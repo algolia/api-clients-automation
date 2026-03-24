@@ -93,6 +93,27 @@ class TestClientCompositionClient < Test::Unit::TestCase
     assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.36.1\).*/))
   end
 
+  # handles 204 No Content responses correctly
+  def test_no_content0
+    client = Algolia::CompositionClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6691,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "compositionClient"
+      )
+    )
+    req = client.custom_delete("1/test/no-content")
+    assert_equal(nil, req)
+  end
+
   # switch API key
   def test_set_client_api_key0
     client = Algolia::CompositionClient.create_with_config(

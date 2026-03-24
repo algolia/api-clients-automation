@@ -69,6 +69,22 @@ final class RecommendClientClientTests: XCTestCase {
         )
     }
 
+    /// handles 204 No Content responses correctly
+    func testNoContentTest0() async throws {
+        let configuration = try RecommendClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6691")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = RecommendClient(configuration: configuration, transporter: transporter)
+        let response = try await client.customDelete(path: "1/test/no-content")
+
+        XCTAssertTrue(response.value is Void)
+    }
+
     /// switch API key
     func testSetClientApiKeyTest0() async throws {
         let configuration = try RecommendClientConfiguration(

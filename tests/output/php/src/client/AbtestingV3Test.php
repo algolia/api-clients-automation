@@ -68,6 +68,20 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('handles 204 No Content responses correctly')]
+    public function test0noContent(): void
+    {
+        $client = AbtestingV3Client::createWithConfig(AbtestingV3Config::create('test-app-id', 'test-api-key', 'us')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6691']));
+
+        $res = $client->customDelete(
+            '1/test/no-content',
+        );
+        $this->assertEquals(
+            null,
+            $res
+        );
+    }
+
     #[TestDox('uses the correct region')]
     public function test0parameters(): void
     {

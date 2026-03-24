@@ -14,6 +14,10 @@ let libraries: [Target.Dependency] = [
         package: "algoliasearch-client-swift"
     ),
     .product(
+        name: "AlgoliaAgentStudio",
+        package: "algoliasearch-client-swift"
+    ),
+    .product(
         name: "AlgoliaAnalytics",
         package: "algoliasearch-client-swift"
     ),

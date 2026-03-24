@@ -5,14 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import com.algolia.api.IngestionClient;
 import com.algolia.config.*;
 import com.algolia.model.ingestion.*;
+import com.algolia.utils.TestHelpers;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.util.*;
 import org.junit.jupiter.api.*;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class IngestionClientRequestsTestsE2E {
@@ -42,11 +41,7 @@ class IngestionClientRequestsTestsE2E {
   void enableTaskTest() {
     TaskUpdateResponse res = client.enableTask("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
     assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
-        "{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}",
-        json.writeValueAsString(res),
-        JSONCompareMode.LENIENT
-      )
+      TestHelpers.lenientJsonAssert("{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}", json.writeValueAsString(res))
     );
   }
 
@@ -55,11 +50,7 @@ class IngestionClientRequestsTestsE2E {
   void enableTaskV1Test() {
     TaskUpdateResponse res = client.enableTaskV1("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
     assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
-        "{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}",
-        json.writeValueAsString(res),
-        JSONCompareMode.LENIENT
-      )
+      TestHelpers.lenientJsonAssert("{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}", json.writeValueAsString(res))
     );
   }
 
@@ -68,10 +59,9 @@ class IngestionClientRequestsTestsE2E {
   void getSourceTest() {
     Source res = client.getSource("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
     assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
+      TestHelpers.lenientJsonAssert(
         "{\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"name\":\"cts_e2e_browse\",\"type\":\"json\",\"input\":{\"url\":\"https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json\"}}",
-        json.writeValueAsString(res),
-        JSONCompareMode.LENIENT
+        json.writeValueAsString(res)
       )
     );
   }
@@ -88,10 +78,9 @@ class IngestionClientRequestsTestsE2E {
       OrderKeys.ASC
     );
     assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
+      TestHelpers.lenientJsonAssert(
         "{\"pagination\":{\"page\":1,\"itemsPerPage\":2},\"authentications\":[{\"authenticationID\":\"474f050f-a771-464c-a016-323538029f5f\",\"type\":\"algolia\",\"name\":\"algolia-auth-1677060483885\",\"input\":{},\"createdAt\":\"2023-02-22T10:08:04Z\",\"updatedAt\":\"2023-10-25T08:41:56Z\"},{}]}",
-        json.writeValueAsString(res),
-        JSONCompareMode.LENIENT
+        json.writeValueAsString(res)
       )
     );
   }
@@ -109,10 +98,9 @@ class IngestionClientRequestsTestsE2E {
       )
     );
     assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
+      TestHelpers.lenientJsonAssert(
         "[{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"destinationID\":\"506d79fa-e29d-4bcf-907c-6b6a41172153\",\"enabled\":true,\"failureThreshold\":0,\"action\":\"replace\",\"createdAt\":\"2024-01-08T16:47:41Z\"}]",
-        json.writeValueAsString(res),
-        JSONCompareMode.LENIENT
+        json.writeValueAsString(res)
       )
     );
   }
@@ -130,10 +118,9 @@ class IngestionClientRequestsTestsE2E {
       )
     );
     assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
+      TestHelpers.lenientJsonAssert(
         "[{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"destinationID\":\"506d79fa-e29d-4bcf-907c-6b6a41172153\",\"trigger\":{\"type\":\"onDemand\"},\"enabled\":true,\"failureThreshold\":0,\"action\":\"replace\",\"createdAt\":\"2024-01-08T16:47:41Z\"}]",
-        json.writeValueAsString(res),
-        JSONCompareMode.LENIENT
+        json.writeValueAsString(res)
       )
     );
   }

@@ -87,6 +87,31 @@ class PersonalizationClientClientTests {
   }
 
   @Test
+  @DisplayName("handles 204 No Content responses correctly")
+  void noContentTest0() {
+    PersonalizationClient client = new PersonalizationClient(
+      "test-app-id",
+      "test-api-key",
+      "us",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6691
+          )
+        ),
+        false
+      )
+    );
+
+    Object res = client.customDelete("1/test/no-content");
+
+    assertEquals(null, res);
+  }
+
+  @Test
   @DisplayName("throws when region is not given")
   void parametersTest0() {
     {
