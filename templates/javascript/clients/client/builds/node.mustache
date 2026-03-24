@@ -2,6 +2,8 @@
 
 export type {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}>{{#searchHelpers}} & SearchClientNodeHelpers{{/searchHelpers}};
 
+import { gzipSync } from 'node:zlib';
+
 {{#searchHelpers}}
 import { createHmac } from 'node:crypto';
 {{/searchHelpers}}
@@ -22,6 +24,7 @@ import { createHmac } from 'node:crypto';
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),
+      compress: async (data: string): Promise<Uint8Array> => gzipSync(Buffer.from(data)),
       ...options,
     }),
     {{#searchHelpers}}
