@@ -1,3 +1,7 @@
+## [1.47.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.47.0...1.47.1)
+
+- [fec26adc20](https://github.com/algolia/api-clients-automation/commit/fec26adc20) fix(dart): use caret versioning for archive dependency ([#6157](https://github.com/algolia/api-clients-automation/pull/6157)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [1.47.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.46.2...1.47.0)
 
 - [3a84c8f9be](https://github.com/algolia/api-clients-automation/commit/3a84c8f9be) feat(dart): Implement gzip compression ([#6057](https://github.com/algolia/api-clients-automation/pull/6057)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
