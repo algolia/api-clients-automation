@@ -9,7 +9,12 @@ try {
   expectBody(res, """{{{match.value}}}""");
   {{/match.isPrimitive}}
   {{#match.isPrimitive}}
+  {{#match.isNull}}
+  expect(res, isA<AlgoliaNoResponse>());
+  {{/match.isNull}}
+  {{^match.isNull}}
   expect(res, {{#match}}{{> tests/param_value}}{{/match}});
+  {{/match.isNull}}
   {{/match.isPrimitive}}
   {{/testResponse}}
 } on InterceptionException catch (_) {

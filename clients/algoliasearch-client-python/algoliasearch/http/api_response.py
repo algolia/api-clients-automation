@@ -60,7 +60,7 @@ class ApiResponse(Generic[T]):
 
         :return: object.
         """
-        if data is None:
+        if data is None or data == "":
             return None
 
         if hasattr(klass, "__origin__") and klass.__origin__ is list:
