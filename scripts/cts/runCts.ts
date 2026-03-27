@@ -72,6 +72,13 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
           language,
         },
       );
+      // run manual tests
+      if (suites.client) {
+        await run(`go test -race -count 1 -v gotests/tests/manual/...`, {
+          cwd,
+          language,
+        });
+      }
       break;
     case 'java':
       await run(`./gradle/gradlew -p tests/output/java test --rerun ${filter((f) => `--tests 'com.algolia.${f}*'`)}`, {
