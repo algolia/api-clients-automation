@@ -248,7 +248,7 @@ final class ApiWrapper implements ApiWrapperInterface
                 $this->log(LogLevel::INFO, 'Retry attempt '.$attemptNumber.'/'.$hostCount.' for '.$method.' '.$path, $logParams);
                 $this->log(LogLevel::DEBUG, $retryDebug, $logParams);
             } catch (BadRequestException $e) {
-                $this->log(LogLevel::ERROR, 'Bad request: '.$e->getMessage(), $logParams);
+                $this->log(LogLevel::WARNING, 'Bad request: '.$e->getMessage(), $logParams);
 
                 throw $e;
             } catch (\Exception $e) {
@@ -300,6 +300,7 @@ final class ApiWrapper implements ApiWrapperInterface
             $responseArray = Helpers::json_decode($body, true);
         } catch (\InvalidArgumentException $e) {
             $this->log(LogLevel::ERROR, 'Failed to deserialize response: '.$e->getMessage());
+
             throw $e;
         }
 
@@ -352,6 +353,7 @@ final class ApiWrapper implements ApiWrapperInterface
                 $body = \json_encode($body, $this->jsonOptions);
                 if (JSON_ERROR_NONE !== json_last_error()) {
                     $this->log(LogLevel::ERROR, 'Serialization error: '.json_last_error_msg());
+
                     throw new \InvalidArgumentException('json_encode error: '.json_last_error_msg());
                 }
             }
