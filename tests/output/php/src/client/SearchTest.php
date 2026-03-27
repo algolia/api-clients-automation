@@ -152,8 +152,22 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    #[TestDox('calls api with default read timeouts')]
+    #[TestDox('test the response decompression strategy')]
     public function test7api(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6691']));
+
+        $res = $client->customGet(
+            '1/test/gzip-response',
+        );
+        $this->assertEquals(
+            '{"message":"ok decompression test server response","data":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('calls api with default read timeouts')]
+    public function test8api(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customGet(
@@ -171,7 +185,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('calls api with default write timeouts')]
-    public function test8api(): void
+    public function test9api(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customPost(
@@ -189,7 +203,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('can handle unknown response fields')]
-    public function test9api(): void
+    public function test10api(): void
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
 
@@ -203,7 +217,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('can handle unknown response fields inside a nested oneOf')]
-    public function test10api(): void
+    public function test11api(): void
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
 
@@ -218,7 +232,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('does not retry on success')]
-    public function test11api(): void
+    public function test12api(): void
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6675', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6674']));
 
@@ -263,7 +277,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.39.1\).*/',
+                '/^Algolia for PHP \(4.40.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );

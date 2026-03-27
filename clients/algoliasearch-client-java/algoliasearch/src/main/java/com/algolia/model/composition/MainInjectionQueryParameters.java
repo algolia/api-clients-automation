@@ -24,9 +24,6 @@ public class MainInjectionQueryParameters {
   @JsonProperty("alternativesAsExact")
   private List<AlternativesAsExact> alternativesAsExact;
 
-  @JsonProperty("analytics")
-  private Boolean analytics;
-
   @JsonProperty("attributeCriteriaComputedByMinProximity")
   private Boolean attributeCriteriaComputedByMinProximity;
 
@@ -41,9 +38,6 @@ public class MainInjectionQueryParameters {
 
   @JsonProperty("clickAnalytics")
   private Boolean clickAnalytics;
-
-  @JsonProperty("decompoundQuery")
-  private Boolean decompoundQuery;
 
   @JsonProperty("disableExactOnAttributes")
   private List<String> disableExactOnAttributes;
@@ -86,9 +80,6 @@ public class MainInjectionQueryParameters {
 
   @JsonProperty("ignorePlurals")
   private IgnorePlurals ignorePlurals;
-
-  @JsonProperty("maxFacetHits")
-  private Integer maxFacetHits;
 
   @JsonProperty("minProximity")
   private Integer minProximity;
@@ -257,17 +248,6 @@ public class MainInjectionQueryParameters {
     return alternativesAsExact;
   }
 
-  public MainInjectionQueryParameters setAnalytics(Boolean analytics) {
-    this.analytics = analytics;
-    return this;
-  }
-
-  /** Whether this search will be included in Analytics. */
-  @javax.annotation.Nullable
-  public Boolean getAnalytics() {
-    return analytics;
-  }
-
   public MainInjectionQueryParameters setAttributeCriteriaComputedByMinProximity(Boolean attributeCriteriaComputedByMinProximity) {
     this.attributeCriteriaComputedByMinProximity = attributeCriteriaComputedByMinProximity;
     return this;
@@ -375,25 +355,6 @@ public class MainInjectionQueryParameters {
   @javax.annotation.Nullable
   public Boolean getClickAnalytics() {
     return clickAnalytics;
-  }
-
-  public MainInjectionQueryParameters setDecompoundQuery(Boolean decompoundQuery) {
-    this.decompoundQuery = decompoundQuery;
-    return this;
-  }
-
-  /**
-   * Whether to split compound words in the query into their building blocks For more information,
-   * see [Word
-   * segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words).
-   * Word segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and
-   * Norwegian. Decompounding doesn't work for words with [non-spacing mark Unicode
-   * characters](https://www.charactercodes.net/category/non-spacing_mark). For example,
-   * `Gartenstühle` won't be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).
-   */
-  @javax.annotation.Nullable
-  public Boolean getDecompoundQuery() {
-    return decompoundQuery;
   }
 
   public MainInjectionQueryParameters setDisableExactOnAttributes(List<String> disableExactOnAttributes) {
@@ -601,21 +562,6 @@ public class MainInjectionQueryParameters {
   @javax.annotation.Nullable
   public IgnorePlurals getIgnorePlurals() {
     return ignorePlurals;
-  }
-
-  public MainInjectionQueryParameters setMaxFacetHits(Integer maxFacetHits) {
-    this.maxFacetHits = maxFacetHits;
-    return this;
-  }
-
-  /**
-   * Maximum number of facet values to return when [searching for facet
-   * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
-   * maximum: 100
-   */
-  @javax.annotation.Nullable
-  public Integer getMaxFacetHits() {
-    return maxFacetHits;
   }
 
   public MainInjectionQueryParameters setMinProximity(Integer minProximity) {
@@ -1075,13 +1021,11 @@ public class MainInjectionQueryParameters {
       Objects.equals(this.advancedSyntaxFeatures, mainInjectionQueryParameters.advancedSyntaxFeatures) &&
       Objects.equals(this.allowTyposOnNumericTokens, mainInjectionQueryParameters.allowTyposOnNumericTokens) &&
       Objects.equals(this.alternativesAsExact, mainInjectionQueryParameters.alternativesAsExact) &&
-      Objects.equals(this.analytics, mainInjectionQueryParameters.analytics) &&
       Objects.equals(this.attributeCriteriaComputedByMinProximity, mainInjectionQueryParameters.attributeCriteriaComputedByMinProximity) &&
       Objects.equals(this.attributesToHighlight, mainInjectionQueryParameters.attributesToHighlight) &&
       Objects.equals(this.attributesToRetrieve, mainInjectionQueryParameters.attributesToRetrieve) &&
       Objects.equals(this.attributesToSnippet, mainInjectionQueryParameters.attributesToSnippet) &&
       Objects.equals(this.clickAnalytics, mainInjectionQueryParameters.clickAnalytics) &&
-      Objects.equals(this.decompoundQuery, mainInjectionQueryParameters.decompoundQuery) &&
       Objects.equals(this.disableExactOnAttributes, mainInjectionQueryParameters.disableExactOnAttributes) &&
       Objects.equals(this.disableTypoToleranceOnAttributes, mainInjectionQueryParameters.disableTypoToleranceOnAttributes) &&
       Objects.equals(this.distinct, mainInjectionQueryParameters.distinct) &&
@@ -1096,7 +1040,6 @@ public class MainInjectionQueryParameters {
       Objects.equals(this.highlightPostTag, mainInjectionQueryParameters.highlightPostTag) &&
       Objects.equals(this.highlightPreTag, mainInjectionQueryParameters.highlightPreTag) &&
       Objects.equals(this.ignorePlurals, mainInjectionQueryParameters.ignorePlurals) &&
-      Objects.equals(this.maxFacetHits, mainInjectionQueryParameters.maxFacetHits) &&
       Objects.equals(this.minProximity, mainInjectionQueryParameters.minProximity) &&
       Objects.equals(this.minWordSizefor1Typo, mainInjectionQueryParameters.minWordSizefor1Typo) &&
       Objects.equals(this.minWordSizefor2Typos, mainInjectionQueryParameters.minWordSizefor2Typos) &&
@@ -1135,13 +1078,11 @@ public class MainInjectionQueryParameters {
       advancedSyntaxFeatures,
       allowTyposOnNumericTokens,
       alternativesAsExact,
-      analytics,
       attributeCriteriaComputedByMinProximity,
       attributesToHighlight,
       attributesToRetrieve,
       attributesToSnippet,
       clickAnalytics,
-      decompoundQuery,
       disableExactOnAttributes,
       disableTypoToleranceOnAttributes,
       distinct,
@@ -1156,7 +1097,6 @@ public class MainInjectionQueryParameters {
       highlightPostTag,
       highlightPreTag,
       ignorePlurals,
-      maxFacetHits,
       minProximity,
       minWordSizefor1Typo,
       minWordSizefor2Typos,
@@ -1196,7 +1136,6 @@ public class MainInjectionQueryParameters {
     sb.append("    advancedSyntaxFeatures: ").append(toIndentedString(advancedSyntaxFeatures)).append("\n");
     sb.append("    allowTyposOnNumericTokens: ").append(toIndentedString(allowTyposOnNumericTokens)).append("\n");
     sb.append("    alternativesAsExact: ").append(toIndentedString(alternativesAsExact)).append("\n");
-    sb.append("    analytics: ").append(toIndentedString(analytics)).append("\n");
     sb
       .append("    attributeCriteriaComputedByMinProximity: ")
       .append(toIndentedString(attributeCriteriaComputedByMinProximity))
@@ -1205,7 +1144,6 @@ public class MainInjectionQueryParameters {
     sb.append("    attributesToRetrieve: ").append(toIndentedString(attributesToRetrieve)).append("\n");
     sb.append("    attributesToSnippet: ").append(toIndentedString(attributesToSnippet)).append("\n");
     sb.append("    clickAnalytics: ").append(toIndentedString(clickAnalytics)).append("\n");
-    sb.append("    decompoundQuery: ").append(toIndentedString(decompoundQuery)).append("\n");
     sb.append("    disableExactOnAttributes: ").append(toIndentedString(disableExactOnAttributes)).append("\n");
     sb.append("    disableTypoToleranceOnAttributes: ").append(toIndentedString(disableTypoToleranceOnAttributes)).append("\n");
     sb.append("    distinct: ").append(toIndentedString(distinct)).append("\n");
@@ -1220,7 +1158,6 @@ public class MainInjectionQueryParameters {
     sb.append("    highlightPostTag: ").append(toIndentedString(highlightPostTag)).append("\n");
     sb.append("    highlightPreTag: ").append(toIndentedString(highlightPreTag)).append("\n");
     sb.append("    ignorePlurals: ").append(toIndentedString(ignorePlurals)).append("\n");
-    sb.append("    maxFacetHits: ").append(toIndentedString(maxFacetHits)).append("\n");
     sb.append("    minProximity: ").append(toIndentedString(minProximity)).append("\n");
     sb.append("    minWordSizefor1Typo: ").append(toIndentedString(minWordSizefor1Typo)).append("\n");
     sb.append("    minWordSizefor2Typos: ").append(toIndentedString(minWordSizefor2Typos)).append("\n");

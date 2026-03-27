@@ -64,6 +64,26 @@ describe('api', () => {
       },
     });
   }, 25000);
+
+  test('test the response decompression strategy', async () => {
+    const client = compositionClient('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6691,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.customGet({ path: '1/test/gzip-response' });
+
+    expect(result).toEqual({
+      message: 'ok decompression test server response',
+      data: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    });
+  }, 25000);
 });
 
 describe('commonApi', () => {
@@ -82,7 +102,7 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.24.2\).*/);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.25.0\).*/);
   }, 25000);
 });
 

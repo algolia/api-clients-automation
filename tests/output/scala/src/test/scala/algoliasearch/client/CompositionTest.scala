@@ -106,6 +106,39 @@ class CompositionTest extends AnyFunSuite {
     )
   }
 
+  test("test the response decompression strategy") {
+
+    val client = CompositionClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6691)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.customGet[JObject](
+        path = "1/test/gzip-response"
+      ),
+      Duration.Inf
+    )
+    assert(
+      parse(write(res)) == parse(
+        "{\"message\":\"ok decompression test server response\",\"data\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"}"
+      )
+    )
+  }
+
   test("calls api with correct user agent") {
     val (client, echo) = testClient()
 
@@ -130,7 +163,7 @@ class CompositionTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.38.2\).*""".r
+    val regexp = """^Algolia for Scala \(2.38.3\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }

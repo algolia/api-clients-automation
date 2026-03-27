@@ -145,8 +145,27 @@ final class SearchClientClientTests: XCTestCase {
         )
     }
 
-    /// calls api with default read timeouts
+    /// test the response decompression strategy
     func testApiTest7() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6691")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.customGet(path: "1/test/gzip-response")
+
+        XTCJSONEquals(
+            received: response,
+            expected: "{\"message\":\"ok decompression test server response\",\"data\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"}"
+        )
+    }
+
+    /// calls api with default read timeouts
+    func testApiTest8() async throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -159,7 +178,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// calls api with default write timeouts
-    func testApiTest8() async throws {
+    func testApiTest9() async throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -172,7 +191,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// can handle unknown response fields
-    func testApiTest9() async throws {
+    func testApiTest10() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
@@ -191,7 +210,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// can handle unknown response fields inside a nested oneOf
-    func testApiTest10() async throws {
+    func testApiTest11() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
@@ -210,7 +229,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// does not retry on success
-    func testApiTest11() async throws {
+    func testApiTest12() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
@@ -264,7 +283,7 @@ final class SearchClientClientTests: XCTestCase {
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
-        let pattern = "^Algolia for Swift \\(9.41.0\\).*"
+        let pattern = "^Algolia for Swift \\(9.41.1\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern

@@ -252,8 +252,39 @@ class SearchClientClientTests {
   }
 
   @Test
-  @DisplayName("calls api with default read timeouts")
+  @DisplayName("test the response decompression strategy")
   void apiTest7() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6691
+          )
+        ),
+        false
+      )
+    );
+
+    Object res = client.customGet("1/test/gzip-response");
+
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"message\":\"ok decompression test server response\",\"data\":\"Lorem ipsum" +
+          " dolor sit amet, consectetur adipiscing elit.\"}",
+        json.writeValueAsString(res),
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("calls api with default read timeouts")
+  void apiTest8() {
     SearchClient client = createClient();
 
     client.customGet("1/test");
@@ -264,7 +295,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("calls api with default write timeouts")
-  void apiTest8() {
+  void apiTest9() {
     SearchClient client = createClient();
 
     client.customPost("1/test");
@@ -275,7 +306,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("can handle unknown response fields")
-  void apiTest9() {
+  void apiTest10() {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
@@ -305,7 +336,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("can handle unknown response fields inside a nested oneOf")
-  void apiTest10() {
+  void apiTest11() {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
@@ -335,7 +366,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("does not retry on success")
-  void apiTest11() {
+  void apiTest12() {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
@@ -402,7 +433,7 @@ class SearchClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.36.1\\).*";
+      String regexp = "^Algolia for Java \\(4.36.2\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp

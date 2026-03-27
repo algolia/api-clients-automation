@@ -278,8 +278,46 @@ func TestSearchapi6(t *testing.T) {
 	)
 }
 
-// calls api with default read timeouts.
+// test the response decompression strategy.
 func TestSearchapi7(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6691", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
+		"1/test/gzip-response"))
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(
+		t,
+		`{"message":"ok decompression test server response","data":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}`,
+		string(rawBody),
+	)
+}
+
+// calls api with default read timeouts.
+func TestSearchapi8(t *testing.T) {
 	var (
 		err error
 		res any
@@ -296,7 +334,7 @@ func TestSearchapi7(t *testing.T) {
 }
 
 // calls api with default write timeouts.
-func TestSearchapi8(t *testing.T) {
+func TestSearchapi9(t *testing.T) {
 	var (
 		err error
 		res any
@@ -313,7 +351,7 @@ func TestSearchapi8(t *testing.T) {
 }
 
 // can handle unknown response fields.
-func TestSearchapi9(t *testing.T) {
+func TestSearchapi10(t *testing.T) {
 	var (
 		err error
 		res any
@@ -347,7 +385,7 @@ func TestSearchapi9(t *testing.T) {
 }
 
 // can handle unknown response fields inside a nested oneOf.
-func TestSearchapi10(t *testing.T) {
+func TestSearchapi11(t *testing.T) {
 	var (
 		err error
 		res any
@@ -381,7 +419,7 @@ func TestSearchapi10(t *testing.T) {
 }
 
 // does not retry on success.
-func TestSearchapi11(t *testing.T) {
+func TestSearchapi12(t *testing.T) {
 	var (
 		err error
 		res any
@@ -460,7 +498,7 @@ func TestSearchcommonApi1(t *testing.T) {
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, `^Algolia for Go \(4.37.1\).*`, echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.37.2\).*`, echo.Header.Get("User-Agent"))
 }
 
 // call deleteObjects without error.

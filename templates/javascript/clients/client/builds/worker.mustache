@@ -10,6 +10,8 @@ export type SearchClientWorkerHelpers = {
 export type {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}>{{#searchHelpers}} & SearchClientWorkerHelpers{{/searchHelpers}};
 
 {{> client/builds/definition}}
+  const { compression: _compression, ...workerOptions } = options || {};
+
   return {
     ...create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
       appId,
@@ -25,7 +27,7 @@ export type {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} = ReturnTyp
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),
-      ...options,
+      ...workerOptions,
     }),
     {{#searchHelpers}}
     {{> client/api/workerHelpers}}

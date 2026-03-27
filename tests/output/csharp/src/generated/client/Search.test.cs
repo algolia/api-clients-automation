@@ -247,8 +247,40 @@ public class SearchClientTests
     );
   }
 
-  [Fact(DisplayName = "calls api with default read timeouts")]
+  [Fact(DisplayName = "test the response decompression strategy")]
   public async Task ApiTest7()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6691,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.CustomGetAsync("1/test/gzip-response");
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"message\":\"ok decompression test server response\",\"data\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "calls api with default read timeouts")]
+  public async Task ApiTest8()
   {
     var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
     await client.CustomGetAsync("1/test");
@@ -259,7 +291,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "calls api with default write timeouts")]
-  public async Task ApiTest8()
+  public async Task ApiTest9()
   {
     var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
     await client.CustomPostAsync("1/test");
@@ -270,7 +302,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "can handle unknown response fields")]
-  public async Task ApiTest9()
+  public async Task ApiTest10()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -302,7 +334,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "can handle unknown response fields inside a nested oneOf")]
-  public async Task ApiTest10()
+  public async Task ApiTest11()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -334,7 +366,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "does not retry on success")]
-  public async Task ApiTest11()
+  public async Task ApiTest12()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -409,7 +441,7 @@ public class SearchClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.38.2\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.38.3\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }

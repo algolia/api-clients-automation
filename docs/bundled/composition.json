@@ -1504,25 +1504,10 @@
         },
         "description": "Facets for which to retrieve facet values that match the search criteria and the number of matching facet values\nTo retrieve all facets, use the wildcard character `*`.\nTo retrieve disjunctive facets lists, annotate any facets with the `disjunctive` modifier.\nFor more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts) and [disjunctive faceting for Smart Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).\n",
         "default": [],
-        "examples": [
-          {
-            "facetSpecificList": {
-              "summary": "Specify which facet to retrieve with some marked as disjunctive",
-              "value": [
-                "category",
-                "disjunctive(brand)",
-                "price"
-              ]
-            }
-          },
-          {
-            "facetAll": {
-              "summary": "Retrieve all facets",
-              "value": [
-                "*"
-              ]
-            }
-          }
+        "example": [
+          "category",
+          "disjunctive(brand)",
+          "price"
         ],
         "x-categories": [
           "Faceting"
@@ -3192,14 +3177,6 @@
           "Highlighting and Snippeting"
         ]
       },
-      "decompoundQuery": {
-        "type": "boolean",
-        "description": "Whether to split compound words in the query into their building blocks\nFor more information, see [Word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words).\nWord segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and Norwegian.\nDecompounding doesn't work for words with [non-spacing mark Unicode characters](https://www.charactercodes.net/category/non-spacing_mark).\nFor example, `Gartenstühle` won't be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).\n",
-        "default": true,
-        "x-categories": [
-          "Languages"
-        ]
-      },
       "disableExactOnAttributes": {
         "type": "array",
         "items": {
@@ -3578,9 +3555,6 @@
           "alternativesAsExact": {
             "$ref": "#/components/schemas/IndexSettings_alternativesAsExact"
           },
-          "analytics": {
-            "$ref": "#/components/schemas/analytics"
-          },
           "attributeCriteriaComputedByMinProximity": {
             "$ref": "#/components/schemas/attributeCriteriaComputedByMinProximity"
           },
@@ -3595,9 +3569,6 @@
           },
           "clickAnalytics": {
             "$ref": "#/components/schemas/clickAnalytics"
-          },
-          "decompoundQuery": {
-            "$ref": "#/components/schemas/decompoundQuery"
           },
           "disableExactOnAttributes": {
             "$ref": "#/components/schemas/disableExactOnAttributes"
@@ -3640,9 +3611,6 @@
           },
           "ignorePlurals": {
             "$ref": "#/components/schemas/ignorePlurals"
-          },
-          "maxFacetHits": {
-            "$ref": "#/components/schemas/maxFacetHits"
           },
           "minProximity": {
             "$ref": "#/components/schemas/minProximity"
