@@ -224,29 +224,13 @@ final class ApiWrapper implements ApiWrapperInterface
             } catch (TimeoutException $e) {
                 $this->clusterHosts->timedOut($hostUrl);
 
-                $hasNextHost = $index + 1 < $hostCount;
-                $nextHost = $hasNextHost ? $hosts[$index + 1] : 'none';
-                $retryDebug = 'Retry '.$attemptNumber.'/'.$hostCount.': Timeout on '.$hostUrl.' after '.($timeout * 1000).'ms ('.$e->getMessage().'), trying '.$nextHost;
-                if ($hasNextHost) {
-                    $nextRetryCount = $this->clusterHosts->getRetryCount($nextHost, $isRead);
-                    $nextConnectTimeoutMs = $requestOptions->getConnectTimeout() * ($nextRetryCount + 1) * 1000;
-                    $retryDebug .= ' with '.$nextConnectTimeoutMs.'ms backoff';
-                }
                 $this->log(LogLevel::INFO, 'Retry attempt '.$attemptNumber.'/'.$hostCount.' for '.$method.' '.$path, $logParams);
-                $this->log(LogLevel::DEBUG, $retryDebug, $logParams);
+                $this->log(LogLevel::DEBUG, 'Retry '.$attemptNumber.'/'.$hostCount.': Timeout on '.$hostUrl.' after '.($timeout * 1000).'ms ('.$e->getMessage().')', $logParams);
             } catch (RetriableException $e) {
                 $this->clusterHosts->failed($hostUrl);
 
-                $hasNextHost = $index + 1 < $hostCount;
-                $nextHost = $hasNextHost ? $hosts[$index + 1] : 'none';
-                $retryDebug = 'Retry '.$attemptNumber.'/'.$hostCount.': '.$e->getMessage().' on '.$hostUrl.', trying '.$nextHost;
-                if ($hasNextHost) {
-                    $nextRetryCount = $this->clusterHosts->getRetryCount($nextHost, $isRead);
-                    $nextConnectTimeoutMs = $requestOptions->getConnectTimeout() * ($nextRetryCount + 1) * 1000;
-                    $retryDebug .= ' with '.$nextConnectTimeoutMs.'ms backoff';
-                }
                 $this->log(LogLevel::INFO, 'Retry attempt '.$attemptNumber.'/'.$hostCount.' for '.$method.' '.$path, $logParams);
-                $this->log(LogLevel::DEBUG, $retryDebug, $logParams);
+                $this->log(LogLevel::DEBUG, 'Retry '.$attemptNumber.'/'.$hostCount.': '.$e->getMessage().' on '.$hostUrl, $logParams);
             } catch (BadRequestException $e) {
                 $this->log(LogLevel::WARNING, 'Bad request: '.$e->getMessage(), $logParams);
 

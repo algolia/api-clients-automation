@@ -116,8 +116,8 @@ class LoggingIntegrationTest extends TestCase
         // INFO: retry attempt
         $this->assertLogMatches('info', '/Retry attempt \d+\/\d+ for GET/', 'INFO log should match "Retry attempt {N}/{MAX} for {METHOD} {PATH}"');
 
-        // DEBUG: retry details with host, reason, next host, backoff
-        $this->assertLogMatches('debug', '/Retry \d+\/\d+: .+ on '.$host1.'.+trying '.$host2.'.+backoff/', 'DEBUG log should include failed host, next host, and backoff');
+        // DEBUG: retry details with host and reason
+        $this->assertLogMatches('debug', '/Retry \d+\/\d+: .+ on '.$host1.'/', 'DEBUG log should include failed host and reason');
     }
 
     // Spec: ERROR "Request failed after {MAX} retries: {ERROR_MESSAGE}"
