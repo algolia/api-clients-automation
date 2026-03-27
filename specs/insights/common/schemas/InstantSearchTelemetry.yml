@@ -9,19 +9,12 @@ properties:
     $ref: './EventAttributes.yml#/eventName'
   sessionID:
     $ref: './EventAttributes.yml#/sessionID'
-  # Index and userToken are not specified in the Agentic Analytics document 
-  # # but are required by all other event schemas. 
-  # Is there any case where we would not be able to provide either of these?
-  index:
-    $ref: './EventAttributes.yml#/index'
   userToken:
     $ref: './EventAttributes.yml#/userToken'
   # This is not specified in the Agentic Analytics document but is optional in all other schemas 
   # Can we keep it here for consistency?
   authenticatedUserToken:
     $ref: './EventAttributes.yml#/authenticatedUserToken'
-  # This is stated as required by Agentic Analytics but we recommend leaving as optional for consistency
-  # with other schemas (it can be inferred if ommitted)
   timestamp:
     $ref: './EventAttributes.yml#/timestamp'
   performance:
@@ -30,14 +23,10 @@ properties:
   widgets:
     description: free form object for widget information.
     type: object
-
-  # The library and version are requested by Agent Analytics as optional parameters.
-  # I suggest ommiting them if they can be retrieved from the X-Algolia-Agent header
 required:
   - eventName
   - sessionID
   - eventType
-  - index
   - userToken
 x-discriminator-fields:
   - eventType
