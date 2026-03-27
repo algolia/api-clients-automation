@@ -162,7 +162,7 @@ final class ApiWrapper implements ApiWrapperInterface
         $attemptNumber = 0;
         $totalStartTime = microtime(true);
 
-        foreach ($hosts as $index => $hostUrl) {
+        foreach ($hosts as $hostUrl) {
             if ($this->config->getHasFullHosts()) {
                 $hostParts = explode(':', $hostUrl);
                 $uri = $uri->withHost(trim($hostParts[1], '/'))
