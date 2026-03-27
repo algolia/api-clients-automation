@@ -68,7 +68,7 @@ objectIDs:
     type: string
   minItems: 1
   maxItems: 20
-  example: ['object-1', 'object-2', 'object-3']
+  example: [ 'object-1', 'object-2', 'object-3' ]
 
 filters:
   type: array
@@ -81,8 +81,39 @@ filters:
     type: string
   minItems: 1
   maxItems: 20
-  example: ['brand:apple']
+  example: [ 'brand:apple' ]
 
+instantSearch:
+  description: a set of fields for matching events to instant-search responses
+  type: object
+  properties:
+    messageID:
+      description: the ID of the instant-search message to which this event is related
+      type: string
+      minLength: 1
+      maxLength: 256
+    toolCallID:
+      description: the ID of the instant-search tool to which this event is related
+      type: string
+      minLength: 1
+      maxLength: 256
+    conversationID:
+      description: the ID of the instant-search conversation to which this event is related
+      type: string
+      minLength: 1
+      maxLength: 256
+    agentID:
+      description: the ID of instant-search agent to which this event is related
+      type: string
+      minLength: 1
+      maxLength: 256
+  required:
+  # Although all these fields are specified as optional in the Agentic Analytics document, now that they are grouped, it may
+  # make sense to make the parent property optional but require all sub properties to be supplied together, as here
+  - messageID
+  - toolCallID
+  - conversationID
+  - agentID
 positions:
   type: array
   items:
@@ -94,25 +125,25 @@ positions:
     Position of the clicked item the search results.
 
     You must provide 1 `position` for each `objectID`.
-  example: [1, 2, 5]
+  example: [ 1, 2, 5 ]
 
 price:
   description: Final price of a single product, including any discounts, in units of `currency`.
   oneOf:
-    - type: number
-      format: double
-      example: 9.99
-    - type: string
-      example: '9.99'
+  - type: number
+    format: double
+    example: 9.99
+  - type: string
+    example: '9.99'
 
 discount:
   description: Absolute value of the discount for this product, in units of `currency`.
   oneOf:
-    - type: number
-      format: double
-      example: 20
-    - type: string
-      example: '20'
+  - type: number
+    format: double
+    example: 20
+  - type: string
+    example: '20'
 
 quantity:
   type: integer
@@ -181,14 +212,25 @@ currency:
   description: Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html).
   example: EUR
 
+sessionID:
+  type: string
+  # We don't necessarily need to be this restrictive:
+  pattern: '[0-9a-f]{32}'
+  minLength: 32
+  maxLength: 32
+  description: |
+    Unique identifier for a session
+    [TODO]: Document here where this is derived and how it is used
+  example: 3e48cd0616e466948dd85abf5c3fbbe2
+
 value:
   description: |
     Total monetary value of this event in units of `currency`.
     This should be equal to the sum of `price` times `quantity`.
   oneOf:
-    - type: number
-      format: double
-      example: 1000.00
-    - type: string
-      maxLength: 16
-      example: '1000.00'
+  - type: number
+    format: double
+    example: 1000.00
+  - type: string
+    maxLength: 16
+    example: '1000.00'
