@@ -83,6 +83,37 @@ filters:
   maxItems: 20
   example: ['brand:apple']
 
+agent:
+  description: a set of fields for matching events to agent responses.
+  type: object
+  properties:
+    agentID:
+      description: the ID of the agent to which this event is related.
+      type: string
+      minLength: 1
+      maxLength: 256
+    messageID:
+      description: the ID of the agent message to which this event is related.
+      type: string
+      minLength: 1
+      maxLength: 256
+    toolCallID:
+      description: the ID of the instant-search tool to which this event is related.
+      type: string
+      minLength: 1
+      maxLength: 256
+    conversationID:
+      description: the ID of the instant-search conversation to which this event is related.
+      type: string
+      minLength: 1
+      maxLength: 256
+  required:
+    # Although all these fields are specified as optional in the Agentic Analytics document, now that they are grouped, it may
+    # make sense to make the parent property optional but require all sub properties to be supplied together, as here
+    - agentID
+    - messageID
+    - toolCallID
+    - conversationID
 positions:
   type: array
   items:
@@ -180,6 +211,17 @@ currency:
   pattern: '^[A-Za-z]{3}$'
   description: Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html).
   example: EUR
+
+sessionID:
+  type: string
+  # We don't necessarily need to be this restrictive:
+  pattern: '[0-9a-f]{32}'
+  minLength: 32
+  maxLength: 32
+  description: |
+    Unique identifier for a session
+    [TODO]: Document here where this is derived and how it is used.
+  example: 3e48cd0616e466948dd85abf5c3fbbe2
 
 value:
   description: |
