@@ -1,16 +1,16 @@
 type: object
-title: Instant Search
+title: Instant Search Telemetry Event
 description: |
-  Tracks an initial user interaction with the Agentic Analytics API
+  Tracks an initial user interaction with the Agentic Analytics API.
 properties:
   eventType:
-    $ref: './InstantSearchEvent.yml'
+    $ref: './InstantSearchTelemetryEvent.yml'
   eventName:
     $ref: './EventAttributes.yml#/eventName'
   sessionID:
     $ref: './EventAttributes.yml#/sessionID'
   # Index and userToken are not specified in the Agentic Analytics document 
-  ## but are required by all other event schemas. 
+  # # but are required by all other event schemas. 
   # Is there any case where we would not be able to provide either of these?
   index:
     $ref: './EventAttributes.yml#/index'
@@ -25,19 +25,19 @@ properties:
   timestamp:
     $ref: './EventAttributes.yml#/timestamp'
   performance:
-    description: free form object for performance data
+    description: free form object for performance data.
     type: object
   widgets:
-    description: free form object for widget information
+    description: free form object for widget information.
     type: object
 
   # The library and version are requested by Agent Analytics as optional parameters.
   # I suggest ommiting them if they can be retrieved from the X-Algolia-Agent header
 required:
-- eventName
-- sessionID
-- eventType
-- index
-- userToken
+  - eventName
+  - sessionID
+  - eventType
+  - index
+  - userToken
 x-discriminator-fields:
-- eventType
+  - eventType
