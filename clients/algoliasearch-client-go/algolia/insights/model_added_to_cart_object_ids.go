@@ -27,6 +27,7 @@ type AddedToCartObjectIDs struct {
 	// Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30 days. If not provided, we use the time at which the request was received.
 	Timestamp *int64 `json:"timestamp,omitempty"`
 	Value     *Value `json:"value,omitempty"`
+	Agent     *Agent `json:"agent,omitempty"`
 }
 
 type AddedToCartObjectIDsOption func(f *AddedToCartObjectIDs)
@@ -58,6 +59,12 @@ func WithAddedToCartObjectIDsTimestamp(val int64) AddedToCartObjectIDsOption {
 func WithAddedToCartObjectIDsValue(val Value) AddedToCartObjectIDsOption {
 	return func(f *AddedToCartObjectIDs) {
 		f.Value = &val
+	}
+}
+
+func WithAddedToCartObjectIDsAgent(val Agent) AddedToCartObjectIDsOption {
+	return func(f *AddedToCartObjectIDs) {
+		f.Agent = &val
 	}
 }
 
@@ -447,6 +454,43 @@ func (o *AddedToCartObjectIDs) SetValue(v *Value) *AddedToCartObjectIDs {
 	return o
 }
 
+// GetAgent returns the Agent field value if set, zero value otherwise.
+func (o *AddedToCartObjectIDs) GetAgent() Agent {
+	if o == nil || o.Agent == nil {
+		var ret Agent
+
+		return ret
+	}
+
+	return *o.Agent
+}
+
+// GetAgentOk returns a tuple with the Agent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddedToCartObjectIDs) GetAgentOk() (*Agent, bool) {
+	if o == nil || o.Agent == nil {
+		return nil, false
+	}
+
+	return o.Agent, true
+}
+
+// HasAgent returns a boolean if a field has been set.
+func (o *AddedToCartObjectIDs) HasAgent() bool {
+	if o != nil && o.Agent != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAgent gets a reference to the given Agent and assigns it to the Agent field.
+func (o *AddedToCartObjectIDs) SetAgent(v *Agent) *AddedToCartObjectIDs {
+	o.Agent = v
+
+	return o
+}
+
 func (o AddedToCartObjectIDs) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
 	toSerialize["eventName"] = o.EventName
@@ -476,6 +520,10 @@ func (o AddedToCartObjectIDs) MarshalJSON() ([]byte, error) {
 		toSerialize["value"] = o.Value
 	}
 
+	if o.Agent != nil {
+		toSerialize["agent"] = o.Agent
+	}
+
 	serialized, err := json.Marshal(toSerialize)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal AddedToCartObjectIDs: %w", err)
@@ -497,6 +545,7 @@ func (o AddedToCartObjectIDs) String() string {
 	out += fmt.Sprintf("  objectData=%v\n", o.ObjectData)
 	out += fmt.Sprintf("  timestamp=%v\n", o.Timestamp)
 	out += fmt.Sprintf("  value=%v\n", o.Value)
+	out += fmt.Sprintf("  agent=%v\n", o.Agent)
 
 	return fmt.Sprintf("AddedToCartObjectIDs {\n%s}", out)
 }

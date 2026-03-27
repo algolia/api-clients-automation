@@ -508,6 +508,30 @@
                       }
                     ]
                   }
+                },
+                "InstantSearchTelemetry": {
+                  "summary": "InstantSearch Telemetry event",
+                  "value": {
+                    "events": [
+                      {
+                        "eventName": "My Event Name",
+                        "eventType": "instantsearch_telemetry",
+                        "index": "test-index",
+                        "userToken": "anonymous-user-1",
+                        "sessionID": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+                        "client_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+                        "performance": {
+                          "foo": 343,
+                          "bar": "blah"
+                        },
+                        "widgets": {
+                          "ping": {
+                            "pong": 21
+                          }
+                        }
+                      }
+                    ]
+                  }
                 }
               }
             }
@@ -1010,6 +1034,42 @@
         "description": "Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30 days.\nIf not provided, we use the time at which the request was received.\n",
         "example": 1687193127
       },
+      "agent": {
+        "description": "a set of fields for matching events to agent responses.",
+        "type": "object",
+        "properties": {
+          "agentID": {
+            "description": "the ID of the agent to which this event is related.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "messageID": {
+            "description": "the ID of the agent message to which this event is related.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "toolCallID": {
+            "description": "the ID of the instant-search tool to which this event is related.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "conversationID": {
+            "description": "the ID of the instant-search conversation to which this event is related.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "required": [
+          "agentID",
+          "messageID",
+          "toolCallID",
+          "conversationID"
+        ]
+      },
       "ClickedObjectIDsAfterSearch": {
         "type": "object",
         "title": "Clicked object IDs after search",
@@ -1041,6 +1101,9 @@
           },
           "timestamp": {
             "$ref": "#/components/schemas/timestamp"
+          },
+          "agent": {
+            "$ref": "#/components/schemas/agent"
           }
         },
         "required": [
@@ -1199,6 +1262,9 @@
           },
           "value": {
             "$ref": "#/components/schemas/value"
+          },
+          "agent": {
+            "$ref": "#/components/schemas/agent"
           }
         },
         "required": [
@@ -1260,6 +1326,9 @@
           },
           "value": {
             "$ref": "#/components/schemas/value"
+          },
+          "agent": {
+            "$ref": "#/components/schemas/agent"
           }
         },
         "required": [
@@ -1306,6 +1375,9 @@
           },
           "timestamp": {
             "$ref": "#/components/schemas/timestamp"
+          },
+          "agent": {
+            "$ref": "#/components/schemas/agent"
           }
         },
         "required": [
@@ -1346,6 +1418,9 @@
           },
           "timestamp": {
             "$ref": "#/components/schemas/timestamp"
+          },
+          "agent": {
+            "$ref": "#/components/schemas/agent"
           }
         },
         "required": [
@@ -1421,6 +1496,9 @@
           },
           "value": {
             "$ref": "#/components/schemas/value"
+          },
+          "agent": {
+            "$ref": "#/components/schemas/agent"
           }
         },
         "required": [
@@ -1474,6 +1552,9 @@
           },
           "value": {
             "$ref": "#/components/schemas/value"
+          },
+          "agent": {
+            "$ref": "#/components/schemas/agent"
           }
         },
         "required": [
@@ -1515,6 +1596,9 @@
           },
           "timestamp": {
             "$ref": "#/components/schemas/timestamp"
+          },
+          "agent": {
+            "$ref": "#/components/schemas/agent"
           }
         },
         "required": [
@@ -1566,6 +1650,9 @@
           },
           "timestamp": {
             "$ref": "#/components/schemas/timestamp"
+          },
+          "agent": {
+            "$ref": "#/components/schemas/agent"
           }
         },
         "required": [
@@ -1604,6 +1691,9 @@
           },
           "timestamp": {
             "$ref": "#/components/schemas/timestamp"
+          },
+          "agent": {
+            "$ref": "#/components/schemas/agent"
           }
         },
         "required": [
@@ -1649,6 +1739,9 @@
           },
           "timestamp": {
             "$ref": "#/components/schemas/timestamp"
+          },
+          "agent": {
+            "$ref": "#/components/schemas/agent"
           }
         },
         "required": [
@@ -1688,6 +1781,9 @@
           },
           "timestamp": {
             "$ref": "#/components/schemas/timestamp"
+          },
+          "agent": {
+            "$ref": "#/components/schemas/agent"
           }
         },
         "required": [
@@ -1700,6 +1796,62 @@
         "x-discriminator-fields": [
           "eventType",
           "filters"
+        ]
+      },
+      "InstantSearchTelemetryEvent": {
+        "type": "string",
+        "enum": [
+          "instantsearch_telemetry"
+        ]
+      },
+      "sessionID": {
+        "type": "string",
+        "pattern": "[0-9a-f]{32}",
+        "minLength": 32,
+        "maxLength": 32,
+        "description": "Unique identifier for a session\n[TODO]: Document here where this is derived and how it is used.\n",
+        "example": "3e48cd0616e466948dd85abf5c3fbbe2"
+      },
+      "InstantSearchTelemetry": {
+        "type": "object",
+        "title": "Instant Search Telemetry Event",
+        "description": "Tracks an initial user interaction with the Agentic Analytics API.\n",
+        "properties": {
+          "eventType": {
+            "$ref": "#/components/schemas/InstantSearchTelemetryEvent"
+          },
+          "eventName": {
+            "$ref": "#/components/schemas/eventName"
+          },
+          "sessionID": {
+            "$ref": "#/components/schemas/sessionID"
+          },
+          "userToken": {
+            "$ref": "#/components/schemas/userToken"
+          },
+          "authenticatedUserToken": {
+            "$ref": "#/components/schemas/authenticatedUserToken"
+          },
+          "timestamp": {
+            "$ref": "#/components/schemas/timestamp"
+          },
+          "performance": {
+            "description": "free form object for performance data.",
+            "type": "object"
+          },
+          "widgets": {
+            "description": "free form object for widget information.",
+            "type": "object"
+          }
+        },
+        "required": [
+          "eventName",
+          "sessionID",
+          "eventType",
+          "userToken"
+        ],
+        "x-discriminator-fields": [
+          "eventType"
         ]
       },
       "EventsItems": {
@@ -1739,6 +1891,9 @@
           },
           {
             "$ref": "#/components/schemas/ViewedFilters"
+          },
+          {
+            "$ref": "#/components/schemas/InstantSearchTelemetry"
           }
         ]
       },

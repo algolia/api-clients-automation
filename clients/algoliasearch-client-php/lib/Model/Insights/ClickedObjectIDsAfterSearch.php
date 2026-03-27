@@ -31,6 +31,7 @@ class ClickedObjectIDsAfterSearch extends AbstractModel implements ModelInterfac
         'userToken' => 'string',
         'authenticatedUserToken' => 'string',
         'timestamp' => 'int',
+        'agent' => '\Algolia\AlgoliaSearch\Model\Insights\Agent',
     ];
 
     /**
@@ -48,6 +49,7 @@ class ClickedObjectIDsAfterSearch extends AbstractModel implements ModelInterfac
         'userToken' => null,
         'authenticatedUserToken' => null,
         'timestamp' => 'int64',
+        'agent' => null,
     ];
 
     /**
@@ -66,6 +68,7 @@ class ClickedObjectIDsAfterSearch extends AbstractModel implements ModelInterfac
         'userToken' => 'userToken',
         'authenticatedUserToken' => 'authenticatedUserToken',
         'timestamp' => 'timestamp',
+        'agent' => 'agent',
     ];
 
     /**
@@ -83,6 +86,7 @@ class ClickedObjectIDsAfterSearch extends AbstractModel implements ModelInterfac
         'userToken' => 'setUserToken',
         'authenticatedUserToken' => 'setAuthenticatedUserToken',
         'timestamp' => 'setTimestamp',
+        'agent' => 'setAgent',
     ];
 
     /**
@@ -100,6 +104,7 @@ class ClickedObjectIDsAfterSearch extends AbstractModel implements ModelInterfac
         'userToken' => 'getUserToken',
         'authenticatedUserToken' => 'getAuthenticatedUserToken',
         'timestamp' => 'getTimestamp',
+        'agent' => 'getAgent',
     ];
 
     /**
@@ -142,6 +147,9 @@ class ClickedObjectIDsAfterSearch extends AbstractModel implements ModelInterfac
         }
         if (isset($data['timestamp'])) {
             $this->container['timestamp'] = $data['timestamp'];
+        }
+        if (isset($data['agent'])) {
+            $this->container['agent'] = $data['agent'];
         }
     }
 
@@ -453,6 +461,30 @@ class ClickedObjectIDsAfterSearch extends AbstractModel implements ModelInterfac
     public function setTimestamp($timestamp)
     {
         $this->container['timestamp'] = $timestamp;
+
+        return $this;
+    }
+
+    /**
+     * Gets agent.
+     *
+     * @return null|Agent
+     */
+    public function getAgent()
+    {
+        return $this->container['agent'] ?? null;
+    }
+
+    /**
+     * Sets agent.
+     *
+     * @param null|Agent $agent agent
+     *
+     * @return self
+     */
+    public function setAgent($agent)
+    {
+        $this->container['agent'] = $agent;
 
         return $this;
     }

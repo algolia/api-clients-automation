@@ -31,6 +31,10 @@ PurchasedObjectIDs _$PurchasedObjectIDsFromJson(Map<String, dynamic> json) =>
                   .toList()),
           timestamp: $checkedConvert('timestamp', (v) => (v as num?)?.toInt()),
           value: $checkedConvert('value', (v) => v),
+          agent: $checkedConvert(
+              'agent',
+              (v) =>
+                  v == null ? null : Agent.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -58,6 +62,7 @@ Map<String, dynamic> _$PurchasedObjectIDsToJson(PurchasedObjectIDs instance) {
       'objectData', instance.objectData?.map((e) => e.toJson()).toList());
   writeNotNull('timestamp', instance.timestamp);
   writeNotNull('value', instance.value);
+  writeNotNull('agent', instance.agent?.toJson());
   return val;
 }
 

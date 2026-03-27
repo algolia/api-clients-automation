@@ -27,6 +27,7 @@ type PurchasedObjectIDsAfterSearch struct {
 	// Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30 days. If not provided, we use the time at which the request was received.
 	Timestamp *int64 `json:"timestamp,omitempty"`
 	Value     *Value `json:"value,omitempty"`
+	Agent     *Agent `json:"agent,omitempty"`
 }
 
 type PurchasedObjectIDsAfterSearchOption func(f *PurchasedObjectIDsAfterSearch)
@@ -52,6 +53,12 @@ func WithPurchasedObjectIDsAfterSearchTimestamp(val int64) PurchasedObjectIDsAft
 func WithPurchasedObjectIDsAfterSearchValue(val Value) PurchasedObjectIDsAfterSearchOption {
 	return func(f *PurchasedObjectIDsAfterSearch) {
 		f.Value = &val
+	}
+}
+
+func WithPurchasedObjectIDsAfterSearchAgent(val Agent) PurchasedObjectIDsAfterSearchOption {
+	return func(f *PurchasedObjectIDsAfterSearch) {
+		f.Agent = &val
 	}
 }
 
@@ -434,6 +441,43 @@ func (o *PurchasedObjectIDsAfterSearch) SetValue(v *Value) *PurchasedObjectIDsAf
 	return o
 }
 
+// GetAgent returns the Agent field value if set, zero value otherwise.
+func (o *PurchasedObjectIDsAfterSearch) GetAgent() Agent {
+	if o == nil || o.Agent == nil {
+		var ret Agent
+
+		return ret
+	}
+
+	return *o.Agent
+}
+
+// GetAgentOk returns a tuple with the Agent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PurchasedObjectIDsAfterSearch) GetAgentOk() (*Agent, bool) {
+	if o == nil || o.Agent == nil {
+		return nil, false
+	}
+
+	return o.Agent, true
+}
+
+// HasAgent returns a boolean if a field has been set.
+func (o *PurchasedObjectIDsAfterSearch) HasAgent() bool {
+	if o != nil && o.Agent != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAgent gets a reference to the given Agent and assigns it to the Agent field.
+func (o *PurchasedObjectIDsAfterSearch) SetAgent(v *Agent) *PurchasedObjectIDsAfterSearch {
+	o.Agent = v
+
+	return o
+}
+
 func (o PurchasedObjectIDsAfterSearch) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
 	toSerialize["eventName"] = o.EventName
@@ -460,6 +504,10 @@ func (o PurchasedObjectIDsAfterSearch) MarshalJSON() ([]byte, error) {
 		toSerialize["value"] = o.Value
 	}
 
+	if o.Agent != nil {
+		toSerialize["agent"] = o.Agent
+	}
+
 	serialized, err := json.Marshal(toSerialize)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal PurchasedObjectIDsAfterSearch: %w", err)
@@ -481,6 +529,7 @@ func (o PurchasedObjectIDsAfterSearch) String() string {
 	out += fmt.Sprintf("  objectData=%v\n", o.ObjectData)
 	out += fmt.Sprintf("  timestamp=%v\n", o.Timestamp)
 	out += fmt.Sprintf("  value=%v\n", o.Value)
+	out += fmt.Sprintf("  agent=%v\n", o.Agent)
 
 	return fmt.Sprintf("PurchasedObjectIDsAfterSearch {\n%s}", out)
 }

@@ -51,6 +51,9 @@ public class AddedToCartObjectIDs implements EventsItems {
   @JsonProperty("value")
   private Value value;
 
+  @JsonProperty("agent")
+  private Agent agent;
+
   public AddedToCartObjectIDs setEventName(String eventName) {
     this.eventName = eventName;
     return this;
@@ -206,6 +209,17 @@ public class AddedToCartObjectIDs implements EventsItems {
     return value;
   }
 
+  public AddedToCartObjectIDs setAgent(Agent agent) {
+    this.agent = agent;
+    return this;
+  }
+
+  /** Get agent */
+  @javax.annotation.Nullable
+  public Agent getAgent() {
+    return agent;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -226,7 +240,8 @@ public class AddedToCartObjectIDs implements EventsItems {
       Objects.equals(this.currency, addedToCartObjectIDs.currency) &&
       Objects.equals(this.objectData, addedToCartObjectIDs.objectData) &&
       Objects.equals(this.timestamp, addedToCartObjectIDs.timestamp) &&
-      Objects.equals(this.value, addedToCartObjectIDs.value)
+      Objects.equals(this.value, addedToCartObjectIDs.value) &&
+      Objects.equals(this.agent, addedToCartObjectIDs.agent)
     );
   }
 
@@ -243,7 +258,8 @@ public class AddedToCartObjectIDs implements EventsItems {
       currency,
       objectData,
       timestamp,
-      value
+      value,
+      agent
     );
   }
 
@@ -262,6 +278,7 @@ public class AddedToCartObjectIDs implements EventsItems {
     sb.append("    objectData: ").append(toIndentedString(objectData)).append("\n");
     sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
     sb.append("    value: ").append(toIndentedString(value)).append("\n");
+    sb.append("    agent: ").append(toIndentedString(agent)).append("\n");
     sb.append("}");
     return sb.toString();
   }

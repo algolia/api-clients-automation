@@ -21,6 +21,7 @@ type ViewedFilters struct {
 	AuthenticatedUserToken *string `json:"authenticatedUserToken,omitempty"`
 	// Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30 days. If not provided, we use the time at which the request was received.
 	Timestamp *int64 `json:"timestamp,omitempty"`
+	Agent     *Agent `json:"agent,omitempty"`
 }
 
 type ViewedFiltersOption func(f *ViewedFilters)
@@ -34,6 +35,12 @@ func WithViewedFiltersAuthenticatedUserToken(val string) ViewedFiltersOption {
 func WithViewedFiltersTimestamp(val int64) ViewedFiltersOption {
 	return func(f *ViewedFilters) {
 		f.Timestamp = &val
+	}
+}
+
+func WithViewedFiltersAgent(val Agent) ViewedFiltersOption {
+	return func(f *ViewedFilters) {
+		f.Agent = &val
 	}
 }
 
@@ -282,6 +289,43 @@ func (o *ViewedFilters) SetTimestamp(v int64) *ViewedFilters {
 	return o
 }
 
+// GetAgent returns the Agent field value if set, zero value otherwise.
+func (o *ViewedFilters) GetAgent() Agent {
+	if o == nil || o.Agent == nil {
+		var ret Agent
+
+		return ret
+	}
+
+	return *o.Agent
+}
+
+// GetAgentOk returns a tuple with the Agent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ViewedFilters) GetAgentOk() (*Agent, bool) {
+	if o == nil || o.Agent == nil {
+		return nil, false
+	}
+
+	return o.Agent, true
+}
+
+// HasAgent returns a boolean if a field has been set.
+func (o *ViewedFilters) HasAgent() bool {
+	if o != nil && o.Agent != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAgent gets a reference to the given Agent and assigns it to the Agent field.
+func (o *ViewedFilters) SetAgent(v *Agent) *ViewedFilters {
+	o.Agent = v
+
+	return o
+}
+
 func (o ViewedFilters) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
 	toSerialize["eventName"] = o.EventName
@@ -296,6 +340,10 @@ func (o ViewedFilters) MarshalJSON() ([]byte, error) {
 
 	if o.Timestamp != nil {
 		toSerialize["timestamp"] = o.Timestamp
+	}
+
+	if o.Agent != nil {
+		toSerialize["agent"] = o.Agent
 	}
 
 	serialized, err := json.Marshal(toSerialize)
@@ -315,6 +363,7 @@ func (o ViewedFilters) String() string {
 	out += fmt.Sprintf("  userToken=%v\n", o.UserToken)
 	out += fmt.Sprintf("  authenticatedUserToken=%v\n", o.AuthenticatedUserToken)
 	out += fmt.Sprintf("  timestamp=%v\n", o.Timestamp)
+	out += fmt.Sprintf("  agent=%v\n", o.Agent)
 
 	return fmt.Sprintf("ViewedFilters {\n%s}", out)
 }

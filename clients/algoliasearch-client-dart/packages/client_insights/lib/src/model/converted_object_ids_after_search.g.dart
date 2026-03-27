@@ -24,6 +24,10 @@ ConvertedObjectIDsAfterSearch _$ConvertedObjectIDsAfterSearchFromJson(
           authenticatedUserToken:
               $checkedConvert('authenticatedUserToken', (v) => v as String?),
           timestamp: $checkedConvert('timestamp', (v) => (v as num?)?.toInt()),
+          agent: $checkedConvert(
+              'agent',
+              (v) =>
+                  v == null ? null : Agent.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -48,6 +52,7 @@ Map<String, dynamic> _$ConvertedObjectIDsAfterSearchToJson(
 
   writeNotNull('authenticatedUserToken', instance.authenticatedUserToken);
   writeNotNull('timestamp', instance.timestamp);
+  writeNotNull('agent', instance.agent?.toJson());
   return val;
 }
 

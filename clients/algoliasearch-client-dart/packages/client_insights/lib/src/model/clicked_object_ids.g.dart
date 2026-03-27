@@ -22,6 +22,10 @@ ClickedObjectIDs _$ClickedObjectIDsFromJson(Map<String, dynamic> json) =>
           authenticatedUserToken:
               $checkedConvert('authenticatedUserToken', (v) => v as String?),
           timestamp: $checkedConvert('timestamp', (v) => (v as num?)?.toInt()),
+          agent: $checkedConvert(
+              'agent',
+              (v) =>
+                  v == null ? null : Agent.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -44,6 +48,7 @@ Map<String, dynamic> _$ClickedObjectIDsToJson(ClickedObjectIDs instance) {
 
   writeNotNull('authenticatedUserToken', instance.authenticatedUserToken);
   writeNotNull('timestamp', instance.timestamp);
+  writeNotNull('agent', instance.agent?.toJson());
   return val;
 }
 

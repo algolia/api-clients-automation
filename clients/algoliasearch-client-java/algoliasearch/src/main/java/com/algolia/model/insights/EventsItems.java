@@ -143,6 +143,17 @@ public interface EventsItems {
           LOGGER.finest("Failed to deserialize oneOf ViewedFilters (error: " + e.getMessage() + ") (type: ViewedFilters)");
         }
       }
+      // deserialize InstantSearchTelemetry
+      if (tree.isObject() && tree.has("eventType")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(InstantSearchTelemetry.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf InstantSearchTelemetry (error: " + e.getMessage() + ") (type: InstantSearchTelemetry)"
+          );
+        }
+      }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
     }
 

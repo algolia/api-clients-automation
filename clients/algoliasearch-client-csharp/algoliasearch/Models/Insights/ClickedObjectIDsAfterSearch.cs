@@ -114,6 +114,12 @@ public partial class ClickedObjectIDsAfterSearch
   public long? Timestamp { get; set; }
 
   /// <summary>
+  /// Gets or Sets Agent
+  /// </summary>
+  [JsonPropertyName("agent")]
+  public Agent Agent { get; set; }
+
+  /// <summary>
   /// Returns the string presentation of the object
   /// </summary>
   /// <returns>String presentation of the object</returns>
@@ -130,6 +136,7 @@ public partial class ClickedObjectIDsAfterSearch
     sb.Append("  UserToken: ").Append(UserToken).Append("\n");
     sb.Append("  AuthenticatedUserToken: ").Append(AuthenticatedUserToken).Append("\n");
     sb.Append("  Timestamp: ").Append(Timestamp).Append("\n");
+    sb.Append("  Agent: ").Append(Agent).Append("\n");
     sb.Append("}\n");
     return sb.ToString();
   }
@@ -177,7 +184,8 @@ public partial class ClickedObjectIDsAfterSearch
           && AuthenticatedUserToken.Equals(input.AuthenticatedUserToken)
         )
       )
-      && (Timestamp == input.Timestamp || Timestamp.Equals(input.Timestamp));
+      && (Timestamp == input.Timestamp || Timestamp.Equals(input.Timestamp))
+      && (Agent == input.Agent || (Agent != null && Agent.Equals(input.Agent)));
   }
 
   /// <summary>
@@ -219,6 +227,10 @@ public partial class ClickedObjectIDsAfterSearch
         hashCode = (hashCode * 59) + AuthenticatedUserToken.GetHashCode();
       }
       hashCode = (hashCode * 59) + Timestamp.GetHashCode();
+      if (Agent != null)
+      {
+        hashCode = (hashCode * 59) + Agent.GetHashCode();
+      }
       return hashCode;
     }
   }

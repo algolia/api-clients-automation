@@ -42,6 +42,8 @@ module Algolia
 
       attr_accessor :value
 
+      attr_accessor :agent
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -56,7 +58,8 @@ module Algolia
           :currency => :currency,
           :object_data => :objectData,
           :timestamp => :timestamp,
-          :value => :value
+          :value => :value,
+          :agent => :agent
         }
       end
 
@@ -84,7 +87,8 @@ module Algolia
           :currency => :"String",
           :object_data => :"Array<ObjectDataAfterSearch>",
           :timestamp => :"Integer",
-          :value => :"Value"
+          :value => :"Value",
+          :agent => :"Agent"
         }
       end
 
@@ -183,6 +187,10 @@ module Algolia
         if attributes.key?(:value)
           self.value = attributes[:value]
         end
+
+        if attributes.key?(:agent)
+          self.agent = attributes[:agent]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -201,7 +209,8 @@ module Algolia
           currency == other.currency &&
           object_data == other.object_data &&
           timestamp == other.timestamp &&
-          value == other.value
+          value == other.value &&
+          agent == other.agent
       end
 
       # @see the `==` method
@@ -225,7 +234,8 @@ module Algolia
           currency,
           object_data,
           timestamp,
-          value
+          value,
+          agent
         ].hash
       end
 

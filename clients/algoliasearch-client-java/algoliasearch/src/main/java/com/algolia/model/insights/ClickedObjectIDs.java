@@ -38,6 +38,9 @@ public class ClickedObjectIDs implements EventsItems {
   @JsonProperty("timestamp")
   private Long timestamp;
 
+  @JsonProperty("agent")
+  private Agent agent;
+
   public ClickedObjectIDs setEventName(String eventName) {
     this.eventName = eventName;
     return this;
@@ -138,6 +141,17 @@ public class ClickedObjectIDs implements EventsItems {
     return timestamp;
   }
 
+  public ClickedObjectIDs setAgent(Agent agent) {
+    this.agent = agent;
+    return this;
+  }
+
+  /** Get agent */
+  @javax.annotation.Nullable
+  public Agent getAgent() {
+    return agent;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -154,13 +168,14 @@ public class ClickedObjectIDs implements EventsItems {
       Objects.equals(this.objectIDs, clickedObjectIDs.objectIDs) &&
       Objects.equals(this.userToken, clickedObjectIDs.userToken) &&
       Objects.equals(this.authenticatedUserToken, clickedObjectIDs.authenticatedUserToken) &&
-      Objects.equals(this.timestamp, clickedObjectIDs.timestamp)
+      Objects.equals(this.timestamp, clickedObjectIDs.timestamp) &&
+      Objects.equals(this.agent, clickedObjectIDs.agent)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(eventName, eventType, index, objectIDs, userToken, authenticatedUserToken, timestamp);
+    return Objects.hash(eventName, eventType, index, objectIDs, userToken, authenticatedUserToken, timestamp, agent);
   }
 
   @Override
@@ -174,6 +189,7 @@ public class ClickedObjectIDs implements EventsItems {
     sb.append("    userToken: ").append(toIndentedString(userToken)).append("\n");
     sb.append("    authenticatedUserToken: ").append(toIndentedString(authenticatedUserToken)).append("\n");
     sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
+    sb.append("    agent: ").append(toIndentedString(agent)).append("\n");
     sb.append("}");
     return sb.toString();
   }
