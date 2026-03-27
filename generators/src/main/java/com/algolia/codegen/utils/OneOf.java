@@ -131,7 +131,7 @@ public class OneOf {
       var oneOfs = getCodegenProperties(model);
       if (isMultiArrayOneOfs(oneOfs)) model.vendorExtensions.put("x-is-multi-array", true);
       if (isMultiMapOneOfs(oneOfs)) model.vendorExtensions.put("x-is-multi-map", true);
-      if (hasAtModelOrEnum(oneOfs)) model.vendorExtensions.put("x-has-model", true);
+      if (hasAtModelOrEnum(oneOfs, model, models)) model.vendorExtensions.put("x-has-model", true);
       if (hasDiscriminators(oneOfs)) model.vendorExtensions.put("x-has-discriminator", true);
       markOneOfModels(oneOfs);
       sortOneOfs(oneOfs);
@@ -165,9 +165,15 @@ public class OneOf {
   }
 
   /** Get true if a composed type has at least one model/enum. */
-  private static boolean hasAtModelOrEnum(List<CodegenProperty> oneOfs) {
+  private static boolean hasAtModelOrEnum(List<CodegenProperty> oneOfs, CodegenModel model, Map<String, ModelsMap> models) {
     for (var prop : oneOfs) {
       if (prop.isModel || prop.isEnumRef) return true;
+    }
+    // Fallback: check if any oneOf type name is a known model.
+    // This handles cases where additionalProperties on a schema causes
+    // OpenAPI Generator to set isModel=false (classifying it as a map instead).
+    for (String oneOf : model.oneOf) {
+      if (models.containsKey(oneOf)) return true;
     }
     return false;
   }
