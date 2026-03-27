@@ -837,14 +837,14 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
                 'body' => $object,
             ];
 
-            if (sizeof($requests) === $batchSize || $count === sizeof($objects) - 1) {
+            ++$count;
+
+            if (sizeof($requests) === $batchSize || $count === sizeof($objects)) {
                 $responses[] = $this->batch($indexName, ['requests' => $requests], $requestOptions);
                 $requests = [];
 
-                $logger->info('Algolia API client: Batch progress: '.min($count + 1, $totalObjects).'/'.$totalObjects.' objects processed');
+                $logger->info('Algolia API client: Batch progress: '.min($count, $totalObjects).'/'.$totalObjects.' objects processed');
             }
-
-            ++$count;
         }
 
         if (!empty($requests)) {
