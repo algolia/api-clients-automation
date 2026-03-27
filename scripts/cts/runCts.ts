@@ -64,15 +64,17 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
         language,
       });
       break;
-    case 'go':
-      await run(
-        `go test ${suites.benchmark ? '' : '-race'} -count 1 ${isVerbose() ? '-v' : ''} ${filter((f) => `gotests/tests/${f}/...`)}`,
-        {
-          cwd,
-          language,
-        },
-      );
+    case 'go': {
+      const goPaths = [
+        ...folders.map((f) => `gotests/tests/${f}/...`),
+        ...(suites.client ? ['gotests/tests/manual/...'] : []),
+      ].join(' ');
+      await run(`go test ${suites.benchmark ? '' : '-race'} -count 1 ${isVerbose() ? '-v' : ''} ${goPaths}`, {
+        cwd,
+        language,
+      });
       break;
+    }
     case 'java':
       await run(`./gradle/gradlew -p tests/output/java test --rerun ${filter((f) => `--tests 'com.algolia.${f}*'`)}`, {
         language,
