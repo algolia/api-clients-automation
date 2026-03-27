@@ -16,8 +16,8 @@ properties:
     $ref: './EventAttributes.yml#/authenticatedUserToken'
   timestamp:
     $ref: './EventAttributes.yml#/timestamp'
-  instantSearch:
-    $ref: './EventAttributes.yml#/instantSearch'
+  agent:
+    $ref: './EventAttributes.yml#/agent'
 required:
   - eventName
   - eventType

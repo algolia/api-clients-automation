@@ -26,8 +26,8 @@ properties:
     $ref: './EventAttributes.yml#/timestamp'
   value:
     $ref: './EventAttributes.yml#/value'
-  instantSearch:
-    $ref: './EventAttributes.yml#/instantSearch'
+  agent:
+    $ref: './EventAttributes.yml#/agent'
 required:
   - eventName
   - eventType

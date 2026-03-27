@@ -83,12 +83,17 @@ filters:
   maxItems: 20
   example: ['brand:apple']
 
-instantSearch:
-  description: a set of fields for matching events to instant-search responses.
+agent:
+  description: a set of fields for matching events to agent responses.
   type: object
   properties:
+    agentID:
+      description: the ID of the agent to which this event is related.
+      type: string
+      minLength: 1
+      maxLength: 256
     messageID:
-      description: the ID of the instant-search message to which this event is related.
+      description: the ID of the agent message to which this event is related.
       type: string
       minLength: 1
       maxLength: 256
@@ -102,20 +107,13 @@ instantSearch:
       type: string
       minLength: 1
       maxLength: 256
-    agentID:
-      description: the ID of instant-search agent to which this event is related.
-      type: string
-      minLength: 1
-      maxLength: 256
-    instantSearch:
-      $ref: './EventAttributes.yml#/instantSearch'
   required:
     # Although all these fields are specified as optional in the Agentic Analytics document, now that they are grouped, it may
     # make sense to make the parent property optional but require all sub properties to be supplied together, as here
+    - agentID
     - messageID
     - toolCallID
     - conversationID
-    - agentID
 positions:
   type: array
   items:
