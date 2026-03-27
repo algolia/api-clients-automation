@@ -156,10 +156,10 @@ class LoggingIntegrationTest extends TestCase
 
         $wrapper->send('GET', '/1/test/instant');
 
-        $this->assertLogMatches('info', '/Request completed after \d+ retries \(total: \d+ms\)/', 'INFO log should match "Request completed after {N} retries (total: {DURATION}ms)"');
+        $this->assertLogMatches('info', '/Request completed on attempt \d+\/\d+ \(total: \d+ms\)/', 'INFO log should match "Request completed on attempt {N}/{MAX} (total: {DURATION}ms)"');
     }
 
-    public function testBadRequestLogsError(): void
+    public function testBadRequestLogsWarning(): void
     {
         $mockHttp = new class implements HttpClientInterface {
             public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
@@ -185,7 +185,7 @@ class LoggingIntegrationTest extends TestCase
         } catch (BadRequestException $e) {
         }
 
-        $this->assertLogMatches('error', '/Bad request:/', 'ERROR log should match "Bad request: {ERROR_MESSAGE}"');
+        $this->assertLogMatches('warning', '/Bad request:/', 'WARNING log should match "Bad request: {ERROR_MESSAGE}"');
     }
 
     public function testDefaultLoggerProducesNoOutput(): void
