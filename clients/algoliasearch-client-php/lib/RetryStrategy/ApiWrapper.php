@@ -213,7 +213,7 @@ final class ApiWrapper implements ApiWrapperInterface
 
                 if ($attemptNumber > 1) {
                     $totalDurationMs = round((microtime(true) - $totalStartTime) * 1000);
-                    $this->log(LogLevel::INFO, 'Request completed after '.$attemptNumber.' retries (total: '.$totalDurationMs.'ms)', $logParams);
+                    $this->log(LogLevel::INFO, 'Request completed on attempt '.$attemptNumber.'/'.$hostCount.' (total: '.$totalDurationMs.'ms)', $logParams);
                 }
 
                 // DEBUG: response details
