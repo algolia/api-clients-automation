@@ -24,6 +24,8 @@ properties:
     $ref: './EventAttributes.yml#/authenticatedUserToken'
   timestamp:
     $ref: './EventAttributes.yml#/timestamp'
+  instantSearch:
+    $ref: './EventAttributes.yml#/instantSearch'
 required:
   - eventName
   - eventType
