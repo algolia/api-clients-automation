@@ -281,6 +281,30 @@ class LoggingIntegrationTest extends TestCase
         $this->assertLogMatches('error', '/Failed to deserialize response:/', 'ERROR log should match "Failed to deserialize response: {ERROR}"');
     }
 
+    public function testSerializationTimingLog(): void
+    {
+        $mockHttp = new class implements HttpClientInterface {
+            public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+            {
+                return new Response(200, ['Content-Type' => 'application/json'], '{}');
+            }
+        };
+
+        $wrapper = $this->createApiWrapperWithMockHttp($mockHttp);
+        $wrapper->send('POST', '/1/test', ['body' => ['key' => 'value']]);
+
+        $this->assertLogMatches('debug', '/Request body serialized in \d+ms/', 'DEBUG log should match "Request body serialized in {N}ms"');
+    }
+
+    public function testDeserializationTimingLog(): void
+    {
+        $this->createApiWrapperWithFullHosts(['http://'.getLoggingTestServerHost()])
+            ->send('GET', '/1/test/instant')
+        ;
+
+        $this->assertLogMatches('debug', '/Response body deserialized in \d+ms/', 'DEBUG log should match "Response body deserialized in {N}ms"');
+    }
+
     public function testSerializationErrorLogsError(): void
     {
         $mockHttp = new class implements HttpClientInterface {

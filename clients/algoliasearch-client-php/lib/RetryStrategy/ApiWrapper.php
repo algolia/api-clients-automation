@@ -297,7 +297,10 @@ final class ApiWrapper implements ApiWrapperInterface
         }
 
         try {
+            $deserializeStart = microtime(true);
             $responseArray = Helpers::json_decode($body, true);
+            $deserializeDurationMs = round((microtime(true) - $deserializeStart) * 1000);
+            $this->log(LogLevel::DEBUG, 'Response body deserialized in '.$deserializeDurationMs.'ms');
         } catch (\InvalidArgumentException $e) {
             $this->log(LogLevel::ERROR, 'Failed to deserialize response: '.$e->getMessage());
 
@@ -350,12 +353,15 @@ final class ApiWrapper implements ApiWrapperInterface
             if (empty($body)) {
                 $body = '{}';
             } else {
+                $serializeStart = microtime(true);
                 $body = \json_encode($body, $this->jsonOptions);
                 if (JSON_ERROR_NONE !== json_last_error()) {
                     $this->log(LogLevel::ERROR, 'Serialization error: '.json_last_error_msg());
 
                     throw new \InvalidArgumentException('json_encode error: '.json_last_error_msg());
                 }
+                $serializeDurationMs = round((microtime(true) - $serializeStart) * 1000);
+                $this->log(LogLevel::DEBUG, 'Request body serialized in '.$serializeDurationMs.'ms');
             }
         }
 
