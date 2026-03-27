@@ -113,11 +113,11 @@ class LoggingIntegrationTest extends TestCase
         } catch (UnreachableException $e) {
         }
 
-        // INFO: retry attempt
-        $this->assertLogMatches('info', '/Retry attempt \d+\/\d+ for GET/', 'INFO log should match "Retry attempt {N}/{MAX} for {METHOD} {PATH}"');
+        // INFO: failed attempt
+        $this->assertLogMatches('info', '/Attempt \d+\/\d+ failed for GET/', 'INFO log should match "Attempt {N}/{MAX} failed for {METHOD} {PATH}"');
 
-        // DEBUG: retry details with host and reason
-        $this->assertLogMatches('debug', '/Retry \d+\/\d+: .+ on '.$host1.'/', 'DEBUG log should include failed host and reason');
+        // DEBUG: attempt details with host and reason
+        $this->assertLogMatches('debug', '/Attempt \d+\/\d+: .+ on '.$host1.'/', 'DEBUG log should include failed host and reason');
     }
 
     // Spec: ERROR "Request failed after {MAX} retries: {ERROR_MESSAGE}"

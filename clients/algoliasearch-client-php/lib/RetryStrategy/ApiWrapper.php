@@ -224,13 +224,13 @@ final class ApiWrapper implements ApiWrapperInterface
             } catch (TimeoutException $e) {
                 $this->clusterHosts->timedOut($hostUrl);
 
-                $this->log(LogLevel::INFO, 'Retry attempt '.$attemptNumber.'/'.$hostCount.' for '.$method.' '.$path, $logParams);
-                $this->log(LogLevel::DEBUG, 'Retry '.$attemptNumber.'/'.$hostCount.': Timeout on '.$hostUrl.' after '.($timeout * 1000).'ms ('.$e->getMessage().')', $logParams);
+                $this->log(LogLevel::INFO, 'Attempt '.$attemptNumber.'/'.$hostCount.' failed for '.$method.' '.$path, $logParams);
+                $this->log(LogLevel::DEBUG, 'Attempt '.$attemptNumber.'/'.$hostCount.': Timeout on '.$hostUrl.' after '.($timeout * 1000).'ms ('.$e->getMessage().')', $logParams);
             } catch (RetriableException $e) {
                 $this->clusterHosts->failed($hostUrl);
 
-                $this->log(LogLevel::INFO, 'Retry attempt '.$attemptNumber.'/'.$hostCount.' for '.$method.' '.$path, $logParams);
-                $this->log(LogLevel::DEBUG, 'Retry '.$attemptNumber.'/'.$hostCount.': '.$e->getMessage().' on '.$hostUrl, $logParams);
+                $this->log(LogLevel::INFO, 'Attempt '.$attemptNumber.'/'.$hostCount.' failed for '.$method.' '.$path, $logParams);
+                $this->log(LogLevel::DEBUG, 'Attempt '.$attemptNumber.'/'.$hostCount.': '.$e->getMessage().' on '.$hostUrl, $logParams);
             } catch (BadRequestException $e) {
                 $this->log(LogLevel::WARNING, 'Bad request: '.$e->getMessage(), $logParams);
 
