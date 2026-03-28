@@ -43,7 +43,7 @@
     "prettier-plugin-java": "2.8.1",
     "prettier-plugin-organize-imports": "4.3.0",
     "renovate-config-algolia": "2.2.0",
-    "typescript": "5.9.3"
+    "typescript": "6.0.2"
   },
   "engines": {
     "node": "^24.0.0",
