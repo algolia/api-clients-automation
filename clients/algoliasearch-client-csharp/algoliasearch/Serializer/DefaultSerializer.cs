@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -20,15 +21,23 @@ internal class DefaultJsonSerializer(ILoggerFactory logger) : ISerializer
   /// <returns>A JSON string.</returns>
   public string Serialize(object data)
   {
+    var sw = Stopwatch.StartNew();
     try
     {
+      string result;
       if (data is not AbstractSchema schema)
       {
-        return JsonSerializer.Serialize(data, JsonConfig.Options);
+        result = JsonSerializer.Serialize(data, JsonConfig.Options);
+      }
+      else
+      {
+        // the object to be serialized is a oneOf/anyOf schema
+        result = schema.ToJson();
       }
 
-      // the object to be serialized is a oneOf/anyOf schema
-      return schema.ToJson();
+      _logger.LogDebug("Request body serialized in {Duration}ms", sw.ElapsedMilliseconds);
+
+      return result;
     }
     catch (Exception ex)
     {
@@ -40,6 +49,10 @@ internal class DefaultJsonSerializer(ILoggerFactory logger) : ISerializer
       }
 
       throw new AlgoliaException($"Error while serializing object of type {dataType}", ex);
+    }
+    finally
+    {
+      sw.Stop();
     }
   }
 
@@ -57,14 +70,19 @@ internal class DefaultJsonSerializer(ILoggerFactory logger) : ISerializer
   /// <returns>Object representation of the JSON string.</returns>
   private async Task<object> Deserialize(Stream response, Type type)
   {
+    var sw = Stopwatch.StartNew();
     try
     {
       using var reader = new StreamReader(response);
       var readToEndAsync = await reader.ReadToEndAsync().ConfigureAwait(false);
 
-      return string.IsNullOrEmpty(readToEndAsync)
+      var result = string.IsNullOrEmpty(readToEndAsync)
         ? null
         : JsonSerializer.Deserialize(readToEndAsync, type, JsonConfig.Options);
+
+      _logger.LogDebug("Response body deserialized in {Duration}ms", sw.ElapsedMilliseconds);
+
+      return result;
     }
     catch (Exception ex)
     {
@@ -74,6 +92,10 @@ internal class DefaultJsonSerializer(ILoggerFactory logger) : ISerializer
       }
 
       throw new AlgoliaException($"Error while deserializing response of type {type}", ex);
+    }
+    finally
+    {
+      sw.Stop();
     }
   }
 }
