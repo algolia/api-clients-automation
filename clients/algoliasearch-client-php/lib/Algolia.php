@@ -14,7 +14,7 @@ use Psr\SimpleCache\CacheInterface;
 
 final class Algolia
 {
-    public const VERSION = '4.39.1';
+    public const VERSION = '4.40.0';
 
     /**
      * Holds an instance of the simple cache repository (PSR-16).
@@ -34,6 +34,11 @@ final class Algolia
      * @var HttpClientInterface
      */
     private static $httpClient;
+
+    /**
+     * @var bool
+     */
+    private static $debugWarningShown = false;
 
     public static function isCacheEnabled()
     {
@@ -86,6 +91,15 @@ final class Algolia
     public static function setLogger(LoggerInterface $logger)
     {
         self::$logger = $logger;
+        self::$debugWarningShown = false;
+    }
+
+    public static function logDebugWarningOnce(): void
+    {
+        if (!self::$debugWarningShown) {
+            self::$debugWarningShown = true;
+            self::getLogger()->debug('Algolia API client: WARNING: DEBUG level logging is enabled. This logs full request/response bodies which may contain sensitive data. Only use in local development.');
+        }
     }
 
     public static function getHttpClient()

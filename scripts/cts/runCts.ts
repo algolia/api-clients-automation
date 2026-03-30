@@ -97,10 +97,10 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
           language,
         },
       );
-      // run manual timeout tests
+      // run manual tests
       if (suites.client) {
         await run(
-          'php ./clients/algoliasearch-client-php/vendor/bin/phpunit --testdox --fail-on-warning ./clients/algoliasearch-client-php/tests/TimeoutIntegrationTest.php',
+          'php ./clients/algoliasearch-client-php/vendor/bin/phpunit --testdox --fail-on-warning ./clients/algoliasearch-client-php/tests/',
           {
             language,
           },

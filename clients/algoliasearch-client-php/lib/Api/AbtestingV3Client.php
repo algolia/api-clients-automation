@@ -27,7 +27,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class AbtestingV3Client
 {
-    public const VERSION = '4.39.1';
+    public const VERSION = '4.40.0';
 
     /**
      * @var ApiWrapperInterface
@@ -80,6 +80,10 @@ class AbtestingV3Client
         );
 
         $client = new static($apiWrapper, $config);
+
+        $logger = Algolia::getLogger();
+        $logger->info('Algolia API client: Algolia AbtestingV3Client initialized (appId: '.$config->getAppId().')');
+        Algolia::logDebugWarningOnce();
 
         return $client;
     }
