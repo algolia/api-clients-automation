@@ -45,7 +45,7 @@ internal class DefaultJsonSerializer(ILoggerFactory logger) : ISerializer
 
       if (_logger.IsEnabled(LogLevel.Error))
       {
-        _logger.LogError(ex, "Error while serializing object of type {Type}", dataType);
+        _logger.LogError(ex, "Serialization error for type {Type}", dataType);
       }
 
       throw new AlgoliaException($"Error while serializing object of type {dataType}", ex);
@@ -88,7 +88,7 @@ internal class DefaultJsonSerializer(ILoggerFactory logger) : ISerializer
     {
       if (_logger.IsEnabled(LogLevel.Error))
       {
-        _logger.LogError(ex, "Error while deserializing response of type {Type}", type);
+        _logger.LogError(ex, "Failed to deserialize response of type {Type}", type);
       }
 
       throw new AlgoliaException($"Error while deserializing response of type {type}", ex);
