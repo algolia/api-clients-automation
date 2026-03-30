@@ -108,12 +108,7 @@ agent:
       minLength: 1
       maxLength: 256
   required:
-    # Although all these fields are specified as optional in the Agentic Analytics document, now that they are grouped, it may
-    # make sense to make the parent property optional but require all sub properties to be supplied together, as here
-    - agentID
     - messageID
-    - toolCallID
-    - conversationID
 positions:
   type: array
   items:
