@@ -19,6 +19,7 @@ public enum EventsItems: Codable, JSONEncodable, AbstractEncodable {
     case convertedFilters(ConvertedFilters)
     case viewedObjectIDs(ViewedObjectIDs)
     case viewedFilters(ViewedFilters)
+    case instantSearchTelemetry(InstantSearchTelemetry)
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
@@ -46,6 +47,8 @@ public enum EventsItems: Codable, JSONEncodable, AbstractEncodable {
         case let .viewedObjectIDs(value):
             try container.encode(value)
         case let .viewedFilters(value):
+            try container.encode(value)
+        case let .instantSearchTelemetry(value):
             try container.encode(value)
         }
     }
@@ -76,6 +79,8 @@ public enum EventsItems: Codable, JSONEncodable, AbstractEncodable {
             self = .viewedObjectIDs(value)
         } else if let value = try? container.decode(ViewedFilters.self) {
             self = .viewedFilters(value)
+        } else if let value = try? container.decode(InstantSearchTelemetry.self) {
+            self = .instantSearchTelemetry(value)
         } else {
             throw DecodingError.typeMismatch(
                 Self.Type.self,
@@ -110,6 +115,8 @@ public enum EventsItems: Codable, JSONEncodable, AbstractEncodable {
             value as ViewedObjectIDs
         case let .viewedFilters(value):
             value as ViewedFilters
+        case let .instantSearchTelemetry(value):
+            value as InstantSearchTelemetry
         }
     }
 }

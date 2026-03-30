@@ -34,6 +34,7 @@ import kotlinx.serialization.json.*
  * @param timestamp Timestamp of the event, measured in milliseconds since the Unix epoch. Must be
  *   no older than 30 days. If not provided, we use the time at which the request was received.
  * @param `value`
+ * @param agent
  */
 @Serializable
 public data class PurchasedObjectIDsAfterSearch(
@@ -85,4 +86,5 @@ public data class PurchasedObjectIDsAfterSearch(
    */
   @SerialName(value = "timestamp") val timestamp: Long? = null,
   @SerialName(value = "value") val `value`: Value? = null,
+  @SerialName(value = "agent") val agent: Agent? = null,
 ) : EventsItems {}

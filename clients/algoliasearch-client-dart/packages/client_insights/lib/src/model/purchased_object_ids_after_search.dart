@@ -2,6 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:algolia_client_insights/src/model/conversion_event.dart';
 import 'package:algolia_client_insights/src/model/object_data_after_search.dart';
+import 'package:algolia_client_insights/src/model/agent.dart';
 import 'package:algolia_client_insights/src/model/purchase_event.dart';
 
 import 'package:json_annotation/json_annotation.dart';
@@ -23,6 +24,7 @@ final class PurchasedObjectIDsAfterSearch {
     required this.objectData,
     this.timestamp,
     this.value,
+    this.agent,
   });
 
   /// Event name, up to 64 ASCII characters.  Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
@@ -69,6 +71,9 @@ final class PurchasedObjectIDsAfterSearch {
   @JsonKey(name: r'value')
   final dynamic value;
 
+  @JsonKey(name: r'agent')
+  final Agent? agent;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -83,7 +88,8 @@ final class PurchasedObjectIDsAfterSearch {
           other.currency == currency &&
           other.objectData == objectData &&
           other.timestamp == timestamp &&
-          other.value == value;
+          other.value == value &&
+          other.agent == agent;
 
   @override
   int get hashCode =>
@@ -97,7 +103,8 @@ final class PurchasedObjectIDsAfterSearch {
       currency.hashCode +
       objectData.hashCode +
       timestamp.hashCode +
-      value.hashCode;
+      value.hashCode +
+      agent.hashCode;
 
   factory PurchasedObjectIDsAfterSearch.fromJson(Map<String, dynamic> json) =>
       _$PurchasedObjectIDsAfterSearchFromJson(json);

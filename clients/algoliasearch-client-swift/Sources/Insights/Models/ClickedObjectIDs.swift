@@ -30,6 +30,7 @@ public struct ClickedObjectIDs: Codable, JSONEncodable {
     /// Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30 days. If not
     /// provided, we use the time at which the request was received.
     public var timestamp: Int64?
+    public var agent: Agent?
 
     public init(
         eventName: String,
@@ -38,7 +39,8 @@ public struct ClickedObjectIDs: Codable, JSONEncodable {
         objectIDs: [String],
         userToken: String,
         authenticatedUserToken: String? = nil,
-        timestamp: Int64? = nil
+        timestamp: Int64? = nil,
+        agent: Agent? = nil
     ) {
         self.eventName = eventName
         self.eventType = eventType
@@ -47,6 +49,7 @@ public struct ClickedObjectIDs: Codable, JSONEncodable {
         self.userToken = userToken
         self.authenticatedUserToken = authenticatedUserToken
         self.timestamp = timestamp
+        self.agent = agent
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -57,6 +60,7 @@ public struct ClickedObjectIDs: Codable, JSONEncodable {
         case userToken
         case authenticatedUserToken
         case timestamp
+        case agent
     }
 
     // Encodable protocol methods
@@ -70,6 +74,7 @@ public struct ClickedObjectIDs: Codable, JSONEncodable {
         try container.encode(self.userToken, forKey: .userToken)
         try container.encodeIfPresent(self.authenticatedUserToken, forKey: .authenticatedUserToken)
         try container.encodeIfPresent(self.timestamp, forKey: .timestamp)
+        try container.encodeIfPresent(self.agent, forKey: .agent)
     }
 }
 
@@ -81,7 +86,8 @@ extension ClickedObjectIDs: Equatable {
             lhs.objectIDs == rhs.objectIDs &&
             lhs.userToken == rhs.userToken &&
             lhs.authenticatedUserToken == rhs.authenticatedUserToken &&
-            lhs.timestamp == rhs.timestamp
+            lhs.timestamp == rhs.timestamp &&
+            lhs.agent == rhs.agent
     }
 }
 
@@ -94,5 +100,6 @@ extension ClickedObjectIDs: Hashable {
         hasher.combine(self.userToken.hashValue)
         hasher.combine(self.authenticatedUserToken?.hashValue)
         hasher.combine(self.timestamp?.hashValue)
+        hasher.combine(self.agent?.hashValue)
     }
 }

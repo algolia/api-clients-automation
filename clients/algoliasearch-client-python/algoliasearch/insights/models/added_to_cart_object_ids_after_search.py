@@ -20,6 +20,7 @@ else:
 
 
 from algoliasearch.insights.models.add_to_cart_event import AddToCartEvent
+from algoliasearch.insights.models.agent import Agent
 from algoliasearch.insights.models.conversion_event import ConversionEvent
 from algoliasearch.insights.models.object_data_after_search import ObjectDataAfterSearch
 from algoliasearch.insights.models.value import Value
@@ -37,6 +38,7 @@ _ALIASES = {
     "object_data": "objectData",
     "timestamp": "timestamp",
     "value": "value",
+    "agent": "agent",
 }
 
 
@@ -70,6 +72,7 @@ class AddedToCartObjectIDsAfterSearch(BaseModel):
     timestamp: Optional[int] = None
     """ Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30 days. If not provided, we use the time at which the request was received.  """
     value: Optional[Value] = None
+    agent: Optional[Agent] = None
 
     @field_validator("event_name")
     def event_name_validate_regular_expression(cls, value):
@@ -162,6 +165,9 @@ class AddedToCartObjectIDsAfterSearch(BaseModel):
         )
         obj["value"] = (
             Value.from_dict(obj["value"]) if obj.get("value") is not None else None
+        )
+        obj["agent"] = (
+            Agent.from_dict(obj["agent"]) if obj.get("agent") is not None else None
         )
 
         return cls.model_validate(obj)

@@ -19,6 +19,7 @@ else:
     from typing_extensions import Self
 
 
+from algoliasearch.insights.models.agent import Agent
 from algoliasearch.insights.models.conversion_event import ConversionEvent
 
 _ALIASES = {
@@ -30,6 +31,7 @@ _ALIASES = {
     "user_token": "userToken",
     "authenticated_user_token": "authenticatedUserToken",
     "timestamp": "timestamp",
+    "agent": "agent",
 }
 
 
@@ -57,6 +59,7 @@ class ConvertedObjectIDsAfterSearch(BaseModel):
     """ Identifier for authenticated users.  When the user signs in, you can get an identifier from your system and send it as `authenticatedUserToken`. This lets you keep using the `userToken` from before the user signed in, while providing a reliable way to identify users across sessions. Don't use personally identifiable information in user tokens. For more information, see [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).  """
     timestamp: Optional[int] = None
     """ Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30 days. If not provided, we use the time at which the request was received.  """
+    agent: Optional[Agent] = None
 
     @field_validator("event_name")
     def event_name_validate_regular_expression(cls, value):
@@ -131,5 +134,8 @@ class ConvertedObjectIDsAfterSearch(BaseModel):
             return cls.model_validate(obj)
 
         obj["eventType"] = obj.get("eventType")
+        obj["agent"] = (
+            Agent.from_dict(obj["agent"]) if obj.get("agent") is not None else None
+        )
 
         return cls.model_validate(obj)

@@ -69,5 +69,6 @@ case class PurchasedObjectIDsAfterSearch(
     currency: Option[String] = scala.None,
     objectData: Seq[ObjectDataAfterSearch],
     timestamp: Option[Long] = scala.None,
-    value: Option[Value] = scala.None
+    value: Option[Value] = scala.None,
+    agent: Option[Agent] = scala.None
 ) extends EventsItemsTrait

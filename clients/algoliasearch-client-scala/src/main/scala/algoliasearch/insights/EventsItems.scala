@@ -27,7 +27,7 @@
 package algoliasearch.insights
 
 import algoliasearch.insights.AddToCartEvent._
-import algoliasearch.insights.ViewEvent._
+import algoliasearch.insights.InstantSearchTelemetryEvent._
 
 import org.json4s._
 
@@ -80,6 +80,8 @@ object EventsItemsSerializer extends Serializer[EventsItems] {
           Extraction.extract[ViewedObjectIDs](value)
         case value: JObject if value.obj.exists(_._1 == "eventType") && value.obj.exists(_._1 == "filters") =>
           Extraction.extract[ViewedFilters](value)
+        case value: JObject if value.obj.exists(_._1 == "eventType") =>
+          Extraction.extract[InstantSearchTelemetry](value)
         case _ => throw new MappingException("Can't convert " + json + " to EventsItems")
       }
   }
@@ -98,6 +100,7 @@ object EventsItemsSerializer extends Serializer[EventsItems] {
       case value: ConvertedFilters                => Extraction.decompose(value)(format - this)
       case value: ViewedObjectIDs                 => Extraction.decompose(value)(format - this)
       case value: ViewedFilters                   => Extraction.decompose(value)(format - this)
+      case value: InstantSearchTelemetry          => Extraction.decompose(value)(format - this)
     }
   }
 }

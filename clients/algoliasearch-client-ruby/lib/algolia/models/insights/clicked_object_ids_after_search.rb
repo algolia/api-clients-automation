@@ -35,6 +35,8 @@ module Algolia
       # Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30 days. If not provided, we use the time at which the request was received.
       attr_accessor :timestamp
 
+      attr_accessor :agent
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -46,7 +48,8 @@ module Algolia
           :query_id => :queryID,
           :user_token => :userToken,
           :authenticated_user_token => :authenticatedUserToken,
-          :timestamp => :timestamp
+          :timestamp => :timestamp,
+          :agent => :agent
         }
       end
 
@@ -70,7 +73,8 @@ module Algolia
           :query_id => :"String",
           :user_token => :"String",
           :authenticated_user_token => :"String",
-          :timestamp => :"Integer"
+          :timestamp => :"Integer",
+          :agent => :"Agent"
         }
       end
 
@@ -157,6 +161,10 @@ module Algolia
         if attributes.key?(:timestamp)
           self.timestamp = attributes[:timestamp]
         end
+
+        if attributes.key?(:agent)
+          self.agent = attributes[:agent]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -172,7 +180,8 @@ module Algolia
           query_id == other.query_id &&
           user_token == other.user_token &&
           authenticated_user_token == other.authenticated_user_token &&
-          timestamp == other.timestamp
+          timestamp == other.timestamp &&
+          agent == other.agent
       end
 
       # @see the `==` method
@@ -193,7 +202,8 @@ module Algolia
           query_id,
           user_token,
           authenticated_user_token,
-          timestamp
+          timestamp,
+          agent
         ].hash
       end
 

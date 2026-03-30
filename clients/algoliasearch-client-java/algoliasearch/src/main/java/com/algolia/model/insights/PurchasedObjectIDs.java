@@ -50,6 +50,9 @@ public class PurchasedObjectIDs implements EventsItems {
   @JsonProperty("value")
   private Value value;
 
+  @JsonProperty("agent")
+  private Agent agent;
+
   public PurchasedObjectIDs setEventName(String eventName) {
     this.eventName = eventName;
     return this;
@@ -205,6 +208,17 @@ public class PurchasedObjectIDs implements EventsItems {
     return value;
   }
 
+  public PurchasedObjectIDs setAgent(Agent agent) {
+    this.agent = agent;
+    return this;
+  }
+
+  /** Get agent */
+  @javax.annotation.Nullable
+  public Agent getAgent() {
+    return agent;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -225,7 +239,8 @@ public class PurchasedObjectIDs implements EventsItems {
       Objects.equals(this.currency, purchasedObjectIDs.currency) &&
       Objects.equals(this.objectData, purchasedObjectIDs.objectData) &&
       Objects.equals(this.timestamp, purchasedObjectIDs.timestamp) &&
-      Objects.equals(this.value, purchasedObjectIDs.value)
+      Objects.equals(this.value, purchasedObjectIDs.value) &&
+      Objects.equals(this.agent, purchasedObjectIDs.agent)
     );
   }
 
@@ -242,7 +257,8 @@ public class PurchasedObjectIDs implements EventsItems {
       currency,
       objectData,
       timestamp,
-      value
+      value,
+      agent
     );
   }
 
@@ -261,6 +277,7 @@ public class PurchasedObjectIDs implements EventsItems {
     sb.append("    objectData: ").append(toIndentedString(objectData)).append("\n");
     sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
     sb.append("    value: ").append(toIndentedString(value)).append("\n");
+    sb.append("    agent: ").append(toIndentedString(agent)).append("\n");
     sb.append("}");
     return sb.toString();
   }

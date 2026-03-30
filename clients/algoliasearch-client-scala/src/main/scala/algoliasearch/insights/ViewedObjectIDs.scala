@@ -58,5 +58,6 @@ case class ViewedObjectIDs(
     objectIDs: Seq[String],
     userToken: String,
     authenticatedUserToken: Option[String] = scala.None,
-    timestamp: Option[Long] = scala.None
+    timestamp: Option[Long] = scala.None,
+    agent: Option[Agent] = scala.None
 ) extends EventsItemsTrait

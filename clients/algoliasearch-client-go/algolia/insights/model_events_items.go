@@ -18,6 +18,7 @@ type EventsItems struct {
 	ConvertedFilters                *ConvertedFilters
 	ConvertedObjectIDs              *ConvertedObjectIDs
 	ConvertedObjectIDsAfterSearch   *ConvertedObjectIDsAfterSearch
+	InstantSearchTelemetry          *InstantSearchTelemetry
 	PurchasedObjectIDs              *PurchasedObjectIDs
 	PurchasedObjectIDsAfterSearch   *PurchasedObjectIDsAfterSearch
 	ViewedFilters                   *ViewedFilters
@@ -105,6 +106,13 @@ func ViewedObjectIDsAsEventsItems(v *ViewedObjectIDs) *EventsItems {
 func ViewedFiltersAsEventsItems(v *ViewedFilters) *EventsItems {
 	return &EventsItems{
 		ViewedFilters: v,
+	}
+}
+
+// InstantSearchTelemetryAsEventsItems is a convenience function that returns InstantSearchTelemetry wrapped in EventsItems.
+func InstantSearchTelemetryAsEventsItems(v *InstantSearchTelemetry) *EventsItems {
+	return &EventsItems{
+		InstantSearchTelemetry: v,
 	}
 }
 
@@ -213,6 +221,14 @@ func (dst *EventsItems) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	if utils.HasKey(jsonDict, "eventType") {
+		// try to unmarshal data into InstantSearchTelemetry
+		err = json.Unmarshal(data, &dst.InstantSearchTelemetry)
+		if err != nil {
+			dst.InstantSearchTelemetry = nil
+		}
+	}
+
 	// check if at least one type was successfully unmarshaled
 	if dst.AddedToCartObjectIDs != nil {
 		return nil
@@ -243,6 +259,10 @@ func (dst *EventsItems) UnmarshalJSON(data []byte) error {
 	}
 
 	if dst.ConvertedObjectIDsAfterSearch != nil {
+		return nil
+	}
+
+	if dst.InstantSearchTelemetry != nil {
 		return nil
 	}
 
@@ -339,6 +359,15 @@ func (src EventsItems) MarshalJSON() ([]byte, error) {
 		return serialized, nil
 	}
 
+	if src.InstantSearchTelemetry != nil {
+		serialized, err := json.Marshal(&src.InstantSearchTelemetry)
+		if err != nil {
+			return nil, fmt.Errorf("failed to unmarshal one of InstantSearchTelemetry of EventsItems: %w", err)
+		}
+
+		return serialized, nil
+	}
+
 	if src.PurchasedObjectIDs != nil {
 		serialized, err := json.Marshal(&src.PurchasedObjectIDs)
 		if err != nil {
@@ -410,6 +439,10 @@ func (obj EventsItems) GetActualInstance() any {
 
 	if obj.ConvertedObjectIDsAfterSearch != nil {
 		return *obj.ConvertedObjectIDsAfterSearch
+	}
+
+	if obj.InstantSearchTelemetry != nil {
+		return *obj.InstantSearchTelemetry
 	}
 
 	if obj.PurchasedObjectIDs != nil {

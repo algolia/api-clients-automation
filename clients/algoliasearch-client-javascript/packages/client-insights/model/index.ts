@@ -3,6 +3,7 @@
 export * from './addedToCartObjectIDs';
 export * from './addedToCartObjectIDsAfterSearch';
 export * from './addToCartEvent';
+export * from './agent';
 export * from './clickedFilters';
 export * from './clickedObjectIDs';
 export * from './clickedObjectIDsAfterSearch';
@@ -17,6 +18,8 @@ export * from './errorBase';
 export * from './eventsItems';
 export * from './eventsResponse';
 export * from './insightsEvents';
+export * from './instantSearchTelemetry';
+export * from './instantSearchTelemetryEvent';
 export * from './objectData';
 export * from './objectDataAfterSearch';
 export * from './price';

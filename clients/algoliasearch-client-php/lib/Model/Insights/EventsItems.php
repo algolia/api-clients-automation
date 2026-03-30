@@ -21,7 +21,7 @@ class EventsItems extends AbstractModel implements ModelInterface, \ArrayAccess,
      */
     protected static $modelTypes = [
         'eventName' => 'string',
-        'eventType' => '\Algolia\AlgoliaSearch\Model\Insights\ViewEvent',
+        'eventType' => '\Algolia\AlgoliaSearch\Model\Insights\InstantSearchTelemetryEvent',
         'index' => 'string',
         'objectIDs' => 'string[]',
         'positions' => 'int[]',
@@ -29,11 +29,15 @@ class EventsItems extends AbstractModel implements ModelInterface, \ArrayAccess,
         'userToken' => 'string',
         'authenticatedUserToken' => 'string',
         'timestamp' => 'int',
+        'agent' => '\Algolia\AlgoliaSearch\Model\Insights\Agent',
         'eventSubtype' => '\Algolia\AlgoliaSearch\Model\Insights\AddToCartEvent',
         'currency' => 'string',
         'objectData' => '\Algolia\AlgoliaSearch\Model\Insights\ObjectData[]',
         'value' => '\Algolia\AlgoliaSearch\Model\Insights\Value',
         'filters' => 'string[]',
+        'sessionID' => 'string',
+        'performance' => 'object',
+        'widgets' => 'object',
     ];
 
     /**
@@ -51,11 +55,15 @@ class EventsItems extends AbstractModel implements ModelInterface, \ArrayAccess,
         'userToken' => null,
         'authenticatedUserToken' => null,
         'timestamp' => 'int64',
+        'agent' => null,
         'eventSubtype' => null,
         'currency' => null,
         'objectData' => null,
         'value' => null,
         'filters' => null,
+        'sessionID' => null,
+        'performance' => null,
+        'widgets' => null,
     ];
 
     /**
@@ -74,11 +82,15 @@ class EventsItems extends AbstractModel implements ModelInterface, \ArrayAccess,
         'userToken' => 'userToken',
         'authenticatedUserToken' => 'authenticatedUserToken',
         'timestamp' => 'timestamp',
+        'agent' => 'agent',
         'eventSubtype' => 'eventSubtype',
         'currency' => 'currency',
         'objectData' => 'objectData',
         'value' => 'value',
         'filters' => 'filters',
+        'sessionID' => 'sessionID',
+        'performance' => 'performance',
+        'widgets' => 'widgets',
     ];
 
     /**
@@ -96,11 +108,15 @@ class EventsItems extends AbstractModel implements ModelInterface, \ArrayAccess,
         'userToken' => 'setUserToken',
         'authenticatedUserToken' => 'setAuthenticatedUserToken',
         'timestamp' => 'setTimestamp',
+        'agent' => 'setAgent',
         'eventSubtype' => 'setEventSubtype',
         'currency' => 'setCurrency',
         'objectData' => 'setObjectData',
         'value' => 'setValue',
         'filters' => 'setFilters',
+        'sessionID' => 'setSessionID',
+        'performance' => 'setPerformance',
+        'widgets' => 'setWidgets',
     ];
 
     /**
@@ -118,11 +134,15 @@ class EventsItems extends AbstractModel implements ModelInterface, \ArrayAccess,
         'userToken' => 'getUserToken',
         'authenticatedUserToken' => 'getAuthenticatedUserToken',
         'timestamp' => 'getTimestamp',
+        'agent' => 'getAgent',
         'eventSubtype' => 'getEventSubtype',
         'currency' => 'getCurrency',
         'objectData' => 'getObjectData',
         'value' => 'getValue',
         'filters' => 'getFilters',
+        'sessionID' => 'getSessionID',
+        'performance' => 'getPerformance',
+        'widgets' => 'getWidgets',
     ];
 
     /**
@@ -166,6 +186,9 @@ class EventsItems extends AbstractModel implements ModelInterface, \ArrayAccess,
         if (isset($data['timestamp'])) {
             $this->container['timestamp'] = $data['timestamp'];
         }
+        if (isset($data['agent'])) {
+            $this->container['agent'] = $data['agent'];
+        }
         if (isset($data['eventSubtype'])) {
             $this->container['eventSubtype'] = $data['eventSubtype'];
         }
@@ -180,6 +203,15 @@ class EventsItems extends AbstractModel implements ModelInterface, \ArrayAccess,
         }
         if (isset($data['filters'])) {
             $this->container['filters'] = $data['filters'];
+        }
+        if (isset($data['sessionID'])) {
+            $this->container['sessionID'] = $data['sessionID'];
+        }
+        if (isset($data['performance'])) {
+            $this->container['performance'] = $data['performance'];
+        }
+        if (isset($data['widgets'])) {
+            $this->container['widgets'] = $data['widgets'];
         }
     }
 
@@ -273,6 +305,9 @@ class EventsItems extends AbstractModel implements ModelInterface, \ArrayAccess,
         if (!isset($this->container['filters']) || null === $this->container['filters']) {
             $invalidProperties[] = "'filters' can't be null";
         }
+        if (!isset($this->container['sessionID']) || null === $this->container['sessionID']) {
+            $invalidProperties[] = "'sessionID' can't be null";
+        }
 
         return $invalidProperties;
     }
@@ -315,7 +350,7 @@ class EventsItems extends AbstractModel implements ModelInterface, \ArrayAccess,
     /**
      * Gets eventType.
      *
-     * @return ViewEvent
+     * @return InstantSearchTelemetryEvent
      */
     public function getEventType()
     {
@@ -325,7 +360,7 @@ class EventsItems extends AbstractModel implements ModelInterface, \ArrayAccess,
     /**
      * Sets eventType.
      *
-     * @param ViewEvent $eventType eventType
+     * @param InstantSearchTelemetryEvent $eventType eventType
      *
      * @return self
      */
@@ -505,6 +540,30 @@ class EventsItems extends AbstractModel implements ModelInterface, \ArrayAccess,
     }
 
     /**
+     * Gets agent.
+     *
+     * @return null|Agent
+     */
+    public function getAgent()
+    {
+        return $this->container['agent'] ?? null;
+    }
+
+    /**
+     * Sets agent.
+     *
+     * @param null|Agent $agent agent
+     *
+     * @return self
+     */
+    public function setAgent($agent)
+    {
+        $this->container['agent'] = $agent;
+
+        return $this;
+    }
+
+    /**
      * Gets eventSubtype.
      *
      * @return AddToCartEvent
@@ -620,6 +679,78 @@ class EventsItems extends AbstractModel implements ModelInterface, \ArrayAccess,
     public function setFilters($filters)
     {
         $this->container['filters'] = $filters;
+
+        return $this;
+    }
+
+    /**
+     * Gets sessionID.
+     *
+     * @return string
+     */
+    public function getSessionID()
+    {
+        return $this->container['sessionID'] ?? null;
+    }
+
+    /**
+     * Sets sessionID.
+     *
+     * @param string $sessionID unique identifier for a session [TODO]: Document here where this is derived and how it is used
+     *
+     * @return self
+     */
+    public function setSessionID($sessionID)
+    {
+        $this->container['sessionID'] = $sessionID;
+
+        return $this;
+    }
+
+    /**
+     * Gets performance.
+     *
+     * @return null|object
+     */
+    public function getPerformance()
+    {
+        return $this->container['performance'] ?? null;
+    }
+
+    /**
+     * Sets performance.
+     *
+     * @param null|object $performance free form object for performance data
+     *
+     * @return self
+     */
+    public function setPerformance($performance)
+    {
+        $this->container['performance'] = $performance;
+
+        return $this;
+    }
+
+    /**
+     * Gets widgets.
+     *
+     * @return null|object
+     */
+    public function getWidgets()
+    {
+        return $this->container['widgets'] ?? null;
+    }
+
+    /**
+     * Sets widgets.
+     *
+     * @param null|object $widgets free form object for widget information
+     *
+     * @return self
+     */
+    public function setWidgets($widgets)
+    {
+        $this->container['widgets'] = $widgets;
 
         return $this;
     }

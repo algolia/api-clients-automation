@@ -11,6 +11,7 @@ __version__ = "4.38.0"
 from .add_to_cart_event import AddToCartEvent
 from .added_to_cart_object_ids import AddedToCartObjectIDs
 from .added_to_cart_object_ids_after_search import AddedToCartObjectIDsAfterSearch
+from .agent import Agent
 from .click_event import ClickEvent
 from .clicked_filters import ClickedFilters
 from .clicked_object_ids import ClickedObjectIDs
@@ -24,6 +25,8 @@ from .error_base import ErrorBase
 from .events_items import EventsItems
 from .events_response import EventsResponse
 from .insights_events import InsightsEvents
+from .instant_search_telemetry import InstantSearchTelemetry
+from .instant_search_telemetry_event import InstantSearchTelemetryEvent
 from .object_data import ObjectData
 from .object_data_after_search import ObjectDataAfterSearch
 from .price import Price
@@ -39,6 +42,7 @@ __all__ = (
     "AddToCartEvent",
     "AddedToCartObjectIDs",
     "AddedToCartObjectIDsAfterSearch",
+    "Agent",
     "ClickEvent",
     "ClickedFilters",
     "ClickedObjectIDs",
@@ -52,6 +56,8 @@ __all__ = (
     "EventsItems",
     "EventsResponse",
     "InsightsEvents",
+    "InstantSearchTelemetry",
+    "InstantSearchTelemetryEvent",
     "ObjectData",
     "ObjectDataAfterSearch",
     "Price",

@@ -1,6 +1,7 @@
 import 'package:algolia_client_insights/src/model/add_to_cart_event.dart';
 import 'package:algolia_client_insights/src/model/added_to_cart_object_ids.dart';
 import 'package:algolia_client_insights/src/model/added_to_cart_object_ids_after_search.dart';
+import 'package:algolia_client_insights/src/model/agent.dart';
 import 'package:algolia_client_insights/src/model/click_event.dart';
 import 'package:algolia_client_insights/src/model/clicked_filters.dart';
 import 'package:algolia_client_insights/src/model/clicked_object_ids.dart';
@@ -12,6 +13,8 @@ import 'package:algolia_client_insights/src/model/converted_object_ids_after_sea
 import 'package:algolia_client_insights/src/model/error_base.dart';
 import 'package:algolia_client_insights/src/model/events_response.dart';
 import 'package:algolia_client_insights/src/model/insights_events.dart';
+import 'package:algolia_client_insights/src/model/instant_search_telemetry.dart';
+import 'package:algolia_client_insights/src/model/instant_search_telemetry_event.dart';
 import 'package:algolia_client_insights/src/model/object_data.dart';
 import 'package:algolia_client_insights/src/model/object_data_after_search.dart';
 import 'package:algolia_client_insights/src/model/purchase_event.dart';
@@ -48,6 +51,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AddedToCartObjectIDsAfterSearch':
       return AddedToCartObjectIDsAfterSearch.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'Agent':
+      return Agent.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'ClickEvent':
       return ClickEvent.fromJson(value) as ReturnType;
     case 'ClickedFilters':
@@ -78,6 +83,11 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'InsightsEvents':
       return InsightsEvents.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'InstantSearchTelemetry':
+      return InstantSearchTelemetry.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'InstantSearchTelemetryEvent':
+      return InstantSearchTelemetryEvent.fromJson(value) as ReturnType;
     case 'ObjectData':
       return ObjectData.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'ObjectDataAfterSearch':

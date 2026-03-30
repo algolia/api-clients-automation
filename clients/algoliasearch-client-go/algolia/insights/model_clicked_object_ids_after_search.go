@@ -25,6 +25,7 @@ type ClickedObjectIDsAfterSearch struct {
 	AuthenticatedUserToken *string `json:"authenticatedUserToken,omitempty"`
 	// Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30 days. If not provided, we use the time at which the request was received.
 	Timestamp *int64 `json:"timestamp,omitempty"`
+	Agent     *Agent `json:"agent,omitempty"`
 }
 
 type ClickedObjectIDsAfterSearchOption func(f *ClickedObjectIDsAfterSearch)
@@ -38,6 +39,12 @@ func WithClickedObjectIDsAfterSearchAuthenticatedUserToken(val string) ClickedOb
 func WithClickedObjectIDsAfterSearchTimestamp(val int64) ClickedObjectIDsAfterSearchOption {
 	return func(f *ClickedObjectIDsAfterSearch) {
 		f.Timestamp = &val
+	}
+}
+
+func WithClickedObjectIDsAfterSearchAgent(val Agent) ClickedObjectIDsAfterSearchOption {
+	return func(f *ClickedObjectIDsAfterSearch) {
+		f.Agent = &val
 	}
 }
 
@@ -346,6 +353,43 @@ func (o *ClickedObjectIDsAfterSearch) SetTimestamp(v int64) *ClickedObjectIDsAft
 	return o
 }
 
+// GetAgent returns the Agent field value if set, zero value otherwise.
+func (o *ClickedObjectIDsAfterSearch) GetAgent() Agent {
+	if o == nil || o.Agent == nil {
+		var ret Agent
+
+		return ret
+	}
+
+	return *o.Agent
+}
+
+// GetAgentOk returns a tuple with the Agent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ClickedObjectIDsAfterSearch) GetAgentOk() (*Agent, bool) {
+	if o == nil || o.Agent == nil {
+		return nil, false
+	}
+
+	return o.Agent, true
+}
+
+// HasAgent returns a boolean if a field has been set.
+func (o *ClickedObjectIDsAfterSearch) HasAgent() bool {
+	if o != nil && o.Agent != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAgent gets a reference to the given Agent and assigns it to the Agent field.
+func (o *ClickedObjectIDsAfterSearch) SetAgent(v *Agent) *ClickedObjectIDsAfterSearch {
+	o.Agent = v
+
+	return o
+}
+
 func (o ClickedObjectIDsAfterSearch) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
 	toSerialize["eventName"] = o.EventName
@@ -362,6 +406,10 @@ func (o ClickedObjectIDsAfterSearch) MarshalJSON() ([]byte, error) {
 
 	if o.Timestamp != nil {
 		toSerialize["timestamp"] = o.Timestamp
+	}
+
+	if o.Agent != nil {
+		toSerialize["agent"] = o.Agent
 	}
 
 	serialized, err := json.Marshal(toSerialize)
@@ -383,6 +431,7 @@ func (o ClickedObjectIDsAfterSearch) String() string {
 	out += fmt.Sprintf("  userToken=%v\n", o.UserToken)
 	out += fmt.Sprintf("  authenticatedUserToken=%v\n", o.AuthenticatedUserToken)
 	out += fmt.Sprintf("  timestamp=%v\n", o.Timestamp)
+	out += fmt.Sprintf("  agent=%v\n", o.Agent)
 
 	return fmt.Sprintf("ClickedObjectIDsAfterSearch {\n%s}", out)
 }

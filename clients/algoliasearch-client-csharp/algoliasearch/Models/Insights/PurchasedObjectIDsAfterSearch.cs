@@ -126,6 +126,12 @@ public partial class PurchasedObjectIDsAfterSearch
   public Value Value { get; set; }
 
   /// <summary>
+  /// Gets or Sets Agent
+  /// </summary>
+  [JsonPropertyName("agent")]
+  public Agent Agent { get; set; }
+
+  /// <summary>
   /// Returns the string presentation of the object
   /// </summary>
   /// <returns>String presentation of the object</returns>
@@ -144,6 +150,7 @@ public partial class PurchasedObjectIDsAfterSearch
     sb.Append("  ObjectData: ").Append(ObjectData).Append("\n");
     sb.Append("  Timestamp: ").Append(Timestamp).Append("\n");
     sb.Append("  Value: ").Append(Value).Append("\n");
+    sb.Append("  Agent: ").Append(Agent).Append("\n");
     sb.Append("}\n");
     return sb.ToString();
   }
@@ -195,7 +202,8 @@ public partial class PurchasedObjectIDsAfterSearch
           && ObjectData.SequenceEqual(input.ObjectData)
       )
       && (Timestamp == input.Timestamp || Timestamp.Equals(input.Timestamp))
-      && (Value == input.Value || (Value != null && Value.Equals(input.Value)));
+      && (Value == input.Value || (Value != null && Value.Equals(input.Value)))
+      && (Agent == input.Agent || (Agent != null && Agent.Equals(input.Agent)));
   }
 
   /// <summary>
@@ -241,6 +249,10 @@ public partial class PurchasedObjectIDsAfterSearch
       if (Value != null)
       {
         hashCode = (hashCode * 59) + Value.GetHashCode();
+      }
+      if (Agent != null)
+      {
+        hashCode = (hashCode * 59) + Agent.GetHashCode();
       }
       return hashCode;
     }

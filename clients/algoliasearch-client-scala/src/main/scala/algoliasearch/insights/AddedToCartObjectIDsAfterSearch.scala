@@ -73,5 +73,6 @@ case class AddedToCartObjectIDsAfterSearch(
     currency: Option[String] = scala.None,
     objectData: Option[Seq[ObjectDataAfterSearch]] = scala.None,
     timestamp: Option[Long] = scala.None,
-    value: Option[Value] = scala.None
+    value: Option[Value] = scala.None,
+    agent: Option[Agent] = scala.None
 ) extends EventsItemsTrait

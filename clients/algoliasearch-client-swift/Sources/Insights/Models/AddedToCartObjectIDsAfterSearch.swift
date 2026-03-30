@@ -39,6 +39,7 @@ public struct AddedToCartObjectIDsAfterSearch: Codable, JSONEncodable {
     /// provided, we use the time at which the request was received.
     public var timestamp: Int64?
     public var value: InsightsValue?
+    public var agent: Agent?
 
     public init(
         eventName: String,
@@ -52,7 +53,8 @@ public struct AddedToCartObjectIDsAfterSearch: Codable, JSONEncodable {
         currency: String? = nil,
         objectData: [ObjectDataAfterSearch]? = nil,
         timestamp: Int64? = nil,
-        value: InsightsValue? = nil
+        value: InsightsValue? = nil,
+        agent: Agent? = nil
     ) {
         self.eventName = eventName
         self.eventType = eventType
@@ -66,6 +68,7 @@ public struct AddedToCartObjectIDsAfterSearch: Codable, JSONEncodable {
         self.objectData = objectData
         self.timestamp = timestamp
         self.value = value
+        self.agent = agent
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -81,6 +84,7 @@ public struct AddedToCartObjectIDsAfterSearch: Codable, JSONEncodable {
         case objectData
         case timestamp
         case value
+        case agent
     }
 
     // Encodable protocol methods
@@ -99,6 +103,7 @@ public struct AddedToCartObjectIDsAfterSearch: Codable, JSONEncodable {
         try container.encodeIfPresent(self.objectData, forKey: .objectData)
         try container.encodeIfPresent(self.timestamp, forKey: .timestamp)
         try container.encodeIfPresent(self.value, forKey: .value)
+        try container.encodeIfPresent(self.agent, forKey: .agent)
     }
 }
 
@@ -115,7 +120,8 @@ extension AddedToCartObjectIDsAfterSearch: Equatable {
             lhs.currency == rhs.currency &&
             lhs.objectData == rhs.objectData &&
             lhs.timestamp == rhs.timestamp &&
-            lhs.value == rhs.value
+            lhs.value == rhs.value &&
+            lhs.agent == rhs.agent
     }
 }
 
@@ -133,5 +139,6 @@ extension AddedToCartObjectIDsAfterSearch: Hashable {
         hasher.combine(self.objectData?.hashValue)
         hasher.combine(self.timestamp?.hashValue)
         hasher.combine(self.value?.hashValue)
+        hasher.combine(self.agent?.hashValue)
     }
 }

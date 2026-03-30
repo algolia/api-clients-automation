@@ -34,6 +34,7 @@ import kotlinx.serialization.json.*
  *   [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
  * @param timestamp Timestamp of the event, measured in milliseconds since the Unix epoch. Must be
  *   no older than 30 days. If not provided, we use the time at which the request was received.
+ * @param agent
  */
 @Serializable
 public data class ClickedObjectIDsAfterSearch(
@@ -87,4 +88,5 @@ public data class ClickedObjectIDsAfterSearch(
    * days. If not provided, we use the time at which the request was received.
    */
   @SerialName(value = "timestamp") val timestamp: Long? = null,
+  @SerialName(value = "agent") val agent: Agent? = null,
 ) : EventsItems {}

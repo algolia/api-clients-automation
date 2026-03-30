@@ -153,6 +153,17 @@ public partial class EventsItems : AbstractSchema
   }
 
   /// <summary>
+  /// Initializes a new instance of the EventsItems class
+  /// with a InstantSearchTelemetry
+  /// </summary>
+  /// <param name="actualInstance">An instance of InstantSearchTelemetry.</param>
+  public EventsItems(InstantSearchTelemetry actualInstance)
+  {
+    ActualInstance =
+      actualInstance ?? throw new ArgumentException("Invalid instance found. Must not be null.");
+  }
+
+  /// <summary>
   /// Gets or Sets ActualInstance
   /// </summary>
   public sealed override object ActualInstance { get; set; }
@@ -278,6 +289,16 @@ public partial class EventsItems : AbstractSchema
   }
 
   /// <summary>
+  /// Get the actual instance of `InstantSearchTelemetry`. If the actual instance is not `InstantSearchTelemetry`,
+  /// the InvalidClassException will be thrown
+  /// </summary>
+  /// <returns>An instance of InstantSearchTelemetry</returns>
+  public InstantSearchTelemetry AsInstantSearchTelemetry()
+  {
+    return (InstantSearchTelemetry)ActualInstance;
+  }
+
+  /// <summary>
   /// Check if the actual instance is of `AddedToCartObjectIDsAfterSearch` type.
   /// </summary>
   /// <returns>Whether or not the instance is the type</returns>
@@ -383,6 +404,15 @@ public partial class EventsItems : AbstractSchema
   public bool IsViewedFilters()
   {
     return ActualInstance.GetType() == typeof(ViewedFilters);
+  }
+
+  /// <summary>
+  /// Check if the actual instance is of `InstantSearchTelemetry` type.
+  /// </summary>
+  /// <returns>Whether or not the instance is the type</returns>
+  public bool IsInstantSearchTelemetry()
+  {
+    return ActualInstance.GetType() == typeof(InstantSearchTelemetry);
   }
 
   /// <summary>
@@ -696,6 +726,22 @@ public class EventsItemsJsonConverter : JsonConverter<EventsItems>
         // deserialization failed, try the next one
         System.Diagnostics.Debug.WriteLine(
           $"Failed to deserialize into ViewedFilters: {exception}"
+        );
+      }
+    }
+    if (root.ValueKind == JsonValueKind.Object && root.TryGetProperty("eventType", out _))
+    {
+      try
+      {
+        return new EventsItems(
+          jsonDocument.Deserialize<InstantSearchTelemetry>(JsonConfig.Options)
+        );
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine(
+          $"Failed to deserialize into InstantSearchTelemetry: {exception}"
         );
       }
     }
