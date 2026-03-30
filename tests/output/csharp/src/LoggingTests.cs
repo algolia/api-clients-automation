@@ -161,10 +161,10 @@ public class LoggingTests
       new InternalRequestOptions { UseReadTransporter = true }
     );
 
-    var debugMessages = GetLogsByLevel(LogLevel.Debug).Select(l => l.Message).ToList();
-    Assert.Contains(debugMessages, m => m.Contains("Header:"));
-    Assert.Contains(debugMessages, m => m.Contains("Response header:"));
-    Assert.Contains(debugMessages, m => m.Contains("Response body:"));
+    var traceMessages = GetLogsByLevel(LogLevel.Trace).Select(l => l.Message).ToList();
+    Assert.Contains(traceMessages, m => m.Contains("Header:"));
+    Assert.Contains(traceMessages, m => m.Contains("Response header:"));
+    Assert.Contains(traceMessages, m => m.Contains("Response HTTP"));
   }
 
   [Fact]
@@ -198,7 +198,7 @@ public class LoggingTests
       Assert.DoesNotContain("secret-in-url", log.Message);
     }
 
-    var headerLog = AssertLogMatches(LogLevel.Debug, @"Header: x-algolia-api-key", "Should have filtered api-key header log");
+    var headerLog = AssertLogMatches(LogLevel.Trace, @"Header: x-algolia-api-key", "Should have filtered api-key header log");
     Assert.Contains("[FILTERED]", headerLog);
   }
 
@@ -217,8 +217,8 @@ public class LoggingTests
 
     AssertLogMatches(
       LogLevel.Information,
-      @"Retry attempt \d+/\d+ for GET",
-      @"INFO log should match ""Retry attempt {N}/{MAX} for {METHOD} {PATH}"""
+      @"Retry \d+/\d+: Timeout on .+ after \d+ms",
+      @"INFO log should match ""Retry {N}/{MAX}: Timeout on {HOST} after {TIMEOUT}ms"""
     );
 
     AssertLogMatches(
@@ -283,8 +283,8 @@ public class LoggingTests
 
     AssertLogMatches(
       LogLevel.Information,
-      @"Request completed after \d+ retries \(total: \d+ms\)",
-      @"INFO log should match ""Request completed after {N} retries (total: {DURATION}ms)"""
+      @"Request completed on attempt \d+/\d+ \(total: \d+ms\)",
+      @"INFO log should match ""Request completed on attempt {N}/{MAX} (total: {DURATION}ms)"""
     );
   }
 

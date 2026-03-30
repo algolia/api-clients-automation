@@ -149,18 +149,18 @@ internal class HttpTransport
         request.Body = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
       }
 
-      if (_logger.IsEnabled(LogLevel.Debug))
+      if (_logger.IsEnabled(LogLevel.Trace))
       {
-        _logger.LogDebug(
+        _logger.LogTrace(
           "Sending request: {Method} {Uri}",
           request.Method,
           SanitizeUrl(request.Uri)
         );
-        _logger.LogDebug("Request timeout: {RequestTimeout} (s)", requestTimeout.TotalSeconds);
-        _logger.LogDebug("Connect timeout: {ConnectTimeout} (s)", connectTimeout.TotalSeconds);
+        _logger.LogTrace("Request timeout: {RequestTimeout} (s)", requestTimeout.TotalSeconds);
+        _logger.LogTrace("Connect timeout: {ConnectTimeout} (s)", connectTimeout.TotalSeconds);
         foreach (var header in FilterHeaders(request.Headers))
         {
-          _logger.LogDebug("Header: {HeaderName}: {HeaderValue}", header.Key, header.Value);
+          _logger.LogTrace("Header: {HeaderName}: {HeaderValue}", header.Key, header.Value);
         }
       }
 
@@ -189,20 +189,21 @@ internal class HttpTransport
             {
               overallStopwatch.Stop();
               _logger.LogInformation(
-                "Request completed after {Retries} retries (total: {TotalDuration}ms)",
-                attemptNumber - 1,
+                "Request completed on attempt {Attempt}/{MaxAttempts} (total: {TotalDuration}ms)",
+                attemptNumber,
+                maxAttempts,
                 overallStopwatch.ElapsedMilliseconds
               );
             }
           }
 
-          if (_logger.IsEnabled(LogLevel.Debug))
+          if (_logger.IsEnabled(LogLevel.Trace))
           {
             if (response.ResponseHeaders != null)
             {
               foreach (var header in response.ResponseHeaders)
               {
-                _logger.LogDebug(
+                _logger.LogTrace(
                   "Response header: {HeaderName}: {HeaderValue}",
                   header.Key,
                   header.Value
@@ -214,7 +215,7 @@ internal class HttpTransport
             {
               var reader = new StreamReader(response.Body);
               var json = await reader.ReadToEndAsync().ConfigureAwait(false);
-              _logger.LogDebug("Response body: {Json}", json);
+              _logger.LogTrace("Response HTTP {HttpCode}: {Json}", response.HttpStatusCode, json);
               response.Body.Seek(0, SeekOrigin.Begin);
             }
           }
@@ -244,11 +245,11 @@ internal class HttpTransport
           if (_logger.IsEnabled(LogLevel.Information))
           {
             _logger.LogInformation(
-              "Retry attempt {RetryCount}/{MaxRetries} for {Method} {Path}",
+              "Retry {RetryCount}/{MaxRetries}: Timeout on {Host} after {ConnectTimeout}ms",
               attemptNumber,
               maxAttempts - 1,
-              request.Method,
-              uri
+              host.Url,
+              (int)connectTimeout.TotalMilliseconds
             );
           }
 
@@ -305,9 +306,9 @@ internal class HttpTransport
   {
     var serializedData = _serializer.Serialize(data);
 
-    if (_logger.IsEnabled(LogLevel.Debug))
+    if (_logger.IsEnabled(LogLevel.Trace))
     {
-      logger.LogDebug("Request body: {Json}", serializedData);
+      logger.LogTrace("Request body: {Json}", serializedData);
     }
 
     return data == null ? null : Compression.CreateStream(serializedData, compress);
