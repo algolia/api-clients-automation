@@ -191,7 +191,6 @@ post:
               events:
                 - eventName: My Event Name
                   eventType: instantsearch_telemetry
-                  index: test-index
                   userToken: anonymous-user-1
                   sessionID: f47ac10b-58cc-4372-a567-0e02b2c3d479
                   client_agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
