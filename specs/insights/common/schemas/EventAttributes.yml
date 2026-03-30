@@ -98,12 +98,12 @@ agent:
       minLength: 1
       maxLength: 256
     toolCallID:
-      description: the ID of the instant-search tool to which this event is related.
+      description: the ID of the instant search tool to which this event is related.
       type: string
       minLength: 1
       maxLength: 256
     conversationID:
-      description: the ID of the instant-search conversation to which this event is related.
+      description: the ID of the instant search conversation to which this event is related.
       type: string
       minLength: 1
       maxLength: 256
