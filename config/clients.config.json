@@ -262,7 +262,7 @@
     ],
     "folder": "clients/algoliasearch-client-php",
     "gitRepoId": "algoliasearch-client-php",
-    "packageVersion": "4.40.0",
+    "packageVersion": "4.41.0",
     "modelFolder": "lib/Model",
     "apiFolder": "lib/Api",
     "dockerImage": "apic_base",
