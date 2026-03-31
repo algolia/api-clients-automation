@@ -26,7 +26,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class QuerySuggestionsClient
 {
-    public const VERSION = '4.39.1';
+    public const VERSION = '4.40.0';
 
     /**
      * @var ApiWrapperInterface
@@ -79,6 +79,10 @@ class QuerySuggestionsClient
         );
 
         $client = new static($apiWrapper, $config);
+
+        $logger = Algolia::getLogger();
+        $logger->info('Algolia API client: Algolia QuerySuggestionsClient initialized (appId: '.$config->getAppId().')');
+        Algolia::logDebugWarningOnce();
 
         return $client;
     }

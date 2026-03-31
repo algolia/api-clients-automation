@@ -35,7 +35,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class CompositionClient
 {
-    public const VERSION = '4.39.1';
+    public const VERSION = '4.40.0';
 
     /**
      * @var ApiWrapperInterface
@@ -85,6 +85,10 @@ class CompositionClient
         );
 
         $client = new static($apiWrapper, $config);
+
+        $logger = Algolia::getLogger();
+        $logger->info('Algolia API client: Algolia CompositionClient initialized (appId: '.$config->getAppId().')');
+        Algolia::logDebugWarningOnce();
 
         return $client;
     }

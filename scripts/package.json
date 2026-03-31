@@ -18,7 +18,7 @@
     "waitForAllReleases": "yarn runScript ci/codegen/waitForAllReleases.ts"
   },
   "devDependencies": {
-    "@actions/artifact": "6.2.0",
+    "@actions/artifact": "6.2.1",
     "@actions/core": "3.0.0",
     "@actions/exec": "3.0.0",
     "@actions/io": "3.0.2",
@@ -42,7 +42,7 @@
     "folder-hash": "4.1.2",
     "fs-extra": "11.3.4",
     "js-yaml": "4.1.1",
-    "knip": "5.67.1",
+    "knip": "6.0.3",
     "micromatch": "4.0.8",
     "semver": "7.7.4",
     "spinnies": "0.5.1",

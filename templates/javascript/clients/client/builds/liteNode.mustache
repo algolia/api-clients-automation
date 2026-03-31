@@ -1,5 +1,7 @@
 // {{{generationBanner}}}
 
+import { gzipSync } from 'node:zlib';
+
 export type {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}>;
 
 {{> client/builds/definition}}
@@ -16,7 +18,8 @@ export type {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} = ReturnTyp
     algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],
     responsesCache: createNullCache(),
     requestsCache: createNullCache(),
-    hostsCache: createMemoryCache(),
-    ...options,
+      hostsCache: createMemoryCache(),
+      compress: async (data: string): Promise<Uint8Array> => gzipSync(Buffer.from(data)),
+      ...options,
   });
 }

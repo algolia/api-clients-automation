@@ -24,7 +24,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class PersonalizationClient
 {
-    public const VERSION = '4.39.1';
+    public const VERSION = '4.40.0';
 
     /**
      * @var ApiWrapperInterface
@@ -77,6 +77,10 @@ class PersonalizationClient
         );
 
         $client = new static($apiWrapper, $config);
+
+        $logger = Algolia::getLogger();
+        $logger->info('Algolia API client: Algolia PersonalizationClient initialized (appId: '.$config->getAppId().')');
+        Algolia::logDebugWarningOnce();
 
         return $client;
     }

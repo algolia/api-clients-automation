@@ -40,7 +40,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class AnalyticsClient
 {
-    public const VERSION = '4.39.1';
+    public const VERSION = '4.40.0';
 
     /**
      * @var ApiWrapperInterface
@@ -93,6 +93,10 @@ class AnalyticsClient
         );
 
         $client = new static($apiWrapper, $config);
+
+        $logger = Algolia::getLogger();
+        $logger->info('Algolia API client: Algolia AnalyticsClient initialized (appId: '.$config->getAppId().')');
+        Algolia::logDebugWarningOnce();
 
         return $client;
     }
