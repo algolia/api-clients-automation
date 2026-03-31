@@ -243,8 +243,8 @@ public class LoggingTests
 
     AssertLogMatches(
       LogLevel.Error,
-      @"Request failed after \d+ retries",
-      @"ERROR log should match ""Request failed after {MAX} retries: ..."""
+      @"Request failed after \d+ attempts",
+      @"ERROR log should match ""Request failed after {MAX} attempts: ..."""
     );
   }
 
