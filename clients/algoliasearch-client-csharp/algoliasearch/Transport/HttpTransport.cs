@@ -282,7 +282,7 @@ internal class HttpTransport
     if (_logger.IsEnabled(LogLevel.Error))
     {
       _logger.LogError(
-        "Request failed after {MaxAttempts} retries: {ErrorMessage}",
+        "Request failed after {MaxAttempts} attempts: {ErrorMessage}",
         maxAttempts,
         _errorMessage
       );
