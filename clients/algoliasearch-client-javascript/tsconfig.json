@@ -7,7 +7,7 @@
     "exactOptionalPropertyTypes": true,
     "lib": ["dom", "esnext", "dom.iterable", "scripthost"],
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "noImplicitAny": true,
     "noImplicitOverride": true,
     "noImplicitThis": true,
