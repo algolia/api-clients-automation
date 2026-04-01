@@ -4,7 +4,7 @@ namespace Algolia\AlgoliaSearch\RequestOptions;
 
 use Algolia\AlgoliaSearch\Support\Helpers;
 
-final class RequestOptions implements \ArrayAccess
+final class RequestOptions implements \ArrayAccess, \IteratorAggregate
 {
     private $headers = [];
 
@@ -48,6 +48,18 @@ final class RequestOptions implements \ArrayAccess
         }
 
         $this->{$offset} = $value;
+    }
+
+    public function getIterator(): \ArrayIterator
+    {
+        return new \ArrayIterator([
+            'headers' => $this->headers,
+            'queryParameters' => $this->queryParameters,
+            'body' => $this->body,
+            'readTimeout' => $this->readTimeout,
+            'writeTimeout' => $this->writeTimeout,
+            'connectTimeout' => $this->connectTimeout,
+        ]);
     }
 
     public function offsetUnset($offset): void
