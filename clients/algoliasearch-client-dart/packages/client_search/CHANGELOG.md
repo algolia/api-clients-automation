@@ -1,3 +1,7 @@
+## [1.47.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.47.1...1.47.2)
+
+- [dc02ad1023](https://github.com/algolia/api-clients-automation/commit/dc02ad1023) chore(deps): dependencies 2026-03-30 ([#6169](https://github.com/algolia/api-clients-automation/pull/6169)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [1.47.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.47.0...1.47.1)
 
 - [fec26adc20](https://github.com/algolia/api-clients-automation/commit/fec26adc20) fix(dart): use caret versioning for archive dependency ([#6157](https://github.com/algolia/api-clients-automation/pull/6157)) by [@Fluf22](https://github.com/Fluf22/)
