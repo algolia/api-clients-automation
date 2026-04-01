@@ -4,7 +4,7 @@ namespace Algolia\AlgoliaSearch\RequestOptions;
 
 use Algolia\AlgoliaSearch\Support\Helpers;
 
-final class RequestOptions
+final class RequestOptions implements \ArrayAccess
 {
     private $headers = [];
 
@@ -17,6 +17,45 @@ final class RequestOptions
     private $writeTimeout;
 
     private $connectTimeout;
+
+    private static $validOffsets = [
+        'headers',
+        'queryParameters',
+        'body',
+        'readTimeout',
+        'writeTimeout',
+        'connectTimeout',
+    ];
+
+    public function offsetExists($offset): bool
+    {
+        return in_array($offset, self::$validOffsets, true) && null !== $this->{$offset};
+    }
+
+    public function &offsetGet($offset): mixed
+    {
+        if (!in_array($offset, self::$validOffsets, true)) {
+            throw new \InvalidArgumentException("Invalid RequestOptions offset: {$offset}");
+        }
+
+        return $this->{$offset};
+    }
+
+    public function offsetSet($offset, $value): void
+    {
+        if (!in_array($offset, self::$validOffsets, true)) {
+            throw new \InvalidArgumentException("Invalid RequestOptions offset: {$offset}");
+        }
+
+        $this->{$offset} = $value;
+    }
+
+    public function offsetUnset($offset): void
+    {
+        if (in_array($offset, self::$validOffsets, true)) {
+            $this->{$offset} = is_array($this->{$offset}) ? [] : null;
+        }
+    }
 
     public function __construct(array $options = [])
     {

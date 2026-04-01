@@ -58,8 +58,8 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       );
       break;
     case 'dart':
-      const testPaths = [...folders.map((f) => `test/${f}`), ...(suites.client ? ['test/manual/'] : [])].join(' ');
-      await run(`dart test ${testPaths}`, {
+      const dartTestPaths = [...folders.map((f) => `test/${f}`), ...(suites.client ? ['test/manual/'] : [])].join(' ');
+      await run(`dart test ${dartTestPaths}`, {
         cwd,
         language,
       });
@@ -89,24 +89,20 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
         language,
       });
       break;
-    case 'php':
+    case 'php': {
       await runComposerInstall();
+      const phpTestPaths = [
+        ...folders.map((f) => `${cwd}/src/${f}`),
+        ...(suites.client ? ['./clients/algoliasearch-client-php/tests/'] : []),
+      ].join(' ');
       await run(
-        `php ./clients/algoliasearch-client-php/vendor/bin/phpunit --testdox --fail-on-warning ${filter((f) => `${cwd}/src/${f}`)}`,
+        `php ./clients/algoliasearch-client-php/vendor/bin/phpunit --testdox --fail-on-warning ${phpTestPaths}`,
         {
           language,
         },
       );
-      // run manual tests
-      if (suites.client) {
-        await run(
-          'php ./clients/algoliasearch-client-php/vendor/bin/phpunit --testdox --fail-on-warning ./clients/algoliasearch-client-php/tests/',
-          {
-            language,
-          },
-        );
-      }
       break;
+    }
     case 'python':
       await run(`poetry lock && poetry sync && poetry run pytest -vv ${filter((f) => `tests/${f}`)}`, {
         cwd,
