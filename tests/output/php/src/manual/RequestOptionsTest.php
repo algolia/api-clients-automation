@@ -34,11 +34,11 @@ class RequestOptionsTest extends TestCase
         };
 
         $config = SearchConfig::create('test-app-id', 'test-api-key')
-            ->setFullHosts(['http://localhost:80'])
+            ->setFullHosts(['http://localhost:9999'])
         ;
 
         $client = new SearchClient(
-            new ApiWrapper($mockHttp, $config, ClusterHosts::create(['http://localhost:80']), new RequestOptionsFactory($config)),
+            new ApiWrapper($mockHttp, $config, ClusterHosts::create(['http://localhost:9999']), new RequestOptionsFactory($config)),
             $config
         );
 

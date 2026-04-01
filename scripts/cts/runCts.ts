@@ -93,7 +93,7 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       await runComposerInstall();
       const phpTestPaths = [
         ...folders.map((f) => `${cwd}/src/${f}`),
-        ...(suites.client ? ['./clients/algoliasearch-client-php/tests/'] : []),
+        ...(suites.client ? [`${cwd}/src/manual/`] : []),
       ].join(' ');
       await run(
         `php ./clients/algoliasearch-client-php/vendor/bin/phpunit --testdox --fail-on-warning ${phpTestPaths}`,

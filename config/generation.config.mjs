@@ -92,7 +92,6 @@ export const patterns = [
 
   // PHP
   '!clients/algoliasearch-client-php/**',
-  '!clients/algoliasearch-client-php/tests/**',
   'clients/algoliasearch-client-php/lib/Api/*',
   'clients/algoliasearch-client-php/lib/Model/**',
   '!clients/algoliasearch-client-php/lib/Model/AbstractModel.php',
@@ -101,6 +100,7 @@ export const patterns = [
   '!clients/algoliasearch-client-php/lib/Configuration/Configuration.php',
   '!clients/algoliasearch-client-php/lib/Configuration/ConfigWithRegion.php',
   'clients/algoliasearch-client-php/composer.json',
+  '!tests/output/php/src/manual/**',
 
   // Python
   'clients/algoliasearch-client-python/**',
