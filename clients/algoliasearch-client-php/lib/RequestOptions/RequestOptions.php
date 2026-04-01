@@ -27,6 +27,19 @@ final class RequestOptions implements \ArrayAccess, \IteratorAggregate
         'connectTimeout',
     ];
 
+    public function __construct(array $options = [])
+    {
+        foreach (['headers', 'queryParameters', 'body'] as $name) {
+            if (isset($options[$name]) && !empty($options[$name])) {
+                $this->{$name} = $options[$name];
+            }
+        }
+
+        $this->readTimeout = $options['readTimeout'];
+        $this->writeTimeout = $options['writeTimeout'];
+        $this->connectTimeout = $options['connectTimeout'];
+    }
+
     public function offsetExists($offset): bool
     {
         return in_array($offset, self::$validOffsets, true) && null !== $this->{$offset};
@@ -50,6 +63,13 @@ final class RequestOptions implements \ArrayAccess, \IteratorAggregate
         $this->{$offset} = $value;
     }
 
+    public function offsetUnset($offset): void
+    {
+        if (in_array($offset, self::$validOffsets, true)) {
+            $this->{$offset} = is_array($this->{$offset}) ? [] : null;
+        }
+    }
+
     public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator([
@@ -60,26 +80,6 @@ final class RequestOptions implements \ArrayAccess, \IteratorAggregate
             'writeTimeout' => $this->writeTimeout,
             'connectTimeout' => $this->connectTimeout,
         ]);
-    }
-
-    public function offsetUnset($offset): void
-    {
-        if (in_array($offset, self::$validOffsets, true)) {
-            $this->{$offset} = is_array($this->{$offset}) ? [] : null;
-        }
-    }
-
-    public function __construct(array $options = [])
-    {
-        foreach (['headers', 'queryParameters', 'body'] as $name) {
-            if (isset($options[$name]) && !empty($options[$name])) {
-                $this->{$name} = $options[$name];
-            }
-        }
-
-        $this->readTimeout = $options['readTimeout'];
-        $this->writeTimeout = $options['writeTimeout'];
-        $this->connectTimeout = $options['connectTimeout'];
     }
 
     /**
