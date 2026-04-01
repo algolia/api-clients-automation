@@ -26,14 +26,14 @@ final class RequestOptionsFactory
 
             $options = new RequestOptions($options);
         } elseif ($options instanceof RequestOptions) {
-            $options = $this->create(array_filter([
+            $options = $this->create([
                 'headers' => $options->getHeaders(),
                 'queryParameters' => $options->getQueryParameters(),
                 'body' => $options->getBody(),
                 'readTimeout' => $options->getReadTimeout(),
                 'writeTimeout' => $options->getWriteTimeout(),
                 'connectTimeout' => $options->getConnectTimeout(),
-            ], fn ($v) => null !== $v && [] !== $v));
+            ]);
         } else {
             throw new \InvalidArgumentException('RequestOptions can only be created from array or from RequestOptions object');
         }
