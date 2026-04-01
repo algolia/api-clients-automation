@@ -47,7 +47,7 @@ public class AbtestingClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.38.3\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.39.0\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }
