@@ -1,3 +1,7 @@
+## [2.38.4](https://github.com/algolia/algoliasearch-client-scala/compare/2.38.3...2.38.4)
+
+- [dc02ad1023](https://github.com/algolia/api-clients-automation/commit/dc02ad1023) chore(deps): dependencies 2026-03-30 ([#6169](https://github.com/algolia/api-clients-automation/pull/6169)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [2.38.3](https://github.com/algolia/algoliasearch-client-scala/compare/2.38.2...2.38.3)
 
 - [600f157a13](https://github.com/algolia/api-clients-automation/commit/600f157a13) fix(specs): remove query parameter that are not accepted by the Composition API ([#6128](https://github.com/algolia/api-clients-automation/pull/6128)) by [@ClaraMuller](https://github.com/ClaraMuller/)
