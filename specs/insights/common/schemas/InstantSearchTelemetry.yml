@@ -1,0 +1,32 @@
+type: object
+title: Instant Search Telemetry Event
+description: |
+  Tracks an initial user interaction with the Agentic Analytics API.
+properties:
+  eventType:
+    $ref: './InstantSearchTelemetryEvent.yml'
+  eventName:
+    $ref: './EventAttributes.yml#/eventName'
+  sessionID:
+    $ref: './EventAttributes.yml#/sessionID'
+  userToken:
+    $ref: './EventAttributes.yml#/userToken'
+  # This is not specified in the Agentic Analytics document but is optional in all other schemas 
+  # Can we keep it here for consistency?
+  authenticatedUserToken:
+    $ref: './EventAttributes.yml#/authenticatedUserToken'
+  timestamp:
+    $ref: './EventAttributes.yml#/timestamp'
+  performance:
+    description: free form object for performance data.
+    type: object
+  widgets:
+    description: free form object for widget information.
+    type: object
+required:
+  - eventName
+  - sessionID
+  - eventType
+  - userToken
+x-discriminator-fields:
+  - eventType
