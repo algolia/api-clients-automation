@@ -1,6 +1,8 @@
 SearchSource:
   title: searchSource
   description: Injected items will originate from a search request performed on the specified index.
+  x-discriminator-fields:
+    - search
   type: object
   additionalProperties: false
   properties:
@@ -23,6 +25,8 @@ SearchSource:
 ExternalSource:
   title: externalSource
   description: Injected items will originate from externally provided objectIDs (that must exist in the index) given at runtime in the run request payload.
+  x-discriminator-fields:
+    - external
   type: object
   additionalProperties: false
   properties:
