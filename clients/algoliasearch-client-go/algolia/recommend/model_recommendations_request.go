@@ -4,6 +4,8 @@ package recommend
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 // RecommendationsRequest - struct for RecommendationsRequest.
@@ -53,6 +55,10 @@ func LookingSimilarQueryAsRecommendationsRequest(v *LookingSimilarQuery) *Recomm
 // Unmarshal JSON data into one or more of the pointers in the struct.
 func (dst *RecommendationsRequest) UnmarshalJSON(data []byte) error {
 	var err error
+	// use discriminator value to speed up the lookup if possible, if not we will try every possibility
+	var jsonDict map[string]any
+
+	_ = json.Unmarshal(data, &jsonDict)
 	// try to unmarshal data into BoughtTogetherQuery
 	err = json.Unmarshal(data, &dst.BoughtTogetherQuery)
 	if err != nil {
@@ -68,10 +74,13 @@ func (dst *RecommendationsRequest) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		dst.TrendingItemsQuery = nil
 	}
-	// try to unmarshal data into TrendingFacetsQuery
-	err = json.Unmarshal(data, &dst.TrendingFacetsQuery)
-	if err != nil {
-		dst.TrendingFacetsQuery = nil
+
+	if utils.HasKey(jsonDict, "facetName") {
+		// try to unmarshal data into TrendingFacetsQuery
+		err = json.Unmarshal(data, &dst.TrendingFacetsQuery)
+		if err != nil {
+			dst.TrendingFacetsQuery = nil
+		}
 	}
 	// try to unmarshal data into LookingSimilarQuery
 	err = json.Unmarshal(data, &dst.LookingSimilarQuery)

@@ -35,7 +35,8 @@ object TaskInputSerializer extends Serializer[TaskInput] {
       json match {
         case value: JObject if value.obj.exists(_._1 == "mapping") => Extraction.extract[StreamingInput](value)
         case value: JObject if value.obj.exists(_._1 == "streams") => Extraction.extract[DockerStreamsInput](value)
-        case value: JObject                                        => Extraction.extract[ShopifyInput](value)
+        case value: JObject if value.obj.exists(_._1 == "market") && value.obj.exists(_._1 == "metafields") =>
+          Extraction.extract[ShopifyInput](value)
         case _ => throw new MappingException("Can't convert " + json + " to TaskInput")
       }
   }

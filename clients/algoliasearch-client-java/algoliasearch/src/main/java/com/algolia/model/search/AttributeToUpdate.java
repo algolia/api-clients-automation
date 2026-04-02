@@ -65,7 +65,7 @@ public interface AttributeToUpdate {
         }
       }
       // deserialize BuiltInOperation
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("_operation") && tree.has("value")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(BuiltInOperation.class);
         } catch (Exception e) {

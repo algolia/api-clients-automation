@@ -180,7 +180,11 @@ public class AttributeToUpdateJsonConverter : JsonConverter<AttributeToUpdate>
         System.Diagnostics.Debug.WriteLine($"Failed to deserialize into string: {exception}");
       }
     }
-    if (root.ValueKind == JsonValueKind.Object)
+    if (
+      root.ValueKind == JsonValueKind.Object
+      && root.TryGetProperty("_operation", out _)
+      && root.TryGetProperty("value", out _)
+    )
     {
       try
       {

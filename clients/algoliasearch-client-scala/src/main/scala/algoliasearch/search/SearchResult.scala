@@ -49,8 +49,8 @@ object SearchResultSerializer extends Serializer[SearchResult] {
       json match {
         case value: JObject if value.obj.exists(_._1 == "facetHits") =>
           Extraction.extract[SearchForFacetValuesResponse](value)
-        case value: JObject => Extraction.extract[SearchResponse](value)
-        case _              => throw new MappingException("Can't convert " + json + " to SearchResult")
+        case value: JObject if value.obj.exists(_._1 == "hits") => Extraction.extract[SearchResponse](value)
+        case _ => throw new MappingException("Can't convert " + json + " to SearchResult")
       }
   }
 

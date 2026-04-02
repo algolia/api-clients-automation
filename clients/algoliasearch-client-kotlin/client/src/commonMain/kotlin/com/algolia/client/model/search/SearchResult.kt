@@ -47,7 +47,7 @@ internal class SearchResultSerializer :
     return when {
       element is JsonObject && element.containsKey("facetHits") ->
         SearchForFacetValuesResponse.serializer()
-      element is JsonObject -> SearchResponse.serializer()
+      element is JsonObject && element.containsKey("hits") -> SearchResponse.serializer()
       else -> throw AlgoliaClientException("Failed to deserialize json element: $element")
     }
   }

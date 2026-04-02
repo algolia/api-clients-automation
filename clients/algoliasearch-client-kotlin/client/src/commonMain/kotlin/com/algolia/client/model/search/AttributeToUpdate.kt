@@ -46,7 +46,8 @@ internal class AttributeToUpdateSerializer :
   ): DeserializationStrategy<AttributeToUpdate> {
     return when {
       element.isString -> AttributeToUpdate.StringValue.serializer()
-      element is JsonObject -> BuiltInOperation.serializer()
+      element is JsonObject && element.containsKey("_operation") && element.containsKey("value") ->
+        BuiltInOperation.serializer()
       else -> throw AlgoliaClientException("Failed to deserialize json element: $element")
     }
   }

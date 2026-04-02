@@ -40,7 +40,7 @@ public interface TaskInput {
         }
       }
       // deserialize ShopifyInput
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("market") && tree.has("metafields")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(ShopifyInput.class);
         } catch (Exception e) {

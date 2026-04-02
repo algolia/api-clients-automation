@@ -59,8 +59,9 @@ object AttributeToUpdateSerializer extends Serializer[AttributeToUpdate] {
     case (TypeInfo(clazz, _), json) if clazz == classOf[AttributeToUpdate] =>
       json match {
         case JString(value) => AttributeToUpdate.StringValue(value)
-        case value: JObject => Extraction.extract[BuiltInOperation](value)
-        case _              => throw new MappingException("Can't convert " + json + " to AttributeToUpdate")
+        case value: JObject if value.obj.exists(_._1 == "_operation") && value.obj.exists(_._1 == "value") =>
+          Extraction.extract[BuiltInOperation](value)
+        case _ => throw new MappingException("Can't convert " + json + " to AttributeToUpdate")
       }
   }
 

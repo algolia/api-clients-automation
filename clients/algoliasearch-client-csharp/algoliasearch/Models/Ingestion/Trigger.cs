@@ -242,7 +242,11 @@ public class TriggerJsonConverter : JsonConverter<Trigger>
         );
       }
     }
-    if (root.ValueKind == JsonValueKind.Object)
+    if (
+      root.ValueKind == JsonValueKind.Object
+      && root.TryGetProperty("cron", out _)
+      && root.TryGetProperty("nextRun", out _)
+    )
     {
       try
       {

@@ -42,10 +42,13 @@ func (dst *SearchResult) UnmarshalJSON(data []byte) error {
 			dst.SearchForFacetValuesResponse = nil
 		}
 	}
-	// try to unmarshal data into SearchResponse
-	err = json.Unmarshal(data, &dst.SearchResponse)
-	if err != nil {
-		dst.SearchResponse = nil
+
+	if utils.HasKey(jsonDict, "hits") {
+		// try to unmarshal data into SearchResponse
+		err = json.Unmarshal(data, &dst.SearchResponse)
+		if err != nil {
+			dst.SearchResponse = nil
+		}
 	}
 
 	// check if at least one type was successfully unmarshaled

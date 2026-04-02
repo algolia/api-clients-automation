@@ -22,7 +22,7 @@ public interface InjectedItemSource {
     public InjectedItemSource deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
       // deserialize SearchSource
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("search")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(SearchSource.class);
         } catch (Exception e) {
@@ -31,7 +31,7 @@ public interface InjectedItemSource {
         }
       }
       // deserialize ExternalSource
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("external")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(ExternalSource.class);
         } catch (Exception e) {

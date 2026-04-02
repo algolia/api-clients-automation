@@ -4,6 +4,8 @@ package search
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 // AttributeToUpdate - struct for AttributeToUpdate.
@@ -29,15 +31,22 @@ func BuiltInOperationAsAttributeToUpdate(v *BuiltInOperation) *AttributeToUpdate
 // Unmarshal JSON data into one or more of the pointers in the struct.
 func (dst *AttributeToUpdate) UnmarshalJSON(data []byte) error {
 	var err error
+	// use discriminator value to speed up the lookup if possible, if not we will try every possibility
+	var jsonDict map[string]any
+
+	_ = json.Unmarshal(data, &jsonDict)
 	// try to unmarshal data into String
 	err = json.Unmarshal(data, &dst.String)
 	if err != nil {
 		dst.String = nil
 	}
-	// try to unmarshal data into BuiltInOperation
-	err = json.Unmarshal(data, &dst.BuiltInOperation)
-	if err != nil {
-		dst.BuiltInOperation = nil
+
+	if utils.HasKey(jsonDict, "_operation") && utils.HasKey(jsonDict, "value") {
+		// try to unmarshal data into BuiltInOperation
+		err = json.Unmarshal(data, &dst.BuiltInOperation)
+		if err != nil {
+			dst.BuiltInOperation = nil
+		}
 	}
 
 	// check if at least one type was successfully unmarshaled

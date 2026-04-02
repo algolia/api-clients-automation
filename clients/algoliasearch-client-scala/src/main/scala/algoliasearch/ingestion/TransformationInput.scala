@@ -33,9 +33,9 @@ object TransformationInputSerializer extends Serializer[TransformationInput] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[TransformationInput] =>
       json match {
-        case value: JObject => Extraction.extract[TransformationCode](value)
-        case value: JObject => Extraction.extract[TransformationNoCode](value)
-        case _              => throw new MappingException("Can't convert " + json + " to TransformationInput")
+        case value: JObject if value.obj.exists(_._1 == "code")  => Extraction.extract[TransformationCode](value)
+        case value: JObject if value.obj.exists(_._1 == "steps") => Extraction.extract[TransformationNoCode](value)
+        case _ => throw new MappingException("Can't convert " + json + " to TransformationInput")
       }
   }
 

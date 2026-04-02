@@ -43,7 +43,8 @@ object BatchCompositionActionSerializer extends Serializer[BatchCompositionActio
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[BatchCompositionAction] =>
       json match {
-        case value: JObject => Extraction.extract[Composition](value)
+        case value: JObject if value.obj.exists(_._1 == "behavior") && value.obj.exists(_._1 == "name") =>
+          Extraction.extract[Composition](value)
         case value: JObject => Extraction.extract[DeleteCompositionAction](value)
         case _              => throw new MappingException("Can't convert " + json + " to BatchCompositionAction")
       }

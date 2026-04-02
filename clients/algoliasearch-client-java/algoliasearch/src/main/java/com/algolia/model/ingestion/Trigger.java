@@ -31,7 +31,7 @@ public interface Trigger {
         }
       }
       // deserialize ScheduleTrigger
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("cron") && tree.has("nextRun")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(ScheduleTrigger.class);
         } catch (Exception e) {

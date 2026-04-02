@@ -56,7 +56,8 @@ internal class TriggerSerializer : JsonContentPolymorphicSerializer<Trigger>(Tri
   override fun selectDeserializer(element: JsonElement): DeserializationStrategy<Trigger> {
     return when {
       element is JsonObject -> OnDemandTrigger.serializer()
-      element is JsonObject -> ScheduleTrigger.serializer()
+      element is JsonObject && element.containsKey("cron") && element.containsKey("nextRun") ->
+        ScheduleTrigger.serializer()
       element is JsonObject -> SubscriptionTrigger.serializer()
       element is JsonObject -> StreamingTrigger.serializer()
       else -> throw AlgoliaClientException("Failed to deserialize json element: $element")

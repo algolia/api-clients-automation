@@ -58,10 +58,13 @@ func (dst *TaskInput) UnmarshalJSON(data []byte) error {
 			dst.DockerStreamsInput = nil
 		}
 	}
-	// try to unmarshal data into ShopifyInput
-	err = json.Unmarshal(data, &dst.ShopifyInput)
-	if err != nil {
-		dst.ShopifyInput = nil
+
+	if utils.HasKey(jsonDict, "market") && utils.HasKey(jsonDict, "metafields") {
+		// try to unmarshal data into ShopifyInput
+		err = json.Unmarshal(data, &dst.ShopifyInput)
+		if err != nil {
+			dst.ShopifyInput = nil
+		}
 	}
 
 	// check if at least one type was successfully unmarshaled

@@ -76,7 +76,7 @@ internal class RecommendationsRequestSerializer :
       element is JsonObject -> BoughtTogetherQuery.serializer()
       element is JsonObject -> RelatedQuery.serializer()
       element is JsonObject -> TrendingItemsQuery.serializer()
-      element is JsonObject -> TrendingFacetsQuery.serializer()
+      element is JsonObject && element.containsKey("facetName") -> TrendingFacetsQuery.serializer()
       element is JsonObject -> LookingSimilarQuery.serializer()
       else -> throw AlgoliaClientException("Failed to deserialize json element: $element")
     }

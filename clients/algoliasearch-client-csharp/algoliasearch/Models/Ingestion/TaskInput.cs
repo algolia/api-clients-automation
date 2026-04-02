@@ -226,7 +226,11 @@ public class TaskInputJsonConverter : JsonConverter<TaskInput>
         );
       }
     }
-    if (root.ValueKind == JsonValueKind.Object)
+    if (
+      root.ValueKind == JsonValueKind.Object
+      && root.TryGetProperty("market", out _)
+      && root.TryGetProperty("metafields", out _)
+    )
     {
       try
       {

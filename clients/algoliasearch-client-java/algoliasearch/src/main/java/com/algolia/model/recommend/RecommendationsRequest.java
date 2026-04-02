@@ -49,7 +49,7 @@ public interface RecommendationsRequest {
         }
       }
       // deserialize TrendingFacetsQuery
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("facetName")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(TrendingFacetsQuery.class);
         } catch (Exception e) {

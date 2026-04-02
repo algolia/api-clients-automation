@@ -36,7 +36,8 @@ object TriggerSerializer extends Serializer[Trigger] {
     case (TypeInfo(clazz, _), json) if clazz == classOf[Trigger] =>
       json match {
         case value: JObject => Extraction.extract[OnDemandTrigger](value)
-        case value: JObject => Extraction.extract[ScheduleTrigger](value)
+        case value: JObject if value.obj.exists(_._1 == "cron") && value.obj.exists(_._1 == "nextRun") =>
+          Extraction.extract[ScheduleTrigger](value)
         case value: JObject => Extraction.extract[SubscriptionTrigger](value)
         case value: JObject => Extraction.extract[StreamingTrigger](value)
         case _              => throw new MappingException("Can't convert " + json + " to Trigger")

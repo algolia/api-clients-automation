@@ -50,7 +50,8 @@ internal class TaskInputSerializer : JsonContentPolymorphicSerializer<TaskInput>
     return when {
       element is JsonObject && element.containsKey("mapping") -> StreamingInput.serializer()
       element is JsonObject && element.containsKey("streams") -> DockerStreamsInput.serializer()
-      element is JsonObject -> ShopifyInput.serializer()
+      element is JsonObject && element.containsKey("market") && element.containsKey("metafields") ->
+        ShopifyInput.serializer()
       else -> throw AlgoliaClientException("Failed to deserialize json element: $element")
     }
   }

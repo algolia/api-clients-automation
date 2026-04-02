@@ -45,7 +45,7 @@ object RulesBatchCompositionActionSerializer extends Serializer[RulesBatchCompos
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[RulesBatchCompositionAction] =>
       json match {
-        case value: JObject => Extraction.extract[CompositionRule](value)
+        case value: JObject if value.obj.exists(_._1 == "consequence") => Extraction.extract[CompositionRule](value)
         case value: JObject => Extraction.extract[DeleteCompositionRuleAction](value)
         case _              => throw new MappingException("Can't convert " + json + " to RulesBatchCompositionAction")
       }

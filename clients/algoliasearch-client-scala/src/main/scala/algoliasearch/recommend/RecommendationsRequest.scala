@@ -45,12 +45,12 @@ object RecommendationsRequestSerializer extends Serializer[RecommendationsReques
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[RecommendationsRequest] =>
       json match {
-        case value: JObject => Extraction.extract[BoughtTogetherQuery](value)
-        case value: JObject => Extraction.extract[RelatedQuery](value)
-        case value: JObject => Extraction.extract[TrendingItemsQuery](value)
-        case value: JObject => Extraction.extract[TrendingFacetsQuery](value)
-        case value: JObject => Extraction.extract[LookingSimilarQuery](value)
-        case _              => throw new MappingException("Can't convert " + json + " to RecommendationsRequest")
+        case value: JObject                                          => Extraction.extract[BoughtTogetherQuery](value)
+        case value: JObject                                          => Extraction.extract[RelatedQuery](value)
+        case value: JObject                                          => Extraction.extract[TrendingItemsQuery](value)
+        case value: JObject if value.obj.exists(_._1 == "facetName") => Extraction.extract[TrendingFacetsQuery](value)
+        case value: JObject                                          => Extraction.extract[LookingSimilarQuery](value)
+        case _ => throw new MappingException("Can't convert " + json + " to RecommendationsRequest")
       }
   }
 

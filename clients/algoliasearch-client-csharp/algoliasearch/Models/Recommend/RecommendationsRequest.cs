@@ -304,7 +304,7 @@ public class RecommendationsRequestJsonConverter : JsonConverter<Recommendations
         );
       }
     }
-    if (root.ValueKind == JsonValueKind.Object)
+    if (root.ValueKind == JsonValueKind.Object && root.TryGetProperty("facetName", out _))
     {
       try
       {

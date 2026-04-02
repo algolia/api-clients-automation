@@ -49,7 +49,7 @@ public interface SearchResult<T> {
         }
       }
       // deserialize SearchResponse
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("hits")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           // For generic types, the innerType is erased by Java, we need to use the contextual type.
           JavaType innerType = ctxt.getTypeFactory().constructParametricType(SearchResponse.class, returnType);

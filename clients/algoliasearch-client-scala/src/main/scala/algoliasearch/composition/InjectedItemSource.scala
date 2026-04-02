@@ -43,9 +43,9 @@ object InjectedItemSourceSerializer extends Serializer[InjectedItemSource] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[InjectedItemSource] =>
       json match {
-        case value: JObject => Extraction.extract[SearchSource](value)
-        case value: JObject => Extraction.extract[ExternalSource](value)
-        case _              => throw new MappingException("Can't convert " + json + " to InjectedItemSource")
+        case value: JObject if value.obj.exists(_._1 == "search")   => Extraction.extract[SearchSource](value)
+        case value: JObject if value.obj.exists(_._1 == "external") => Extraction.extract[ExternalSource](value)
+        case _ => throw new MappingException("Can't convert " + json + " to InjectedItemSource")
       }
   }
 

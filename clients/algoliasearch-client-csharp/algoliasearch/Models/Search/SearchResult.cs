@@ -222,7 +222,7 @@ public class SearchResultJsonConverter<T> : JsonConverter<SearchResult<T>>
         );
       }
     }
-    if (root.ValueKind == JsonValueKind.Object)
+    if (root.ValueKind == JsonValueKind.Object && root.TryGetProperty("hits", out _))
     {
       try
       {
