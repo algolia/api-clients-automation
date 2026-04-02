@@ -105,7 +105,6 @@ export const patterns = [
   // Python
   'clients/algoliasearch-client-python/**',
   '!clients/algoliasearch-client-python/algoliasearch/http/**',
-  '!clients/algoliasearch-client-python/algoliasearch/tests/**',
   '!clients/algoliasearch-client-python/algoliasearch/py.typed',
   'clients/algoliasearch-client-python/algoliasearch/http/__init__.py',
   '!clients/algoliasearch-client-python/*',
@@ -117,6 +116,7 @@ export const patterns = [
   'tests/output/python/poetry.lock',
   '!tests/output/python/**/__init__.py',
   'tests/output/python/requirements.txt',
+  '!tests/output/python/tests/manual/**',
 
   // Ruby
   '!clients/algoliasearch-client-ruby/**',

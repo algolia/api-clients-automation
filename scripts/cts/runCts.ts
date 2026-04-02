@@ -89,7 +89,7 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
         language,
       });
       break;
-    case 'php': {
+    case 'php':
       await runComposerInstall();
       const phpTestPaths = [
         ...folders.map((f) => `${cwd}/src/${f}`),
@@ -102,22 +102,19 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
         },
       );
       break;
-    }
     case 'python':
-      await run(`poetry lock && poetry sync && poetry run pytest -vv ${filter((f) => `tests/${f}`)}`, {
+      await run(`poetry lock && poetry sync`, {
         cwd,
         language,
       });
-      // run manual timeout tests
-      if (suites.client) {
-        await run(
-          'poetry run pytest -vv ../../../clients/algoliasearch-client-python/algoliasearch/tests/test_timeout_integration.py',
-          {
-            cwd,
-            language,
-          },
-        );
-      }
+      const pythonTestPaths = [...folders.map((f) => `tests/${f}`), ...(suites.client ? ['tests/manual/'] : [])].join(
+        ' ',
+      );
+
+      await run(`poetry run pytest -vv ${pythonTestPaths}`, {
+        cwd,
+        language,
+      });
       break;
     case 'ruby':
       await run(`bundle install && bundle exec rake ${filter((f) => `test:${f}`)} --trace`, {
