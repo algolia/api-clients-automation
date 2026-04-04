@@ -29,7 +29,7 @@
     "@types/folder-hash": "4.0.4",
     "@types/fs-extra": "11.0.4",
     "@types/js-yaml": "4.0.9",
-    "@types/node": "24.12.0",
+    "@types/node": "24.12.2",
     "@types/semver": "7.7.1",
     "@types/spinnies": "0.5.3",
     "chai": "6.2.2",
