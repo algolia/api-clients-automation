@@ -6207,9 +6207,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:6.1.0":
-  version: 6.1.0
-  resolution: "knip@npm:6.1.0"
+"knip@npm:6.3.0":
+  version: 6.3.0
+  resolution: "knip@npm:6.3.0"
   dependencies:
     "@nodelib/fs.walk": "npm:^1.2.3"
     fast-glob: "npm:^3.3.3"
@@ -6229,7 +6229,7 @@ __metadata:
   bin:
     knip: bin/knip.js
     knip-bun: bin/knip-bun.js
-  checksum: 10/e748ca17957216498fce0789ae5126e836063144682419998139c89b8ab56ff4d0887056f90572390db97d06e80f96553d772c5077883c871f83cf0fcd8db992
+  checksum: 10/545a2730d2f00e52b78a85f73b5a4d1c8eeaaea85feac614dd2196d8313c6f9800b416f3c8a3df3676857e855f22133d2b3e472a118c17fe7851b5dd2da12cd2
   languageName: node
   linkType: hard
 
@@ -8256,7 +8256,7 @@ __metadata:
     folder-hash: "npm:4.1.2"
     fs-extra: "npm:11.3.4"
     js-yaml: "npm:4.1.1"
-    knip: "npm:6.1.0"
+    knip: "npm:6.3.0"
     micromatch: "npm:4.0.8"
     semver: "npm:7.7.4"
     spinnies: "npm:0.5.1"
