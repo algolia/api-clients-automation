@@ -1,3 +1,7 @@
+## [4.37.3](https://github.com/algolia/algoliasearch-client-go/compare/4.37.2...4.37.3)
+
+- [16b17eea7b](https://github.com/algolia/api-clients-automation/commit/16b17eea7b) fix(clients): add discriminator fields for InjectedItemSource oneOf ([#6170](https://github.com/algolia/api-clients-automation/pull/6170)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+
 ## [4.37.2](https://github.com/algolia/algoliasearch-client-go/compare/4.37.1...4.37.2)
 
 - [600f157a13](https://github.com/algolia/api-clients-automation/commit/600f157a13) fix(specs): remove query parameter that are not accepted by the Composition API ([#6128](https://github.com/algolia/api-clients-automation/pull/6128)) by [@ClaraMuller](https://github.com/ClaraMuller/)
