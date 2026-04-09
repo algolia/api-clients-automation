@@ -49,3 +49,38 @@ injectedItemExternalSource:
 externalOrdering:
   enum: ['default', 'userDefined']
   default: 'default'
+
+RecommendSource:
+  title: injectedItemRecommendSource
+  description: Injected items will originate from a recommendation request performed on the specified index.
+  x-discriminator-fields:
+    - recommend
+  type: object
+  additionalProperties: false
+  properties:
+    recommend:
+      title: recommend
+      type: object
+      additionalProperties: false
+      properties:
+        indexName:
+          type: string
+          description: Index to retrieve recommendations from.
+          example: Products
+        model:
+          $ref: './RecommendModel.yml#/model'
+        threshold:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: Minimum score a recommendation must have to be included.
+        queryParameters:
+          $ref: './SearchQueryParams.yml#/injectedItemsQueryParameters'
+        fallbackParameters:
+          $ref: './SearchQueryParams.yml#/injectedItemsQueryParameters'
+      required:
+        - indexName
+        - model
+        - threshold
+  required:
+    - recommend
