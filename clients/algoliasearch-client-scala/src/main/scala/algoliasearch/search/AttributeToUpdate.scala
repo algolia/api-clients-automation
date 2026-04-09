@@ -58,16 +58,17 @@ object AttributeToUpdateSerializer extends Serializer[AttributeToUpdate] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[AttributeToUpdate] =>
       json match {
+        case value: JObject if value.obj.exists(_._1 == "_operation") && value.obj.exists(_._1 == "value") =>
+          Extraction.extract[BuiltInOperation](value)
         case JString(value) => AttributeToUpdate.StringValue(value)
-        case value: JObject => Extraction.extract[BuiltInOperation](value)
         case _              => throw new MappingException("Can't convert " + json + " to AttributeToUpdate")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: AttributeToUpdate =>
     value match {
-      case AttributeToUpdate.StringValue(value) => JString(value)
       case value: BuiltInOperation              => Extraction.decompose(value)(format - this)
+      case AttributeToUpdate.StringValue(value) => JString(value)
     }
   }
 }

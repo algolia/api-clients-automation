@@ -33,18 +33,19 @@ object TaskInputSerializer extends Serializer[TaskInput] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[TaskInput] =>
       json match {
+        case value: JObject if value.obj.exists(_._1 == "market") && value.obj.exists(_._1 == "metafields") =>
+          Extraction.extract[ShopifyInput](value)
         case value: JObject if value.obj.exists(_._1 == "mapping") => Extraction.extract[StreamingInput](value)
         case value: JObject if value.obj.exists(_._1 == "streams") => Extraction.extract[DockerStreamsInput](value)
-        case value: JObject                                        => Extraction.extract[ShopifyInput](value)
         case _ => throw new MappingException("Can't convert " + json + " to TaskInput")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: TaskInput =>
     value match {
+      case value: ShopifyInput       => Extraction.decompose(value)(format - this)
       case value: StreamingInput     => Extraction.decompose(value)(format - this)
       case value: DockerStreamsInput => Extraction.decompose(value)(format - this)
-      case value: ShopifyInput       => Extraction.decompose(value)(format - this)
     }
   }
 }

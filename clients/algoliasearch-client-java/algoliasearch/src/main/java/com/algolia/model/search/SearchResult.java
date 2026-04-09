@@ -37,19 +37,8 @@ public interface SearchResult<T> {
     @Override
     public SearchResult<T> deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-      // deserialize SearchForFacetValuesResponse
-      if (tree.isObject() && tree.has("facetHits")) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(SearchForFacetValuesResponse.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest(
-            "Failed to deserialize oneOf SearchForFacetValuesResponse (error: " + e.getMessage() + ") (type: SearchForFacetValuesResponse)"
-          );
-        }
-      }
       // deserialize SearchResponse
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("hits")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           // For generic types, the innerType is erased by Java, we need to use the contextual type.
           JavaType innerType = ctxt.getTypeFactory().constructParametricType(SearchResponse.class, returnType);
@@ -60,6 +49,17 @@ public interface SearchResult<T> {
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf SearchResponse (error: " + e.getMessage() + ") (type: SearchResponse)");
+        }
+      }
+      // deserialize SearchForFacetValuesResponse
+      if (tree.isObject() && tree.has("facetHits")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(SearchForFacetValuesResponse.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf SearchForFacetValuesResponse (error: " + e.getMessage() + ") (type: SearchForFacetValuesResponse)"
+          );
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));

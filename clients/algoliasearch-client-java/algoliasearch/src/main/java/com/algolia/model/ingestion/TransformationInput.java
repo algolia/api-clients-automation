@@ -22,7 +22,7 @@ public interface TransformationInput {
     public TransformationInput deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
       // deserialize TransformationCode
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("code")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(TransformationCode.class);
         } catch (Exception e) {
@@ -31,7 +31,7 @@ public interface TransformationInput {
         }
       }
       // deserialize TransformationNoCode
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("steps")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(TransformationNoCode.class);
         } catch (Exception e) {

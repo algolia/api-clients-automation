@@ -45,22 +45,22 @@ object RecommendationsRequestSerializer extends Serializer[RecommendationsReques
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[RecommendationsRequest] =>
       json match {
-        case value: JObject => Extraction.extract[BoughtTogetherQuery](value)
-        case value: JObject => Extraction.extract[RelatedQuery](value)
-        case value: JObject => Extraction.extract[TrendingItemsQuery](value)
-        case value: JObject => Extraction.extract[TrendingFacetsQuery](value)
-        case value: JObject => Extraction.extract[LookingSimilarQuery](value)
-        case _              => throw new MappingException("Can't convert " + json + " to RecommendationsRequest")
+        case value: JObject if value.obj.exists(_._1 == "facetName") => Extraction.extract[TrendingFacetsQuery](value)
+        case value: JObject                                          => Extraction.extract[BoughtTogetherQuery](value)
+        case value: JObject                                          => Extraction.extract[RelatedQuery](value)
+        case value: JObject                                          => Extraction.extract[TrendingItemsQuery](value)
+        case value: JObject                                          => Extraction.extract[LookingSimilarQuery](value)
+        case _ => throw new MappingException("Can't convert " + json + " to RecommendationsRequest")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = {
     case value: RecommendationsRequest =>
       value match {
+        case value: TrendingFacetsQuery => Extraction.decompose(value)(format - this)
         case value: BoughtTogetherQuery => Extraction.decompose(value)(format - this)
         case value: RelatedQuery        => Extraction.decompose(value)(format - this)
         case value: TrendingItemsQuery  => Extraction.decompose(value)(format - this)
-        case value: TrendingFacetsQuery => Extraction.decompose(value)(format - this)
         case value: LookingSimilarQuery => Extraction.decompose(value)(format - this)
       }
   }

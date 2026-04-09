@@ -35,8 +35,9 @@ object TriggerSerializer extends Serializer[Trigger] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[Trigger] =>
       json match {
+        case value: JObject if value.obj.exists(_._1 == "cron") && value.obj.exists(_._1 == "nextRun") =>
+          Extraction.extract[ScheduleTrigger](value)
         case value: JObject => Extraction.extract[OnDemandTrigger](value)
-        case value: JObject => Extraction.extract[ScheduleTrigger](value)
         case value: JObject => Extraction.extract[SubscriptionTrigger](value)
         case value: JObject => Extraction.extract[StreamingTrigger](value)
         case _              => throw new MappingException("Can't convert " + json + " to Trigger")
@@ -45,8 +46,8 @@ object TriggerSerializer extends Serializer[Trigger] {
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: Trigger =>
     value match {
-      case value: OnDemandTrigger     => Extraction.decompose(value)(format - this)
       case value: ScheduleTrigger     => Extraction.decompose(value)(format - this)
+      case value: OnDemandTrigger     => Extraction.decompose(value)(format - this)
       case value: SubscriptionTrigger => Extraction.decompose(value)(format - this)
       case value: StreamingTrigger    => Extraction.decompose(value)(format - this)
     }

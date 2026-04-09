@@ -47,17 +47,17 @@ object SearchResultSerializer extends Serializer[SearchResult] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[SearchResult] =>
       json match {
+        case value: JObject if value.obj.exists(_._1 == "hits") => Extraction.extract[SearchResponse](value)
         case value: JObject if value.obj.exists(_._1 == "facetHits") =>
           Extraction.extract[SearchForFacetValuesResponse](value)
-        case value: JObject => Extraction.extract[SearchResponse](value)
-        case _              => throw new MappingException("Can't convert " + json + " to SearchResult")
+        case _ => throw new MappingException("Can't convert " + json + " to SearchResult")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: SearchResult =>
     value match {
-      case value: SearchForFacetValuesResponse => Extraction.decompose(value)(format - this)
       case value: SearchResponse               => Extraction.decompose(value)(format - this)
+      case value: SearchForFacetValuesResponse => Extraction.decompose(value)(format - this)
     }
   }
 }
