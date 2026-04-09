@@ -1,13 +1,12 @@
 SearchSource:
-  title: searchSource
-  description: Injected items will originate from a search request performed on the specified index.
+  description: Organic result set will originate from a search request performed on the specified index.
   x-discriminator-fields:
     - search
   type: object
   additionalProperties: false
   properties:
     search:
-      title: search
+      title: mainSearchSource
       type: object
       additionalProperties: false
       properties:
@@ -16,22 +15,21 @@ SearchSource:
           description: Composition Index name.
           example: Products
         params:
-          $ref: './QueryParams.yml#/injectedItemsQueryParameters'
+          $ref: './SearchQueryParams.yml#/mainInjectionQueryParameters'
       required:
         - index
   required:
     - search
 
-ExternalSource:
-  title: externalSource
-  description: Injected items will originate from externally provided objectIDs (that must exist in the index) given at runtime in the run request payload.
+RecommendSource:
+  description: Organic result set will originate from a recommend request.
   x-discriminator-fields:
-    - external
+    - recommend
   type: object
   additionalProperties: false
   properties:
-    external:
-      title: external
+    recommend:
+      title: mainRecommendSource
       type: object
       additionalProperties: false
       properties:
@@ -39,15 +37,7 @@ ExternalSource:
           type: string
           description: Composition Index name.
           example: Products
-        params:
-          $ref: './QueryParams.yml#/injectedItemsQueryParameters'
-        ordering:
-          $ref: '#/externalOrdering'
       required:
         - index
   required:
-    - external
-
-externalOrdering:
-  enum: ['default', 'userDefined']
-  default: 'default'
+    - recommend
