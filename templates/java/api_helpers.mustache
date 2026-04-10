@@ -69,6 +69,7 @@ public <T> List<WatchResponse> chunkedPush(
     }
 
     if (waitForTasks && responses.size() > 0 && (responses.size() % waitBatchSize == 0 || !it.hasNext())) {
+      long waitStartTime = System.currentTimeMillis();
       responses
         .subList(offset, Math.min(offset + waitBatchSize, responses.size()))
         .forEach(response -> {
@@ -93,6 +94,17 @@ public <T> List<WatchResponse> chunkedPush(
         });
 
       offset += waitBatchSize;
+
+      if (it.hasNext()) {
+        long remainingMs = waitBatchSize * 100L - (System.currentTimeMillis() - waitStartTime);
+        if (remainingMs > 0) {
+          try {
+            Thread.sleep(remainingMs);
+          } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+          }
+        }
+      }
     }
 
     if (!it.hasNext()) {
