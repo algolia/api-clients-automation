@@ -21,6 +21,15 @@ public interface RecommendationsRequest {
     @Override
     public RecommendationsRequest deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
+      // deserialize TrendingFacetsQuery
+      if (tree.isObject() && tree.has("facetName")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(TrendingFacetsQuery.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf TrendingFacetsQuery (error: " + e.getMessage() + ") (type: TrendingFacetsQuery)");
+        }
+      }
       // deserialize BoughtTogetherQuery
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -46,15 +55,6 @@ public interface RecommendationsRequest {
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf TrendingItemsQuery (error: " + e.getMessage() + ") (type: TrendingItemsQuery)");
-        }
-      }
-      // deserialize TrendingFacetsQuery
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(TrendingFacetsQuery.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf TrendingFacetsQuery (error: " + e.getMessage() + ") (type: TrendingFacetsQuery)");
         }
       }
       // deserialize LookingSimilarQuery

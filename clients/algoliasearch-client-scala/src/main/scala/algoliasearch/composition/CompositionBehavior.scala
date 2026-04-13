@@ -43,9 +43,11 @@ object CompositionBehaviorSerializer extends Serializer[CompositionBehavior] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[CompositionBehavior] =>
       json match {
-        case value: JObject => Extraction.extract[CompositionInjectionBehavior](value)
-        case value: JObject => Extraction.extract[CompositionMultifeedBehavior](value)
-        case _              => throw new MappingException("Can't convert " + json + " to CompositionBehavior")
+        case value: JObject if value.obj.exists(_._1 == "injection") =>
+          Extraction.extract[CompositionInjectionBehavior](value)
+        case value: JObject if value.obj.exists(_._1 == "multifeed") =>
+          Extraction.extract[CompositionMultifeedBehavior](value)
+        case _ => throw new MappingException("Can't convert " + json + " to CompositionBehavior")
       }
   }
 
