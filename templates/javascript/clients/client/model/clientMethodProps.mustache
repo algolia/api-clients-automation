@@ -149,12 +149,18 @@ export type PartialUpdateObjectsOptions = Pick<
    *To be provided if non-existing objects are passed, otherwise, the call will fail.
    */
   createIfNotExists?: boolean | undefined;
+  useThrottling?: boolean | undefined;
 };
 
 export type SaveObjectsOptions = Pick<
   ChunkedBatchOptions,
   'indexName' | 'objects' | 'waitForTasks' | 'batchSize'
->;
+> & {
+  /**
+   * Whether or not to use throttling to smooth traffic when waitForTasks is true. Defaults to false.
+   */
+  useThrottling?: boolean | undefined;
+};
 
 export type ChunkedBatchOptions = ReplaceAllObjectsOptions & {
   /**

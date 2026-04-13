@@ -365,9 +365,9 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         $objects,
         $action = 'addObject',
         $waitForTasks = true,
-        $useThrottling = false,
         $batchSize = 1000,
         $referenceIndexName = null,
+        $useThrottling = false,
         $requestOptions = []
     ) {
         $responses = [];
@@ -756,7 +756,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
           throw new \InvalidArgumentException('`setTransformationRegion` must have been called before calling this method.');
       }
 
-      return $this->ingestionTransporter->chunkedPush($indexName, $objects, 'addObject', $waitForTasks, $useThrottling, $batchSize, null, $requestOptions);
+      return $this->ingestionTransporter->chunkedPush($indexName, $objects, 'addObject', $waitForTasks, $batchSize, null, $useThrottling, $requestOptions);
     }
 
     /**
@@ -812,7 +812,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
           throw new \InvalidArgumentException('`setTransformationRegion` must have been called before calling this method.');
       }
 
-      return $this->ingestionTransporter->chunkedPush($indexName, $objects, ($createIfNotExists == TRUE) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, $useThrottling, $batchSize, null, $requestOptions);
+      return $this->ingestionTransporter->chunkedPush($indexName, $objects, ($createIfNotExists == TRUE) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, $batchSize, null, $useThrottling, $requestOptions);
     }
 
     /**
