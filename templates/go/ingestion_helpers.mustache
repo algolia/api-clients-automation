@@ -103,10 +103,12 @@ func (c *APIClient) ChunkedPush(indexName string, objects []map[string]any, acti
 
 			offset += waitBatchSize
 
-			if i != len(objects)-1 {
-				remaining := time.Duration(waitBatchSize*100)*time.Millisecond - time.Since(waitStartTime)
-				if remaining > 0 {
-					time.Sleep(remaining)
+			if conf.useThrottling {
+				if i != len(objects)-1 {
+					remaining := time.Duration(waitBatchSize*100)*time.Millisecond - time.Since(waitStartTime)
+					if remaining > 0 {
+						time.Sleep(remaining)
+					}
 				}
 			}
 		}

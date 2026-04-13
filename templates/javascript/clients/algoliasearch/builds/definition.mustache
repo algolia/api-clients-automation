@@ -113,7 +113,7 @@ export function algoliasearch(
   return {
     ...client,
 
-    async saveObjectsWithTransformation({ indexName, objects, waitForTasks }, requestOptions): Promise<Array<WatchResponse>> {
+    async saveObjectsWithTransformation({ indexName, objects, waitForTasks, useThrottling }, requestOptions): Promise<Array<WatchResponse>> {
       if (!ingestionTransporter) {
         throw new Error('`transformation.region` must be provided at client instantiation before calling this method.');
       }
@@ -122,11 +122,11 @@ export function algoliasearch(
         throw new Error('`region` must be provided when leveraging the transformation pipeline');
       }
 
-      return ingestionTransporter.chunkedPush({ indexName, objects, action: 'addObject', waitForTasks }, requestOptions);
+      return ingestionTransporter.chunkedPush({ indexName, objects, action: 'addObject', waitForTasks, useThrottling }, requestOptions);
     },
 
     async partialUpdateObjectsWithTransformation(
-      { indexName, objects, createIfNotExists, waitForTasks },
+      { indexName, objects, createIfNotExists, waitForTasks, useThrottling },
       requestOptions,
     ): Promise<Array<WatchResponse>> {
       if (!ingestionTransporter) {
@@ -137,7 +137,7 @@ export function algoliasearch(
         throw new Error('`region` must be provided when leveraging the transformation pipeline');
       }
 
-      return ingestionTransporter.chunkedPush({ indexName, objects, action: createIfNotExists ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', waitForTasks }, requestOptions);
+      return ingestionTransporter.chunkedPush({ indexName, objects, action: createIfNotExists ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', waitForTasks, useThrottling }, requestOptions);
     },
 
     async replaceAllObjectsWithTransformation(

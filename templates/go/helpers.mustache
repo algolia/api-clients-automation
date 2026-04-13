@@ -27,6 +27,13 @@ func WithWaitForTasks(waitForTasks bool) chunkedBatchOption {
 	})
 }
 
+// WithThrottling whether or not we should use throttling for the batch request.
+func WithThrottling(useThrottling bool) chunkedBatchOption {
+	return chunkedBatchOption(func(c *config) {
+		c.useThrottling = useThrottling
+	})
+}
+
 // WithBatchSize the size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
 func WithBatchSize(batchSize int) chunkedBatchOption {
 	return chunkedBatchOption(func(c *config) {

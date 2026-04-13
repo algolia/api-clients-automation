@@ -365,6 +365,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         $objects,
         $action = 'addObject',
         $waitForTasks = true,
+        $useThrottling = false,
         $batchSize = 1000,
         $referenceIndexName = null,
         $requestOptions = []
@@ -425,7 +426,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
                 }
                 $offset = $offset + $waitBatchSize;
 
-                if ($count < sizeof($objects)) {
+                if ($useThrottling && $count < sizeof($objects)) {
                     $elapsedMs = (microtime(true) - $waitStartTime) * 1000;
                     $remainingMs = $waitBatchSize * 100 - $elapsedMs;
                     if ($remainingMs > 0) {
@@ -749,13 +750,13 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
      * @param int    $batchSize      The size of the chunk of `objects`. The number of `push` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param array  $requestOptions Request options
      */
-    public function saveObjectsWithTransformation($indexName, $objects, $waitForTasks = false, $batchSize = 1000, $requestOptions = [])
+    public function saveObjectsWithTransformation($indexName, $objects, $waitForTasks = false, $useThrottling = false, $batchSize = 1000, $requestOptions = [])
     {
       if (null == $this->ingestionTransporter) {
           throw new \InvalidArgumentException('`setTransformationRegion` must have been called before calling this method.');
       }
 
-      return $this->ingestionTransporter->chunkedPush($indexName, $objects, 'addObject', $waitForTasks, $batchSize, null, $requestOptions);
+      return $this->ingestionTransporter->chunkedPush($indexName, $objects, 'addObject', $waitForTasks, $useThrottling, $batchSize, null, $requestOptions);
     }
 
     /**
@@ -805,13 +806,13 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
      * @param int    $batchSize         The size of the chunk of `objects`. The number of `push` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param array  $requestOptions    Request options
      */
-    public function partialUpdateObjectsWithTransformation($indexName, $objects, $createIfNotExists, $waitForTasks = false, $batchSize = 1000, $requestOptions = [])
+    public function partialUpdateObjectsWithTransformation($indexName, $objects, $createIfNotExists, $waitForTasks = false, $useThrottling = false, $batchSize = 1000, $requestOptions = [])
     {
       if (null == $this->ingestionTransporter) {
           throw new \InvalidArgumentException('`setTransformationRegion` must have been called before calling this method.');
       }
 
-      return $this->ingestionTransporter->chunkedPush($indexName, $objects, ($createIfNotExists == TRUE) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, $batchSize, null, $requestOptions);
+      return $this->ingestionTransporter->chunkedPush($indexName, $objects, ($createIfNotExists == TRUE) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, $useThrottling, $batchSize, null, $requestOptions);
     }
 
     /**
