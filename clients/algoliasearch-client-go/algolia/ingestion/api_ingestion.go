@@ -25,8 +25,9 @@ type config struct {
 	timeouts     transport.RequestConfiguration
 
 	// -- ChunkedPush options
-	waitForTasks bool
-	batchSize    int
+	waitForTasks  bool
+	useThrottling bool
+	batchSize     int
 
 	// -- Iterable options
 	maxRetries int
@@ -9289,6 +9290,13 @@ func WithWaitForTasks(waitForTasks bool) chunkedBatchOption {
 	})
 }
 
+// WithThrottling whether or not we should use throttling for the batch request.
+func WithThrottling(useThrottling bool) chunkedBatchOption {
+	return chunkedBatchOption(func(c *config) {
+		c.useThrottling = useThrottling
+	})
+}
+
 // WithBatchSize the size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
 func WithBatchSize(batchSize int) chunkedBatchOption {
 	return chunkedBatchOption(func(c *config) {
@@ -9408,15 +9416,15 @@ func (c *APIClient) ChunkedPush(
 		batchSize:    1000,
 	}
 
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
 	offset := 0
 
 	waitBatchSize := conf.batchSize / 10
 	if waitBatchSize < 1 {
 		waitBatchSize = conf.batchSize
-	}
-
-	for _, opt := range opts {
-		opt.apply(&conf)
 	}
 
 	records := make([]map[string]any, 0, len(objects)%conf.batchSize)
@@ -9462,10 +9470,12 @@ func (c *APIClient) ChunkedPush(
 			var waitableResponses []WatchResponse
 
 			if len(responses) > offset+waitBatchSize {
-				waitableResponses = responses[offset:waitBatchSize]
+				waitableResponses = responses[offset : offset+waitBatchSize]
 			} else {
 				waitableResponses = responses[offset:]
 			}
+
+			waitStartTime := time.Now()
 
 			for _, resp := range waitableResponses {
 				_, err := CreateIterable(
@@ -9492,6 +9502,15 @@ func (c *APIClient) ChunkedPush(
 			}
 
 			offset += waitBatchSize
+
+			if conf.useThrottling {
+				if i != len(objects)-1 {
+					remaining := time.Duration(waitBatchSize*100)*time.Millisecond - time.Since(waitStartTime)
+					if remaining > 0 {
+						time.Sleep(remaining)
+					}
+				}
+			}
 		}
 	}
 

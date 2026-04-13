@@ -10027,6 +10027,8 @@ public class IngestionClient extends ApiClient {
    * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
    *     processed, this operation may slow the total execution time of this method but is more
    *     reliable.
+   * @param useThrottling - Whether or not we should apply throttling (sleep) between batch
+   *     processing to avoid overloading the API.
    * @param batchSize - The size of the chunk of `objects`. The number of `batch` calls will be
    *     equal to `length(objects) / batchSize`. Defaults to 1000.
    * @param referenceIndexName - This is required when targeting an index that does not have a push
@@ -10040,6 +10042,7 @@ public class IngestionClient extends ApiClient {
     Iterable<T> objects,
     Action action,
     boolean waitForTasks,
+    boolean useThrottling,
     int batchSize,
     String referenceIndexName,
     RequestOptions requestOptions
@@ -10071,6 +10074,7 @@ public class IngestionClient extends ApiClient {
       }
 
       if (waitForTasks && responses.size() > 0 && (responses.size() % waitBatchSize == 0 || !it.hasNext())) {
+        long waitStartTime = System.currentTimeMillis();
         responses
           .subList(offset, Math.min(offset + waitBatchSize, responses.size()))
           .forEach(response -> {
@@ -10095,6 +10099,17 @@ public class IngestionClient extends ApiClient {
           });
 
         offset += waitBatchSize;
+
+        if (useThrottling && it.hasNext()) {
+          long remainingMs = waitBatchSize * 100L - (System.currentTimeMillis() - waitStartTime);
+          if (remainingMs > 0) {
+            try {
+              Thread.sleep(remainingMs);
+            } catch (InterruptedException e) {
+              Thread.currentThread().interrupt();
+            }
+          }
+        }
       }
 
       if (!it.hasNext()) {

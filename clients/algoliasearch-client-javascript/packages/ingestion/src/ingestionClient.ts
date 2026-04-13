@@ -253,6 +253,7 @@ export function createIngestionClient({
         waitForTasks,
         batchSize = 1000,
         referenceIndexName,
+        useThrottling,
       }: ChunkedPushOptions,
       requestOptions?: RequestOptions,
     ): Promise<Array<WatchResponse>> {
@@ -276,6 +277,7 @@ export function createIngestionClient({
           responses.length > 0 &&
           (responses.length % waitBatchSize === 0 || i === objects.length - 1)
         ) {
+          const waitStartTime = Date.now();
           for (const resp of responses.slice(offset, offset + waitBatchSize)) {
             if (!resp.eventID) {
               throw new Error('received unexpected response from the push endpoint, eventID must not be undefined');
@@ -307,6 +309,12 @@ export function createIngestionClient({
             });
           }
           offset += waitBatchSize;
+          if (useThrottling && i !== objects.length - 1) {
+            const remainingMs = waitBatchSize * 100 - (Date.now() - waitStartTime);
+            if (remainingMs > 0) {
+              await new Promise((resolve) => setTimeout(resolve, remainingMs));
+            }
+          }
         }
       }
 

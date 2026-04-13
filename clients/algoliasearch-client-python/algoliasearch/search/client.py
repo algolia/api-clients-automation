@@ -540,6 +540,7 @@ class SearchClient:
         index_name: str,
         objects: List[Dict[str, Any]],
         wait_for_tasks: bool = False,
+        use_throttling: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[IngestionWatchResponse]:
@@ -555,6 +556,7 @@ class SearchClient:
             objects=objects,
             action=IngestionAction.ADDOBJECT,
             wait_for_tasks=wait_for_tasks,
+            use_throttling=use_throttling,
             batch_size=batch_size,
             request_options=request_options,
         )
@@ -608,6 +610,7 @@ class SearchClient:
         objects: List[Dict[str, Any]],
         create_if_not_exists: bool = False,
         wait_for_tasks: bool = False,
+        use_throttling: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[IngestionWatchResponse]:
@@ -625,6 +628,7 @@ class SearchClient:
             if create_if_not_exists
             else IngestionAction.PARTIALUPDATEOBJECTNOCREATE,
             wait_for_tasks=wait_for_tasks,
+            use_throttling=use_throttling,
             batch_size=batch_size,
             request_options=request_options,
         )
@@ -5790,6 +5794,7 @@ class SearchClientSync:
         index_name: str,
         objects: List[Dict[str, Any]],
         wait_for_tasks: bool = False,
+        use_throttling: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[IngestionWatchResponse]:
@@ -5805,6 +5810,7 @@ class SearchClientSync:
             objects=objects,
             action=IngestionAction.ADDOBJECT,
             wait_for_tasks=wait_for_tasks,
+            use_throttling=use_throttling,
             batch_size=batch_size,
             request_options=request_options,
         )
@@ -5858,6 +5864,7 @@ class SearchClientSync:
         objects: List[Dict[str, Any]],
         create_if_not_exists: bool = False,
         wait_for_tasks: bool = False,
+        use_throttling: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[IngestionWatchResponse]:
@@ -5875,6 +5882,7 @@ class SearchClientSync:
             if create_if_not_exists
             else IngestionAction.PARTIALUPDATEOBJECTNOCREATE,
             wait_for_tasks=wait_for_tasks,
+            use_throttling=use_throttling,
             batch_size=batch_size,
             request_options=request_options,
         )

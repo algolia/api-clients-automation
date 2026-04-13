@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from json import dumps
 from sys import version_info
+from time import sleep, time
 from typing import Any, Dict, List, Optional, Union
 from urllib.parse import quote
 from warnings import warn
@@ -19,6 +20,8 @@ if version_info >= (3, 11):
     from typing import Self
 else:
     from typing_extensions import Self
+
+import asyncio
 
 from algoliasearch.http.api_response import ApiResponse
 from algoliasearch.http.base_config import BaseConfig
@@ -212,6 +215,7 @@ class IngestionClient:
         objects: List[Dict[str, Any]],
         action: Action = Action.ADDOBJECT,
         wait_for_tasks: bool = False,
+        use_throttling: bool = False,
         batch_size: int = 1000,
         reference_index_name: Optional[str] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -245,6 +249,7 @@ class IngestionClient:
                 and len(responses) > 0
                 and (len(responses) % wait_batch_size == 0 or i == len(objects) - 1)
             ):
+                _wait_start_time = time()
                 for response in responses[offset : offset + wait_batch_size]:
 
                     async def _func(_: Optional[Event]) -> Event:
@@ -283,6 +288,10 @@ class IngestionClient:
                         error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${50})",
                     )
                 offset += wait_batch_size
+                if use_throttling and i != len(objects) - 1:
+                    _remaining_s = wait_batch_size * 0.1 - (time() - _wait_start_time)
+                    if _remaining_s > 0:
+                        await asyncio.sleep(_remaining_s)
         return responses
 
     async def create_authentication_with_http_info(
@@ -5502,6 +5511,7 @@ class IngestionClientSync:
         objects: List[Dict[str, Any]],
         action: Action = Action.ADDOBJECT,
         wait_for_tasks: bool = False,
+        use_throttling: bool = False,
         batch_size: int = 1000,
         reference_index_name: Optional[str] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -5535,6 +5545,7 @@ class IngestionClientSync:
                 and len(responses) > 0
                 and (len(responses) % wait_batch_size == 0 or i == len(objects) - 1)
             ):
+                _wait_start_time = time()
                 for response in responses[offset : offset + wait_batch_size]:
 
                     def _func(_: Optional[Event]) -> Event:
@@ -5573,6 +5584,10 @@ class IngestionClientSync:
                         error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${50})",
                     )
                 offset += wait_batch_size
+                if use_throttling and i != len(objects) - 1:
+                    _remaining_s = wait_batch_size * 0.1 - (time() - _wait_start_time)
+                    if _remaining_s > 0:
+                        sleep(_remaining_s)
         return responses
 
     def create_authentication_with_http_info(

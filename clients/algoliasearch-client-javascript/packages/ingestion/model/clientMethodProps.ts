@@ -778,6 +778,11 @@ export type ChunkedPushOptions = {
   waitForTasks?: boolean | undefined;
 
   /**
+   * Whether to use throttling to smooth traffic when waitForTasks is true. Defaults to false.
+   */
+  useThrottling?: boolean | undefined;
+
+  /**
    * The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
    */
   batchSize?: number | undefined;

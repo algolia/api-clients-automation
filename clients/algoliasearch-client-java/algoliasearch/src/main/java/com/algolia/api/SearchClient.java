@@ -13006,7 +13006,7 @@ public class SearchClient extends ApiClient {
     boolean waitForTasks,
     RequestOptions requestOptions
   ) {
-    return saveObjectsWithTransformation(indexName, objects, waitForTasks, 1000, requestOptions);
+    return saveObjectsWithTransformation(indexName, objects, waitForTasks, 1000, false, requestOptions);
   }
 
   /**
@@ -13030,6 +13030,7 @@ public class SearchClient extends ApiClient {
     Iterable<T> objects,
     boolean waitForTasks,
     int batchSize,
+    boolean useThrottling,
     RequestOptions requestOptions
   ) {
     if (this.ingestionTransporter == null) {
@@ -13041,6 +13042,7 @@ public class SearchClient extends ApiClient {
       objects,
       com.algolia.model.ingestion.Action.ADD_OBJECT,
       waitForTasks,
+      useThrottling,
       batchSize,
       null,
       requestOptions
@@ -13244,7 +13246,7 @@ public class SearchClient extends ApiClient {
     boolean waitForTasks,
     RequestOptions requestOptions
   ) {
-    return partialUpdateObjectsWithTransformation(indexName, objects, createIfNotExists, waitForTasks, 1000, null);
+    return partialUpdateObjectsWithTransformation(indexName, objects, createIfNotExists, waitForTasks, 1000, false, null);
   }
 
   /**
@@ -13271,6 +13273,7 @@ public class SearchClient extends ApiClient {
     boolean createIfNotExists,
     boolean waitForTasks,
     int batchSize,
+    boolean useThrottling,
     RequestOptions requestOptions
   ) {
     if (this.ingestionTransporter == null) {
@@ -13284,6 +13287,7 @@ public class SearchClient extends ApiClient {
         ? com.algolia.model.ingestion.Action.PARTIAL_UPDATE_OBJECT
         : com.algolia.model.ingestion.Action.PARTIAL_UPDATE_OBJECT_NO_CREATE,
       waitForTasks,
+      useThrottling,
       batchSize,
       null,
       requestOptions
@@ -13644,6 +13648,7 @@ public class SearchClient extends ApiClient {
         objects,
         com.algolia.model.ingestion.Action.ADD_OBJECT,
         true,
+        false,
         batchSize,
         indexName,
         requestOptions

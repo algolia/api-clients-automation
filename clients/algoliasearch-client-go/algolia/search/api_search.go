@@ -36,8 +36,9 @@ type config struct {
 	timeouts     transport.RequestConfiguration
 
 	// -- ChunkedBatch options
-	waitForTasks bool
-	batchSize    int
+	waitForTasks  bool
+	useThrottling bool
+	batchSize     int
 
 	// -- Partial update options
 	createIfNotExists bool
@@ -260,6 +261,7 @@ func toIngestionChunkedBatchOptions(opts []ChunkedBatchOption) []ingestion.Chunk
 	}
 
 	ingestionOpts = append(ingestionOpts, ingestion.WithWaitForTasks(conf.waitForTasks))
+	ingestionOpts = append(ingestionOpts, ingestion.WithThrottling(conf.useThrottling))
 
 	return ingestionOpts
 }
@@ -9190,6 +9192,13 @@ func (r requestOption) chunkedBatch() {}
 func WithWaitForTasks(waitForTasks bool) chunkedBatchOption {
 	return chunkedBatchOption(func(c *config) {
 		c.waitForTasks = waitForTasks
+	})
+}
+
+// WithThrottling whether or not we should use throttling for the batch request.
+func WithThrottling(useThrottling bool) chunkedBatchOption {
+	return chunkedBatchOption(func(c *config) {
+		c.useThrottling = useThrottling
 	})
 }
 

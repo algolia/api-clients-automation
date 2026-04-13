@@ -4321,6 +4321,7 @@ class IngestionClient
      * @param array  $batchSize          The size of the chunk of `objects`. The number of `push` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param array  $referenceIndexName This is required when targeting an index that does not have a push connector setup (e.g. a tmp index), but you wish to attach another index's transformation to it (e.g. the source index name).
      * @param array  $requestOptions     Request options
+     * @param mixed  $useThrottling
      */
     public function chunkedPush(
         $indexName,
@@ -4329,6 +4330,7 @@ class IngestionClient
         $waitForTasks = true,
         $batchSize = 1000,
         $referenceIndexName = null,
+        $useThrottling = false,
         $requestOptions = []
     ) {
         $responses = [];
@@ -4359,6 +4361,8 @@ class IngestionClient
             if ($waitForTasks && !empty($responses) && (0 === sizeof($responses) % $waitBatchSize || $count === sizeof($objects))) {
                 $timeoutCalculation = 'Algolia\AlgoliaSearch\Support\Helpers::linearTimeout';
 
+                $waitStartTime = microtime(true);
+
                 foreach (array_slice($responses, $offset, $waitBatchSize) as $response) {
                     $retry = 0;
 
@@ -4384,6 +4388,14 @@ class IngestionClient
                     }
                 }
                 $offset = $offset + $waitBatchSize;
+
+                if ($useThrottling && $count < sizeof($objects)) {
+                    $elapsedMs = (microtime(true) - $waitStartTime) * 1000;
+                    $remainingMs = $waitBatchSize * 100 - $elapsedMs;
+                    if ($remainingMs > 0) {
+                        usleep((int) ($remainingMs * 1000));
+                    }
+                }
             }
         }
 

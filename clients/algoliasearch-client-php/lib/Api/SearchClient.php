@@ -4420,14 +4420,15 @@ class SearchClient
      * @param bool   $waitForTasks   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
      * @param int    $batchSize      The size of the chunk of `objects`. The number of `push` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param array  $requestOptions Request options
+     * @param mixed  $useThrottling
      */
-    public function saveObjectsWithTransformation($indexName, $objects, $waitForTasks = false, $batchSize = 1000, $requestOptions = [])
+    public function saveObjectsWithTransformation($indexName, $objects, $waitForTasks = false, $useThrottling = false, $batchSize = 1000, $requestOptions = [])
     {
         if (null == $this->ingestionTransporter) {
             throw new \InvalidArgumentException('`setTransformationRegion` must have been called before calling this method.');
         }
 
-        return $this->ingestionTransporter->chunkedPush($indexName, $objects, 'addObject', $waitForTasks, $batchSize, null, $requestOptions);
+        return $this->ingestionTransporter->chunkedPush($indexName, $objects, 'addObject', $waitForTasks, $batchSize, null, $useThrottling, $requestOptions);
     }
 
     /**
@@ -4477,14 +4478,15 @@ class SearchClient
      * @param bool   $waitForTasks      Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
      * @param int    $batchSize         The size of the chunk of `objects`. The number of `push` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param array  $requestOptions    Request options
+     * @param mixed  $useThrottling
      */
-    public function partialUpdateObjectsWithTransformation($indexName, $objects, $createIfNotExists, $waitForTasks = false, $batchSize = 1000, $requestOptions = [])
+    public function partialUpdateObjectsWithTransformation($indexName, $objects, $createIfNotExists, $waitForTasks = false, $useThrottling = false, $batchSize = 1000, $requestOptions = [])
     {
         if (null == $this->ingestionTransporter) {
             throw new \InvalidArgumentException('`setTransformationRegion` must have been called before calling this method.');
         }
 
-        return $this->ingestionTransporter->chunkedPush($indexName, $objects, (true == $createIfNotExists) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, $batchSize, null, $requestOptions);
+        return $this->ingestionTransporter->chunkedPush($indexName, $objects, (true == $createIfNotExists) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, $batchSize, null, $useThrottling, $requestOptions);
     }
 
     /**
