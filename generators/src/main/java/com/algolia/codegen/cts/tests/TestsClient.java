@@ -102,6 +102,21 @@ public class TestsClient extends TestsGenerator {
                 stepOut.put("transformationRegion", step.parameters.get("transformationRegion"));
               }
 
+              boolean hasTransformationOptions = step.parameters != null && step.parameters.containsKey("transformationOptions");
+              if (hasTransformationOptions) {
+                testOut.put("useEchoRequester", false);
+                Map<String, Object> transformationOptions = (Map<String, Object>) step.parameters.get("transformationOptions");
+                stepOut.put("transformationRegion", transformationOptions.get("region"));
+                stepOut.put("hasTransformationRegion", true);
+
+                boolean hasTransformationCustomHosts = transformationOptions.containsKey("customHosts");
+                stepOut.put("hasTransformationCustomHosts", hasTransformationCustomHosts);
+                if (hasTransformationCustomHosts) {
+                  stepOut.put("transformationCustomHosts", transformationOptions.get("customHosts"));
+                }
+              }
+              stepOut.put("hasTransformationOptions", hasTransformationOptions);
+
               boolean gzipEncoding = step.parameters != null && step.parameters.getOrDefault("gzip", false).equals(true);
               stepOut.put("gzipEncoding", gzipEncoding);
             } else if (step.type.equals("method")) {

@@ -23,7 +23,21 @@
     compression: 'gzip',
     {{/gzipEncoding}}
     {{#hasTransformationRegion}}
-    transformation: { region : "{{{transformationRegion}}}" },
+    transformationOptions: {
+      region : "{{{transformationRegion}}}",
+      {{#hasTransformationCustomHosts}}
+        hosts:[
+        {{#transformationCustomHosts}}
+        {
+          url: 'localhost',
+          port: {{port}},
+          accept: 'readWrite',
+          protocol: 'http'
+        },
+        {{/transformationCustomHosts}}
+        ],
+      {{/hasTransformationCustomHosts}}
+    },
     {{/hasTransformationRegion}} 
   }
   {{/isStandaloneClient}}
