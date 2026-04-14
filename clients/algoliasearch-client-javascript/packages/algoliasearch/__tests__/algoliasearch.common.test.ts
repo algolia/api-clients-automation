@@ -144,29 +144,29 @@ describe('api', () => {
   });
 
   describe('bridge methods', () => {
-    test('throws when missing transformation.region', () => {
+    test('throws when missing transformationOptions.region', () => {
       //@ts-expect-error
-      expect(() => algoliasearch('APP_ID', 'API_KEY', { transformation: {} })).toThrow(
-        '`region` must be provided when leveraging the transformation pipeline',
+      expect(() => algoliasearch('APP_ID', 'API_KEY', { transformationOptions: {} })).toThrow(
+        '`region` is required in `transformationOptions`.',
       );
     });
 
     test('throws when calling the transformation methods without init parameters', async () => {
-      await expect(
+     await expect(
         client.saveObjectsWithTransformation({
           indexName: 'foo',
           objects: [{ objectID: 'bar', baz: 42 }],
           waitForTasks: true,
         }),
-      ).rejects.toThrow('`transformation.region` must be provided at client instantiation before calling this method.');
+      ).rejects.toThrow('`transformationOptions` must be set in the client config before calling this method.');
 
-      await expect(
+     await expect(
         client.partialUpdateObjectsWithTransformation({
           indexName: 'foo',
           objects: [{ objectID: 'bar', baz: 42 }],
           waitForTasks: true,
         }),
-      ).rejects.toThrow('`transformation.region` must be provided at client instantiation before calling this method.');
+      ).rejects.toThrow('`transformationOptions` must be set in the client config before calling this method.');
     });
   });
 });
