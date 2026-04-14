@@ -45,6 +45,9 @@
     "renovate-config-algolia": "2.2.0",
     "typescript": "5.9.3"
   },
+  "resolutions": {
+    "axios": ">=1.15.0"
+  },
   "engines": {
     "node": "^24.0.0",
     "yarn": "^4.0.0"
