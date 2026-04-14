@@ -1300,7 +1300,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/core@npm:>=11.1.18":
+"@nestjs/core@npm:^11.1.18":
   version: 11.1.19
   resolution: "@nestjs/core@npm:11.1.19"
   dependencies:
@@ -3614,7 +3614,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:>=1.15.0":
+"axios@npm:^1.15.0":
   version: 1.15.0
   resolution: "axios@npm:1.15.0"
   dependencies:
@@ -5114,7 +5114,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-xml-parser@npm:>=5.5.7":
+"fast-xml-parser@npm:^5.5.7":
   version: 5.5.12
   resolution: "fast-xml-parser@npm:5.5.12"
   dependencies:
@@ -6467,14 +6467,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash-es@npm:>=4.18.0":
+"lodash-es@npm:^4.18.0":
   version: 4.18.1
   resolution: "lodash-es@npm:4.18.1"
   checksum: 10/8bfad225ef09ef42b04283cdaf7830efcc2ba29ae41b56501c74422155ee1ccaa1f0f6e8319def3451a1fe54dec501c8e4bee622bae2b2d98ac993731e0a5cce
   languageName: node
   linkType: hard
 
-"lodash@npm:>=4.18.0":
+"lodash@npm:^4.18.0":
   version: 4.18.1
   resolution: "lodash@npm:4.18.1"
   checksum: 10/306fea53dfd39dad1f03d45ba654a2405aebd35797b673077f401edb7df2543623dc44b9effbb98f69b32152295fff725a4cec99c684098947430600c6af0c3f
@@ -9374,7 +9374,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:>=8.0.5":
+"vite@npm:^8.0.5":
   version: 8.0.8
   resolution: "vite@npm:8.0.8"
   dependencies:
