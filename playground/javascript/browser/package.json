@@ -11,22 +11,22 @@
   },
   "dependencies": {
     "algoliasearch": "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch",
-    "instantsearch.css": "8.12.0",
+    "instantsearch.css": "8.13.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-instantsearch": "7.28.1"
+    "react-instantsearch": "7.29.0"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react-swc": "4.3.0",
-    "eslint": "10.1.0",
+    "eslint": "10.2.0",
     "eslint-plugin-react-hooks": "7.0.1",
     "eslint-plugin-react-refresh": "0.4.24",
     "globals": "17.4.0",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.57.2",
-    "vite": "8.0.3"
+    "typescript-eslint": "8.58.1",
+    "vite": "8.0.8"
   }
 }
