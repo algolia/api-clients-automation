@@ -80,7 +80,8 @@
     ]
   },
   "resolutions": {
-    "bundlewatch/axios": "0.31.0"
+    "bundlewatch/axios": "0.31.0",
+    "follow-redirects": ">=1.16.0"
   },
   "engines": {
     "node": ">= 14.0.0",
