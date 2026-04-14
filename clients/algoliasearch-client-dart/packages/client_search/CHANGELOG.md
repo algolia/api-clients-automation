@@ -1,3 +1,7 @@
+## [1.47.3](https://github.com/algolia/algoliasearch-client-dart/compare/1.47.2...1.47.3)
+
+- [d86a5438e2](https://github.com/algolia/api-clients-automation/commit/d86a5438e2) chore(deps): dependencies 2026-04-06 ([#6200](https://github.com/algolia/api-clients-automation/pull/6200)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [1.47.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.47.1...1.47.2)
 
 - [dc02ad1023](https://github.com/algolia/api-clients-automation/commit/dc02ad1023) chore(deps): dependencies 2026-03-30 ([#6169](https://github.com/algolia/api-clients-automation/pull/6169)) by [@algolia-bot](https://github.com/algolia-bot/)
