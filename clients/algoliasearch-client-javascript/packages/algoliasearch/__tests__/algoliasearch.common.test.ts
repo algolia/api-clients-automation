@@ -152,7 +152,7 @@ describe('api', () => {
     });
 
     test('throws when calling the transformation methods without init parameters', async () => {
-     await expect(
+      await expect(
         client.saveObjectsWithTransformation({
           indexName: 'foo',
           objects: [{ objectID: 'bar', baz: 42 }],
@@ -160,7 +160,7 @@ describe('api', () => {
         }),
       ).rejects.toThrow('`transformationOptions` must be set in the client config before calling this method.');
 
-     await expect(
+      await expect(
         client.partialUpdateObjectsWithTransformation({
           indexName: 'foo',
           objects: [{ objectID: 'bar', baz: 42 }],
