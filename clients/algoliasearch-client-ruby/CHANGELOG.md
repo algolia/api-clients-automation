@@ -1,3 +1,7 @@
+## [3.37.1](https://github.com/algolia/algoliasearch-client-ruby/compare/3.37.0...3.37.1)
+
+- [16b17eea7b](https://github.com/algolia/api-clients-automation/commit/16b17eea7b) fix(clients): add discriminator fields for InjectedItemSource oneOf ([#6170](https://github.com/algolia/api-clients-automation/pull/6170)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+
 ## [3.37.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.36.1...3.37.0)
 
 - [a196c9cf73](https://github.com/algolia/api-clients-automation/commit/a196c9cf73) feat(clients): response decompression ([#6095](https://github.com/algolia/api-clients-automation/pull/6095)) by [@eric-zaharia](https://github.com/eric-zaharia/)
