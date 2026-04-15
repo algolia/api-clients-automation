@@ -315,7 +315,7 @@
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[IngestionWatchResponse]:
         """
-        Helper: Similar to the `save_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client's config at instantiation.
+        Helper: Similar to the `save_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. Call `client.set_transformation_options(...)` first to configure the ingestion transporter.
         """
         if self._ingestion_transporter is None:
             raise ValueError("`transformation_options` must be set on the client before calling this method. See client.set_transformation_options(). It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/")
@@ -358,7 +358,7 @@
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[IngestionWatchResponse]:
         """
-        Helper: Similar to the `partial_update_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client instantiation method.
+        Helper: Similar to the `partial_update_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. Call `client.set_transformation_options(...)` first to configure the ingestion transporter.
         """
         if self._ingestion_transporter is None:
             raise ValueError("`transformation_options` must be set on the client before calling this method. See client.set_transformation_options(). It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/")
@@ -405,7 +405,7 @@
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ReplaceAllObjectsWithTransformationResponse:
         """
-        Helper: Similar to the `replaceAllObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must have been passed to the client instantiation method.
+        Helper: Similar to the `replaceAllObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. Call `client.set_transformation_options(...)` first to configure the ingestion transporter.
 
         See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
         """
