@@ -1128,5 +1128,83 @@
         ]
       }
     }
+  },
+  {
+    "testName": "withQueryCategorization",
+    "parameters": {
+      "requests": [
+        {
+          "indexName": "<YOUR_INDEX_NAME>",
+          "query": "<YOUR_QUERY>",
+          "extensions": {
+            "queryCategorization": {
+              "enableCategoriesRetrieval": true,
+              "enableAutoFiltering": false
+            }
+          }
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/indexes/*/queries",
+      "method": "POST",
+      "body": {
+        "requests": [
+          {
+            "indexName": "<YOUR_INDEX_NAME>",
+            "query": "<YOUR_QUERY>",
+            "extensions": {
+              "queryCategorization": {
+                "enableCategoriesRetrieval": true,
+                "enableAutoFiltering": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "results": [
+          {
+            "hits": [],
+            "page": 0,
+            "nbHits": 0,
+            "nbPages": 0,
+            "hitsPerPage": 20,
+            "exhaustiveNbHits": true,
+            "exhaustiveTypo": true,
+            "query": "<YOUR_QUERY>",
+            "index": "<YOUR_INDEX_NAME>",
+            "extensions": {
+              "queryCategorization": {
+                "normalizedQuery": "your query",
+                "type": "narrow",
+                "categories": [
+                  {
+                    "bin": "very high",
+                    "hierarchyPath": [
+                      {
+                        "facetName": "categories.lvl0",
+                        "facetValue": "Appliances",
+                        "depth": 0
+                      }
+                    ]
+                  }
+                ],
+                "autofiltering": {
+                  "enabled": true,
+                  "facetFilters": [
+                    "categories.lvl0:Appliances"
+                  ],
+                  "optionalFilters": []
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
   }
 ]
