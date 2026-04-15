@@ -1,6 +1,8 @@
 from os import environ
 from typing import Dict, Optional
+{{#isSearchClient}}
 from warnings import warn
+{{/isSearchClient}}
 
 from algoliasearch.http.hosts import (
   CallType,
@@ -27,7 +29,7 @@ class TransformationOptions:
 
 
 class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
-    def __init__(self, app_id: Optional[str], api_key: Optional[str]{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str = ""{{/fallbackToAliasHost}}{{/hasRegionalHost}}{{#isSearchClient}}, transformation_options: Optional["TransformationOptions"] = None{{/isSearchClient}}) -> None:
+    def __init__(self, app_id: Optional[str], api_key: Optional[str]{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str = ""{{/fallbackToAliasHost}}{{/hasRegionalHost}}) -> None:
         super().__init__(app_id, api_key)
 
         # In milliseconds
@@ -68,21 +70,11 @@ class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
 
     {{#isSearchClient}}
         self.region = None
-        self._transformation_options = None
-
-        if transformation_options is not None:
-            self.set_transformation_options(transformation_options)
 
     def set_transformation_region(self, region: str = ""):
-        """@deprecated Use `transformation_options` kwarg on SearchConfig or `set_transformation_options()` instead. The old setter forwarded the parent search config to the ingestion transporter; `transformation_options` defaults to Ingestion API defaults and only overrides what is explicitly specified. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"""
-        warn("set_transformation_region is deprecated. Use `transformation_options` kwarg on SearchConfig or `set_transformation_options()` instead. The old setter forwarded the parent search config to the ingestion transporter; `transformation_options` defaults to Ingestion API defaults and only overrides what is explicitly specified. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/", DeprecationWarning)
-        self.set_transformation_options(TransformationOptions(region=region))
-
-    def set_transformation_options(self, transformation_options: "TransformationOptions"):
-        """Set the transformation options for the ingestion pipeline. Defaults to Ingestion API defaults (25s timeouts). Only explicitly provided fields override these defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"""
-        self.region = transformation_options.region
-        self._transformation_options = transformation_options
-
+        """@deprecated Does not work after client construction. Use client.set_transformation_options() instead. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"""
+        warn("set_transformation_region is deprecated and does not work after client construction. Use client.set_transformation_options() instead. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/", DeprecationWarning)
+        self.region = region
     {{/isSearchClient}}
 
     def set_default_hosts(self):
