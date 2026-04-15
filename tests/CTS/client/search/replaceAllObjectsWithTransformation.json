@@ -13,7 +13,12 @@
               "port": 6690
             }
           ],
-          "transformationRegion": "us"
+          "transformationOptions": {
+            "region": "us",
+            "customHosts": [
+              { "port": 6690 }
+            ]
+          }
         }
       },
       {
