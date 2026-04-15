@@ -19,9 +19,9 @@ func TestInjectedItemSource_UnmarshalSearchSource(t *testing.T) {
 	err := json.Unmarshal([]byte(input), &source)
 	require.NoError(t, err)
 
-	require.NotNil(t, source.InjectedItemSourceSearchSource, "expected InjectedItemSourceSearchSource to be set")
-	require.Nil(t, source.ExternalSource, "expected ExternalSource to be nil")
-	require.Equal(t, "demo", source.InjectedItemSourceSearchSource.Search.Index)
+	require.NotNil(t, source.InjectedItemSearchSource, "expected SearchSource to be set")
+	require.Nil(t, source.InjectedItemExternalSource, "expected ExternalSource to be nil")
+	require.Equal(t, "demo", source.InjectedItemSearchSource.Index)
 }
 
 func TestInjectedItemSource_UnmarshalExternalSource(t *testing.T) {
@@ -34,9 +34,9 @@ func TestInjectedItemSource_UnmarshalExternalSource(t *testing.T) {
 	err := json.Unmarshal([]byte(input), &source)
 	require.NoError(t, err)
 
-	require.NotNil(t, source.ExternalSource, "expected ExternalSource to be set")
-	require.Nil(t, source.InjectedItemSourceSearchSource, "expected InjectedItemSourceSearchSource to be nil")
-	require.Equal(t, "sponsored", source.ExternalSource.External.Index)
+	require.NotNil(t, source.InjectedItemExternalSource, "expected External Source to be set")
+	require.Nil(t, source.InjectedItemSearchSource, "expected Search Source to be nil")
+	require.Equal(t, "sponsored", source.InjectedItemExternalSource.Index)
 }
 
 func TestInjectedItemSource_RoundTripSearchSource(t *testing.T) {
@@ -79,9 +79,9 @@ func TestInjectionMainSource_UnmarshalSearchSource(t *testing.T) {
 	err := json.Unmarshal([]byte(input), &source)
 	require.NoError(t, err)
 
-	require.NotNil(t, source.SearchSource, "expected SearchSource to be set")
-	require.Nil(t, source.RecommendSource, "expected RecommendSource to be nil")
-	require.Equal(t, "demo", source.SearchSource.Search.Index)
+	require.NotNil(t, source.MainSearchSource, "expected SearchSource to be set")
+	require.Nil(t, source.MainRecommendSource, "expected RecommendSource to be nil")
+	require.Equal(t, "demo", source.MainSearchSource.Index)
 }
 
 func TestInjectionMainSource_RoundTripSearchSource(t *testing.T) {

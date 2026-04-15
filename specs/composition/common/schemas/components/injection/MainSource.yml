@@ -1,5 +1,4 @@
-SearchSource:
-  title: mainSearchSource
+MainSearchSource:
   description: Organic result set will originate from a search request performed on the specified index.
   x-discriminator-fields:
     - search
@@ -13,7 +12,7 @@ SearchSource:
       properties:
         index:
           type: string
-          description: Composition Index name.
+          description: Targeted index name.
           example: Products
         params:
           $ref: './SearchQueryParams.yml#/mainInjectionQueryParameters'
@@ -22,7 +21,7 @@ SearchSource:
   required:
     - search
 
-RecommendSource:
+MainRecommendSource:
   title: mainRecommendSource
   description: Organic result set will originate from a recommend request.
   x-discriminator-fields:
@@ -37,7 +36,7 @@ RecommendSource:
       properties:
         index:
           type: string
-          description: Composition Index name.
+          description: Targeted index name.
           example: Products
       required:
         - index
