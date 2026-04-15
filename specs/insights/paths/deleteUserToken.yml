@@ -2,7 +2,7 @@ delete:
   tags:
     - usertokens
   operationId: deleteUserToken
-  summary: Delete user token
+  summary: Delete user token events
   description: |
     Deletes all events related to the specified user token from events metrics and analytics.
     The deletion is asynchronous, and processed within 48 hours.
