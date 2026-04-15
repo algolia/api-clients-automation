@@ -11,7 +11,7 @@ injection:
       minItems: 0
       maxItems: 3
       items:
-        $ref: './InjectedItem.yml#/injectionInjectedItem'
+        $ref: './InjectedItem.yml#/injectedItem'
     deduplication:
       title: deduplication
       type: object

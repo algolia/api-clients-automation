@@ -1,4 +1,5 @@
 SearchSource:
+  title: mainSearchSource
   description: Organic result set will originate from a search request performed on the specified index.
   x-discriminator-fields:
     - search
@@ -22,6 +23,7 @@ SearchSource:
     - search
 
 RecommendSource:
+  title: mainRecommendSource
   description: Organic result set will originate from a recommend request.
   x-discriminator-fields:
     - recommend

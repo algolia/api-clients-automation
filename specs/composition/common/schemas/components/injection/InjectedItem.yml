@@ -1,6 +1,5 @@
-injectionInjectedItem:
+injectedItem:
   type: object
-  title: injectedItem
   additionalProperties: false
   properties:
     key:
