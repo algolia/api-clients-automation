@@ -800,7 +800,7 @@
           "usertokens"
         ],
         "operationId": "deleteUserToken",
-        "summary": "Delete user token",
+        "summary": "Delete user token events",
         "description": "Deletes all events related to the specified user token from events metrics and analytics.\nThe deletion is asynchronous, and processed within 48 hours.\nTo delete a personalization user profile, see `Delete a user profile` in the Personalization API.\n",
         "x-acl": [
           "deleteObject"
