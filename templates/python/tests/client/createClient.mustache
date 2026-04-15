@@ -6,6 +6,6 @@ _config = {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}("{{
         {{#isError}}    {{/isError}}_config.compression_type = "gzip"
         {{/gzipEncoding}}
         {{#hasTransformationRegion}}
-        {{#isError}}    {{/isError}}_config.set_transformation_region("{{{transformationRegion}}}")
+        {{#isError}}    {{/isError}}{{#hasTransformationCustomHosts}}_config.set_transformation_options(TransformationOptions(region="{{{transformationRegion}}}", hosts=HostsCollection([{{#transformationCustomHosts}}Host(url='localhost' if environ.get('CI') == 'true' else 'host.docker.internal', scheme='http', port={{port}}){{^-last}},{{/-last}}{{/transformationCustomHosts}}]))){{/hasTransformationCustomHosts}}{{^hasTransformationCustomHosts}}_config.set_transformation_options(TransformationOptions(region="{{{transformationRegion}}}")){{/hasTransformationCustomHosts}}
         {{/hasTransformationRegion}}
         {{#isError}}    {{/isError}}_client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSyncClient}}Sync{{/isSyncClient}}.create_with_config(config=_config{{#useEchoRequester}}, transporter=EchoTransporter{{#isSyncClient}}Sync{{/isSyncClient}}(_config){{/useEchoRequester}})

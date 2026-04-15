@@ -70,6 +70,10 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
             transporter = Transporter{{#isSyncClient}}Sync{{/isSyncClient}}(config)
         self._transporter = transporter
 
+        {{#isSearchClient}}
+        self._ingestion_transporter = None
+        {{/isSearchClient}}
+
     @classmethod
     def create_with_config(cls, config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}, transporter: Optional[Transporter{{#isSyncClient}}Sync{{/isSyncClient}}] = None) -> {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         """Allows creating a client with a customized `{{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}` and `Transporter{{#isSyncClient}}Sync{{/isSyncClient}}`. If `transporter` is not provided, the default one will be initialized from the given `config`.
@@ -94,8 +98,15 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         if config.region is not None:
             ingestion_config = IngestionConfig(config.app_id, config.api_key, config.region)
 
-            if config.hosts is not None:
-                ingestion_config.hosts = config.hosts
+            if config._transformation_options is not None:
+                if config._transformation_options.connect_timeout is not None:
+                    ingestion_config.connect_timeout = config._transformation_options.connect_timeout
+                if config._transformation_options.read_timeout is not None:
+                    ingestion_config.read_timeout = config._transformation_options.read_timeout
+                if config._transformation_options.write_timeout is not None:
+                    ingestion_config.write_timeout = config._transformation_options.write_timeout
+                if config._transformation_options.hosts is not None:
+                    ingestion_config.hosts = config._transformation_options.hosts
 
             _ingestion_transporter = IngestionClient{{#isSyncClient}}Sync{{/isSyncClient}}.create_with_config(ingestion_config)
         {{/isSearchClient}}
