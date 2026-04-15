@@ -641,7 +641,23 @@ describe('partialUpdateObjectsWithTransformation', () => {
           protocol: 'http',
         },
       ],
-      transformation: { region: 'us' },
+      transformationOptions: {
+        region: 'us',
+        hosts: [
+          {
+            url: 'localhost',
+            port: 6688,
+            accept: 'readWrite',
+            protocol: 'http',
+          },
+          {
+            url: 'localhost',
+            port: 6689,
+            accept: 'readWrite',
+            protocol: 'http',
+          },
+        ],
+      },
     });
 
     {
@@ -781,7 +797,17 @@ describe('replaceAllObjectsWithTransformation', () => {
           protocol: 'http',
         },
       ],
-      transformation: { region: 'us' },
+      transformationOptions: {
+        region: 'us',
+        hosts: [
+          {
+            url: 'localhost',
+            port: 6690,
+            accept: 'readWrite',
+            protocol: 'http',
+          },
+        ],
+      },
     });
 
     {
@@ -970,7 +996,23 @@ describe('saveObjectsWithTransformation', () => {
           protocol: 'http',
         },
       ],
-      transformation: { region: 'us' },
+      transformationOptions: {
+        region: 'us',
+        hosts: [
+          {
+            url: 'localhost',
+            port: 6688,
+            accept: 'readWrite',
+            protocol: 'http',
+          },
+          {
+            url: 'localhost',
+            port: 6689,
+            accept: 'readWrite',
+            protocol: 'http',
+          },
+        ],
+      },
     });
 
     {
