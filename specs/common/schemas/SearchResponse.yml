@@ -153,6 +153,8 @@ baseSearchResponse:
     _automaticInsights:
       type: boolean
       description: Whether automatic events collection is enabled for the application.
+    extensions:
+      $ref: '#/responseExtensions'
 
 nbHits:
   type: integer
@@ -212,3 +214,85 @@ SearchPagination:
       $ref: '#/nbPages'
     hitsPerPage:
       $ref: './IndexSettings.yml#/hitsPerPage'
+
+responseExtensions:
+  type: object
+  description: |
+    AI-generated metadata returned alongside search results.
+    Present when Algolia AI features such as [Query Categorization](https://www.algolia.com/doc/guides/algolia-ai/query-categorization/) are enabled.
+  properties:
+    queryCategorization:
+      $ref: '#/queryCategorization'
+
+queryCategorization:
+  type: object
+  description: |
+    Query Categorization prediction returned by the AI model.
+    This field is empty when the model cannot categorize the query.
+    See [Query Categorization](https://www.algolia.com/doc/guides/algolia-ai/query-categorization/).
+  properties:
+    normalizedQuery:
+      type: string
+      description: Processed and normalized version of the original search query.
+    type:
+      $ref: '#/queryCategorization_type'
+    categories:
+      type: array
+      description: List of category predictions with confidence levels.
+      items:
+        $ref: '#/categoryPrediction'
+    autofiltering:
+      $ref: '#/autoFilteringResult'
+
+queryCategorization_type:
+  type: string
+  enum: [narrow, broad, ambiguous, none]
+  description: Classification of the query scope.
+
+categoryPrediction:
+  type: object
+  properties:
+    bin:
+      $ref: '#/categoryPrediction_bin'
+    hierarchyPath:
+      type: array
+      description: Ordered list of category levels from root to the predicted category.
+      items:
+        $ref: '#/hierarchyPathEntry'
+
+categoryPrediction_bin:
+  type: string
+  enum: [certain, very high, high, low, very low]
+  description: Confidence level of the category prediction.
+
+hierarchyPathEntry:
+  type: object
+  properties:
+    facetName:
+      type: string
+      description: Facet attribute name at this hierarchy level, for example, `categories.lvl0`.
+    facetValue:
+      type: string
+      description: Facet value at this level of the category hierarchy.
+    depth:
+      type: integer
+      description: Depth level in the category hierarchy, starting at 0.
+
+autoFilteringResult:
+  type: object
+  description: Result of automatic filtering applied by Query Categorization.
+  properties:
+    enabled:
+      type: boolean
+      description: Whether automatic filtering was applied to this query.
+    maxDepth:
+      type: integer
+      description: Maximum category hierarchy depth used for filtering.
+    facetFilters:
+      type: array
+      description: Facet filters automatically applied to the query.
+      items: {}
+    optionalFilters:
+      type: array
+      description: Optional filters automatically applied to boost relevant categories.
+      items: {}
