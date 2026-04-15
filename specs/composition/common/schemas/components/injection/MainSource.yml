@@ -6,7 +6,7 @@ injectionMainSearchSource:
   additionalProperties: false
   properties:
     search:
-      title: mainSearchSource
+      title: mainSearch
       type: object
       additionalProperties: false
       properties:
@@ -29,7 +29,7 @@ injectionMainRecommendSource:
   additionalProperties: false
   properties:
     recommend:
-      title: mainRecommendSource
+      title: mainRecommend
       type: object
       additionalProperties: false
       properties:
