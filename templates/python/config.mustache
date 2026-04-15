@@ -26,7 +26,7 @@ class TransformationOptions:
 
 
 class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
-    def __init__(self, app_id: Optional[str], api_key: Optional[str]{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str = ""{{/fallbackToAliasHost}}{{/hasRegionalHost}}) -> None:
+    def __init__(self, app_id: Optional[str], api_key: Optional[str]{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str = ""{{/fallbackToAliasHost}}{{/hasRegionalHost}}{{#isSearchClient}}, transformation_options: Optional["TransformationOptions"] = None{{/isSearchClient}}) -> None:
         super().__init__(app_id, api_key)
 
         # In milliseconds
@@ -69,9 +69,12 @@ class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
         self.region = None
         self._transformation_options = None
 
+        if transformation_options is not None:
+            self.set_transformation_options(transformation_options)
+
     def set_transformation_region(self, region: str = ""):
-        """@deprecated Use `set_transformation_options` instead. `set_transformation_options` defaults to Ingestion API defaults and only overrides what is explicitly specified."""
-        self.region = region
+        """@deprecated Use `transformation_options` kwarg on SearchConfig or `set_transformation_options()` instead. The old setter forwarded the parent search config to the ingestion transporter; `transformation_options` defaults to Ingestion API defaults and only overrides what is explicitly specified. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"""
+        self.set_transformation_options(TransformationOptions(region=region))
 
     def set_transformation_options(self, transformation_options: "TransformationOptions"):
         """Set the transformation options for the ingestion pipeline. Defaults to Ingestion API defaults (25s timeouts). Only explicitly provided fields override these defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"""
