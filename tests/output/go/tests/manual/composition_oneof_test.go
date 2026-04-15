@@ -79,9 +79,9 @@ func TestInjectionMainSource_UnmarshalSearchSource(t *testing.T) {
 	err := json.Unmarshal([]byte(input), &source)
 	require.NoError(t, err)
 
-	require.NotNil(t, source.MainSearchSource, "expected SearchSource to be set")
-	require.Nil(t, source.MainRecommendSource, "expected RecommendSource to be nil")
-	require.Equal(t, "demo", source.MainSearchSource.Search.Index)
+	require.NotNil(t, source.InjectionMainSearchSource, "expected SearchSource to be set")
+	require.Nil(t, source.InjectionMainRecommendSource, "expected RecommendSource to be nil")
+	require.Equal(t, "demo", source.InjectionMainSearchSource.Search.Index)
 }
 
 func TestInjectionMainSource_RoundTripSearchSource(t *testing.T) {

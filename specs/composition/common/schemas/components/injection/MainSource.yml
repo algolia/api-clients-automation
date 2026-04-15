@@ -1,4 +1,4 @@
-mainSearchSource:
+injectionMainSearchSource:
   description: Organic result set will originate from a search request performed on the specified index.
   x-discriminator-fields:
     - search
@@ -6,7 +6,7 @@ mainSearchSource:
   additionalProperties: false
   properties:
     search:
-      title: search
+      title: mainSearchSource
       type: object
       additionalProperties: false
       properties:
@@ -21,7 +21,7 @@ mainSearchSource:
   required:
     - search
 
-mainRecommendSource:
+injectionMainRecommendSource:
   description: Organic result set will originate from a recommend request.
   x-discriminator-fields:
     - recommend
@@ -29,7 +29,7 @@ mainRecommendSource:
   additionalProperties: false
   properties:
     recommend:
-      title: recommend
+      title: mainRecommendSource
       type: object
       additionalProperties: false
       properties:

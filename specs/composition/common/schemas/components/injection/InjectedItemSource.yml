@@ -6,7 +6,7 @@ injectedItemSearchSource:
   additionalProperties: false
   properties:
     search:
-      title: search
+      title: injectedItemSearchSource
       type: object
       additionalProperties: false
       properties:
@@ -29,7 +29,7 @@ injectedItemExternalSource:
   additionalProperties: false
   properties:
     external:
-      title: external
+      title: injectedItemExternalSource
       type: object
       additionalProperties: false
       properties:
