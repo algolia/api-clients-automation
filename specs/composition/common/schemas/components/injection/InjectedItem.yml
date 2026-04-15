@@ -41,8 +41,8 @@ injectionInjectedItem:
 
 injectedItemSource:
   oneOf:
-    - $ref: './InjectedItemSource.yml#/InjectedItemSearchSource'
-    - $ref: './InjectedItemSource.yml#/InjectedItemExternalSource'
+    - $ref: './InjectedItemSource.yml#/injectedItemSearchSource'
+    - $ref: './InjectedItemSource.yml#/injectedItemExternalSource'
 
 dedupPositioning:
   type: string

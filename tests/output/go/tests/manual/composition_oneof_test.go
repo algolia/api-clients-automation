@@ -21,7 +21,7 @@ func TestInjectedItemSource_UnmarshalSearchSource(t *testing.T) {
 
 	require.NotNil(t, source.InjectedItemSearchSource, "expected SearchSource to be set")
 	require.Nil(t, source.InjectedItemExternalSource, "expected ExternalSource to be nil")
-	require.Equal(t, "demo", source.InjectedItemSearchSource.Index)
+	require.Equal(t, "demo", source.InjectedItemSearchSource.Search.Index)
 }
 
 func TestInjectedItemSource_UnmarshalExternalSource(t *testing.T) {
@@ -36,7 +36,7 @@ func TestInjectedItemSource_UnmarshalExternalSource(t *testing.T) {
 
 	require.NotNil(t, source.InjectedItemExternalSource, "expected External Source to be set")
 	require.Nil(t, source.InjectedItemSearchSource, "expected Search Source to be nil")
-	require.Equal(t, "sponsored", source.InjectedItemExternalSource.Index)
+	require.Equal(t, "sponsored", source.InjectedItemExternalSource.External.Index)
 }
 
 func TestInjectedItemSource_RoundTripSearchSource(t *testing.T) {
@@ -81,7 +81,7 @@ func TestInjectionMainSource_UnmarshalSearchSource(t *testing.T) {
 
 	require.NotNil(t, source.MainSearchSource, "expected SearchSource to be set")
 	require.Nil(t, source.MainRecommendSource, "expected RecommendSource to be nil")
-	require.Equal(t, "demo", source.MainSearchSource.Index)
+	require.Equal(t, "demo", source.MainSearchSource.Search.Index)
 }
 
 func TestInjectionMainSource_RoundTripSearchSource(t *testing.T) {

@@ -9,5 +9,5 @@ injectionMain:
 injectionMainSource:
   description: Source to be used to retrieve organic result set.
   oneOf:
-    - $ref: './MainSource.yml#/MainSearchSource'
-    - $ref: './MainSource.yml#/MainRecommendSource'
+    - $ref: './MainSource.yml#/mainSearchSource'
+    - $ref: './MainSource.yml#/mainRecommendSource'

@@ -1,4 +1,4 @@
-InjectedItemSearchSource:
+injectedItemSearchSource:
   description: Injected items will originate from a search request performed on the specified index.
   x-discriminator-fields:
     - search
@@ -6,7 +6,7 @@ InjectedItemSearchSource:
   additionalProperties: false
   properties:
     search:
-      title: injectedItemSearchSource
+      title: search
       type: object
       additionalProperties: false
       properties:
@@ -21,7 +21,7 @@ InjectedItemSearchSource:
   required:
     - search
 
-InjectedItemExternalSource:
+injectedItemExternalSource:
   description: Injected items will originate from externally provided objectIDs (that must exist in the index) given at runtime in the run request payload.
   x-discriminator-fields:
     - external
@@ -29,7 +29,7 @@ InjectedItemExternalSource:
   additionalProperties: false
   properties:
     external:
-      title: injectedItemExternalSource
+      title: external
       type: object
       additionalProperties: false
       properties:
