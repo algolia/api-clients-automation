@@ -74,7 +74,7 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         {{#isSearchClient}}
         self._ingestion_transporter = None
         if transformation_options is not None:
-            self.set_transformation_options(transformation_options)
+            self._ingestion_transporter = self._build_ingestion_transporter(transformation_options)
         {{/isSearchClient}}
 
     @classmethod
@@ -99,7 +99,7 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
 
         {{#isSearchClient}}
         if config.region is not None:
-            client.set_transformation_options(TransformationOptions(region=config.region))
+            client._ingestion_transporter = client._build_ingestion_transporter(TransformationOptions(region=config.region))
         {{/isSearchClient}}
         
         return client
@@ -114,7 +114,11 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
 
     async def close(self) -> None:
         """Closes the underlying `transporter` of the API client."""
-        return await self._transporter.close()
+        {{#isSearchClient}}
+        if self._ingestion_transporter is not None:
+            await self._ingestion_transporter.close()
+        {{/isSearchClient}}
+        await self._transporter.close()
     {{/isSyncClient}}
 
     {{#isSyncClient}}
@@ -126,7 +130,11 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         self.close()
 
     def close(self) -> None:
-        return self._transporter.close()
+        {{#isSearchClient}}
+        if self._ingestion_transporter is not None:
+            self._ingestion_transporter.close()
+        {{/isSearchClient}}
+        self._transporter.close()
     {{/isSyncClient}}
     
     {{^isSyncClient}}async {{/isSyncClient}}def set_client_api_key(self, api_key: str) -> None:

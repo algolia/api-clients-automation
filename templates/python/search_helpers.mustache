@@ -279,8 +279,7 @@
         """
         return "{}_tmp_{}".format(index_name, randint(1000000, 9999999))
 
-    def set_transformation_options(self, transformation_options: "TransformationOptions"):
-        """Set transformation options and create the ingestion transporter. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"""
+    def _build_ingestion_transporter(self, transformation_options: "TransformationOptions") -> IngestionClient{{#isSyncClient}}Sync{{/isSyncClient}}:
         config = self._config
         ingestion_config = IngestionConfig(config.app_id, config.api_key, transformation_options.region)
         if transformation_options.connect_timeout is not None:
@@ -291,7 +290,14 @@
             ingestion_config.write_timeout = transformation_options.write_timeout
         if transformation_options.hosts is not None:
             ingestion_config.hosts = transformation_options.hosts
-        self._ingestion_transporter = IngestionClient{{#isSyncClient}}Sync{{/isSyncClient}}.create_with_config(ingestion_config)
+        return IngestionClient{{#isSyncClient}}Sync{{/isSyncClient}}.create_with_config(ingestion_config)
+
+    {{^isSyncClient}}async {{/isSyncClient}}def set_transformation_options(self, transformation_options: "TransformationOptions"):
+        """Set transformation options and create the ingestion transporter. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"""
+        old_ingestion_transporter = self._ingestion_transporter
+        self._ingestion_transporter = self._build_ingestion_transporter(transformation_options)
+        if old_ingestion_transporter is not None:
+            {{^isSyncClient}}await {{/isSyncClient}}old_ingestion_transporter.close()
 
     {{^isSyncClient}}async {{/isSyncClient}}def save_objects(
         self,

@@ -73,7 +73,7 @@ class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
 
     def set_transformation_region(self, region: str = ""):
         """@deprecated Does not work after client construction. Use client.set_transformation_options() instead. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"""
-        warn("set_transformation_region is deprecated and does not work after client construction. Use client.set_transformation_options() instead. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/", DeprecationWarning)
+        warn("set_transformation_region is deprecated and does not work after client construction. Use client.set_transformation_options() instead. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/", DeprecationWarning, stacklevel=2)
         self.region = region
     {{/isSearchClient}}
 
