@@ -43,16 +43,17 @@ object InjectedItemSourceSerializer extends Serializer[InjectedItemSource] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[InjectedItemSource] =>
       json match {
-        case value: JObject if value.obj.exists(_._1 == "search")   => Extraction.extract[SearchSource](value)
-        case value: JObject if value.obj.exists(_._1 == "external") => Extraction.extract[ExternalSource](value)
+        case value: JObject if value.obj.exists(_._1 == "search") => Extraction.extract[InjectedItemSearchSource](value)
+        case value: JObject if value.obj.exists(_._1 == "external") =>
+          Extraction.extract[InjectedItemExternalSource](value)
         case _ => throw new MappingException("Can't convert " + json + " to InjectedItemSource")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: InjectedItemSource =>
     value match {
-      case value: SearchSource   => Extraction.decompose(value)(format - this)
-      case value: ExternalSource => Extraction.decompose(value)(format - this)
+      case value: InjectedItemSearchSource   => Extraction.decompose(value)(format - this)
+      case value: InjectedItemExternalSource => Extraction.decompose(value)(format - this)
     }
   }
 }

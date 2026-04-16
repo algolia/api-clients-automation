@@ -20,8 +20,8 @@ class InjectedItemSource extends AbstractModel implements ModelInterface, \Array
      * @var string[]
      */
     protected static $modelTypes = [
-        'search' => '\Algolia\AlgoliaSearch\Model\Composition\Search',
-        'external' => '\Algolia\AlgoliaSearch\Model\Composition\External',
+        'search' => '\Algolia\AlgoliaSearch\Model\Composition\InjectedItemSearch',
+        'external' => '\Algolia\AlgoliaSearch\Model\Composition\InjectedItemExternal',
     ];
 
     /**
@@ -171,7 +171,7 @@ class InjectedItemSource extends AbstractModel implements ModelInterface, \Array
     /**
      * Gets search.
      *
-     * @return Search
+     * @return InjectedItemSearch
      */
     public function getSearch()
     {
@@ -181,7 +181,7 @@ class InjectedItemSource extends AbstractModel implements ModelInterface, \Array
     /**
      * Sets search.
      *
-     * @param Search $search search
+     * @param InjectedItemSearch $search search
      *
      * @return self
      */
@@ -195,7 +195,7 @@ class InjectedItemSource extends AbstractModel implements ModelInterface, \Array
     /**
      * Gets external.
      *
-     * @return External
+     * @return InjectedItemExternal
      */
     public function getExternal()
     {
@@ -205,7 +205,7 @@ class InjectedItemSource extends AbstractModel implements ModelInterface, \Array
     /**
      * Sets external.
      *
-     * @param External $external external
+     * @param InjectedItemExternal $external external
      *
      * @return self
      */

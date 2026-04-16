@@ -22,8 +22,6 @@ import 'package:algolia_client_composition/src/model/composition_rule_consequenc
 import 'package:algolia_client_composition/src/model/composition_rules_batch_params.dart';
 import 'package:algolia_client_composition/src/model/composition_run_applied_rules.dart';
 import 'package:algolia_client_composition/src/model/composition_run_search_response.dart';
-import 'package:algolia_client_composition/src/model/composition_source.dart';
-import 'package:algolia_client_composition/src/model/composition_source_search.dart';
 import 'package:algolia_client_composition/src/model/compositions_search_response.dart';
 import 'package:algolia_client_composition/src/model/condition.dart';
 import 'package:algolia_client_composition/src/model/dedup_positioning.dart';
@@ -33,11 +31,9 @@ import 'package:algolia_client_composition/src/model/delete_composition_rule_act
 import 'package:algolia_client_composition/src/model/error_base.dart';
 import 'package:algolia_client_composition/src/model/exact_on_single_word_query.dart';
 import 'package:algolia_client_composition/src/model/exhaustive.dart';
-import 'package:algolia_client_composition/src/model/external.dart';
 import 'package:algolia_client_composition/src/model/external_injected_item.dart';
 import 'package:algolia_client_composition/src/model/external_injection.dart';
 import 'package:algolia_client_composition/src/model/external_ordering.dart';
-import 'package:algolia_client_composition/src/model/external_source.dart';
 import 'package:algolia_client_composition/src/model/facet_hits.dart';
 import 'package:algolia_client_composition/src/model/facet_ordering.dart';
 import 'package:algolia_client_composition/src/model/facet_stats.dart';
@@ -48,13 +44,21 @@ import 'package:algolia_client_composition/src/model/hit.dart';
 import 'package:algolia_client_composition/src/model/hit_metadata.dart';
 import 'package:algolia_client_composition/src/model/hit_ranking_info.dart';
 import 'package:algolia_client_composition/src/model/index_settings_facets.dart';
-import 'package:algolia_client_composition/src/model/injected_item.dart';
+import 'package:algolia_client_composition/src/model/injected_item_external.dart';
+import 'package:algolia_client_composition/src/model/injected_item_external_source.dart';
 import 'package:algolia_client_composition/src/model/injected_item_hits_metadata.dart';
 import 'package:algolia_client_composition/src/model/injected_item_metadata.dart';
+import 'package:algolia_client_composition/src/model/injected_item_search.dart';
+import 'package:algolia_client_composition/src/model/injected_item_search_source.dart';
 import 'package:algolia_client_composition/src/model/injection.dart';
+import 'package:algolia_client_composition/src/model/injection_injected_item.dart';
+import 'package:algolia_client_composition/src/model/injection_main.dart';
+import 'package:algolia_client_composition/src/model/injection_main_recommend_source.dart';
+import 'package:algolia_client_composition/src/model/injection_main_search_source.dart';
 import 'package:algolia_client_composition/src/model/list_compositions_response.dart';
-import 'package:algolia_client_composition/src/model/main.dart';
 import 'package:algolia_client_composition/src/model/main_injection_query_parameters.dart';
+import 'package:algolia_client_composition/src/model/main_recommend.dart';
+import 'package:algolia_client_composition/src/model/main_search.dart';
 import 'package:algolia_client_composition/src/model/match_level.dart';
 import 'package:algolia_client_composition/src/model/matched_geo_location.dart';
 import 'package:algolia_client_composition/src/model/multifeed.dart';
@@ -78,7 +82,6 @@ import 'package:algolia_client_composition/src/model/results_injected_item_appli
 import 'package:algolia_client_composition/src/model/results_injected_item_info_response.dart';
 import 'package:algolia_client_composition/src/model/rules_multiple_batch_request.dart';
 import 'package:algolia_client_composition/src/model/rules_multiple_batch_response.dart';
-import 'package:algolia_client_composition/src/model/search.dart';
 import 'package:algolia_client_composition/src/model/search_composition_rules_params.dart';
 import 'package:algolia_client_composition/src/model/search_composition_rules_response.dart';
 import 'package:algolia_client_composition/src/model/search_fields.dart';
@@ -89,7 +92,6 @@ import 'package:algolia_client_composition/src/model/search_for_facet_values_res
 import 'package:algolia_client_composition/src/model/search_response.dart';
 import 'package:algolia_client_composition/src/model/search_results.dart';
 import 'package:algolia_client_composition/src/model/search_results_item.dart';
-import 'package:algolia_client_composition/src/model/search_source.dart';
 import 'package:algolia_client_composition/src/model/snippet_result_option.dart';
 import 'package:algolia_client_composition/src/model/sort_remaining_by.dart';
 import 'package:algolia_client_composition/src/model/supported_language.dart';
@@ -180,12 +182,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'CompositionRunSearchResponse':
       return CompositionRunSearchResponse.fromJson(
           value as Map<String, dynamic>) as ReturnType;
-    case 'CompositionSource':
-      return CompositionSource.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'CompositionSourceSearch':
-      return CompositionSourceSearch.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
     case 'CompositionsSearchResponse':
       return CompositionsSearchResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -208,8 +204,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return ExactOnSingleWordQuery.fromJson(value) as ReturnType;
     case 'Exhaustive':
       return Exhaustive.fromJson(value as Map<String, dynamic>) as ReturnType;
-    case 'External':
-      return External.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'ExternalInjectedItem':
       return ExternalInjectedItem.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -218,9 +212,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'ExternalOrdering':
       return ExternalOrdering.fromJson(value) as ReturnType;
-    case 'ExternalSource':
-      return ExternalSource.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
     case 'FacetHits':
       return FacetHits.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'FacetOrdering':
@@ -247,24 +238,49 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'IndexSettingsFacets':
       return IndexSettingsFacets.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'InjectedItem':
-      return InjectedItem.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'InjectedItemExternal':
+      return InjectedItemExternal.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'InjectedItemExternalSource':
+      return InjectedItemExternalSource.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'InjectedItemHitsMetadata':
       return InjectedItemHitsMetadata.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'InjectedItemMetadata':
       return InjectedItemMetadata.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'InjectedItemSearch':
+      return InjectedItemSearch.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'InjectedItemSearchSource':
+      return InjectedItemSearchSource.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'Injection':
       return Injection.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'InjectionInjectedItem':
+      return InjectionInjectedItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'InjectionMain':
+      return InjectionMain.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'InjectionMainRecommendSource':
+      return InjectionMainRecommendSource.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'InjectionMainSearchSource':
+      return InjectionMainSearchSource.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'ListCompositionsResponse':
       return ListCompositionsResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'Main':
-      return Main.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'MainInjectionQueryParameters':
       return MainInjectionQueryParameters.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'MainRecommend':
+      return MainRecommend.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'MainSearch':
+      return MainSearch.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'MatchLevel':
       return MatchLevel.fromJson(value) as ReturnType;
     case 'MatchedGeoLocation':
@@ -324,8 +340,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'RulesMultipleBatchResponse':
       return RulesMultipleBatchResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'Search':
-      return Search.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'SearchCompositionRulesParams':
       return SearchCompositionRulesParams.fromJson(
           value as Map<String, dynamic>) as ReturnType;
@@ -355,8 +369,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'SearchResultsItem':
       return SearchResultsItem.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'SearchSource':
-      return SearchSource.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'SnippetResultOption':
       return SnippetResultOption.fromJson(value as Map<String, dynamic>)
           as ReturnType;

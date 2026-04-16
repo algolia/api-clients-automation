@@ -676,10 +676,12 @@ class SnippetCompositionClient {
                 name = "my first composition",
                 behavior = CompositionInjectionBehavior(
                   injection = Injection(
-                    main = Main(
-                      source = CompositionSource(
-                        search = CompositionSourceSearch(
-                          index = "bar"
+                    main = InjectionMain(
+                      source = Some(
+                        InjectionMainSearchSource(
+                          search = MainSearch(
+                            index = "bar"
+                          )
                         )
                       )
                     )
@@ -725,19 +727,21 @@ class SnippetCompositionClient {
                 name = "my first composition",
                 behavior = CompositionInjectionBehavior(
                   injection = Injection(
-                    main = Main(
-                      source = CompositionSource(
-                        search = CompositionSourceSearch(
-                          index = "foo"
+                    main = InjectionMain(
+                      source = Some(
+                        InjectionMainSearchSource(
+                          search = MainSearch(
+                            index = "foo"
+                          )
                         )
                       )
                     ),
                     injectedItems = Some(
                       Seq(
-                        InjectedItem(
+                        InjectionInjectedItem(
                           key = "my-unique-external-group-key",
-                          source = ExternalSource(
-                            external = External(
+                          source = InjectedItemExternalSource(
+                            external = InjectedItemExternal(
                               index = "foo",
                               ordering = Some(ExternalOrdering.withName("userDefined")),
                               params = Some(
@@ -788,13 +792,15 @@ class SnippetCompositionClient {
                 name = "my composition",
                 behavior = CompositionInjectionBehavior(
                   injection = Injection(
-                    main = Main(
-                      source = CompositionSource(
-                        search = CompositionSourceSearch(
-                          index = "foo",
-                          params = Some(
-                            MainInjectionQueryParameters(
-                              filters = Some("brand:adidas")
+                    main = InjectionMain(
+                      source = Some(
+                        InjectionMainSearchSource(
+                          search = MainSearch(
+                            index = "foo",
+                            params = Some(
+                              MainInjectionQueryParameters(
+                                filters = Some("brand:adidas")
+                              )
                             )
                           )
                         )
@@ -802,10 +808,10 @@ class SnippetCompositionClient {
                     ),
                     injectedItems = Some(
                       Seq(
-                        InjectedItem(
+                        InjectionInjectedItem(
                           key = "my-unique-group-key",
-                          source = SearchSource(
-                            search = Search(
+                          source = InjectedItemSearchSource(
+                            search = InjectedItemSearch(
                               index = "foo",
                               params = Some(
                                 BaseInjectionQueryParameters(
@@ -838,10 +844,10 @@ class SnippetCompositionClient {
                             )
                           )
                         ),
-                        InjectedItem(
+                        InjectionInjectedItem(
                           key = "my-unique-group-key",
-                          source = SearchSource(
-                            search = Search(
+                          source = InjectedItemSearchSource(
+                            search = InjectedItemSearch(
                               index = "foo",
                               params = Some(
                                 BaseInjectionQueryParameters(
@@ -912,19 +918,21 @@ class SnippetCompositionClient {
                 name = "my composition",
                 behavior = CompositionInjectionBehavior(
                   injection = Injection(
-                    main = Main(
-                      source = CompositionSource(
-                        search = CompositionSourceSearch(
-                          index = "foo"
+                    main = InjectionMain(
+                      source = Some(
+                        InjectionMainSearchSource(
+                          search = MainSearch(
+                            index = "foo"
+                          )
                         )
                       )
                     ),
                     injectedItems = Some(
                       Seq(
-                        InjectedItem(
+                        InjectionInjectedItem(
                           key = "my-unique-injected-item-key",
-                          source = SearchSource(
-                            search = Search(
+                          source = InjectedItemSearchSource(
+                            search = InjectedItemSearch(
                               index = "foo"
                             )
                           ),
@@ -971,19 +979,21 @@ class SnippetCompositionClient {
           name = "my first composition",
           behavior = CompositionInjectionBehavior(
             injection = Injection(
-              main = Main(
-                source = CompositionSource(
-                  search = CompositionSourceSearch(
-                    index = "foo"
+              main = InjectionMain(
+                source = Some(
+                  InjectionMainSearchSource(
+                    search = MainSearch(
+                      index = "foo"
+                    )
                   )
                 )
               ),
               injectedItems = Some(
                 Seq(
-                  InjectedItem(
+                  InjectionInjectedItem(
                     key = "my-unique-group-key",
-                    source = SearchSource(
-                      search = Search(
+                    source = InjectedItemSearchSource(
+                      search = InjectedItemSearch(
                         index = "foo"
                       )
                     ),
@@ -1022,19 +1032,21 @@ class SnippetCompositionClient {
           name = "my first composition",
           behavior = CompositionInjectionBehavior(
             injection = Injection(
-              main = Main(
-                source = CompositionSource(
-                  search = CompositionSourceSearch(
-                    index = "foo"
+              main = InjectionMain(
+                source = Some(
+                  InjectionMainSearchSource(
+                    search = MainSearch(
+                      index = "foo"
+                    )
                   )
                 )
               ),
               injectedItems = Some(
                 Seq(
-                  InjectedItem(
+                  InjectionInjectedItem(
                     key = "my-unique-external-group-key",
-                    source = ExternalSource(
-                      external = External(
+                    source = InjectedItemExternalSource(
+                      external = InjectedItemExternal(
                         index = "foo",
                         ordering = Some(ExternalOrdering.withName("userDefined")),
                         params = Some(
@@ -1079,13 +1091,15 @@ class SnippetCompositionClient {
           name = "my composition",
           behavior = CompositionInjectionBehavior(
             injection = Injection(
-              main = Main(
-                source = CompositionSource(
-                  search = CompositionSourceSearch(
-                    index = "foo",
-                    params = Some(
-                      MainInjectionQueryParameters(
-                        filters = Some("brand:adidas")
+              main = InjectionMain(
+                source = Some(
+                  InjectionMainSearchSource(
+                    search = MainSearch(
+                      index = "foo",
+                      params = Some(
+                        MainInjectionQueryParameters(
+                          filters = Some("brand:adidas")
+                        )
                       )
                     )
                   )
@@ -1093,10 +1107,10 @@ class SnippetCompositionClient {
               ),
               injectedItems = Some(
                 Seq(
-                  InjectedItem(
+                  InjectionInjectedItem(
                     key = "my-unique-group-key",
-                    source = SearchSource(
-                      search = Search(
+                    source = InjectedItemSearchSource(
+                      search = InjectedItemSearch(
                         index = "foo",
                         params = Some(
                           BaseInjectionQueryParameters(
@@ -1129,10 +1143,10 @@ class SnippetCompositionClient {
                       )
                     )
                   ),
-                  InjectedItem(
+                  InjectionInjectedItem(
                     key = "my-unique-group-key",
-                    source = SearchSource(
-                      search = Search(
+                    source = InjectedItemSearchSource(
+                      search = InjectedItemSearch(
                         index = "foo",
                         params = Some(
                           BaseInjectionQueryParameters(
@@ -1197,13 +1211,15 @@ class SnippetCompositionClient {
           name = "my composition",
           behavior = CompositionInjectionBehavior(
             injection = Injection(
-              main = Main(
-                source = CompositionSource(
-                  search = CompositionSourceSearch(
-                    index = "foo",
-                    params = Some(
-                      MainInjectionQueryParameters(
-                        filters = Some("brand:adidas")
+              main = InjectionMain(
+                source = Some(
+                  InjectionMainSearchSource(
+                    search = MainSearch(
+                      index = "foo",
+                      params = Some(
+                        MainInjectionQueryParameters(
+                          filters = Some("brand:adidas")
+                        )
                       )
                     )
                   )
@@ -1211,10 +1227,10 @@ class SnippetCompositionClient {
               ),
               injectedItems = Some(
                 Seq(
-                  InjectedItem(
+                  InjectionInjectedItem(
                     key = "my-unique-injected-item-key",
-                    source = SearchSource(
-                      search = Search(
+                    source = InjectedItemSearchSource(
+                      search = InjectedItemSearch(
                         index = "foo"
                       )
                     ),
@@ -1259,10 +1275,12 @@ class SnippetCompositionClient {
           sortingStrategy = Some(Map("Price-asc" -> "products-low-to-high", "Price-desc" -> "products-high-to-low")),
           behavior = CompositionInjectionBehavior(
             injection = Injection(
-              main = Main(
-                source = CompositionSource(
-                  search = CompositionSourceSearch(
-                    index = "products"
+              main = InjectionMain(
+                source = Some(
+                  InjectionMainSearchSource(
+                    search = MainSearch(
+                      index = "products"
+                    )
                   )
                 )
               )
@@ -1299,13 +1317,15 @@ class SnippetCompositionClient {
               feeds = Map(
                 "products" -> FeedInjection(
                   injection = Injection(
-                    main = Main(
-                      source = CompositionSource(
-                        search = CompositionSourceSearch(
-                          index = "products",
-                          params = Some(
-                            MainInjectionQueryParameters(
-                              hitsPerPage = Some(12)
+                    main = InjectionMain(
+                      source = Some(
+                        InjectionMainSearchSource(
+                          search = MainSearch(
+                            index = "products",
+                            params = Some(
+                              MainInjectionQueryParameters(
+                                hitsPerPage = Some(12)
+                              )
                             )
                           )
                         )
@@ -1313,10 +1333,10 @@ class SnippetCompositionClient {
                     ),
                     injectedItems = Some(
                       Seq(
-                        InjectedItem(
+                        InjectionInjectedItem(
                           key = "featured-products",
-                          source = SearchSource(
-                            search = Search(
+                          source = InjectedItemSearchSource(
+                            search = InjectedItemSearch(
                               index = "products",
                               params = Some(
                                 BaseInjectionQueryParameters(
@@ -1334,14 +1354,16 @@ class SnippetCompositionClient {
                 ),
                 "articles" -> FeedInjection(
                   injection = Injection(
-                    main = Main(
-                      source = CompositionSource(
-                        search = CompositionSourceSearch(
-                          index = "articles",
-                          params = Some(
-                            MainInjectionQueryParameters(
-                              hitsPerPage = Some(5),
-                              attributesToRetrieve = Some(Seq("title", "excerpt", "publishedAt"))
+                    main = InjectionMain(
+                      source = Some(
+                        InjectionMainSearchSource(
+                          search = MainSearch(
+                            index = "articles",
+                            params = Some(
+                              MainInjectionQueryParameters(
+                                hitsPerPage = Some(5),
+                                attributesToRetrieve = Some(Seq("title", "excerpt", "publishedAt"))
+                              )
                             )
                           )
                         )
@@ -1349,10 +1371,10 @@ class SnippetCompositionClient {
                     ),
                     injectedItems = Some(
                       Seq(
-                        InjectedItem(
+                        InjectionInjectedItem(
                           key = "editorial-picks",
-                          source = SearchSource(
-                            search = Search(
+                          source = InjectedItemSearchSource(
+                            search = InjectedItemSearch(
                               index = "articles",
                               params = Some(
                                 BaseInjectionQueryParameters(
@@ -1370,14 +1392,16 @@ class SnippetCompositionClient {
                 ),
                 "videos" -> FeedInjection(
                   injection = Injection(
-                    main = Main(
-                      source = CompositionSource(
-                        search = CompositionSourceSearch(
-                          index = "videos",
-                          params = Some(
-                            MainInjectionQueryParameters(
-                              hitsPerPage = Some(3),
-                              attributesToRetrieve = Some(Seq("title", "thumbnail", "duration"))
+                    main = InjectionMain(
+                      source = Some(
+                        InjectionMainSearchSource(
+                          search = MainSearch(
+                            index = "videos",
+                            params = Some(
+                              MainInjectionQueryParameters(
+                                hitsPerPage = Some(3),
+                                attributesToRetrieve = Some(Seq("title", "thumbnail", "duration"))
+                              )
                             )
                           )
                         )
@@ -1426,19 +1450,21 @@ class SnippetCompositionClient {
           consequence = CompositionRuleConsequence(
             behavior = CompositionInjectionBehavior(
               injection = Injection(
-                main = Main(
-                  source = CompositionSource(
-                    search = CompositionSourceSearch(
-                      index = "foo"
+                main = InjectionMain(
+                  source = Some(
+                    InjectionMainSearchSource(
+                      search = MainSearch(
+                        index = "foo"
+                      )
                     )
                   )
                 ),
                 injectedItems = Some(
                   Seq(
-                    InjectedItem(
+                    InjectionInjectedItem(
                       key = "my-unique-group-from-rule-key",
-                      source = SearchSource(
-                        search = Search(
+                      source = InjectedItemSearchSource(
+                        search = InjectedItemSearch(
                           index = "foo"
                         )
                       ),
@@ -1487,19 +1513,21 @@ class SnippetCompositionClient {
           consequence = CompositionRuleConsequence(
             behavior = CompositionInjectionBehavior(
               injection = Injection(
-                main = Main(
-                  source = CompositionSource(
-                    search = CompositionSourceSearch(
-                      index = "foo"
+                main = InjectionMain(
+                  source = Some(
+                    InjectionMainSearchSource(
+                      search = MainSearch(
+                        index = "foo"
+                      )
                     )
                   )
                 ),
                 injectedItems = Some(
                   Seq(
-                    InjectedItem(
+                    InjectionInjectedItem(
                       key = "my-unique-group-from-rule-key",
-                      source = SearchSource(
-                        search = Search(
+                      source = InjectedItemSearchSource(
+                        search = InjectedItemSearch(
                           index = "foo",
                           params = Some(
                             BaseInjectionQueryParameters(
@@ -1589,13 +1617,15 @@ class SnippetCompositionClient {
           consequence = CompositionRuleConsequence(
             behavior = CompositionInjectionBehavior(
               injection = Injection(
-                main = Main(
-                  source = CompositionSource(
-                    search = CompositionSourceSearch(
-                      index = "my-index",
-                      params = Some(
-                        MainInjectionQueryParameters(
-                          filters = Some("brand:adidas")
+                main = InjectionMain(
+                  source = Some(
+                    InjectionMainSearchSource(
+                      search = MainSearch(
+                        index = "my-index",
+                        params = Some(
+                          MainInjectionQueryParameters(
+                            filters = Some("brand:adidas")
+                          )
                         )
                       )
                     )
@@ -1603,10 +1633,10 @@ class SnippetCompositionClient {
                 ),
                 injectedItems = Some(
                   Seq(
-                    InjectedItem(
+                    InjectionInjectedItem(
                       key = "my-unique-external-group-from-rule-key",
-                      source = ExternalSource(
-                        external = External(
+                      source = InjectedItemExternalSource(
+                        external = InjectedItemExternal(
                           index = "my-index",
                           params = Some(
                             BaseInjectionQueryParameters(
@@ -1663,19 +1693,21 @@ class SnippetCompositionClient {
           consequence = CompositionRuleConsequence(
             behavior = CompositionInjectionBehavior(
               injection = Injection(
-                main = Main(
-                  source = CompositionSource(
-                    search = CompositionSourceSearch(
-                      index = "my-index"
+                main = InjectionMain(
+                  source = Some(
+                    InjectionMainSearchSource(
+                      search = MainSearch(
+                        index = "my-index"
+                      )
                     )
                   )
                 ),
                 injectedItems = Some(
                   Seq(
-                    InjectedItem(
+                    InjectionInjectedItem(
                       key = "my-unique-injected-item-key",
-                      source = SearchSource(
-                        search = Search(
+                      source = InjectedItemSearchSource(
+                        search = InjectedItemSearch(
                           index = "my-index"
                         )
                       ),
@@ -1732,10 +1764,12 @@ class SnippetCompositionClient {
                   consequence = CompositionRuleConsequence(
                     behavior = CompositionInjectionBehavior(
                       injection = Injection(
-                        main = Main(
-                          source = CompositionSource(
-                            search = CompositionSourceSearch(
-                              index = "<YOUR_INDEX_NAME>"
+                        main = InjectionMain(
+                          source = Some(
+                            InjectionMainSearchSource(
+                              search = MainSearch(
+                                index = "<YOUR_INDEX_NAME>"
+                              )
                             )
                           )
                         )
@@ -1787,19 +1821,21 @@ class SnippetCompositionClient {
                   consequence = CompositionRuleConsequence(
                     behavior = CompositionInjectionBehavior(
                       injection = Injection(
-                        main = Main(
-                          source = CompositionSource(
-                            search = CompositionSourceSearch(
-                              index = "foo"
+                        main = InjectionMain(
+                          source = Some(
+                            InjectionMainSearchSource(
+                              search = MainSearch(
+                                index = "foo"
+                              )
                             )
                           )
                         ),
                         injectedItems = Some(
                           Seq(
-                            InjectedItem(
+                            InjectionInjectedItem(
                               key = "my-unique-group-from-rule-key",
-                              source = SearchSource(
-                                search = Search(
+                              source = InjectedItemSearchSource(
+                                search = InjectedItemSearch(
                                   index = "foo",
                                   params = Some(
                                     BaseInjectionQueryParameters(
@@ -1897,13 +1933,15 @@ class SnippetCompositionClient {
                   consequence = CompositionRuleConsequence(
                     behavior = CompositionInjectionBehavior(
                       injection = Injection(
-                        main = Main(
-                          source = CompositionSource(
-                            search = CompositionSourceSearch(
-                              index = "my-index",
-                              params = Some(
-                                MainInjectionQueryParameters(
-                                  filters = Some("brand:adidas")
+                        main = InjectionMain(
+                          source = Some(
+                            InjectionMainSearchSource(
+                              search = MainSearch(
+                                index = "my-index",
+                                params = Some(
+                                  MainInjectionQueryParameters(
+                                    filters = Some("brand:adidas")
+                                  )
                                 )
                               )
                             )
@@ -1911,10 +1949,10 @@ class SnippetCompositionClient {
                         ),
                         injectedItems = Some(
                           Seq(
-                            InjectedItem(
+                            InjectionInjectedItem(
                               key = "my-unique-external-group-from-rule-key",
-                              source = ExternalSource(
-                                external = External(
+                              source = InjectedItemExternalSource(
+                                external = InjectedItemExternal(
                                   index = "my-index",
                                   params = Some(
                                     BaseInjectionQueryParameters(
@@ -1982,19 +2020,21 @@ class SnippetCompositionClient {
                   consequence = CompositionRuleConsequence(
                     behavior = CompositionInjectionBehavior(
                       injection = Injection(
-                        main = Main(
-                          source = CompositionSource(
-                            search = CompositionSourceSearch(
-                              index = "my-index"
+                        main = InjectionMain(
+                          source = Some(
+                            InjectionMainSearchSource(
+                              search = MainSearch(
+                                index = "my-index"
+                              )
                             )
                           )
                         ),
                         injectedItems = Some(
                           Seq(
-                            InjectedItem(
+                            InjectionInjectedItem(
                               key = "my-unique-injected-item-key",
-                              source = SearchSource(
-                                search = Search(
+                              source = InjectedItemSearchSource(
+                                search = InjectedItemSearch(
                                   index = "my-index"
                                 )
                               ),

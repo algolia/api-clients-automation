@@ -378,9 +378,9 @@ class TestCompositionClient < Test::Unit::TestCase
               name: "my first composition",
               behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                 injection: Algolia::Composition::Injection.new(
-                  main: Algolia::Composition::Main.new(
-                    source: Algolia::Composition::CompositionSource.new(
-                      search: Algolia::Composition::CompositionSourceSearch.new(index: "bar")
+                  main: Algolia::Composition::InjectionMain.new(
+                    source: Algolia::Composition::InjectionMainSearchSource.new(
+                      search: Algolia::Composition::MainSearch.new(index: "bar")
                     )
                   )
                 )
@@ -419,16 +419,16 @@ class TestCompositionClient < Test::Unit::TestCase
               name: "my first composition",
               behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                 injection: Algolia::Composition::Injection.new(
-                  main: Algolia::Composition::Main.new(
-                    source: Algolia::Composition::CompositionSource.new(
-                      search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+                  main: Algolia::Composition::InjectionMain.new(
+                    source: Algolia::Composition::InjectionMainSearchSource.new(
+                      search: Algolia::Composition::MainSearch.new(index: "foo")
                     )
                   ),
                   injected_items: [
-                    Algolia::Composition::InjectedItem.new(
+                    Algolia::Composition::InjectionInjectedItem.new(
                       key: "my-unique-external-group-key",
-                      source: Algolia::Composition::ExternalSource.new(
-                        external: Algolia::Composition::External.new(
+                      source: Algolia::Composition::InjectedItemExternalSource.new(
+                        external: Algolia::Composition::InjectedItemExternal.new(
                           index: "foo",
                           ordering: "userDefined",
                           params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas")
@@ -470,19 +470,19 @@ class TestCompositionClient < Test::Unit::TestCase
               name: "my composition",
               behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                 injection: Algolia::Composition::Injection.new(
-                  main: Algolia::Composition::Main.new(
-                    source: Algolia::Composition::CompositionSource.new(
-                      search: Algolia::Composition::CompositionSourceSearch.new(
+                  main: Algolia::Composition::InjectionMain.new(
+                    source: Algolia::Composition::InjectionMainSearchSource.new(
+                      search: Algolia::Composition::MainSearch.new(
                         index: "foo",
                         params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
                       )
                     )
                   ),
                   injected_items: [
-                    Algolia::Composition::InjectedItem.new(
+                    Algolia::Composition::InjectionInjectedItem.new(
                       key: "my-unique-group-key",
-                      source: Algolia::Composition::SearchSource.new(
-                        search: Algolia::Composition::Search.new(
+                      source: Algolia::Composition::InjectedItemSearchSource.new(
+                        search: Algolia::Composition::InjectedItemSearch.new(
                           index: "foo",
                           params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas")
                         )
@@ -501,10 +501,10 @@ class TestCompositionClient < Test::Unit::TestCase
                         )
                       )
                     ),
-                    Algolia::Composition::InjectedItem.new(
+                    Algolia::Composition::InjectionInjectedItem.new(
                       key: "my-unique-group-key",
-                      source: Algolia::Composition::SearchSource.new(
-                        search: Algolia::Composition::Search.new(
+                      source: Algolia::Composition::InjectedItemSearchSource.new(
+                        search: Algolia::Composition::InjectedItemSearch.new(
                           index: "foo",
                           params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:puma")
                         )
@@ -556,16 +556,16 @@ class TestCompositionClient < Test::Unit::TestCase
               name: "my composition",
               behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                 injection: Algolia::Composition::Injection.new(
-                  main: Algolia::Composition::Main.new(
-                    source: Algolia::Composition::CompositionSource.new(
-                      search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+                  main: Algolia::Composition::InjectionMain.new(
+                    source: Algolia::Composition::InjectionMainSearchSource.new(
+                      search: Algolia::Composition::MainSearch.new(index: "foo")
                     )
                   ),
                   injected_items: [
-                    Algolia::Composition::InjectedItem.new(
+                    Algolia::Composition::InjectionInjectedItem.new(
                       key: "my-unique-injected-item-key",
-                      source: Algolia::Composition::SearchSource.new(
-                        search: Algolia::Composition::Search.new(index: "foo")
+                      source: Algolia::Composition::InjectedItemSearchSource.new(
+                        search: Algolia::Composition::InjectedItemSearch.new(index: "foo")
                       ),
                       position: 2,
                       length: 1
@@ -601,15 +601,17 @@ class TestCompositionClient < Test::Unit::TestCase
         name: "my first composition",
         behavior: Algolia::Composition::CompositionInjectionBehavior.new(
           injection: Algolia::Composition::Injection.new(
-            main: Algolia::Composition::Main.new(
-              source: Algolia::Composition::CompositionSource.new(
-                search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+            main: Algolia::Composition::InjectionMain.new(
+              source: Algolia::Composition::InjectionMainSearchSource.new(
+                search: Algolia::Composition::MainSearch.new(index: "foo")
               )
             ),
             injected_items: [
-              Algolia::Composition::InjectedItem.new(
+              Algolia::Composition::InjectionInjectedItem.new(
                 key: "my-unique-group-key",
-                source: Algolia::Composition::SearchSource.new(search: Algolia::Composition::Search.new(index: "foo")),
+                source: Algolia::Composition::InjectedItemSearchSource.new(
+                  search: Algolia::Composition::InjectedItemSearch.new(index: "foo")
+                ),
                 position: 2,
                 length: 1
               )
@@ -640,16 +642,16 @@ class TestCompositionClient < Test::Unit::TestCase
         name: "my first composition",
         behavior: Algolia::Composition::CompositionInjectionBehavior.new(
           injection: Algolia::Composition::Injection.new(
-            main: Algolia::Composition::Main.new(
-              source: Algolia::Composition::CompositionSource.new(
-                search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+            main: Algolia::Composition::InjectionMain.new(
+              source: Algolia::Composition::InjectionMainSearchSource.new(
+                search: Algolia::Composition::MainSearch.new(index: "foo")
               )
             ),
             injected_items: [
-              Algolia::Composition::InjectedItem.new(
+              Algolia::Composition::InjectionInjectedItem.new(
                 key: "my-unique-external-group-key",
-                source: Algolia::Composition::ExternalSource.new(
-                  external: Algolia::Composition::External.new(
+                source: Algolia::Composition::InjectedItemExternalSource.new(
+                  external: Algolia::Composition::InjectedItemExternal.new(
                     index: "foo",
                     ordering: "userDefined",
                     params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas")
@@ -685,19 +687,19 @@ class TestCompositionClient < Test::Unit::TestCase
         name: "my composition",
         behavior: Algolia::Composition::CompositionInjectionBehavior.new(
           injection: Algolia::Composition::Injection.new(
-            main: Algolia::Composition::Main.new(
-              source: Algolia::Composition::CompositionSource.new(
-                search: Algolia::Composition::CompositionSourceSearch.new(
+            main: Algolia::Composition::InjectionMain.new(
+              source: Algolia::Composition::InjectionMainSearchSource.new(
+                search: Algolia::Composition::MainSearch.new(
                   index: "foo",
                   params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
                 )
               )
             ),
             injected_items: [
-              Algolia::Composition::InjectedItem.new(
+              Algolia::Composition::InjectionInjectedItem.new(
                 key: "my-unique-group-key",
-                source: Algolia::Composition::SearchSource.new(
-                  search: Algolia::Composition::Search.new(
+                source: Algolia::Composition::InjectedItemSearchSource.new(
+                  search: Algolia::Composition::InjectedItemSearch.new(
                     index: "foo",
                     params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas")
                   )
@@ -716,10 +718,10 @@ class TestCompositionClient < Test::Unit::TestCase
                   )
                 )
               ),
-              Algolia::Composition::InjectedItem.new(
+              Algolia::Composition::InjectionInjectedItem.new(
                 key: "my-unique-group-key",
-                source: Algolia::Composition::SearchSource.new(
-                  search: Algolia::Composition::Search.new(
+                source: Algolia::Composition::InjectedItemSearchSource.new(
+                  search: Algolia::Composition::InjectedItemSearch.new(
                     index: "foo",
                     params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:puma")
                   )
@@ -765,18 +767,20 @@ class TestCompositionClient < Test::Unit::TestCase
         name: "my composition",
         behavior: Algolia::Composition::CompositionInjectionBehavior.new(
           injection: Algolia::Composition::Injection.new(
-            main: Algolia::Composition::Main.new(
-              source: Algolia::Composition::CompositionSource.new(
-                search: Algolia::Composition::CompositionSourceSearch.new(
+            main: Algolia::Composition::InjectionMain.new(
+              source: Algolia::Composition::InjectionMainSearchSource.new(
+                search: Algolia::Composition::MainSearch.new(
                   index: "foo",
                   params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
                 )
               )
             ),
             injected_items: [
-              Algolia::Composition::InjectedItem.new(
+              Algolia::Composition::InjectionInjectedItem.new(
                 key: "my-unique-injected-item-key",
-                source: Algolia::Composition::SearchSource.new(search: Algolia::Composition::Search.new(index: "foo")),
+                source: Algolia::Composition::InjectedItemSearchSource.new(
+                  search: Algolia::Composition::InjectedItemSearch.new(index: "foo")
+                ),
                 position: 2,
                 length: 1
               )
@@ -809,9 +813,9 @@ class TestCompositionClient < Test::Unit::TestCase
         sorting_strategy: {:"Price-asc" => "products-low-to-high", :"Price-desc" => "products-high-to-low"},
         behavior: Algolia::Composition::CompositionInjectionBehavior.new(
           injection: Algolia::Composition::Injection.new(
-            main: Algolia::Composition::Main.new(
-              source: Algolia::Composition::CompositionSource.new(
-                search: Algolia::Composition::CompositionSourceSearch.new(index: "products")
+            main: Algolia::Composition::InjectionMain.new(
+              source: Algolia::Composition::InjectionMainSearchSource.new(
+                search: Algolia::Composition::MainSearch.new(index: "products")
               )
             )
           )
@@ -843,19 +847,19 @@ class TestCompositionClient < Test::Unit::TestCase
             feeds: {
               products: Algolia::Composition::FeedInjection.new(
                 injection: Algolia::Composition::Injection.new(
-                  main: Algolia::Composition::Main.new(
-                    source: Algolia::Composition::CompositionSource.new(
-                      search: Algolia::Composition::CompositionSourceSearch.new(
+                  main: Algolia::Composition::InjectionMain.new(
+                    source: Algolia::Composition::InjectionMainSearchSource.new(
+                      search: Algolia::Composition::MainSearch.new(
                         index: "products",
                         params: Algolia::Composition::MainInjectionQueryParameters.new(hits_per_page: 12)
                       )
                     )
                   ),
                   injected_items: [
-                    Algolia::Composition::InjectedItem.new(
+                    Algolia::Composition::InjectionInjectedItem.new(
                       key: "featured-products",
-                      source: Algolia::Composition::SearchSource.new(
-                        search: Algolia::Composition::Search.new(
+                      source: Algolia::Composition::InjectedItemSearchSource.new(
+                        search: Algolia::Composition::InjectedItemSearch.new(
                           index: "products",
                           params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "featured:true")
                         )
@@ -868,9 +872,9 @@ class TestCompositionClient < Test::Unit::TestCase
               ),
               articles: Algolia::Composition::FeedInjection.new(
                 injection: Algolia::Composition::Injection.new(
-                  main: Algolia::Composition::Main.new(
-                    source: Algolia::Composition::CompositionSource.new(
-                      search: Algolia::Composition::CompositionSourceSearch.new(
+                  main: Algolia::Composition::InjectionMain.new(
+                    source: Algolia::Composition::InjectionMainSearchSource.new(
+                      search: Algolia::Composition::MainSearch.new(
                         index: "articles",
                         params: Algolia::Composition::MainInjectionQueryParameters.new(
                           hits_per_page: 5,
@@ -880,10 +884,10 @@ class TestCompositionClient < Test::Unit::TestCase
                     )
                   ),
                   injected_items: [
-                    Algolia::Composition::InjectedItem.new(
+                    Algolia::Composition::InjectionInjectedItem.new(
                       key: "editorial-picks",
-                      source: Algolia::Composition::SearchSource.new(
-                        search: Algolia::Composition::Search.new(
+                      source: Algolia::Composition::InjectedItemSearchSource.new(
+                        search: Algolia::Composition::InjectedItemSearch.new(
                           index: "articles",
                           params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "editorial_pick:true")
                         )
@@ -896,9 +900,9 @@ class TestCompositionClient < Test::Unit::TestCase
               ),
               videos: Algolia::Composition::FeedInjection.new(
                 injection: Algolia::Composition::Injection.new(
-                  main: Algolia::Composition::Main.new(
-                    source: Algolia::Composition::CompositionSource.new(
-                      search: Algolia::Composition::CompositionSourceSearch.new(
+                  main: Algolia::Composition::InjectionMain.new(
+                    source: Algolia::Composition::InjectionMainSearchSource.new(
+                      search: Algolia::Composition::MainSearch.new(
                         index: "videos",
                         params: Algolia::Composition::MainInjectionQueryParameters.new(
                           hits_per_page: 3,
@@ -939,15 +943,17 @@ class TestCompositionClient < Test::Unit::TestCase
         consequence: Algolia::Composition::CompositionRuleConsequence.new(
           behavior: Algolia::Composition::CompositionInjectionBehavior.new(
             injection: Algolia::Composition::Injection.new(
-              main: Algolia::Composition::Main.new(
-                source: Algolia::Composition::CompositionSource.new(
-                  search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+              main: Algolia::Composition::InjectionMain.new(
+                source: Algolia::Composition::InjectionMainSearchSource.new(
+                  search: Algolia::Composition::MainSearch.new(index: "foo")
                 )
               ),
               injected_items: [
-                Algolia::Composition::InjectedItem.new(
+                Algolia::Composition::InjectionInjectedItem.new(
                   key: "my-unique-group-from-rule-key",
-                  source: Algolia::Composition::SearchSource.new(search: Algolia::Composition::Search.new(index: "foo")),
+                  source: Algolia::Composition::InjectedItemSearchSource.new(
+                    search: Algolia::Composition::InjectedItemSearch.new(index: "foo")
+                  ),
                   position: 2,
                   length: 1
                 )
@@ -981,16 +987,16 @@ class TestCompositionClient < Test::Unit::TestCase
         consequence: Algolia::Composition::CompositionRuleConsequence.new(
           behavior: Algolia::Composition::CompositionInjectionBehavior.new(
             injection: Algolia::Composition::Injection.new(
-              main: Algolia::Composition::Main.new(
-                source: Algolia::Composition::CompositionSource.new(
-                  search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+              main: Algolia::Composition::InjectionMain.new(
+                source: Algolia::Composition::InjectionMainSearchSource.new(
+                  search: Algolia::Composition::MainSearch.new(index: "foo")
                 )
               ),
               injected_items: [
-                Algolia::Composition::InjectedItem.new(
+                Algolia::Composition::InjectionInjectedItem.new(
                   key: "my-unique-group-from-rule-key",
-                  source: Algolia::Composition::SearchSource.new(
-                    search: Algolia::Composition::Search.new(
+                  source: Algolia::Composition::InjectedItemSearchSource.new(
+                    search: Algolia::Composition::InjectedItemSearch.new(
                       index: "foo",
                       params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas")
                     )
@@ -1046,19 +1052,19 @@ class TestCompositionClient < Test::Unit::TestCase
         consequence: Algolia::Composition::CompositionRuleConsequence.new(
           behavior: Algolia::Composition::CompositionInjectionBehavior.new(
             injection: Algolia::Composition::Injection.new(
-              main: Algolia::Composition::Main.new(
-                source: Algolia::Composition::CompositionSource.new(
-                  search: Algolia::Composition::CompositionSourceSearch.new(
+              main: Algolia::Composition::InjectionMain.new(
+                source: Algolia::Composition::InjectionMainSearchSource.new(
+                  search: Algolia::Composition::MainSearch.new(
                     index: "my-index",
                     params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
                   )
                 )
               ),
               injected_items: [
-                Algolia::Composition::InjectedItem.new(
+                Algolia::Composition::InjectionInjectedItem.new(
                   key: "my-unique-external-group-from-rule-key",
-                  source: Algolia::Composition::ExternalSource.new(
-                    external: Algolia::Composition::External.new(
+                  source: Algolia::Composition::InjectedItemExternalSource.new(
+                    external: Algolia::Composition::InjectedItemExternal.new(
                       index: "my-index",
                       params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas"),
                       ordering: "userDefined"
@@ -1099,16 +1105,16 @@ class TestCompositionClient < Test::Unit::TestCase
         consequence: Algolia::Composition::CompositionRuleConsequence.new(
           behavior: Algolia::Composition::CompositionInjectionBehavior.new(
             injection: Algolia::Composition::Injection.new(
-              main: Algolia::Composition::Main.new(
-                source: Algolia::Composition::CompositionSource.new(
-                  search: Algolia::Composition::CompositionSourceSearch.new(index: "my-index")
+              main: Algolia::Composition::InjectionMain.new(
+                source: Algolia::Composition::InjectionMainSearchSource.new(
+                  search: Algolia::Composition::MainSearch.new(index: "my-index")
                 )
               ),
               injected_items: [
-                Algolia::Composition::InjectedItem.new(
+                Algolia::Composition::InjectionInjectedItem.new(
                   key: "my-unique-injected-item-key",
-                  source: Algolia::Composition::SearchSource.new(
-                    search: Algolia::Composition::Search.new(index: "my-index")
+                  source: Algolia::Composition::InjectedItemSearchSource.new(
+                    search: Algolia::Composition::InjectedItemSearch.new(index: "my-index")
                   ),
                   position: 0,
                   length: 3
@@ -1147,9 +1153,9 @@ class TestCompositionClient < Test::Unit::TestCase
               consequence: Algolia::Composition::CompositionRuleConsequence.new(
                 behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                   injection: Algolia::Composition::Injection.new(
-                    main: Algolia::Composition::Main.new(
-                      source: Algolia::Composition::CompositionSource.new(
-                        search: Algolia::Composition::CompositionSourceSearch.new(index: "<YOUR_INDEX_NAME>")
+                    main: Algolia::Composition::InjectionMain.new(
+                      source: Algolia::Composition::InjectionMainSearchSource.new(
+                        search: Algolia::Composition::MainSearch.new(index: "<YOUR_INDEX_NAME>")
                       )
                     )
                   )
@@ -1187,16 +1193,16 @@ class TestCompositionClient < Test::Unit::TestCase
               consequence: Algolia::Composition::CompositionRuleConsequence.new(
                 behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                   injection: Algolia::Composition::Injection.new(
-                    main: Algolia::Composition::Main.new(
-                      source: Algolia::Composition::CompositionSource.new(
-                        search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+                    main: Algolia::Composition::InjectionMain.new(
+                      source: Algolia::Composition::InjectionMainSearchSource.new(
+                        search: Algolia::Composition::MainSearch.new(index: "foo")
                       )
                     ),
                     injected_items: [
-                      Algolia::Composition::InjectedItem.new(
+                      Algolia::Composition::InjectionInjectedItem.new(
                         key: "my-unique-group-from-rule-key",
-                        source: Algolia::Composition::SearchSource.new(
-                          search: Algolia::Composition::Search.new(
+                        source: Algolia::Composition::InjectedItemSearchSource.new(
+                          search: Algolia::Composition::InjectedItemSearch.new(
                             index: "foo",
                             params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas")
                           )
@@ -1258,19 +1264,19 @@ class TestCompositionClient < Test::Unit::TestCase
               consequence: Algolia::Composition::CompositionRuleConsequence.new(
                 behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                   injection: Algolia::Composition::Injection.new(
-                    main: Algolia::Composition::Main.new(
-                      source: Algolia::Composition::CompositionSource.new(
-                        search: Algolia::Composition::CompositionSourceSearch.new(
+                    main: Algolia::Composition::InjectionMain.new(
+                      source: Algolia::Composition::InjectionMainSearchSource.new(
+                        search: Algolia::Composition::MainSearch.new(
                           index: "my-index",
                           params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
                         )
                       )
                     ),
                     injected_items: [
-                      Algolia::Composition::InjectedItem.new(
+                      Algolia::Composition::InjectionInjectedItem.new(
                         key: "my-unique-external-group-from-rule-key",
-                        source: Algolia::Composition::ExternalSource.new(
-                          external: Algolia::Composition::External.new(
+                        source: Algolia::Composition::InjectedItemExternalSource.new(
+                          external: Algolia::Composition::InjectedItemExternal.new(
                             index: "my-index",
                             params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas"),
                             ordering: "userDefined"
@@ -1320,16 +1326,16 @@ class TestCompositionClient < Test::Unit::TestCase
               consequence: Algolia::Composition::CompositionRuleConsequence.new(
                 behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                   injection: Algolia::Composition::Injection.new(
-                    main: Algolia::Composition::Main.new(
-                      source: Algolia::Composition::CompositionSource.new(
-                        search: Algolia::Composition::CompositionSourceSearch.new(index: "my-index")
+                    main: Algolia::Composition::InjectionMain.new(
+                      source: Algolia::Composition::InjectionMainSearchSource.new(
+                        search: Algolia::Composition::MainSearch.new(index: "my-index")
                       )
                     ),
                     injected_items: [
-                      Algolia::Composition::InjectedItem.new(
+                      Algolia::Composition::InjectionInjectedItem.new(
                         key: "my-unique-injected-item-key",
-                        source: Algolia::Composition::SearchSource.new(
-                          search: Algolia::Composition::Search.new(index: "my-index")
+                        source: Algolia::Composition::InjectedItemSearchSource.new(
+                          search: Algolia::Composition::InjectedItemSearch.new(index: "my-index")
                         ),
                         position: 0,
                         length: 3

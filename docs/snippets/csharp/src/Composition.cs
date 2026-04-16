@@ -638,12 +638,14 @@ public class SnippetCompositionClient
                   {
                     Injection = new Injection
                     {
-                      Main = new Main
+                      Main = new InjectionMain
                       {
-                        Source = new CompositionSource
-                        {
-                          Search = new CompositionSourceSearch { Index = "bar" },
-                        },
+                        Source = new InjectionMainSource(
+                          new InjectionMainSearchSource
+                          {
+                            Search = new MainSearch { Index = "bar" },
+                          }
+                        ),
                       },
                     },
                   }
@@ -697,22 +699,24 @@ public class SnippetCompositionClient
                   {
                     Injection = new Injection
                     {
-                      Main = new Main
+                      Main = new InjectionMain
                       {
-                        Source = new CompositionSource
-                        {
-                          Search = new CompositionSourceSearch { Index = "foo" },
-                        },
+                        Source = new InjectionMainSource(
+                          new InjectionMainSearchSource
+                          {
+                            Search = new MainSearch { Index = "foo" },
+                          }
+                        ),
                       },
-                      InjectedItems = new List<InjectedItem>
+                      InjectedItems = new List<InjectionInjectedItem>
                       {
-                        new InjectedItem
+                        new InjectionInjectedItem
                         {
                           Key = "my-unique-external-group-key",
                           Source = new InjectedItemSource(
-                            new ExternalSource
+                            new InjectedItemExternalSource
                             {
-                              External = new External
+                              External = new InjectedItemExternal
                               {
                                 Index = "foo",
                                 Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
@@ -774,26 +778,31 @@ public class SnippetCompositionClient
                   {
                     Injection = new Injection
                     {
-                      Main = new Main
+                      Main = new InjectionMain
                       {
-                        Source = new CompositionSource
-                        {
-                          Search = new CompositionSourceSearch
+                        Source = new InjectionMainSource(
+                          new InjectionMainSearchSource
                           {
-                            Index = "foo",
-                            Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
-                          },
-                        },
+                            Search = new MainSearch
+                            {
+                              Index = "foo",
+                              Params = new MainInjectionQueryParameters
+                              {
+                                Filters = "brand:adidas",
+                              },
+                            },
+                          }
+                        ),
                       },
-                      InjectedItems = new List<InjectedItem>
+                      InjectedItems = new List<InjectionInjectedItem>
                       {
-                        new InjectedItem
+                        new InjectionInjectedItem
                         {
                           Key = "my-unique-group-key",
                           Source = new InjectedItemSource(
-                            new SearchSource
+                            new InjectedItemSearchSource
                             {
-                              Search = new Algolia.Search.Models.Composition.Search
+                              Search = new InjectedItemSearch
                               {
                                 Index = "foo",
                                 Params = new BaseInjectionQueryParameters
@@ -823,13 +832,13 @@ public class SnippetCompositionClient
                             },
                           },
                         },
-                        new InjectedItem
+                        new InjectionInjectedItem
                         {
                           Key = "my-unique-group-key",
                           Source = new InjectedItemSource(
-                            new SearchSource
+                            new InjectedItemSearchSource
                             {
-                              Search = new Algolia.Search.Models.Composition.Search
+                              Search = new InjectedItemSearch
                               {
                                 Index = "foo",
                                 Params = new BaseInjectionQueryParameters
@@ -907,25 +916,24 @@ public class SnippetCompositionClient
                   {
                     Injection = new Injection
                     {
-                      Main = new Main
+                      Main = new InjectionMain
                       {
-                        Source = new CompositionSource
-                        {
-                          Search = new CompositionSourceSearch { Index = "foo" },
-                        },
+                        Source = new InjectionMainSource(
+                          new InjectionMainSearchSource
+                          {
+                            Search = new MainSearch { Index = "foo" },
+                          }
+                        ),
                       },
-                      InjectedItems = new List<InjectedItem>
+                      InjectedItems = new List<InjectionInjectedItem>
                       {
-                        new InjectedItem
+                        new InjectionInjectedItem
                         {
                           Key = "my-unique-injected-item-key",
                           Source = new InjectedItemSource(
-                            new SearchSource
+                            new InjectedItemSearchSource
                             {
-                              Search = new Algolia.Search.Models.Composition.Search
-                              {
-                                Index = "foo",
-                              },
+                              Search = new InjectedItemSearch { Index = "foo" },
                             }
                           ),
                           Position = 2,
@@ -976,22 +984,21 @@ public class SnippetCompositionClient
           {
             Injection = new Injection
             {
-              Main = new Main
+              Main = new InjectionMain
               {
-                Source = new CompositionSource
-                {
-                  Search = new CompositionSourceSearch { Index = "foo" },
-                },
+                Source = new InjectionMainSource(
+                  new InjectionMainSearchSource { Search = new MainSearch { Index = "foo" } }
+                ),
               },
-              InjectedItems = new List<InjectedItem>
+              InjectedItems = new List<InjectionInjectedItem>
               {
-                new InjectedItem
+                new InjectionInjectedItem
                 {
                   Key = "my-unique-group-key",
                   Source = new InjectedItemSource(
-                    new SearchSource
+                    new InjectedItemSearchSource
                     {
-                      Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
+                      Search = new InjectedItemSearch { Index = "foo" },
                     }
                   ),
                   Position = 2,
@@ -1034,22 +1041,21 @@ public class SnippetCompositionClient
           {
             Injection = new Injection
             {
-              Main = new Main
+              Main = new InjectionMain
               {
-                Source = new CompositionSource
-                {
-                  Search = new CompositionSourceSearch { Index = "foo" },
-                },
+                Source = new InjectionMainSource(
+                  new InjectionMainSearchSource { Search = new MainSearch { Index = "foo" } }
+                ),
               },
-              InjectedItems = new List<InjectedItem>
+              InjectedItems = new List<InjectionInjectedItem>
               {
-                new InjectedItem
+                new InjectionInjectedItem
                 {
                   Key = "my-unique-external-group-key",
                   Source = new InjectedItemSource(
-                    new ExternalSource
+                    new InjectedItemExternalSource
                     {
-                      External = new External
+                      External = new InjectedItemExternal
                       {
                         Index = "foo",
                         Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
@@ -1097,26 +1103,28 @@ public class SnippetCompositionClient
           {
             Injection = new Injection
             {
-              Main = new Main
+              Main = new InjectionMain
               {
-                Source = new CompositionSource
-                {
-                  Search = new CompositionSourceSearch
+                Source = new InjectionMainSource(
+                  new InjectionMainSearchSource
                   {
-                    Index = "foo",
-                    Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
-                  },
-                },
+                    Search = new MainSearch
+                    {
+                      Index = "foo",
+                      Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                    },
+                  }
+                ),
               },
-              InjectedItems = new List<InjectedItem>
+              InjectedItems = new List<InjectionInjectedItem>
               {
-                new InjectedItem
+                new InjectionInjectedItem
                 {
                   Key = "my-unique-group-key",
                   Source = new InjectedItemSource(
-                    new SearchSource
+                    new InjectedItemSearchSource
                     {
-                      Search = new Algolia.Search.Models.Composition.Search
+                      Search = new InjectedItemSearch
                       {
                         Index = "foo",
                         Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
@@ -1143,13 +1151,13 @@ public class SnippetCompositionClient
                     },
                   },
                 },
-                new InjectedItem
+                new InjectionInjectedItem
                 {
                   Key = "my-unique-group-key",
                   Source = new InjectedItemSource(
-                    new SearchSource
+                    new InjectedItemSearchSource
                     {
-                      Search = new Algolia.Search.Models.Composition.Search
+                      Search = new InjectedItemSearch
                       {
                         Index = "foo",
                         Params = new BaseInjectionQueryParameters { Filters = "brand:puma" },
@@ -1213,26 +1221,28 @@ public class SnippetCompositionClient
           {
             Injection = new Injection
             {
-              Main = new Main
+              Main = new InjectionMain
               {
-                Source = new CompositionSource
-                {
-                  Search = new CompositionSourceSearch
+                Source = new InjectionMainSource(
+                  new InjectionMainSearchSource
                   {
-                    Index = "foo",
-                    Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
-                  },
-                },
+                    Search = new MainSearch
+                    {
+                      Index = "foo",
+                      Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                    },
+                  }
+                ),
               },
-              InjectedItems = new List<InjectedItem>
+              InjectedItems = new List<InjectionInjectedItem>
               {
-                new InjectedItem
+                new InjectionInjectedItem
                 {
                   Key = "my-unique-injected-item-key",
                   Source = new InjectedItemSource(
-                    new SearchSource
+                    new InjectedItemSearchSource
                     {
-                      Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
+                      Search = new InjectedItemSearch { Index = "foo" },
                     }
                   ),
                   Position = 2,
@@ -1284,12 +1294,11 @@ public class SnippetCompositionClient
           {
             Injection = new Injection
             {
-              Main = new Main
+              Main = new InjectionMain
               {
-                Source = new CompositionSource
-                {
-                  Search = new CompositionSourceSearch { Index = "products" },
-                },
+                Source = new InjectionMainSource(
+                  new InjectionMainSearchSource { Search = new MainSearch { Index = "products" } }
+                ),
               },
             },
           }
@@ -1335,26 +1344,28 @@ public class SnippetCompositionClient
                   {
                     Injection = new Injection
                     {
-                      Main = new Main
+                      Main = new InjectionMain
                       {
-                        Source = new CompositionSource
-                        {
-                          Search = new CompositionSourceSearch
+                        Source = new InjectionMainSource(
+                          new InjectionMainSearchSource
                           {
-                            Index = "products",
-                            Params = new MainInjectionQueryParameters { HitsPerPage = 12 },
-                          },
-                        },
+                            Search = new MainSearch
+                            {
+                              Index = "products",
+                              Params = new MainInjectionQueryParameters { HitsPerPage = 12 },
+                            },
+                          }
+                        ),
                       },
-                      InjectedItems = new List<InjectedItem>
+                      InjectedItems = new List<InjectionInjectedItem>
                       {
-                        new InjectedItem
+                        new InjectionInjectedItem
                         {
                           Key = "featured-products",
                           Source = new InjectedItemSource(
-                            new SearchSource
+                            new InjectedItemSearchSource
                             {
-                              Search = new Algolia.Search.Models.Composition.Search
+                              Search = new InjectedItemSearch
                               {
                                 Index = "products",
                                 Params = new BaseInjectionQueryParameters
@@ -1377,35 +1388,37 @@ public class SnippetCompositionClient
                   {
                     Injection = new Injection
                     {
-                      Main = new Main
+                      Main = new InjectionMain
                       {
-                        Source = new CompositionSource
-                        {
-                          Search = new CompositionSourceSearch
+                        Source = new InjectionMainSource(
+                          new InjectionMainSearchSource
                           {
-                            Index = "articles",
-                            Params = new MainInjectionQueryParameters
+                            Search = new MainSearch
                             {
-                              HitsPerPage = 5,
-                              AttributesToRetrieve = new List<string>
+                              Index = "articles",
+                              Params = new MainInjectionQueryParameters
                               {
-                                "title",
-                                "excerpt",
-                                "publishedAt",
+                                HitsPerPage = 5,
+                                AttributesToRetrieve = new List<string>
+                                {
+                                  "title",
+                                  "excerpt",
+                                  "publishedAt",
+                                },
                               },
                             },
-                          },
-                        },
+                          }
+                        ),
                       },
-                      InjectedItems = new List<InjectedItem>
+                      InjectedItems = new List<InjectionInjectedItem>
                       {
-                        new InjectedItem
+                        new InjectionInjectedItem
                         {
                           Key = "editorial-picks",
                           Source = new InjectedItemSource(
-                            new SearchSource
+                            new InjectedItemSearchSource
                             {
-                              Search = new Algolia.Search.Models.Composition.Search
+                              Search = new InjectedItemSearch
                               {
                                 Index = "articles",
                                 Params = new BaseInjectionQueryParameters
@@ -1428,25 +1441,27 @@ public class SnippetCompositionClient
                   {
                     Injection = new Injection
                     {
-                      Main = new Main
+                      Main = new InjectionMain
                       {
-                        Source = new CompositionSource
-                        {
-                          Search = new CompositionSourceSearch
+                        Source = new InjectionMainSource(
+                          new InjectionMainSearchSource
                           {
-                            Index = "videos",
-                            Params = new MainInjectionQueryParameters
+                            Search = new MainSearch
                             {
-                              HitsPerPage = 3,
-                              AttributesToRetrieve = new List<string>
+                              Index = "videos",
+                              Params = new MainInjectionQueryParameters
                               {
-                                "title",
-                                "thumbnail",
-                                "duration",
+                                HitsPerPage = 3,
+                                AttributesToRetrieve = new List<string>
+                                {
+                                  "title",
+                                  "thumbnail",
+                                  "duration",
+                                },
                               },
                             },
-                          },
-                        },
+                          }
+                        ),
                       },
                     },
                   }
@@ -1495,22 +1510,21 @@ public class SnippetCompositionClient
             {
               Injection = new Injection
               {
-                Main = new Main
+                Main = new InjectionMain
                 {
-                  Source = new CompositionSource
-                  {
-                    Search = new CompositionSourceSearch { Index = "foo" },
-                  },
+                  Source = new InjectionMainSource(
+                    new InjectionMainSearchSource { Search = new MainSearch { Index = "foo" } }
+                  ),
                 },
-                InjectedItems = new List<InjectedItem>
+                InjectedItems = new List<InjectionInjectedItem>
                 {
-                  new InjectedItem
+                  new InjectionInjectedItem
                   {
                     Key = "my-unique-group-from-rule-key",
                     Source = new InjectedItemSource(
-                      new SearchSource
+                      new InjectedItemSearchSource
                       {
-                        Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
+                        Search = new InjectedItemSearch { Index = "foo" },
                       }
                     ),
                     Position = 2,
@@ -1560,22 +1574,21 @@ public class SnippetCompositionClient
             {
               Injection = new Injection
               {
-                Main = new Main
+                Main = new InjectionMain
                 {
-                  Source = new CompositionSource
-                  {
-                    Search = new CompositionSourceSearch { Index = "foo" },
-                  },
+                  Source = new InjectionMainSource(
+                    new InjectionMainSearchSource { Search = new MainSearch { Index = "foo" } }
+                  ),
                 },
-                InjectedItems = new List<InjectedItem>
+                InjectedItems = new List<InjectionInjectedItem>
                 {
-                  new InjectedItem
+                  new InjectionInjectedItem
                   {
                     Key = "my-unique-group-from-rule-key",
                     Source = new InjectedItemSource(
-                      new SearchSource
+                      new InjectedItemSearchSource
                       {
-                        Search = new Algolia.Search.Models.Composition.Search
+                        Search = new InjectedItemSearch
                         {
                           Index = "foo",
                           Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
@@ -1654,26 +1667,28 @@ public class SnippetCompositionClient
             {
               Injection = new Injection
               {
-                Main = new Main
+                Main = new InjectionMain
                 {
-                  Source = new CompositionSource
-                  {
-                    Search = new CompositionSourceSearch
+                  Source = new InjectionMainSource(
+                    new InjectionMainSearchSource
                     {
-                      Index = "my-index",
-                      Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
-                    },
-                  },
+                      Search = new MainSearch
+                      {
+                        Index = "my-index",
+                        Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                      },
+                    }
+                  ),
                 },
-                InjectedItems = new List<InjectedItem>
+                InjectedItems = new List<InjectionInjectedItem>
                 {
-                  new InjectedItem
+                  new InjectionInjectedItem
                   {
                     Key = "my-unique-external-group-from-rule-key",
                     Source = new InjectedItemSource(
-                      new ExternalSource
+                      new InjectedItemExternalSource
                       {
-                        External = new External
+                        External = new InjectedItemExternal
                         {
                           Index = "my-index",
                           Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
@@ -1730,25 +1745,21 @@ public class SnippetCompositionClient
             {
               Injection = new Injection
               {
-                Main = new Main
+                Main = new InjectionMain
                 {
-                  Source = new CompositionSource
-                  {
-                    Search = new CompositionSourceSearch { Index = "my-index" },
-                  },
+                  Source = new InjectionMainSource(
+                    new InjectionMainSearchSource { Search = new MainSearch { Index = "my-index" } }
+                  ),
                 },
-                InjectedItems = new List<InjectedItem>
+                InjectedItems = new List<InjectionInjectedItem>
                 {
-                  new InjectedItem
+                  new InjectionInjectedItem
                   {
                     Key = "my-unique-injected-item-key",
                     Source = new InjectedItemSource(
-                      new SearchSource
+                      new InjectedItemSearchSource
                       {
-                        Search = new Algolia.Search.Models.Composition.Search
-                        {
-                          Index = "my-index",
-                        },
+                        Search = new InjectedItemSearch { Index = "my-index" },
                       }
                     ),
                     Position = 0,
@@ -1806,12 +1817,14 @@ public class SnippetCompositionClient
                     {
                       Injection = new Injection
                       {
-                        Main = new Main
+                        Main = new InjectionMain
                         {
-                          Source = new CompositionSource
-                          {
-                            Search = new CompositionSourceSearch { Index = "<YOUR_INDEX_NAME>" },
-                          },
+                          Source = new InjectionMainSource(
+                            new InjectionMainSearchSource
+                            {
+                              Search = new MainSearch { Index = "<YOUR_INDEX_NAME>" },
+                            }
+                          ),
                         },
                       },
                     }
@@ -1867,22 +1880,24 @@ public class SnippetCompositionClient
                     {
                       Injection = new Injection
                       {
-                        Main = new Main
+                        Main = new InjectionMain
                         {
-                          Source = new CompositionSource
-                          {
-                            Search = new CompositionSourceSearch { Index = "foo" },
-                          },
+                          Source = new InjectionMainSource(
+                            new InjectionMainSearchSource
+                            {
+                              Search = new MainSearch { Index = "foo" },
+                            }
+                          ),
                         },
-                        InjectedItems = new List<InjectedItem>
+                        InjectedItems = new List<InjectionInjectedItem>
                         {
-                          new InjectedItem
+                          new InjectionInjectedItem
                           {
                             Key = "my-unique-group-from-rule-key",
                             Source = new InjectedItemSource(
-                              new SearchSource
+                              new InjectedItemSearchSource
                               {
-                                Search = new Algolia.Search.Models.Composition.Search
+                                Search = new InjectedItemSearch
                                 {
                                   Index = "foo",
                                   Params = new BaseInjectionQueryParameters
@@ -1983,29 +1998,31 @@ public class SnippetCompositionClient
                     {
                       Injection = new Injection
                       {
-                        Main = new Main
+                        Main = new InjectionMain
                         {
-                          Source = new CompositionSource
-                          {
-                            Search = new CompositionSourceSearch
+                          Source = new InjectionMainSource(
+                            new InjectionMainSearchSource
                             {
-                              Index = "my-index",
-                              Params = new MainInjectionQueryParameters
+                              Search = new MainSearch
                               {
-                                Filters = "brand:adidas",
+                                Index = "my-index",
+                                Params = new MainInjectionQueryParameters
+                                {
+                                  Filters = "brand:adidas",
+                                },
                               },
-                            },
-                          },
+                            }
+                          ),
                         },
-                        InjectedItems = new List<InjectedItem>
+                        InjectedItems = new List<InjectionInjectedItem>
                         {
-                          new InjectedItem
+                          new InjectionInjectedItem
                           {
                             Key = "my-unique-external-group-from-rule-key",
                             Source = new InjectedItemSource(
-                              new ExternalSource
+                              new InjectedItemExternalSource
                               {
-                                External = new External
+                                External = new InjectedItemExternal
                                 {
                                   Index = "my-index",
                                   Params = new BaseInjectionQueryParameters
@@ -2081,25 +2098,24 @@ public class SnippetCompositionClient
                     {
                       Injection = new Injection
                       {
-                        Main = new Main
+                        Main = new InjectionMain
                         {
-                          Source = new CompositionSource
-                          {
-                            Search = new CompositionSourceSearch { Index = "my-index" },
-                          },
+                          Source = new InjectionMainSource(
+                            new InjectionMainSearchSource
+                            {
+                              Search = new MainSearch { Index = "my-index" },
+                            }
+                          ),
                         },
-                        InjectedItems = new List<InjectedItem>
+                        InjectedItems = new List<InjectionInjectedItem>
                         {
-                          new InjectedItem
+                          new InjectionInjectedItem
                           {
                             Key = "my-unique-injected-item-key",
                             Source = new InjectedItemSource(
-                              new SearchSource
+                              new InjectedItemSearchSource
                               {
-                                Search = new Algolia.Search.Models.Composition.Search
-                                {
-                                  Index = "my-index",
-                                },
+                                Search = new InjectedItemSearch { Index = "my-index" },
                               }
                             ),
                             Position = 0,

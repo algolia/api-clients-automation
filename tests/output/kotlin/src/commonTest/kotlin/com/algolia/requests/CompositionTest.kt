@@ -488,11 +488,9 @@ class CompositionTest {
                             injection =
                               Injection(
                                 main =
-                                  Main(
+                                  InjectionMain(
                                     source =
-                                      CompositionSource(
-                                        search = CompositionSourceSearch(index = "bar")
-                                      )
+                                      InjectionMainSearchSource(search = MainSearch(index = "bar"))
                                   )
                               )
                           ),
@@ -534,15 +532,15 @@ class CompositionTest {
                   injection =
                     Injection(
                       main =
-                        Main(
-                          source =
-                            CompositionSource(search = CompositionSourceSearch(index = "foo"))
+                        InjectionMain(
+                          source = InjectionMainSearchSource(search = MainSearch(index = "foo"))
                         ),
                       injectedItems =
                         listOf(
-                          InjectedItem(
+                          InjectionInjectedItem(
                             key = "my-unique-group-key",
-                            source = SearchSource(search = Search(index = "foo")),
+                            source =
+                              InjectedItemSearchSource(search = InjectedItemSearch(index = "foo")),
                             position = 2,
                             length = 1,
                           )
@@ -578,18 +576,17 @@ class CompositionTest {
                   injection =
                     Injection(
                       main =
-                        Main(
-                          source =
-                            CompositionSource(search = CompositionSourceSearch(index = "foo"))
+                        InjectionMain(
+                          source = InjectionMainSearchSource(search = MainSearch(index = "foo"))
                         ),
                       injectedItems =
                         listOf(
-                          InjectedItem(
+                          InjectionInjectedItem(
                             key = "my-unique-external-group-key",
                             source =
-                              ExternalSource(
+                              InjectedItemExternalSource(
                                 external =
-                                  External(
+                                  InjectedItemExternal(
                                     index = "foo",
                                     ordering =
                                       ExternalOrdering.entries.first { it.value == "userDefined" },
@@ -634,11 +631,11 @@ class CompositionTest {
                   injection =
                     Injection(
                       main =
-                        Main(
+                        InjectionMain(
                           source =
-                            CompositionSource(
+                            InjectionMainSearchSource(
                               search =
-                                CompositionSourceSearch(
+                                MainSearch(
                                   index = "foo",
                                   params = MainInjectionQueryParameters(filters = "brand:adidas"),
                                 )
@@ -646,9 +643,10 @@ class CompositionTest {
                         ),
                       injectedItems =
                         listOf(
-                          InjectedItem(
+                          InjectionInjectedItem(
                             key = "my-unique-injected-item-key",
-                            source = SearchSource(search = Search(index = "foo")),
+                            source =
+                              InjectedItemSearchSource(search = InjectedItemSearch(index = "foo")),
                             position = 2,
                             length = 1,
                           )
@@ -693,9 +691,9 @@ class CompositionTest {
                   injection =
                     Injection(
                       main =
-                        Main(
+                        InjectionMain(
                           source =
-                            CompositionSource(search = CompositionSourceSearch(index = "products"))
+                            InjectionMainSearchSource(search = MainSearch(index = "products"))
                         )
                     )
                 ),
@@ -734,11 +732,11 @@ class CompositionTest {
                               injection =
                                 Injection(
                                   main =
-                                    Main(
+                                    InjectionMain(
                                       source =
-                                        CompositionSource(
+                                        InjectionMainSearchSource(
                                           search =
-                                            CompositionSourceSearch(
+                                            MainSearch(
                                               index = "products",
                                               params =
                                                 MainInjectionQueryParameters(hitsPerPage = 12),
@@ -747,12 +745,12 @@ class CompositionTest {
                                     ),
                                   injectedItems =
                                     listOf(
-                                      InjectedItem(
+                                      InjectionInjectedItem(
                                         key = "featured-products",
                                         source =
-                                          SearchSource(
+                                          InjectedItemSearchSource(
                                             search =
-                                              Search(
+                                              InjectedItemSearch(
                                                 index = "products",
                                                 params =
                                                   BaseInjectionQueryParameters(
@@ -771,11 +769,11 @@ class CompositionTest {
                               injection =
                                 Injection(
                                   main =
-                                    Main(
+                                    InjectionMain(
                                       source =
-                                        CompositionSource(
+                                        InjectionMainSearchSource(
                                           search =
-                                            CompositionSourceSearch(
+                                            MainSearch(
                                               index = "articles",
                                               params =
                                                 MainInjectionQueryParameters(
@@ -788,12 +786,12 @@ class CompositionTest {
                                     ),
                                   injectedItems =
                                     listOf(
-                                      InjectedItem(
+                                      InjectionInjectedItem(
                                         key = "editorial-picks",
                                         source =
-                                          SearchSource(
+                                          InjectedItemSearchSource(
                                             search =
-                                              Search(
+                                              InjectedItemSearch(
                                                 index = "articles",
                                                 params =
                                                   BaseInjectionQueryParameters(
@@ -812,11 +810,11 @@ class CompositionTest {
                               injection =
                                 Injection(
                                   main =
-                                    Main(
+                                    InjectionMain(
                                       source =
-                                        CompositionSource(
+                                        InjectionMainSearchSource(
                                           search =
-                                            CompositionSourceSearch(
+                                            MainSearch(
                                               index = "videos",
                                               params =
                                                 MainInjectionQueryParameters(
@@ -873,15 +871,17 @@ class CompositionTest {
                       injection =
                         Injection(
                           main =
-                            Main(
-                              source =
-                                CompositionSource(search = CompositionSourceSearch(index = "foo"))
+                            InjectionMain(
+                              source = InjectionMainSearchSource(search = MainSearch(index = "foo"))
                             ),
                           injectedItems =
                             listOf(
-                              InjectedItem(
+                              InjectionInjectedItem(
                                 key = "my-unique-group-from-rule-key",
-                                source = SearchSource(search = Search(index = "foo")),
+                                source =
+                                  InjectedItemSearchSource(
+                                    search = InjectedItemSearch(index = "foo")
+                                  ),
                                 position = 2,
                                 length = 1,
                               )
@@ -938,11 +938,11 @@ class CompositionTest {
                       injection =
                         Injection(
                           main =
-                            Main(
+                            InjectionMain(
                               source =
-                                CompositionSource(
+                                InjectionMainSearchSource(
                                   search =
-                                    CompositionSourceSearch(
+                                    MainSearch(
                                       index = "my-index",
                                       params =
                                         MainInjectionQueryParameters(filters = "brand:adidas"),
@@ -951,12 +951,12 @@ class CompositionTest {
                             ),
                           injectedItems =
                             listOf(
-                              InjectedItem(
+                              InjectionInjectedItem(
                                 key = "my-unique-external-group-from-rule-key",
                                 source =
-                                  ExternalSource(
+                                  InjectedItemExternalSource(
                                     external =
-                                      External(
+                                      InjectedItemExternal(
                                         index = "my-index",
                                         params =
                                           BaseInjectionQueryParameters(filters = "brand:adidas"),
@@ -1016,17 +1016,18 @@ class CompositionTest {
                       injection =
                         Injection(
                           main =
-                            Main(
+                            InjectionMain(
                               source =
-                                CompositionSource(
-                                  search = CompositionSourceSearch(index = "my-index")
-                                )
+                                InjectionMainSearchSource(search = MainSearch(index = "my-index"))
                             ),
                           injectedItems =
                             listOf(
-                              InjectedItem(
+                              InjectionInjectedItem(
                                 key = "my-unique-injected-item-key",
-                                source = SearchSource(search = Search(index = "my-index")),
+                                source =
+                                  InjectedItemSearchSource(
+                                    search = InjectedItemSearch(index = "my-index")
+                                  ),
                                 position = 0,
                                 length = 3,
                               )
@@ -1081,11 +1082,10 @@ class CompositionTest {
                                 injection =
                                   Injection(
                                     main =
-                                      Main(
+                                      InjectionMain(
                                         source =
-                                          CompositionSource(
-                                            search =
-                                              CompositionSourceSearch(index = "<YOUR_INDEX_NAME>")
+                                          InjectionMainSearchSource(
+                                            search = MainSearch(index = "<YOUR_INDEX_NAME>")
                                           )
                                       )
                                   )
@@ -1145,11 +1145,11 @@ class CompositionTest {
                                 injection =
                                   Injection(
                                     main =
-                                      Main(
+                                      InjectionMain(
                                         source =
-                                          CompositionSource(
+                                          InjectionMainSearchSource(
                                             search =
-                                              CompositionSourceSearch(
+                                              MainSearch(
                                                 index = "my-index",
                                                 params =
                                                   MainInjectionQueryParameters(
@@ -1160,12 +1160,12 @@ class CompositionTest {
                                       ),
                                     injectedItems =
                                       listOf(
-                                        InjectedItem(
+                                        InjectionInjectedItem(
                                           key = "my-unique-external-group-from-rule-key",
                                           source =
-                                            ExternalSource(
+                                            InjectedItemExternalSource(
                                               external =
-                                                External(
+                                                InjectedItemExternal(
                                                   index = "my-index",
                                                   params =
                                                     BaseInjectionQueryParameters(
@@ -1236,18 +1236,20 @@ class CompositionTest {
                                 injection =
                                   Injection(
                                     main =
-                                      Main(
+                                      InjectionMain(
                                         source =
-                                          CompositionSource(
-                                            search = CompositionSourceSearch(index = "my-index")
+                                          InjectionMainSearchSource(
+                                            search = MainSearch(index = "my-index")
                                           )
                                       ),
                                     injectedItems =
                                       listOf(
-                                        InjectedItem(
+                                        InjectionInjectedItem(
                                           key = "my-unique-injected-item-key",
                                           source =
-                                            SearchSource(search = Search(index = "my-index")),
+                                            InjectedItemSearchSource(
+                                              search = InjectedItemSearch(index = "my-index")
+                                            ),
                                           position = 0,
                                           length = 3,
                                         )

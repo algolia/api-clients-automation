@@ -22,10 +22,10 @@ public partial class InjectedItemSource : AbstractSchema
 {
   /// <summary>
   /// Initializes a new instance of the InjectedItemSource class
-  /// with a SearchSource
+  /// with a InjectedItemSearchSource
   /// </summary>
-  /// <param name="actualInstance">An instance of SearchSource.</param>
-  public InjectedItemSource(SearchSource actualInstance)
+  /// <param name="actualInstance">An instance of InjectedItemSearchSource.</param>
+  public InjectedItemSource(InjectedItemSearchSource actualInstance)
   {
     ActualInstance =
       actualInstance ?? throw new ArgumentException("Invalid instance found. Must not be null.");
@@ -33,10 +33,10 @@ public partial class InjectedItemSource : AbstractSchema
 
   /// <summary>
   /// Initializes a new instance of the InjectedItemSource class
-  /// with a ExternalSource
+  /// with a InjectedItemExternalSource
   /// </summary>
-  /// <param name="actualInstance">An instance of ExternalSource.</param>
-  public InjectedItemSource(ExternalSource actualInstance)
+  /// <param name="actualInstance">An instance of InjectedItemExternalSource.</param>
+  public InjectedItemSource(InjectedItemExternalSource actualInstance)
   {
     ActualInstance =
       actualInstance ?? throw new ArgumentException("Invalid instance found. Must not be null.");
@@ -48,41 +48,41 @@ public partial class InjectedItemSource : AbstractSchema
   public sealed override object ActualInstance { get; set; }
 
   /// <summary>
-  /// Get the actual instance of `SearchSource`. If the actual instance is not `SearchSource`,
+  /// Get the actual instance of `InjectedItemSearchSource`. If the actual instance is not `InjectedItemSearchSource`,
   /// the InvalidClassException will be thrown
   /// </summary>
-  /// <returns>An instance of SearchSource</returns>
-  public SearchSource AsSearchSource()
+  /// <returns>An instance of InjectedItemSearchSource</returns>
+  public InjectedItemSearchSource AsInjectedItemSearchSource()
   {
-    return (SearchSource)ActualInstance;
+    return (InjectedItemSearchSource)ActualInstance;
   }
 
   /// <summary>
-  /// Get the actual instance of `ExternalSource`. If the actual instance is not `ExternalSource`,
+  /// Get the actual instance of `InjectedItemExternalSource`. If the actual instance is not `InjectedItemExternalSource`,
   /// the InvalidClassException will be thrown
   /// </summary>
-  /// <returns>An instance of ExternalSource</returns>
-  public ExternalSource AsExternalSource()
+  /// <returns>An instance of InjectedItemExternalSource</returns>
+  public InjectedItemExternalSource AsInjectedItemExternalSource()
   {
-    return (ExternalSource)ActualInstance;
+    return (InjectedItemExternalSource)ActualInstance;
   }
 
   /// <summary>
-  /// Check if the actual instance is of `SearchSource` type.
+  /// Check if the actual instance is of `InjectedItemSearchSource` type.
   /// </summary>
   /// <returns>Whether or not the instance is the type</returns>
-  public bool IsSearchSource()
+  public bool IsInjectedItemSearchSource()
   {
-    return ActualInstance.GetType() == typeof(SearchSource);
+    return ActualInstance.GetType() == typeof(InjectedItemSearchSource);
   }
 
   /// <summary>
-  /// Check if the actual instance is of `ExternalSource` type.
+  /// Check if the actual instance is of `InjectedItemExternalSource` type.
   /// </summary>
   /// <returns>Whether or not the instance is the type</returns>
-  public bool IsExternalSource()
+  public bool IsInjectedItemExternalSource()
   {
-    return ActualInstance.GetType() == typeof(ExternalSource);
+    return ActualInstance.GetType() == typeof(InjectedItemExternalSource);
   }
 
   /// <summary>
@@ -172,25 +172,31 @@ public class InjectedItemSourceJsonConverter : JsonConverter<InjectedItemSource>
     {
       try
       {
-        return new InjectedItemSource(jsonDocument.Deserialize<SearchSource>(JsonConfig.Options));
+        return new InjectedItemSource(
+          jsonDocument.Deserialize<InjectedItemSearchSource>(JsonConfig.Options)
+        );
       }
       catch (Exception exception)
       {
         // deserialization failed, try the next one
-        System.Diagnostics.Debug.WriteLine($"Failed to deserialize into SearchSource: {exception}");
+        System.Diagnostics.Debug.WriteLine(
+          $"Failed to deserialize into InjectedItemSearchSource: {exception}"
+        );
       }
     }
     if (root.ValueKind == JsonValueKind.Object && root.TryGetProperty("external", out _))
     {
       try
       {
-        return new InjectedItemSource(jsonDocument.Deserialize<ExternalSource>(JsonConfig.Options));
+        return new InjectedItemSource(
+          jsonDocument.Deserialize<InjectedItemExternalSource>(JsonConfig.Options)
+        );
       }
       catch (Exception exception)
       {
         // deserialization failed, try the next one
         System.Diagnostics.Debug.WriteLine(
-          $"Failed to deserialize into ExternalSource: {exception}"
+          $"Failed to deserialize into InjectedItemExternalSource: {exception}"
         );
       }
     }

@@ -27,8 +27,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :main => :"Main",
-          :injected_items => :"Array<InjectedItem>",
+          :main => :"InjectionMain",
+          :injected_items => :"Array<InjectionInjectedItem>",
           :deduplication => :"Deduplication"
         }
       end

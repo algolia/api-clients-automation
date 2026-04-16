@@ -18,8 +18,12 @@ else:
     from typing_extensions import Self
 
 
-from algoliasearch.composition.models.external_source import ExternalSource
-from algoliasearch.composition.models.search_source import SearchSource
+from algoliasearch.composition.models.injected_item_external_source import (
+    InjectedItemExternalSource,
+)
+from algoliasearch.composition.models.injected_item_search_source import (
+    InjectedItemSearchSource,
+)
 
 
 class InjectedItemSource(BaseModel):
@@ -27,12 +31,17 @@ class InjectedItemSource(BaseModel):
     InjectedItemSource
     """
 
-    oneof_schema_1_validator: Optional[SearchSource] = Field(default=None)
+    oneof_schema_1_validator: Optional[InjectedItemSearchSource] = Field(default=None)
 
-    oneof_schema_2_validator: Optional[ExternalSource] = Field(default=None)
+    oneof_schema_2_validator: Optional[InjectedItemExternalSource] = Field(default=None)
 
-    actual_instance: Union[ExternalSource, SearchSource, None] = None
-    one_of_schemas: Set[str] = {"ExternalSource", "SearchSource"}
+    actual_instance: Union[
+        InjectedItemExternalSource, InjectedItemSearchSource, None
+    ] = None
+    one_of_schemas: Set[str] = {
+        "InjectedItemExternalSource",
+        "InjectedItemSearchSource",
+    }
 
     def __init__(self, *args, **kwargs) -> None:
         if args:
@@ -49,7 +58,9 @@ class InjectedItemSource(BaseModel):
             super().__init__(**kwargs)
 
     @model_serializer
-    def unwrap_actual_instance(self) -> Union[ExternalSource, SearchSource, Self, None]:
+    def unwrap_actual_instance(
+        self,
+    ) -> Union[InjectedItemExternalSource, InjectedItemSearchSource, Self, None]:
         """
         Unwraps the `actual_instance` when calling the `to_json` method.
         """
@@ -67,20 +78,20 @@ class InjectedItemSource(BaseModel):
         error_messages = []
 
         try:
-            instance.actual_instance = SearchSource.from_json(json_str)
+            instance.actual_instance = InjectedItemSearchSource.from_json(json_str)
 
             return instance
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
         try:
-            instance.actual_instance = ExternalSource.from_json(json_str)
+            instance.actual_instance = InjectedItemExternalSource.from_json(json_str)
 
             return instance
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
 
         raise ValueError(
-            "No match found when deserializing the JSON string into InjectedItemSource with oneOf schemas: ExternalSource, SearchSource. Details: "
+            "No match found when deserializing the JSON string into InjectedItemSource with oneOf schemas: InjectedItemExternalSource, InjectedItemSearchSource. Details: "
             + ", ".join(error_messages)
         )
 
@@ -96,7 +107,11 @@ class InjectedItemSource(BaseModel):
         else:
             return dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], ExternalSource, SearchSource]]:
+    def to_dict(
+        self,
+    ) -> Optional[
+        Union[Dict[str, Any], InjectedItemExternalSource, InjectedItemSearchSource]
+    ]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None
