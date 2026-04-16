@@ -1,5 +1,4 @@
-SearchSource:
-  title: searchSource
+injectedItemSearchSource:
   description: Injected items will originate from a search request performed on the specified index.
   x-discriminator-fields:
     - search
@@ -7,7 +6,7 @@ SearchSource:
   additionalProperties: false
   properties:
     search:
-      title: search
+      title: injectedItemSearch
       type: object
       additionalProperties: false
       properties:
@@ -16,14 +15,13 @@ SearchSource:
           description: Composition Index name.
           example: Products
         params:
-          $ref: './QueryParams.yml#/injectedItemsQueryParameters'
+          $ref: './SearchQueryParams.yml#/injectedItemsQueryParameters'
       required:
         - index
   required:
     - search
 
-ExternalSource:
-  title: externalSource
+injectedItemExternalSource:
   description: Injected items will originate from externally provided objectIDs (that must exist in the index) given at runtime in the run request payload.
   x-discriminator-fields:
     - external
@@ -31,7 +29,7 @@ ExternalSource:
   additionalProperties: false
   properties:
     external:
-      title: external
+      title: injectedItemExternal
       type: object
       additionalProperties: false
       properties:
@@ -40,7 +38,7 @@ ExternalSource:
           description: Composition Index name.
           example: Products
         params:
-          $ref: './QueryParams.yml#/injectedItemsQueryParameters'
+          $ref: './SearchQueryParams.yml#/injectedItemsQueryParameters'
         ordering:
           $ref: '#/externalOrdering'
       required:
