@@ -1,0 +1,59 @@
+injectionInjectedItem:
+  type: object
+  additionalProperties: false
+  properties:
+    key:
+      type: string
+      description: injected Item unique identifier.
+    source:
+      description: Source to be used to inject items into result set.
+      $ref: '#/injectedItemSource'
+    position:
+      type: integer
+      minimum: 0
+      maximum: 99
+    length:
+      type: integer
+      minimum: 0
+      maximum: 50
+    metadata:
+      title: injectedItemMetadata
+      type: object
+      description: Used to add metadata to the results of the injectedItem.
+      properties:
+        hits:
+          title: injectedItemHitsMetadata
+          type: object
+          description: Adds the provided metadata to each injected hit via an `_extra` attribute.
+          properties:
+            addItemKey:
+              type: boolean
+              description: When true, the `_injectedItemKey` field is set in the `_extra` object of each affected hit.
+            extra:
+              type: object
+              additionalProperties: true
+              description: The user-defined key-value pairs that will be placed in the `_extra` field of each affected hit.
+  required:
+    - key
+    - source
+    - position
+    - length
+
+injectedItemSource:
+  oneOf:
+    - $ref: './InjectedItemSource.yml#/injectedItemSearchSource'
+    - $ref: './InjectedItemSource.yml#/injectedItemExternalSource'
+
+dedupPositioning:
+  type: string
+  enum:
+    - highest
+    - highestInjected
+  description: |
+    Deduplication positioning configures how a duplicate result should be resolved between an injected item and main search results.
+    Current configuration supports:
+    - 'highest': always select the item in the highest position, and remove duplicates that appear lower in the results.
+    - 'highestInjected': duplicate result will be moved to its highest possible injected position, but not higher. 
+      If a duplicate appears higher in main search results, it will be removed to stay it's intended group position (which could be lower than main).
+  example: highest
+  default: highestInjected
