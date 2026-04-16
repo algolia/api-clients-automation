@@ -36,8 +36,9 @@ type config struct {
 
   {{#isIngestionClient}}
   // -- ChunkedPush options
-	waitForTasks bool
-	batchSize    int
+	waitForTasks   bool
+	useThrottling  bool
+	batchSize      int
 
 	// -- Iterable options
 	maxRetries    int
@@ -47,8 +48,9 @@ type config struct {
 
   {{#isSearchClient}}
   // -- ChunkedBatch options
-	waitForTasks bool
-	batchSize    int
+	waitForTasks   bool
+	useThrottling  bool
+	batchSize      int
 
   // -- Partial update options
   createIfNotExists bool
@@ -272,6 +274,7 @@ func toIngestionChunkedBatchOptions(opts []ChunkedBatchOption) []ingestion.Chunk
 	}
 
 	ingestionOpts = append(ingestionOpts, ingestion.WithWaitForTasks(conf.waitForTasks))
+	ingestionOpts = append(ingestionOpts, ingestion.WithThrottling(conf.useThrottling))
 
 	return ingestionOpts
 }

@@ -297,6 +297,7 @@
         index_name: str,
         objects: List[Dict[str, Any]],
         wait_for_tasks: bool = False,
+        use_throttling: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[IngestionWatchResponse]:
@@ -305,7 +306,7 @@
         """
         if self._ingestion_transporter is None:
             raise ValueError("`region` must be provided at client instantiation before calling this method.")
-        return {{^isSyncClient}}await {{/isSyncClient}}self._ingestion_transporter.chunked_push(index_name=index_name, objects=objects, action=IngestionAction.ADDOBJECT, wait_for_tasks=wait_for_tasks, batch_size=batch_size, request_options=request_options)
+        return {{^isSyncClient}}await {{/isSyncClient}}self._ingestion_transporter.chunked_push(index_name=index_name, objects=objects, action=IngestionAction.ADDOBJECT, wait_for_tasks=wait_for_tasks, use_throttling=use_throttling, batch_size=batch_size, request_options=request_options)
 
     {{^isSyncClient}}async {{/isSyncClient}}def delete_objects(
         self,
@@ -340,6 +341,7 @@
         objects: List[Dict[str, Any]],
         create_if_not_exists: bool = False,
         wait_for_tasks: bool = False,
+        use_throttling: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[IngestionWatchResponse]:
@@ -348,7 +350,7 @@
         """
         if self._ingestion_transporter is None:
             raise ValueError("`region` must be provided at client instantiation before calling this method.")
-        return {{^isSyncClient}}await {{/isSyncClient}}self._ingestion_transporter.chunked_push(index_name=index_name, objects=objects, action=IngestionAction.PARTIALUPDATEOBJECT if create_if_not_exists else IngestionAction.PARTIALUPDATEOBJECTNOCREATE, wait_for_tasks=wait_for_tasks, batch_size=batch_size, request_options=request_options)
+        return {{^isSyncClient}}await {{/isSyncClient}}self._ingestion_transporter.chunked_push(index_name=index_name, objects=objects, action=IngestionAction.PARTIALUPDATEOBJECT if create_if_not_exists else IngestionAction.PARTIALUPDATEOBJECTNOCREATE, wait_for_tasks=wait_for_tasks, use_throttling=use_throttling, batch_size=batch_size, request_options=request_options)
 
     {{^isSyncClient}}async {{/isSyncClient}}def chunked_batch(
         self,

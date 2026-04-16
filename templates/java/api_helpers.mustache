@@ -25,6 +25,8 @@ private <T> List<PushTaskRecords> objectsToPushTaskRecords(Iterable<T> objects) 
  * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
  *     processed, this operation may slow the total execution time of this method but is more
  *     reliable.
+ * @param useThrottling - Whether or not we should apply throttling (sleep) between batch
+ *     processing to avoid overloading the API.
  * @param batchSize - The size of the chunk of `objects`. The number of `batch` calls will be
  *     equal to `length(objects) / batchSize`. Defaults to 1000.
  * @param referenceIndexName - This is required when targeting an index that does not have a push
@@ -38,6 +40,7 @@ public <T> List<WatchResponse> chunkedPush(
   Iterable<T> objects,
   Action action,
   boolean waitForTasks,
+  boolean useThrottling,
   int batchSize,
   String referenceIndexName,
   RequestOptions requestOptions
@@ -69,6 +72,7 @@ public <T> List<WatchResponse> chunkedPush(
     }
 
     if (waitForTasks && responses.size() > 0 && (responses.size() % waitBatchSize == 0 || !it.hasNext())) {
+      long waitStartTime = System.currentTimeMillis();
       responses
         .subList(offset, Math.min(offset + waitBatchSize, responses.size()))
         .forEach(response -> {
@@ -93,6 +97,17 @@ public <T> List<WatchResponse> chunkedPush(
         });
 
       offset += waitBatchSize;
+
+      if (useThrottling && it.hasNext()) {
+        long remainingMs = waitBatchSize * 100L - (System.currentTimeMillis() - waitStartTime);
+        if (remainingMs > 0) {
+          try {
+            Thread.sleep(remainingMs);
+          } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+          }
+        }
+      }
     }
 
     if (!it.hasNext()) {
@@ -830,7 +845,7 @@ public <T> List<WatchResponse> saveObjectsWithTransformation(
   boolean waitForTasks,
   RequestOptions requestOptions
 ) {
-  return saveObjectsWithTransformation(indexName, objects, waitForTasks, 1000, requestOptions);
+  return saveObjectsWithTransformation(indexName, objects, waitForTasks, 1000, false, requestOptions);
 }
 
 /**
@@ -854,13 +869,14 @@ public <T> List<WatchResponse> saveObjectsWithTransformation(
   Iterable<T> objects,
   boolean waitForTasks,
   int batchSize,
+  boolean useThrottling,
   RequestOptions requestOptions
 ) {
   if (this.ingestionTransporter == null) {
     throw new AlgoliaRuntimeException("`setTransformationRegion` must have been called before calling this method.");
   }
 
-  return this.ingestionTransporter.chunkedPush(indexName, objects, com.algolia.model.ingestion.Action.ADD_OBJECT, waitForTasks, batchSize, null, requestOptions);
+  return this.ingestionTransporter.chunkedPush(indexName, objects, com.algolia.model.ingestion.Action.ADD_OBJECT, waitForTasks, useThrottling, batchSize, null, requestOptions);
 }
 
 /**
@@ -1048,7 +1064,7 @@ public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
   boolean waitForTasks,
   RequestOptions requestOptions
 ) {
-  return partialUpdateObjectsWithTransformation(indexName, objects, createIfNotExists, waitForTasks, 1000, null);
+  return partialUpdateObjectsWithTransformation(indexName, objects, createIfNotExists, waitForTasks, 1000, false, null);
 }
 
 /**
@@ -1075,6 +1091,7 @@ public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
   boolean createIfNotExists,
   boolean waitForTasks,
   int batchSize,
+  boolean useThrottling,
   RequestOptions requestOptions
 ) {
   if (this.ingestionTransporter == null) {
@@ -1086,6 +1103,7 @@ public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
     objects,
     createIfNotExists ? com.algolia.model.ingestion.Action.PARTIAL_UPDATE_OBJECT : com.algolia.model.ingestion.Action.PARTIAL_UPDATE_OBJECT_NO_CREATE,
     waitForTasks,
+    useThrottling,
     batchSize,
     null,
     requestOptions
@@ -1442,6 +1460,7 @@ public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTran
           objects,
           com.algolia.model.ingestion.Action.ADD_OBJECT,
           true,
+          false,
           batchSize,
           indexName,
           requestOptions

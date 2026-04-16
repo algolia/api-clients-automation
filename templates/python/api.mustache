@@ -20,6 +20,7 @@ from algoliasearch.ingestion.client import (IngestionClient, IngestionClientSync
 from algoliasearch.ingestion.models import Action as IngestionAction
 {{/isSearchClient}}
 {{#isIngestionClient}}
+{{^isSyncClient}}import asyncio{{/isSyncClient}}
 from algoliasearch.ingestion.models import (Action, WatchResponse, Event, PushTaskRecords)
 {{/isIngestionClient}}
 

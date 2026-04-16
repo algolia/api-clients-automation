@@ -4,6 +4,7 @@
         objects: List[Dict[str, Any]],
         action: Action = Action.ADDOBJECT,
         wait_for_tasks: bool = False,
+        use_throttling: bool = False,
         batch_size: int = 1000,
         reference_index_name: Optional[str] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -37,6 +38,7 @@
                 and len(responses) > 0
                 and (len(responses) % wait_batch_size == 0 or i == len(objects) - 1)
             ):
+                _wait_start_time = time()
                 for response in responses[offset:offset+wait_batch_size]:
 
                     {{^isSyncClient}}async {{/isSyncClient}}def _func(_: Optional[Event]) -> Event:
@@ -75,4 +77,8 @@
                         error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${50})",
                     )
                 offset += wait_batch_size
+                if use_throttling and i != len(objects) - 1:
+                    _remaining_s = wait_batch_size * 0.1 - (time() - _wait_start_time)
+                    if _remaining_s > 0:
+                        {{^isSyncClient}}await asyncio.sleep(_remaining_s){{/isSyncClient}}{{#isSyncClient}}sleep(_remaining_s){{/isSyncClient}}
         return responses
