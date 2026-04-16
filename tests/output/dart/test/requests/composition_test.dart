@@ -683,9 +683,9 @@ void main() {
                 name: "my first composition",
                 behavior: CompositionInjectionBehavior(
                   injection: Injection(
-                    main: Main(
-                      source: CompositionSource(
-                        search: CompositionSourceSearch(
+                    main: InjectionMain(
+                      source: InjectionMainSearchSource(
+                        search: MainSearch(
                           index: "bar",
                         ),
                       ),
@@ -731,18 +731,18 @@ void main() {
                 name: "my first composition",
                 behavior: CompositionInjectionBehavior(
                   injection: Injection(
-                    main: Main(
-                      source: CompositionSource(
-                        search: CompositionSourceSearch(
+                    main: InjectionMain(
+                      source: InjectionMainSearchSource(
+                        search: MainSearch(
                           index: "foo",
                         ),
                       ),
                     ),
                     injectedItems: [
-                      InjectedItem(
+                      InjectionInjectedItem(
                         key: "my-unique-external-group-key",
-                        source: ExternalSource(
-                          external_: External(
+                        source: InjectedItemExternalSource(
+                          external_: InjectedItemExternal(
                             index: "foo",
                             ordering: ExternalOrdering.fromJson("userDefined"),
                             params: BaseInjectionQueryParameters(
@@ -789,9 +789,9 @@ void main() {
                 name: "my composition",
                 behavior: CompositionInjectionBehavior(
                   injection: Injection(
-                    main: Main(
-                      source: CompositionSource(
-                        search: CompositionSourceSearch(
+                    main: InjectionMain(
+                      source: InjectionMainSearchSource(
+                        search: MainSearch(
                           index: "foo",
                           params: MainInjectionQueryParameters(
                             filters: "brand:adidas",
@@ -800,10 +800,10 @@ void main() {
                       ),
                     ),
                     injectedItems: [
-                      InjectedItem(
+                      InjectionInjectedItem(
                         key: "my-unique-group-key",
-                        source: SearchSource(
-                          search: Search(
+                        source: InjectedItemSearchSource(
+                          search: InjectedItemSearch(
                             index: "foo",
                             params: BaseInjectionQueryParameters(
                               filters: "brand:adidas",
@@ -826,10 +826,10 @@ void main() {
                           ),
                         ),
                       ),
-                      InjectedItem(
+                      InjectionInjectedItem(
                         key: "my-unique-group-key",
-                        source: SearchSource(
-                          search: Search(
+                        source: InjectedItemSearchSource(
+                          search: InjectedItemSearch(
                             index: "foo",
                             params: BaseInjectionQueryParameters(
                               filters: "brand:puma",
@@ -888,18 +888,18 @@ void main() {
                 name: "my composition",
                 behavior: CompositionInjectionBehavior(
                   injection: Injection(
-                    main: Main(
-                      source: CompositionSource(
-                        search: CompositionSourceSearch(
+                    main: InjectionMain(
+                      source: InjectionMainSearchSource(
+                        search: MainSearch(
                           index: "foo",
                         ),
                       ),
                     ),
                     injectedItems: [
-                      InjectedItem(
+                      InjectionInjectedItem(
                         key: "my-unique-injected-item-key",
-                        source: SearchSource(
-                          search: Search(
+                        source: InjectedItemSearchSource(
+                          search: InjectedItemSearch(
                             index: "foo",
                           ),
                         ),
@@ -942,18 +942,18 @@ void main() {
           name: "my first composition",
           behavior: CompositionInjectionBehavior(
             injection: Injection(
-              main: Main(
-                source: CompositionSource(
-                  search: CompositionSourceSearch(
+              main: InjectionMain(
+                source: InjectionMainSearchSource(
+                  search: MainSearch(
                     index: "foo",
                   ),
                 ),
               ),
               injectedItems: [
-                InjectedItem(
+                InjectionInjectedItem(
                   key: "my-unique-group-key",
-                  source: SearchSource(
-                    search: Search(
+                  source: InjectedItemSearchSource(
+                    search: InjectedItemSearch(
                       index: "foo",
                     ),
                   ),
@@ -990,18 +990,18 @@ void main() {
           name: "my first composition",
           behavior: CompositionInjectionBehavior(
             injection: Injection(
-              main: Main(
-                source: CompositionSource(
-                  search: CompositionSourceSearch(
+              main: InjectionMain(
+                source: InjectionMainSearchSource(
+                  search: MainSearch(
                     index: "foo",
                   ),
                 ),
               ),
               injectedItems: [
-                InjectedItem(
+                InjectionInjectedItem(
                   key: "my-unique-external-group-key",
-                  source: ExternalSource(
-                    external_: External(
+                  source: InjectedItemExternalSource(
+                    external_: InjectedItemExternal(
                       index: "foo",
                       ordering: ExternalOrdering.fromJson("userDefined"),
                       params: BaseInjectionQueryParameters(
@@ -1042,9 +1042,9 @@ void main() {
           name: "my composition",
           behavior: CompositionInjectionBehavior(
             injection: Injection(
-              main: Main(
-                source: CompositionSource(
-                  search: CompositionSourceSearch(
+              main: InjectionMain(
+                source: InjectionMainSearchSource(
+                  search: MainSearch(
                     index: "foo",
                     params: MainInjectionQueryParameters(
                       filters: "brand:adidas",
@@ -1053,10 +1053,10 @@ void main() {
                 ),
               ),
               injectedItems: [
-                InjectedItem(
+                InjectionInjectedItem(
                   key: "my-unique-group-key",
-                  source: SearchSource(
-                    search: Search(
+                  source: InjectedItemSearchSource(
+                    search: InjectedItemSearch(
                       index: "foo",
                       params: BaseInjectionQueryParameters(
                         filters: "brand:adidas",
@@ -1079,10 +1079,10 @@ void main() {
                     ),
                   ),
                 ),
-                InjectedItem(
+                InjectionInjectedItem(
                   key: "my-unique-group-key",
-                  source: SearchSource(
-                    search: Search(
+                  source: InjectedItemSearchSource(
+                    search: InjectedItemSearch(
                       index: "foo",
                       params: BaseInjectionQueryParameters(
                         filters: "brand:puma",
@@ -1135,9 +1135,9 @@ void main() {
           name: "my composition",
           behavior: CompositionInjectionBehavior(
             injection: Injection(
-              main: Main(
-                source: CompositionSource(
-                  search: CompositionSourceSearch(
+              main: InjectionMain(
+                source: InjectionMainSearchSource(
+                  search: MainSearch(
                     index: "foo",
                     params: MainInjectionQueryParameters(
                       filters: "brand:adidas",
@@ -1146,10 +1146,10 @@ void main() {
                 ),
               ),
               injectedItems: [
-                InjectedItem(
+                InjectionInjectedItem(
                   key: "my-unique-injected-item-key",
-                  source: SearchSource(
-                    search: Search(
+                  source: InjectedItemSearchSource(
+                    search: InjectedItemSearch(
                       index: "foo",
                     ),
                   ),
@@ -1193,9 +1193,9 @@ void main() {
           },
           behavior: CompositionInjectionBehavior(
             injection: Injection(
-              main: Main(
-                source: CompositionSource(
-                  search: CompositionSourceSearch(
+              main: InjectionMain(
+                source: InjectionMainSearchSource(
+                  search: MainSearch(
                     index: "products",
                   ),
                 ),
@@ -1232,9 +1232,9 @@ void main() {
               feeds: {
                 'products': FeedInjection(
                   injection: Injection(
-                    main: Main(
-                      source: CompositionSource(
-                        search: CompositionSourceSearch(
+                    main: InjectionMain(
+                      source: InjectionMainSearchSource(
+                        search: MainSearch(
                           index: "products",
                           params: MainInjectionQueryParameters(
                             hitsPerPage: 12,
@@ -1243,10 +1243,10 @@ void main() {
                       ),
                     ),
                     injectedItems: [
-                      InjectedItem(
+                      InjectionInjectedItem(
                         key: "featured-products",
-                        source: SearchSource(
-                          search: Search(
+                        source: InjectedItemSearchSource(
+                          search: InjectedItemSearch(
                             index: "products",
                             params: BaseInjectionQueryParameters(
                               filters: "featured:true",
@@ -1261,9 +1261,9 @@ void main() {
                 ),
                 'articles': FeedInjection(
                   injection: Injection(
-                    main: Main(
-                      source: CompositionSource(
-                        search: CompositionSourceSearch(
+                    main: InjectionMain(
+                      source: InjectionMainSearchSource(
+                        search: MainSearch(
                           index: "articles",
                           params: MainInjectionQueryParameters(
                             hitsPerPage: 5,
@@ -1277,10 +1277,10 @@ void main() {
                       ),
                     ),
                     injectedItems: [
-                      InjectedItem(
+                      InjectionInjectedItem(
                         key: "editorial-picks",
-                        source: SearchSource(
-                          search: Search(
+                        source: InjectedItemSearchSource(
+                          search: InjectedItemSearch(
                             index: "articles",
                             params: BaseInjectionQueryParameters(
                               filters: "editorial_pick:true",
@@ -1295,9 +1295,9 @@ void main() {
                 ),
                 'videos': FeedInjection(
                   injection: Injection(
-                    main: Main(
-                      source: CompositionSource(
-                        search: CompositionSourceSearch(
+                    main: InjectionMain(
+                      source: InjectionMainSearchSource(
+                        search: MainSearch(
                           index: "videos",
                           params: MainInjectionQueryParameters(
                             hitsPerPage: 3,
@@ -1354,18 +1354,18 @@ void main() {
           consequence: CompositionRuleConsequence(
             behavior: CompositionInjectionBehavior(
               injection: Injection(
-                main: Main(
-                  source: CompositionSource(
-                    search: CompositionSourceSearch(
+                main: InjectionMain(
+                  source: InjectionMainSearchSource(
+                    search: MainSearch(
                       index: "foo",
                     ),
                   ),
                 ),
                 injectedItems: [
-                  InjectedItem(
+                  InjectionInjectedItem(
                     key: "my-unique-group-from-rule-key",
-                    source: SearchSource(
-                      search: Search(
+                    source: InjectedItemSearchSource(
+                      search: InjectedItemSearch(
                         index: "foo",
                       ),
                     ),
@@ -1410,18 +1410,18 @@ void main() {
           consequence: CompositionRuleConsequence(
             behavior: CompositionInjectionBehavior(
               injection: Injection(
-                main: Main(
-                  source: CompositionSource(
-                    search: CompositionSourceSearch(
+                main: InjectionMain(
+                  source: InjectionMainSearchSource(
+                    search: MainSearch(
                       index: "foo",
                     ),
                   ),
                 ),
                 injectedItems: [
-                  InjectedItem(
+                  InjectionInjectedItem(
                     key: "my-unique-group-from-rule-key",
-                    source: SearchSource(
-                      search: Search(
+                    source: InjectedItemSearchSource(
+                      search: InjectedItemSearch(
                         index: "foo",
                         params: BaseInjectionQueryParameters(
                           filters: "brand:adidas",
@@ -1499,9 +1499,9 @@ void main() {
           consequence: CompositionRuleConsequence(
             behavior: CompositionInjectionBehavior(
               injection: Injection(
-                main: Main(
-                  source: CompositionSource(
-                    search: CompositionSourceSearch(
+                main: InjectionMain(
+                  source: InjectionMainSearchSource(
+                    search: MainSearch(
                       index: "my-index",
                       params: MainInjectionQueryParameters(
                         filters: "brand:adidas",
@@ -1510,10 +1510,10 @@ void main() {
                   ),
                 ),
                 injectedItems: [
-                  InjectedItem(
+                  InjectionInjectedItem(
                     key: "my-unique-external-group-from-rule-key",
-                    source: ExternalSource(
-                      external_: External(
+                    source: InjectedItemExternalSource(
+                      external_: InjectedItemExternal(
                         index: "my-index",
                         params: BaseInjectionQueryParameters(
                           filters: "brand:adidas",
@@ -1565,18 +1565,18 @@ void main() {
           consequence: CompositionRuleConsequence(
             behavior: CompositionInjectionBehavior(
               injection: Injection(
-                main: Main(
-                  source: CompositionSource(
-                    search: CompositionSourceSearch(
+                main: InjectionMain(
+                  source: InjectionMainSearchSource(
+                    search: MainSearch(
                       index: "my-index",
                     ),
                   ),
                 ),
                 injectedItems: [
-                  InjectedItem(
+                  InjectionInjectedItem(
                     key: "my-unique-injected-item-key",
-                    source: SearchSource(
-                      search: Search(
+                    source: InjectedItemSearchSource(
+                      search: InjectedItemSearch(
                         index: "my-index",
                       ),
                     ),
@@ -1627,9 +1627,9 @@ void main() {
                 consequence: CompositionRuleConsequence(
                   behavior: CompositionInjectionBehavior(
                     injection: Injection(
-                      main: Main(
-                        source: CompositionSource(
-                          search: CompositionSourceSearch(
+                      main: InjectionMain(
+                        source: InjectionMainSearchSource(
+                          search: MainSearch(
                             index: "<YOUR_INDEX_NAME>",
                           ),
                         ),
@@ -1677,18 +1677,18 @@ void main() {
                 consequence: CompositionRuleConsequence(
                   behavior: CompositionInjectionBehavior(
                     injection: Injection(
-                      main: Main(
-                        source: CompositionSource(
-                          search: CompositionSourceSearch(
+                      main: InjectionMain(
+                        source: InjectionMainSearchSource(
+                          search: MainSearch(
                             index: "foo",
                           ),
                         ),
                       ),
                       injectedItems: [
-                        InjectedItem(
+                        InjectionInjectedItem(
                           key: "my-unique-group-from-rule-key",
-                          source: SearchSource(
-                            search: Search(
+                          source: InjectedItemSearchSource(
+                            search: InjectedItemSearch(
                               index: "foo",
                               params: BaseInjectionQueryParameters(
                                 filters: "brand:adidas",
@@ -1772,9 +1772,9 @@ void main() {
                 consequence: CompositionRuleConsequence(
                   behavior: CompositionInjectionBehavior(
                     injection: Injection(
-                      main: Main(
-                        source: CompositionSource(
-                          search: CompositionSourceSearch(
+                      main: InjectionMain(
+                        source: InjectionMainSearchSource(
+                          search: MainSearch(
                             index: "my-index",
                             params: MainInjectionQueryParameters(
                               filters: "brand:adidas",
@@ -1783,10 +1783,10 @@ void main() {
                         ),
                       ),
                       injectedItems: [
-                        InjectedItem(
+                        InjectionInjectedItem(
                           key: "my-unique-external-group-from-rule-key",
-                          source: ExternalSource(
-                            external_: External(
+                          source: InjectedItemExternalSource(
+                            external_: InjectedItemExternal(
                               index: "my-index",
                               params: BaseInjectionQueryParameters(
                                 filters: "brand:adidas",
@@ -1848,18 +1848,18 @@ void main() {
                 consequence: CompositionRuleConsequence(
                   behavior: CompositionInjectionBehavior(
                     injection: Injection(
-                      main: Main(
-                        source: CompositionSource(
-                          search: CompositionSourceSearch(
+                      main: InjectionMain(
+                        source: InjectionMainSearchSource(
+                          search: MainSearch(
                             index: "my-index",
                           ),
                         ),
                       ),
                       injectedItems: [
-                        InjectedItem(
+                        InjectionInjectedItem(
                           key: "my-unique-injected-item-key",
-                          source: SearchSource(
-                            search: Search(
+                          source: InjectedItemSearchSource(
+                            search: InjectedItemSearch(
                               index: "my-index",
                             ),
                           ),

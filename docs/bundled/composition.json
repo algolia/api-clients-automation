@@ -3747,8 +3747,87 @@
           }
         ]
       },
-      "SearchSource": {
-        "title": "searchSource",
+      "injectionMainSearchSource": {
+        "description": "Organic result set will originate from a search request performed on the specified index.",
+        "x-discriminator-fields": [
+          "search"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "search": {
+            "title": "mainSearch",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "index": {
+                "type": "string",
+                "description": "Targeted index name.",
+                "example": "Products"
+              },
+              "params": {
+                "$ref": "#/components/schemas/mainInjectionQueryParameters"
+              }
+            },
+            "required": [
+              "index"
+            ]
+          }
+        },
+        "required": [
+          "search"
+        ]
+      },
+      "injectionMainRecommendSource": {
+        "description": "Organic result set will originate from a recommend request.",
+        "x-discriminator-fields": [
+          "recommend"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "recommend": {
+            "title": "mainRecommend",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "index": {
+                "type": "string",
+                "description": "Targeted index name.",
+                "example": "Products"
+              }
+            },
+            "required": [
+              "index"
+            ]
+          }
+        },
+        "required": [
+          "recommend"
+        ]
+      },
+      "injectionMainSource": {
+        "description": "Source to be used to retrieve organic result set.",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/injectionMainSearchSource"
+          },
+          {
+            "$ref": "#/components/schemas/injectionMainRecommendSource"
+          }
+        ]
+      },
+      "injectionMain": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Main defines the organic result set of the injection.",
+        "properties": {
+          "source": {
+            "$ref": "#/components/schemas/injectionMainSource"
+          }
+        }
+      },
+      "injectedItemSearchSource": {
         "description": "Injected items will originate from a search request performed on the specified index.",
         "x-discriminator-fields": [
           "search"
@@ -3757,7 +3836,7 @@
         "additionalProperties": false,
         "properties": {
           "search": {
-            "title": "search",
+            "title": "injectedItemSearch",
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -3786,8 +3865,7 @@
         ],
         "default": "default"
       },
-      "ExternalSource": {
-        "title": "externalSource",
+      "injectedItemExternalSource": {
         "description": "Injected items will originate from externally provided objectIDs (that must exist in the index) given at runtime in the run request payload.",
         "x-discriminator-fields": [
           "external"
@@ -3796,7 +3874,7 @@
         "additionalProperties": false,
         "properties": {
           "external": {
-            "title": "external",
+            "title": "injectedItemExternal",
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -3824,14 +3902,14 @@
       "injectedItemSource": {
         "oneOf": [
           {
-            "$ref": "#/components/schemas/SearchSource"
+            "$ref": "#/components/schemas/injectedItemSearchSource"
           },
           {
-            "$ref": "#/components/schemas/ExternalSource"
+            "$ref": "#/components/schemas/injectedItemExternalSource"
           }
         ]
       },
-      "injectedItem": {
+      "injectionInjectedItem": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -3840,18 +3918,18 @@
             "description": "injected Item unique identifier."
           },
           "source": {
-            "description": "Search source to be used to inject items into result set.",
+            "description": "Source to be used to inject items into result set.",
             "$ref": "#/components/schemas/injectedItemSource"
           },
           "position": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 19
+            "maximum": 99
           },
           "length": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 20
+            "maximum": 50
           },
           "metadata": {
             "title": "injectedItemMetadata",
@@ -3900,50 +3978,15 @@
         "additionalProperties": false,
         "properties": {
           "main": {
-            "title": "main",
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "source": {
-                "title": "compositionSource",
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "search": {
-                    "title": "compositionSourceSearch",
-                    "type": "object",
-                    "additionalProperties": false,
-                    "properties": {
-                      "index": {
-                        "type": "string",
-                        "description": "Composition Main Index name.",
-                        "example": "Products"
-                      },
-                      "params": {
-                        "$ref": "#/components/schemas/mainInjectionQueryParameters"
-                      }
-                    },
-                    "required": [
-                      "index"
-                    ]
-                  }
-                },
-                "required": [
-                  "search"
-                ]
-              }
-            },
-            "required": [
-              "source"
-            ]
+            "$ref": "#/components/schemas/injectionMain"
           },
           "injectedItems": {
             "type": "array",
             "description": "list of injected items of the current Composition.",
             "minItems": 0,
-            "maxItems": 2,
+            "maxItems": 3,
             "items": {
-              "$ref": "#/components/schemas/injectedItem"
+              "$ref": "#/components/schemas/injectionInjectedItem"
             }
           },
           "deduplication": {

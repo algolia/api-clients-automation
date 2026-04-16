@@ -59,6 +59,7 @@ object JsonSupport {
     HighlightResultSerializer :+
     IgnorePluralsSerializer :+
     InjectedItemSourceSerializer :+
+    InjectionMainSourceSerializer :+
     InsideBoundingBoxSerializer :+
     NumericFiltersSerializer :+
     OptionalFiltersSerializer :+
