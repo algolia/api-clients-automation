@@ -43,7 +43,7 @@ injectedItemSource:
   oneOf:
     - $ref: './InjectedItemSource.yml#/injectedItemSearchSource'
     - $ref: './InjectedItemSource.yml#/injectedItemExternalSource'
-    - $ref: './InjectedItemSource.yml#/RecommendSource'
+    - $ref: './InjectedItemSource.yml#/injectedItemRecommendSource'
 
 dedupPositioning:
   type: string

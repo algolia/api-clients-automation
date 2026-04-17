@@ -50,7 +50,7 @@ externalOrdering:
   enum: ['default', 'userDefined']
   default: 'default'
 
-RecommendSource:
+injectedItemRecommendSource:
   title: injectedItemRecommendSource
   description: Injected items will originate from a recommendation request performed on the specified index.
   x-discriminator-fields:
