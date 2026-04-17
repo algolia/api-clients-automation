@@ -17,6 +17,12 @@ namespace Algolia.Search.Models.Composition;
 public partial class MainRecommend
 {
   /// <summary>
+  /// Gets or Sets Model
+  /// </summary>
+  [JsonPropertyName("model")]
+  public Model? Model { get; set; }
+
+  /// <summary>
   /// Initializes a new instance of the MainRecommend class.
   /// </summary>
   [JsonConstructor]
@@ -25,18 +31,41 @@ public partial class MainRecommend
   /// <summary>
   /// Initializes a new instance of the MainRecommend class.
   /// </summary>
-  /// <param name="index">Targeted index name. (required).</param>
-  public MainRecommend(string index)
+  /// <param name="indexName">Index to retrieve recommendations from. (required).</param>
+  /// <param name="model">model (required).</param>
+  /// <param name="threshold">Minimum score a recommendation must have to be included. (required).</param>
+  public MainRecommend(string indexName, Model? model, int threshold)
   {
-    Index = index ?? throw new ArgumentNullException(nameof(index));
+    IndexName = indexName ?? throw new ArgumentNullException(nameof(indexName));
+    Model = model;
+    Threshold = threshold;
   }
 
   /// <summary>
-  /// Targeted index name.
+  /// Index to retrieve recommendations from.
   /// </summary>
-  /// <value>Targeted index name.</value>
-  [JsonPropertyName("index")]
-  public string Index { get; set; }
+  /// <value>Index to retrieve recommendations from.</value>
+  [JsonPropertyName("indexName")]
+  public string IndexName { get; set; }
+
+  /// <summary>
+  /// Minimum score a recommendation must have to be included.
+  /// </summary>
+  /// <value>Minimum score a recommendation must have to be included.</value>
+  [JsonPropertyName("threshold")]
+  public int Threshold { get; set; }
+
+  /// <summary>
+  /// Gets or Sets QueryParameters
+  /// </summary>
+  [JsonPropertyName("queryParameters")]
+  public MainInjectionQueryParameters QueryParameters { get; set; }
+
+  /// <summary>
+  /// Gets or Sets FallbackParameters
+  /// </summary>
+  [JsonPropertyName("fallbackParameters")]
+  public MainInjectionQueryParameters FallbackParameters { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object
@@ -46,7 +75,11 @@ public partial class MainRecommend
   {
     StringBuilder sb = new StringBuilder();
     sb.Append("class MainRecommend {\n");
-    sb.Append("  Index: ").Append(Index).Append("\n");
+    sb.Append("  IndexName: ").Append(IndexName).Append("\n");
+    sb.Append("  Model: ").Append(Model).Append("\n");
+    sb.Append("  Threshold: ").Append(Threshold).Append("\n");
+    sb.Append("  QueryParameters: ").Append(QueryParameters).Append("\n");
+    sb.Append("  FallbackParameters: ").Append(FallbackParameters).Append("\n");
     sb.Append("}\n");
     return sb.ToString();
   }
@@ -72,7 +105,19 @@ public partial class MainRecommend
       return false;
     }
 
-    return (Index == input.Index || (Index != null && Index.Equals(input.Index)));
+    return (
+        IndexName == input.IndexName || (IndexName != null && IndexName.Equals(input.IndexName))
+      )
+      && (Model == input.Model || Model.Equals(input.Model))
+      && (Threshold == input.Threshold || Threshold.Equals(input.Threshold))
+      && (
+        QueryParameters == input.QueryParameters
+        || (QueryParameters != null && QueryParameters.Equals(input.QueryParameters))
+      )
+      && (
+        FallbackParameters == input.FallbackParameters
+        || (FallbackParameters != null && FallbackParameters.Equals(input.FallbackParameters))
+      );
   }
 
   /// <summary>
@@ -84,9 +129,19 @@ public partial class MainRecommend
     unchecked // Overflow is fine, just wrap
     {
       int hashCode = 41;
-      if (Index != null)
+      if (IndexName != null)
       {
-        hashCode = (hashCode * 59) + Index.GetHashCode();
+        hashCode = (hashCode * 59) + IndexName.GetHashCode();
+      }
+      hashCode = (hashCode * 59) + Model.GetHashCode();
+      hashCode = (hashCode * 59) + Threshold.GetHashCode();
+      if (QueryParameters != null)
+      {
+        hashCode = (hashCode * 59) + QueryParameters.GetHashCode();
+      }
+      if (FallbackParameters != null)
+      {
+        hashCode = (hashCode * 59) + FallbackParameters.GetHashCode();
       }
       return hashCode;
     }

@@ -14,7 +14,7 @@ final class MainSearch {
     this.params,
   });
 
-  /// Targeted index name.
+  /// Index to retrieve search results from.
   @JsonKey(name: r'index')
   final String index;
 

@@ -20,7 +20,11 @@ class MainRecommend extends AbstractModel implements ModelInterface, \ArrayAcces
      * @var string[]
      */
     protected static $modelTypes = [
-        'index' => 'string',
+        'indexName' => 'string',
+        'model' => '\Algolia\AlgoliaSearch\Model\Composition\Model',
+        'threshold' => 'int',
+        'queryParameters' => '\Algolia\AlgoliaSearch\Model\Composition\MainInjectionQueryParameters',
+        'fallbackParameters' => '\Algolia\AlgoliaSearch\Model\Composition\MainInjectionQueryParameters',
     ];
 
     /**
@@ -29,7 +33,11 @@ class MainRecommend extends AbstractModel implements ModelInterface, \ArrayAcces
      * @var string[]
      */
     protected static $modelFormats = [
-        'index' => null,
+        'indexName' => null,
+        'model' => null,
+        'threshold' => null,
+        'queryParameters' => null,
+        'fallbackParameters' => null,
     ];
 
     /**
@@ -39,7 +47,11 @@ class MainRecommend extends AbstractModel implements ModelInterface, \ArrayAcces
      * @var string[]
      */
     protected static $attributeMap = [
-        'index' => 'index',
+        'indexName' => 'indexName',
+        'model' => 'model',
+        'threshold' => 'threshold',
+        'queryParameters' => 'queryParameters',
+        'fallbackParameters' => 'fallbackParameters',
     ];
 
     /**
@@ -48,7 +60,11 @@ class MainRecommend extends AbstractModel implements ModelInterface, \ArrayAcces
      * @var string[]
      */
     protected static $setters = [
-        'index' => 'setIndex',
+        'indexName' => 'setIndexName',
+        'model' => 'setModel',
+        'threshold' => 'setThreshold',
+        'queryParameters' => 'setQueryParameters',
+        'fallbackParameters' => 'setFallbackParameters',
     ];
 
     /**
@@ -57,7 +73,11 @@ class MainRecommend extends AbstractModel implements ModelInterface, \ArrayAcces
      * @var string[]
      */
     protected static $getters = [
-        'index' => 'getIndex',
+        'indexName' => 'getIndexName',
+        'model' => 'getModel',
+        'threshold' => 'getThreshold',
+        'queryParameters' => 'getQueryParameters',
+        'fallbackParameters' => 'getFallbackParameters',
     ];
 
     /**
@@ -74,8 +94,20 @@ class MainRecommend extends AbstractModel implements ModelInterface, \ArrayAcces
      */
     public function __construct(?array $data = null)
     {
-        if (isset($data['index'])) {
-            $this->container['index'] = $data['index'];
+        if (isset($data['indexName'])) {
+            $this->container['indexName'] = $data['indexName'];
+        }
+        if (isset($data['model'])) {
+            $this->container['model'] = $data['model'];
+        }
+        if (isset($data['threshold'])) {
+            $this->container['threshold'] = $data['threshold'];
+        }
+        if (isset($data['queryParameters'])) {
+            $this->container['queryParameters'] = $data['queryParameters'];
+        }
+        if (isset($data['fallbackParameters'])) {
+            $this->container['fallbackParameters'] = $data['fallbackParameters'];
         }
     }
 
@@ -139,8 +171,14 @@ class MainRecommend extends AbstractModel implements ModelInterface, \ArrayAcces
     {
         $invalidProperties = [];
 
-        if (!isset($this->container['index']) || null === $this->container['index']) {
-            $invalidProperties[] = "'index' can't be null";
+        if (!isset($this->container['indexName']) || null === $this->container['indexName']) {
+            $invalidProperties[] = "'indexName' can't be null";
+        }
+        if (!isset($this->container['model']) || null === $this->container['model']) {
+            $invalidProperties[] = "'model' can't be null";
+        }
+        if (!isset($this->container['threshold']) || null === $this->container['threshold']) {
+            $invalidProperties[] = "'threshold' can't be null";
         }
 
         return $invalidProperties;
@@ -158,25 +196,121 @@ class MainRecommend extends AbstractModel implements ModelInterface, \ArrayAcces
     }
 
     /**
-     * Gets index.
+     * Gets indexName.
      *
      * @return string
      */
-    public function getIndex()
+    public function getIndexName()
     {
-        return $this->container['index'] ?? null;
+        return $this->container['indexName'] ?? null;
     }
 
     /**
-     * Sets index.
+     * Sets indexName.
      *
-     * @param string $index targeted index name
+     * @param string $indexName index to retrieve recommendations from
      *
      * @return self
      */
-    public function setIndex($index)
+    public function setIndexName($indexName)
     {
-        $this->container['index'] = $index;
+        $this->container['indexName'] = $indexName;
+
+        return $this;
+    }
+
+    /**
+     * Gets model.
+     *
+     * @return Model
+     */
+    public function getModel()
+    {
+        return $this->container['model'] ?? null;
+    }
+
+    /**
+     * Sets model.
+     *
+     * @param Model $model model
+     *
+     * @return self
+     */
+    public function setModel($model)
+    {
+        $this->container['model'] = $model;
+
+        return $this;
+    }
+
+    /**
+     * Gets threshold.
+     *
+     * @return int
+     */
+    public function getThreshold()
+    {
+        return $this->container['threshold'] ?? null;
+    }
+
+    /**
+     * Sets threshold.
+     *
+     * @param int $threshold minimum score a recommendation must have to be included
+     *
+     * @return self
+     */
+    public function setThreshold($threshold)
+    {
+        $this->container['threshold'] = $threshold;
+
+        return $this;
+    }
+
+    /**
+     * Gets queryParameters.
+     *
+     * @return null|MainInjectionQueryParameters
+     */
+    public function getQueryParameters()
+    {
+        return $this->container['queryParameters'] ?? null;
+    }
+
+    /**
+     * Sets queryParameters.
+     *
+     * @param null|MainInjectionQueryParameters $queryParameters queryParameters
+     *
+     * @return self
+     */
+    public function setQueryParameters($queryParameters)
+    {
+        $this->container['queryParameters'] = $queryParameters;
+
+        return $this;
+    }
+
+    /**
+     * Gets fallbackParameters.
+     *
+     * @return null|MainInjectionQueryParameters
+     */
+    public function getFallbackParameters()
+    {
+        return $this->container['fallbackParameters'] ?? null;
+    }
+
+    /**
+     * Sets fallbackParameters.
+     *
+     * @param null|MainInjectionQueryParameters $fallbackParameters fallbackParameters
+     *
+     * @return self
+     */
+    public function setFallbackParameters($fallbackParameters)
+    {
+        $this->container['fallbackParameters'] = $fallbackParameters;
 
         return $this;
     }

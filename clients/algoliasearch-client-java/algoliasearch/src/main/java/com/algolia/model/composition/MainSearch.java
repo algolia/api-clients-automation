@@ -21,7 +21,7 @@ public class MainSearch {
     return this;
   }
 
-  /** Targeted index name. */
+  /** Index to retrieve search results from. */
   @javax.annotation.Nonnull
   public String getIndex() {
     return index;

@@ -716,6 +716,186 @@ class CompositionTest {
     client.runTest(
       call = {
         putComposition(
+          compositionID = "my-recommend-compo",
+          composition =
+            Composition(
+              objectID = "my-recommend-compo",
+              name = "my recommend composition",
+              behavior =
+                CompositionInjectionBehavior(
+                  injection =
+                    Injection(
+                      main =
+                        InjectionMain(
+                          source =
+                            InjectionMainRecommendSource(
+                              recommend =
+                                MainRecommend(
+                                  indexName = "products",
+                                  model = Model.entries.first { it.value == "trending-items" },
+                                  threshold = 50,
+                                )
+                            )
+                        ),
+                      injectedItems =
+                        listOf(
+                          InjectionInjectedItem(
+                            key = "injected-recommend-key",
+                            source =
+                              InjectedItemRecommendSource(
+                                recommend =
+                                  Recommend(
+                                    indexName = "products",
+                                    model = Model.entries.first { it.value == "trending-items" },
+                                    threshold = 30,
+                                    fallbackParameters =
+                                      BaseInjectionQueryParameters(filters = "category:electronics"),
+                                  )
+                              ),
+                            position = 3,
+                            length = 2,
+                          )
+                        ),
+                    )
+                ),
+            ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/my-recommend-compo".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody(
+          """{"objectID":"my-recommend-compo","name":"my recommend composition","behavior":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}},"injectedItems":[{"key":"injected-recommend-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":30,"fallbackParameters":{"filters":"category:electronics"}}},"position":3,"length":2}]}}}""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `putComposition6`() = runTest {
+    client.runTest(
+      call = {
+        putComposition(
+          compositionID = "my-search-and-recommend-compo",
+          composition =
+            Composition(
+              objectID = "my-search-and-recommend-compo",
+              name = "my search main with recommend injection",
+              behavior =
+                CompositionInjectionBehavior(
+                  injection =
+                    Injection(
+                      main =
+                        InjectionMain(
+                          source =
+                            InjectionMainSearchSource(
+                              search =
+                                MainSearch(
+                                  index = "products",
+                                  params = MainInjectionQueryParameters(filters = "brand:nike"),
+                                )
+                            )
+                        ),
+                      injectedItems =
+                        listOf(
+                          InjectionInjectedItem(
+                            key = "injected-recommend-key",
+                            source =
+                              InjectedItemRecommendSource(
+                                recommend =
+                                  Recommend(
+                                    indexName = "products",
+                                    model = Model.entries.first { it.value == "trending-items" },
+                                    threshold = 40,
+                                  )
+                              ),
+                            position = 1,
+                            length = 3,
+                          )
+                        ),
+                    )
+                ),
+            ),
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/compositions/my-search-and-recommend-compo".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody(
+          """{"objectID":"my-search-and-recommend-compo","name":"my search main with recommend injection","behavior":{"injection":{"main":{"source":{"search":{"index":"products","params":{"filters":"brand:nike"}}}},"injectedItems":[{"key":"injected-recommend-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":40}},"position":1,"length":3}]}}}""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `putComposition7`() = runTest {
+    client.runTest(
+      call = {
+        putComposition(
+          compositionID = "my-multifeed-recommend-compo",
+          composition =
+            Composition(
+              objectID = "my-multifeed-recommend-compo",
+              name = "multifeed with recommend main",
+              behavior =
+                CompositionMultifeedBehavior(
+                  multifeed =
+                    Multifeed(
+                      feeds =
+                        mapOf(
+                          "trending" to
+                            FeedInjection(
+                              injection =
+                                Injection(
+                                  main =
+                                    InjectionMain(
+                                      source =
+                                        InjectionMainRecommendSource(
+                                          recommend =
+                                            MainRecommend(
+                                              indexName = "products",
+                                              model =
+                                                Model.entries.first {
+                                                  it.value == "trending-items"
+                                                },
+                                              threshold = 50,
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        ),
+                      feedsOrder = listOf("trending"),
+                    )
+                ),
+            ),
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/compositions/my-multifeed-recommend-compo".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody(
+          """{"objectID":"my-multifeed-recommend-compo","name":"multifeed with recommend main","behavior":{"multifeed":{"feeds":{"trending":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}}}}},"feedsOrder":["trending"]}}}""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `putComposition8`() = runTest {
+    client.runTest(
+      call = {
+        putComposition(
           compositionID = "my-compo",
           composition =
             Composition(
@@ -1206,6 +1386,257 @@ class CompositionTest {
 
   @Test
   fun `saveRules3`() = runTest {
+    client.runTest(
+      call = {
+        saveRules(
+          compositionID = "rule-with-recommend",
+          rules =
+            CompositionRulesBatchParams(
+              requests =
+                listOf(
+                  RulesMultipleBatchRequest(
+                    action = Action.entries.first { it.value == "upsert" },
+                    body =
+                      CompositionRule(
+                        objectID = "rule-with-recommend",
+                        conditions =
+                          listOf(
+                            Condition(
+                              anchoring = Anchoring.entries.first { it.value == "is" },
+                              pattern = "trending",
+                            )
+                          ),
+                        consequence =
+                          CompositionRuleConsequence(
+                            behavior =
+                              CompositionInjectionBehavior(
+                                injection =
+                                  Injection(
+                                    main =
+                                      InjectionMain(
+                                        source =
+                                          InjectionMainRecommendSource(
+                                            recommend =
+                                              MainRecommend(
+                                                indexName = "products",
+                                                model =
+                                                  Model.entries.first {
+                                                    it.value == "trending-items"
+                                                  },
+                                                threshold = 50,
+                                              )
+                                          )
+                                      ),
+                                    injectedItems =
+                                      listOf(
+                                        InjectionInjectedItem(
+                                          key = "injected-recommend-from-rule-key",
+                                          source =
+                                            InjectedItemRecommendSource(
+                                              recommend =
+                                                Recommend(
+                                                  indexName = "products",
+                                                  model =
+                                                    Model.entries.first {
+                                                      it.value == "trending-items"
+                                                    },
+                                                  threshold = 30,
+                                                  fallbackParameters =
+                                                    BaseInjectionQueryParameters(
+                                                      filters = "category:electronics"
+                                                    ),
+                                                )
+                                            ),
+                                          position = 2,
+                                          length = 3,
+                                        )
+                                      ),
+                                  )
+                              )
+                          ),
+                      ),
+                  )
+                )
+            ),
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/compositions/rule-with-recommend/rules/batch".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-recommend","conditions":[{"anchoring":"is","pattern":"trending"}],"consequence":{"behavior":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}},"injectedItems":[{"key":"injected-recommend-from-rule-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":30,"fallbackParameters":{"filters":"category:electronics"}}},"position":2,"length":3}]}}}}}]}""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `saveRules4`() = runTest {
+    client.runTest(
+      call = {
+        saveRules(
+          compositionID = "rule-with-search-and-recommend",
+          rules =
+            CompositionRulesBatchParams(
+              requests =
+                listOf(
+                  RulesMultipleBatchRequest(
+                    action = Action.entries.first { it.value == "upsert" },
+                    body =
+                      CompositionRule(
+                        objectID = "rule-with-search-and-recommend",
+                        conditions =
+                          listOf(
+                            Condition(
+                              anchoring = Anchoring.entries.first { it.value == "contains" },
+                              pattern = "shoes",
+                            )
+                          ),
+                        consequence =
+                          CompositionRuleConsequence(
+                            behavior =
+                              CompositionInjectionBehavior(
+                                injection =
+                                  Injection(
+                                    main =
+                                      InjectionMain(
+                                        source =
+                                          InjectionMainSearchSource(
+                                            search =
+                                              MainSearch(
+                                                index = "products",
+                                                params =
+                                                  MainInjectionQueryParameters(
+                                                    filters = "category:shoes"
+                                                  ),
+                                              )
+                                          )
+                                      ),
+                                    injectedItems =
+                                      listOf(
+                                        InjectionInjectedItem(
+                                          key = "injected-recommend-from-rule-key",
+                                          source =
+                                            InjectedItemRecommendSource(
+                                              recommend =
+                                                Recommend(
+                                                  indexName = "products",
+                                                  model =
+                                                    Model.entries.first {
+                                                      it.value == "trending-items"
+                                                    },
+                                                  threshold = 40,
+                                                )
+                                            ),
+                                          position = 1,
+                                          length = 2,
+                                        )
+                                      ),
+                                  )
+                              )
+                          ),
+                      ),
+                  )
+                )
+            ),
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/compositions/rule-with-search-and-recommend/rules/batch".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-search-and-recommend","conditions":[{"anchoring":"contains","pattern":"shoes"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"products","params":{"filters":"category:shoes"}}}},"injectedItems":[{"key":"injected-recommend-from-rule-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":40}},"position":1,"length":2}]}}}}}]}""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `saveRules5`() = runTest {
+    client.runTest(
+      call = {
+        saveRules(
+          compositionID = "rule-with-multifeed-recommend",
+          rules =
+            CompositionRulesBatchParams(
+              requests =
+                listOf(
+                  RulesMultipleBatchRequest(
+                    action = Action.entries.first { it.value == "upsert" },
+                    body =
+                      CompositionRule(
+                        objectID = "rule-with-multifeed-recommend",
+                        conditions =
+                          listOf(
+                            Condition(
+                              anchoring = Anchoring.entries.first { it.value == "is" },
+                              pattern = "trending",
+                            )
+                          ),
+                        consequence =
+                          CompositionRuleConsequence(
+                            behavior =
+                              CompositionMultifeedBehavior(
+                                multifeed =
+                                  Multifeed(
+                                    feeds =
+                                      mapOf(
+                                        "trending" to
+                                          FeedInjection(
+                                            injection =
+                                              Injection(
+                                                main =
+                                                  InjectionMain(
+                                                    source =
+                                                      InjectionMainRecommendSource(
+                                                        recommend =
+                                                          MainRecommend(
+                                                            indexName = "products",
+                                                            model =
+                                                              Model.entries.first {
+                                                                it.value == "trending-items"
+                                                              },
+                                                            threshold = 50,
+                                                          )
+                                                      )
+                                                  )
+                                              )
+                                          )
+                                      ),
+                                    feedsOrder = listOf("trending"),
+                                  )
+                              )
+                          ),
+                      ),
+                  )
+                )
+            ),
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/compositions/rule-with-multifeed-recommend/rules/batch".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-multifeed-recommend","conditions":[{"anchoring":"is","pattern":"trending"}],"consequence":{"behavior":{"multifeed":{"feeds":{"trending":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}}}}},"feedsOrder":["trending"]}}}}}]}""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `saveRules6`() = runTest {
     client.runTest(
       call = {
         saveRules(

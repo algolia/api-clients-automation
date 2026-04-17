@@ -819,6 +819,150 @@ describe('putComposition', () => {
 
   test('putComposition', async () => {
     const req = (await client.putComposition({
+      compositionID: 'my-recommend-compo',
+      composition: {
+        objectID: 'my-recommend-compo',
+        name: 'my recommend composition',
+        behavior: {
+          injection: {
+            main: { source: { recommend: { indexName: 'products', model: 'trending-items', threshold: 50 } } },
+            injectedItems: [
+              {
+                key: 'injected-recommend-key',
+                source: {
+                  recommend: {
+                    indexName: 'products',
+                    model: 'trending-items',
+                    threshold: 30,
+                    fallbackParameters: { filters: 'category:electronics' },
+                  },
+                },
+                position: 3,
+                length: 2,
+              },
+            ],
+          },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/my-recommend-compo');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'my-recommend-compo',
+      name: 'my recommend composition',
+      behavior: {
+        injection: {
+          main: { source: { recommend: { indexName: 'products', model: 'trending-items', threshold: 50 } } },
+          injectedItems: [
+            {
+              key: 'injected-recommend-key',
+              source: {
+                recommend: {
+                  indexName: 'products',
+                  model: 'trending-items',
+                  threshold: 30,
+                  fallbackParameters: { filters: 'category:electronics' },
+                },
+              },
+              position: 3,
+              length: 2,
+            },
+          ],
+        },
+      },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('putComposition', async () => {
+    const req = (await client.putComposition({
+      compositionID: 'my-search-and-recommend-compo',
+      composition: {
+        objectID: 'my-search-and-recommend-compo',
+        name: 'my search main with recommend injection',
+        behavior: {
+          injection: {
+            main: { source: { search: { index: 'products', params: { filters: 'brand:nike' } } } },
+            injectedItems: [
+              {
+                key: 'injected-recommend-key',
+                source: { recommend: { indexName: 'products', model: 'trending-items', threshold: 40 } },
+                position: 1,
+                length: 3,
+              },
+            ],
+          },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/my-search-and-recommend-compo');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'my-search-and-recommend-compo',
+      name: 'my search main with recommend injection',
+      behavior: {
+        injection: {
+          main: { source: { search: { index: 'products', params: { filters: 'brand:nike' } } } },
+          injectedItems: [
+            {
+              key: 'injected-recommend-key',
+              source: { recommend: { indexName: 'products', model: 'trending-items', threshold: 40 } },
+              position: 1,
+              length: 3,
+            },
+          ],
+        },
+      },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('putComposition', async () => {
+    const req = (await client.putComposition({
+      compositionID: 'my-multifeed-recommend-compo',
+      composition: {
+        objectID: 'my-multifeed-recommend-compo',
+        name: 'multifeed with recommend main',
+        behavior: {
+          multifeed: {
+            feeds: {
+              trending: {
+                injection: {
+                  main: { source: { recommend: { indexName: 'products', model: 'trending-items', threshold: 50 } } },
+                },
+              },
+            },
+            feedsOrder: ['trending'],
+          },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/my-multifeed-recommend-compo');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'my-multifeed-recommend-compo',
+      name: 'multifeed with recommend main',
+      behavior: {
+        multifeed: {
+          feeds: {
+            trending: {
+              injection: {
+                main: { source: { recommend: { indexName: 'products', model: 'trending-items', threshold: 50 } } },
+              },
+            },
+          },
+          feedsOrder: ['trending'],
+        },
+      },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('putComposition', async () => {
+    const req = (await client.putComposition({
       compositionID: 'my-compo',
       composition: {
         objectID: 'my-compo',
@@ -1360,6 +1504,208 @@ describe('saveRules', () => {
                       length: 3,
                     },
                   ],
+                },
+              },
+            },
+          },
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('saveRules', async () => {
+    const req = (await client.saveRules({
+      compositionID: 'rule-with-recommend',
+      rules: {
+        requests: [
+          {
+            action: 'upsert',
+            body: {
+              objectID: 'rule-with-recommend',
+              conditions: [{ anchoring: 'is', pattern: 'trending' }],
+              consequence: {
+                behavior: {
+                  injection: {
+                    main: { source: { recommend: { indexName: 'products', model: 'trending-items', threshold: 50 } } },
+                    injectedItems: [
+                      {
+                        key: 'injected-recommend-from-rule-key',
+                        source: {
+                          recommend: {
+                            indexName: 'products',
+                            model: 'trending-items',
+                            threshold: 30,
+                            fallbackParameters: { filters: 'category:electronics' },
+                          },
+                        },
+                        position: 2,
+                        length: 3,
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/rule-with-recommend/rules/batch');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          action: 'upsert',
+          body: {
+            objectID: 'rule-with-recommend',
+            conditions: [{ anchoring: 'is', pattern: 'trending' }],
+            consequence: {
+              behavior: {
+                injection: {
+                  main: { source: { recommend: { indexName: 'products', model: 'trending-items', threshold: 50 } } },
+                  injectedItems: [
+                    {
+                      key: 'injected-recommend-from-rule-key',
+                      source: {
+                        recommend: {
+                          indexName: 'products',
+                          model: 'trending-items',
+                          threshold: 30,
+                          fallbackParameters: { filters: 'category:electronics' },
+                        },
+                      },
+                      position: 2,
+                      length: 3,
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('saveRules', async () => {
+    const req = (await client.saveRules({
+      compositionID: 'rule-with-search-and-recommend',
+      rules: {
+        requests: [
+          {
+            action: 'upsert',
+            body: {
+              objectID: 'rule-with-search-and-recommend',
+              conditions: [{ anchoring: 'contains', pattern: 'shoes' }],
+              consequence: {
+                behavior: {
+                  injection: {
+                    main: { source: { search: { index: 'products', params: { filters: 'category:shoes' } } } },
+                    injectedItems: [
+                      {
+                        key: 'injected-recommend-from-rule-key',
+                        source: { recommend: { indexName: 'products', model: 'trending-items', threshold: 40 } },
+                        position: 1,
+                        length: 2,
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/rule-with-search-and-recommend/rules/batch');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          action: 'upsert',
+          body: {
+            objectID: 'rule-with-search-and-recommend',
+            conditions: [{ anchoring: 'contains', pattern: 'shoes' }],
+            consequence: {
+              behavior: {
+                injection: {
+                  main: { source: { search: { index: 'products', params: { filters: 'category:shoes' } } } },
+                  injectedItems: [
+                    {
+                      key: 'injected-recommend-from-rule-key',
+                      source: { recommend: { indexName: 'products', model: 'trending-items', threshold: 40 } },
+                      position: 1,
+                      length: 2,
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('saveRules', async () => {
+    const req = (await client.saveRules({
+      compositionID: 'rule-with-multifeed-recommend',
+      rules: {
+        requests: [
+          {
+            action: 'upsert',
+            body: {
+              objectID: 'rule-with-multifeed-recommend',
+              conditions: [{ anchoring: 'is', pattern: 'trending' }],
+              consequence: {
+                behavior: {
+                  multifeed: {
+                    feeds: {
+                      trending: {
+                        injection: {
+                          main: {
+                            source: { recommend: { indexName: 'products', model: 'trending-items', threshold: 50 } },
+                          },
+                        },
+                      },
+                    },
+                    feedsOrder: ['trending'],
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/rule-with-multifeed-recommend/rules/batch');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          action: 'upsert',
+          body: {
+            objectID: 'rule-with-multifeed-recommend',
+            conditions: [{ anchoring: 'is', pattern: 'trending' }],
+            consequence: {
+              behavior: {
+                multifeed: {
+                  feeds: {
+                    trending: {
+                      injection: {
+                        main: {
+                          source: { recommend: { indexName: 'products', model: 'trending-items', threshold: 50 } },
+                        },
+                      },
+                    },
+                  },
+                  feedsOrder: ['trending'],
                 },
               },
             },

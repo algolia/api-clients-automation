@@ -1086,6 +1086,147 @@ class SnippetCompositionClient {
 
     // Call the API
     TaskIDResponse response = client.putComposition(
+      "my-recommend-compo",
+      new Composition()
+        .setObjectID("my-recommend-compo")
+        .setName("my recommend composition")
+        .setBehavior(
+          new CompositionInjectionBehavior().setInjection(
+            new Injection()
+              .setMain(
+                new InjectionMain().setSource(
+                  new InjectionMainRecommendSource().setRecommend(
+                    new MainRecommend().setIndexName("<YOUR_INDEX_NAME>").setModel(Model.TRENDING_ITEMS).setThreshold(50)
+                  )
+                )
+              )
+              .setInjectedItems(
+                Arrays.asList(
+                  new InjectionInjectedItem()
+                    .setKey("injected-recommend-key")
+                    .setSource(
+                      new InjectedItemRecommendSource().setRecommend(
+                        new Recommend()
+                          .setIndexName("<YOUR_INDEX_NAME>")
+                          .setModel(Model.TRENDING_ITEMS)
+                          .setThreshold(30)
+                          .setFallbackParameters(new BaseInjectionQueryParameters().setFilters("category:electronics"))
+                      )
+                    )
+                    .setPosition(3)
+                    .setLength(2)
+                )
+              )
+          )
+        )
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the putComposition method.
+  //
+  // putComposition
+  void snippetForPutComposition6() throws Exception {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    TaskIDResponse response = client.putComposition(
+      "my-search-and-recommend-compo",
+      new Composition()
+        .setObjectID("my-search-and-recommend-compo")
+        .setName("my search main with recommend injection")
+        .setBehavior(
+          new CompositionInjectionBehavior().setInjection(
+            new Injection()
+              .setMain(
+                new InjectionMain().setSource(
+                  new InjectionMainSearchSource().setSearch(
+                    new MainSearch().setIndex("products").setParams(new MainInjectionQueryParameters().setFilters("brand:nike"))
+                  )
+                )
+              )
+              .setInjectedItems(
+                Arrays.asList(
+                  new InjectionInjectedItem()
+                    .setKey("injected-recommend-key")
+                    .setSource(
+                      new InjectedItemRecommendSource().setRecommend(
+                        new Recommend().setIndexName("<YOUR_INDEX_NAME>").setModel(Model.TRENDING_ITEMS).setThreshold(40)
+                      )
+                    )
+                    .setPosition(1)
+                    .setLength(3)
+                )
+              )
+          )
+        )
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the putComposition method.
+  //
+  // putComposition
+  void snippetForPutComposition7() throws Exception {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    TaskIDResponse response = client.putComposition(
+      "my-multifeed-recommend-compo",
+      new Composition()
+        .setObjectID("my-multifeed-recommend-compo")
+        .setName("multifeed with recommend main")
+        .setBehavior(
+          new CompositionMultifeedBehavior().setMultifeed(
+            new Multifeed()
+              .setFeeds(
+                new HashMap() {
+                  {
+                    put(
+                      "trending",
+                      new FeedInjection().setInjection(
+                        new Injection().setMain(
+                          new InjectionMain().setSource(
+                            new InjectionMainRecommendSource().setRecommend(
+                              new MainRecommend().setIndexName("<YOUR_INDEX_NAME>").setModel(Model.TRENDING_ITEMS).setThreshold(50)
+                            )
+                          )
+                        )
+                      )
+                    );
+                  }
+                }
+              )
+              .setFeedsOrder(Arrays.asList("trending"))
+          )
+        )
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the putComposition method.
+  //
+  // putComposition
+  void snippetForPutComposition8() throws Exception {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    TaskIDResponse response = client.putComposition(
       "my-compo",
       new Composition()
         .setObjectID("my-compo")
@@ -1584,6 +1725,182 @@ class SnippetCompositionClient {
   //
   // saveRules
   void snippetForSaveRules3() throws Exception {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    RulesMultipleBatchResponse response = client.saveRules(
+      "rule-with-recommend",
+      new CompositionRulesBatchParams().setRequests(
+        Arrays.asList(
+          new RulesMultipleBatchRequest()
+            .setAction(Action.UPSERT)
+            .setBody(
+              new CompositionRule()
+                .setObjectID("rule-with-recommend")
+                .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.IS).setPattern("trending")))
+                .setConsequence(
+                  new CompositionRuleConsequence().setBehavior(
+                    new CompositionInjectionBehavior().setInjection(
+                      new Injection()
+                        .setMain(
+                          new InjectionMain().setSource(
+                            new InjectionMainRecommendSource().setRecommend(
+                              new MainRecommend().setIndexName("<YOUR_INDEX_NAME>").setModel(Model.TRENDING_ITEMS).setThreshold(50)
+                            )
+                          )
+                        )
+                        .setInjectedItems(
+                          Arrays.asList(
+                            new InjectionInjectedItem()
+                              .setKey("injected-recommend-from-rule-key")
+                              .setSource(
+                                new InjectedItemRecommendSource().setRecommend(
+                                  new Recommend()
+                                    .setIndexName("<YOUR_INDEX_NAME>")
+                                    .setModel(Model.TRENDING_ITEMS)
+                                    .setThreshold(30)
+                                    .setFallbackParameters(new BaseInjectionQueryParameters().setFilters("category:electronics"))
+                                )
+                              )
+                              .setPosition(2)
+                              .setLength(3)
+                          )
+                        )
+                    )
+                  )
+                )
+            )
+        )
+      )
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the saveRules method.
+  //
+  // saveRules
+  void snippetForSaveRules4() throws Exception {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    RulesMultipleBatchResponse response = client.saveRules(
+      "rule-with-search-and-recommend",
+      new CompositionRulesBatchParams().setRequests(
+        Arrays.asList(
+          new RulesMultipleBatchRequest()
+            .setAction(Action.UPSERT)
+            .setBody(
+              new CompositionRule()
+                .setObjectID("rule-with-search-and-recommend")
+                .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("shoes")))
+                .setConsequence(
+                  new CompositionRuleConsequence().setBehavior(
+                    new CompositionInjectionBehavior().setInjection(
+                      new Injection()
+                        .setMain(
+                          new InjectionMain().setSource(
+                            new InjectionMainSearchSource().setSearch(
+                              new MainSearch()
+                                .setIndex("products")
+                                .setParams(new MainInjectionQueryParameters().setFilters("category:shoes"))
+                            )
+                          )
+                        )
+                        .setInjectedItems(
+                          Arrays.asList(
+                            new InjectionInjectedItem()
+                              .setKey("injected-recommend-from-rule-key")
+                              .setSource(
+                                new InjectedItemRecommendSource().setRecommend(
+                                  new Recommend().setIndexName("<YOUR_INDEX_NAME>").setModel(Model.TRENDING_ITEMS).setThreshold(40)
+                                )
+                              )
+                              .setPosition(1)
+                              .setLength(2)
+                          )
+                        )
+                    )
+                  )
+                )
+            )
+        )
+      )
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the saveRules method.
+  //
+  // saveRules
+  void snippetForSaveRules5() throws Exception {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    RulesMultipleBatchResponse response = client.saveRules(
+      "rule-with-multifeed-recommend",
+      new CompositionRulesBatchParams().setRequests(
+        Arrays.asList(
+          new RulesMultipleBatchRequest()
+            .setAction(Action.UPSERT)
+            .setBody(
+              new CompositionRule()
+                .setObjectID("rule-with-multifeed-recommend")
+                .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.IS).setPattern("trending")))
+                .setConsequence(
+                  new CompositionRuleConsequence().setBehavior(
+                    new CompositionMultifeedBehavior().setMultifeed(
+                      new Multifeed()
+                        .setFeeds(
+                          new HashMap() {
+                            {
+                              put(
+                                "trending",
+                                new FeedInjection().setInjection(
+                                  new Injection().setMain(
+                                    new InjectionMain().setSource(
+                                      new InjectionMainRecommendSource().setRecommend(
+                                        new MainRecommend()
+                                          .setIndexName("<YOUR_INDEX_NAME>")
+                                          .setModel(Model.TRENDING_ITEMS)
+                                          .setThreshold(50)
+                                      )
+                                    )
+                                  )
+                                )
+                              );
+                            }
+                          }
+                        )
+                        .setFeedsOrder(Arrays.asList("trending"))
+                    )
+                  )
+                )
+            )
+        )
+      )
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the saveRules method.
+  //
+  // saveRules
+  void snippetForSaveRules6() throws Exception {
     // >SEPARATOR saveRules saveRules
     // Initialize the client
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");

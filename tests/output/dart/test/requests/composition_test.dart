@@ -1223,6 +1223,163 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.putComposition(
+        compositionID: "my-recommend-compo",
+        composition: Composition(
+          objectID: "my-recommend-compo",
+          name: "my recommend composition",
+          behavior: CompositionInjectionBehavior(
+            injection: Injection(
+              main: InjectionMain(
+                source: InjectionMainRecommendSource(
+                  recommend: MainRecommend(
+                    indexName: "products",
+                    model: Model.fromJson("trending-items"),
+                    threshold: 50,
+                  ),
+                ),
+              ),
+              injectedItems: [
+                InjectionInjectedItem(
+                  key: "injected-recommend-key",
+                  source: InjectedItemRecommendSource(
+                    recommend: Recommend(
+                      indexName: "products",
+                      model: Model.fromJson("trending-items"),
+                      threshold: 30,
+                      fallbackParameters: BaseInjectionQueryParameters(
+                        filters: "category:electronics",
+                      ),
+                    ),
+                  ),
+                  position: 3,
+                  length: 2,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/my-recommend-compo');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"my-recommend-compo","name":"my recommend composition","behavior":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}},"injectedItems":[{"key":"injected-recommend-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":30,"fallbackParameters":{"filters":"category:electronics"}}},"position":3,"length":2}]}}}""");
+      },
+    ),
+  );
+
+  // putComposition
+  test(
+    'putComposition',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.putComposition(
+        compositionID: "my-search-and-recommend-compo",
+        composition: Composition(
+          objectID: "my-search-and-recommend-compo",
+          name: "my search main with recommend injection",
+          behavior: CompositionInjectionBehavior(
+            injection: Injection(
+              main: InjectionMain(
+                source: InjectionMainSearchSource(
+                  search: MainSearch(
+                    index: "products",
+                    params: MainInjectionQueryParameters(
+                      filters: "brand:nike",
+                    ),
+                  ),
+                ),
+              ),
+              injectedItems: [
+                InjectionInjectedItem(
+                  key: "injected-recommend-key",
+                  source: InjectedItemRecommendSource(
+                    recommend: Recommend(
+                      indexName: "products",
+                      model: Model.fromJson("trending-items"),
+                      threshold: 40,
+                    ),
+                  ),
+                  position: 1,
+                  length: 3,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(
+            request.path, '/1/compositions/my-search-and-recommend-compo');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"my-search-and-recommend-compo","name":"my search main with recommend injection","behavior":{"injection":{"main":{"source":{"search":{"index":"products","params":{"filters":"brand:nike"}}}},"injectedItems":[{"key":"injected-recommend-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":40}},"position":1,"length":3}]}}}""");
+      },
+    ),
+  );
+
+  // putComposition
+  test(
+    'putComposition',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.putComposition(
+        compositionID: "my-multifeed-recommend-compo",
+        composition: Composition(
+          objectID: "my-multifeed-recommend-compo",
+          name: "multifeed with recommend main",
+          behavior: CompositionMultifeedBehavior(
+            multifeed: Multifeed(
+              feeds: {
+                'trending': FeedInjection(
+                  injection: Injection(
+                    main: InjectionMain(
+                      source: InjectionMainRecommendSource(
+                        recommend: MainRecommend(
+                          indexName: "products",
+                          model: Model.fromJson("trending-items"),
+                          threshold: 50,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              },
+              feedsOrder: [
+                "trending",
+              ],
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(
+            request.path, '/1/compositions/my-multifeed-recommend-compo');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"my-multifeed-recommend-compo","name":"multifeed with recommend main","behavior":{"multifeed":{"feeds":{"trending":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}}}}},"feedsOrder":["trending"]}}}""");
+      },
+    ),
+  );
+
+  // putComposition
+  test(
+    'putComposition',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.putComposition(
         compositionID: "my-compo",
         composition: Composition(
           objectID: "my-compo",
@@ -1813,6 +1970,206 @@ void main() {
         expect(request.method, 'post');
         expectBody(request.body,
             """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-external-group-from-rule-key","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}}]}""");
+      },
+    ),
+  );
+
+  // saveRules
+  test(
+    'saveRules',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRules(
+        compositionID: "rule-with-recommend",
+        rules: CompositionRulesBatchParams(
+          requests: [
+            RulesMultipleBatchRequest(
+              action: Action.fromJson("upsert"),
+              body: CompositionRule(
+                objectID: "rule-with-recommend",
+                conditions: [
+                  Condition(
+                    anchoring: Anchoring.fromJson("is"),
+                    pattern: "trending",
+                  ),
+                ],
+                consequence: CompositionRuleConsequence(
+                  behavior: CompositionInjectionBehavior(
+                    injection: Injection(
+                      main: InjectionMain(
+                        source: InjectionMainRecommendSource(
+                          recommend: MainRecommend(
+                            indexName: "products",
+                            model: Model.fromJson("trending-items"),
+                            threshold: 50,
+                          ),
+                        ),
+                      ),
+                      injectedItems: [
+                        InjectionInjectedItem(
+                          key: "injected-recommend-from-rule-key",
+                          source: InjectedItemRecommendSource(
+                            recommend: Recommend(
+                              indexName: "products",
+                              model: Model.fromJson("trending-items"),
+                              threshold: 30,
+                              fallbackParameters: BaseInjectionQueryParameters(
+                                filters: "category:electronics",
+                              ),
+                            ),
+                          ),
+                          position: 2,
+                          length: 3,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(
+            request.path, '/1/compositions/rule-with-recommend/rules/batch');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-recommend","conditions":[{"anchoring":"is","pattern":"trending"}],"consequence":{"behavior":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}},"injectedItems":[{"key":"injected-recommend-from-rule-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":30,"fallbackParameters":{"filters":"category:electronics"}}},"position":2,"length":3}]}}}}}]}""");
+      },
+    ),
+  );
+
+  // saveRules
+  test(
+    'saveRules',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRules(
+        compositionID: "rule-with-search-and-recommend",
+        rules: CompositionRulesBatchParams(
+          requests: [
+            RulesMultipleBatchRequest(
+              action: Action.fromJson("upsert"),
+              body: CompositionRule(
+                objectID: "rule-with-search-and-recommend",
+                conditions: [
+                  Condition(
+                    anchoring: Anchoring.fromJson("contains"),
+                    pattern: "shoes",
+                  ),
+                ],
+                consequence: CompositionRuleConsequence(
+                  behavior: CompositionInjectionBehavior(
+                    injection: Injection(
+                      main: InjectionMain(
+                        source: InjectionMainSearchSource(
+                          search: MainSearch(
+                            index: "products",
+                            params: MainInjectionQueryParameters(
+                              filters: "category:shoes",
+                            ),
+                          ),
+                        ),
+                      ),
+                      injectedItems: [
+                        InjectionInjectedItem(
+                          key: "injected-recommend-from-rule-key",
+                          source: InjectedItemRecommendSource(
+                            recommend: Recommend(
+                              indexName: "products",
+                              model: Model.fromJson("trending-items"),
+                              threshold: 40,
+                            ),
+                          ),
+                          position: 1,
+                          length: 2,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/compositions/rule-with-search-and-recommend/rules/batch');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-search-and-recommend","conditions":[{"anchoring":"contains","pattern":"shoes"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"products","params":{"filters":"category:shoes"}}}},"injectedItems":[{"key":"injected-recommend-from-rule-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":40}},"position":1,"length":2}]}}}}}]}""");
+      },
+    ),
+  );
+
+  // saveRules
+  test(
+    'saveRules',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRules(
+        compositionID: "rule-with-multifeed-recommend",
+        rules: CompositionRulesBatchParams(
+          requests: [
+            RulesMultipleBatchRequest(
+              action: Action.fromJson("upsert"),
+              body: CompositionRule(
+                objectID: "rule-with-multifeed-recommend",
+                conditions: [
+                  Condition(
+                    anchoring: Anchoring.fromJson("is"),
+                    pattern: "trending",
+                  ),
+                ],
+                consequence: CompositionRuleConsequence(
+                  behavior: CompositionMultifeedBehavior(
+                    multifeed: Multifeed(
+                      feeds: {
+                        'trending': FeedInjection(
+                          injection: Injection(
+                            main: InjectionMain(
+                              source: InjectionMainRecommendSource(
+                                recommend: MainRecommend(
+                                  indexName: "products",
+                                  model: Model.fromJson("trending-items"),
+                                  threshold: 50,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      },
+                      feedsOrder: [
+                        "trending",
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/compositions/rule-with-multifeed-recommend/rules/batch');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-multifeed-recommend","conditions":[{"anchoring":"is","pattern":"trending"}],"consequence":{"behavior":{"multifeed":{"feeds":{"trending":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}}}}},"feedsOrder":["trending"]}}}}}]}""");
       },
     ),
   );

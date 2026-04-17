@@ -906,6 +906,128 @@ final class CompositionClientSnippet {
 
         // Call the API
         let response = try await client.putComposition(
+            compositionID: "my-recommend-compo",
+            composition: Composition(
+                objectID: "my-recommend-compo",
+                name: "my recommend composition",
+                behavior: CompositionBehavior
+                    .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                        main: InjectionMain(source: InjectionMainSource
+                            .injectionMainRecommendSource(InjectionMainRecommendSource(recommend: MainRecommend(
+                                indexName: "<YOUR_INDEX_NAME>",
+                                model: Model.trendingItems,
+                                threshold: 50
+                            )))),
+                        injectedItems: [InjectionInjectedItem(
+                            key: "injected-recommend-key",
+                            source: InjectedItemSource
+                                .injectedItemRecommendSource(InjectedItemRecommendSource(recommend: Recommend(
+                                    indexName: "<YOUR_INDEX_NAME>",
+                                    model: Model.trendingItems,
+                                    threshold: 30,
+                                    fallbackParameters: BaseInjectionQueryParameters(filters: "category:electronics")
+                                ))),
+                            position: 3,
+                            length: 2
+                        )]
+                    )))
+            )
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the putComposition method.
+    ///
+    /// putComposition
+    func snippetForPutComposition6() async throws {
+        // >SEPARATOR putComposition putComposition
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.putComposition(
+            compositionID: "my-search-and-recommend-compo",
+            composition: Composition(
+                objectID: "my-search-and-recommend-compo",
+                name: "my search main with recommend injection",
+                behavior: CompositionBehavior
+                    .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                        main: InjectionMain(source: InjectionMainSource
+                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                index: "products",
+                                params: MainInjectionQueryParameters(filters: "brand:nike")
+                            )))),
+                        injectedItems: [InjectionInjectedItem(
+                            key: "injected-recommend-key",
+                            source: InjectedItemSource
+                                .injectedItemRecommendSource(InjectedItemRecommendSource(recommend: Recommend(
+                                    indexName: "<YOUR_INDEX_NAME>",
+                                    model: Model.trendingItems,
+                                    threshold: 40
+                                ))),
+                            position: 1,
+                            length: 3
+                        )]
+                    )))
+            )
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the putComposition method.
+    ///
+    /// putComposition
+    func snippetForPutComposition7() async throws {
+        // >SEPARATOR putComposition putComposition
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.putComposition(
+            compositionID: "my-multifeed-recommend-compo",
+            composition: Composition(
+                objectID: "my-multifeed-recommend-compo",
+                name: "multifeed with recommend main",
+                behavior: CompositionBehavior
+                    .compositionMultifeedBehavior(CompositionMultifeedBehavior(multifeed: Multifeed(
+                        feeds: [
+                            "trending": FeedInjection(
+                                injection: Injection(main: InjectionMain(source: InjectionMainSource
+                                        .injectionMainRecommendSource(
+                                            InjectionMainRecommendSource(recommend: MainRecommend(
+                                                indexName: "<YOUR_INDEX_NAME>",
+                                                model: Model.trendingItems,
+                                                threshold: 50
+                                            ))
+                                        )))
+                            ),
+                        ],
+                        feedsOrder: ["trending"]
+                    )))
+            )
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the putComposition method.
+    ///
+    /// putComposition
+    func snippetForPutComposition8() async throws {
+        // >SEPARATOR putComposition putComposition
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.putComposition(
             compositionID: "my-compo",
             composition: Composition(
                 objectID: "my-compo",
@@ -1286,6 +1408,139 @@ final class CompositionClientSnippet {
     ///
     /// saveRules
     func snippetForSaveRules3() async throws {
+        // >SEPARATOR saveRules saveRules
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.saveRules(
+            compositionID: "rule-with-recommend",
+            rules: CompositionRulesBatchParams(requests: [RulesMultipleBatchRequest(
+                action: CompositionAction.upsert,
+                body: RulesBatchCompositionAction.compositionRule(CompositionRule(
+                    objectID: "rule-with-recommend",
+                    conditions: [CompositionCondition(pattern: "trending", anchoring: CompositionAnchoring.`is`)],
+                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                        .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                            main: InjectionMain(source: InjectionMainSource
+                                .injectionMainRecommendSource(InjectionMainRecommendSource(recommend: MainRecommend(
+                                    indexName: "<YOUR_INDEX_NAME>",
+                                    model: Model.trendingItems,
+                                    threshold: 50
+                                )))),
+                            injectedItems: [InjectionInjectedItem(
+                                key: "injected-recommend-from-rule-key",
+                                source: InjectedItemSource
+                                    .injectedItemRecommendSource(InjectedItemRecommendSource(recommend: Recommend(
+                                        indexName: "<YOUR_INDEX_NAME>",
+                                        model: Model.trendingItems,
+                                        threshold: 30,
+                                        fallbackParameters: BaseInjectionQueryParameters(
+                                            filters: "category:electronics"
+                                        )
+                                    ))),
+                                position: 2,
+                                length: 3
+                            )]
+                        ))))
+                ))
+            )])
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the saveRules method.
+    ///
+    /// saveRules
+    func snippetForSaveRules4() async throws {
+        // >SEPARATOR saveRules saveRules
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.saveRules(
+            compositionID: "rule-with-search-and-recommend",
+            rules: CompositionRulesBatchParams(requests: [RulesMultipleBatchRequest(
+                action: CompositionAction.upsert,
+                body: RulesBatchCompositionAction.compositionRule(CompositionRule(
+                    objectID: "rule-with-search-and-recommend",
+                    conditions: [CompositionCondition(pattern: "shoes", anchoring: CompositionAnchoring.contains)],
+                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                        .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                            main: InjectionMain(source: InjectionMainSource
+                                .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                    index: "products",
+                                    params: MainInjectionQueryParameters(filters: "category:shoes")
+                                )))),
+                            injectedItems: [InjectionInjectedItem(
+                                key: "injected-recommend-from-rule-key",
+                                source: InjectedItemSource
+                                    .injectedItemRecommendSource(InjectedItemRecommendSource(recommend: Recommend(
+                                        indexName: "<YOUR_INDEX_NAME>",
+                                        model: Model.trendingItems,
+                                        threshold: 40
+                                    ))),
+                                position: 1,
+                                length: 2
+                            )]
+                        ))))
+                ))
+            )])
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the saveRules method.
+    ///
+    /// saveRules
+    func snippetForSaveRules5() async throws {
+        // >SEPARATOR saveRules saveRules
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.saveRules(
+            compositionID: "rule-with-multifeed-recommend",
+            rules: CompositionRulesBatchParams(requests: [RulesMultipleBatchRequest(
+                action: CompositionAction.upsert,
+                body: RulesBatchCompositionAction.compositionRule(CompositionRule(
+                    objectID: "rule-with-multifeed-recommend",
+                    conditions: [CompositionCondition(pattern: "trending", anchoring: CompositionAnchoring.`is`)],
+                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                        .compositionMultifeedBehavior(CompositionMultifeedBehavior(multifeed: Multifeed(
+                            feeds: [
+                                "trending": FeedInjection(
+                                    injection: Injection(main: InjectionMain(source: InjectionMainSource
+                                            .injectionMainRecommendSource(
+                                                InjectionMainRecommendSource(recommend: MainRecommend(
+                                                    indexName: "<YOUR_INDEX_NAME>",
+                                                    model: Model.trendingItems,
+                                                    threshold: 50
+                                                ))
+                                            )))
+                                ),
+                            ],
+                            feedsOrder: ["trending"]
+                        ))))
+                ))
+            )])
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the saveRules method.
+    ///
+    /// saveRules
+    func snippetForSaveRules6() async throws {
         // >SEPARATOR saveRules saveRules
         // Initialize the client
         let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")

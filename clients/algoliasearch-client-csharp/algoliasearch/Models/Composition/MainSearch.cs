@@ -25,16 +25,16 @@ public partial class MainSearch
   /// <summary>
   /// Initializes a new instance of the MainSearch class.
   /// </summary>
-  /// <param name="index">Targeted index name. (required).</param>
+  /// <param name="index">Index to retrieve search results from. (required).</param>
   public MainSearch(string index)
   {
     Index = index ?? throw new ArgumentNullException(nameof(index));
   }
 
   /// <summary>
-  /// Targeted index name.
+  /// Index to retrieve search results from.
   /// </summary>
-  /// <value>Targeted index name.</value>
+  /// <value>Index to retrieve search results from.</value>
   [JsonPropertyName("index")]
   public string Index { get; set; }
 

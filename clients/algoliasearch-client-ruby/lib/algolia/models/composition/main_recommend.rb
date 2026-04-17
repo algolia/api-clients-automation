@@ -8,20 +8,37 @@ require "time"
 module Algolia
   module Composition
     class MainRecommend
-      # Targeted index name.
-      attr_accessor :index
+      # Index to retrieve recommendations from.
+      attr_accessor :index_name
+
+      attr_accessor :model
+
+      # Minimum score a recommendation must have to be included.
+      attr_accessor :threshold
+
+      attr_accessor :query_parameters
+
+      attr_accessor :fallback_parameters
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :index => :index
+          :index_name => :indexName,
+          :model => :model,
+          :threshold => :threshold,
+          :query_parameters => :queryParameters,
+          :fallback_parameters => :fallbackParameters
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :index => :"String"
+          :index_name => :"String",
+          :model => :"Model",
+          :threshold => :"Integer",
+          :query_parameters => :"MainInjectionQueryParameters",
+          :fallback_parameters => :"MainInjectionQueryParameters"
         }
       end
 
@@ -55,10 +72,30 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:index)
-          self.index = attributes[:index]
+        if attributes.key?(:index_name)
+          self.index_name = attributes[:index_name]
         else
-          self.index = nil
+          self.index_name = nil
+        end
+
+        if attributes.key?(:model)
+          self.model = attributes[:model]
+        else
+          self.model = nil
+        end
+
+        if attributes.key?(:threshold)
+          self.threshold = attributes[:threshold]
+        else
+          self.threshold = nil
+        end
+
+        if attributes.key?(:query_parameters)
+          self.query_parameters = attributes[:query_parameters]
+        end
+
+        if attributes.key?(:fallback_parameters)
+          self.fallback_parameters = attributes[:fallback_parameters]
         end
       end
 
@@ -67,7 +104,11 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          index == other.index
+          index_name == other.index_name &&
+          model == other.model &&
+          threshold == other.threshold &&
+          query_parameters == other.query_parameters &&
+          fallback_parameters == other.fallback_parameters
       end
 
       # @see the `==` method
@@ -79,7 +120,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [index].hash
+        [index_name, model, threshold, query_parameters, fallback_parameters].hash
       end
 
       # Builds the object from hash

@@ -1249,6 +1249,194 @@ public class CompositionClientRequestTests
   public async Task PutCompositionTest5()
   {
     await client.PutCompositionAsync(
+      "my-recommend-compo",
+      new Composition
+      {
+        ObjectID = "my-recommend-compo",
+        Name = "my recommend composition",
+        Behavior = new CompositionBehavior(
+          new CompositionInjectionBehavior
+          {
+            Injection = new Injection
+            {
+              Main = new InjectionMain
+              {
+                Source = new InjectionMainSource(
+                  new InjectionMainRecommendSource
+                  {
+                    Recommend = new MainRecommend
+                    {
+                      IndexName = "products",
+                      Model = Enum.Parse<Model>("TrendingItems"),
+                      Threshold = 50,
+                    },
+                  }
+                ),
+              },
+              InjectedItems = new List<InjectionInjectedItem>
+              {
+                new InjectionInjectedItem
+                {
+                  Key = "injected-recommend-key",
+                  Source = new InjectedItemSource(
+                    new InjectedItemRecommendSource
+                    {
+                      Recommend = new Recommend
+                      {
+                        IndexName = "products",
+                        Model = Enum.Parse<Model>("TrendingItems"),
+                        Threshold = 30,
+                        FallbackParameters = new BaseInjectionQueryParameters
+                        {
+                          Filters = "category:electronics",
+                        },
+                      },
+                    }
+                  ),
+                  Position = 3,
+                  Length = 2,
+                },
+              },
+            },
+          }
+        ),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/my-recommend-compo", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"objectID\":\"my-recommend-compo\",\"name\":\"my recommend composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}},\"injectedItems\":[{\"key\":\"injected-recommend-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":30,\"fallbackParameters\":{\"filters\":\"category:electronics\"}}},\"position\":3,\"length\":2}]}}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "putComposition")]
+  public async Task PutCompositionTest6()
+  {
+    await client.PutCompositionAsync(
+      "my-search-and-recommend-compo",
+      new Composition
+      {
+        ObjectID = "my-search-and-recommend-compo",
+        Name = "my search main with recommend injection",
+        Behavior = new CompositionBehavior(
+          new CompositionInjectionBehavior
+          {
+            Injection = new Injection
+            {
+              Main = new InjectionMain
+              {
+                Source = new InjectionMainSource(
+                  new InjectionMainSearchSource
+                  {
+                    Search = new MainSearch
+                    {
+                      Index = "products",
+                      Params = new MainInjectionQueryParameters { Filters = "brand:nike" },
+                    },
+                  }
+                ),
+              },
+              InjectedItems = new List<InjectionInjectedItem>
+              {
+                new InjectionInjectedItem
+                {
+                  Key = "injected-recommend-key",
+                  Source = new InjectedItemSource(
+                    new InjectedItemRecommendSource
+                    {
+                      Recommend = new Recommend
+                      {
+                        IndexName = "products",
+                        Model = Enum.Parse<Model>("TrendingItems"),
+                        Threshold = 40,
+                      },
+                    }
+                  ),
+                  Position = 1,
+                  Length = 3,
+                },
+              },
+            },
+          }
+        ),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/my-search-and-recommend-compo", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"objectID\":\"my-search-and-recommend-compo\",\"name\":\"my search main with recommend injection\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"filters\":\"brand:nike\"}}}},\"injectedItems\":[{\"key\":\"injected-recommend-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":40}},\"position\":1,\"length\":3}]}}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "putComposition")]
+  public async Task PutCompositionTest7()
+  {
+    await client.PutCompositionAsync(
+      "my-multifeed-recommend-compo",
+      new Composition
+      {
+        ObjectID = "my-multifeed-recommend-compo",
+        Name = "multifeed with recommend main",
+        Behavior = new CompositionBehavior(
+          new CompositionMultifeedBehavior
+          {
+            Multifeed = new Multifeed
+            {
+              Feeds = new Dictionary<string, FeedInjection>
+              {
+                {
+                  "trending",
+                  new FeedInjection
+                  {
+                    Injection = new Injection
+                    {
+                      Main = new InjectionMain
+                      {
+                        Source = new InjectionMainSource(
+                          new InjectionMainRecommendSource
+                          {
+                            Recommend = new MainRecommend
+                            {
+                              IndexName = "products",
+                              Model = Enum.Parse<Model>("TrendingItems"),
+                              Threshold = 50,
+                            },
+                          }
+                        ),
+                      },
+                    },
+                  }
+                },
+              },
+              FeedsOrder = new List<string> { "trending" },
+            },
+          }
+        ),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/my-multifeed-recommend-compo", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"objectID\":\"my-multifeed-recommend-compo\",\"name\":\"multifeed with recommend main\",\"behavior\":{\"multifeed\":{\"feeds\":{\"trending\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}}}}},\"feedsOrder\":[\"trending\"]}}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "putComposition")]
+  public async Task PutCompositionTest8()
+  {
+    await client.PutCompositionAsync(
       "my-compo",
       new Composition
       {
@@ -1941,6 +2129,255 @@ public class CompositionClientRequestTests
 
   [Fact(DisplayName = "saveRules")]
   public async Task SaveRulesTest3()
+  {
+    await client.SaveRulesAsync(
+      "rule-with-recommend",
+      new CompositionRulesBatchParams
+      {
+        Requests = new List<RulesMultipleBatchRequest>
+        {
+          new RulesMultipleBatchRequest
+          {
+            Action = Enum.Parse<Action>("Upsert"),
+            Body = new RulesBatchCompositionAction(
+              new CompositionRule
+              {
+                ObjectID = "rule-with-recommend",
+                Conditions = new List<Condition>
+                {
+                  new Condition { Anchoring = Enum.Parse<Anchoring>("Is"), Pattern = "trending" },
+                },
+                Consequence = new CompositionRuleConsequence
+                {
+                  Behavior = new CompositionBehavior(
+                    new CompositionInjectionBehavior
+                    {
+                      Injection = new Injection
+                      {
+                        Main = new InjectionMain
+                        {
+                          Source = new InjectionMainSource(
+                            new InjectionMainRecommendSource
+                            {
+                              Recommend = new MainRecommend
+                              {
+                                IndexName = "products",
+                                Model = Enum.Parse<Model>("TrendingItems"),
+                                Threshold = 50,
+                              },
+                            }
+                          ),
+                        },
+                        InjectedItems = new List<InjectionInjectedItem>
+                        {
+                          new InjectionInjectedItem
+                          {
+                            Key = "injected-recommend-from-rule-key",
+                            Source = new InjectedItemSource(
+                              new InjectedItemRecommendSource
+                              {
+                                Recommend = new Recommend
+                                {
+                                  IndexName = "products",
+                                  Model = Enum.Parse<Model>("TrendingItems"),
+                                  Threshold = 30,
+                                  FallbackParameters = new BaseInjectionQueryParameters
+                                  {
+                                    Filters = "category:electronics",
+                                  },
+                                },
+                              }
+                            ),
+                            Position = 2,
+                            Length = 3,
+                          },
+                        },
+                      },
+                    }
+                  ),
+                },
+              }
+            ),
+          },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/rule-with-recommend/rules/batch", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-recommend\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"trending\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}},\"injectedItems\":[{\"key\":\"injected-recommend-from-rule-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":30,\"fallbackParameters\":{\"filters\":\"category:electronics\"}}},\"position\":2,\"length\":3}]}}}}}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "saveRules")]
+  public async Task SaveRulesTest4()
+  {
+    await client.SaveRulesAsync(
+      "rule-with-search-and-recommend",
+      new CompositionRulesBatchParams
+      {
+        Requests = new List<RulesMultipleBatchRequest>
+        {
+          new RulesMultipleBatchRequest
+          {
+            Action = Enum.Parse<Action>("Upsert"),
+            Body = new RulesBatchCompositionAction(
+              new CompositionRule
+              {
+                ObjectID = "rule-with-search-and-recommend",
+                Conditions = new List<Condition>
+                {
+                  new Condition
+                  {
+                    Anchoring = Enum.Parse<Anchoring>("Contains"),
+                    Pattern = "shoes",
+                  },
+                },
+                Consequence = new CompositionRuleConsequence
+                {
+                  Behavior = new CompositionBehavior(
+                    new CompositionInjectionBehavior
+                    {
+                      Injection = new Injection
+                      {
+                        Main = new InjectionMain
+                        {
+                          Source = new InjectionMainSource(
+                            new InjectionMainSearchSource
+                            {
+                              Search = new MainSearch
+                              {
+                                Index = "products",
+                                Params = new MainInjectionQueryParameters
+                                {
+                                  Filters = "category:shoes",
+                                },
+                              },
+                            }
+                          ),
+                        },
+                        InjectedItems = new List<InjectionInjectedItem>
+                        {
+                          new InjectionInjectedItem
+                          {
+                            Key = "injected-recommend-from-rule-key",
+                            Source = new InjectedItemSource(
+                              new InjectedItemRecommendSource
+                              {
+                                Recommend = new Recommend
+                                {
+                                  IndexName = "products",
+                                  Model = Enum.Parse<Model>("TrendingItems"),
+                                  Threshold = 40,
+                                },
+                              }
+                            ),
+                            Position = 1,
+                            Length = 2,
+                          },
+                        },
+                      },
+                    }
+                  ),
+                },
+              }
+            ),
+          },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/rule-with-search-and-recommend/rules/batch", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-search-and-recommend\",\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"shoes\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"filters\":\"category:shoes\"}}}},\"injectedItems\":[{\"key\":\"injected-recommend-from-rule-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":40}},\"position\":1,\"length\":2}]}}}}}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "saveRules")]
+  public async Task SaveRulesTest5()
+  {
+    await client.SaveRulesAsync(
+      "rule-with-multifeed-recommend",
+      new CompositionRulesBatchParams
+      {
+        Requests = new List<RulesMultipleBatchRequest>
+        {
+          new RulesMultipleBatchRequest
+          {
+            Action = Enum.Parse<Action>("Upsert"),
+            Body = new RulesBatchCompositionAction(
+              new CompositionRule
+              {
+                ObjectID = "rule-with-multifeed-recommend",
+                Conditions = new List<Condition>
+                {
+                  new Condition { Anchoring = Enum.Parse<Anchoring>("Is"), Pattern = "trending" },
+                },
+                Consequence = new CompositionRuleConsequence
+                {
+                  Behavior = new CompositionBehavior(
+                    new CompositionMultifeedBehavior
+                    {
+                      Multifeed = new Multifeed
+                      {
+                        Feeds = new Dictionary<string, FeedInjection>
+                        {
+                          {
+                            "trending",
+                            new FeedInjection
+                            {
+                              Injection = new Injection
+                              {
+                                Main = new InjectionMain
+                                {
+                                  Source = new InjectionMainSource(
+                                    new InjectionMainRecommendSource
+                                    {
+                                      Recommend = new MainRecommend
+                                      {
+                                        IndexName = "products",
+                                        Model = Enum.Parse<Model>("TrendingItems"),
+                                        Threshold = 50,
+                                      },
+                                    }
+                                  ),
+                                },
+                              },
+                            }
+                          },
+                        },
+                        FeedsOrder = new List<string> { "trending" },
+                      },
+                    }
+                  ),
+                },
+              }
+            ),
+          },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/rule-with-multifeed-recommend/rules/batch", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-multifeed-recommend\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"trending\"}],\"consequence\":{\"behavior\":{\"multifeed\":{\"feeds\":{\"trending\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}}}}},\"feedsOrder\":[\"trending\"]}}}}}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "saveRules")]
+  public async Task SaveRulesTest6()
   {
     await client.SaveRulesAsync(
       "my-compo",

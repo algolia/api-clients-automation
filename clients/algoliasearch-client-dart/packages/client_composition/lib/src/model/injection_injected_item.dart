@@ -24,6 +24,7 @@ final class InjectionInjectedItem {
   /// One of types:
   /// - [InjectedItemExternalSource]
   /// - [InjectedItemSearchSource]
+  /// - [InjectedItemRecommendSource]
   @JsonKey(name: r'source')
   final dynamic source;
 

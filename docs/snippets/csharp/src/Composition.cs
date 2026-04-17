@@ -1326,6 +1326,212 @@ public class SnippetCompositionClient
 
     // Call the API
     var response = await client.PutCompositionAsync(
+      "my-recommend-compo",
+      new Composition
+      {
+        ObjectID = "my-recommend-compo",
+        Name = "my recommend composition",
+        Behavior = new CompositionBehavior(
+          new CompositionInjectionBehavior
+          {
+            Injection = new Injection
+            {
+              Main = new InjectionMain
+              {
+                Source = new InjectionMainSource(
+                  new InjectionMainRecommendSource
+                  {
+                    Recommend = new MainRecommend
+                    {
+                      IndexName = "<YOUR_INDEX_NAME>",
+                      Model = Enum.Parse<Model>("TrendingItems"),
+                      Threshold = 50,
+                    },
+                  }
+                ),
+              },
+              InjectedItems = new List<InjectionInjectedItem>
+              {
+                new InjectionInjectedItem
+                {
+                  Key = "injected-recommend-key",
+                  Source = new InjectedItemSource(
+                    new InjectedItemRecommendSource
+                    {
+                      Recommend = new Recommend
+                      {
+                        IndexName = "<YOUR_INDEX_NAME>",
+                        Model = Enum.Parse<Model>("TrendingItems"),
+                        Threshold = 30,
+                        FallbackParameters = new BaseInjectionQueryParameters
+                        {
+                          Filters = "category:electronics",
+                        },
+                      },
+                    }
+                  ),
+                  Position = 3,
+                  Length = 2,
+                },
+              },
+            },
+          }
+        ),
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the PutComposition method.
+  ///
+  /// putComposition
+  /// </summary>
+  public async Task SnippetForCompositionClientPutComposition6()
+  {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.PutCompositionAsync(
+      "my-search-and-recommend-compo",
+      new Composition
+      {
+        ObjectID = "my-search-and-recommend-compo",
+        Name = "my search main with recommend injection",
+        Behavior = new CompositionBehavior(
+          new CompositionInjectionBehavior
+          {
+            Injection = new Injection
+            {
+              Main = new InjectionMain
+              {
+                Source = new InjectionMainSource(
+                  new InjectionMainSearchSource
+                  {
+                    Search = new MainSearch
+                    {
+                      Index = "products",
+                      Params = new MainInjectionQueryParameters { Filters = "brand:nike" },
+                    },
+                  }
+                ),
+              },
+              InjectedItems = new List<InjectionInjectedItem>
+              {
+                new InjectionInjectedItem
+                {
+                  Key = "injected-recommend-key",
+                  Source = new InjectedItemSource(
+                    new InjectedItemRecommendSource
+                    {
+                      Recommend = new Recommend
+                      {
+                        IndexName = "<YOUR_INDEX_NAME>",
+                        Model = Enum.Parse<Model>("TrendingItems"),
+                        Threshold = 40,
+                      },
+                    }
+                  ),
+                  Position = 1,
+                  Length = 3,
+                },
+              },
+            },
+          }
+        ),
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the PutComposition method.
+  ///
+  /// putComposition
+  /// </summary>
+  public async Task SnippetForCompositionClientPutComposition7()
+  {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.PutCompositionAsync(
+      "my-multifeed-recommend-compo",
+      new Composition
+      {
+        ObjectID = "my-multifeed-recommend-compo",
+        Name = "multifeed with recommend main",
+        Behavior = new CompositionBehavior(
+          new CompositionMultifeedBehavior
+          {
+            Multifeed = new Multifeed
+            {
+              Feeds = new Dictionary<string, FeedInjection>
+              {
+                {
+                  "trending",
+                  new FeedInjection
+                  {
+                    Injection = new Injection
+                    {
+                      Main = new InjectionMain
+                      {
+                        Source = new InjectionMainSource(
+                          new InjectionMainRecommendSource
+                          {
+                            Recommend = new MainRecommend
+                            {
+                              IndexName = "<YOUR_INDEX_NAME>",
+                              Model = Enum.Parse<Model>("TrendingItems"),
+                              Threshold = 50,
+                            },
+                          }
+                        ),
+                      },
+                    },
+                  }
+                },
+              },
+              FeedsOrder = new List<string> { "trending" },
+            },
+          }
+        ),
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the PutComposition method.
+  ///
+  /// putComposition
+  /// </summary>
+  public async Task SnippetForCompositionClientPutComposition8()
+  {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.PutCompositionAsync(
       "my-compo",
       new Composition
       {
@@ -2059,6 +2265,273 @@ public class SnippetCompositionClient
   /// saveRules
   /// </summary>
   public async Task SnippetForCompositionClientSaveRules3()
+  {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.SaveRulesAsync(
+      "rule-with-recommend",
+      new CompositionRulesBatchParams
+      {
+        Requests = new List<RulesMultipleBatchRequest>
+        {
+          new RulesMultipleBatchRequest
+          {
+            Action = Enum.Parse<Action>("Upsert"),
+            Body = new RulesBatchCompositionAction(
+              new CompositionRule
+              {
+                ObjectID = "rule-with-recommend",
+                Conditions = new List<Condition>
+                {
+                  new Condition { Anchoring = Enum.Parse<Anchoring>("Is"), Pattern = "trending" },
+                },
+                Consequence = new CompositionRuleConsequence
+                {
+                  Behavior = new CompositionBehavior(
+                    new CompositionInjectionBehavior
+                    {
+                      Injection = new Injection
+                      {
+                        Main = new InjectionMain
+                        {
+                          Source = new InjectionMainSource(
+                            new InjectionMainRecommendSource
+                            {
+                              Recommend = new MainRecommend
+                              {
+                                IndexName = "<YOUR_INDEX_NAME>",
+                                Model = Enum.Parse<Model>("TrendingItems"),
+                                Threshold = 50,
+                              },
+                            }
+                          ),
+                        },
+                        InjectedItems = new List<InjectionInjectedItem>
+                        {
+                          new InjectionInjectedItem
+                          {
+                            Key = "injected-recommend-from-rule-key",
+                            Source = new InjectedItemSource(
+                              new InjectedItemRecommendSource
+                              {
+                                Recommend = new Recommend
+                                {
+                                  IndexName = "<YOUR_INDEX_NAME>",
+                                  Model = Enum.Parse<Model>("TrendingItems"),
+                                  Threshold = 30,
+                                  FallbackParameters = new BaseInjectionQueryParameters
+                                  {
+                                    Filters = "category:electronics",
+                                  },
+                                },
+                              }
+                            ),
+                            Position = 2,
+                            Length = 3,
+                          },
+                        },
+                      },
+                    }
+                  ),
+                },
+              }
+            ),
+          },
+        },
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SaveRules method.
+  ///
+  /// saveRules
+  /// </summary>
+  public async Task SnippetForCompositionClientSaveRules4()
+  {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.SaveRulesAsync(
+      "rule-with-search-and-recommend",
+      new CompositionRulesBatchParams
+      {
+        Requests = new List<RulesMultipleBatchRequest>
+        {
+          new RulesMultipleBatchRequest
+          {
+            Action = Enum.Parse<Action>("Upsert"),
+            Body = new RulesBatchCompositionAction(
+              new CompositionRule
+              {
+                ObjectID = "rule-with-search-and-recommend",
+                Conditions = new List<Condition>
+                {
+                  new Condition
+                  {
+                    Anchoring = Enum.Parse<Anchoring>("Contains"),
+                    Pattern = "shoes",
+                  },
+                },
+                Consequence = new CompositionRuleConsequence
+                {
+                  Behavior = new CompositionBehavior(
+                    new CompositionInjectionBehavior
+                    {
+                      Injection = new Injection
+                      {
+                        Main = new InjectionMain
+                        {
+                          Source = new InjectionMainSource(
+                            new InjectionMainSearchSource
+                            {
+                              Search = new MainSearch
+                              {
+                                Index = "products",
+                                Params = new MainInjectionQueryParameters
+                                {
+                                  Filters = "category:shoes",
+                                },
+                              },
+                            }
+                          ),
+                        },
+                        InjectedItems = new List<InjectionInjectedItem>
+                        {
+                          new InjectionInjectedItem
+                          {
+                            Key = "injected-recommend-from-rule-key",
+                            Source = new InjectedItemSource(
+                              new InjectedItemRecommendSource
+                              {
+                                Recommend = new Recommend
+                                {
+                                  IndexName = "<YOUR_INDEX_NAME>",
+                                  Model = Enum.Parse<Model>("TrendingItems"),
+                                  Threshold = 40,
+                                },
+                              }
+                            ),
+                            Position = 1,
+                            Length = 2,
+                          },
+                        },
+                      },
+                    }
+                  ),
+                },
+              }
+            ),
+          },
+        },
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SaveRules method.
+  ///
+  /// saveRules
+  /// </summary>
+  public async Task SnippetForCompositionClientSaveRules5()
+  {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.SaveRulesAsync(
+      "rule-with-multifeed-recommend",
+      new CompositionRulesBatchParams
+      {
+        Requests = new List<RulesMultipleBatchRequest>
+        {
+          new RulesMultipleBatchRequest
+          {
+            Action = Enum.Parse<Action>("Upsert"),
+            Body = new RulesBatchCompositionAction(
+              new CompositionRule
+              {
+                ObjectID = "rule-with-multifeed-recommend",
+                Conditions = new List<Condition>
+                {
+                  new Condition { Anchoring = Enum.Parse<Anchoring>("Is"), Pattern = "trending" },
+                },
+                Consequence = new CompositionRuleConsequence
+                {
+                  Behavior = new CompositionBehavior(
+                    new CompositionMultifeedBehavior
+                    {
+                      Multifeed = new Multifeed
+                      {
+                        Feeds = new Dictionary<string, FeedInjection>
+                        {
+                          {
+                            "trending",
+                            new FeedInjection
+                            {
+                              Injection = new Injection
+                              {
+                                Main = new InjectionMain
+                                {
+                                  Source = new InjectionMainSource(
+                                    new InjectionMainRecommendSource
+                                    {
+                                      Recommend = new MainRecommend
+                                      {
+                                        IndexName = "<YOUR_INDEX_NAME>",
+                                        Model = Enum.Parse<Model>("TrendingItems"),
+                                        Threshold = 50,
+                                      },
+                                    }
+                                  ),
+                                },
+                              },
+                            }
+                          },
+                        },
+                        FeedsOrder = new List<string> { "trending" },
+                      },
+                    }
+                  ),
+                },
+              }
+            ),
+          },
+        },
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SaveRules method.
+  ///
+  /// saveRules
+  /// </summary>
+  public async Task SnippetForCompositionClientSaveRules6()
   {
     // >SEPARATOR saveRules saveRules
     // Initialize the client

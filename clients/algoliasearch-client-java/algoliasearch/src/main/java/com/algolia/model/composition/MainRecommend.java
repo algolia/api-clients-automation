@@ -10,18 +10,74 @@ import java.util.Objects;
 /** MainRecommend */
 public class MainRecommend {
 
-  @JsonProperty("index")
-  private String index;
+  @JsonProperty("indexName")
+  private String indexName;
 
-  public MainRecommend setIndex(String index) {
-    this.index = index;
+  @JsonProperty("model")
+  private Model model;
+
+  @JsonProperty("threshold")
+  private Integer threshold;
+
+  @JsonProperty("queryParameters")
+  private MainInjectionQueryParameters queryParameters;
+
+  @JsonProperty("fallbackParameters")
+  private MainInjectionQueryParameters fallbackParameters;
+
+  public MainRecommend setIndexName(String indexName) {
+    this.indexName = indexName;
     return this;
   }
 
-  /** Targeted index name. */
+  /** Index to retrieve recommendations from. */
   @javax.annotation.Nonnull
-  public String getIndex() {
-    return index;
+  public String getIndexName() {
+    return indexName;
+  }
+
+  public MainRecommend setModel(Model model) {
+    this.model = model;
+    return this;
+  }
+
+  /** Get model */
+  @javax.annotation.Nonnull
+  public Model getModel() {
+    return model;
+  }
+
+  public MainRecommend setThreshold(Integer threshold) {
+    this.threshold = threshold;
+    return this;
+  }
+
+  /** Minimum score a recommendation must have to be included. minimum: 0 maximum: 100 */
+  @javax.annotation.Nonnull
+  public Integer getThreshold() {
+    return threshold;
+  }
+
+  public MainRecommend setQueryParameters(MainInjectionQueryParameters queryParameters) {
+    this.queryParameters = queryParameters;
+    return this;
+  }
+
+  /** Get queryParameters */
+  @javax.annotation.Nullable
+  public MainInjectionQueryParameters getQueryParameters() {
+    return queryParameters;
+  }
+
+  public MainRecommend setFallbackParameters(MainInjectionQueryParameters fallbackParameters) {
+    this.fallbackParameters = fallbackParameters;
+    return this;
+  }
+
+  /** Get fallbackParameters */
+  @javax.annotation.Nullable
+  public MainInjectionQueryParameters getFallbackParameters() {
+    return fallbackParameters;
   }
 
   @Override
@@ -33,19 +89,29 @@ public class MainRecommend {
       return false;
     }
     MainRecommend mainRecommend = (MainRecommend) o;
-    return Objects.equals(this.index, mainRecommend.index);
+    return (
+      Objects.equals(this.indexName, mainRecommend.indexName) &&
+      Objects.equals(this.model, mainRecommend.model) &&
+      Objects.equals(this.threshold, mainRecommend.threshold) &&
+      Objects.equals(this.queryParameters, mainRecommend.queryParameters) &&
+      Objects.equals(this.fallbackParameters, mainRecommend.fallbackParameters)
+    );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(index);
+    return Objects.hash(indexName, model, threshold, queryParameters, fallbackParameters);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class MainRecommend {\n");
-    sb.append("    index: ").append(toIndentedString(index)).append("\n");
+    sb.append("    indexName: ").append(toIndentedString(indexName)).append("\n");
+    sb.append("    model: ").append(toIndentedString(model)).append("\n");
+    sb.append("    threshold: ").append(toIndentedString(threshold)).append("\n");
+    sb.append("    queryParameters: ").append(toIndentedString(queryParameters)).append("\n");
+    sb.append("    fallbackParameters: ").append(toIndentedString(fallbackParameters)).append("\n");
     sb.append("}");
     return sb.toString();
   }

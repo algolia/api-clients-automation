@@ -43,6 +43,17 @@ public interface InjectedItemSource {
           );
         }
       }
+      // deserialize InjectedItemRecommendSource
+      if (tree.isObject() && tree.has("recommend")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(InjectedItemRecommendSource.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf InjectedItemRecommendSource (error: " + e.getMessage() + ") (type: InjectedItemRecommendSource)"
+          );
+        }
+      }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
     }
 

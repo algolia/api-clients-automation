@@ -18,8 +18,17 @@ else:
     from typing_extensions import Self
 
 
+from algoliasearch.composition.models.main_injection_query_parameters import (
+    MainInjectionQueryParameters,
+)
+from algoliasearch.composition.models.model import Model
+
 _ALIASES = {
-    "index": "index",
+    "index_name": "indexName",
+    "model": "model",
+    "threshold": "threshold",
+    "query_parameters": "queryParameters",
+    "fallback_parameters": "fallbackParameters",
 }
 
 
@@ -32,8 +41,13 @@ class MainRecommend(BaseModel):
     MainRecommend
     """
 
-    index: str
-    """ Targeted index name. """
+    index_name: str
+    """ Index to retrieve recommendations from. """
+    model: Model
+    threshold: int
+    """ Minimum score a recommendation must have to be included. """
+    query_parameters: Optional[MainInjectionQueryParameters] = None
+    fallback_parameters: Optional[MainInjectionQueryParameters] = None
 
     model_config = ConfigDict(
         strict=False,
@@ -69,5 +83,17 @@ class MainRecommend(BaseModel):
 
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
+
+        obj["model"] = obj.get("model")
+        obj["queryParameters"] = (
+            MainInjectionQueryParameters.from_dict(obj["queryParameters"])
+            if obj.get("queryParameters") is not None
+            else None
+        )
+        obj["fallbackParameters"] = (
+            MainInjectionQueryParameters.from_dict(obj["fallbackParameters"])
+            if obj.get("fallbackParameters") is not None
+            else None
+        )
 
         return cls.model_validate(obj)

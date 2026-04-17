@@ -48,6 +48,7 @@ import 'package:algolia_client_composition/src/model/injected_item_external.dart
 import 'package:algolia_client_composition/src/model/injected_item_external_source.dart';
 import 'package:algolia_client_composition/src/model/injected_item_hits_metadata.dart';
 import 'package:algolia_client_composition/src/model/injected_item_metadata.dart';
+import 'package:algolia_client_composition/src/model/injected_item_recommend_source.dart';
 import 'package:algolia_client_composition/src/model/injected_item_search.dart';
 import 'package:algolia_client_composition/src/model/injected_item_search_source.dart';
 import 'package:algolia_client_composition/src/model/injection.dart';
@@ -61,6 +62,7 @@ import 'package:algolia_client_composition/src/model/main_recommend.dart';
 import 'package:algolia_client_composition/src/model/main_search.dart';
 import 'package:algolia_client_composition/src/model/match_level.dart';
 import 'package:algolia_client_composition/src/model/matched_geo_location.dart';
+import 'package:algolia_client_composition/src/model/model.dart';
 import 'package:algolia_client_composition/src/model/multifeed.dart';
 import 'package:algolia_client_composition/src/model/multiple_batch_request.dart';
 import 'package:algolia_client_composition/src/model/multiple_batch_response.dart';
@@ -69,6 +71,7 @@ import 'package:algolia_client_composition/src/model/personalization.dart';
 import 'package:algolia_client_composition/src/model/query_type.dart';
 import 'package:algolia_client_composition/src/model/range.dart';
 import 'package:algolia_client_composition/src/model/ranking_info.dart';
+import 'package:algolia_client_composition/src/model/recommend.dart';
 import 'package:algolia_client_composition/src/model/redirect.dart';
 import 'package:algolia_client_composition/src/model/redirect_rule_index_data.dart';
 import 'package:algolia_client_composition/src/model/redirect_rule_index_metadata.dart';
@@ -250,6 +253,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'InjectedItemMetadata':
       return InjectedItemMetadata.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'InjectedItemRecommendSource':
+      return InjectedItemRecommendSource.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'InjectedItemSearch':
       return InjectedItemSearch.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -286,6 +292,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'MatchedGeoLocation':
       return MatchedGeoLocation.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'Model':
+      return Model.fromJson(value) as ReturnType;
     case 'Multifeed':
       return Multifeed.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'MultipleBatchRequest':
@@ -305,6 +313,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return Range.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RankingInfo':
       return RankingInfo.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'Recommend':
+      return Recommend.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'Redirect':
       return Redirect.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RedirectRuleIndexData':

@@ -178,7 +178,7 @@ class MainSearch extends AbstractModel implements ModelInterface, \ArrayAccess, 
     /**
      * Sets index.
      *
-     * @param string $index targeted index name
+     * @param string $index index to retrieve search results from
      *
      * @return self
      */
