@@ -18,6 +18,7 @@ from algoliasearch.ingestion.models import WatchResponse as IngestionWatchRespon
 from algoliasearch.ingestion.config import IngestionConfig
 from algoliasearch.ingestion.client import (IngestionClient, IngestionClientSync)
 from algoliasearch.ingestion.models import Action as IngestionAction
+from algoliasearch.search.config import TransformationOptions
 {{/isSearchClient}}
 {{#isIngestionClient}}
 from algoliasearch.ingestion.models import (Action, WatchResponse, Event, PushTaskRecords)
@@ -55,7 +56,7 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
     _config: BaseConfig
     _request_options: RequestOptions
 
-    def __init__(self, app_id: Optional[str] = None, api_key: Optional[str] = None, {{#hasRegionalHost}}region: {{#fallbackToAliasHost}}Optional[str] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str = ""{{/fallbackToAliasHost}}, {{/hasRegionalHost}}transporter: Optional[Transporter{{#isSyncClient}}Sync{{/isSyncClient}}] = None, config: Optional[{{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}] = None) -> None:
+    def __init__(self, app_id: Optional[str] = None, api_key: Optional[str] = None, {{#hasRegionalHost}}region: {{#fallbackToAliasHost}}Optional[str] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str = ""{{/fallbackToAliasHost}}, {{/hasRegionalHost}}transporter: Optional[Transporter{{#isSyncClient}}Sync{{/isSyncClient}}] = None, config: Optional[{{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}] = None{{#isSearchClient}}, transformation_options: Optional["TransformationOptions"] = None{{/isSearchClient}}) -> None:
         if transporter is not None and config is None:
             config = {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(transporter.config.app_id, transporter.config.api_key{{#hasRegionalHost}}, region{{/hasRegionalHost}})
         elif config is None:
@@ -69,6 +70,12 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         if transporter is None:
             transporter = Transporter{{#isSyncClient}}Sync{{/isSyncClient}}(config)
         self._transporter = transporter
+
+        {{#isSearchClient}}
+        self._ingestion_transporter = None
+        if transformation_options is not None:
+            self._ingestion_transporter = self._build_ingestion_transporter(transformation_options)
+        {{/isSearchClient}}
 
     @classmethod
     def create_with_config(cls, config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}, transporter: Optional[Transporter{{#isSyncClient}}Sync{{/isSyncClient}}] = None) -> {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
@@ -88,23 +95,11 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         if transporter is None:
             transporter = Transporter{{#isSyncClient}}Sync{{/isSyncClient}}(config)
 
-        {{#isSearchClient}}
-        _ingestion_transporter: Optional[IngestionClient{{#isSyncClient}}Sync{{/isSyncClient}}] = None
-
-        if config.region is not None:
-            ingestion_config = IngestionConfig(config.app_id, config.api_key, config.region)
-
-            if config.hosts is not None:
-                ingestion_config.hosts = config.hosts
-
-            _ingestion_transporter = IngestionClient{{#isSyncClient}}Sync{{/isSyncClient}}.create_with_config(ingestion_config)
-        {{/isSearchClient}}
-
         client = {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}(app_id=config.app_id, api_key=config.api_key, {{#hasRegionalHost}}region=config.region, {{/hasRegionalHost}}transporter=transporter, config=config)
 
         {{#isSearchClient}}
-        if _ingestion_transporter is not None:
-            client._ingestion_transporter = _ingestion_transporter
+        if config.region is not None:
+            client._ingestion_transporter = client._build_ingestion_transporter(TransformationOptions(region=config.region))
         {{/isSearchClient}}
         
         return client
@@ -119,7 +114,11 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
 
     async def close(self) -> None:
         """Closes the underlying `transporter` of the API client."""
-        return await self._transporter.close()
+        {{#isSearchClient}}
+        if self._ingestion_transporter is not None:
+            await self._ingestion_transporter.close()
+        {{/isSearchClient}}
+        await self._transporter.close()
     {{/isSyncClient}}
 
     {{#isSyncClient}}
@@ -131,7 +130,11 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         self.close()
 
     def close(self) -> None:
-        return self._transporter.close()
+        {{#isSearchClient}}
+        if self._ingestion_transporter is not None:
+            self._ingestion_transporter.close()
+        {{/isSearchClient}}
+        self._transporter.close()
     {{/isSyncClient}}
     
     {{^isSyncClient}}async {{/isSyncClient}}def set_client_api_key(self, api_key: str) -> None:

@@ -279,6 +279,26 @@
         """
         return "{}_tmp_{}".format(index_name, randint(1000000, 9999999))
 
+    def _build_ingestion_transporter(self, transformation_options: "TransformationOptions") -> IngestionClient{{#isSyncClient}}Sync{{/isSyncClient}}:
+        config = self._config
+        ingestion_config = IngestionConfig(config.app_id, config.api_key, transformation_options.region)
+        if transformation_options.connect_timeout is not None:
+            ingestion_config.connect_timeout = transformation_options.connect_timeout
+        if transformation_options.read_timeout is not None:
+            ingestion_config.read_timeout = transformation_options.read_timeout
+        if transformation_options.write_timeout is not None:
+            ingestion_config.write_timeout = transformation_options.write_timeout
+        if transformation_options.hosts is not None:
+            ingestion_config.hosts = transformation_options.hosts
+        return IngestionClient{{#isSyncClient}}Sync{{/isSyncClient}}.create_with_config(ingestion_config)
+
+    {{^isSyncClient}}async {{/isSyncClient}}def set_transformation_options(self, transformation_options: "TransformationOptions"):
+        """Set transformation options and create the ingestion transporter. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"""
+        old_ingestion_transporter = self._ingestion_transporter
+        self._ingestion_transporter = self._build_ingestion_transporter(transformation_options)
+        if old_ingestion_transporter is not None:
+            {{^isSyncClient}}await {{/isSyncClient}}old_ingestion_transporter.close()
+
     {{^isSyncClient}}async {{/isSyncClient}}def save_objects(
         self,
         index_name: str,
@@ -301,10 +321,10 @@
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[IngestionWatchResponse]:
         """
-        Helper: Similar to the `save_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client's config at instantiation.
+        Helper: Similar to the `save_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. Call `client.set_transformation_options(...)` first to configure the ingestion transporter.
         """
         if self._ingestion_transporter is None:
-            raise ValueError("`region` must be provided at client instantiation before calling this method.")
+            raise ValueError("`transformation_options` must be set on the client before calling this method. See client.set_transformation_options(). It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/")
         return {{^isSyncClient}}await {{/isSyncClient}}self._ingestion_transporter.chunked_push(index_name=index_name, objects=objects, action=IngestionAction.ADDOBJECT, wait_for_tasks=wait_for_tasks, batch_size=batch_size, request_options=request_options)
 
     {{^isSyncClient}}async {{/isSyncClient}}def delete_objects(
@@ -344,10 +364,10 @@
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[IngestionWatchResponse]:
         """
-        Helper: Similar to the `partial_update_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client instantiation method.
+        Helper: Similar to the `partial_update_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. Call `client.set_transformation_options(...)` first to configure the ingestion transporter.
         """
         if self._ingestion_transporter is None:
-            raise ValueError("`region` must be provided at client instantiation before calling this method.")
+            raise ValueError("`transformation_options` must be set on the client before calling this method. See client.set_transformation_options(). It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/")
         return {{^isSyncClient}}await {{/isSyncClient}}self._ingestion_transporter.chunked_push(index_name=index_name, objects=objects, action=IngestionAction.PARTIALUPDATEOBJECT if create_if_not_exists else IngestionAction.PARTIALUPDATEOBJECTNOCREATE, wait_for_tasks=wait_for_tasks, batch_size=batch_size, request_options=request_options)
 
     {{^isSyncClient}}async {{/isSyncClient}}def chunked_batch(
@@ -391,12 +411,12 @@
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ReplaceAllObjectsWithTransformationResponse:
         """
-        Helper: Similar to the `replaceAllObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must have been passed to the client instantiation method.
+        Helper: Similar to the `replaceAllObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. Call `client.set_transformation_options(...)` first to configure the ingestion transporter.
 
         See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
         """
         if self._ingestion_transporter is None:
-            raise ValueError("`region` must be provided at client instantiation before calling this method.")
+            raise ValueError("`transformation_options` must be set on the client before calling this method. See client.set_transformation_options(). It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/")
         tmp_index_name = self.create_temporary_name(index_name)
 
         try:
