@@ -3852,6 +3852,42 @@ class SearchTest {
     )
   }
 
+  @Test
+  fun `withQueryCategorization16`() = runTest {
+    client.runTest(
+      call = {
+        search(
+          searchMethodParams =
+            SearchMethodParams(
+              requests =
+                listOf(
+                  SearchForHits(
+                    indexName = "cts_e2e_browse",
+                    query = "drama",
+                    extensions =
+                      SearchExtensions(
+                        queryCategorization =
+                          SearchExtensionsQueryCategorization(
+                            enableCategoriesRetrieval = true,
+                            enableAutoFiltering = false,
+                          )
+                      ),
+                  )
+                )
+            )
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/*/queries".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """{"requests":[{"indexName":"cts_e2e_browse","query":"drama","extensions":{"queryCategorization":{"enableCategoriesRetrieval":true,"enableAutoFiltering":false}}}]}""",
+          it.body,
+        )
+      },
+    )
+  }
+
   // searchDictionaryEntries
 
   @Test

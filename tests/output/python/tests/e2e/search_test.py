@@ -335,6 +335,54 @@ class TestSearchClientE2E:
             == _expected_body
         )
 
+    async def test_search_16(self):
+        """
+        withQueryCategorization
+        """
+        raw_resp = await SearchClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_with_http_info(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_browse",
+                        "query": "drama",
+                        "extensions": {
+                            "queryCategorization": {
+                                "enableCategoriesRetrieval": True,
+                                "enableAutoFiltering": False,
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        resp = await SearchClient(self._e2e_app_id, self._e2e_api_key).search(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_browse",
+                        "query": "drama",
+                        "extensions": {
+                            "queryCategorization": {
+                                "enableCategoriesRetrieval": True,
+                                "enableAutoFiltering": False,
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+        _expected_body = loads(
+            """{"results":[{"page":0,"hitsPerPage":20,"exhaustiveTypo":true,"query":"drama","index":"cts_e2e_browse"}]}"""
+        )
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
+
     async def test_search_dictionary_entries_(self):
         """
         get searchDictionaryEntries results with minimal parameters
@@ -783,6 +831,54 @@ class TestSearchClientSyncE2E:
         )
         _expected_body = loads(
             """{"results":[{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":2,"nbPages":1,"page":0,"hits":[{"editor":"visual studio","_highlightResult":{"editor":{"value":"visual studio","matchLevel":"none"}}},{"editor":"neovim","_highlightResult":{"editor":{"value":"neovim","matchLevel":"none"}}}],"query":"","params":"filters=editor%3A%27visual+studio%27+OR+editor%3Aneovim"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%22editor%3Aneovim%22%5D"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%5D%5D"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%2C%5B%22editor%3Agoland%22%5D%5D%5D"}]}"""
+        )
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
+
+    def test_search_16(self):
+        """
+        withQueryCategorization
+        """
+        raw_resp = SearchClientSync(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_with_http_info(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_browse",
+                        "query": "drama",
+                        "extensions": {
+                            "queryCategorization": {
+                                "enableCategoriesRetrieval": True,
+                                "enableAutoFiltering": False,
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        resp = SearchClientSync(self._e2e_app_id, self._e2e_api_key).search(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_browse",
+                        "query": "drama",
+                        "extensions": {
+                            "queryCategorization": {
+                                "enableCategoriesRetrieval": True,
+                                "enableAutoFiltering": False,
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+        _expected_body = loads(
+            """{"results":[{"page":0,"hitsPerPage":20,"exhaustiveTypo":true,"query":"drama","index":"cts_e2e_browse"}]}"""
         )
         assert (
             self._helpers.union(_expected_body, self._helpers.unwrap(resp))

@@ -4742,6 +4742,43 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// withQueryCategorization
+    func testSearchTest16() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponses<Hit>> = try await client
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [SearchQuery
+                    .searchForHits(SearchForHits(
+                        query: "drama",
+                        indexName: "cts_e2e_browse",
+                        extensions: SearchExtensions(queryCategorization: SearchExtensionsQueryCategorization(
+                            enableCategoriesRetrieval: true,
+                            enableAutoFiltering: false
+                        ))
+                    ))]))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"requests\":[{\"indexName\":\"cts_e2e_browse\",\"query\":\"drama\",\"extensions\":{\"queryCategorization\":{\"enableCategoriesRetrieval\":true,\"enableAutoFiltering\":false}}}]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/*/queries")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// get searchDictionaryEntries results with minimal parameters
     func testSearchDictionaryEntriesTest() async throws {
         let configuration = try SearchClientConfiguration(

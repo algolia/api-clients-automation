@@ -5169,6 +5169,40 @@ func SnippetForSearchOfSearch15() {
 	// SEPARATOR<
 }
 
+func SnippetForSearchOfSearch16() {
+	/*
+	   Snippet for the search method.
+
+	   withQueryCategorization
+	*/
+
+	// >SEPARATOR search withQueryCategorization
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.Search(client.NewApiSearchRequest(
+
+		search.NewEmptySearchMethodParams().SetRequests(
+			[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+				search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("drama").SetExtensions(
+					search.NewEmptySearchExtensions().SetQueryCategorization(
+						search.NewEmptySearchExtensionsQueryCategorization().SetEnableCategoriesRetrieval(true).SetEnableAutoFiltering(false))))})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
 func SnippetForSearchDictionaryEntriesOfSearch() {
 	/*
 	   Snippet for the searchDictionaryEntries method.

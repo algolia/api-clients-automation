@@ -18,6 +18,11 @@ SearchHits _$SearchHitsFromJson(Map<String, dynamic> json) => $checkedCreate(
                   .toList()),
           query: $checkedConvert('query', (v) => v as String?),
           params: $checkedConvert('params', (v) => v as String?),
+          extensions: $checkedConvert(
+              'extensions',
+              (v) => v == null
+                  ? null
+                  : ResponseExtensions.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -27,6 +32,7 @@ const _$SearchHitsFieldMap = <String, String>{
   'hits': 'hits',
   'query': 'query',
   'params': 'params',
+  'extensions': 'extensions',
 };
 
 Map<String, dynamic> _$SearchHitsToJson(SearchHits instance) {
@@ -42,5 +48,6 @@ Map<String, dynamic> _$SearchHitsToJson(SearchHits instance) {
 
   writeNotNull('query', instance.query);
   writeNotNull('params', instance.params);
+  writeNotNull('extensions', instance.extensions?.toJson());
   return val;
 }

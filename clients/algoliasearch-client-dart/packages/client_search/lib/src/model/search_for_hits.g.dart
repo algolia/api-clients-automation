@@ -160,6 +160,11 @@ SearchForHits _$SearchForHitsFromJson(Map<String, dynamic> json) =>
           indexName: $checkedConvert('indexName', (v) => v as String),
           type: $checkedConvert('type',
               (v) => $enumDecodeNullable(_$SearchTypeDefaultEnumMap, v)),
+          extensions: $checkedConvert(
+              'extensions',
+              (v) => v == null
+                  ? null
+                  : SearchExtensions.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -261,6 +266,7 @@ Map<String, dynamic> _$SearchForHitsToJson(SearchForHits instance) {
   writeNotNull('reRankingApplyFilter', instance.reRankingApplyFilter);
   val['indexName'] = instance.indexName;
   writeNotNull('type', instance.type?.toJson());
+  writeNotNull('extensions', instance.extensions?.toJson());
   return val;
 }
 

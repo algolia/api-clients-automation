@@ -257,6 +257,24 @@ describe('search', () => {
 
     expect(expectedBody).toEqual(union(expectedBody, resp));
   });
+
+  test('withQueryCategorization', async () => {
+    const resp = await client.search({
+      requests: [
+        {
+          indexName: 'cts_e2e_browse',
+          query: 'drama',
+          extensions: { queryCategorization: { enableCategoriesRetrieval: true, enableAutoFiltering: false } },
+        },
+      ],
+    });
+
+    const expectedBody = {
+      results: [{ page: 0, hitsPerPage: 20, exhaustiveTypo: true, query: 'drama', index: 'cts_e2e_browse' }],
+    };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
+  });
 });
 
 describe('searchDictionaryEntries', () => {

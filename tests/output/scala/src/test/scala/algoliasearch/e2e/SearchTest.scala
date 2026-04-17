@@ -291,6 +291,48 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
+  test("withQueryCategorization16") {
+    val client = testClient()
+    val future = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = Seq(
+          SearchForHits(
+            indexName = "cts_e2e_browse",
+            query = Some("drama"),
+            extensions = Some(
+              SearchExtensions(
+                queryCategorization = Some(
+                  SearchExtensionsQueryCategorization(
+                    enableCategoriesRetrieval = Some(true),
+                    enableAutoFiltering = Some(false)
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    val response = Await.result(future, Duration.Inf)
+    val expected = parse(
+      """{"results":[{"page":0,"hitsPerPage":20,"exhaustiveTypo":true,"query":"drama","index":"cts_e2e_browse"}]}"""
+    )
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
+  }
+
   test("get searchDictionaryEntries results with minimal parameters") {
     val client = testClient()
     val future = client.searchDictionaryEntries(

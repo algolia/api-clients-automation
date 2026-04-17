@@ -3670,6 +3670,38 @@ def snippet_for_search15
   # SEPARATOR<
 end
 
+# Snippet for the search method.
+#
+# withQueryCategorization
+def snippet_for_search16
+  # >SEPARATOR search withQueryCategorization
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search(
+    Algolia::Search::SearchMethodParams.new(
+      requests: [
+        Algolia::Search::SearchForHits.new(
+          index_name: "<YOUR_INDEX_NAME>",
+          query: "drama",
+          extensions: Algolia::Search::SearchExtensions.new(
+            query_categorization: Algolia::Search::SearchExtensionsQueryCategorization.new(
+              enable_categories_retrieval: true,
+              enable_auto_filtering: false
+            )
+          )
+        )
+      ]
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
 # Snippet for the searchDictionaryEntries method.
 #
 # get searchDictionaryEntries results with minimal parameters

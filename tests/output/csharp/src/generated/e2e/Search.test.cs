@@ -316,6 +316,49 @@ public class SearchClientRequestTestsE2E
     }
   }
 
+  [Fact(DisplayName = "withQueryCategorization")]
+  public async Task SearchTest16()
+  {
+    try
+    {
+      var resp = await client.SearchAsync<Hit>(
+        new SearchMethodParams
+        {
+          Requests = new List<SearchQuery>
+          {
+            new SearchQuery(
+              new SearchForHits
+              {
+                IndexName = "cts_e2e_browse",
+                Query = "drama",
+                Extensions = new SearchExtensions
+                {
+                  QueryCategorization = new SearchExtensionsQueryCategorization
+                  {
+                    EnableCategoriesRetrieval = true,
+                    EnableAutoFiltering = false,
+                  },
+                },
+              }
+            ),
+          },
+        }
+      );
+      // Check status code 200
+      Assert.NotNull(resp);
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"results\":[{\"page\":0,\"hitsPerPage\":20,\"exhaustiveTypo\":true,\"query\":\"drama\",\"index\":\"cts_e2e_browse\"}]}",
+        JsonSerializer.Serialize(resp, JsonConfig.Options),
+        new JsonDiffConfig(true)
+      );
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
+    }
+  }
+
   [Fact(DisplayName = "get searchDictionaryEntries results with minimal parameters")]
   public async Task SearchDictionaryEntriesTest()
   {

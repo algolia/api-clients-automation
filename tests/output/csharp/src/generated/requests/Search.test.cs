@@ -3913,6 +3913,43 @@ public class SearchClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "withQueryCategorization")]
+  public async Task SearchTest16()
+  {
+    await client.SearchAsync<Hit>(
+      new SearchMethodParams
+      {
+        Requests = new List<SearchQuery>
+        {
+          new SearchQuery(
+            new SearchForHits
+            {
+              IndexName = "cts_e2e_browse",
+              Query = "drama",
+              Extensions = new SearchExtensions
+              {
+                QueryCategorization = new SearchExtensionsQueryCategorization
+                {
+                  EnableCategoriesRetrieval = true,
+                  EnableAutoFiltering = false,
+                },
+              },
+            }
+          ),
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/*/queries", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"requests\":[{\"indexName\":\"cts_e2e_browse\",\"query\":\"drama\",\"extensions\":{\"queryCategorization\":{\"enableCategoriesRetrieval\":true,\"enableAutoFiltering\":false}}}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "get searchDictionaryEntries results with minimal parameters")]
   public async Task SearchDictionaryEntriesTest()
   {

@@ -4382,6 +4382,42 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForSearch16() {
+    // >SEPARATOR search withQueryCategorization
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.search(
+        searchMethodParams =
+          SearchMethodParams(
+            requests =
+              listOf(
+                SearchForHits(
+                  indexName = "<YOUR_INDEX_NAME>",
+                  query = "drama",
+                  extensions =
+                    SearchExtensions(
+                      queryCategorization =
+                        SearchExtensionsQueryCategorization(
+                          enableCategoriesRetrieval = true,
+                          enableAutoFiltering = false,
+                        )
+                    ),
+                )
+              )
+          )
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForSearchDictionaryEntries() {
     // >SEPARATOR searchDictionaryEntries get searchDictionaryEntries results with minimal
     // parameters

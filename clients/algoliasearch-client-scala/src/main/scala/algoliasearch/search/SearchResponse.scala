@@ -134,7 +134,8 @@ case class SearchResponse(
     hitsPerPage: Option[Int] = scala.None,
     hits: Seq[Hit],
     query: Option[String] = scala.None,
-    params: Option[String] = scala.None
+    params: Option[String] = scala.None,
+    extensions: Option[ResponseExtensions] = scala.None
 ) extends SearchResultTrait
 
 class SearchResponseSerializer extends Serializer[SearchResponse] {

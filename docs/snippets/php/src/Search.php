@@ -5061,6 +5061,37 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the Search method.
+     *
+     * withQueryCategorization
+     */
+    public function snippetForSearch16(): void
+    {
+        // >SEPARATOR search withQueryCategorization
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->search(
+            ['requests' => [
+                ['indexName' => '<YOUR_INDEX_NAME>',
+                    'query' => 'drama',
+                    'extensions' => ['queryCategorization' => ['enableCategoriesRetrieval' => true,
+                        'enableAutoFiltering' => false,
+                    ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the SearchDictionaryEntries method.
      *
      * get searchDictionaryEntries results with minimal parameters

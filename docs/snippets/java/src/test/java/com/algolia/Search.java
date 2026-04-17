@@ -4088,6 +4088,36 @@ class SnippetSearchClient {
     // SEPARATOR<
   }
 
+  // Snippet for the search method.
+  //
+  // withQueryCategorization
+  void snippetForSearch16() throws Exception {
+    // >SEPARATOR search withQueryCategorization
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    SearchResponses response = client.search(
+      new SearchMethodParams().setRequests(
+        Arrays.asList(
+          new SearchForHits()
+            .setIndexName("<YOUR_INDEX_NAME>")
+            .setQuery("drama")
+            .setExtensions(
+              new SearchExtensions().setQueryCategorization(
+                new SearchExtensionsQueryCategorization().setEnableCategoriesRetrieval(true).setEnableAutoFiltering(false)
+              )
+            )
+        )
+      ),
+      Hit.class
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
   // Snippet for the searchDictionaryEntries method.
   //
   // get searchDictionaryEntries results with minimal parameters

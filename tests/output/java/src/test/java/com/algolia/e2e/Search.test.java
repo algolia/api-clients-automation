@@ -200,6 +200,33 @@ class SearchClientRequestsTestsE2E {
   }
 
   @Test
+  @DisplayName("withQueryCategorization")
+  void searchTest16() {
+    SearchResponses res = client.search(
+      new SearchMethodParams().setRequests(
+        Arrays.asList(
+          new SearchForHits()
+            .setIndexName("cts_e2e_browse")
+            .setQuery("drama")
+            .setExtensions(
+              new SearchExtensions().setQueryCategorization(
+                new SearchExtensionsQueryCategorization().setEnableCategoriesRetrieval(true).setEnableAutoFiltering(false)
+              )
+            )
+        )
+      ),
+      Hit.class
+    );
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"results\":[{\"page\":0,\"hitsPerPage\":20,\"exhaustiveTypo\":true,\"query\":\"drama\",\"index\":\"cts_e2e_browse\"}]}",
+        json.writeValueAsString(res),
+        JSONCompareMode.LENIENT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("get searchDictionaryEntries results with minimal parameters")
   void searchDictionaryEntriesTest() {
     SearchDictionaryEntriesResponse res = client.searchDictionaryEntries(

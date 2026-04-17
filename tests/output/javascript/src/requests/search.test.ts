@@ -2541,6 +2541,31 @@ describe('search', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('withQueryCategorization', async () => {
+    const req = (await client.search({
+      requests: [
+        {
+          indexName: 'cts_e2e_browse',
+          query: 'drama',
+          extensions: { queryCategorization: { enableCategoriesRetrieval: true, enableAutoFiltering: false } },
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/queries');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          indexName: 'cts_e2e_browse',
+          query: 'drama',
+          extensions: { queryCategorization: { enableCategoriesRetrieval: true, enableAutoFiltering: false } },
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('searchDictionaryEntries', () => {

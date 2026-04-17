@@ -199,6 +199,48 @@ class TestSearchClientE2E < Test::Unit::TestCase
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
+  # withQueryCategorization
+  def test_search16
+    res = @client.search_with_http_info(
+      Algolia::Search::SearchMethodParams.new(
+        requests: [
+          Algolia::Search::SearchForHits.new(
+            index_name: "cts_e2e_browse",
+            query: "drama",
+            extensions: Algolia::Search::SearchExtensions.new(
+              query_categorization: Algolia::Search::SearchExtensionsQueryCategorization.new(
+                enable_categories_retrieval: true,
+                enable_auto_filtering: false
+              )
+            )
+          )
+        ]
+      )
+    )
+
+    assert_equal(res.status, 200)
+    res = @client.search(
+      Algolia::Search::SearchMethodParams.new(
+        requests: [
+          Algolia::Search::SearchForHits.new(
+            index_name: "cts_e2e_browse",
+            query: "drama",
+            extensions: Algolia::Search::SearchExtensions.new(
+              query_categorization: Algolia::Search::SearchExtensionsQueryCategorization.new(
+                enable_categories_retrieval: true,
+                enable_auto_filtering: false
+              )
+            )
+          )
+        ]
+      )
+    )
+    expected_body = JSON.parse(
+      "{\"results\":[{\"page\":0,\"hitsPerPage\":20,\"exhaustiveTypo\":true,\"query\":\"drama\",\"index\":\"cts_e2e_browse\"}]}"
+    )
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
+  end
+
   # get searchDictionaryEntries results with minimal parameters
   def test_search_dictionary_entries
     res = @client.search_dictionary_entries_with_http_info(

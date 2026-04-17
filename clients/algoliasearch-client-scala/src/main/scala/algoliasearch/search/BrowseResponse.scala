@@ -138,6 +138,7 @@ case class BrowseResponse(
     hits: Seq[Hit],
     query: Option[String] = scala.None,
     params: Option[String] = scala.None,
+    extensions: Option[ResponseExtensions] = scala.None,
     cursor: Option[String] = scala.None
 )
 

@@ -96,6 +96,7 @@ class SearchForHits extends AbstractModel implements ModelInterface, \ArrayAcces
         'reRankingApplyFilter' => '\Algolia\AlgoliaSearch\Model\Search\ReRankingApplyFilter',
         'indexName' => 'string',
         'type' => '\Algolia\AlgoliaSearch\Model\Search\SearchTypeDefault',
+        'extensions' => '\Algolia\AlgoliaSearch\Model\Search\SearchExtensions',
     ];
 
     /**
@@ -180,6 +181,7 @@ class SearchForHits extends AbstractModel implements ModelInterface, \ArrayAcces
         'reRankingApplyFilter' => null,
         'indexName' => null,
         'type' => null,
+        'extensions' => null,
     ];
 
     /**
@@ -265,6 +267,7 @@ class SearchForHits extends AbstractModel implements ModelInterface, \ArrayAcces
         'reRankingApplyFilter' => 'reRankingApplyFilter',
         'indexName' => 'indexName',
         'type' => 'type',
+        'extensions' => 'extensions',
     ];
 
     /**
@@ -349,6 +352,7 @@ class SearchForHits extends AbstractModel implements ModelInterface, \ArrayAcces
         'reRankingApplyFilter' => 'setReRankingApplyFilter',
         'indexName' => 'setIndexName',
         'type' => 'setType',
+        'extensions' => 'setExtensions',
     ];
 
     /**
@@ -433,6 +437,7 @@ class SearchForHits extends AbstractModel implements ModelInterface, \ArrayAcces
         'reRankingApplyFilter' => 'getReRankingApplyFilter',
         'indexName' => 'getIndexName',
         'type' => 'getType',
+        'extensions' => 'getExtensions',
     ];
 
     /**
@@ -676,6 +681,9 @@ class SearchForHits extends AbstractModel implements ModelInterface, \ArrayAcces
         }
         if (isset($data['type'])) {
             $this->container['type'] = $data['type'];
+        }
+        if (isset($data['extensions'])) {
+            $this->container['extensions'] = $data['extensions'];
         }
     }
 
@@ -2577,6 +2585,30 @@ class SearchForHits extends AbstractModel implements ModelInterface, \ArrayAcces
     public function setType($type)
     {
         $this->container['type'] = $type;
+
+        return $this;
+    }
+
+    /**
+     * Gets extensions.
+     *
+     * @return null|SearchExtensions
+     */
+    public function getExtensions()
+    {
+        return $this->container['extensions'] ?? null;
+    }
+
+    /**
+     * Sets extensions.
+     *
+     * @param null|SearchExtensions $extensions extensions
+     *
+     * @return self
+     */
+    public function setExtensions($extensions)
+    {
+        $this->container['extensions'] = $extensions;
 
         return $this;
     }

@@ -114,6 +114,9 @@ public class SearchResponse<T> implements SearchResult<T> {
   @JsonProperty("params")
   private String params;
 
+  @JsonProperty("extensions")
+  private ResponseExtensions extensions;
+
   private Map<String, Object> additionalProperties = new HashMap<>();
 
   @JsonAnyGetter
@@ -557,6 +560,17 @@ public class SearchResponse<T> implements SearchResult<T> {
     return params;
   }
 
+  public SearchResponse<T> setExtensions(ResponseExtensions extensions) {
+    this.extensions = extensions;
+    return this;
+  }
+
+  /** Get extensions */
+  @javax.annotation.Nullable
+  public ResponseExtensions getExtensions() {
+    return extensions;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -600,6 +614,7 @@ public class SearchResponse<T> implements SearchResult<T> {
       Objects.equals(this.hits, searchResponse.hits) &&
       Objects.equals(this.query, searchResponse.query) &&
       Objects.equals(this.params, searchResponse.params) &&
+      Objects.equals(this.extensions, searchResponse.extensions) &&
       super.equals(o)
     );
   }
@@ -640,6 +655,7 @@ public class SearchResponse<T> implements SearchResult<T> {
       hits,
       query,
       params,
+      extensions,
       super.hashCode()
     );
   }
@@ -682,6 +698,7 @@ public class SearchResponse<T> implements SearchResult<T> {
     sb.append("    hits: ").append(toIndentedString(hits)).append("\n");
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb.append("    params: ").append(toIndentedString(params)).append("\n");
+    sb.append("    extensions: ").append(toIndentedString(extensions)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -3571,6 +3571,30 @@ final class SearchClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the search method.
+    ///
+    /// withQueryCategorization
+    func snippetForSearch16() async throws {
+        // >SEPARATOR search withQueryCategorization
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response: SearchResponses<Hit> = try await client
+            .search(searchMethodParams: SearchMethodParams(requests: [SearchQuery.searchForHits(SearchForHits(
+                query: "drama",
+                indexName: "<YOUR_INDEX_NAME>",
+                extensions: SearchExtensions(queryCategorization: SearchExtensionsQueryCategorization(
+                    enableCategoriesRetrieval: true,
+                    enableAutoFiltering: false
+                ))
+            ))]))
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
     /// Snippet for the searchDictionaryEntries method.
     ///
     /// get searchDictionaryEntries results with minimal parameters

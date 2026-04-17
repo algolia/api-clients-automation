@@ -322,6 +322,42 @@ func TestSearchE2E_Search(t *testing.T) {
 
 		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
 	})
+	t.Run("withQueryCategorization", func(t *testing.T) {
+		t.Parallel()
+
+		client := createE2ESearchClient(t)
+		res, err := client.Search(client.NewApiSearchRequest(
+
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("cts_e2e_browse").SetQuery("drama").SetExtensions(
+						search.NewEmptySearchExtensions().SetQueryCategorization(
+							search.NewEmptySearchExtensionsQueryCategorization().SetEnableCategoriesRetrieval(true).SetEnableAutoFiltering(false))))})))
+		require.NoError(t, err)
+
+		_ = res
+
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+
+		var rawBodyMap any
+
+		err = json.Unmarshal(rawBody, &rawBodyMap)
+		require.NoError(t, err)
+
+		expectedBodyRaw := `{"results":[{"page":0,"hitsPerPage":20,"exhaustiveTypo":true,"query":"drama","index":"cts_e2e_browse"}]}`
+
+		var expectedBody any
+
+		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+		require.NoError(t, err)
+
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
+		unionBodyRaw, err := json.Marshal(unionBody)
+		require.NoError(t, err)
+
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
+	})
 }
 
 func TestSearchE2E_SearchDictionaryEntries(t *testing.T) {

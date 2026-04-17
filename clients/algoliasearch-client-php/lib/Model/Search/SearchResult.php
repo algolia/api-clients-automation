@@ -53,6 +53,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'hits' => '\Algolia\AlgoliaSearch\Model\Search\Hit[]',
         'query' => 'string',
         'params' => 'string',
+        'extensions' => '\Algolia\AlgoliaSearch\Model\Search\ResponseExtensions',
         'facetHits' => '\Algolia\AlgoliaSearch\Model\Search\FacetHits[]',
     ];
 
@@ -95,6 +96,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'hits' => null,
         'query' => null,
         'params' => null,
+        'extensions' => null,
         'facetHits' => null,
     ];
 
@@ -138,6 +140,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'hits' => 'hits',
         'query' => 'query',
         'params' => 'params',
+        'extensions' => 'extensions',
         'facetHits' => 'facetHits',
     ];
 
@@ -180,6 +183,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'hits' => 'setHits',
         'query' => 'setQuery',
         'params' => 'setParams',
+        'extensions' => 'setExtensions',
         'facetHits' => 'setFacetHits',
     ];
 
@@ -222,6 +226,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'hits' => 'getHits',
         'query' => 'getQuery',
         'params' => 'getParams',
+        'extensions' => 'getExtensions',
         'facetHits' => 'getFacetHits',
     ];
 
@@ -337,6 +342,9 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         }
         if (isset($data['params'])) {
             $this->container['params'] = $data['params'];
+        }
+        if (isset($data['extensions'])) {
+            $this->container['extensions'] = $data['extensions'];
         }
         if (isset($data['facetHits'])) {
             $this->container['facetHits'] = $data['facetHits'];
@@ -1223,6 +1231,30 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     public function setParams($params)
     {
         $this->container['params'] = $params;
+
+        return $this;
+    }
+
+    /**
+     * Gets extensions.
+     *
+     * @return null|ResponseExtensions
+     */
+    public function getExtensions()
+    {
+        return $this->container['extensions'] ?? null;
+    }
+
+    /**
+     * Sets extensions.
+     *
+     * @param null|ResponseExtensions $extensions extensions
+     *
+     * @return self
+     */
+    public function setExtensions($extensions)
+    {
+        $this->container['extensions'] = $extensions;
 
         return $this;
     }

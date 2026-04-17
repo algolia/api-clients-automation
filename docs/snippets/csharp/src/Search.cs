@@ -4912,6 +4912,47 @@ public class SnippetSearchClient
   }
 
   /// <summary>
+  /// Snippet for the Search method.
+  ///
+  /// withQueryCategorization
+  /// </summary>
+  public async Task SnippetForSearchClientSearch16()
+  {
+    // >SEPARATOR search withQueryCategorization
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchAsync<Hit>(
+      new SearchMethodParams
+      {
+        Requests = new List<SearchQuery>
+        {
+          new SearchQuery(
+            new SearchForHits
+            {
+              IndexName = "<YOUR_INDEX_NAME>",
+              Query = "drama",
+              Extensions = new SearchExtensions
+              {
+                QueryCategorization = new SearchExtensionsQueryCategorization
+                {
+                  EnableCategoriesRetrieval = true,
+                  EnableAutoFiltering = false,
+                },
+              },
+            }
+          ),
+        },
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the SearchDictionaryEntries method.
   ///
   /// get searchDictionaryEntries results with minimal parameters

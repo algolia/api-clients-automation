@@ -2762,6 +2762,106 @@ components:
           $ref: '#/components/schemas/rankingInfo'
         _distinctSeqID:
           $ref: '#/components/schemas/distinctSeqID'
+    queryCategorization_type:
+      type: string
+      enum:
+        - narrow
+        - broad
+        - ambiguous
+        - none
+      description: Classification of the query scope.
+    categoryPrediction_bin:
+      type: string
+      enum:
+        - certain
+        - very high
+        - high
+        - low
+        - very low
+      description: Confidence level of the category prediction.
+    hierarchyPathEntry:
+      type: object
+      properties:
+        facetName:
+          type: string
+          description: >-
+            Facet attribute name at this hierarchy level, for example,
+            `categories.lvl0`.
+        facetValue:
+          type: string
+          description: Facet value at this level of the category hierarchy.
+        depth:
+          type: integer
+          description: Depth level in the category hierarchy, starting at 0.
+    categoryPrediction:
+      type: object
+      properties:
+        bin:
+          $ref: '#/components/schemas/categoryPrediction_bin'
+        hierarchyPath:
+          type: array
+          description: Ordered list of category levels from root to the predicted category.
+          items:
+            $ref: '#/components/schemas/hierarchyPathEntry'
+    autoFilteringFilterEntry:
+      oneOf:
+        - type: string
+        - type: array
+          items:
+            type: string
+    autoFilteringResult:
+      type: object
+      description: Result of automatic filtering applied by Query Categorization.
+      properties:
+        enabled:
+          type: boolean
+          description: Whether automatic filtering was applied to this query.
+        maxDepth:
+          type: integer
+          description: Maximum category hierarchy depth used for filtering.
+        facetFilters:
+          type: array
+          description: Facet filters automatically applied to the query.
+          items:
+            $ref: '#/components/schemas/autoFilteringFilterEntry'
+        optionalFilters:
+          type: array
+          description: Optional filters automatically applied to boost relevant categories.
+          items:
+            $ref: '#/components/schemas/autoFilteringFilterEntry'
+    queryCategorization:
+      type: object
+      description: >
+        Query Categorization prediction returned by the AI model.
+
+        This field is empty when the model cannot categorize the query.
+
+        See [Query
+        Categorization](https://www.algolia.com/doc/guides/algolia-ai/query-categorization/).
+      properties:
+        normalizedQuery:
+          type: string
+          description: Processed and normalized version of the original search query.
+        type:
+          $ref: '#/components/schemas/queryCategorization_type'
+        categories:
+          type: array
+          description: List of category predictions with confidence levels.
+          items:
+            $ref: '#/components/schemas/categoryPrediction'
+        autofiltering:
+          $ref: '#/components/schemas/autoFilteringResult'
+    responseExtensions:
+      type: object
+      description: >
+        AI-generated metadata returned alongside search results.
+
+        Present when Algolia AI features such as [Query
+        Categorization](https://www.algolia.com/doc/guides/algolia-ai/query-categorization/)
+        are enabled.
+      properties:
+        queryCategorization:
+          $ref: '#/components/schemas/queryCategorization'
     searchHits:
       type: object
       additionalProperties: true
@@ -2782,6 +2882,8 @@ components:
           type: string
           description: URL-encoded string of all search parameters.
           example: query=a&hitsPerPage=20
+        extensions:
+          $ref: '#/components/schemas/responseExtensions'
       required:
         - hits
     searchResponse:
@@ -2804,6 +2906,36 @@ components:
 
         - `facet` [searches for facet
         values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
+    searchExtensionsQueryCategorization:
+      type: object
+      description: >-
+        Parameters for the [Query
+        Categorization](https://www.algolia.com/doc/guides/algolia-ai/query-categorization/)
+        AI feature.
+      properties:
+        enableCategoriesRetrieval:
+          type: boolean
+          description: >-
+            Whether to retrieve category predictions in the response
+            `extensions.queryCategorization` field.
+          default: false
+        enableAutoFiltering:
+          type: boolean
+          description: >-
+            Whether to automatically apply category-based filters and boosts to
+            search results.
+          default: false
+    searchExtensions:
+      type: object
+      description: >
+        Additional parameters for Algolia AI features.
+
+        Used to enable [Query
+        Categorization](https://www.algolia.com/doc/guides/algolia-ai/query-categorization/)
+        and other AI-powered capabilities.
+      properties:
+        queryCategorization:
+          $ref: '#/components/schemas/searchExtensionsQueryCategorization'
     searchForHitsOptions:
       x-is-SearchForHitsOptions: true
       type: object
@@ -2812,6 +2944,8 @@ components:
           $ref: '#/components/schemas/indexName'
         type:
           $ref: '#/components/schemas/searchTypeDefault'
+        extensions:
+          $ref: '#/components/schemas/searchExtensions'
       required:
         - indexName
     SearchForHits:

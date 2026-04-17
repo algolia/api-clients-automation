@@ -4414,6 +4414,40 @@ void main() {
     ),
   );
 
+  // search
+  test(
+    'withQueryCategorization',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        searchMethodParams: SearchMethodParams(
+          requests: [
+            SearchForHits(
+              indexName: "cts_e2e_browse",
+              query: "drama",
+              extensions: SearchExtensions(
+                queryCategorization: SearchExtensionsQueryCategorization(
+                  enableCategoriesRetrieval: true,
+                  enableAutoFiltering: false,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/queries');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"cts_e2e_browse","query":"drama","extensions":{"queryCategorization":{"enableCategoriesRetrieval":true,"enableAutoFiltering":false}}}]}""");
+      },
+    ),
+  );
+
   // searchDictionaryEntries
   test(
     'get searchDictionaryEntries results with minimal parameters',

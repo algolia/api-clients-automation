@@ -48,6 +48,7 @@ case class SearchHits(
     hits: Seq[Hit],
     query: Option[String] = scala.None,
     params: Option[String] = scala.None,
+    extensions: Option[ResponseExtensions] = scala.None,
     additionalProperties: Option[List[JField]] = None
 )
 
@@ -61,7 +62,7 @@ class SearchHitsSerializer extends Serializer[SearchHits] {
           val mf = manifest[SearchHits]
           val obj = Extraction.extract[SearchHits](jobject)(formats, mf)
 
-          val fields = Set("hits", "query", "params")
+          val fields = Set("hits", "query", "params", "extensions")
           val extraProperties = jobject removeField {
             case (name, _) if fields.contains(name) => true
             case _                                  => false

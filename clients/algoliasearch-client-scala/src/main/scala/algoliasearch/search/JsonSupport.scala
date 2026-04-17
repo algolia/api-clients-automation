@@ -45,6 +45,7 @@ object JsonSupport {
     new AroundRadiusAllSerializer() :+
     new BooleanStringSerializer() :+
     new BuiltInOperationTypeSerializer() :+
+    new CategoryPredictionBinSerializer() :+
     new DictionaryActionSerializer() :+
     new DictionaryEntryStateSerializer() :+
     new DictionaryEntryTypeSerializer() :+
@@ -57,6 +58,7 @@ object JsonSupport {
     new MatchLevelSerializer() :+
     new ModeSerializer() :+
     new OperationTypeSerializer() :+
+    new QueryCategorizationTypeSerializer() :+
     new QueryTypeSerializer() :+
     new RemoveWordsIfNoResultsSerializer() :+
     new ScopeTypeSerializer() :+
@@ -73,6 +75,7 @@ object JsonSupport {
     AroundPrecisionSerializer :+
     AroundRadiusSerializer :+
     AttributeToUpdateSerializer :+
+    AutoFilteringFilterEntrySerializer :+
     AutomaticFacetFiltersSerializer :+
     BrowseParamsSerializer :+
     BuiltInOperationValueSerializer :+

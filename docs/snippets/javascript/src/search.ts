@@ -3606,6 +3606,31 @@ export async function snippetForSearch15(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the search method.
+//
+// withQueryCategorization
+export async function snippetForSearch16(): Promise<void> {
+  // >SEPARATOR search withQueryCategorization
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    requests: [
+      {
+        indexName: 'cts_e2e_browse',
+        query: 'drama',
+        extensions: { queryCategorization: { enableCategoriesRetrieval: true, enableAutoFiltering: false } },
+      },
+    ],
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the searchDictionaryEntries method.
 //
 // get searchDictionaryEntries results with minimal parameters

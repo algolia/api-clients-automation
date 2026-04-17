@@ -5273,6 +5273,41 @@ def snippet_for_search15():
     # SEPARATOR<
 
 
+def snippet_for_search16():
+    """
+    Snippet for the search method.
+
+    withQueryCategorization
+    """
+    # >SEPARATOR search withQueryCategorization
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.search(
+        search_method_params={
+            "requests": [
+                {
+                    "indexName": "<YOUR_INDEX_NAME>",
+                    "query": "drama",
+                    "extensions": {
+                        "queryCategorization": {
+                            "enableCategoriesRetrieval": True,
+                            "enableAutoFiltering": False,
+                        },
+                    },
+                },
+            ],
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_search_dictionary_entries():
     """
     Snippet for the searchDictionaryEntries method.

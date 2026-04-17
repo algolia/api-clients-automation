@@ -3734,6 +3734,38 @@ class SearchClientRequestsTests {
   }
 
   @Test
+  @DisplayName("withQueryCategorization")
+  void searchTest16() {
+    assertDoesNotThrow(() -> {
+      client.search(
+        new SearchMethodParams().setRequests(
+          Arrays.asList(
+            new SearchForHits()
+              .setIndexName("cts_e2e_browse")
+              .setQuery("drama")
+              .setExtensions(
+                new SearchExtensions().setQueryCategorization(
+                  new SearchExtensionsQueryCategorization().setEnableCategoriesRetrieval(true).setEnableAutoFiltering(false)
+                )
+              )
+          )
+        ),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/*/queries", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"requests\":[{\"indexName\":\"cts_e2e_browse\",\"query\":\"drama\",\"extensions\":{\"queryCategorization\":{\"enableCategoriesRetrieval\":true,\"enableAutoFiltering\":false}}}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("get searchDictionaryEntries results with minimal parameters")
   void searchDictionaryEntriesTest() {
     assertDoesNotThrow(() -> {

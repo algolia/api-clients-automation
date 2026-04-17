@@ -16,6 +16,11 @@ SearchForHitsOptions _$SearchForHitsOptionsFromJson(
           indexName: $checkedConvert('indexName', (v) => v as String),
           type: $checkedConvert('type',
               (v) => $enumDecodeNullable(_$SearchTypeDefaultEnumMap, v)),
+          extensions: $checkedConvert(
+              'extensions',
+              (v) => v == null
+                  ? null
+                  : SearchExtensions.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -34,6 +39,7 @@ Map<String, dynamic> _$SearchForHitsOptionsToJson(
   }
 
   writeNotNull('type', instance.type?.toJson());
+  writeNotNull('extensions', instance.extensions?.toJson());
   return val;
 }
 

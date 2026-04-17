@@ -2802,6 +2802,37 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
+  # withQueryCategorization
+  def test_search16
+    req = @client.search_with_http_info(
+      Algolia::Search::SearchMethodParams.new(
+        requests: [
+          Algolia::Search::SearchForHits.new(
+            index_name: "cts_e2e_browse",
+            query: "drama",
+            extensions: Algolia::Search::SearchExtensions.new(
+              query_categorization: Algolia::Search::SearchExtensionsQueryCategorization.new(
+                enable_categories_retrieval: true,
+                enable_auto_filtering: false
+              )
+            )
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/*/queries", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"requests\":[{\"indexName\":\"cts_e2e_browse\",\"query\":\"drama\",\"extensions\":{\"queryCategorization\":{\"enableCategoriesRetrieval\":true,\"enableAutoFiltering\":false}}}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # get searchDictionaryEntries results with minimal parameters
   def test_search_dictionary_entries
     req = @client.search_dictionary_entries_with_http_info(

@@ -4142,6 +4142,38 @@ void snippetForsearch15() async {
   // SEPARATOR<
 }
 
+// Snippet for the search method.
+//
+// withQueryCategorization
+void snippetForsearch16() async {
+  // >SEPARATOR search withQueryCategorization
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          query: "drama",
+          extensions: SearchExtensions(
+            queryCategorization: SearchExtensionsQueryCategorization(
+              enableCategoriesRetrieval: true,
+              enableAutoFiltering: false,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
 // Snippet for the searchDictionaryEntries method.
 //
 // get searchDictionaryEntries results with minimal parameters

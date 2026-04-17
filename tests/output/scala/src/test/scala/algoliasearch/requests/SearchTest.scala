@@ -3936,6 +3936,41 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("withQueryCategorization16") {
+    val (client, echo) = testClient()
+    val future = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = Seq(
+          SearchForHits(
+            indexName = "cts_e2e_browse",
+            query = Some("drama"),
+            extensions = Some(
+              SearchExtensions(
+                queryCategorization = Some(
+                  SearchExtensionsQueryCategorization(
+                    enableCategoriesRetrieval = Some(true),
+                    enableAutoFiltering = Some(false)
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/*/queries")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"requests":[{"indexName":"cts_e2e_browse","query":"drama","extensions":{"queryCategorization":{"enableCategoriesRetrieval":true,"enableAutoFiltering":false}}}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("get searchDictionaryEntries results with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.searchDictionaryEntries(

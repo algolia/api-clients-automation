@@ -193,6 +193,28 @@ class SearchTest extends TestCase
         $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
+    #[TestDox('withQueryCategorization')]
+    public function testSearch16(): void
+    {
+        $client = $this->getClient();
+        $resp = $client->search(
+            ['requests' => [
+                ['indexName' => 'cts_e2e_browse',
+                    'query' => 'drama',
+                    'extensions' => ['queryCategorization' => ['enableCategoriesRetrieval' => true,
+                        'enableAutoFiltering' => false,
+                    ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        $expected = json_decode('{"results":[{"page":0,"hitsPerPage":20,"exhaustiveTypo":true,"query":"drama","index":"cts_e2e_browse"}]}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
+    }
+
     #[TestDox('get searchDictionaryEntries results with minimal parameters')]
     public function testSearchDictionaryEntries(): void
     {

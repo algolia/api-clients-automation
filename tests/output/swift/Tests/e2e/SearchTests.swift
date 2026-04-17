@@ -225,6 +225,31 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
         XCTAssertEqual(response.statusCode, 200)
     }
 
+    /// withQueryCategorization
+    func testSearchTest16() async throws {
+        guard let client = SearchClientRequestsTestsE2E.client else {
+            XCTFail("E2E client is not initialized")
+            return
+        }
+
+        let response: Response<SearchResponses<Hit>> = try await client
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [SearchQuery
+                    .searchForHits(SearchForHits(
+                        query: "drama",
+                        indexName: "cts_e2e_browse",
+                        extensions: SearchExtensions(queryCategorization: SearchExtensionsQueryCategorization(
+                            enableCategoriesRetrieval: true,
+                            enableAutoFiltering: false
+                        ))
+                    ))]))
+        try XCTLenientAssertEqual(
+            received: XCTUnwrap(response.body),
+            expected: "{\"results\":[{\"page\":0,\"hitsPerPage\":20,\"exhaustiveTypo\":true,\"query\":\"drama\",\"index\":\"cts_e2e_browse\"}]}"
+        )
+
+        XCTAssertEqual(response.statusCode, 200)
+    }
+
     /// get searchDictionaryEntries results with minimal parameters
     func testSearchDictionaryEntriesTest() async throws {
         guard let client = SearchClientRequestsTestsE2E.client else {

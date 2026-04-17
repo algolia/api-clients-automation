@@ -3684,6 +3684,32 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('withQueryCategorization')]
+    public function testSearch16(): void
+    {
+        $client = $this->getClient();
+        $client->search(
+            ['requests' => [
+                ['indexName' => 'cts_e2e_browse',
+                    'query' => 'drama',
+                    'extensions' => ['queryCategorization' => ['enableCategoriesRetrieval' => true,
+                        'enableAutoFiltering' => false,
+                    ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/*/queries',
+                'method' => 'POST',
+                'body' => json_decode('{"requests":[{"indexName":"cts_e2e_browse","query":"drama","extensions":{"queryCategorization":{"enableCategoriesRetrieval":true,"enableAutoFiltering":false}}}]}'),
+            ],
+        ]);
+    }
+
     #[TestDox('get searchDictionaryEntries results with minimal parameters')]
     public function testSearchDictionaryEntries(): void
     {
