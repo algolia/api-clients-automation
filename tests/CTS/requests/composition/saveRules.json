@@ -527,6 +527,95 @@
   },
   {
     "parameters": {
+      "compositionID": "rule-with-multifeed-recommend",
+      "rules": {
+        "requests": [
+          {
+            "action": "upsert",
+            "body": {
+              "objectID": "rule-with-multifeed-recommend",
+              "conditions": [
+                {
+                  "anchoring": "is",
+                  "pattern": "trending"
+                }
+              ],
+              "consequence": {
+                "behavior": {
+                  "multifeed": {
+                    "feeds": {
+                      "trending": {
+                        "injection": {
+                          "main": {
+                            "source": {
+                              "recommend": {
+                                "indexName": "products",
+                                "model": "trending-items",
+                                "threshold": 50
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "feedsOrder": [
+                      "trending"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/compositions/rule-with-multifeed-recommend/rules/batch",
+      "method": "POST",
+      "body": {
+        "requests": [
+          {
+            "action": "upsert",
+            "body": {
+              "objectID": "rule-with-multifeed-recommend",
+              "conditions": [
+                {
+                  "anchoring": "is",
+                  "pattern": "trending"
+                }
+              ],
+              "consequence": {
+                "behavior": {
+                  "multifeed": {
+                    "feeds": {
+                      "trending": {
+                        "injection": {
+                          "main": {
+                            "source": {
+                              "recommend": {
+                                "indexName": "products",
+                                "model": "trending-items",
+                                "threshold": 50
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "feedsOrder": [
+                      "trending"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "parameters": {
       "compositionID": "my-compo",
       "rules": {
         "requests": [

@@ -563,6 +563,67 @@
   },
   {
     "parameters": {
+      "compositionID": "my-multifeed-recommend-compo",
+      "composition": {
+        "objectID": "my-multifeed-recommend-compo",
+        "name": "multifeed with recommend main",
+        "behavior": {
+          "multifeed": {
+            "feeds": {
+              "trending": {
+                "injection": {
+                  "main": {
+                    "source": {
+                      "recommend": {
+                        "indexName": "products",
+                        "model": "trending-items",
+                        "threshold": 50
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "feedsOrder": [
+              "trending"
+            ]
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/compositions/my-multifeed-recommend-compo",
+      "method": "PUT",
+      "body": {
+        "objectID": "my-multifeed-recommend-compo",
+        "name": "multifeed with recommend main",
+        "behavior": {
+          "multifeed": {
+            "feeds": {
+              "trending": {
+                "injection": {
+                  "main": {
+                    "source": {
+                      "recommend": {
+                        "indexName": "products",
+                        "model": "trending-items",
+                        "threshold": 50
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "feedsOrder": [
+              "trending"
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "parameters": {
       "compositionID": "my-compo",
       "composition": {
         "objectID": "my-compo",
