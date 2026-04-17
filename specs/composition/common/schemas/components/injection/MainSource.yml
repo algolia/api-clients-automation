@@ -12,7 +12,7 @@ injectionMainSearchSource:
       properties:
         index:
           type: string
-          description: Targeted index name.
+          description: Index to retrieve search results from.
           example: Products
         params:
           $ref: './SearchQueryParams.yml#/mainInjectionQueryParameters'
@@ -33,11 +33,24 @@ injectionMainRecommendSource:
       type: object
       additionalProperties: false
       properties:
-        index:
+        indexName:
           type: string
-          description: Targeted index name.
+          description: Index to retrieve recommendations from.
           example: Products
+        model:
+          $ref: './RecommendModel.yml#/model'
+        threshold:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: Minimum score a recommendation must have to be included.
+        queryParameters:
+          $ref: './SearchQueryParams.yml#/mainInjectionQueryParameters'
+        fallbackParameters:
+          $ref: './SearchQueryParams.yml#/mainInjectionQueryParameters'
       required:
-        - index
+        - indexName
+        - model
+        - threshold
   required:
     - recommend
