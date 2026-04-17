@@ -18,12 +18,17 @@ else:
     from typing_extensions import Self
 
 
-from algoliasearch.composition.models.composition_source_search import (
-    CompositionSourceSearch,
+from algoliasearch.composition.models.base_injection_query_parameters import (
+    BaseInjectionQueryParameters,
 )
+from algoliasearch.composition.models.model import Model
 
 _ALIASES = {
-    "search": "search",
+    "index_name": "indexName",
+    "model": "model",
+    "threshold": "threshold",
+    "query_parameters": "queryParameters",
+    "fallback_parameters": "fallbackParameters",
 }
 
 
@@ -31,12 +36,18 @@ def _alias_generator(name: str) -> str:
     return _ALIASES.get(name, name)
 
 
-class CompositionSource(BaseModel):
+class Recommend(BaseModel):
     """
-    CompositionSource
+    Recommend
     """
 
-    search: CompositionSourceSearch
+    index_name: str
+    """ Index to retrieve recommendations from. """
+    model: Model
+    threshold: int
+    """ Minimum score a recommendation must have to be included. """
+    query_parameters: Optional[BaseInjectionQueryParameters] = None
+    fallback_parameters: Optional[BaseInjectionQueryParameters] = None
 
     model_config = ConfigDict(
         strict=False,
@@ -53,7 +64,7 @@ class CompositionSource(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CompositionSource from a JSON string"""
+        """Create an instance of Recommend from a JSON string"""
         return cls.from_dict(loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -66,16 +77,22 @@ class CompositionSource(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CompositionSource from a dict"""
+        """Create an instance of Recommend from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        obj["search"] = (
-            CompositionSourceSearch.from_dict(obj["search"])
-            if obj.get("search") is not None
+        obj["model"] = obj.get("model")
+        obj["queryParameters"] = (
+            BaseInjectionQueryParameters.from_dict(obj["queryParameters"])
+            if obj.get("queryParameters") is not None
+            else None
+        )
+        obj["fallbackParameters"] = (
+            BaseInjectionQueryParameters.from_dict(obj["fallbackParameters"])
+            if obj.get("fallbackParameters") is not None
             else None
         )
 

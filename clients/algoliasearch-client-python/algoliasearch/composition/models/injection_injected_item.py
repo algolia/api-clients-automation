@@ -18,13 +18,15 @@ else:
     from typing_extensions import Self
 
 
-from algoliasearch.composition.models.main_injection_query_parameters import (
-    MainInjectionQueryParameters,
-)
+from algoliasearch.composition.models.injected_item_metadata import InjectedItemMetadata
+from algoliasearch.composition.models.injected_item_source import InjectedItemSource
 
 _ALIASES = {
-    "index": "index",
-    "params": "params",
+    "key": "key",
+    "source": "source",
+    "position": "position",
+    "length": "length",
+    "metadata": "metadata",
 }
 
 
@@ -32,14 +34,17 @@ def _alias_generator(name: str) -> str:
     return _ALIASES.get(name, name)
 
 
-class CompositionSourceSearch(BaseModel):
+class InjectionInjectedItem(BaseModel):
     """
-    CompositionSourceSearch
+    InjectionInjectedItem
     """
 
-    index: str
-    """ Composition Main Index name. """
-    params: Optional[MainInjectionQueryParameters] = None
+    key: str
+    """ injected Item unique identifier. """
+    source: InjectedItemSource
+    position: int
+    length: int
+    metadata: Optional[InjectedItemMetadata] = None
 
     model_config = ConfigDict(
         strict=False,
@@ -56,7 +61,7 @@ class CompositionSourceSearch(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CompositionSourceSearch from a JSON string"""
+        """Create an instance of InjectionInjectedItem from a JSON string"""
         return cls.from_dict(loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -69,16 +74,21 @@ class CompositionSourceSearch(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CompositionSourceSearch from a dict"""
+        """Create an instance of InjectionInjectedItem from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        obj["params"] = (
-            MainInjectionQueryParameters.from_dict(obj["params"])
-            if obj.get("params") is not None
+        obj["source"] = (
+            InjectedItemSource.from_dict(obj["source"])
+            if obj.get("source") is not None
+            else None
+        )
+        obj["metadata"] = (
+            InjectedItemMetadata.from_dict(obj["metadata"])
+            if obj.get("metadata") is not None
             else None
         )
 

@@ -9,6 +9,7 @@ from algoliasearch.http.hosts import Host, HostsCollection
 from algoliasearch.search.client import SearchClient
 from algoliasearch.search.client import SearchClientSync
 from algoliasearch.search.config import SearchConfig
+from algoliasearch.search.config import TransformationOptions
 
 
 class TestSearchClient:
@@ -819,8 +820,30 @@ class TestSearchClient:
                 ),
             ]
         )
-        _config.set_transformation_region("us")
         _client = SearchClient.create_with_config(config=_config)
+        await _client.set_transformation_options(
+            TransformationOptions(
+                region="us",
+                hosts=HostsCollection(
+                    [
+                        Host(
+                            url="localhost"
+                            if environ.get("CI") == "true"
+                            else "host.docker.internal",
+                            scheme="http",
+                            port=6688,
+                        ),
+                        Host(
+                            url="localhost"
+                            if environ.get("CI") == "true"
+                            else "host.docker.internal",
+                            scheme="http",
+                            port=6689,
+                        ),
+                    ]
+                ),
+            )
+        )
         _req = await _client.partial_update_objects_with_transformation(
             index_name="cts_e2e_partialUpdateObjectsWithTransformation_python",
             objects=[
@@ -1019,8 +1042,23 @@ class TestSearchClient:
                 )
             ]
         )
-        _config.set_transformation_region("us")
         _client = SearchClient.create_with_config(config=_config)
+        await _client.set_transformation_options(
+            TransformationOptions(
+                region="us",
+                hosts=HostsCollection(
+                    [
+                        Host(
+                            url="localhost"
+                            if environ.get("CI") == "true"
+                            else "host.docker.internal",
+                            scheme="http",
+                            port=6690,
+                        )
+                    ]
+                ),
+            )
+        )
         _req = await _client.replace_all_objects_with_transformation(
             index_name="cts_e2e_replace_all_objects_with_transformation_python",
             objects=[
@@ -1243,8 +1281,30 @@ class TestSearchClient:
                 ),
             ]
         )
-        _config.set_transformation_region("us")
         _client = SearchClient.create_with_config(config=_config)
+        await _client.set_transformation_options(
+            TransformationOptions(
+                region="us",
+                hosts=HostsCollection(
+                    [
+                        Host(
+                            url="localhost"
+                            if environ.get("CI") == "true"
+                            else "host.docker.internal",
+                            scheme="http",
+                            port=6688,
+                        ),
+                        Host(
+                            url="localhost"
+                            if environ.get("CI") == "true"
+                            else "host.docker.internal",
+                            scheme="http",
+                            port=6689,
+                        ),
+                    ]
+                ),
+            )
+        )
         _req = await _client.save_objects_with_transformation(
             index_name="cts_e2e_saveObjectsWithTransformation_python",
             objects=[
@@ -2314,8 +2374,30 @@ class TestSearchClientSync:
                 ),
             ]
         )
-        _config.set_transformation_region("us")
         _client = SearchClientSync.create_with_config(config=_config)
+        _client.set_transformation_options(
+            TransformationOptions(
+                region="us",
+                hosts=HostsCollection(
+                    [
+                        Host(
+                            url="localhost"
+                            if environ.get("CI") == "true"
+                            else "host.docker.internal",
+                            scheme="http",
+                            port=6688,
+                        ),
+                        Host(
+                            url="localhost"
+                            if environ.get("CI") == "true"
+                            else "host.docker.internal",
+                            scheme="http",
+                            port=6689,
+                        ),
+                    ]
+                ),
+            )
+        )
         _req = _client.partial_update_objects_with_transformation(
             index_name="cts_e2e_partialUpdateObjectsWithTransformation_python",
             objects=[
@@ -2514,8 +2596,23 @@ class TestSearchClientSync:
                 )
             ]
         )
-        _config.set_transformation_region("us")
         _client = SearchClientSync.create_with_config(config=_config)
+        _client.set_transformation_options(
+            TransformationOptions(
+                region="us",
+                hosts=HostsCollection(
+                    [
+                        Host(
+                            url="localhost"
+                            if environ.get("CI") == "true"
+                            else "host.docker.internal",
+                            scheme="http",
+                            port=6690,
+                        )
+                    ]
+                ),
+            )
+        )
         _req = _client.replace_all_objects_with_transformation(
             index_name="cts_e2e_replace_all_objects_with_transformation_python",
             objects=[
@@ -2738,8 +2835,30 @@ class TestSearchClientSync:
                 ),
             ]
         )
-        _config.set_transformation_region("us")
         _client = SearchClientSync.create_with_config(config=_config)
+        _client.set_transformation_options(
+            TransformationOptions(
+                region="us",
+                hosts=HostsCollection(
+                    [
+                        Host(
+                            url="localhost"
+                            if environ.get("CI") == "true"
+                            else "host.docker.internal",
+                            scheme="http",
+                            port=6688,
+                        ),
+                        Host(
+                            url="localhost"
+                            if environ.get("CI") == "true"
+                            else "host.docker.internal",
+                            scheme="http",
+                            port=6689,
+                        ),
+                    ]
+                ),
+            )
+        )
         _req = _client.save_objects_with_transformation(
             index_name="cts_e2e_saveObjectsWithTransformation_python",
             objects=[

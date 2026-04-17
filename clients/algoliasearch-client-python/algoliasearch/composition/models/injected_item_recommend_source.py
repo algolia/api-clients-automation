@@ -18,13 +18,10 @@ else:
     from typing_extensions import Self
 
 
-from algoliasearch.composition.models.base_injection_query_parameters import (
-    BaseInjectionQueryParameters,
-)
+from algoliasearch.composition.models.recommend import Recommend
 
 _ALIASES = {
-    "index": "index",
-    "params": "params",
+    "recommend": "recommend",
 }
 
 
@@ -32,14 +29,12 @@ def _alias_generator(name: str) -> str:
     return _ALIASES.get(name, name)
 
 
-class Search(BaseModel):
+class InjectedItemRecommendSource(BaseModel):
     """
-    Search
+    Injected items will originate from a recommendation request performed on the specified index.
     """
 
-    index: str
-    """ Composition Index name. """
-    params: Optional[BaseInjectionQueryParameters] = None
+    recommend: Recommend
 
     model_config = ConfigDict(
         strict=False,
@@ -56,7 +51,7 @@ class Search(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Search from a JSON string"""
+        """Create an instance of InjectedItemRecommendSource from a JSON string"""
         return cls.from_dict(loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -69,16 +64,16 @@ class Search(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Search from a dict"""
+        """Create an instance of InjectedItemRecommendSource from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        obj["params"] = (
-            BaseInjectionQueryParameters.from_dict(obj["params"])
-            if obj.get("params") is not None
+        obj["recommend"] = (
+            Recommend.from_dict(obj["recommend"])
+            if obj.get("recommend") is not None
             else None
         )
 

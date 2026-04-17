@@ -18,10 +18,17 @@ else:
     from typing_extensions import Self
 
 
-from algoliasearch.composition.models.external import External
+from algoliasearch.composition.models.main_injection_query_parameters import (
+    MainInjectionQueryParameters,
+)
+from algoliasearch.composition.models.model import Model
 
 _ALIASES = {
-    "external": "external",
+    "index_name": "indexName",
+    "model": "model",
+    "threshold": "threshold",
+    "query_parameters": "queryParameters",
+    "fallback_parameters": "fallbackParameters",
 }
 
 
@@ -29,12 +36,18 @@ def _alias_generator(name: str) -> str:
     return _ALIASES.get(name, name)
 
 
-class ExternalSource(BaseModel):
+class MainRecommend(BaseModel):
     """
-    Injected items will originate from externally provided objectIDs (that must exist in the index) given at runtime in the run request payload.
+    MainRecommend
     """
 
-    external: External
+    index_name: str
+    """ Index to retrieve recommendations from. """
+    model: Model
+    threshold: int
+    """ Minimum score a recommendation must have to be included. """
+    query_parameters: Optional[MainInjectionQueryParameters] = None
+    fallback_parameters: Optional[MainInjectionQueryParameters] = None
 
     model_config = ConfigDict(
         strict=False,
@@ -51,7 +64,7 @@ class ExternalSource(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ExternalSource from a JSON string"""
+        """Create an instance of MainRecommend from a JSON string"""
         return cls.from_dict(loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -64,16 +77,22 @@ class ExternalSource(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ExternalSource from a dict"""
+        """Create an instance of MainRecommend from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        obj["external"] = (
-            External.from_dict(obj["external"])
-            if obj.get("external") is not None
+        obj["model"] = obj.get("model")
+        obj["queryParameters"] = (
+            MainInjectionQueryParameters.from_dict(obj["queryParameters"])
+            if obj.get("queryParameters") is not None
+            else None
+        )
+        obj["fallbackParameters"] = (
+            MainInjectionQueryParameters.from_dict(obj["fallbackParameters"])
+            if obj.get("fallbackParameters") is not None
             else None
         )
 

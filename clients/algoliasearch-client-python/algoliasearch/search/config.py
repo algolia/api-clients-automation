@@ -1,10 +1,34 @@
 from os import environ
 from typing import Optional
+from warnings import warn
 
 from algoliasearch import __version__
 from algoliasearch.http.base_config import BaseConfig
 from algoliasearch.http.hosts import CallType, Host, HostsCollection
 from algoliasearch.http.user_agent import UserAgent
+
+
+class TransformationOptions:
+    """Options for the transformation pipeline."""
+
+    def __init__(
+        self,
+        region: str,
+        *,
+        connect_timeout: Optional[int] = None,
+        read_timeout: Optional[int] = None,
+        write_timeout: Optional[int] = None,
+        hosts: Optional[HostsCollection] = None,
+    ):
+        if not region:
+            raise ValueError(
+                "`region` is required in `transformation_options`. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"
+            )
+        self.region = region
+        self.connect_timeout = connect_timeout
+        self.read_timeout = read_timeout
+        self.write_timeout = write_timeout
+        self.hosts = hosts
 
 
 class SearchConfig(BaseConfig):
@@ -45,7 +69,12 @@ class SearchConfig(BaseConfig):
         self.region = None
 
     def set_transformation_region(self, region: str = ""):
-        "This method is required to be called with the appropriate region of your Algolia application if you wish to leverage the *_with_transformation methods."
+        """@deprecated Does not work after client construction. Use client.set_transformation_options() instead. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"""
+        warn(
+            "set_transformation_region is deprecated and does not work after client construction. Use client.set_transformation_options() instead. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         self.region = region
 
     def set_default_hosts(self):
