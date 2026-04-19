@@ -106,7 +106,7 @@ __metadata:
   dependencies:
     "@eslint/json": "npm:1.2.0"
     "@openapitools/openapi-generator-cli": "npm:2.25.0"
-    "@redocly/cli": "npm:2.26.0"
+    "@redocly/cli": "npm:2.28.1"
     eslint: "npm:10.2.0"
     eslint-plugin-automation-custom: "npm:1.0.0"
     eslint-plugin-yml: "npm:3.1.2"
@@ -2326,17 +2326,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/cli@npm:2.26.0":
-  version: 2.26.0
-  resolution: "@redocly/cli@npm:2.26.0"
+"@redocly/cli@npm:2.28.1":
+  version: 2.28.1
+  resolution: "@redocly/cli@npm:2.28.1"
   dependencies:
     "@opentelemetry/exporter-trace-otlp-http": "npm:0.202.0"
     "@opentelemetry/resources": "npm:2.0.1"
     "@opentelemetry/sdk-trace-node": "npm:2.0.1"
     "@opentelemetry/semantic-conventions": "npm:1.34.0"
     "@redocly/cli-otel": "npm:0.1.2"
-    "@redocly/openapi-core": "npm:2.26.0"
-    "@redocly/respect-core": "npm:2.26.0"
+    "@redocly/openapi-core": "npm:2.28.1"
+    "@redocly/respect-core": "npm:2.28.1"
     abort-controller: "npm:^3.0.0"
     ajv: "npm:@redocly/ajv@8.18.0"
     ajv-formats: "npm:^3.0.1"
@@ -2362,7 +2362,7 @@ __metadata:
   bin:
     openapi: bin/cli.js
     redocly: bin/cli.js
-  checksum: 10/6e6fe155b7bce8b828ceb6aa61085e3c734a58b75cd72e701dc1783161a338199117265e36b4881b3127345bbf4d0b182de236fab6097ba220b49791fa7c2153
+  checksum: 10/3cbdca1701b0ed6bf52000c015cdfd692583c2fb8ac7205e632cd50f356bd6e72d67e29b957b64ed0cd645df617956a713c2dea1cbf8f720da2b772322ab4b9a
   languageName: node
   linkType: hard
 
@@ -2373,21 +2373,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/config@npm:^0.46.1":
-  version: 0.46.1
-  resolution: "@redocly/config@npm:0.46.1"
+"@redocly/config@npm:^0.48.0":
+  version: 0.48.0
+  resolution: "@redocly/config@npm:0.48.0"
   dependencies:
     json-schema-to-ts: "npm:2.7.2"
-  checksum: 10/fc6503f96e374ddb611936eb0397898a2c20fa41bf3043378adde1527931b13c9575b0a97b97aaa7ecf883a578e78624749af35a92361ea50e1dc1a9830e3860
+  checksum: 10/b7388933a2f8738ad62ac97a7cab01515a4267a53cf0ac54ba1ebe667a1005db5bdfbd9fe279a72d17ca13c45d950c2e5c8efea4cf13fd86fefb8bca2cc0aab2
   languageName: node
   linkType: hard
 
-"@redocly/openapi-core@npm:2.26.0":
-  version: 2.26.0
-  resolution: "@redocly/openapi-core@npm:2.26.0"
+"@redocly/openapi-core@npm:2.28.1":
+  version: 2.28.1
+  resolution: "@redocly/openapi-core@npm:2.28.1"
   dependencies:
     "@redocly/ajv": "npm:^8.18.0"
-    "@redocly/config": "npm:^0.46.1"
+    "@redocly/config": "npm:^0.48.0"
     ajv: "npm:@redocly/ajv@8.18.0"
     ajv-formats: "npm:^3.0.1"
     colorette: "npm:^1.2.0"
@@ -2396,7 +2396,7 @@ __metadata:
     picomatch: "npm:^4.0.4"
     pluralize: "npm:^8.0.0"
     yaml-ast-parser: "npm:0.0.43"
-  checksum: 10/d1dbfaa5d7de914e8a797fafdd0499e244311c12d7f75ecc7d272ba00b080cb728b0cb3f4bbe337e9a626bc09a4b939649c8ff4f1964648f129d45407e621f60
+  checksum: 10/c7ab9eda185fecb31d7cf1080609bcd18bbd6cc84259723a67084945c4f28303a3f9f762b38473bc8e60245d377b119f44b5f43029b7ea782180a12bf8c25f43
   languageName: node
   linkType: hard
 
@@ -2417,14 +2417,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/respect-core@npm:2.26.0":
-  version: 2.26.0
-  resolution: "@redocly/respect-core@npm:2.26.0"
+"@redocly/respect-core@npm:2.28.1":
+  version: 2.28.1
+  resolution: "@redocly/respect-core@npm:2.28.1"
   dependencies:
     "@faker-js/faker": "npm:^7.6.0"
     "@noble/hashes": "npm:^1.8.0"
     "@redocly/ajv": "npm:^8.18.0"
-    "@redocly/openapi-core": "npm:2.26.0"
+    "@redocly/openapi-core": "npm:2.28.1"
     ajv: "npm:@redocly/ajv@8.18.0"
     better-ajv-errors: "npm:^1.2.0"
     colorette: "npm:^2.0.20"
@@ -2433,7 +2433,7 @@ __metadata:
     openapi-sampler: "npm:^1.7.1"
     outdent: "npm:^0.8.0"
     picomatch: "npm:^4.0.4"
-  checksum: 10/d39677075bf1d8988af77cee62ae38192b8aa4d9a3d389fa55c40a8725e295d2bb943eebd872a186f45f6f97e00c5577be68fe0f637c1f45d6c98891dee1044d
+  checksum: 10/f0197f9fccaa3fc601395b7927d9253d326d4f77bb32fa979105dc319c719795d721f97ba8e37e4f97fb508ff6bbba992cf1cbb47cbb5099fd41f48a33ccac6c
   languageName: node
   linkType: hard
 
