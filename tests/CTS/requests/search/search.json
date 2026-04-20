@@ -1134,8 +1134,8 @@
     "parameters": {
       "requests": [
         {
-          "indexName": "cts_e2e_browse",
-          "query": "drama",
+          "indexName": "cts_e2e_query_categorization",
+          "query": "sofa",
           "extensions": {
             "queryCategorization": {
               "enableCategoriesRetrieval": true,
@@ -1151,8 +1151,8 @@
       "body": {
         "requests": [
           {
-            "indexName": "cts_e2e_browse",
-            "query": "drama",
+            "indexName": "cts_e2e_query_categorization",
+            "query": "sofa",
             "extensions": {
               "queryCategorization": {
                 "enableCategoriesRetrieval": true,
@@ -1168,11 +1168,24 @@
       "body": {
         "results": [
           {
-            "page": 0,
-            "hitsPerPage": 20,
-            "exhaustiveTypo": true,
-            "query": "drama",
-            "index": "cts_e2e_browse"
+            "index": "cts_e2e_query_categorization",
+            "query": "sofa",
+            "extensions": {
+              "queryCategorization": {
+                "normalizedQuery": "sofa",
+                "categories": [
+                  {
+                    "hierarchyPath": [
+                      {
+                        "facetName": "hierarchicalCategories.lvl0",
+                        "facetValue": "Furniture",
+                        "depth": 0
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
         ]
       }
