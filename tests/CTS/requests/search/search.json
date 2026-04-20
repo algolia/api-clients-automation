@@ -1173,17 +1173,7 @@
             "extensions": {
               "queryCategorization": {
                 "normalizedQuery": "sofa",
-                "categories": [
-                  {
-                    "hierarchyPath": [
-                      {
-                        "facetName": "hierarchicalCategories.lvl0",
-                        "facetValue": "Furniture",
-                        "depth": 0
-                      }
-                    ]
-                  }
-                ]
+                "categories": [{}]
               }
             }
           }
