@@ -400,7 +400,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
                 foreach (array_slice($responses, $offset, $waitBatchSize) as $response) {
                     $retry = 0;
 
-                    while ($retry < 50) {
+                    while ($retry < 100) {
                         try {
                             $this->getEvent($response['runID'], $response['eventID']);
 
@@ -418,7 +418,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
                     }
 
                     if (false === $ok) {
-                        throw new ExceededRetriesException('Maximum number of retries (50) exceeded.');
+                        throw new ExceededRetriesException('The client stopped waiting after 100 retries for the ingestion event. This does not mean the indexing operation failed; it may still complete later.');
                     }
                 }
                 $offset = $offset + $waitBatchSize;
