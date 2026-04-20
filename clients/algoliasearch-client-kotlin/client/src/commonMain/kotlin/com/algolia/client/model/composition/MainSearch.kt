@@ -10,13 +10,13 @@ import kotlinx.serialization.json.*
 /**
  * MainSearch
  *
- * @param index Targeted index name.
+ * @param index Index to retrieve search results from.
  * @param params
  */
 @Serializable
 public data class MainSearch(
 
-  /** Targeted index name. */
+  /** Index to retrieve search results from. */
   @SerialName(value = "index") val index: String,
   @SerialName(value = "params") val params: MainInjectionQueryParameters? = null,
 ) {}

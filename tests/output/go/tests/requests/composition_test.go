@@ -774,6 +774,94 @@ func TestComposition_PutComposition(t *testing.T) {
 	})
 	t.Run("putComposition", func(t *testing.T) {
 		_, err := client.PutComposition(client.NewApiPutCompositionRequest(
+			"my-recommend-compo",
+			composition.NewEmptyComposition().
+				SetObjectID("my-recommend-compo").
+				SetName("my recommend composition").
+				SetBehavior(composition.CompositionInjectionBehaviorAsCompositionBehavior(
+					composition.NewEmptyCompositionInjectionBehavior().SetInjection(
+						composition.NewEmptyInjection().SetMain(
+							composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainRecommendSourceAsInjectionMainSource(
+								composition.NewEmptyInjectionMainRecommendSource().SetRecommend(
+									composition.NewEmptyMainRecommend().
+										SetIndexName("products").
+										SetModel(composition.Model("trending-items")).
+										SetThreshold(50),
+								),
+							))).SetInjectedItems(
+							[]composition.InjectionInjectedItem{
+								*composition.NewEmptyInjectionInjectedItem().SetKey("injected-recommend-key").SetSource(composition.InjectedItemRecommendSourceAsInjectedItemSource(
+									composition.NewEmptyInjectedItemRecommendSource().SetRecommend(
+										composition.NewEmptyRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(30).SetFallbackParameters(
+											composition.NewEmptyBaseInjectionQueryParameters().SetFilters("category:electronics"))))).SetPosition(3).SetLength(2),
+							}),
+					))),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/compositions/my-recommend-compo", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"objectID":"my-recommend-compo","name":"my recommend composition","behavior":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}},"injectedItems":[{"key":"injected-recommend-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":30,"fallbackParameters":{"filters":"category:electronics"}}},"position":3,"length":2}]}}}`)
+	})
+	t.Run("putComposition", func(t *testing.T) {
+		_, err := client.PutComposition(client.NewApiPutCompositionRequest(
+			"my-search-and-recommend-compo",
+			composition.NewEmptyComposition().
+				SetObjectID("my-search-and-recommend-compo").
+				SetName("my search main with recommend injection").
+				SetBehavior(composition.CompositionInjectionBehaviorAsCompositionBehavior(
+					composition.NewEmptyCompositionInjectionBehavior().SetInjection(
+						composition.NewEmptyInjection().SetMain(
+							composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
+								composition.NewEmptyInjectionMainSearchSource().SetSearch(
+									composition.NewEmptyMainSearch().SetIndex("products").SetParams(
+										composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:nike")))))).SetInjectedItems(
+							[]composition.InjectionInjectedItem{
+								*composition.NewEmptyInjectionInjectedItem().SetKey("injected-recommend-key").SetSource(composition.InjectedItemRecommendSourceAsInjectedItemSource(
+									composition.NewEmptyInjectedItemRecommendSource().SetRecommend(
+										composition.NewEmptyRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(40)))).SetPosition(1).SetLength(3),
+							}),
+					))),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/compositions/my-search-and-recommend-compo", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"objectID":"my-search-and-recommend-compo","name":"my search main with recommend injection","behavior":{"injection":{"main":{"source":{"search":{"index":"products","params":{"filters":"brand:nike"}}}},"injectedItems":[{"key":"injected-recommend-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":40}},"position":1,"length":3}]}}}`)
+	})
+	t.Run("putComposition", func(t *testing.T) {
+		_, err := client.PutComposition(client.NewApiPutCompositionRequest(
+			"my-multifeed-recommend-compo",
+			composition.NewEmptyComposition().
+				SetObjectID("my-multifeed-recommend-compo").
+				SetName("multifeed with recommend main").
+				SetBehavior(composition.CompositionMultifeedBehaviorAsCompositionBehavior(
+					composition.NewEmptyCompositionMultifeedBehavior().SetMultifeed(
+						composition.NewEmptyMultifeed().
+							SetFeeds(map[string]composition.FeedInjection{"trending": *composition.NewEmptyFeedInjection().SetInjection(
+								composition.NewEmptyInjection().SetMain(
+									composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainRecommendSourceAsInjectionMainSource(
+										composition.NewEmptyInjectionMainRecommendSource().SetRecommend(
+											composition.NewEmptyMainRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(50))))))}).
+							SetFeedsOrder(
+								[]string{"trending"}),
+					),
+				)),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/compositions/my-multifeed-recommend-compo", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"objectID":"my-multifeed-recommend-compo","name":"multifeed with recommend main","behavior":{"multifeed":{"feeds":{"trending":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}}}}},"feedsOrder":["trending"]}}}`)
+	})
+	t.Run("putComposition", func(t *testing.T) {
+		_, err := client.PutComposition(client.NewApiPutCompositionRequest(
 			"my-compo",
 			composition.NewEmptyComposition().
 				SetObjectID("my-compo").
@@ -1047,6 +1135,88 @@ func TestComposition_SaveRules(t *testing.T) {
 
 		jsonassert.New(t).
 			Assertf(*echo.Body, "%s", `{"requests":[{"action":"upsert","body":{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-external-group-from-rule-key","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}}]}`)
+	})
+	t.Run("saveRules", func(t *testing.T) {
+		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
+			"rule-with-recommend",
+			composition.NewEmptyCompositionRulesBatchParams().SetRequests(
+				[]composition.RulesMultipleBatchRequest{
+					*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
+						composition.NewEmptyCompositionRule().SetObjectID("rule-with-recommend").SetConditions(
+							[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("is")).SetPattern("trending")}).SetConsequence(
+							composition.NewEmptyCompositionRuleConsequence().SetBehavior(composition.CompositionInjectionBehaviorAsCompositionBehavior(
+								composition.NewEmptyCompositionInjectionBehavior().SetInjection(
+									composition.NewEmptyInjection().SetMain(
+										composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainRecommendSourceAsInjectionMainSource(
+											composition.NewEmptyInjectionMainRecommendSource().SetRecommend(
+												composition.NewEmptyMainRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(50))))).SetInjectedItems(
+										[]composition.InjectionInjectedItem{*composition.NewEmptyInjectionInjectedItem().SetKey("injected-recommend-from-rule-key").SetSource(composition.InjectedItemRecommendSourceAsInjectedItemSource(
+											composition.NewEmptyInjectedItemRecommendSource().SetRecommend(
+												composition.NewEmptyRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(30).SetFallbackParameters(
+													composition.NewEmptyBaseInjectionQueryParameters().SetFilters("category:electronics"))))).SetPosition(2).SetLength(3)}))))))),
+				}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/compositions/rule-with-recommend/rules/batch", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"requests":[{"action":"upsert","body":{"objectID":"rule-with-recommend","conditions":[{"anchoring":"is","pattern":"trending"}],"consequence":{"behavior":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}},"injectedItems":[{"key":"injected-recommend-from-rule-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":30,"fallbackParameters":{"filters":"category:electronics"}}},"position":2,"length":3}]}}}}}]}`)
+	})
+	t.Run("saveRules", func(t *testing.T) {
+		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
+			"rule-with-search-and-recommend",
+			composition.NewEmptyCompositionRulesBatchParams().SetRequests(
+				[]composition.RulesMultipleBatchRequest{
+					*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
+						composition.NewEmptyCompositionRule().SetObjectID("rule-with-search-and-recommend").SetConditions(
+							[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("shoes")}).SetConsequence(
+							composition.NewEmptyCompositionRuleConsequence().SetBehavior(composition.CompositionInjectionBehaviorAsCompositionBehavior(
+								composition.NewEmptyCompositionInjectionBehavior().SetInjection(
+									composition.NewEmptyInjection().SetMain(
+										composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
+											composition.NewEmptyInjectionMainSearchSource().SetSearch(
+												composition.NewEmptyMainSearch().SetIndex("products").SetParams(
+													composition.NewEmptyMainInjectionQueryParameters().SetFilters("category:shoes")))))).SetInjectedItems(
+										[]composition.InjectionInjectedItem{*composition.NewEmptyInjectionInjectedItem().SetKey("injected-recommend-from-rule-key").SetSource(composition.InjectedItemRecommendSourceAsInjectedItemSource(
+											composition.NewEmptyInjectedItemRecommendSource().SetRecommend(
+												composition.NewEmptyRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(40)))).SetPosition(1).SetLength(2)}))))))),
+				}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/compositions/rule-with-search-and-recommend/rules/batch", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"requests":[{"action":"upsert","body":{"objectID":"rule-with-search-and-recommend","conditions":[{"anchoring":"contains","pattern":"shoes"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"products","params":{"filters":"category:shoes"}}}},"injectedItems":[{"key":"injected-recommend-from-rule-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":40}},"position":1,"length":2}]}}}}}]}`)
+	})
+	t.Run("saveRules", func(t *testing.T) {
+		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
+			"rule-with-multifeed-recommend",
+			composition.NewEmptyCompositionRulesBatchParams().SetRequests(
+				[]composition.RulesMultipleBatchRequest{
+					*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
+						composition.NewEmptyCompositionRule().SetObjectID("rule-with-multifeed-recommend").SetConditions(
+							[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("is")).SetPattern("trending")}).SetConsequence(
+							composition.NewEmptyCompositionRuleConsequence().SetBehavior(composition.CompositionMultifeedBehaviorAsCompositionBehavior(
+								composition.NewEmptyCompositionMultifeedBehavior().SetMultifeed(
+									composition.NewEmptyMultifeed().SetFeeds(map[string]composition.FeedInjection{"trending": *composition.NewEmptyFeedInjection().SetInjection(
+										composition.NewEmptyInjection().SetMain(
+											composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainRecommendSourceAsInjectionMainSource(
+												composition.NewEmptyInjectionMainRecommendSource().SetRecommend(
+													composition.NewEmptyMainRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(50))))))}).SetFeedsOrder(
+										[]string{"trending"}))))))),
+				}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/compositions/rule-with-multifeed-recommend/rules/batch", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"requests":[{"action":"upsert","body":{"objectID":"rule-with-multifeed-recommend","conditions":[{"anchoring":"is","pattern":"trending"}],"consequence":{"behavior":{"multifeed":{"feeds":{"trending":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}}}}},"feedsOrder":["trending"]}}}}}]}`)
 	})
 	t.Run("saveRules", func(t *testing.T) {
 		_, err := client.SaveRules(client.NewApiSaveRulesRequest(

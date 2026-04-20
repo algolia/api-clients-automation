@@ -838,6 +838,148 @@ class TestCompositionClient < Test::Unit::TestCase
   # putComposition
   def test_put_composition5
     req = @client.put_composition_with_http_info(
+      "my-recommend-compo",
+      Algolia::Composition::Composition.new(
+        algolia_object_id: "my-recommend-compo",
+        name: "my recommend composition",
+        behavior: Algolia::Composition::CompositionInjectionBehavior.new(
+          injection: Algolia::Composition::Injection.new(
+            main: Algolia::Composition::InjectionMain.new(
+              source: Algolia::Composition::InjectionMainRecommendSource.new(
+                recommend: Algolia::Composition::MainRecommend.new(
+                  index_name: "products",
+                  model: "trending-items",
+                  threshold: 50
+                )
+              )
+            ),
+            injected_items: [
+              Algolia::Composition::InjectionInjectedItem.new(
+                key: "injected-recommend-key",
+                source: Algolia::Composition::InjectedItemRecommendSource.new(
+                  recommend: Algolia::Composition::Recommend.new(
+                    index_name: "products",
+                    model: "trending-items",
+                    threshold: 30,
+                    fallback_parameters: Algolia::Composition::BaseInjectionQueryParameters.new(
+                      filters: "category:electronics"
+                    )
+                  )
+                ),
+                position: 3,
+                length: 2
+              )
+            ]
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/compositions/my-recommend-compo", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"my-recommend-compo\",\"name\":\"my recommend composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}},\"injectedItems\":[{\"key\":\"injected-recommend-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":30,\"fallbackParameters\":{\"filters\":\"category:electronics\"}}},\"position\":3,\"length\":2}]}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # putComposition
+  def test_put_composition6
+    req = @client.put_composition_with_http_info(
+      "my-search-and-recommend-compo",
+      Algolia::Composition::Composition.new(
+        algolia_object_id: "my-search-and-recommend-compo",
+        name: "my search main with recommend injection",
+        behavior: Algolia::Composition::CompositionInjectionBehavior.new(
+          injection: Algolia::Composition::Injection.new(
+            main: Algolia::Composition::InjectionMain.new(
+              source: Algolia::Composition::InjectionMainSearchSource.new(
+                search: Algolia::Composition::MainSearch.new(
+                  index: "products",
+                  params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:nike")
+                )
+              )
+            ),
+            injected_items: [
+              Algolia::Composition::InjectionInjectedItem.new(
+                key: "injected-recommend-key",
+                source: Algolia::Composition::InjectedItemRecommendSource.new(
+                  recommend: Algolia::Composition::Recommend.new(
+                    index_name: "products",
+                    model: "trending-items",
+                    threshold: 40
+                  )
+                ),
+                position: 1,
+                length: 3
+              )
+            ]
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/compositions/my-search-and-recommend-compo", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"my-search-and-recommend-compo\",\"name\":\"my search main with recommend injection\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"filters\":\"brand:nike\"}}}},\"injectedItems\":[{\"key\":\"injected-recommend-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":40}},\"position\":1,\"length\":3}]}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # putComposition
+  def test_put_composition7
+    req = @client.put_composition_with_http_info(
+      "my-multifeed-recommend-compo",
+      Algolia::Composition::Composition.new(
+        algolia_object_id: "my-multifeed-recommend-compo",
+        name: "multifeed with recommend main",
+        behavior: Algolia::Composition::CompositionMultifeedBehavior.new(
+          multifeed: Algolia::Composition::Multifeed.new(
+            feeds: {
+              trending: Algolia::Composition::FeedInjection.new(
+                injection: Algolia::Composition::Injection.new(
+                  main: Algolia::Composition::InjectionMain.new(
+                    source: Algolia::Composition::InjectionMainRecommendSource.new(
+                      recommend: Algolia::Composition::MainRecommend.new(
+                        index_name: "products",
+                        model: "trending-items",
+                        threshold: 50
+                      )
+                    )
+                  )
+                )
+              )
+            },
+            feeds_order: ["trending"]
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/compositions/my-multifeed-recommend-compo", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"my-multifeed-recommend-compo\",\"name\":\"multifeed with recommend main\",\"behavior\":{\"multifeed\":{\"feeds\":{\"trending\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}}}}},\"feedsOrder\":[\"trending\"]}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # putComposition
+  def test_put_composition8
+    req = @client.put_composition_with_http_info(
       "my-compo",
       Algolia::Composition::Composition.new(
         algolia_object_id: "my-compo",
@@ -1309,6 +1451,175 @@ class TestCompositionClient < Test::Unit::TestCase
 
   # saveRules
   def test_save_rules3
+    req = @client.save_rules_with_http_info(
+      "rule-with-recommend",
+      Algolia::Composition::CompositionRulesBatchParams.new(
+        requests: [
+          Algolia::Composition::RulesMultipleBatchRequest.new(
+            action: "upsert",
+            body: Algolia::Composition::CompositionRule.new(
+              algolia_object_id: "rule-with-recommend",
+              conditions: [Algolia::Composition::Condition.new(anchoring: "is", pattern: "trending")],
+              consequence: Algolia::Composition::CompositionRuleConsequence.new(
+                behavior: Algolia::Composition::CompositionInjectionBehavior.new(
+                  injection: Algolia::Composition::Injection.new(
+                    main: Algolia::Composition::InjectionMain.new(
+                      source: Algolia::Composition::InjectionMainRecommendSource.new(
+                        recommend: Algolia::Composition::MainRecommend.new(
+                          index_name: "products",
+                          model: "trending-items",
+                          threshold: 50
+                        )
+                      )
+                    ),
+                    injected_items: [
+                      Algolia::Composition::InjectionInjectedItem.new(
+                        key: "injected-recommend-from-rule-key",
+                        source: Algolia::Composition::InjectedItemRecommendSource.new(
+                          recommend: Algolia::Composition::Recommend.new(
+                            index_name: "products",
+                            model: "trending-items",
+                            threshold: 30,
+                            fallback_parameters: Algolia::Composition::BaseInjectionQueryParameters.new(
+                              filters: "category:electronics"
+                            )
+                          )
+                        ),
+                        position: 2,
+                        length: 3
+                      )
+                    ]
+                  )
+                )
+              )
+            )
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/compositions/rule-with-recommend/rules/batch", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-recommend\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"trending\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}},\"injectedItems\":[{\"key\":\"injected-recommend-from-rule-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":30,\"fallbackParameters\":{\"filters\":\"category:electronics\"}}},\"position\":2,\"length\":3}]}}}}}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # saveRules
+  def test_save_rules4
+    req = @client.save_rules_with_http_info(
+      "rule-with-search-and-recommend",
+      Algolia::Composition::CompositionRulesBatchParams.new(
+        requests: [
+          Algolia::Composition::RulesMultipleBatchRequest.new(
+            action: "upsert",
+            body: Algolia::Composition::CompositionRule.new(
+              algolia_object_id: "rule-with-search-and-recommend",
+              conditions: [Algolia::Composition::Condition.new(anchoring: "contains", pattern: "shoes")],
+              consequence: Algolia::Composition::CompositionRuleConsequence.new(
+                behavior: Algolia::Composition::CompositionInjectionBehavior.new(
+                  injection: Algolia::Composition::Injection.new(
+                    main: Algolia::Composition::InjectionMain.new(
+                      source: Algolia::Composition::InjectionMainSearchSource.new(
+                        search: Algolia::Composition::MainSearch.new(
+                          index: "products",
+                          params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "category:shoes")
+                        )
+                      )
+                    ),
+                    injected_items: [
+                      Algolia::Composition::InjectionInjectedItem.new(
+                        key: "injected-recommend-from-rule-key",
+                        source: Algolia::Composition::InjectedItemRecommendSource.new(
+                          recommend: Algolia::Composition::Recommend.new(
+                            index_name: "products",
+                            model: "trending-items",
+                            threshold: 40
+                          )
+                        ),
+                        position: 1,
+                        length: 2
+                      )
+                    ]
+                  )
+                )
+              )
+            )
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/compositions/rule-with-search-and-recommend/rules/batch", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-search-and-recommend\",\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"shoes\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"filters\":\"category:shoes\"}}}},\"injectedItems\":[{\"key\":\"injected-recommend-from-rule-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":40}},\"position\":1,\"length\":2}]}}}}}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # saveRules
+  def test_save_rules5
+    req = @client.save_rules_with_http_info(
+      "rule-with-multifeed-recommend",
+      Algolia::Composition::CompositionRulesBatchParams.new(
+        requests: [
+          Algolia::Composition::RulesMultipleBatchRequest.new(
+            action: "upsert",
+            body: Algolia::Composition::CompositionRule.new(
+              algolia_object_id: "rule-with-multifeed-recommend",
+              conditions: [Algolia::Composition::Condition.new(anchoring: "is", pattern: "trending")],
+              consequence: Algolia::Composition::CompositionRuleConsequence.new(
+                behavior: Algolia::Composition::CompositionMultifeedBehavior.new(
+                  multifeed: Algolia::Composition::Multifeed.new(
+                    feeds: {
+                      trending: Algolia::Composition::FeedInjection.new(
+                        injection: Algolia::Composition::Injection.new(
+                          main: Algolia::Composition::InjectionMain.new(
+                            source: Algolia::Composition::InjectionMainRecommendSource.new(
+                              recommend: Algolia::Composition::MainRecommend.new(
+                                index_name: "products",
+                                model: "trending-items",
+                                threshold: 50
+                              )
+                            )
+                          )
+                        )
+                      )
+                    },
+                    feeds_order: ["trending"]
+                  )
+                )
+              )
+            )
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/compositions/rule-with-multifeed-recommend/rules/batch", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-multifeed-recommend\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"trending\"}],\"consequence\":{\"behavior\":{\"multifeed\":{\"feeds\":{\"trending\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}}}}},\"feedsOrder\":[\"trending\"]}}}}}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # saveRules
+  def test_save_rules6
     req = @client.save_rules_with_http_info(
       "my-compo",
       Algolia::Composition::CompositionRulesBatchParams.new(

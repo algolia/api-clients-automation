@@ -10,11 +10,22 @@ import kotlinx.serialization.json.*
 /**
  * MainRecommend
  *
- * @param index Targeted index name.
+ * @param indexName Index to retrieve recommendations from.
+ * @param model
+ * @param threshold Minimum score a recommendation must have to be included.
+ * @param queryParameters
+ * @param fallbackParameters
  */
 @Serializable
 public data class MainRecommend(
 
-  /** Targeted index name. */
-  @SerialName(value = "index") val index: String
+  /** Index to retrieve recommendations from. */
+  @SerialName(value = "indexName") val indexName: String,
+  @SerialName(value = "model") val model: Model,
+
+  /** Minimum score a recommendation must have to be included. */
+  @SerialName(value = "threshold") val threshold: Int,
+  @SerialName(value = "queryParameters") val queryParameters: MainInjectionQueryParameters? = null,
+  @SerialName(value = "fallbackParameters")
+  val fallbackParameters: MainInjectionQueryParameters? = null,
 ) {}

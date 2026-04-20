@@ -1175,6 +1175,148 @@ func SnippetForPutCompositionOfComposition5() {
 
 	// Call the API
 	response, err := client.PutComposition(client.NewApiPutCompositionRequest(
+		"my-recommend-compo",
+		composition.NewEmptyComposition().
+			SetObjectID("my-recommend-compo").
+			SetName("my recommend composition").
+			SetBehavior(composition.CompositionInjectionBehaviorAsCompositionBehavior(
+				composition.NewEmptyCompositionInjectionBehavior().SetInjection(
+					composition.NewEmptyInjection().SetMain(
+						composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainRecommendSourceAsInjectionMainSource(
+							composition.NewEmptyInjectionMainRecommendSource().SetRecommend(
+								composition.NewEmptyMainRecommend().
+									SetIndexName("<YOUR_INDEX_NAME>").
+									SetModel(composition.Model("trending-items")).
+									SetThreshold(50),
+							),
+						))).SetInjectedItems(
+						[]composition.InjectionInjectedItem{
+							*composition.NewEmptyInjectionInjectedItem().SetKey("injected-recommend-key").SetSource(composition.InjectedItemRecommendSourceAsInjectedItemSource(
+								composition.NewEmptyInjectedItemRecommendSource().SetRecommend(
+									composition.NewEmptyRecommend().SetIndexName("<YOUR_INDEX_NAME>").SetModel(composition.Model("trending-items")).SetThreshold(30).SetFallbackParameters(
+										composition.NewEmptyBaseInjectionQueryParameters().SetFilters("category:electronics"))))).SetPosition(3).SetLength(2),
+						}),
+				))),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForPutCompositionOfComposition6() {
+	/*
+	   Snippet for the putComposition method.
+
+	   putComposition
+	*/
+
+	// >SEPARATOR putComposition putComposition
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.PutComposition(client.NewApiPutCompositionRequest(
+		"my-search-and-recommend-compo",
+		composition.NewEmptyComposition().
+			SetObjectID("my-search-and-recommend-compo").
+			SetName("my search main with recommend injection").
+			SetBehavior(composition.CompositionInjectionBehaviorAsCompositionBehavior(
+				composition.NewEmptyCompositionInjectionBehavior().SetInjection(
+					composition.NewEmptyInjection().SetMain(
+						composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
+							composition.NewEmptyInjectionMainSearchSource().SetSearch(
+								composition.NewEmptyMainSearch().SetIndex("products").SetParams(
+									composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:nike")))))).SetInjectedItems(
+						[]composition.InjectionInjectedItem{
+							*composition.NewEmptyInjectionInjectedItem().SetKey("injected-recommend-key").SetSource(composition.InjectedItemRecommendSourceAsInjectedItemSource(
+								composition.NewEmptyInjectedItemRecommendSource().SetRecommend(
+									composition.NewEmptyRecommend().SetIndexName("<YOUR_INDEX_NAME>").SetModel(composition.Model("trending-items")).SetThreshold(40)))).SetPosition(1).SetLength(3),
+						}),
+				))),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForPutCompositionOfComposition7() {
+	/*
+	   Snippet for the putComposition method.
+
+	   putComposition
+	*/
+
+	// >SEPARATOR putComposition putComposition
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.PutComposition(client.NewApiPutCompositionRequest(
+		"my-multifeed-recommend-compo",
+		composition.NewEmptyComposition().
+			SetObjectID("my-multifeed-recommend-compo").
+			SetName("multifeed with recommend main").
+			SetBehavior(composition.CompositionMultifeedBehaviorAsCompositionBehavior(
+				composition.NewEmptyCompositionMultifeedBehavior().SetMultifeed(
+					composition.NewEmptyMultifeed().
+						SetFeeds(map[string]composition.FeedInjection{"trending": *composition.NewEmptyFeedInjection().SetInjection(
+							composition.NewEmptyInjection().SetMain(
+								composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainRecommendSourceAsInjectionMainSource(
+									composition.NewEmptyInjectionMainRecommendSource().SetRecommend(
+										composition.NewEmptyMainRecommend().SetIndexName("<YOUR_INDEX_NAME>").SetModel(composition.Model("trending-items")).SetThreshold(50))))))}).
+						SetFeedsOrder(
+							[]string{"trending"}),
+				),
+			)),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForPutCompositionOfComposition8() {
+	/*
+	   Snippet for the putComposition method.
+
+	   putComposition
+	*/
+
+	// >SEPARATOR putComposition putComposition
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.PutComposition(client.NewApiPutCompositionRequest(
 		"my-compo",
 		composition.NewEmptyComposition().
 			SetObjectID("my-compo").
@@ -1551,6 +1693,142 @@ func SnippetForSaveRulesOfComposition2() {
 }
 
 func SnippetForSaveRulesOfComposition3() {
+	/*
+	   Snippet for the saveRules method.
+
+	   saveRules
+	*/
+
+	// >SEPARATOR saveRules saveRules
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRules(client.NewApiSaveRulesRequest(
+		"rule-with-recommend",
+		composition.NewEmptyCompositionRulesBatchParams().SetRequests(
+			[]composition.RulesMultipleBatchRequest{
+				*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
+					composition.NewEmptyCompositionRule().SetObjectID("rule-with-recommend").SetConditions(
+						[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("is")).SetPattern("trending")}).SetConsequence(
+						composition.NewEmptyCompositionRuleConsequence().SetBehavior(composition.CompositionInjectionBehaviorAsCompositionBehavior(
+							composition.NewEmptyCompositionInjectionBehavior().SetInjection(
+								composition.NewEmptyInjection().SetMain(
+									composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainRecommendSourceAsInjectionMainSource(
+										composition.NewEmptyInjectionMainRecommendSource().SetRecommend(
+											composition.NewEmptyMainRecommend().SetIndexName("<YOUR_INDEX_NAME>").SetModel(composition.Model("trending-items")).SetThreshold(50))))).SetInjectedItems(
+									[]composition.InjectionInjectedItem{*composition.NewEmptyInjectionInjectedItem().SetKey("injected-recommend-from-rule-key").SetSource(composition.InjectedItemRecommendSourceAsInjectedItemSource(
+										composition.NewEmptyInjectedItemRecommendSource().SetRecommend(
+											composition.NewEmptyRecommend().SetIndexName("<YOUR_INDEX_NAME>").SetModel(composition.Model("trending-items")).SetThreshold(30).SetFallbackParameters(
+												composition.NewEmptyBaseInjectionQueryParameters().SetFilters("category:electronics"))))).SetPosition(2).SetLength(3)}))))))),
+			}),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForSaveRulesOfComposition4() {
+	/*
+	   Snippet for the saveRules method.
+
+	   saveRules
+	*/
+
+	// >SEPARATOR saveRules saveRules
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRules(client.NewApiSaveRulesRequest(
+		"rule-with-search-and-recommend",
+		composition.NewEmptyCompositionRulesBatchParams().SetRequests(
+			[]composition.RulesMultipleBatchRequest{
+				*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
+					composition.NewEmptyCompositionRule().SetObjectID("rule-with-search-and-recommend").SetConditions(
+						[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("shoes")}).SetConsequence(
+						composition.NewEmptyCompositionRuleConsequence().SetBehavior(composition.CompositionInjectionBehaviorAsCompositionBehavior(
+							composition.NewEmptyCompositionInjectionBehavior().SetInjection(
+								composition.NewEmptyInjection().SetMain(
+									composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
+										composition.NewEmptyInjectionMainSearchSource().SetSearch(
+											composition.NewEmptyMainSearch().SetIndex("products").SetParams(
+												composition.NewEmptyMainInjectionQueryParameters().SetFilters("category:shoes")))))).SetInjectedItems(
+									[]composition.InjectionInjectedItem{*composition.NewEmptyInjectionInjectedItem().SetKey("injected-recommend-from-rule-key").SetSource(composition.InjectedItemRecommendSourceAsInjectedItemSource(
+										composition.NewEmptyInjectedItemRecommendSource().SetRecommend(
+											composition.NewEmptyRecommend().SetIndexName("<YOUR_INDEX_NAME>").SetModel(composition.Model("trending-items")).SetThreshold(40)))).SetPosition(1).SetLength(2)}))))))),
+			}),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForSaveRulesOfComposition5() {
+	/*
+	   Snippet for the saveRules method.
+
+	   saveRules
+	*/
+
+	// >SEPARATOR saveRules saveRules
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRules(client.NewApiSaveRulesRequest(
+		"rule-with-multifeed-recommend",
+		composition.NewEmptyCompositionRulesBatchParams().SetRequests(
+			[]composition.RulesMultipleBatchRequest{
+				*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
+					composition.NewEmptyCompositionRule().SetObjectID("rule-with-multifeed-recommend").SetConditions(
+						[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("is")).SetPattern("trending")}).SetConsequence(
+						composition.NewEmptyCompositionRuleConsequence().SetBehavior(composition.CompositionMultifeedBehaviorAsCompositionBehavior(
+							composition.NewEmptyCompositionMultifeedBehavior().SetMultifeed(
+								composition.NewEmptyMultifeed().SetFeeds(map[string]composition.FeedInjection{"trending": *composition.NewEmptyFeedInjection().SetInjection(
+									composition.NewEmptyInjection().SetMain(
+										composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainRecommendSourceAsInjectionMainSource(
+											composition.NewEmptyInjectionMainRecommendSource().SetRecommend(
+												composition.NewEmptyMainRecommend().SetIndexName("<YOUR_INDEX_NAME>").SetModel(composition.Model("trending-items")).SetThreshold(50))))))}).SetFeedsOrder(
+									[]string{"trending"}))))))),
+			}),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForSaveRulesOfComposition6() {
 	/*
 	   Snippet for the saveRules method.
 

@@ -972,6 +972,151 @@ def snippet_for_put_composition5
 
   # Call the API
   response = client.put_composition(
+    "my-recommend-compo",
+    Algolia::Composition::Composition.new(
+      algolia_object_id: "my-recommend-compo",
+      name: "my recommend composition",
+      behavior: Algolia::Composition::CompositionInjectionBehavior.new(
+        injection: Algolia::Composition::Injection.new(
+          main: Algolia::Composition::InjectionMain.new(
+            source: Algolia::Composition::InjectionMainRecommendSource.new(
+              recommend: Algolia::Composition::MainRecommend.new(
+                index_name: "<YOUR_INDEX_NAME>",
+                model: "trending-items",
+                threshold: 50
+              )
+            )
+          ),
+          injected_items: [
+            Algolia::Composition::InjectionInjectedItem.new(
+              key: "injected-recommend-key",
+              source: Algolia::Composition::InjectedItemRecommendSource.new(
+                recommend: Algolia::Composition::Recommend.new(
+                  index_name: "<YOUR_INDEX_NAME>",
+                  model: "trending-items",
+                  threshold: 30,
+                  fallback_parameters: Algolia::Composition::BaseInjectionQueryParameters.new(
+                    filters: "category:electronics"
+                  )
+                )
+              ),
+              position: 3,
+              length: 2
+            )
+          ]
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the putComposition method.
+#
+# putComposition
+def snippet_for_put_composition6
+  # >SEPARATOR putComposition putComposition
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.put_composition(
+    "my-search-and-recommend-compo",
+    Algolia::Composition::Composition.new(
+      algolia_object_id: "my-search-and-recommend-compo",
+      name: "my search main with recommend injection",
+      behavior: Algolia::Composition::CompositionInjectionBehavior.new(
+        injection: Algolia::Composition::Injection.new(
+          main: Algolia::Composition::InjectionMain.new(
+            source: Algolia::Composition::InjectionMainSearchSource.new(
+              search: Algolia::Composition::MainSearch.new(
+                index: "products",
+                params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:nike")
+              )
+            )
+          ),
+          injected_items: [
+            Algolia::Composition::InjectionInjectedItem.new(
+              key: "injected-recommend-key",
+              source: Algolia::Composition::InjectedItemRecommendSource.new(
+                recommend: Algolia::Composition::Recommend.new(
+                  index_name: "<YOUR_INDEX_NAME>",
+                  model: "trending-items",
+                  threshold: 40
+                )
+              ),
+              position: 1,
+              length: 3
+            )
+          ]
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the putComposition method.
+#
+# putComposition
+def snippet_for_put_composition7
+  # >SEPARATOR putComposition putComposition
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.put_composition(
+    "my-multifeed-recommend-compo",
+    Algolia::Composition::Composition.new(
+      algolia_object_id: "my-multifeed-recommend-compo",
+      name: "multifeed with recommend main",
+      behavior: Algolia::Composition::CompositionMultifeedBehavior.new(
+        multifeed: Algolia::Composition::Multifeed.new(
+          feeds: {
+            trending: Algolia::Composition::FeedInjection.new(
+              injection: Algolia::Composition::Injection.new(
+                main: Algolia::Composition::InjectionMain.new(
+                  source: Algolia::Composition::InjectionMainRecommendSource.new(
+                    recommend: Algolia::Composition::MainRecommend.new(
+                      index_name: "<YOUR_INDEX_NAME>",
+                      model: "trending-items",
+                      threshold: 50
+                    )
+                  )
+                )
+              )
+            )
+          },
+          feeds_order: ["trending"]
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the putComposition method.
+#
+# putComposition
+def snippet_for_put_composition8
+  # >SEPARATOR putComposition putComposition
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.put_composition(
     "my-compo",
     Algolia::Composition::Composition.new(
       algolia_object_id: "my-compo",
@@ -1446,6 +1591,178 @@ end
 #
 # saveRules
 def snippet_for_save_rules3
+  # >SEPARATOR saveRules saveRules
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rules(
+    "rule-with-recommend",
+    Algolia::Composition::CompositionRulesBatchParams.new(
+      requests: [
+        Algolia::Composition::RulesMultipleBatchRequest.new(
+          action: "upsert",
+          body: Algolia::Composition::CompositionRule.new(
+            algolia_object_id: "rule-with-recommend",
+            conditions: [Algolia::Composition::Condition.new(anchoring: "is", pattern: "trending")],
+            consequence: Algolia::Composition::CompositionRuleConsequence.new(
+              behavior: Algolia::Composition::CompositionInjectionBehavior.new(
+                injection: Algolia::Composition::Injection.new(
+                  main: Algolia::Composition::InjectionMain.new(
+                    source: Algolia::Composition::InjectionMainRecommendSource.new(
+                      recommend: Algolia::Composition::MainRecommend.new(
+                        index_name: "<YOUR_INDEX_NAME>",
+                        model: "trending-items",
+                        threshold: 50
+                      )
+                    )
+                  ),
+                  injected_items: [
+                    Algolia::Composition::InjectionInjectedItem.new(
+                      key: "injected-recommend-from-rule-key",
+                      source: Algolia::Composition::InjectedItemRecommendSource.new(
+                        recommend: Algolia::Composition::Recommend.new(
+                          index_name: "<YOUR_INDEX_NAME>",
+                          model: "trending-items",
+                          threshold: 30,
+                          fallback_parameters: Algolia::Composition::BaseInjectionQueryParameters.new(
+                            filters: "category:electronics"
+                          )
+                        )
+                      ),
+                      position: 2,
+                      length: 3
+                    )
+                  ]
+                )
+              )
+            )
+          )
+        )
+      ]
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRules method.
+#
+# saveRules
+def snippet_for_save_rules4
+  # >SEPARATOR saveRules saveRules
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rules(
+    "rule-with-search-and-recommend",
+    Algolia::Composition::CompositionRulesBatchParams.new(
+      requests: [
+        Algolia::Composition::RulesMultipleBatchRequest.new(
+          action: "upsert",
+          body: Algolia::Composition::CompositionRule.new(
+            algolia_object_id: "rule-with-search-and-recommend",
+            conditions: [Algolia::Composition::Condition.new(anchoring: "contains", pattern: "shoes")],
+            consequence: Algolia::Composition::CompositionRuleConsequence.new(
+              behavior: Algolia::Composition::CompositionInjectionBehavior.new(
+                injection: Algolia::Composition::Injection.new(
+                  main: Algolia::Composition::InjectionMain.new(
+                    source: Algolia::Composition::InjectionMainSearchSource.new(
+                      search: Algolia::Composition::MainSearch.new(
+                        index: "products",
+                        params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "category:shoes")
+                      )
+                    )
+                  ),
+                  injected_items: [
+                    Algolia::Composition::InjectionInjectedItem.new(
+                      key: "injected-recommend-from-rule-key",
+                      source: Algolia::Composition::InjectedItemRecommendSource.new(
+                        recommend: Algolia::Composition::Recommend.new(
+                          index_name: "<YOUR_INDEX_NAME>",
+                          model: "trending-items",
+                          threshold: 40
+                        )
+                      ),
+                      position: 1,
+                      length: 2
+                    )
+                  ]
+                )
+              )
+            )
+          )
+        )
+      ]
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRules method.
+#
+# saveRules
+def snippet_for_save_rules5
+  # >SEPARATOR saveRules saveRules
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rules(
+    "rule-with-multifeed-recommend",
+    Algolia::Composition::CompositionRulesBatchParams.new(
+      requests: [
+        Algolia::Composition::RulesMultipleBatchRequest.new(
+          action: "upsert",
+          body: Algolia::Composition::CompositionRule.new(
+            algolia_object_id: "rule-with-multifeed-recommend",
+            conditions: [Algolia::Composition::Condition.new(anchoring: "is", pattern: "trending")],
+            consequence: Algolia::Composition::CompositionRuleConsequence.new(
+              behavior: Algolia::Composition::CompositionMultifeedBehavior.new(
+                multifeed: Algolia::Composition::Multifeed.new(
+                  feeds: {
+                    trending: Algolia::Composition::FeedInjection.new(
+                      injection: Algolia::Composition::Injection.new(
+                        main: Algolia::Composition::InjectionMain.new(
+                          source: Algolia::Composition::InjectionMainRecommendSource.new(
+                            recommend: Algolia::Composition::MainRecommend.new(
+                              index_name: "<YOUR_INDEX_NAME>",
+                              model: "trending-items",
+                              threshold: 50
+                            )
+                          )
+                        )
+                      )
+                    )
+                  },
+                  feeds_order: ["trending"]
+                )
+              )
+            )
+          )
+        )
+      ]
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRules method.
+#
+# saveRules
+def snippet_for_save_rules6
   # >SEPARATOR saveRules saveRules
   # Initialize the client
   client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")

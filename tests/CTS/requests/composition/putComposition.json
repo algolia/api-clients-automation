@@ -413,6 +413,217 @@
   },
   {
     "parameters": {
+      "compositionID": "my-recommend-compo",
+      "composition": {
+        "objectID": "my-recommend-compo",
+        "name": "my recommend composition",
+        "behavior": {
+          "injection": {
+            "main": {
+              "source": {
+                "recommend": {
+                  "indexName": "products",
+                  "model": "trending-items",
+                  "threshold": 50
+                }
+              }
+            },
+            "injectedItems": [
+              {
+                "key": "injected-recommend-key",
+                "source": {
+                  "recommend": {
+                    "indexName": "products",
+                    "model": "trending-items",
+                    "threshold": 30,
+                    "fallbackParameters": {
+                      "filters": "category:electronics"
+                    }
+                  }
+                },
+                "position": 3,
+                "length": 2
+              }
+            ]
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/compositions/my-recommend-compo",
+      "method": "PUT",
+      "body": {
+        "objectID": "my-recommend-compo",
+        "name": "my recommend composition",
+        "behavior": {
+          "injection": {
+            "main": {
+              "source": {
+                "recommend": {
+                  "indexName": "products",
+                  "model": "trending-items",
+                  "threshold": 50
+                }
+              }
+            },
+            "injectedItems": [
+              {
+                "key": "injected-recommend-key",
+                "source": {
+                  "recommend": {
+                    "indexName": "products",
+                    "model": "trending-items",
+                    "threshold": 30,
+                    "fallbackParameters": {
+                      "filters": "category:electronics"
+                    }
+                  }
+                },
+                "position": 3,
+                "length": 2
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "parameters": {
+      "compositionID": "my-search-and-recommend-compo",
+      "composition": {
+        "objectID": "my-search-and-recommend-compo",
+        "name": "my search main with recommend injection",
+        "behavior": {
+          "injection": {
+            "main": {
+              "source": {
+                "search": {
+                  "index": "products",
+                  "params": {
+                    "filters": "brand:nike"
+                  }
+                }
+              }
+            },
+            "injectedItems": [
+              {
+                "key": "injected-recommend-key",
+                "source": {
+                  "recommend": {
+                    "indexName": "products",
+                    "model": "trending-items",
+                    "threshold": 40
+                  }
+                },
+                "position": 1,
+                "length": 3
+              }
+            ]
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/compositions/my-search-and-recommend-compo",
+      "method": "PUT",
+      "body": {
+        "objectID": "my-search-and-recommend-compo",
+        "name": "my search main with recommend injection",
+        "behavior": {
+          "injection": {
+            "main": {
+              "source": {
+                "search": {
+                  "index": "products",
+                  "params": {
+                    "filters": "brand:nike"
+                  }
+                }
+              }
+            },
+            "injectedItems": [
+              {
+                "key": "injected-recommend-key",
+                "source": {
+                  "recommend": {
+                    "indexName": "products",
+                    "model": "trending-items",
+                    "threshold": 40
+                  }
+                },
+                "position": 1,
+                "length": 3
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "parameters": {
+      "compositionID": "my-multifeed-recommend-compo",
+      "composition": {
+        "objectID": "my-multifeed-recommend-compo",
+        "name": "multifeed with recommend main",
+        "behavior": {
+          "multifeed": {
+            "feeds": {
+              "trending": {
+                "injection": {
+                  "main": {
+                    "source": {
+                      "recommend": {
+                        "indexName": "products",
+                        "model": "trending-items",
+                        "threshold": 50
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "feedsOrder": [
+              "trending"
+            ]
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/compositions/my-multifeed-recommend-compo",
+      "method": "PUT",
+      "body": {
+        "objectID": "my-multifeed-recommend-compo",
+        "name": "multifeed with recommend main",
+        "behavior": {
+          "multifeed": {
+            "feeds": {
+              "trending": {
+                "injection": {
+                  "main": {
+                    "source": {
+                      "recommend": {
+                        "indexName": "products",
+                        "model": "trending-items",
+                        "threshold": 50
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "feedsOrder": [
+              "trending"
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "parameters": {
       "compositionID": "my-compo",
       "composition": {
         "objectID": "my-compo",

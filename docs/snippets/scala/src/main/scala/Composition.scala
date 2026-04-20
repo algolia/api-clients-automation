@@ -1308,6 +1308,176 @@ class SnippetCompositionClient {
     // Call the API
     val response = Await.result(
       client.putComposition(
+        compositionID = "my-recommend-compo",
+        composition = Composition(
+          objectID = "my-recommend-compo",
+          name = "my recommend composition",
+          behavior = CompositionInjectionBehavior(
+            injection = Injection(
+              main = InjectionMain(
+                source = Some(
+                  InjectionMainRecommendSource(
+                    recommend = MainRecommend(
+                      indexName = "<YOUR_INDEX_NAME>",
+                      model = Model.withName("trending-items"),
+                      threshold = 50
+                    )
+                  )
+                )
+              ),
+              injectedItems = Some(
+                Seq(
+                  InjectionInjectedItem(
+                    key = "injected-recommend-key",
+                    source = InjectedItemRecommendSource(
+                      recommend = Recommend(
+                        indexName = "<YOUR_INDEX_NAME>",
+                        model = Model.withName("trending-items"),
+                        threshold = 30,
+                        fallbackParameters = Some(
+                          BaseInjectionQueryParameters(
+                            filters = Some("category:electronics")
+                          )
+                        )
+                      )
+                    ),
+                    position = 3,
+                    length = 2
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the putComposition method.
+    *
+    * putComposition
+    */
+  def snippetForCompositionClientPutComposition6(): Unit = {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.putComposition(
+        compositionID = "my-search-and-recommend-compo",
+        composition = Composition(
+          objectID = "my-search-and-recommend-compo",
+          name = "my search main with recommend injection",
+          behavior = CompositionInjectionBehavior(
+            injection = Injection(
+              main = InjectionMain(
+                source = Some(
+                  InjectionMainSearchSource(
+                    search = MainSearch(
+                      index = "products",
+                      params = Some(
+                        MainInjectionQueryParameters(
+                          filters = Some("brand:nike")
+                        )
+                      )
+                    )
+                  )
+                )
+              ),
+              injectedItems = Some(
+                Seq(
+                  InjectionInjectedItem(
+                    key = "injected-recommend-key",
+                    source = InjectedItemRecommendSource(
+                      recommend = Recommend(
+                        indexName = "<YOUR_INDEX_NAME>",
+                        model = Model.withName("trending-items"),
+                        threshold = 40
+                      )
+                    ),
+                    position = 1,
+                    length = 3
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the putComposition method.
+    *
+    * putComposition
+    */
+  def snippetForCompositionClientPutComposition7(): Unit = {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.putComposition(
+        compositionID = "my-multifeed-recommend-compo",
+        composition = Composition(
+          objectID = "my-multifeed-recommend-compo",
+          name = "multifeed with recommend main",
+          behavior = CompositionMultifeedBehavior(
+            multifeed = Multifeed(
+              feeds = Map(
+                "trending" -> FeedInjection(
+                  injection = Injection(
+                    main = InjectionMain(
+                      source = Some(
+                        InjectionMainRecommendSource(
+                          recommend = MainRecommend(
+                            indexName = "<YOUR_INDEX_NAME>",
+                            model = Model.withName("trending-items"),
+                            threshold = 50
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              ),
+              feedsOrder = Some(Seq("trending"))
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the putComposition method.
+    *
+    * putComposition
+    */
+  def snippetForCompositionClientPutComposition8(): Unit = {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.putComposition(
         compositionID = "my-compo",
         composition = Composition(
           objectID = "my-compo",
@@ -1989,6 +2159,230 @@ class SnippetCompositionClient {
     * saveRules
     */
   def snippetForCompositionClientSaveRules3(): Unit = {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRules(
+        compositionID = "rule-with-recommend",
+        rules = CompositionRulesBatchParams(
+          requests = Some(
+            Seq(
+              RulesMultipleBatchRequest(
+                action = Action.withName("upsert"),
+                body = CompositionRule(
+                  objectID = "rule-with-recommend",
+                  conditions = Some(
+                    Seq(
+                      Condition(
+                        anchoring = Some(Anchoring.withName("is")),
+                        pattern = Some("trending")
+                      )
+                    )
+                  ),
+                  consequence = CompositionRuleConsequence(
+                    behavior = CompositionInjectionBehavior(
+                      injection = Injection(
+                        main = InjectionMain(
+                          source = Some(
+                            InjectionMainRecommendSource(
+                              recommend = MainRecommend(
+                                indexName = "<YOUR_INDEX_NAME>",
+                                model = Model.withName("trending-items"),
+                                threshold = 50
+                              )
+                            )
+                          )
+                        ),
+                        injectedItems = Some(
+                          Seq(
+                            InjectionInjectedItem(
+                              key = "injected-recommend-from-rule-key",
+                              source = InjectedItemRecommendSource(
+                                recommend = Recommend(
+                                  indexName = "<YOUR_INDEX_NAME>",
+                                  model = Model.withName("trending-items"),
+                                  threshold = 30,
+                                  fallbackParameters = Some(
+                                    BaseInjectionQueryParameters(
+                                      filters = Some("category:electronics")
+                                    )
+                                  )
+                                )
+                              ),
+                              position = 2,
+                              length = 3
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRules method.
+    *
+    * saveRules
+    */
+  def snippetForCompositionClientSaveRules4(): Unit = {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRules(
+        compositionID = "rule-with-search-and-recommend",
+        rules = CompositionRulesBatchParams(
+          requests = Some(
+            Seq(
+              RulesMultipleBatchRequest(
+                action = Action.withName("upsert"),
+                body = CompositionRule(
+                  objectID = "rule-with-search-and-recommend",
+                  conditions = Some(
+                    Seq(
+                      Condition(
+                        anchoring = Some(Anchoring.withName("contains")),
+                        pattern = Some("shoes")
+                      )
+                    )
+                  ),
+                  consequence = CompositionRuleConsequence(
+                    behavior = CompositionInjectionBehavior(
+                      injection = Injection(
+                        main = InjectionMain(
+                          source = Some(
+                            InjectionMainSearchSource(
+                              search = MainSearch(
+                                index = "products",
+                                params = Some(
+                                  MainInjectionQueryParameters(
+                                    filters = Some("category:shoes")
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        ),
+                        injectedItems = Some(
+                          Seq(
+                            InjectionInjectedItem(
+                              key = "injected-recommend-from-rule-key",
+                              source = InjectedItemRecommendSource(
+                                recommend = Recommend(
+                                  indexName = "<YOUR_INDEX_NAME>",
+                                  model = Model.withName("trending-items"),
+                                  threshold = 40
+                                )
+                              ),
+                              position = 1,
+                              length = 2
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRules method.
+    *
+    * saveRules
+    */
+  def snippetForCompositionClientSaveRules5(): Unit = {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRules(
+        compositionID = "rule-with-multifeed-recommend",
+        rules = CompositionRulesBatchParams(
+          requests = Some(
+            Seq(
+              RulesMultipleBatchRequest(
+                action = Action.withName("upsert"),
+                body = CompositionRule(
+                  objectID = "rule-with-multifeed-recommend",
+                  conditions = Some(
+                    Seq(
+                      Condition(
+                        anchoring = Some(Anchoring.withName("is")),
+                        pattern = Some("trending")
+                      )
+                    )
+                  ),
+                  consequence = CompositionRuleConsequence(
+                    behavior = CompositionMultifeedBehavior(
+                      multifeed = Multifeed(
+                        feeds = Map(
+                          "trending" -> FeedInjection(
+                            injection = Injection(
+                              main = InjectionMain(
+                                source = Some(
+                                  InjectionMainRecommendSource(
+                                    recommend = MainRecommend(
+                                      indexName = "<YOUR_INDEX_NAME>",
+                                      model = Model.withName("trending-items"),
+                                      threshold = 50
+                                    )
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        ),
+                        feedsOrder = Some(Seq("trending"))
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRules method.
+    *
+    * saveRules
+    */
+  def snippetForCompositionClientSaveRules6(): Unit = {
     // >SEPARATOR saveRules saveRules
     // Initialize the client
     val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")

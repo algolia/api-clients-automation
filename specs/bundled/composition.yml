@@ -3547,7 +3547,7 @@ components:
           properties:
             index:
               type: string
-              description: Targeted index name.
+              description: Index to retrieve search results from.
               example: Products
             params:
               $ref: '#/components/schemas/mainInjectionQueryParameters'
@@ -3555,6 +3555,12 @@ components:
             - index
       required:
         - search
+    model:
+      type: string
+      enum:
+        - trending-items
+      description: Recommendation model to use for retrieving recommendations.
+      example: trending-items
     injectionMainRecommendSource:
       description: Organic result set will originate from a recommend request.
       x-discriminator-fields:
@@ -3567,12 +3573,25 @@ components:
           type: object
           additionalProperties: false
           properties:
-            index:
+            indexName:
               type: string
-              description: Targeted index name.
+              description: Index to retrieve recommendations from.
               example: Products
+            model:
+              $ref: '#/components/schemas/model'
+            threshold:
+              type: integer
+              minimum: 0
+              maximum: 100
+              description: Minimum score a recommendation must have to be included.
+            queryParameters:
+              $ref: '#/components/schemas/mainInjectionQueryParameters'
+            fallbackParameters:
+              $ref: '#/components/schemas/mainInjectionQueryParameters'
           required:
-            - index
+            - indexName
+            - model
+            - threshold
       required:
         - recommend
     injectionMainSource:
@@ -3642,10 +3661,47 @@ components:
             - index
       required:
         - external
+    injectedItemRecommendSource:
+      title: injectedItemRecommendSource
+      description: >-
+        Injected items will originate from a recommendation request performed on
+        the specified index.
+      x-discriminator-fields:
+        - recommend
+      type: object
+      additionalProperties: false
+      properties:
+        recommend:
+          title: recommend
+          type: object
+          additionalProperties: false
+          properties:
+            indexName:
+              type: string
+              description: Index to retrieve recommendations from.
+              example: Products
+            model:
+              $ref: '#/components/schemas/model'
+            threshold:
+              type: integer
+              minimum: 0
+              maximum: 100
+              description: Minimum score a recommendation must have to be included.
+            queryParameters:
+              $ref: '#/components/schemas/baseInjectionQueryParameters'
+            fallbackParameters:
+              $ref: '#/components/schemas/baseInjectionQueryParameters'
+          required:
+            - indexName
+            - model
+            - threshold
+      required:
+        - recommend
     injectedItemSource:
       oneOf:
         - $ref: '#/components/schemas/injectedItemSearchSource'
         - $ref: '#/components/schemas/injectedItemExternalSource'
+        - $ref: '#/components/schemas/injectedItemRecommendSource'
     injectionInjectedItem:
       type: object
       additionalProperties: false

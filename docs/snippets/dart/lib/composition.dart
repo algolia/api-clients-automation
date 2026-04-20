@@ -1162,6 +1162,155 @@ void snippetForputComposition5() async {
 
   // Call the API
   final response = await client.putComposition(
+    compositionID: "my-recommend-compo",
+    composition: Composition(
+      objectID: "my-recommend-compo",
+      name: "my recommend composition",
+      behavior: CompositionInjectionBehavior(
+        injection: Injection(
+          main: InjectionMain(
+            source: InjectionMainRecommendSource(
+              recommend: MainRecommend(
+                indexName: "<YOUR_INDEX_NAME>",
+                model: Model.fromJson("trending-items"),
+                threshold: 50,
+              ),
+            ),
+          ),
+          injectedItems: [
+            InjectionInjectedItem(
+              key: "injected-recommend-key",
+              source: InjectedItemRecommendSource(
+                recommend: Recommend(
+                  indexName: "<YOUR_INDEX_NAME>",
+                  model: Model.fromJson("trending-items"),
+                  threshold: 30,
+                  fallbackParameters: BaseInjectionQueryParameters(
+                    filters: "category:electronics",
+                  ),
+                ),
+              ),
+              position: 3,
+              length: 2,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the putComposition method.
+//
+// putComposition
+void snippetForputComposition6() async {
+  // >SEPARATOR putComposition putComposition
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.putComposition(
+    compositionID: "my-search-and-recommend-compo",
+    composition: Composition(
+      objectID: "my-search-and-recommend-compo",
+      name: "my search main with recommend injection",
+      behavior: CompositionInjectionBehavior(
+        injection: Injection(
+          main: InjectionMain(
+            source: InjectionMainSearchSource(
+              search: MainSearch(
+                index: "products",
+                params: MainInjectionQueryParameters(
+                  filters: "brand:nike",
+                ),
+              ),
+            ),
+          ),
+          injectedItems: [
+            InjectionInjectedItem(
+              key: "injected-recommend-key",
+              source: InjectedItemRecommendSource(
+                recommend: Recommend(
+                  indexName: "<YOUR_INDEX_NAME>",
+                  model: Model.fromJson("trending-items"),
+                  threshold: 40,
+                ),
+              ),
+              position: 1,
+              length: 3,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the putComposition method.
+//
+// putComposition
+void snippetForputComposition7() async {
+  // >SEPARATOR putComposition putComposition
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.putComposition(
+    compositionID: "my-multifeed-recommend-compo",
+    composition: Composition(
+      objectID: "my-multifeed-recommend-compo",
+      name: "multifeed with recommend main",
+      behavior: CompositionMultifeedBehavior(
+        multifeed: Multifeed(
+          feeds: {
+            'trending': FeedInjection(
+              injection: Injection(
+                main: InjectionMain(
+                  source: InjectionMainRecommendSource(
+                    recommend: MainRecommend(
+                      indexName: "<YOUR_INDEX_NAME>",
+                      model: Model.fromJson("trending-items"),
+                      threshold: 50,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          },
+          feedsOrder: [
+            "trending",
+          ],
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the putComposition method.
+//
+// putComposition
+void snippetForputComposition8() async {
+  // >SEPARATOR putComposition putComposition
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.putComposition(
     compositionID: "my-compo",
     composition: Composition(
       objectID: "my-compo",
@@ -1737,6 +1886,197 @@ void snippetForsaveRules2() async {
 //
 // saveRules
 void snippetForsaveRules3() async {
+  // >SEPARATOR saveRules saveRules
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRules(
+    compositionID: "rule-with-recommend",
+    rules: CompositionRulesBatchParams(
+      requests: [
+        RulesMultipleBatchRequest(
+          action: Action.fromJson("upsert"),
+          body: CompositionRule(
+            objectID: "rule-with-recommend",
+            conditions: [
+              Condition(
+                anchoring: Anchoring.fromJson("is"),
+                pattern: "trending",
+              ),
+            ],
+            consequence: CompositionRuleConsequence(
+              behavior: CompositionInjectionBehavior(
+                injection: Injection(
+                  main: InjectionMain(
+                    source: InjectionMainRecommendSource(
+                      recommend: MainRecommend(
+                        indexName: "<YOUR_INDEX_NAME>",
+                        model: Model.fromJson("trending-items"),
+                        threshold: 50,
+                      ),
+                    ),
+                  ),
+                  injectedItems: [
+                    InjectionInjectedItem(
+                      key: "injected-recommend-from-rule-key",
+                      source: InjectedItemRecommendSource(
+                        recommend: Recommend(
+                          indexName: "<YOUR_INDEX_NAME>",
+                          model: Model.fromJson("trending-items"),
+                          threshold: 30,
+                          fallbackParameters: BaseInjectionQueryParameters(
+                            filters: "category:electronics",
+                          ),
+                        ),
+                      ),
+                      position: 2,
+                      length: 3,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRules method.
+//
+// saveRules
+void snippetForsaveRules4() async {
+  // >SEPARATOR saveRules saveRules
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRules(
+    compositionID: "rule-with-search-and-recommend",
+    rules: CompositionRulesBatchParams(
+      requests: [
+        RulesMultipleBatchRequest(
+          action: Action.fromJson("upsert"),
+          body: CompositionRule(
+            objectID: "rule-with-search-and-recommend",
+            conditions: [
+              Condition(
+                anchoring: Anchoring.fromJson("contains"),
+                pattern: "shoes",
+              ),
+            ],
+            consequence: CompositionRuleConsequence(
+              behavior: CompositionInjectionBehavior(
+                injection: Injection(
+                  main: InjectionMain(
+                    source: InjectionMainSearchSource(
+                      search: MainSearch(
+                        index: "products",
+                        params: MainInjectionQueryParameters(
+                          filters: "category:shoes",
+                        ),
+                      ),
+                    ),
+                  ),
+                  injectedItems: [
+                    InjectionInjectedItem(
+                      key: "injected-recommend-from-rule-key",
+                      source: InjectedItemRecommendSource(
+                        recommend: Recommend(
+                          indexName: "<YOUR_INDEX_NAME>",
+                          model: Model.fromJson("trending-items"),
+                          threshold: 40,
+                        ),
+                      ),
+                      position: 1,
+                      length: 2,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRules method.
+//
+// saveRules
+void snippetForsaveRules5() async {
+  // >SEPARATOR saveRules saveRules
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRules(
+    compositionID: "rule-with-multifeed-recommend",
+    rules: CompositionRulesBatchParams(
+      requests: [
+        RulesMultipleBatchRequest(
+          action: Action.fromJson("upsert"),
+          body: CompositionRule(
+            objectID: "rule-with-multifeed-recommend",
+            conditions: [
+              Condition(
+                anchoring: Anchoring.fromJson("is"),
+                pattern: "trending",
+              ),
+            ],
+            consequence: CompositionRuleConsequence(
+              behavior: CompositionMultifeedBehavior(
+                multifeed: Multifeed(
+                  feeds: {
+                    'trending': FeedInjection(
+                      injection: Injection(
+                        main: InjectionMain(
+                          source: InjectionMainRecommendSource(
+                            recommend: MainRecommend(
+                              indexName: "<YOUR_INDEX_NAME>",
+                              model: Model.fromJson("trending-items"),
+                              threshold: 50,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  },
+                  feedsOrder: [
+                    "trending",
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRules method.
+//
+// saveRules
+void snippetForsaveRules6() async {
   // >SEPARATOR saveRules saveRules
   // Initialize the client
   final client = CompositionClient(

@@ -1002,6 +1002,146 @@ class TestCompositionClient:
         putComposition
         """
         _req = await self._client.put_composition_with_http_info(
+            composition_id="my-recommend-compo",
+            composition={
+                "objectID": "my-recommend-compo",
+                "name": "my recommend composition",
+                "behavior": {
+                    "injection": {
+                        "main": {
+                            "source": {
+                                "recommend": {
+                                    "indexName": "products",
+                                    "model": "trending-items",
+                                    "threshold": 50,
+                                },
+                            },
+                        },
+                        "injectedItems": [
+                            {
+                                "key": "injected-recommend-key",
+                                "source": {
+                                    "recommend": {
+                                        "indexName": "products",
+                                        "model": "trending-items",
+                                        "threshold": 30,
+                                        "fallbackParameters": {
+                                            "filters": "category:electronics",
+                                        },
+                                    },
+                                },
+                                "position": 3,
+                                "length": 2,
+                            },
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-recommend-compo"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"my-recommend-compo","name":"my recommend composition","behavior":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}},"injectedItems":[{"key":"injected-recommend-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":30,"fallbackParameters":{"filters":"category:electronics"}}},"position":3,"length":2}]}}}"""
+        )
+
+    async def test_put_composition_6(self):
+        """
+        putComposition
+        """
+        _req = await self._client.put_composition_with_http_info(
+            composition_id="my-search-and-recommend-compo",
+            composition={
+                "objectID": "my-search-and-recommend-compo",
+                "name": "my search main with recommend injection",
+                "behavior": {
+                    "injection": {
+                        "main": {
+                            "source": {
+                                "search": {
+                                    "index": "products",
+                                    "params": {
+                                        "filters": "brand:nike",
+                                    },
+                                },
+                            },
+                        },
+                        "injectedItems": [
+                            {
+                                "key": "injected-recommend-key",
+                                "source": {
+                                    "recommend": {
+                                        "indexName": "products",
+                                        "model": "trending-items",
+                                        "threshold": 40,
+                                    },
+                                },
+                                "position": 1,
+                                "length": 3,
+                            },
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-search-and-recommend-compo"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"my-search-and-recommend-compo","name":"my search main with recommend injection","behavior":{"injection":{"main":{"source":{"search":{"index":"products","params":{"filters":"brand:nike"}}}},"injectedItems":[{"key":"injected-recommend-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":40}},"position":1,"length":3}]}}}"""
+        )
+
+    async def test_put_composition_7(self):
+        """
+        putComposition
+        """
+        _req = await self._client.put_composition_with_http_info(
+            composition_id="my-multifeed-recommend-compo",
+            composition={
+                "objectID": "my-multifeed-recommend-compo",
+                "name": "multifeed with recommend main",
+                "behavior": {
+                    "multifeed": {
+                        "feeds": {
+                            "trending": {
+                                "injection": {
+                                    "main": {
+                                        "source": {
+                                            "recommend": {
+                                                "indexName": "products",
+                                                "model": "trending-items",
+                                                "threshold": 50,
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        "feedsOrder": [
+                            "trending",
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-multifeed-recommend-compo"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"my-multifeed-recommend-compo","name":"multifeed with recommend main","behavior":{"multifeed":{"feeds":{"trending":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}}}}},"feedsOrder":["trending"]}}}"""
+        )
+
+    async def test_put_composition_8(self):
+        """
+        putComposition
+        """
+        _req = await self._client.put_composition_with_http_info(
             composition_id="my-compo",
             composition={
                 "objectID": "my-compo",
@@ -1558,6 +1698,188 @@ class TestCompositionClient:
         )
 
     async def test_save_rules_3(self):
+        """
+        saveRules
+        """
+        _req = await self._client.save_rules_with_http_info(
+            composition_id="rule-with-recommend",
+            rules={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "rule-with-recommend",
+                            "conditions": [
+                                {
+                                    "anchoring": "is",
+                                    "pattern": "trending",
+                                },
+                            ],
+                            "consequence": {
+                                "behavior": {
+                                    "injection": {
+                                        "main": {
+                                            "source": {
+                                                "recommend": {
+                                                    "indexName": "products",
+                                                    "model": "trending-items",
+                                                    "threshold": 50,
+                                                },
+                                            },
+                                        },
+                                        "injectedItems": [
+                                            {
+                                                "key": "injected-recommend-from-rule-key",
+                                                "source": {
+                                                    "recommend": {
+                                                        "indexName": "products",
+                                                        "model": "trending-items",
+                                                        "threshold": 30,
+                                                        "fallbackParameters": {
+                                                            "filters": "category:electronics",
+                                                        },
+                                                    },
+                                                },
+                                                "position": 2,
+                                                "length": 3,
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/rule-with-recommend/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-recommend","conditions":[{"anchoring":"is","pattern":"trending"}],"consequence":{"behavior":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}},"injectedItems":[{"key":"injected-recommend-from-rule-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":30,"fallbackParameters":{"filters":"category:electronics"}}},"position":2,"length":3}]}}}}}]}"""
+        )
+
+    async def test_save_rules_4(self):
+        """
+        saveRules
+        """
+        _req = await self._client.save_rules_with_http_info(
+            composition_id="rule-with-search-and-recommend",
+            rules={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "rule-with-search-and-recommend",
+                            "conditions": [
+                                {
+                                    "anchoring": "contains",
+                                    "pattern": "shoes",
+                                },
+                            ],
+                            "consequence": {
+                                "behavior": {
+                                    "injection": {
+                                        "main": {
+                                            "source": {
+                                                "search": {
+                                                    "index": "products",
+                                                    "params": {
+                                                        "filters": "category:shoes",
+                                                    },
+                                                },
+                                            },
+                                        },
+                                        "injectedItems": [
+                                            {
+                                                "key": "injected-recommend-from-rule-key",
+                                                "source": {
+                                                    "recommend": {
+                                                        "indexName": "products",
+                                                        "model": "trending-items",
+                                                        "threshold": 40,
+                                                    },
+                                                },
+                                                "position": 1,
+                                                "length": 2,
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/rule-with-search-and-recommend/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-search-and-recommend","conditions":[{"anchoring":"contains","pattern":"shoes"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"products","params":{"filters":"category:shoes"}}}},"injectedItems":[{"key":"injected-recommend-from-rule-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":40}},"position":1,"length":2}]}}}}}]}"""
+        )
+
+    async def test_save_rules_5(self):
+        """
+        saveRules
+        """
+        _req = await self._client.save_rules_with_http_info(
+            composition_id="rule-with-multifeed-recommend",
+            rules={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "rule-with-multifeed-recommend",
+                            "conditions": [
+                                {
+                                    "anchoring": "is",
+                                    "pattern": "trending",
+                                },
+                            ],
+                            "consequence": {
+                                "behavior": {
+                                    "multifeed": {
+                                        "feeds": {
+                                            "trending": {
+                                                "injection": {
+                                                    "main": {
+                                                        "source": {
+                                                            "recommend": {
+                                                                "indexName": "products",
+                                                                "model": "trending-items",
+                                                                "threshold": 50,
+                                                            },
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                        },
+                                        "feedsOrder": [
+                                            "trending",
+                                        ],
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/rule-with-multifeed-recommend/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-multifeed-recommend","conditions":[{"anchoring":"is","pattern":"trending"}],"consequence":{"behavior":{"multifeed":{"feeds":{"trending":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}}}}},"feedsOrder":["trending"]}}}}}]}"""
+        )
+
+    async def test_save_rules_6(self):
         """
         saveRules
         """
@@ -2755,6 +3077,146 @@ class TestCompositionClientSync:
         putComposition
         """
         _req = self._client.put_composition_with_http_info(
+            composition_id="my-recommend-compo",
+            composition={
+                "objectID": "my-recommend-compo",
+                "name": "my recommend composition",
+                "behavior": {
+                    "injection": {
+                        "main": {
+                            "source": {
+                                "recommend": {
+                                    "indexName": "products",
+                                    "model": "trending-items",
+                                    "threshold": 50,
+                                },
+                            },
+                        },
+                        "injectedItems": [
+                            {
+                                "key": "injected-recommend-key",
+                                "source": {
+                                    "recommend": {
+                                        "indexName": "products",
+                                        "model": "trending-items",
+                                        "threshold": 30,
+                                        "fallbackParameters": {
+                                            "filters": "category:electronics",
+                                        },
+                                    },
+                                },
+                                "position": 3,
+                                "length": 2,
+                            },
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-recommend-compo"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"my-recommend-compo","name":"my recommend composition","behavior":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}},"injectedItems":[{"key":"injected-recommend-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":30,"fallbackParameters":{"filters":"category:electronics"}}},"position":3,"length":2}]}}}"""
+        )
+
+    def test_put_composition_6(self):
+        """
+        putComposition
+        """
+        _req = self._client.put_composition_with_http_info(
+            composition_id="my-search-and-recommend-compo",
+            composition={
+                "objectID": "my-search-and-recommend-compo",
+                "name": "my search main with recommend injection",
+                "behavior": {
+                    "injection": {
+                        "main": {
+                            "source": {
+                                "search": {
+                                    "index": "products",
+                                    "params": {
+                                        "filters": "brand:nike",
+                                    },
+                                },
+                            },
+                        },
+                        "injectedItems": [
+                            {
+                                "key": "injected-recommend-key",
+                                "source": {
+                                    "recommend": {
+                                        "indexName": "products",
+                                        "model": "trending-items",
+                                        "threshold": 40,
+                                    },
+                                },
+                                "position": 1,
+                                "length": 3,
+                            },
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-search-and-recommend-compo"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"my-search-and-recommend-compo","name":"my search main with recommend injection","behavior":{"injection":{"main":{"source":{"search":{"index":"products","params":{"filters":"brand:nike"}}}},"injectedItems":[{"key":"injected-recommend-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":40}},"position":1,"length":3}]}}}"""
+        )
+
+    def test_put_composition_7(self):
+        """
+        putComposition
+        """
+        _req = self._client.put_composition_with_http_info(
+            composition_id="my-multifeed-recommend-compo",
+            composition={
+                "objectID": "my-multifeed-recommend-compo",
+                "name": "multifeed with recommend main",
+                "behavior": {
+                    "multifeed": {
+                        "feeds": {
+                            "trending": {
+                                "injection": {
+                                    "main": {
+                                        "source": {
+                                            "recommend": {
+                                                "indexName": "products",
+                                                "model": "trending-items",
+                                                "threshold": 50,
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        "feedsOrder": [
+                            "trending",
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-multifeed-recommend-compo"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"my-multifeed-recommend-compo","name":"multifeed with recommend main","behavior":{"multifeed":{"feeds":{"trending":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}}}}},"feedsOrder":["trending"]}}}"""
+        )
+
+    def test_put_composition_8(self):
+        """
+        putComposition
+        """
+        _req = self._client.put_composition_with_http_info(
             composition_id="my-compo",
             composition={
                 "objectID": "my-compo",
@@ -3311,6 +3773,188 @@ class TestCompositionClientSync:
         )
 
     def test_save_rules_3(self):
+        """
+        saveRules
+        """
+        _req = self._client.save_rules_with_http_info(
+            composition_id="rule-with-recommend",
+            rules={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "rule-with-recommend",
+                            "conditions": [
+                                {
+                                    "anchoring": "is",
+                                    "pattern": "trending",
+                                },
+                            ],
+                            "consequence": {
+                                "behavior": {
+                                    "injection": {
+                                        "main": {
+                                            "source": {
+                                                "recommend": {
+                                                    "indexName": "products",
+                                                    "model": "trending-items",
+                                                    "threshold": 50,
+                                                },
+                                            },
+                                        },
+                                        "injectedItems": [
+                                            {
+                                                "key": "injected-recommend-from-rule-key",
+                                                "source": {
+                                                    "recommend": {
+                                                        "indexName": "products",
+                                                        "model": "trending-items",
+                                                        "threshold": 30,
+                                                        "fallbackParameters": {
+                                                            "filters": "category:electronics",
+                                                        },
+                                                    },
+                                                },
+                                                "position": 2,
+                                                "length": 3,
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/rule-with-recommend/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-recommend","conditions":[{"anchoring":"is","pattern":"trending"}],"consequence":{"behavior":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}},"injectedItems":[{"key":"injected-recommend-from-rule-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":30,"fallbackParameters":{"filters":"category:electronics"}}},"position":2,"length":3}]}}}}}]}"""
+        )
+
+    def test_save_rules_4(self):
+        """
+        saveRules
+        """
+        _req = self._client.save_rules_with_http_info(
+            composition_id="rule-with-search-and-recommend",
+            rules={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "rule-with-search-and-recommend",
+                            "conditions": [
+                                {
+                                    "anchoring": "contains",
+                                    "pattern": "shoes",
+                                },
+                            ],
+                            "consequence": {
+                                "behavior": {
+                                    "injection": {
+                                        "main": {
+                                            "source": {
+                                                "search": {
+                                                    "index": "products",
+                                                    "params": {
+                                                        "filters": "category:shoes",
+                                                    },
+                                                },
+                                            },
+                                        },
+                                        "injectedItems": [
+                                            {
+                                                "key": "injected-recommend-from-rule-key",
+                                                "source": {
+                                                    "recommend": {
+                                                        "indexName": "products",
+                                                        "model": "trending-items",
+                                                        "threshold": 40,
+                                                    },
+                                                },
+                                                "position": 1,
+                                                "length": 2,
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/rule-with-search-and-recommend/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-search-and-recommend","conditions":[{"anchoring":"contains","pattern":"shoes"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"products","params":{"filters":"category:shoes"}}}},"injectedItems":[{"key":"injected-recommend-from-rule-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":40}},"position":1,"length":2}]}}}}}]}"""
+        )
+
+    def test_save_rules_5(self):
+        """
+        saveRules
+        """
+        _req = self._client.save_rules_with_http_info(
+            composition_id="rule-with-multifeed-recommend",
+            rules={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "rule-with-multifeed-recommend",
+                            "conditions": [
+                                {
+                                    "anchoring": "is",
+                                    "pattern": "trending",
+                                },
+                            ],
+                            "consequence": {
+                                "behavior": {
+                                    "multifeed": {
+                                        "feeds": {
+                                            "trending": {
+                                                "injection": {
+                                                    "main": {
+                                                        "source": {
+                                                            "recommend": {
+                                                                "indexName": "products",
+                                                                "model": "trending-items",
+                                                                "threshold": 50,
+                                                            },
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                        },
+                                        "feedsOrder": [
+                                            "trending",
+                                        ],
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/rule-with-multifeed-recommend/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-multifeed-recommend","conditions":[{"anchoring":"is","pattern":"trending"}],"consequence":{"behavior":{"multifeed":{"feeds":{"trending":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}}}}},"feedsOrder":["trending"]}}}}}]}"""
+        )
+
+    def test_save_rules_6(self):
         """
         saveRules
         """

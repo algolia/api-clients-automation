@@ -31,7 +31,7 @@ package algoliasearch.composition
 /** MainSearch
   *
   * @param index
-  *   Targeted index name.
+  *   Index to retrieve search results from.
   */
 case class MainSearch(
     index: String,

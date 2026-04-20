@@ -1280,6 +1280,157 @@ class CompositionClientRequestsTests {
   void putCompositionTest5() {
     assertDoesNotThrow(() -> {
       client.putComposition(
+        "my-recommend-compo",
+        new Composition()
+          .setObjectID("my-recommend-compo")
+          .setName("my recommend composition")
+          .setBehavior(
+            new CompositionInjectionBehavior().setInjection(
+              new Injection()
+                .setMain(
+                  new InjectionMain().setSource(
+                    new InjectionMainRecommendSource().setRecommend(
+                      new MainRecommend().setIndexName("products").setModel(Model.TRENDING_ITEMS).setThreshold(50)
+                    )
+                  )
+                )
+                .setInjectedItems(
+                  Arrays.asList(
+                    new InjectionInjectedItem()
+                      .setKey("injected-recommend-key")
+                      .setSource(
+                        new InjectedItemRecommendSource().setRecommend(
+                          new Recommend()
+                            .setIndexName("products")
+                            .setModel(Model.TRENDING_ITEMS)
+                            .setThreshold(30)
+                            .setFallbackParameters(new BaseInjectionQueryParameters().setFilters("category:electronics"))
+                        )
+                      )
+                      .setPosition(3)
+                      .setLength(2)
+                  )
+                )
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/my-recommend-compo", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"my-recommend-compo\",\"name\":\"my recommend" +
+          " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}},\"injectedItems\":[{\"key\":\"injected-recommend-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":30,\"fallbackParameters\":{\"filters\":\"category:electronics\"}}},\"position\":3,\"length\":2}]}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("putComposition")
+  void putCompositionTest6() {
+    assertDoesNotThrow(() -> {
+      client.putComposition(
+        "my-search-and-recommend-compo",
+        new Composition()
+          .setObjectID("my-search-and-recommend-compo")
+          .setName("my search main with recommend injection")
+          .setBehavior(
+            new CompositionInjectionBehavior().setInjection(
+              new Injection()
+                .setMain(
+                  new InjectionMain().setSource(
+                    new InjectionMainSearchSource().setSearch(
+                      new MainSearch().setIndex("products").setParams(new MainInjectionQueryParameters().setFilters("brand:nike"))
+                    )
+                  )
+                )
+                .setInjectedItems(
+                  Arrays.asList(
+                    new InjectionInjectedItem()
+                      .setKey("injected-recommend-key")
+                      .setSource(
+                        new InjectedItemRecommendSource().setRecommend(
+                          new Recommend().setIndexName("products").setModel(Model.TRENDING_ITEMS).setThreshold(40)
+                        )
+                      )
+                      .setPosition(1)
+                      .setLength(3)
+                  )
+                )
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/my-search-and-recommend-compo", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"my-search-and-recommend-compo\",\"name\":\"my search main with" +
+          " recommend" +
+          " injection\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"filters\":\"brand:nike\"}}}},\"injectedItems\":[{\"key\":\"injected-recommend-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":40}},\"position\":1,\"length\":3}]}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("putComposition")
+  void putCompositionTest7() {
+    assertDoesNotThrow(() -> {
+      client.putComposition(
+        "my-multifeed-recommend-compo",
+        new Composition()
+          .setObjectID("my-multifeed-recommend-compo")
+          .setName("multifeed with recommend main")
+          .setBehavior(
+            new CompositionMultifeedBehavior().setMultifeed(
+              new Multifeed()
+                .setFeeds(
+                  new HashMap() {
+                    {
+                      put(
+                        "trending",
+                        new FeedInjection().setInjection(
+                          new Injection().setMain(
+                            new InjectionMain().setSource(
+                              new InjectionMainRecommendSource().setRecommend(
+                                new MainRecommend().setIndexName("products").setModel(Model.TRENDING_ITEMS).setThreshold(50)
+                              )
+                            )
+                          )
+                        )
+                      );
+                    }
+                  }
+                )
+                .setFeedsOrder(Arrays.asList("trending"))
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/my-multifeed-recommend-compo", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"my-multifeed-recommend-compo\",\"name\":\"multifeed with recommend" +
+          " main\",\"behavior\":{\"multifeed\":{\"feeds\":{\"trending\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}}}}},\"feedsOrder\":[\"trending\"]}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("putComposition")
+  void putCompositionTest8() {
+    assertDoesNotThrow(() -> {
+      client.putComposition(
         "my-compo",
         new Composition()
           .setObjectID("my-compo")
@@ -1808,6 +1959,185 @@ class CompositionClientRequestsTests {
   @Test
   @DisplayName("saveRules")
   void saveRulesTest3() {
+    assertDoesNotThrow(() -> {
+      client.saveRules(
+        "rule-with-recommend",
+        new CompositionRulesBatchParams().setRequests(
+          Arrays.asList(
+            new RulesMultipleBatchRequest()
+              .setAction(Action.UPSERT)
+              .setBody(
+                new CompositionRule()
+                  .setObjectID("rule-with-recommend")
+                  .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.IS).setPattern("trending")))
+                  .setConsequence(
+                    new CompositionRuleConsequence().setBehavior(
+                      new CompositionInjectionBehavior().setInjection(
+                        new Injection()
+                          .setMain(
+                            new InjectionMain().setSource(
+                              new InjectionMainRecommendSource().setRecommend(
+                                new MainRecommend().setIndexName("products").setModel(Model.TRENDING_ITEMS).setThreshold(50)
+                              )
+                            )
+                          )
+                          .setInjectedItems(
+                            Arrays.asList(
+                              new InjectionInjectedItem()
+                                .setKey("injected-recommend-from-rule-key")
+                                .setSource(
+                                  new InjectedItemRecommendSource().setRecommend(
+                                    new Recommend()
+                                      .setIndexName("products")
+                                      .setModel(Model.TRENDING_ITEMS)
+                                      .setThreshold(30)
+                                      .setFallbackParameters(new BaseInjectionQueryParameters().setFilters("category:electronics"))
+                                  )
+                                )
+                                .setPosition(2)
+                                .setLength(3)
+                            )
+                          )
+                      )
+                    )
+                  )
+              )
+          )
+        )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/rule-with-recommend/rules/batch", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-recommend\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"trending\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}},\"injectedItems\":[{\"key\":\"injected-recommend-from-rule-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":30,\"fallbackParameters\":{\"filters\":\"category:electronics\"}}},\"position\":2,\"length\":3}]}}}}}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("saveRules")
+  void saveRulesTest4() {
+    assertDoesNotThrow(() -> {
+      client.saveRules(
+        "rule-with-search-and-recommend",
+        new CompositionRulesBatchParams().setRequests(
+          Arrays.asList(
+            new RulesMultipleBatchRequest()
+              .setAction(Action.UPSERT)
+              .setBody(
+                new CompositionRule()
+                  .setObjectID("rule-with-search-and-recommend")
+                  .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("shoes")))
+                  .setConsequence(
+                    new CompositionRuleConsequence().setBehavior(
+                      new CompositionInjectionBehavior().setInjection(
+                        new Injection()
+                          .setMain(
+                            new InjectionMain().setSource(
+                              new InjectionMainSearchSource().setSearch(
+                                new MainSearch()
+                                  .setIndex("products")
+                                  .setParams(new MainInjectionQueryParameters().setFilters("category:shoes"))
+                              )
+                            )
+                          )
+                          .setInjectedItems(
+                            Arrays.asList(
+                              new InjectionInjectedItem()
+                                .setKey("injected-recommend-from-rule-key")
+                                .setSource(
+                                  new InjectedItemRecommendSource().setRecommend(
+                                    new Recommend().setIndexName("products").setModel(Model.TRENDING_ITEMS).setThreshold(40)
+                                  )
+                                )
+                                .setPosition(1)
+                                .setLength(2)
+                            )
+                          )
+                      )
+                    )
+                  )
+              )
+          )
+        )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/rule-with-search-and-recommend/rules/batch", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-search-and-recommend\",\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"shoes\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"filters\":\"category:shoes\"}}}},\"injectedItems\":[{\"key\":\"injected-recommend-from-rule-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":40}},\"position\":1,\"length\":2}]}}}}}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("saveRules")
+  void saveRulesTest5() {
+    assertDoesNotThrow(() -> {
+      client.saveRules(
+        "rule-with-multifeed-recommend",
+        new CompositionRulesBatchParams().setRequests(
+          Arrays.asList(
+            new RulesMultipleBatchRequest()
+              .setAction(Action.UPSERT)
+              .setBody(
+                new CompositionRule()
+                  .setObjectID("rule-with-multifeed-recommend")
+                  .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.IS).setPattern("trending")))
+                  .setConsequence(
+                    new CompositionRuleConsequence().setBehavior(
+                      new CompositionMultifeedBehavior().setMultifeed(
+                        new Multifeed()
+                          .setFeeds(
+                            new HashMap() {
+                              {
+                                put(
+                                  "trending",
+                                  new FeedInjection().setInjection(
+                                    new Injection().setMain(
+                                      new InjectionMain().setSource(
+                                        new InjectionMainRecommendSource().setRecommend(
+                                          new MainRecommend().setIndexName("products").setModel(Model.TRENDING_ITEMS).setThreshold(50)
+                                        )
+                                      )
+                                    )
+                                  )
+                                );
+                              }
+                            }
+                          )
+                          .setFeedsOrder(Arrays.asList("trending"))
+                      )
+                    )
+                  )
+              )
+          )
+        )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/rule-with-multifeed-recommend/rules/batch", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-multifeed-recommend\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"trending\"}],\"consequence\":{\"behavior\":{\"multifeed\":{\"feeds\":{\"trending\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}}}}},\"feedsOrder\":[\"trending\"]}}}}}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("saveRules")
+  void saveRulesTest6() {
     assertDoesNotThrow(() -> {
       client.saveRules(
         "my-compo",

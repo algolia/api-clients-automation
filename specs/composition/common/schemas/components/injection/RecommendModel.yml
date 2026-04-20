@@ -1,0 +1,6 @@
+model:
+  type: string
+  enum:
+    - trending-items
+  description: Recommendation model to use for retrieving recommendations.
+  example: trending-items

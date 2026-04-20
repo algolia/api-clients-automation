@@ -971,6 +971,120 @@ class CompositionTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->putComposition(
+            'my-recommend-compo',
+            ['objectID' => 'my-recommend-compo',
+                'name' => 'my recommend composition',
+                'behavior' => ['injection' => ['main' => ['source' => ['recommend' => ['indexName' => 'products',
+                    'model' => 'trending-items',
+                    'threshold' => 50,
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'injected-recommend-key',
+                            'source' => ['recommend' => ['indexName' => 'products',
+                                'model' => 'trending-items',
+                                'threshold' => 30,
+                                'fallbackParameters' => ['filters' => 'category:electronics',
+                                ],
+                            ],
+                            ],
+                            'position' => 3,
+                            'length' => 2,
+                        ],
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/my-recommend-compo',
+                'method' => 'PUT',
+                'body' => json_decode('{"objectID":"my-recommend-compo","name":"my recommend composition","behavior":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}},"injectedItems":[{"key":"injected-recommend-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":30,"fallbackParameters":{"filters":"category:electronics"}}},"position":3,"length":2}]}}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('putComposition')]
+    public function testPutComposition6(): void
+    {
+        $client = $this->getClient();
+        $client->putComposition(
+            'my-search-and-recommend-compo',
+            ['objectID' => 'my-search-and-recommend-compo',
+                'name' => 'my search main with recommend injection',
+                'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'products',
+                    'params' => ['filters' => 'brand:nike',
+                    ],
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'injected-recommend-key',
+                            'source' => ['recommend' => ['indexName' => 'products',
+                                'model' => 'trending-items',
+                                'threshold' => 40,
+                            ],
+                            ],
+                            'position' => 1,
+                            'length' => 3,
+                        ],
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/my-search-and-recommend-compo',
+                'method' => 'PUT',
+                'body' => json_decode('{"objectID":"my-search-and-recommend-compo","name":"my search main with recommend injection","behavior":{"injection":{"main":{"source":{"search":{"index":"products","params":{"filters":"brand:nike"}}}},"injectedItems":[{"key":"injected-recommend-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":40}},"position":1,"length":3}]}}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('putComposition')]
+    public function testPutComposition7(): void
+    {
+        $client = $this->getClient();
+        $client->putComposition(
+            'my-multifeed-recommend-compo',
+            ['objectID' => 'my-multifeed-recommend-compo',
+                'name' => 'multifeed with recommend main',
+                'behavior' => ['multifeed' => ['feeds' => ['trending' => ['injection' => ['main' => ['source' => ['recommend' => ['indexName' => 'products',
+                    'model' => 'trending-items',
+                    'threshold' => 50,
+                ],
+                ],
+                ],
+                ],
+                ],
+                ],
+                    'feedsOrder' => [
+                        'trending',
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/my-multifeed-recommend-compo',
+                'method' => 'PUT',
+                'body' => json_decode('{"objectID":"my-multifeed-recommend-compo","name":"multifeed with recommend main","behavior":{"multifeed":{"feeds":{"trending":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}}}}},"feedsOrder":["trending"]}}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('putComposition')]
+    public function testPutComposition8(): void
+    {
+        $client = $this->getClient();
+        $client->putComposition(
             'my-compo',
             ['objectID' => 'my-compo',
                 'name' => 'my composition',
@@ -1413,6 +1527,150 @@ class CompositionTest extends TestCase implements HttpClientInterface
 
     #[TestDox('saveRules')]
     public function testSaveRules3(): void
+    {
+        $client = $this->getClient();
+        $client->saveRules(
+            'rule-with-recommend',
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'rule-with-recommend',
+                        'conditions' => [
+                            ['anchoring' => 'is',
+                                'pattern' => 'trending',
+                            ],
+                        ],
+                        'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['recommend' => ['indexName' => 'products',
+                            'model' => 'trending-items',
+                            'threshold' => 50,
+                        ],
+                        ],
+                        ],
+                            'injectedItems' => [
+                                ['key' => 'injected-recommend-from-rule-key',
+                                    'source' => ['recommend' => ['indexName' => 'products',
+                                        'model' => 'trending-items',
+                                        'threshold' => 30,
+                                        'fallbackParameters' => ['filters' => 'category:electronics',
+                                        ],
+                                    ],
+                                    ],
+                                    'position' => 2,
+                                    'length' => 3,
+                                ],
+                            ],
+                        ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/rule-with-recommend/rules/batch',
+                'method' => 'POST',
+                'body' => json_decode('{"requests":[{"action":"upsert","body":{"objectID":"rule-with-recommend","conditions":[{"anchoring":"is","pattern":"trending"}],"consequence":{"behavior":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}},"injectedItems":[{"key":"injected-recommend-from-rule-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":30,"fallbackParameters":{"filters":"category:electronics"}}},"position":2,"length":3}]}}}}}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('saveRules')]
+    public function testSaveRules4(): void
+    {
+        $client = $this->getClient();
+        $client->saveRules(
+            'rule-with-search-and-recommend',
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'rule-with-search-and-recommend',
+                        'conditions' => [
+                            ['anchoring' => 'contains',
+                                'pattern' => 'shoes',
+                            ],
+                        ],
+                        'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'products',
+                            'params' => ['filters' => 'category:shoes',
+                            ],
+                        ],
+                        ],
+                        ],
+                            'injectedItems' => [
+                                ['key' => 'injected-recommend-from-rule-key',
+                                    'source' => ['recommend' => ['indexName' => 'products',
+                                        'model' => 'trending-items',
+                                        'threshold' => 40,
+                                    ],
+                                    ],
+                                    'position' => 1,
+                                    'length' => 2,
+                                ],
+                            ],
+                        ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/rule-with-search-and-recommend/rules/batch',
+                'method' => 'POST',
+                'body' => json_decode('{"requests":[{"action":"upsert","body":{"objectID":"rule-with-search-and-recommend","conditions":[{"anchoring":"contains","pattern":"shoes"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"products","params":{"filters":"category:shoes"}}}},"injectedItems":[{"key":"injected-recommend-from-rule-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":40}},"position":1,"length":2}]}}}}}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('saveRules')]
+    public function testSaveRules5(): void
+    {
+        $client = $this->getClient();
+        $client->saveRules(
+            'rule-with-multifeed-recommend',
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'rule-with-multifeed-recommend',
+                        'conditions' => [
+                            ['anchoring' => 'is',
+                                'pattern' => 'trending',
+                            ],
+                        ],
+                        'consequence' => ['behavior' => ['multifeed' => ['feeds' => ['trending' => ['injection' => ['main' => ['source' => ['recommend' => ['indexName' => 'products',
+                            'model' => 'trending-items',
+                            'threshold' => 50,
+                        ],
+                        ],
+                        ],
+                        ],
+                        ],
+                        ],
+                            'feedsOrder' => [
+                                'trending',
+                            ],
+                        ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/rule-with-multifeed-recommend/rules/batch',
+                'method' => 'POST',
+                'body' => json_decode('{"requests":[{"action":"upsert","body":{"objectID":"rule-with-multifeed-recommend","conditions":[{"anchoring":"is","pattern":"trending"}],"consequence":{"behavior":{"multifeed":{"feeds":{"trending":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}}}}},"feedsOrder":["trending"]}}}}}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('saveRules')]
+    public function testSaveRules6(): void
     {
         $client = $this->getClient();
         $client->saveRules(

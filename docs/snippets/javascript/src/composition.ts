@@ -857,6 +857,120 @@ export async function snippetForPutComposition5(): Promise<void> {
 
   // Call the API
   const response = await client.putComposition({
+    compositionID: 'my-recommend-compo',
+    composition: {
+      objectID: 'my-recommend-compo',
+      name: 'my recommend composition',
+      behavior: {
+        injection: {
+          main: { source: { recommend: { indexName: 'products', model: 'trending-items', threshold: 50 } } },
+          injectedItems: [
+            {
+              key: 'injected-recommend-key',
+              source: {
+                recommend: {
+                  indexName: 'products',
+                  model: 'trending-items',
+                  threshold: 30,
+                  fallbackParameters: { filters: 'category:electronics' },
+                },
+              },
+              position: 3,
+              length: 2,
+            },
+          ],
+        },
+      },
+    },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the putComposition method.
+//
+// putComposition
+export async function snippetForPutComposition6(): Promise<void> {
+  // >SEPARATOR putComposition putComposition
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.putComposition({
+    compositionID: 'my-search-and-recommend-compo',
+    composition: {
+      objectID: 'my-search-and-recommend-compo',
+      name: 'my search main with recommend injection',
+      behavior: {
+        injection: {
+          main: { source: { search: { index: 'products', params: { filters: 'brand:nike' } } } },
+          injectedItems: [
+            {
+              key: 'injected-recommend-key',
+              source: { recommend: { indexName: 'products', model: 'trending-items', threshold: 40 } },
+              position: 1,
+              length: 3,
+            },
+          ],
+        },
+      },
+    },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the putComposition method.
+//
+// putComposition
+export async function snippetForPutComposition7(): Promise<void> {
+  // >SEPARATOR putComposition putComposition
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.putComposition({
+    compositionID: 'my-multifeed-recommend-compo',
+    composition: {
+      objectID: 'my-multifeed-recommend-compo',
+      name: 'multifeed with recommend main',
+      behavior: {
+        multifeed: {
+          feeds: {
+            trending: {
+              injection: {
+                main: { source: { recommend: { indexName: 'products', model: 'trending-items', threshold: 50 } } },
+              },
+            },
+          },
+          feedsOrder: ['trending'],
+        },
+      },
+    },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the putComposition method.
+//
+// putComposition
+export async function snippetForPutComposition8(): Promise<void> {
+  // >SEPARATOR putComposition putComposition
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.putComposition({
     compositionID: 'my-compo',
     composition: {
       objectID: 'my-compo',
@@ -1236,6 +1350,149 @@ export async function snippetForSaveRules2(): Promise<void> {
 //
 // saveRules
 export async function snippetForSaveRules3(): Promise<void> {
+  // >SEPARATOR saveRules saveRules
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRules({
+    compositionID: 'rule-with-recommend',
+    rules: {
+      requests: [
+        {
+          action: 'upsert',
+          body: {
+            objectID: 'rule-with-recommend',
+            conditions: [{ anchoring: 'is', pattern: 'trending' }],
+            consequence: {
+              behavior: {
+                injection: {
+                  main: { source: { recommend: { indexName: 'products', model: 'trending-items', threshold: 50 } } },
+                  injectedItems: [
+                    {
+                      key: 'injected-recommend-from-rule-key',
+                      source: {
+                        recommend: {
+                          indexName: 'products',
+                          model: 'trending-items',
+                          threshold: 30,
+                          fallbackParameters: { filters: 'category:electronics' },
+                        },
+                      },
+                      position: 2,
+                      length: 3,
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRules method.
+//
+// saveRules
+export async function snippetForSaveRules4(): Promise<void> {
+  // >SEPARATOR saveRules saveRules
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRules({
+    compositionID: 'rule-with-search-and-recommend',
+    rules: {
+      requests: [
+        {
+          action: 'upsert',
+          body: {
+            objectID: 'rule-with-search-and-recommend',
+            conditions: [{ anchoring: 'contains', pattern: 'shoes' }],
+            consequence: {
+              behavior: {
+                injection: {
+                  main: { source: { search: { index: 'products', params: { filters: 'category:shoes' } } } },
+                  injectedItems: [
+                    {
+                      key: 'injected-recommend-from-rule-key',
+                      source: { recommend: { indexName: 'products', model: 'trending-items', threshold: 40 } },
+                      position: 1,
+                      length: 2,
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRules method.
+//
+// saveRules
+export async function snippetForSaveRules5(): Promise<void> {
+  // >SEPARATOR saveRules saveRules
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRules({
+    compositionID: 'rule-with-multifeed-recommend',
+    rules: {
+      requests: [
+        {
+          action: 'upsert',
+          body: {
+            objectID: 'rule-with-multifeed-recommend',
+            conditions: [{ anchoring: 'is', pattern: 'trending' }],
+            consequence: {
+              behavior: {
+                multifeed: {
+                  feeds: {
+                    trending: {
+                      injection: {
+                        main: {
+                          source: { recommend: { indexName: 'products', model: 'trending-items', threshold: 50 } },
+                        },
+                      },
+                    },
+                  },
+                  feedsOrder: ['trending'],
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRules method.
+//
+// saveRules
+export async function snippetForSaveRules6(): Promise<void> {
   // >SEPARATOR saveRules saveRules
   // Initialize the client
   const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');

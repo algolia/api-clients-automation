@@ -7,33 +7,64 @@ import Foundation
 #endif
 
 public struct MainRecommend: Codable, JSONEncodable {
-    /// Targeted index name.
-    public var index: String
+    /// Index to retrieve recommendations from.
+    public var indexName: String
+    public var model: Model
+    /// Minimum score a recommendation must have to be included.
+    public var threshold: Int
+    public var queryParameters: MainInjectionQueryParameters?
+    public var fallbackParameters: MainInjectionQueryParameters?
 
-    public init(index: String) {
-        self.index = index
+    public init(
+        indexName: String,
+        model: Model,
+        threshold: Int,
+        queryParameters: MainInjectionQueryParameters? = nil,
+        fallbackParameters: MainInjectionQueryParameters? = nil
+    ) {
+        self.indexName = indexName
+        self.model = model
+        self.threshold = threshold
+        self.queryParameters = queryParameters
+        self.fallbackParameters = fallbackParameters
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
-        case index
+        case indexName
+        case model
+        case threshold
+        case queryParameters
+        case fallbackParameters
     }
 
     // Encodable protocol methods
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(self.index, forKey: .index)
+        try container.encode(self.indexName, forKey: .indexName)
+        try container.encode(self.model, forKey: .model)
+        try container.encode(self.threshold, forKey: .threshold)
+        try container.encodeIfPresent(self.queryParameters, forKey: .queryParameters)
+        try container.encodeIfPresent(self.fallbackParameters, forKey: .fallbackParameters)
     }
 }
 
 extension MainRecommend: Equatable {
     public static func ==(lhs: MainRecommend, rhs: MainRecommend) -> Bool {
-        lhs.index == rhs.index
+        lhs.indexName == rhs.indexName &&
+            lhs.model == rhs.model &&
+            lhs.threshold == rhs.threshold &&
+            lhs.queryParameters == rhs.queryParameters &&
+            lhs.fallbackParameters == rhs.fallbackParameters
     }
 }
 
 extension MainRecommend: Hashable {
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(self.index.hashValue)
+        hasher.combine(self.indexName.hashValue)
+        hasher.combine(self.model.hashValue)
+        hasher.combine(self.threshold.hashValue)
+        hasher.combine(self.queryParameters?.hashValue)
+        hasher.combine(self.fallbackParameters?.hashValue)
     }
 }

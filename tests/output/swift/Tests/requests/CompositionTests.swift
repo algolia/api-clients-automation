@@ -1339,6 +1339,164 @@ final class CompositionClientRequestsTests: XCTestCase {
         let client = CompositionClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.putCompositionWithHTTPInfo(
+            compositionID: "my-recommend-compo",
+            composition: Composition(
+                objectID: "my-recommend-compo",
+                name: "my recommend composition",
+                behavior: CompositionBehavior
+                    .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                        main: InjectionMain(source: InjectionMainSource
+                            .injectionMainRecommendSource(InjectionMainRecommendSource(recommend: MainRecommend(
+                                indexName: "products",
+                                model: Model.trendingItems,
+                                threshold: 50
+                            )))),
+                        injectedItems: [InjectionInjectedItem(
+                            key: "injected-recommend-key",
+                            source: InjectedItemSource
+                                .injectedItemRecommendSource(InjectedItemRecommendSource(recommend: Recommend(
+                                    indexName: "products",
+                                    model: Model.trendingItems,
+                                    threshold: 30,
+                                    fallbackParameters: BaseInjectionQueryParameters(filters: "category:electronics")
+                                ))),
+                            position: 3,
+                            length: 2
+                        )]
+                    )))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"objectID\":\"my-recommend-compo\",\"name\":\"my recommend composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}},\"injectedItems\":[{\"key\":\"injected-recommend-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":30,\"fallbackParameters\":{\"filters\":\"category:electronics\"}}},\"position\":3,\"length\":2}]}}}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/my-recommend-compo")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// putComposition
+    func testPutCompositionTest6() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.putCompositionWithHTTPInfo(
+            compositionID: "my-search-and-recommend-compo",
+            composition: Composition(
+                objectID: "my-search-and-recommend-compo",
+                name: "my search main with recommend injection",
+                behavior: CompositionBehavior
+                    .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                        main: InjectionMain(source: InjectionMainSource
+                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                index: "products",
+                                params: MainInjectionQueryParameters(filters: "brand:nike")
+                            )))),
+                        injectedItems: [InjectionInjectedItem(
+                            key: "injected-recommend-key",
+                            source: InjectedItemSource
+                                .injectedItemRecommendSource(InjectedItemRecommendSource(recommend: Recommend(
+                                    indexName: "products",
+                                    model: Model.trendingItems,
+                                    threshold: 40
+                                ))),
+                            position: 1,
+                            length: 3
+                        )]
+                    )))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"objectID\":\"my-search-and-recommend-compo\",\"name\":\"my search main with recommend injection\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"filters\":\"brand:nike\"}}}},\"injectedItems\":[{\"key\":\"injected-recommend-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":40}},\"position\":1,\"length\":3}]}}}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/my-search-and-recommend-compo")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// putComposition
+    func testPutCompositionTest7() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.putCompositionWithHTTPInfo(
+            compositionID: "my-multifeed-recommend-compo",
+            composition: Composition(
+                objectID: "my-multifeed-recommend-compo",
+                name: "multifeed with recommend main",
+                behavior: CompositionBehavior
+                    .compositionMultifeedBehavior(CompositionMultifeedBehavior(multifeed: Multifeed(
+                        feeds: [
+                            "trending": FeedInjection(
+                                injection: Injection(main: InjectionMain(source: InjectionMainSource
+                                        .injectionMainRecommendSource(
+                                            InjectionMainRecommendSource(recommend: MainRecommend(
+                                                indexName: "products",
+                                                model: Model.trendingItems,
+                                                threshold: 50
+                                            ))
+                                        )))
+                            ),
+                        ],
+                        feedsOrder: ["trending"]
+                    )))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"objectID\":\"my-multifeed-recommend-compo\",\"name\":\"multifeed with recommend main\",\"behavior\":{\"multifeed\":{\"feeds\":{\"trending\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}}}}},\"feedsOrder\":[\"trending\"]}}}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/my-multifeed-recommend-compo")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// putComposition
+    func testPutCompositionTest8() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.putCompositionWithHTTPInfo(
             compositionID: "my-compo",
             composition: Composition(
                 objectID: "my-compo",
@@ -1813,6 +1971,175 @@ final class CompositionClientRequestsTests: XCTestCase {
 
     /// saveRules
     func testSaveRulesTest3() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRulesWithHTTPInfo(
+            compositionID: "rule-with-recommend",
+            rules: CompositionRulesBatchParams(requests: [RulesMultipleBatchRequest(
+                action: CompositionAction.upsert,
+                body: RulesBatchCompositionAction.compositionRule(CompositionRule(
+                    objectID: "rule-with-recommend",
+                    conditions: [CompositionCondition(pattern: "trending", anchoring: CompositionAnchoring.`is`)],
+                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                        .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                            main: InjectionMain(source: InjectionMainSource
+                                .injectionMainRecommendSource(InjectionMainRecommendSource(recommend: MainRecommend(
+                                    indexName: "products",
+                                    model: Model.trendingItems,
+                                    threshold: 50
+                                )))),
+                            injectedItems: [InjectionInjectedItem(
+                                key: "injected-recommend-from-rule-key",
+                                source: InjectedItemSource
+                                    .injectedItemRecommendSource(InjectedItemRecommendSource(recommend: Recommend(
+                                        indexName: "products",
+                                        model: Model.trendingItems,
+                                        threshold: 30,
+                                        fallbackParameters: BaseInjectionQueryParameters(
+                                            filters: "category:electronics"
+                                        )
+                                    ))),
+                                position: 2,
+                                length: 3
+                            )]
+                        ))))
+                ))
+            )])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-recommend\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"trending\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}},\"injectedItems\":[{\"key\":\"injected-recommend-from-rule-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":30,\"fallbackParameters\":{\"filters\":\"category:electronics\"}}},\"position\":2,\"length\":3}]}}}}}]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/rule-with-recommend/rules/batch")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// saveRules
+    func testSaveRulesTest4() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRulesWithHTTPInfo(
+            compositionID: "rule-with-search-and-recommend",
+            rules: CompositionRulesBatchParams(requests: [RulesMultipleBatchRequest(
+                action: CompositionAction.upsert,
+                body: RulesBatchCompositionAction.compositionRule(CompositionRule(
+                    objectID: "rule-with-search-and-recommend",
+                    conditions: [CompositionCondition(pattern: "shoes", anchoring: CompositionAnchoring.contains)],
+                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                        .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                            main: InjectionMain(source: InjectionMainSource
+                                .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                    index: "products",
+                                    params: MainInjectionQueryParameters(filters: "category:shoes")
+                                )))),
+                            injectedItems: [InjectionInjectedItem(
+                                key: "injected-recommend-from-rule-key",
+                                source: InjectedItemSource
+                                    .injectedItemRecommendSource(InjectedItemRecommendSource(recommend: Recommend(
+                                        indexName: "products",
+                                        model: Model.trendingItems,
+                                        threshold: 40
+                                    ))),
+                                position: 1,
+                                length: 2
+                            )]
+                        ))))
+                ))
+            )])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-search-and-recommend\",\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"shoes\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"filters\":\"category:shoes\"}}}},\"injectedItems\":[{\"key\":\"injected-recommend-from-rule-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":40}},\"position\":1,\"length\":2}]}}}}}]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/rule-with-search-and-recommend/rules/batch")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// saveRules
+    func testSaveRulesTest5() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRulesWithHTTPInfo(
+            compositionID: "rule-with-multifeed-recommend",
+            rules: CompositionRulesBatchParams(requests: [RulesMultipleBatchRequest(
+                action: CompositionAction.upsert,
+                body: RulesBatchCompositionAction.compositionRule(CompositionRule(
+                    objectID: "rule-with-multifeed-recommend",
+                    conditions: [CompositionCondition(pattern: "trending", anchoring: CompositionAnchoring.`is`)],
+                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                        .compositionMultifeedBehavior(CompositionMultifeedBehavior(multifeed: Multifeed(
+                            feeds: [
+                                "trending": FeedInjection(
+                                    injection: Injection(main: InjectionMain(source: InjectionMainSource
+                                            .injectionMainRecommendSource(
+                                                InjectionMainRecommendSource(recommend: MainRecommend(
+                                                    indexName: "products",
+                                                    model: Model.trendingItems,
+                                                    threshold: 50
+                                                ))
+                                            )))
+                                ),
+                            ],
+                            feedsOrder: ["trending"]
+                        ))))
+                ))
+            )])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-multifeed-recommend\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"trending\"}],\"consequence\":{\"behavior\":{\"multifeed\":{\"feeds\":{\"trending\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}}}}},\"feedsOrder\":[\"trending\"]}}}}}]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/rule-with-multifeed-recommend/rules/batch")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// saveRules
+    func testSaveRulesTest6() async throws {
         let configuration = try CompositionClientConfiguration(
             appID: CompositionClientRequestsTests.APPLICATION_ID,
             apiKey: CompositionClientRequestsTests.API_KEY

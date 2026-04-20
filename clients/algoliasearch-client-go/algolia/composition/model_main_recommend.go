@@ -8,17 +8,42 @@ import (
 
 // MainRecommend struct for MainRecommend.
 type MainRecommend struct {
-	// Targeted index name.
-	Index string `json:"index"`
+	// Index to retrieve recommendations from.
+	IndexName string `json:"indexName"`
+	Model     Model  `json:"model"`
+	// Minimum score a recommendation must have to be included.
+	Threshold          int32                         `json:"threshold"`
+	QueryParameters    *MainInjectionQueryParameters `json:"queryParameters,omitempty"`
+	FallbackParameters *MainInjectionQueryParameters `json:"fallbackParameters,omitempty"`
+}
+
+type MainRecommendOption func(f *MainRecommend)
+
+func WithMainRecommendQueryParameters(val MainInjectionQueryParameters) MainRecommendOption {
+	return func(f *MainRecommend) {
+		f.QueryParameters = &val
+	}
+}
+
+func WithMainRecommendFallbackParameters(val MainInjectionQueryParameters) MainRecommendOption {
+	return func(f *MainRecommend) {
+		f.FallbackParameters = &val
+	}
 }
 
 // NewMainRecommend instantiates a new MainRecommend object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed.
-func NewMainRecommend(index string) *MainRecommend {
+func NewMainRecommend(indexName string, model Model, threshold int32, opts ...MainRecommendOption) *MainRecommend {
 	this := &MainRecommend{}
-	this.Index = index
+	this.IndexName = indexName
+	this.Model = model
+
+	this.Threshold = threshold
+	for _, opt := range opts {
+		opt(this)
+	}
 
 	return this
 }
@@ -28,37 +53,177 @@ func NewEmptyMainRecommend() *MainRecommend {
 	return &MainRecommend{}
 }
 
-// GetIndex returns the Index field value.
-func (o *MainRecommend) GetIndex() string {
+// GetIndexName returns the IndexName field value.
+func (o *MainRecommend) GetIndexName() string {
 	if o == nil {
 		var ret string
 
 		return ret
 	}
 
-	return o.Index
+	return o.IndexName
 }
 
-// GetIndexOk returns a tuple with the Index field value
+// GetIndexNameOk returns a tuple with the IndexName field value
 // and a boolean to check if the value has been set.
-func (o *MainRecommend) GetIndexOk() (*string, bool) {
+func (o *MainRecommend) GetIndexNameOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
 
-	return &o.Index, true
+	return &o.IndexName, true
 }
 
-// SetIndex sets field value.
-func (o *MainRecommend) SetIndex(v string) *MainRecommend {
-	o.Index = v
+// SetIndexName sets field value.
+func (o *MainRecommend) SetIndexName(v string) *MainRecommend {
+	o.IndexName = v
+
+	return o
+}
+
+// GetModel returns the Model field value.
+func (o *MainRecommend) GetModel() Model {
+	if o == nil {
+		var ret Model
+
+		return ret
+	}
+
+	return o.Model
+}
+
+// GetModelOk returns a tuple with the Model field value
+// and a boolean to check if the value has been set.
+func (o *MainRecommend) GetModelOk() (*Model, bool) {
+	if o == nil {
+		return nil, false
+	}
+
+	return &o.Model, true
+}
+
+// SetModel sets field value.
+func (o *MainRecommend) SetModel(v Model) *MainRecommend {
+	o.Model = v
+
+	return o
+}
+
+// GetThreshold returns the Threshold field value.
+func (o *MainRecommend) GetThreshold() int32 {
+	if o == nil {
+		var ret int32
+
+		return ret
+	}
+
+	return o.Threshold
+}
+
+// GetThresholdOk returns a tuple with the Threshold field value
+// and a boolean to check if the value has been set.
+func (o *MainRecommend) GetThresholdOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+
+	return &o.Threshold, true
+}
+
+// SetThreshold sets field value.
+func (o *MainRecommend) SetThreshold(v int32) *MainRecommend {
+	o.Threshold = v
+
+	return o
+}
+
+// GetQueryParameters returns the QueryParameters field value if set, zero value otherwise.
+func (o *MainRecommend) GetQueryParameters() MainInjectionQueryParameters {
+	if o == nil || o.QueryParameters == nil {
+		var ret MainInjectionQueryParameters
+
+		return ret
+	}
+
+	return *o.QueryParameters
+}
+
+// GetQueryParametersOk returns a tuple with the QueryParameters field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MainRecommend) GetQueryParametersOk() (*MainInjectionQueryParameters, bool) {
+	if o == nil || o.QueryParameters == nil {
+		return nil, false
+	}
+
+	return o.QueryParameters, true
+}
+
+// HasQueryParameters returns a boolean if a field has been set.
+func (o *MainRecommend) HasQueryParameters() bool {
+	if o != nil && o.QueryParameters != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetQueryParameters gets a reference to the given MainInjectionQueryParameters and assigns it to the QueryParameters field.
+func (o *MainRecommend) SetQueryParameters(v *MainInjectionQueryParameters) *MainRecommend {
+	o.QueryParameters = v
+
+	return o
+}
+
+// GetFallbackParameters returns the FallbackParameters field value if set, zero value otherwise.
+func (o *MainRecommend) GetFallbackParameters() MainInjectionQueryParameters {
+	if o == nil || o.FallbackParameters == nil {
+		var ret MainInjectionQueryParameters
+
+		return ret
+	}
+
+	return *o.FallbackParameters
+}
+
+// GetFallbackParametersOk returns a tuple with the FallbackParameters field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MainRecommend) GetFallbackParametersOk() (*MainInjectionQueryParameters, bool) {
+	if o == nil || o.FallbackParameters == nil {
+		return nil, false
+	}
+
+	return o.FallbackParameters, true
+}
+
+// HasFallbackParameters returns a boolean if a field has been set.
+func (o *MainRecommend) HasFallbackParameters() bool {
+	if o != nil && o.FallbackParameters != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetFallbackParameters gets a reference to the given MainInjectionQueryParameters and assigns it to the FallbackParameters field.
+func (o *MainRecommend) SetFallbackParameters(v *MainInjectionQueryParameters) *MainRecommend {
+	o.FallbackParameters = v
 
 	return o
 }
 
 func (o MainRecommend) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
-	toSerialize["index"] = o.Index
+	toSerialize["indexName"] = o.IndexName
+	toSerialize["model"] = o.Model
+
+	toSerialize["threshold"] = o.Threshold
+	if o.QueryParameters != nil {
+		toSerialize["queryParameters"] = o.QueryParameters
+	}
+
+	if o.FallbackParameters != nil {
+		toSerialize["fallbackParameters"] = o.FallbackParameters
+	}
 
 	serialized, err := json.Marshal(toSerialize)
 	if err != nil {
@@ -70,7 +235,11 @@ func (o MainRecommend) MarshalJSON() ([]byte, error) {
 
 func (o MainRecommend) String() string {
 	out := ""
-	out += fmt.Sprintf("  index=%v\n", o.Index)
+	out += fmt.Sprintf("  indexName=%v\n", o.IndexName)
+	out += fmt.Sprintf("  model=%v\n", o.Model)
+	out += fmt.Sprintf("  threshold=%v\n", o.Threshold)
+	out += fmt.Sprintf("  queryParameters=%v\n", o.QueryParameters)
+	out += fmt.Sprintf("  fallbackParameters=%v\n", o.FallbackParameters)
 
 	return fmt.Sprintf("MainRecommend {\n%s}", out)
 }
