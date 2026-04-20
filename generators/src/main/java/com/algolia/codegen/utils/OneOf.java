@@ -102,6 +102,7 @@ public class OneOf {
       for (var m : model.getComposedSchemas().getOneOf()) {
         if (m.openApiType.equals(compoundModel.classname)) {
           m.vendorExtensions.put("x-discriminator-fields", values);
+          m.vendorExtensions.put("x-has-discriminator-fields", true);
         }
       }
     }
@@ -160,6 +161,7 @@ public class OneOf {
     }
 
     // For each variant without an explicit discriminator, compute unique required fields
+    var inferredFields = new LinkedHashMap<CodegenProperty, List<String>>();
     for (var entry : allRequired.entrySet()) {
       var prop = entry.getKey();
       if (prop.vendorExtensions.containsKey("x-discriminator-fields")) continue;
@@ -175,8 +177,34 @@ public class OneOf {
 
       if (!unique.isEmpty()) {
         Collections.sort(unique);
-        prop.vendorExtensions.put("x-discriminator-fields", unique);
+        inferredFields.put(prop, unique);
       }
+    }
+
+    // If every variant would get a discriminator (no natural fallback remains), designate
+    // the one with the most unique required fields as an unconditional fallback. This
+    // preserves backward-compatible behaviour for oneOf types like SearchResult<T> where
+    // one schema is a general catch-all and only the other needs a discriminator.
+    boolean hasNaturalFallback = allRequired
+      .keySet()
+      .stream()
+      .anyMatch(p -> !p.vendorExtensions.containsKey("x-discriminator-fields") && !inferredFields.containsKey(p));
+
+    CodegenProperty fallback = null;
+    if (!hasNaturalFallback && !inferredFields.isEmpty()) {
+      fallback = inferredFields
+        .entrySet()
+        .stream()
+        .max(Comparator.comparingInt(e -> e.getValue().size()))
+        .map(Map.Entry::getKey)
+        .orElse(null);
+    }
+
+    for (var entry : inferredFields.entrySet()) {
+      var prop = entry.getKey();
+      if (prop == fallback) continue;
+      prop.vendorExtensions.put("x-discriminator-fields", entry.getValue());
+      prop.vendorExtensions.put("x-has-discriminator-fields", true);
     }
   }
 
