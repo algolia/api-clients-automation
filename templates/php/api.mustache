@@ -419,7 +419,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
                     }
 
                     if (false === $ok) {
-                        throw new ExceededRetriesException('Stopped waiting for the ingestion event after '.$maxRetries.' retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher $maxRetries.');
+                        throw new ExceededRetriesException('Stopped waiting for the ingestion event after '.$maxRetries.' retries. This does not mean the operation failed; it may still complete.');
                     }
                 }
                 $offset = $offset + $waitBatchSize;
