@@ -118,7 +118,7 @@ final class Helpers
             );
         }
 
-        throw new ExceededRetriesException('The waitForTask helper stopped waiting after '.$maxRetries.' retries. This does not mean the indexing operation failed; it may still complete and publish later. Retry with a higher $maxRetries if you need to keep polling.');
+        throw new ExceededRetriesException('Stopped waiting for the task after '.$maxRetries.' retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher $maxRetries.');
     }
 
     /**
@@ -182,7 +182,7 @@ final class Helpers
             );
         }
 
-        throw new ExceededRetriesException('The client stopped waiting after '.$maxRetries.' retries. This does not necessarily mean the operation failed; it may still complete later. Retry with a higher $maxRetries if you need to keep polling.');
+        throw new ExceededRetriesException('Stopped waiting for the API key operation after '.$maxRetries.' retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher $maxRetries.');
     }
 
     /**
