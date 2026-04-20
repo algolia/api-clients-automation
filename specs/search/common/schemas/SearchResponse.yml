@@ -47,6 +47,9 @@ queryCategorization:
     normalizedQuery:
       type: string
       description: Processed and normalized version of the original search query.
+    count:
+      type: integer
+      description: Number of times this normalized query was observed during the training window.
     type:
       $ref: '#/queryCategorization_type'
     categories:
