@@ -350,8 +350,8 @@
     },
     "/1/indexing/{clusters}": {
       "get": {
-        "summary": "Retrieve indexing times",
-        "description": "Retrieves average times for indexing operations for selected clusters.",
+        "summary": "Retrieve indexing monitoring latency",
+        "description": "Retrieves indexing latency metrics for selected clusters.\n\nThis endpoint is intended for infrastructure-level monitoring and availability checks.\nThe returned value reflects latency measured on Algolia's internal monitoring index\nand is reported in milliseconds.\n\nThis metric isn't intended to represent the indexing performance of an individual\napplication or index. To measure when an indexing operation has completed for your\napplication, use the `waitTask` method.\n",
         "operationId": "getIndexingTime",
         "security": [],
         "tags": [
