@@ -159,17 +159,10 @@ public class OneOf {
       allRequired.put(prop, required);
     }
 
-    long noExplicitCount = allRequired
-      .keySet()
-      .stream()
-      .filter(p -> !p.vendorExtensions.containsKey("x-discriminator-fields"))
-      .count();
-
     // For each variant without an explicit discriminator, compute unique required fields
     for (var entry : allRequired.entrySet()) {
       var prop = entry.getKey();
       if (prop.vendorExtensions.containsKey("x-discriminator-fields")) continue;
-      if (noExplicitCount == 1) continue;
 
       var required = entry.getValue();
       if (required.isEmpty()) continue;
