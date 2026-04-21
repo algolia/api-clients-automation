@@ -159,10 +159,6 @@ public class OneOf {
       allRequired.put(prop, required);
     }
 
-    // If exactly one model variant lacks an explicit discriminator, it is the natural fallback
-    // (all other variants are already discriminated, so this one only matches when none did).
-    // Skip auto-infer for it so it is tried unconditionally, not gated on a required field
-    // that might be absent (e.g. via ResponseFields).
     long undiscriminatedCount = allRequired
       .keySet()
       .stream()
