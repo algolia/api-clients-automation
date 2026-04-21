@@ -223,14 +223,8 @@
           }
           catch (Exception exception)
           {
-            {{#vendorExtensions.x-has-discriminator-fields}}
-            // discriminator matched — surface the real deserialization error
-            throw new InvalidDataException($"Discriminator matched '{{{datatypeWithEnum}}}' but deserialization failed: {exception.Message}", exception);
-            {{/vendorExtensions.x-has-discriminator-fields}}
-            {{^vendorExtensions.x-has-discriminator-fields}}
             // deserialization failed, try the next one
             System.Diagnostics.Debug.WriteLine($"Failed to deserialize into {{{datatypeWithEnum}}}: {exception}");
-            {{/vendorExtensions.x-has-discriminator-fields}}
           }
         }
         {{/composedSchemas.oneOf}}

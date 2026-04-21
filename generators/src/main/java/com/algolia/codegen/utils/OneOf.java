@@ -176,7 +176,6 @@ public class OneOf {
       if (!unique.isEmpty()) {
         Collections.sort(unique);
         prop.vendorExtensions.put("x-discriminator-fields", unique);
-        prop.vendorExtensions.put("x-has-discriminator-fields", true);
       }
     }
   }
