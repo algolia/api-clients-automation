@@ -159,15 +159,21 @@ public class OneOf {
       allRequired.put(prop, required);
     }
 
+    // If exactly one model variant lacks an explicit discriminator, it is the natural fallback
+    // (all other variants are already discriminated, so this one only matches when none did).
+    // Skip auto-infer for it so it is tried unconditionally, not gated on a required field
+    // that might be absent (e.g. via ResponseFields).
+    long undiscriminatedCount = allRequired
+      .keySet()
+      .stream()
+      .filter(p -> !p.vendorExtensions.containsKey("x-discriminator-fields"))
+      .count();
+
     // For each variant without an explicit discriminator, compute unique required fields
     for (var entry : allRequired.entrySet()) {
       var prop = entry.getKey();
       if (prop.vendorExtensions.containsKey("x-discriminator-fields")) continue;
-      var modelsMap = models.get(prop.dataType);
-      if (modelsMap != null) {
-        var variantModel = modelsMap.getModels().get(0).getModel();
-        if (variantModel.vendorExtensions.containsKey("x-is-one-of-fallback")) continue;
-      }
+      if (undiscriminatedCount == 1) continue;
 
       var required = entry.getValue();
       if (required.isEmpty()) continue;
