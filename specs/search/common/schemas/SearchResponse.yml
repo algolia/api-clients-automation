@@ -1,6 +1,6 @@
 searchResponse:
   additionalProperties: true
-  x-discriminator-fields: []
+  x-is-one-of-fallback: true
   allOf:
     - $ref: '../../../common/schemas/SearchResponse.yml#/baseSearchResponse'
     - $ref: '../../../common/schemas/SearchResponse.yml#/SearchPagination'

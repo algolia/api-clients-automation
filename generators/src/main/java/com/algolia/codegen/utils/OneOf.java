@@ -163,6 +163,11 @@ public class OneOf {
     for (var entry : allRequired.entrySet()) {
       var prop = entry.getKey();
       if (prop.vendorExtensions.containsKey("x-discriminator-fields")) continue;
+      var modelsMap = models.get(prop.dataType);
+      if (modelsMap != null) {
+        var variantModel = modelsMap.getModels().get(0).getModel();
+        if (variantModel.vendorExtensions.containsKey("x-is-one-of-fallback")) continue;
+      }
 
       var required = entry.getValue();
       if (required.isEmpty()) continue;
