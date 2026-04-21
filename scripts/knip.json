@@ -9,6 +9,8 @@
         "ci/actions/restore-artifacts/src/index.ts",
         "ci/githubActions/createMatrix.ts",
         "ci/githubActions/setRunVariables.ts",
+        "index-maintenance/query-categorization/setupIndex.ts",
+        "index-maintenance/query-categorization/generateEvents.ts",
         "configReplacer.cjs",
         "husky/pre-commit.mjs",
         "release/createReleasePR.ts"

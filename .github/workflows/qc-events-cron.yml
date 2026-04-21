@@ -1,0 +1,38 @@
+name: Query Categorization events cron
+
+on:
+  schedule:
+    - cron: '0 6 1 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  generate:
+    name: Generate QC events
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          type: minimal
+
+      - name: Populate index
+        working-directory: scripts
+        env:
+          ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
+          ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
+        run: yarn runScript index-maintenance/query-categorization/setupIndex.ts
+
+      - name: Generate events
+        working-directory: scripts
+        env:
+          ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
+          ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
+        run: yarn runScript index-maintenance/query-categorization/generateEvents.ts
