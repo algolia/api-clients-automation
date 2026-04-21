@@ -160,10 +160,6 @@ public class OneOf {
       allRequired.put(prop, required);
     }
 
-    // If exactly one variant has no explicit discriminator, it is the intended fallback —
-    // the spec author has already identified all other variants with explicit discriminators,
-    // so the remaining one is the general catch-all. Auto-inferring a discriminator for it
-    // would break deserialization when that field is absent (e.g. stripped by responseFields).
     long noExplicitCount = allRequired
       .keySet()
       .stream()
