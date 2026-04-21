@@ -102,7 +102,6 @@ public class OneOf {
       for (var m : model.getComposedSchemas().getOneOf()) {
         if (m.openApiType.equals(compoundModel.classname)) {
           m.vendorExtensions.put("x-discriminator-fields", values);
-          m.vendorExtensions.put("x-has-discriminator-fields", true);
         }
       }
     }
