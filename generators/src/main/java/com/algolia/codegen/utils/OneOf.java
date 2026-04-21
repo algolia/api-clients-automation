@@ -160,11 +160,21 @@ public class OneOf {
       allRequired.put(prop, required);
     }
 
+    // If exactly one variant has no explicit discriminator, it is the intended fallback —
+    // the spec author has already identified all other variants with explicit discriminators,
+    // so the remaining one is the general catch-all. Auto-inferring a discriminator for it
+    // would break deserialization when that field is absent (e.g. stripped by responseFields).
+    long noExplicitCount = allRequired
+      .keySet()
+      .stream()
+      .filter(p -> !p.vendorExtensions.containsKey("x-discriminator-fields"))
+      .count();
+
     // For each variant without an explicit discriminator, compute unique required fields
-    var inferredFields = new LinkedHashMap<CodegenProperty, List<String>>();
     for (var entry : allRequired.entrySet()) {
       var prop = entry.getKey();
       if (prop.vendorExtensions.containsKey("x-discriminator-fields")) continue;
+      if (noExplicitCount == 1) continue;
 
       var required = entry.getValue();
       if (required.isEmpty()) continue;
@@ -177,34 +187,9 @@ public class OneOf {
 
       if (!unique.isEmpty()) {
         Collections.sort(unique);
-        inferredFields.put(prop, unique);
+        prop.vendorExtensions.put("x-discriminator-fields", unique);
+        prop.vendorExtensions.put("x-has-discriminator-fields", true);
       }
-    }
-
-    // If every variant would get a discriminator (no natural fallback remains), designate
-    // the one with the most unique required fields as an unconditional fallback. This
-    // preserves backward-compatible behaviour for oneOf types like SearchResult<T> where
-    // one schema is a general catch-all and only the other needs a discriminator.
-    boolean hasNaturalFallback = allRequired
-      .keySet()
-      .stream()
-      .anyMatch(p -> !p.vendorExtensions.containsKey("x-discriminator-fields") && !inferredFields.containsKey(p));
-
-    CodegenProperty fallback = null;
-    if (!hasNaturalFallback && !inferredFields.isEmpty()) {
-      fallback = inferredFields
-        .entrySet()
-        .stream()
-        .max(Comparator.comparingInt(e -> e.getValue().size()))
-        .map(Map.Entry::getKey)
-        .orElse(null);
-    }
-
-    for (var entry : inferredFields.entrySet()) {
-      var prop = entry.getKey();
-      if (prop == fallback) continue;
-      prop.vendorExtensions.put("x-discriminator-fields", entry.getValue());
-      prop.vendorExtensions.put("x-has-discriminator-fields", true);
     }
   }
 
