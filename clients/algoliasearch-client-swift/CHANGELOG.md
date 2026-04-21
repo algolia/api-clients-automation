@@ -1,3 +1,9 @@
+## [9.42.0](https://github.com/algolia/algoliasearch-client-swift/compare/9.41.2...9.42.0)
+
+- [39ea2c5cb3](https://github.com/algolia/api-clients-automation/commit/39ea2c5cb3) refactor(specs): split injection schema ([#6224](https://github.com/algolia/api-clients-automation/pull/6224)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [544091a5f2](https://github.com/algolia/api-clients-automation/commit/544091a5f2) feat(specs): introduce recommend source in Comp API client ([#6227](https://github.com/algolia/api-clients-automation/pull/6227)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [f73d69aae4](https://github.com/algolia/api-clients-automation/commit/f73d69aae4) fix(specs): clarify getIndexingTime ([#6276](https://github.com/algolia/api-clients-automation/pull/6276)) by [@kai687](https://github.com/kai687/)
+
 ## [9.41.2](https://github.com/algolia/algoliasearch-client-swift/compare/9.41.1...9.41.2)
 
 - [e8df706a83](https://github.com/algolia/api-clients-automation/commit/e8df706a83) fix(generators): auto-infer discriminator fields from unique required properties ([#6199](https://github.com/algolia/api-clients-automation/pull/6199)) by [@Fluf22](https://github.com/Fluf22/)
