@@ -19,7 +19,7 @@ post:
     If you know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
   requestBody:
     required: true
-    description: Muli-search request body. Results are returned in the same order as the requests.
+    description: Multi-query search request body. Results are returned in the same order as the requests.
     content:
       application/json:
         schema:
