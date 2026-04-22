@@ -118,10 +118,15 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
     async def close(self) -> None:
         """Closes the underlying `transporter` of the API client."""
         {{#isSearchClient}}
-        if self._ingestion_transporter is not None:
-            await self._ingestion_transporter.close()
+        try:
+            if self._ingestion_transporter is not None:
+                await self._ingestion_transporter.close()
+        finally:
+            await self._transporter.close()
         {{/isSearchClient}}
+        {{^isSearchClient}}
         await self._transporter.close()
+        {{/isSearchClient}}
     {{/isSyncClient}}
 
     {{#isSyncClient}}
@@ -134,10 +139,15 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
 
     def close(self) -> None:
         {{#isSearchClient}}
-        if self._ingestion_transporter is not None:
-            self._ingestion_transporter.close()
+        try:
+            if self._ingestion_transporter is not None:
+                self._ingestion_transporter.close()
+        finally:
+            self._transporter.close()
         {{/isSearchClient}}
+        {{^isSearchClient}}
         self._transporter.close()
+        {{/isSearchClient}}
     {{/isSyncClient}}
     
     {{^isSyncClient}}async {{/isSyncClient}}def set_client_api_key(self, api_key: str) -> None:
