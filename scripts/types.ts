@@ -45,9 +45,9 @@ export type Spec = {
   paths: Path;
   components: {
     schemas: Record<string, any>;
+    securitySchemes: Partial<{ appId?: Record<string, any>; apiKey?: Record<string, any> }>;
     parameters?: Record<string, any>;
     responses?: Record<string, any>;
-    securitySchemes: Partial<{ appId?: Record<string, any>; apiKey?: Record<string, any> }>;
   };
 };
 
