@@ -241,6 +241,9 @@ public class SearchForHits implements SearchQuery {
   @JsonProperty("type")
   private SearchTypeDefault type;
 
+  @JsonProperty("extensions")
+  private SearchExtensions extensions;
+
   public SearchForHits setParams(String params) {
     this.params = params;
     return this;
@@ -1433,6 +1436,17 @@ public class SearchForHits implements SearchQuery {
     return type;
   }
 
+  public SearchForHits setExtensions(SearchExtensions extensions) {
+    this.extensions = extensions;
+    return this;
+  }
+
+  /** Get extensions */
+  @javax.annotation.Nullable
+  public SearchExtensions getExtensions() {
+    return extensions;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -1518,7 +1532,8 @@ public class SearchForHits implements SearchQuery {
       Objects.equals(this.enableReRanking, searchForHits.enableReRanking) &&
       Objects.equals(this.reRankingApplyFilter, searchForHits.reRankingApplyFilter) &&
       Objects.equals(this.indexName, searchForHits.indexName) &&
-      Objects.equals(this.type, searchForHits.type)
+      Objects.equals(this.type, searchForHits.type) &&
+      Objects.equals(this.extensions, searchForHits.extensions)
     );
   }
 
@@ -1600,7 +1615,8 @@ public class SearchForHits implements SearchQuery {
       enableReRanking,
       reRankingApplyFilter,
       indexName,
-      type
+      type,
+      extensions
     );
   }
 
@@ -1687,6 +1703,7 @@ public class SearchForHits implements SearchQuery {
     sb.append("    reRankingApplyFilter: ").append(toIndentedString(reRankingApplyFilter)).append("\n");
     sb.append("    indexName: ").append(toIndentedString(indexName)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    extensions: ").append(toIndentedString(extensions)).append("\n");
     sb.append("}");
     return sb.toString();
   }

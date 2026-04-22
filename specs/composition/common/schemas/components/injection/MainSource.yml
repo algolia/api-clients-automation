@@ -1,0 +1,56 @@
+injectionMainSearchSource:
+  description: Organic result set will originate from a search request performed on the specified index.
+  x-discriminator-fields:
+    - search
+  type: object
+  additionalProperties: false
+  properties:
+    search:
+      title: mainSearch
+      type: object
+      additionalProperties: false
+      properties:
+        index:
+          type: string
+          description: Index to retrieve search results from.
+          example: Products
+        params:
+          $ref: './SearchQueryParams.yml#/mainInjectionQueryParameters'
+      required:
+        - index
+  required:
+    - search
+
+injectionMainRecommendSource:
+  description: Organic result set will originate from a recommend request.
+  x-discriminator-fields:
+    - recommend
+  type: object
+  additionalProperties: false
+  properties:
+    recommend:
+      title: mainRecommend
+      type: object
+      additionalProperties: false
+      properties:
+        indexName:
+          type: string
+          description: Index to retrieve recommendations from.
+          example: Products
+        model:
+          $ref: './RecommendModel.yml#/model'
+        threshold:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: Minimum score a recommendation must have to be included.
+        queryParameters:
+          $ref: './SearchQueryParams.yml#/mainInjectionQueryParameters'
+        fallbackParameters:
+          $ref: './SearchQueryParams.yml#/mainInjectionQueryParameters'
+      required:
+        - indexName
+        - model
+        - threshold
+  required:
+    - recommend

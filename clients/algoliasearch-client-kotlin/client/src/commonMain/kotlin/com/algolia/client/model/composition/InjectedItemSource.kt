@@ -17,24 +17,38 @@ import kotlinx.serialization.json.*
  * InjectedItemSource
  *
  * Implementations:
- * - [ExternalSource]
- * - [SearchSource]
+ * - [InjectedItemExternalSource]
+ * - [InjectedItemRecommendSource]
+ * - [InjectedItemSearchSource]
  */
 @Serializable(InjectedItemSourceSerializer::class)
 public sealed interface InjectedItemSource {
   @Serializable
   @JvmInline
-  public value class SearchSourceValue(public val value: SearchSource) : InjectedItemSource
+  public value class InjectedItemSearchSourceValue(public val value: InjectedItemSearchSource) :
+    InjectedItemSource
 
   @Serializable
   @JvmInline
-  public value class ExternalSourceValue(public val value: ExternalSource) : InjectedItemSource
+  public value class InjectedItemExternalSourceValue(public val value: InjectedItemExternalSource) :
+    InjectedItemSource
+
+  @Serializable
+  @JvmInline
+  public value class InjectedItemRecommendSourceValue(
+    public val value: InjectedItemRecommendSource
+  ) : InjectedItemSource
 
   public companion object {
 
-    public fun of(value: SearchSource): InjectedItemSource = SearchSourceValue(value)
+    public fun of(value: InjectedItemSearchSource): InjectedItemSource =
+      InjectedItemSearchSourceValue(value)
 
-    public fun of(value: ExternalSource): InjectedItemSource = ExternalSourceValue(value)
+    public fun of(value: InjectedItemExternalSource): InjectedItemSource =
+      InjectedItemExternalSourceValue(value)
+
+    public fun of(value: InjectedItemRecommendSource): InjectedItemSource =
+      InjectedItemRecommendSourceValue(value)
   }
 }
 
@@ -44,8 +58,12 @@ internal class InjectedItemSourceSerializer :
     element: JsonElement
   ): DeserializationStrategy<InjectedItemSource> {
     return when {
-      element is JsonObject && element.containsKey("search") -> SearchSource.serializer()
-      element is JsonObject && element.containsKey("external") -> ExternalSource.serializer()
+      element is JsonObject && element.containsKey("search") ->
+        InjectedItemSearchSource.serializer()
+      element is JsonObject && element.containsKey("external") ->
+        InjectedItemExternalSource.serializer()
+      element is JsonObject && element.containsKey("recommend") ->
+        InjectedItemRecommendSource.serializer()
       else -> throw AlgoliaClientException("Failed to deserialize json element: $element")
     }
   }

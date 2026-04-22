@@ -761,7 +761,7 @@ class CompositionClientRequestsTests {
                   .setBehavior(
                     new CompositionInjectionBehavior().setInjection(
                       new Injection().setMain(
-                        new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("bar")))
+                        new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("bar")))
                       )
                     )
                   )
@@ -801,14 +801,14 @@ class CompositionClientRequestsTests {
                   .setBehavior(
                     new CompositionInjectionBehavior().setInjection(
                       new Injection()
-                        .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
+                        .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("foo"))))
                         .setInjectedItems(
                           Arrays.asList(
-                            new InjectedItem()
+                            new InjectionInjectedItem()
                               .setKey("my-unique-external-group-key")
                               .setSource(
-                                new ExternalSource().setExternal(
-                                  new External()
+                                new InjectedItemExternalSource().setExternal(
+                                  new InjectedItemExternal()
                                     .setIndex("foo")
                                     .setOrdering(ExternalOrdering.USER_DEFINED)
                                     .setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
@@ -856,21 +856,21 @@ class CompositionClientRequestsTests {
                     new CompositionInjectionBehavior().setInjection(
                       new Injection()
                         .setMain(
-                          new Main().setSource(
-                            new CompositionSource().setSearch(
-                              new CompositionSourceSearch()
-                                .setIndex("foo")
-                                .setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
+                          new InjectionMain().setSource(
+                            new InjectionMainSearchSource().setSearch(
+                              new MainSearch().setIndex("foo").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
                             )
                           )
                         )
                         .setInjectedItems(
                           Arrays.asList(
-                            new InjectedItem()
+                            new InjectionInjectedItem()
                               .setKey("my-unique-group-key")
                               .setSource(
-                                new SearchSource().setSearch(
-                                  new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
+                                new InjectedItemSearchSource().setSearch(
+                                  new InjectedItemSearch()
+                                    .setIndex("foo")
+                                    .setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
                                 )
                               )
                               .setPosition(2)
@@ -898,11 +898,13 @@ class CompositionClientRequestsTests {
                                     )
                                 )
                               ),
-                            new InjectedItem()
+                            new InjectionInjectedItem()
                               .setKey("my-unique-group-key")
                               .setSource(
-                                new SearchSource().setSearch(
-                                  new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:puma"))
+                                new InjectedItemSearchSource().setSearch(
+                                  new InjectedItemSearch()
+                                    .setIndex("foo")
+                                    .setParams(new BaseInjectionQueryParameters().setFilters("brand:puma"))
                                 )
                               )
                               .setPosition(5)
@@ -968,12 +970,12 @@ class CompositionClientRequestsTests {
                   .setBehavior(
                     new CompositionInjectionBehavior().setInjection(
                       new Injection()
-                        .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
+                        .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("foo"))))
                         .setInjectedItems(
                           Arrays.asList(
-                            new InjectedItem()
+                            new InjectionInjectedItem()
                               .setKey("my-unique-injected-item-key")
-                              .setSource(new SearchSource().setSearch(new Search().setIndex("foo")))
+                              .setSource(new InjectedItemSearchSource().setSearch(new InjectedItemSearch().setIndex("foo")))
                               .setPosition(2)
                               .setLength(1)
                           )
@@ -1011,12 +1013,12 @@ class CompositionClientRequestsTests {
           .setBehavior(
             new CompositionInjectionBehavior().setInjection(
               new Injection()
-                .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
+                .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("foo"))))
                 .setInjectedItems(
                   Arrays.asList(
-                    new InjectedItem()
+                    new InjectionInjectedItem()
                       .setKey("my-unique-group-key")
-                      .setSource(new SearchSource().setSearch(new Search().setIndex("foo")))
+                      .setSource(new InjectedItemSearchSource().setSearch(new InjectedItemSearch().setIndex("foo")))
                       .setPosition(2)
                       .setLength(1)
                   )
@@ -1050,14 +1052,14 @@ class CompositionClientRequestsTests {
           .setBehavior(
             new CompositionInjectionBehavior().setInjection(
               new Injection()
-                .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
+                .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("foo"))))
                 .setInjectedItems(
                   Arrays.asList(
-                    new InjectedItem()
+                    new InjectionInjectedItem()
                       .setKey("my-unique-external-group-key")
                       .setSource(
-                        new ExternalSource().setExternal(
-                          new External()
+                        new InjectedItemExternalSource().setExternal(
+                          new InjectedItemExternal()
                             .setIndex("foo")
                             .setOrdering(ExternalOrdering.USER_DEFINED)
                             .setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
@@ -1097,19 +1099,19 @@ class CompositionClientRequestsTests {
             new CompositionInjectionBehavior().setInjection(
               new Injection()
                 .setMain(
-                  new Main().setSource(
-                    new CompositionSource().setSearch(
-                      new CompositionSourceSearch().setIndex("foo").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
+                  new InjectionMain().setSource(
+                    new InjectionMainSearchSource().setSearch(
+                      new MainSearch().setIndex("foo").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
                     )
                   )
                 )
                 .setInjectedItems(
                   Arrays.asList(
-                    new InjectedItem()
+                    new InjectionInjectedItem()
                       .setKey("my-unique-group-key")
                       .setSource(
-                        new SearchSource().setSearch(
-                          new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
+                        new InjectedItemSearchSource().setSearch(
+                          new InjectedItemSearch().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
                         )
                       )
                       .setPosition(2)
@@ -1137,11 +1139,11 @@ class CompositionClientRequestsTests {
                             )
                         )
                       ),
-                    new InjectedItem()
+                    new InjectionInjectedItem()
                       .setKey("my-unique-group-key")
                       .setSource(
-                        new SearchSource().setSearch(
-                          new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:puma"))
+                        new InjectedItemSearchSource().setSearch(
+                          new InjectedItemSearch().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:puma"))
                         )
                       )
                       .setPosition(5)
@@ -1201,17 +1203,17 @@ class CompositionClientRequestsTests {
             new CompositionInjectionBehavior().setInjection(
               new Injection()
                 .setMain(
-                  new Main().setSource(
-                    new CompositionSource().setSearch(
-                      new CompositionSourceSearch().setIndex("foo").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
+                  new InjectionMain().setSource(
+                    new InjectionMainSearchSource().setSearch(
+                      new MainSearch().setIndex("foo").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
                     )
                   )
                 )
                 .setInjectedItems(
                   Arrays.asList(
-                    new InjectedItem()
+                    new InjectionInjectedItem()
                       .setKey("my-unique-injected-item-key")
-                      .setSource(new SearchSource().setSearch(new Search().setIndex("foo")))
+                      .setSource(new InjectedItemSearchSource().setSearch(new InjectedItemSearch().setIndex("foo")))
                       .setPosition(2)
                       .setLength(1)
                   )
@@ -1254,7 +1256,7 @@ class CompositionClientRequestsTests {
           .setBehavior(
             new CompositionInjectionBehavior().setInjection(
               new Injection().setMain(
-                new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("products")))
+                new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("products")))
               )
             )
           )
@@ -1278,6 +1280,157 @@ class CompositionClientRequestsTests {
   void putCompositionTest5() {
     assertDoesNotThrow(() -> {
       client.putComposition(
+        "my-recommend-compo",
+        new Composition()
+          .setObjectID("my-recommend-compo")
+          .setName("my recommend composition")
+          .setBehavior(
+            new CompositionInjectionBehavior().setInjection(
+              new Injection()
+                .setMain(
+                  new InjectionMain().setSource(
+                    new InjectionMainRecommendSource().setRecommend(
+                      new MainRecommend().setIndexName("products").setModel(Model.TRENDING_ITEMS).setThreshold(50)
+                    )
+                  )
+                )
+                .setInjectedItems(
+                  Arrays.asList(
+                    new InjectionInjectedItem()
+                      .setKey("injected-recommend-key")
+                      .setSource(
+                        new InjectedItemRecommendSource().setRecommend(
+                          new Recommend()
+                            .setIndexName("products")
+                            .setModel(Model.TRENDING_ITEMS)
+                            .setThreshold(30)
+                            .setFallbackParameters(new BaseInjectionQueryParameters().setFilters("category:electronics"))
+                        )
+                      )
+                      .setPosition(3)
+                      .setLength(2)
+                  )
+                )
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/my-recommend-compo", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"my-recommend-compo\",\"name\":\"my recommend" +
+          " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}},\"injectedItems\":[{\"key\":\"injected-recommend-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":30,\"fallbackParameters\":{\"filters\":\"category:electronics\"}}},\"position\":3,\"length\":2}]}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("putComposition")
+  void putCompositionTest6() {
+    assertDoesNotThrow(() -> {
+      client.putComposition(
+        "my-search-and-recommend-compo",
+        new Composition()
+          .setObjectID("my-search-and-recommend-compo")
+          .setName("my search main with recommend injection")
+          .setBehavior(
+            new CompositionInjectionBehavior().setInjection(
+              new Injection()
+                .setMain(
+                  new InjectionMain().setSource(
+                    new InjectionMainSearchSource().setSearch(
+                      new MainSearch().setIndex("products").setParams(new MainInjectionQueryParameters().setFilters("brand:nike"))
+                    )
+                  )
+                )
+                .setInjectedItems(
+                  Arrays.asList(
+                    new InjectionInjectedItem()
+                      .setKey("injected-recommend-key")
+                      .setSource(
+                        new InjectedItemRecommendSource().setRecommend(
+                          new Recommend().setIndexName("products").setModel(Model.TRENDING_ITEMS).setThreshold(40)
+                        )
+                      )
+                      .setPosition(1)
+                      .setLength(3)
+                  )
+                )
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/my-search-and-recommend-compo", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"my-search-and-recommend-compo\",\"name\":\"my search main with" +
+          " recommend" +
+          " injection\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"filters\":\"brand:nike\"}}}},\"injectedItems\":[{\"key\":\"injected-recommend-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":40}},\"position\":1,\"length\":3}]}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("putComposition")
+  void putCompositionTest7() {
+    assertDoesNotThrow(() -> {
+      client.putComposition(
+        "my-multifeed-recommend-compo",
+        new Composition()
+          .setObjectID("my-multifeed-recommend-compo")
+          .setName("multifeed with recommend main")
+          .setBehavior(
+            new CompositionMultifeedBehavior().setMultifeed(
+              new Multifeed()
+                .setFeeds(
+                  new HashMap() {
+                    {
+                      put(
+                        "trending",
+                        new FeedInjection().setInjection(
+                          new Injection().setMain(
+                            new InjectionMain().setSource(
+                              new InjectionMainRecommendSource().setRecommend(
+                                new MainRecommend().setIndexName("products").setModel(Model.TRENDING_ITEMS).setThreshold(50)
+                              )
+                            )
+                          )
+                        )
+                      );
+                    }
+                  }
+                )
+                .setFeedsOrder(Arrays.asList("trending"))
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/my-multifeed-recommend-compo", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"my-multifeed-recommend-compo\",\"name\":\"multifeed with recommend" +
+          " main\",\"behavior\":{\"multifeed\":{\"feeds\":{\"trending\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}}}}},\"feedsOrder\":[\"trending\"]}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("putComposition")
+  void putCompositionTest8() {
+    assertDoesNotThrow(() -> {
+      client.putComposition(
         "my-compo",
         new Composition()
           .setObjectID("my-compo")
@@ -1293,21 +1446,19 @@ class CompositionClientRequestsTests {
                         new FeedInjection().setInjection(
                           new Injection()
                             .setMain(
-                              new Main().setSource(
-                                new CompositionSource().setSearch(
-                                  new CompositionSourceSearch()
-                                    .setIndex("products")
-                                    .setParams(new MainInjectionQueryParameters().setHitsPerPage(12))
+                              new InjectionMain().setSource(
+                                new InjectionMainSearchSource().setSearch(
+                                  new MainSearch().setIndex("products").setParams(new MainInjectionQueryParameters().setHitsPerPage(12))
                                 )
                               )
                             )
                             .setInjectedItems(
                               Arrays.asList(
-                                new InjectedItem()
+                                new InjectionInjectedItem()
                                   .setKey("featured-products")
                                   .setSource(
-                                    new SearchSource().setSearch(
-                                      new Search()
+                                    new InjectedItemSearchSource().setSearch(
+                                      new InjectedItemSearch()
                                         .setIndex("products")
                                         .setParams(new BaseInjectionQueryParameters().setFilters("featured:true"))
                                     )
@@ -1323,9 +1474,9 @@ class CompositionClientRequestsTests {
                         new FeedInjection().setInjection(
                           new Injection()
                             .setMain(
-                              new Main().setSource(
-                                new CompositionSource().setSearch(
-                                  new CompositionSourceSearch()
+                              new InjectionMain().setSource(
+                                new InjectionMainSearchSource().setSearch(
+                                  new MainSearch()
                                     .setIndex("articles")
                                     .setParams(
                                       new MainInjectionQueryParameters()
@@ -1337,11 +1488,11 @@ class CompositionClientRequestsTests {
                             )
                             .setInjectedItems(
                               Arrays.asList(
-                                new InjectedItem()
+                                new InjectionInjectedItem()
                                   .setKey("editorial-picks")
                                   .setSource(
-                                    new SearchSource().setSearch(
-                                      new Search()
+                                    new InjectedItemSearchSource().setSearch(
+                                      new InjectedItemSearch()
                                         .setIndex("articles")
                                         .setParams(new BaseInjectionQueryParameters().setFilters("editorial_pick:true"))
                                     )
@@ -1356,9 +1507,9 @@ class CompositionClientRequestsTests {
                         "videos",
                         new FeedInjection().setInjection(
                           new Injection().setMain(
-                            new Main().setSource(
-                              new CompositionSource().setSearch(
-                                new CompositionSourceSearch()
+                            new InjectionMain().setSource(
+                              new InjectionMainSearchSource().setSearch(
+                                new MainSearch()
                                   .setIndex("videos")
                                   .setParams(
                                     new MainInjectionQueryParameters()
@@ -1405,12 +1556,12 @@ class CompositionClientRequestsTests {
             new CompositionRuleConsequence().setBehavior(
               new CompositionInjectionBehavior().setInjection(
                 new Injection()
-                  .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
+                  .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("foo"))))
                   .setInjectedItems(
                     Arrays.asList(
-                      new InjectedItem()
+                      new InjectionInjectedItem()
                         .setKey("my-unique-group-from-rule-key")
-                        .setSource(new SearchSource().setSearch(new Search().setIndex("foo")))
+                        .setSource(new InjectedItemSearchSource().setSearch(new InjectedItemSearch().setIndex("foo")))
                         .setPosition(2)
                         .setLength(1)
                     )
@@ -1446,14 +1597,16 @@ class CompositionClientRequestsTests {
             new CompositionRuleConsequence().setBehavior(
               new CompositionInjectionBehavior().setInjection(
                 new Injection()
-                  .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
+                  .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("foo"))))
                   .setInjectedItems(
                     Arrays.asList(
-                      new InjectedItem()
+                      new InjectionInjectedItem()
                         .setKey("my-unique-group-from-rule-key")
                         .setSource(
-                          new SearchSource().setSearch(
-                            new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
+                          new InjectedItemSearchSource().setSearch(
+                            new InjectedItemSearch()
+                              .setIndex("foo")
+                              .setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
                           )
                         )
                         .setPosition(2)
@@ -1524,21 +1677,19 @@ class CompositionClientRequestsTests {
               new CompositionInjectionBehavior().setInjection(
                 new Injection()
                   .setMain(
-                    new Main().setSource(
-                      new CompositionSource().setSearch(
-                        new CompositionSourceSearch()
-                          .setIndex("my-index")
-                          .setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
+                    new InjectionMain().setSource(
+                      new InjectionMainSearchSource().setSearch(
+                        new MainSearch().setIndex("my-index").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
                       )
                     )
                   )
                   .setInjectedItems(
                     Arrays.asList(
-                      new InjectedItem()
+                      new InjectionInjectedItem()
                         .setKey("my-unique-external-group-from-rule-key")
                         .setSource(
-                          new ExternalSource().setExternal(
-                            new External()
+                          new InjectedItemExternalSource().setExternal(
+                            new InjectedItemExternal()
                               .setIndex("my-index")
                               .setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
                               .setOrdering(ExternalOrdering.USER_DEFINED)
@@ -1582,12 +1733,12 @@ class CompositionClientRequestsTests {
             new CompositionRuleConsequence().setBehavior(
               new CompositionInjectionBehavior().setInjection(
                 new Injection()
-                  .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("my-index"))))
+                  .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("my-index"))))
                   .setInjectedItems(
                     Arrays.asList(
-                      new InjectedItem()
+                      new InjectionInjectedItem()
                         .setKey("my-unique-injected-item-key")
-                        .setSource(new SearchSource().setSearch(new Search().setIndex("my-index")))
+                        .setSource(new InjectedItemSearchSource().setSearch(new InjectedItemSearch().setIndex("my-index")))
                         .setPosition(0)
                         .setLength(3)
                     )
@@ -1629,8 +1780,8 @@ class CompositionClientRequestsTests {
                     new CompositionRuleConsequence().setBehavior(
                       new CompositionInjectionBehavior().setInjection(
                         new Injection().setMain(
-                          new Main().setSource(
-                            new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("<YOUR_INDEX_NAME>"))
+                          new InjectionMain().setSource(
+                            new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("<YOUR_INDEX_NAME>"))
                           )
                         )
                       )
@@ -1671,14 +1822,18 @@ class CompositionClientRequestsTests {
                     new CompositionRuleConsequence().setBehavior(
                       new CompositionInjectionBehavior().setInjection(
                         new Injection()
-                          .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
+                          .setMain(
+                            new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("foo")))
+                          )
                           .setInjectedItems(
                             Arrays.asList(
-                              new InjectedItem()
+                              new InjectionInjectedItem()
                                 .setKey("my-unique-group-from-rule-key")
                                 .setSource(
-                                  new SearchSource().setSearch(
-                                    new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
+                                  new InjectedItemSearchSource().setSearch(
+                                    new InjectedItemSearch()
+                                      .setIndex("foo")
+                                      .setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
                                   )
                                 )
                                 .setPosition(2)
@@ -1756,9 +1911,9 @@ class CompositionClientRequestsTests {
                       new CompositionInjectionBehavior().setInjection(
                         new Injection()
                           .setMain(
-                            new Main().setSource(
-                              new CompositionSource().setSearch(
-                                new CompositionSourceSearch()
+                            new InjectionMain().setSource(
+                              new InjectionMainSearchSource().setSearch(
+                                new MainSearch()
                                   .setIndex("my-index")
                                   .setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
                               )
@@ -1766,11 +1921,11 @@ class CompositionClientRequestsTests {
                           )
                           .setInjectedItems(
                             Arrays.asList(
-                              new InjectedItem()
+                              new InjectionInjectedItem()
                                 .setKey("my-unique-external-group-from-rule-key")
                                 .setSource(
-                                  new ExternalSource().setExternal(
-                                    new External()
+                                  new InjectedItemExternalSource().setExternal(
+                                    new InjectedItemExternal()
                                       .setIndex("my-index")
                                       .setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
                                       .setOrdering(ExternalOrdering.USER_DEFINED)
@@ -1806,6 +1961,185 @@ class CompositionClientRequestsTests {
   void saveRulesTest3() {
     assertDoesNotThrow(() -> {
       client.saveRules(
+        "rule-with-recommend",
+        new CompositionRulesBatchParams().setRequests(
+          Arrays.asList(
+            new RulesMultipleBatchRequest()
+              .setAction(Action.UPSERT)
+              .setBody(
+                new CompositionRule()
+                  .setObjectID("rule-with-recommend")
+                  .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.IS).setPattern("trending")))
+                  .setConsequence(
+                    new CompositionRuleConsequence().setBehavior(
+                      new CompositionInjectionBehavior().setInjection(
+                        new Injection()
+                          .setMain(
+                            new InjectionMain().setSource(
+                              new InjectionMainRecommendSource().setRecommend(
+                                new MainRecommend().setIndexName("products").setModel(Model.TRENDING_ITEMS).setThreshold(50)
+                              )
+                            )
+                          )
+                          .setInjectedItems(
+                            Arrays.asList(
+                              new InjectionInjectedItem()
+                                .setKey("injected-recommend-from-rule-key")
+                                .setSource(
+                                  new InjectedItemRecommendSource().setRecommend(
+                                    new Recommend()
+                                      .setIndexName("products")
+                                      .setModel(Model.TRENDING_ITEMS)
+                                      .setThreshold(30)
+                                      .setFallbackParameters(new BaseInjectionQueryParameters().setFilters("category:electronics"))
+                                  )
+                                )
+                                .setPosition(2)
+                                .setLength(3)
+                            )
+                          )
+                      )
+                    )
+                  )
+              )
+          )
+        )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/rule-with-recommend/rules/batch", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-recommend\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"trending\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}},\"injectedItems\":[{\"key\":\"injected-recommend-from-rule-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":30,\"fallbackParameters\":{\"filters\":\"category:electronics\"}}},\"position\":2,\"length\":3}]}}}}}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("saveRules")
+  void saveRulesTest4() {
+    assertDoesNotThrow(() -> {
+      client.saveRules(
+        "rule-with-search-and-recommend",
+        new CompositionRulesBatchParams().setRequests(
+          Arrays.asList(
+            new RulesMultipleBatchRequest()
+              .setAction(Action.UPSERT)
+              .setBody(
+                new CompositionRule()
+                  .setObjectID("rule-with-search-and-recommend")
+                  .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("shoes")))
+                  .setConsequence(
+                    new CompositionRuleConsequence().setBehavior(
+                      new CompositionInjectionBehavior().setInjection(
+                        new Injection()
+                          .setMain(
+                            new InjectionMain().setSource(
+                              new InjectionMainSearchSource().setSearch(
+                                new MainSearch()
+                                  .setIndex("products")
+                                  .setParams(new MainInjectionQueryParameters().setFilters("category:shoes"))
+                              )
+                            )
+                          )
+                          .setInjectedItems(
+                            Arrays.asList(
+                              new InjectionInjectedItem()
+                                .setKey("injected-recommend-from-rule-key")
+                                .setSource(
+                                  new InjectedItemRecommendSource().setRecommend(
+                                    new Recommend().setIndexName("products").setModel(Model.TRENDING_ITEMS).setThreshold(40)
+                                  )
+                                )
+                                .setPosition(1)
+                                .setLength(2)
+                            )
+                          )
+                      )
+                    )
+                  )
+              )
+          )
+        )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/rule-with-search-and-recommend/rules/batch", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-search-and-recommend\",\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"shoes\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"filters\":\"category:shoes\"}}}},\"injectedItems\":[{\"key\":\"injected-recommend-from-rule-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":40}},\"position\":1,\"length\":2}]}}}}}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("saveRules")
+  void saveRulesTest5() {
+    assertDoesNotThrow(() -> {
+      client.saveRules(
+        "rule-with-multifeed-recommend",
+        new CompositionRulesBatchParams().setRequests(
+          Arrays.asList(
+            new RulesMultipleBatchRequest()
+              .setAction(Action.UPSERT)
+              .setBody(
+                new CompositionRule()
+                  .setObjectID("rule-with-multifeed-recommend")
+                  .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.IS).setPattern("trending")))
+                  .setConsequence(
+                    new CompositionRuleConsequence().setBehavior(
+                      new CompositionMultifeedBehavior().setMultifeed(
+                        new Multifeed()
+                          .setFeeds(
+                            new HashMap() {
+                              {
+                                put(
+                                  "trending",
+                                  new FeedInjection().setInjection(
+                                    new Injection().setMain(
+                                      new InjectionMain().setSource(
+                                        new InjectionMainRecommendSource().setRecommend(
+                                          new MainRecommend().setIndexName("products").setModel(Model.TRENDING_ITEMS).setThreshold(50)
+                                        )
+                                      )
+                                    )
+                                  )
+                                );
+                              }
+                            }
+                          )
+                          .setFeedsOrder(Arrays.asList("trending"))
+                      )
+                    )
+                  )
+              )
+          )
+        )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/rule-with-multifeed-recommend/rules/batch", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-multifeed-recommend\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"trending\"}],\"consequence\":{\"behavior\":{\"multifeed\":{\"feeds\":{\"trending\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}}}}},\"feedsOrder\":[\"trending\"]}}}}}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("saveRules")
+  void saveRulesTest6() {
+    assertDoesNotThrow(() -> {
+      client.saveRules(
         "my-compo",
         new CompositionRulesBatchParams().setRequests(
           Arrays.asList(
@@ -1827,13 +2161,13 @@ class CompositionClientRequestsTests {
                       new CompositionInjectionBehavior().setInjection(
                         new Injection()
                           .setMain(
-                            new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("my-index")))
+                            new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("my-index")))
                           )
                           .setInjectedItems(
                             Arrays.asList(
-                              new InjectedItem()
+                              new InjectionInjectedItem()
                                 .setKey("my-unique-injected-item-key")
-                                .setSource(new SearchSource().setSearch(new Search().setIndex("my-index")))
+                                .setSource(new InjectedItemSearchSource().setSearch(new InjectedItemSearch().setIndex("my-index")))
                                 .setPosition(0)
                                 .setLength(3)
                             )

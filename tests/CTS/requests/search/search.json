@@ -1128,5 +1128,57 @@
         ]
       }
     }
+  },
+  {
+    "testName": "withQueryCategorization",
+    "parameters": {
+      "requests": [
+        {
+          "indexName": "cts_e2e_query_categorization",
+          "query": "sofa",
+          "extensions": {
+            "queryCategorization": {
+              "enableCategoriesRetrieval": true,
+              "enableAutoFiltering": false
+            }
+          }
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/indexes/*/queries",
+      "method": "POST",
+      "body": {
+        "requests": [
+          {
+            "indexName": "cts_e2e_query_categorization",
+            "query": "sofa",
+            "extensions": {
+              "queryCategorization": {
+                "enableCategoriesRetrieval": true,
+                "enableAutoFiltering": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "results": [
+          {
+            "index": "cts_e2e_query_categorization",
+            "query": "sofa",
+            "extensions": {
+              "queryCategorization": {
+                "normalizedQuery": "sofa",
+                "categories": [{}]
+              }
+            }
+          }
+        ]
+      }
+    }
   }
 ]

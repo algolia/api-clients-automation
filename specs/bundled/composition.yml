@@ -3531,8 +3531,82 @@ components:
               $ref: '#/components/schemas/sortFacetValuesBy'
             sumOrFiltersScores:
               $ref: '#/components/schemas/sumOrFiltersScores'
-    SearchSource:
-      title: searchSource
+    injectionMainSearchSource:
+      description: >-
+        Organic result set will originate from a search request performed on the
+        specified index.
+      x-discriminator-fields:
+        - search
+      type: object
+      additionalProperties: false
+      properties:
+        search:
+          title: mainSearch
+          type: object
+          additionalProperties: false
+          properties:
+            index:
+              type: string
+              description: Index to retrieve search results from.
+              example: Products
+            params:
+              $ref: '#/components/schemas/mainInjectionQueryParameters'
+          required:
+            - index
+      required:
+        - search
+    model:
+      type: string
+      enum:
+        - trending-items
+      description: Recommendation model to use for retrieving recommendations.
+      example: trending-items
+    injectionMainRecommendSource:
+      description: Organic result set will originate from a recommend request.
+      x-discriminator-fields:
+        - recommend
+      type: object
+      additionalProperties: false
+      properties:
+        recommend:
+          title: mainRecommend
+          type: object
+          additionalProperties: false
+          properties:
+            indexName:
+              type: string
+              description: Index to retrieve recommendations from.
+              example: Products
+            model:
+              $ref: '#/components/schemas/model'
+            threshold:
+              type: integer
+              minimum: 0
+              maximum: 100
+              description: Minimum score a recommendation must have to be included.
+            queryParameters:
+              $ref: '#/components/schemas/mainInjectionQueryParameters'
+            fallbackParameters:
+              $ref: '#/components/schemas/mainInjectionQueryParameters'
+          required:
+            - indexName
+            - model
+            - threshold
+      required:
+        - recommend
+    injectionMainSource:
+      description: Source to be used to retrieve organic result set.
+      oneOf:
+        - $ref: '#/components/schemas/injectionMainSearchSource'
+        - $ref: '#/components/schemas/injectionMainRecommendSource'
+    injectionMain:
+      type: object
+      additionalProperties: false
+      description: Main defines the organic result set of the injection.
+      properties:
+        source:
+          $ref: '#/components/schemas/injectionMainSource'
+    injectedItemSearchSource:
       description: >-
         Injected items will originate from a search request performed on the
         specified index.
@@ -3542,7 +3616,7 @@ components:
       additionalProperties: false
       properties:
         search:
-          title: search
+          title: injectedItemSearch
           type: object
           additionalProperties: false
           properties:
@@ -3561,8 +3635,7 @@ components:
         - default
         - userDefined
       default: default
-    ExternalSource:
-      title: externalSource
+    injectedItemExternalSource:
       description: >-
         Injected items will originate from externally provided objectIDs (that
         must exist in the index) given at runtime in the run request payload.
@@ -3572,7 +3645,7 @@ components:
       additionalProperties: false
       properties:
         external:
-          title: external
+          title: injectedItemExternal
           type: object
           additionalProperties: false
           properties:
@@ -3588,11 +3661,48 @@ components:
             - index
       required:
         - external
+    injectedItemRecommendSource:
+      title: injectedItemRecommendSource
+      description: >-
+        Injected items will originate from a recommendation request performed on
+        the specified index.
+      x-discriminator-fields:
+        - recommend
+      type: object
+      additionalProperties: false
+      properties:
+        recommend:
+          title: recommend
+          type: object
+          additionalProperties: false
+          properties:
+            indexName:
+              type: string
+              description: Index to retrieve recommendations from.
+              example: Products
+            model:
+              $ref: '#/components/schemas/model'
+            threshold:
+              type: integer
+              minimum: 0
+              maximum: 100
+              description: Minimum score a recommendation must have to be included.
+            queryParameters:
+              $ref: '#/components/schemas/baseInjectionQueryParameters'
+            fallbackParameters:
+              $ref: '#/components/schemas/baseInjectionQueryParameters'
+          required:
+            - indexName
+            - model
+            - threshold
+      required:
+        - recommend
     injectedItemSource:
       oneOf:
-        - $ref: '#/components/schemas/SearchSource'
-        - $ref: '#/components/schemas/ExternalSource'
-    injectedItem:
+        - $ref: '#/components/schemas/injectedItemSearchSource'
+        - $ref: '#/components/schemas/injectedItemExternalSource'
+        - $ref: '#/components/schemas/injectedItemRecommendSource'
+    injectionInjectedItem:
       type: object
       additionalProperties: false
       properties:
@@ -3600,16 +3710,16 @@ components:
           type: string
           description: injected Item unique identifier.
         source:
-          description: Search source to be used to inject items into result set.
+          description: Source to be used to inject items into result set.
           $ref: '#/components/schemas/injectedItemSource'
         position:
           type: integer
           minimum: 0
-          maximum: 19
+          maximum: 99
         length:
           type: integer
           minimum: 0
-          maximum: 20
+          maximum: 50
         metadata:
           title: injectedItemMetadata
           type: object
@@ -3663,39 +3773,14 @@ components:
       additionalProperties: false
       properties:
         main:
-          title: main
-          type: object
-          additionalProperties: false
-          properties:
-            source:
-              title: compositionSource
-              type: object
-              additionalProperties: false
-              properties:
-                search:
-                  title: compositionSourceSearch
-                  type: object
-                  additionalProperties: false
-                  properties:
-                    index:
-                      type: string
-                      description: Composition Main Index name.
-                      example: Products
-                    params:
-                      $ref: '#/components/schemas/mainInjectionQueryParameters'
-                  required:
-                    - index
-              required:
-                - search
-          required:
-            - source
+          $ref: '#/components/schemas/injectionMain'
         injectedItems:
           type: array
           description: list of injected items of the current Composition.
           minItems: 0
-          maxItems: 2
+          maxItems: 3
           items:
-            $ref: '#/components/schemas/injectedItem'
+            $ref: '#/components/schemas/injectionInjectedItem'
         deduplication:
           title: deduplication
           type: object

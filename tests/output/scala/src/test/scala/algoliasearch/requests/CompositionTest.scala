@@ -628,10 +628,12 @@ class CompositionTest extends AnyFunSuite {
               name = "my first composition",
               behavior = CompositionInjectionBehavior(
                 injection = Injection(
-                  main = Main(
-                    source = CompositionSource(
-                      search = CompositionSourceSearch(
-                        index = "bar"
+                  main = InjectionMain(
+                    source = Some(
+                      InjectionMainSearchSource(
+                        search = MainSearch(
+                          index = "bar"
+                        )
                       )
                     )
                   )
@@ -673,19 +675,21 @@ class CompositionTest extends AnyFunSuite {
               name = "my first composition",
               behavior = CompositionInjectionBehavior(
                 injection = Injection(
-                  main = Main(
-                    source = CompositionSource(
-                      search = CompositionSourceSearch(
-                        index = "foo"
+                  main = InjectionMain(
+                    source = Some(
+                      InjectionMainSearchSource(
+                        search = MainSearch(
+                          index = "foo"
+                        )
                       )
                     )
                   ),
                   injectedItems = Some(
                     Seq(
-                      InjectedItem(
+                      InjectionInjectedItem(
                         key = "my-unique-external-group-key",
-                        source = ExternalSource(
-                          external = External(
+                        source = InjectedItemExternalSource(
+                          external = InjectedItemExternal(
                             index = "foo",
                             ordering = Some(ExternalOrdering.withName("userDefined")),
                             params = Some(
@@ -732,13 +736,15 @@ class CompositionTest extends AnyFunSuite {
               name = "my composition",
               behavior = CompositionInjectionBehavior(
                 injection = Injection(
-                  main = Main(
-                    source = CompositionSource(
-                      search = CompositionSourceSearch(
-                        index = "foo",
-                        params = Some(
-                          MainInjectionQueryParameters(
-                            filters = Some("brand:adidas")
+                  main = InjectionMain(
+                    source = Some(
+                      InjectionMainSearchSource(
+                        search = MainSearch(
+                          index = "foo",
+                          params = Some(
+                            MainInjectionQueryParameters(
+                              filters = Some("brand:adidas")
+                            )
                           )
                         )
                       )
@@ -746,10 +752,10 @@ class CompositionTest extends AnyFunSuite {
                   ),
                   injectedItems = Some(
                     Seq(
-                      InjectedItem(
+                      InjectionInjectedItem(
                         key = "my-unique-group-key",
-                        source = SearchSource(
-                          search = Search(
+                        source = InjectedItemSearchSource(
+                          search = InjectedItemSearch(
                             index = "foo",
                             params = Some(
                               BaseInjectionQueryParameters(
@@ -782,10 +788,10 @@ class CompositionTest extends AnyFunSuite {
                           )
                         )
                       ),
-                      InjectedItem(
+                      InjectionInjectedItem(
                         key = "my-unique-group-key",
-                        source = SearchSource(
-                          search = Search(
+                        source = InjectedItemSearchSource(
+                          search = InjectedItemSearch(
                             index = "foo",
                             params = Some(
                               BaseInjectionQueryParameters(
@@ -852,19 +858,21 @@ class CompositionTest extends AnyFunSuite {
               name = "my composition",
               behavior = CompositionInjectionBehavior(
                 injection = Injection(
-                  main = Main(
-                    source = CompositionSource(
-                      search = CompositionSourceSearch(
-                        index = "foo"
+                  main = InjectionMain(
+                    source = Some(
+                      InjectionMainSearchSource(
+                        search = MainSearch(
+                          index = "foo"
+                        )
                       )
                     )
                   ),
                   injectedItems = Some(
                     Seq(
-                      InjectedItem(
+                      InjectionInjectedItem(
                         key = "my-unique-injected-item-key",
-                        source = SearchSource(
-                          search = Search(
+                        source = InjectedItemSearchSource(
+                          search = InjectedItemSearch(
                             index = "foo"
                           )
                         ),
@@ -907,19 +915,21 @@ class CompositionTest extends AnyFunSuite {
         name = "my first composition",
         behavior = CompositionInjectionBehavior(
           injection = Injection(
-            main = Main(
-              source = CompositionSource(
-                search = CompositionSourceSearch(
-                  index = "foo"
+            main = InjectionMain(
+              source = Some(
+                InjectionMainSearchSource(
+                  search = MainSearch(
+                    index = "foo"
+                  )
                 )
               )
             ),
             injectedItems = Some(
               Seq(
-                InjectedItem(
+                InjectionInjectedItem(
                   key = "my-unique-group-key",
-                  source = SearchSource(
-                    search = Search(
+                  source = InjectedItemSearchSource(
+                    search = InjectedItemSearch(
                       index = "foo"
                     )
                   ),
@@ -954,19 +964,21 @@ class CompositionTest extends AnyFunSuite {
         name = "my first composition",
         behavior = CompositionInjectionBehavior(
           injection = Injection(
-            main = Main(
-              source = CompositionSource(
-                search = CompositionSourceSearch(
-                  index = "foo"
+            main = InjectionMain(
+              source = Some(
+                InjectionMainSearchSource(
+                  search = MainSearch(
+                    index = "foo"
+                  )
                 )
               )
             ),
             injectedItems = Some(
               Seq(
-                InjectedItem(
+                InjectionInjectedItem(
                   key = "my-unique-external-group-key",
-                  source = ExternalSource(
-                    external = External(
+                  source = InjectedItemExternalSource(
+                    external = InjectedItemExternal(
                       index = "foo",
                       ordering = Some(ExternalOrdering.withName("userDefined")),
                       params = Some(
@@ -1007,13 +1019,15 @@ class CompositionTest extends AnyFunSuite {
         name = "my composition",
         behavior = CompositionInjectionBehavior(
           injection = Injection(
-            main = Main(
-              source = CompositionSource(
-                search = CompositionSourceSearch(
-                  index = "foo",
-                  params = Some(
-                    MainInjectionQueryParameters(
-                      filters = Some("brand:adidas")
+            main = InjectionMain(
+              source = Some(
+                InjectionMainSearchSource(
+                  search = MainSearch(
+                    index = "foo",
+                    params = Some(
+                      MainInjectionQueryParameters(
+                        filters = Some("brand:adidas")
+                      )
                     )
                   )
                 )
@@ -1021,10 +1035,10 @@ class CompositionTest extends AnyFunSuite {
             ),
             injectedItems = Some(
               Seq(
-                InjectedItem(
+                InjectionInjectedItem(
                   key = "my-unique-group-key",
-                  source = SearchSource(
-                    search = Search(
+                  source = InjectedItemSearchSource(
+                    search = InjectedItemSearch(
                       index = "foo",
                       params = Some(
                         BaseInjectionQueryParameters(
@@ -1057,10 +1071,10 @@ class CompositionTest extends AnyFunSuite {
                     )
                   )
                 ),
-                InjectedItem(
+                InjectionInjectedItem(
                   key = "my-unique-group-key",
-                  source = SearchSource(
-                    search = Search(
+                  source = InjectedItemSearchSource(
+                    search = InjectedItemSearch(
                       index = "foo",
                       params = Some(
                         BaseInjectionQueryParameters(
@@ -1121,13 +1135,15 @@ class CompositionTest extends AnyFunSuite {
         name = "my composition",
         behavior = CompositionInjectionBehavior(
           injection = Injection(
-            main = Main(
-              source = CompositionSource(
-                search = CompositionSourceSearch(
-                  index = "foo",
-                  params = Some(
-                    MainInjectionQueryParameters(
-                      filters = Some("brand:adidas")
+            main = InjectionMain(
+              source = Some(
+                InjectionMainSearchSource(
+                  search = MainSearch(
+                    index = "foo",
+                    params = Some(
+                      MainInjectionQueryParameters(
+                        filters = Some("brand:adidas")
+                      )
                     )
                   )
                 )
@@ -1135,10 +1151,10 @@ class CompositionTest extends AnyFunSuite {
             ),
             injectedItems = Some(
               Seq(
-                InjectedItem(
+                InjectionInjectedItem(
                   key = "my-unique-injected-item-key",
-                  source = SearchSource(
-                    search = Search(
+                  source = InjectedItemSearchSource(
+                    search = InjectedItemSearch(
                       index = "foo"
                     )
                   ),
@@ -1179,10 +1195,12 @@ class CompositionTest extends AnyFunSuite {
         sortingStrategy = Some(Map("Price-asc" -> "products-low-to-high", "Price-desc" -> "products-high-to-low")),
         behavior = CompositionInjectionBehavior(
           injection = Injection(
-            main = Main(
-              source = CompositionSource(
-                search = CompositionSourceSearch(
-                  index = "products"
+            main = InjectionMain(
+              source = Some(
+                InjectionMainSearchSource(
+                  search = MainSearch(
+                    index = "products"
+                  )
                 )
               )
             )
@@ -1206,6 +1224,164 @@ class CompositionTest extends AnyFunSuite {
   test("putComposition5") {
     val (client, echo) = testClient()
     val future = client.putComposition(
+      compositionID = "my-recommend-compo",
+      composition = Composition(
+        objectID = "my-recommend-compo",
+        name = "my recommend composition",
+        behavior = CompositionInjectionBehavior(
+          injection = Injection(
+            main = InjectionMain(
+              source = Some(
+                InjectionMainRecommendSource(
+                  recommend = MainRecommend(
+                    indexName = "products",
+                    model = Model.withName("trending-items"),
+                    threshold = 50
+                  )
+                )
+              )
+            ),
+            injectedItems = Some(
+              Seq(
+                InjectionInjectedItem(
+                  key = "injected-recommend-key",
+                  source = InjectedItemRecommendSource(
+                    recommend = Recommend(
+                      indexName = "products",
+                      model = Model.withName("trending-items"),
+                      threshold = 30,
+                      fallbackParameters = Some(
+                        BaseInjectionQueryParameters(
+                          filters = Some("category:electronics")
+                        )
+                      )
+                    )
+                  ),
+                  position = 3,
+                  length = 2
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/my-recommend-compo")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"objectID":"my-recommend-compo","name":"my recommend composition","behavior":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}},"injectedItems":[{"key":"injected-recommend-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":30,"fallbackParameters":{"filters":"category:electronics"}}},"position":3,"length":2}]}}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("putComposition6") {
+    val (client, echo) = testClient()
+    val future = client.putComposition(
+      compositionID = "my-search-and-recommend-compo",
+      composition = Composition(
+        objectID = "my-search-and-recommend-compo",
+        name = "my search main with recommend injection",
+        behavior = CompositionInjectionBehavior(
+          injection = Injection(
+            main = InjectionMain(
+              source = Some(
+                InjectionMainSearchSource(
+                  search = MainSearch(
+                    index = "products",
+                    params = Some(
+                      MainInjectionQueryParameters(
+                        filters = Some("brand:nike")
+                      )
+                    )
+                  )
+                )
+              )
+            ),
+            injectedItems = Some(
+              Seq(
+                InjectionInjectedItem(
+                  key = "injected-recommend-key",
+                  source = InjectedItemRecommendSource(
+                    recommend = Recommend(
+                      indexName = "products",
+                      model = Model.withName("trending-items"),
+                      threshold = 40
+                    )
+                  ),
+                  position = 1,
+                  length = 3
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/my-search-and-recommend-compo")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"objectID":"my-search-and-recommend-compo","name":"my search main with recommend injection","behavior":{"injection":{"main":{"source":{"search":{"index":"products","params":{"filters":"brand:nike"}}}},"injectedItems":[{"key":"injected-recommend-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":40}},"position":1,"length":3}]}}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("putComposition7") {
+    val (client, echo) = testClient()
+    val future = client.putComposition(
+      compositionID = "my-multifeed-recommend-compo",
+      composition = Composition(
+        objectID = "my-multifeed-recommend-compo",
+        name = "multifeed with recommend main",
+        behavior = CompositionMultifeedBehavior(
+          multifeed = Multifeed(
+            feeds = Map(
+              "trending" -> FeedInjection(
+                injection = Injection(
+                  main = InjectionMain(
+                    source = Some(
+                      InjectionMainRecommendSource(
+                        recommend = MainRecommend(
+                          indexName = "products",
+                          model = Model.withName("trending-items"),
+                          threshold = 50
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            ),
+            feedsOrder = Some(Seq("trending"))
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/my-multifeed-recommend-compo")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"objectID":"my-multifeed-recommend-compo","name":"multifeed with recommend main","behavior":{"multifeed":{"feeds":{"trending":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}}}}},"feedsOrder":["trending"]}}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("putComposition8") {
+    val (client, echo) = testClient()
+    val future = client.putComposition(
       compositionID = "my-compo",
       composition = Composition(
         objectID = "my-compo",
@@ -1215,13 +1391,15 @@ class CompositionTest extends AnyFunSuite {
             feeds = Map(
               "products" -> FeedInjection(
                 injection = Injection(
-                  main = Main(
-                    source = CompositionSource(
-                      search = CompositionSourceSearch(
-                        index = "products",
-                        params = Some(
-                          MainInjectionQueryParameters(
-                            hitsPerPage = Some(12)
+                  main = InjectionMain(
+                    source = Some(
+                      InjectionMainSearchSource(
+                        search = MainSearch(
+                          index = "products",
+                          params = Some(
+                            MainInjectionQueryParameters(
+                              hitsPerPage = Some(12)
+                            )
                           )
                         )
                       )
@@ -1229,10 +1407,10 @@ class CompositionTest extends AnyFunSuite {
                   ),
                   injectedItems = Some(
                     Seq(
-                      InjectedItem(
+                      InjectionInjectedItem(
                         key = "featured-products",
-                        source = SearchSource(
-                          search = Search(
+                        source = InjectedItemSearchSource(
+                          search = InjectedItemSearch(
                             index = "products",
                             params = Some(
                               BaseInjectionQueryParameters(
@@ -1250,14 +1428,16 @@ class CompositionTest extends AnyFunSuite {
               ),
               "articles" -> FeedInjection(
                 injection = Injection(
-                  main = Main(
-                    source = CompositionSource(
-                      search = CompositionSourceSearch(
-                        index = "articles",
-                        params = Some(
-                          MainInjectionQueryParameters(
-                            hitsPerPage = Some(5),
-                            attributesToRetrieve = Some(Seq("title", "excerpt", "publishedAt"))
+                  main = InjectionMain(
+                    source = Some(
+                      InjectionMainSearchSource(
+                        search = MainSearch(
+                          index = "articles",
+                          params = Some(
+                            MainInjectionQueryParameters(
+                              hitsPerPage = Some(5),
+                              attributesToRetrieve = Some(Seq("title", "excerpt", "publishedAt"))
+                            )
                           )
                         )
                       )
@@ -1265,10 +1445,10 @@ class CompositionTest extends AnyFunSuite {
                   ),
                   injectedItems = Some(
                     Seq(
-                      InjectedItem(
+                      InjectionInjectedItem(
                         key = "editorial-picks",
-                        source = SearchSource(
-                          search = Search(
+                        source = InjectedItemSearchSource(
+                          search = InjectedItemSearch(
                             index = "articles",
                             params = Some(
                               BaseInjectionQueryParameters(
@@ -1286,14 +1466,16 @@ class CompositionTest extends AnyFunSuite {
               ),
               "videos" -> FeedInjection(
                 injection = Injection(
-                  main = Main(
-                    source = CompositionSource(
-                      search = CompositionSourceSearch(
-                        index = "videos",
-                        params = Some(
-                          MainInjectionQueryParameters(
-                            hitsPerPage = Some(3),
-                            attributesToRetrieve = Some(Seq("title", "thumbnail", "duration"))
+                  main = InjectionMain(
+                    source = Some(
+                      InjectionMainSearchSource(
+                        search = MainSearch(
+                          index = "videos",
+                          params = Some(
+                            MainInjectionQueryParameters(
+                              hitsPerPage = Some(3),
+                              attributesToRetrieve = Some(Seq("title", "thumbnail", "duration"))
+                            )
                           )
                         )
                       )
@@ -1338,19 +1520,21 @@ class CompositionTest extends AnyFunSuite {
         consequence = CompositionRuleConsequence(
           behavior = CompositionInjectionBehavior(
             injection = Injection(
-              main = Main(
-                source = CompositionSource(
-                  search = CompositionSourceSearch(
-                    index = "foo"
+              main = InjectionMain(
+                source = Some(
+                  InjectionMainSearchSource(
+                    search = MainSearch(
+                      index = "foo"
+                    )
                   )
                 )
               ),
               injectedItems = Some(
                 Seq(
-                  InjectedItem(
+                  InjectionInjectedItem(
                     key = "my-unique-group-from-rule-key",
-                    source = SearchSource(
-                      search = Search(
+                    source = InjectedItemSearchSource(
+                      search = InjectedItemSearch(
                         index = "foo"
                       )
                     ),
@@ -1395,19 +1579,21 @@ class CompositionTest extends AnyFunSuite {
         consequence = CompositionRuleConsequence(
           behavior = CompositionInjectionBehavior(
             injection = Injection(
-              main = Main(
-                source = CompositionSource(
-                  search = CompositionSourceSearch(
-                    index = "foo"
+              main = InjectionMain(
+                source = Some(
+                  InjectionMainSearchSource(
+                    search = MainSearch(
+                      index = "foo"
+                    )
                   )
                 )
               ),
               injectedItems = Some(
                 Seq(
-                  InjectedItem(
+                  InjectionInjectedItem(
                     key = "my-unique-group-from-rule-key",
-                    source = SearchSource(
-                      search = Search(
+                    source = InjectedItemSearchSource(
+                      search = InjectedItemSearch(
                         index = "foo",
                         params = Some(
                           BaseInjectionQueryParameters(
@@ -1493,13 +1679,15 @@ class CompositionTest extends AnyFunSuite {
         consequence = CompositionRuleConsequence(
           behavior = CompositionInjectionBehavior(
             injection = Injection(
-              main = Main(
-                source = CompositionSource(
-                  search = CompositionSourceSearch(
-                    index = "my-index",
-                    params = Some(
-                      MainInjectionQueryParameters(
-                        filters = Some("brand:adidas")
+              main = InjectionMain(
+                source = Some(
+                  InjectionMainSearchSource(
+                    search = MainSearch(
+                      index = "my-index",
+                      params = Some(
+                        MainInjectionQueryParameters(
+                          filters = Some("brand:adidas")
+                        )
                       )
                     )
                   )
@@ -1507,10 +1695,10 @@ class CompositionTest extends AnyFunSuite {
               ),
               injectedItems = Some(
                 Seq(
-                  InjectedItem(
+                  InjectionInjectedItem(
                     key = "my-unique-external-group-from-rule-key",
-                    source = ExternalSource(
-                      external = External(
+                    source = InjectedItemExternalSource(
+                      external = InjectedItemExternal(
                         index = "my-index",
                         params = Some(
                           BaseInjectionQueryParameters(
@@ -1563,19 +1751,21 @@ class CompositionTest extends AnyFunSuite {
         consequence = CompositionRuleConsequence(
           behavior = CompositionInjectionBehavior(
             injection = Injection(
-              main = Main(
-                source = CompositionSource(
-                  search = CompositionSourceSearch(
-                    index = "my-index"
+              main = InjectionMain(
+                source = Some(
+                  InjectionMainSearchSource(
+                    search = MainSearch(
+                      index = "my-index"
+                    )
                   )
                 )
               ),
               injectedItems = Some(
                 Seq(
-                  InjectedItem(
+                  InjectionInjectedItem(
                     key = "my-unique-injected-item-key",
-                    source = SearchSource(
-                      search = Search(
+                    source = InjectedItemSearchSource(
+                      search = InjectedItemSearch(
                         index = "my-index"
                       )
                     ),
@@ -1628,10 +1818,12 @@ class CompositionTest extends AnyFunSuite {
                 consequence = CompositionRuleConsequence(
                   behavior = CompositionInjectionBehavior(
                     injection = Injection(
-                      main = Main(
-                        source = CompositionSource(
-                          search = CompositionSourceSearch(
-                            index = "<YOUR_INDEX_NAME>"
+                      main = InjectionMain(
+                        source = Some(
+                          InjectionMainSearchSource(
+                            search = MainSearch(
+                              index = "<YOUR_INDEX_NAME>"
+                            )
                           )
                         )
                       )
@@ -1679,19 +1871,21 @@ class CompositionTest extends AnyFunSuite {
                 consequence = CompositionRuleConsequence(
                   behavior = CompositionInjectionBehavior(
                     injection = Injection(
-                      main = Main(
-                        source = CompositionSource(
-                          search = CompositionSourceSearch(
-                            index = "foo"
+                      main = InjectionMain(
+                        source = Some(
+                          InjectionMainSearchSource(
+                            search = MainSearch(
+                              index = "foo"
+                            )
                           )
                         )
                       ),
                       injectedItems = Some(
                         Seq(
-                          InjectedItem(
+                          InjectionInjectedItem(
                             key = "my-unique-group-from-rule-key",
-                            source = SearchSource(
-                              search = Search(
+                            source = InjectedItemSearchSource(
+                              search = InjectedItemSearch(
                                 index = "foo",
                                 params = Some(
                                   BaseInjectionQueryParameters(
@@ -1785,13 +1979,15 @@ class CompositionTest extends AnyFunSuite {
                 consequence = CompositionRuleConsequence(
                   behavior = CompositionInjectionBehavior(
                     injection = Injection(
-                      main = Main(
-                        source = CompositionSource(
-                          search = CompositionSourceSearch(
-                            index = "my-index",
-                            params = Some(
-                              MainInjectionQueryParameters(
-                                filters = Some("brand:adidas")
+                      main = InjectionMain(
+                        source = Some(
+                          InjectionMainSearchSource(
+                            search = MainSearch(
+                              index = "my-index",
+                              params = Some(
+                                MainInjectionQueryParameters(
+                                  filters = Some("brand:adidas")
+                                )
                               )
                             )
                           )
@@ -1799,10 +1995,10 @@ class CompositionTest extends AnyFunSuite {
                       ),
                       injectedItems = Some(
                         Seq(
-                          InjectedItem(
+                          InjectionInjectedItem(
                             key = "my-unique-external-group-from-rule-key",
-                            source = ExternalSource(
-                              external = External(
+                            source = InjectedItemExternalSource(
+                              external = InjectedItemExternal(
                                 index = "my-index",
                                 params = Some(
                                   BaseInjectionQueryParameters(
@@ -1842,6 +2038,218 @@ class CompositionTest extends AnyFunSuite {
   test("saveRules3") {
     val (client, echo) = testClient()
     val future = client.saveRules(
+      compositionID = "rule-with-recommend",
+      rules = CompositionRulesBatchParams(
+        requests = Some(
+          Seq(
+            RulesMultipleBatchRequest(
+              action = Action.withName("upsert"),
+              body = CompositionRule(
+                objectID = "rule-with-recommend",
+                conditions = Some(
+                  Seq(
+                    Condition(
+                      anchoring = Some(Anchoring.withName("is")),
+                      pattern = Some("trending")
+                    )
+                  )
+                ),
+                consequence = CompositionRuleConsequence(
+                  behavior = CompositionInjectionBehavior(
+                    injection = Injection(
+                      main = InjectionMain(
+                        source = Some(
+                          InjectionMainRecommendSource(
+                            recommend = MainRecommend(
+                              indexName = "products",
+                              model = Model.withName("trending-items"),
+                              threshold = 50
+                            )
+                          )
+                        )
+                      ),
+                      injectedItems = Some(
+                        Seq(
+                          InjectionInjectedItem(
+                            key = "injected-recommend-from-rule-key",
+                            source = InjectedItemRecommendSource(
+                              recommend = Recommend(
+                                indexName = "products",
+                                model = Model.withName("trending-items"),
+                                threshold = 30,
+                                fallbackParameters = Some(
+                                  BaseInjectionQueryParameters(
+                                    filters = Some("category:electronics")
+                                  )
+                                )
+                              )
+                            ),
+                            position = 2,
+                            length = 3
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/rule-with-recommend/rules/batch")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-recommend","conditions":[{"anchoring":"is","pattern":"trending"}],"consequence":{"behavior":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}},"injectedItems":[{"key":"injected-recommend-from-rule-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":30,"fallbackParameters":{"filters":"category:electronics"}}},"position":2,"length":3}]}}}}}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("saveRules4") {
+    val (client, echo) = testClient()
+    val future = client.saveRules(
+      compositionID = "rule-with-search-and-recommend",
+      rules = CompositionRulesBatchParams(
+        requests = Some(
+          Seq(
+            RulesMultipleBatchRequest(
+              action = Action.withName("upsert"),
+              body = CompositionRule(
+                objectID = "rule-with-search-and-recommend",
+                conditions = Some(
+                  Seq(
+                    Condition(
+                      anchoring = Some(Anchoring.withName("contains")),
+                      pattern = Some("shoes")
+                    )
+                  )
+                ),
+                consequence = CompositionRuleConsequence(
+                  behavior = CompositionInjectionBehavior(
+                    injection = Injection(
+                      main = InjectionMain(
+                        source = Some(
+                          InjectionMainSearchSource(
+                            search = MainSearch(
+                              index = "products",
+                              params = Some(
+                                MainInjectionQueryParameters(
+                                  filters = Some("category:shoes")
+                                )
+                              )
+                            )
+                          )
+                        )
+                      ),
+                      injectedItems = Some(
+                        Seq(
+                          InjectionInjectedItem(
+                            key = "injected-recommend-from-rule-key",
+                            source = InjectedItemRecommendSource(
+                              recommend = Recommend(
+                                indexName = "products",
+                                model = Model.withName("trending-items"),
+                                threshold = 40
+                              )
+                            ),
+                            position = 1,
+                            length = 2
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/rule-with-search-and-recommend/rules/batch")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-search-and-recommend","conditions":[{"anchoring":"contains","pattern":"shoes"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"products","params":{"filters":"category:shoes"}}}},"injectedItems":[{"key":"injected-recommend-from-rule-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":40}},"position":1,"length":2}]}}}}}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("saveRules5") {
+    val (client, echo) = testClient()
+    val future = client.saveRules(
+      compositionID = "rule-with-multifeed-recommend",
+      rules = CompositionRulesBatchParams(
+        requests = Some(
+          Seq(
+            RulesMultipleBatchRequest(
+              action = Action.withName("upsert"),
+              body = CompositionRule(
+                objectID = "rule-with-multifeed-recommend",
+                conditions = Some(
+                  Seq(
+                    Condition(
+                      anchoring = Some(Anchoring.withName("is")),
+                      pattern = Some("trending")
+                    )
+                  )
+                ),
+                consequence = CompositionRuleConsequence(
+                  behavior = CompositionMultifeedBehavior(
+                    multifeed = Multifeed(
+                      feeds = Map(
+                        "trending" -> FeedInjection(
+                          injection = Injection(
+                            main = InjectionMain(
+                              source = Some(
+                                InjectionMainRecommendSource(
+                                  recommend = MainRecommend(
+                                    indexName = "products",
+                                    model = Model.withName("trending-items"),
+                                    threshold = 50
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      ),
+                      feedsOrder = Some(Seq("trending"))
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/rule-with-multifeed-recommend/rules/batch")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-multifeed-recommend","conditions":[{"anchoring":"is","pattern":"trending"}],"consequence":{"behavior":{"multifeed":{"feeds":{"trending":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}}}}},"feedsOrder":["trending"]}}}}}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("saveRules6") {
+    val (client, echo) = testClient()
+    val future = client.saveRules(
       compositionID = "my-compo",
       rules = CompositionRulesBatchParams(
         requests = Some(
@@ -1866,19 +2274,21 @@ class CompositionTest extends AnyFunSuite {
                 consequence = CompositionRuleConsequence(
                   behavior = CompositionInjectionBehavior(
                     injection = Injection(
-                      main = Main(
-                        source = CompositionSource(
-                          search = CompositionSourceSearch(
-                            index = "my-index"
+                      main = InjectionMain(
+                        source = Some(
+                          InjectionMainSearchSource(
+                            search = MainSearch(
+                              index = "my-index"
+                            )
                           )
                         )
                       ),
                       injectedItems = Some(
                         Seq(
-                          InjectedItem(
+                          InjectionInjectedItem(
                             key = "my-unique-injected-item-key",
-                            source = SearchSource(
-                              search = Search(
+                            source = InjectedItemSearchSource(
+                              search = InjectedItemSearch(
                                 index = "my-index"
                               )
                             ),

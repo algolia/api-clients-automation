@@ -42,6 +42,7 @@ object JsonSupport {
     new ExactOnSingleWordQuerySerializer() :+
     new ExternalOrderingSerializer() :+
     new MatchLevelSerializer() :+
+    new ModelSerializer() :+
     new QueryTypeSerializer() :+
     new RemoveWordsIfNoResultsSerializer() :+
     new SortRemainingBySerializer() :+
@@ -59,6 +60,7 @@ object JsonSupport {
     HighlightResultSerializer :+
     IgnorePluralsSerializer :+
     InjectedItemSourceSerializer :+
+    InjectionMainSourceSerializer :+
     InsideBoundingBoxSerializer :+
     NumericFiltersSerializer :+
     OptionalFiltersSerializer :+

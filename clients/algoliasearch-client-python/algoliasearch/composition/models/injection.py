@@ -19,8 +19,10 @@ else:
 
 
 from algoliasearch.composition.models.deduplication import Deduplication
-from algoliasearch.composition.models.injected_item import InjectedItem
-from algoliasearch.composition.models.main import Main
+from algoliasearch.composition.models.injection_injected_item import (
+    InjectionInjectedItem,
+)
+from algoliasearch.composition.models.injection_main import InjectionMain
 
 _ALIASES = {
     "main": "main",
@@ -38,8 +40,8 @@ class Injection(BaseModel):
     Injection
     """
 
-    main: Main
-    injected_items: Optional[List[InjectedItem]] = None
+    main: InjectionMain
+    injected_items: Optional[List[InjectionInjectedItem]] = None
     """ list of injected items of the current Composition. """
     deduplication: Optional[Deduplication] = None
 
@@ -79,10 +81,12 @@ class Injection(BaseModel):
             return cls.model_validate(obj)
 
         obj["main"] = (
-            Main.from_dict(obj["main"]) if obj.get("main") is not None else None
+            InjectionMain.from_dict(obj["main"])
+            if obj.get("main") is not None
+            else None
         )
         obj["injectedItems"] = (
-            [InjectedItem.from_dict(_item) for _item in obj["injectedItems"]]
+            [InjectionInjectedItem.from_dict(_item) for _item in obj["injectedItems"]]
             if obj.get("injectedItems") is not None
             else None
         )

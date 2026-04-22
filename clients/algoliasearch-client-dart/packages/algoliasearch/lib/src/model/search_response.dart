@@ -5,6 +5,7 @@ import 'package:algoliasearch/src/model/hit.dart';
 import 'package:algoliasearch/src/model/rendering_content.dart';
 import 'package:algoliasearch/src/model/exhaustive.dart';
 import 'package:algoliasearch/src/model/facet_stats.dart';
+import 'package:algoliasearch/src/model/response_extensions.dart';
 
 import 'package:json_annotation/json_annotation.dart';
 
@@ -47,6 +48,7 @@ final class SearchResponse {
     required this.hits,
     this.query,
     this.params,
+    this.extensions,
   });
 
   /// A/B test ID. This is only included in the response for indices that are part of an A/B test.
@@ -185,6 +187,9 @@ final class SearchResponse {
   @JsonKey(name: r'params')
   final String? params;
 
+  @JsonKey(name: r'extensions')
+  final ResponseExtensions? extensions;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -218,7 +223,8 @@ final class SearchResponse {
           other.hitsPerPage == hitsPerPage &&
           other.hits == hits &&
           other.query == query &&
-          other.params == params;
+          other.params == params &&
+          other.extensions == extensions;
 
   @override
   int get hashCode =>
@@ -251,7 +257,8 @@ final class SearchResponse {
       hitsPerPage.hashCode +
       hits.hashCode +
       query.hashCode +
-      params.hashCode;
+      params.hashCode +
+      extensions.hashCode;
 
   factory SearchResponse.fromJson(Map<String, dynamic> json) =>
       _$SearchResponseFromJson(json);

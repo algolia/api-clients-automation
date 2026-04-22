@@ -232,7 +232,7 @@ class MonitoringClient
     }
 
     /**
-     * Retrieves average times for indexing operations for selected clusters.
+     * Retrieves indexing latency metrics for selected clusters.  This endpoint is intended for infrastructure-level monitoring and availability checks. The returned value reflects latency measured on Algolia's internal monitoring index and is reported in milliseconds.  This metric isn't intended to represent the indexing performance of an individual application or index. To measure when an indexing operation has completed for your application, use the `waitTask` method.
      *
      * @param string $clusters       Subset of clusters, separated by commas. (required)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
@@ -585,10 +585,10 @@ class MonitoringClient
     }
 
     /**
-     * Retrieve indexing times (with HTTP info).
+     * Retrieve indexing monitoring latency (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
-     * Retrieves average times for indexing operations for selected clusters.
+     * Retrieves indexing latency metrics for selected clusters.  This endpoint is intended for infrastructure-level monitoring and availability checks. The returned value reflects latency measured on Algolia's internal monitoring index and is reported in milliseconds.  This metric isn't intended to represent the indexing performance of an individual application or index. To measure when an indexing operation has completed for your application, use the `waitTask` method.
      *
      * @param string $clusters       Subset of clusters, separated by commas. (required)
      * @param array  $requestOptions Request options

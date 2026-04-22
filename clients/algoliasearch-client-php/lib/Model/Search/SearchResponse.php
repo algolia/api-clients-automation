@@ -53,6 +53,7 @@ class SearchResponse extends AbstractModel implements ModelInterface, \ArrayAcce
         'hits' => '\Algolia\AlgoliaSearch\Model\Search\Hit[]',
         'query' => 'string',
         'params' => 'string',
+        'extensions' => '\Algolia\AlgoliaSearch\Model\Search\ResponseExtensions',
     ];
 
     /**
@@ -94,6 +95,7 @@ class SearchResponse extends AbstractModel implements ModelInterface, \ArrayAcce
         'hits' => null,
         'query' => null,
         'params' => null,
+        'extensions' => null,
     ];
 
     /**
@@ -136,6 +138,7 @@ class SearchResponse extends AbstractModel implements ModelInterface, \ArrayAcce
         'hits' => 'hits',
         'query' => 'query',
         'params' => 'params',
+        'extensions' => 'extensions',
     ];
 
     /**
@@ -177,6 +180,7 @@ class SearchResponse extends AbstractModel implements ModelInterface, \ArrayAcce
         'hits' => 'setHits',
         'query' => 'setQuery',
         'params' => 'setParams',
+        'extensions' => 'setExtensions',
     ];
 
     /**
@@ -218,6 +222,7 @@ class SearchResponse extends AbstractModel implements ModelInterface, \ArrayAcce
         'hits' => 'getHits',
         'query' => 'getQuery',
         'params' => 'getParams',
+        'extensions' => 'getExtensions',
     ];
 
     /**
@@ -332,6 +337,9 @@ class SearchResponse extends AbstractModel implements ModelInterface, \ArrayAcce
         }
         if (isset($data['params'])) {
             $this->container['params'] = $data['params'];
+        }
+        if (isset($data['extensions'])) {
+            $this->container['extensions'] = $data['extensions'];
         }
     }
 
@@ -1213,6 +1221,30 @@ class SearchResponse extends AbstractModel implements ModelInterface, \ArrayAcce
     public function setParams($params)
     {
         $this->container['params'] = $params;
+
+        return $this;
+    }
+
+    /**
+     * Gets extensions.
+     *
+     * @return null|ResponseExtensions
+     */
+    public function getExtensions()
+    {
+        return $this->container['extensions'] ?? null;
+    }
+
+    /**
+     * Sets extensions.
+     *
+     * @param null|ResponseExtensions $extensions extensions
+     *
+     * @return self
+     */
+    public function setExtensions($extensions)
+    {
+        $this->container['extensions'] = $extensions;
 
         return $this;
     }

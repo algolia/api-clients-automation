@@ -34,7 +34,7 @@ package algoliasearch.composition
   *   list of injected items of the current Composition.
   */
 case class Injection(
-    main: Main,
-    injectedItems: Option[Seq[InjectedItem]] = scala.None,
+    main: InjectionMain,
+    injectedItems: Option[Seq[InjectionInjectedItem]] = scala.None,
     deduplication: Option[Deduplication] = scala.None
 )
