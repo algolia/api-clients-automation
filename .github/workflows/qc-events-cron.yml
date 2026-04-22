@@ -30,7 +30,7 @@ jobs:
           ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
         run: yarn runScript index-maintenance/query-categorization/setupIndex.ts
 
-      - name: Generate events
+      - name: generate events
         working-directory: scripts
         env:
           ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
