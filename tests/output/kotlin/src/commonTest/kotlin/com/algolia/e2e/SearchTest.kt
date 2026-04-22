@@ -233,6 +233,41 @@ class SearchTest {
   }
 
   @Test
+  fun `withQueryCategorization16`() = runTest {
+    client.runTest(
+      call = {
+        search(
+          searchMethodParams =
+            SearchMethodParams(
+              requests =
+                listOf(
+                  SearchForHits(
+                    indexName = "cts_e2e_query_categorization",
+                    query = "sofa",
+                    extensions =
+                      SearchExtensions(
+                        queryCategorization =
+                          SearchExtensionsQueryCategorization(
+                            enableCategoriesRetrieval = true,
+                            enableAutoFiltering = false,
+                          )
+                      ),
+                  )
+                )
+            )
+        )
+      },
+      response = {
+        JSONAssert.assertEquals(
+          "{\"results\":[{\"index\":\"cts_e2e_query_categorization\",\"query\":\"sofa\",\"extensions\":{\"queryCategorization\":{\"normalizedQuery\":\"sofa\",\"categories\":[{}]}}}]}",
+          Json.encodeToString(it),
+          JSONCompareMode.LENIENT,
+        )
+      },
+    )
+  }
+
+  @Test
   fun `get searchDictionaryEntries results with minimal parameters`() = runTest {
     client.runTest(
       call = {
