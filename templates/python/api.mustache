@@ -56,7 +56,7 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
     _config: BaseConfig
     _request_options: RequestOptions
 
-    def __init__(self, app_id: Optional[str] = None, api_key: Optional[str] = None, {{#hasRegionalHost}}region: {{#fallbackToAliasHost}}Optional[str] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str = ""{{/fallbackToAliasHost}}, {{/hasRegionalHost}}transporter: Optional[Transporter{{#isSyncClient}}Sync{{/isSyncClient}}] = None, config: Optional[{{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}] = None{{#isSearchClient}}, transformation_options: Optional["TransformationOptions"] = None{{/isSearchClient}}) -> None:
+    def __init__(self, app_id: Optional[str] = None, api_key: Optional[str] = None, {{#hasRegionalHost}}region: {{#fallbackToAliasHost}}Optional[str] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str = ""{{/fallbackToAliasHost}}, {{/hasRegionalHost}}transporter: Optional[Transporter{{#isSyncClient}}Sync{{/isSyncClient}}] = None, config: Optional[{{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}] = None) -> None:
         if transporter is not None and config is None:
             config = {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(transporter.config.app_id, transporter.config.api_key{{#hasRegionalHost}}, region{{/hasRegionalHost}})
         elif config is None:
@@ -73,10 +73,8 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
 
         {{#isSearchClient}}
         self._ingestion_transporter = None
-        if transformation_options is None:
-            transformation_options = config.transformation_options
-        if transformation_options is not None:
-            self._ingestion_transporter = self._build_ingestion_transporter(transformation_options)
+        if config.transformation_options is not None:
+            self._ingestion_transporter = self._build_ingestion_transporter(config.transformation_options)
         {{/isSearchClient}}
 
     @classmethod
@@ -98,12 +96,11 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
             transporter = Transporter{{#isSyncClient}}Sync{{/isSyncClient}}(config)
 
         {{#isSearchClient}}
-        transformation_options = config.transformation_options
-        if transformation_options is None and config.region:
-            transformation_options = TransformationOptions(region=config.region)
+        if config.transformation_options is None and config.region:
+            config.transformation_options = TransformationOptions(region=config.region)
         {{/isSearchClient}}
 
-        client = {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}(app_id=config.app_id, api_key=config.api_key, {{#hasRegionalHost}}region=config.region, {{/hasRegionalHost}}transporter=transporter, config=config{{#isSearchClient}}, transformation_options=transformation_options{{/isSearchClient}})
+        client = {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}(app_id=config.app_id, api_key=config.api_key, {{#hasRegionalHost}}region=config.region, {{/hasRegionalHost}}transporter=transporter, config=config)
 
         return client
 
