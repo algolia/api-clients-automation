@@ -73,6 +73,8 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
 
         {{#isSearchClient}}
         self._ingestion_transporter = None
+        if transformation_options is None:
+            transformation_options = config.transformation_options
         if transformation_options is not None:
             self._ingestion_transporter = self._build_ingestion_transporter(transformation_options)
         {{/isSearchClient}}
@@ -95,13 +97,14 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         if transporter is None:
             transporter = Transporter{{#isSyncClient}}Sync{{/isSyncClient}}(config)
 
-        client = {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}(app_id=config.app_id, api_key=config.api_key, {{#hasRegionalHost}}region=config.region, {{/hasRegionalHost}}transporter=transporter, config=config)
-
         {{#isSearchClient}}
-        if config.region is not None:
-            client._ingestion_transporter = client._build_ingestion_transporter(TransformationOptions(region=config.region))
+        transformation_options = config.transformation_options
+        if transformation_options is None and config.region:
+            transformation_options = TransformationOptions(region=config.region)
         {{/isSearchClient}}
-        
+
+        client = {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}(app_id=config.app_id, api_key=config.api_key, {{#hasRegionalHost}}region=config.region, {{/hasRegionalHost}}transporter=transporter, config=config{{#isSearchClient}}, transformation_options=transformation_options{{/isSearchClient}})
+
         return client
 
     {{^isSyncClient}}
