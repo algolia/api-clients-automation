@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   generate:
-    name: Generate QC events
+    name: generate QC events
     runs-on: ubuntu-22.04
     timeout-minutes: 15
     steps:
@@ -23,7 +23,7 @@ jobs:
         with:
           type: minimal
 
-      - name: Populate index
+      - name: populate index
         working-directory: scripts
         env:
           ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
