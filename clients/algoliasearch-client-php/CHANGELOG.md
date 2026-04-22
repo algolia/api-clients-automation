@@ -1,5 +1,7 @@
 ## [4.42.0](https://github.com/algolia/algoliasearch-client-php/compare/4.41.1...4.42.0)
 
+BREAKING CHANGES: this minor version includes breaking changes in the Composition API. See below for more details.
+
 - [0e13e8ef5c](https://github.com/algolia/api-clients-automation/commit/0e13e8ef5c) docs(insights): Update the user token deletion summary ([#6225](https://github.com/algolia/api-clients-automation/pull/6225)) by [@fophillips](https://github.com/fophillips/)
 - [39ea2c5cb3](https://github.com/algolia/api-clients-automation/commit/39ea2c5cb3) refactor(specs): split injection schema ([#6224](https://github.com/algolia/api-clients-automation/pull/6224)) by [@ClaraMuller](https://github.com/ClaraMuller/)
 - [544091a5f2](https://github.com/algolia/api-clients-automation/commit/544091a5f2) feat(specs): introduce recommend source in Comp API client ([#6227](https://github.com/algolia/api-clients-automation/pull/6227)) by [@ClaraMuller](https://github.com/ClaraMuller/)

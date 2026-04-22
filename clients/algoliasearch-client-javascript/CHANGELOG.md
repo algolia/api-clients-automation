@@ -1,5 +1,7 @@
 ## [5.51.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.50.2...5.51.0)
 
+BREAKING CHANGES: this minor version includes breaking changes in the Composition API. See below for more details.
+
 - [00271b6ba0](https://github.com/algolia/api-clients-automation/commit/00271b6ba0) feat(javascript): add transformationOptions and fix ingestion config leak ([#6252](https://github.com/algolia/api-clients-automation/pull/6252)) by [@eric-zaharia](https://github.com/eric-zaharia/)
 - [39ea2c5cb3](https://github.com/algolia/api-clients-automation/commit/39ea2c5cb3) refactor(specs): split injection schema ([#6224](https://github.com/algolia/api-clients-automation/pull/6224)) by [@ClaraMuller](https://github.com/ClaraMuller/)
 - [544091a5f2](https://github.com/algolia/api-clients-automation/commit/544091a5f2) feat(specs): introduce recommend source in Comp API client ([#6227](https://github.com/algolia/api-clients-automation/pull/6227)) by [@ClaraMuller](https://github.com/ClaraMuller/)

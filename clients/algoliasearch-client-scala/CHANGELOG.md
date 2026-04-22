@@ -1,5 +1,7 @@
 ## [2.39.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.38.5...2.39.0)
 
+BREAKING CHANGES: this minor version includes breaking changes in the Composition API. See below for more details.
+
 - [39ea2c5cb3](https://github.com/algolia/api-clients-automation/commit/39ea2c5cb3) refactor(specs): split injection schema ([#6224](https://github.com/algolia/api-clients-automation/pull/6224)) by [@ClaraMuller](https://github.com/ClaraMuller/)
 - [544091a5f2](https://github.com/algolia/api-clients-automation/commit/544091a5f2) feat(specs): introduce recommend source in Comp API client ([#6227](https://github.com/algolia/api-clients-automation/pull/6227)) by [@ClaraMuller](https://github.com/ClaraMuller/)
 - [f73d69aae4](https://github.com/algolia/api-clients-automation/commit/f73d69aae4) fix(specs): clarify getIndexingTime ([#6276](https://github.com/algolia/api-clients-automation/pull/6276)) by [@kai687](https://github.com/kai687/)

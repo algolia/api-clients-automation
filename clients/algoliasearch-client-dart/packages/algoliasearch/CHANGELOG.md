@@ -1,5 +1,7 @@
 ## [1.48.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.47.3...1.48.0)
 
+BREAKING CHANGES: this minor version includes breaking changes in the Composition API. See below for more details.
+
 - [39ea2c5cb3](https://github.com/algolia/api-clients-automation/commit/39ea2c5cb3) refactor(specs): split injection schema ([#6224](https://github.com/algolia/api-clients-automation/pull/6224)) by [@ClaraMuller](https://github.com/ClaraMuller/)
 - [544091a5f2](https://github.com/algolia/api-clients-automation/commit/544091a5f2) feat(specs): introduce recommend source in Comp API client ([#6227](https://github.com/algolia/api-clients-automation/pull/6227)) by [@ClaraMuller](https://github.com/ClaraMuller/)
 - [e48d5c4bbf](https://github.com/algolia/api-clients-automation/commit/e48d5c4bbf) feat(specs): query categorization ([#6258](https://github.com/algolia/api-clients-automation/pull/6258)) by [@eric-zaharia](https://github.com/eric-zaharia/)
