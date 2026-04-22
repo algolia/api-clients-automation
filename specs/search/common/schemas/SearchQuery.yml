@@ -51,6 +51,8 @@ searchForHitsOptions:
       $ref: '../../../common/parameters.yml#/indexName'
     type:
       $ref: '#/searchTypeDefault'
+    extensions:
+      $ref: '#/searchExtensions'
   required:
     - indexName
 
@@ -69,3 +71,25 @@ searchTypeDefault:
   description: |
     - `default`: perform a search query
     - `facet` [searches for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
+
+searchExtensions:
+  type: object
+  description: |
+    Additional parameters for Algolia AI features.
+    Used to enable [Query Categorization](https://www.algolia.com/doc/guides/algolia-ai/query-categorization/) and other AI-powered capabilities.
+  properties:
+    queryCategorization:
+      $ref: '#/searchExtensionsQueryCategorization'
+
+searchExtensionsQueryCategorization:
+  type: object
+  description: Parameters for the [Query Categorization](https://www.algolia.com/doc/guides/algolia-ai/query-categorization/) AI feature.
+  properties:
+    enableCategoriesRetrieval:
+      type: boolean
+      description: Whether to retrieve category predictions in the response `extensions.queryCategorization` field.
+      default: false
+    enableAutoFiltering:
+      type: boolean
+      description: Whether to automatically apply category-based filters and boosts to search results.
+      default: false

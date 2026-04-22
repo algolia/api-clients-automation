@@ -1,0 +1,48 @@
+name: Query Categorization events cron
+
+on:
+  schedule:
+    - cron: '0 6 1 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  generate:
+    name: generate QC events
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+
+      - name: setup
+        uses: ./.github/actions/setup
+        with:
+          type: minimal
+
+      - name: populate index
+        working-directory: scripts
+        env:
+          ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
+          ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
+        run: yarn runScript index-maintenance/query-categorization/setupIndex.ts
+
+      - name: generate events
+        working-directory: scripts
+        env:
+          ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
+          ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
+        run: yarn runScript index-maintenance/query-categorization/generateEvents.ts
+
+      - name: notify slack on failure
+        uses: slackapi/slack-github-action@v3.0.1
+        if: failure()
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_CHANNEL_ID }}
+            text: ":alert: QC events cron failed :alert:\nhttps://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
