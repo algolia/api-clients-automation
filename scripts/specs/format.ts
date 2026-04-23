@@ -37,16 +37,39 @@ const MERGEABLE_OBJECT_SCHEMA_KEYS = new Set([
   'x-categories',
 ]);
 
+const BLOCKED_REF_SEGMENTS = new Set(['__proto__', 'prototype', 'constructor']);
+
+function getOwnProperty(value: unknown, key: string): unknown {
+  if (typeof value !== 'object' || value === null) {
+    return undefined;
+  }
+
+  if (BLOCKED_REF_SEGMENTS.has(key) || !Object.hasOwn(value, key)) {
+    return undefined;
+  }
+
+  return (value as Record<string, unknown>)[key];
+}
+
 function resolveLocalRef<T>(spec: Spec, ref: string): T | undefined {
   if (!ref.startsWith('#/')) {
     return undefined;
   }
 
-  return ref
+  let current: unknown = spec;
+
+  for (const segment of ref
     .slice(2)
     .split('/')
-    .map((segment) => segment.replaceAll('~1', '/').replaceAll('~0', '~'))
-    .reduce<any>((current, segment) => current?.[segment], spec);
+    .map((part) => part.replaceAll('~1', '/').replaceAll('~0', '~'))) {
+    current = getOwnProperty(current, segment);
+
+    if (current === undefined) {
+      return undefined;
+    }
+  }
+
+  return current as T | undefined;
 }
 
 function cloneSchema<T>(schema: T): T {
