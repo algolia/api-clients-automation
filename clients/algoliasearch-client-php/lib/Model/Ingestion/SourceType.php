@@ -14,6 +14,8 @@ class SourceType
     /**
      * Possible values of this enum.
      */
+    public const ALGOLIA_INDEX = 'algoliaIndex';
+
     public const BIGCOMMERCE = 'bigcommerce';
 
     public const BIGQUERY = 'bigquery';
@@ -40,6 +42,7 @@ class SourceType
     public static function getAllowableEnumValues()
     {
         return [
+            self::ALGOLIA_INDEX,
             self::BIGCOMMERCE,
             self::BIGQUERY,
             self::COMMERCETOOLS,
