@@ -60,16 +60,35 @@ public class {{classname}} extends ApiClient {
     private IngestionClient ingestionTransporter;
 
     /**
-     * @deprecated Use {@link ClientOptions.Builder#setTransformationOptions(TransformationOptions)}
-     *     instead. The old setter forwarded the parent search {@link ClientOptions} to the ingestion
-     *     transporter, which caused search timeouts to bleed into ingestion calls. The new
-     *     {@code transformationOptions} defaults to Ingestion API defaults (25 s timeouts) and only
-     *     overrides what is explicitly specified.
+     * Sets (or replaces) the ingestion transporter used by {@code *WithTransformation} helpers.
+     * Closes the previous transporter if one exists.
+     * See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+     */
+    public void setTransformationOptions(TransformationOptions transformationOptions) throws java.io.IOException {
+      IngestionClient previous = this.ingestionTransporter;
+      this.ingestionTransporter = new IngestionClient(
+        this.authInterceptor.getApplicationId(),
+        this.authInterceptor.getApiKey(),
+        transformationOptions.getRegion(),
+        transformationOptions.getClientOptions()
+      );
+      if (previous != null) {
+        previous.close();
+      }
+    }
+
+    /**
+     * @deprecated Use {@link #setTransformationOptions(TransformationOptions)} or pass
+     *     {@link TransformationOptions} directly to the {@link {{classname}}} constructor instead.
+     *     The old setter forwarded the parent search {@link ClientOptions} to the ingestion
+     *     transporter, which caused search timeouts to bleed into ingestion calls.
+     *     The new {@code TransformationOptions} defaults to Ingestion API defaults (25 s timeouts)
+     *     and only overrides what is explicitly specified.
      *     See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
      */
     @Deprecated
-    public void setTransformationRegion(String region) {
-      this.ingestionTransporter = new IngestionClient(this.authInterceptor.getApplicationId(), this.authInterceptor.getApiKey(), region, this.clientOptions);
+    public void setTransformationRegion(String region) throws java.io.IOException {
+      setTransformationOptions(new TransformationOptions(region));
     }
     {{/isSearchClient}}
 
@@ -101,17 +120,36 @@ public class {{classname}} extends ApiClient {
 
     public {{classname}}(String appId, String apiKey, ClientOptions options) {
       super(appId, apiKey, "{{{baseName}}}", options, getDefaultHosts({{#hostWithAppID}}appId{{/hostWithAppID}}), Duration.ofMillis({{{x-timeouts.server.connect}}}L), Duration.ofMillis({{{x-timeouts.server.read}}}L), Duration.ofMillis({{{x-timeouts.server.write}}}L));
-      {{#isSearchClient}}
-      if (options != null && options.getTransformationOptions() != null) {
+    }
+    {{#isSearchClient}}
+
+    public {{classname}}(String appId, String apiKey, TransformationOptions transformationOptions) {
+        this(appId, apiKey, transformationOptions, null);
+    }
+
+    public {{classname}}(String appId, String apiKey, TransformationOptions transformationOptions, ClientOptions options) {
+      super(appId, apiKey, "{{{baseName}}}", options, getDefaultHosts({{#hostWithAppID}}appId{{/hostWithAppID}}), Duration.ofMillis({{{x-timeouts.server.connect}}}L), Duration.ofMillis({{{x-timeouts.server.read}}}L), Duration.ofMillis({{{x-timeouts.server.write}}}L));
+      if (transformationOptions != null) {
         this.ingestionTransporter = new IngestionClient(
           this.authInterceptor.getApplicationId(),
           this.authInterceptor.getApiKey(),
-          options.getTransformationOptions().getRegion(),
-          options.getTransformationOptions().toClientOptions()
+          transformationOptions.getRegion(),
+          transformationOptions.getClientOptions()
         );
       }
-      {{/isSearchClient}}
     }
+
+    @Override
+    public void close() throws java.io.IOException {
+      try {
+        if (this.ingestionTransporter != null) {
+          this.ingestionTransporter.close();
+        }
+      } finally {
+        super.close();
+      }
+    }
+    {{/isSearchClient}}
     {{/hasRegionalHost}}
 
     {{#hostWithAppID}}

@@ -33,8 +33,6 @@ public final class ClientOptions implements ClientConfig {
 
   private final ExecutorService executor;
 
-  private final TransformationOptions transformationOptions;
-
   public ClientOptions() {
     this(new Builder());
   }
@@ -53,7 +51,6 @@ public final class ClientOptions implements ClientConfig {
     this.requesterConfig = builder.requesterConfig;
     this.mapperConfig = builder.mapperConfig;
     this.executor = builder.executor != null ? builder.executor : ExecutorUtils.newThreadPool();
-    this.transformationOptions = builder.transformationOptions;
   }
 
   @Nonnull
@@ -116,15 +113,10 @@ public final class ClientOptions implements ClientConfig {
     return executor;
   }
 
-  public TransformationOptions getTransformationOptions() {
-    return transformationOptions;
-  }
-
   public static class Builder {
 
     public ExecutorService executor;
     private Requester customRequester;
-    private TransformationOptions transformationOptions;
     private List<Host> hosts;
     private Logger logger;
     private Consumer<HttpRequester.Builder> requesterConfig;
@@ -219,11 +211,6 @@ public final class ClientOptions implements ClientConfig {
 
     public Builder setExecutor(ExecutorService executor) {
       this.executor = executor;
-      return this;
-    }
-
-    public Builder setTransformationOptions(TransformationOptions transformationOptions) {
-      this.transformationOptions = transformationOptions;
       return this;
     }
 
