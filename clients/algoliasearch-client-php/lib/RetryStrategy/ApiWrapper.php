@@ -15,7 +15,6 @@ use Algolia\AlgoliaSearch\Http\Psr7\Request;
 use Algolia\AlgoliaSearch\Http\Psr7\Uri;
 use Algolia\AlgoliaSearch\RequestOptions\RequestOptions;
 use Algolia\AlgoliaSearch\RequestOptions\RequestOptionsFactory;
-use Algolia\AlgoliaSearch\ObjectSerializer;
 use Algolia\AlgoliaSearch\Support\Helpers;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -148,12 +147,14 @@ final class ApiWrapper implements ApiWrapperInterface
             ->withScheme('https')
         ;
 
-        if (isset($data) && !is_array($data)) {
-            $data = json_decode(json_encode(ObjectSerializer::sanitizeForSerialization($data)), true);
+        $requestBody = $requestOptions->getBody();
+        if ($data instanceof \JsonSerializable && !empty($requestBody)) {
+            $body = array_merge((array) $data->jsonSerialize(), $requestBody);
+        } elseif (is_array($data)) {
+            $body = array_merge($data, $requestBody);
+        } else {
+            $body = $data;
         }
-        $body = isset($data)
-            ? array_merge($data, $requestOptions->getBody())
-            : $data;
 
         $logParams = [
             'body' => $body,
@@ -336,21 +337,19 @@ final class ApiWrapper implements ApiWrapperInterface
         $body = null,
         $protocolVersion = '1.1'
     ) {
-        if (is_array($body)) {
+        if (is_array($body) && empty($body)) {
             // Send an empty valid JSON object
-            if (empty($body)) {
-                $body = '{}';
-            } else {
-                $serializeStart = microtime(true);
-                $body = \json_encode($body, $this->jsonOptions);
-                if (JSON_ERROR_NONE !== json_last_error()) {
-                    $this->log(LogLevel::ERROR, 'Serialization error: '.json_last_error_msg());
+            $body = '{}';
+        } elseif (is_array($body) || $body instanceof \JsonSerializable) {
+            $serializeStart = microtime(true);
+            $body = \json_encode($body, $this->jsonOptions);
+            if (JSON_ERROR_NONE !== json_last_error()) {
+                $this->log(LogLevel::ERROR, 'Serialization error: '.json_last_error_msg());
 
-                    throw new \InvalidArgumentException('json_encode error: '.json_last_error_msg());
-                }
-                $serializeDurationMs = round((microtime(true) - $serializeStart) * 1000);
-                $this->log(LogLevel::DEBUG, 'Request body serialized in '.$serializeDurationMs.'ms');
+                throw new \InvalidArgumentException('json_encode error: '.json_last_error_msg());
             }
+            $serializeDurationMs = round((microtime(true) - $serializeStart) * 1000);
+            $this->log(LogLevel::DEBUG, 'Request body serialized in '.$serializeDurationMs.'ms');
         }
 
         if ('gzip' === $this->config->getCompressionType() && is_string($body) && strlen($body) >= self::COMPRESSION_THRESHOLD) {
