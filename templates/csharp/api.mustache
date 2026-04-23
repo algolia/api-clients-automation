@@ -194,6 +194,27 @@ namespace Algolia.Search.Clients;
         {
           _logger.LogDebug("WARNING: DEBUG level logging is enabled. This logs full request/response bodies which may contain sensitive data. Only use in local development.");
         }
+
+        {{#isSearchClient}}
+        if (config.TransformationOptions != null)
+        {
+          var opts = config.TransformationOptions;
+          var ingestionConfig = new IngestionConfig(config.AppId, config.ApiKey, opts.Region);
+          if (opts.ReadTimeout.HasValue)
+            ingestionConfig.ReadTimeout = opts.ReadTimeout;
+          if (opts.WriteTimeout.HasValue)
+            ingestionConfig.WriteTimeout = opts.WriteTimeout;
+          if (opts.ConnectTimeout.HasValue)
+            ingestionConfig.ConnectTimeout = opts.ConnectTimeout;
+          if (opts.Compression.HasValue)
+            ingestionConfig.Compression = opts.Compression.Value;
+          if (opts.CustomHosts != null)
+            ingestionConfig.CustomHosts = opts.CustomHosts;
+          if (opts.DefaultHeaders != null)
+            ingestionConfig.DefaultHeaders = opts.DefaultHeaders;
+          _ingestionTransporter = new IngestionClient(ingestionConfig, factory);
+        }
+        {{/isSearchClient}}
       }
 
       /// <summary>
@@ -208,11 +229,15 @@ namespace Algolia.Search.Clients;
 
       {{#isSearchClient}}
       /// <summary>
-      /// Sets the region of the transformation pipeline. This is required to be called
-      /// if you wish to leverage the transformation pipeline (via the *WithTransformation methods).
+      /// Sets the region of the transformation pipeline.
       /// </summary>
       /// <param name="region">The region ("us" or "eu")</param>
       /// <param name="factory">Logger factory</param>
+      [Obsolete(
+        "SetTransformationRegion is deprecated. It forwarded the parent search config to the ingestion transporter. "
+          + "Use TransformationOptions in SearchConfig instead — it defaults to Ingestion API defaults and only overrides what's explicitly specified. "
+          + "See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
+      )]
       public void SetTransformationRegion(string region, ILoggerFactory factory = null)
       {
         if (string.IsNullOrWhiteSpace(region))

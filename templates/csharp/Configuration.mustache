@@ -13,6 +13,16 @@ namespace Algolia.Search.Clients;
 /// </summary>
 public sealed class {{apiPackageName}}Config : AlgoliaConfig
 {
+  {{#isSearchClient}}
+  /// <summary>
+  /// When set, eagerly creates an ingestion transporter using Ingestion API defaults.
+  /// Only fields explicitly provided in <see cref="TransformationOptions"/> override those defaults.
+  /// The parent search config is not forwarded to the ingestion transporter.
+  /// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+  /// </summary>
+  public TransformationOptions TransformationOptions { get; set; }
+
+  {{/isSearchClient}}
   {{#hasRegionalHost}}
   /// <summary>
   /// The configuration of the {{apiPackageName}} client
