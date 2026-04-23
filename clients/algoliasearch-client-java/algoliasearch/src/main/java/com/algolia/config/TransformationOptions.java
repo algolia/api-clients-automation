@@ -41,7 +41,7 @@ public final class TransformationOptions {
     if (region == null || region.isEmpty()) {
       throw new AlgoliaRuntimeException(
           "region is required in transformationOptions."
-              + " See https://www.algolia.com/doc/api-client/methods/push/#transformation-options");
+              + " See https://www.algolia.com/doc/libraries/sdk/methods/ingestion");
     }
     this.region = region;
   }
