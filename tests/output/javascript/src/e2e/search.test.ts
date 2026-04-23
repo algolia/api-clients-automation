@@ -257,6 +257,30 @@ describe('search', () => {
 
     expect(expectedBody).toEqual(union(expectedBody, resp));
   });
+
+  test('withQueryCategorization', async () => {
+    const resp = await client.search({
+      requests: [
+        {
+          indexName: 'cts_e2e_query_categorization',
+          query: 'sofa',
+          extensions: { queryCategorization: { enableCategoriesRetrieval: true, enableAutoFiltering: false } },
+        },
+      ],
+    });
+
+    const expectedBody = {
+      results: [
+        {
+          index: 'cts_e2e_query_categorization',
+          query: 'sofa',
+          extensions: { queryCategorization: { normalizedQuery: 'sofa', categories: [{}] } },
+        },
+      ],
+    };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
+  });
 });
 
 describe('searchDictionaryEntries', () => {

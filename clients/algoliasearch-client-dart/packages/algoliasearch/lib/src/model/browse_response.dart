@@ -5,6 +5,7 @@ import 'package:algoliasearch/src/model/hit.dart';
 import 'package:algoliasearch/src/model/rendering_content.dart';
 import 'package:algoliasearch/src/model/exhaustive.dart';
 import 'package:algoliasearch/src/model/facet_stats.dart';
+import 'package:algoliasearch/src/model/response_extensions.dart';
 
 import 'package:json_annotation/json_annotation.dart';
 
@@ -47,6 +48,7 @@ final class BrowseResponse {
     required this.hits,
     this.query,
     this.params,
+    this.extensions,
     this.cursor,
   });
 
@@ -186,6 +188,9 @@ final class BrowseResponse {
   @JsonKey(name: r'params')
   final String? params;
 
+  @JsonKey(name: r'extensions')
+  final ResponseExtensions? extensions;
+
   /// Cursor to get the next page of the response.  The parameter must match the value returned in the response of a previous request. The last page of the response does not return a `cursor` attribute.
   @JsonKey(name: r'cursor')
   final String? cursor;
@@ -224,6 +229,7 @@ final class BrowseResponse {
           other.hits == hits &&
           other.query == query &&
           other.params == params &&
+          other.extensions == extensions &&
           other.cursor == cursor;
 
   @override
@@ -258,6 +264,7 @@ final class BrowseResponse {
       hits.hashCode +
       query.hashCode +
       params.hashCode +
+      extensions.hashCode +
       cursor.hashCode;
 
   factory BrowseResponse.fromJson(Map<String, dynamic> json) =>

@@ -96,6 +96,7 @@ class SearchQuery extends AbstractModel implements ModelInterface, \ArrayAccess,
         'reRankingApplyFilter' => '\Algolia\AlgoliaSearch\Model\Search\ReRankingApplyFilter',
         'indexName' => 'string',
         'type' => '\Algolia\AlgoliaSearch\Model\Search\SearchTypeFacet',
+        'extensions' => '\Algolia\AlgoliaSearch\Model\Search\SearchExtensions',
         'facet' => 'string',
         'facetQuery' => 'string',
         'maxFacetHits' => 'int',
@@ -183,6 +184,7 @@ class SearchQuery extends AbstractModel implements ModelInterface, \ArrayAccess,
         'reRankingApplyFilter' => null,
         'indexName' => null,
         'type' => null,
+        'extensions' => null,
         'facet' => null,
         'facetQuery' => null,
         'maxFacetHits' => null,
@@ -271,6 +273,7 @@ class SearchQuery extends AbstractModel implements ModelInterface, \ArrayAccess,
         'reRankingApplyFilter' => 'reRankingApplyFilter',
         'indexName' => 'indexName',
         'type' => 'type',
+        'extensions' => 'extensions',
         'facet' => 'facet',
         'facetQuery' => 'facetQuery',
         'maxFacetHits' => 'maxFacetHits',
@@ -358,6 +361,7 @@ class SearchQuery extends AbstractModel implements ModelInterface, \ArrayAccess,
         'reRankingApplyFilter' => 'setReRankingApplyFilter',
         'indexName' => 'setIndexName',
         'type' => 'setType',
+        'extensions' => 'setExtensions',
         'facet' => 'setFacet',
         'facetQuery' => 'setFacetQuery',
         'maxFacetHits' => 'setMaxFacetHits',
@@ -445,6 +449,7 @@ class SearchQuery extends AbstractModel implements ModelInterface, \ArrayAccess,
         'reRankingApplyFilter' => 'getReRankingApplyFilter',
         'indexName' => 'getIndexName',
         'type' => 'getType',
+        'extensions' => 'getExtensions',
         'facet' => 'getFacet',
         'facetQuery' => 'getFacetQuery',
         'maxFacetHits' => 'getMaxFacetHits',
@@ -691,6 +696,9 @@ class SearchQuery extends AbstractModel implements ModelInterface, \ArrayAccess,
         }
         if (isset($data['type'])) {
             $this->container['type'] = $data['type'];
+        }
+        if (isset($data['extensions'])) {
+            $this->container['extensions'] = $data['extensions'];
         }
         if (isset($data['facet'])) {
             $this->container['facet'] = $data['facet'];
@@ -2607,6 +2615,30 @@ class SearchQuery extends AbstractModel implements ModelInterface, \ArrayAccess,
     public function setType($type)
     {
         $this->container['type'] = $type;
+
+        return $this;
+    }
+
+    /**
+     * Gets extensions.
+     *
+     * @return null|SearchExtensions
+     */
+    public function getExtensions()
+    {
+        return $this->container['extensions'] ?? null;
+    }
+
+    /**
+     * Sets extensions.
+     *
+     * @param null|SearchExtensions $extensions extensions
+     *
+     * @return self
+     */
+    public function setExtensions($extensions)
+    {
+        $this->container['extensions'] = $extensions;
 
         return $this;
     }
