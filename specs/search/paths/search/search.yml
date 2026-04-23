@@ -7,19 +7,19 @@ post:
   x-legacy-signature: true
   x-acl:
     - search
-  summary: Search multiple indices
+  summary: Search multiple queries
   description: |
-    Sends multiple search requests to one or more indices.
+    Runs multiple search queries against one or more indices in a single API request.
 
-    This can be useful in these cases:
+    Use cases include:
 
-    - Different indices for different purposes, such as, one index for products, another one for marketing content.
-    - Multiple searches to the same index—for example, with different filters.
+    - Searching different indices, such as products and marketing content.
+    - Run multiple queries on the same index with different parameters or filters.
 
-    Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
+    If you know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
   requestBody:
     required: true
-    description: Muli-search request body. Results are returned in the same order as the requests.
+    description: Multi-query search request body. Results are returned in the same order as the requests.
     content:
       application/json:
         schema:

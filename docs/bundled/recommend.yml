@@ -2871,16 +2871,10 @@ paths:
               description: Recommend rules parameters.
               additionalProperties: false
               properties:
-                query:
-                  $ref: '#/components/schemas/parameters_query'
                 context:
                   type: string
                   description: Only search for rules with matching context.
                   example: mobile
-                page:
-                  $ref: '#/components/schemas/parameters_page'
-                hitsPerPage:
-                  $ref: '#/components/schemas/parameters_hitsPerPage'
                 enabled:
                   type: boolean
                   description: >
@@ -2889,12 +2883,6 @@ paths:
 
                     If absent, show all rules, regardless of their `enabled`
                     property.
-                filters:
-                  type: string
-                  description: >-
-                    Filter expression. This only searches for rules matching the
-                    filter expression.
-                  example: objectID:rr-123456
                 facets:
                   type: array
                   description: >-
@@ -2906,11 +2894,23 @@ paths:
                     type: string
                     description: Facet name for rule objects or `*` as wildcard character.
                     example: condition.context
+                filters:
+                  type: string
+                  description: >-
+                    Filter expression. This only searches for rules matching the
+                    filter expression.
+                  example: objectID:rr-123456
+                hitsPerPage:
+                  $ref: '#/components/schemas/parameters_hitsPerPage'
                 maxValuesPerFacet:
                   type: integer
                   description: Maximum number of values to return for each facet.
                   minimum: 1
                   maximum: 1000
+                page:
+                  $ref: '#/components/schemas/parameters_page'
+                query:
+                  $ref: '#/components/schemas/parameters_query'
       responses:
         '200':
           description: OK
@@ -2933,10 +2933,10 @@ paths:
                       $ref: '#/components/schemas/RecommendRule'
                   nbHits:
                     $ref: '#/components/schemas/nbHits'
-                  page:
-                    $ref: '#/components/schemas/page'
                   nbPages:
                     $ref: '#/components/schemas/nbPages'
+                  page:
+                    $ref: '#/components/schemas/page'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -4235,62 +4235,62 @@ components:
       type: object
       additionalProperties: false
       properties:
-        similarQuery:
-          $ref: '#/components/schemas/similarQuery'
-        filters:
-          $ref: '#/components/schemas/filters'
-        facetFilters:
-          $ref: '#/components/schemas/facetFilters'
-        optionalFilters:
-          $ref: '#/components/schemas/optionalFilters'
-        numericFilters:
-          $ref: '#/components/schemas/numericFilters'
-        tagFilters:
-          $ref: '#/components/schemas/tagFilters'
-        sumOrFiltersScores:
-          $ref: '#/components/schemas/sumOrFiltersScores'
-        restrictSearchableAttributes:
-          $ref: '#/components/schemas/restrictSearchableAttributes'
-        facets:
-          $ref: '#/components/schemas/facets'
-        facetingAfterDistinct:
-          $ref: '#/components/schemas/facetingAfterDistinct'
-        aroundLatLng:
-          $ref: '#/components/schemas/aroundLatLng'
-        aroundLatLngViaIP:
-          $ref: '#/components/schemas/aroundLatLngViaIP'
-        aroundRadius:
-          $ref: '#/components/schemas/aroundRadius'
-        aroundPrecision:
-          $ref: '#/components/schemas/aroundPrecision'
-        minimumAroundRadius:
-          $ref: '#/components/schemas/minimumAroundRadius'
-        insideBoundingBox:
-          $ref: '#/components/schemas/insideBoundingBox'
-        insidePolygon:
-          $ref: '#/components/schemas/insidePolygon'
-        naturalLanguages:
-          $ref: '#/components/schemas/naturalLanguages'
-        ruleContexts:
-          $ref: '#/components/schemas/ruleContexts'
-        personalizationImpact:
-          $ref: '#/components/schemas/personalizationImpact'
-        userToken:
-          $ref: '#/components/schemas/userToken'
-        getRankingInfo:
-          $ref: '#/components/schemas/getRankingInfo'
-        synonyms:
-          $ref: '#/components/schemas/synonyms'
-        clickAnalytics:
-          $ref: '#/components/schemas/clickAnalytics'
         analytics:
           $ref: '#/components/schemas/analytics'
         analyticsTags:
           $ref: '#/components/schemas/analyticsTags'
-        percentileComputation:
-          $ref: '#/components/schemas/percentileComputation'
+        aroundLatLng:
+          $ref: '#/components/schemas/aroundLatLng'
+        aroundLatLngViaIP:
+          $ref: '#/components/schemas/aroundLatLngViaIP'
+        aroundPrecision:
+          $ref: '#/components/schemas/aroundPrecision'
+        aroundRadius:
+          $ref: '#/components/schemas/aroundRadius'
+        clickAnalytics:
+          $ref: '#/components/schemas/clickAnalytics'
         enableABTest:
           $ref: '#/components/schemas/enableABTest'
+        facetFilters:
+          $ref: '#/components/schemas/facetFilters'
+        facetingAfterDistinct:
+          $ref: '#/components/schemas/facetingAfterDistinct'
+        facets:
+          $ref: '#/components/schemas/facets'
+        filters:
+          $ref: '#/components/schemas/filters'
+        getRankingInfo:
+          $ref: '#/components/schemas/getRankingInfo'
+        insideBoundingBox:
+          $ref: '#/components/schemas/insideBoundingBox'
+        insidePolygon:
+          $ref: '#/components/schemas/insidePolygon'
+        minimumAroundRadius:
+          $ref: '#/components/schemas/minimumAroundRadius'
+        naturalLanguages:
+          $ref: '#/components/schemas/naturalLanguages'
+        numericFilters:
+          $ref: '#/components/schemas/numericFilters'
+        optionalFilters:
+          $ref: '#/components/schemas/optionalFilters'
+        percentileComputation:
+          $ref: '#/components/schemas/percentileComputation'
+        personalizationImpact:
+          $ref: '#/components/schemas/personalizationImpact'
+        restrictSearchableAttributes:
+          $ref: '#/components/schemas/restrictSearchableAttributes'
+        ruleContexts:
+          $ref: '#/components/schemas/ruleContexts'
+        similarQuery:
+          $ref: '#/components/schemas/similarQuery'
+        sumOrFiltersScores:
+          $ref: '#/components/schemas/sumOrFiltersScores'
+        synonyms:
+          $ref: '#/components/schemas/synonyms'
+        tagFilters:
+          $ref: '#/components/schemas/tagFilters'
+        userToken:
+          $ref: '#/components/schemas/userToken'
     query:
       type: string
       description: Search query.
@@ -4327,6 +4327,39 @@ components:
       type: object
       additionalProperties: false
       properties:
+        allowCompressionOfIntegerArray:
+          type: boolean
+          description: >
+            Whether arrays with exclusively non-negative integers should be
+            compressed for better performance.
+
+            If true, the compressed arrays may be reordered.
+          default: false
+          x-categories:
+            - Performance
+        attributeForDistinct:
+          description: >
+            Attribute that should be used to establish groups of results.
+
+            Attribute names are case-sensitive.
+
+
+            All records with the same value for this attribute are considered a
+            group.
+
+            You can combine `attributeForDistinct` with the `distinct` search
+            parameter to control
+
+            how many items per group are included in the search results.
+
+
+            If you want to use the same attribute also for faceting, use the
+            `afterDistinct` modifier of the `attributesForFaceting` setting.
+
+            This applies faceting _after_ deduplication, which will result in
+            accurate facet counts.
+          example: url
+          type: string
         attributesForFaceting:
           type: array
           items:
@@ -4367,95 +4400,6 @@ components:
           default: []
           x-categories:
             - Faceting
-        replicas:
-          type: array
-          items:
-            type: string
-          example:
-            - virtual(prod_products_price_asc)
-            - dev_products_replica
-          description: >
-            Creates [replica
-            indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas).
-
-
-            Replicas are copies of a primary index with the same records but
-            different settings, synonyms, or rules.
-
-            If you want to offer a different ranking or sorting of your search
-            results, you'll use replica indices.
-
-            All index operations on a primary index are automatically forwarded
-            to its replicas.
-
-            To add a replica index, you must provide the complete set of
-            replicas to this parameter.
-
-            If you omit a replica from this list, the replica turns into a
-            regular, standalone index that will no longer be synced with the
-            primary index.
-
-
-            **Modifier**
-
-
-            - `virtual("REPLICA")`.
-              Create a virtual replica,
-              Virtual replicas don't increase the number of records and are optimized for [Relevant sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort).
-          default: []
-          x-categories:
-            - Ranking
-        paginationLimitedTo:
-          type: integer
-          example: 100
-          description: >
-            Maximum number of search results that can be obtained through
-            pagination.
-
-
-            Higher pagination limits might slow down your search.
-
-            For pagination limits above 1,000, the sorting of results beyond the
-            1,000th hit can't be guaranteed.
-          default: 1000
-          maximum: 20000
-        unretrievableAttributes:
-          type: array
-          items:
-            type: string
-          example:
-            - total_sales
-          description: >
-            Attributes that can't be retrieved at query time.
-
-
-            This can be useful if you want to use an attribute for ranking or to
-            [restrict
-            access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data),
-
-            but don't want to include it in the search results.
-
-            Attribute names are case-sensitive.
-          default: []
-          x-categories:
-            - Attributes
-        disableTypoToleranceOnWords:
-          type: array
-          items:
-            type: string
-          example:
-            - wheel
-            - 1X2BCD
-          description: >
-            Creates a list of [words which require exact
-            matches](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#turn-off-typo-tolerance-for-certain-words).
-
-            This also turns off [word splitting and
-            concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation)
-            for the specified words.
-          default: []
-          x-categories:
-            - Typos
         attributesToTransliterate:
           description: >
             Attributes, for which you want to support [Japanese
@@ -4491,200 +4435,6 @@ components:
           default: []
           x-categories:
             - Languages
-        decompoundedAttributes:
-          type: object
-          example:
-            de:
-              - name
-          description: >
-            Searchable attributes to which Algolia should apply [word
-            segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation)
-            (decompounding).
-
-            Attribute names are case-sensitive.
-
-
-            Compound words are formed by combining two or more individual words,
-
-            and are particularly prevalent in Germanic languages—for example,
-            "firefighter".
-
-            With decompounding, the individual components are indexed
-            separately.
-
-
-            You can specify different lists for different languages.
-
-            Decompounding is supported for these languages:
-
-            Dutch (`nl`), German (`de`), Finnish (`fi`), Danish (`da`), Swedish
-            (`sv`), and Norwegian (`no`).
-
-            Decompounding doesn't work for words with [non-spacing mark Unicode
-            characters](https://www.charactercodes.net/category/non-spacing_mark).
-
-            For example, `Gartenstühle` won't be decompounded if the `ü`
-            consists of `u` (U+0075) and `◌̈` (U+0308).
-          default: {}
-          x-categories:
-            - Languages
-        indexLanguages:
-          type: array
-          items:
-            $ref: '#/components/schemas/supportedLanguage'
-          example:
-            - ja
-          description: >
-            Languages for language-specific processing steps, such as word
-            detection and dictionary settings.
-
-
-            **Always specify an indexing language.**
-
-            If you don't specify an indexing language, the search engine uses
-            all [supported
-            languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
-
-            or the languages you specified with the `ignorePlurals` or
-            `removeStopWords` parameters.
-
-            This can lead to unexpected search results.
-
-            For more information, see [Language-specific
-            configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
-          default: []
-          x-categories:
-            - Languages
-        disablePrefixOnAttributes:
-          type: array
-          items:
-            type: string
-          example:
-            - sku
-          description: >
-            Searchable attributes for which you want to turn off [prefix
-            matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjusting-prefix-search).
-
-            Attribute names are case-sensitive.
-          default: []
-          x-categories:
-            - Query strategy
-        allowCompressionOfIntegerArray:
-          type: boolean
-          description: >
-            Whether arrays with exclusively non-negative integers should be
-            compressed for better performance.
-
-            If true, the compressed arrays may be reordered.
-          default: false
-          x-categories:
-            - Performance
-        numericAttributesForFiltering:
-          type: array
-          items:
-            type: string
-          description: >
-            Numeric attributes that can be used as [numerical
-            filters](https://www.algolia.com/doc/guides/managing-results/rules/detecting-intent/how-to/applying-a-custom-filter-for-a-specific-query/#numerical-filters).
-
-            Attribute names are case-sensitive.
-
-
-            By default, all numeric attributes are available as numerical
-            filters.
-
-            For faster indexing, reduce the number of numeric attributes.
-
-
-            To turn off filtering for all numeric attributes, specify an
-            attribute that doesn't exist in your index, such as
-            `NO_NUMERIC_FILTERING`.
-
-
-            **Modifier**
-
-
-            - `equalOnly("ATTRIBUTE")`.
-              Support only filtering based on equality comparisons `=` and `!=`.
-          example:
-            - equalOnly(quantity)
-            - popularity
-          default: []
-          x-categories:
-            - Performance
-        separatorsToIndex:
-          type: string
-          example: +#
-          description: >
-            Control which non-alphanumeric characters are indexed.
-
-
-            By default, Algolia ignores [non-alphanumeric
-            characters](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/#handling-non-alphanumeric-characters)
-            like hyphen (`-`), plus (`+`), and parentheses (`(`,`)`).
-
-            To include such characters, define them with `separatorsToIndex`.
-
-
-            Separators are all non-letter characters except spaces and currency
-            characters, such as $€£¥.
-
-
-            With `separatorsToIndex`, Algolia treats separator characters as
-            separate words.
-
-            For example, in a search for "Disney+", Algolia considers "Disney"
-            and "+" as two separate words.
-          default: ''
-          x-categories:
-            - Typos
-        searchableAttributes:
-          type: array
-          items:
-            type: string
-          example:
-            - title,alternative_title
-            - author
-            - unordered(text)
-            - emails.personal
-          description: >
-            Attributes used for searching. Attribute names are case-sensitive.
-
-
-            By default, all attributes are searchable and the
-            [Attribute](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#attribute)
-            ranking criterion is turned off.
-
-            With a non-empty list, Algolia only returns results with matches in
-            the selected attributes.
-
-            In addition, the Attribute ranking criterion is turned on: matches
-            in attributes that are higher in the list of `searchableAttributes`
-            rank first.
-
-            To make matches in two attributes rank equally, include them in a
-            comma-separated string, such as `"title,alternate_title"`.
-
-            Attributes with the same priority are always unordered.
-
-
-            For more information, see [Searchable
-            attributes](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/setting-searchable-attributes).
-
-
-            **Modifier**
-
-
-            - `unordered("ATTRIBUTE")`.
-              Ignore the position of a match within the attribute.
-
-            Without a modifier, matches at the beginning of an attribute rank
-            higher than matches at the end.
-          default: []
-          x-categories:
-            - Attributes
-        userData:
-          $ref: '#/components/schemas/userData'
         customNormalization:
           description: >
             Characters and their normalized replacements.
@@ -4700,43 +4450,6 @@ components:
             type: object
             additionalProperties:
               type: string
-          x-categories:
-            - Languages
-        attributeForDistinct:
-          description: >
-            Attribute that should be used to establish groups of results.
-
-            Attribute names are case-sensitive.
-
-
-            All records with the same value for this attribute are considered a
-            group.
-
-            You can combine `attributeForDistinct` with the `distinct` search
-            parameter to control
-
-            how many items per group are included in the search results.
-
-
-            If you want to use the same attribute also for faceting, use the
-            `afterDistinct` modifier of the `attributesForFaceting` setting.
-
-            This applies faceting _after_ deduplication, which will result in
-            accurate facet counts.
-          example: url
-          type: string
-        maxFacetHits:
-          $ref: '#/components/schemas/maxFacetHits'
-        keepDiacriticsOnCharacters:
-          type: string
-          example: øé
-          description: |
-            Characters for which diacritics should be preserved.
-
-            By default, Algolia removes diacritics from letters.
-            For example, `é` becomes `e`. If this causes issues in your search,
-            you can specify characters that should keep their diacritics.
-          default: ''
           x-categories:
             - Languages
         customRanking:
@@ -4782,6 +4495,293 @@ components:
           default: []
           x-categories:
             - Ranking
+        decompoundedAttributes:
+          type: object
+          example:
+            de:
+              - name
+          description: >
+            Searchable attributes to which Algolia should apply [word
+            segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation)
+            (decompounding).
+
+            Attribute names are case-sensitive.
+
+
+            Compound words are formed by combining two or more individual words,
+
+            and are particularly prevalent in Germanic languages—for example,
+            "firefighter".
+
+            With decompounding, the individual components are indexed
+            separately.
+
+
+            You can specify different lists for different languages.
+
+            Decompounding is supported for these languages:
+
+            Dutch (`nl`), German (`de`), Finnish (`fi`), Danish (`da`), Swedish
+            (`sv`), and Norwegian (`no`).
+
+            Decompounding doesn't work for words with [non-spacing mark Unicode
+            characters](https://www.charactercodes.net/category/non-spacing_mark).
+
+            For example, `Gartenstühle` won't be decompounded if the `ü`
+            consists of `u` (U+0075) and `◌̈` (U+0308).
+          default: {}
+          x-categories:
+            - Languages
+        disablePrefixOnAttributes:
+          type: array
+          items:
+            type: string
+          example:
+            - sku
+          description: >
+            Searchable attributes for which you want to turn off [prefix
+            matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjusting-prefix-search).
+
+            Attribute names are case-sensitive.
+          default: []
+          x-categories:
+            - Query strategy
+        disableTypoToleranceOnWords:
+          type: array
+          items:
+            type: string
+          example:
+            - wheel
+            - 1X2BCD
+          description: >
+            Creates a list of [words which require exact
+            matches](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#turn-off-typo-tolerance-for-certain-words).
+
+            This also turns off [word splitting and
+            concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation)
+            for the specified words.
+          default: []
+          x-categories:
+            - Typos
+        indexLanguages:
+          type: array
+          items:
+            $ref: '#/components/schemas/supportedLanguage'
+          example:
+            - ja
+          description: >
+            Languages for language-specific processing steps, such as word
+            detection and dictionary settings.
+
+
+            **Always specify an indexing language.**
+
+            If you don't specify an indexing language, the search engine uses
+            all [supported
+            languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
+
+            or the languages you specified with the `ignorePlurals` or
+            `removeStopWords` parameters.
+
+            This can lead to unexpected search results.
+
+            For more information, see [Language-specific
+            configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
+          default: []
+          x-categories:
+            - Languages
+        keepDiacriticsOnCharacters:
+          type: string
+          example: øé
+          description: |
+            Characters for which diacritics should be preserved.
+
+            By default, Algolia removes diacritics from letters.
+            For example, `é` becomes `e`. If this causes issues in your search,
+            you can specify characters that should keep their diacritics.
+          default: ''
+          x-categories:
+            - Languages
+        maxFacetHits:
+          $ref: '#/components/schemas/maxFacetHits'
+        numericAttributesForFiltering:
+          type: array
+          items:
+            type: string
+          description: >
+            Numeric attributes that can be used as [numerical
+            filters](https://www.algolia.com/doc/guides/managing-results/rules/detecting-intent/how-to/applying-a-custom-filter-for-a-specific-query/#numerical-filters).
+
+            Attribute names are case-sensitive.
+
+
+            By default, all numeric attributes are available as numerical
+            filters.
+
+            For faster indexing, reduce the number of numeric attributes.
+
+
+            To turn off filtering for all numeric attributes, specify an
+            attribute that doesn't exist in your index, such as
+            `NO_NUMERIC_FILTERING`.
+
+
+            **Modifier**
+
+
+            - `equalOnly("ATTRIBUTE")`.
+              Support only filtering based on equality comparisons `=` and `!=`.
+          example:
+            - equalOnly(quantity)
+            - popularity
+          default: []
+          x-categories:
+            - Performance
+        paginationLimitedTo:
+          type: integer
+          example: 100
+          description: >
+            Maximum number of search results that can be obtained through
+            pagination.
+
+
+            Higher pagination limits might slow down your search.
+
+            For pagination limits above 1,000, the sorting of results beyond the
+            1,000th hit can't be guaranteed.
+          default: 1000
+          maximum: 20000
+        replicas:
+          type: array
+          items:
+            type: string
+          example:
+            - virtual(prod_products_price_asc)
+            - dev_products_replica
+          description: >
+            Creates [replica
+            indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas).
+
+
+            Replicas are copies of a primary index with the same records but
+            different settings, synonyms, or rules.
+
+            If you want to offer a different ranking or sorting of your search
+            results, you'll use replica indices.
+
+            All index operations on a primary index are automatically forwarded
+            to its replicas.
+
+            To add a replica index, you must provide the complete set of
+            replicas to this parameter.
+
+            If you omit a replica from this list, the replica turns into a
+            regular, standalone index that will no longer be synced with the
+            primary index.
+
+
+            **Modifier**
+
+
+            - `virtual("REPLICA")`.
+              Create a virtual replica,
+              Virtual replicas don't increase the number of records and are optimized for [Relevant sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort).
+          default: []
+          x-categories:
+            - Ranking
+        searchableAttributes:
+          type: array
+          items:
+            type: string
+          example:
+            - title,alternative_title
+            - author
+            - unordered(text)
+            - emails.personal
+          description: >
+            Attributes used for searching. Attribute names are case-sensitive.
+
+
+            By default, all attributes are searchable and the
+            [Attribute](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#attribute)
+            ranking criterion is turned off.
+
+            With a non-empty list, Algolia only returns results with matches in
+            the selected attributes.
+
+            In addition, the Attribute ranking criterion is turned on: matches
+            in attributes that are higher in the list of `searchableAttributes`
+            rank first.
+
+            To make matches in two attributes rank equally, include them in a
+            comma-separated string, such as `"title,alternate_title"`.
+
+            Attributes with the same priority are always unordered.
+
+
+            For more information, see [Searchable
+            attributes](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/setting-searchable-attributes).
+
+
+            **Modifier**
+
+
+            - `unordered("ATTRIBUTE")`.
+              Ignore the position of a match within the attribute.
+
+            Without a modifier, matches at the beginning of an attribute rank
+            higher than matches at the end.
+          default: []
+          x-categories:
+            - Attributes
+        separatorsToIndex:
+          type: string
+          example: +#
+          description: >
+            Control which non-alphanumeric characters are indexed.
+
+
+            By default, Algolia ignores [non-alphanumeric
+            characters](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/#handling-non-alphanumeric-characters)
+            like hyphen (`-`), plus (`+`), and parentheses (`(`,`)`).
+
+            To include such characters, define them with `separatorsToIndex`.
+
+
+            Separators are all non-letter characters except spaces and currency
+            characters, such as $€£¥.
+
+
+            With `separatorsToIndex`, Algolia treats separator characters as
+            separate words.
+
+            For example, in a search for "Disney+", Algolia considers "Disney"
+            and "+" as two separate words.
+          default: ''
+          x-categories:
+            - Typos
+        unretrievableAttributes:
+          type: array
+          items:
+            type: string
+          example:
+            - total_sales
+          description: >
+            Attributes that can't be retrieved at query time.
+
+
+            This can be useful if you want to use an attribute for ranking or to
+            [restrict
+            access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data),
+
+            but don't want to include it in the search results.
+
+            Attribute names are case-sensitive.
+          default: []
+          x-categories:
+            - Attributes
+        userData:
+          $ref: '#/components/schemas/userData'
     attributesToRetrieve:
       type: array
       items:
@@ -5617,12 +5617,12 @@ components:
       type: object
       additionalProperties: false
       properties:
+        hide:
+          $ref: '#/components/schemas/hide'
         order:
           $ref: '#/components/schemas/order'
         sortRemainingBy:
           $ref: '#/components/schemas/sortRemainingBy'
-        hide:
-          $ref: '#/components/schemas/hide'
     values:
       description: Order of facet values. One object for each facet.
       type: object
@@ -5657,12 +5657,12 @@ components:
       type: object
       additionalProperties: false
       properties:
+        title:
+          type: string
         urls:
           type: array
           items:
             $ref: '#/components/schemas/bannerImageUrl'
-        title:
-          type: string
     bannerLink:
       description: Link for a banner defined in the Merchandising Studio.
       type: object
@@ -5742,87 +5742,618 @@ components:
       type: object
       additionalProperties: false
       properties:
-        attributesToRetrieve:
-          $ref: '#/components/schemas/attributesToRetrieve'
-        ranking:
-          $ref: '#/components/schemas/ranking'
-        relevancyStrictness:
-          $ref: '#/components/schemas/relevancyStrictness'
+        advancedSyntax:
+          $ref: '#/components/schemas/advancedSyntax'
+        advancedSyntaxFeatures:
+          $ref: '#/components/schemas/IndexSettings_advancedSyntaxFeatures'
+        allowTyposOnNumericTokens:
+          $ref: '#/components/schemas/allowTyposOnNumericTokens'
+        alternativesAsExact:
+          $ref: '#/components/schemas/IndexSettings_alternativesAsExact'
+        attributeCriteriaComputedByMinProximity:
+          $ref: '#/components/schemas/attributeCriteriaComputedByMinProximity'
         attributesToHighlight:
           $ref: '#/components/schemas/attributesToHighlight'
+        attributesToRetrieve:
+          $ref: '#/components/schemas/attributesToRetrieve'
         attributesToSnippet:
           $ref: '#/components/schemas/attributesToSnippet'
-        highlightPreTag:
-          $ref: '#/components/schemas/highlightPreTag'
+        decompoundQuery:
+          $ref: '#/components/schemas/decompoundQuery'
+        disableExactOnAttributes:
+          $ref: '#/components/schemas/disableExactOnAttributes'
+        disableTypoToleranceOnAttributes:
+          $ref: '#/components/schemas/disableTypoToleranceOnAttributes'
+        distinct:
+          $ref: '#/components/schemas/distinct'
+        enablePersonalization:
+          $ref: '#/components/schemas/enablePersonalization'
+        enableReRanking:
+          $ref: '#/components/schemas/enableReRanking'
+        enableRules:
+          $ref: '#/components/schemas/enableRules'
+        exactOnSingleWordQuery:
+          $ref: '#/components/schemas/exactOnSingleWordQuery'
         highlightPostTag:
           $ref: '#/components/schemas/highlightPostTag'
-        snippetEllipsisText:
-          $ref: '#/components/schemas/snippetEllipsisText'
-        restrictHighlightAndSnippetArrays:
-          $ref: '#/components/schemas/restrictHighlightAndSnippetArrays'
+        highlightPreTag:
+          $ref: '#/components/schemas/highlightPreTag'
+        ignorePlurals:
+          $ref: '#/components/schemas/ignorePlurals'
+        maxValuesPerFacet:
+          $ref: '#/components/schemas/maxValuesPerFacet'
+        minProximity:
+          $ref: '#/components/schemas/minProximity'
         minWordSizefor1Typo:
           $ref: '#/components/schemas/minWordSizefor1Typo'
         minWordSizefor2Typos:
           $ref: '#/components/schemas/minWordSizefor2Typos'
-        typoTolerance:
-          $ref: '#/components/schemas/typoTolerance'
-        allowTyposOnNumericTokens:
-          $ref: '#/components/schemas/allowTyposOnNumericTokens'
-        disableTypoToleranceOnAttributes:
-          $ref: '#/components/schemas/disableTypoToleranceOnAttributes'
-        ignorePlurals:
-          $ref: '#/components/schemas/ignorePlurals'
-        removeStopWords:
-          $ref: '#/components/schemas/removeStopWords'
-        queryLanguages:
-          $ref: '#/components/schemas/queryLanguages'
-        decompoundQuery:
-          $ref: '#/components/schemas/decompoundQuery'
-        enableRules:
-          $ref: '#/components/schemas/enableRules'
-        enablePersonalization:
-          $ref: '#/components/schemas/enablePersonalization'
-        queryType:
-          $ref: '#/components/schemas/queryType'
-        removeWordsIfNoResults:
-          $ref: '#/components/schemas/removeWordsIfNoResults'
-        advancedSyntax:
-          $ref: '#/components/schemas/advancedSyntax'
         optionalWords:
           $ref: '#/components/schemas/optionalWords'
-        disableExactOnAttributes:
-          $ref: '#/components/schemas/disableExactOnAttributes'
-        exactOnSingleWordQuery:
-          $ref: '#/components/schemas/exactOnSingleWordQuery'
-        alternativesAsExact:
-          $ref: '#/components/schemas/IndexSettings_alternativesAsExact'
-        advancedSyntaxFeatures:
-          $ref: '#/components/schemas/IndexSettings_advancedSyntaxFeatures'
-        distinct:
-          $ref: '#/components/schemas/distinct'
-        replaceSynonymsInHighlight:
-          $ref: '#/components/schemas/replaceSynonymsInHighlight'
-        minProximity:
-          $ref: '#/components/schemas/minProximity'
-        responseFields:
-          $ref: '#/components/schemas/responseFields'
-        maxValuesPerFacet:
-          $ref: '#/components/schemas/maxValuesPerFacet'
-        sortFacetValuesBy:
-          $ref: '#/components/schemas/sortFacetValuesBy'
-        attributeCriteriaComputedByMinProximity:
-          $ref: '#/components/schemas/attributeCriteriaComputedByMinProximity'
+        queryLanguages:
+          $ref: '#/components/schemas/queryLanguages'
+        queryType:
+          $ref: '#/components/schemas/queryType'
+        ranking:
+          $ref: '#/components/schemas/ranking'
+        relevancyStrictness:
+          $ref: '#/components/schemas/relevancyStrictness'
+        removeStopWords:
+          $ref: '#/components/schemas/removeStopWords'
+        removeWordsIfNoResults:
+          $ref: '#/components/schemas/removeWordsIfNoResults'
         renderingContent:
           $ref: '#/components/schemas/renderingContent'
-        enableReRanking:
-          $ref: '#/components/schemas/enableReRanking'
+        replaceSynonymsInHighlight:
+          $ref: '#/components/schemas/replaceSynonymsInHighlight'
         reRankingApplyFilter:
           $ref: '#/components/schemas/properties-reRankingApplyFilter'
+        responseFields:
+          $ref: '#/components/schemas/responseFields'
+        restrictHighlightAndSnippetArrays:
+          $ref: '#/components/schemas/restrictHighlightAndSnippetArrays'
+        snippetEllipsisText:
+          $ref: '#/components/schemas/snippetEllipsisText'
+        sortFacetValuesBy:
+          $ref: '#/components/schemas/sortFacetValuesBy'
+        typoTolerance:
+          $ref: '#/components/schemas/typoTolerance'
     recommendIndexSettings:
+      type: object
+      properties:
+        advancedSyntax:
+          $ref: '#/components/schemas/advancedSyntax'
+        advancedSyntaxFeatures:
+          $ref: '#/components/schemas/IndexSettings_advancedSyntaxFeatures'
+        allowCompressionOfIntegerArray:
+          type: boolean
+          description: >
+            Whether arrays with exclusively non-negative integers should be
+            compressed for better performance.
+
+            If true, the compressed arrays may be reordered.
+          default: false
+          x-categories:
+            - Performance
+        allowTyposOnNumericTokens:
+          $ref: '#/components/schemas/allowTyposOnNumericTokens'
+        alternativesAsExact:
+          $ref: '#/components/schemas/IndexSettings_alternativesAsExact'
+        attributeCriteriaComputedByMinProximity:
+          $ref: '#/components/schemas/attributeCriteriaComputedByMinProximity'
+        attributeForDistinct:
+          description: >
+            Attribute that should be used to establish groups of results.
+
+            Attribute names are case-sensitive.
+
+
+            All records with the same value for this attribute are considered a
+            group.
+
+            You can combine `attributeForDistinct` with the `distinct` search
+            parameter to control
+
+            how many items per group are included in the search results.
+
+
+            If you want to use the same attribute also for faceting, use the
+            `afterDistinct` modifier of the `attributesForFaceting` setting.
+
+            This applies faceting _after_ deduplication, which will result in
+            accurate facet counts.
+          example: url
+          type: string
+        attributesForFaceting:
+          type: array
+          items:
+            type: string
+          example:
+            - author
+            - filterOnly(isbn)
+            - searchable(edition)
+            - afterDistinct(category)
+            - afterDistinct(searchable(publisher))
+          description: >
+            Attributes used for
+            [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting).
+
+
+            Facets are attributes that let you categorize search results.
+
+            They can be used for filtering search results.
+
+            By default, no attribute is used for faceting.
+
+            Attribute names are case-sensitive.
+
+
+            **Modifiers**
+
+
+            - `filterOnly("ATTRIBUTE")`.
+              Allows the attribute to be used as a filter but doesn't evaluate the facet values.
+
+            - `searchable("ATTRIBUTE")`.
+              Allows searching for facet values.
+
+            - `afterDistinct("ATTRIBUTE")`.
+              Evaluates the facet count _after_ deduplication with `distinct`.
+              This ensures accurate facet counts.
+              You can apply this modifier to searchable facets: `afterDistinct(searchable(ATTRIBUTE))`.
+          default: []
+          x-categories:
+            - Faceting
+        attributesToHighlight:
+          $ref: '#/components/schemas/attributesToHighlight'
+        attributesToRetrieve:
+          $ref: '#/components/schemas/attributesToRetrieve'
+        attributesToSnippet:
+          $ref: '#/components/schemas/attributesToSnippet'
+        attributesToTransliterate:
+          description: >
+            Attributes, for which you want to support [Japanese
+            transliteration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#japanese-transliteration-and-type-ahead).
+
+
+            Transliteration supports searching in any of the Japanese writing
+            systems.
+
+            To support transliteration, you must set the indexing language to
+            Japanese.
+
+            Attribute names are case-sensitive.
+          type: array
+          items:
+            type: string
+          example:
+            - name
+            - description
+          x-categories:
+            - Languages
+        camelCaseAttributes:
+          type: array
+          items:
+            type: string
+          example:
+            - description
+          description: >
+            Attributes for which to split [camel
+            case](https://wikipedia.org/wiki/Camel_case) words.
+
+            Attribute names are case-sensitive.
+          default: []
+          x-categories:
+            - Languages
+        customNormalization:
+          description: >
+            Characters and their normalized replacements.
+
+            This overrides Algolia's default
+            [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization).
+          type: object
+          example:
+            default:
+              ä: ae
+              ü: ue
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: string
+          x-categories:
+            - Languages
+        customRanking:
+          type: array
+          items:
+            type: string
+          example:
+            - desc(popularity)
+            - asc(price)
+          description: >
+            Attributes to use as [custom
+            ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking).
+
+            Attribute names are case-sensitive.
+
+
+            The custom ranking attributes decide which items are shown first if
+            the other ranking criteria are equal.
+
+
+            Records with missing values for your selected custom ranking
+            attributes are always sorted last.
+
+            Boolean attributes are sorted based on their alphabetical order.
+
+
+            **Modifiers**
+
+
+            - `asc("ATTRIBUTE")`.
+              Sort the index by the values of an attribute, in ascending order.
+
+            - `desc("ATTRIBUTE")`.
+              Sort the index by the values of an attribute, in descending order.
+
+            If you use two or more custom ranking attributes,
+
+            [reduce the
+            precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision)
+            of your first attributes,
+
+            or the other attributes will never be applied.
+          default: []
+          x-categories:
+            - Ranking
+        decompoundedAttributes:
+          type: object
+          example:
+            de:
+              - name
+          description: >
+            Searchable attributes to which Algolia should apply [word
+            segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation)
+            (decompounding).
+
+            Attribute names are case-sensitive.
+
+
+            Compound words are formed by combining two or more individual words,
+
+            and are particularly prevalent in Germanic languages—for example,
+            "firefighter".
+
+            With decompounding, the individual components are indexed
+            separately.
+
+
+            You can specify different lists for different languages.
+
+            Decompounding is supported for these languages:
+
+            Dutch (`nl`), German (`de`), Finnish (`fi`), Danish (`da`), Swedish
+            (`sv`), and Norwegian (`no`).
+
+            Decompounding doesn't work for words with [non-spacing mark Unicode
+            characters](https://www.charactercodes.net/category/non-spacing_mark).
+
+            For example, `Gartenstühle` won't be decompounded if the `ü`
+            consists of `u` (U+0075) and `◌̈` (U+0308).
+          default: {}
+          x-categories:
+            - Languages
+        decompoundQuery:
+          $ref: '#/components/schemas/decompoundQuery'
+        disableExactOnAttributes:
+          $ref: '#/components/schemas/disableExactOnAttributes'
+        disablePrefixOnAttributes:
+          type: array
+          items:
+            type: string
+          example:
+            - sku
+          description: >
+            Searchable attributes for which you want to turn off [prefix
+            matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjusting-prefix-search).
+
+            Attribute names are case-sensitive.
+          default: []
+          x-categories:
+            - Query strategy
+        disableTypoToleranceOnAttributes:
+          $ref: '#/components/schemas/disableTypoToleranceOnAttributes'
+        disableTypoToleranceOnWords:
+          type: array
+          items:
+            type: string
+          example:
+            - wheel
+            - 1X2BCD
+          description: >
+            Creates a list of [words which require exact
+            matches](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#turn-off-typo-tolerance-for-certain-words).
+
+            This also turns off [word splitting and
+            concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation)
+            for the specified words.
+          default: []
+          x-categories:
+            - Typos
+        distinct:
+          $ref: '#/components/schemas/distinct'
+        enablePersonalization:
+          $ref: '#/components/schemas/enablePersonalization'
+        enableReRanking:
+          $ref: '#/components/schemas/enableReRanking'
+        enableRules:
+          $ref: '#/components/schemas/enableRules'
+        exactOnSingleWordQuery:
+          $ref: '#/components/schemas/exactOnSingleWordQuery'
+        highlightPostTag:
+          $ref: '#/components/schemas/highlightPostTag'
+        highlightPreTag:
+          $ref: '#/components/schemas/highlightPreTag'
+        ignorePlurals:
+          $ref: '#/components/schemas/ignorePlurals'
+        indexLanguages:
+          type: array
+          items:
+            $ref: '#/components/schemas/supportedLanguage'
+          example:
+            - ja
+          description: >
+            Languages for language-specific processing steps, such as word
+            detection and dictionary settings.
+
+
+            **Always specify an indexing language.**
+
+            If you don't specify an indexing language, the search engine uses
+            all [supported
+            languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
+
+            or the languages you specified with the `ignorePlurals` or
+            `removeStopWords` parameters.
+
+            This can lead to unexpected search results.
+
+            For more information, see [Language-specific
+            configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
+          default: []
+          x-categories:
+            - Languages
+        keepDiacriticsOnCharacters:
+          type: string
+          example: øé
+          description: |
+            Characters for which diacritics should be preserved.
+
+            By default, Algolia removes diacritics from letters.
+            For example, `é` becomes `e`. If this causes issues in your search,
+            you can specify characters that should keep their diacritics.
+          default: ''
+          x-categories:
+            - Languages
+        maxFacetHits:
+          $ref: '#/components/schemas/maxFacetHits'
+        maxValuesPerFacet:
+          $ref: '#/components/schemas/maxValuesPerFacet'
+        minProximity:
+          $ref: '#/components/schemas/minProximity'
+        minWordSizefor1Typo:
+          $ref: '#/components/schemas/minWordSizefor1Typo'
+        minWordSizefor2Typos:
+          $ref: '#/components/schemas/minWordSizefor2Typos'
+        numericAttributesForFiltering:
+          type: array
+          items:
+            type: string
+          description: >
+            Numeric attributes that can be used as [numerical
+            filters](https://www.algolia.com/doc/guides/managing-results/rules/detecting-intent/how-to/applying-a-custom-filter-for-a-specific-query/#numerical-filters).
+
+            Attribute names are case-sensitive.
+
+
+            By default, all numeric attributes are available as numerical
+            filters.
+
+            For faster indexing, reduce the number of numeric attributes.
+
+
+            To turn off filtering for all numeric attributes, specify an
+            attribute that doesn't exist in your index, such as
+            `NO_NUMERIC_FILTERING`.
+
+
+            **Modifier**
+
+
+            - `equalOnly("ATTRIBUTE")`.
+              Support only filtering based on equality comparisons `=` and `!=`.
+          example:
+            - equalOnly(quantity)
+            - popularity
+          default: []
+          x-categories:
+            - Performance
+        optionalWords:
+          $ref: '#/components/schemas/optionalWords'
+        paginationLimitedTo:
+          type: integer
+          example: 100
+          description: >
+            Maximum number of search results that can be obtained through
+            pagination.
+
+
+            Higher pagination limits might slow down your search.
+
+            For pagination limits above 1,000, the sorting of results beyond the
+            1,000th hit can't be guaranteed.
+          default: 1000
+          maximum: 20000
+        queryLanguages:
+          $ref: '#/components/schemas/queryLanguages'
+        queryType:
+          $ref: '#/components/schemas/queryType'
+        ranking:
+          $ref: '#/components/schemas/ranking'
+        relevancyStrictness:
+          $ref: '#/components/schemas/relevancyStrictness'
+        removeStopWords:
+          $ref: '#/components/schemas/removeStopWords'
+        removeWordsIfNoResults:
+          $ref: '#/components/schemas/removeWordsIfNoResults'
+        renderingContent:
+          $ref: '#/components/schemas/renderingContent'
+        replaceSynonymsInHighlight:
+          $ref: '#/components/schemas/replaceSynonymsInHighlight'
+        replicas:
+          type: array
+          items:
+            type: string
+          example:
+            - virtual(prod_products_price_asc)
+            - dev_products_replica
+          description: >
+            Creates [replica
+            indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas).
+
+
+            Replicas are copies of a primary index with the same records but
+            different settings, synonyms, or rules.
+
+            If you want to offer a different ranking or sorting of your search
+            results, you'll use replica indices.
+
+            All index operations on a primary index are automatically forwarded
+            to its replicas.
+
+            To add a replica index, you must provide the complete set of
+            replicas to this parameter.
+
+            If you omit a replica from this list, the replica turns into a
+            regular, standalone index that will no longer be synced with the
+            primary index.
+
+
+            **Modifier**
+
+
+            - `virtual("REPLICA")`.
+              Create a virtual replica,
+              Virtual replicas don't increase the number of records and are optimized for [Relevant sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort).
+          default: []
+          x-categories:
+            - Ranking
+        reRankingApplyFilter:
+          $ref: '#/components/schemas/properties-reRankingApplyFilter'
+        responseFields:
+          $ref: '#/components/schemas/responseFields'
+        restrictHighlightAndSnippetArrays:
+          $ref: '#/components/schemas/restrictHighlightAndSnippetArrays'
+        searchableAttributes:
+          type: array
+          items:
+            type: string
+          example:
+            - title,alternative_title
+            - author
+            - unordered(text)
+            - emails.personal
+          description: >
+            Attributes used for searching. Attribute names are case-sensitive.
+
+
+            By default, all attributes are searchable and the
+            [Attribute](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#attribute)
+            ranking criterion is turned off.
+
+            With a non-empty list, Algolia only returns results with matches in
+            the selected attributes.
+
+            In addition, the Attribute ranking criterion is turned on: matches
+            in attributes that are higher in the list of `searchableAttributes`
+            rank first.
+
+            To make matches in two attributes rank equally, include them in a
+            comma-separated string, such as `"title,alternate_title"`.
+
+            Attributes with the same priority are always unordered.
+
+
+            For more information, see [Searchable
+            attributes](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/setting-searchable-attributes).
+
+
+            **Modifier**
+
+
+            - `unordered("ATTRIBUTE")`.
+              Ignore the position of a match within the attribute.
+
+            Without a modifier, matches at the beginning of an attribute rank
+            higher than matches at the end.
+          default: []
+          x-categories:
+            - Attributes
+        separatorsToIndex:
+          type: string
+          example: +#
+          description: >
+            Control which non-alphanumeric characters are indexed.
+
+
+            By default, Algolia ignores [non-alphanumeric
+            characters](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/#handling-non-alphanumeric-characters)
+            like hyphen (`-`), plus (`+`), and parentheses (`(`,`)`).
+
+            To include such characters, define them with `separatorsToIndex`.
+
+
+            Separators are all non-letter characters except spaces and currency
+            characters, such as $€£¥.
+
+
+            With `separatorsToIndex`, Algolia treats separator characters as
+            separate words.
+
+            For example, in a search for "Disney+", Algolia considers "Disney"
+            and "+" as two separate words.
+          default: ''
+          x-categories:
+            - Typos
+        snippetEllipsisText:
+          $ref: '#/components/schemas/snippetEllipsisText'
+        sortFacetValuesBy:
+          $ref: '#/components/schemas/sortFacetValuesBy'
+        typoTolerance:
+          $ref: '#/components/schemas/typoTolerance'
+        unretrievableAttributes:
+          type: array
+          items:
+            type: string
+          example:
+            - total_sales
+          description: >
+            Attributes that can't be retrieved at query time.
+
+
+            This can be useful if you want to use an attribute for ranking or to
+            [restrict
+            access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data),
+
+            but don't want to include it in the search results.
+
+            Attribute names are case-sensitive.
+          default: []
+          x-categories:
+            - Attributes
+        userData:
+          $ref: '#/components/schemas/userData'
+      additionalProperties: false
       description: Index settings.
-      allOf:
-        - $ref: '#/components/schemas/baseIndexSettings'
-        - $ref: '#/components/schemas/baseRecommendIndexSettings'
     recommendSearchParams:
       title: Search parameters as object
       description: Search parameters for filtering the recommendations.
@@ -5899,10 +6430,48 @@ components:
         - model
         - objectID
     boughtTogetherQuery:
+      type: object
+      properties:
+        indexName:
+          $ref: '#/components/schemas/indexName'
+        model:
+          $ref: '#/components/schemas/fbtModel'
+        objectID:
+          $ref: '#/components/schemas/objectID'
+        threshold:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+          description: >-
+            Minimum score a recommendation must have to be included in the
+            response.
+        fallbackParameters:
+          $ref: '#/components/schemas/fallbackParams'
+        maxRecommendations:
+          type: integer
+          minimum: 1
+          maximum: 30
+          default: 30
+          description: >
+            Maximum number of recommendations to retrieve.
+
+            By default, all recommendations are returned and no fallback request
+            is made.
+
+            Depending on the available recommendations and the other request
+            parameters,
+
+            the actual number of recommendations may be lower than this value.
+        queryParameters:
+          $ref: '#/components/schemas/recommendSearchParams'
+      required:
+        - indexName
+        - threshold
+        - model
+        - objectID
+      additionalProperties: false
       title: Frequently bought together
-      allOf:
-        - $ref: '#/components/schemas/baseRecommendRequest'
-        - $ref: '#/components/schemas/frequentlyBoughtTogether'
     relatedModel:
       type: string
       description: >
@@ -5928,10 +6497,48 @@ components:
         - model
         - objectID
     relatedQuery:
+      type: object
+      properties:
+        indexName:
+          $ref: '#/components/schemas/indexName'
+        model:
+          $ref: '#/components/schemas/relatedModel'
+        objectID:
+          $ref: '#/components/schemas/objectID'
+        threshold:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+          description: >-
+            Minimum score a recommendation must have to be included in the
+            response.
+        fallbackParameters:
+          $ref: '#/components/schemas/fallbackParams'
+        maxRecommendations:
+          type: integer
+          minimum: 1
+          maximum: 30
+          default: 30
+          description: >
+            Maximum number of recommendations to retrieve.
+
+            By default, all recommendations are returned and no fallback request
+            is made.
+
+            Depending on the available recommendations and the other request
+            parameters,
+
+            the actual number of recommendations may be lower than this value.
+        queryParameters:
+          $ref: '#/components/schemas/recommendSearchParams'
+      required:
+        - indexName
+        - threshold
+        - model
+        - objectID
+      additionalProperties: false
       title: Related products
-      allOf:
-        - $ref: '#/components/schemas/baseRecommendRequest'
-        - $ref: '#/components/schemas/relatedProducts'
     facetName:
       type: string
       description: >
@@ -5959,21 +6566,60 @@ components:
     trendingItems:
       type: object
       properties:
+        model:
+          $ref: '#/components/schemas/trendingItemsModel'
         facetName:
           $ref: '#/components/schemas/facetName'
         facetValue:
           $ref: '#/components/schemas/facetValue'
-        model:
-          $ref: '#/components/schemas/trendingItemsModel'
         fallbackParameters:
           $ref: '#/components/schemas/fallbackParams'
       required:
         - model
     trendingItemsQuery:
+      type: object
+      properties:
+        indexName:
+          $ref: '#/components/schemas/indexName'
+        model:
+          $ref: '#/components/schemas/trendingItemsModel'
+        threshold:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+          description: >-
+            Minimum score a recommendation must have to be included in the
+            response.
+        facetName:
+          $ref: '#/components/schemas/facetName'
+        facetValue:
+          $ref: '#/components/schemas/facetValue'
+        fallbackParameters:
+          $ref: '#/components/schemas/fallbackParams'
+        maxRecommendations:
+          type: integer
+          minimum: 1
+          maximum: 30
+          default: 30
+          description: >
+            Maximum number of recommendations to retrieve.
+
+            By default, all recommendations are returned and no fallback request
+            is made.
+
+            Depending on the available recommendations and the other request
+            parameters,
+
+            the actual number of recommendations may be lower than this value.
+        queryParameters:
+          $ref: '#/components/schemas/recommendSearchParams'
+      required:
+        - indexName
+        - threshold
+        - model
+      additionalProperties: false
       title: Trending items
-      allOf:
-        - $ref: '#/components/schemas/baseRecommendRequest'
-        - $ref: '#/components/schemas/trendingItems'
     trendingFacetsModel:
       type: string
       description: >
@@ -5988,8 +6634,13 @@ components:
       type: object
       additionalProperties: false
       properties:
+        facetName:
+          type: string
+          description: Facet attribute for which to retrieve trending facet values.
         indexName:
           $ref: '#/components/schemas/indexName'
+        model:
+          $ref: '#/components/schemas/trendingFacetsModel'
         threshold:
           type: number
           format: double
@@ -6013,20 +6664,51 @@ components:
             parameters,
 
             the actual number of recommendations may be lower than this value.
-        facetName:
-          type: string
-          description: Facet attribute for which to retrieve trending facet values.
-        model:
-          $ref: '#/components/schemas/trendingFacetsModel'
       required:
         - indexName
         - threshold
         - facetName
         - model
     trendingFacetsQuery:
+      type: object
+      properties:
+        facetName:
+          type: string
+          description: Facet attribute for which to retrieve trending facet values.
+        indexName:
+          $ref: '#/components/schemas/indexName'
+        model:
+          $ref: '#/components/schemas/trendingFacetsModel'
+        threshold:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+          description: >-
+            Minimum score a recommendation must have to be included in the
+            response.
+        maxRecommendations:
+          type: integer
+          minimum: 1
+          maximum: 30
+          default: 30
+          description: >
+            Maximum number of recommendations to retrieve.
+
+            By default, all recommendations are returned and no fallback request
+            is made.
+
+            Depending on the available recommendations and the other request
+            parameters,
+
+            the actual number of recommendations may be lower than this value.
+      required:
+        - indexName
+        - threshold
+        - facetName
+        - model
+      additionalProperties: false
       title: Trending facet values
-      allOf:
-        - $ref: '#/components/schemas/trendingFacets'
     lookingSimilarModel:
       type: string
       description: >
@@ -6050,10 +6732,48 @@ components:
         - model
         - objectID
     lookingSimilarQuery:
+      type: object
+      properties:
+        indexName:
+          $ref: '#/components/schemas/indexName'
+        model:
+          $ref: '#/components/schemas/lookingSimilarModel'
+        objectID:
+          $ref: '#/components/schemas/objectID'
+        threshold:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+          description: >-
+            Minimum score a recommendation must have to be included in the
+            response.
+        fallbackParameters:
+          $ref: '#/components/schemas/fallbackParams'
+        maxRecommendations:
+          type: integer
+          minimum: 1
+          maximum: 30
+          default: 30
+          description: >
+            Maximum number of recommendations to retrieve.
+
+            By default, all recommendations are returned and no fallback request
+            is made.
+
+            Depending on the available recommendations and the other request
+            parameters,
+
+            the actual number of recommendations may be lower than this value.
+        queryParameters:
+          $ref: '#/components/schemas/recommendSearchParams'
+      required:
+        - indexName
+        - threshold
+        - model
+        - objectID
+      additionalProperties: false
       title: Looking similar
-      allOf:
-        - $ref: '#/components/schemas/baseRecommendRequest'
-        - $ref: '#/components/schemas/lookingSimilar'
     recommendationsRequest:
       oneOf:
         - $ref: '#/components/schemas/boughtTogetherQuery'
@@ -6068,18 +6788,6 @@ components:
     RedirectRuleIndexMetadata:
       type: object
       properties:
-        source:
-          type: string
-          description: Source index for the redirect rule.
-        dest:
-          type: string
-          description: Destination index for the redirect rule.
-        reason:
-          type: string
-          description: Reason for the redirect rule.
-        succeed:
-          type: boolean
-          description: Redirect rule status.
         data:
           title: redirectRuleIndexData
           type: object
@@ -6089,6 +6797,18 @@ components:
           properties:
             ruleObjectID:
               type: string
+        dest:
+          type: string
+          description: Destination index for the redirect rule.
+        reason:
+          type: string
+          description: Reason for the redirect rule.
+        source:
+          type: string
+          description: Source index for the redirect rule.
+        succeed:
+          type: boolean
+          description: Redirect rule status.
       required:
         - data
         - succeed
@@ -6099,6 +6819,9 @@ components:
       type: object
       additionalProperties: true
       properties:
+        _automaticInsights:
+          type: boolean
+          description: Whether automatic events collection is enabled for the application.
         abTestID:
           type: integer
           description: >-
@@ -6110,6 +6833,12 @@ components:
           description: >-
             Variant ID. This is only included in the response for indices that
             are part of an A/B test.
+        appliedRules:
+          description: Rules applied to the query.
+          title: appliedRules
+          type: array
+          items:
+            type: object
         aroundLatLng:
           type: string
           description: Computed geographical location.
@@ -6167,12 +6896,6 @@ components:
                 default) to be processed (this can happen when a lot of typo
                 alternatives exist for the query). This field will not be
                 included when typo-tolerance is entirely disabled.
-        appliedRules:
-          description: Rules applied to the query.
-          title: appliedRules
-          type: array
-          items:
-            type: object
         exhaustiveFacetsCount:
           type: boolean
           description: >-
@@ -6208,18 +6931,18 @@ components:
             title: facetStats
             type: object
             properties:
-              min:
-                type: number
-                format: double
-                description: Minimum value in the results.
-              max:
-                type: number
-                format: double
-                description: Maximum value in the results.
               avg:
                 type: number
                 format: double
                 description: Average facet value in the results.
+              max:
+                type: number
+                format: double
+                description: Maximum value in the results.
+              min:
+                type: number
+                format: double
+                description: Minimum value in the results.
               sum:
                 type: number
                 format: double
@@ -6260,6 +6983,12 @@ components:
           description: >-
             Markup text indicating which parts of the original query have been
             removed to retrieve a non-empty result set.
+        queryID:
+          type: string
+          description: >-
+            Unique identifier for the query. This is used for [click
+            analytics](https://www.algolia.com/doc/guides/analytics/click-analytics).
+          example: a00dbc80a8d13c4565a442e7e2dca80a
         redirect:
           title: redirect
           type: object
@@ -6284,15 +7013,6 @@ components:
           example: c2-uk-3.algolia.net
         userData:
           $ref: '#/components/schemas/userData'
-        queryID:
-          type: string
-          description: >-
-            Unique identifier for the query. This is used for [click
-            analytics](https://www.algolia.com/doc/guides/analytics/click-analytics).
-          example: a00dbc80a8d13c4565a442e7e2dca80a
-        _automaticInsights:
-          type: boolean
-          description: Whether automatic events collection is enabled for the application.
     page:
       type: integer
       description: Page of search results to retrieve.
@@ -6320,14 +7040,14 @@ components:
       type: object
       additionalProperties: false
       properties:
-        page:
-          $ref: '#/components/schemas/page'
+        hitsPerPage:
+          $ref: '#/components/schemas/hitsPerPage'
         nbHits:
           $ref: '#/components/schemas/nbHits'
         nbPages:
           $ref: '#/components/schemas/nbPages'
-        hitsPerPage:
-          $ref: '#/components/schemas/hitsPerPage'
+        page:
+          $ref: '#/components/schemas/page'
     highlightedValue:
       type: string
       description: Highlighted attribute value, including HTML tags.
@@ -6345,10 +7065,6 @@ components:
       description: Surround words that match the query with HTML tags for highlighting.
       additionalProperties: false
       properties:
-        value:
-          $ref: '#/components/schemas/highlightedValue'
-        matchLevel:
-          $ref: '#/components/schemas/matchLevel'
         matchedWords:
           type: array
           description: List of matched words from the search query.
@@ -6356,6 +7072,10 @@ components:
             - action
           items:
             type: string
+        matchLevel:
+          $ref: '#/components/schemas/matchLevel'
+        value:
+          $ref: '#/components/schemas/highlightedValue'
         fullyHighlighted:
           type: boolean
           description: Whether the entire attribute value is highlighted.
@@ -6391,10 +7111,10 @@ components:
       description: Snippets that show the context around a matching search query.
       additionalProperties: false
       properties:
-        value:
-          $ref: '#/components/schemas/highlightedValue'
         matchLevel:
           $ref: '#/components/schemas/matchLevel'
+        value:
+          $ref: '#/components/schemas/highlightedValue'
       required:
         - value
         - matchLevel
@@ -6422,6 +7142,11 @@ components:
     matchedGeoLocation:
       type: object
       properties:
+        distance:
+          type: integer
+          description: >-
+            Distance between the matched location and the search location (in
+            meters).
         lat:
           type: number
           format: double
@@ -6430,11 +7155,6 @@ components:
           type: number
           format: double
           description: Longitude of the matched location.
-        distance:
-          type: integer
-          description: >-
-            Distance between the matched location and the search location (in
-            meters).
     personalization:
       type: object
       properties:
@@ -6452,10 +7172,6 @@ components:
       description: Object with detailed information about the record's ranking.
       additionalProperties: false
       properties:
-        filters:
-          type: integer
-          minimum: 0
-          description: Whether a filter matched the query.
         firstMatchedWord:
           type: integer
           minimum: 0
@@ -6469,14 +7185,6 @@ components:
             Distance between the geo location in the search query and the best
             matching geo location in the record, divided by the geo precision
             (in meters).
-        geoPrecision:
-          type: integer
-          minimum: 1
-          description: Precision used when computing the geo distance, in meters.
-        matchedGeoLocation:
-          $ref: '#/components/schemas/matchedGeoLocation'
-        personalization:
-          $ref: '#/components/schemas/personalization'
         nbExactWords:
           type: integer
           minimum: 0
@@ -6485,27 +7193,39 @@ components:
           type: integer
           minimum: 0
           description: Number of typos encountered when matching the record.
+        userScore:
+          type: integer
+          description: >-
+            Overall ranking of the record, expressed as a single integer. This
+            attribute is internal.
+        filters:
+          type: integer
+          minimum: 0
+          description: Whether a filter matched the query.
+        geoPrecision:
+          type: integer
+          minimum: 1
+          description: Precision used when computing the geo distance, in meters.
+        matchedGeoLocation:
+          $ref: '#/components/schemas/matchedGeoLocation'
+        personalization:
+          $ref: '#/components/schemas/personalization'
         promoted:
           type: boolean
           description: Whether the record was promoted by a rule.
+        promotedByReRanking:
+          type: boolean
+          description: Whether the record is re-ranked.
         proximityDistance:
           type: integer
           minimum: 0
           description: >-
             Number of words between multiple matches in the query plus 1. For
             single word queries, `proximityDistance` is 0.
-        userScore:
-          type: integer
-          description: >-
-            Overall ranking of the record, expressed as a single integer. This
-            attribute is internal.
         words:
           type: integer
           minimum: 1
           description: Number of matched words.
-        promotedByReRanking:
-          type: boolean
-          description: Whether the record is re-ranked.
       required:
         - nbTypos
         - firstMatchedWord
@@ -6529,16 +7249,16 @@ components:
       properties:
         objectID:
           $ref: '#/components/schemas/objectID'
-        _highlightResult:
-          $ref: '#/components/schemas/highlightResultMap'
-        _snippetResult:
-          $ref: '#/components/schemas/snippetResultMap'
-        _rankingInfo:
-          $ref: '#/components/schemas/rankingInfo'
         _distinctSeqID:
           $ref: '#/components/schemas/distinctSeqID'
+        _highlightResult:
+          $ref: '#/components/schemas/highlightResultMap'
+        _rankingInfo:
+          $ref: '#/components/schemas/rankingInfo'
         _score:
           $ref: '#/components/schemas/recommendScore'
+        _snippetResult:
+          $ref: '#/components/schemas/snippetResultMap'
       x-discriminator-fields:
         - objectID
     trendingFacetHit:
@@ -6549,12 +7269,12 @@ components:
         - facetName
         - facetValue
       properties:
-        _score:
-          $ref: '#/components/schemas/recommendScore'
         facetName:
           $ref: '#/components/schemas/facetName'
         facetValue:
           $ref: '#/components/schemas/facetValue'
+        _score:
+          $ref: '#/components/schemas/recommendScore'
       x-discriminator-fields:
         - facetName
         - facetValue
@@ -6610,10 +7330,10 @@ components:
         Condition that triggers the rule.
         If not specified, the rule is triggered for all recommendations.
       properties:
-        filters:
-          $ref: '#/components/schemas/filters'
         context:
           $ref: '#/components/schemas/context'
+        filters:
+          $ref: '#/components/schemas/filters'
     HideConsequenceObject:
       type: object
       description: Object ID of the recommendation you want to exclude.
@@ -6703,10 +7423,10 @@ components:
       properties:
         hide:
           $ref: '#/components/schemas/HideConsequence'
-        promote:
-          $ref: '#/components/schemas/PromoteConsequence'
         params:
           $ref: '#/components/schemas/ParamsConsequence'
+        promote:
+          $ref: '#/components/schemas/PromoteConsequence'
     timeRange:
       type: object
       additionalProperties: false
@@ -6735,8 +7455,6 @@ components:
           properties:
             lastUpdate:
               $ref: '#/components/schemas/updatedAt'
-        objectID:
-          $ref: '#/components/schemas/ruleID'
         condition:
           $ref: '#/components/schemas/Condition'
         consequence:
@@ -6753,6 +7471,8 @@ components:
           description: >-
             Indicates whether to enable the rule. If it isn't enabled, it isn't
             applied at query time.
+        objectID:
+          $ref: '#/components/schemas/ruleID'
         validity:
           type: array
           description: Time periods when the rule is active.
@@ -6885,10 +7605,10 @@ components:
               - taskID
               - deletedAt
             properties:
-              taskID:
-                $ref: '#/components/schemas/taskID'
               deletedAt:
                 $ref: '#/components/schemas/deletedAt'
+              taskID:
+                $ref: '#/components/schemas/taskID'
     RecommendUpdatedAt:
       description: OK
       content:

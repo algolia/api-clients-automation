@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.annotation.*;
 
 /** Gets or Sets SourceType */
 public enum SourceType {
+  ALGOLIA_INDEX("algoliaIndex"),
+
   BIGCOMMERCE("bigcommerce"),
 
   BIGQUERY("bigquery"),

@@ -2640,16 +2640,16 @@ paths:
                       Date and time when the Query Suggestions index was last
                       built, in RFC 3339 format.
                     example: '2023-07-05T08:03:53Z'
+                  lastSuccessfulBuildDuration:
+                    type: string
+                    description: Duration of the last successful build in seconds.
+                    example: 28
                   lastSuccessfulBuiltAt:
                     type: string
                     description: >-
                       Date and time when the Query Suggestions index was last
                       updated successfully.
                     example: '2023-07-05T08:03:53Z'
-                  lastSuccessfulBuildDuration:
-                    type: string
-                    description: Duration of the last successful build in seconds.
-                    example: 28
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -2897,18 +2897,6 @@ paths:
                 type: object
                 additionalProperties: false
                 properties:
-                  timestamp:
-                    type: string
-                    description: Date and time of the log entry, in RFC 3339 format.
-                    example: '2023-07-05T08:03:33.898076171Z'
-                  level:
-                    $ref: '#/components/schemas/LogLevel'
-                  message:
-                    type: string
-                    description: Details about this log entry.
-                    example: >-
-                      skipping query "Brooke Adams": not enough search results,
-                      got 1, expected 5
                   contextLevel:
                     type: integer
                     description: >
@@ -2920,6 +2908,18 @@ paths:
                       suggestion belongs to a previous suggestion with
                       `contextLevel` 0.
                     example: 1
+                  level:
+                    $ref: '#/components/schemas/LogLevel'
+                  message:
+                    type: string
+                    description: Details about this log entry.
+                    example: >-
+                      skipping query "Brooke Adams": not enough search results,
+                      got 1, expected 5
+                  timestamp:
+                    type: string
+                    description: Date and time of the log entry, in RFC 3339 format.
+                    example: '2023-07-05T08:03:33.898076171Z'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -3215,12 +3215,12 @@ components:
       type: object
       description: Facet to use as category.
       properties:
-        attribute:
-          type: string
-          description: Facet name.
         amount:
           type: integer
           description: Number of suggestions.
+        attribute:
+          type: string
+          description: Facet name.
     Facets:
       title: facets
       description: >
@@ -3303,19 +3303,14 @@ components:
             Name of the Algolia index (case-sensitive) to use as source for
             query suggestions.
           example: products
-        replicas:
-          type: boolean
-          default: false
-          description: >
-            If true, Query Suggestions uses all replica indices to find popular
-            searches.
-
-            If false, only the primary index is used.
-          example: false
         analyticsTags:
           $ref: '#/components/schemas/AnalyticsTags'
+        external:
+          $ref: '#/components/schemas/External'
         facets:
           $ref: '#/components/schemas/Facets'
+        generate:
+          $ref: '#/components/schemas/Generate'
         minHits:
           type: integer
           minimum: 0
@@ -3336,10 +3331,15 @@ components:
 
             A search query must be at least `minLetters` long to be included in
             the Query Suggestions index.
-        generate:
-          $ref: '#/components/schemas/Generate'
-        external:
-          $ref: '#/components/schemas/External'
+        replicas:
+          type: boolean
+          default: false
+          description: >
+            If true, Query Suggestions uses all replica indices to find popular
+            searches.
+
+            If false, only the primary index is used.
+          example: false
     Languages:
       title: languages
       description: |
@@ -3377,31 +3377,48 @@ components:
           minItems: 1
           items:
             $ref: '#/components/schemas/SourceIndex'
-        languages:
-          $ref: '#/components/schemas/Languages'
-        exclude:
-          $ref: '#/components/schemas/Exclude'
-        enablePersonalization:
-          type: boolean
-          default: false
-          description: Whether to turn on personalized query suggestions.
         allowSpecialCharacters:
           type: boolean
           default: false
           description: Whether to include suggestions with special characters.
+        enablePersonalization:
+          type: boolean
+          default: false
+          description: Whether to turn on personalized query suggestions.
+        exclude:
+          $ref: '#/components/schemas/Exclude'
+        languages:
+          $ref: '#/components/schemas/Languages'
     ConfigurationWithIndex:
       type: object
-      description: Query Suggestions configuration.
+      properties:
+        indexName:
+          $ref: '#/components/schemas/IndexName'
+        sourceIndices:
+          type: array
+          description: >-
+            Algolia indices from which to get the popular searches for query
+            suggestions.
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/SourceIndex'
+        allowSpecialCharacters:
+          type: boolean
+          default: false
+          description: Whether to include suggestions with special characters.
+        enablePersonalization:
+          type: boolean
+          default: false
+          description: Whether to turn on personalized query suggestions.
+        exclude:
+          $ref: '#/components/schemas/Exclude'
+        languages:
+          $ref: '#/components/schemas/Languages'
       required:
         - indexName
         - sourceIndices
-      allOf:
-        - type: object
-          additionalProperties: false
-          properties:
-            indexName:
-              $ref: '#/components/schemas/IndexName'
-        - $ref: '#/components/schemas/Configuration'
+      additionalProperties: false
+      description: Query Suggestions configuration.
     ConfigurationResponse:
       type: object
       description: API response for retrieving Query Suggestions configurations.
@@ -3418,12 +3435,12 @@ components:
     BaseResponse:
       type: object
       properties:
-        status:
-          type: integer
-          description: HTTP status code.
         message:
           type: string
           description: Details about the response, such as error messages.
+        status:
+          type: integer
+          description: HTTP status code.
     LogLevel:
       title: level
       type: string

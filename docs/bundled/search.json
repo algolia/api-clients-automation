@@ -367,11 +367,11 @@
         "x-acl": [
           "search"
         ],
-        "summary": "Search multiple indices",
-        "description": "Sends multiple search requests to one or more indices.\n\nThis can be useful in these cases:\n\n- Different indices for different purposes, such as, one index for products, another one for marketing content.\n- Multiple searches to the same index—for example, with different filters.\n\nUse the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.\n",
+        "summary": "Search multiple queries",
+        "description": "Runs multiple search queries against one or more indices in a single API request.\n\nUse cases include:\n\n- Searching different indices, such as products and marketing content.\n- Run multiple queries on the same index with different parameters or filters.\n\nIf you know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.\n",
         "requestBody": {
           "required": true,
-          "description": "Muli-search request body. Results are returned in the same order as the requests.",
+          "description": "Multi-query search request body. Results are returned in the same order as the requests.",
           "content": {
             "application/json": {
               "schema": {
