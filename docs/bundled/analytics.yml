@@ -1100,13 +1100,13 @@ paths:
       parameters:
         - $ref: '#/components/parameters/Index'
         - $ref: '#/components/parameters/ClickAnalytics'
-        - $ref: '#/components/parameters/RevenueAnalytics'
-        - $ref: '#/components/parameters/StartDate'
-        - $ref: '#/components/parameters/EndDate'
-        - $ref: '#/components/parameters/OrderBy'
         - $ref: '#/components/parameters/Direction'
+        - $ref: '#/components/parameters/EndDate'
         - $ref: '#/components/parameters/Limit'
         - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/OrderBy'
+        - $ref: '#/components/parameters/RevenueAnalytics'
+        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/Tags'
       responses:
         '200':
@@ -1353,8 +1353,8 @@ paths:
         the current day.
       parameters:
         - $ref: '#/components/parameters/Index'
-        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/Tags'
       responses:
         '200':
@@ -1389,10 +1389,10 @@ paths:
                         - date
                         - count
                       properties:
-                        date:
-                          $ref: '#/components/schemas/date'
                         count:
                           $ref: '#/components/schemas/parameters_count'
+                        date:
+                          $ref: '#/components/schemas/date'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1619,10 +1619,10 @@ paths:
       description: Retrieves the 1,000 most frequent searches that produced zero results.
       parameters:
         - $ref: '#/components/parameters/Index'
-        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
         - $ref: '#/components/parameters/Limit'
         - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/Tags'
       responses:
         '200':
@@ -1655,10 +1655,10 @@ paths:
                         - count
                         - withFilterCount
                       properties:
-                        search:
-                          $ref: '#/components/schemas/search'
                         count:
                           $ref: '#/components/schemas/parameters_count'
+                        search:
+                          $ref: '#/components/schemas/search'
                         withFilterCount:
                           $ref: '#/components/schemas/withFilterCount'
         '400':
@@ -1894,10 +1894,10 @@ paths:
         that remained unclicked.
       parameters:
         - $ref: '#/components/parameters/Index'
-        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
         - $ref: '#/components/parameters/Limit'
         - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/Tags'
       responses:
         '200':
@@ -1930,8 +1930,6 @@ paths:
                         - count
                         - nbHits
                       properties:
-                        search:
-                          $ref: '#/components/schemas/search'
                         count:
                           type: integer
                           description: Number of tracked searches.
@@ -1939,6 +1937,8 @@ paths:
                           example: 7
                         nbHits:
                           $ref: '#/components/schemas/nbHits'
+                        search:
+                          $ref: '#/components/schemas/search'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -2176,8 +2176,8 @@ paths:
         the current day.
       parameters:
         - $ref: '#/components/parameters/Index'
-        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/Tags'
       responses:
         '200':
@@ -2201,12 +2201,8 @@ paths:
                   - noResultCount
                   - dates
                 properties:
-                  rate:
-                    $ref: '#/components/schemas/noResultsRate'
                   count:
                     $ref: '#/components/schemas/count'
-                  noResultCount:
-                    $ref: '#/components/schemas/noResultCount'
                   dates:
                     type: array
                     description: Daily no results rates.
@@ -2220,14 +2216,18 @@ paths:
                         - count
                         - rate
                       properties:
+                        count:
+                          $ref: '#/components/schemas/count'
                         date:
                           $ref: '#/components/schemas/date'
                         noResultCount:
                           $ref: '#/components/schemas/noResultCount'
-                        count:
-                          $ref: '#/components/schemas/count'
                         rate:
                           $ref: '#/components/schemas/noResultsRate'
+                  noResultCount:
+                    $ref: '#/components/schemas/noResultCount'
+                  rate:
+                    $ref: '#/components/schemas/noResultsRate'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -2463,8 +2463,8 @@ paths:
         the current day.
       parameters:
         - $ref: '#/components/parameters/Index'
-        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/Tags'
       responses:
         '200':
@@ -2488,12 +2488,8 @@ paths:
                   - noClickCount
                   - rate
                 properties:
-                  rate:
-                    $ref: '#/components/schemas/noClickRate'
                   count:
                     $ref: '#/components/schemas/trackedSearchCount'
-                  noClickCount:
-                    $ref: '#/components/schemas/noClickCount'
                   dates:
                     type: array
                     description: Daily no click rates.
@@ -2507,14 +2503,18 @@ paths:
                         - noClickCount
                         - date
                       properties:
-                        rate:
-                          $ref: '#/components/schemas/noClickRate'
                         count:
                           $ref: '#/components/schemas/trackedSearchCount'
-                        noClickCount:
-                          $ref: '#/components/schemas/noClickCount'
                         date:
                           $ref: '#/components/schemas/date'
+                        noClickCount:
+                          $ref: '#/components/schemas/noClickCount'
+                        rate:
+                          $ref: '#/components/schemas/noClickRate'
+                  noClickCount:
+                    $ref: '#/components/schemas/noClickCount'
+                  rate:
+                    $ref: '#/components/schemas/noClickRate'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -2786,13 +2786,13 @@ paths:
         were received.
       parameters:
         - $ref: '#/components/parameters/Index'
-        - $ref: '#/components/parameters/Search'
         - $ref: '#/components/parameters/ClickAnalytics'
-        - $ref: '#/components/parameters/RevenueAnalytics'
-        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
         - $ref: '#/components/parameters/Limit'
         - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/RevenueAnalytics'
+        - $ref: '#/components/parameters/Search'
+        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/Tags'
       responses:
         '200':
@@ -3052,8 +3052,8 @@ paths:
         description: Distinguish users for analytics.
       parameters:
         - $ref: '#/components/parameters/Index'
-        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/Tags'
       responses:
         '200':
@@ -3089,11 +3089,11 @@ paths:
                         - date
                         - count
                       properties:
-                        date:
-                          $ref: '#/components/schemas/date'
                         count:
                           type: integer
                           description: Number of unique users.
+                        date:
+                          $ref: '#/components/schemas/date'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -3324,11 +3324,11 @@ paths:
         `attributesForFaceting` setting.
       parameters:
         - $ref: '#/components/parameters/Index'
-        - $ref: '#/components/parameters/Search'
-        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
         - $ref: '#/components/parameters/Limit'
         - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Search'
+        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/Tags'
       responses:
         '200':
@@ -3579,11 +3579,11 @@ paths:
       parameters:
         - $ref: '#/components/parameters/Attribute'
         - $ref: '#/components/parameters/Index'
-        - $ref: '#/components/parameters/Search'
-        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
         - $ref: '#/components/parameters/Limit'
         - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Search'
+        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/Tags'
       responses:
         '200':
@@ -3850,11 +3850,11 @@ paths:
         operation.
       parameters:
         - $ref: '#/components/parameters/Index'
-        - $ref: '#/components/parameters/Search'
-        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
         - $ref: '#/components/parameters/Limit'
         - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Search'
+        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/Tags'
       responses:
         '200':
@@ -4098,10 +4098,10 @@ paths:
       description: Retrieves the countries with the most searches in your index.
       parameters:
         - $ref: '#/components/parameters/Index'
-        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
         - $ref: '#/components/parameters/Limit'
         - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/Tags'
       responses:
         '200':
@@ -4133,12 +4133,12 @@ paths:
                         - country
                         - count
                       properties:
+                        count:
+                          $ref: '#/components/schemas/parameters_count'
                         country:
                           description: Country code.
                           type: string
                           example: UK
-                        count:
-                          $ref: '#/components/schemas/parameters_count'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -4384,8 +4384,8 @@ paths:
         The average is `null` until Algolia receives at least one click event.
       parameters:
         - $ref: '#/components/parameters/Index'
-        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/Tags'
       responses:
         '200':
@@ -4670,8 +4670,8 @@ paths:
         for the queries.
       parameters:
         - $ref: '#/components/parameters/Index'
-        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/Tags'
       responses:
         '200':
@@ -4938,8 +4938,8 @@ paths:
         were received.
       parameters:
         - $ref: '#/components/parameters/Index'
-        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/Tags'
       responses:
         '200':
@@ -4963,12 +4963,8 @@ paths:
                   - trackedSearchCount
                   - rate
                 properties:
-                  rate:
-                    $ref: '#/components/schemas/clickThroughRate'
                   clickCount:
                     $ref: '#/components/schemas/clickCount'
-                  trackedSearchCount:
-                    $ref: '#/components/schemas/trackedSearchCount'
                   dates:
                     type: array
                     description: Daily click-through rates.
@@ -4982,14 +4978,18 @@ paths:
                         - trackedSearchCount
                         - date
                       properties:
-                        rate:
-                          $ref: '#/components/schemas/clickThroughRate'
                         clickCount:
                           $ref: '#/components/schemas/clickCount'
-                        trackedSearchCount:
-                          $ref: '#/components/schemas/trackedSearchCount'
                         date:
                           $ref: '#/components/schemas/date'
+                        rate:
+                          $ref: '#/components/schemas/clickThroughRate'
+                        trackedSearchCount:
+                          $ref: '#/components/schemas/trackedSearchCount'
+                  rate:
+                    $ref: '#/components/schemas/clickThroughRate'
+                  trackedSearchCount:
+                    $ref: '#/components/schemas/trackedSearchCount'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -5235,8 +5235,8 @@ paths:
         were received.
       parameters:
         - $ref: '#/components/parameters/Index'
-        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/Tags'
       responses:
         '200':
@@ -5260,10 +5260,6 @@ paths:
                   - conversionCount
                   - rate
                 properties:
-                  rate:
-                    $ref: '#/components/schemas/conversionRate'
-                  trackedSearchCount:
-                    $ref: '#/components/schemas/trackedSearchCount'
                   conversionCount:
                     $ref: '#/components/schemas/conversionCount'
                   dates:
@@ -5279,14 +5275,18 @@ paths:
                         - conversionCount
                         - date
                       properties:
-                        rate:
-                          $ref: '#/components/schemas/conversionRate'
-                        trackedSearchCount:
-                          $ref: '#/components/schemas/trackedSearchCount'
                         conversionCount:
                           $ref: '#/components/schemas/conversionCount'
                         date:
                           $ref: '#/components/schemas/date'
+                        rate:
+                          $ref: '#/components/schemas/conversionRate'
+                        trackedSearchCount:
+                          $ref: '#/components/schemas/trackedSearchCount'
+                  rate:
+                    $ref: '#/components/schemas/conversionRate'
+                  trackedSearchCount:
+                    $ref: '#/components/schemas/trackedSearchCount'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -5541,8 +5541,8 @@ paths:
         were received.
       parameters:
         - $ref: '#/components/parameters/Index'
-        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/Tags'
       responses:
         '200':
@@ -5566,10 +5566,6 @@ paths:
                   - addToCartCount
                   - rate
                 properties:
-                  rate:
-                    $ref: '#/components/schemas/addToCartRate'
-                  trackedSearchCount:
-                    $ref: '#/components/schemas/trackedSearchCount'
                   addToCartCount:
                     $ref: '#/components/schemas/addToCartCount'
                   dates:
@@ -5585,14 +5581,18 @@ paths:
                         - addToCartCount
                         - date
                       properties:
-                        rate:
-                          $ref: '#/components/schemas/addToCartRate'
-                        trackedSearchCount:
-                          $ref: '#/components/schemas/trackedSearchCount'
                         addToCartCount:
                           $ref: '#/components/schemas/addToCartCount'
                         date:
                           $ref: '#/components/schemas/date'
+                        rate:
+                          $ref: '#/components/schemas/addToCartRate'
+                        trackedSearchCount:
+                          $ref: '#/components/schemas/trackedSearchCount'
+                  rate:
+                    $ref: '#/components/schemas/addToCartRate'
+                  trackedSearchCount:
+                    $ref: '#/components/schemas/trackedSearchCount'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -5846,8 +5846,8 @@ paths:
         were received.
       parameters:
         - $ref: '#/components/parameters/Index'
-        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/Tags'
       responses:
         '200':
@@ -5871,12 +5871,6 @@ paths:
                   - purchaseCount
                   - rate
                 properties:
-                  rate:
-                    $ref: '#/components/schemas/purchaseRate'
-                  trackedSearchCount:
-                    $ref: '#/components/schemas/trackedSearchCount'
-                  purchaseCount:
-                    $ref: '#/components/schemas/purchaseCount'
                   dates:
                     type: array
                     description: Daily purchase rates.
@@ -5890,14 +5884,20 @@ paths:
                         - purchaseCount
                         - date
                       properties:
+                        date:
+                          $ref: '#/components/schemas/date'
+                        purchaseCount:
+                          $ref: '#/components/schemas/purchaseCount'
                         rate:
                           $ref: '#/components/schemas/purchaseRate'
                         trackedSearchCount:
                           $ref: '#/components/schemas/trackedSearchCount'
-                        purchaseCount:
-                          $ref: '#/components/schemas/purchaseCount'
-                        date:
-                          $ref: '#/components/schemas/date'
+                  purchaseCount:
+                    $ref: '#/components/schemas/purchaseCount'
+                  rate:
+                    $ref: '#/components/schemas/purchaseRate'
+                  trackedSearchCount:
+                    $ref: '#/components/schemas/trackedSearchCount'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -6138,8 +6138,8 @@ paths:
         attribute for each object in the event's `objectData` array.
       parameters:
         - $ref: '#/components/parameters/Index'
-        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/Tags'
       responses:
         '200':
@@ -6834,12 +6834,12 @@ components:
               - count
               - nbHits
             properties:
-              search:
-                $ref: '#/components/schemas/search'
               count:
                 $ref: '#/components/schemas/count'
               nbHits:
                 $ref: '#/components/schemas/nbHits'
+              search:
+                $ref: '#/components/schemas/search'
     clickThroughRate:
       oneOf:
         - type: number
@@ -6882,6 +6882,12 @@ components:
         type: object
         description: Click position.
         properties:
+          clickCount:
+            type: integer
+            description: Number of times this search has been clicked at that position.
+            example: 24
+            minimum: 0
+            default: 0
           position:
             type: array
             description: >
@@ -6900,12 +6906,6 @@ components:
               - -1
             items:
               type: integer
-          clickCount:
-            type: integer
-            description: Number of times this search has been clicked at that position.
-            example: 24
-            minimum: 0
-            default: 0
     conversionRate:
       oneOf:
         - type: number
@@ -6969,26 +6969,26 @@ components:
               - clickCount
               - conversionCount
             properties:
-              search:
-                $ref: '#/components/schemas/search'
-              count:
-                $ref: '#/components/schemas/count'
-              clickThroughRate:
-                $ref: '#/components/schemas/clickThroughRate'
               averageClickPosition:
                 $ref: '#/components/schemas/averageClickPosition'
-              clickPositions:
-                $ref: '#/components/schemas/clickPositions'
-              conversionRate:
-                $ref: '#/components/schemas/conversionRate'
-              trackedSearchCount:
-                $ref: '#/components/schemas/trackedSearchCount'
               clickCount:
                 $ref: '#/components/schemas/clickCount'
+              clickPositions:
+                $ref: '#/components/schemas/clickPositions'
+              clickThroughRate:
+                $ref: '#/components/schemas/clickThroughRate'
               conversionCount:
                 $ref: '#/components/schemas/conversionCount'
+              conversionRate:
+                $ref: '#/components/schemas/conversionRate'
+              count:
+                $ref: '#/components/schemas/count'
               nbHits:
                 $ref: '#/components/schemas/nbHits'
+              search:
+                $ref: '#/components/schemas/search'
+              trackedSearchCount:
+                $ref: '#/components/schemas/trackedSearchCount'
     currencies:
       type: object
       description: |
@@ -7082,36 +7082,36 @@ components:
               - purchaseRate
               - purchaseCount
             properties:
-              search:
-                $ref: '#/components/schemas/search'
-              count:
-                $ref: '#/components/schemas/count'
-              clickThroughRate:
-                $ref: '#/components/schemas/clickThroughRate'
-              averageClickPosition:
-                $ref: '#/components/schemas/averageClickPosition'
-              clickPositions:
-                $ref: '#/components/schemas/clickPositions'
-              conversionRate:
-                $ref: '#/components/schemas/conversionRate'
-              trackedSearchCount:
-                $ref: '#/components/schemas/trackedSearchCount'
-              clickCount:
-                $ref: '#/components/schemas/clickCount'
-              conversionCount:
-                $ref: '#/components/schemas/conversionCount'
-              nbHits:
-                $ref: '#/components/schemas/nbHits'
-              currencies:
-                $ref: '#/components/schemas/currencies'
-              addToCartRate:
-                $ref: '#/components/schemas/addToCartRate'
               addToCartCount:
                 $ref: '#/components/schemas/addToCartCount'
-              purchaseRate:
-                $ref: '#/components/schemas/purchaseRate'
+              addToCartRate:
+                $ref: '#/components/schemas/addToCartRate'
+              averageClickPosition:
+                $ref: '#/components/schemas/averageClickPosition'
+              clickCount:
+                $ref: '#/components/schemas/clickCount'
+              clickPositions:
+                $ref: '#/components/schemas/clickPositions'
+              clickThroughRate:
+                $ref: '#/components/schemas/clickThroughRate'
+              conversionCount:
+                $ref: '#/components/schemas/conversionCount'
+              conversionRate:
+                $ref: '#/components/schemas/conversionRate'
+              count:
+                $ref: '#/components/schemas/count'
+              currencies:
+                $ref: '#/components/schemas/currencies'
+              nbHits:
+                $ref: '#/components/schemas/nbHits'
               purchaseCount:
                 $ref: '#/components/schemas/purchaseCount'
+              purchaseRate:
+                $ref: '#/components/schemas/purchaseRate'
+              search:
+                $ref: '#/components/schemas/search'
+              trackedSearchCount:
+                $ref: '#/components/schemas/trackedSearchCount'
     getTopSearchesResponse:
       oneOf:
         - $ref: '#/components/schemas/topSearchesResponse'
@@ -7180,10 +7180,10 @@ components:
               - hit
               - count
             properties:
-              hit:
-                $ref: '#/components/schemas/hit'
               count:
                 $ref: '#/components/schemas/parameters_count'
+              hit:
+                $ref: '#/components/schemas/hit'
     topHitsResponseWithAnalytics:
       type: object
       title: Top search results with click analytics
@@ -7207,20 +7207,20 @@ components:
               - clickCount
               - conversionCount
             properties:
-              hit:
-                $ref: '#/components/schemas/hit'
-              count:
-                $ref: '#/components/schemas/parameters_count'
-              clickThroughRate:
-                $ref: '#/components/schemas/clickThroughRate'
-              conversionRate:
-                $ref: '#/components/schemas/conversionRate'
-              trackedHitCount:
-                $ref: '#/components/schemas/trackedSearchCount'
               clickCount:
                 $ref: '#/components/schemas/clickCount'
+              clickThroughRate:
+                $ref: '#/components/schemas/clickThroughRate'
               conversionCount:
                 $ref: '#/components/schemas/conversionCount'
+              conversionRate:
+                $ref: '#/components/schemas/conversionRate'
+              count:
+                $ref: '#/components/schemas/parameters_count'
+              hit:
+                $ref: '#/components/schemas/hit'
+              trackedHitCount:
+                $ref: '#/components/schemas/trackedSearchCount'
     topHitsResponseWithRevenueAnalytics:
       type: object
       title: Top search results with revenue analytics
@@ -7251,30 +7251,30 @@ components:
               - addToCartRate
               - currencies
             properties:
-              hit:
-                $ref: '#/components/schemas/hit'
-              count:
-                $ref: '#/components/schemas/parameters_count'
-              clickThroughRate:
-                $ref: '#/components/schemas/clickThroughRate'
-              conversionRate:
-                $ref: '#/components/schemas/conversionRate'
-              trackedHitCount:
-                $ref: '#/components/schemas/trackedSearchCount'
-              clickCount:
-                $ref: '#/components/schemas/clickCount'
-              conversionCount:
-                $ref: '#/components/schemas/conversionCount'
-              addToCartRate:
-                $ref: '#/components/schemas/addToCartRate'
               addToCartCount:
                 $ref: '#/components/schemas/addToCartCount'
-              purchaseRate:
-                $ref: '#/components/schemas/purchaseRate'
-              purchaseCount:
-                $ref: '#/components/schemas/purchaseCount'
+              addToCartRate:
+                $ref: '#/components/schemas/addToCartRate'
+              clickCount:
+                $ref: '#/components/schemas/clickCount'
+              clickThroughRate:
+                $ref: '#/components/schemas/clickThroughRate'
+              conversionCount:
+                $ref: '#/components/schemas/conversionCount'
+              conversionRate:
+                $ref: '#/components/schemas/conversionRate'
+              count:
+                $ref: '#/components/schemas/parameters_count'
               currencies:
                 $ref: '#/components/schemas/currencies'
+              hit:
+                $ref: '#/components/schemas/hit'
+              purchaseCount:
+                $ref: '#/components/schemas/purchaseCount'
+              purchaseRate:
+                $ref: '#/components/schemas/purchaseRate'
+              trackedHitCount:
+                $ref: '#/components/schemas/trackedSearchCount'
     getTopHitsResponse:
       oneOf:
         - $ref: '#/components/schemas/topHitsResponse'
@@ -7337,12 +7337,12 @@ components:
       properties:
         attribute:
           $ref: '#/components/schemas/attribute'
+        count:
+          $ref: '#/components/schemas/parameters_count'
         operator:
           $ref: '#/components/schemas/operator'
         value:
           $ref: '#/components/schemas/value'
-        count:
-          $ref: '#/components/schemas/parameters_count'
     getTopFilterForAttributeResponse:
       type: object
       additionalProperties: false

@@ -454,6 +454,7 @@
   },
   {
     "testName": "search for multiple mixed requests in multiple indices with minimal parameters",
+    "isCodeSample": true,
     "parameters": {
       "requests": [
         {
