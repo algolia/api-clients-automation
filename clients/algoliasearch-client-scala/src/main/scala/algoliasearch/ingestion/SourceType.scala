@@ -25,6 +25,9 @@ sealed trait SourceType
 /** SourceType enumeration
   */
 object SourceType {
+  case object AlgoliaIndex extends SourceType {
+    override def toString = "algoliaIndex"
+  }
   case object Bigcommerce extends SourceType {
     override def toString = "bigcommerce"
   }
@@ -53,7 +56,7 @@ object SourceType {
     override def toString = "push"
   }
   val values: Seq[SourceType] =
-    Seq(Bigcommerce, Bigquery, Commercetools, Csv, Docker, Ga4BigqueryExport, Json, Shopify, Push)
+    Seq(AlgoliaIndex, Bigcommerce, Bigquery, Commercetools, Csv, Docker, Ga4BigqueryExport, Json, Shopify, Push)
 
   def withName(name: String): SourceType = SourceType.values
     .find(_.toString == name)

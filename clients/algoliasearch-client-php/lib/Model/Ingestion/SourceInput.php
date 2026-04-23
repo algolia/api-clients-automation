@@ -46,6 +46,8 @@ class SourceInput extends AbstractModel implements ModelInterface, \ArrayAccess,
         'configuration' => 'object',
         'featureFlags' => 'array<string,mixed>',
         'shopURL' => 'string',
+        'indexName' => 'string',
+        'filters' => 'string',
     ];
 
     /**
@@ -80,6 +82,8 @@ class SourceInput extends AbstractModel implements ModelInterface, \ArrayAccess,
         'configuration' => null,
         'featureFlags' => null,
         'shopURL' => null,
+        'indexName' => null,
+        'filters' => null,
     ];
 
     /**
@@ -115,6 +119,8 @@ class SourceInput extends AbstractModel implements ModelInterface, \ArrayAccess,
         'configuration' => 'configuration',
         'featureFlags' => 'featureFlags',
         'shopURL' => 'shopURL',
+        'indexName' => 'indexName',
+        'filters' => 'filters',
     ];
 
     /**
@@ -149,6 +155,8 @@ class SourceInput extends AbstractModel implements ModelInterface, \ArrayAccess,
         'configuration' => 'setConfiguration',
         'featureFlags' => 'setFeatureFlags',
         'shopURL' => 'setShopURL',
+        'indexName' => 'setIndexName',
+        'filters' => 'setFilters',
     ];
 
     /**
@@ -183,6 +191,8 @@ class SourceInput extends AbstractModel implements ModelInterface, \ArrayAccess,
         'configuration' => 'getConfiguration',
         'featureFlags' => 'getFeatureFlags',
         'shopURL' => 'getShopURL',
+        'indexName' => 'getIndexName',
+        'filters' => 'getFilters',
     ];
 
     /**
@@ -277,6 +287,12 @@ class SourceInput extends AbstractModel implements ModelInterface, \ArrayAccess,
         if (isset($data['shopURL'])) {
             $this->container['shopURL'] = $data['shopURL'];
         }
+        if (isset($data['indexName'])) {
+            $this->container['indexName'] = $data['indexName'];
+        }
+        if (isset($data['filters'])) {
+            $this->container['filters'] = $data['filters'];
+        }
     }
 
     /**
@@ -365,6 +381,9 @@ class SourceInput extends AbstractModel implements ModelInterface, \ArrayAccess,
         }
         if (!isset($this->container['shopURL']) || null === $this->container['shopURL']) {
             $invalidProperties[] = "'shopURL' can't be null";
+        }
+        if (!isset($this->container['indexName']) || null === $this->container['indexName']) {
+            $invalidProperties[] = "'indexName' can't be null";
         }
 
         return $invalidProperties;
@@ -1001,6 +1020,54 @@ class SourceInput extends AbstractModel implements ModelInterface, \ArrayAccess,
     public function setShopURL($shopURL)
     {
         $this->container['shopURL'] = $shopURL;
+
+        return $this;
+    }
+
+    /**
+     * Gets indexName.
+     *
+     * @return string
+     */
+    public function getIndexName()
+    {
+        return $this->container['indexName'] ?? null;
+    }
+
+    /**
+     * Sets indexName.
+     *
+     * @param string $indexName name of the Algolia index to read records from
+     *
+     * @return self
+     */
+    public function setIndexName($indexName)
+    {
+        $this->container['indexName'] = $indexName;
+
+        return $this;
+    }
+
+    /**
+     * Gets filters.
+     *
+     * @return null|string
+     */
+    public function getFilters()
+    {
+        return $this->container['filters'] ?? null;
+    }
+
+    /**
+     * Sets filters.
+     *
+     * @param null|string $filters SQL-like filter expression applied while browsing the source index. See [filters](https://www.algolia.com/doc/api-reference/api-parameters/filters/).
+     *
+     * @return self
+     */
+    public function setFilters($filters)
+    {
+        $this->container['filters'] = $filters;
 
         return $this;
     }

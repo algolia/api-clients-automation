@@ -32,7 +32,9 @@ import org.json4s._
 
 sealed trait ExternalOrdering
 
-/** ExternalOrdering enumeration
+/** Ordering to apply on the injected items coming from the external source. 'default' means the items will be ordered
+  * as they are in the index (natural relevance) in the smart group. 'userDefined' means the order in which the
+  * objectIDs are provided in the run request payload will be preserved in the smart group.
   */
 object ExternalOrdering {
   case object Default extends ExternalOrdering {
