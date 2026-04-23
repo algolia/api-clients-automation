@@ -100,6 +100,7 @@ SourceSearch:
 SourceType:
   type: string
   enum:
+    - algoliaIndex
     - bigcommerce
     - bigquery
     - commercetools
@@ -388,6 +389,38 @@ SourceUpdateDocker:
   x-discriminator-fields:
     - configuration
 
+SourceAlgoliaIndex:
+  type: object
+  description: Specific configuration attributes of an `algoliaIndex` source.
+  additionalProperties: false
+  properties:
+    indexName:
+      type: string
+      description: Name of the Algolia index to read records from.
+    filters:
+      type: string
+      description: |
+        SQL-like filter expression applied while browsing the source index.
+        See [filters](https://www.algolia.com/doc/api-reference/api-parameters/filters/).
+  required:
+    - indexName
+  x-discriminator-fields:
+    - indexName
+
+SourceUpdateAlgoliaIndex:
+  type: object
+  description: Specific configuration attributes of an `algoliaIndex` source.
+  additionalProperties: false
+  properties:
+    indexName:
+      type: string
+      description: Name of the Algolia index to read records from.
+    filters:
+      type: string
+      description: |
+        SQL-like filter expression applied while browsing the source index.
+        See [filters](https://www.algolia.com/doc/api-reference/api-parameters/filters/).
+
 SourceInput:
   oneOf:
     - $ref: '#/SourceCommercetools'
@@ -398,6 +431,7 @@ SourceInput:
     - $ref: '#/SourceGA4BigQueryExport'
     - $ref: '#/SourceDocker'
     - $ref: '#/SourceShopify'
+    - $ref: '#/SourceAlgoliaIndex'
 
 SourceUpdateCommercetools:
   type: object
@@ -443,6 +477,7 @@ SourceUpdateInput:
     - $ref: '#/SourceGA4BigQueryExport'
     - $ref: '#/SourceUpdateDocker'
     - $ref: '#/SourceUpdateShopify'
+    - $ref: '#/SourceUpdateAlgoliaIndex'
 
 SourceUpdateShopify:
   type: object
