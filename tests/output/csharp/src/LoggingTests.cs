@@ -64,12 +64,7 @@ public class LoggingTests
     var config = new SearchConfig("test-app-id", "test-api-key")
     {
       CustomHosts = hosts
-        .Select(h => new StatefulHost
-        {
-          Url = h,
-          Accept = CallType.Read | CallType.Write,
-          Up = true,
-        })
+        .Select(h => new StatefulHost { Url = h, Accept = CallType.Read | CallType.Write, Up = true })
         .ToList(),
       ConnectTimeout = TimeSpan.FromSeconds(ConnectTimeoutSeconds),
     };
@@ -82,12 +77,7 @@ public class LoggingTests
     {
       CustomHosts = new List<StatefulHost>
       {
-        new()
-        {
-          Url = "localhost",
-          Accept = CallType.Read | CallType.Write,
-          Up = true,
-        },
+        new() { Url = "localhost", Accept = CallType.Read | CallType.Write, Up = true },
       },
     };
     return new HttpTransport(config, mockHttp, _loggerFactory);
@@ -137,12 +127,11 @@ public class LoggingTests
       )
       .ReturnsAsync(OkResponse());
 
-    await CreateTransportWithMockHttp(mockHttp.Object)
-      .ExecuteRequestAsync(
-        HttpMethod.Get,
-        "/1/test/instant",
-        new InternalRequestOptions { UseReadTransporter = true }
-      );
+    await CreateTransportWithMockHttp(mockHttp.Object).ExecuteRequestAsync(
+      HttpMethod.Get,
+      "/1/test/instant",
+      new InternalRequestOptions { UseReadTransporter = true }
+    );
 
     AssertLogMatches(
       LogLevel.Information,
@@ -166,12 +155,11 @@ public class LoggingTests
       )
       .ReturnsAsync(OkResponse());
 
-    await CreateTransportWithMockHttp(mockHttp.Object)
-      .ExecuteRequestAsync(
-        HttpMethod.Get,
-        "/1/test/instant",
-        new InternalRequestOptions { UseReadTransporter = true }
-      );
+    await CreateTransportWithMockHttp(mockHttp.Object).ExecuteRequestAsync(
+      HttpMethod.Get,
+      "/1/test/instant",
+      new InternalRequestOptions { UseReadTransporter = true }
+    );
 
     var traceMessages = GetLogsByLevel(LogLevel.Trace).Select(l => l.Message).ToList();
     Assert.Contains(traceMessages, m => m.Contains("Header:"));
@@ -194,16 +182,15 @@ public class LoggingTests
       )
       .ReturnsAsync(OkResponse());
 
-    await CreateTransportWithMockHttp(mockHttp.Object)
-      .ExecuteRequestAsync(
-        HttpMethod.Get,
-        "/1/test/instant",
-        new InternalRequestOptions
-        {
-          UseReadTransporter = true,
-          QueryParameters = new Dictionary<string, string> { ["apiKey"] = "secret-in-url" },
-        }
-      );
+    await CreateTransportWithMockHttp(mockHttp.Object).ExecuteRequestAsync(
+      HttpMethod.Get,
+      "/1/test/instant",
+      new InternalRequestOptions
+      {
+        UseReadTransporter = true,
+        QueryParameters = new Dictionary<string, string> { ["apiKey"] = "secret-in-url" },
+      }
+    );
 
     foreach (var log in _logs)
     {
@@ -211,11 +198,7 @@ public class LoggingTests
       Assert.DoesNotContain("secret-in-url", log.Message);
     }
 
-    var headerLog = AssertLogMatches(
-      LogLevel.Trace,
-      @"Header: x-algolia-api-key",
-      "Should have filtered api-key header log"
-    );
+    var headerLog = AssertLogMatches(LogLevel.Trace, @"Header: x-algolia-api-key", "Should have filtered api-key header log");
     Assert.Contains("[FILTERED]", headerLog);
   }
 
@@ -224,12 +207,11 @@ public class LoggingTests
   {
     try
     {
-      await CreateTransportWithHosts(NonRoutableIp, NonRoutableIp2)
-        .ExecuteRequestAsync(
-          HttpMethod.Get,
-          "/1/test",
-          new InternalRequestOptions { UseReadTransporter = true }
-        );
+      await CreateTransportWithHosts(NonRoutableIp, NonRoutableIp2).ExecuteRequestAsync(
+        HttpMethod.Get,
+        "/1/test",
+        new InternalRequestOptions { UseReadTransporter = true }
+      );
     }
     catch (AlgoliaUnreachableHostException) { }
 
@@ -251,12 +233,11 @@ public class LoggingTests
   {
     try
     {
-      await CreateTransportWithHosts(NonRoutableIp)
-        .ExecuteRequestAsync(
-          HttpMethod.Get,
-          "/1/test",
-          new InternalRequestOptions { UseReadTransporter = true }
-        );
+      await CreateTransportWithHosts(NonRoutableIp).ExecuteRequestAsync(
+        HttpMethod.Get,
+        "/1/test",
+        new InternalRequestOptions { UseReadTransporter = true }
+      );
     }
     catch (AlgoliaUnreachableHostException) { }
 
@@ -287,18 +268,8 @@ public class LoggingTests
     {
       CustomHosts = new List<StatefulHost>
       {
-        new()
-        {
-          Url = "bad-host",
-          Accept = CallType.Read | CallType.Write,
-          Up = true,
-        },
-        new()
-        {
-          Url = "good-host",
-          Accept = CallType.Read | CallType.Write,
-          Up = true,
-        },
+        new() { Url = "bad-host", Accept = CallType.Read | CallType.Write, Up = true },
+        new() { Url = "good-host", Accept = CallType.Read | CallType.Write, Up = true },
       },
     };
 
@@ -330,16 +301,21 @@ public class LoggingTests
           It.IsAny<CancellationToken>()
         )
       )
-      .ReturnsAsync(new AlgoliaHttpResponse { HttpStatusCode = 403, Error = "Invalid API key" });
+      .ReturnsAsync(
+        new AlgoliaHttpResponse
+        {
+          HttpStatusCode = 403,
+          Error = "Invalid API key",
+        }
+      );
 
     try
     {
-      await CreateTransportWithMockHttp(mockHttp.Object)
-        .ExecuteRequestAsync(
-          HttpMethod.Get,
-          "/1/test",
-          new InternalRequestOptions { UseReadTransporter = true }
-        );
+      await CreateTransportWithMockHttp(mockHttp.Object).ExecuteRequestAsync(
+        HttpMethod.Get,
+        "/1/test",
+        new InternalRequestOptions { UseReadTransporter = true }
+      );
     }
     catch (AlgoliaApiException) { }
 
@@ -369,12 +345,7 @@ public class LoggingTests
     {
       CustomHosts = new List<StatefulHost>
       {
-        new()
-        {
-          Url = "localhost",
-          Accept = CallType.Read | CallType.Write,
-          Up = true,
-        },
+        new() { Url = "localhost", Accept = CallType.Read | CallType.Write, Up = true },
       },
     };
     var transport = new HttpTransport(config, mockHttp.Object, NullLoggerFactory.Instance);
@@ -415,12 +386,7 @@ public class LoggingTests
     {
       CustomHosts = new List<StatefulHost>
       {
-        new()
-        {
-          Url = "localhost",
-          Accept = CallType.Read | CallType.Write,
-          Up = true,
-        },
+        new() { Url = "localhost", Accept = CallType.Read | CallType.Write, Up = true },
       },
     };
 
@@ -484,12 +450,11 @@ public class LoggingTests
 
     try
     {
-      await CreateTransportWithMockHttp(mockHttp.Object)
-        .ExecuteRequestAsync<SearchClient>(
-          HttpMethod.Get,
-          "/1/test",
-          new InternalRequestOptions { UseReadTransporter = true }
-        );
+      await CreateTransportWithMockHttp(mockHttp.Object).ExecuteRequestAsync<SearchClient>(
+        HttpMethod.Get,
+        "/1/test",
+        new InternalRequestOptions { UseReadTransporter = true }
+      );
     }
     catch (AlgoliaException) { }
 
@@ -518,12 +483,11 @@ public class LoggingTests
     try
     {
       // double.NaN cannot be serialized to JSON by System.Text.Json
-      await CreateTransportWithMockHttp(mockHttp.Object)
-        .ExecuteRequestAsync<object>(
-          HttpMethod.Post,
-          "/1/test",
-          new InternalRequestOptions { Data = new { value = double.NaN } }
-        );
+      await CreateTransportWithMockHttp(mockHttp.Object).ExecuteRequestAsync<object>(
+        HttpMethod.Post,
+        "/1/test",
+        new InternalRequestOptions { Data = new { value = double.NaN } }
+      );
     }
     catch (AlgoliaException) { }
 
@@ -575,7 +539,6 @@ public class TestLogger(string categoryName, List<TestLogEntry> logs) : ILogger
   private sealed class NullScope : IDisposable
   {
     public static readonly NullScope Instance = new();
-
     public void Dispose() { }
   }
 }
