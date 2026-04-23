@@ -15,6 +15,7 @@ use Algolia\AlgoliaSearch\Http\Psr7\Request;
 use Algolia\AlgoliaSearch\Http\Psr7\Uri;
 use Algolia\AlgoliaSearch\RequestOptions\RequestOptions;
 use Algolia\AlgoliaSearch\RequestOptions\RequestOptionsFactory;
+use Algolia\AlgoliaSearch\ObjectSerializer;
 use Algolia\AlgoliaSearch\Support\Helpers;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -147,6 +148,9 @@ final class ApiWrapper implements ApiWrapperInterface
             ->withScheme('https')
         ;
 
+        if (isset($data) && !is_array($data)) {
+            $data = json_decode(json_encode(ObjectSerializer::sanitizeForSerialization($data)), true);
+        }
         $body = isset($data)
             ? array_merge($data, $requestOptions->getBody())
             : $data;
