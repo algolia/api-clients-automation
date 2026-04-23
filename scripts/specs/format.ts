@@ -19,6 +19,11 @@ type OpenAPIParameter = {
   required?: boolean;
 };
 
+type SpecMethod = Record<string, any> & {
+  operationId: string;
+  tags?: string[];
+};
+
 const MERGEABLE_OBJECT_SCHEMA_KEYS = new Set([
   '$ref',
   'additionalProperties',
@@ -37,18 +42,72 @@ const MERGEABLE_OBJECT_SCHEMA_KEYS = new Set([
   'x-categories',
 ]);
 
-const BLOCKED_REF_SEGMENTS = new Set(['__proto__', 'prototype', 'constructor']);
+function getEntryValue<T>(record: Record<string, T> | undefined, key: string): T | undefined {
+  const entry = Object.entries(record ?? {}).find(([entryKey]) => entryKey === key);
 
-function getOwnProperty(value: unknown, key: string): unknown {
-  if (typeof value !== 'object' || value === null) {
+  if (!entry) {
     return undefined;
   }
 
-  if (BLOCKED_REF_SEGMENTS.has(key) || !Object.hasOwn(value, key)) {
-    return undefined;
-  }
+  const [, value] = entry;
+  return value;
+}
 
-  return (value as Record<string, unknown>)[key];
+function setEntryValue<T>(record: Record<string, T>, key: string, value: T): Record<string, T> {
+  const entriesWithoutKey = Object.entries(record).filter(([entryKey]) => entryKey !== key);
+
+  return Object.fromEntries([...entriesWithoutKey, [key, value]]) as Record<string, T>;
+}
+
+function removeEntry<T>(record: Record<string, T>, key: string): Record<string, T> {
+  return Object.fromEntries(Object.entries(record).filter(([entryKey]) => entryKey !== key)) as Record<string, T>;
+}
+
+function getSchemaCategories(schema: Record<string, any>): unknown {
+  return getEntryValue(schema, 'x-categories');
+}
+
+function setSchemaCategories(schema: Record<string, any>, value: unknown): void {
+  Object.assign(schema, { 'x-categories': value });
+}
+
+function hasHelperFlag(specMethod: SpecMethod): boolean {
+  return getEntryValue(specMethod, 'x-helper') === true;
+}
+
+function getCodeSamples(specMethod: SpecMethod): Array<Record<string, any>> | undefined {
+  const codeSamples = getEntryValue(specMethod, 'x-codeSamples');
+
+  return Array.isArray(codeSamples) ? codeSamples : undefined;
+}
+
+function setCodeSamples(specMethod: SpecMethod, codeSamples: Array<Record<string, any>>): void {
+  Object.assign(specMethod, { 'x-codeSamples': codeSamples });
+}
+
+function appendCodeSample(specMethod: SpecMethod, codeSample: Record<string, any>): void {
+  const existingSamples = getCodeSamples(specMethod) ?? [];
+  setCodeSamples(specMethod, [...existingSamples, codeSample]);
+}
+
+function getOperationSamples(
+  codeSamples: Record<string, Record<string, string>>,
+  operationId: string,
+): Record<string, string> | undefined {
+  return getEntryValue(codeSamples, operationId);
+}
+
+function getLanguageCodeSamples(
+  codeSamples: Record<string, Record<string, Record<string, string>>>,
+  language: string,
+): Record<string, Record<string, string>> | undefined {
+  return getEntryValue(codeSamples, language);
+}
+
+function getPreferredCodeSampleSource(operationSamples: Record<string, string>): string | undefined {
+  const preferredSample = getEntryValue(operationSamples, CODE_SAMPLE_KEY);
+
+  return preferredSample ?? Object.values(operationSamples)[0];
 }
 
 function resolveLocalRef<T>(spec: Spec, ref: string): T | undefined {
@@ -62,7 +121,11 @@ function resolveLocalRef<T>(spec: Spec, ref: string): T | undefined {
     .slice(2)
     .split('/')
     .map((part) => part.replaceAll('~1', '/').replaceAll('~0', '~'))) {
-    current = getOwnProperty(current, segment);
+    if (!current || typeof current !== 'object' || Array.isArray(current)) {
+      return undefined;
+    }
+
+    current = getEntryValue(current as Record<string, unknown>, segment);
 
     if (current === undefined) {
       return undefined;
@@ -97,38 +160,144 @@ function mergeFlattenedObjectSchemas(
     mergedSchema.required = requiredFields;
   }
 
-  for (const key of [
-    'additionalProperties',
-    'default',
-    'deprecated',
-    'description',
-    'example',
-    'nullable',
-    'readOnly',
-    'title',
-    'writeOnly',
-    'x-categories',
-  ] as const) {
-    const leftValue = leftSchema[key];
-    const rightValue = rightSchema[key];
+  const leftAdditionalProperties = leftSchema.additionalProperties;
+  const rightAdditionalProperties = rightSchema.additionalProperties;
 
-    if (leftValue !== undefined && rightValue !== undefined && !isDeepStrictEqual(leftValue, rightValue)) {
-      return undefined;
-    }
+  if (
+    leftAdditionalProperties !== undefined &&
+    rightAdditionalProperties !== undefined &&
+    !isDeepStrictEqual(leftAdditionalProperties, rightAdditionalProperties)
+  ) {
+    return undefined;
+  }
 
-    if (leftValue !== undefined || rightValue !== undefined) {
-      mergedSchema[key] = cloneSchema(leftValue ?? rightValue);
-    }
+  if (leftAdditionalProperties !== undefined || rightAdditionalProperties !== undefined) {
+    mergedSchema.additionalProperties = cloneSchema(leftAdditionalProperties ?? rightAdditionalProperties);
+  }
+
+  const leftDefault = leftSchema.default;
+  const rightDefault = rightSchema.default;
+
+  if (leftDefault !== undefined && rightDefault !== undefined && !isDeepStrictEqual(leftDefault, rightDefault)) {
+    return undefined;
+  }
+
+  if (leftDefault !== undefined || rightDefault !== undefined) {
+    mergedSchema.default = cloneSchema(leftDefault ?? rightDefault);
+  }
+
+  const leftDeprecated = leftSchema.deprecated;
+  const rightDeprecated = rightSchema.deprecated;
+
+  if (
+    leftDeprecated !== undefined &&
+    rightDeprecated !== undefined &&
+    !isDeepStrictEqual(leftDeprecated, rightDeprecated)
+  ) {
+    return undefined;
+  }
+
+  if (leftDeprecated !== undefined || rightDeprecated !== undefined) {
+    mergedSchema.deprecated = cloneSchema(leftDeprecated ?? rightDeprecated);
+  }
+
+  const leftDescription = leftSchema.description;
+  const rightDescription = rightSchema.description;
+
+  if (
+    leftDescription !== undefined &&
+    rightDescription !== undefined &&
+    !isDeepStrictEqual(leftDescription, rightDescription)
+  ) {
+    return undefined;
+  }
+
+  if (leftDescription !== undefined || rightDescription !== undefined) {
+    mergedSchema.description = cloneSchema(leftDescription ?? rightDescription);
+  }
+
+  const leftExample = leftSchema.example;
+  const rightExample = rightSchema.example;
+
+  if (leftExample !== undefined && rightExample !== undefined && !isDeepStrictEqual(leftExample, rightExample)) {
+    return undefined;
+  }
+
+  if (leftExample !== undefined || rightExample !== undefined) {
+    mergedSchema.example = cloneSchema(leftExample ?? rightExample);
+  }
+
+  const leftNullable = leftSchema.nullable;
+  const rightNullable = rightSchema.nullable;
+
+  if (leftNullable !== undefined && rightNullable !== undefined && !isDeepStrictEqual(leftNullable, rightNullable)) {
+    return undefined;
+  }
+
+  if (leftNullable !== undefined || rightNullable !== undefined) {
+    mergedSchema.nullable = cloneSchema(leftNullable ?? rightNullable);
+  }
+
+  const leftReadOnly = leftSchema.readOnly;
+  const rightReadOnly = rightSchema.readOnly;
+
+  if (leftReadOnly !== undefined && rightReadOnly !== undefined && !isDeepStrictEqual(leftReadOnly, rightReadOnly)) {
+    return undefined;
+  }
+
+  if (leftReadOnly !== undefined || rightReadOnly !== undefined) {
+    mergedSchema.readOnly = cloneSchema(leftReadOnly ?? rightReadOnly);
+  }
+
+  const leftTitle = leftSchema.title;
+  const rightTitle = rightSchema.title;
+
+  if (leftTitle !== undefined && rightTitle !== undefined && !isDeepStrictEqual(leftTitle, rightTitle)) {
+    return undefined;
+  }
+
+  if (leftTitle !== undefined || rightTitle !== undefined) {
+    mergedSchema.title = cloneSchema(leftTitle ?? rightTitle);
+  }
+
+  const leftWriteOnly = leftSchema.writeOnly;
+  const rightWriteOnly = rightSchema.writeOnly;
+
+  if (
+    leftWriteOnly !== undefined &&
+    rightWriteOnly !== undefined &&
+    !isDeepStrictEqual(leftWriteOnly, rightWriteOnly)
+  ) {
+    return undefined;
+  }
+
+  if (leftWriteOnly !== undefined || rightWriteOnly !== undefined) {
+    mergedSchema.writeOnly = cloneSchema(leftWriteOnly ?? rightWriteOnly);
+  }
+
+  const leftCategories = getSchemaCategories(leftSchema);
+  const rightCategories = getSchemaCategories(rightSchema);
+
+  if (
+    leftCategories !== undefined &&
+    rightCategories !== undefined &&
+    !isDeepStrictEqual(leftCategories, rightCategories)
+  ) {
+    return undefined;
+  }
+
+  if (leftCategories !== undefined || rightCategories !== undefined) {
+    setSchemaCategories(mergedSchema, cloneSchema(leftCategories ?? rightCategories));
   }
 
   for (const [propertyName, propertySchema] of Object.entries(rightSchema.properties ?? {})) {
-    const existingProperty = mergedSchema.properties[propertyName];
+    const existingProperty = getEntryValue(mergedSchema.properties, propertyName);
 
     if (existingProperty !== undefined && !isDeepStrictEqual(existingProperty, propertySchema)) {
       return undefined;
     }
 
-    mergedSchema.properties[propertyName] = cloneSchema(propertySchema);
+    mergedSchema.properties = setEntryValue(mergedSchema.properties, propertyName, cloneSchema(propertySchema));
   }
 
   return mergedSchema;
@@ -173,21 +342,46 @@ function buildFlattenedObjectSchema(
     mergedSchema.required = cloneSchema(resolvedSchema.required);
   }
 
-  for (const key of [
-    'additionalProperties',
-    'default',
-    'deprecated',
-    'description',
-    'example',
-    'nullable',
-    'readOnly',
-    'title',
-    'writeOnly',
-    'x-categories',
-  ] as const) {
-    if (resolvedSchema[key] !== undefined) {
-      mergedSchema[key] = cloneSchema(resolvedSchema[key]);
-    }
+  if (resolvedSchema.additionalProperties !== undefined) {
+    mergedSchema.additionalProperties = cloneSchema(resolvedSchema.additionalProperties);
+  }
+
+  if (resolvedSchema.default !== undefined) {
+    mergedSchema.default = cloneSchema(resolvedSchema.default);
+  }
+
+  if (resolvedSchema.deprecated !== undefined) {
+    mergedSchema.deprecated = cloneSchema(resolvedSchema.deprecated);
+  }
+
+  if (resolvedSchema.description !== undefined) {
+    mergedSchema.description = cloneSchema(resolvedSchema.description);
+  }
+
+  if (resolvedSchema.example !== undefined) {
+    mergedSchema.example = cloneSchema(resolvedSchema.example);
+  }
+
+  if (resolvedSchema.nullable !== undefined) {
+    mergedSchema.nullable = cloneSchema(resolvedSchema.nullable);
+  }
+
+  if (resolvedSchema.readOnly !== undefined) {
+    mergedSchema.readOnly = cloneSchema(resolvedSchema.readOnly);
+  }
+
+  if (resolvedSchema.title !== undefined) {
+    mergedSchema.title = cloneSchema(resolvedSchema.title);
+  }
+
+  if (resolvedSchema.writeOnly !== undefined) {
+    mergedSchema.writeOnly = cloneSchema(resolvedSchema.writeOnly);
+  }
+
+  const resolvedSchemaCategories = getSchemaCategories(resolvedSchema);
+
+  if (resolvedSchemaCategories !== undefined) {
+    setSchemaCategories(mergedSchema, cloneSchema(resolvedSchemaCategories));
   }
 
   if (!Array.isArray(resolvedSchema.allOf)) {
@@ -225,7 +419,7 @@ function flattenSchemaAllOf(spec: Spec, schema: Record<string, any>): void {
   }
 
   for (const key of Object.keys(schema)) {
-    delete schema[key];
+    Reflect.deleteProperty(schema, key);
   }
 
   Object.assign(schema, flattenedSchema);
@@ -267,10 +461,16 @@ function sortSchemaProperties(spec: Spec, schema: Record<string, any> | undefine
     sortSchemaProperties(spec, schema.additionalProperties);
   }
 
-  for (const keyword of ['allOf', 'anyOf', 'oneOf'] as const) {
-    if (Array.isArray(schema[keyword])) {
-      (schema[keyword] as Record<string, any>[]).forEach((subSchema) => sortSchemaProperties(spec, subSchema));
-    }
+  if (Array.isArray(schema.allOf)) {
+    schema.allOf.forEach((subSchema: Record<string, any>) => sortSchemaProperties(spec, subSchema));
+  }
+
+  if (Array.isArray(schema.anyOf)) {
+    schema.anyOf.forEach((subSchema: Record<string, any>) => sortSchemaProperties(spec, subSchema));
+  }
+
+  if (Array.isArray(schema.oneOf)) {
+    schema.oneOf.forEach((subSchema: Record<string, any>) => sortSchemaProperties(spec, subSchema));
   }
 
   if (schema.not && typeof schema.not === 'object') {
@@ -296,7 +496,7 @@ function getParameterSortKey(parameter: OpenAPIParameter, spec: Spec): { name: s
 }
 
 function bundledParameter(spec: Spec, parameterName: string): Record<string, any> | undefined {
-  return spec.components.parameters?.[parameterName];
+  return getEntryValue(spec.components.parameters, parameterName);
 }
 
 function sortRequestOrResponseSchemas(spec: Spec, content: Record<string, any> | undefined): void {
@@ -388,9 +588,11 @@ export async function bundleSpecsForDoc(bundledPath: string, clientName: string)
   const codeSamples = await transformGeneratedSnippetsToCodeSamples(clientName);
 
   for (const [pathKey, pathMethods] of Object.entries(bundledSpec.paths)) {
-    for (const [method, specMethod] of Object.entries(pathMethods)) {
-      if (specMethod['x-helper']) {
-        delete bundledSpec.paths[pathKey];
+    for (const [method, rawSpecMethod] of Object.entries(pathMethods)) {
+      const specMethod = rawSpecMethod as SpecMethod;
+
+      if (hasHelperFlag(specMethod)) {
+        bundledSpec.paths = removeEntry(bundledSpec.paths, pathKey) as Spec['paths'];
         break;
       }
 
@@ -400,25 +602,27 @@ export async function bundleSpecsForDoc(bundledPath: string, clientName: string)
           continue;
         }
 
-        if (!specMethod['x-codeSamples']) {
-          specMethod['x-codeSamples'] = [];
+        if (!getCodeSamples(specMethod)) {
+          setCodeSamples(specMethod, []);
         }
 
         // if a CTS test is marked with isCodeSample: true, it takes priority; otherwise fall back to the first snippet
-        if (codeSamples[gen.language][specMethod.operationId]) {
-          specMethod['x-codeSamples'].push({
+        const languageCodeSamples = getLanguageCodeSamples(codeSamples, gen.language);
+        const operationSamples = languageCodeSamples
+          ? getOperationSamples(languageCodeSamples, specMethod.operationId)
+          : undefined;
+
+        if (operationSamples) {
+          appendCodeSample(specMethod, {
             lang: gen.language,
             label: getCodeSampleLabel(gen.language),
-            source:
-              (Object.hasOwn(codeSamples[gen.language][specMethod.operationId], CODE_SAMPLE_KEY)
-                ? codeSamples[gen.language][specMethod.operationId][CODE_SAMPLE_KEY]
-                : undefined) || Object.values(codeSamples[gen.language][specMethod.operationId])[0],
+            source: getPreferredCodeSampleSource(operationSamples),
           });
         }
       }
 
       // skip custom path for cURL
-      if (pathKey !== '/{path}' && specMethod['x-codeSamples']) {
+      if (pathKey !== '/{path}' && getCodeSamples(specMethod)) {
         const harRequest = harRequests.find((baseHarRequest) => {
           // the url also has the query parameters, so we need to check if it ends with the path
           // all the variables are also replaced by the example in the spec, so we need to check with a regex.
@@ -452,19 +656,19 @@ export async function bundleSpecsForDoc(bundledPath: string, clientName: string)
 
         const curlSnippet = new HTTPSnippet(harRequest as HarRequest).convert('shell', 'curl');
 
-        specMethod['x-codeSamples'].push({
+        appendCodeSample(specMethod, {
           lang: 'cURL',
           label: 'curl',
           source: curlSnippet ? curlSnippet[0] : '',
         });
       }
 
-      if (!bundledSpec.paths[pathKey][method].tags) {
+      if (!specMethod.tags) {
         continue;
       }
 
       // Checks that specified tags are well defined at root level
-      for (const tag of bundledSpec.paths[pathKey][method].tags) {
+      for (const tag of specMethod.tags) {
         if (tag === clientName) {
           throw new Error(
             `Tag name "${tag}" must be different from client name ${clientName} in operation ${specMethod.operationId}`,
