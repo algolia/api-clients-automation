@@ -10,10 +10,23 @@
         LastUse = DateTime.UtcNow,
         Accept = CallType.Read | CallType.Write,
       }{{^-last}},{{/-last}}{{/customHosts}}
-  }{{#gzipEncoding}},Compression = CompressionType.Gzip{{/gzipEncoding}}
+  }{{#gzipEncoding}},Compression = CompressionType.Gzip{{/gzipEncoding}}{{#hasTransformationOptions}},
+  TransformationOptions = new TransformationOptions("{{{transformationRegion}}}"){{#hasTransformationCustomHosts}} {
+    CustomHosts = new List<StatefulHost>
+    {
+      {{#transformationCustomHosts}}new () {
+        Scheme = HttpScheme.Http,
+        Url = Environment.GetEnvironmentVariable("CI") == "true" ? "localhost" : "host.docker.internal",
+        Port = {{port}},
+        Up = true,
+        LastUse = DateTime.UtcNow,
+        Accept = CallType.Read | CallType.Write,
+      }{{^-last}},{{/-last}}{{/transformationCustomHosts}}
+    }
+  }{{/hasTransformationCustomHosts}}{{/hasTransformationOptions}}
 };
 {{^autoCreateClient}}var client = {{/autoCreateClient}}new {{client}}(_config);
 {{/hasCustomHosts}}
-{{#hasTransformationRegion}}client.SetTransformationRegion("{{{transformationRegion}}}");{{/hasTransformationRegion}}
+{{#hasTransformationRegion}}{{^hasTransformationOptions}}client.SetTransformationRegion("{{{transformationRegion}}}");{{/hasTransformationOptions}}{{/hasTransformationRegion}}
 {{#useEchoRequester}}
 {{^autoCreateClient}}var client = {{/autoCreateClient}}new {{client}}(new {{clientPrefix}}Config("{{parametersWithDataTypeMap.appId.value}}","{{parametersWithDataTypeMap.apiKey.value}}"{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}},"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}}), _echo);{{/useEchoRequester}}
