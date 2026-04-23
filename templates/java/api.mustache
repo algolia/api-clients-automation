@@ -60,10 +60,14 @@ public class {{classname}} extends ApiClient {
     private IngestionClient ingestionTransporter;
 
     /**
-     * Sets the region of the current algolia application to the configuration, this is required to be called if you wish to leverage the transformation pipeline (via the *WithTransformation methods).
-     *
-     * @param region (required)
+     * @deprecated Use {@link ClientOptions.Builder#setTransformationOptions(TransformationOptions)}
+     *     instead. The old setter forwarded the parent search {@link ClientOptions} to the ingestion
+     *     transporter, which caused search timeouts to bleed into ingestion calls. The new
+     *     {@code transformationOptions} defaults to Ingestion API defaults (25 s timeouts) and only
+     *     overrides what is explicitly specified.
+     *     See https://www.algolia.com/doc/api-client/methods/push/#transformation-options
      */
+    @Deprecated
     public void setTransformationRegion(String region) {
       this.ingestionTransporter = new IngestionClient(this.authInterceptor.getApplicationId(), this.authInterceptor.getApiKey(), region, this.clientOptions);
     }
@@ -97,6 +101,16 @@ public class {{classname}} extends ApiClient {
 
     public {{classname}}(String appId, String apiKey, ClientOptions options) {
       super(appId, apiKey, "{{{baseName}}}", options, getDefaultHosts({{#hostWithAppID}}appId{{/hostWithAppID}}), Duration.ofMillis({{{x-timeouts.server.connect}}}L), Duration.ofMillis({{{x-timeouts.server.read}}}L), Duration.ofMillis({{{x-timeouts.server.write}}}L));
+      {{#isSearchClient}}
+      if (options != null && options.getTransformationOptions() != null) {
+        this.ingestionTransporter = new IngestionClient(
+          this.authInterceptor.getApplicationId(),
+          this.authInterceptor.getApiKey(),
+          options.getTransformationOptions().getRegion(),
+          options.getTransformationOptions().toClientOptions()
+        );
+      }
+      {{/isSearchClient}}
     }
     {{/hasRegionalHost}}
 

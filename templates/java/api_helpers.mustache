@@ -857,7 +857,11 @@ public <T> List<WatchResponse> saveObjectsWithTransformation(
   RequestOptions requestOptions
 ) {
   if (this.ingestionTransporter == null) {
-    throw new AlgoliaRuntimeException("`setTransformationRegion` must have been called before calling this method.");
+    throw new AlgoliaRuntimeException(
+      "transformationOptions must be set in the client config before calling this method." +
+      " It defaults to the Ingestion API defaults." +
+      " See https://www.algolia.com/doc/api-client/methods/push/#transformation-options"
+    );
   }
 
   return this.ingestionTransporter.chunkedPush(indexName, objects, com.algolia.model.ingestion.Action.ADD_OBJECT, waitForTasks, batchSize, null, requestOptions);
@@ -1078,7 +1082,11 @@ public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
   RequestOptions requestOptions
 ) {
   if (this.ingestionTransporter == null) {
-    throw new AlgoliaRuntimeException("`setTransformationRegion` must have been called before calling this method.");
+    throw new AlgoliaRuntimeException(
+      "transformationOptions must be set in the client config before calling this method." +
+      " It defaults to the Ingestion API defaults." +
+      " See https://www.algolia.com/doc/api-client/methods/push/#transformation-options"
+    );
   }
 
   return this.ingestionTransporter.chunkedPush(
@@ -1407,7 +1415,11 @@ public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTran
   RequestOptions requestOptions
 ) {
   if (this.ingestionTransporter == null) {
-    throw new AlgoliaRuntimeException("`setTransformationRegion` must have been called before calling this method.");
+    throw new AlgoliaRuntimeException(
+      "transformationOptions must be set in the client config before calling this method." +
+      " It defaults to the Ingestion API defaults." +
+      " See https://www.algolia.com/doc/api-client/methods/push/#transformation-options"
+    );
   }
 
   Random rnd = new Random();
