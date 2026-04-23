@@ -1315,7 +1315,7 @@ public partial class SearchClient : ISearchClient
     if (_ingestionTransporter == null)
     {
       throw new AlgoliaException(
-        "`setTransformationRegion` must have been called before calling this method."
+        "TransformationOptions must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
       );
     }
 
@@ -1371,7 +1371,7 @@ public partial class SearchClient : ISearchClient
     if (_ingestionTransporter == null)
     {
       throw new AlgoliaException(
-        "`setTransformationRegion` must have been called before calling this method."
+        "TransformationOptions must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
       );
     }
 
@@ -1430,7 +1430,7 @@ public partial class SearchClient : ISearchClient
     if (_ingestionTransporter == null)
     {
       throw new AlgoliaException(
-        "`setTransformationRegion` must have been called before calling this method."
+        "TransformationOptions must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
       );
     }
 
