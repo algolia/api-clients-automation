@@ -3052,11 +3052,11 @@ components:
       description: Incident details.
       type: object
       properties:
+        status:
+          $ref: '#/components/schemas/Status'
         title:
           type: string
           description: Description of the incident.
-        status:
-          $ref: '#/components/schemas/Status'
     Incidents:
       title: incidents
       description: >-
@@ -3107,12 +3107,15 @@ components:
       type: object
       additionalProperties: false
       properties:
-        name:
+        cluster:
           type: string
-          description: Server name.
-          example: c16-de-1
-        region:
-          $ref: '#/components/schemas/Region'
+          description: Name of the cluster to which this server belongs.
+          example: c16-de
+        is_replica:
+          type: boolean
+          default: false
+          description: Whether this server is a replica of another server.
+          example: false
         is_slave:
           type: boolean
           default: false
@@ -3121,15 +3124,12 @@ components:
             Included to support legacy applications.
             Use `is_replica` instead.
           example: false
-        is_replica:
-          type: boolean
-          default: false
-          description: Whether this server is a replica of another server.
-          example: false
-        cluster:
+        name:
           type: string
-          description: Name of the cluster to which this server belongs.
-          example: c16-de
+          description: Server name.
+          example: c16-de-1
+        region:
+          $ref: '#/components/schemas/Region'
         status:
           $ref: '#/components/schemas/ServerStatus'
         type:
@@ -3443,6 +3443,12 @@ components:
                 type: object
                 additionalProperties: false
                 properties:
+                  avg_build_time:
+                    type: object
+                    description: Average build time of the indices in seconds.
+                    additionalProperties:
+                      x-additionalPropertiesName: probes
+                      $ref: '#/components/schemas/InfraProbes'
                   cpu_usage:
                     type: object
                     description: CPU idleness in %.
@@ -3468,12 +3474,6 @@ components:
 
                       0% means no SSD usage. A value of 50% indicates 32&nbsp;GB
                       SSD usage for a machine with 64&nbsp;RAM.
-                    additionalProperties:
-                      x-additionalPropertiesName: probes
-                      $ref: '#/components/schemas/InfraProbes'
-                  avg_build_time:
-                    type: object
-                    description: Average build time of the indices in seconds.
                     additionalProperties:
                       x-additionalPropertiesName: probes
                       $ref: '#/components/schemas/InfraProbes'
