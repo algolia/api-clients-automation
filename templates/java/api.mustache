@@ -115,7 +115,7 @@ public class {{classname}} extends ApiClient {
     {{/hasRegionalHost}}
     {{^hasRegionalHost}}
     public {{classname}}(String appId, String apiKey) {
-        this(appId, apiKey, null);
+        this(appId, apiKey, (ClientOptions) null);
     }
 
     public {{classname}}(String appId, String apiKey, ClientOptions options) {
