@@ -35,10 +35,10 @@ public class TransformationOptionsTests
   [Trait("Category", "unit")]
   public void WithClientOptions_StoresComposition()
   {
-    var clientOptions = new ClientOptions { ReadTimeout = TimeSpan.FromSeconds(10) };
-    var opts = new TransformationOptions("eu", clientOptions);
+    var ingestionConfig = new IngestionConfig("app-id", "api-key", "eu") { ReadTimeout = TimeSpan.FromSeconds(10) };
+    var opts = new TransformationOptions("eu", ingestionConfig);
     Assert.Equal("eu", opts.Region);
-    Assert.Same(clientOptions, opts.ClientOptions);
+    Assert.Same(ingestionConfig, opts.ClientOptions);
     Assert.Equal(TimeSpan.FromSeconds(10), opts.ClientOptions.ReadTimeout);
   }
 

@@ -223,26 +223,30 @@ namespace Algolia.Search.Clients;
         if (transformationOptions == null)
           throw new ArgumentNullException(nameof(transformationOptions));
 
-        var ingestionConfig = new IngestionConfig(
-          _transport._algoliaConfig.AppId,
-          _transport._algoliaConfig.ApiKey,
-          transformationOptions.Region
-        );
-        var clientOptions = transformationOptions.ClientOptions;
-        if (clientOptions != null)
+        IngestionConfig ingestionConfig;
+        if (transformationOptions.ClientOptions is IngestionConfig providedConfig)
         {
-          if (clientOptions.ReadTimeout.HasValue)
-            ingestionConfig.ReadTimeout = clientOptions.ReadTimeout;
-          if (clientOptions.WriteTimeout.HasValue)
-            ingestionConfig.WriteTimeout = clientOptions.WriteTimeout;
-          if (clientOptions.ConnectTimeout.HasValue)
-            ingestionConfig.ConnectTimeout = clientOptions.ConnectTimeout;
-          if (clientOptions.Compression.HasValue)
-            ingestionConfig.Compression = clientOptions.Compression.Value;
-          if (clientOptions.CustomHosts != null)
-            ingestionConfig.CustomHosts = clientOptions.CustomHosts;
-          if (clientOptions.DefaultHeaders != null)
-            ingestionConfig.DefaultHeaders = clientOptions.DefaultHeaders;
+          ingestionConfig = providedConfig;
+        }
+        else
+        {
+          ingestionConfig = new IngestionConfig(
+            _transport._algoliaConfig.AppId,
+            _transport._algoliaConfig.ApiKey,
+            transformationOptions.Region
+          );
+          var opts = transformationOptions.ClientOptions;
+          if (opts != null)
+          {
+            if (opts.ReadTimeout.HasValue)
+              ingestionConfig.ReadTimeout = opts.ReadTimeout;
+            if (opts.WriteTimeout.HasValue)
+              ingestionConfig.WriteTimeout = opts.WriteTimeout;
+            if (opts.ConnectTimeout.HasValue)
+              ingestionConfig.ConnectTimeout = opts.ConnectTimeout;
+            if (opts.CustomHosts != null)
+              ingestionConfig.CustomHosts = opts.CustomHosts;
+          }
         }
         _ingestionTransporter = new IngestionClient(ingestionConfig, _loggerFactory);
       }
