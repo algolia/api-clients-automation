@@ -428,7 +428,7 @@ public partial interface ISearchClient
   /// <summary>
   /// Helper: Similar to the `SaveObjects` method but requires a Push connector to be created first,
   /// in order to transform records before indexing them to Algolia.
-  /// The ingestion region must have been provided at client instantiation.
+  /// <see cref="TransformationOptions"/> must have been set via <see cref="SearchClient.SetTransformationOptions"/> or <see cref="SearchClient.WithTransformation"/>.
   /// </summary>
   /// <param name="indexName">The index in which to perform the request.</param>
   /// <param name="objects">The list of `objects` to store in the given Algolia `indexName`.</param>
@@ -458,7 +458,7 @@ public partial interface ISearchClient
   /// <summary>
   /// Helper: Similar to the `PartialUpdateObjects` method but requires a Push connector to be created first,
   /// in order to transform records before indexing them to Algolia.
-  /// The ingestion region must have been provided at client instantiation.
+  /// <see cref="TransformationOptions"/> must have been set via <see cref="SearchClient.SetTransformationOptions"/> or <see cref="SearchClient.WithTransformation"/>.
   /// </summary>
   /// <param name="indexName">The index in which to perform the request.</param>
   /// <param name="objects">The list of `objects` to update in the given Algolia `indexName`.</param>
@@ -493,7 +493,7 @@ public partial interface ISearchClient
   /// <summary>
   /// Helper: Similar to the `ReplaceAllObjects` method but requires a Push connector to be created first,
   /// in order to transform records before indexing them to Algolia.
-  /// The ingestion region must have been provided at client instantiation.
+  /// <see cref="TransformationOptions"/> must have been set via <see cref="SearchClient.SetTransformationOptions"/> or <see cref="SearchClient.WithTransformation"/>.
   /// A temporary index is created during this process in order to backup your data.
   /// </summary>
   /// <param name="indexName">The index in which to perform the request.</param>

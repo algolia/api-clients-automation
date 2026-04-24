@@ -115,4 +115,28 @@ public class TransformationOptionsTests
       Assert.DoesNotContain("TransformationOptions must be set", algoliaEx.Message);
     }
   }
+
+  [Fact]
+  [Trait("Category", "unit")]
+  public void WithTransformation_DoesNotThrowConfigErrorWhenConfigured()
+  {
+    var client = SearchClient.WithTransformation("app-id", "api-key", new TransformationOptions("us"));
+
+    var ex = Record.Exception(() =>
+      client.SaveObjectsWithTransformation("index", new[] { new { objectID = "1" } })
+    );
+    if (ex is AlgoliaException algoliaEx)
+    {
+      Assert.DoesNotContain("TransformationOptions must be set", algoliaEx.Message);
+    }
+  }
+
+  [Fact]
+  [Trait("Category", "unit")]
+  public void WithTransformation_NullTransformationOptions_Throws()
+  {
+    Assert.Throws<ArgumentNullException>(() =>
+      SearchClient.WithTransformation("app-id", "api-key", null)
+    );
+  }
 }

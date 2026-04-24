@@ -266,6 +266,25 @@ namespace Algolia.Search.Clients;
         }
         SetTransformationOptions(new TransformationOptions(region));
       }
+
+      /// <summary>
+      /// Creates a <see cref="SearchClient"/> configured with <see cref="TransformationOptions"/> for use
+      /// with <c>*WithTransformation</c> helpers. The ingestion transporter is initialised eagerly using
+      /// Ingestion API defaults; set override fields on <see cref="TransformationOptions"/> to change
+      /// specific defaults.
+      /// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+      /// </summary>
+      public static {{classname}} WithTransformation(
+        string appId,
+        string apiKey,
+        TransformationOptions transformationOptions,
+        ILoggerFactory loggerFactory = null
+      )
+      {
+        var client = new {{classname}}(appId, apiKey, loggerFactory);
+        client.SetTransformationOptions(transformationOptions);
+        return client;
+      }
       {{/isSearchClient}}
   
 
