@@ -40,9 +40,8 @@ class TransformationOptionsTest {
   @DisplayName("*WithTransformation throws when transformationOptions not set")
   void withTransformationThrowsWhenNotConfigured() {
     SearchClient client = new SearchClient("app-id", "api-key");
-    AlgoliaRuntimeException ex = assertThrows(
-      AlgoliaRuntimeException.class,
-      () -> client.saveObjectsWithTransformation("index", List.of(), false, 1000, null)
+    AlgoliaRuntimeException ex = assertThrows(AlgoliaRuntimeException.class, () ->
+      client.saveObjectsWithTransformation("index", List.of(), false, 1000, null)
     );
     assertTrue(ex.getMessage().contains("transformationOptions"));
     assertDoesNotThrow(client::close);
@@ -76,10 +75,7 @@ class TransformationOptionsTest {
   @DisplayName("setTransformationOptions enables *WithTransformation methods")
   void setTransformationOptionsEnablesMethods() throws Exception {
     try (SearchClient client = new SearchClient("app-id", "api-key")) {
-      assertThrows(
-        AlgoliaRuntimeException.class,
-        () -> client.saveObjectsWithTransformation("index", List.of(), false, 1000, null)
-      );
+      assertThrows(AlgoliaRuntimeException.class, () -> client.saveObjectsWithTransformation("index", List.of(), false, 1000, null));
 
       client.setTransformationOptions(new TransformationOptions("us"));
 
