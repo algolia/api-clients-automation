@@ -50,7 +50,7 @@ class TransformationOptionsTest {
   @Test
   @DisplayName("*WithTransformation does not throw config error when transformationOptions is set")
   void withTransformationDoesNotThrowConfigErrorWhenConfigured() throws Exception {
-    try (SearchClient client = new SearchClient("app-id", "api-key", new TransformationOptions("us"))) {
+    try (SearchClient client = SearchClient.withTransformation("app-id", "api-key", new TransformationOptions("us"))) {
       try {
         client.saveObjectsWithTransformation("index", List.of(), false, 1000, null);
       } catch (AlgoliaRuntimeException e) {
@@ -90,7 +90,7 @@ class TransformationOptionsTest {
   @Test
   @DisplayName("setTransformationOptions replaces the region on subsequent calls")
   void setTransformationOptionsReplacesRegion() throws Exception {
-    try (SearchClient client = new SearchClient("app-id", "api-key", new TransformationOptions("us"))) {
+    try (SearchClient client = SearchClient.withTransformation("app-id", "api-key", new TransformationOptions("us"))) {
       assertDoesNotThrow(() -> client.setTransformationOptions(new TransformationOptions("eu")));
     }
   }
