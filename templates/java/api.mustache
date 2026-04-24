@@ -145,7 +145,7 @@ public class {{classname}} extends ApiClient {
      * {@link TransformationOptions} for use with {@code *WithTransformation} helpers.
      * See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
      */
-    public static {{classname}} withTransformation(String appId, String apiKey, @Nullable ClientOptions options, @Nonnull TransformationOptions transformationOptions) {
+    public static {{classname}} withTransformation(String appId, String apiKey, @Nonnull TransformationOptions transformationOptions, @Nullable ClientOptions options) {
       {{classname}} client = new {{classname}}(appId, apiKey, options);
       client.setTransformationOptions(transformationOptions);
       return client;
