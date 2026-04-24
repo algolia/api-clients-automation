@@ -198,10 +198,6 @@ namespace Algolia.Search.Clients;
 
         {{#isSearchClient}}
         _loggerFactory = factory;
-        if (config.TransformationOptions != null)
-        {
-          SetTransformationOptions(config.TransformationOptions);
-        }
         {{/isSearchClient}}
       }
 
@@ -232,18 +228,22 @@ namespace Algolia.Search.Clients;
           _transport._algoliaConfig.ApiKey,
           transformationOptions.Region
         );
-        if (transformationOptions.ReadTimeout.HasValue)
-          ingestionConfig.ReadTimeout = transformationOptions.ReadTimeout;
-        if (transformationOptions.WriteTimeout.HasValue)
-          ingestionConfig.WriteTimeout = transformationOptions.WriteTimeout;
-        if (transformationOptions.ConnectTimeout.HasValue)
-          ingestionConfig.ConnectTimeout = transformationOptions.ConnectTimeout;
-        if (transformationOptions.Compression.HasValue)
-          ingestionConfig.Compression = transformationOptions.Compression.Value;
-        if (transformationOptions.CustomHosts != null)
-          ingestionConfig.CustomHosts = transformationOptions.CustomHosts;
-        if (transformationOptions.DefaultHeaders != null)
-          ingestionConfig.DefaultHeaders = transformationOptions.DefaultHeaders;
+        var clientOptions = transformationOptions.ClientOptions;
+        if (clientOptions != null)
+        {
+          if (clientOptions.ReadTimeout.HasValue)
+            ingestionConfig.ReadTimeout = clientOptions.ReadTimeout;
+          if (clientOptions.WriteTimeout.HasValue)
+            ingestionConfig.WriteTimeout = clientOptions.WriteTimeout;
+          if (clientOptions.ConnectTimeout.HasValue)
+            ingestionConfig.ConnectTimeout = clientOptions.ConnectTimeout;
+          if (clientOptions.Compression.HasValue)
+            ingestionConfig.Compression = clientOptions.Compression.Value;
+          if (clientOptions.CustomHosts != null)
+            ingestionConfig.CustomHosts = clientOptions.CustomHosts;
+          if (clientOptions.DefaultHeaders != null)
+            ingestionConfig.DefaultHeaders = clientOptions.DefaultHeaders;
+        }
         _ingestionTransporter = new IngestionClient(ingestionConfig, _loggerFactory);
       }
 
@@ -253,7 +253,7 @@ namespace Algolia.Search.Clients;
       /// <param name="region">The region ("us" or "eu")</param>
       /// <param name="factory">Logger factory (ignored, kept for backwards compatibility)</param>
       [Obsolete(
-        "SetTransformationRegion is deprecated. Use SetTransformationOptions or pass TransformationOptions in SearchConfig instead. "
+        "SetTransformationRegion is deprecated. Use SetTransformationOptions instead. "
           + "The old setter forwarded the parent search config to the ingestion transporter. "
           + "The new approach defaults to Ingestion API defaults and only overrides what's explicitly specified. "
           + "See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
@@ -282,6 +282,24 @@ namespace Algolia.Search.Clients;
       )
       {
         var client = new {{classname}}(appId, apiKey, loggerFactory);
+        client.SetTransformationOptions(transformationOptions);
+        return client;
+      }
+
+      /// <summary>
+      /// Creates a <see cref="{{classname}}"/> configured with <see cref="TransformationOptions"/> for use
+      /// with <c>*WithTransformation</c> helpers, using a custom <see cref="{{apiPackageName}}Config"/> for the search
+      /// transporter. The ingestion transporter is initialised eagerly using Ingestion API defaults; set
+      /// override fields on <see cref="TransformationOptions"/> to change specific defaults.
+      /// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+      /// </summary>
+      public static {{classname}} WithTransformation(
+        {{apiPackageName}}Config searchConfig,
+        TransformationOptions transformationOptions,
+        ILoggerFactory loggerFactory = null
+      )
+      {
+        var client = new {{classname}}(searchConfig, loggerFactory);
         client.SetTransformationOptions(transformationOptions);
         return client;
       }

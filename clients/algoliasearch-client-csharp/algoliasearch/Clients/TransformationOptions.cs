@@ -1,15 +1,12 @@
 using System;
-using System.Collections.Generic;
-using Algolia.Search.Models.Common;
-using Algolia.Search.Transport;
 
 namespace Algolia.Search.Clients;
 
 /// <summary>
-/// Options for the ingestion transporter used by the transformation pipeline.
-/// When set in <see cref="SearchConfig"/>, the ingestion transporter is eagerly
-/// created using Ingestion API defaults. Only fields explicitly provided here
-/// override those defaults.
+/// Configuration options for the ingestion transporter used by <c>*WithTransformation</c> helpers.
+/// An ingestion transporter is eagerly created using Ingestion API defaults (25 s timeouts,
+/// region-derived hosts, no compression). Pass a <see cref="ClientOptions"/> to override specific
+/// defaults; only the fields set there replace the Ingestion API defaults.
 /// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
 /// </summary>
 public class TransformationOptions
@@ -17,27 +14,24 @@ public class TransformationOptions
   /// <summary>The ingestion region ("eu" or "us"). Required.</summary>
   public string Region { get; }
 
-  /// <summary>Overrides the ingestion transporter read timeout (default: 25s).</summary>
-  public TimeSpan? ReadTimeout { get; set; }
-
-  /// <summary>Overrides the ingestion transporter write timeout (default: 25s).</summary>
-  public TimeSpan? WriteTimeout { get; set; }
-
-  /// <summary>Overrides the ingestion transporter connect timeout (default: 25s).</summary>
-  public TimeSpan? ConnectTimeout { get; set; }
-
-  /// <summary>Overrides the ingestion transporter compression type (default: none).</summary>
-  public CompressionType? Compression { get; set; }
-
-  /// <summary>Overrides the ingestion transporter hosts.</summary>
-  public List<StatefulHost> CustomHosts { get; set; }
-
-  /// <summary>Overrides the ingestion transporter default headers.</summary>
-  public Dictionary<string, string> DefaultHeaders { get; set; }
+  /// <summary>
+  /// Optional overrides forwarded to the ingestion transporter.
+  /// Only fields explicitly set here replace the Ingestion API defaults.
+  /// </summary>
+  public ClientOptions ClientOptions { get; }
 
   /// <param name="region">The ingestion region ("eu" or "us"). Required.</param>
   /// <exception cref="ArgumentException">Thrown when region is null or empty.</exception>
   public TransformationOptions(string region)
+    : this(region, null) { }
+
+  /// <param name="region">The ingestion region ("eu" or "us"). Required.</param>
+  /// <param name="clientOptions">
+  /// Optional <see cref="ClientOptions"/> forwarded to the ingestion transporter.
+  /// Only fields explicitly set here override the Ingestion API defaults.
+  /// </param>
+  /// <exception cref="ArgumentException">Thrown when region is null or empty.</exception>
+  public TransformationOptions(string region, ClientOptions clientOptions)
   {
     if (string.IsNullOrWhiteSpace(region))
     {
@@ -46,5 +40,6 @@ public class TransformationOptions
       );
     }
     Region = region;
+    ClientOptions = clientOptions;
   }
 }

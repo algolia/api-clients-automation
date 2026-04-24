@@ -28,12 +28,18 @@ public class TransformationOptionsTests
   {
     var opts = new TransformationOptions("us");
     Assert.Equal("us", opts.Region);
-    Assert.Null(opts.ReadTimeout);
-    Assert.Null(opts.WriteTimeout);
-    Assert.Null(opts.ConnectTimeout);
-    Assert.Null(opts.Compression);
-    Assert.Null(opts.CustomHosts);
-    Assert.Null(opts.DefaultHeaders);
+    Assert.Null(opts.ClientOptions);
+  }
+
+  [Fact]
+  [Trait("Category", "unit")]
+  public void WithClientOptions_StoresComposition()
+  {
+    var clientOptions = new ClientOptions { ReadTimeout = TimeSpan.FromSeconds(10) };
+    var opts = new TransformationOptions("eu", clientOptions);
+    Assert.Equal("eu", opts.Region);
+    Assert.Same(clientOptions, opts.ClientOptions);
+    Assert.Equal(TimeSpan.FromSeconds(10), opts.ClientOptions.ReadTimeout);
   }
 
   [Fact]
@@ -80,26 +86,6 @@ public class TransformationOptionsTests
 
   [Fact]
   [Trait("Category", "unit")]
-  public void TransformationOptionsInConfig_EagerlyCreatesTransporter()
-  {
-    var client = new SearchClient(
-      new SearchConfig("app-id", "api-key")
-      {
-        TransformationOptions = new TransformationOptions("us"),
-      }
-    );
-
-    var ex = Record.Exception(() =>
-      client.SaveObjectsWithTransformation("index", new[] { new { objectID = "1" } })
-    );
-    if (ex is AlgoliaException algoliaEx)
-    {
-      Assert.DoesNotContain("TransformationOptions must be set", algoliaEx.Message);
-    }
-  }
-
-  [Fact]
-  [Trait("Category", "unit")]
   public void DeprecatedSetTransformationRegion_StillWorks()
   {
     var client = new SearchClient("app-id", "api-key");
@@ -137,6 +123,33 @@ public class TransformationOptionsTests
   {
     Assert.Throws<ArgumentNullException>(() =>
       SearchClient.WithTransformation("app-id", "api-key", null)
+    );
+  }
+
+  [Fact]
+  [Trait("Category", "unit")]
+  public void WithTransformation_SearchConfigOverload_DoesNotThrowConfigError()
+  {
+    var client = SearchClient.WithTransformation(
+      new SearchConfig("app-id", "api-key"),
+      new TransformationOptions("us")
+    );
+
+    var ex = Record.Exception(() =>
+      client.SaveObjectsWithTransformation("index", new[] { new { objectID = "1" } })
+    );
+    if (ex is AlgoliaException algoliaEx)
+    {
+      Assert.DoesNotContain("TransformationOptions must be set", algoliaEx.Message);
+    }
+  }
+
+  [Fact]
+  [Trait("Category", "unit")]
+  public void WithTransformation_SearchConfigOverload_NullTransformationOptions_Throws()
+  {
+    Assert.Throws<ArgumentNullException>(() =>
+      SearchClient.WithTransformation(new SearchConfig("app-id", "api-key"), null)
     );
   }
 }
