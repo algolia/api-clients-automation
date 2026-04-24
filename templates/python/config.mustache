@@ -1,5 +1,5 @@
 from os import environ
-from typing import Dict, Optional
+from typing import Dict, Literal, Optional
 {{#isSearchClient}}
 from warnings import warn
 {{/isSearchClient}}
@@ -27,7 +27,7 @@ class TransformationOptions:
         hosts: Optional[HostsCollection] = None,
         proxies: Optional[Dict[str, str]] = None,
         headers: Optional[Dict[str, str]] = None,
-        compression_type: Optional[str] = None,
+        compression_type: Optional[Literal["gzip"]] = None,
         compression_threshold: Optional[int] = None,
         wait_task_time_before_retry: Optional[int] = None,
     ):
@@ -40,7 +40,7 @@ class TransformationOptions:
         self.hosts = hosts
         self.proxies = proxies
         self.headers = headers
-        self.compression_type = compression_type
+        self.compression_type: Optional[Literal["gzip"]] = compression_type
         self.compression_threshold = compression_threshold
         self.wait_task_time_before_retry = wait_task_time_before_retry
 {{/isSearchClient}}
