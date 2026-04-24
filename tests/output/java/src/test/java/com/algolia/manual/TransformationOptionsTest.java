@@ -6,7 +6,7 @@ import com.algolia.api.SearchClient;
 import com.algolia.config.*;
 import com.algolia.exceptions.AlgoliaRuntimeException;
 import java.time.Duration;
-import java.util.List;
+import java.util.Collections;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -41,7 +41,7 @@ class TransformationOptionsTest {
   void withTransformationThrowsWhenNotConfigured() {
     SearchClient client = new SearchClient("app-id", "api-key");
     AlgoliaRuntimeException ex = assertThrows(AlgoliaRuntimeException.class, () ->
-      client.saveObjectsWithTransformation("index", List.of(), false, 1000, null)
+      client.saveObjectsWithTransformation("index", Collections.emptyList(), false, 1000, null)
     );
     assertTrue(ex.getMessage().contains("transformationOptions"));
     assertDoesNotThrow(client::close);
@@ -52,7 +52,7 @@ class TransformationOptionsTest {
   void withTransformationDoesNotThrowConfigErrorWhenConfigured() throws Exception {
     try (SearchClient client = SearchClient.withTransformation("app-id", "api-key", new TransformationOptions("us"))) {
       try {
-        client.saveObjectsWithTransformation("index", List.of(), false, 1000, null);
+        client.saveObjectsWithTransformation("index", Collections.emptyList(), false, 1000, null);
       } catch (AlgoliaRuntimeException e) {
         assertFalse(
           e.getMessage().contains("transformationOptions must be set"),
@@ -75,12 +75,12 @@ class TransformationOptionsTest {
   @DisplayName("setTransformationOptions enables *WithTransformation methods")
   void setTransformationOptionsEnablesMethods() throws Exception {
     try (SearchClient client = new SearchClient("app-id", "api-key")) {
-      assertThrows(AlgoliaRuntimeException.class, () -> client.saveObjectsWithTransformation("index", List.of(), false, 1000, null));
+      assertThrows(AlgoliaRuntimeException.class, () -> client.saveObjectsWithTransformation("index", Collections.emptyList(), false, 1000, null));
 
       client.setTransformationOptions(new TransformationOptions("us"));
 
       try {
-        client.saveObjectsWithTransformation("index", List.of(), false, 1000, null);
+        client.saveObjectsWithTransformation("index", Collections.emptyList(), false, 1000, null);
       } catch (AlgoliaRuntimeException e) {
         assertFalse(e.getMessage().contains("transformationOptions must be set"));
       }
