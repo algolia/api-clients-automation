@@ -140,6 +140,17 @@ public class {{classname}} extends ApiClient {
       return client;
     }
 
+    /**
+     * Creates a {@link {{classname}}} configured with custom search-client options and a
+     * {@link TransformationOptions} for use with {@code *WithTransformation} helpers.
+     * See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+     */
+    public static {{classname}} withTransformation(String appId, String apiKey, @Nullable ClientOptions options, @Nonnull TransformationOptions transformationOptions) {
+      {{classname}} client = new {{classname}}(appId, apiKey, options);
+      client.setTransformationOptions(transformationOptions);
+      return client;
+    }
+
     @Override
     public void close() throws java.io.IOException {
       try {
