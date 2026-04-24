@@ -11,6 +11,8 @@ use Algolia\AlgoliaSearch\Model\ModelInterface;
  * ExternalInjectedItem Class Doc Comment.
  *
  * @category Class
+ *
+ * @description Contains a list of objects to inject from an external source.
  */
 class ExternalInjectedItem extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
 {

@@ -23,7 +23,7 @@ public class ExternalInjection {
     return this;
   }
 
-  /** An objectID injected into an external source. */
+  /** An objectID injected from an external source and also present in the targeted index. */
   @javax.annotation.Nonnull
   public String getObjectID() {
     return objectID;
