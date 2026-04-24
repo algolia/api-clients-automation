@@ -20,6 +20,13 @@ export const hasType: Rule.RuleModule = {
           return; // allow everything in properties
         }
 
+        // allow everything in example
+        for (let parentNode = node.parent; parentNode; parentNode = parentNode.parent) {
+          if (isPairWithKey(parentNode, 'example')) {
+            return;
+          }
+        }
+
         const type = node.parent.pairs.find((pair) => isPairWithKey(pair, 'type'));
         if (isPairWithKey(node, 'properties') && (!type || !isPairWithValue(type, 'object'))) {
           return context.report({
