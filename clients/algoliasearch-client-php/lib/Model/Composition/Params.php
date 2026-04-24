@@ -780,7 +780,7 @@ class Params extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
     /**
      * Sets injectedItems.
      *
-     * @param null|array<string,ExternalInjectedItem> $injectedItems a list of extenrally injected objectID groups into from an external source
+     * @param null|array<string,ExternalInjectedItem> $injectedItems an object containing keys corresponding to the `key`s from an injection's `injectedItems` and values containing a list of hits to inject
      *
      * @return self
      */

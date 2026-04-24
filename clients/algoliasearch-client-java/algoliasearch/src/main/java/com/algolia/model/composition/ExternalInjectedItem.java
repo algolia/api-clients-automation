@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** ExternalInjectedItem */
+/** Contains a list of objects to inject from an external source. */
 public class ExternalInjectedItem {
 
   @JsonProperty("items")
