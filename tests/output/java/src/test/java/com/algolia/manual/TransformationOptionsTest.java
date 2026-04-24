@@ -1,4 +1,4 @@
-package com.algolia.client.manual;
+package com.algolia.manual;
 
 import static org.junit.jupiter.api.Assertions.*;
 

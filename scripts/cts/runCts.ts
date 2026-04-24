@@ -78,7 +78,7 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
     case 'java': {
       const javaTests = [
         ...folders.map((f) => `--tests 'com.algolia.${f}*'`),
-        ...(suites.client ? ["--tests 'com.algolia.client.manual*'"] : []),
+        ...(suites.client ? ["--tests 'com.algolia.manual*'"] : []),
       ].join(' ');
       await run(`./gradle/gradlew -p tests/output/java test --rerun ${javaTests}`, {
         language,
