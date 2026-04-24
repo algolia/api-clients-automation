@@ -84,7 +84,8 @@ import algoliasearch.composition.SupportedLanguage._
   * @param hitsPerPage
   *   Number of hits per page.
   * @param injectedItems
-  *   A list of extenrally injected objectID groups into from an external source.
+  *   An object containing keys corresponding to the `key`s from an injection's `injectedItems` and values containing a
+  *   list of hits to inject.
   * @param insidePolygon
   *   Coordinates of a polygon in which to search. Polygons are defined by 3 to 10,000 points. Each point is represented
   *   by its latitude and longitude. Provide multiple polygons as nested arrays. For more information, see [filtering

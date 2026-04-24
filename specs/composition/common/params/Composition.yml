@@ -48,15 +48,28 @@ injectedItems:
   additionalProperties:
     $ref: '#/externalInjectedItem'
   description: |
-    A list of extenrally injected objectID groups into from an external source.
+    An object containing keys corresponding to the `key`s from an injection's `injectedItems` and values containing a list of hits to inject.
   default: {}
   x-categories:
     - Retail Media Network
   example:
-    'my-group-key': [{'objectID': 'my-object-1', 'metadata': {'my-field': 'my-value'}}, {'objectID': 'my-object-2'}]
+    my-group-key:
+      items:
+        - objectID: 'my-object-1'
+          metadata:
+            my-field: 'my-value'
+        - objectID: 'my-object-2'
+          metadata:
+            my-field: 'my-value-2'
+    my-other-group-key:
+      items:
+        - objectID: 'my-other-object-1'
+        - objectID: 'my-other-object-2'
 
 externalInjectedItem:
   type: object
+  description: |
+    Contains a list of objects to inject from an external source.
   properties:
     items:
       type: array
@@ -67,7 +80,7 @@ externalInjectedItem:
         properties:
           objectID:
             type: string
-            description: An objectID injected into an external source.
+            description: An objectID injected from an external source and also present in the targeted index.
           metadata:
             type: object
             additionalProperties: true
@@ -75,11 +88,14 @@ externalInjectedItem:
               User-defined key-values that will be added to the injected item in the response.
               This is identical to Hits metadata defined in Composition or Composition Rule,
               with the benefit of being set at runtime.
-            example: {'my-field': 'my-value'}
+            example:
+              my-field: 'my-value'
         required:
           - objectID
         example:
-          {'objectID': 'my-object-1', 'metadata': {'my-field': 'my-value'}}
+          objectID: 'my-object-1'
+          metadata':
+            my-field: 'my-value'
   required:
     - items
 
