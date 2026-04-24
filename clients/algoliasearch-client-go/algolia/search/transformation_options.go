@@ -1,0 +1,42 @@
+package search
+
+import (
+	"errors"
+	"time"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/compression"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
+)
+
+// TransformationOptions configures the ingestion transporter used by *WithTransformation helpers.
+// When passed to NewClient or set via SetTransformationOptions, the transporter is eagerly created
+// using Ingestion API defaults (25s timeouts, no compression). Only explicitly set fields override
+// those defaults. The parent search config is NOT forwarded to the ingestion transporter.
+// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+type TransformationOptions struct {
+	Region         ingestion.Region // required
+	ReadTimeout    time.Duration
+	WriteTimeout   time.Duration
+	ConnectTimeout time.Duration
+	Compression    compression.Compression
+	Hosts          []transport.StatefulHost
+	DefaultHeaders map[string]string
+}
+
+func (o TransformationOptions) validate() error {
+	if o.Region == "" {
+		return errors.New("Region is required in TransformationOptions. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion")
+	}
+	return nil
+}
+
+// ClientOption configures the search client at construction time.
+type ClientOption func(*SearchConfiguration)
+
+// WithTransformationOptions returns a ClientOption that configures the ingestion transporter.
+func WithTransformationOptions(opts TransformationOptions) ClientOption {
+	return func(cfg *SearchConfiguration) {
+		cfg.TransformationOptions = &opts
+	}
+}

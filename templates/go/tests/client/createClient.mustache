@@ -1,3 +1,6 @@
+{{#hasTransformationOptions}}
+transformationOptions := search.TransformationOptions{Region: "{{{transformationRegion}}}"{{#hasTransformationCustomHosts}}, Hosts: []transport.StatefulHost{ {{#transformationCustomHosts}}transport.NewStatefulHost("http", tests.GetLocalhost() + ":{{port}}", call.IsReadWrite),{{/transformationCustomHosts}} }{{/hasTransformationCustomHosts}}}
+{{/hasTransformationOptions}}
 cfg = {{clientPrefix}}.{{clientName}}Configuration{
   Configuration: transport.Configuration{
     AppID:     "{{parametersWithDataTypeMap.appId.value}}",
@@ -13,8 +16,9 @@ cfg = {{clientPrefix}}.{{clientName}}Configuration{
     {{/gzipEncoding}}
   },{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region.value}}
   Region: {{clientPrefix}}.Region("{{parametersWithDataTypeMap.region.value}}"),{{/parametersWithDataTypeMap.region.value}}{{/hasRegionalHost}}
-  {{#hasTransformationRegion}}
-  Transformation: &search.TransformationConfiguration{ Region: "{{{transformationRegion}}}" },
-  {{/hasTransformationRegion}}
 }
 client, err = {{clientPrefix}}.NewClientWithConfig(cfg)
+{{#hasTransformationOptions}}
+require.NoError(t, err)
+err = client.SetTransformationOptions(transformationOptions)
+{{/hasTransformationOptions}}

@@ -2,6 +2,7 @@
 package {{packageName}}
 
 import (
+  "github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
   "github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
@@ -20,22 +21,22 @@ const (
 // {{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{/lambda.titlecase}}Configuration stores the configuration of the API client.
 type {{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{/lambda.titlecase}}Configuration struct {
 	transport.Configuration
-  
+
   {{#hasRegionalHost}}Region Region{{/hasRegionalHost}}
   {{#isSearchClient}}
-  Transformation *TransformationConfiguration
+  // TransformationOptions configures the ingestion transporter used by *WithTransformation helpers.
+  // When set, the transporter is eagerly created using Ingestion API defaults.
+  TransformationOptions *TransformationOptions
   {{/isSearchClient}}
 }
 
 {{#isSearchClient}}
-type TransformationConfiguration struct {
-  Region ingestion.Region
-}
-
-// SetTransformationRegion sets the region of the current algolia application to the configuration, this is required to be called if you wish to leverage the transformation pipeline (via the *WithTransformation methods).
+// Deprecated: Use WithTransformationOptions or SetTransformationOptions on the client instead.
+// The old method forwarded the parent search config to the ingestion transporter, causing search
+// timeouts to bleed into ingestion calls. The new approach defaults to Ingestion API defaults and
+// only overrides what's explicitly specified.
+// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
 func (s *SearchConfiguration) SetTransformationRegion(region ingestion.Region) {
-  s.Transformation = &TransformationConfiguration{
-    Region: region,
-  }
+  s.TransformationOptions = &TransformationOptions{Region: region}
 }
 {{/isSearchClient}}
