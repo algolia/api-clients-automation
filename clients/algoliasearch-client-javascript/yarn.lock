@@ -2896,7 +2896,7 @@ __metadata:
   resolution: "algoliasearch-client-javascript@workspace:."
   dependencies:
     "@types/node": "npm:24.12.2"
-    bundlewatch: "npm:0.4.1"
+    bundlewatch: "npm:0.4.2"
     execa: "npm:9.6.1"
     lerna: "npm:9.0.7"
     rollup: "npm:4.59.0"
@@ -3194,11 +3194,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bundlewatch@npm:0.4.1":
-  version: 0.4.1
-  resolution: "bundlewatch@npm:0.4.1"
+"bundlewatch@npm:0.4.2":
+  version: 0.4.2
+  resolution: "bundlewatch@npm:0.4.2"
   dependencies:
-    axios: "npm:^0.30.0"
+    axios: "npm:^0.31.1"
     bytes: "npm:^3.1.1"
     chalk: "npm:^4.0.0"
     ci-env: "npm:^1.17.0"
@@ -3210,7 +3210,7 @@ __metadata:
     read-pkg-up: "npm:^7.0.1"
   bin:
     bundlewatch: lib/bin/index.js
-  checksum: 10/27c663e351d765ac8b3587d2896bd47992524abb8a03f4a32f00f10e80cf4dd6f15703d84237c793ac0c5f34e8b34921e8464936e61eb7b87f35d04aff23ec46
+  checksum: 10/844aef38c938c7729d4a3cf24309f7e25ed173e39608cf6ef36541979332fe828c433cd419b85b3401e2db84496c55dc4e2c5152b12d20b1e535812e3e553b0b
   languageName: node
   linkType: hard
 
