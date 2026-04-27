@@ -99,7 +99,7 @@ public <T> List<WatchResponse> chunkedPush(
               return resp != null;
             },
             50,
-            null
+            (retries) -> Math.min(retries * 1500, 5000)
           );
         });
 
