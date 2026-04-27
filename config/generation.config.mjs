@@ -55,7 +55,6 @@ export const patterns = [
 
   'tests/output/go/go.mod',
   '!tests/output/go/tests/manual/**',
-  '!tests/output/go/tests/client/transformation_options_test.go',
 
   // Java
   '!clients/algoliasearch-client-java/**',
