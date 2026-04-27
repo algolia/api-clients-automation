@@ -36,7 +36,6 @@ import javax.annotation.Nonnull;
 
 {{#isSearchClient}}
 import com.algolia.internal.JsonSerializer;
-import java.time.Duration;
 import java.time.Instant;
 import java.util.Base64;
 import java.util.regex.*;
@@ -44,8 +43,6 @@ import com.algolia.search.models.apikeys.SecuredApiKeyRestriction;
 import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-import javax.annotation.Nonnull;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import com.algolia.model.ingestion.Event;
@@ -60,12 +57,42 @@ public class {{classname}} extends ApiClient {
     private IngestionClient ingestionTransporter;
 
     /**
-     * Sets the region of the current algolia application to the configuration, this is required to be called if you wish to leverage the transformation pipeline (via the *WithTransformation methods).
-     *
-     * @param region (required)
+     * Sets (or replaces) the ingestion transporter used by {@code *WithTransformation} helpers.
+     * Closes the previous transporter if one exists.
+     * See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
      */
+    public void setTransformationOptions(@Nonnull TransformationOptions transformationOptions) {
+      if (transformationOptions == null) {
+        throw new AlgoliaRuntimeException("transformationOptions must not be null");
+      }
+      IngestionClient previous = this.ingestionTransporter;
+      this.ingestionTransporter = new IngestionClient(
+        this.authInterceptor.getApplicationId(),
+        this.authInterceptor.getApiKey(),
+        transformationOptions.getRegion(),
+        transformationOptions.getClientOptions()
+      );
+      if (previous != null) {
+        try {
+          previous.close();
+        } catch (java.io.IOException e) {
+          throw new AlgoliaRuntimeException("Failed to close previous ingestion transporter", e);
+        }
+      }
+    }
+
+    /**
+     * @deprecated Use {@link #withTransformation(String, String, TransformationOptions)} or
+     *     {@link #setTransformationOptions(TransformationOptions)} instead.
+     *     The old setter forwarded the parent search {@link ClientOptions} to the ingestion
+     *     transporter, which caused search timeouts to bleed into ingestion calls.
+     *     The new {@code TransformationOptions} defaults to Ingestion API defaults (25 s timeouts)
+     *     and only overrides what is explicitly specified.
+     *     See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+     */
+    @Deprecated
     public void setTransformationRegion(String region) {
-      this.ingestionTransporter = new IngestionClient(this.authInterceptor.getApplicationId(), this.authInterceptor.getApiKey(), region, this.clientOptions);
+      setTransformationOptions(new TransformationOptions(region));
     }
     {{/isSearchClient}}
 
@@ -98,6 +125,43 @@ public class {{classname}} extends ApiClient {
     public {{classname}}(String appId, String apiKey, ClientOptions options) {
       super(appId, apiKey, "{{{baseName}}}", options, getDefaultHosts({{#hostWithAppID}}appId{{/hostWithAppID}}), Duration.ofMillis({{{x-timeouts.server.connect}}}L), Duration.ofMillis({{{x-timeouts.server.read}}}L), Duration.ofMillis({{{x-timeouts.server.write}}}L));
     }
+    {{#isSearchClient}}
+
+    /**
+     * Creates a {@link {{classname}}} configured with a {@link TransformationOptions} for use with
+     * {@code *WithTransformation} helpers. The ingestion transporter is initialised eagerly using
+     * Ingestion API defaults (25 s timeouts); pass a {@link ClientOptions} inside
+     * {@link TransformationOptions} to override specific defaults.
+     * See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+     */
+    public static {{classname}} withTransformation(String appId, String apiKey, @Nonnull TransformationOptions transformationOptions) {
+      {{classname}} client = new {{classname}}(appId, apiKey);
+      client.setTransformationOptions(transformationOptions);
+      return client;
+    }
+
+    /**
+     * Creates a {@link {{classname}}} configured with custom search-client options and a
+     * {@link TransformationOptions} for use with {@code *WithTransformation} helpers.
+     * See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+     */
+    public static {{classname}} withTransformation(String appId, String apiKey, @Nonnull TransformationOptions transformationOptions, @Nullable ClientOptions options) {
+      {{classname}} client = new {{classname}}(appId, apiKey, options);
+      client.setTransformationOptions(transformationOptions);
+      return client;
+    }
+
+    @Override
+    public void close() throws java.io.IOException {
+      try {
+        if (this.ingestionTransporter != null) {
+          this.ingestionTransporter.close();
+        }
+      } finally {
+        super.close();
+      }
+    }
+    {{/isSearchClient}}
     {{/hasRegionalHost}}
 
     {{#hostWithAppID}}

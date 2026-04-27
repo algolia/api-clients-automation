@@ -775,7 +775,7 @@ public <T> List<BatchResponse> chunkedBatch(
  * Helper: Similar to the `saveObjects` method but requires a Push connector
  * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
  * to be created first, in order to transform records before indexing them to Algolia. The
- * `region` must have been passed to the client instantiation method.
+ * {@link TransformationOptions} must have been passed to the client constructor or set via {@link #setTransformationOptions}.
  *
  * @param indexName The `indexName` to replace `objects` in.
  * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -791,7 +791,7 @@ public <T> List<WatchResponse> saveObjectsWithTransformation(String indexName, I
  * Helper: Similar to the `saveObjects` method but requires a Push connector
  * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
  * to be created first, in order to transform records before indexing them to Algolia. The
- * `region` must have been passed to the client instantiation method.
+ * {@link TransformationOptions} must have been passed to the client constructor or set via {@link #setTransformationOptions}.
  *
  * @param indexName The `indexName` to replace `objects` in.
  * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -810,7 +810,7 @@ public <T> List<WatchResponse> saveObjectsWithTransformation(String indexName, I
  * Helper: Similar to the `saveObjects` method but requires a Push connector
  * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
  * to be created first, in order to transform records before indexing them to Algolia. The
- * `region` must have been passed to the client instantiation method.
+ * {@link TransformationOptions} must have been passed to the client constructor or set via {@link #setTransformationOptions}.
  *
  * @param indexName The `indexName` to replace `objects` in.
  * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -825,7 +825,7 @@ public <T> List<WatchResponse> saveObjectsWithTransformation(String indexName, I
  * Helper: Similar to the `saveObjects` method but requires a Push connector
  * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
  * to be created first, in order to transform records before indexing them to Algolia. The
- * `region` must have been passed to the client instantiation method.
+ * {@link TransformationOptions} must have been passed to the client constructor or set via {@link #setTransformationOptions}.
  *
  * @param indexName The `indexName` to replace `objects` in.
  * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -848,7 +848,7 @@ public <T> List<WatchResponse> saveObjectsWithTransformation(
  * Helper: Similar to the `saveObjects` method but requires a Push connector
  * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
  * to be created first, in order to transform records before indexing them to Algolia. The
- * `region` must have been passed to the client instantiation method.
+ * {@link TransformationOptions} must have been passed to the client constructor or set via {@link #setTransformationOptions}.
  *
  * @param indexName The `indexName` to replace `objects` in.
  * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -868,7 +868,11 @@ public <T> List<WatchResponse> saveObjectsWithTransformation(
   RequestOptions requestOptions
 ) {
   if (this.ingestionTransporter == null) {
-    throw new AlgoliaRuntimeException("`setTransformationRegion` must have been called before calling this method.");
+    throw new AlgoliaRuntimeException(
+      "transformationOptions must be set in the client config before calling this method." +
+      " It defaults to the Ingestion API defaults." +
+      " See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
+    );
   }
 
   return this.ingestionTransporter.chunkedPush(indexName, objects, com.algolia.model.ingestion.Action.ADD_OBJECT, waitForTasks, batchSize, null, requestOptions);
@@ -1002,7 +1006,7 @@ public List<BatchResponse> deleteObjects(String indexName, List<String> objectID
  * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector
  * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
  * to be created first, in order to transform records before indexing them to Algolia. The
- * `region` must have been passed to the client instantiation method.
+ * {@link TransformationOptions} must have been passed to the client constructor or set via {@link #setTransformationOptions}.
  *
  * @param indexName The `indexName` to update `objects` in.
  * @param objects The array of `objects` to update in the given Algolia `indexName`.
@@ -1017,7 +1021,7 @@ public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(String ind
  * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector
  * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
  * to be created first, in order to transform records before indexing them to Algolia. The
- * `region` must have been passed to the client instantiation method.
+ * {@link TransformationOptions} must have been passed to the client constructor or set via {@link #setTransformationOptions}.
  *
  * @param indexName The `indexName` to update `objects` in.
  * @param objects The array of `objects` to update in the given Algolia `indexName`.
@@ -1040,7 +1044,7 @@ public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
  * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector
  * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
  * to be created first, in order to transform records before indexing them to Algolia. The
- * `region` must have been passed to the client instantiation method.
+ * {@link TransformationOptions} must have been passed to the client constructor or set via {@link #setTransformationOptions}.
  *
  * @param indexName The `indexName` to update `objects` in.
  * @param objects The array of `objects` to update in the given Algolia `indexName`.
@@ -1059,14 +1063,14 @@ public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
   boolean waitForTasks,
   RequestOptions requestOptions
 ) {
-  return partialUpdateObjectsWithTransformation(indexName, objects, createIfNotExists, waitForTasks, 1000, null);
+  return partialUpdateObjectsWithTransformation(indexName, objects, createIfNotExists, waitForTasks, 1000, requestOptions);
 }
 
 /**
  * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector
  * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
  * to be created first, in order to transform records before indexing them to Algolia. The
- * `region` must have been passed to the client instantiation method.
+ * {@link TransformationOptions} must have been passed to the client constructor or set via {@link #setTransformationOptions}.
  *
  * @param indexName The `indexName` to update `objects` in.
  * @param objects The array of `objects` to update in the given Algolia `indexName`.
@@ -1089,7 +1093,11 @@ public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
   RequestOptions requestOptions
 ) {
   if (this.ingestionTransporter == null) {
-    throw new AlgoliaRuntimeException("`setTransformationRegion` must have been called before calling this method.");
+    throw new AlgoliaRuntimeException(
+      "transformationOptions must be set in the client config before calling this method." +
+      " It defaults to the Ingestion API defaults." +
+      " See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
+    );
   }
 
   return this.ingestionTransporter.chunkedPush(
@@ -1342,7 +1350,7 @@ public <T> ReplaceAllObjectsResponse replaceAllObjects(
  * Helper: Similar to the `saveObjects` method but requires a Push connector
  * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
  * to be created first, in order to transform records before indexing them to Algolia. The
- * `region` must have been passed to the client instantiation method.
+ * {@link TransformationOptions} must have been passed to the client constructor or set via {@link #setTransformationOptions}.
  *
  * @param indexName The `indexName` to replace `objects` in.
  * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -1358,7 +1366,7 @@ public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTran
  * Helper: Similar to the `saveObjects` method but requires a Push connector
  * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
  * to be created first, in order to transform records before indexing them to Algolia. The
- * `region` must have been passed to the client instantiation method.
+ * {@link TransformationOptions} must have been passed to the client constructor or set via {@link #setTransformationOptions}.
  *
  * @param indexName The `indexName` to replace `objects` in.
  * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -1376,7 +1384,7 @@ public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTran
  * Helper: Similar to the `saveObjects` method but requires a Push connector
  * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
  * to be created first, in order to transform records before indexing them to Algolia. The
- * `region` must have been passed to the client instantiation method.
+ * {@link TransformationOptions} must have been passed to the client constructor or set via {@link #setTransformationOptions}.
  *
  * @param indexName The `indexName` to replace `objects` in.
  * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -1396,7 +1404,7 @@ public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTran
  * Helper: Similar to the `saveObjects` method but requires a Push connector
  * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
  * to be created first, in order to transform records before indexing them to Algolia. The
- * `region` must have been passed to the client instantiation method.
+ * {@link TransformationOptions} must have been passed to the client constructor or set via {@link #setTransformationOptions}.
  *
  * @param indexName The `indexName` to replace `objects` in.
  * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -1418,7 +1426,11 @@ public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTran
   RequestOptions requestOptions
 ) {
   if (this.ingestionTransporter == null) {
-    throw new AlgoliaRuntimeException("`setTransformationRegion` must have been called before calling this method.");
+    throw new AlgoliaRuntimeException(
+      "transformationOptions must be set in the client config before calling this method." +
+      " It defaults to the Ingestion API defaults." +
+      " See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
+    );
   }
 
   Random rnd = new Random();
