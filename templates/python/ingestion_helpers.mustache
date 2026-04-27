@@ -68,7 +68,7 @@
                         func=_func,
                         validate=_validate,
                         aggregator=_aggregator,
-                        timeout=lambda: min(_retry_count * 1.5, 5),
+                        timeout=lambda: float(min(_retry_count * 1.5, 5)),
                         error_validate=lambda _: _retry_count >= 50,
                         error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${50})",
                     )
