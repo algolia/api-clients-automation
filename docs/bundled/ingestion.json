@@ -4336,6 +4336,7 @@
       "SourceType": {
         "type": "string",
         "enum": [
+          "algoliaIndex",
           "bigcommerce",
           "bigquery",
           "commercetools",
@@ -4763,6 +4764,27 @@
           }
         ]
       },
+      "SourceAlgoliaIndex": {
+        "type": "object",
+        "description": "Specific configuration attributes of an `algoliaIndex` source.",
+        "additionalProperties": false,
+        "properties": {
+          "indexName": {
+            "type": "string",
+            "description": "Name of the Algolia index to read records from."
+          },
+          "filters": {
+            "type": "string",
+            "description": "SQL-like filter expression applied while browsing the source index.\nSee [filters](https://www.algolia.com/doc/api-reference/api-parameters/filters/).\n"
+          }
+        },
+        "required": [
+          "indexName"
+        ],
+        "x-discriminator-fields": [
+          "indexName"
+        ]
+      },
       "SourceInput": {
         "oneOf": [
           {
@@ -4788,6 +4810,9 @@
           },
           {
             "$ref": "#/components/schemas/SourceShopify"
+          },
+          {
+            "$ref": "#/components/schemas/SourceAlgoliaIndex"
           }
         ]
       },
@@ -4946,6 +4971,21 @@
           "configuration"
         ]
       },
+      "SourceUpdateAlgoliaIndex": {
+        "type": "object",
+        "description": "Specific configuration attributes of an `algoliaIndex` source.",
+        "additionalProperties": false,
+        "properties": {
+          "indexName": {
+            "type": "string",
+            "description": "Name of the Algolia index to read records from."
+          },
+          "filters": {
+            "type": "string",
+            "description": "SQL-like filter expression applied while browsing the source index.\nSee [filters](https://www.algolia.com/doc/api-reference/api-parameters/filters/).\n"
+          }
+        }
+      },
       "SourceUpdateInput": {
         "oneOf": [
           {
@@ -4968,6 +5008,9 @@
           },
           {
             "$ref": "#/components/schemas/SourceUpdateShopify"
+          },
+          {
+            "$ref": "#/components/schemas/SourceUpdateAlgoliaIndex"
           }
         ]
       },

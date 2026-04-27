@@ -77,6 +77,15 @@ public interface SourceInput {
           LOGGER.finest("Failed to deserialize oneOf SourceShopify (error: " + e.getMessage() + ") (type: SourceShopify)");
         }
       }
+      // deserialize SourceAlgoliaIndex
+      if (tree.isObject() && tree.has("indexName")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(SourceAlgoliaIndex.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf SourceAlgoliaIndex (error: " + e.getMessage() + ") (type: SourceAlgoliaIndex)");
+        }
+      }
       // deserialize SourceJSON
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {

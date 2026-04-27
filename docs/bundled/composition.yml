@@ -1418,17 +1418,32 @@ paths:
                 "getRankingInfo": false,
                 "hitsPerPage": 20,
                 "injectedItems": {
-                  "my-group-key": [
-                    {
-                      "objectID": "my-object-1",
-                      "metadata": {
-                        "my-field": "my-value"
+                  "my-group-key": {
+                    "items": [
+                      {
+                        "objectID": "my-object-1",
+                        "metadata": {
+                          "my-field": "my-value"
+                        }
+                      },
+                      {
+                        "objectID": "my-object-2",
+                        "metadata": {
+                          "my-field": "my-value-2"
+                        }
                       }
-                    },
-                    {
-                      "objectID": "my-object-2"
-                    }
-                  ]
+                    ]
+                  },
+                  "my-other-group-key": {
+                    "items": [
+                      {
+                        "objectID": "my-other-object-1"
+                      },
+                      {
+                        "objectID": "my-other-object-2"
+                      }
+                    ]
+                  }
                 },
                 "insideBoundingBox": "lorem",
                 "insidePolygon": [
@@ -1520,10 +1535,10 @@ paths:
                   title: searchForFacetValuesParams
                   type: object
                   properties:
-                    query:
-                      $ref: '#/components/schemas/query'
                     maxFacetHits:
                       $ref: '#/components/schemas/maxFacetHits'
+                    query:
+                      $ref: '#/components/schemas/query'
                     searchQuery:
                       $ref: '#/components/schemas/params'
       responses:
@@ -1853,17 +1868,32 @@ paths:
                   "getRankingInfo": false,
                   "hitsPerPage": 20,
                   "injectedItems": {
-                    "my-group-key": [
-                      {
-                        "objectID": "my-object-1",
-                        "metadata": {
-                          "my-field": "my-value"
+                    "my-group-key": {
+                      "items": [
+                        {
+                          "objectID": "my-object-1",
+                          "metadata": {
+                            "my-field": "my-value"
+                          }
+                        },
+                        {
+                          "objectID": "my-object-2",
+                          "metadata": {
+                            "my-field": "my-value-2"
+                          }
                         }
-                      },
-                      {
-                        "objectID": "my-object-2"
-                      }
-                    ]
+                      ]
+                    },
+                    "my-other-group-key": {
+                      "items": [
+                        {
+                          "objectID": "my-other-object-1"
+                        },
+                        {
+                          "objectID": "my-other-object-2"
+                        }
+                      ]
+                    }
                   },
                   "insideBoundingBox": "lorem",
                   "insidePolygon": [
@@ -1924,8 +1954,8 @@ paths:
       description: |
         Lists all compositions in the current Algolia application.
       parameters:
-        - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/HitsPerPage'
+        - $ref: '#/components/parameters/Page'
       responses:
         '200':
           description: OK
@@ -7991,8 +8021,6 @@ paths:
               description: Composition Rules search parameters.
               additionalProperties: false
               properties:
-                query:
-                  $ref: '#/components/schemas/parameters_query'
                 anchoring:
                   $ref: '#/components/schemas/anchoring'
                 context:
@@ -8001,10 +8029,6 @@ paths:
                     Only return composition rules that match the context (exact
                     match).
                   example: mobile
-                page:
-                  $ref: '#/components/schemas/parameters_page'
-                hitsPerPage:
-                  $ref: '#/components/schemas/parameters_hitsPerPage'
                 enabled:
                   oneOf:
                     - type: boolean
@@ -8014,6 +8038,12 @@ paths:
                         By default, _all_ composition rules are returned.
                     - type: 'null'
                   default: null
+                hitsPerPage:
+                  $ref: '#/components/schemas/parameters_hitsPerPage'
+                page:
+                  $ref: '#/components/schemas/parameters_page'
+                query:
+                  $ref: '#/components/schemas/parameters_query'
       responses:
         '200':
           description: OK
@@ -8039,12 +8069,12 @@ paths:
                     description: >-
                       Number of composition rules that matched the search
                       criteria.
-                  page:
-                    type: integer
-                    description: Current page.
                   nbPages:
                     type: integer
                     description: Number of pages.
+                  page:
+                    type: integer
+                    description: Current page.
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -8933,6 +8963,8 @@ components:
         - Pagination
     externalInjectedItem:
       type: object
+      description: |
+        Contains a list of objects to inject from an external source.
       properties:
         items:
           type: array
@@ -8943,7 +8975,9 @@ components:
             properties:
               objectID:
                 type: string
-                description: An objectID injected into an external source.
+                description: >-
+                  An objectID injected from an external source and also present
+                  in the targeted index.
               metadata:
                 type: object
                 additionalProperties: true
@@ -8961,7 +8995,7 @@ components:
               - objectID
             example:
               objectID: my-object-1
-              metadata:
+              metadata':
                 my-field: my-value
       required:
         - items
@@ -8970,17 +9004,25 @@ components:
       additionalProperties:
         $ref: '#/components/schemas/externalInjectedItem'
       description: >
-        A list of extenrally injected objectID groups into from an external
-        source.
+        An object containing keys corresponding to the `key`s from an
+        injection's `injectedItems` and values containing a list of hits to
+        inject.
       default: {}
       x-categories:
         - Retail Media Network
       example:
         my-group-key:
-          - objectID: my-object-1
-            metadata:
-              my-field: my-value
-          - objectID: my-object-2
+          items:
+            - objectID: my-object-1
+              metadata:
+                my-field: my-value
+            - objectID: my-object-2
+              metadata:
+                my-field: my-value-2
+        my-other-group-key:
+          items:
+            - objectID: my-other-object-1
+            - objectID: my-other-object-2
     insideBoundingBoxArray:
       type: array
       items:
@@ -9351,10 +9393,10 @@ components:
           $ref: '#/components/schemas/aroundLatLng'
         aroundLatLngViaIP:
           $ref: '#/components/schemas/aroundLatLngViaIP'
-        aroundRadius:
-          $ref: '#/components/schemas/aroundRadius'
         aroundPrecision:
           $ref: '#/components/schemas/aroundPrecision'
+        aroundRadius:
+          $ref: '#/components/schemas/aroundRadius'
         clickAnalytics:
           $ref: '#/components/schemas/clickAnalytics'
         enableABTest:
@@ -9452,18 +9494,6 @@ components:
     RedirectRuleIndexMetadata:
       type: object
       properties:
-        source:
-          type: string
-          description: Source index for the redirect rule.
-        dest:
-          type: string
-          description: Destination index for the redirect rule.
-        reason:
-          type: string
-          description: Reason for the redirect rule.
-        succeed:
-          type: boolean
-          description: Redirect rule status.
         data:
           title: redirectRuleIndexData
           type: object
@@ -9473,6 +9503,18 @@ components:
           properties:
             ruleObjectID:
               type: string
+        dest:
+          type: string
+          description: Destination index for the redirect rule.
+        reason:
+          type: string
+          description: Reason for the redirect rule.
+        source:
+          type: string
+          description: Source index for the redirect rule.
+        succeed:
+          type: boolean
+          description: Redirect rule status.
       required:
         - data
         - succeed
@@ -9525,12 +9567,12 @@ components:
       type: object
       additionalProperties: false
       properties:
+        hide:
+          $ref: '#/components/schemas/hide'
         order:
           $ref: '#/components/schemas/order'
         sortRemainingBy:
           $ref: '#/components/schemas/sortRemainingBy'
-        hide:
-          $ref: '#/components/schemas/hide'
     values:
       description: Order of facet values. One object for each facet.
       type: object
@@ -9565,12 +9607,12 @@ components:
       type: object
       additionalProperties: false
       properties:
+        title:
+          type: string
         urls:
           type: array
           items:
             $ref: '#/components/schemas/bannerImageUrl'
-        title:
-          type: string
     bannerLink:
       description: Link for a banner defined in the Merchandising Studio.
       type: object
@@ -9634,6 +9676,9 @@ components:
       type: object
       additionalProperties: true
       properties:
+        _automaticInsights:
+          type: boolean
+          description: Whether automatic events collection is enabled for the application.
         abTestID:
           type: integer
           description: >-
@@ -9645,6 +9690,12 @@ components:
           description: >-
             Variant ID. This is only included in the response for indices that
             are part of an A/B test.
+        appliedRules:
+          description: Rules applied to the query.
+          title: appliedRules
+          type: array
+          items:
+            type: object
         aroundLatLng:
           type: string
           description: Computed geographical location.
@@ -9702,12 +9753,6 @@ components:
                 default) to be processed (this can happen when a lot of typo
                 alternatives exist for the query). This field will not be
                 included when typo-tolerance is entirely disabled.
-        appliedRules:
-          description: Rules applied to the query.
-          title: appliedRules
-          type: array
-          items:
-            type: object
         exhaustiveFacetsCount:
           type: boolean
           description: >-
@@ -9743,18 +9788,18 @@ components:
             title: facetStats
             type: object
             properties:
-              min:
-                type: number
-                format: double
-                description: Minimum value in the results.
-              max:
-                type: number
-                format: double
-                description: Maximum value in the results.
               avg:
                 type: number
                 format: double
                 description: Average facet value in the results.
+              max:
+                type: number
+                format: double
+                description: Maximum value in the results.
+              min:
+                type: number
+                format: double
+                description: Minimum value in the results.
               sum:
                 type: number
                 format: double
@@ -9795,6 +9840,12 @@ components:
           description: >-
             Markup text indicating which parts of the original query have been
             removed to retrieve a non-empty result set.
+        queryID:
+          type: string
+          description: >-
+            Unique identifier for the query. This is used for [click
+            analytics](https://www.algolia.com/doc/guides/analytics/click-analytics).
+          example: a00dbc80a8d13c4565a442e7e2dca80a
         redirect:
           title: redirect
           type: object
@@ -9819,15 +9870,6 @@ components:
           example: c2-uk-3.algolia.net
         userData:
           $ref: '#/components/schemas/userData'
-        queryID:
-          type: string
-          description: >-
-            Unique identifier for the query. This is used for [click
-            analytics](https://www.algolia.com/doc/guides/analytics/click-analytics).
-          example: a00dbc80a8d13c4565a442e7e2dca80a
-        _automaticInsights:
-          type: boolean
-          description: Whether automatic events collection is enabled for the application.
     objectID:
       type: string
       description: Unique record identifier.
@@ -9849,10 +9891,6 @@ components:
       description: Surround words that match the query with HTML tags for highlighting.
       additionalProperties: false
       properties:
-        value:
-          $ref: '#/components/schemas/highlightedValue'
-        matchLevel:
-          $ref: '#/components/schemas/matchLevel'
         matchedWords:
           type: array
           description: List of matched words from the search query.
@@ -9860,6 +9898,10 @@ components:
             - action
           items:
             type: string
+        matchLevel:
+          $ref: '#/components/schemas/matchLevel'
+        value:
+          $ref: '#/components/schemas/highlightedValue'
         fullyHighlighted:
           type: boolean
           description: Whether the entire attribute value is highlighted.
@@ -9895,10 +9937,10 @@ components:
       description: Snippets that show the context around a matching search query.
       additionalProperties: false
       properties:
-        value:
-          $ref: '#/components/schemas/highlightedValue'
         matchLevel:
           $ref: '#/components/schemas/matchLevel'
+        value:
+          $ref: '#/components/schemas/highlightedValue'
       required:
         - value
         - matchLevel
@@ -9926,6 +9968,11 @@ components:
     matchedGeoLocation:
       type: object
       properties:
+        distance:
+          type: integer
+          description: >-
+            Distance between the matched location and the search location (in
+            meters).
         lat:
           type: number
           format: double
@@ -9934,11 +9981,6 @@ components:
           type: number
           format: double
           description: Longitude of the matched location.
-        distance:
-          type: integer
-          description: >-
-            Distance between the matched location and the search location (in
-            meters).
     personalization:
       type: object
       properties:
@@ -9956,10 +9998,6 @@ components:
       description: Object with detailed information about the record's ranking.
       additionalProperties: false
       properties:
-        filters:
-          type: integer
-          minimum: 0
-          description: Whether a filter matched the query.
         firstMatchedWord:
           type: integer
           minimum: 0
@@ -9973,14 +10011,6 @@ components:
             Distance between the geo location in the search query and the best
             matching geo location in the record, divided by the geo precision
             (in meters).
-        geoPrecision:
-          type: integer
-          minimum: 1
-          description: Precision used when computing the geo distance, in meters.
-        matchedGeoLocation:
-          $ref: '#/components/schemas/matchedGeoLocation'
-        personalization:
-          $ref: '#/components/schemas/personalization'
         nbExactWords:
           type: integer
           minimum: 0
@@ -9989,27 +10019,39 @@ components:
           type: integer
           minimum: 0
           description: Number of typos encountered when matching the record.
+        userScore:
+          type: integer
+          description: >-
+            Overall ranking of the record, expressed as a single integer. This
+            attribute is internal.
+        filters:
+          type: integer
+          minimum: 0
+          description: Whether a filter matched the query.
+        geoPrecision:
+          type: integer
+          minimum: 1
+          description: Precision used when computing the geo distance, in meters.
+        matchedGeoLocation:
+          $ref: '#/components/schemas/matchedGeoLocation'
+        personalization:
+          $ref: '#/components/schemas/personalization'
         promoted:
           type: boolean
           description: Whether the record was promoted by a rule.
+        promotedByReRanking:
+          type: boolean
+          description: Whether the record is re-ranked.
         proximityDistance:
           type: integer
           minimum: 0
           description: >-
             Number of words between multiple matches in the query plus 1. For
             single word queries, `proximityDistance` is 0.
-        userScore:
-          type: integer
-          description: >-
-            Overall ranking of the record, expressed as a single integer. This
-            attribute is internal.
         words:
           type: integer
           minimum: 1
           description: Number of matched words.
-        promotedByReRanking:
-          type: boolean
-          description: Whether the record is re-ranked.
       required:
         - nbTypos
         - firstMatchedWord
@@ -10042,9 +10084,91 @@ components:
               index: products
               injectedItemKey: sponsored-products
     Hit_rankingInfo:
-      allOf:
-        - $ref: '#/components/schemas/rankingInfo'
-        - $ref: '#/components/schemas/compositionRankingInfo'
+      type: object
+      properties:
+        firstMatchedWord:
+          type: integer
+          minimum: 0
+          description: >-
+            Position of the first matched word in the best matching attribute of
+            the record.
+        geoDistance:
+          type: integer
+          minimum: 0
+          description: >-
+            Distance between the geo location in the search query and the best
+            matching geo location in the record, divided by the geo precision
+            (in meters).
+        nbExactWords:
+          type: integer
+          minimum: 0
+          description: Number of exactly matched words.
+        nbTypos:
+          type: integer
+          minimum: 0
+          description: Number of typos encountered when matching the record.
+        userScore:
+          type: integer
+          description: >-
+            Overall ranking of the record, expressed as a single integer. This
+            attribute is internal.
+        composed:
+          title: composedRankingInfo
+          type: object
+          additionalProperties:
+            title: compositionIdRankingInfo
+            x-additionalPropertiesName: composition-id
+            type: object
+            properties:
+              index:
+                type: string
+                example: products
+              injectedItemKey:
+                type: string
+                example: sponsored-products
+            required:
+              - index
+              - injectedItemKey
+          example:
+            my-composition-to-sponsor-products:
+              index: products
+              injectedItemKey: sponsored-products
+        filters:
+          type: integer
+          minimum: 0
+          description: Whether a filter matched the query.
+        geoPrecision:
+          type: integer
+          minimum: 1
+          description: Precision used when computing the geo distance, in meters.
+        matchedGeoLocation:
+          $ref: '#/components/schemas/matchedGeoLocation'
+        personalization:
+          $ref: '#/components/schemas/personalization'
+        promoted:
+          type: boolean
+          description: Whether the record was promoted by a rule.
+        promotedByReRanking:
+          type: boolean
+          description: Whether the record is re-ranked.
+        proximityDistance:
+          type: integer
+          minimum: 0
+          description: >-
+            Number of words between multiple matches in the query plus 1. For
+            single word queries, `proximityDistance` is 0.
+        words:
+          type: integer
+          minimum: 1
+          description: Number of matched words.
+      required:
+        - nbTypos
+        - firstMatchedWord
+        - geoDistance
+        - nbExactWords
+        - userScore
+      additionalProperties: false
+      description: Object with detailed information about the record's ranking.
     distinctSeqID:
       type: integer
     hitMetadata:
@@ -10072,16 +10196,16 @@ components:
       properties:
         objectID:
           $ref: '#/components/schemas/objectID'
-        _highlightResult:
-          $ref: '#/components/schemas/highlightResultMap'
-        _snippetResult:
-          $ref: '#/components/schemas/snippetResultMap'
-        _rankingInfo:
-          $ref: '#/components/schemas/Hit_rankingInfo'
         _distinctSeqID:
           $ref: '#/components/schemas/distinctSeqID'
         _extra:
           $ref: '#/components/schemas/hitMetadata'
+        _highlightResult:
+          $ref: '#/components/schemas/highlightResultMap'
+        _rankingInfo:
+          $ref: '#/components/schemas/Hit_rankingInfo'
+        _snippetResult:
+          $ref: '#/components/schemas/snippetResultMap'
     hits:
       type: array
       description: >
@@ -10175,11 +10299,11 @@ components:
     resultsCompositionsResponse:
       type: object
       properties:
-        feedID:
-          $ref: '#/components/schemas/feedID'
         compositions:
           additionalProperties:
             $ref: '#/components/schemas/resultsCompositionInfoResponse'
+        feedID:
+          $ref: '#/components/schemas/feedID'
       required:
         - compositions
     searchResultsItem:
@@ -10222,8 +10346,13 @@ components:
       x-discriminator-fields:
         - facetHits
       properties:
-        indexName:
-          type: string
+        exhaustiveFacetsCount:
+          type: boolean
+          description: >
+            Whether the facet count is exhaustive (true) or approximate (false).
+
+            For more information, see [Why are my facet and hit counts not
+            accurate](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate).
         facetHits:
           type: array
           description: Matching facet values.
@@ -10236,24 +10365,19 @@ components:
               - highlighted
               - count
             properties:
-              value:
-                description: Facet value.
-                example: Mobile phone
-                type: string
-              highlighted:
-                $ref: '#/components/schemas/highlightedValue'
               count:
                 description: >-
                   Number of records with this facet value. [The count may be
                   approximated](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate).
                 type: integer
-        exhaustiveFacetsCount:
-          type: boolean
-          description: >
-            Whether the facet count is exhaustive (true) or approximate (false).
-
-            For more information, see [Why are my facet and hit counts not
-            accurate](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate).
+              highlighted:
+                $ref: '#/components/schemas/highlightedValue'
+              value:
+                description: Facet value.
+                example: Mobile phone
+                type: string
+        indexName:
+          type: string
         processingTimeMS:
           $ref: '#/components/schemas/processingTimeMS'
     searchForFacetValuesResponse:
@@ -11203,9 +11327,9 @@ components:
               minimum: 0
               maximum: 100
               description: Minimum score a recommendation must have to be included.
-            queryParameters:
-              $ref: '#/components/schemas/mainInjectionQueryParameters'
             fallbackParameters:
+              $ref: '#/components/schemas/mainInjectionQueryParameters'
+            queryParameters:
               $ref: '#/components/schemas/mainInjectionQueryParameters'
           required:
             - indexName
@@ -11250,6 +11374,12 @@ components:
       required:
         - search
     externalOrdering:
+      description: >-
+        Ordering to apply on the injected items coming from the external source.
+        'default' means the items will be ordered as they are in the index
+        (natural relevance) in the smart group. 'userDefined' means the order in
+        which the objectIDs are provided in the run request payload will be
+        preserved in the smart group.
       enum:
         - default
         - userDefined
@@ -11272,16 +11402,15 @@ components:
               type: string
               description: Composition Index name.
               example: Products
-            params:
-              $ref: '#/components/schemas/baseInjectionQueryParameters'
             ordering:
               $ref: '#/components/schemas/externalOrdering'
+            params:
+              $ref: '#/components/schemas/baseInjectionQueryParameters'
           required:
             - index
       required:
         - external
     injectedItemRecommendSource:
-      title: injectedItemRecommendSource
       description: >-
         Injected items will originate from a recommendation request performed on
         the specified index.
@@ -11306,9 +11435,9 @@ components:
               minimum: 0
               maximum: 100
               description: Minimum score a recommendation must have to be included.
-            queryParameters:
-              $ref: '#/components/schemas/baseInjectionQueryParameters'
             fallbackParameters:
+              $ref: '#/components/schemas/baseInjectionQueryParameters'
+            queryParameters:
               $ref: '#/components/schemas/baseInjectionQueryParameters'
           required:
             - indexName
@@ -11328,17 +11457,17 @@ components:
         key:
           type: string
           description: injected Item unique identifier.
-        source:
-          description: Source to be used to inject items into result set.
-          $ref: '#/components/schemas/injectedItemSource'
-        position:
-          type: integer
-          minimum: 0
-          maximum: 99
         length:
           type: integer
           minimum: 0
           maximum: 50
+        position:
+          type: integer
+          minimum: 0
+          maximum: 99
+        source:
+          description: Source to be used to inject items into result set.
+          $ref: '#/components/schemas/injectedItemSource'
         metadata:
           title: injectedItemMetadata
           type: object
@@ -11393,13 +11522,6 @@ components:
       properties:
         main:
           $ref: '#/components/schemas/injectionMain'
-        injectedItems:
-          type: array
-          description: list of injected items of the current Composition.
-          minItems: 0
-          maxItems: 3
-          items:
-            $ref: '#/components/schemas/injectionInjectedItem'
         deduplication:
           title: deduplication
           type: object
@@ -11412,6 +11534,13 @@ components:
               $ref: '#/components/schemas/dedupPositioning'
           required:
             - positioning
+        injectedItems:
+          type: array
+          description: list of injected items of the current Composition.
+          minItems: 0
+          maxItems: 3
+          items:
+            $ref: '#/components/schemas/injectionInjectedItem'
       required:
         - main
     compositionInjectionBehavior:
@@ -11533,18 +11662,18 @@ components:
       type: object
       additionalProperties: false
       properties:
-        objectID:
-          $ref: '#/components/schemas/compositionObjectID'
+        behavior:
+          $ref: '#/components/schemas/compositionBehavior'
         name:
           type: string
           description: Composition name.
           example: my lovely crafted composition
+        objectID:
+          $ref: '#/components/schemas/compositionObjectID'
         description:
           type: string
           description: Composition description.
           example: my lovely crafted composition that is used for X purpose
-        behavior:
-          $ref: '#/components/schemas/compositionBehavior'
         sortingStrategy:
           $ref: '#/components/schemas/sortingStrategy'
       required:
@@ -11555,11 +11684,19 @@ components:
       type: object
       additionalProperties: false
       properties:
+        hitsPerPage:
+          type: integer
+          description: Number of items per page.
+          example: 20
         items:
           type: array
           description: All compositions in your Algolia application.
           items:
             $ref: '#/components/schemas/composition'
+        nbHits:
+          type: integer
+          description: Number of items.
+          example: 200
         nbPages:
           type: integer
           description: Number of pages.
@@ -11568,14 +11705,6 @@ components:
           type: integer
           description: Current page.
           example: 0
-        hitsPerPage:
-          type: integer
-          description: Number of items per page.
-          example: 20
-        nbHits:
-          type: integer
-          description: Number of items.
-          example: 200
       required:
         - hitsPerPage
         - items
@@ -11658,21 +11787,6 @@ components:
       type: object
       additionalProperties: false
       properties:
-        pattern:
-          type: string
-          description: >
-            Query pattern that triggers the rule.
-
-
-            You can use either a literal string, or a special pattern
-            `{facet:ATTRIBUTE}`, where `ATTRIBUTE` is a facet name.
-
-            The rule is triggered if the query matches the literal string or a
-            value of the specified facet.
-
-            For example, with `pattern: {facet:genre}`, the rule is triggered
-            when users search for a genre, such as "comedy".
-          example: '{facet:genre}'
         anchoring:
           $ref: '#/components/schemas/anchoring'
         context:
@@ -11689,6 +11803,21 @@ components:
             You can use `filters` on its own or combine it with the `pattern`
             parameter.
           example: genre:comedy
+        pattern:
+          type: string
+          description: >
+            Query pattern that triggers the rule.
+
+
+            You can use either a literal string, or a special pattern
+            `{facet:ATTRIBUTE}`, where `ATTRIBUTE` is a facet name.
+
+            The rule is triggered if the query matches the literal string or a
+            value of the specified facet.
+
+            For example, with `pattern: {facet:genre}`, the rule is triggered
+            when users search for a genre, such as "comedy".
+          example: '{facet:genre}'
         sortBy:
           type: string
           description: >
@@ -11721,15 +11850,6 @@ components:
       type: object
       additionalProperties: false
       properties:
-        objectID:
-          $ref: '#/components/schemas/compositionRuleObjectID'
-        conditions:
-          type: array
-          minItems: 0
-          maxItems: 25
-          description: Conditions that trigger a composition rule.
-          items:
-            $ref: '#/components/schemas/condition'
         consequence:
           title: compositionRuleConsequence
           type: object
@@ -11740,6 +11860,15 @@ components:
               $ref: '#/components/schemas/compositionBehavior'
           required:
             - behavior
+        objectID:
+          $ref: '#/components/schemas/compositionRuleObjectID'
+        conditions:
+          type: array
+          minItems: 0
+          maxItems: 25
+          description: Conditions that trigger a composition rule.
+          items:
+            $ref: '#/components/schemas/condition'
         description:
           type: string
           description: >-
@@ -11750,11 +11879,6 @@ components:
           type: boolean
           default: true
           description: Whether the rule is active.
-        validity:
-          type: array
-          description: Time periods when the rule is active.
-          items:
-            $ref: '#/components/schemas/timeRange'
         tags:
           type: array
           description: A list of tags.
@@ -11762,6 +11886,11 @@ components:
             type: string
           example:
             - conditional
+        validity:
+          type: array
+          description: Time periods when the rule is active.
+          items:
+            $ref: '#/components/schemas/timeRange'
       required:
         - objectID
         - consequence

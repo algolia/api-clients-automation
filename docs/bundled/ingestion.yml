@@ -1040,7 +1040,6 @@ paths:
         write: 180000
       parameters:
         - $ref: '#/components/parameters/IndexName'
-        - $ref: '#/components/parameters/watch'
         - name: referenceIndexName
           in: query
           description: >-
@@ -1050,6 +1049,7 @@ paths:
           required: false
           schema:
             type: string
+        - $ref: '#/components/parameters/watch'
       requestBody:
         content:
           application/json:
@@ -1434,11 +1434,11 @@ paths:
         - editSettings
       parameters:
         - $ref: '#/components/parameters/itemsPerPage'
+        - $ref: '#/components/parameters/order'
         - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/type'
         - $ref: '#/components/parameters/platform'
         - $ref: '#/components/parameters/sort'
-        - $ref: '#/components/parameters/order'
+        - $ref: '#/components/parameters/type'
       responses:
         '200':
           description: OK
@@ -3027,13 +3027,13 @@ paths:
         - deleteIndex
         - editSettings
       parameters:
-        - $ref: '#/components/parameters/itemsPerPage'
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/destinationParameters_type'
         - $ref: '#/components/parameters/authenticationID'
-        - $ref: '#/components/parameters/transformationID'
-        - $ref: '#/components/parameters/destinationParameters_sort'
+        - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/order'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/destinationParameters_sort'
+        - $ref: '#/components/parameters/transformationID'
+        - $ref: '#/components/parameters/destinationParameters_type'
       responses:
         '200':
           description: OK
@@ -4635,12 +4635,12 @@ paths:
         - deleteIndex
         - editSettings
       parameters:
-        - $ref: '#/components/parameters/itemsPerPage'
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/sourceParameters_type'
         - $ref: '#/components/parameters/sourceParameters_authenticationID'
-        - $ref: '#/components/parameters/sourceParameters_sort'
+        - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/order'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/sourceParameters_sort'
+        - $ref: '#/components/parameters/sourceParameters_type'
       responses:
         '200':
           description: OK
@@ -4651,12 +4651,12 @@ paths:
                 type: object
                 additionalProperties: false
                 properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
                   sources:
                     type: array
                     items:
                       $ref: '#/components/schemas/Source'
-                  pagination:
-                    $ref: '#/components/schemas/Pagination'
                 required:
                   - sources
                   - pagination
@@ -5236,7 +5236,7 @@ paths:
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
               --data '
             {
-              "type": "bigcommerce",
+              "type": "algoliaIndex",
               "name": "lorem",
               "input": {
                 "storeKeys": [
@@ -5631,7 +5631,7 @@ paths:
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
               --data '
             {
-              "type": "bigcommerce",
+              "type": "algoliaIndex",
               "name": "lorem",
               "input": {
                 "storeKeys": [
@@ -7292,6 +7292,8 @@ paths:
                 title: runSourceResponse
                 type: object
                 properties:
+                  createdAt:
+                    $ref: '#/components/schemas/CreatedAt'
                   taskWithRunID:
                     type: object
                     description: >-
@@ -7299,8 +7301,6 @@ paths:
                       runID.
                     additionalProperties:
                       type: string
-                  createdAt:
-                    $ref: '#/components/schemas/CreatedAt'
                 required:
                   - taskWithRunID
                   - createdAt
@@ -7617,17 +7617,17 @@ paths:
         - deleteIndex
         - editSettings
       parameters:
-        - $ref: '#/components/parameters/itemsPerPage'
-        - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/action'
+        - $ref: '#/components/parameters/destinationID'
         - $ref: '#/components/parameters/enabled'
+        - $ref: '#/components/parameters/itemsPerPage'
+        - $ref: '#/components/parameters/order'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/taskParameters_sort'
         - $ref: '#/components/parameters/sourceID'
         - $ref: '#/components/parameters/sourceType'
-        - $ref: '#/components/parameters/destinationID'
         - $ref: '#/components/parameters/triggerType'
         - $ref: '#/components/parameters/withEmailNotifications'
-        - $ref: '#/components/parameters/taskParameters_sort'
-        - $ref: '#/components/parameters/order'
       responses:
         '200':
           description: OK
@@ -7639,12 +7639,12 @@ paths:
                 description: Configured tasks and pagination information.
                 additionalProperties: false
                 properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
                   tasks:
                     type: array
                     items:
                       $ref: '#/components/schemas/Task'
-                  pagination:
-                    $ref: '#/components/schemas/Pagination'
                 required:
                   - tasks
                   - pagination
@@ -10711,15 +10711,15 @@ paths:
         - deleteIndex
         - editSettings
       parameters:
-        - $ref: '#/components/parameters/itemsPerPage'
-        - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/action'
-        - $ref: '#/components/parameters/enabled'
-        - $ref: '#/components/parameters/sourceID'
         - $ref: '#/components/parameters/destinationID'
-        - $ref: '#/components/parameters/triggerType'
-        - $ref: '#/components/parameters/taskParameters_sort'
+        - $ref: '#/components/parameters/enabled'
+        - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/order'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/taskParameters_sort'
+        - $ref: '#/components/parameters/sourceID'
+        - $ref: '#/components/parameters/triggerType'
       responses:
         '200':
           description: OK
@@ -10731,12 +10731,12 @@ paths:
                 description: Configured tasks and pagination information.
                 additionalProperties: false
                 properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
                   tasks:
                     type: array
                     items:
                       $ref: '#/components/schemas/TaskV1'
-                  pagination:
-                    $ref: '#/components/schemas/Pagination'
                 required:
                   - tasks
                   - pagination
@@ -13130,9 +13130,9 @@ paths:
         - editSettings
       parameters:
         - $ref: '#/components/parameters/itemsPerPage'
+        - $ref: '#/components/parameters/order'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/transformationParameters_sort'
-        - $ref: '#/components/parameters/order'
         - $ref: '#/components/parameters/transformationParameters_type'
       responses:
         '200':
@@ -13145,12 +13145,12 @@ paths:
                 description: Configured transformations and pagination information.
                 additionalProperties: false
                 properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
                   transformations:
                     type: array
                     items:
                       $ref: '#/components/schemas/Transformation'
-                  pagination:
-                    $ref: '#/components/schemas/Pagination'
                 required:
                   - transformations
                   - pagination
@@ -15449,20 +15449,6 @@ paths:
         - deleteIndex
         - editSettings
       parameters:
-        - $ref: '#/components/parameters/itemsPerPage'
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/runStatus'
-        - $ref: '#/components/parameters/runType'
-        - $ref: '#/components/parameters/taskID'
-        - $ref: '#/components/parameters/runSort'
-        - $ref: '#/components/parameters/order'
-        - name: startDate
-          in: query
-          description: >-
-            Date and time for the earliest run to retrieve, in RFC 3339 format.
-            By default, the current day minus seven days is used.
-          schema:
-            type: string
         - name: endDate
           in: query
           description: >-
@@ -15470,6 +15456,20 @@ paths:
             default, the current day is used.
           schema:
             type: string
+        - $ref: '#/components/parameters/itemsPerPage'
+        - $ref: '#/components/parameters/order'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/runSort'
+        - name: startDate
+          in: query
+          description: >-
+            Date and time for the earliest run to retrieve, in RFC 3339 format.
+            By default, the current day minus seven days is used.
+          schema:
+            type: string
+        - $ref: '#/components/parameters/runStatus'
+        - $ref: '#/components/parameters/taskID'
+        - $ref: '#/components/parameters/runType'
       responses:
         '200':
           description: OK
@@ -15933,19 +15933,6 @@ paths:
         - editSettings
       parameters:
         - $ref: '#/components/parameters/pathRunID'
-        - $ref: '#/components/parameters/itemsPerPage'
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/eventStatus'
-        - $ref: '#/components/parameters/eventType'
-        - $ref: '#/components/parameters/eventSort'
-        - $ref: '#/components/parameters/order'
-        - name: startDate
-          in: query
-          description: >-
-            Date and time in RFC 3339 format for the earliest events to
-            retrieve. By default, the current time minus three hours is used.
-          schema:
-            type: string
         - name: endDate
           in: query
           description: >-
@@ -15953,6 +15940,19 @@ paths:
             By default, the current time is used.
           schema:
             type: string
+        - $ref: '#/components/parameters/itemsPerPage'
+        - $ref: '#/components/parameters/order'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/eventSort'
+        - name: startDate
+          in: query
+          description: >-
+            Date and time in RFC 3339 format for the earliest events to
+            retrieve. By default, the current time minus three hours is used.
+          schema:
+            type: string
+        - $ref: '#/components/parameters/eventStatus'
+        - $ref: '#/components/parameters/eventType'
       responses:
         '200':
           description: OK
@@ -16209,8 +16209,8 @@ paths:
         - deleteIndex
         - editSettings
       parameters:
-        - $ref: '#/components/parameters/pathRunID'
         - $ref: '#/components/parameters/pathEventID'
+        - $ref: '#/components/parameters/pathRunID'
       responses:
         '200':
           description: OK
@@ -16921,27 +16921,27 @@ components:
       description: An event describe a step of the task execution flow.
       additionalProperties: false
       properties:
-        eventID:
-          $ref: '#/components/schemas/EventID'
-        runID:
-          $ref: '#/components/schemas/RunID'
-        status:
-          $ref: '#/components/schemas/EventStatus'
-        type:
-          $ref: '#/components/schemas/EventType'
         batchSize:
           type: integer
           description: The extracted record batch size.
           example: 10
           minimum: 0
           multipleOf: 1
+        eventID:
+          $ref: '#/components/schemas/EventID'
+        publishedAt:
+          $ref: '#/components/schemas/PublishedAt'
+        runID:
+          $ref: '#/components/schemas/RunID'
+        status:
+          $ref: '#/components/schemas/EventStatus'
+        type:
+          $ref: '#/components/schemas/EventType'
         data:
           oneOf:
             - type: object
               additionalProperties: true
             - type: 'null'
-        publishedAt:
-          $ref: '#/components/schemas/PublishedAt'
       required:
         - eventID
         - runID
@@ -16958,8 +16958,8 @@ components:
       properties:
         runID:
           $ref: '#/components/schemas/RunID'
-        eventID:
-          $ref: '#/components/schemas/EventID'
+        createdAt:
+          $ref: '#/components/schemas/CreatedAt'
         data:
           type: array
           description: >
@@ -16969,6 +16969,8 @@ components:
             include the sampled data of the source.
           items:
             type: object
+        eventID:
+          $ref: '#/components/schemas/EventID'
         events:
           description: >-
             in case of error, observability events will be added to the
@@ -16981,8 +16983,6 @@ components:
             a message describing the outcome of the operation that has been ran
             (push, discover or validate) run.
           type: string
-        createdAt:
-          $ref: '#/components/schemas/CreatedAt'
       required:
         - runID
     itemsPerPage:
@@ -17083,12 +17083,12 @@ components:
       description: Credentials for authenticating with user name and password.
       additionalProperties: false
       properties:
-        username:
-          type: string
-          description: Username.
         password:
           type: string
           description: Password. This field is `null` in the API response.
+        username:
+          type: string
+          description: Username.
       x-discriminator-fields:
         - username
     AuthAPIKeyPartial:
@@ -17106,9 +17106,6 @@ components:
       description: Credentials for authenticating with OAuth 2.0.
       additionalProperties: false
       properties:
-        url:
-          type: string
-          description: URL for the OAuth endpoint.
         client_id:
           type: string
           description: Client ID.
@@ -17128,6 +17125,9 @@ components:
           type: string
           default: ''
           description: OAuth scope.
+        url:
+          type: string
+          description: URL for the OAuth endpoint.
       x-discriminator-fields:
         - url
     AuthAlgoliaPartial:
@@ -17135,9 +17135,6 @@ components:
       description: Credentials for authenticating with Algolia.
       additionalProperties: false
       properties:
-        appID:
-          type: string
-          description: Algolia application ID.
         apiKey:
           type: string
           description: >
@@ -17145,19 +17142,22 @@ components:
             `settings`, `editSettings`, `listIndexes`, `deleteIndex`.
 
             This field is `null` in the API response.
+        appID:
+          type: string
+          description: Algolia application ID.
     AuthAlgoliaInsightsPartial:
       type: object
       additionalProperties: false
       description: Credentials for authenticating with the Algolia Insights API.
       properties:
-        appID:
-          type: string
-          description: Algolia application ID.
         apiKey:
           type: string
           description: |
             Algolia API key with the ACL: `search`.
             This field is `null` in the API response.
+        appID:
+          type: string
+          description: Algolia application ID.
     AuthSecrets:
       title: Key:value
       type: object
@@ -17185,20 +17185,20 @@ components:
       properties:
         authenticationID:
           $ref: '#/components/schemas/authenticationID'
-        type:
-          $ref: '#/components/schemas/AuthenticationType'
-        name:
-          $ref: '#/components/schemas/name'
-        platform:
-          $ref: '#/components/schemas/Platform'
-        owner:
-          $ref: '#/components/schemas/owner'
-        input:
-          $ref: '#/components/schemas/AuthInputPartial'
         createdAt:
           $ref: '#/components/schemas/CreatedAt'
+        input:
+          $ref: '#/components/schemas/AuthInputPartial'
+        name:
+          $ref: '#/components/schemas/name'
+        type:
+          $ref: '#/components/schemas/AuthenticationType'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
+        owner:
+          $ref: '#/components/schemas/owner'
+        platform:
+          $ref: '#/components/schemas/Platform'
       required:
         - authenticationID
         - type
@@ -17211,18 +17211,18 @@ components:
       description: Paginated API response.
       additionalProperties: false
       properties:
+        itemsPerPage:
+          $ref: '#/components/schemas/itemsPerPage'
+        nbItems:
+          type: integer
+          minimum: 0
+          description: Number of items in the API response.
         nbPages:
           type: integer
           minimum: 1
           description: Number of pages in the API response.
         page:
           $ref: '#/components/schemas/page'
-        nbItems:
-          type: integer
-          minimum: 0
-          description: Number of items in the API response.
-        itemsPerPage:
-          $ref: '#/components/schemas/itemsPerPage'
       required:
         - nbPages
         - page
@@ -17257,12 +17257,12 @@ components:
       description: Credentials for authenticating with user name and password.
       additionalProperties: false
       properties:
-        username:
-          type: string
-          description: Username.
         password:
           type: string
           description: Password. This field is `null` in the API response.
+        username:
+          type: string
+          description: Username.
       required:
         - username
         - password
@@ -17323,9 +17323,6 @@ components:
       additionalProperties: false
       description: Credentials for authenticating with Algolia.
       properties:
-        appID:
-          type: string
-          description: Algolia application ID.
         apiKey:
           type: string
           description: >
@@ -17333,6 +17330,9 @@ components:
             `settings`, `editSettings`, `listIndexes`, `deleteIndex`.
 
             This field is `null` in the API response.
+        appID:
+          type: string
+          description: Algolia application ID.
       required:
         - appID
         - apiKey
@@ -17342,14 +17342,14 @@ components:
       additionalProperties: false
       description: Credentials for authenticating with the Algolia Insights API.
       properties:
-        appID:
-          type: string
-          description: Algolia application ID.
         apiKey:
           type: string
           description: |
             Algolia API key with the ACL: `search`.
             This field is `null` in the API response.
+        appID:
+          type: string
+          description: Algolia application ID.
       required:
         - appID
         - apiKey
@@ -17367,14 +17367,14 @@ components:
       description: Request body for creating a new authentication resource.
       additionalProperties: false
       properties:
-        type:
-          $ref: '#/components/schemas/AuthenticationType'
-        name:
-          $ref: '#/components/schemas/name'
-        platform:
-          $ref: '#/components/schemas/Platform'
         input:
           $ref: '#/components/schemas/AuthInput'
+        name:
+          $ref: '#/components/schemas/name'
+        type:
+          $ref: '#/components/schemas/AuthenticationType'
+        platform:
+          $ref: '#/components/schemas/Platform'
       required:
         - type
         - name
@@ -17386,10 +17386,10 @@ components:
       properties:
         authenticationID:
           $ref: '#/components/schemas/authenticationID'
-        name:
-          $ref: '#/components/schemas/name'
         createdAt:
           $ref: '#/components/schemas/CreatedAt'
+        name:
+          $ref: '#/components/schemas/name'
       required:
         - authenticationID
         - name
@@ -17418,10 +17418,10 @@ components:
       description: Request body for updating an authentication resource.
       additionalProperties: false
       properties:
-        name:
-          $ref: '#/components/schemas/name'
         input:
           $ref: '#/components/schemas/AuthInputPartial'
+        name:
+          $ref: '#/components/schemas/name'
     AuthenticationUpdateResponse:
       type: object
       additionalProperties: false
@@ -17503,10 +17503,10 @@ components:
         indexName:
           type: string
           description: Algolia index name (case-sensitive).
-        recordType:
-          $ref: '#/components/schemas/RecordType'
         attributesToExclude:
           $ref: '#/components/schemas/AttributesToExclude'
+        recordType:
+          $ref: '#/components/schemas/RecordType'
       required:
         - indexName
     transformationIDs:
@@ -17518,22 +17518,22 @@ components:
       description: Destinations are Algolia resources like indices or event streams.
       additionalProperties: false
       properties:
-        destinationID:
-          $ref: '#/components/schemas/destinationID'
-        type:
-          $ref: '#/components/schemas/DestinationType'
-        name:
-          $ref: '#/components/schemas/name'
-        owner:
-          $ref: '#/components/schemas/owner'
-        input:
-          $ref: '#/components/schemas/DestinationInput'
         createdAt:
           $ref: '#/components/schemas/CreatedAt'
+        destinationID:
+          $ref: '#/components/schemas/destinationID'
+        input:
+          $ref: '#/components/schemas/DestinationInput'
+        name:
+          $ref: '#/components/schemas/name'
+        type:
+          $ref: '#/components/schemas/DestinationType'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
         authenticationID:
           $ref: '#/components/schemas/authenticationID'
+        owner:
+          $ref: '#/components/schemas/owner'
         transformationIDs:
           $ref: '#/components/schemas/transformationIDs'
       required:
@@ -17548,12 +17548,12 @@ components:
       additionalProperties: false
       description: API request body for creating a new destination.
       properties:
-        type:
-          $ref: '#/components/schemas/DestinationType'
-        name:
-          $ref: '#/components/schemas/name'
         input:
           $ref: '#/components/schemas/DestinationInput'
+        name:
+          $ref: '#/components/schemas/name'
+        type:
+          $ref: '#/components/schemas/DestinationType'
         authenticationID:
           $ref: '#/components/schemas/authenticationID'
         transformationIDs:
@@ -17567,12 +17567,12 @@ components:
       additionalProperties: false
       description: API response for creating a new destination.
       properties:
+        createdAt:
+          $ref: '#/components/schemas/CreatedAt'
         destinationID:
           $ref: '#/components/schemas/destinationID'
         name:
           $ref: '#/components/schemas/name'
-        createdAt:
-          $ref: '#/components/schemas/CreatedAt'
       required:
         - destinationID
         - name
@@ -17593,16 +17593,16 @@ components:
       additionalProperties: false
       description: API request body for updating a destination.
       properties:
-        type:
-          $ref: '#/components/schemas/DestinationType'
-        name:
-          $ref: '#/components/schemas/name'
-        input:
-          $ref: '#/components/schemas/DestinationInput'
         authenticationID:
           $ref: '#/components/schemas/authenticationID'
+        input:
+          $ref: '#/components/schemas/DestinationInput'
+        name:
+          $ref: '#/components/schemas/name'
         transformationIDs:
           $ref: '#/components/schemas/transformationIDs'
+        type:
+          $ref: '#/components/schemas/DestinationType'
     DestinationUpdateResponse:
       type: object
       additionalProperties: false
@@ -17621,6 +17621,7 @@ components:
     SourceType:
       type: string
       enum:
+        - algoliaIndex
         - bigcommerce
         - bigquery
         - commercetools
@@ -17653,6 +17654,13 @@ components:
         For more information, see [Using Custom Types and Custom
         Fields](https://docs.commercetools.com/tutorials/custom-types).
       properties:
+        category:
+          oneOf:
+            - type: array
+              description: Category custom fields.
+              items:
+                type: string
+            - type: 'null'
         inventory:
           oneOf:
             - type: array
@@ -17667,23 +17675,23 @@ components:
               items:
                 type: string
             - type: 'null'
-        category:
-          oneOf:
-            - type: array
-              description: Category custom fields.
-              items:
-                type: string
-            - type: 'null'
     SourceCommercetools:
       type: object
       description: Specific configuration attributes of a `commercetools` source.
       additionalProperties: false
       properties:
-        storeKeys:
-          type: array
-          items:
-            description: Unique and immutable key of the referenced store.
-            type: string
+        projectKey:
+          type: string
+        url:
+          type: string
+        customFields:
+          $ref: '#/components/schemas/CommercetoolsCustomFields'
+        fallbackIsInStockValue:
+          type: boolean
+          default: true
+          description: >
+            Whether a fallback value is stored in the Algolia record if there's
+            no inventory information about the product.
         locales:
           type: array
           description: Locales for your commercetools stores.
@@ -17694,29 +17702,22 @@ components:
               Locale specified as combination of a two-letter language code and
               an optional two-letter country code.
             example: fr-FR
-        url:
-          type: string
-        projectKey:
-          type: string
-        fallbackIsInStockValue:
-          type: boolean
-          default: true
-          description: >
-            Whether a fallback value is stored in the Algolia record if there's
-            no inventory information about the product.
         productQueryPredicate:
           type: string
           description: >
             Predicate to filter out specific products when indexing. For more
             information, see [Query
             Predicate](https://docs.commercetools.com/api/predicates/query).
+        storeKeys:
+          type: array
+          items:
+            description: Unique and immutable key of the referenced store.
+            type: string
         useImagesObjects:
           type: boolean
           description: >
             When set to true, the connector indexes objects with all images
             attributes instead of only the URLs.
-        customFields:
-          $ref: '#/components/schemas/CommercetoolsCustomFields'
       required:
         - url
         - projectKey
@@ -17745,12 +17746,12 @@ components:
       type: object
       additionalProperties: false
       properties:
-        namespace:
-          type: string
-          description: Namespace of the metafield.
         key:
           type: string
           description: Key identifier of the metafield.
+        namespace:
+          type: string
+          description: Namespace of the metafield.
       required:
         - namespace
         - key
@@ -17799,10 +17800,10 @@ components:
         url:
           type: string
           description: URL of the file.
-        uniqueIDColumn:
-          $ref: '#/components/schemas/UniqueIDColumn'
         method:
           $ref: '#/components/schemas/MethodType'
+        uniqueIDColumn:
+          $ref: '#/components/schemas/UniqueIDColumn'
       required:
         - url
     MappingTypeCSV:
@@ -17821,8 +17822,14 @@ components:
         url:
           type: string
           description: URL of the file.
-        uniqueIDColumn:
-          $ref: '#/components/schemas/UniqueIDColumn'
+        delimiter:
+          type: string
+          minLength: 1
+          maxLength: 1
+          default: ','
+          description: >-
+            The character used to split the value on each line, default to a
+            comma (\r, \n, 0xFFFD, and space are forbidden).
         mapping:
           type: object
           description: |
@@ -17832,14 +17839,8 @@ components:
             $ref: '#/components/schemas/MappingTypeCSV'
         method:
           $ref: '#/components/schemas/MethodType'
-        delimiter:
-          type: string
-          minLength: 1
-          maxLength: 1
-          default: ','
-          description: >-
-            The character used to split the value on each line, default to a
-            comma (\r, \n, 0xFFFD, and space are forbidden).
+        uniqueIDColumn:
+          $ref: '#/components/schemas/UniqueIDColumn'
       required:
         - url
     BigQueryDataType:
@@ -17852,12 +17853,15 @@ components:
       description: Specific configuration attributes of a `bigquery` source.
       additionalProperties: false
       properties:
-        projectID:
-          type: string
-          description: Project ID of the BigQuery source.
         datasetID:
           type: string
           description: Dataset ID of the BigQuery source.
+        projectID:
+          type: string
+          description: Project ID of the BigQuery source.
+        customSQLRequest:
+          type: string
+          description: Custom SQL request to extract data from the BigQuery table.
         dataType:
           $ref: '#/components/schemas/BigQueryDataType'
         table:
@@ -17866,9 +17870,6 @@ components:
         tablePrefix:
           type: string
           description: Table prefix for a Google Analytics 4 data export to BigQuery.
-        customSQLRequest:
-          type: string
-          description: Custom SQL request to extract data from the BigQuery table.
         uniqueIDColumn:
           $ref: '#/components/schemas/UniqueIDColumn'
       required:
@@ -17881,12 +17882,12 @@ components:
       description: Specific configuration attributes of a `ga4BigqueryExport` source.
       additionalProperties: false
       properties:
-        projectID:
-          type: string
-          description: GCP project ID that the BigQuery export writes to.
         datasetID:
           type: string
           description: BigQuery dataset ID that the BigQuery export writes to.
+        projectID:
+          type: string
+          description: GCP project ID that the BigQuery export writes to.
         tablePrefix:
           type: string
           description: Prefix of the tables that the BigQuery Export writes to.
@@ -17904,13 +17905,13 @@ components:
       description: Specific configuration attributes of a `docker` source.
       additionalProperties: false
       properties:
+        configuration:
+          type: object
+          description: Configuration of the spec.
         image:
           type: string
           description: Name of the connector.
           example: zendesk
-        configuration:
-          type: object
-          description: Configuration of the spec.
       required:
         - image
         - configuration
@@ -17941,6 +17942,25 @@ components:
       allOf:
         - $ref: '#/components/schemas/SourceUpdateShopify'
         - $ref: '#/components/schemas/sourceShopifyBase'
+    SourceAlgoliaIndex:
+      type: object
+      description: Specific configuration attributes of an `algoliaIndex` source.
+      additionalProperties: false
+      properties:
+        indexName:
+          type: string
+          description: Name of the Algolia index to read records from.
+        filters:
+          type: string
+          description: >
+            SQL-like filter expression applied while browsing the source index.
+
+            See
+            [filters](https://www.algolia.com/doc/api-reference/api-parameters/filters/).
+      required:
+        - indexName
+      x-discriminator-fields:
+        - indexName
     SourceInput:
       oneOf:
         - $ref: '#/components/schemas/SourceCommercetools'
@@ -17951,26 +17971,27 @@ components:
         - $ref: '#/components/schemas/SourceGA4BigQueryExport'
         - $ref: '#/components/schemas/SourceDocker'
         - $ref: '#/components/schemas/SourceShopify'
+        - $ref: '#/components/schemas/SourceAlgoliaIndex'
     Source:
       type: object
       additionalProperties: false
       properties:
+        createdAt:
+          $ref: '#/components/schemas/CreatedAt'
+        name:
+          type: string
         sourceID:
           $ref: '#/components/schemas/sourceID'
         type:
           $ref: '#/components/schemas/SourceType'
-        name:
-          type: string
-        owner:
-          $ref: '#/components/schemas/owner'
-        input:
-          $ref: '#/components/schemas/SourceInput'
-        authenticationID:
-          $ref: '#/components/schemas/authenticationID'
-        createdAt:
-          $ref: '#/components/schemas/CreatedAt'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
+        authenticationID:
+          $ref: '#/components/schemas/authenticationID'
+        input:
+          $ref: '#/components/schemas/SourceInput'
+        owner:
+          $ref: '#/components/schemas/owner'
       required:
         - sourceID
         - type
@@ -17981,15 +18002,15 @@ components:
       type: object
       additionalProperties: false
       properties:
-        type:
-          $ref: '#/components/schemas/SourceType'
         name:
           type: string
           description: Descriptive name of the source.
-        input:
-          $ref: '#/components/schemas/SourceInput'
+        type:
+          $ref: '#/components/schemas/SourceType'
         authenticationID:
           $ref: '#/components/schemas/authenticationID'
+        input:
+          $ref: '#/components/schemas/SourceInput'
       required:
         - type
         - name
@@ -17997,13 +18018,13 @@ components:
       type: object
       additionalProperties: false
       properties:
-        sourceID:
-          $ref: '#/components/schemas/sourceID'
+        createdAt:
+          $ref: '#/components/schemas/CreatedAt'
         name:
           type: string
           description: Descriptive name of the source.
-        createdAt:
-          $ref: '#/components/schemas/CreatedAt'
+        sourceID:
+          $ref: '#/components/schemas/sourceID'
       required:
         - sourceID
         - name
@@ -18023,11 +18044,13 @@ components:
       description: Specific configuration attributes of a `commercetools` source.
       additionalProperties: false
       properties:
-        storeKeys:
-          type: array
-          items:
-            description: Unique and immutable key of the referenced store.
-            type: string
+        customFields:
+          $ref: '#/components/schemas/CommercetoolsCustomFields'
+        fallbackIsInStockValue:
+          type: boolean
+          description: >
+            Whether a fallback value is stored in the Algolia record if there's
+            no inventory information about the product.
         locales:
           type: array
           description: Locales for your commercetools stores.
@@ -18038,26 +18061,24 @@ components:
               Locale specified as combination of a two-letter language code and
               an optional two-letter country code.
             example: fr-FR
-        url:
-          type: string
-        fallbackIsInStockValue:
-          type: boolean
-          description: >
-            Whether a fallback value is stored in the Algolia record if there's
-            no inventory information about the product.
         productQueryPredicate:
           type: string
           description: >
             Predicate to filter out specific products when indexing. For more
             information, see [Query
             Predicate](https://docs.commercetools.com/api/predicates/query).
+        storeKeys:
+          type: array
+          items:
+            description: Unique and immutable key of the referenced store.
+            type: string
+        url:
+          type: string
         useImagesObjects:
           type: boolean
           description: >
             When set to true, the connector indexes objects with all images
             attributes instead of only the URLs.
-        customFields:
-          $ref: '#/components/schemas/CommercetoolsCustomFields'
     SourceUpdateDocker:
       type: object
       description: Specific configuration attributes of a `docker` source.
@@ -18070,6 +18091,21 @@ components:
         - configuration
       x-discriminator-fields:
         - configuration
+    SourceUpdateAlgoliaIndex:
+      type: object
+      description: Specific configuration attributes of an `algoliaIndex` source.
+      additionalProperties: false
+      properties:
+        filters:
+          type: string
+          description: >
+            SQL-like filter expression applied while browsing the source index.
+
+            See
+            [filters](https://www.algolia.com/doc/api-reference/api-parameters/filters/).
+        indexName:
+          type: string
+          description: Name of the Algolia index to read records from.
     SourceUpdateInput:
       oneOf:
         - $ref: '#/components/schemas/SourceUpdateCommercetools'
@@ -18079,26 +18115,27 @@ components:
         - $ref: '#/components/schemas/SourceGA4BigQueryExport'
         - $ref: '#/components/schemas/SourceUpdateDocker'
         - $ref: '#/components/schemas/SourceUpdateShopify'
+        - $ref: '#/components/schemas/SourceUpdateAlgoliaIndex'
     SourceUpdate:
       type: object
       additionalProperties: false
       properties:
+        authenticationID:
+          $ref: '#/components/schemas/authenticationID'
+        input:
+          $ref: '#/components/schemas/SourceUpdateInput'
         name:
           type: string
           description: Descriptive name of the source.
-        input:
-          $ref: '#/components/schemas/SourceUpdateInput'
-        authenticationID:
-          $ref: '#/components/schemas/authenticationID'
     SourceUpdateResponse:
       type: object
       additionalProperties: false
       properties:
-        sourceID:
-          $ref: '#/components/schemas/sourceID'
         name:
           type: string
           description: Descriptive name of the source.
+        sourceID:
+          $ref: '#/components/schemas/sourceID'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
       required:
@@ -18115,16 +18152,6 @@ components:
       type: object
       additionalProperties: false
       properties:
-        indexToInclude:
-          type: array
-          description: List of index names to include in reindex/update.
-          items:
-            type: string
-        indexToExclude:
-          type: array
-          description: List of index names to exclude in reindex/update.
-          items:
-            type: string
         entityIDs:
           type: array
           items:
@@ -18132,6 +18159,16 @@ components:
           description: List of entityIDs to update.
         entityType:
           $ref: '#/components/schemas/EntityType'
+        indexToExclude:
+          type: array
+          description: List of index names to exclude in reindex/update.
+          items:
+            type: string
+        indexToInclude:
+          type: array
+          description: List of index names to include in reindex/update.
+          items:
+            type: string
         runMetadata:
           type: object
           additionalProperties: true
@@ -18219,22 +18256,22 @@ components:
         Describes how a destination object should be resolved by means of
         applying a set of directives.
       properties:
-        id:
-          description: ID to uniquely identify this action.
-          type: string
         enabled:
           description: Whether this action has any effect.
           type: boolean
+        fieldDirectives:
+          type: array
+          items:
+            $ref: '#/components/schemas/MappingFieldDirective'
         trigger:
           description: >-
             Condition which must be satisfied to apply the action. If this
             evaluates to false, the action is not applied, and the process
             attempts to apply the next action, if any.
           type: string
-        fieldDirectives:
-          type: array
-          items:
-            $ref: '#/components/schemas/MappingFieldDirective'
+        id:
+          description: ID to uniquely identify this action.
+          type: string
       required:
         - enabled
         - trigger
@@ -18244,12 +18281,12 @@ components:
       additionalProperties: false
       description: Transformations to apply to the source, serialized as a JSON string.
       properties:
-        format:
-          $ref: '#/components/schemas/MappingFormatSchema'
         actions:
           type: array
           items:
             $ref: '#/components/schemas/MappingKitAction'
+        format:
+          $ref: '#/components/schemas/MappingFormatSchema'
       required:
         - format
         - actions
@@ -18282,13 +18319,13 @@ components:
         name:
           type: string
           description: The name of the stream to fetch the data from (e.g. table name).
+        syncMode:
+          $ref: '#/components/schemas/DockerStreamsSyncMode'
         properties:
           type: array
           description: The properties of the stream to select (e.g. column).
           items:
             type: string
-        syncMode:
-          $ref: '#/components/schemas/DockerStreamsSyncMode'
       required:
         - name
         - syncMode
@@ -18310,9 +18347,9 @@ components:
       additionalProperties: false
       description: Represents a metafield in Shopify.
       properties:
-        namespace:
-          type: string
         key:
+          type: string
+        namespace:
           type: string
         value:
           type: string
@@ -18349,12 +18386,12 @@ components:
         Represents the required elements of the task input when using a
         `shopify` source.
       properties:
+        market:
+          $ref: '#/components/schemas/ShopifyMarket'
         metafields:
           type: array
           items:
             $ref: '#/components/schemas/ShopifyMetafield'
-        market:
-          $ref: '#/components/schemas/ShopifyMarket'
       required:
         - metafields
         - market
@@ -18407,42 +18444,42 @@ components:
       type: object
       additionalProperties: false
       properties:
-        taskID:
-          $ref: '#/components/schemas/taskID'
-        sourceID:
-          $ref: '#/components/schemas/sourceID'
+        createdAt:
+          $ref: '#/components/schemas/CreatedAt'
         destinationID:
           $ref: '#/components/schemas/destinationID'
-        cron:
-          $ref: '#/components/schemas/Cron'
-        lastRun:
-          $ref: '#/components/schemas/LastRun'
-        nextRun:
-          $ref: '#/components/schemas/NextRun'
-        owner:
-          $ref: '#/components/schemas/owner'
-        input:
-          $ref: '#/components/schemas/TaskInput'
         enabled:
           type: boolean
           default: true
           description: Whether the task is enabled.
-        failureThreshold:
-          $ref: '#/components/schemas/failureThreshold'
-        action:
-          $ref: '#/components/schemas/ActionType'
-        subscriptionAction:
-          $ref: '#/components/schemas/ActionType'
-        cursor:
-          $ref: '#/components/schemas/cursor'
-        notifications:
-          $ref: '#/components/schemas/Notifications'
-        policies:
-          $ref: '#/components/schemas/Policies'
-        createdAt:
-          $ref: '#/components/schemas/CreatedAt'
+        sourceID:
+          $ref: '#/components/schemas/sourceID'
+        taskID:
+          $ref: '#/components/schemas/taskID'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
+        action:
+          $ref: '#/components/schemas/ActionType'
+        cron:
+          $ref: '#/components/schemas/Cron'
+        cursor:
+          $ref: '#/components/schemas/cursor'
+        failureThreshold:
+          $ref: '#/components/schemas/failureThreshold'
+        input:
+          $ref: '#/components/schemas/TaskInput'
+        lastRun:
+          $ref: '#/components/schemas/LastRun'
+        nextRun:
+          $ref: '#/components/schemas/NextRun'
+        notifications:
+          $ref: '#/components/schemas/Notifications'
+        owner:
+          $ref: '#/components/schemas/owner'
+        policies:
+          $ref: '#/components/schemas/Policies'
+        subscriptionAction:
+          $ref: '#/components/schemas/ActionType'
       required:
         - taskID
         - sourceID
@@ -18455,16 +18492,16 @@ components:
       additionalProperties: false
       description: API request body for creating a task.
       properties:
-        sourceID:
-          $ref: '#/components/schemas/sourceID'
-        destinationID:
-          $ref: '#/components/schemas/destinationID'
         action:
           $ref: '#/components/schemas/ActionType'
-        subscriptionAction:
-          $ref: '#/components/schemas/ActionType'
+        destinationID:
+          $ref: '#/components/schemas/destinationID'
+        sourceID:
+          $ref: '#/components/schemas/sourceID'
         cron:
           $ref: '#/components/schemas/Cron'
+        cursor:
+          $ref: '#/components/schemas/cursor'
         enabled:
           type: boolean
           description: Whether the task is enabled.
@@ -18472,12 +18509,12 @@ components:
           $ref: '#/components/schemas/failureThreshold'
         input:
           $ref: '#/components/schemas/TaskInput'
-        cursor:
-          $ref: '#/components/schemas/cursor'
         notifications:
           $ref: '#/components/schemas/Notifications'
         policies:
           $ref: '#/components/schemas/Policies'
+        subscriptionAction:
+          $ref: '#/components/schemas/ActionType'
       required:
         - sourceID
         - destinationID
@@ -18487,10 +18524,10 @@ components:
       additionalProperties: false
       description: API response for creating a task.
       properties:
-        taskID:
-          $ref: '#/components/schemas/taskID'
         createdAt:
           $ref: '#/components/schemas/CreatedAt'
+        taskID:
+          $ref: '#/components/schemas/taskID'
       required:
         - taskID
         - createdAt
@@ -18509,14 +18546,14 @@ components:
       additionalProperties: false
       description: API request body for updating a task.
       properties:
-        destinationID:
-          $ref: '#/components/schemas/destinationID'
         action:
           $ref: '#/components/schemas/ActionType'
-        subscriptionAction:
-          $ref: '#/components/schemas/ActionType'
+        destinationID:
+          $ref: '#/components/schemas/destinationID'
         cron:
           $ref: '#/components/schemas/Cron'
+        cursor:
+          $ref: '#/components/schemas/cursor'
         enabled:
           type: boolean
           description: Whether the task is enabled.
@@ -18524,12 +18561,12 @@ components:
           $ref: '#/components/schemas/failureThreshold'
         input:
           $ref: '#/components/schemas/TaskInput'
-        cursor:
-          $ref: '#/components/schemas/cursor'
         notifications:
           $ref: '#/components/schemas/Notifications'
         policies:
           $ref: '#/components/schemas/Policies'
+        subscriptionAction:
+          $ref: '#/components/schemas/ActionType'
       required:
         - destinationID
         - action
@@ -18550,23 +18587,23 @@ components:
       additionalProperties: false
       description: API request body for partially updating a task.
       properties:
-        destinationID:
-          $ref: '#/components/schemas/destinationID'
         cron:
           $ref: '#/components/schemas/Cron'
-        input:
-          $ref: '#/components/schemas/TaskInput'
+        destinationID:
+          $ref: '#/components/schemas/destinationID'
         enabled:
           type: boolean
           description: Whether the task is enabled.
-        subscriptionAction:
-          $ref: '#/components/schemas/ActionType'
         failureThreshold:
           $ref: '#/components/schemas/failureThreshold'
+        input:
+          $ref: '#/components/schemas/TaskInput'
         notifications:
           $ref: '#/components/schemas/Notifications'
         policies:
           $ref: '#/components/schemas/Policies'
+        subscriptionAction:
+          $ref: '#/components/schemas/ActionType'
     RunTaskPayload:
       type: object
       additionalProperties: false
@@ -18580,10 +18617,10 @@ components:
       additionalProperties: false
       description: API response for running a task.
       properties:
-        runID:
-          $ref: '#/components/schemas/RunID'
         createdAt:
           $ref: '#/components/schemas/CreatedAt'
+        runID:
+          $ref: '#/components/schemas/RunID'
       required:
         - runID
         - createdAt
@@ -18613,14 +18650,14 @@ components:
       additionalProperties: false
       description: Trigger information for scheduled tasks.
       properties:
-        type:
-          $ref: '#/components/schemas/ScheduleTriggerType'
         cron:
           $ref: '#/components/schemas/Cron'
-        lastRun:
-          $ref: '#/components/schemas/LastRun'
         nextRun:
           $ref: '#/components/schemas/NextRun'
+        type:
+          $ref: '#/components/schemas/ScheduleTriggerType'
+        lastRun:
+          $ref: '#/components/schemas/LastRun'
       required:
         - type
         - cron
@@ -18668,34 +18705,34 @@ components:
         The V1 task object. Use methods and types that don't contain the V1
         suffix.
       properties:
-        taskID:
-          $ref: '#/components/schemas/taskID'
-        sourceID:
-          $ref: '#/components/schemas/sourceID'
+        createdAt:
+          $ref: '#/components/schemas/CreatedAt'
         destinationID:
           $ref: '#/components/schemas/destinationID'
-        trigger:
-          $ref: '#/components/schemas/Trigger'
-        input:
-          $ref: '#/components/schemas/TaskInput'
         enabled:
           type: boolean
           default: true
           description: Whether the task is enabled.
-        failureThreshold:
-          $ref: '#/components/schemas/failureThreshold'
+        sourceID:
+          $ref: '#/components/schemas/sourceID'
+        taskID:
+          $ref: '#/components/schemas/taskID'
+        trigger:
+          $ref: '#/components/schemas/Trigger'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
         action:
           $ref: '#/components/schemas/ActionType'
         cursor:
           $ref: '#/components/schemas/cursor'
+        failureThreshold:
+          $ref: '#/components/schemas/failureThreshold'
+        input:
+          $ref: '#/components/schemas/TaskInput'
         notifications:
           $ref: '#/components/schemas/Notifications'
         policies:
           $ref: '#/components/schemas/Policies'
-        createdAt:
-          $ref: '#/components/schemas/CreatedAt'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
       required:
         - taskID
         - sourceID
@@ -18718,10 +18755,10 @@ components:
       additionalProperties: false
       description: Trigger input for scheduled tasks.
       properties:
-        type:
-          $ref: '#/components/schemas/ScheduleTriggerType'
         cron:
           $ref: '#/components/schemas/Cron'
+        type:
+          $ref: '#/components/schemas/ScheduleTriggerType'
       required:
         - type
         - cron
@@ -18741,14 +18778,16 @@ components:
         API request body for creating a task using the V1 shape. Use methods and
         types that don't contain the V1 suffix.
       properties:
-        sourceID:
-          $ref: '#/components/schemas/sourceID'
-        destinationID:
-          $ref: '#/components/schemas/destinationID'
-        trigger:
-          $ref: '#/components/schemas/TaskCreateTrigger'
         action:
           $ref: '#/components/schemas/ActionType'
+        destinationID:
+          $ref: '#/components/schemas/destinationID'
+        sourceID:
+          $ref: '#/components/schemas/sourceID'
+        trigger:
+          $ref: '#/components/schemas/TaskCreateTrigger'
+        cursor:
+          $ref: '#/components/schemas/cursor'
         enabled:
           type: boolean
           description: Whether the task is enabled.
@@ -18756,8 +18795,6 @@ components:
           $ref: '#/components/schemas/failureThreshold'
         input:
           $ref: '#/components/schemas/TaskInput'
-        cursor:
-          $ref: '#/components/schemas/cursor'
       required:
         - sourceID
         - destinationID
@@ -18785,14 +18822,14 @@ components:
       properties:
         destinationID:
           $ref: '#/components/schemas/destinationID'
-        trigger:
-          $ref: '#/components/schemas/TriggerUpdateInput'
-        input:
-          $ref: '#/components/schemas/TaskInput'
         enabled:
           $ref: '#/components/schemas/Enabled'
         failureThreshold:
           $ref: '#/components/schemas/failureThreshold'
+        input:
+          $ref: '#/components/schemas/TaskInput'
+        trigger:
+          $ref: '#/components/schemas/TriggerUpdateInput'
     transformationSortKeys:
       type: string
       description: Property by which to sort the list of transformations.
@@ -18863,26 +18900,26 @@ components:
       type: object
       additionalProperties: false
       properties:
-        transformationID:
-          $ref: '#/components/schemas/transformationID'
-        authenticationIDs:
-          $ref: '#/components/schemas/AuthenticationIDs'
         code:
           $ref: '#/components/schemas/Code'
-        type:
-          $ref: '#/components/schemas/TransformationType'
-        input:
-          $ref: '#/components/schemas/TransformationInput'
-        name:
-          $ref: '#/components/schemas/Name'
-        description:
-          $ref: '#/components/schemas/Description'
-        owner:
-          $ref: '#/components/schemas/owner'
         createdAt:
           $ref: '#/components/schemas/CreatedAt'
+        name:
+          $ref: '#/components/schemas/Name'
+        transformationID:
+          $ref: '#/components/schemas/transformationID'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
+        authenticationIDs:
+          $ref: '#/components/schemas/AuthenticationIDs'
+        description:
+          $ref: '#/components/schemas/Description'
+        input:
+          $ref: '#/components/schemas/TransformationInput'
+        owner:
+          $ref: '#/components/schemas/owner'
+        type:
+          $ref: '#/components/schemas/TransformationType'
       required:
         - transformationID
         - code
@@ -18894,18 +18931,18 @@ components:
       additionalProperties: false
       description: API request body for creating a transformation.
       properties:
-        code:
-          $ref: '#/components/schemas/Code'
         name:
           $ref: '#/components/schemas/Name'
-        type:
-          $ref: '#/components/schemas/TransformationType'
-        input:
-          $ref: '#/components/schemas/TransformationInput'
-        description:
-          $ref: '#/components/schemas/Description'
         authenticationIDs:
           $ref: '#/components/schemas/AuthenticationIDs'
+        code:
+          $ref: '#/components/schemas/Code'
+        description:
+          $ref: '#/components/schemas/Description'
+        input:
+          $ref: '#/components/schemas/TransformationInput'
+        type:
+          $ref: '#/components/schemas/TransformationType'
       required:
         - name
     TransformationCreateResponse:
@@ -18913,10 +18950,10 @@ components:
       additionalProperties: false
       description: API response for creating a transformation.
       properties:
-        transformationID:
-          $ref: '#/components/schemas/transformationID'
         createdAt:
           $ref: '#/components/schemas/CreatedAt'
+        transformationID:
+          $ref: '#/components/schemas/transformationID'
       required:
         - transformationID
         - createdAt
@@ -18924,12 +18961,6 @@ components:
       type: object
       additionalProperties: false
       properties:
-        code:
-          $ref: '#/components/schemas/Code'
-        type:
-          $ref: '#/components/schemas/TransformationType'
-        input:
-          $ref: '#/components/schemas/TransformationInput'
         sampleRecord:
           description: The record to apply the given code to.
           type: object
@@ -18937,6 +18968,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AuthenticationCreate'
+        code:
+          $ref: '#/components/schemas/Code'
+        input:
+          $ref: '#/components/schemas/TransformationInput'
+        type:
+          $ref: '#/components/schemas/TransformationType'
       required:
         - sampleRecord
     TransformationTryResponse:
@@ -19041,14 +19078,24 @@ components:
       type: object
       additionalProperties: false
       properties:
-        runID:
-          $ref: '#/components/schemas/RunID'
         appID:
           type: string
-        taskID:
-          $ref: '#/components/schemas/taskID'
+        createdAt:
+          $ref: '#/components/schemas/CreatedAt'
+        runID:
+          $ref: '#/components/schemas/RunID'
         status:
           $ref: '#/components/schemas/RunStatus'
+        taskID:
+          $ref: '#/components/schemas/taskID'
+        type:
+          $ref: '#/components/schemas/RunType'
+        failureThreshold:
+          $ref: '#/components/schemas/failureThreshold'
+        finishedAt:
+          $ref: '#/components/schemas/finishedAt'
+        outcome:
+          $ref: '#/components/schemas/RunOutcome'
         progress:
           title: runProgress
           type: object
@@ -19061,23 +19108,13 @@ components:
           required:
             - expectedNbOfEvents
             - receivedNbOfEvents
-        outcome:
-          $ref: '#/components/schemas/RunOutcome'
-        failureThreshold:
-          $ref: '#/components/schemas/failureThreshold'
         reason:
           type: string
           description: More information about the task run's outcome.
         reasonCode:
           $ref: '#/components/schemas/RunReasonCode'
-        type:
-          $ref: '#/components/schemas/RunType'
-        createdAt:
-          $ref: '#/components/schemas/CreatedAt'
         startedAt:
           $ref: '#/components/schemas/startedAt'
-        finishedAt:
-          $ref: '#/components/schemas/finishedAt'
       required:
         - runID
         - appID
@@ -19090,15 +19127,15 @@ components:
       additionalProperties: false
       description: Time window by which to filter the observability data.
       properties:
-        startDate:
-          type: string
-          description: >-
-            Date and time representing the oldest data in the time window, in
-            RFC 3339 format.
         endDate:
           type: string
           description: >-
             Date and time representing the newest data in the time window, in
+            RFC 3339 format.
+        startDate:
+          type: string
+          description: >-
+            Date and time representing the oldest data in the time window, in
             RFC 3339 format.
       required:
         - startDate
@@ -19107,12 +19144,12 @@ components:
       type: object
       additionalProperties: false
       properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
         runs:
           type: array
           items:
             $ref: '#/components/schemas/Run'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
         window:
           $ref: '#/components/schemas/Window'
       required:

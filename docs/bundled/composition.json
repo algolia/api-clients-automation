@@ -1541,6 +1541,7 @@
       },
       "externalInjectedItem": {
         "type": "object",
+        "description": "Contains a list of objects to inject from an external source.\n",
         "properties": {
           "items": {
             "type": "array",
@@ -1551,7 +1552,7 @@
               "properties": {
                 "objectID": {
                   "type": "string",
-                  "description": "An objectID injected into an external source."
+                  "description": "An objectID injected from an external source and also present in the targeted index."
                 },
                 "metadata": {
                   "type": "object",
@@ -1567,7 +1568,7 @@
               ],
               "example": {
                 "objectID": "my-object-1",
-                "metadata": {
+                "metadata'": {
                   "my-field": "my-value"
                 }
               }
@@ -1583,23 +1584,38 @@
         "additionalProperties": {
           "$ref": "#/components/schemas/externalInjectedItem"
         },
-        "description": "A list of extenrally injected objectID groups into from an external source.\n",
+        "description": "An object containing keys corresponding to the `key`s from an injection's `injectedItems` and values containing a list of hits to inject.\n",
         "default": {},
         "x-categories": [
           "Retail Media Network"
         ],
         "example": {
-          "my-group-key": [
-            {
-              "objectID": "my-object-1",
-              "metadata": {
-                "my-field": "my-value"
+          "my-group-key": {
+            "items": [
+              {
+                "objectID": "my-object-1",
+                "metadata": {
+                  "my-field": "my-value"
+                }
+              },
+              {
+                "objectID": "my-object-2",
+                "metadata": {
+                  "my-field": "my-value-2"
+                }
               }
-            },
-            {
-              "objectID": "my-object-2"
-            }
-          ]
+            ]
+          },
+          "my-other-group-key": {
+            "items": [
+              {
+                "objectID": "my-other-object-1"
+              },
+              {
+                "objectID": "my-other-object-2"
+              }
+            ]
+          }
         }
       },
       "insideBoundingBoxArray": {
@@ -3884,6 +3900,7 @@
         ]
       },
       "externalOrdering": {
+        "description": "Ordering to apply on the injected items coming from the external source. 'default' means the items will be ordered as they are in the index (natural relevance) in the smart group. 'userDefined' means the order in which the objectIDs are provided in the run request payload will be preserved in the smart group.",
         "enum": [
           "default",
           "userDefined"
@@ -3925,7 +3942,6 @@
         ]
       },
       "injectedItemRecommendSource": {
-        "title": "injectedItemRecommendSource",
         "description": "Injected items will originate from a recommendation request performed on the specified index.",
         "x-discriminator-fields": [
           "recommend"

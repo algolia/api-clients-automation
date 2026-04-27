@@ -47,6 +47,7 @@ object SourceInputSerializer extends Serializer[SourceInput] {
         case value: JObject if value.obj.exists(_._1 == "storeHash")  => Extraction.extract[SourceBigCommerce](value)
         case value: JObject if value.obj.exists(_._1 == "projectID")  => Extraction.extract[SourceBigQuery](value)
         case value: JObject if value.obj.exists(_._1 == "shopURL")    => Extraction.extract[SourceShopify](value)
+        case value: JObject if value.obj.exists(_._1 == "indexName")  => Extraction.extract[SourceAlgoliaIndex](value)
         case value: JObject                                           => Extraction.extract[SourceJSON](value)
         case value: JObject                                           => Extraction.extract[SourceCSV](value)
         case _ => throw new MappingException("Can't convert " + json + " to SourceInput")
@@ -61,6 +62,7 @@ object SourceInputSerializer extends Serializer[SourceInput] {
       case value: SourceBigCommerce       => Extraction.decompose(value)(format - this)
       case value: SourceBigQuery          => Extraction.decompose(value)(format - this)
       case value: SourceShopify           => Extraction.decompose(value)(format - this)
+      case value: SourceAlgoliaIndex      => Extraction.decompose(value)(format - this)
       case value: SourceJSON              => Extraction.decompose(value)(format - this)
       case value: SourceCSV               => Extraction.decompose(value)(format - this)
     }

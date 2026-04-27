@@ -1,5 +1,8 @@
 from os import environ
-from typing import Dict, Optional
+from typing import Dict, Literal, Optional
+{{#isSearchClient}}
+from warnings import warn
+{{/isSearchClient}}
 
 from algoliasearch.http.hosts import (
   CallType,
@@ -11,8 +14,40 @@ from algoliasearch.http.base_config import BaseConfig
 from algoliasearch import __version__
 
 
+{{#isSearchClient}}
+class TransformationOptions:
+    """Options for the transformation pipeline."""
+    def __init__(
+        self,
+        region: str,
+        *,
+        connect_timeout: Optional[int] = None,
+        read_timeout: Optional[int] = None,
+        write_timeout: Optional[int] = None,
+        hosts: Optional[HostsCollection] = None,
+        proxies: Optional[Dict[str, str]] = None,
+        headers: Optional[Dict[str, str]] = None,
+        compression_type: Optional[Literal["gzip"]] = None,
+        compression_threshold: Optional[int] = None,
+        wait_task_time_before_retry: Optional[int] = None,
+    ):
+        if not region:
+            raise ValueError("`region` is required in `transformation_options`. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/")
+        self.region = region
+        self.connect_timeout = connect_timeout
+        self.read_timeout = read_timeout
+        self.write_timeout = write_timeout
+        self.hosts = hosts
+        self.proxies = proxies
+        self.headers = headers
+        self.compression_type: Optional[Literal["gzip"]] = compression_type
+        self.compression_threshold = compression_threshold
+        self.wait_task_time_before_retry = wait_task_time_before_retry
+{{/isSearchClient}}
+
+
 class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
-    def __init__(self, app_id: Optional[str], api_key: Optional[str]{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str = ""{{/fallbackToAliasHost}}{{/hasRegionalHost}}) -> None:
+    def __init__(self, app_id: Optional[str], api_key: Optional[str]{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str = ""{{/fallbackToAliasHost}}{{/hasRegionalHost}}{{#isSearchClient}}, transformation_options: Optional["TransformationOptions"] = None{{/isSearchClient}}) -> None:
         super().__init__(app_id, api_key)
 
         # In milliseconds
@@ -53,10 +88,13 @@ class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
 
     {{#isSearchClient}}
         self.region = None
+        self.transformation_options = transformation_options
 
     def set_transformation_region(self, region: str = ""):
-        "This method is required to be called with the appropriate region of your Algolia application if you wish to leverage the *_with_transformation methods."
+        """@deprecated Set `transformation_options` in the client config before creating the client. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"""
+        warn("set_transformation_region is deprecated. Set `transformation_options` in the client config before creating the client. Changes after client construction do not affect the existing ingestion transporter. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/", DeprecationWarning, stacklevel=2)
         self.region = region
+        self.transformation_options = None if not region else TransformationOptions(region=region)
     {{/isSearchClient}}
 
     def set_default_hosts(self):

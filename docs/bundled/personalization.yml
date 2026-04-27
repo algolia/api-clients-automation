@@ -1050,8 +1050,6 @@ paths:
                   - scores
                   - lastEventAt
                 properties:
-                  userToken:
-                    $ref: '#/components/schemas/userToken'
                   lastEventAt:
                     type: string
                     description: >-
@@ -1067,6 +1065,8 @@ paths:
                       towards specific facet values,
 
                       given the personalization strategy and past events.
+                  userToken:
+                    $ref: '#/components/schemas/userToken'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1322,8 +1322,6 @@ paths:
                   - userToken
                   - deletedUntil
                 properties:
-                  userToken:
-                    $ref: '#/components/schemas/userToken'
                   deletedUntil:
                     type: string
                     description: >
@@ -1332,6 +1330,8 @@ paths:
 
                       Any events received after the `deletedUntil` date start a
                       new user profile.
+                  userToken:
+                    $ref: '#/components/schemas/userToken'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -2244,13 +2244,13 @@ components:
         - eventName
         - eventType
       properties:
-        score:
-          $ref: '#/components/schemas/score'
         eventName:
           type: string
           description: Event name.
         eventType:
           $ref: '#/components/schemas/EventType'
+        score:
+          $ref: '#/components/schemas/score'
     facetsScoring:
       type: object
       additionalProperties: false
@@ -2258,11 +2258,11 @@ components:
         - score
         - facetName
       properties:
-        score:
-          $ref: '#/components/schemas/score'
         facetName:
           type: string
           description: Facet attribute name.
+        score:
+          $ref: '#/components/schemas/score'
     personalizationStrategyParams:
       type: object
       additionalProperties: false

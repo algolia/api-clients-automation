@@ -353,7 +353,10 @@ public class Params {
     return this;
   }
 
-  /** A list of extenrally injected objectID groups into from an external source. */
+  /**
+   * An object containing keys corresponding to the `key`s from an injection's `injectedItems` and
+   * values containing a list of hits to inject.
+   */
   @javax.annotation.Nullable
   public Map<String, ExternalInjectedItem> getInjectedItems() {
     return injectedItems;

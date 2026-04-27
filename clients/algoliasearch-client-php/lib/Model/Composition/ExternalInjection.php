@@ -178,7 +178,7 @@ class ExternalInjection extends AbstractModel implements ModelInterface, \ArrayA
     /**
      * Sets objectID.
      *
-     * @param string $objectID an objectID injected into an external source
+     * @param string $objectID an objectID injected from an external source and also present in the targeted index
      *
      * @return self
      */

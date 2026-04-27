@@ -88,6 +88,17 @@ public interface SourceUpdateInput {
           LOGGER.finest("Failed to deserialize oneOf SourceUpdateShopify (error: " + e.getMessage() + ") (type: SourceUpdateShopify)");
         }
       }
+      // deserialize SourceUpdateAlgoliaIndex
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(SourceUpdateAlgoliaIndex.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf SourceUpdateAlgoliaIndex (error: " + e.getMessage() + ") (type: SourceUpdateAlgoliaIndex)"
+          );
+        }
+      }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
     }
 
