@@ -147,14 +147,13 @@ final class ApiWrapper implements ApiWrapperInterface
             ->withScheme('https')
         ;
 
-        $requestBody = $requestOptions->getBody();
-        if ($data instanceof \JsonSerializable && !empty($requestBody)) {
-            $body = array_merge((array) $data->jsonSerialize(), $requestBody);
-        } elseif (is_array($data)) {
-            $body = array_merge($data, $requestBody);
-        } else {
-            $body = $data;
+        if ($data instanceof \JsonSerializable) {
+            $data = (array) $data->jsonSerialize();
         }
+
+        $body = isset($data)
+            ? array_merge($data, $requestOptions->getBody())
+            : $data;
 
         $logParams = [
             'body' => $body,
