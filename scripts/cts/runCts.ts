@@ -75,11 +75,16 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       });
       break;
     }
-    case 'java':
-      await run(`./gradle/gradlew -p tests/output/java test --rerun ${filter((f) => `--tests 'com.algolia.${f}*'`)}`, {
+    case 'java': {
+      const javaTests = [
+        ...folders.map((f) => `--tests 'com.algolia.${f}*'`),
+        ...(suites.client ? ["--tests 'com.algolia.manual*'"] : []),
+      ].join(' ');
+      await run(`./gradle/gradlew -p tests/output/java test --rerun ${javaTests}`, {
         language,
       });
       break;
+    }
     case 'javascript':
       await run(`YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test ${filter((f) => `src/${f}`)}`, {
         cwd,
