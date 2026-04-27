@@ -168,7 +168,8 @@ func (c *APIClient) SetClientApiKey(apiKey string) error {
 // The transporter uses Ingestion API defaults (25s timeouts); only fields set in opts override those defaults.
 // See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
 func (c *APIClient) SetTransformationOptions(opts TransformationOptions) error {
-  if err := opts.validate(); err != nil {
+  err := opts.validate()
+  if err != nil {
     return err
   }
   ingestionConfig := ingestion.IngestionConfiguration{
