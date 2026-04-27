@@ -10044,19 +10044,27 @@ public class IngestionClient extends ApiClient {
     String referenceIndexName,
     RequestOptions requestOptions
   ) {
+    if (batchSize < 1) {
+      throw new AlgoliaRuntimeException("`batchSize` must be greater than 0");
+    }
+
     List<WatchResponse> responses = new ArrayList<>();
     List<T> records = new ArrayList<>();
     int offset = 0;
-    int waitBatchSize = batchSize / 10;
-    if (waitBatchSize < 1) {
-      waitBatchSize = batchSize;
-    }
+    // Poll for task completion every 10% of total batches to balance throughput and feedback.
+    int pollInterval = Math.max(1, batchSize / 10);
 
     Iterator<T> it = objects.iterator();
+
+    if (!it.hasNext()) {
+      return responses;
+    }
+
     T current = it.next();
 
     while (true) {
       records.add(current);
+      boolean pushed = false;
 
       if (records.size() == batchSize || !it.hasNext()) {
         WatchResponse watch = this.push(
@@ -10068,11 +10076,14 @@ public class IngestionClient extends ApiClient {
         );
         responses.add(watch);
         records.clear();
+        pushed = true;
       }
 
-      if (waitForTasks && responses.size() > 0 && (responses.size() % waitBatchSize == 0 || !it.hasNext())) {
+      if (waitForTasks && pushed && responses.size() > 0 && (responses.size() % pollInterval == 0 || !it.hasNext())) {
+        int nextOffset = Math.min(offset + pollInterval, responses.size());
+
         responses
-          .subList(offset, Math.min(offset + waitBatchSize, responses.size()))
+          .subList(offset, nextOffset)
           .forEach(response -> {
             TaskUtils.retryUntil(
               () -> {
@@ -10094,7 +10105,7 @@ public class IngestionClient extends ApiClient {
             );
           });
 
-        offset += waitBatchSize;
+        offset = nextOffset;
       }
 
       if (!it.hasNext()) {
