@@ -236,19 +236,14 @@ namespace Algolia.Search.Clients;
       /// Sets the region of the transformation pipeline.
       /// </summary>
       /// <param name="region">The region ("us" or "eu")</param>
-      /// <param name="factory">Logger factory (ignored, kept for backwards compatibility)</param>
       [Obsolete(
         "SetTransformationRegion is deprecated. Use SetTransformationOptions instead. "
           + "The old setter forwarded the parent search config to the ingestion transporter. "
           + "The new approach defaults to Ingestion API defaults and only overrides what's explicitly specified. "
           + "See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
       )]
-      public void SetTransformationRegion(string region, ILoggerFactory factory = null)
+      public void SetTransformationRegion(string region)
       {
-        if (string.IsNullOrWhiteSpace(region))
-        {
-          throw new ArgumentException("`region` must be provided when leveraging the transformation pipeline");
-        }
         SetTransformationOptions(new TransformationOptions(region));
       }
 
