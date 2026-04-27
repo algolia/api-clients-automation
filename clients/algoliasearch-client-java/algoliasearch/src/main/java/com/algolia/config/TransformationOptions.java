@@ -32,7 +32,7 @@ public final class TransformationOptions {
    *     Only fields explicitly set here override the Ingestion API defaults.
    */
   public TransformationOptions(@Nonnull String region, @Nullable ClientOptions clientOptions) {
-    if (region == null || region.isEmpty()) {
+    if (region == null || region.isBlank()) {
       throw new AlgoliaRuntimeException(
         "region is required in transformationOptions." + " See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
       );
