@@ -64,13 +64,11 @@
                     def _validate(_resp: Event | None) -> bool:
                         return _resp is not None
 
-                    timeout = RetryTimeout()
-
                     {{^isSyncClient}}await {{/isSyncClient}}create_iterable{{#isSyncClient}}_sync{{/isSyncClient}}(
                         func=_func,
                         validate=_validate,
                         aggregator=_aggregator,
-                        timeout=lambda: timeout(_retry_count),
+                        timeout=lambda: min(_retry_count * 1.5, 5),
                         error_validate=lambda _: _retry_count >= 50,
                         error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${50})",
                     )
