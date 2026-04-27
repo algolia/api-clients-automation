@@ -63,7 +63,7 @@ export const patterns = [
   'clients/algoliasearch-client-java/algoliasearch/src/main/java/com/algolia/BuildConfig.java',
 
   'tests/output/java/build.gradle',
-  '!tests/output/java/src/test/java/com/algolia/client/manual/**',
+  '!tests/output/java/src/test/java/com/algolia/manual/**',
 
   // JavaScript
   '!clients/algoliasearch-client-javascript/*',
