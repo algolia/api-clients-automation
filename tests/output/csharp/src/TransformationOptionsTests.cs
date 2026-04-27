@@ -28,18 +28,18 @@ public class TransformationOptionsTests
   {
     var opts = new TransformationOptions("us");
     Assert.Equal("us", opts.Region);
-    Assert.Null(opts.IngestionConfig);
+    Assert.Null(opts.ClientOptions);
   }
 
   [Fact]
   [Trait("Category", "unit")]
   public void WithClientOptions_StoresComposition()
   {
-    var ingestionConfig = new IngestionConfig("app-id", "api-key", "eu") { ReadTimeout = TimeSpan.FromSeconds(10) };
-    var opts = new TransformationOptions("eu", ingestionConfig);
+    var clientOptions = new ClientOptions { ReadTimeout = TimeSpan.FromSeconds(10) };
+    var opts = new TransformationOptions("eu", clientOptions);
     Assert.Equal("eu", opts.Region);
-    Assert.Same(ingestionConfig, opts.IngestionConfig);
-    Assert.Equal(TimeSpan.FromSeconds(10), opts.IngestionConfig.ReadTimeout);
+    Assert.Same(clientOptions, opts.ClientOptions);
+    Assert.Equal(TimeSpan.FromSeconds(10), opts.ClientOptions.ReadTimeout);
   }
 
   [Fact]

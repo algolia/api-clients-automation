@@ -1,6 +1,6 @@
 {{#hasTransformationRegion}}
 {{#hasTransformationCustomHosts}}
-var transformationOptions = new TransformationOptions("{{{transformationRegion}}}", new IngestionConfig("{{parametersWithDataTypeMap.appId.value}}","{{parametersWithDataTypeMap.apiKey.value}}","{{{transformationRegion}}}") {
+var transformationOptions = new TransformationOptions("{{{transformationRegion}}}", new ClientOptions {
   CustomHosts = new List<StatefulHost>
   {
     {{#transformationCustomHosts}}new () {

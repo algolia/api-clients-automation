@@ -214,8 +214,9 @@ namespace Algolia.Search.Clients;
       {{#isSearchClient}}
       /// <summary>
       /// Sets (or replaces) the ingestion transporter used by *WithTransformation helpers.
-      /// The ingestion transporter is created using Ingestion API defaults; only fields explicitly
-      /// provided in <paramref name="transformationOptions"/> override those defaults.
+      /// The ingestion transporter is created using the region from <paramref name="transformationOptions"/>
+      /// and Ingestion API defaults; pass an <see cref="ClientOptions"/> inside
+      /// <paramref name="transformationOptions"/> to override specific defaults.
       /// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
       /// </summary>
       public void SetTransformationOptions(TransformationOptions transformationOptions)
@@ -223,12 +224,23 @@ namespace Algolia.Search.Clients;
         if (transformationOptions == null)
           throw new ArgumentNullException(nameof(transformationOptions));
 
-        var ingestionConfig = transformationOptions.IngestionConfig
-          ?? new IngestionConfig(
-            _transport._algoliaConfig.AppId,
-            _transport._algoliaConfig.ApiKey,
-            transformationOptions.Region
-          );
+        var ingestionConfig = new IngestionConfig(
+          _transport._algoliaConfig.AppId,
+          _transport._algoliaConfig.ApiKey,
+          transformationOptions.Region
+        );
+
+        if (transformationOptions.ClientOptions != null)
+        {
+          var opts = transformationOptions.ClientOptions;
+          if (opts.CustomHosts != null) ingestionConfig.CustomHosts = opts.CustomHosts;
+          if (opts.ConnectTimeout.HasValue) ingestionConfig.ConnectTimeout = opts.ConnectTimeout;
+          if (opts.ReadTimeout.HasValue) ingestionConfig.ReadTimeout = opts.ReadTimeout;
+          if (opts.WriteTimeout.HasValue) ingestionConfig.WriteTimeout = opts.WriteTimeout;
+          if (opts.Compression.HasValue) ingestionConfig.Compression = opts.Compression.Value;
+          if (opts.DefaultHeaders != null) ingestionConfig.DefaultHeaders = opts.DefaultHeaders;
+        }
+
         _ingestionTransporter = new IngestionClient(ingestionConfig, _loggerFactory);
       }
 
@@ -236,13 +248,14 @@ namespace Algolia.Search.Clients;
       /// Sets the region of the transformation pipeline.
       /// </summary>
       /// <param name="region">The region ("us" or "eu")</param>
+      /// <param name="factory">Logger factory (ignored, kept for source compatibility)</param>
       [Obsolete(
         "SetTransformationRegion is deprecated. Use SetTransformationOptions instead. "
           + "The old setter forwarded the parent search config to the ingestion transporter. "
           + "The new approach defaults to Ingestion API defaults and only overrides what's explicitly specified. "
           + "See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
       )]
-      public void SetTransformationRegion(string region)
+      public void SetTransformationRegion(string region, ILoggerFactory factory = null)
       {
         SetTransformationOptions(new TransformationOptions(region));
       }
@@ -261,6 +274,8 @@ namespace Algolia.Search.Clients;
         ILoggerFactory loggerFactory = null
       )
       {
+        if (transformationOptions == null)
+          throw new ArgumentNullException(nameof(transformationOptions));
         var client = new {{classname}}(appId, apiKey, loggerFactory);
         client.SetTransformationOptions(transformationOptions);
         return client;
@@ -269,8 +284,7 @@ namespace Algolia.Search.Clients;
       /// <summary>
       /// Creates a <see cref="{{classname}}"/> configured with <see cref="TransformationOptions"/> for use
       /// with <c>*WithTransformation</c> helpers, using a custom <see cref="{{apiPackageName}}Config"/> for the search
-      /// transporter. The ingestion transporter is initialised eagerly using Ingestion API defaults; set
-      /// override fields on <see cref="TransformationOptions"/> to change specific defaults.
+      /// transporter.
       /// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
       /// </summary>
       public static {{classname}} WithTransformation(
@@ -279,6 +293,8 @@ namespace Algolia.Search.Clients;
         ILoggerFactory loggerFactory = null
       )
       {
+        if (transformationOptions == null)
+          throw new ArgumentNullException(nameof(transformationOptions));
         var client = new {{classname}}(searchConfig, loggerFactory);
         client.SetTransformationOptions(transformationOptions);
         return client;
