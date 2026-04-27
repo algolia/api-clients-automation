@@ -51,6 +51,7 @@ export const patterns = [
   '!clients/algoliasearch-client-go/algolia/compression/*',
   '!clients/algoliasearch-client-go/algolia/debug/*',
   '!clients/algoliasearch-client-go/algolia/utils/*',
+
   'tests/output/go/go.mod',
   '!tests/output/go/tests/manual/**',
 
@@ -62,7 +63,6 @@ export const patterns = [
   'clients/algoliasearch-client-java/algoliasearch/src/main/java/com/algolia/BuildConfig.java',
 
   'tests/output/java/build.gradle',
-  '!tests/output/java/src/test/java/com/algolia/manual/**',
 
   // JavaScript
   '!clients/algoliasearch-client-javascript/*',
