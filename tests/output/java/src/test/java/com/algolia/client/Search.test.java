@@ -827,9 +827,29 @@ class SearchClientClientTests {
   @Test
   @DisplayName("call partialUpdateObjectsWithTransformation with createIfNotExists=true")
   void partialUpdateObjectsWithTransformationTest0() {
-    SearchClient client = new SearchClient(
+    ClientOptions ingestionOptions = ClientOptions.builder()
+      .setHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6688
+          ),
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6689
+          )
+        )
+      )
+      .build();
+    TransformationOptions transformationOptions = new TransformationOptions("us", ingestionOptions);
+    SearchClient client = SearchClient.withTransformation(
       "test-app-id",
       "test-api-key",
+      transformationOptions,
       withCustomHosts(
         Arrays.asList(
           new Host(
@@ -848,7 +868,7 @@ class SearchClientClientTests {
         false
       )
     );
-    client.setTransformationRegion("us");
+
     assertDoesNotThrow(() -> {
       List res = client.partialUpdateObjectsWithTransformation(
         "cts_e2e_partialUpdateObjectsWithTransformation_java",
@@ -1073,9 +1093,23 @@ class SearchClientClientTests {
   @Test
   @DisplayName("call replaceAllObjectsWithTransformation without error")
   void replaceAllObjectsWithTransformationTest0() {
-    SearchClient client = new SearchClient(
+    ClientOptions ingestionOptions = ClientOptions.builder()
+      .setHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6690
+          )
+        )
+      )
+      .build();
+    TransformationOptions transformationOptions = new TransformationOptions("us", ingestionOptions);
+    SearchClient client = SearchClient.withTransformation(
       "test-app-id",
       "test-api-key",
+      transformationOptions,
       withCustomHosts(
         Arrays.asList(
           new Host(
@@ -1088,7 +1122,7 @@ class SearchClientClientTests {
         false
       )
     );
-    client.setTransformationRegion("us");
+
     assertDoesNotThrow(() -> {
       ReplaceAllObjectsWithTransformationResponse res = client.replaceAllObjectsWithTransformation(
         "cts_e2e_replace_all_objects_with_transformation_java",
@@ -1334,9 +1368,29 @@ class SearchClientClientTests {
   @Test
   @DisplayName("call saveObjectsWithTransformation without error")
   void saveObjectsWithTransformationTest0() {
-    SearchClient client = new SearchClient(
+    ClientOptions ingestionOptions = ClientOptions.builder()
+      .setHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6688
+          ),
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6689
+          )
+        )
+      )
+      .build();
+    TransformationOptions transformationOptions = new TransformationOptions("us", ingestionOptions);
+    SearchClient client = SearchClient.withTransformation(
       "test-app-id",
       "test-api-key",
+      transformationOptions,
       withCustomHosts(
         Arrays.asList(
           new Host(
@@ -1355,7 +1409,7 @@ class SearchClientClientTests {
         false
       )
     );
-    client.setTransformationRegion("us");
+
     assertDoesNotThrow(() -> {
       List res = client.saveObjectsWithTransformation(
         "cts_e2e_saveObjectsWithTransformation_java",
