@@ -28,7 +28,7 @@ public class TransformationOptionsTests
   {
     var opts = new TransformationOptions("us");
     Assert.Equal("us", opts.Region);
-    Assert.Null(opts.ClientOptions);
+    Assert.Null(opts.IngestionConfig);
   }
 
   [Fact]
@@ -38,8 +38,8 @@ public class TransformationOptionsTests
     var ingestionConfig = new IngestionConfig("app-id", "api-key", "eu") { ReadTimeout = TimeSpan.FromSeconds(10) };
     var opts = new TransformationOptions("eu", ingestionConfig);
     Assert.Equal("eu", opts.Region);
-    Assert.Same(ingestionConfig, opts.ClientOptions);
-    Assert.Equal(TimeSpan.FromSeconds(10), opts.ClientOptions.ReadTimeout);
+    Assert.Same(ingestionConfig, opts.IngestionConfig);
+    Assert.Equal(TimeSpan.FromSeconds(10), opts.IngestionConfig.ReadTimeout);
   }
 
   [Fact]
