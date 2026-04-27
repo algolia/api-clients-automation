@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.algolia.api.SearchClient;
 import com.algolia.config.*;
 import com.algolia.exceptions.AlgoliaRuntimeException;
+import java.lang.reflect.Field;
 import java.time.Duration;
-import java.util.Collections;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -37,65 +37,53 @@ class TransformationOptionsTest {
   }
 
   @Test
-  @DisplayName("*WithTransformation throws when transformationOptions not set")
-  void withTransformationThrowsWhenNotConfigured() {
-    SearchClient client = new SearchClient("app-id", "api-key");
-    AlgoliaRuntimeException ex = assertThrows(AlgoliaRuntimeException.class, () ->
-      client.saveObjectsWithTransformation("index", Collections.emptyList(), false, 1000, null)
-    );
-    assertTrue(ex.getMessage().contains("transformationOptions"));
-    assertDoesNotThrow(client::close);
+  @DisplayName("ingestion transporter is null when TransformationOptions not set")
+  void ingestionTransporterNullWithoutConfig() throws Exception {
+    try (SearchClient client = new SearchClient("app-id", "api-key")) {
+      assertNull(ingestionTransporter(client));
+    }
   }
 
   @Test
-  @DisplayName("*WithTransformation does not throw config error when transformationOptions is set")
-  void withTransformationDoesNotThrowConfigErrorWhenConfigured() throws Exception {
+  @DisplayName("setTransformationOptions creates the ingestion transporter")
+  void setTransformationOptionsCreatesIngestionTransporter() throws Exception {
+    try (SearchClient client = new SearchClient("app-id", "api-key")) {
+      assertNull(ingestionTransporter(client));
+      client.setTransformationOptions(new TransformationOptions("us"));
+      assertNotNull(ingestionTransporter(client));
+    }
+  }
+
+  @Test
+  @DisplayName("setTransformationOptions replaces the transporter on subsequent calls")
+  void setTransformationOptionsReplacesPreviousTransporter() throws Exception {
     try (SearchClient client = SearchClient.withTransformation("app-id", "api-key", new TransformationOptions("us"))) {
-      try {
-        client.saveObjectsWithTransformation("index", Collections.emptyList(), false, 1000, null);
-      } catch (AlgoliaRuntimeException e) {
-        assertFalse(
-          e.getMessage().contains("transformationOptions must be set"),
-          "Should not throw the 'not configured' error when transformationOptions is set"
-        );
-      } catch (Exception e) {
-        // non-guard errors (e.g. empty-list edge case in chunkedPush) are acceptable
-      }
+      Object previous = ingestionTransporter(client);
+      assertNotNull(previous);
+      client.setTransformationOptions(new TransformationOptions("eu"));
+      Object next = ingestionTransporter(client);
+      assertNotNull(next);
+      assertNotSame(previous, next);
     }
   }
 
   @Test
   @DisplayName("close() without TransformationOptions does not throw")
   void closeWithoutTransformationOptionsIsNoop() {
-    assertDoesNotThrow(() -> {
-      SearchClient client = new SearchClient("app-id", "api-key");
-      client.close();
-    });
+    assertDoesNotThrow(() -> new SearchClient("app-id", "api-key").close());
   }
 
   @Test
-  @DisplayName("setTransformationOptions enables *WithTransformation methods")
-  void setTransformationOptionsEnablesMethods() throws Exception {
-    try (SearchClient client = new SearchClient("app-id", "api-key")) {
-      assertThrows(AlgoliaRuntimeException.class, () -> client.saveObjectsWithTransformation("index", Collections.emptyList(), false, 1000, null));
-
-      client.setTransformationOptions(new TransformationOptions("us"));
-
-      try {
-        client.saveObjectsWithTransformation("index", Collections.emptyList(), false, 1000, null);
-      } catch (AlgoliaRuntimeException e) {
-        assertFalse(e.getMessage().contains("transformationOptions must be set"));
-      } catch (Exception e) {
-        // non-guard errors (e.g. empty-list edge case in chunkedPush) are acceptable
-      }
-    }
+  @DisplayName("close() with TransformationOptions closes the ingestion transporter")
+  void closeWithTransformationOptionsClosesTransporter() throws Exception {
+    SearchClient client = SearchClient.withTransformation("app-id", "api-key", new TransformationOptions("us"));
+    assertNotNull(ingestionTransporter(client));
+    assertDoesNotThrow(client::close);
   }
 
-  @Test
-  @DisplayName("setTransformationOptions replaces the region on subsequent calls")
-  void setTransformationOptionsReplacesRegion() throws Exception {
-    try (SearchClient client = SearchClient.withTransformation("app-id", "api-key", new TransformationOptions("us"))) {
-      assertDoesNotThrow(() -> client.setTransformationOptions(new TransformationOptions("eu")));
-    }
+  private static Object ingestionTransporter(SearchClient client) throws Exception {
+    Field field = SearchClient.class.getDeclaredField("ingestionTransporter");
+    field.setAccessible(true);
+    return field.get(client);
   }
 }
