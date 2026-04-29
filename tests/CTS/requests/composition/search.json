@@ -80,7 +80,6 @@
       }
     }
   },
-
   {
     "parameters": {
       "compositionID": "foo",
@@ -99,6 +98,33 @@
           "query": "batman",
           "sortBy": "Price (asc)"
         }
+      }
+    }
+  },
+  {
+    "parameters": {
+      "compositionID": "foo",
+      "requestBody": {
+        "params": {
+          "query": "batman"
+        },
+        "feedsOrder": [
+          "feed-movies",
+          "feed-comics"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/compositions/foo/run",
+      "method": "POST",
+      "body": {
+        "params": {
+          "query": "batman"
+        },
+        "feedsOrder": [
+          "feed-movies",
+          "feed-comics"
+        ]
       }
     }
   }

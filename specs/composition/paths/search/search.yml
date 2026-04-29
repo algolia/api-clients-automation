@@ -21,6 +21,8 @@ post:
           properties:
             params:
               $ref: '../../common/schemas/requestBodies/RunParams.yml#/params'
+            feedsOrder:
+              $ref: '../../common/schemas/requestBodies/RunParams.yml#/feedsOrder'
   responses:
     '200':
       description: OK
