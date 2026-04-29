@@ -10101,7 +10101,7 @@ public class IngestionClient extends ApiClient {
                 return resp != null;
               },
               50,
-              null
+              retries -> Math.min(retries * 1500, 5000)
             );
           });
 
