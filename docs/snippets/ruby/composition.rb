@@ -1898,6 +1898,29 @@ def snippet_for_search2
   # SEPARATOR<
 end
 
+# Snippet for the search method.
+#
+# search
+def snippet_for_search3
+  # >SEPARATOR search search
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search(
+    "foo",
+    Algolia::Composition::RequestBody.new(
+      params: Algolia::Composition::Params.new(query: "batman"),
+      feeds_order: ["feed-movies", "feed-comics"]
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
 # Snippet for the searchCompositionRules method.
 #
 # searchCompositionRules

@@ -2234,6 +2234,34 @@ void snippetForsearch2() async {
   // SEPARATOR<
 }
 
+// Snippet for the search method.
+//
+// search
+void snippetForsearch3() async {
+  // >SEPARATOR search search
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    compositionID: "foo",
+    requestBody: RequestBody(
+      params: Params(
+        query: "batman",
+      ),
+      feedsOrder: [
+        "feed-movies",
+        "feed-comics",
+      ],
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
 // Snippet for the searchCompositionRules method.
 //
 // searchCompositionRules
