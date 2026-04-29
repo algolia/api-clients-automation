@@ -700,7 +700,7 @@ package object extension {
       * have been passed to the client via [[SearchClient.withTransformation]].
       *
       * @param indexName
-      *   The `indexName` to replace `objects` in.
+      *   The `indexName` to save `objects` in.
       * @param objects
       *   The array of `objects` to store in the given Algolia `indexName`.
       * @param waitForTasks
@@ -944,7 +944,10 @@ package object extension {
             responsesSoFar <- acc
             pushed <- pushSuperBatch(superBatch)
             _ <-
-              if (waitForTasks) Future.sequence(pushed.map(pollEvent(_, requestOptions))).map(_ => ())
+              if (waitForTasks)
+                pushed.foldLeft(Future.unit) { (a, r) =>
+                  a.flatMap(_ => pollEvent(r, requestOptions).map(_ => ()))
+                }
               else Future.unit
           } yield responsesSoFar ++ pushed
         }
