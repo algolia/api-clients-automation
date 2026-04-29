@@ -710,9 +710,9 @@ package object extension {
       * @param requestOptions
       *   The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
       */
-    def saveObjectsWithTransformation[T](
+    def saveObjectsWithTransformation(
         indexName: String,
-        objects: Seq[T],
+        objects: Seq[Any],
         waitForTasks: Boolean = false,
         batchSize: Int = 1000,
         requestOptions: Option[RequestOptions] = None
@@ -752,9 +752,9 @@ package object extension {
       * @param requestOptions
       *   The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
       */
-    def partialUpdateObjectsWithTransformation[T](
+    def partialUpdateObjectsWithTransformation(
         indexName: String,
-        objects: Seq[T],
+        objects: Seq[Any],
         createIfNotExists: Boolean = false,
         waitForTasks: Boolean = false,
         batchSize: Int = 1000,
@@ -797,9 +797,9 @@ package object extension {
       * @param requestOptions
       *   The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
       */
-    def replaceAllObjectsWithTransformation[T](
+    def replaceAllObjectsWithTransformation(
         indexName: String,
-        objects: Seq[T],
+        objects: Seq[Any],
         batchSize: Int = 1000,
         scopes: Option[Seq[ScopeType]] = Some(Seq(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms)),
         requestOptions: Option[RequestOptions] = None
@@ -903,9 +903,9 @@ package object extension {
       * @return
       *   A future containing the responses from each push.
       */
-    def chunkedPush[T](
+    def chunkedPush(
         indexName: String,
-        objects: Seq[T],
+        objects: Seq[Any],
         action: IngestionAction,
         waitForTasks: Boolean,
         batchSize: Int = 1000,
@@ -920,7 +920,7 @@ package object extension {
       val pollInterval = math.max(1, batchSize / 10)
       val superBatches = batches.grouped(pollInterval).toSeq
 
-      def pushSuperBatch(superBatch: Seq[Seq[T]]): Future[Seq[IngestionWatchResponse]] =
+      def pushSuperBatch(superBatch: Seq[Seq[Any]]): Future[Seq[IngestionWatchResponse]] =
         superBatch.foldLeft(Future.successful(Vector.empty[IngestionWatchResponse])) { (acc, batch) =>
           acc.flatMap { rs =>
             client
@@ -978,7 +978,7 @@ package object extension {
       }
     }
 
-    private def objectsToPushTaskRecords[T](objects: Seq[T]): Seq[PushTaskRecords] = {
+    private def objectsToPushTaskRecords(objects: Seq[Any]): Seq[PushTaskRecords] = {
       implicit val formats: Formats = algoliasearch.ingestion.JsonSupport.format
       Try {
         val jValue = Extraction.decompose(objects)

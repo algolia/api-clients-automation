@@ -163,16 +163,19 @@ class {{classname}}(
     *
     * See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
     */
-  def setTransformationOptions(transformationOptions: TransformationOptions): Unit = synchronized {
-    val previous = ingestionTransporter
-    ingestionTransporter = Some(
-      IngestionClient(
-        appId = appId,
-        apiKey = apiKey,
-        region = transformationOptions.region,
-        clientOptions = transformationOptions.clientOptions.getOrElse(ClientOptions())
+  def setTransformationOptions(transformationOptions: TransformationOptions): Unit = {
+    val previous = synchronized {
+      val old = ingestionTransporter
+      ingestionTransporter = Some(
+        IngestionClient(
+          appId = appId,
+          apiKey = apiKey,
+          region = transformationOptions.region,
+          clientOptions = transformationOptions.clientOptions.getOrElse(ClientOptions())
+        )
       )
-    )
+      old
+    }
     previous.foreach(_.close())
   }
 
