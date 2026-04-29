@@ -23,6 +23,19 @@ func TestTransformationOptionsRegionRequiredAtConstruction(t *testing.T) {
 	require.ErrorContains(t, err, "Region is required in TransformationOptions")
 }
 
+func TestTransformationOptionsRegionOnlyHasNilClientOptions(t *testing.T) {
+	opts := search.TransformationOptions{Region: "us"}
+	require.Equal(t, "us", string(opts.Region))
+	require.Nil(t, opts.ClientOptions)
+}
+
+func TestTransformationOptionsClientOptionsStored(t *testing.T) {
+	co := &search.ClientOptions{ReadTimeout: 50 * time.Second}
+	opts := search.TransformationOptions{Region: "eu", ClientOptions: co}
+	require.Equal(t, "eu", string(opts.Region))
+	require.Same(t, co, opts.ClientOptions)
+}
+
 func TestTransformationOptionsWithRegionOnly(t *testing.T) {
 	client, err := search.NewClient("appID", "apiKey")
 	require.NoError(t, err)
@@ -30,11 +43,28 @@ func TestTransformationOptionsWithRegionOnly(t *testing.T) {
 	require.NoError(t, err)
 }
 
+func TestIngestionTransporterNilBeforeSet(t *testing.T) {
+	client, err := search.NewClient("appID", "apiKey")
+	require.NoError(t, err)
+	_, err = client.SaveObjectsWithTransformation("index", []map[string]any{{"objectID": "1"}})
+	require.ErrorContains(t, err, "TransformationOptions must be set")
+}
+
+func TestSetTransformationOptionsCreatesTransporter(t *testing.T) {
+	client, err := search.NewClient("appID", "apiKey")
+	require.NoError(t, err)
+	_, err = client.SaveObjectsWithTransformation("index", []map[string]any{{"objectID": "1"}})
+	require.ErrorContains(t, err, "TransformationOptions must be set")
+	require.NoError(t, client.SetTransformationOptions(search.TransformationOptions{Region: "us"}))
+	_, err = client.SaveObjectsWithTransformation("index", []map[string]any{{"objectID": "1"}})
+	require.NotContains(t, err.Error(), "TransformationOptions must be set")
+}
+
 func TestWithTransformationOptionsFunctionalOption(t *testing.T) {
 	client, err := search.NewClient("appID", "apiKey",
 		search.WithTransformationOptions(search.TransformationOptions{
-			Region:      "us",
-			ReadTimeout: 50 * time.Second,
+			Region:        "us",
+			ClientOptions: &search.ClientOptions{ReadTimeout: 50 * time.Second},
 		}),
 	)
 	require.NoError(t, err)

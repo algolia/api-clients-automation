@@ -179,23 +179,25 @@ func (c *APIClient) SetTransformationOptions(opts TransformationOptions) error {
     },
     Region: opts.Region,
   }
-  if opts.ReadTimeout != 0 {
-    ingestionConfig.ReadTimeout = opts.ReadTimeout
-  }
-  if opts.WriteTimeout != 0 {
-    ingestionConfig.WriteTimeout = opts.WriteTimeout
-  }
-  if opts.ConnectTimeout != 0 {
-    ingestionConfig.ConnectTimeout = opts.ConnectTimeout
-  }
-  if opts.Compression != 0 {
-    ingestionConfig.Compression = opts.Compression
-  }
-  if len(opts.Hosts) > 0 {
-    ingestionConfig.Hosts = opts.Hosts
-  }
-  if opts.DefaultHeaders != nil {
-    ingestionConfig.DefaultHeader = opts.DefaultHeaders
+  if co := opts.ClientOptions; co != nil {
+    if co.ReadTimeout != 0 {
+      ingestionConfig.ReadTimeout = co.ReadTimeout
+    }
+    if co.WriteTimeout != 0 {
+      ingestionConfig.WriteTimeout = co.WriteTimeout
+    }
+    if co.ConnectTimeout != 0 {
+      ingestionConfig.ConnectTimeout = co.ConnectTimeout
+    }
+    if co.Compression != 0 {
+      ingestionConfig.Compression = co.Compression
+    }
+    if len(co.Hosts) > 0 {
+      ingestionConfig.Hosts = co.Hosts
+    }
+    if co.DefaultHeaders != nil {
+      ingestionConfig.DefaultHeader = co.DefaultHeaders
+    }
   }
   ingestionClient, err := ingestion.NewClientWithConfig(ingestionConfig)
   if err != nil {
