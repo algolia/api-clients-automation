@@ -69,23 +69,15 @@ object {{classname}} {
       apiKey: String,
       transformationOptions: TransformationOptions,
       clientOptions: ClientOptions = ClientOptions()
-  ) = new {{classname}}(
-    appId = appId,
-    apiKey = apiKey,
-    clientOptions = clientOptions,
-    transformationOptions = Some(transformationOptions)
-  )
-
-  private[algoliasearch] def buildIngestionClient(
-      appId: String,
-      apiKey: String,
-      transformationOptions: TransformationOptions
-  ): IngestionClient = IngestionClient(
-    appId = appId,
-    apiKey = apiKey,
-    region = transformationOptions.region,
-    clientOptions = transformationOptions.clientOptions.getOrElse(ClientOptions())
-  )
+  ): {{classname}} = {
+    val client = new {{classname}}(
+      appId = appId,
+      apiKey = apiKey,
+      clientOptions = clientOptions
+    )
+    client.setTransformationOptions(transformationOptions)
+    client
+  }
   {{/isSearchClient}}
 
   private def readTimeout(): Duration = {
@@ -147,8 +139,7 @@ class {{classname}}(
     appId: String,
     apiKey: String,
     {{#hasRegionalHost}}region: {{#fallbackToAliasHost}}Option[String] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}String{{/fallbackToAliasHost}},{{/hasRegionalHost}}
-    clientOptions: ClientOptions = ClientOptions(){{#isSearchClient}},
-    transformationOptions: Option[TransformationOptions] = None{{/isSearchClient}}
+    clientOptions: ClientOptions = ClientOptions()
 ) extends ApiClient(
       appId = appId,
       apiKey = apiKey,
@@ -162,8 +153,25 @@ class {{classname}}(
     ) {
 
 {{#isSearchClient}}
-  private[algoliasearch] val ingestionTransporter: Option[IngestionClient] =
-    transformationOptions.map({{classname}}.buildIngestionClient(appId, apiKey, _))
+  private[algoliasearch] var ingestionTransporter: Option[IngestionClient] = None
+
+  /** Sets (or replaces) the ingestion transporter used by `*WithTransformation` helpers.
+    * Closes the previous transporter if one exists.
+    *
+    * See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+    */
+  def setTransformationOptions(transformationOptions: TransformationOptions): Unit = {
+    val previous = ingestionTransporter
+    ingestionTransporter = Some(
+      IngestionClient(
+        appId = appId,
+        apiKey = apiKey,
+        region = transformationOptions.region,
+        clientOptions = transformationOptions.clientOptions.getOrElse(ClientOptions())
+      )
+    )
+    previous.foreach(_.close())
+  }
 
   override def close(): Unit = {
     try ingestionTransporter.foreach(_.close())
