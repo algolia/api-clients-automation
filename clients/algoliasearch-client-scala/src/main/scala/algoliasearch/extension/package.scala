@@ -28,6 +28,11 @@ import scala.util.{Failure, Success, Try}
 
 package object extension {
 
+  private val transformationOptionsRequired: String =
+    "transformationOptions must be set in the client config before calling this method." +
+      " It defaults to the Ingestion API defaults." +
+      " See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
+
   implicit class SecuredApiKeyRestrictionsExtension(val restrictions: SecuredApiKeyRestrictions) {
 
     /** Converts the restrictions to a URL-encoded string. Only includes fields that are defined (Some).
@@ -858,11 +863,6 @@ package object extension {
           }
       }
     }
-
-    private val transformationOptionsRequired: String =
-      "transformationOptions must be set in the client config before calling this method." +
-        " It defaults to the Ingestion API defaults." +
-        " See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
 
     private def ingestionToSearchWatchResponses(
         responses: Seq[IngestionWatchResponse]
