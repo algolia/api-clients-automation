@@ -501,11 +501,9 @@ package object extension {
         moveOperationResponse = move
       )
 
-      steps.recover({ case e: Throwable =>
-        client.deleteIndex(tmpIndexName)
-
-        throw e
-      })
+      steps.recoverWith { case e: Throwable =>
+        client.deleteIndex(tmpIndexName).transformWith(_ => Future.failed(e))
+      }
     }
 
     /** Check if an index exists.
@@ -857,9 +855,8 @@ package object extension {
             moveOperationResponse = move
           )
 
-          steps.recover { case e: Throwable =>
-            client.deleteIndex(tmpIndexName)
-            throw e
+          steps.recoverWith { case e: Throwable =>
+            client.deleteIndex(tmpIndexName).transformWith(_ => Future.failed(e))
           }
       }
     }
