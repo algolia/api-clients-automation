@@ -1,7 +1,7 @@
 package algoliasearch
 
 import algoliasearch.api.{IngestionClient, SearchClient}
-import algoliasearch.config.RequestOptions
+import algoliasearch.config.{RequestOptions, TransformationOptions}
 import algoliasearch.exception.{AlgoliaApiException, AlgoliaClientException}
 import algoliasearch.extension.internal.Iterable.createIterable
 import algoliasearch.extension.internal.RetryUntil.{DEFAULT_DELAY, retryUntil}
