@@ -28,7 +28,7 @@
   */
 package algoliasearch.composition
 
-/** ExternalInjectedItem
+/** Contains a list of objects to inject from an external source.
   */
 case class ExternalInjectedItem(
     items: Seq[ExternalInjection]

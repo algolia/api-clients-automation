@@ -1191,7 +1191,12 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * Retrieves average times for indexing operations for selected clusters.
+   * Retrieves indexing latency metrics for selected clusters. This endpoint is intended for
+   * infrastructure-level monitoring and availability checks. The returned value reflects latency
+   * measured on Algolia's internal monitoring index and is reported in milliseconds. This metric
+   * isn't intended to represent the indexing performance of an individual application or index. To
+   * measure when an indexing operation has completed for your application, use the `waitTask`
+   * method.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1204,7 +1209,12 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * Retrieves average times for indexing operations for selected clusters.
+   * Retrieves indexing latency metrics for selected clusters. This endpoint is intended for
+   * infrastructure-level monitoring and availability checks. The returned value reflects latency
+   * measured on Algolia's internal monitoring index and is reported in milliseconds. This metric
+   * isn't intended to represent the indexing performance of an individual application or index. To
+   * measure when an indexing operation has completed for your application, use the `waitTask`
+   * method.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1217,7 +1227,12 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * Retrieves average times for indexing operations for selected clusters.
+   * Retrieves indexing latency metrics for selected clusters. This endpoint is intended for
+   * infrastructure-level monitoring and availability checks. The returned value reflects latency
+   * measured on Algolia's internal monitoring index and is reported in milliseconds. This metric
+   * isn't intended to represent the indexing performance of an individual application or index. To
+   * measure when an indexing operation has completed for your application, use the `waitTask`
+   * method.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1227,7 +1242,12 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * Retrieves average times for indexing operations for selected clusters.
+   * Retrieves indexing latency metrics for selected clusters. This endpoint is intended for
+   * infrastructure-level monitoring and availability checks. The returned value reflects latency
+   * measured on Algolia's internal monitoring index and is reported in milliseconds. This metric
+   * isn't intended to represent the indexing performance of an individual application or index. To
+   * measure when an indexing operation has completed for your application, use the `waitTask`
+   * method.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1237,7 +1257,12 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves average times for indexing operations for selected clusters.
+   * (asynchronously) Retrieves indexing latency metrics for selected clusters. This endpoint is
+   * intended for infrastructure-level monitoring and availability checks. The returned value
+   * reflects latency measured on Algolia's internal monitoring index and is reported in
+   * milliseconds. This metric isn't intended to represent the indexing performance of an individual
+   * application or index. To measure when an indexing operation has completed for your application,
+   * use the `waitTask` method.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1254,7 +1279,12 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves average times for indexing operations for selected clusters.
+   * (asynchronously) Retrieves indexing latency metrics for selected clusters. This endpoint is
+   * intended for infrastructure-level monitoring and availability checks. The returned value
+   * reflects latency measured on Algolia's internal monitoring index and is reported in
+   * milliseconds. This metric isn't intended to represent the indexing performance of an individual
+   * application or index. To measure when an indexing operation has completed for your application,
+   * use the `waitTask` method.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1271,7 +1301,12 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves average times for indexing operations for selected clusters.
+   * (asynchronously) Retrieves indexing latency metrics for selected clusters. This endpoint is
+   * intended for infrastructure-level monitoring and availability checks. The returned value
+   * reflects latency measured on Algolia's internal monitoring index and is reported in
+   * milliseconds. This metric isn't intended to represent the indexing performance of an individual
+   * application or index. To measure when an indexing operation has completed for your application,
+   * use the `waitTask` method.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1281,7 +1316,12 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves average times for indexing operations for selected clusters.
+   * (asynchronously) Retrieves indexing latency metrics for selected clusters. This endpoint is
+   * intended for infrastructure-level monitoring and availability checks. The returned value
+   * reflects latency measured on Algolia's internal monitoring index and is reported in
+   * milliseconds. This metric isn't intended to represent the indexing performance of an individual
+   * application or index. To measure when an indexing operation has completed for your application,
+   * use the `waitTask` method.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call

@@ -41,5 +41,6 @@ import algoliasearch.search.SearchTypeDefault._
   */
 case class SearchForHitsOptions(
     indexName: String,
-    `type`: Option[SearchTypeDefault] = scala.None
+    `type`: Option[SearchTypeDefault] = scala.None,
+    extensions: Option[SearchExtensions] = scala.None
 )

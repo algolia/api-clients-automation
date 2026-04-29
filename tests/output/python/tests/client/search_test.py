@@ -9,6 +9,7 @@ from algoliasearch.http.hosts import Host, HostsCollection
 from algoliasearch.search.client import SearchClient
 from algoliasearch.search.client import SearchClientSync
 from algoliasearch.search.config import SearchConfig
+from algoliasearch.search.config import TransformationOptions
 
 
 class TestSearchClient:
@@ -398,7 +399,7 @@ class TestSearchClient:
         _req = await _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.38.1\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.39.0\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     async def test_delete_objects_0(self):
@@ -800,7 +801,32 @@ class TestSearchClient:
         call partialUpdateObjectsWithTransformation with createIfNotExists=true
         """
 
-        _config = SearchConfig("test-app-id", "test-api-key")
+        _transformation_options = TransformationOptions(
+            region="us",
+            hosts=HostsCollection(
+                [
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6688,
+                    ),
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6689,
+                    ),
+                ]
+            ),
+        )
+        _config = SearchConfig(
+            "test-app-id",
+            "test-api-key",
+            transformation_options=_transformation_options,
+        )
         _config.hosts = HostsCollection(
             [
                 Host(
@@ -819,7 +845,6 @@ class TestSearchClient:
                 ),
             ]
         )
-        _config.set_transformation_region("us")
         _client = SearchClient.create_with_config(config=_config)
         _req = await _client.partial_update_objects_with_transformation(
             index_name="cts_e2e_partialUpdateObjectsWithTransformation_python",
@@ -1007,7 +1032,25 @@ class TestSearchClient:
         call replaceAllObjectsWithTransformation without error
         """
 
-        _config = SearchConfig("test-app-id", "test-api-key")
+        _transformation_options = TransformationOptions(
+            region="us",
+            hosts=HostsCollection(
+                [
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6690,
+                    )
+                ]
+            ),
+        )
+        _config = SearchConfig(
+            "test-app-id",
+            "test-api-key",
+            transformation_options=_transformation_options,
+        )
         _config.hosts = HostsCollection(
             [
                 Host(
@@ -1019,7 +1062,6 @@ class TestSearchClient:
                 )
             ]
         )
-        _config.set_transformation_region("us")
         _client = SearchClient.create_with_config(config=_config)
         _req = await _client.replace_all_objects_with_transformation(
             index_name="cts_e2e_replace_all_objects_with_transformation_python",
@@ -1224,7 +1266,32 @@ class TestSearchClient:
         call saveObjectsWithTransformation without error
         """
 
-        _config = SearchConfig("test-app-id", "test-api-key")
+        _transformation_options = TransformationOptions(
+            region="us",
+            hosts=HostsCollection(
+                [
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6688,
+                    ),
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6689,
+                    ),
+                ]
+            ),
+        )
+        _config = SearchConfig(
+            "test-app-id",
+            "test-api-key",
+            transformation_options=_transformation_options,
+        )
         _config.hosts = HostsCollection(
             [
                 Host(
@@ -1243,7 +1310,6 @@ class TestSearchClient:
                 ),
             ]
         )
-        _config.set_transformation_region("us")
         _client = SearchClient.create_with_config(config=_config)
         _req = await _client.save_objects_with_transformation(
             index_name="cts_e2e_saveObjectsWithTransformation_python",
@@ -1893,7 +1959,7 @@ class TestSearchClientSync:
         _req = _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.38.1\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.39.0\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     def test_delete_objects_0(self):
@@ -2295,7 +2361,32 @@ class TestSearchClientSync:
         call partialUpdateObjectsWithTransformation with createIfNotExists=true
         """
 
-        _config = SearchConfig("test-app-id", "test-api-key")
+        _transformation_options = TransformationOptions(
+            region="us",
+            hosts=HostsCollection(
+                [
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6688,
+                    ),
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6689,
+                    ),
+                ]
+            ),
+        )
+        _config = SearchConfig(
+            "test-app-id",
+            "test-api-key",
+            transformation_options=_transformation_options,
+        )
         _config.hosts = HostsCollection(
             [
                 Host(
@@ -2314,7 +2405,6 @@ class TestSearchClientSync:
                 ),
             ]
         )
-        _config.set_transformation_region("us")
         _client = SearchClientSync.create_with_config(config=_config)
         _req = _client.partial_update_objects_with_transformation(
             index_name="cts_e2e_partialUpdateObjectsWithTransformation_python",
@@ -2502,7 +2592,25 @@ class TestSearchClientSync:
         call replaceAllObjectsWithTransformation without error
         """
 
-        _config = SearchConfig("test-app-id", "test-api-key")
+        _transformation_options = TransformationOptions(
+            region="us",
+            hosts=HostsCollection(
+                [
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6690,
+                    )
+                ]
+            ),
+        )
+        _config = SearchConfig(
+            "test-app-id",
+            "test-api-key",
+            transformation_options=_transformation_options,
+        )
         _config.hosts = HostsCollection(
             [
                 Host(
@@ -2514,7 +2622,6 @@ class TestSearchClientSync:
                 )
             ]
         )
-        _config.set_transformation_region("us")
         _client = SearchClientSync.create_with_config(config=_config)
         _req = _client.replace_all_objects_with_transformation(
             index_name="cts_e2e_replace_all_objects_with_transformation_python",
@@ -2719,7 +2826,32 @@ class TestSearchClientSync:
         call saveObjectsWithTransformation without error
         """
 
-        _config = SearchConfig("test-app-id", "test-api-key")
+        _transformation_options = TransformationOptions(
+            region="us",
+            hosts=HostsCollection(
+                [
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6688,
+                    ),
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6689,
+                    ),
+                ]
+            ),
+        )
+        _config = SearchConfig(
+            "test-app-id",
+            "test-api-key",
+            transformation_options=_transformation_options,
+        )
         _config.hosts = HostsCollection(
             [
                 Host(
@@ -2738,7 +2870,6 @@ class TestSearchClientSync:
                 ),
             ]
         )
-        _config.set_transformation_region("us")
         _client = SearchClientSync.create_with_config(config=_config)
         _req = _client.save_objects_with_transformation(
             index_name="cts_e2e_saveObjectsWithTransformation_python",

@@ -42,19 +42,41 @@ public class SearchClient extends ApiClient {
   private IngestionClient ingestionTransporter;
 
   /**
-   * Sets the region of the current algolia application to the configuration, this is required to be
-   * called if you wish to leverage the transformation pipeline (via the *WithTransformation
-   * methods).
-   *
-   * @param region (required)
+   * Sets (or replaces) the ingestion transporter used by {@code *WithTransformation} helpers.
+   * Closes the previous transporter if one exists. See
+   * https://www.algolia.com/doc/libraries/sdk/methods/ingestion
    */
-  public void setTransformationRegion(String region) {
+  public void setTransformationOptions(@Nonnull TransformationOptions transformationOptions) {
+    if (transformationOptions == null) {
+      throw new AlgoliaRuntimeException("transformationOptions must not be null");
+    }
+    IngestionClient previous = this.ingestionTransporter;
     this.ingestionTransporter = new IngestionClient(
       this.authInterceptor.getApplicationId(),
       this.authInterceptor.getApiKey(),
-      region,
-      this.clientOptions
+      transformationOptions.getRegion(),
+      transformationOptions.getClientOptions()
     );
+    if (previous != null) {
+      try {
+        previous.close();
+      } catch (java.io.IOException e) {
+        throw new AlgoliaRuntimeException("Failed to close previous ingestion transporter", e);
+      }
+    }
+  }
+
+  /**
+   * @deprecated Use {@link #withTransformation(String, String, TransformationOptions)} or {@link
+   *     #setTransformationOptions(TransformationOptions)} instead. The old setter forwarded the
+   *     parent search {@link ClientOptions} to the ingestion transporter, which caused search
+   *     timeouts to bleed into ingestion calls. The new {@code TransformationOptions} defaults to
+   *     Ingestion API defaults (25 s timeouts) and only overrides what is explicitly specified. See
+   *     https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+   */
+  @Deprecated
+  public void setTransformationRegion(String region) {
+    setTransformationOptions(new TransformationOptions(region));
   }
 
   public SearchClient(String appId, String apiKey) {
@@ -72,6 +94,46 @@ public class SearchClient extends ApiClient {
       Duration.ofMillis(5000L),
       Duration.ofMillis(30000L)
     );
+  }
+
+  /**
+   * Creates a {@link SearchClient} configured with a {@link TransformationOptions} for use with
+   * {@code *WithTransformation} helpers. The ingestion transporter is initialised eagerly using
+   * Ingestion API defaults (25 s timeouts); pass a {@link ClientOptions} inside {@link
+   * TransformationOptions} to override specific defaults. See
+   * https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+   */
+  public static SearchClient withTransformation(String appId, String apiKey, @Nonnull TransformationOptions transformationOptions) {
+    SearchClient client = new SearchClient(appId, apiKey);
+    client.setTransformationOptions(transformationOptions);
+    return client;
+  }
+
+  /**
+   * Creates a {@link SearchClient} configured with custom search-client options and a {@link
+   * TransformationOptions} for use with {@code *WithTransformation} helpers. See
+   * https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+   */
+  public static SearchClient withTransformation(
+    String appId,
+    String apiKey,
+    @Nonnull TransformationOptions transformationOptions,
+    @Nullable ClientOptions options
+  ) {
+    SearchClient client = new SearchClient(appId, apiKey, options);
+    client.setTransformationOptions(transformationOptions);
+    return client;
+  }
+
+  @Override
+  public void close() throws java.io.IOException {
+    try {
+      if (this.ingestionTransporter != null) {
+        this.ingestionTransporter.close();
+      }
+    } finally {
+      super.close();
+    }
   }
 
   private static List<Host> getDefaultHosts(String appId) {
@@ -10148,14 +10210,13 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Sends multiple search requests to one or more indices. This can be useful in these cases: -
-   * Different indices for different purposes, such as, one index for products, another one for
-   * marketing content. - Multiple searches to the same index—for example, with different filters.
-   * Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient
-   * format, if you already know the return type you want.
+   * Runs multiple search queries against one or more indices in a single API request. Use cases
+   * include: - Searching different indices, such as products and marketing content. - Run multiple
+   * queries on the same index with different parameters or filters. If you know the expected result
+   * type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
    *
-   * @param searchMethodParams Muli-search request body. Results are returned in the same order as
-   *     the requests. (required)
+   * @param searchMethodParams Multi-query search request body. Results are returned in the same
+   *     order as the requests. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -10170,14 +10231,13 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Sends multiple search requests to one or more indices. This can be useful in these cases: -
-   * Different indices for different purposes, such as, one index for products, another one for
-   * marketing content. - Multiple searches to the same index—for example, with different filters.
-   * Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient
-   * format, if you already know the return type you want.
+   * Runs multiple search queries against one or more indices in a single API request. Use cases
+   * include: - Searching different indices, such as products and marketing content. - Run multiple
+   * queries on the same index with different parameters or filters. If you know the expected result
+   * type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
    *
-   * @param searchMethodParams Muli-search request body. Results are returned in the same order as
-   *     the requests. (required)
+   * @param searchMethodParams Multi-query search request body. Results are returned in the same
+   *     order as the requests. (required)
    * @param innerType The class for an HTTP response.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -10192,14 +10252,13 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Sends multiple search requests to one or more indices. This can be useful in these cases: -
-   * Different indices for different purposes, such as, one index for products, another one for
-   * marketing content. - Multiple searches to the same index—for example, with different filters.
-   * Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient
-   * format, if you already know the return type you want.
+   * Runs multiple search queries against one or more indices in a single API request. Use cases
+   * include: - Searching different indices, such as products and marketing content. - Run multiple
+   * queries on the same index with different parameters or filters. If you know the expected result
+   * type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
    *
-   * @param searchMethodParams Muli-search request body. Results are returned in the same order as
-   *     the requests. (required)
+   * @param searchMethodParams Multi-query search request body. Results are returned in the same
+   *     order as the requests. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -10208,14 +10267,13 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Sends multiple search requests to one or more indices. This can be useful in these cases: -
-   * Different indices for different purposes, such as, one index for products, another one for
-   * marketing content. - Multiple searches to the same index—for example, with different filters.
-   * Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient
-   * format, if you already know the return type you want.
+   * Runs multiple search queries against one or more indices in a single API request. Use cases
+   * include: - Searching different indices, such as products and marketing content. - Run multiple
+   * queries on the same index with different parameters or filters. If you know the expected result
+   * type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
    *
-   * @param searchMethodParams Muli-search request body. Results are returned in the same order as
-   *     the requests. (required)
+   * @param searchMethodParams Multi-query search request body. Results are returned in the same
+   *     order as the requests. (required)
    * @param innerType The class for an HTTP response.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -10225,14 +10283,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Sends multiple search requests to one or more indices. This can be useful in
-   * these cases: - Different indices for different purposes, such as, one index for products,
-   * another one for marketing content. - Multiple searches to the same index—for example, with
-   * different filters. Use the helper `searchForHits` or `searchForFacets` to get the results in a
-   * more convenient format, if you already know the return type you want.
+   * (asynchronously) Runs multiple search queries against one or more indices in a single API
+   * request. Use cases include: - Searching different indices, such as products and marketing
+   * content. - Run multiple queries on the same index with different parameters or filters. If you
+   * know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify
+   * the response format.
    *
-   * @param searchMethodParams Muli-search request body. Results are returned in the same order as
-   *     the requests. (required)
+   * @param searchMethodParams Multi-query search request body. Results are returned in the same
+   *     order as the requests. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -10255,14 +10313,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Sends multiple search requests to one or more indices. This can be useful in
-   * these cases: - Different indices for different purposes, such as, one index for products,
-   * another one for marketing content. - Multiple searches to the same index—for example, with
-   * different filters. Use the helper `searchForHits` or `searchForFacets` to get the results in a
-   * more convenient format, if you already know the return type you want.
+   * (asynchronously) Runs multiple search queries against one or more indices in a single API
+   * request. Use cases include: - Searching different indices, such as products and marketing
+   * content. - Run multiple queries on the same index with different parameters or filters. If you
+   * know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify
+   * the response format.
    *
-   * @param searchMethodParams Muli-search request body. Results are returned in the same order as
-   *     the requests. (required)
+   * @param searchMethodParams Multi-query search request body. Results are returned in the same
+   *     order as the requests. (required)
    * @param innerType The class for an HTTP response.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -10285,14 +10343,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Sends multiple search requests to one or more indices. This can be useful in
-   * these cases: - Different indices for different purposes, such as, one index for products,
-   * another one for marketing content. - Multiple searches to the same index—for example, with
-   * different filters. Use the helper `searchForHits` or `searchForFacets` to get the results in a
-   * more convenient format, if you already know the return type you want.
+   * (asynchronously) Runs multiple search queries against one or more indices in a single API
+   * request. Use cases include: - Searching different indices, such as products and marketing
+   * content. - Run multiple queries on the same index with different parameters or filters. If you
+   * know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify
+   * the response format.
    *
-   * @param searchMethodParams Muli-search request body. Results are returned in the same order as
-   *     the requests. (required)
+   * @param searchMethodParams Multi-query search request body. Results are returned in the same
+   *     order as the requests. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -10302,14 +10360,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Sends multiple search requests to one or more indices. This can be useful in
-   * these cases: - Different indices for different purposes, such as, one index for products,
-   * another one for marketing content. - Multiple searches to the same index—for example, with
-   * different filters. Use the helper `searchForHits` or `searchForFacets` to get the results in a
-   * more convenient format, if you already know the return type you want.
+   * (asynchronously) Runs multiple search queries against one or more indices in a single API
+   * request. Use cases include: - Searching different indices, such as products and marketing
+   * content. - Run multiple queries on the same index with different parameters or filters. If you
+   * know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify
+   * the response format.
    *
-   * @param searchMethodParams Muli-search request body. Results are returned in the same order as
-   *     the requests. (required)
+   * @param searchMethodParams Multi-query search request body. Results are returned in the same
+   *     order as the requests. (required)
    * @param innerType The class for an HTTP response.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -12939,8 +12997,9 @@ public class SearchClient extends ApiClient {
   /**
    * Helper: Similar to the `saveObjects` method but requires a Push connector
    * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
-   * to be created first, in order to transform records before indexing them to Algolia. The
-   * `region` must have been passed to the client instantiation method.
+   * to be created first, in order to transform records before indexing them to Algolia. The {@link
+   * TransformationOptions} must have been passed to the client constructor or set via {@link
+   * #setTransformationOptions}.
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -12955,8 +13014,9 @@ public class SearchClient extends ApiClient {
   /**
    * Helper: Similar to the `saveObjects` method but requires a Push connector
    * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
-   * to be created first, in order to transform records before indexing them to Algolia. The
-   * `region` must have been passed to the client instantiation method.
+   * to be created first, in order to transform records before indexing them to Algolia. The {@link
+   * TransformationOptions} must have been passed to the client constructor or set via {@link
+   * #setTransformationOptions}.
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -12974,8 +13034,9 @@ public class SearchClient extends ApiClient {
   /**
    * Helper: Similar to the `saveObjects` method but requires a Push connector
    * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
-   * to be created first, in order to transform records before indexing them to Algolia. The
-   * `region` must have been passed to the client instantiation method.
+   * to be created first, in order to transform records before indexing them to Algolia. The {@link
+   * TransformationOptions} must have been passed to the client constructor or set via {@link
+   * #setTransformationOptions}.
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -12989,8 +13050,9 @@ public class SearchClient extends ApiClient {
   /**
    * Helper: Similar to the `saveObjects` method but requires a Push connector
    * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
-   * to be created first, in order to transform records before indexing them to Algolia. The
-   * `region` must have been passed to the client instantiation method.
+   * to be created first, in order to transform records before indexing them to Algolia. The {@link
+   * TransformationOptions} must have been passed to the client constructor or set via {@link
+   * #setTransformationOptions}.
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -13012,8 +13074,9 @@ public class SearchClient extends ApiClient {
   /**
    * Helper: Similar to the `saveObjects` method but requires a Push connector
    * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
-   * to be created first, in order to transform records before indexing them to Algolia. The
-   * `region` must have been passed to the client instantiation method.
+   * to be created first, in order to transform records before indexing them to Algolia. The {@link
+   * TransformationOptions} must have been passed to the client constructor or set via {@link
+   * #setTransformationOptions}.
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -13033,7 +13096,11 @@ public class SearchClient extends ApiClient {
     RequestOptions requestOptions
   ) {
     if (this.ingestionTransporter == null) {
-      throw new AlgoliaRuntimeException("`setTransformationRegion` must have been called before calling this method.");
+      throw new AlgoliaRuntimeException(
+        "transformationOptions must be set in the client config before calling this method." +
+          " It defaults to the Ingestion API defaults." +
+          " See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
+      );
     }
 
     return this.ingestionTransporter.chunkedPush(
@@ -13186,8 +13253,9 @@ public class SearchClient extends ApiClient {
   /**
    * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector
    * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
-   * to be created first, in order to transform records before indexing them to Algolia. The
-   * `region` must have been passed to the client instantiation method.
+   * to be created first, in order to transform records before indexing them to Algolia. The {@link
+   * TransformationOptions} must have been passed to the client constructor or set via {@link
+   * #setTransformationOptions}.
    *
    * @param indexName The `indexName` to update `objects` in.
    * @param objects The array of `objects` to update in the given Algolia `indexName`.
@@ -13201,8 +13269,9 @@ public class SearchClient extends ApiClient {
   /**
    * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector
    * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
-   * to be created first, in order to transform records before indexing them to Algolia. The
-   * `region` must have been passed to the client instantiation method.
+   * to be created first, in order to transform records before indexing them to Algolia. The {@link
+   * TransformationOptions} must have been passed to the client constructor or set via {@link
+   * #setTransformationOptions}.
    *
    * @param indexName The `indexName` to update `objects` in.
    * @param objects The array of `objects` to update in the given Algolia `indexName`.
@@ -13224,8 +13293,9 @@ public class SearchClient extends ApiClient {
   /**
    * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector
    * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
-   * to be created first, in order to transform records before indexing them to Algolia. The
-   * `region` must have been passed to the client instantiation method.
+   * to be created first, in order to transform records before indexing them to Algolia. The {@link
+   * TransformationOptions} must have been passed to the client constructor or set via {@link
+   * #setTransformationOptions}.
    *
    * @param indexName The `indexName` to update `objects` in.
    * @param objects The array of `objects` to update in the given Algolia `indexName`.
@@ -13244,14 +13314,15 @@ public class SearchClient extends ApiClient {
     boolean waitForTasks,
     RequestOptions requestOptions
   ) {
-    return partialUpdateObjectsWithTransformation(indexName, objects, createIfNotExists, waitForTasks, 1000, null);
+    return partialUpdateObjectsWithTransformation(indexName, objects, createIfNotExists, waitForTasks, 1000, requestOptions);
   }
 
   /**
    * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector
    * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
-   * to be created first, in order to transform records before indexing them to Algolia. The
-   * `region` must have been passed to the client instantiation method.
+   * to be created first, in order to transform records before indexing them to Algolia. The {@link
+   * TransformationOptions} must have been passed to the client constructor or set via {@link
+   * #setTransformationOptions}.
    *
    * @param indexName The `indexName` to update `objects` in.
    * @param objects The array of `objects` to update in the given Algolia `indexName`.
@@ -13274,7 +13345,11 @@ public class SearchClient extends ApiClient {
     RequestOptions requestOptions
   ) {
     if (this.ingestionTransporter == null) {
-      throw new AlgoliaRuntimeException("`setTransformationRegion` must have been called before calling this method.");
+      throw new AlgoliaRuntimeException(
+        "transformationOptions must be set in the client config before calling this method." +
+          " It defaults to the Ingestion API defaults." +
+          " See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
+      );
     }
 
     return this.ingestionTransporter.chunkedPush(
@@ -13524,8 +13599,9 @@ public class SearchClient extends ApiClient {
   /**
    * Helper: Similar to the `saveObjects` method but requires a Push connector
    * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
-   * to be created first, in order to transform records before indexing them to Algolia. The
-   * `region` must have been passed to the client instantiation method.
+   * to be created first, in order to transform records before indexing them to Algolia. The {@link
+   * TransformationOptions} must have been passed to the client constructor or set via {@link
+   * #setTransformationOptions}.
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -13540,8 +13616,9 @@ public class SearchClient extends ApiClient {
   /**
    * Helper: Similar to the `saveObjects` method but requires a Push connector
    * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
-   * to be created first, in order to transform records before indexing them to Algolia. The
-   * `region` must have been passed to the client instantiation method.
+   * to be created first, in order to transform records before indexing them to Algolia. The {@link
+   * TransformationOptions} must have been passed to the client constructor or set via {@link
+   * #setTransformationOptions}.
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -13562,8 +13639,9 @@ public class SearchClient extends ApiClient {
   /**
    * Helper: Similar to the `saveObjects` method but requires a Push connector
    * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
-   * to be created first, in order to transform records before indexing them to Algolia. The
-   * `region` must have been passed to the client instantiation method.
+   * to be created first, in order to transform records before indexing them to Algolia. The {@link
+   * TransformationOptions} must have been passed to the client constructor or set via {@link
+   * #setTransformationOptions}.
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -13587,8 +13665,9 @@ public class SearchClient extends ApiClient {
   /**
    * Helper: Similar to the `saveObjects` method but requires a Push connector
    * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
-   * to be created first, in order to transform records before indexing them to Algolia. The
-   * `region` must have been passed to the client instantiation method.
+   * to be created first, in order to transform records before indexing them to Algolia. The {@link
+   * TransformationOptions} must have been passed to the client constructor or set via {@link
+   * #setTransformationOptions}.
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -13610,7 +13689,11 @@ public class SearchClient extends ApiClient {
     RequestOptions requestOptions
   ) {
     if (this.ingestionTransporter == null) {
-      throw new AlgoliaRuntimeException("`setTransformationRegion` must have been called before calling this method.");
+      throw new AlgoliaRuntimeException(
+        "transformationOptions must be set in the client config before calling this method." +
+          " It defaults to the Ingestion API defaults." +
+          " See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
+      );
     }
 
     Random rnd = new Random();

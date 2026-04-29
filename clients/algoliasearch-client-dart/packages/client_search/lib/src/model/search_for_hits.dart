@@ -3,6 +3,7 @@
 import 'package:algolia_client_search/src/model/mode.dart';
 import 'package:algolia_client_search/src/model/supported_language.dart';
 import 'package:algolia_client_search/src/model/rendering_content.dart';
+import 'package:algolia_client_search/src/model/search_extensions.dart';
 import 'package:algolia_client_search/src/model/alternatives_as_exact.dart';
 import 'package:algolia_client_search/src/model/exact_on_single_word_query.dart';
 import 'package:algolia_client_search/src/model/search_type_default.dart';
@@ -95,6 +96,7 @@ final class SearchForHits {
     this.reRankingApplyFilter,
     required this.indexName,
     this.type,
+    this.extensions,
   });
 
   /// Search parameters as a URL-encoded query string.
@@ -437,6 +439,9 @@ final class SearchForHits {
   @JsonKey(name: r'type')
   final SearchTypeDefault? type;
 
+  @JsonKey(name: r'extensions')
+  final SearchExtensions? extensions;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -519,7 +524,8 @@ final class SearchForHits {
           other.enableReRanking == enableReRanking &&
           other.reRankingApplyFilter == reRankingApplyFilter &&
           other.indexName == indexName &&
-          other.type == type;
+          other.type == type &&
+          other.extensions == extensions;
 
   @override
   int get hashCode =>
@@ -598,7 +604,8 @@ final class SearchForHits {
       enableReRanking.hashCode +
       reRankingApplyFilter.hashCode +
       indexName.hashCode +
-      type.hashCode;
+      type.hashCode +
+      extensions.hashCode;
 
   factory SearchForHits.fromJson(Map<String, dynamic> json) =>
       _$SearchForHitsFromJson(json);

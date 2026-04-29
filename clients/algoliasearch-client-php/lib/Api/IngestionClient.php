@@ -74,7 +74,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class IngestionClient
 {
-    public const VERSION = '4.41.1';
+    public const VERSION = '4.42.0';
 
     /**
      * @var ApiWrapperInterface
@@ -4357,8 +4357,6 @@ class IngestionClient
             }
 
             if ($waitForTasks && !empty($responses) && (0 === sizeof($responses) % $waitBatchSize || $count === sizeof($objects))) {
-                $timeoutCalculation = 'Algolia\AlgoliaSearch\Support\Helpers::linearTimeout';
-
                 foreach (array_slice($responses, $offset, $waitBatchSize) as $response) {
                     $retry = 0;
 
@@ -4374,9 +4372,7 @@ class IngestionClient
                         }
 
                         ++$retry;
-                        usleep(
-                            call_user_func_array($timeoutCalculation, [$this->config->getWaitTaskTimeBeforeRetry(), $retry])
-                        );
+                        usleep(min($retry * 1500, 5000) * 1000);
                     }
 
                     if (false === $ok) {

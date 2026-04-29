@@ -81,6 +81,11 @@ SearchResponse _$SearchResponseFromJson(Map<String, dynamic> json) =>
                   .toList()),
           query: $checkedConvert('query', (v) => v as String?),
           params: $checkedConvert('params', (v) => v as String?),
+          extensions: $checkedConvert(
+              'extensions',
+              (v) => v == null
+                  ? null
+                  : ResponseExtensions.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -133,5 +138,6 @@ Map<String, dynamic> _$SearchResponseToJson(SearchResponse instance) {
   val['hits'] = instance.hits.map((e) => e.toJson()).toList();
   writeNotNull('query', instance.query);
   writeNotNull('params', instance.params);
+  writeNotNull('extensions', instance.extensions?.toJson());
   return val;
 }

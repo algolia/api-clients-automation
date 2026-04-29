@@ -358,5 +358,6 @@ case class SearchForHits(
     enableReRanking: Option[Boolean] = scala.None,
     reRankingApplyFilter: Option[ReRankingApplyFilter] = scala.None,
     indexName: String,
-    `type`: Option[SearchTypeDefault] = scala.None
+    `type`: Option[SearchTypeDefault] = scala.None,
+    extensions: Option[SearchExtensions] = scala.None
 ) extends SearchQueryTrait

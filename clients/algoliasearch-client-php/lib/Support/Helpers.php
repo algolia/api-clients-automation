@@ -118,7 +118,7 @@ final class Helpers
             );
         }
 
-        throw new ExceededRetriesException('Maximum number of retries ('.$maxRetries.') exceeded.');
+        throw new ExceededRetriesException('Stopped waiting for the task after '.$maxRetries.' retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher $maxRetries.');
     }
 
     /**
@@ -182,7 +182,7 @@ final class Helpers
             );
         }
 
-        throw new ExceededRetriesException('Maximum number of retries ('.$maxRetries.') exceeded.');
+        throw new ExceededRetriesException('Stopped waiting for the API key operation after '.$maxRetries.' retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher $maxRetries.');
     }
 
     /**

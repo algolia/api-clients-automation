@@ -2384,6 +2384,12 @@ components:
       type: object
       additionalProperties: false
       properties:
+        discount:
+          $ref: '#/components/schemas/discount'
+        price:
+          $ref: '#/components/schemas/price'
+        quantity:
+          $ref: '#/components/schemas/quantity'
         queryID:
           type: string
           pattern: '[0-9a-f]{32}'
@@ -2393,12 +2399,6 @@ components:
             Unique identifier for a search query, used to track purchase events
             with multiple records that originate from different searches.
           example: 3e48cd0616e466948dd85abf5c3fbbe2
-        price:
-          $ref: '#/components/schemas/price'
-        quantity:
-          $ref: '#/components/schemas/quantity'
-        discount:
-          $ref: '#/components/schemas/discount'
     objectDataAfterSearchList:
       type: array
       description: >
@@ -2434,16 +2434,16 @@ components:
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
-        eventType:
-          $ref: '#/components/schemas/ConversionEvent'
         eventSubtype:
           $ref: '#/components/schemas/AddToCartEvent'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
         index:
           $ref: '#/components/schemas/index'
-        queryID:
-          $ref: '#/components/schemas/queryID'
         objectIDs:
           $ref: '#/components/schemas/objectIDs'
+        queryID:
+          $ref: '#/components/schemas/queryID'
         userToken:
           $ref: '#/components/schemas/userToken'
         authenticatedUserToken:
@@ -2485,12 +2485,14 @@ components:
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
-        eventType:
-          $ref: '#/components/schemas/ConversionEvent'
         eventSubtype:
           $ref: '#/components/schemas/PurchaseEvent'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
         index:
           $ref: '#/components/schemas/index'
+        objectData:
+          $ref: '#/components/schemas/objectDataAfterSearchList'
         objectIDs:
           $ref: '#/components/schemas/objectIDs'
         userToken:
@@ -2499,8 +2501,6 @@ components:
           $ref: '#/components/schemas/authenticatedUserToken'
         currency:
           $ref: '#/components/schemas/currency'
-        objectData:
-          $ref: '#/components/schemas/objectDataAfterSearchList'
         timestamp:
           $ref: '#/components/schemas/timestamp'
         value:
@@ -2602,12 +2602,12 @@ components:
       type: object
       additionalProperties: false
       properties:
+        discount:
+          $ref: '#/components/schemas/discount'
         price:
           $ref: '#/components/schemas/price'
         quantity:
           $ref: '#/components/schemas/quantity'
-        discount:
-          $ref: '#/components/schemas/discount'
     objectDataList:
       type: array
       description: >
@@ -2634,10 +2634,10 @@ components:
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
-        eventType:
-          $ref: '#/components/schemas/ConversionEvent'
         eventSubtype:
           $ref: '#/components/schemas/PurchaseEvent'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
         index:
           $ref: '#/components/schemas/index'
         objectIDs:
@@ -2679,10 +2679,10 @@ components:
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
-        eventType:
-          $ref: '#/components/schemas/ConversionEvent'
         eventSubtype:
           $ref: '#/components/schemas/AddToCartEvent'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
         index:
           $ref: '#/components/schemas/index'
         objectIDs:
@@ -2771,10 +2771,10 @@ components:
           $ref: '#/components/schemas/eventName'
         eventType:
           $ref: '#/components/schemas/ClickEvent'
-        index:
-          $ref: '#/components/schemas/index'
         filters:
           $ref: '#/components/schemas/filters'
+        index:
+          $ref: '#/components/schemas/index'
         userToken:
           $ref: '#/components/schemas/userToken'
         authenticatedUserToken:
@@ -2798,10 +2798,10 @@ components:
           $ref: '#/components/schemas/eventName'
         eventType:
           $ref: '#/components/schemas/ConversionEvent'
-        index:
-          $ref: '#/components/schemas/index'
         filters:
           $ref: '#/components/schemas/filters'
+        index:
+          $ref: '#/components/schemas/index'
         userToken:
           $ref: '#/components/schemas/userToken'
         authenticatedUserToken:
@@ -2861,10 +2861,10 @@ components:
           $ref: '#/components/schemas/eventName'
         eventType:
           $ref: '#/components/schemas/ViewEvent'
-        index:
-          $ref: '#/components/schemas/index'
         filters:
           $ref: '#/components/schemas/filters'
+        index:
+          $ref: '#/components/schemas/index'
         userToken:
           $ref: '#/components/schemas/userToken'
         authenticatedUserToken:

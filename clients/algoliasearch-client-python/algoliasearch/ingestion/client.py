@@ -23,11 +23,7 @@ else:
 from algoliasearch.http.api_response import ApiResponse
 from algoliasearch.http.base_config import BaseConfig
 from algoliasearch.http.exceptions import RequestException
-from algoliasearch.http.helpers import (
-    RetryTimeout,
-    create_iterable,
-    create_iterable_sync,
-)
+from algoliasearch.http.helpers import create_iterable, create_iterable_sync
 from algoliasearch.http.request_options import RequestOptions
 from algoliasearch.http.serializer import body_serializer
 from algoliasearch.http.transporter import Transporter
@@ -196,7 +192,7 @@ class IngestionClient:
 
     async def close(self) -> None:
         """Closes the underlying `transporter` of the API client."""
-        return await self._transporter.close()
+        await self._transporter.close()
 
     async def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
@@ -272,13 +268,11 @@ class IngestionClient:
                     def _validate(_resp: Event | None) -> bool:
                         return _resp is not None
 
-                    timeout = RetryTimeout()
-
                     await create_iterable(
                         func=_func,
                         validate=_validate,
                         aggregator=_aggregator,
-                        timeout=lambda: timeout(_retry_count),
+                        timeout=lambda: float(min(_retry_count * 1.5, 5)),
                         error_validate=lambda _: _retry_count >= 50,
                         error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${50})",
                     )
@@ -5486,7 +5480,7 @@ class IngestionClientSync:
         self.close()
 
     def close(self) -> None:
-        return self._transporter.close()
+        self._transporter.close()
 
     def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
@@ -5562,13 +5556,11 @@ class IngestionClientSync:
                     def _validate(_resp: Event | None) -> bool:
                         return _resp is not None
 
-                    timeout = RetryTimeout()
-
                     create_iterable_sync(
                         func=_func,
                         validate=_validate,
                         aggregator=_aggregator,
-                        timeout=lambda: timeout(_retry_count),
+                        timeout=lambda: float(min(_retry_count * 1.5, 5)),
                         error_validate=lambda _: _retry_count >= 50,
                         error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${50})",
                     )
