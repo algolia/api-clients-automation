@@ -956,7 +956,12 @@ package object extension {
         requestOptions: Option[RequestOptions]
     )(implicit ec: ExecutionContext): Future[Option[IngestionEvent]] = {
       response.eventID match {
-        case None => Future.successful(None)
+        case None =>
+          Future.failed(
+            new AlgoliaClientException(
+              "received unexpected response from the push endpoint, eventID must not be undefined"
+            )
+          )
         case Some(eventID) =>
           retryUntil(
             retry = () =>
