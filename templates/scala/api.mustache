@@ -153,14 +153,17 @@ class {{classname}}(
     ) {
 
 {{#isSearchClient}}
-  private[algoliasearch] var ingestionTransporter: Option[IngestionClient] = None
+  @volatile private[algoliasearch] var ingestionTransporter: Option[IngestionClient] = None
 
   /** Sets (or replaces) the ingestion transporter used by `*WithTransformation` helpers.
-    * Closes the previous transporter if one exists.
+    * Closes the previous transporter if one exists. Thread-safe with respect to other
+    * `setTransformationOptions` and `close()` calls. Calling this while a
+    * `*WithTransformation` operation is in flight may cause that operation to fail —
+    * reconfigure between calls.
     *
     * See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
     */
-  def setTransformationOptions(transformationOptions: TransformationOptions): Unit = {
+  def setTransformationOptions(transformationOptions: TransformationOptions): Unit = synchronized {
     val previous = ingestionTransporter
     ingestionTransporter = Some(
       IngestionClient(
@@ -173,7 +176,7 @@ class {{classname}}(
     previous.foreach(_.close())
   }
 
-  override def close(): Unit = {
+  override def close(): Unit = synchronized {
     try ingestionTransporter.foreach(_.close())
     finally super.close()
   }
