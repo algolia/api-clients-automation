@@ -48,6 +48,46 @@ object {{classname}} {
     clientOptions = clientOptions
   )
 
+  {{#isSearchClient}}
+  /** Creates a new {{classname}} configured with [[TransformationOptions]] for use with the
+    * `*WithTransformation` helpers. The ingestion transporter is built eagerly using
+    * Ingestion API defaults; pass [[TransformationOptions.clientOptions]] to override them.
+    *
+    * See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+    *
+    * @param appId
+    *   application ID
+    * @param apiKey
+    *   api key
+    * @param transformationOptions
+    *   ingestion transporter configuration; `region` is required
+    * @param clientOptions
+    *   search client options
+    */
+  def withTransformation(
+      appId: String,
+      apiKey: String,
+      transformationOptions: TransformationOptions,
+      clientOptions: ClientOptions = ClientOptions()
+  ) = new {{classname}}(
+    appId = appId,
+    apiKey = apiKey,
+    clientOptions = clientOptions,
+    transformationOptions = Some(transformationOptions)
+  )
+
+  private[algoliasearch] def buildIngestionClient(
+      appId: String,
+      apiKey: String,
+      transformationOptions: TransformationOptions
+  ): IngestionClient = IngestionClient(
+    appId = appId,
+    apiKey = apiKey,
+    region = transformationOptions.region,
+    clientOptions = transformationOptions.clientOptions.getOrElse(ClientOptions())
+  )
+  {{/isSearchClient}}
+
   private def readTimeout(): Duration = {
     Duration({{x-timeouts.server.read}}, TimeUnit.MILLISECONDS)
   }
@@ -103,11 +143,12 @@ object {{classname}} {
   {{/hostsWithoutVariables.size}}
 }
 
-class {{classname}}(
+class {{classname}}{{#isSearchClient}} private{{/isSearchClient}}(
     appId: String,
     apiKey: String,
     {{#hasRegionalHost}}region: {{#fallbackToAliasHost}}Option[String] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}String{{/fallbackToAliasHost}},{{/hasRegionalHost}}
-    clientOptions: ClientOptions = ClientOptions()
+    clientOptions: ClientOptions = ClientOptions(){{#isSearchClient}},
+    transformationOptions: Option[TransformationOptions] = None{{/isSearchClient}}
 ) extends ApiClient(
       appId = appId,
       apiKey = apiKey,
@@ -119,6 +160,16 @@ class {{classname}}(
       formats = JsonSupport.format,
       options = clientOptions
     ) {
+
+{{#isSearchClient}}
+  private[algoliasearch] val ingestionTransporter: Option[IngestionClient] =
+    transformationOptions.map({{classname}}.buildIngestionClient(appId, apiKey, _))
+
+  override def close(): Unit = {
+    try ingestionTransporter.foreach(_.close())
+    finally super.close()
+  }
+{{/isSearchClient}}
 
 {{#operation}}
 /** {{{notes}}}

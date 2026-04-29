@@ -1,10 +1,17 @@
 package algoliasearch
 
-import algoliasearch.api.SearchClient
+import algoliasearch.api.{IngestionClient, SearchClient}
 import algoliasearch.config.RequestOptions
-import algoliasearch.exception.AlgoliaApiException
+import algoliasearch.exception.{AlgoliaApiException, AlgoliaClientException}
 import algoliasearch.extension.internal.Iterable.createIterable
 import algoliasearch.extension.internal.RetryUntil.{DEFAULT_DELAY, retryUntil}
+import algoliasearch.ingestion.{
+  Action => IngestionAction,
+  Event => IngestionEvent,
+  PushTaskPayload,
+  PushTaskRecords,
+  WatchResponse => IngestionWatchResponse
+}
 import algoliasearch.internal.util.{escape, paramToString}
 import algoliasearch.search._
 import org.json4s.native.Serialization.read
@@ -679,6 +686,300 @@ package object extension {
           }
         }
         case _ => None
+      }
+    }
+
+    /** Helper: Similar to the `saveObjects` method but requires a Push connector
+      * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be
+      * created first, in order to transform records before indexing them to Algolia. The [[TransformationOptions]] must
+      * have been passed to the client via [[SearchClient.withTransformation]].
+      *
+      * @param indexName
+      *   The `indexName` to replace `objects` in.
+      * @param objects
+      *   The array of `objects` to store in the given Algolia `indexName`.
+      * @param waitForTasks
+      *   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total
+      *   execution time of this method but is more reliable.
+      * @param batchSize
+      *   The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`.
+      * @param requestOptions
+      *   The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+      */
+    def saveObjectsWithTransformation[T](
+        indexName: String,
+        objects: Seq[T],
+        waitForTasks: Boolean = false,
+        batchSize: Int = 1000,
+        requestOptions: Option[RequestOptions] = None
+    )(implicit ec: ExecutionContext): Future[Seq[IngestionWatchResponse]] = {
+      client.ingestionTransporter match {
+        case None              => Future.failed(new AlgoliaClientException(transformationOptionsRequired))
+        case Some(transporter) =>
+          transporter.chunkedPush(
+            indexName = indexName,
+            objects = objects,
+            action = IngestionAction.AddObject,
+            waitForTasks = waitForTasks,
+            batchSize = batchSize,
+            referenceIndexName = None,
+            requestOptions = requestOptions
+          )
+      }
+    }
+
+    /** Helper: Similar to the `partialUpdateObjects` method but requires a Push connector
+      * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be
+      * created first, in order to transform records before indexing them to Algolia. The [[TransformationOptions]] must
+      * have been passed to the client via [[SearchClient.withTransformation]].
+      *
+      * @param indexName
+      *   The `indexName` to update `objects` in.
+      * @param objects
+      *   The array of `objects` to update in the given Algolia `indexName`.
+      * @param createIfNotExists
+      *   To be provided if non-existing objects are passed, otherwise, the call will fail.
+      * @param waitForTasks
+      *   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total
+      *   execution time of this method but is more reliable.
+      * @param batchSize
+      *   The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`.
+      * @param requestOptions
+      *   The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+      */
+    def partialUpdateObjectsWithTransformation[T](
+        indexName: String,
+        objects: Seq[T],
+        createIfNotExists: Boolean = false,
+        waitForTasks: Boolean = false,
+        batchSize: Int = 1000,
+        requestOptions: Option[RequestOptions] = None
+    )(implicit ec: ExecutionContext): Future[Seq[IngestionWatchResponse]] = {
+      client.ingestionTransporter match {
+        case None              => Future.failed(new AlgoliaClientException(transformationOptionsRequired))
+        case Some(transporter) =>
+          transporter.chunkedPush(
+            indexName = indexName,
+            objects = objects,
+            action =
+              if (createIfNotExists) IngestionAction.PartialUpdateObject else IngestionAction.PartialUpdateObjectNoCreate,
+            waitForTasks = waitForTasks,
+            batchSize = batchSize,
+            referenceIndexName = None,
+            requestOptions = requestOptions
+          )
+      }
+    }
+
+    /** Helper: Similar to the `replaceAllObjects` method but requires a Push connector
+      * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be
+      * created first, in order to transform records before indexing them to Algolia. The [[TransformationOptions]] must
+      * have been passed to the client via [[SearchClient.withTransformation]].
+      *
+      * See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation
+      * details.
+      *
+      * @param indexName
+      *   The `indexName` to replace `objects` in.
+      * @param objects
+      *   The array of `objects` to store in the given Algolia `indexName`.
+      * @param batchSize
+      *   The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`.
+      * @param scopes
+      *   The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
+      * @param requestOptions
+      *   The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+      */
+    def replaceAllObjectsWithTransformation[T](
+        indexName: String,
+        objects: Seq[T],
+        batchSize: Int = 1000,
+        scopes: Option[Seq[ScopeType]] = Some(Seq(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms)),
+        requestOptions: Option[RequestOptions] = None
+    )(implicit ec: ExecutionContext): Future[ReplaceAllObjectsWithTransformationResponse] = {
+      client.ingestionTransporter match {
+        case None              => Future.failed(new AlgoliaClientException(transformationOptionsRequired))
+        case Some(transporter) =>
+          val tmpIndexName = s"${indexName}_tmp_${scala.util.Random.nextInt(100)}"
+
+          val steps = for {
+            copy <- client.operationIndex(
+              indexName = indexName,
+              operationIndexParams = OperationIndexParams(
+                operation = OperationType.Copy,
+                destination = tmpIndexName,
+                scope = scopes
+              ),
+              requestOptions = requestOptions
+            )
+
+            watchResponses <- transporter.chunkedPush(
+              indexName = tmpIndexName,
+              objects = objects,
+              action = IngestionAction.AddObject,
+              waitForTasks = true,
+              batchSize = batchSize,
+              referenceIndexName = Some(indexName),
+              requestOptions = requestOptions
+            )
+
+            _ <- client.waitForTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
+
+            copy <- client.operationIndex(
+              indexName = indexName,
+              operationIndexParams = OperationIndexParams(
+                operation = OperationType.Copy,
+                destination = tmpIndexName,
+                scope = scopes
+              ),
+              requestOptions = requestOptions
+            )
+            _ <- client.waitForTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
+
+            move <- client.operationIndex(
+              indexName = tmpIndexName,
+              operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
+              requestOptions = requestOptions
+            )
+            _ <- client.waitForTask(indexName = tmpIndexName, taskID = move.taskID, requestOptions = requestOptions)
+          } yield ReplaceAllObjectsWithTransformationResponse(
+            copyOperationResponse = copy,
+            watchResponses = ingestionToSearchWatchResponses(watchResponses),
+            moveOperationResponse = move
+          )
+
+          steps.recover { case e: Throwable =>
+            client.deleteIndex(tmpIndexName)
+            throw e
+          }
+      }
+    }
+
+    private val transformationOptionsRequired: String =
+      "transformationOptions must be set in the client config before calling this method." +
+        " It defaults to the Ingestion API defaults." +
+        " See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
+
+    private def ingestionToSearchWatchResponses(
+        responses: Seq[IngestionWatchResponse]
+    ): Seq[WatchResponse] = {
+      implicit val formats: Formats = JsonSupport.format
+      Try {
+        Extraction.decompose(responses).extract[Seq[WatchResponse]]
+      } match {
+        case Success(converted) => converted
+        case Failure(_)         =>
+          throw new AlgoliaClientException(
+            "ingestion WatchResponse cannot be converted to a search WatchResponse"
+          )
+      }
+    }
+  }
+
+  implicit class IngestionClientExtensions(val client: IngestionClient) {
+
+    /** Helper: Chunks `objects` into requests of at most `batchSize` records and pushes each chunk through the
+      * Ingestion API's transformation pipeline.
+      *
+      * If `waitForTasks` is true, the helper polls the Ingestion API after every `max(1, batchSize / 10)` pushes for
+      * the corresponding events, providing backpressure on long jobs.
+      *
+      * @param indexName
+      *   The index in which to perform the request.
+      * @param objects
+      *   The list of objects to push.
+      * @param action
+      *   The action to perform on the objects.
+      * @param waitForTasks
+      *   Whether to wait for the server to finish processing each push.
+      * @param batchSize
+      *   The size of the chunk. Default is 1000.
+      * @param referenceIndexName
+      *   Required when targeting an index that does not have a push connector setup, but you wish to attach another
+      *   index's transformation to it.
+      * @param requestOptions
+      *   Additional request configuration.
+      * @return
+      *   A future containing the responses from each push.
+      */
+    def chunkedPush[T](
+        indexName: String,
+        objects: Seq[T],
+        action: IngestionAction,
+        waitForTasks: Boolean,
+        batchSize: Int = 1000,
+        referenceIndexName: Option[String] = None,
+        requestOptions: Option[RequestOptions] = None
+    )(implicit ec: ExecutionContext): Future[Seq[IngestionWatchResponse]] = {
+      if (batchSize < 1) return Future.failed(new AlgoliaClientException("`batchSize` must be greater than 0"))
+
+      val batches = objects.grouped(batchSize).toSeq
+      if (batches.isEmpty) return Future.successful(Seq.empty)
+
+      val pollInterval = math.max(1, batchSize / 10)
+      val superBatches = batches.grouped(pollInterval).toSeq
+
+      def pushSuperBatch(superBatch: Seq[Seq[T]]): Future[Seq[IngestionWatchResponse]] =
+        superBatch.foldLeft(Future.successful(Vector.empty[IngestionWatchResponse])) { (acc, batch) =>
+          acc.flatMap { rs =>
+            client
+              .push(
+                indexName = indexName,
+                pushTaskPayload = PushTaskPayload(action = action, records = objectsToPushTaskRecords(batch)),
+                watch = Some(false),
+                referenceIndexName = referenceIndexName,
+                requestOptions = requestOptions
+              )
+              .map(rs :+ _)
+          }
+        }
+
+      superBatches
+        .foldLeft(Future.successful(Vector.empty[IngestionWatchResponse])) { (acc, superBatch) =>
+          for {
+            responsesSoFar <- acc
+            pushed <- pushSuperBatch(superBatch)
+            _ <-
+              if (waitForTasks) Future.sequence(pushed.map(pollEvent(_, requestOptions))).map(_ => ())
+              else Future.unit
+          } yield responsesSoFar ++ pushed
+        }
+        .map(_.toSeq)
+    }
+
+    private def pollEvent(
+        response: IngestionWatchResponse,
+        requestOptions: Option[RequestOptions]
+    )(implicit ec: ExecutionContext): Future[Option[IngestionEvent]] = {
+      response.eventID match {
+        case None => Future.successful(None)
+        case Some(eventID) =>
+          retryUntil(
+            retry = () =>
+              client
+                .getEvent(response.runID, eventID, requestOptions)
+                .map(Option(_))
+                .recover {
+                  case e: AlgoliaApiException if e.httpErrorCode == 404 => None
+                },
+            until = (event: Option[IngestionEvent]) => event.isDefined,
+            maxRetries = 50,
+            delay = retries => math.min(retries * 1500, 5000L)
+          )
+      }
+    }
+
+    private def objectsToPushTaskRecords[T](objects: Seq[T]): Seq[PushTaskRecords] = {
+      implicit val formats: Formats = algoliasearch.ingestion.JsonSupport.format
+      Try {
+        val jValue = Extraction.decompose(objects)
+        jValue.extract[Seq[PushTaskRecords]]
+      } match {
+        case Success(records) => records
+        case Failure(_) =>
+          throw new AlgoliaClientException(
+            "each object must have an `objectID` key in order to be indexed"
+          )
       }
     }
   }
