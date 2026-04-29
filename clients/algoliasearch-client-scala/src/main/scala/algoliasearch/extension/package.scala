@@ -702,7 +702,8 @@ package object extension {
       *   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total
       *   execution time of this method but is more reliable.
       * @param batchSize
-      *   The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`.
+      *   The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) /
+      *   batchSize`.
       * @param requestOptions
       *   The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
       */
@@ -714,7 +715,7 @@ package object extension {
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[IngestionWatchResponse]] = {
       client.ingestionTransporter match {
-        case None              => Future.failed(new AlgoliaClientException(transformationOptionsRequired))
+        case None => Future.failed(new AlgoliaClientException(transformationOptionsRequired))
         case Some(transporter) =>
           transporter.chunkedPush(
             indexName = indexName,
@@ -743,7 +744,8 @@ package object extension {
       *   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total
       *   execution time of this method but is more reliable.
       * @param batchSize
-      *   The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`.
+      *   The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) /
+      *   batchSize`.
       * @param requestOptions
       *   The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
       */
@@ -756,13 +758,14 @@ package object extension {
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[IngestionWatchResponse]] = {
       client.ingestionTransporter match {
-        case None              => Future.failed(new AlgoliaClientException(transformationOptionsRequired))
+        case None => Future.failed(new AlgoliaClientException(transformationOptionsRequired))
         case Some(transporter) =>
           transporter.chunkedPush(
             indexName = indexName,
             objects = objects,
             action =
-              if (createIfNotExists) IngestionAction.PartialUpdateObject else IngestionAction.PartialUpdateObjectNoCreate,
+              if (createIfNotExists) IngestionAction.PartialUpdateObject
+              else IngestionAction.PartialUpdateObjectNoCreate,
             waitForTasks = waitForTasks,
             batchSize = batchSize,
             referenceIndexName = None,
@@ -784,7 +787,8 @@ package object extension {
       * @param objects
       *   The array of `objects` to store in the given Algolia `indexName`.
       * @param batchSize
-      *   The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`.
+      *   The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) /
+      *   batchSize`.
       * @param scopes
       *   The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
       * @param requestOptions
@@ -798,7 +802,7 @@ package object extension {
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[ReplaceAllObjectsWithTransformationResponse] = {
       client.ingestionTransporter match {
-        case None              => Future.failed(new AlgoliaClientException(transformationOptionsRequired))
+        case None => Future.failed(new AlgoliaClientException(transformationOptionsRequired))
         case Some(transporter) =>
           val tmpIndexName = s"${indexName}_tmp_${scala.util.Random.nextInt(100)}"
 
@@ -868,7 +872,7 @@ package object extension {
         Extraction.decompose(responses).extract[Seq[WatchResponse]]
       } match {
         case Success(converted) => converted
-        case Failure(_)         =>
+        case Failure(_) =>
           throw new AlgoliaClientException(
             "ingestion WatchResponse cannot be converted to a search WatchResponse"
           )

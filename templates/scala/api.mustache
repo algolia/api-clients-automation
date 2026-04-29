@@ -143,7 +143,7 @@ object {{classname}} {
   {{/hostsWithoutVariables.size}}
 }
 
-class {{classname}}{{#isSearchClient}} private{{/isSearchClient}}(
+class {{classname}}(
     appId: String,
     apiKey: String,
     {{#hasRegionalHost}}region: {{#fallbackToAliasHost}}Option[String] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}String{{/fallbackToAliasHost}},{{/hasRegionalHost}}
