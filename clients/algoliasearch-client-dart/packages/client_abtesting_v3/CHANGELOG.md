@@ -1,3 +1,9 @@
+## [1.49.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.48.0...1.49.0)
+
+- [d275af4e18](https://github.com/algolia/api-clients-automation/commit/d275af4e18) feat(specs): add Algolia Index as a native connector in ingestion client ([#6290](https://github.com/algolia/api-clients-automation/pull/6290)) by [@morganleroi](https://github.com/morganleroi/)
+- [74e91c1cd3](https://github.com/algolia/api-clients-automation/commit/74e91c1cd3) fix(specs): compostion run payload example for external injected items ([#6291](https://github.com/algolia/api-clients-automation/pull/6291)) by [@gavinwade12](https://github.com/gavinwade12/)
+- [a98b7f7cd8](https://github.com/algolia/api-clients-automation/commit/a98b7f7cd8) feat(specs): add feedsOrder to composition run params ([#6314](https://github.com/algolia/api-clients-automation/pull/6314)) by [@gavinwade12](https://github.com/gavinwade12/)
+
 ## [1.48.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.47.3...1.48.0)
 
 - [39ea2c5cb3](https://github.com/algolia/api-clients-automation/commit/39ea2c5cb3) refactor(specs): split injection schema ([#6224](https://github.com/algolia/api-clients-automation/pull/6224)) by [@ClaraMuller](https://github.com/ClaraMuller/)
