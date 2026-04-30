@@ -3104,17 +3104,26 @@ components:
             $ref: '#/components/schemas/destinationID'
       required:
         - destinationIDs
+    DestinationUpdateInput:
+      type: object
+      additionalProperties: false
+      properties:
+        indexName:
+          type: string
+          description: Algolia index name (case-sensitive).
+        recordType:
+          $ref: '#/components/schemas/RecordType'
+        attributesToExclude:
+          $ref: '#/components/schemas/AttributesToExclude'
     DestinationUpdate:
       type: object
       additionalProperties: false
       description: API request body for updating a destination.
       properties:
-        type:
-          $ref: '#/components/schemas/DestinationType'
         name:
           $ref: '#/components/schemas/name'
         input:
-          $ref: '#/components/schemas/DestinationInput'
+          $ref: '#/components/schemas/DestinationUpdateInput'
         authenticationID:
           $ref: '#/components/schemas/authenticationID'
         transformationIDs:

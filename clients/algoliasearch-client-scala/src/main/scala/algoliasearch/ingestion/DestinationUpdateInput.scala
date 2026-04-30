@@ -18,16 +18,23 @@
   */
 package algoliasearch.ingestion
 
-/** API request body for updating a destination.
+import algoliasearch.ingestion.RecordType._
+
+/** DestinationUpdateInput
   *
-  * @param name
-  *   Descriptive name for the resource.
-  * @param authenticationID
-  *   Universally unique identifier (UUID) of an authentication resource.
+  * @param indexName
+  *   Algolia index name (case-sensitive).
+  * @param attributesToExclude
+  *   Attributes from your source to exclude from Algolia records. Not all your data attributes will be useful for
+  *   searching. Keeping your Algolia records small increases indexing and search performance. - Exclude nested
+  *   attributes with `.` notation. For example, `foo.bar` indexes the `foo` attribute and all its children **except**
+  *   the `bar` attribute. - Exclude attributes from arrays with `[i]`, where `i` is the index of the array element. For
+  *   example, `foo.[0].bar` only excludes the `bar` attribute from the first element of the `foo` array, but indexes
+  *   the complete `foo` attribute for all other elements. Use `*` as wildcard: `foo.[*].bar` excludes `bar` from all
+  *   elements of the `foo` array.
   */
-case class DestinationUpdate(
-    name: Option[String] = scala.None,
-    input: Option[DestinationUpdateInput] = scala.None,
-    authenticationID: Option[String] = scala.None,
-    transformationIDs: Option[Seq[String]] = scala.None
+case class DestinationUpdateInput(
+    indexName: Option[String] = scala.None,
+    recordType: Option[RecordType] = scala.None,
+    attributesToExclude: Option[Seq[String]] = scala.None
 )
