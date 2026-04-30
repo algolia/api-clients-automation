@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:algolia_client_core/src/config/agent_segment.dart';
 import 'package:algolia_client_core/src/config/host.dart';
+import 'package:algolia_client_core/src/config/transformation_options.dart';
 import 'package:algolia_client_core/src/transport/requester.dart';
 import 'package:dio/dio.dart';
 
@@ -42,6 +43,9 @@ final class ClientOptions {
   /// Set to 'gzip' to enable gzip compression for POST/PUT requests.
   final String? compression;
 
+  /// Options for the ingestion transporter used by `*WithTransformation` helpers on [SearchClient].
+  final TransformationOptions? transformationOptions;
+
   /// Constructs a [ClientOptions] instance with the provided parameters.
   const ClientOptions({
     this.connectTimeout = const Duration(seconds: 2),
@@ -55,6 +59,7 @@ final class ClientOptions {
     this.interceptors,
     this.httpClientAdapter,
     this.compression,
+    this.transformationOptions,
   });
 
   @override
@@ -72,7 +77,8 @@ final class ClientOptions {
           requester == other.requester &&
           interceptors == other.interceptors &&
           httpClientAdapter == other.httpClientAdapter &&
-          compression == other.compression;
+          compression == other.compression &&
+          transformationOptions == other.transformationOptions;
 
   @override
   int get hashCode =>
@@ -86,10 +92,11 @@ final class ClientOptions {
       requester.hashCode ^
       interceptors.hashCode ^
       httpClientAdapter.hashCode ^
-      compression.hashCode;
+      compression.hashCode ^
+      transformationOptions.hashCode;
 
   @override
   String toString() {
-    return 'ClientOptions{hosts: $hosts, connectTimeout: $connectTimeout, writeTimeout: $writeTimeout, readTimeout: $readTimeout, headers: $headers, agentSegments: $agentSegments, logger: $logger, requester: $requester, interceptors: $interceptors, httpClientAdapter: $httpClientAdapter, compression: $compression}';
+    return 'ClientOptions{hosts: $hosts, connectTimeout: $connectTimeout, writeTimeout: $writeTimeout, readTimeout: $readTimeout, headers: $headers, agentSegments: $agentSegments, logger: $logger, requester: $requester, interceptors: $interceptors, httpClientAdapter: $httpClientAdapter, compression: $compression, transformationOptions: $transformationOptions}';
   }
 }
