@@ -1,19 +1,9 @@
-# Helper: Chunks the given `objects` list in subsets of `batch_size` elements max in order to
-# make it fit in `push` requests by leveraging the Transformation pipeline setup in the Push
-# connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
-#
-# @param index_name [String] the index to push records to
-# @param objects [Array<Hash>] the objects to push
-# @param action [String] the push action (default: addObject)
-# @param wait_for_tasks [Boolean] whether to wait for tasks to complete
-# @param batch_size [Integer] number of records per push request
-# @param reference_index_name [String, nil] optional reference index for the push
-# @param request_options [Hash] request options
-# @return [Array<Ingestion::WatchResponse>]
 def chunked_push(index_name, objects, action = Ingestion::Action::ADD_OBJECT, wait_for_tasks = false, batch_size = 1000, reference_index_name = nil, request_options = {})
   responses = []
   offset = 0
   wait_batch_size = [batch_size / 10, 1].max
+  total_batches = (objects.length.to_f / batch_size).ceil
+  max_retries = 50
 
   objects.each_slice(batch_size).with_index do |chunk, batch_index|
     response = push(
@@ -25,7 +15,6 @@ def chunked_push(index_name, objects, action = Ingestion::Action::ADD_OBJECT, wa
     )
     responses << response
 
-    total_batches = (objects.length.to_f / batch_size).ceil
     if wait_for_tasks && (responses.length % wait_batch_size == 0 || batch_index == total_batches - 1)
       responses[offset, wait_batch_size].each do |watch_response|
         if watch_response.event_id.nil?
@@ -33,7 +22,6 @@ def chunked_push(index_name, objects, action = Ingestion::Action::ADD_OBJECT, wa
         end
 
         retries = 0
-        max_retries = 50
         loop do
           begin
             event = get_event(watch_response.run_id, watch_response.event_id, request_options)

@@ -1,5 +1,3 @@
-# Helper: Build an ingestion transporter using ingestion defaults, overriding only the fields
-# explicitly provided in transformation_options.client_options.
 # The parent search config MUST NOT leak into the ingestion transporter.
 def _build_ingestion_transporter(transformation_options)
   co = transformation_options.client_options
@@ -36,36 +34,24 @@ def _build_ingestion_transporter(transformation_options)
   Algolia::IngestionClient.create_with_config(config)
 end
 
-# Sets (or replaces) the ingestion transporter used by *_with_transformation helpers.
-# See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion
-#
-# @param transformation_options [TransformationOptions] transformation options
 def set_transformation_options(transformation_options)
   @ingestion_transporter = _build_ingestion_transporter(transformation_options)
 end
 
-# @deprecated Use with_transformation or set_transformation_options instead.
-# The old setter forwarded the parent search config to the ingestion transporter.
-# The new approach defaults to Ingestion API defaults and only overrides what's explicitly specified.
-# See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion
+# @deprecated Use {SearchClient.with_transformation} or {#set_transformation_options} instead.
+#   The old setter forwarded the parent search config to the ingestion transporter, causing search
+#   timeouts to bleed into ingestion calls. Use TransformationOptions to set Ingestion API defaults.
 def set_transformation_region(region)
   warn '[DEPRECATION] set_transformation_region is deprecated. Use set_transformation_options with a TransformationOptions object instead.'
   set_transformation_options(Algolia::TransformationOptions.new(region))
 end
 
-# Helper: Similar to save_objects but sends records through the transformation pipeline.
-# transformation_options must be set in the client config before calling this method.
-#
-# @param index_name [String] the index to save objects to
-# @param objects [Array<Hash>] the objects to save
-# @param wait_for_tasks [Boolean] whether to wait for indexing tasks to complete
-# @param batch_size [Integer] the number of records per push request
-# @param request_options [Hash] request options
-# @return [Array<Ingestion::WatchResponse>]
+def assert_ingestion_transporter!
+  raise ArgumentError, "`transformation_options` must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion/" if @ingestion_transporter.nil?
+end
+
 def save_objects_with_transformation(index_name, objects, wait_for_tasks = false, batch_size = 1000, request_options = {})
-  if @ingestion_transporter.nil?
-    raise ArgumentError, "`transformation_options` must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion/"
-  end
+  assert_ingestion_transporter!
 
   @ingestion_transporter.chunked_push(
     index_name,
@@ -78,20 +64,8 @@ def save_objects_with_transformation(index_name, objects, wait_for_tasks = false
   )
 end
 
-# Helper: Similar to partial_update_objects but sends records through the transformation pipeline.
-# transformation_options must be set in the client config before calling this method.
-#
-# @param index_name [String] the index to update objects in
-# @param objects [Array<Hash>] the objects to update
-# @param create_if_not_exists [Boolean] create the object if it doesn't exist
-# @param wait_for_tasks [Boolean] whether to wait for indexing tasks to complete
-# @param batch_size [Integer] the number of records per push request
-# @param request_options [Hash] request options
-# @return [Array<Ingestion::WatchResponse>]
 def partial_update_objects_with_transformation(index_name, objects, create_if_not_exists = false, wait_for_tasks = false, batch_size = 1000, request_options = {})
-  if @ingestion_transporter.nil?
-    raise ArgumentError, "`transformation_options` must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion/"
-  end
+  assert_ingestion_transporter!
 
   action = create_if_not_exists ? Ingestion::Action::PARTIAL_UPDATE_OBJECT : Ingestion::Action::PARTIAL_UPDATE_OBJECT_NO_CREATE
 
@@ -106,15 +80,6 @@ def partial_update_objects_with_transformation(index_name, objects, create_if_no
   )
 end
 
-# Helper: Similar to replace_all_objects but sends records through the transformation pipeline.
-# transformation_options must be set in the client config before calling this method.
-#
-# @param index_name [String] the index to replace objects in
-# @param objects [Array<Hash>] the replacement objects
-# @param batch_size [Integer] the number of records per push request
-# @param scopes [Array<String>] the scopes to copy before replacing
-# @param request_options [Hash] request options
-# @return [Search::ReplaceAllObjectsWithTransformationResponse]
 def replace_all_objects_with_transformation(
   index_name,
   objects,
@@ -122,9 +87,7 @@ def replace_all_objects_with_transformation(
   scopes = [Search::ScopeType::SETTINGS, Search::ScopeType::RULES, Search::ScopeType::SYNONYMS],
   request_options = {}
 )
-  if @ingestion_transporter.nil?
-    raise ArgumentError, "`transformation_options` must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion/"
-  end
+  assert_ingestion_transporter!
 
   tmp_index_name = index_name + '_tmp_' + rand(10_000_000).to_s
 
@@ -183,7 +146,7 @@ def replace_all_objects_with_transformation(
       watch_responses: search_watch_responses,
       move_operation_response: move_operation_response
     )
-  rescue Exception => e
+  rescue StandardError => e
     delete_index(tmp_index_name)
 
     raise e
