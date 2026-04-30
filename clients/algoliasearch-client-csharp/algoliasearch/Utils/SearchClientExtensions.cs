@@ -25,7 +25,7 @@ public partial interface ISearchClient
   /// </summary>
   /// <param name="indexName">The `indexName` where the operation was performed.</param>
   /// <param name="taskId">The `taskID` returned in the method response.</param>
-  /// <param name="maxRetries">The maximum number of retry. 50 by default. (optional)</param>
+  /// <param name="maxRetries">The maximum number of retry. 100 by default. (optional)</param>
   /// <param name="timeout">The function to decide how long to wait between retries. Math.Min(retryCount * 200, 5000) by default. (optional)</param>
   /// <param name="requestOptions">The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)</param>
   /// <param name="ct">Cancellation token (optional)</param>
@@ -52,7 +52,7 @@ public partial interface ISearchClient
   /// Wait for an application-level task to complete with `taskID`.
   /// </summary>
   /// <param name="taskId">The `taskID` returned in the method response.</param>
-  /// <param name="maxRetries">The maximum number of retry. 50 by default. (optional)</param>
+  /// <param name="maxRetries">The maximum number of retry. 100 by default. (optional)</param>
   /// <param name="timeout">The function to decide how long to wait between retries. Math.Min(retryCount * 200, 5000) by default. (optional)</param>
   /// <param name="requestOptions">The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)</param>
   /// <param name="ct">Cancellation token (optional)</param>
@@ -79,7 +79,7 @@ public partial interface ISearchClient
   /// <param name="key">The key that has been added, deleted or updated.</param>
   /// <param name="operation">The `operation` that was done on a `key`.</param>
   /// <param name="apiKey">Necessary to know if an `update` operation has been processed, compare fields of the response with it. (optional - mandatory if operation is UPDATE)</param>
-  /// <param name="maxRetries">The maximum number of retry. 50 by default. (optional)</param>
+  /// <param name="maxRetries">The maximum number of retry. 100 by default. (optional)</param>
   /// <param name="timeout">The function to decide how long to wait between retries. Math.Min(retryCount * 200, 5000) by default. (optional)</param>
   /// <param name="requestOptions">The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)</param>
   /// <param name="ct">Cancellation token (optional)</param>
