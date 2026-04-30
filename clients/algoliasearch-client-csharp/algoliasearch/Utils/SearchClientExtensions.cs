@@ -451,23 +451,26 @@ public partial interface ISearchClient
   /// <param name="batchSize">The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <param name="maxRetries">Maximum number of retries</param>
   Task<List<Algolia.Search.Models.Ingestion.WatchResponse>> SaveObjectsWithTransformationAsync(
     string indexName,
     IEnumerable<object> objects,
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = SearchClient.DefaultMaxRetries
   );
 
-  /// <inheritdoc cref="SaveObjectsWithTransformationAsync(string, IEnumerable{object}, bool, int, RequestOptions, CancellationToken)"/>
+  /// <inheritdoc cref="SaveObjectsWithTransformationAsync(string, IEnumerable{object}, bool, int, RequestOptions, CancellationToken, int)"/>
   List<Algolia.Search.Models.Ingestion.WatchResponse> SaveObjectsWithTransformation(
     string indexName,
     IEnumerable<object> objects,
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = SearchClient.DefaultMaxRetries
   );
 
   /// <summary>
@@ -1344,7 +1347,8 @@ public partial class SearchClient : ISearchClient
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = DefaultMaxRetries
   )
   {
     if (_ingestionTransporter == null)
@@ -1363,7 +1367,8 @@ public partial class SearchClient : ISearchClient
         batchSize,
         referenceIndexName: null,
         options,
-        cancellationToken
+        cancellationToken,
+        maxRetries
       )
       .ConfigureAwait(false);
   }
@@ -1375,7 +1380,8 @@ public partial class SearchClient : ISearchClient
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = DefaultMaxRetries
   ) =>
     AsyncHelper.RunSync(() =>
       SaveObjectsWithTransformationAsync(
@@ -1384,7 +1390,8 @@ public partial class SearchClient : ISearchClient
         waitForTasks,
         batchSize,
         options,
-        cancellationToken
+        cancellationToken,
+        maxRetries
       )
     );
 
