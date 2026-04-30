@@ -22,9 +22,8 @@ class DestinationUpdate extends AbstractModel implements ModelInterface, \ArrayA
      * @var string[]
      */
     protected static $modelTypes = [
-        'type' => '\Algolia\AlgoliaSearch\Model\Ingestion\DestinationType',
         'name' => 'string',
-        'input' => '\Algolia\AlgoliaSearch\Model\Ingestion\DestinationInput',
+        'input' => '\Algolia\AlgoliaSearch\Model\Ingestion\DestinationUpdateInput',
         'authenticationID' => 'string',
         'transformationIDs' => 'string[]',
     ];
@@ -35,7 +34,6 @@ class DestinationUpdate extends AbstractModel implements ModelInterface, \ArrayA
      * @var string[]
      */
     protected static $modelFormats = [
-        'type' => null,
         'name' => null,
         'input' => null,
         'authenticationID' => null,
@@ -49,7 +47,6 @@ class DestinationUpdate extends AbstractModel implements ModelInterface, \ArrayA
      * @var string[]
      */
     protected static $attributeMap = [
-        'type' => 'type',
         'name' => 'name',
         'input' => 'input',
         'authenticationID' => 'authenticationID',
@@ -62,7 +59,6 @@ class DestinationUpdate extends AbstractModel implements ModelInterface, \ArrayA
      * @var string[]
      */
     protected static $setters = [
-        'type' => 'setType',
         'name' => 'setName',
         'input' => 'setInput',
         'authenticationID' => 'setAuthenticationID',
@@ -75,7 +71,6 @@ class DestinationUpdate extends AbstractModel implements ModelInterface, \ArrayA
      * @var string[]
      */
     protected static $getters = [
-        'type' => 'getType',
         'name' => 'getName',
         'input' => 'getInput',
         'authenticationID' => 'getAuthenticationID',
@@ -96,9 +91,6 @@ class DestinationUpdate extends AbstractModel implements ModelInterface, \ArrayA
      */
     public function __construct(?array $data = null)
     {
-        if (isset($data['type'])) {
-            $this->container['type'] = $data['type'];
-        }
         if (isset($data['name'])) {
             $this->container['name'] = $data['name'];
         }
@@ -186,30 +178,6 @@ class DestinationUpdate extends AbstractModel implements ModelInterface, \ArrayA
     }
 
     /**
-     * Gets type.
-     *
-     * @return null|DestinationType
-     */
-    public function getType()
-    {
-        return $this->container['type'] ?? null;
-    }
-
-    /**
-     * Sets type.
-     *
-     * @param null|DestinationType $type type
-     *
-     * @return self
-     */
-    public function setType($type)
-    {
-        $this->container['type'] = $type;
-
-        return $this;
-    }
-
-    /**
      * Gets name.
      *
      * @return null|string
@@ -236,7 +204,7 @@ class DestinationUpdate extends AbstractModel implements ModelInterface, \ArrayA
     /**
      * Gets input.
      *
-     * @return null|DestinationInput
+     * @return null|DestinationUpdateInput
      */
     public function getInput()
     {
@@ -246,7 +214,7 @@ class DestinationUpdate extends AbstractModel implements ModelInterface, \ArrayA
     /**
      * Sets input.
      *
-     * @param null|DestinationInput $input input
+     * @param null|DestinationUpdateInput $input input
      *
      * @return self
      */
