@@ -372,13 +372,15 @@ public partial interface ISearchClient
   /// <param name="batchSize">The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <param name="maxRetries">Maximum number of retries</param>
   Task<List<BatchResponse>> DeleteObjectsAsync(
     string indexName,
     IEnumerable<String> objectIDs,
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = SearchClient.DefaultMaxRetries
   );
 
   /// <inheritdoc cref="DeleteObjectsAsync(string, IEnumerable{String}, RequestOptions, CancellationToken)"/>
@@ -388,7 +390,8 @@ public partial interface ISearchClient
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = SearchClient.DefaultMaxRetries
   );
 
   /// <summary>
@@ -401,6 +404,7 @@ public partial interface ISearchClient
   /// <param name="batchSize">The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <param name="maxRetries">Maximum number of retries</param>
   Task<List<BatchResponse>> PartialUpdateObjectsAsync<T>(
     string indexName,
     IEnumerable<T> objects,
@@ -408,7 +412,8 @@ public partial interface ISearchClient
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = SearchClient.DefaultMaxRetries
   )
     where T : class;
 
@@ -420,7 +425,8 @@ public partial interface ISearchClient
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = SearchClient.DefaultMaxRetries
   )
     where T : class;
 
@@ -1202,7 +1208,8 @@ public partial class SearchClient : ISearchClient
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = DefaultMaxRetries
   )
   {
     return await ChunkedBatchAsync(
@@ -1212,7 +1219,8 @@ public partial class SearchClient : ISearchClient
         waitForTasks,
         batchSize,
         options,
-        cancellationToken
+        cancellationToken,
+        maxRetries
       )
       .ConfigureAwait(false);
   }
@@ -1224,10 +1232,11 @@ public partial class SearchClient : ISearchClient
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = DefaultMaxRetries
   ) =>
     AsyncHelper.RunSync(() =>
-      DeleteObjectsAsync(indexName, objectIDs, waitForTasks, batchSize, options, cancellationToken)
+      DeleteObjectsAsync(indexName, objectIDs, waitForTasks, batchSize, options, cancellationToken, maxRetries)
     );
 
   /// <inheritdoc/>
@@ -1238,7 +1247,8 @@ public partial class SearchClient : ISearchClient
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = DefaultMaxRetries
   )
     where T : class
   {
@@ -1249,7 +1259,8 @@ public partial class SearchClient : ISearchClient
         waitForTasks,
         batchSize,
         options,
-        cancellationToken
+        cancellationToken,
+        maxRetries
       )
       .ConfigureAwait(false);
   }
@@ -1262,7 +1273,8 @@ public partial class SearchClient : ISearchClient
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = DefaultMaxRetries
   )
     where T : class =>
     AsyncHelper.RunSync(() =>
@@ -1273,7 +1285,8 @@ public partial class SearchClient : ISearchClient
         waitForTasks,
         batchSize,
         options,
-        cancellationToken
+        cancellationToken,
+        maxRetries
       )
     );
 
