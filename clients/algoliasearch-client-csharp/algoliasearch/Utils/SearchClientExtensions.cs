@@ -310,6 +310,7 @@ public partial interface ISearchClient
   /// <param name="batchSize">The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <param name="maxRetries">Maximum number of retries</param>
   /// <typeparam name="T"></typeparam>
   Task<List<BatchResponse>> SaveObjectsAsync<T>(
     string indexName,
@@ -317,7 +318,8 @@ public partial interface ISearchClient
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = SearchClient.DefaultMaxRetries
   )
     where T : class;
 
@@ -328,7 +330,8 @@ public partial interface ISearchClient
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = SearchClient.DefaultMaxRetries
   )
     where T : class;
 
@@ -1127,7 +1130,8 @@ public partial class SearchClient : ISearchClient
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = DefaultMaxRetries
   )
     where T : class
   {
@@ -1138,7 +1142,8 @@ public partial class SearchClient : ISearchClient
         waitForTasks,
         batchSize,
         options,
-        cancellationToken
+        cancellationToken,
+        maxRetries
       )
       .ConfigureAwait(false);
   }
@@ -1150,11 +1155,12 @@ public partial class SearchClient : ISearchClient
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = DefaultMaxRetries
   )
     where T : class =>
     AsyncHelper.RunSync(() =>
-      SaveObjectsAsync(indexName, objects, waitForTasks, batchSize, options, cancellationToken)
+      SaveObjectsAsync(indexName, objects, waitForTasks, batchSize, options, cancellationToken, maxRetries)
     );
 
   /// <inheritdoc/>
