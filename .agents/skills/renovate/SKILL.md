@@ -118,6 +118,7 @@ If the PR only updates the `crossScalaVersions` 3.x entry or the 2.x `scalaVersi
 Close (do not merge) PRs that update these packages, and add them to the "Abandoned" report list with a note:
 
 - **Dart `json_serializable`**: Updating `json_serializable` requires updating `json_annotation`, which in turn requires bumping the minimum Dart SDK version. This is a breaking change for customers on older Dart versions. Close the PR.
+- **`@redocly/cli` beyond v2.27.0**: v2.27.1 introduces breaking changes (renaming components) that break our spec bundling. Pinned at v2.27.0 for now. Close the PR.
 
 **Step 4.6 — Dart caret versioning.**
 
