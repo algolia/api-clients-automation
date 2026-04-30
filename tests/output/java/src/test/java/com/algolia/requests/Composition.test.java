@@ -2279,6 +2279,28 @@ class CompositionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("search")
+  void searchTest3() {
+    assertDoesNotThrow(() -> {
+      client.search(
+        "foo",
+        new RequestBody().setParams(new Params().setQuery("batman")).setFeedsOrder(Arrays.asList("feed-movies", "feed-comics")),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/foo/run", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"params\":{\"query\":\"batman\"},\"feedsOrder\":[\"feed-movies\",\"feed-comics\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("searchCompositionRules")
   void searchCompositionRulesTest() {
     assertDoesNotThrow(() -> {

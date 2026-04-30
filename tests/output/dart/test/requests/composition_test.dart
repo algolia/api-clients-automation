@@ -2343,6 +2343,36 @@ void main() {
     ),
   );
 
+  // search
+  test(
+    'search',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        compositionID: "foo",
+        requestBody: RequestBody(
+          params: Params(
+            query: "batman",
+          ),
+          feedsOrder: [
+            "feed-movies",
+            "feed-comics",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/foo/run');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"params":{"query":"batman"},"feedsOrder":["feed-movies","feed-comics"]}""");
+      },
+    ),
+  );
+
   // searchCompositionRules
   test(
     'searchCompositionRules',
