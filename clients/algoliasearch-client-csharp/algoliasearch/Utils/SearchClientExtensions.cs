@@ -243,13 +243,15 @@ public partial interface ISearchClient
   /// <param name="scopes"> The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <param name="maxRetries">Maximum number of retries</param>
   Task<ReplaceAllObjectsResponse> ReplaceAllObjectsAsync<T>(
     string indexName,
     IEnumerable<T> objects,
     int batchSize = 1000,
     List<ScopeType> scopes = null,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = SearchClient.DefaultMaxRetries
   )
     where T : class;
 
@@ -260,7 +262,8 @@ public partial interface ISearchClient
     int batchSize = 1000,
     List<ScopeType> scopes = null,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = SearchClient.DefaultMaxRetries
   )
     where T : class;
 
@@ -887,7 +890,8 @@ public partial class SearchClient : ISearchClient
     int batchSize = 1000,
     List<ScopeType> scopes = null,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = DefaultMaxRetries
   )
     where T : class
   {
@@ -931,13 +935,15 @@ public partial class SearchClient : ISearchClient
           true,
           batchSize,
           options,
-          cancellationToken
+          cancellationToken,
+          maxRetries
         )
         .ConfigureAwait(false);
 
       await WaitForTaskAsync(
           tmpIndexName,
           copyResponse.TaskID,
+          maxRetries: maxRetries,
           requestOptions: options,
           ct: cancellationToken
         )
@@ -953,6 +959,7 @@ public partial class SearchClient : ISearchClient
       await WaitForTaskAsync(
           tmpIndexName,
           copyResponse.TaskID,
+          maxRetries: maxRetries,
           requestOptions: options,
           ct: cancellationToken
         )
@@ -969,6 +976,7 @@ public partial class SearchClient : ISearchClient
       await WaitForTaskAsync(
           tmpIndexName,
           moveResponse.TaskID,
+          maxRetries: maxRetries,
           requestOptions: options,
           ct: cancellationToken
         )
@@ -1009,11 +1017,12 @@ public partial class SearchClient : ISearchClient
     int batchSize = 1000,
     List<ScopeType> scopes = null,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = DefaultMaxRetries
   )
     where T : class =>
     AsyncHelper.RunSync(() =>
-      ReplaceAllObjectsAsync(indexName, objects, batchSize, scopes, options, cancellationToken)
+      ReplaceAllObjectsAsync(indexName, objects, batchSize, scopes, options, cancellationToken, maxRetries)
     );
 
   /// <inheritdoc/>
