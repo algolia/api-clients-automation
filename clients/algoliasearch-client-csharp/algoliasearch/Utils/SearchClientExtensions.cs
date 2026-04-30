@@ -255,7 +255,7 @@ public partial interface ISearchClient
   )
     where T : class;
 
-  /// <inheritdoc cref="ReplaceAllObjectsAsync{T}(string, IEnumerable{T}, int, RequestOptions, CancellationToken)"/>
+  /// <inheritdoc cref="ReplaceAllObjectsAsync{T}(string, IEnumerable{T}, int, List{ScopeType}, RequestOptions, CancellationToken, int)"/>
   ReplaceAllObjectsResponse ReplaceAllObjects<T>(
     string indexName,
     IEnumerable<T> objects,
@@ -326,7 +326,7 @@ public partial interface ISearchClient
   )
     where T : class;
 
-  /// <inheritdoc cref="SaveObjectsAsync{T}(string, IEnumerable{T}, RequestOptions, CancellationToken)"/>
+  /// <inheritdoc cref="SaveObjectsAsync{T}(string, IEnumerable{T}, bool, int, RequestOptions, CancellationToken, int)"/>
   List<BatchResponse> SaveObjects<T>(
     string indexName,
     IEnumerable<T> objects,
@@ -383,7 +383,7 @@ public partial interface ISearchClient
     int maxRetries = SearchClient.DefaultMaxRetries
   );
 
-  /// <inheritdoc cref="DeleteObjectsAsync(string, IEnumerable{String}, RequestOptions, CancellationToken)"/>
+  /// <inheritdoc cref="DeleteObjectsAsync(string, IEnumerable{String}, bool, int, RequestOptions, CancellationToken, int)"/>
   List<BatchResponse> DeleteObjects(
     string indexName,
     IEnumerable<String> objectIDs,
@@ -417,7 +417,7 @@ public partial interface ISearchClient
   )
     where T : class;
 
-  /// <inheritdoc cref="PartialUpdateObjectsAsync{T}(string, IEnumerable{T}, bool, RequestOptions, CancellationToken)"/>
+  /// <inheritdoc cref="PartialUpdateObjectsAsync{T}(string, IEnumerable{T}, bool, bool, int, RequestOptions, CancellationToken, int)"/>
   List<BatchResponse> PartialUpdateObjects<T>(
     string indexName,
     IEnumerable<T> objects,
