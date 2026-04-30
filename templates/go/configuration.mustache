@@ -30,13 +30,3 @@ type {{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{
   {{/isSearchClient}}
 }
 
-{{#isSearchClient}}
-// Deprecated: Use WithTransformationOptions or SetTransformationOptions on the client instead.
-// The old method forwarded the parent search config to the ingestion transporter, causing search
-// timeouts to bleed into ingestion calls. The new approach defaults to Ingestion API defaults and
-// only overrides what's explicitly specified.
-// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
-func (s *SearchConfiguration) SetTransformationRegion(region ingestion.Region) {
-  s.TransformationOptions = &TransformationOptions{Region: region}
-}
-{{/isSearchClient}}

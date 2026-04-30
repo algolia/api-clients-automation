@@ -207,13 +207,6 @@ func (c *APIClient) SetTransformationOptions(opts TransformationOptions) error {
   return nil
 }
 
-// Deprecated: Use SetTransformationOptions instead.
-// The old method forwarded the parent search config to the ingestion transporter, causing search
-// timeouts to bleed into ingestion calls. The new approach defaults to Ingestion API defaults.
-// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
-func (c *APIClient) SetTransformationRegion(region ingestion.Region) error {
-  return c.SetTransformationOptions(TransformationOptions{Region: region})
-}
 {{/isSearchClient}}
 
 // callAPI do the request.

@@ -80,10 +80,3 @@ func TestSetTransformationOptionsReplacesTransporter(t *testing.T) {
 	err = client.SetTransformationOptions(search.TransformationOptions{Region: "eu"})
 	require.NoError(t, err)
 }
-
-func TestDeprecatedSetTransformationRegion(t *testing.T) {
-	client, err := search.NewClient("appID", "apiKey")
-	require.NoError(t, err)
-	err = client.SetTransformationRegion("us")
-	require.NoError(t, err)
-}
