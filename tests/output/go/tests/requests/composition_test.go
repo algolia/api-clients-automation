@@ -1296,6 +1296,19 @@ func TestComposition_Search(t *testing.T) {
 
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"params":{"query":"batman","sortBy":"Price (asc)"}}`)
 	})
+	t.Run("search", func(t *testing.T) {
+		_, err := client.Search(client.NewApiSearchRequest(
+			"foo",
+			composition.NewEmptyRequestBody().SetParams(
+				composition.NewEmptyParams().SetQuery("batman")).SetFeedsOrder(
+				[]string{"feed-movies", "feed-comics"})))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/compositions/foo/run", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"params":{"query":"batman"},"feedsOrder":["feed-movies","feed-comics"]}`)
+	})
 }
 
 func TestComposition_SearchCompositionRules(t *testing.T) {

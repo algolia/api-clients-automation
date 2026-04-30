@@ -1745,6 +1745,30 @@ class CompositionTest {
     )
   }
 
+  @Test
+  fun `search3`() = runTest {
+    client.runTest(
+      call = {
+        search(
+          compositionID = "foo",
+          requestBody =
+            RequestBody(
+              params = Params(query = "batman"),
+              feedsOrder = listOf("feed-movies", "feed-comics"),
+            ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/foo/run".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """{"params":{"query":"batman"},"feedsOrder":["feed-movies","feed-comics"]}""",
+          it.body,
+        )
+      },
+    )
+  }
+
   // searchCompositionRules
 
   @Test

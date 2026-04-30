@@ -2045,6 +2045,26 @@ class SnippetCompositionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the search method.
+  //
+  // search
+  void snippetForSearch3() throws Exception {
+    // >SEPARATOR search search
+    // Initialize the client
+    CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    SearchResponse response = client.search(
+      "foo",
+      new RequestBody().setParams(new Params().setQuery("batman")).setFeedsOrder(Arrays.asList("feed-movies", "feed-comics")),
+      Hit.class
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
   // Snippet for the searchCompositionRules method.
   //
   // searchCompositionRules

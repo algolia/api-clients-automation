@@ -1655,6 +1655,28 @@ final class CompositionClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the search method.
+    ///
+    /// search
+    func snippetForSearch3() async throws {
+        // >SEPARATOR search search
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response: CompositionSearchResponse<CompositionHit> = try await client.search(
+            compositionID: "foo",
+            requestBody: RequestBody(
+                params: CompositionParams(query: "batman"),
+                feedsOrder: ["feed-movies", "feed-comics"]
+            )
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
     /// Snippet for the searchCompositionRules method.
     ///
     /// searchCompositionRules
