@@ -19,7 +19,7 @@ type ClientOptions struct {
 	ConnectTimeout time.Duration
 	Compression    compression.Compression
 	Hosts          []transport.StatefulHost
-	DefaultHeaders map[string]string
+	DefaultHeader map[string]string
 }
 
 // TransformationOptions configures the ingestion transporter used by *WithTransformation helpers.
