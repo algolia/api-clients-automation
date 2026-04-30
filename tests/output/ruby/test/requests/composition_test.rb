@@ -1743,6 +1743,26 @@ class TestCompositionClient < Test::Unit::TestCase
     assert_equal(JSON.parse("{\"params\":{\"query\":\"batman\",\"sortBy\":\"Price (asc)\"}}"), JSON.parse(req.body))
   end
 
+  # search
+  def test_search3
+    req = @client.search_with_http_info(
+      "foo",
+      Algolia::Composition::RequestBody.new(
+        params: Algolia::Composition::Params.new(query: "batman"),
+        feeds_order: ["feed-movies", "feed-comics"]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/compositions/foo/run", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse("{\"params\":{\"query\":\"batman\"},\"feedsOrder\":[\"feed-movies\",\"feed-comics\"]}"),
+      JSON.parse(req.body)
+    )
+  end
+
   # searchCompositionRules
   def test_search_composition_rules
     req = @client.search_composition_rules_with_http_info(
