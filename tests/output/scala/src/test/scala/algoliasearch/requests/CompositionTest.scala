@@ -2422,6 +2422,30 @@ class CompositionTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("search3") {
+    val (client, echo) = testClient()
+    val future = client.search(
+      compositionID = "foo",
+      requestBody = RequestBody(
+        params = Some(
+          Params(
+            query = Some("batman")
+          )
+        ),
+        feedsOrder = Some(Seq("feed-movies", "feed-comics"))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/foo/run")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"params":{"query":"batman"},"feedsOrder":["feed-movies","feed-comics"]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("searchCompositionRules") {
     val (client, echo) = testClient()
     val future = client.searchCompositionRules(

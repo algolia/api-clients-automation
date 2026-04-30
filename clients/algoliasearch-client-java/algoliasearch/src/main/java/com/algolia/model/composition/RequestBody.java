@@ -5,6 +5,8 @@ package com.algolia.model.composition;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /** RequestBody */
@@ -12,6 +14,9 @@ public class RequestBody {
 
   @JsonProperty("params")
   private Params params;
+
+  @JsonProperty("feedsOrder")
+  private List<String> feedsOrder;
 
   public RequestBody setParams(Params params) {
     this.params = params;
@@ -24,6 +29,31 @@ public class RequestBody {
     return params;
   }
 
+  public RequestBody setFeedsOrder(List<String> feedsOrder) {
+    this.feedsOrder = feedsOrder;
+    return this;
+  }
+
+  public RequestBody addFeedsOrder(String feedsOrderItem) {
+    if (this.feedsOrder == null) {
+      this.feedsOrder = new ArrayList<>();
+    }
+    this.feedsOrder.add(feedsOrderItem);
+    return this;
+  }
+
+  /**
+   * A list of Feed IDs that specifies the order in which to order the results in the response. The
+   * IDs should be a subset of those in the `feeds` object of the targeted `multifeed` Composition /
+   * Composition Rule, and only those specified will be processed. The value overrides the value in
+   * the defined behavior, and when unspecified, the value defined in the behavior is used. When
+   * neither value is present, all feeds are processed.
+   */
+  @javax.annotation.Nullable
+  public List<String> getFeedsOrder() {
+    return feedsOrder;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -33,12 +63,12 @@ public class RequestBody {
       return false;
     }
     RequestBody requestBody = (RequestBody) o;
-    return Objects.equals(this.params, requestBody.params);
+    return Objects.equals(this.params, requestBody.params) && Objects.equals(this.feedsOrder, requestBody.feedsOrder);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(params);
+    return Objects.hash(params, feedsOrder);
   }
 
   @Override
@@ -46,6 +76,7 @@ public class RequestBody {
     StringBuilder sb = new StringBuilder();
     sb.append("class RequestBody {\n");
     sb.append("    params: ").append(toIndentedString(params)).append("\n");
+    sb.append("    feedsOrder: ").append(toIndentedString(feedsOrder)).append("\n");
     sb.append("}");
     return sb.toString();
   }

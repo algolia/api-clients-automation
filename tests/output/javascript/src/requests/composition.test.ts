@@ -1861,6 +1861,18 @@ describe('search', () => {
     expect(req.data).toEqual({ params: { query: 'batman', sortBy: 'Price (asc)' } });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('search', async () => {
+    const req = (await client.search({
+      compositionID: 'foo',
+      requestBody: { params: { query: 'batman' }, feedsOrder: ['feed-movies', 'feed-comics'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/foo/run');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ params: { query: 'batman' }, feedsOrder: ['feed-movies', 'feed-comics'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('searchCompositionRules', () => {

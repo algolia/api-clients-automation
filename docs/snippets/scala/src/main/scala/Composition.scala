@@ -2573,6 +2573,36 @@ class SnippetCompositionClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the search method.
+    *
+    * search
+    */
+  def snippetForCompositionClientSearch3(): Unit = {
+    // >SEPARATOR search search
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.search(
+        compositionID = "foo",
+        requestBody = RequestBody(
+          params = Some(
+            Params(
+              query = Some("batman")
+            )
+          ),
+          feedsOrder = Some(Seq("feed-movies", "feed-comics"))
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
   /** Snippet for the searchCompositionRules method.
     *
     * searchCompositionRules

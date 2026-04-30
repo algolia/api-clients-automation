@@ -1796,6 +1796,31 @@ class CompositionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('search')]
+    public function testSearch3(): void
+    {
+        $client = $this->getClient();
+        $client->search(
+            'foo',
+            ['params' => ['query' => 'batman',
+            ],
+                'feedsOrder' => [
+                    'feed-movies',
+
+                    'feed-comics',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/foo/run',
+                'method' => 'POST',
+                'body' => json_decode('{"params":{"query":"batman"},"feedsOrder":["feed-movies","feed-comics"]}'),
+            ],
+        ]);
+    }
+
     #[TestDox('searchCompositionRules')]
     public function testSearchCompositionRules(): void
     {
