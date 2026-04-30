@@ -2020,6 +2020,36 @@ class SnippetCompositionClient
     }
 
     /**
+     * Snippet for the Search method.
+     *
+     * search
+     */
+    public function snippetForSearch3(): void
+    {
+        // >SEPARATOR search search
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->search(
+            'foo',
+            ['params' => ['query' => 'batman',
+            ],
+                'feedsOrder' => [
+                    'feed-movies',
+
+                    'feed-comics',
+                ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the SearchCompositionRules method.
      *
      * searchCompositionRules

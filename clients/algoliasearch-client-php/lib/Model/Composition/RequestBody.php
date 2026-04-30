@@ -21,6 +21,7 @@ class RequestBody extends AbstractModel implements ModelInterface, \ArrayAccess,
      */
     protected static $modelTypes = [
         'params' => '\Algolia\AlgoliaSearch\Model\Composition\Params',
+        'feedsOrder' => 'string[]',
     ];
 
     /**
@@ -30,6 +31,7 @@ class RequestBody extends AbstractModel implements ModelInterface, \ArrayAccess,
      */
     protected static $modelFormats = [
         'params' => null,
+        'feedsOrder' => null,
     ];
 
     /**
@@ -40,6 +42,7 @@ class RequestBody extends AbstractModel implements ModelInterface, \ArrayAccess,
      */
     protected static $attributeMap = [
         'params' => 'params',
+        'feedsOrder' => 'feedsOrder',
     ];
 
     /**
@@ -49,6 +52,7 @@ class RequestBody extends AbstractModel implements ModelInterface, \ArrayAccess,
      */
     protected static $setters = [
         'params' => 'setParams',
+        'feedsOrder' => 'setFeedsOrder',
     ];
 
     /**
@@ -58,6 +62,7 @@ class RequestBody extends AbstractModel implements ModelInterface, \ArrayAccess,
      */
     protected static $getters = [
         'params' => 'getParams',
+        'feedsOrder' => 'getFeedsOrder',
     ];
 
     /**
@@ -76,6 +81,9 @@ class RequestBody extends AbstractModel implements ModelInterface, \ArrayAccess,
     {
         if (isset($data['params'])) {
             $this->container['params'] = $data['params'];
+        }
+        if (isset($data['feedsOrder'])) {
+            $this->container['feedsOrder'] = $data['feedsOrder'];
         }
     }
 
@@ -171,6 +179,30 @@ class RequestBody extends AbstractModel implements ModelInterface, \ArrayAccess,
     public function setParams($params)
     {
         $this->container['params'] = $params;
+
+        return $this;
+    }
+
+    /**
+     * Gets feedsOrder.
+     *
+     * @return null|string[]
+     */
+    public function getFeedsOrder()
+    {
+        return $this->container['feedsOrder'] ?? null;
+    }
+
+    /**
+     * Sets feedsOrder.
+     *
+     * @param null|string[] $feedsOrder A list of Feed IDs that specifies the order in which to order the results in the response.  The IDs should be a subset of those in the `feeds` object of the targeted `multifeed` Composition / Composition Rule, and only those specified will be processed.   The value overrides the value in the defined behavior, and when unspecified, the value defined in the behavior is used. When neither value is present, all feeds are processed.
+     *
+     * @return self
+     */
+    public function setFeedsOrder($feedsOrder)
+    {
+        $this->container['feedsOrder'] = $feedsOrder;
 
         return $this;
     }

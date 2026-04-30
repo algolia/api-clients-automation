@@ -2302,6 +2302,40 @@ final class CompositionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// search
+    func testSearchTest3() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<CompositionSearchResponse<CompositionHit>> = try await client.searchWithHTTPInfo(
+            compositionID: "foo",
+            requestBody: RequestBody(
+                params: CompositionParams(query: "batman"),
+                feedsOrder: ["feed-movies", "feed-comics"]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"params\":{\"query\":\"batman\"},\"feedsOrder\":[\"feed-movies\",\"feed-comics\"]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/foo/run")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// searchCompositionRules
     func testSearchCompositionRulesTest() async throws {
         let configuration = try CompositionClientConfiguration(

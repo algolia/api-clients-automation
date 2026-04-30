@@ -2549,6 +2549,28 @@ public class CompositionClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "search")]
+  public async Task SearchTest3()
+  {
+    await client.SearchAsync<Hit>(
+      "foo",
+      new RequestBody
+      {
+        Params = new Params { Query = "batman" },
+        FeedsOrder = new List<string> { "feed-movies", "feed-comics" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/foo/run", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"params\":{\"query\":\"batman\"},\"feedsOrder\":[\"feed-movies\",\"feed-comics\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "searchCompositionRules")]
   public async Task SearchCompositionRulesTest()
   {

@@ -1972,6 +1972,38 @@ func SnippetForSearchOfComposition2() {
 	// SEPARATOR<
 }
 
+func SnippetForSearchOfComposition3() {
+	/*
+	   Snippet for the search method.
+
+	   search
+	*/
+
+	// >SEPARATOR search search
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.Search(client.NewApiSearchRequest(
+		"foo",
+		composition.NewEmptyRequestBody().SetParams(
+			composition.NewEmptyParams().SetQuery("batman")).SetFeedsOrder(
+			[]string{"feed-movies", "feed-comics"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
 func SnippetForSearchCompositionRulesOfComposition() {
 	/*
 	   Snippet for the searchCompositionRules method.

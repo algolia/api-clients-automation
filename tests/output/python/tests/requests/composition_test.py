@@ -2024,6 +2024,31 @@ class TestCompositionClient:
             """{"params":{"query":"batman","sortBy":"Price (asc)"}}"""
         )
 
+    async def test_search_3(self):
+        """
+        search
+        """
+        _req = await self._client.search_with_http_info(
+            composition_id="foo",
+            request_body={
+                "params": {
+                    "query": "batman",
+                },
+                "feedsOrder": [
+                    "feed-movies",
+                    "feed-comics",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/foo/run"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"params":{"query":"batman"},"feedsOrder":["feed-movies","feed-comics"]}"""
+        )
+
     async def test_search_composition_rules_(self):
         """
         searchCompositionRules
@@ -4097,6 +4122,31 @@ class TestCompositionClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"params":{"query":"batman","sortBy":"Price (asc)"}}"""
+        )
+
+    def test_search_3(self):
+        """
+        search
+        """
+        _req = self._client.search_with_http_info(
+            composition_id="foo",
+            request_body={
+                "params": {
+                    "query": "batman",
+                },
+                "feedsOrder": [
+                    "feed-movies",
+                    "feed-comics",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/foo/run"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"params":{"query":"batman"},"feedsOrder":["feed-movies","feed-comics"]}"""
         )
 
     def test_search_composition_rules_(self):
