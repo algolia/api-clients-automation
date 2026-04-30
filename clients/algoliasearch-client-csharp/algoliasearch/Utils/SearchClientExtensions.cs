@@ -523,23 +523,26 @@ public partial interface ISearchClient
   /// <param name="scopes">The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <param name="maxRetries">Maximum number of retries</param>
   Task<ReplaceAllObjectsWithTransformationResponse> ReplaceAllObjectsWithTransformationAsync(
     string indexName,
     IEnumerable<object> objects,
     int batchSize = 1000,
     List<ScopeType> scopes = null,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = SearchClient.DefaultMaxRetries
   );
 
-  /// <inheritdoc cref="ReplaceAllObjectsWithTransformationAsync(string, IEnumerable{object}, int, List{ScopeType}, RequestOptions, CancellationToken)"/>
+  /// <inheritdoc cref="ReplaceAllObjectsWithTransformationAsync(string, IEnumerable{object}, int, List{ScopeType}, RequestOptions, CancellationToken, int)"/>
   ReplaceAllObjectsWithTransformationResponse ReplaceAllObjectsWithTransformation(
     string indexName,
     IEnumerable<object> objects,
     int batchSize = 1000,
     List<ScopeType> scopes = null,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = SearchClient.DefaultMaxRetries
   );
 }
 
@@ -1473,7 +1476,8 @@ public partial class SearchClient : ISearchClient
     int batchSize = 1000,
     List<ScopeType> scopes = null,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = DefaultMaxRetries
   )
   {
     if (_ingestionTransporter == null)
@@ -1516,7 +1520,8 @@ public partial class SearchClient : ISearchClient
           batchSize,
           referenceIndexName: indexName, // CRITICAL: Apply transformation from original index
           options,
-          cancellationToken
+          cancellationToken,
+          maxRetries
         )
         .ConfigureAwait(false);
 
@@ -1524,6 +1529,7 @@ public partial class SearchClient : ISearchClient
       await WaitForTaskAsync(
           tmpIndexName,
           copyOperationResponse.TaskID,
+          maxRetries: maxRetries,
           requestOptions: options,
           ct: cancellationToken
         )
@@ -1541,6 +1547,7 @@ public partial class SearchClient : ISearchClient
       await WaitForTaskAsync(
           tmpIndexName,
           copyOperationResponse.TaskID,
+          maxRetries: maxRetries,
           requestOptions: options,
           ct: cancellationToken
         )
@@ -1558,6 +1565,7 @@ public partial class SearchClient : ISearchClient
       await WaitForTaskAsync(
           tmpIndexName,
           moveOperationResponse.TaskID,
+          maxRetries: maxRetries,
           requestOptions: options,
           ct: cancellationToken
         )
@@ -1592,7 +1600,8 @@ public partial class SearchClient : ISearchClient
     int batchSize = 1000,
     List<ScopeType> scopes = null,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    int maxRetries = DefaultMaxRetries
   ) =>
     AsyncHelper.RunSync(() =>
       ReplaceAllObjectsWithTransformationAsync(
@@ -1601,7 +1610,8 @@ public partial class SearchClient : ISearchClient
         batchSize,
         scopes,
         options,
-        cancellationToken
+        cancellationToken,
+        maxRetries
       )
     );
 
