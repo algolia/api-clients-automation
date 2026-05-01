@@ -27,7 +27,7 @@
     "files": [
       {
         "path": "packages/algoliasearch/dist/algoliasearch.umd.js",
-        "maxSize": "16KB"
+        "maxSize": "17KB"
       },
       {
         "path": "packages/algoliasearch/dist/lite/builds/browser.umd.js",
@@ -75,6 +75,10 @@
       },
       {
         "path": "packages/recommend/dist/builds/browser.umd.js",
+        "maxSize": "6KB"
+      },
+      {
+        "path": "packages/agent-studio/dist/builds/browser.umd.js",
         "maxSize": "6KB"
       }
     ]
