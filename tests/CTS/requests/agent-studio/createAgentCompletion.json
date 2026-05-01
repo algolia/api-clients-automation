@@ -30,7 +30,40 @@
     }
   },
   {
-    "testName": "createAgentCompletion with v5 messages and all query params",
+    "testName": "createAgentCompletion streaming with simple messages",
+    "isStreaming": true,
+    "parameters": {
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
+      "compatibilityMode": "ai-sdk-5",
+      "agentCompletionRequest": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Hello, how are you?"
+          }
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/completions",
+      "method": "POST",
+      "queryParameters": {
+        "compatibilityMode": "ai-sdk-5"
+      },
+      "body": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Hello, how are you?"
+          }
+        ]
+      }
+    },
+    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "ruby", "scala", "swift"]
+  },
+  {
+    "testName": "createAgentCompletion streaming with v5 messages and all query params",
+    "isStreaming": true,
     "parameters": {
       "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
       "compatibilityMode": "ai-sdk-5",
@@ -75,13 +108,15 @@
         ],
         "id": "test-conversation-id"
       }
-    }
+    },
+    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "ruby", "scala", "swift"]
   },
   {
-    "testName": "createAgentCompletion with test configuration",
+    "testName": "createAgentCompletion streaming with test configuration",
+    "isStreaming": true,
     "parameters": {
       "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
-      "compatibilityMode": "ai-sdk-4",
+      "compatibilityMode": "ai-sdk-5",
       "agentCompletionRequest": {
         "messages": [
           {
@@ -102,7 +137,7 @@
       "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/completions",
       "method": "POST",
       "queryParameters": {
-        "compatibilityMode": "ai-sdk-4"
+        "compatibilityMode": "ai-sdk-5"
       },
       "body": {
         "messages": [
@@ -119,6 +154,7 @@
           "tools": [{ "type": "start" }]
         }
       }
-    }
+    },
+    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "ruby", "scala", "swift"]
   }
 ]

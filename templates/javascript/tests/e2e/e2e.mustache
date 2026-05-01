@@ -19,6 +19,7 @@ const client = {{{clientName}}}(process.env.{{e2eAppID}}, process.env.{{e2eApiKe
 {{#blocksE2E}}
 describe('{{operationId}}', () => {
   {{#tests}}
+  {{^isStreamingTest}}
   test('{{{testName}}}', async () => {
     {{#response}}
     {{#body}}const resp = {{/body}}{{> tests/method}};
@@ -30,6 +31,36 @@ describe('{{operationId}}', () => {
     {{/body}}
     {{/response}}
   });
+  {{/isStreamingTest}}
+
+  {{#isStreamingTest}}
+  test('{{{testName}}}', async () => {
+    {{#response}}
+    const events = [];
+    for await (const event of client.{{method}}Stream({{#hasParams}}{{#parametersWithDataType.size}}{{{parameters}}}{{/parametersWithDataType.size}}{{/hasParams}}{{#hasRequestOptions}}, {
+      {{#requestOptions.queryParameters.parameters}}
+        queryParameters: {{{.}}},
+      {{/requestOptions.queryParameters.parameters}}
+      {{#requestOptions.headers.parameters}}
+        headers: {{{.}}},
+      {{/requestOptions.headers.parameters}}
+      }
+      {{/hasRequestOptions}}
+    )) {
+      events.push(event);
+    }
+    expect(events.length).toBeGreaterThan(0);
+
+    {{#body}}
+    const expectedBody = {{{.}}};
+    // assert on collected events
+    const allData = events.filter(e => e.data !== null).map(e => e.data);
+    expect(allData.length).toBeGreaterThan(0);
+    expect(expectedBody).toEqual(union(expectedBody, allData[0]));
+    {{/body}}
+    {{/response}}
+  });
+  {{/isStreamingTest}}
 
   {{/tests}}
 })

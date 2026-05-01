@@ -20,6 +20,7 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSyncClien
 
     {{#blocksRequests}}
     {{#tests}}
+    {{^isStreamingTest}}
     {{^isSyncClient}}async {{/isSyncClient}}def test_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_{{testIndex}}(self):
         """
         {{{testName}}}
@@ -40,6 +41,34 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSyncClien
         {{/assertNullBody}}
         {{/body}}
         {{/request}}
+    {{/isStreamingTest}}
+
+    {{#isStreamingTest}}
+    {{^isSyncClient}}async {{/isSyncClient}}def test_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_{{testIndex}}(self):
+        """
+        {{{testName}}}
+        """
+        _events = []
+        {{^isSyncClient}}async {{/isSyncClient}}for event in self._client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{streamMethodSuffixSnake}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}}):
+            _events.append(event)
+        assert len(_events) > 0
+        _req = loads(_events[0].data)
+
+        {{#request}}
+        assert _req["path"] == "{{{path}}}"
+        assert _req["verb"] == "{{{method}}}"
+        assert dict(_req["query_parameters"]).items() == {{#queryParameters}}{{{.}}}{{/queryParameters}}{{^queryParameters}}{}{{/queryParameters}}.items()
+        assert dict(_req["headers"]).items() >= {{#headers}}{{{.}}}{{/headers}}{{^headers}}{}{{/headers}}.items()
+        {{#body}}
+        assert loads(_req["data"]) == loads("""{{#lambda.escapeSlash}}{{{.}}}{{/lambda.escapeSlash}}""")
+        {{/body}}
+        {{^body}}
+        {{#assertNullBody}}
+        assert _req["data"] is None
+        {{/assertNullBody}}
+        {{/body}}
+        {{/request}}
+    {{/isStreamingTest}}
 
     {{/tests}}
     {{/blocksRequests}}

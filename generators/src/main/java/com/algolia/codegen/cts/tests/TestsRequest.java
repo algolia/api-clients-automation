@@ -142,6 +142,7 @@ public class TestsRequest extends TestsGenerator {
           test.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
           test.put("isReturnGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-return-is-generic", false));
           test.put("isCustomRequest", Helpers.CUSTOM_METHODS.contains(ope.operationIdOriginal));
+          test.put("isStreaming", (boolean) ope.vendorExtensions.getOrDefault("x-streaming", false));
 
           if (req.request != null && !isHelper) {
             // We check on the spec if body parameters should be present in the CTS
@@ -169,6 +170,13 @@ public class TestsRequest extends TestsGenerator {
           test.put("isAsyncMethod", true);
           test.put("hasParams", ope.getHasParams());
           test.put("isHelper", isHelper);
+
+          boolean isStreamingTest = req.isStreaming != null && req.isStreaming;
+          test.put("isStreamingTest", isStreamingTest);
+          if (isStreamingTest) {
+            test.put("streamMethodSuffix", "StreamRaw");
+            test.put("streamMethodSuffixSnake", "_stream_raw");
+          }
 
           addRequestOptions(paramsType, req.requestOptions, test);
 
