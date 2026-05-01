@@ -73,7 +73,7 @@ export function createFetchRequester({ requesterOptions = {} }: FetchRequesterOp
   async function sendStream(request: EndRequest): Promise<ReadableStream<Uint8Array>> {
     const fetchRes = await fetch(request.url, {
       method: request.method,
-      body: request.data || null,
+      body: (request.data as BodyInit) || null,
       redirect: 'manual',
       ...requesterOptions,
       headers: {
