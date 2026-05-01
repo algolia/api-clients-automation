@@ -1,0 +1,47 @@
+AgentConsolidateRequest:
+  properties:
+    providerID:
+      type: string
+      title: providerid
+      description: Provider UUID for LLM credentials.
+    model:
+      type: string
+      title: model
+      description: Model name (e.g., gpt-4o-mini).
+    messages:
+      $ref: 'MessagesUnion.yml#/MessagesUnion'
+    targetMemories:
+      type: integer
+      maximum: 50.0
+      minimum: 1.0
+      title: targetmemories
+      description: Maximum memories to extract/consolidate in this operation.
+      default: 5
+    instructions:
+      oneOf:
+        - type: string
+          maxLength: 50000
+        - type: 'null'
+      title: instructions
+      description: Optional domain-specific instructions to guide extraction or consolidation.
+    wait:
+      type: boolean
+      title: wait
+      description: Wait for Algolia indexing to complete before returning.
+      default: false
+    memoryType:
+      $ref: 'MemoryType.yml#/MemoryType'
+    maxExisting:
+      type: integer
+      maximum: 500.0
+      minimum: 1.0
+      title: maxexisting
+      description: Maximum number of existing memories to load for consolidation.
+      default: 50
+  type: object
+  required:
+    - providerID
+    - model
+    - messages
+  title: agentConsolidateRequest
+  description: Agent endpoint request for automatic memory consolidation.

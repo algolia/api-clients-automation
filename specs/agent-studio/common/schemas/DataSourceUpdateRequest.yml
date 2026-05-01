@@ -1,0 +1,24 @@
+DataSourceUpdateRequest:
+  properties:
+    name:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: name
+    source:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: source
+    filters:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: filters
+    objectID:
+      type: string
+      title: objectid
+  type: object
+  required:
+    - objectID
+  title: dataSourceUpdateRequest

@@ -1,0 +1,9 @@
+HTTPValidationError:
+  properties:
+    detail:
+      items:
+        $ref: 'ValidationErrorItem.yml#/ValidationErrorItem'
+      type: array
+      title: detail
+  type: object
+  title: hTTPValidationError

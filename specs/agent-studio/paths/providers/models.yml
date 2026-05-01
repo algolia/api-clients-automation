@@ -1,0 +1,26 @@
+get:
+  tags:
+    - Providers
+  operationId: listModels
+  x-acl:
+    - settings
+  summary: Get Provider Models
+  description: Get Provider Models.
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+            title: responseGetProviderModels1ProvidersModelsGet
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

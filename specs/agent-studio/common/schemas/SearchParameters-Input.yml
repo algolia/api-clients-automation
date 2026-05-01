@@ -1,0 +1,290 @@
+SearchParameters-Input:
+  properties:
+    queryType:
+      $ref: 'QueryTypeUnion.yml#/QueryTypeUnion'
+    similarQuery:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: similarquery
+    queryLanguages:
+      $ref: 'QueryLanguagesUnion.yml#/QueryLanguagesUnion'
+    advancedSyntax:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: advancedsyntax
+    advancedSyntaxFeatures:
+      $ref: 'AdvancedSyntaxFeaturesUnion.yml#/AdvancedSyntaxFeaturesUnion'
+    alternativesAsExact:
+      $ref: 'AlternativesAsExactUnion.yml#/AlternativesAsExactUnion'
+    decompoundQuery:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: decompoundquery
+    typoTolerance:
+      $ref: 'TypoToleranceUnion.yml#/TypoToleranceUnion'
+    allowTyposOnNumericTokens:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: allowtyposonnumerictokens
+    minWordSizeFor1Typo:
+      oneOf:
+        - type: integer
+        - type: 'null'
+      title: minwordsizefor1Typo
+    minWordSizeFor2Typos:
+      oneOf:
+        - type: integer
+        - type: 'null'
+      title: minwordsizefor2Typos
+    disableTypoToleranceOnAttributes:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: disabletypotoleranceonattributes
+    filters:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: filters
+    facetFilters:
+      $ref: 'FacetFiltersUnion.yml#/FacetFiltersUnion'
+    facets:
+      $ref: 'FacetsUnion.yml#/FacetsUnion'
+    maxValuesPerFacet:
+      oneOf:
+        - type: integer
+        - type: 'null'
+      title: maxvaluesperfacet
+    maxFacetHits:
+      oneOf:
+        - type: integer
+        - type: 'null'
+      title: maxfacethits
+    facetingAfterDistinct:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: facetingafterdistinct
+    sortFacetValuesBy:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: sortfacetvaluesby
+    numericFilters:
+      $ref: 'NumericFiltersUnion.yml#/NumericFiltersUnion'
+    tagFilters:
+      $ref: 'TagFiltersUnion.yml#/TagFiltersUnion'
+    sumOrFiltersScores:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: sumorfiltersscores
+    aroundLatLng:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: aroundlatlng
+    aroundLatLngViaIp:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: aroundlatlngviaip
+    aroundRadius:
+      $ref: 'AroundRadiusUnion.yml#/AroundRadiusUnion'
+    aroundPrecision:
+      $ref: 'AroundPrecisionUnion.yml#/AroundPrecisionUnion'
+    minimumAroundRadius:
+      oneOf:
+        - type: integer
+        - type: 'null'
+      title: minimumaroundradius
+    insideBoundingBox:
+      $ref: 'InsideBoundingBoxUnion.yml#/InsideBoundingBoxUnion'
+    insidePolygon:
+      $ref: 'InsidePolygonUnion.yml#/InsidePolygonUnion'
+    attributesToRetrieve:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: attributestoretrieve
+    attributesToSnippet:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: attributestosnippet
+    snippetEllipsisText:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: snippetellipsistext
+    restrictHighlightAndSnippetArrays:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: restricthighlightandsnippetarrays
+    page:
+      oneOf:
+        - type: integer
+        - type: 'null'
+      title: page
+    offset:
+      oneOf:
+        - type: integer
+        - type: 'null'
+      title: offset
+    hitsPerPage:
+      oneOf:
+        - type: integer
+        - type: 'null'
+      title: hitsperpage
+    length:
+      oneOf:
+        - type: integer
+        - type: 'null'
+      title: length
+    getRankingInfo:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: getrankinginfo
+    relevancyStrictness:
+      oneOf:
+        - type: integer
+        - type: 'null'
+      title: relevancystrictness
+    minProximity:
+      oneOf:
+        - type: integer
+        - type: 'null'
+      title: minproximity
+    attributeCriteriaComputedByMinProximity:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: attributecriteriacomputedbyminproximity
+    distinct:
+      $ref: 'DistinctUnion.yml#/DistinctUnion'
+    enableRules:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: enablerules
+    enablePersonalization:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: enablepersonalization
+    personalizationImpact:
+      oneOf:
+        - type: integer
+        - type: 'null'
+      title: personalizationimpact
+    enableAbTest:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: enableabtest
+    enableReRanking:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: enablereranking
+    reRankingApplyFilter:
+      $ref: 'ReRankingApplyFilterUnion.yml#/ReRankingApplyFilterUnion'
+    ruleContexts:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: rulecontexts
+    removeStopWords:
+      $ref: 'RemoveStopWordsUnion.yml#/RemoveStopWordsUnion'
+    ignorePlurals:
+      $ref: 'IgnorePluralsUnion.yml#/IgnorePluralsUnion'
+    removeWordsIfNoResults:
+      $ref: 'RemoveWordsIfNoResultsUnion.yml#/RemoveWordsIfNoResultsUnion'
+    optionalWords:
+      $ref: 'OptionalWordsUnion.yml#/OptionalWordsUnion'
+    optionalFilters:
+      $ref: 'OptionalFiltersUnion.yml#/OptionalFiltersUnion'
+    synonyms:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: synonyms
+    replaceSynonymsInHighlight:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: replacesynonymsinhighlight
+    analytics:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: analytics
+    analyticsTags:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: analyticstags
+    clickAnalytics:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: clickanalytics
+    userToken:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: usertoken
+    restrictSearchableAttributes:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: restrictsearchableattributes
+    disableExactOnAttributes:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: disableexactonattributes
+    exactOnSingleWordQuery:
+      $ref: 'ExactOnSingleWordQueryUnion.yml#/ExactOnSingleWordQueryUnion'
+    naturalLanguages:
+      $ref: 'NaturalLanguagesUnion.yml#/NaturalLanguagesUnion'
+    percentileComputation:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: percentilecomputation
+    explain:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: explain
+  type: object
+  title: searchParameters
+  description: |-
+    Algolia Search API parameters that can be predefined for the search tool.
+    Reference: https://www.algolia.com/doc/api-reference/search-api-parameters/
+
+    The parameters that seemed irrelevant for the search tool have been commented out.
+    Uses types from algoliasearch.search.models for better type safety.

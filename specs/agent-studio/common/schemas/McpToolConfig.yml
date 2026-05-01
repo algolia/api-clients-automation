@@ -1,0 +1,17 @@
+McpToolConfig:
+  properties:
+    requiresApproval:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: requiresapproval
+      default: false
+    alias:
+      oneOf:
+        - type: string
+          maxLength: 32
+          minLength: 3
+        - type: 'null'
+      title: alias
+  type: object
+  title: mcpToolConfig

@@ -1,0 +1,7 @@
+Actual_instanceUnion:
+  oneOf:
+    - items:
+        $ref: 'FacetFilters-Input.yml#/FacetFilters-Input'
+      type: array
+    - type: string
+    - type: 'null'

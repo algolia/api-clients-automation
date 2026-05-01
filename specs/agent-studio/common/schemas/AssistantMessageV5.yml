@@ -1,0 +1,19 @@
+AssistantMessageV5:
+  properties:
+    id:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: id
+    role:
+      type: string
+      const: assistant
+      title: role
+      default: assistant
+    parts:
+      items:
+        $ref: 'ItemsUnion.yml#/ItemsUnion'
+      type: array
+      title: parts
+  type: object
+  title: assistantMessageV5

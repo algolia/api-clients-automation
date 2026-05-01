@@ -1,0 +1,45 @@
+[
+  {
+    "testName": "listAgentConversations with minimal parameters",
+    "parameters": {
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
+    },
+    "request": {
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/conversations",
+      "method": "GET"
+    }
+  },
+  {
+    "testName": "listAgentConversations with all parameters",
+    "parameters": {
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
+      "startDate": "2024-01-01",
+      "endDate": "2024-12-31",
+      "page": 2,
+      "limit": 10,
+      "xAlgoliaSecureUserToken": null
+    },
+    "request": {
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/conversations",
+      "method": "GET",
+      "queryParameters": {
+        "startDate": "2024-01-01",
+        "endDate": "2024-12-31",
+        "page": "2",
+        "limit": "10"
+      }
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "data": [],
+        "pagination": {
+          "page": 2,
+          "limit": 10,
+          "totalCount": 0,
+          "totalPages": 0
+        }
+      }
+    }
+  }
+]

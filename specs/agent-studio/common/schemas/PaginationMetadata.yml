@@ -1,0 +1,21 @@
+PaginationMetadata:
+  properties:
+    page:
+      type: integer
+      title: page
+    limit:
+      type: integer
+      title: limit
+    totalCount:
+      type: integer
+      title: totalcount
+    totalPages:
+      type: integer
+      title: totalpages
+  type: object
+  required:
+    - page
+    - limit
+    - totalCount
+    - totalPages
+  title: paginationMetadata

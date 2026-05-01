@@ -1,0 +1,7 @@
+TagFiltersUnion:
+  oneOf:
+    - type: string
+    - items:
+        type: object
+      type: array
+    - type: 'null'

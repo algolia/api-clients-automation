@@ -1,0 +1,4 @@
+ToneUnion:
+  oneOf:
+    - $ref: 'Tone.yml#/Tone'
+    - type: 'null'
