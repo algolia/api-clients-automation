@@ -172,6 +172,9 @@ final class {{classname}} implements ApiClient {
       ) + {{/vendorExtensions.x-timeouts}}requestOptions,
     );
     {{#returnType}}
+    {{#vendorExtensions.x-is-custom-request}}
+    if (response == null) return AlgoliaNoResponse();
+    {{/vendorExtensions.x-is-custom-request}}
     return deserialize<{{{.}}}, {{{returnBaseType}}}>(response, '{{{.}}}', growable: true,);
     {{/returnType}}
   }  
