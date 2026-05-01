@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "lerna run build --scope '@algolia/requester-testing' --scope '@algolia/logger-console' --scope 'algoliasearch' --scope '@algolia/composition' --scope '@algolia/advanced-personalization' --include-dependencies",
+    "build": "lerna run build --scope '@algolia/requester-testing' --scope '@algolia/logger-console' --scope 'algoliasearch' --scope '@algolia/composition' --scope '@algolia/advanced-personalization' --scope '@algolia/agent-studio' --include-dependencies",
     "clean": "lerna run clean",
     "release:publish": "lerna publish from-package --yes",
     "release:publish:old": "tsc --project scripts/tsconfig.json && node scripts/dist/publish.js",
