@@ -243,7 +243,7 @@ public partial interface ISearchClient
   /// <param name="scopes"> The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <param name="maxRetries">Maximum number of retries</param>
+  /// <param name="chunkedOptions">Optional configuration for the helper.</param>
   Task<ReplaceAllObjectsResponse> ReplaceAllObjectsAsync<T>(
     string indexName,
     IEnumerable<T> objects,
@@ -251,11 +251,11 @@ public partial interface ISearchClient
     List<ScopeType> scopes = null,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = SearchClient.DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
     where T : class;
 
-  /// <inheritdoc cref="ReplaceAllObjectsAsync{T}(string, IEnumerable{T}, int, List{ScopeType}, RequestOptions, CancellationToken, int)"/>
+  /// <inheritdoc cref="ReplaceAllObjectsAsync{T}(string, IEnumerable{T}, int, List{ScopeType}, RequestOptions, CancellationToken, ChunkedHelperOptions)"/>
   ReplaceAllObjectsResponse ReplaceAllObjects<T>(
     string indexName,
     IEnumerable<T> objects,
@@ -263,7 +263,7 @@ public partial interface ISearchClient
     List<ScopeType> scopes = null,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = SearchClient.DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
     where T : class;
 
@@ -277,7 +277,7 @@ public partial interface ISearchClient
   /// <param name="batchSize">The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <param name="maxRetries">Maximum number of retries</param>
+  /// <param name="chunkedOptions">Optional configuration for the helper.</param>
   /// <typeparam name="T"></typeparam>
   Task<List<BatchResponse>> ChunkedBatchAsync<T>(
     string indexName,
@@ -287,11 +287,11 @@ public partial interface ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = SearchClient.DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
     where T : class;
 
-  /// <inheritdoc cref="ChunkedBatchAsync{T}(string, IEnumerable{T}, Action, bool, int, RequestOptions, CancellationToken, int)"/>
+  /// <inheritdoc cref="ChunkedBatchAsync{T}(string, IEnumerable{T}, Action, bool, int, RequestOptions, CancellationToken, ChunkedHelperOptions)"/>
   List<BatchResponse> ChunkedBatch<T>(
     string indexName,
     IEnumerable<T> objects,
@@ -300,7 +300,7 @@ public partial interface ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = SearchClient.DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
     where T : class;
 
@@ -313,7 +313,7 @@ public partial interface ISearchClient
   /// <param name="batchSize">The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <param name="maxRetries">Maximum number of retries</param>
+  /// <param name="chunkedOptions">Optional configuration for the helper.</param>
   /// <typeparam name="T"></typeparam>
   Task<List<BatchResponse>> SaveObjectsAsync<T>(
     string indexName,
@@ -322,11 +322,11 @@ public partial interface ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = SearchClient.DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
     where T : class;
 
-  /// <inheritdoc cref="SaveObjectsAsync{T}(string, IEnumerable{T}, bool, int, RequestOptions, CancellationToken, int)"/>
+  /// <inheritdoc cref="SaveObjectsAsync{T}(string, IEnumerable{T}, bool, int, RequestOptions, CancellationToken, ChunkedHelperOptions)"/>
   List<BatchResponse> SaveObjects<T>(
     string indexName,
     IEnumerable<T> objects,
@@ -334,7 +334,7 @@ public partial interface ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = SearchClient.DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
     where T : class;
 
@@ -372,7 +372,7 @@ public partial interface ISearchClient
   /// <param name="batchSize">The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <param name="maxRetries">Maximum number of retries</param>
+  /// <param name="chunkedOptions">Optional configuration for the helper.</param>
   Task<List<BatchResponse>> DeleteObjectsAsync(
     string indexName,
     IEnumerable<String> objectIDs,
@@ -380,10 +380,10 @@ public partial interface ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = SearchClient.DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   );
 
-  /// <inheritdoc cref="DeleteObjectsAsync(string, IEnumerable{String}, bool, int, RequestOptions, CancellationToken, int)"/>
+  /// <inheritdoc cref="DeleteObjectsAsync(string, IEnumerable{String}, bool, int, RequestOptions, CancellationToken, ChunkedHelperOptions)"/>
   List<BatchResponse> DeleteObjects(
     string indexName,
     IEnumerable<String> objectIDs,
@@ -391,7 +391,7 @@ public partial interface ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = SearchClient.DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   );
 
   /// <summary>
@@ -404,7 +404,7 @@ public partial interface ISearchClient
   /// <param name="batchSize">The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <param name="maxRetries">Maximum number of retries</param>
+  /// <param name="chunkedOptions">Optional configuration for the helper.</param>
   Task<List<BatchResponse>> PartialUpdateObjectsAsync<T>(
     string indexName,
     IEnumerable<T> objects,
@@ -413,11 +413,11 @@ public partial interface ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = SearchClient.DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
     where T : class;
 
-  /// <inheritdoc cref="PartialUpdateObjectsAsync{T}(string, IEnumerable{T}, bool, bool, int, RequestOptions, CancellationToken, int)"/>
+  /// <inheritdoc cref="PartialUpdateObjectsAsync{T}(string, IEnumerable{T}, bool, bool, int, RequestOptions, CancellationToken, ChunkedHelperOptions)"/>
   List<BatchResponse> PartialUpdateObjects<T>(
     string indexName,
     IEnumerable<T> objects,
@@ -426,7 +426,7 @@ public partial interface ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = SearchClient.DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
     where T : class;
 
@@ -451,7 +451,7 @@ public partial interface ISearchClient
   /// <param name="batchSize">The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <param name="maxRetries">Maximum number of retries</param>
+  /// <param name="chunkedOptions">Optional configuration for the helper.</param>
   Task<List<Algolia.Search.Models.Ingestion.WatchResponse>> SaveObjectsWithTransformationAsync(
     string indexName,
     IEnumerable<object> objects,
@@ -459,10 +459,10 @@ public partial interface ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = SearchClient.DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   );
 
-  /// <inheritdoc cref="SaveObjectsWithTransformationAsync(string, IEnumerable{object}, bool, int, RequestOptions, CancellationToken, int)"/>
+  /// <inheritdoc cref="SaveObjectsWithTransformationAsync(string, IEnumerable{object}, bool, int, RequestOptions, CancellationToken, ChunkedHelperOptions)"/>
   List<Algolia.Search.Models.Ingestion.WatchResponse> SaveObjectsWithTransformation(
     string indexName,
     IEnumerable<object> objects,
@@ -470,7 +470,7 @@ public partial interface ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = SearchClient.DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   );
 
   /// <summary>
@@ -485,7 +485,7 @@ public partial interface ISearchClient
   /// <param name="batchSize">The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <param name="maxRetries">Maximum number of retries</param>
+  /// <param name="chunkedOptions">Optional configuration for the helper.</param>
   Task<
     List<Algolia.Search.Models.Ingestion.WatchResponse>
   > PartialUpdateObjectsWithTransformationAsync(
@@ -496,10 +496,10 @@ public partial interface ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = SearchClient.DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   );
 
-  /// <inheritdoc cref="PartialUpdateObjectsWithTransformationAsync(string, IEnumerable{object}, bool, bool, int, RequestOptions, CancellationToken, int)"/>
+  /// <inheritdoc cref="PartialUpdateObjectsWithTransformationAsync(string, IEnumerable{object}, bool, bool, int, RequestOptions, CancellationToken, ChunkedHelperOptions)"/>
   List<Algolia.Search.Models.Ingestion.WatchResponse> PartialUpdateObjectsWithTransformation(
     string indexName,
     IEnumerable<object> objects,
@@ -508,7 +508,7 @@ public partial interface ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = SearchClient.DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   );
 
   /// <summary>
@@ -523,7 +523,7 @@ public partial interface ISearchClient
   /// <param name="scopes">The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <param name="maxRetries">Maximum number of retries</param>
+  /// <param name="chunkedOptions">Optional configuration for the helper.</param>
   Task<ReplaceAllObjectsWithTransformationResponse> ReplaceAllObjectsWithTransformationAsync(
     string indexName,
     IEnumerable<object> objects,
@@ -531,10 +531,10 @@ public partial interface ISearchClient
     List<ScopeType> scopes = null,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = SearchClient.DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   );
 
-  /// <inheritdoc cref="ReplaceAllObjectsWithTransformationAsync(string, IEnumerable{object}, int, List{ScopeType}, RequestOptions, CancellationToken, int)"/>
+  /// <inheritdoc cref="ReplaceAllObjectsWithTransformationAsync(string, IEnumerable{object}, int, List{ScopeType}, RequestOptions, CancellationToken, ChunkedHelperOptions)"/>
   ReplaceAllObjectsWithTransformationResponse ReplaceAllObjectsWithTransformation(
     string indexName,
     IEnumerable<object> objects,
@@ -542,7 +542,7 @@ public partial interface ISearchClient
     List<ScopeType> scopes = null,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = SearchClient.DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   );
 }
 
@@ -906,10 +906,11 @@ public partial class SearchClient : ISearchClient
     List<ScopeType> scopes = null,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
     where T : class
   {
+    var maxRetries = chunkedOptions?.MaxRetries ?? RetryHelper.DefaultMaxRetries;
     if (objects == null)
     {
       throw new ArgumentNullException(nameof(objects));
@@ -951,7 +952,7 @@ public partial class SearchClient : ISearchClient
           batchSize,
           options,
           cancellationToken,
-          maxRetries
+          chunkedOptions
         )
         .ConfigureAwait(false);
 
@@ -1033,11 +1034,11 @@ public partial class SearchClient : ISearchClient
     List<ScopeType> scopes = null,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
     where T : class =>
     AsyncHelper.RunSync(() =>
-      ReplaceAllObjectsAsync(indexName, objects, batchSize, scopes, options, cancellationToken, maxRetries)
+      ReplaceAllObjectsAsync(indexName, objects, batchSize, scopes, options, cancellationToken, chunkedOptions)
     );
 
   /// <inheritdoc/>
@@ -1049,10 +1050,11 @@ public partial class SearchClient : ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
     where T : class
   {
+    var maxRetries = chunkedOptions?.MaxRetries ?? RetryHelper.DefaultMaxRetries;
     var objectsList = objects.ToList();
     var totalObjects = objectsList.Count;
     var batchCount = (int)Math.Ceiling((double)totalObjects / batchSize);
@@ -1131,7 +1133,7 @@ public partial class SearchClient : ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
     where T : class =>
     AsyncHelper.RunSync(() =>
@@ -1143,7 +1145,7 @@ public partial class SearchClient : ISearchClient
         batchSize,
         options,
         cancellationToken,
-        maxRetries
+        chunkedOptions
       )
     );
 
@@ -1155,7 +1157,7 @@ public partial class SearchClient : ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
     where T : class
   {
@@ -1167,7 +1169,7 @@ public partial class SearchClient : ISearchClient
         batchSize,
         options,
         cancellationToken,
-        maxRetries
+        chunkedOptions
       )
       .ConfigureAwait(false);
   }
@@ -1180,11 +1182,11 @@ public partial class SearchClient : ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
     where T : class =>
     AsyncHelper.RunSync(() =>
-      SaveObjectsAsync(indexName, objects, waitForTasks, batchSize, options, cancellationToken, maxRetries)
+      SaveObjectsAsync(indexName, objects, waitForTasks, batchSize, options, cancellationToken, chunkedOptions)
     );
 
   /// <inheritdoc/>
@@ -1218,7 +1220,7 @@ public partial class SearchClient : ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
   {
     return await ChunkedBatchAsync(
@@ -1229,7 +1231,7 @@ public partial class SearchClient : ISearchClient
         batchSize,
         options,
         cancellationToken,
-        maxRetries
+        chunkedOptions
       )
       .ConfigureAwait(false);
   }
@@ -1242,10 +1244,10 @@ public partial class SearchClient : ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   ) =>
     AsyncHelper.RunSync(() =>
-      DeleteObjectsAsync(indexName, objectIDs, waitForTasks, batchSize, options, cancellationToken, maxRetries)
+      DeleteObjectsAsync(indexName, objectIDs, waitForTasks, batchSize, options, cancellationToken, chunkedOptions)
     );
 
   /// <inheritdoc/>
@@ -1257,7 +1259,7 @@ public partial class SearchClient : ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
     where T : class
   {
@@ -1269,7 +1271,7 @@ public partial class SearchClient : ISearchClient
         batchSize,
         options,
         cancellationToken,
-        maxRetries
+        chunkedOptions
       )
       .ConfigureAwait(false);
   }
@@ -1283,7 +1285,7 @@ public partial class SearchClient : ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
     where T : class =>
     AsyncHelper.RunSync(() =>
@@ -1295,7 +1297,7 @@ public partial class SearchClient : ISearchClient
         batchSize,
         options,
         cancellationToken,
-        maxRetries
+        chunkedOptions
       )
     );
 
@@ -1354,7 +1356,7 @@ public partial class SearchClient : ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
   {
     if (_ingestionTransporter == null)
@@ -1374,7 +1376,7 @@ public partial class SearchClient : ISearchClient
         referenceIndexName: null,
         options,
         cancellationToken,
-        maxRetries
+        chunkedOptions
       )
       .ConfigureAwait(false);
   }
@@ -1387,7 +1389,7 @@ public partial class SearchClient : ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   ) =>
     AsyncHelper.RunSync(() =>
       SaveObjectsWithTransformationAsync(
@@ -1397,7 +1399,7 @@ public partial class SearchClient : ISearchClient
         batchSize,
         options,
         cancellationToken,
-        maxRetries
+        chunkedOptions
       )
     );
 
@@ -1414,7 +1416,7 @@ public partial class SearchClient : ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
   {
     if (_ingestionTransporter == null)
@@ -1438,7 +1440,7 @@ public partial class SearchClient : ISearchClient
         referenceIndexName: null,
         options,
         cancellationToken,
-        maxRetries
+        chunkedOptions
       )
       .ConfigureAwait(false);
   }
@@ -1452,7 +1454,7 @@ public partial class SearchClient : ISearchClient
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   ) =>
     AsyncHelper.RunSync(() =>
       PartialUpdateObjectsWithTransformationAsync(
@@ -1463,7 +1465,7 @@ public partial class SearchClient : ISearchClient
         batchSize,
         options,
         cancellationToken,
-        maxRetries
+        chunkedOptions
       )
     );
 
@@ -1477,9 +1479,10 @@ public partial class SearchClient : ISearchClient
     List<ScopeType> scopes = null,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
   {
+    var maxRetries = chunkedOptions?.MaxRetries ?? RetryHelper.DefaultMaxRetries;
     if (_ingestionTransporter == null)
     {
       throw new AlgoliaException(
@@ -1521,7 +1524,7 @@ public partial class SearchClient : ISearchClient
           referenceIndexName: indexName, // CRITICAL: Apply transformation from original index
           options,
           cancellationToken,
-          maxRetries
+          chunkedOptions
         )
         .ConfigureAwait(false);
 
@@ -1601,7 +1604,7 @@ public partial class SearchClient : ISearchClient
     List<ScopeType> scopes = null,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   ) =>
     AsyncHelper.RunSync(() =>
       ReplaceAllObjectsWithTransformationAsync(
@@ -1611,7 +1614,7 @@ public partial class SearchClient : ISearchClient
         scopes,
         options,
         cancellationToken,
-        maxRetries
+        chunkedOptions
       )
     );
 

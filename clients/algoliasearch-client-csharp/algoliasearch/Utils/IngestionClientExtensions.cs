@@ -29,7 +29,7 @@ public partial interface IIngestionClient
     string referenceIndexName = null,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = RetryHelper.DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   );
 
   /// <summary>
@@ -44,7 +44,7 @@ public partial interface IIngestionClient
     string referenceIndexName = null,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = RetryHelper.DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   );
 }
 
@@ -63,7 +63,7 @@ public partial class IngestionClient : IIngestionClient
   /// <param name="referenceIndexName">This is required when targeting an index that does not have a push connector setup (e.g. a tmp index), but you wish to attach another index's transformation to it (e.g. the source index name).</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation token to cancel the request</param>
-  /// <param name="maxRetries">Maximum number of retries to wait for tasks.</param>
+  /// <param name="chunkedOptions">Optional configuration for the helper.</param>
   /// <returns>List of WatchResponse objects from the push operations</returns>
   public async Task<List<WatchResponse>> ChunkedPushAsync(
     string indexName,
@@ -74,9 +74,10 @@ public partial class IngestionClient : IIngestionClient
     string referenceIndexName = null,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = RetryHelper.DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   )
   {
+    var maxRetries = chunkedOptions?.MaxRetries ?? RetryHelper.DefaultMaxRetries;
     var objectsList = objects.ToList();
     var totalObjects = objectsList.Count;
     var responses = new List<WatchResponse>();
@@ -201,7 +202,7 @@ public partial class IngestionClient : IIngestionClient
     string referenceIndexName = null,
     RequestOptions options = null,
     CancellationToken cancellationToken = default,
-    int maxRetries = RetryHelper.DefaultMaxRetries
+    ChunkedHelperOptions chunkedOptions = null
   ) =>
     AsyncHelper.RunSync(() =>
       ChunkedPushAsync(
@@ -213,7 +214,7 @@ public partial class IngestionClient : IIngestionClient
         referenceIndexName,
         options,
         cancellationToken,
-        maxRetries
+        chunkedOptions
       )
     );
 }
