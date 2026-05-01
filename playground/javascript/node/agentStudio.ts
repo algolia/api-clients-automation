@@ -1,11 +1,11 @@
 import { ApiError } from '@algolia/client-common';
-import { agentStudioClient } from '@algolia/agent-studio';
+import { algoliasearch } from 'algoliasearch';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
 const apiKey = process.env.ALGOLIA_ADMIN_KEY || '**** ADMIN_KEY *****';
 
 // Init client with appId and apiKey
-const client = agentStudioClient(appId, apiKey, 'us');
+const client = algoliasearch(appId, apiKey).initAgentStudio({ region: 'us' });
 
 async function testAgentStudio() {
   try {

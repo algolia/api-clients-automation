@@ -1,5 +1,5 @@
 import { ApiError } from '@algolia/client-common';
-import { agentStudioClient } from '@algolia/agent-studio';
+import { algoliasearch } from 'algoliasearch';
 
 // ─── Config ─────────────────────────────────────────────────────────────────
 const appId = process.env.ALGOLIA_APPLICATION_ID || '';
@@ -13,7 +13,7 @@ if (!appId || !apiKey) {
 console.log(`[CONFIG] appId=${appId}`);
 console.log(`[CONFIG] apiKey=${apiKey.slice(0, 6)}...`);
 
-const client = agentStudioClient(appId, apiKey, 'us');
+const client = algoliasearch(appId, apiKey).initAgentStudio({ region: 'us' });
 
 // The generated JS clients set 'content-type: text/plain' by default, which works
 // for traditional Algolia APIs but agent-studio (FastAPI) requires 'application/json'.
