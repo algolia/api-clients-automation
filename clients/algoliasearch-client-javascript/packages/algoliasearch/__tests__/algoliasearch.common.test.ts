@@ -120,6 +120,7 @@ describe('api', () => {
         set: expect.any(Function),
       },
       request: expect.any(Function),
+      requestStream: expect.any(Function),
       requester: {
         send: expect.any(Function),
       },
