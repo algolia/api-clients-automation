@@ -11,7 +11,7 @@
           "region": "us",
           "customHosts": [
             {
-              "port": 6691
+              "port": 6692
             }
           ]
         }

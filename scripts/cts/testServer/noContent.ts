@@ -11,5 +11,5 @@ function addRoutes(app: express.Express): void {
 }
 
 export function noContentServer(): Promise<Server> {
-  return setupServer('noContent', 6691, addRoutes);
+  return setupServer('noContent', 6692, addRoutes);
 }
