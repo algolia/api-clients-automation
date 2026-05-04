@@ -12,7 +12,7 @@ public class AgentStudioPlayground : IPlayground
   {
     var loggerFactory = LoggerFactory.Create(i => i.AddFilter("Algolia", LogLevel.Information)
       .AddConsole());
-    var config = new AgentStudioConfig(configuration.AppId, configuration.AdminApiKey, "us");
+    var config = new AgentStudioConfig(configuration.AppId, configuration.AdminApiKey);
     _client = new AgentStudioClient(config, loggerFactory);
   }
 

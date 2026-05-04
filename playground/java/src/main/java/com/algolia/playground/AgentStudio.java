@@ -10,7 +10,7 @@ public class AgentStudio {
     var appId = dotenv.get("ALGOLIA_APPLICATION_ID");
     var apiKey = dotenv.get("ALGOLIA_ADMIN_KEY");
 
-    var client = new AgentStudioClient(appId, apiKey, "us");
+    var client = new AgentStudioClient(appId, apiKey);
 
     try {
       var response = client.listAgents();

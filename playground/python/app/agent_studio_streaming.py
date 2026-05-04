@@ -20,7 +20,7 @@ print(f"[CONFIG] apiKey={api_key[:6]}...")
 
 
 async def main():
-    client = AgentStudioClient(app_id, api_key, "us")
+    client = AgentStudioClient(app_id, api_key)
     print("[CLIENT] AgentStudioClient initialized")
 
     created_agent_id = None
