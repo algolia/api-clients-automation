@@ -1,6 +1,7 @@
 TagFiltersUnion:
   oneOf:
     - type: string
-    - items: {}
+    - items:
+        $ref: 'TagFiltersUnion.yml#/TagFiltersUnion'
       type: array
     - type: 'null'

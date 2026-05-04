@@ -9,7 +9,7 @@ load_dotenv("../.env")
 
 async def main():
     client = AgentStudioClient(
-        environ.get("ALGOLIA_APPLICATION_ID"), environ.get("ALGOLIA_ADMIN_KEY"), "us"
+        environ.get("ALGOLIA_APPLICATION_ID"), environ.get("ALGOLIA_ADMIN_KEY")
     )
 
     print("client initialized", client)

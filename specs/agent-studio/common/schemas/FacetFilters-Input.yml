@@ -13,7 +13,6 @@ FacetFilters-Input:
       items:
         type: string
       type: array
-      uniqueItems: true
       title: oneOfSchemas
       default:
         - str

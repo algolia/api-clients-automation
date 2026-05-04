@@ -7,7 +7,7 @@ import (
 )
 
 func testAgentStudio(appID, apiKey string) int {
-	client, err := agentStudio.NewClient(appID, apiKey, agentStudio.US)
+	client, err := agentStudio.NewClient(appID, apiKey)
 	if err != nil {
 		panic(err)
 	}

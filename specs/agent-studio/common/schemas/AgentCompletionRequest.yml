@@ -15,10 +15,7 @@ AgentCompletionRequest:
       $ref: 'AgentCompletionAlgoliaParamsNullable.yml#/AgentCompletionAlgoliaParamsNullable'
     toolApprovals:
       oneOf:
-        - additionalProperties:
-            additionalProperties: true
-            type: object
-          type: object
+        - type: object
         - type: 'null'
       title: toolapprovals
   type: object
