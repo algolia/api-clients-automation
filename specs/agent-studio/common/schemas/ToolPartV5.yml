@@ -23,6 +23,27 @@ ToolPartV5:
         - type: string
         - type: 'null'
       title: errortext
+    providerOptions:
+      oneOf:
+        - additionalProperties: true
+          type: object
+        - type: 'null'
+      title: provideroptions
+    requiresApproval:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: requiresapproval
+    description:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: description
+    argsHash:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: argshash
   type: object
   required:
     - type

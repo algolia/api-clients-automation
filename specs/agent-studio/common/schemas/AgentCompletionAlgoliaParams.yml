@@ -12,6 +12,6 @@ AgentCompletionAlgoliaParams:
         - type: 'null'
       title: mcpservers
     searchParameters:
-      $ref: 'SearchParametersUnion.yml#/SearchParametersUnion'
+      $ref: 'SearchParametersOverridesMapNullable.yml#/SearchParametersOverridesMapNullable'
   type: object
   title: agentCompletionAlgoliaParams

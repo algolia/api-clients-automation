@@ -7,7 +7,7 @@ AlgoliaSearchToolIndexConfig-Output:
       title: index
     description:
       type: string
-      maxLength: 200
+      maxLength: 3000
       minLength: 1
       title: description
     enhancedDescription:
@@ -15,7 +15,9 @@ AlgoliaSearchToolIndexConfig-Output:
       title: enhanceddescription
       default: ''
     searchParameters:
-      $ref: 'SearchParametersUnion.yml#/SearchParametersUnion'
+      $ref: 'SearchParametersOutputNullable.yml#/SearchParametersOutputNullable'
+    searchControls:
+      $ref: 'IndexSearchParametersOutputNullable.yml#/IndexSearchParametersOutputNullable'
   type: object
   required:
     - index

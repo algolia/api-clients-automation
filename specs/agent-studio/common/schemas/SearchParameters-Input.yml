@@ -1,7 +1,7 @@
 SearchParameters-Input:
   properties:
     queryType:
-      $ref: 'QueryTypeUnion.yml#/QueryTypeUnion'
+      $ref: 'QueryTypeNullable.yml#/QueryTypeNullable'
     similarQuery:
       oneOf:
         - type: string
@@ -53,7 +53,7 @@ SearchParameters-Input:
         - type: 'null'
       title: filters
     facetFilters:
-      $ref: 'FacetFiltersUnion.yml#/FacetFiltersUnion'
+      $ref: 'FacetFiltersInputNullable.yml#/FacetFiltersInputNullable'
     facets:
       $ref: 'FacetsUnion.yml#/FacetsUnion'
     maxValuesPerFacet:
@@ -213,7 +213,7 @@ SearchParameters-Input:
     ignorePlurals:
       $ref: 'IgnorePluralsUnion.yml#/IgnorePluralsUnion'
     removeWordsIfNoResults:
-      $ref: 'RemoveWordsIfNoResultsUnion.yml#/RemoveWordsIfNoResultsUnion'
+      $ref: 'RemoveWordsIfNoResultsNullable.yml#/RemoveWordsIfNoResultsNullable'
     optionalWords:
       $ref: 'OptionalWordsUnion.yml#/OptionalWordsUnion'
     optionalFilters:
@@ -265,7 +265,7 @@ SearchParameters-Input:
         - type: 'null'
       title: disableexactonattributes
     exactOnSingleWordQuery:
-      $ref: 'ExactOnSingleWordQueryUnion.yml#/ExactOnSingleWordQueryUnion'
+      $ref: 'ExactOnSingleWordQueryNullable.yml#/ExactOnSingleWordQueryNullable'
     naturalLanguages:
       $ref: 'NaturalLanguagesUnion.yml#/NaturalLanguagesUnion'
     percentileComputation:

@@ -1,4 +1,0 @@
-EpisodeUnion:
-  oneOf:
-    - $ref: 'Episode.yml#/Episode'
-    - type: 'null'

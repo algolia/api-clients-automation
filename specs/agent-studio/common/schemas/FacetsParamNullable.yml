@@ -1,0 +1,4 @@
+FacetsParamNullable:
+  oneOf:
+    - $ref: 'FacetsParam.yml#/FacetsParam'
+    - type: 'null'

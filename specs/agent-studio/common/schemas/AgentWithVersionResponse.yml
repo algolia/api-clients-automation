@@ -26,15 +26,25 @@ AgentWithVersionResponse:
     instructions:
       type: string
       title: instructions
+    systemPrompt:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: systemprompt
     config:
       additionalProperties: true
       type: object
       title: config
     tools:
       items:
-        $ref: 'ItemsUnion.yml#/ItemsUnion'
+        $ref: 'ToolConfigOutput.yml#/ToolConfigOutput'
       type: array
       title: tools
+    templateType:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: templatetype
     createdAt:
       type: string
       title: createdat

@@ -13,6 +13,17 @@ ToolCallPart:
       title: toolname
     args:
       title: args
+    requiresApproval:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: requiresapproval
+    providerOptions:
+      oneOf:
+        - type: object
+          additionalProperties: true
+        - type: 'null'
+      title: provideroptions
   type: object
   required:
     - toolCallId

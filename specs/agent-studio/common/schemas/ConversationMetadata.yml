@@ -1,0 +1,10 @@
+ConversationMetadata:
+  properties:
+    cachedAt:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: cachedat
+  type: object
+  title: conversationMetadata
+  description: Public metadata exposed on conversation responses.

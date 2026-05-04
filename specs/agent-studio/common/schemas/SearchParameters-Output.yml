@@ -1,7 +1,7 @@
 SearchParameters-Output:
   properties:
     queryType:
-      $ref: 'QueryTypeUnion.yml#/QueryTypeUnion'
+      $ref: 'QueryTypeNullable.yml#/QueryTypeNullable'
     similarQuery:
       oneOf:
         - type: string
@@ -24,7 +24,7 @@ SearchParameters-Output:
         - type: 'null'
       title: decompoundquery
     typoTolerance:
-      $ref: 'TypoToleranceUnion.yml#/TypoToleranceUnion'
+      $ref: 'TypoToleranceUnionSearchParametersOutput.yml#/TypoToleranceUnionSearchParametersOutput'
     allowTyposOnNumericTokens:
       oneOf:
         - type: boolean
@@ -53,7 +53,7 @@ SearchParameters-Output:
         - type: 'null'
       title: filters
     facetFilters:
-      $ref: 'FacetFiltersUnion.yml#/FacetFiltersUnion'
+      $ref: 'FacetFiltersOutputNullable.yml#/FacetFiltersOutputNullable'
     facets:
       $ref: 'FacetsUnion.yml#/FacetsUnion'
     maxValuesPerFacet:
@@ -209,11 +209,11 @@ SearchParameters-Output:
         - type: 'null'
       title: rulecontexts
     removeStopWords:
-      $ref: 'RemoveStopWordsUnion.yml#/RemoveStopWordsUnion'
+      $ref: 'RemoveStopWordsUnionSearchParametersOutput.yml#/RemoveStopWordsUnionSearchParametersOutput'
     ignorePlurals:
-      $ref: 'IgnorePluralsUnion.yml#/IgnorePluralsUnion'
+      $ref: 'IgnorePluralsUnionSearchParametersOutput.yml#/IgnorePluralsUnionSearchParametersOutput'
     removeWordsIfNoResults:
-      $ref: 'RemoveWordsIfNoResultsUnion.yml#/RemoveWordsIfNoResultsUnion'
+      $ref: 'RemoveWordsIfNoResultsNullable.yml#/RemoveWordsIfNoResultsNullable'
     optionalWords:
       $ref: 'OptionalWordsUnion.yml#/OptionalWordsUnion'
     optionalFilters:
@@ -265,7 +265,7 @@ SearchParameters-Output:
         - type: 'null'
       title: disableexactonattributes
     exactOnSingleWordQuery:
-      $ref: 'ExactOnSingleWordQueryUnion.yml#/ExactOnSingleWordQueryUnion'
+      $ref: 'ExactOnSingleWordQueryNullable.yml#/ExactOnSingleWordQueryNullable'
     naturalLanguages:
       $ref: 'NaturalLanguagesUnion.yml#/NaturalLanguagesUnion'
     percentileComputation:

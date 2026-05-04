@@ -2,9 +2,9 @@ Facets:
   properties:
     order:
       oneOf:
-        - type: array
-          items:
+        - items:
             type: string
+          type: array
         - type: 'null'
       title: order
   additionalProperties: true

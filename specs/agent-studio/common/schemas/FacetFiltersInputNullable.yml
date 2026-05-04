@@ -1,0 +1,4 @@
+FacetFiltersInputNullable:
+  oneOf:
+    - $ref: 'FacetFilters-Input.yml#/FacetFilters-Input'
+    - type: 'null'

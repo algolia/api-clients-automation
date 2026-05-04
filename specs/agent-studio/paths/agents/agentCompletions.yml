@@ -1,12 +1,21 @@
 post:
   tags:
     - Completions
+    - Completions
   operationId: createAgentCompletion
-  x-streaming: true
   x-acl:
     - search
   summary: Create Completion
-  description: Create a completion for the specified agent.
+  description: |-
+    Create a completion for the specified agent.
+
+    This endpoint handles two types of requests:
+    1. Normal completion request: User message -> Agent response
+    2. Tool approval response: User approval -> Execute tool -> Agent response
+
+    Tool Approval Flow (for MCP tools with requiresApproval: true):
+    - Request 1: User sends message -> Agent requests tool call -> Return approval request
+    - Request 2: User approves -> Execute tool -> Agent continues with result.
   parameters:
     - name: agentId
       in: path
@@ -46,9 +55,29 @@ post:
           - const: false
             type: boolean
           - type: 'null'
-        description: Whether to use memory or not.
+        description: Set to false to disable memory (enabled by default).
         title: memory
-      description: Whether to use memory or not.
+      description: Set to false to disable memory (enabled by default).
+    - name: analytics
+      in: query
+      required: false
+      schema:
+        type: boolean
+        description: 'Set to false to skip Agent Studio analytics for this completion
+          (default: true).'
+        default: true
+        title: analytics
+      description: 'Set to false to skip Agent Studio analytics for this completion
+        (default: true).'
+    - name: X-Algolia-Secure-User-Token
+      in: header
+      required: false
+      schema:
+        oneOf:
+          - type: string
+          - type: 'null'
+        title: x-Algolia-Secure-User-Token
+      description: The X-Algolia-Secure-User-Token.
   requestBody:
     required: true
     content:
@@ -60,11 +89,7 @@ post:
       description: Successful Response.
       content:
         application/json:
-          schema:
-            $ref: '../../common/schemas/AgentCompletionResponse.yml#/AgentCompletionResponse'
-        text/event-stream:
-          schema:
-            type: string
+          schema: {}
     '422':
       description: Validation Error.
       content:

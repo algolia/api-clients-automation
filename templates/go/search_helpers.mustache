@@ -802,7 +802,6 @@ func (c *APIClient) SaveObjectsWithTransformation(indexName string, objects []ma
 		return nil, reportError("`region` must be provided at client instantiation before calling this method.")
 	}
 
-  //nolint:wrapcheck
 	return c.ingestionTransporter.ChunkedPush(
 		indexName,
 		objects,
@@ -842,11 +841,10 @@ func (c *APIClient) PartialUpdateObjectsWithTransformation(indexName string, obj
 		action = ACTION_PARTIAL_UPDATE_OBJECT_NO_CREATE
 	}
 
-  //nolint:wrapcheck
 	return c.ingestionTransporter.ChunkedPush(
   		indexName,
   		objects,
   		ingestion.Action(action),
   		nil,
-  		toIngestionChunkedBatchOptions(partialUpdateObjectsToChunkedBatchOptions(opts))...)
+  		toIngestionChunkedBatchOptions(partialUpdateObjectsToChunkedBatchOptions(opts))...) 
 }

@@ -25,6 +25,20 @@ AgentConfigUpdate:
         - type: string
         - type: 'null'
       title: instructions
+      description: 'The agent prompt: defines the agent''s role, tone, and goals.
+        Guides how it answers using the provided context. Corresponds to the ''Agent
+        prompt'' field in the dashboard.'
+    systemPrompt:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: systemprompt
+      description: 'The system prompt: defines system-level rules and constraints.
+        Guides how the agent uses tools, features, and generates context. Prepended
+        before `instructions` in the final prompt sent to the LLM. Typically injected
+        by an agent template — modify with caution, as changes may affect behavior,
+        tool usage, or response accuracy. Corresponds to the ''System prompt'' field
+        in the dashboard.'
     config:
       oneOf:
         - additionalProperties: true
@@ -34,9 +48,14 @@ AgentConfigUpdate:
     tools:
       oneOf:
         - items:
-            $ref: 'ItemsUnion.yml#/ItemsUnion'
+            $ref: 'ToolConfigInput.yml#/ToolConfigInput'
           type: array
         - type: 'null'
       title: tools
+    templateType:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: templatetype
   type: object
   title: agentConfigUpdate

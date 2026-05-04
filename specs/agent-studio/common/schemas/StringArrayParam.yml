@@ -1,0 +1,25 @@
+StringArrayParam:
+  properties:
+    exposed:
+      type: boolean
+      title: exposed
+    default:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: default
+    constraint:
+      $ref: 'StringArrayParamConstraintNullable.yml#/StringArrayParamConstraintNullable'
+    merge:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: merge
+  type: object
+  required:
+    - exposed
+  title: stringArrayParam
+  description: A string array search parameter with exposure control, constraints,
+    and merge behavior.

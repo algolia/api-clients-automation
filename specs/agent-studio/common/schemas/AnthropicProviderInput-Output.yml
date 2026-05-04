@@ -1,0 +1,15 @@
+AnthropicProviderInput-Output:
+  properties:
+    apiKey:
+      type: string
+      title: apikey
+    baseUrl:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: baseurl
+  type: object
+  required:
+    - apiKey
+  title: anthropicProviderInput
+  description: Anthropic-specific provider input.

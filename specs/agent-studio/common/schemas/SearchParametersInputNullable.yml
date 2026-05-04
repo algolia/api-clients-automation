@@ -1,0 +1,4 @@
+SearchParametersInputNullable:
+  oneOf:
+    - $ref: 'SearchParameters-Input.yml#/SearchParameters-Input'
+    - type: 'null'

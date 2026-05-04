@@ -11,8 +11,7 @@ get:
       in: path
       required: true
       schema:
-        type: string
-        title: agentId
+        $ref: '../../common/schemas/AgentIdUnion.yml#/AgentIdUnion'
       description: The agentId.
     - name: startDate
       in: query
@@ -34,6 +33,29 @@ get:
         description: 'Filter conversations created before this date (format: YYYY-MM-DD).'
         title: enddate
       description: 'Filter conversations created before this date (format: YYYY-MM-DD).'
+    - name: includeFeedback
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: boolean
+          - type: 'null'
+        description: Include feedback per conversation.
+        default: false
+        title: includefeedback
+      description: Include feedback per conversation.
+    - name: feedbackVote
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: integer
+            maximum: 1
+            minimum: 0
+          - type: 'null'
+        description: Filter by feedback value (requires includeFeedback=true).
+        title: feedbackvote
+      description: Filter by feedback value (requires includeFeedback=true).
     - name: page
       in: query
       required: false

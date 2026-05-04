@@ -1,0 +1,4 @@
+StringArrayParamNullable:
+  oneOf:
+    - $ref: 'StringArrayParam.yml#/StringArrayParam'
+    - type: 'null'

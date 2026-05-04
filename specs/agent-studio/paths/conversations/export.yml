@@ -39,10 +39,7 @@ get:
       description: Successful Response.
       content:
         application/json:
-          schema:
-            type: array
-            items:
-              $ref: '../../common/schemas/ConversationFullResponse.yml#/ConversationFullResponse'
+          schema: {}
     '422':
       description: Validation Error.
       content:

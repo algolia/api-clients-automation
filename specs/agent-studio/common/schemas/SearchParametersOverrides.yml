@@ -21,6 +21,21 @@ SearchParametersOverrides:
       title: restrictsearchableattributes
     distinct:
       $ref: 'DistinctUnion.yml#/DistinctUnion'
+    userToken:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: usertoken
+    enablePersonalization:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: enablepersonalization
+    personalizationImpact:
+      oneOf:
+        - type: integer
+        - type: 'null'
+      title: personalizationimpact
   additionalProperties: false
   type: object
   title: searchParametersOverrides

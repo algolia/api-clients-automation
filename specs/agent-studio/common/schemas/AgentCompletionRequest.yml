@@ -1,18 +1,26 @@
 AgentCompletionRequest:
   properties:
     configuration:
-      $ref: 'ConfigurationUnion.yml#/ConfigurationUnion'
+      $ref: 'AgentTestConfigurationNullable.yml#/AgentTestConfigurationNullable'
     messages:
-      $ref: 'MessagesUnion.yml#/MessagesUnion'
+      $ref: 'MessagesNullableUnion.yml#/MessagesNullableUnion'
     id:
       oneOf:
         - type: string
+          maxLength: 128
         - type: 'null'
       title: id
+      description: Optional conversation id.
     algolia:
-      $ref: 'AlgoliaUnion.yml#/AlgoliaUnion'
+      $ref: 'AgentCompletionAlgoliaParamsNullable.yml#/AgentCompletionAlgoliaParamsNullable'
+    toolApprovals:
+      oneOf:
+        - additionalProperties:
+            additionalProperties: true
+            type: object
+          type: object
+        - type: 'null'
+      title: toolapprovals
   type: object
-  required:
-    - messages
   title: agentCompletionRequest
   description: Request model for creating a completion for an assistant.

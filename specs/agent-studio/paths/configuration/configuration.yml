@@ -22,7 +22,7 @@ get:
 patch:
   tags:
     - Configurations
-  operationId: updateConfiguration
+  operationId: updateApplicationConfiguration
   x-acl:
     - logs
   summary: Patch Configuration

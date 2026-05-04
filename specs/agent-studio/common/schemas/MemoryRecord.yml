@@ -3,7 +3,7 @@ MemoryRecord:
     memoryType:
       $ref: 'MemoryType.yml#/MemoryType'
     episode:
-      $ref: 'EpisodeUnion.yml#/EpisodeUnion'
+      $ref: 'EpisodeNullable.yml#/EpisodeNullable'
     text:
       type: string
       maxLength: 2000

@@ -1,7 +1,6 @@
 OptionalFiltersUnion:
   oneOf:
     - type: string
-    - items:
-        type: object
+    - items: {}
       type: array
     - type: 'null'

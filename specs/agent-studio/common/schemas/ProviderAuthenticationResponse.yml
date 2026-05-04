@@ -10,7 +10,7 @@ ProviderAuthenticationResponse:
       type: string
       title: providername
     input:
-      $ref: 'ProviderInput.yml#/ProviderInput'
+      $ref: 'ProviderInputProviderAuthenticationResponse.yml#/ProviderInputProviderAuthenticationResponse'
     createdAt:
       type: string
       title: createdat

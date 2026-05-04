@@ -1,0 +1,68 @@
+get:
+  tags:
+    - Allowed domains
+  operationId: getAllowedDomain
+  x-acl:
+    - settings
+  summary: Get Allowed Domain
+  description: Get a single allowed domain by id.
+  parameters:
+    - name: domainId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: domainId
+      description: The domainId.
+    - name: agentId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: agentId
+      description: The agentId.
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/AllowedDomainResponse.yml#/AllowedDomainResponse'
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
+delete:
+  tags:
+    - Allowed domains
+  operationId: deleteAllowedDomain
+  x-acl:
+    - editSettings
+  summary: Delete Allowed Domain
+  description: Remove an allowed domain by id.
+  parameters:
+    - name: domainId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: domainId
+      description: The domainId.
+    - name: agentId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: agentId
+      description: The agentId.
+  responses:
+    '204':
+      description: Successful Response.
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

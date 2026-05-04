@@ -10,7 +10,7 @@ MessageResponse-Input:
       $ref: 'MessageRole.yml#/MessageRole'
     parts:
       items:
-        $ref: 'ItemsUnion.yml#/ItemsUnion'
+        $ref: 'MessagePartInput.yml#/MessagePartInput'
       type: array
       title: parts
     createdAt:

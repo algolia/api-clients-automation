@@ -1,0 +1,2 @@
+ErrorBase:
+  $ref: '../../../common/schemas/ErrorBase.yml'

@@ -1,0 +1,4 @@
+NumberParamNullable:
+  oneOf:
+    - $ref: 'NumberParam.yml#/NumberParam'
+    - type: 'null'

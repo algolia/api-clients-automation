@@ -8,7 +8,7 @@ ProviderAuthenticationPatch:
         - type: 'null'
       title: name
     input:
-      $ref: 'ProviderInput.yml#/ProviderInput'
+      $ref: 'ProviderInputNullable.yml#/ProviderInputNullable'
   additionalProperties: false
   type: object
   title: providerPatch

@@ -12,7 +12,7 @@ AssistantMessageV5:
       default: assistant
     parts:
       items:
-        $ref: 'ItemsUnion.yml#/ItemsUnion'
+        $ref: 'AssistantPartV5.yml#/AssistantPartV5'
       type: array
       title: parts
   type: object

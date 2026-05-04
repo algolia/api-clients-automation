@@ -2,7 +2,7 @@ HTTPValidationError:
   properties:
     detail:
       items:
-        $ref: 'ValidationErrorItem.yml#/ValidationErrorItem'
+        $ref: 'ValidationError.yml#/ValidationError'
       type: array
       title: detail
   type: object

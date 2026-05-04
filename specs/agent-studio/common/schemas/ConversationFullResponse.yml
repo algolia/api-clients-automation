@@ -27,6 +27,10 @@ ConversationFullResponse:
         - type: string
         - type: 'null'
       title: usertoken
+    isFromDashboard:
+      type: boolean
+      title: isfromdashboard
+      default: false
     messageCount:
       type: integer
       title: messagecount
@@ -43,6 +47,10 @@ ConversationFullResponse:
       type: integer
       title: totaltokens
       default: 0
+    conversationMetadata:
+      $ref: 'ConversationMetadataNullable.yml#/ConversationMetadataNullable'
+    feedback:
+      $ref: 'FeedbackUnion.yml#/FeedbackUnion'
     messages:
       items:
         $ref: 'MessageResponse-Output.yml#/MessageResponse-Output'

@@ -10,7 +10,7 @@ MessageResponse-Output:
       $ref: 'MessageRole.yml#/MessageRole'
     parts:
       items:
-        $ref: 'ItemsUnion.yml#/ItemsUnion'
+        $ref: 'MessagePartOutput.yml#/MessagePartOutput'
       type: array
       title: parts
     createdAt:

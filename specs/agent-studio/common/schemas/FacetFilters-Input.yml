@@ -16,8 +16,8 @@ FacetFilters-Input:
       uniqueItems: true
       title: oneOfSchemas
       default:
-        - List[FacetFilters]
         - str
+        - List[FacetFilters]
   type: object
   title: facetFilters
   description: 'Filter the search by facet values, so that only records with the same
