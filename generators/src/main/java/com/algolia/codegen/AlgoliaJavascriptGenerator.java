@@ -182,10 +182,8 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
         dependency.put("dependencyPackage", "@algolia/" + name);
         dependency.put("dependencyVersion", version);
         dependency.put("withInitMethod", !name.contains("search"));
-        dependency.put(
-          "dependencyHasRegionalHosts",
-          !name.contains("search") && !name.contains("recommend") && !name.contains("monitoring") && !name.startsWith("composition") && !name.startsWith("agent-studio")
-        );
+        var clientsWithoutRegion = List.of("search", "recommend", "monitoring", "composition", "agent-studio");
+        dependency.put("dependencyHasRegionalHosts", clientsWithoutRegion.stream().noneMatch(name::startsWith));
 
         dependencies.add(dependency);
       }
