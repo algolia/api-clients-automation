@@ -13,7 +13,7 @@ if (!appId || !apiKey) {
 console.log(`[CONFIG] appId=${appId}`);
 console.log(`[CONFIG] apiKey=${apiKey.slice(0, 6)}...`);
 
-const client = algoliasearch(appId, apiKey).initAgentStudio({ region: 'us' });
+const client = algoliasearch(appId, apiKey).initAgentStudio();
 
 // The generated JS clients set 'content-type: text/plain' by default, which works
 // for traditional Algolia APIs but agent-studio (FastAPI) requires 'application/json'.

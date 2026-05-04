@@ -5,7 +5,7 @@ const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
 const apiKey = process.env.ALGOLIA_ADMIN_KEY || '**** ADMIN_KEY *****';
 
 // Init client with appId and apiKey
-const client = algoliasearch(appId, apiKey).initAgentStudio({ region: 'us' });
+const client = algoliasearch(appId, apiKey).initAgentStudio();
 
 async function testAgentStudio() {
   try {
