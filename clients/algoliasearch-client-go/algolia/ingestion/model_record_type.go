@@ -4,6 +4,7 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // RecordType Record type for ecommerce sources.
@@ -43,12 +44,10 @@ func (v *RecordType) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := RecordType(value)
-	for _, existing := range AllowedRecordTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedRecordTypeEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid RecordType", value)
@@ -56,13 +55,7 @@ func (v *RecordType) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v RecordType) IsValid() bool {
-	for _, existing := range AllowedRecordTypeEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedRecordTypeEnumValues, v)
 }
 
 // Ptr returns reference to RecordType value.

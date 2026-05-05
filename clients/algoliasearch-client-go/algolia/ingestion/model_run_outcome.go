@@ -4,6 +4,7 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // RunOutcome Task run outcome.
@@ -41,12 +42,10 @@ func (v *RunOutcome) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := RunOutcome(value)
-	for _, existing := range AllowedRunOutcomeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedRunOutcomeEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid RunOutcome", value)
@@ -54,13 +53,7 @@ func (v *RunOutcome) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v RunOutcome) IsValid() bool {
-	for _, existing := range AllowedRunOutcomeEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedRunOutcomeEnumValues, v)
 }
 
 // Ptr returns reference to RunOutcome value.

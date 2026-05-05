@@ -4,6 +4,7 @@ package search
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // TypoToleranceEnum - `min`. Return matches with the lowest number of typos.   For example, if you have matches without typos, only include those.   But if there are no matches without typos (with 1 typo), include matches with 1 typo (2 typos). - `strict`. Return matches with the two lowest numbers of typos.   With `strict`, the Typo ranking criterion is applied first in the `ranking` setting.
@@ -45,12 +46,10 @@ func (v *TypoToleranceEnum) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := TypoToleranceEnum(value)
-	for _, existing := range AllowedTypoToleranceEnumEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedTypoToleranceEnumEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid TypoToleranceEnum", value)
@@ -58,13 +57,7 @@ func (v *TypoToleranceEnum) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v TypoToleranceEnum) IsValid() bool {
-	for _, existing := range AllowedTypoToleranceEnumEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedTypoToleranceEnumEnumValues, v)
 }
 
 // Ptr returns reference to typoToleranceEnum value.

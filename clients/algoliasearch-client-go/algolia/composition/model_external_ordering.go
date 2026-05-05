@@ -4,6 +4,7 @@ package composition
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // ExternalOrdering Ordering to apply on the injected items coming from the external source. 'default' means the items will be ordered as they are in the index (natural relevance) in the smart group. 'userDefined' means the order in which the objectIDs are provided in the run request payload will be preserved in the smart group.
@@ -41,12 +42,10 @@ func (v *ExternalOrdering) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := ExternalOrdering(value)
-	for _, existing := range AllowedExternalOrderingEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedExternalOrderingEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid ExternalOrdering", value)
@@ -54,13 +53,7 @@ func (v *ExternalOrdering) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v ExternalOrdering) IsValid() bool {
-	for _, existing := range AllowedExternalOrderingEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedExternalOrderingEnumValues, v)
 }
 
 // Ptr returns reference to externalOrdering value.

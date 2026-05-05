@@ -4,6 +4,7 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // StreamingTriggerType Task runs continuously.
@@ -39,12 +40,10 @@ func (v *StreamingTriggerType) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := StreamingTriggerType(value)
-	for _, existing := range AllowedStreamingTriggerTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedStreamingTriggerTypeEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid StreamingTriggerType", value)
@@ -52,13 +51,7 @@ func (v *StreamingTriggerType) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v StreamingTriggerType) IsValid() bool {
-	for _, existing := range AllowedStreamingTriggerTypeEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedStreamingTriggerTypeEnumValues, v)
 }
 
 // Ptr returns reference to StreamingTriggerType value.

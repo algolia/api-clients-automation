@@ -4,6 +4,7 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // DockerStreamsSyncMode The strategy to use to fetch the data.
@@ -41,12 +42,10 @@ func (v *DockerStreamsSyncMode) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := DockerStreamsSyncMode(value)
-	for _, existing := range AllowedDockerStreamsSyncModeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedDockerStreamsSyncModeEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid DockerStreamsSyncMode", value)
@@ -54,13 +53,7 @@ func (v *DockerStreamsSyncMode) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v DockerStreamsSyncMode) IsValid() bool {
-	for _, existing := range AllowedDockerStreamsSyncModeEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedDockerStreamsSyncModeEnumValues, v)
 }
 
 // Ptr returns reference to DockerStreamsSyncMode value.

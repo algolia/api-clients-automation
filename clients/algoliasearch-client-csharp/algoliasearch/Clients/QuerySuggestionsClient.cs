@@ -882,8 +882,7 @@ public partial class QuerySuggestionsClient : IQuerySuggestionsClient
       new QuerySuggestionsConfig(applicationId, apiKey, region),
       new AlgoliaHttpRequester(loggerFactory),
       loggerFactory
-    )
-  { }
+    ) { }
 
   /// <summary>
   /// Initialize a client with custom config

@@ -4,6 +4,7 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // RunReasonCode A code for the task run's outcome. A readable description of the code is included in the `reason` response property.
@@ -55,12 +56,10 @@ func (v *RunReasonCode) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := RunReasonCode(value)
-	for _, existing := range AllowedRunReasonCodeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedRunReasonCodeEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid RunReasonCode", value)
@@ -68,13 +67,7 @@ func (v *RunReasonCode) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v RunReasonCode) IsValid() bool {
-	for _, existing := range AllowedRunReasonCodeEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedRunReasonCodeEnumValues, v)
 }
 
 // Ptr returns reference to RunReasonCode value.

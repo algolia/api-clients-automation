@@ -284,7 +284,7 @@ final class ApiWrapper implements ApiWrapperInterface
             throw new AlgoliaException($statusCode.': '.$response->getReasonPhrase(), $statusCode);
         }
 
-        if (204 === $statusCode || $body === '') {
+        if (204 === $statusCode || '' === $body) {
             $responseArray = null;
         } else {
             try {

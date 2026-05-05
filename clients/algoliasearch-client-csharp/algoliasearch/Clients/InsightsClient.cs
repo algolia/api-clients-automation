@@ -502,8 +502,7 @@ public partial class InsightsClient : IInsightsClient
       new InsightsConfig(applicationId, apiKey, region),
       new AlgoliaHttpRequester(loggerFactory),
       loggerFactory
-    )
-  { }
+    ) { }
 
   /// <summary>
   /// Initialize a client with custom config

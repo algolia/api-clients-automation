@@ -4,6 +4,7 @@ package recommend
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // TrendingFacetsModel Trending facet values model.  This model recommends trending facet values for the specified facet attribute.
@@ -39,12 +40,10 @@ func (v *TrendingFacetsModel) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := TrendingFacetsModel(value)
-	for _, existing := range AllowedTrendingFacetsModelEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedTrendingFacetsModelEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid TrendingFacetsModel", value)
@@ -52,13 +51,7 @@ func (v *TrendingFacetsModel) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v TrendingFacetsModel) IsValid() bool {
-	for _, existing := range AllowedTrendingFacetsModelEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedTrendingFacetsModelEnumValues, v)
 }
 
 // Ptr returns reference to trendingFacetsModel value.

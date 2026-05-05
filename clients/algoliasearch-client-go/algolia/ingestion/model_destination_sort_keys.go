@@ -4,6 +4,7 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // DestinationSortKeys Property by which to sort the destinations.
@@ -45,12 +46,10 @@ func (v *DestinationSortKeys) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := DestinationSortKeys(value)
-	for _, existing := range AllowedDestinationSortKeysEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedDestinationSortKeysEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid DestinationSortKeys", value)
@@ -58,13 +57,7 @@ func (v *DestinationSortKeys) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v DestinationSortKeys) IsValid() bool {
-	for _, existing := range AllowedDestinationSortKeysEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedDestinationSortKeysEnumValues, v)
 }
 
 // Ptr returns reference to destinationSortKeys value.

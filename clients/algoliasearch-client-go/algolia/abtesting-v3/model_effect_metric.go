@@ -4,6 +4,7 @@ package abtestingV3
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // EffectMetric Metric for which you want to detect the smallest relative difference.
@@ -47,12 +48,10 @@ func (v *EffectMetric) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := EffectMetric(value)
-	for _, existing := range AllowedEffectMetricEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedEffectMetricEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid EffectMetric", value)
@@ -60,13 +59,7 @@ func (v *EffectMetric) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v EffectMetric) IsValid() bool {
-	for _, existing := range AllowedEffectMetricEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedEffectMetricEnumValues, v)
 }
 
 // Ptr returns reference to EffectMetric value.

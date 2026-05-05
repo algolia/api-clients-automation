@@ -4,6 +4,7 @@ package search
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // DictionaryEntryState Whether a dictionary entry is active.
@@ -41,12 +42,10 @@ func (v *DictionaryEntryState) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := DictionaryEntryState(value)
-	for _, existing := range AllowedDictionaryEntryStateEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedDictionaryEntryStateEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid DictionaryEntryState", value)
@@ -54,13 +53,7 @@ func (v *DictionaryEntryState) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v DictionaryEntryState) IsValid() bool {
-	for _, existing := range AllowedDictionaryEntryStateEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedDictionaryEntryStateEnumValues, v)
 }
 
 // Ptr returns reference to dictionaryEntryState value.

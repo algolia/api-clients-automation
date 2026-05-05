@@ -1527,6 +1527,27 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
       tags:
         - agent-studio
+  /setClientApiKey:
+    get:
+      x-helper: true
+      x-asynchronous-helper: false
+      x-acl: []
+      tags:
+        - agent-studio
+      operationId: setClientApiKey
+      summary: Switch the API key used to authenticate requests
+      description: |
+        Switch the API key used to authenticate requests.
+      parameters:
+        - in: query
+          name: apiKey
+          description: API key to use for subsequent requests.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No content.
 components:
   securitySchemes:
     appId:
@@ -1759,13 +1780,15 @@ components:
     NumericFiltersUnion:
       oneOf:
         - type: string
-        - items: {}
+        - items:
+            $ref: '#/components/schemas/NumericFiltersUnion'
           type: array
         - type: 'null'
     TagFiltersUnion:
       oneOf:
         - type: string
-        - items: {}
+        - items:
+            $ref: '#/components/schemas/TagFiltersUnion'
           type: array
         - type: 'null'
     AroundRadiusUnion:
@@ -1808,7 +1831,8 @@ components:
     ReRankingApplyFilterUnion:
       oneOf:
         - type: string
-        - items: {}
+        - items:
+            $ref: '#/components/schemas/ReRankingApplyFilterUnion'
           type: array
         - type: 'null'
     RemoveStopWordsUnionSearchParametersOutput:
@@ -1858,7 +1882,8 @@ components:
     OptionalFiltersUnion:
       oneOf:
         - type: string
-        - items: {}
+        - items:
+            $ref: '#/components/schemas/OptionalFiltersUnion'
           type: array
         - type: 'null'
     ExactOnSingleWordQuery:
@@ -2765,7 +2790,6 @@ components:
           items:
             type: string
           type: array
-          uniqueItems: true
           title: oneOfSchemas
           default:
             - str
@@ -3959,10 +3983,7 @@ components:
           $ref: '#/components/schemas/AgentCompletionAlgoliaParamsNullable'
         toolApprovals:
           oneOf:
-            - additionalProperties:
-                additionalProperties: true
-                type: object
-              type: object
+            - type: object
             - type: 'null'
           title: toolapprovals
       type: object

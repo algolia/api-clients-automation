@@ -4,6 +4,7 @@ package search
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // DictionaryAction Actions to perform.
@@ -41,12 +42,10 @@ func (v *DictionaryAction) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := DictionaryAction(value)
-	for _, existing := range AllowedDictionaryActionEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedDictionaryActionEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid DictionaryAction", value)
@@ -54,13 +53,7 @@ func (v *DictionaryAction) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v DictionaryAction) IsValid() bool {
-	for _, existing := range AllowedDictionaryActionEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedDictionaryActionEnumValues, v)
 }
 
 // Ptr returns reference to dictionaryAction value.

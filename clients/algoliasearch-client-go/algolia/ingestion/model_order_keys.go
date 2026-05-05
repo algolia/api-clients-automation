@@ -4,6 +4,7 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // OrderKeys Ascending or descending sort order.
@@ -41,12 +42,10 @@ func (v *OrderKeys) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := OrderKeys(value)
-	for _, existing := range AllowedOrderKeysEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedOrderKeysEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid OrderKeys", value)
@@ -54,13 +53,7 @@ func (v *OrderKeys) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v OrderKeys) IsValid() bool {
-	for _, existing := range AllowedOrderKeysEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedOrderKeysEnumValues, v)
 }
 
 // Ptr returns reference to orderKeys value.

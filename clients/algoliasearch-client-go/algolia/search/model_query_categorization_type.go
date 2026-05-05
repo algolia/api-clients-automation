@@ -4,6 +4,7 @@ package search
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // QueryCategorizationType Classification of the query scope.
@@ -45,12 +46,10 @@ func (v *QueryCategorizationType) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := QueryCategorizationType(value)
-	for _, existing := range AllowedQueryCategorizationTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedQueryCategorizationTypeEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid QueryCategorizationType", value)
@@ -58,13 +57,7 @@ func (v *QueryCategorizationType) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v QueryCategorizationType) IsValid() bool {
-	for _, existing := range AllowedQueryCategorizationTypeEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedQueryCategorizationTypeEnumValues, v)
 }
 
 // Ptr returns reference to queryCategorization_type value.

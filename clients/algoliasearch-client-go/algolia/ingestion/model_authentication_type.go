@@ -4,6 +4,7 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // AuthenticationType Type of authentication. This determines the type of credentials required in the `input` object.
@@ -51,12 +52,10 @@ func (v *AuthenticationType) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := AuthenticationType(value)
-	for _, existing := range AllowedAuthenticationTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedAuthenticationTypeEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid AuthenticationType", value)
@@ -64,13 +63,7 @@ func (v *AuthenticationType) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v AuthenticationType) IsValid() bool {
-	for _, existing := range AllowedAuthenticationTypeEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedAuthenticationTypeEnumValues, v)
 }
 
 // Ptr returns reference to AuthenticationType value.
