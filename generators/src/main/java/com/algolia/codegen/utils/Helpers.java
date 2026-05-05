@@ -341,5 +341,4 @@ public class Helpers {
     ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(mapper.writeValueAsString(obj), List.class);
   }
-
 }
