@@ -2,9 +2,11 @@
   {
     "testName": "createFeedback with required parameters",
     "parameters": {
-      "messageId": "msg-abc123",
-      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
-      "vote": 1
+      "feedbackCreationRequest": {
+        "messageId": "msg-abc123",
+        "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
+        "vote": 1
+      }
     },
     "request": {
       "path": "/1/feedback",
@@ -19,11 +21,13 @@
   {
     "testName": "createFeedback with all parameters",
     "parameters": {
-      "messageId": "msg-abc123",
-      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
-      "vote": 0,
-      "tags": ["unhelpful", "off-topic"],
-      "notes": "The response did not address my question."
+      "feedbackCreationRequest": {
+        "messageId": "msg-abc123",
+        "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
+        "vote": 0,
+        "tags": ["unhelpful", "off-topic"],
+        "notes": "The response did not address my question."
+      }
     },
     "request": {
       "path": "/1/feedback",
