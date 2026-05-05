@@ -39,6 +39,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@algolia/agent-studio@workspace:packages/agent-studio":
+  version: 0.0.0-use.local
+  resolution: "@algolia/agent-studio@workspace:packages/agent-studio"
+  dependencies:
+    "@algolia/client-common": "npm:5.52.0"
+    "@algolia/requester-browser-xhr": "npm:5.52.0"
+    "@algolia/requester-fetch": "npm:5.52.0"
+    "@algolia/requester-node-http": "npm:5.52.0"
+    "@arethetypeswrong/cli": "npm:0.18.2"
+    "@types/node": "npm:25.1.0"
+    publint: "npm:0.3.18"
+    rollup: "npm:4.59.0"
+    tsup: "npm:8.5.1"
+    typescript: "npm:5.9.3"
+  languageName: unknown
+  linkType: soft
+
 "@algolia/client-abtesting@npm:5.52.1, @algolia/client-abtesting@workspace:packages/client-abtesting":
   version: 0.0.0-use.local
   resolution: "@algolia/client-abtesting@workspace:packages/client-abtesting"
@@ -72,6 +89,13 @@ __metadata:
     typescript: "npm:5.9.3"
   languageName: unknown
   linkType: soft
+
+"@algolia/client-common@npm:5.52.0":
+  version: 5.52.0
+  resolution: "@algolia/client-common@npm:5.52.0"
+  checksum: 10/a5b0b834991c323435b5231b10ddcb51a2275e7800419088d8f0e44da782fff17eab931913d4b5ae5a3613e032ef24c74c0318e23a2ba493d8b84e1ec7fe9b11
+  languageName: node
+  linkType: hard
 
 "@algolia/client-common@npm:5.52.1, @algolia/client-common@workspace:packages/client-common":
   version: 0.0.0-use.local
@@ -240,6 +264,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@algolia/requester-browser-xhr@npm:5.52.0":
+  version: 5.52.0
+  resolution: "@algolia/requester-browser-xhr@npm:5.52.0"
+  dependencies:
+    "@algolia/client-common": "npm:5.52.0"
+  checksum: 10/4d6ed87c45eccf44017c5089e7831e841fbdfb9995417e55e72739e5a6de9803bb57671833844d99620796342728837b4508ff50d324c3cb3928fa2c3af4bb3f
+  languageName: node
+  linkType: hard
+
 "@algolia/requester-browser-xhr@npm:5.52.1, @algolia/requester-browser-xhr@workspace:packages/requester-browser-xhr":
   version: 0.0.0-use.local
   resolution: "@algolia/requester-browser-xhr@workspace:packages/requester-browser-xhr"
@@ -256,6 +289,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@algolia/requester-fetch@npm:5.52.0":
+  version: 5.52.0
+  resolution: "@algolia/requester-fetch@npm:5.52.0"
+  dependencies:
+    "@algolia/client-common": "npm:5.52.0"
+  checksum: 10/be1294748e4ff07d74e4c9a5429abcf298df65bf7fb486ad58a22bf9beb9a22ffd4a14856ef18adef92ca38e4c8ef138baed2a810fe76babccea49b3c40f9d07
+  languageName: node
+  linkType: hard
+
 "@algolia/requester-fetch@npm:5.52.1, @algolia/requester-fetch@workspace:packages/requester-fetch":
   version: 0.0.0-use.local
   resolution: "@algolia/requester-fetch@workspace:packages/requester-fetch"
@@ -271,6 +313,15 @@ __metadata:
     vitest: "npm:4.1.5"
   languageName: unknown
   linkType: soft
+
+"@algolia/requester-node-http@npm:5.52.0":
+  version: 5.52.0
+  resolution: "@algolia/requester-node-http@npm:5.52.0"
+  dependencies:
+    "@algolia/client-common": "npm:5.52.0"
+  checksum: 10/e4e16628b3c516e92a83fd69ae48089d4ce7f253a12d6a686e03fc20b5e86268e5136e4f72df3c87a7ee49564698941d81b3d3d7e769b69220ca01795f7fa866
+  languageName: node
+  linkType: hard
 
 "@algolia/requester-node-http@npm:5.52.1, @algolia/requester-node-http@workspace:packages/requester-node-http":
   version: 0.0.0-use.local
