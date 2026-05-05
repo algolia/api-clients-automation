@@ -319,6 +319,9 @@ public class {{classname}} extends ApiClient {
   public {{> return_type_async}} {{operationId}}Async({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}},{{/requiredParams}}{{#optionalParams}}{{{dataType}}} {{paramName}}, {{/optionalParams}}{{#vendorExtensions}}{{#x-is-generic}}Class<T> innerType, {{/x-is-generic}}{{/vendorExtensions}}@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
     {{#allParams}}{{#required}}
     Parameters.requireNonNull({{paramName}}, "Parameter `{{paramName}}` is required when calling `{{operationId}}`.");
+    {{#isString}}
+    Parameters.requireNonEmpty({{paramName}}, "Parameter `{{paramName}}` is required when calling `{{operationId}}`.");
+    {{/isString}}
     {{/required}}{{/allParams}}
 
     HttpRequest request = HttpRequest.builder()
@@ -342,6 +345,9 @@ public class {{classname}} extends ApiClient {
   public CompletableFuture<Response> {{operationId}}WithHTTPInfoAsync({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}},{{/requiredParams}}{{#optionalParams}}{{{dataType}}} {{paramName}}, {{/optionalParams}}{{#vendorExtensions}}{{#x-is-generic}}Class<Response> innerType, {{/x-is-generic}}{{/vendorExtensions}}@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
     {{#allParams}}{{#required}}
     Parameters.requireNonNull({{paramName}}, "Parameter `{{paramName}}` is required when calling `{{operationId}}`.");
+    {{#isString}}
+    Parameters.requireNonEmpty({{paramName}}, "Parameter `{{paramName}}` is required when calling `{{operationId}}`.");
+    {{/isString}}
     {{/required}}{{/allParams}}
 
     HttpRequest request = HttpRequest.builder()
