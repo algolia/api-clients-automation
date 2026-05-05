@@ -89,3 +89,5 @@ paths:
     $ref: 'paths/user-data/user-data.yml'
   /{path}:
     $ref: '../common/paths/customRequest.yml'
+  /setClientApiKey:
+    $ref: '../common/helpers/setClientApiKey.yml#/method'
