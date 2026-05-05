@@ -70,12 +70,10 @@ DestinationUpdate:
   additionalProperties: false
   description: API request body for updating a destination.
   properties:
-    type:
-      $ref: '#/DestinationType'
     name:
       $ref: './common.yml#/name'
     input:
-      $ref: '#/DestinationInput'
+      $ref: '#/DestinationUpdateInput'
     authenticationID:
       $ref: './common.yml#/authenticationID'
     transformationIDs:
@@ -134,6 +132,18 @@ DestinationInput:
       $ref: '#/AttributesToExclude'
   required:
     - indexName
+
+DestinationUpdateInput:
+  type: object
+  additionalProperties: false
+  properties:
+    indexName:
+      type: string
+      description: Algolia index name (case-sensitive).
+    recordType:
+      $ref: '#/RecordType'
+    attributesToExclude:
+      $ref: '#/AttributesToExclude'
 
 RecordType:
   type: string
