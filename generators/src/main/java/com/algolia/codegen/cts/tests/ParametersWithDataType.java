@@ -70,22 +70,25 @@ public class ParametersWithDataType {
 
     if (paramName == null) {
       if (parameters != null) {
-        for (Entry<String, Object> param : parameters.entrySet()) {
-          CodegenParameter specParam = null;
-          if (operation != null) {
-            for (CodegenParameter sp : operation.allParams) {
-              if (sp.paramName.equals(param.getKey())) {
-                specParam = sp;
-                break;
-              }
+        if (operation != null) {
+          // Iterate in operation.allParams order to ensure generated method calls
+          // pass arguments in the correct positional order (matching the method signature),
+          // regardless of JSON key order in the CTS test definition.
+          for (CodegenParameter sp : operation.allParams) {
+            if (!parameters.containsKey(sp.paramName)) {
+              continue;
             }
-            if (specParam == null) {
-              throw new CTSException("Parameter " + param.getKey() + " not found in the root parameter");
-            }
+            Object paramValue = parameters.get(sp.paramName);
+            Map<String, Object> paramWithType = traverseParams(sp.paramName, paramValue, sp, "", 0, false);
+            parametersWithDataType.add(paramWithType);
+            parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
           }
-          Map<String, Object> paramWithType = traverseParams(param.getKey(), param.getValue(), specParam, "", 0, false);
-          parametersWithDataType.add(paramWithType);
-          parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
+        } else {
+          for (Entry<String, Object> param : parameters.entrySet()) {
+            Map<String, Object> paramWithType = traverseParams(param.getKey(), param.getValue(), null, "", 0, false);
+            parametersWithDataType.add(paramWithType);
+            parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
+          }
         }
       }
     } else {
