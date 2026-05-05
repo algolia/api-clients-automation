@@ -261,6 +261,10 @@ namespace Algolia.Search.Clients;
           if ({{paramName}} == null)
               throw new ArgumentException("Parameter `{{paramName}}` is required when calling `{{operationId}}`.");
             {{/isEnumRef}}{{/vendorExtensions.x-csharp-value-type}}
+          {{#isString}}
+          if (string.IsNullOrWhiteSpace({{paramName}}))
+              throw new ArgumentException("Parameter `{{paramName}}` is required when calling `{{operationId}}`.");
+          {{/isString}}
           {{/required}}
           {{/allParams}}
           var requestOptions = new InternalRequestOptions(options);
@@ -350,6 +354,10 @@ namespace Algolia.Search.Clients;
           if ({{paramName}} == null)
               throw new ArgumentException("Parameter `{{paramName}}` is required when calling `{{operationId}}`.");
             {{/isEnumRef}}{{/vendorExtensions.x-csharp-value-type}}
+          {{#isString}}
+          if (string.IsNullOrWhiteSpace({{paramName}}))
+              throw new ArgumentException("Parameter `{{paramName}}` is required when calling `{{operationId}}`.");
+          {{/isString}}
           {{/required}}
           {{/allParams}}
           var requestOptions = new InternalRequestOptions(options);
