@@ -122,6 +122,12 @@ module {{moduleName}}
       if @api_client.config.client_side_validation && {{{paramName}}}.nil?
         raise ArgumentError, "Parameter `{{paramName}}` is required when calling `{{operationId}}`."
       end
+      {{#isString}}
+      # verify the required parameter '{{paramName}}' is not empty
+      if @api_client.config.client_side_validation && {{{paramName}}}.empty?
+        raise ArgumentError, "Parameter `{{paramName}}` is required when calling `{{operationId}}`."
+      end
+      {{/isString}}
       {{/required}}
       {{/isNullable}}
       {{/allParams}}
