@@ -16,6 +16,10 @@ package object util {
     if (param == null) throw new IllegalArgumentException(error)
   }
 
+  private[algoliasearch] def requireNotEmpty(param: String, error: String): Unit = {
+    if (param == null || param.trim.isEmpty) throw new IllegalArgumentException(error)
+  }
+
   /** Escape the given string to be used as URL query value.
     */
   private[algoliasearch] def escape(input: Any): String = input match {
