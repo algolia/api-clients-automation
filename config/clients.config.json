@@ -207,7 +207,8 @@
       },
       {
         "name": "agent-studio",
-        "output": "clients/algoliasearch-client-javascript/packages/agent-studio"
+        "output": "clients/algoliasearch-client-javascript/packages/agent-studio",
+        "isStandaloneClient": true
       }
     ],
     "folder": "clients/algoliasearch-client-javascript",

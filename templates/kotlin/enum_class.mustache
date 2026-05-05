@@ -22,7 +22,7 @@ public enum class {{classname}}(public val value: kotlin.Int){{> oneof_parent}} 
      */
     {{/enumDescription}}
     {{#isString}}@SerialName(value = {{{value}}})
-    {{/isString}}{{#lambda.pascalcase}}{{&name}}{{/lambda.pascalcase}}({{{value}}}){{^-last}},{{/-last}}{{#-last}};{{/-last}}
+    {{/isString}}{{#lambda.pascalcase}}{{&name}}{{/lambda.pascalcase}}({{#isString}}{{{value}}}{{/isString}}{{^isString}}{{{intValue}}}{{/isString}}){{^-last}},{{/-last}}{{#-last}};{{/-last}}
 {{/enumVars}}{{/allowableValues}}
 {{#allowableValues}}{{#enumVars}}{{#-first}}{{#isString}}
     override fun toString(): kotlin.String = value
