@@ -174,7 +174,7 @@ public class ParametersWithDataType {
     } else if (spec.getIsArray()) {
       handleArray(paramName, param, testOutput, spec, depth);
     } else if (spec.getIsEnum()) {
-      handleEnum(param, testOutput);
+      handleEnum(param, testOutput, spec);
     } else if (spec.getIsModel() || isCodegenModel) {
       // recursive object
       handleModel(paramName, param, testOutput, spec, baseType, parent, depth, isParentFreeFormObject, isRequired != null && isRequired);
@@ -281,8 +281,9 @@ public class ParametersWithDataType {
     testOutput.put("value", values);
   }
 
-  private void handleEnum(Object param, Map<String, Object> testOutput) {
+  private void handleEnum(Object param, Map<String, Object> testOutput, IJsonSchemaValidationProperties spec) {
     testOutput.put("isEnum", true);
+    testOutput.put("isIntegerEnum", spec.getIsInteger() || spec.getIsNumber());
     testOutput.put("value", param);
   }
 
