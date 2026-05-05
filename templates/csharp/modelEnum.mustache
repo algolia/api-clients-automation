@@ -4,8 +4,8 @@
     {{#description}}
     /// <value>{{{.}}}</value>
     {{/description}}
-    [JsonConverter(typeof(Serializer.JsonStringEnumConverter<{{datatypeWithEnum}}{{^datatypeWithEnum}}{{classname}}{{/datatypeWithEnum}}>))]
-    {{> visibility}} enum {{datatypeWithEnum}}{{^datatypeWithEnum}}{{classname}}{{/datatypeWithEnum}}
+    {{#allowableValues}}{{#enumVars}}{{#-first}}{{#isString}}[JsonConverter(typeof(Serializer.JsonStringEnumConverter<{{datatypeWithEnum}}{{^datatypeWithEnum}}{{classname}}{{/datatypeWithEnum}}>))]
+    {{/isString}}{{/-first}}{{/enumVars}}{{/allowableValues}}{{> visibility}} enum {{datatypeWithEnum}}{{^datatypeWithEnum}}{{classname}}{{/datatypeWithEnum}}
     {
         {{#allowableValues}}
         {{#enumVars}}
