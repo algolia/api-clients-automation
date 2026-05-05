@@ -5,6 +5,7 @@ post:
   operationId: createAgentCompletion
   x-acl:
     - search
+  x-streaming: true
   summary: Create Completion
   description: |-
     Create a completion for the specified agent.
