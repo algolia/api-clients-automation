@@ -342,23 +342,4 @@ public class Helpers {
     return mapper.readValue(mapper.writeValueAsString(obj), List.class);
   }
 
-  @SuppressWarnings("unchecked")
-  public static void fixIntegerEnumValues(Map<String, org.openapitools.codegen.model.ModelsMap> models) {
-    for (org.openapitools.codegen.model.ModelsMap modelContainer : models.values()) {
-      org.openapitools.codegen.CodegenModel model = modelContainer.getModels().get(0).getModel();
-      if (model.isEnum && model.allowableValues != null && model.allowableValues.containsKey("enumVars")) {
-        List<Map<String, Object>> enumVars = (List<Map<String, Object>>) model.allowableValues.get("enumVars");
-        for (Map<String, Object> enumVar : enumVars) {
-          if (!Boolean.TRUE.equals(enumVar.get("isString"))) {
-            String value = String.valueOf(enumVar.get("value"));
-            if (value.startsWith("\"") && value.endsWith("\"")) {
-              enumVar.put("intValue", value.substring(1, value.length() - 1));
-            } else {
-              enumVar.put("intValue", value);
-            }
-          }
-        }
-      }
-    }
-  }
 }

@@ -145,7 +145,6 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     OneOf.updateModelsOneOf(models, modelPackage);
     GenericPropagator.propagateGenericsToModels(models);
     OneOf.addOneOfMetadata(models);
-    Helpers.fixIntegerEnumValues(models);
     return models;
   }
 

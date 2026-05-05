@@ -249,7 +249,6 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     GenericPropagator.propagateGenericsToModels(models, true);
     OneOf.updateModelsOneOf(models, modelPackage);
     OneOf.addOneOfMetadata(models);
-    Helpers.fixIntegerEnumValues(models);
 
     // Add unescapedName for properties where Scala name differs from original
     for (var model : models.values()) {

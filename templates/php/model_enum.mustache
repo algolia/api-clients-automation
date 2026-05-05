@@ -5,7 +5,7 @@ class {{classname}}
      */
     {{#allowableValues}}
     {{#enumVars}}
-    public const {{^isString}}NUMBER_{{/isString}}{{{name}}} = {{#isString}}{{{value}}}{{/isString}}{{^isString}}{{{intValue}}}{{/isString}};
+    public const {{{name}}} = {{{value}}};
 
     {{/enumVars}}
     {{/allowableValues}}
@@ -18,7 +18,7 @@ class {{classname}}
         return [
             {{#allowableValues}}
             {{#enumVars}}
-            self::{{^isString}}NUMBER_{{/isString}}{{{name}}}{{^-last}},
+            self::{{{name}}}{{^-last}},
             {{/-last}}
             {{/enumVars}}
             {{/allowableValues}}

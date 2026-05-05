@@ -94,13 +94,6 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
   }
 
   @Override
-  public Map<String, org.openapitools.codegen.model.ModelsMap> postProcessAllModels(Map<String, org.openapitools.codegen.model.ModelsMap> objs) {
-    Map<String, org.openapitools.codegen.model.ModelsMap> models = super.postProcessAllModels(objs);
-    Helpers.fixIntegerEnumValues(models);
-    return models;
-  }
-
-  @Override
   public String getComposerPackageName() {
     return "algolia/algoliasearch-client-php";
   }

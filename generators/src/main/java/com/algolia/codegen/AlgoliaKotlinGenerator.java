@@ -174,7 +174,6 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     OneOf.updateModelsOneOf(models, modelPackage);
     GenericPropagator.propagateGenericsToModels(models, true);
     OneOf.addOneOfMetadata(models);
-    Helpers.fixIntegerEnumValues(models);
     jsonParent(models);
     return models;
   }
