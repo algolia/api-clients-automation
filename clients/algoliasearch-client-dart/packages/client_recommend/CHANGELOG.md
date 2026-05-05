@@ -1,3 +1,7 @@
+## [1.49.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.49.0...1.49.1)
+
+- [4d2ae79e73](https://github.com/algolia/api-clients-automation/commit/4d2ae79e73) chore(deps): dependencies 2026-04-20 ([#6259](https://github.com/algolia/api-clients-automation/pull/6259)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [1.49.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.48.0...1.49.0)
 
 - [d275af4e18](https://github.com/algolia/api-clients-automation/commit/d275af4e18) feat(specs): add Algolia Index as a native connector in ingestion client ([#6290](https://github.com/algolia/api-clients-automation/pull/6290)) by [@morganleroi](https://github.com/morganleroi/)
