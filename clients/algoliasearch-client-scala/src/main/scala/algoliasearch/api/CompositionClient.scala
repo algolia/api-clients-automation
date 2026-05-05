@@ -111,6 +111,7 @@ class CompositionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customDelete`.")
 
     val request = HttpRequest
       .builder()
@@ -134,6 +135,7 @@ class CompositionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customGet`.")
 
     val request = HttpRequest
       .builder()
@@ -160,6 +162,7 @@ class CompositionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customPost`.")
 
     val request = HttpRequest
       .builder()
@@ -187,6 +190,7 @@ class CompositionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customPut`.")
 
     val request = HttpRequest
       .builder()
@@ -210,6 +214,7 @@ class CompositionClient(
       ec: ExecutionContext
   ): Future[TaskIDResponse] = Future {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `deleteComposition`.")
+    requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `deleteComposition`.")
 
     val request = HttpRequest
       .builder()
@@ -233,7 +238,9 @@ class CompositionClient(
       implicit ec: ExecutionContext
   ): Future[TaskIDResponse] = Future {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `deleteCompositionRule`.")
+    requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `deleteCompositionRule`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `deleteCompositionRule`.")
+    requireNotEmpty(objectID, "Parameter `objectID` is required when calling `deleteCompositionRule`.")
 
     val request = HttpRequest
       .builder()
@@ -256,6 +263,7 @@ class CompositionClient(
       ec: ExecutionContext
   ): Future[Composition] = Future {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `getComposition`.")
+    requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `getComposition`.")
 
     val request = HttpRequest
       .builder()
@@ -281,7 +289,9 @@ class CompositionClient(
       ec: ExecutionContext
   ): Future[CompositionRule] = Future {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `getRule`.")
+    requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `getRule`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `getRule`.")
+    requireNotEmpty(objectID, "Parameter `objectID` is required when calling `getRule`.")
 
     val request = HttpRequest
       .builder()
@@ -309,6 +319,7 @@ class CompositionClient(
       ec: ExecutionContext
   ): Future[GetTaskResponse] = Future {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `getTask`.")
+    requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `getTask`.")
     requireNotNull(taskID, "Parameter `taskID` is required when calling `getTask`.")
 
     val request = HttpRequest
@@ -377,6 +388,7 @@ class CompositionClient(
       implicit ec: ExecutionContext
   ): Future[TaskIDResponse] = Future {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `putComposition`.")
+    requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `putComposition`.")
     requireNotNull(composition, "Parameter `composition` is required when calling `putComposition`.")
 
     val request = HttpRequest
@@ -405,7 +417,9 @@ class CompositionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[TaskIDResponse] = Future {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `putCompositionRule`.")
+    requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `putCompositionRule`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `putCompositionRule`.")
+    requireNotEmpty(objectID, "Parameter `objectID` is required when calling `putCompositionRule`.")
     requireNotNull(compositionRule, "Parameter `compositionRule` is required when calling `putCompositionRule`.")
 
     val request = HttpRequest
@@ -431,6 +445,7 @@ class CompositionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[RulesMultipleBatchResponse] = Future {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `saveRules`.")
+    requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `saveRules`.")
     requireNotNull(rules, "Parameter `rules` is required when calling `saveRules`.")
 
     val request = HttpRequest
@@ -454,6 +469,7 @@ class CompositionClient(
       ec: ExecutionContext
   ): Future[SearchResponse] = Future {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `search`.")
+    requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `search`.")
     requireNotNull(requestBody, "Parameter `requestBody` is required when calling `search`.")
 
     val request = HttpRequest
@@ -480,6 +496,7 @@ class CompositionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[SearchCompositionRulesResponse] = Future {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `searchCompositionRules`.")
+    requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `searchCompositionRules`.")
 
     val request = HttpRequest
       .builder()
@@ -510,7 +527,9 @@ class CompositionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[SearchForFacetValuesResponse] = Future {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `searchForFacetValues`.")
+    requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `searchForFacetValues`.")
     requireNotNull(facetName, "Parameter `facetName` is required when calling `searchForFacetValues`.")
+    requireNotEmpty(facetName, "Parameter `facetName` is required when calling `searchForFacetValues`.")
 
     val request = HttpRequest
       .builder()
@@ -541,6 +560,10 @@ class CompositionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[TaskIDResponse] = Future {
     requireNotNull(
+      compositionID,
+      "Parameter `compositionID` is required when calling `updateSortingStrategyComposition`."
+    )
+    requireNotEmpty(
       compositionID,
       "Parameter `compositionID` is required when calling `updateSortingStrategyComposition`."
     )

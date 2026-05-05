@@ -125,6 +125,7 @@ class QuerySuggestionsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customDelete`.")
 
     val request = HttpRequest
       .builder()
@@ -148,6 +149,7 @@ class QuerySuggestionsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customGet`.")
 
     val request = HttpRequest
       .builder()
@@ -174,6 +176,7 @@ class QuerySuggestionsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customPost`.")
 
     val request = HttpRequest
       .builder()
@@ -201,6 +204,7 @@ class QuerySuggestionsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customPut`.")
 
     val request = HttpRequest
       .builder()
@@ -226,6 +230,7 @@ class QuerySuggestionsClient(
       ec: ExecutionContext
   ): Future[BaseResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `deleteConfig`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `deleteConfig`.")
 
     val request = HttpRequest
       .builder()
@@ -264,6 +269,7 @@ class QuerySuggestionsClient(
       ec: ExecutionContext
   ): Future[ConfigurationResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getConfig`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getConfig`.")
 
     val request = HttpRequest
       .builder()
@@ -285,6 +291,7 @@ class QuerySuggestionsClient(
       ec: ExecutionContext
   ): Future[ConfigStatus] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getConfigStatus`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getConfigStatus`.")
 
     val request = HttpRequest
       .builder()
@@ -306,6 +313,7 @@ class QuerySuggestionsClient(
       ec: ExecutionContext
   ): Future[LogFile] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getLogFile`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getLogFile`.")
 
     val request = HttpRequest
       .builder()
@@ -327,6 +335,7 @@ class QuerySuggestionsClient(
       implicit ec: ExecutionContext
   ): Future[BaseResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `updateConfig`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `updateConfig`.")
     requireNotNull(configuration, "Parameter `configuration` is required when calling `updateConfig`.")
 
     val request = HttpRequest
