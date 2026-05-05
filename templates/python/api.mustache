@@ -191,6 +191,11 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         if {{paramName}} is None:
             raise ValueError("Parameter `{{paramName}}` is required when calling `{{nickname}}`.")
 
+        {{#isString}}
+        if not {{paramName}}:
+            raise ValueError("Parameter `{{paramName}}` is required when calling `{{nickname}}`.")
+
+        {{/isString}}
         {{/required}}
         {{/allParams}}
 

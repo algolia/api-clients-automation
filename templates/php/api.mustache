@@ -275,6 +275,14 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
                 'Parameter `{{paramName}}` is required when calling `{{operationId}}`.'
                 );
                 }
+                {{#isString}}
+                // verify the required parameter '{{paramName}}' is not empty
+                if (isset(${{paramName}}) && ${{paramName}} === '') {
+                throw new \InvalidArgumentException(
+                'Parameter `{{paramName}}` is required when calling `{{operationId}}`.'
+                );
+                }
+                {{/isString}}
             {{/required}}
         {{/allParams}}
 

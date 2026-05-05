@@ -318,6 +318,7 @@ class IngestionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customDelete`.")
 
     val request = HttpRequest
       .builder()
@@ -341,6 +342,7 @@ class IngestionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customGet`.")
 
     val request = HttpRequest
       .builder()
@@ -367,6 +369,7 @@ class IngestionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customPost`.")
 
     val request = HttpRequest
       .builder()
@@ -394,6 +397,7 @@ class IngestionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customPut`.")
 
     val request = HttpRequest
       .builder()
@@ -420,6 +424,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[DeleteResponse] = Future {
     requireNotNull(authenticationID, "Parameter `authenticationID` is required when calling `deleteAuthentication`.")
+    requireNotEmpty(authenticationID, "Parameter `authenticationID` is required when calling `deleteAuthentication`.")
 
     val request = HttpRequest
       .builder()
@@ -443,6 +448,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[DeleteResponse] = Future {
     requireNotNull(destinationID, "Parameter `destinationID` is required when calling `deleteDestination`.")
+    requireNotEmpty(destinationID, "Parameter `destinationID` is required when calling `deleteDestination`.")
 
     val request = HttpRequest
       .builder()
@@ -466,6 +472,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[DeleteResponse] = Future {
     requireNotNull(sourceID, "Parameter `sourceID` is required when calling `deleteSource`.")
+    requireNotEmpty(sourceID, "Parameter `sourceID` is required when calling `deleteSource`.")
 
     val request = HttpRequest
       .builder()
@@ -489,6 +496,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[DeleteResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `deleteTask`.")
+    requireNotEmpty(taskID, "Parameter `taskID` is required when calling `deleteTask`.")
 
     val request = HttpRequest
       .builder()
@@ -514,6 +522,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[DeleteResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `deleteTaskV1`.")
+    requireNotEmpty(taskID, "Parameter `taskID` is required when calling `deleteTaskV1`.")
 
     val request = HttpRequest
       .builder()
@@ -537,6 +546,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[DeleteResponse] = Future {
     requireNotNull(transformationID, "Parameter `transformationID` is required when calling `deleteTransformation`.")
+    requireNotEmpty(transformationID, "Parameter `transformationID` is required when calling `deleteTransformation`.")
 
     val request = HttpRequest
       .builder()
@@ -560,6 +570,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[TaskUpdateResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `disableTask`.")
+    requireNotEmpty(taskID, "Parameter `taskID` is required when calling `disableTask`.")
 
     val request = HttpRequest
       .builder()
@@ -585,6 +596,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[TaskUpdateResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `disableTaskV1`.")
+    requireNotEmpty(taskID, "Parameter `taskID` is required when calling `disableTaskV1`.")
 
     val request = HttpRequest
       .builder()
@@ -608,6 +620,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[TaskUpdateResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `enableTask`.")
+    requireNotEmpty(taskID, "Parameter `taskID` is required when calling `enableTask`.")
 
     val request = HttpRequest
       .builder()
@@ -633,6 +646,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[TaskUpdateResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `enableTaskV1`.")
+    requireNotEmpty(taskID, "Parameter `taskID` is required when calling `enableTaskV1`.")
 
     val request = HttpRequest
       .builder()
@@ -656,6 +670,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[Authentication] = Future {
     requireNotNull(authenticationID, "Parameter `authenticationID` is required when calling `getAuthentication`.")
+    requireNotEmpty(authenticationID, "Parameter `authenticationID` is required when calling `getAuthentication`.")
 
     val request = HttpRequest
       .builder()
@@ -679,6 +694,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[Destination] = Future {
     requireNotNull(destinationID, "Parameter `destinationID` is required when calling `getDestination`.")
+    requireNotEmpty(destinationID, "Parameter `destinationID` is required when calling `getDestination`.")
 
     val request = HttpRequest
       .builder()
@@ -704,7 +720,9 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[Event] = Future {
     requireNotNull(runID, "Parameter `runID` is required when calling `getEvent`.")
+    requireNotEmpty(runID, "Parameter `runID` is required when calling `getEvent`.")
     requireNotNull(eventID, "Parameter `eventID` is required when calling `getEvent`.")
+    requireNotEmpty(eventID, "Parameter `eventID` is required when calling `getEvent`.")
 
     val request = HttpRequest
       .builder()
@@ -727,6 +745,7 @@ class IngestionClient(
   def getRun(runID: String, requestOptions: Option[RequestOptions] = None)(implicit ec: ExecutionContext): Future[Run] =
     Future {
       requireNotNull(runID, "Parameter `runID` is required when calling `getRun`.")
+      requireNotEmpty(runID, "Parameter `runID` is required when calling `getRun`.")
 
       val request = HttpRequest
         .builder()
@@ -750,6 +769,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[Source] = Future {
     requireNotNull(sourceID, "Parameter `sourceID` is required when calling `getSource`.")
+    requireNotEmpty(sourceID, "Parameter `sourceID` is required when calling `getSource`.")
 
     val request = HttpRequest
       .builder()
@@ -773,6 +793,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[Task] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `getTask`.")
+    requireNotEmpty(taskID, "Parameter `taskID` is required when calling `getTask`.")
 
     val request = HttpRequest
       .builder()
@@ -798,6 +819,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[TaskV1] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `getTaskV1`.")
+    requireNotEmpty(taskID, "Parameter `taskID` is required when calling `getTaskV1`.")
 
     val request = HttpRequest
       .builder()
@@ -821,6 +843,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[Transformation] = Future {
     requireNotNull(transformationID, "Parameter `transformationID` is required when calling `getTransformation`.")
+    requireNotEmpty(transformationID, "Parameter `transformationID` is required when calling `getTransformation`.")
 
     val request = HttpRequest
       .builder()
@@ -962,6 +985,7 @@ class IngestionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ListEventsResponse] = Future {
     requireNotNull(runID, "Parameter `runID` is required when calling `listEvents`.")
+    requireNotEmpty(runID, "Parameter `runID` is required when calling `listEvents`.")
 
     val request = HttpRequest
       .builder()
@@ -1271,6 +1295,7 @@ class IngestionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[WatchResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `push`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `push`.")
     requireNotNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `push`.")
 
     val request = HttpRequest
@@ -1317,6 +1342,7 @@ class IngestionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[WatchResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `pushTask`.")
+    requireNotEmpty(taskID, "Parameter `taskID` is required when calling `pushTask`.")
     requireNotNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `pushTask`.")
 
     val request = HttpRequest
@@ -1352,6 +1378,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[TaskUpdateResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `replaceTask`.")
+    requireNotEmpty(taskID, "Parameter `taskID` is required when calling `replaceTask`.")
     requireNotNull(taskReplace, "Parameter `taskReplace` is required when calling `replaceTask`.")
 
     val request = HttpRequest
@@ -1381,6 +1408,7 @@ class IngestionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[RunSourceResponse] = Future {
     requireNotNull(sourceID, "Parameter `sourceID` is required when calling `runSource`.")
+    requireNotEmpty(sourceID, "Parameter `sourceID` is required when calling `runSource`.")
 
     val request = HttpRequest
       .builder()
@@ -1408,6 +1436,7 @@ class IngestionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[RunResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `runTask`.")
+    requireNotEmpty(taskID, "Parameter `taskID` is required when calling `runTask`.")
 
     val request = HttpRequest
       .builder()
@@ -1438,6 +1467,7 @@ class IngestionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[RunResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `runTaskV1`.")
+    requireNotEmpty(taskID, "Parameter `taskID` is required when calling `runTaskV1`.")
 
     val request = HttpRequest
       .builder()
@@ -1597,6 +1627,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[WatchResponse] = Future {
     requireNotNull(sourceID, "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.")
+    requireNotEmpty(sourceID, "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.")
 
     val request = HttpRequest
       .builder()
@@ -1655,6 +1686,10 @@ class IngestionClient(
       transformationID,
       "Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`."
     )
+    requireNotEmpty(
+      transformationID,
+      "Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`."
+    )
     requireNotNull(
       transformationTry,
       "Parameter `transformationTry` is required when calling `tryTransformationBeforeUpdate`."
@@ -1685,6 +1720,7 @@ class IngestionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[AuthenticationUpdateResponse] = Future {
     requireNotNull(authenticationID, "Parameter `authenticationID` is required when calling `updateAuthentication`.")
+    requireNotEmpty(authenticationID, "Parameter `authenticationID` is required when calling `updateAuthentication`.")
     requireNotNull(
       authenticationUpdate,
       "Parameter `authenticationUpdate` is required when calling `updateAuthentication`."
@@ -1715,6 +1751,7 @@ class IngestionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[DestinationUpdateResponse] = Future {
     requireNotNull(destinationID, "Parameter `destinationID` is required when calling `updateDestination`.")
+    requireNotEmpty(destinationID, "Parameter `destinationID` is required when calling `updateDestination`.")
     requireNotNull(destinationUpdate, "Parameter `destinationUpdate` is required when calling `updateDestination`.")
 
     val request = HttpRequest
@@ -1740,6 +1777,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[SourceUpdateResponse] = Future {
     requireNotNull(sourceID, "Parameter `sourceID` is required when calling `updateSource`.")
+    requireNotEmpty(sourceID, "Parameter `sourceID` is required when calling `updateSource`.")
     requireNotNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `updateSource`.")
 
     val request = HttpRequest
@@ -1765,6 +1803,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[TaskUpdateResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `updateTask`.")
+    requireNotEmpty(taskID, "Parameter `taskID` is required when calling `updateTask`.")
     requireNotNull(taskUpdate, "Parameter `taskUpdate` is required when calling `updateTask`.")
 
     val request = HttpRequest
@@ -1792,6 +1831,7 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[TaskUpdateResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `updateTaskV1`.")
+    requireNotEmpty(taskID, "Parameter `taskID` is required when calling `updateTaskV1`.")
     requireNotNull(taskUpdate, "Parameter `taskUpdate` is required when calling `updateTaskV1`.")
 
     val request = HttpRequest
@@ -1819,6 +1859,7 @@ class IngestionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[TransformationUpdateResponse] = Future {
     requireNotNull(transformationID, "Parameter `transformationID` is required when calling `updateTransformation`.")
+    requireNotEmpty(transformationID, "Parameter `transformationID` is required when calling `updateTransformation`.")
     requireNotNull(
       transformationCreate,
       "Parameter `transformationCreate` is required when calling `updateTransformation`."
@@ -1881,6 +1922,7 @@ class IngestionClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[WatchResponse] = Future {
     requireNotNull(sourceID, "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.")
+    requireNotEmpty(sourceID, "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.")
     requireNotNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `validateSourceBeforeUpdate`.")
 
     val request = HttpRequest

@@ -366,8 +366,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `addOrUpdateObject`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `addOrUpdateObject`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `addOrUpdateObject`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `addOrUpdateObject`.");
 
     Parameters.requireNonNull(body, "Parameter `body` is required when calling `addOrUpdateObject`.");
 
@@ -404,8 +406,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `addOrUpdateObject`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `addOrUpdateObject`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `addOrUpdateObject`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `addOrUpdateObject`.");
 
     Parameters.requireNonNull(body, "Parameter `body` is required when calling `addOrUpdateObject`.");
 
@@ -649,6 +653,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(xAlgoliaUserID, "Parameter `xAlgoliaUserID` is required when calling `assignUserId`.");
+    Parameters.requireNonEmpty(xAlgoliaUserID, "Parameter `xAlgoliaUserID` is required when calling `assignUserId`.");
 
     Parameters.requireNonNull(assignUserIdParams, "Parameter `assignUserIdParams` is required when calling `assignUserId`.");
 
@@ -679,6 +684,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(xAlgoliaUserID, "Parameter `xAlgoliaUserID` is required when calling `assignUserId`.");
+    Parameters.requireNonEmpty(xAlgoliaUserID, "Parameter `xAlgoliaUserID` is required when calling `assignUserId`.");
 
     Parameters.requireNonNull(assignUserIdParams, "Parameter `assignUserIdParams` is required when calling `assignUserId`.");
 
@@ -813,6 +819,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `batch`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `batch`.");
 
     Parameters.requireNonNull(batchWriteParams, "Parameter `batchWriteParams` is required when calling `batch`.");
 
@@ -843,6 +850,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `batch`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `batch`.");
 
     Parameters.requireNonNull(batchWriteParams, "Parameter `batchWriteParams` is required when calling `batch`.");
 
@@ -970,6 +978,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(xAlgoliaUserID, "Parameter `xAlgoliaUserID` is required when calling `batchAssignUserIds`.");
+    Parameters.requireNonEmpty(xAlgoliaUserID, "Parameter `xAlgoliaUserID` is required when calling `batchAssignUserIds`.");
 
     Parameters.requireNonNull(
       batchAssignUserIdsParams,
@@ -1003,6 +1012,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(xAlgoliaUserID, "Parameter `xAlgoliaUserID` is required when calling `batchAssignUserIds`.");
+    Parameters.requireNonEmpty(xAlgoliaUserID, "Parameter `xAlgoliaUserID` is required when calling `batchAssignUserIds`.");
 
     Parameters.requireNonNull(
       batchAssignUserIdsParams,
@@ -1416,6 +1426,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `browse`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `browse`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/browse", indexName)
@@ -1452,6 +1463,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `browse`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `browse`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/browse", indexName)
@@ -1669,6 +1681,7 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<UpdatedAtResponse> clearObjectsAsync(@Nonnull String indexName, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `clearObjects`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `clearObjects`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/indexes/{indexName}/clear", indexName).setMethod("POST").build();
     return executeAsync(request, requestOptions, new TypeReference<UpdatedAtResponse>() {});
@@ -1687,6 +1700,7 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<Response> clearObjectsWithHTTPInfoAsync(@Nonnull String indexName, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `clearObjects`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `clearObjects`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/indexes/{indexName}/clear", indexName).setMethod("POST").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -1826,6 +1840,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `clearRules`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `clearRules`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/clear", indexName)
@@ -1850,6 +1865,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `clearRules`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `clearRules`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/clear", indexName)
@@ -2040,6 +2056,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `clearSynonyms`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `clearSynonyms`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/clear", indexName)
@@ -2064,6 +2081,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `clearSynonyms`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `clearSynonyms`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/clear", indexName)
@@ -2252,6 +2270,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customDelete`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -2272,6 +2291,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customDelete`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -2455,6 +2475,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customGet`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -2475,6 +2496,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customGet`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -2668,6 +2690,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPost`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -2695,6 +2718,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPost`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -2896,6 +2920,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPut`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -2923,6 +2948,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPut`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -3060,6 +3086,7 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<DeleteApiKeyResponse> deleteApiKeyAsync(@Nonnull String key, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(key, "Parameter `key` is required when calling `deleteApiKey`.");
+    Parameters.requireNonEmpty(key, "Parameter `key` is required when calling `deleteApiKey`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/keys/{key}", key).setMethod("DELETE").build();
 
@@ -3077,6 +3104,7 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<Response> deleteApiKeyWithHTTPInfoAsync(@Nonnull String key, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(key, "Parameter `key` is required when calling `deleteApiKey`.");
+    Parameters.requireNonEmpty(key, "Parameter `key` is required when calling `deleteApiKey`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/keys/{key}", key).setMethod("DELETE").build();
 
@@ -3204,6 +3232,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `deleteBy`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `deleteBy`.");
 
     Parameters.requireNonNull(deleteByParams, "Parameter `deleteByParams` is required when calling `deleteBy`.");
 
@@ -3236,6 +3265,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `deleteBy`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `deleteBy`.");
 
     Parameters.requireNonNull(deleteByParams, "Parameter `deleteByParams` is required when calling `deleteBy`.");
 
@@ -3364,6 +3394,7 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<DeletedAtResponse> deleteIndexAsync(@Nonnull String indexName, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `deleteIndex`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `deleteIndex`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/indexes/{indexName}", indexName).setMethod("DELETE").build();
     return executeAsync(request, requestOptions, new TypeReference<DeletedAtResponse>() {});
@@ -3385,6 +3416,7 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<Response> deleteIndexWithHTTPInfoAsync(@Nonnull String indexName, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `deleteIndex`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `deleteIndex`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/indexes/{indexName}", indexName).setMethod("DELETE").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -3496,8 +3528,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `deleteObject`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `deleteObject`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `deleteObject`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `deleteObject`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{objectID}", indexName, objectID)
@@ -3524,8 +3558,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `deleteObject`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `deleteObject`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `deleteObject`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `deleteObject`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{objectID}", indexName, objectID)
@@ -3704,8 +3740,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `deleteRule`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `deleteRule`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `deleteRule`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `deleteRule`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/{objectID}", indexName, objectID)
@@ -3733,8 +3771,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `deleteRule`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `deleteRule`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `deleteRule`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `deleteRule`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/{objectID}", indexName, objectID)
@@ -3895,6 +3935,7 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<DeleteSourceResponse> deleteSourceAsync(@Nonnull String source, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(source, "Parameter `source` is required when calling `deleteSource`.");
+    Parameters.requireNonEmpty(source, "Parameter `source` is required when calling `deleteSource`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/security/sources/{source}", source).setMethod("DELETE").build();
     return executeAsync(request, requestOptions, new TypeReference<DeleteSourceResponse>() {});
@@ -3911,6 +3952,7 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<Response> deleteSourceWithHTTPInfoAsync(@Nonnull String source, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(source, "Parameter `source` is required when calling `deleteSource`.");
+    Parameters.requireNonEmpty(source, "Parameter `source` is required when calling `deleteSource`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/security/sources/{source}", source).setMethod("DELETE").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -4076,8 +4118,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `deleteSynonym`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `deleteSynonym`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `deleteSynonym`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `deleteSynonym`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/{objectID}", indexName, objectID)
@@ -4105,8 +4149,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `deleteSynonym`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `deleteSynonym`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `deleteSynonym`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `deleteSynonym`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/{objectID}", indexName, objectID)
@@ -4282,6 +4328,7 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<GetApiKeyResponse> getApiKeyAsync(@Nonnull String key, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(key, "Parameter `key` is required when calling `getApiKey`.");
+    Parameters.requireNonEmpty(key, "Parameter `key` is required when calling `getApiKey`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/keys/{key}", key).setMethod("GET").build();
 
@@ -4302,6 +4349,7 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<Response> getApiKeyWithHTTPInfoAsync(@Nonnull String key, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(key, "Parameter `key` is required when calling `getApiKey`.");
+    Parameters.requireNonEmpty(key, "Parameter `key` is required when calling `getApiKey`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/keys/{key}", key).setMethod("GET").build();
 
@@ -5096,8 +5144,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getObject`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getObject`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `getObject`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `getObject`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{objectID}", indexName, objectID)
@@ -5128,8 +5178,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getObject`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getObject`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `getObject`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `getObject`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{objectID}", indexName, objectID)
@@ -5444,8 +5496,10 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<Rule> getRuleAsync(@Nonnull String indexName, @Nonnull String objectID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getRule`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getRule`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `getRule`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `getRule`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/{objectID}", indexName, objectID)
@@ -5470,8 +5524,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getRule`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getRule`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `getRule`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `getRule`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/{objectID}", indexName, objectID)
@@ -5620,6 +5676,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getSettings`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getSettings`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/settings", indexName)
@@ -5645,6 +5702,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getSettings`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getSettings`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/settings", indexName)
@@ -5880,8 +5938,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getSynonym`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getSynonym`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `getSynonym`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `getSynonym`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/{objectID}", indexName, objectID)
@@ -5906,8 +5966,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getSynonym`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getSynonym`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `getSynonym`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `getSynonym`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/{objectID}", indexName, objectID)
@@ -6021,6 +6083,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getTask`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getTask`.");
 
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getTask`.");
 
@@ -6046,6 +6109,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getTask`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getTask`.");
 
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getTask`.");
 
@@ -6266,6 +6330,7 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<UserId> getUserIdAsync(@Nonnull String userID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(userID, "Parameter `userID` is required when calling `getUserId`.");
+    Parameters.requireNonEmpty(userID, "Parameter `userID` is required when calling `getUserId`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/clusters/mapping/{userID}", userID).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<UserId>() {});
@@ -6285,6 +6350,7 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<Response> getUserIdWithHTTPInfoAsync(@Nonnull String userID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(userID, "Parameter `userID` is required when calling `getUserId`.");
+    Parameters.requireNonEmpty(userID, "Parameter `userID` is required when calling `getUserId`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/clusters/mapping/{userID}", userID).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -7486,6 +7552,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `operationIndex`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `operationIndex`.");
 
     Parameters.requireNonNull(operationIndexParams, "Parameter `operationIndexParams` is required when calling `operationIndex`.");
 
@@ -7529,6 +7596,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `operationIndex`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `operationIndex`.");
 
     Parameters.requireNonNull(operationIndexParams, "Parameter `operationIndexParams` is required when calling `operationIndex`.");
 
@@ -7990,8 +8058,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `partialUpdateObject`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `partialUpdateObject`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `partialUpdateObject`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `partialUpdateObject`.");
 
     Parameters.requireNonNull(attributesToUpdate, "Parameter `attributesToUpdate` is required when calling `partialUpdateObject`.");
 
@@ -8049,8 +8119,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `partialUpdateObject`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `partialUpdateObject`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `partialUpdateObject`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `partialUpdateObject`.");
 
     Parameters.requireNonNull(attributesToUpdate, "Parameter `attributesToUpdate` is required when calling `partialUpdateObject`.");
 
@@ -8386,6 +8458,7 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<RemoveUserIdResponse> removeUserIdAsync(@Nonnull String userID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(userID, "Parameter `userID` is required when calling `removeUserId`.");
+    Parameters.requireNonEmpty(userID, "Parameter `userID` is required when calling `removeUserId`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/clusters/mapping/{userID}", userID).setMethod("DELETE").build();
     return executeAsync(request, requestOptions, new TypeReference<RemoveUserIdResponse>() {});
@@ -8404,6 +8477,7 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<Response> removeUserIdWithHTTPInfoAsync(@Nonnull String userID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(userID, "Parameter `userID` is required when calling `removeUserId`.");
+    Parameters.requireNonEmpty(userID, "Parameter `userID` is required when calling `removeUserId`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/clusters/mapping/{userID}", userID).setMethod("DELETE").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -8596,6 +8670,7 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<AddApiKeyResponse> restoreApiKeyAsync(@Nonnull String key, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(key, "Parameter `key` is required when calling `restoreApiKey`.");
+    Parameters.requireNonEmpty(key, "Parameter `key` is required when calling `restoreApiKey`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/keys/{key}/restore", key).setMethod("POST").build();
 
@@ -8615,6 +8690,7 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<Response> restoreApiKeyWithHTTPInfoAsync(@Nonnull String key, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(key, "Parameter `key` is required when calling `restoreApiKey`.");
+    Parameters.requireNonEmpty(key, "Parameter `key` is required when calling `restoreApiKey`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/keys/{key}/restore", key).setMethod("POST").build();
 
@@ -8761,6 +8837,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `saveObject`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `saveObject`.");
 
     Parameters.requireNonNull(body, "Parameter `body` is required when calling `saveObject`.");
 
@@ -8794,6 +8871,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `saveObject`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `saveObject`.");
 
     Parameters.requireNonNull(body, "Parameter `body` is required when calling `saveObject`.");
 
@@ -9018,8 +9096,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `saveRule`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `saveRule`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `saveRule`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `saveRule`.");
 
     Parameters.requireNonNull(rule, "Parameter `rule` is required when calling `saveRule`.");
 
@@ -9053,8 +9133,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `saveRule`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `saveRule`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `saveRule`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `saveRule`.");
 
     Parameters.requireNonNull(rule, "Parameter `rule` is required when calling `saveRule`.");
 
@@ -9358,6 +9440,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `saveRules`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `saveRules`.");
 
     Parameters.requireNonNull(rules, "Parameter `rules` is required when calling `saveRules`.");
 
@@ -9394,6 +9477,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `saveRules`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `saveRules`.");
 
     Parameters.requireNonNull(rules, "Parameter `rules` is required when calling `saveRules`.");
 
@@ -9701,8 +9785,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `saveSynonym`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `saveSynonym`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `saveSynonym`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `saveSynonym`.");
 
     Parameters.requireNonNull(synonymHit, "Parameter `synonymHit` is required when calling `saveSynonym`.");
 
@@ -9737,8 +9823,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `saveSynonym`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `saveSynonym`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `saveSynonym`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `saveSynonym`.");
 
     Parameters.requireNonNull(synonymHit, "Parameter `synonymHit` is required when calling `saveSynonym`.");
 
@@ -10053,6 +10141,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `saveSynonyms`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `saveSynonyms`.");
 
     Parameters.requireNonNull(synonymHit, "Parameter `synonymHit` is required when calling `saveSynonyms`.");
 
@@ -10088,6 +10177,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `saveSynonyms`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `saveSynonyms`.");
 
     Parameters.requireNonNull(synonymHit, "Parameter `synonymHit` is required when calling `saveSynonyms`.");
 
@@ -10706,8 +10796,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `searchForFacetValues`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `searchForFacetValues`.");
 
     Parameters.requireNonNull(facetName, "Parameter `facetName` is required when calling `searchForFacetValues`.");
+    Parameters.requireNonEmpty(facetName, "Parameter `facetName` is required when calling `searchForFacetValues`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/facets/{facetName}/query", indexName, facetName)
@@ -10739,8 +10831,10 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `searchForFacetValues`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `searchForFacetValues`.");
 
     Parameters.requireNonNull(facetName, "Parameter `facetName` is required when calling `searchForFacetValues`.");
+    Parameters.requireNonEmpty(facetName, "Parameter `facetName` is required when calling `searchForFacetValues`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/facets/{facetName}/query", indexName, facetName)
@@ -10982,6 +11076,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `searchRules`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `searchRules`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/search", indexName)
@@ -11007,6 +11102,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `searchRules`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `searchRules`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/search", indexName)
@@ -11248,6 +11344,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `searchSingleIndex`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `searchSingleIndex`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/query", indexName)
@@ -11278,6 +11375,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `searchSingleIndex`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `searchSingleIndex`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/query", indexName)
@@ -11515,6 +11613,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `searchSynonyms`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `searchSynonyms`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/search", indexName)
@@ -11540,6 +11639,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `searchSynonyms`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `searchSynonyms`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/search", indexName)
@@ -12061,6 +12161,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `setSettings`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `setSettings`.");
 
     Parameters.requireNonNull(indexSettings, "Parameter `indexSettings` is required when calling `setSettings`.");
 
@@ -12092,6 +12193,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `setSettings`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `setSettings`.");
 
     Parameters.requireNonNull(indexSettings, "Parameter `indexSettings` is required when calling `setSettings`.");
 
@@ -12276,6 +12378,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(key, "Parameter `key` is required when calling `updateApiKey`.");
+    Parameters.requireNonEmpty(key, "Parameter `key` is required when calling `updateApiKey`.");
 
     Parameters.requireNonNull(apiKey, "Parameter `apiKey` is required when calling `updateApiKey`.");
 
@@ -12299,6 +12402,7 @@ public class SearchClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(key, "Parameter `key` is required when calling `updateApiKey`.");
+    Parameters.requireNonEmpty(key, "Parameter `key` is required when calling `updateApiKey`.");
 
     Parameters.requireNonNull(apiKey, "Parameter `apiKey` is required when calling `updateApiKey`.");
 
