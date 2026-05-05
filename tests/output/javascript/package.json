@@ -6,9 +6,9 @@
     "test": "tsc --noEmit && vitest run"
   },
   "dependencies": {
-    "algoliasearch": "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch",
     "@algolia/composition": "link:../../../clients/algoliasearch-client-javascript/packages/composition",
-    "@algolia/requester-testing": "link:../../../clients/algoliasearch-client-javascript/packages/requester-testing"
+    "@algolia/requester-testing": "link:../../../clients/algoliasearch-client-javascript/packages/requester-testing",
+    "algoliasearch": "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
   },
   "devDependencies": {
     "@types/node": "25.1.0",
