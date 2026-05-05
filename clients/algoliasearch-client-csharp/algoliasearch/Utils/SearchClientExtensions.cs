@@ -1038,7 +1038,15 @@ public partial class SearchClient : ISearchClient
   )
     where T : class =>
     AsyncHelper.RunSync(() =>
-      ReplaceAllObjectsAsync(indexName, objects, batchSize, scopes, options, cancellationToken, chunkedOptions)
+      ReplaceAllObjectsAsync(
+        indexName,
+        objects,
+        batchSize,
+        scopes,
+        options,
+        cancellationToken,
+        chunkedOptions
+      )
     );
 
   /// <inheritdoc/>
@@ -1186,7 +1194,15 @@ public partial class SearchClient : ISearchClient
   )
     where T : class =>
     AsyncHelper.RunSync(() =>
-      SaveObjectsAsync(indexName, objects, waitForTasks, batchSize, options, cancellationToken, chunkedOptions)
+      SaveObjectsAsync(
+        indexName,
+        objects,
+        waitForTasks,
+        batchSize,
+        options,
+        cancellationToken,
+        chunkedOptions
+      )
     );
 
   /// <inheritdoc/>
@@ -1247,7 +1263,15 @@ public partial class SearchClient : ISearchClient
     ChunkedHelperOptions chunkedOptions = null
   ) =>
     AsyncHelper.RunSync(() =>
-      DeleteObjectsAsync(indexName, objectIDs, waitForTasks, batchSize, options, cancellationToken, chunkedOptions)
+      DeleteObjectsAsync(
+        indexName,
+        objectIDs,
+        waitForTasks,
+        batchSize,
+        options,
+        cancellationToken,
+        chunkedOptions
+      )
     );
 
   /// <inheritdoc/>
