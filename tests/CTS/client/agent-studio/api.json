@@ -9,8 +9,8 @@
         "expected": {
           "type": "timeouts",
           "match": {
-            "connectTimeout": 30000,
-            "responseTimeout": 30000
+            "connectTimeout": 25000,
+            "responseTimeout": 25000
           }
         }
       }
@@ -29,8 +29,8 @@
         "expected": {
           "type": "timeouts",
           "match": {
-            "connectTimeout": 30000,
-            "responseTimeout": 30000
+            "connectTimeout": 25000,
+            "responseTimeout": 25000
           }
         }
       }

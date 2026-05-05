@@ -4,7 +4,7 @@
     "parameters": {
       "messageId": "msg-abc123",
       "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
-      "vote": "upvote"
+      "vote": 1
     },
     "request": {
       "path": "/1/feedback",
@@ -21,7 +21,7 @@
     "parameters": {
       "messageId": "msg-abc123",
       "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
-      "vote": "downvote",
+      "vote": 0,
       "tags": ["unhelpful", "off-topic"],
       "notes": "The response did not address my question."
     },
