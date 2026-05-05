@@ -7,13 +7,6 @@ get:
   summary: Get Allowed Domain
   description: Get a single allowed domain by id.
   parameters:
-    - name: domainId
-      in: path
-      required: true
-      schema:
-        type: string
-        title: domainId
-      description: The domainId.
     - name: agentId
       in: path
       required: true
@@ -21,6 +14,13 @@ get:
         type: string
         title: agentId
       description: The agentId.
+    - name: domainId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: domainId
+      description: The domainId.
   responses:
     '200':
       description: Successful Response.
@@ -43,13 +43,6 @@ delete:
   summary: Delete Allowed Domain
   description: Remove an allowed domain by id.
   parameters:
-    - name: domainId
-      in: path
-      required: true
-      schema:
-        type: string
-        title: domainId
-      description: The domainId.
     - name: agentId
       in: path
       required: true
@@ -57,6 +50,13 @@ delete:
         type: string
         title: agentId
       description: The agentId.
+    - name: domainId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: domainId
+      description: The domainId.
   responses:
     '204':
       description: Successful Response.

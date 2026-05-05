@@ -1,23 +1,9 @@
 FacetFilters-Input:
-  properties:
-    oneof_schema_1_validator:
-      $ref: 'Oneof_schema_1_validatorUnion.yml#/Oneof_schema_1_validatorUnion'
-    oneof_schema_2_validator:
-      oneOf:
-        - type: string
-        - type: 'null'
-      title: oneofSchema2Validator
-    actual_instance:
-      $ref: 'Actual_instanceUnion.yml#/Actual_instanceUnion'
-    one_of_schemas:
-      items:
-        type: string
+  oneOf:
+    - items:
+        $ref: 'FacetFilters-Input.yml#/FacetFilters-Input'
       type: array
-      title: oneOfSchemas
-      default:
-        - str
-        - List[FacetFilters]
-  type: object
+    - type: string
   title: facetFilters
   description: 'Filter the search by facet values, so that only records with the same
     facet values are retrieved.  **Prefer using the `filters` parameter, which supports
