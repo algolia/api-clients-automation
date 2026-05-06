@@ -1,6 +1,6 @@
 get:
   tags:
-    - Allowed domains
+    - Allowed Domains
   operationId: listAgentAllowed-Domains
   x-acl:
     - settings
@@ -29,7 +29,7 @@ get:
             $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
 post:
   tags:
-    - Allowed domains
+    - Allowed Domains
   operationId: createAgentAllowed-Domain
   x-acl:
     - editSettings

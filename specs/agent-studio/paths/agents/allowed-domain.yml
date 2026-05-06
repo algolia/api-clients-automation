@@ -1,6 +1,6 @@
 get:
   tags:
-    - Allowed domains
+    - Allowed Domains
   operationId: getAllowedDomain
   x-acl:
     - settings
@@ -36,7 +36,7 @@ get:
             $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
 delete:
   tags:
-    - Allowed domains
+    - Allowed Domains
   operationId: deleteAllowedDomain
   x-acl:
     - editSettings

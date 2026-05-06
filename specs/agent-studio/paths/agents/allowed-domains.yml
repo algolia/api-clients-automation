@@ -1,6 +1,6 @@
 post:
   tags:
-    - Allowed domains
+    - Allowed Domains
   operationId: createBulk
   x-acl:
     - editSettings
@@ -35,7 +35,7 @@ post:
             $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
 delete:
   tags:
-    - Allowed domains
+    - Allowed Domains
   operationId: deleteBulk
   x-acl:
     - editSettings
