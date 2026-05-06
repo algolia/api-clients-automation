@@ -167,13 +167,13 @@ public class {{classname}} extends ApiClient {
     {{#hostWithAppID}}
     private static List<Host> getDefaultHosts(String appId) {
       List<Host> hosts = new ArrayList<>();
-      hosts.add(new Host(appId + "-dsn.algolia.net", EnumSet.of(CallType.READ)));
-      hosts.add(new Host(appId + ".algolia.net", EnumSet.of(CallType.WRITE)));
+      hosts.add(new Host(appId + "-dsn.algolia.net{{{serverPathSuffix}}}", EnumSet.of(CallType.READ)));
+      hosts.add(new Host(appId + ".algolia.net{{{serverPathSuffix}}}", EnumSet.of(CallType.WRITE)));
 
       List<Host> commonHosts = new ArrayList<>();
-      commonHosts.add(new Host(appId + "-1.algolianet.com", EnumSet.of(CallType.READ, CallType.WRITE)));
-      commonHosts.add(new Host(appId + "-2.algolianet.com", EnumSet.of(CallType.READ, CallType.WRITE)));
-      commonHosts.add(new Host(appId + "-3.algolianet.com", EnumSet.of(CallType.READ, CallType.WRITE)));
+      commonHosts.add(new Host(appId + "-1.algolianet.com{{{serverPathSuffix}}}", EnumSet.of(CallType.READ, CallType.WRITE)));
+      commonHosts.add(new Host(appId + "-2.algolianet.com{{{serverPathSuffix}}}", EnumSet.of(CallType.READ, CallType.WRITE)));
+      commonHosts.add(new Host(appId + "-3.algolianet.com{{{serverPathSuffix}}}", EnumSet.of(CallType.READ, CallType.WRITE)));
 
       Collections.shuffle(commonHosts, new Random());
 

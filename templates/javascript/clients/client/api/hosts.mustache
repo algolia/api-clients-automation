@@ -19,12 +19,12 @@ function getDefaultHosts({{#hostWithAppID}}appId: string{{/hostWithAppID}}): Hos
   return (
     [
       {
-        url: `${appId}-dsn.algolia.net`,
+        url: `${appId}-dsn.algolia.net{{{serverPathSuffix}}}`,
         accept: 'read',
         protocol: 'https',
       },
       {
-        url: `${appId}.algolia.net`,
+        url: `${appId}.algolia.net{{{serverPathSuffix}}}`,
         accept: 'write',
         protocol: 'https',
       },
@@ -32,17 +32,17 @@ function getDefaultHosts({{#hostWithAppID}}appId: string{{/hostWithAppID}}): Hos
   ).concat(
     shuffle([
       {
-        url: `${appId}-1.algolianet.com`,
+        url: `${appId}-1.algolianet.com{{{serverPathSuffix}}}`,
         accept: 'readWrite',
         protocol: 'https',
       },
       {
-        url: `${appId}-2.algolianet.com`,
+        url: `${appId}-2.algolianet.com{{{serverPathSuffix}}}`,
         accept: 'readWrite',
         protocol: 'https',
       },
       {
-        url: `${appId}-3.algolianet.com`,
+        url: `${appId}-3.algolianet.com{{{serverPathSuffix}}}`,
         accept: 'readWrite',
         protocol: 'https',
       },

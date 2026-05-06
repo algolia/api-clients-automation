@@ -121,11 +121,11 @@ class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
             {{/hostsWithoutVariables.size}}
             {{#hostWithAppID}}
             [
-                Host(url="{}-dsn.algolia.net".format(self.app_id), priority=10, accept=CallType.READ),
-                Host(url="{}.algolia.net".format(self.app_id), priority=10, accept=CallType.WRITE),
-                Host("{}-1.algolianet.com".format(self.app_id)),
-                Host("{}-2.algolianet.com".format(self.app_id)),
-                Host("{}-3.algolianet.com".format(self.app_id)),
+                Host(url="{}-dsn.algolia.net{{{serverPathSuffix}}}".format(self.app_id), priority=10, accept=CallType.READ),
+                Host(url="{}.algolia.net{{{serverPathSuffix}}}".format(self.app_id), priority=10, accept=CallType.WRITE),
+                Host("{}-1.algolianet.com{{{serverPathSuffix}}}".format(self.app_id)),
+                Host("{}-2.algolianet.com{{{serverPathSuffix}}}".format(self.app_id)),
+                Host("{}-3.algolianet.com{{{serverPathSuffix}}}".format(self.app_id)),
             ],
             reorder_hosts=True,
             {{/hostWithAppID}}
