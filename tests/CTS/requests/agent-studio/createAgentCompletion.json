@@ -14,7 +14,7 @@
       }
     },
     "request": {
-      "path": "/agent-studio/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/completions",
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/completions",
       "method": "POST",
       "queryParameters": {
         "compatibilityMode": "ai-sdk-4"
@@ -45,7 +45,7 @@
       }
     },
     "request": {
-      "path": "/agent-studio/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/completions",
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/completions",
       "method": "POST",
       "queryParameters": {
         "compatibilityMode": "ai-sdk-5"
@@ -86,7 +86,7 @@
       "memory": false
     },
     "request": {
-      "path": "/agent-studio/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/completions",
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/completions",
       "method": "POST",
       "queryParameters": {
         "compatibilityMode": "ai-sdk-5",
@@ -134,7 +134,7 @@
       }
     },
     "request": {
-      "path": "/agent-studio/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/completions",
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/completions",
       "method": "POST",
       "queryParameters": {
         "compatibilityMode": "ai-sdk-5"

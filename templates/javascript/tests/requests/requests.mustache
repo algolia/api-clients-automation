@@ -19,7 +19,7 @@ describe('{{operationId}}', () => {
   test('{{{testName}}}', async () => {
     const req = ({{> tests/method}}) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('{{{request.path}}}');
+    expect(req.path).toEqual('{{{serverPathSuffix}}}{{{request.path}}}');
     expect(req.method).toEqual('{{{request.method}}}');
     expect(req.data).toEqual({{#request.body}}{{{.}}}{{/request.body}}{{^request.body}}undefined{{/request.body}});
     expect(req.searchParams).toStrictEqual({{#request.queryParameters}}{{{.}}}{{/request.queryParameters}}{{^request.queryParameters}}undefined{{/request.queryParameters}});
@@ -49,7 +49,7 @@ describe('{{operationId}}', () => {
     expect(events.length).toBeGreaterThan(0);
     const req = JSON.parse(events[0].data) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('{{{request.path}}}');
+    expect(req.path).toEqual('{{{serverPathSuffix}}}{{{request.path}}}');
     expect(req.method).toEqual('{{{request.method}}}');
     expect(req.data).toEqual({{#request.body}}{{{.}}}{{/request.body}}{{^request.body}}undefined{{/request.body}});
     expect(req.searchParams).toStrictEqual({{#request.queryParameters}}{{{.}}}{{/request.queryParameters}}{{^request.queryParameters}}undefined{{/request.queryParameters}});

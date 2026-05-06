@@ -5,7 +5,7 @@
       "maxRetentionDays": 30
     },
     "request": {
-      "path": "/agent-studio/1/configuration",
+      "path": "/1/configuration",
       "method": "PATCH",
       "body": {
         "maxRetentionDays": 30

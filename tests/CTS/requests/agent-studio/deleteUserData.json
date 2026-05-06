@@ -5,7 +5,7 @@
       "userToken": "test-user-token"
     },
     "request": {
-      "path": "/agent-studio/1/user-data/test-user-token",
+      "path": "/1/user-data/test-user-token",
       "method": "DELETE"
     }
   }

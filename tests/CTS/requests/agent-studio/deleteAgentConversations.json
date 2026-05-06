@@ -5,7 +5,7 @@
       "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
     },
     "request": {
-      "path": "/agent-studio/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/conversations",
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/conversations",
       "method": "DELETE"
     }
   },
@@ -17,7 +17,7 @@
       "endDate": "2024-06-30"
     },
     "request": {
-      "path": "/agent-studio/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/conversations",
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/conversations",
       "method": "DELETE",
       "queryParameters": {
         "startDate": "2024-01-01",

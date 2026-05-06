@@ -8,7 +8,7 @@
       }
     },
     "request": {
-      "path": "/agent-studio/1/providers/5e33d805-7892-4329-bda7-b524dc3fd04a",
+      "path": "/1/providers/5e33d805-7892-4329-bda7-b524dc3fd04a",
       "method": "PATCH",
       "body": {
         "name": "Updated Provider Name"
@@ -27,7 +27,7 @@
       }
     },
     "request": {
-      "path": "/agent-studio/1/providers/5e33d805-7892-4329-bda7-b524dc3fd04a",
+      "path": "/1/providers/5e33d805-7892-4329-bda7-b524dc3fd04a",
       "method": "PATCH",
       "body": {
         "name": "Updated Provider",
