@@ -1,4 +1,4 @@
-MessageResponse-Output:
+MessageResponse:
   properties:
     id:
       type: string
@@ -10,7 +10,7 @@ MessageResponse-Output:
       $ref: 'MessageRole.yml#/MessageRole'
     parts:
       items:
-        $ref: 'MessagePartOutput.yml#/MessagePartOutput'
+        $ref: 'MessagePart.yml#/MessagePart'
       type: array
       title: parts
     createdAt:

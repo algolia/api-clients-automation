@@ -11,6 +11,11 @@ ValidationError:
     type:
       type: string
       title: errorType
+    input:
+      title: input
+    ctx:
+      type: object
+      title: context
   type: object
   required:
     - loc

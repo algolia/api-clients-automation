@@ -53,7 +53,7 @@ ConversationFullResponse:
       $ref: 'FeedbackUnion.yml#/FeedbackUnion'
     messages:
       items:
-        $ref: 'MessageResponseOutput.yml#/MessageResponse-Output'
+        $ref: 'MessageResponse.yml#/MessageResponse'
       type: array
       title: messages
   type: object

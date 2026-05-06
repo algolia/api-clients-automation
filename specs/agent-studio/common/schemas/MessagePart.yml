@@ -1,9 +1,9 @@
-MessagePartInput:
+MessagePart:
   oneOf:
     - $ref: 'TextPart.yml#/TextPart'
     - $ref: 'ToolCallPart.yml#/ToolCallPart'
-    - $ref: 'ToolResultPartInput.yml#/ToolResultPart-Input'
+    - $ref: 'ToolResultPart.yml#/ToolResultPart'
     - $ref: 'StartPart.yml#/StartPart'
     - $ref: 'StartStepPart.yml#/StartStepPart'
     - $ref: 'ReasoningPart.yml#/ReasoningPart'
-    - $ref: 'ToolApprovalRequestPartInput.yml#/ToolApprovalRequestPart-Input'
+    - $ref: 'ToolApprovalRequestPart.yml#/ToolApprovalRequestPart'

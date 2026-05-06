@@ -1,27 +1,37 @@
-ToolResultPart-Input:
+ToolApprovalRequestPart:
   properties:
     type:
       type: string
-      const: tool-result
+      const: tool-approval-request
       title: type
-      default: tool-result
+      default: tool-approval-request
     toolCallId:
       type: string
       title: toolcallid
     toolName:
       type: string
       title: toolname
-    output:
-      $ref: 'ToolResultOutput.yml#/ToolResultOutput'
+    args:
+      title: args
+    description:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: description
     providerOptions:
       oneOf:
         - type: object
           additionalProperties: true
         - type: 'null'
       title: provideroptions
+    argsHash:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: argshash
   type: object
   required:
     - toolCallId
     - toolName
-    - output
-  title: toolResultPart
+    - args
+  title: toolApprovalRequestPart

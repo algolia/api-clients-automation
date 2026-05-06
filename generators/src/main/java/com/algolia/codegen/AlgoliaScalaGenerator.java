@@ -87,8 +87,10 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     super.processOpts();
     setApiNameSuffix(Helpers.API_SUFFIX);
 
-    // 'wait' conflicts with Object.wait() in Scala/JVM
+    // 'wait' is a final method on Object — backtick escaping alone doesn't help,
+    // the field must be renamed to avoid the conflict entirely.
     reservedWords.add("wait");
+    reservedWordsMappings.put("wait", "_wait");
 
     // Generation notice, added on every generated files
     Helpers.setGenerationBanner(additionalProperties);
@@ -260,7 +262,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
         if (codegenModel.vars != null) {
           var hasUnescapedProperty = false;
           for (var property : codegenModel.vars) {
-            if (!property.name.equals(property.baseName) && !this.isReservedWord(property.baseName)) {
+            if (!property.name.equals(property.baseName) && !property.name.equals("`" + property.baseName + "`")) {
               property.vendorExtensions.put("x-unescaped-name", property.baseName);
               hasUnescapedProperty = true;
             }
