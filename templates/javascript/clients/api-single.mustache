@@ -114,15 +114,11 @@ export function create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
 
       {{#allParams}}
       {{#required}}
-      if ({{#isBoolean}}{{paramName}} === null || {{paramName}} === undefined{{/isBoolean}}{{^isBoolean}}!{{paramName}}{{/isBoolean}}) {
-        throw new Error('Parameter `{{paramName}}` is required when calling `{{nickname}}`.');
-      }
+      validateRequired('{{paramName}}', '{{nickname}}', {{paramName}});
 
       {{#vars}}
       {{#required}}
-      if ({{#isBoolean}}{{paramName}}.{{baseName}} === null || {{paramName}}.{{baseName}} === undefined{{/isBoolean}}{{^isBoolean}}!{{paramName}}.{{baseName}}{{/isBoolean}}) {
-        throw new Error('Parameter `{{paramName}}.{{baseName}}` is required when calling `{{nickname}}`.');
-      }
+      validateRequired('{{paramName}}.{{baseName}}', '{{nickname}}', {{paramName}}.{{baseName}});
       {{/required}}
       {{/vars}}
 
@@ -191,15 +187,11 @@ export function create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
     {{nickname}}StreamRaw( {{> client/api/operation/parameters}} ) : AsyncGenerator<ServerSentEvent> {
       {{#allParams}}
       {{#required}}
-      if ({{#isBoolean}}{{paramName}} === null || {{paramName}} === undefined{{/isBoolean}}{{^isBoolean}}!{{paramName}}{{/isBoolean}}) {
-        throw new Error('Parameter `{{paramName}}` is required when calling `{{nickname}}StreamRaw`.');
-      }
+      validateRequired('{{paramName}}', '{{nickname}}StreamRaw', {{paramName}});
 
       {{#vars}}
       {{#required}}
-      if ({{#isBoolean}}{{paramName}}.{{baseName}} === null || {{paramName}}.{{baseName}} === undefined{{/isBoolean}}{{^isBoolean}}!{{paramName}}.{{baseName}}{{/isBoolean}}) {
-        throw new Error('Parameter `{{paramName}}.{{baseName}}` is required when calling `{{nickname}}StreamRaw`.');
-      }
+      validateRequired('{{paramName}}.{{baseName}}', '{{nickname}}StreamRaw', {{paramName}}.{{baseName}});
       {{/required}}
       {{/vars}}
 
