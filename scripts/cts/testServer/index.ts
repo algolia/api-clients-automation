@@ -74,9 +74,21 @@ export async function startTestServer(suites: Record<CTSType, boolean>): Promise
   };
 }
 
+const SERVER_PATH_PREFIXES = ['/agent-studio'];
+
 export async function setupServer(name: string, port: number, addRoutes: (app: Express) => void): Promise<Server> {
   const spinner = createSpinner(`starting ${name} test server`);
   const app = express();
+
+  app.use((req, _res, next) => {
+    for (const prefix of SERVER_PATH_PREFIXES) {
+      if (req.url.startsWith(prefix)) {
+        req.url = req.url.slice(prefix.length) || '/';
+        break;
+      }
+    }
+    next();
+  });
 
   addRoutes(app);
 
