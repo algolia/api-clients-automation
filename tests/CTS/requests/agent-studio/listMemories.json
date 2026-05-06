@@ -13,6 +13,7 @@
       "agentIds": "agent1,agent2",
       "page": 2,
       "limit": 10,
+      "memoryType": "semantic",
       "startDate": "2024-01-01",
       "endDate": "2024-12-31"
     },
@@ -20,9 +21,10 @@
       "path": "/1/memory",
       "method": "GET",
       "queryParameters": {
-        "agentIds": "agent1,agent2",
+        "agentIds": "agent1%2Cagent2",
         "page": "2",
         "limit": "10",
+        "memoryType": "semantic",
         "startDate": "2024-01-01",
         "endDate": "2024-12-31"
       }

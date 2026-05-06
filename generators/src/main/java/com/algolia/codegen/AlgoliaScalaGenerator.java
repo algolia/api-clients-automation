@@ -87,6 +87,9 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     super.processOpts();
     setApiNameSuffix(Helpers.API_SUFFIX);
 
+    // 'wait' conflicts with Object.wait() in Scala/JVM
+    reservedWords.add("wait");
+
     // Generation notice, added on every generated files
     Helpers.setGenerationBanner(additionalProperties);
 
