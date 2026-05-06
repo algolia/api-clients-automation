@@ -90,7 +90,9 @@ post:
       description: Successful Response.
       content:
         application/json:
-          schema: {}
+          schema:
+            type: object
+            additionalProperties: true
     '422':
       description: Validation Error.
       content:
