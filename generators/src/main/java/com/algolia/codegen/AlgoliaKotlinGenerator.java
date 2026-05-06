@@ -171,11 +171,11 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
   @Override
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
+    replaceFreeFormMaps(models);
     OneOf.updateModelsOneOf(models, modelPackage);
     GenericPropagator.propagateGenericsToModels(models, true);
     OneOf.addOneOfMetadata(models);
     jsonParent(models);
-    replaceFreeFormMaps(models);
     return models;
   }
 
