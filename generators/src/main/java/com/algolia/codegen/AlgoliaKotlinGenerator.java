@@ -175,7 +175,45 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     GenericPropagator.propagateGenericsToModels(models, true);
     OneOf.addOneOfMetadata(models);
     jsonParent(models);
+    replaceFreeFormMaps(models);
     return models;
+  }
+
+  private static final String FREE_FORM_MAP = "Map<kotlin.String, Any>";
+  private static final String JSON_OBJECT = "JsonObject";
+
+  private static void replaceFreeFormMaps(Map<String, ModelsMap> models) {
+    for (ModelsMap modelContainer : models.values()) {
+      CodegenModel model = modelContainer.getModels().get(0).getModel();
+
+      if (model.vars != null) {
+        for (CodegenProperty prop : model.vars) {
+          replaceFreeFormType(prop);
+        }
+      }
+
+      if (model.oneOf != null && model.oneOf.stream().anyMatch(t -> t.contains(FREE_FORM_MAP))) {
+        Set<String> replaced = new LinkedHashSet<>();
+        for (String t : model.oneOf) {
+          replaced.add(t.contains(FREE_FORM_MAP) ? t.replace(FREE_FORM_MAP, JSON_OBJECT) : t);
+        }
+        model.oneOf.clear();
+        model.oneOf.addAll(replaced);
+      }
+
+      if (model.getComposedSchemas() != null && model.getComposedSchemas().getOneOf() != null) {
+        for (CodegenProperty prop : model.getComposedSchemas().getOneOf()) {
+          replaceFreeFormType(prop);
+        }
+      }
+    }
+  }
+
+  private static void replaceFreeFormType(CodegenProperty prop) {
+    if (prop.datatypeWithEnum != null && prop.datatypeWithEnum.contains(FREE_FORM_MAP)) {
+      prop.datatypeWithEnum = prop.datatypeWithEnum.replace(FREE_FORM_MAP, JSON_OBJECT);
+      prop.dataType = prop.dataType.replace(FREE_FORM_MAP, JSON_OBJECT);
+    }
   }
 
   private static void jsonParent(Map<String, ModelsMap> models) {
