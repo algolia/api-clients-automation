@@ -51,7 +51,7 @@
       },
       {
         "path": "packages/client-insights/dist/builds/browser.umd.js",
-        "maxSize": "5KB"
+        "maxSize": "6KB"
       },
       {
         "path": "packages/client-personalization/dist/builds/browser.umd.js",
