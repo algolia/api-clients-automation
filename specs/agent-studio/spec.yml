@@ -25,16 +25,24 @@ security:
 tags:
   - name: Agents
     description: Manage your agents.
+  - name: Allowed Domains
+    description: Manage allowed domain patterns for your agents.
   - name: Completions
     description: Generate completions.
   - name: Configurations
     description: Manage Agent Studio related application configurations.
+  - name: Conversations
+    description: Access and manage agent conversations and messages.
+  - name: Feedback
+    description: Submit feedback on agent responses.
   - name: Internal
     description: Endpoints that are needed for internal or integration logic.
   - name: Providers
     description: Manage your LLM providers.
   - name: Secret Keys
     description: Manage secret keys used to authenticate requests.
+  - name: User Data
+    description: Manage user-specific data and privacy.
 x-timeouts:
   browser:
     connect: 25000
