@@ -2,7 +2,7 @@
   {
     "parameters": {},
     "request": {
-      "path": "/1/providers/models",
+      "path": "/agent-studio/1/providers/models",
       "method": "GET"
     }
   },
@@ -10,7 +10,7 @@
     "testName": "e2e list models",
     "parameters": {},
     "request": {
-      "path": "/1/providers/models",
+      "path": "/agent-studio/1/providers/models",
       "method": "GET"
     },
     "response": {

@@ -2,7 +2,7 @@
   {
     "parameters": {},
     "request": {
-      "path": "/1/configuration",
+      "path": "/agent-studio/1/configuration",
       "method": "GET"
     }
   },
@@ -10,7 +10,7 @@
     "testName": "e2e getApplicationConfiguration",
     "parameters": {},
     "request": {
-      "path": "/1/configuration",
+      "path": "/agent-studio/1/configuration",
       "method": "GET"
     },
     "response": {

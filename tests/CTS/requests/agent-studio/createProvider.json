@@ -9,7 +9,7 @@
       }
     },
     "request": {
-      "path": "/1/providers",
+      "path": "/agent-studio/1/providers",
       "method": "POST",
       "body": {
         "name": "My OpenAI Provider",
@@ -32,7 +32,7 @@
       }
     },
     "request": {
-      "path": "/1/providers",
+      "path": "/agent-studio/1/providers",
       "method": "POST",
       "body": {
         "name": "My Azure Provider",

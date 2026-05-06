@@ -6,7 +6,7 @@
       "instructions": "You are a helpful assistant."
     },
     "request": {
-      "path": "/1/agents",
+      "path": "/agent-studio/1/agents",
       "method": "POST",
       "body": {
         "name": "test-agent",
@@ -33,7 +33,7 @@
       }]
     },
     "request": {
-      "path": "/1/agents",
+      "path": "/agent-studio/1/agents",
       "method": "POST",
       "body": {
         "name": "test-agent",

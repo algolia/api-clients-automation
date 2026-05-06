@@ -6,7 +6,7 @@
       "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
     },
     "request": {
-      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/allowed-domains/a1b2c3d4-5678-90ab-cdef-123456789abc",
+      "path": "/agent-studio/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/allowed-domains/a1b2c3d4-5678-90ab-cdef-123456789abc",
       "method": "GET"
     }
   }
