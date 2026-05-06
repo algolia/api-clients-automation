@@ -1,0 +1,17 @@
+MemorySaveResponse:
+  properties:
+    objectID:
+      type: string
+      title: objectid
+      description: Deterministic ID of the saved memory.
+    taskID:
+      oneOf:
+        - type: integer
+        - type: 'null'
+      title: taskid
+      description: Algolia task identifier.
+  type: object
+  required:
+    - objectID
+  title: memorySaveResponse
+  description: Response model for saving a memory.

@@ -4,6 +4,7 @@ get:
   operationId: exportConversations
   x-acl:
     - logs
+  x-streaming: true
   summary: Export Conversations
   description: Exports all conversations based on the passed filters.
   parameters:

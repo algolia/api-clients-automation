@@ -1,0 +1,19 @@
+MemoryExtractionResponse:
+  properties:
+    memories:
+      items:
+        additionalProperties: true
+        type: object
+      type: array
+      title: memories
+      description: Extracted memories (not yet saved).
+    message:
+      type: string
+      title: message
+      description: Summary message.
+  type: object
+  required:
+    - memories
+    - message
+  title: memoryExtractionResponse
+  description: Response from pure extraction (no saves/deletes).

@@ -14,10 +14,9 @@ AgentCompletionRequest:
     algolia:
       $ref: 'AgentCompletionAlgoliaParamsNullable.yml#/AgentCompletionAlgoliaParamsNullable'
     toolApprovals:
-      oneOf:
-        - type: object
-        - type: 'null'
-      title: toolapprovals
+      type: object
+      title: toolApprovals
+      description: Approval decisions for pending tool calls keyed by toolCallId.
   type: object
   title: agentCompletionRequest
   description: Request model for creating a completion for an assistant.

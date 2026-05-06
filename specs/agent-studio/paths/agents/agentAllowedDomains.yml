@@ -1,11 +1,11 @@
-post:
+get:
   tags:
     - Allowed Domains
-  operationId: createBulk
+  operationId: listAgentAllowedDomains
   x-acl:
-    - editSettings
-  summary: Bulk Insert Allowed Domains
-  description: Add multiple allowed domain patterns. Duplicates are skipped.
+    - settings
+  summary: List Allowed Domains
+  description: List all allowed domain patterns for this agent.
   parameters:
     - name: agentId
       in: path
@@ -14,14 +14,8 @@ post:
         type: string
         title: agentId
       description: The agentId.
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          $ref: '../../common/schemas/AllowedDomainBulkInsert.yml#/AllowedDomainBulkInsert'
   responses:
-    '201':
+    '200':
       description: Successful Response.
       content:
         application/json:
@@ -33,14 +27,15 @@ post:
         application/json:
           schema:
             $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
-delete:
+post:
   tags:
     - Allowed Domains
-  operationId: deleteBulk
+  operationId: createAgentAllowedDomain
   x-acl:
     - editSettings
-  summary: Bulk Delete Allowed Domains
-  description: Delete allowed domains by id list.
+  summary: Create Allowed Domain
+  description: Add a single allowed domain pattern (e.g. https://app.example.com or
+    *.example.com).
   parameters:
     - name: agentId
       in: path
@@ -54,10 +49,14 @@ delete:
     content:
       application/json:
         schema:
-          $ref: '../../common/schemas/AllowedDomainBulkDelete.yml#/AllowedDomainBulkDelete'
+          $ref: '../../common/schemas/AllowedDomainCreate.yml#/AllowedDomainCreate'
   responses:
-    '204':
+    '201':
       description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/AllowedDomainResponse.yml#/AllowedDomainResponse'
     '422':
       description: Validation Error.
       content:

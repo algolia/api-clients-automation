@@ -1,15 +1,15 @@
-IndexSearchParameters-Output:
+IndexSearchParameters-Input:
   properties:
     query:
       $ref: 'TextParamNullable.yml#/TextParamNullable'
     hitsPerPage:
-      $ref: 'NumberParamNullable.yml#/NumberParamNullable'
+      $ref: 'NumberParam.yml#/NumberParam'
     page:
-      $ref: 'NumberParamNullable.yml#/NumberParamNullable'
+      $ref: 'NumberParam.yml#/NumberParam'
     attributesToRetrieve:
-      $ref: 'StringArrayParamNullable.yml#/StringArrayParamNullable'
+      $ref: 'StringArrayParam.yml#/StringArrayParam'
     responseFields:
-      $ref: 'StringArrayParamNullable.yml#/StringArrayParamNullable'
+      $ref: 'StringArrayParam.yml#/StringArrayParam'
     facets:
       $ref: 'FacetsParamNullable.yml#/FacetsParamNullable'
     custom:

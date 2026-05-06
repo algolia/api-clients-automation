@@ -1,7 +1,6 @@
 ReRankingApplyFilterUnion:
   oneOf:
     - type: string
-    - items:
-        $ref: 'ReRankingApplyFilterUnion.yml#/ReRankingApplyFilterUnion'
+    - items: {}
       type: array
     - type: 'null'

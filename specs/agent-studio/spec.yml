@@ -58,11 +58,11 @@ paths:
   /1/agents/{agentId}:
     $ref: 'paths/agents/agent.yml'
   /1/agents/{agentId}/allowed-domains:
-    $ref: 'paths/agents/agentAllowed-Domains.yml'
+    $ref: 'paths/agents/agentAllowedDomains.yml'
   /1/agents/{agentId}/allowed-domains/bulk:
-    $ref: 'paths/agents/allowed-domains.yml'
+    $ref: 'paths/agents/allowedDomainsBulk.yml'
   /1/agents/{agentId}/allowed-domains/{domainId}:
-    $ref: 'paths/agents/allowed-domain.yml'
+    $ref: 'paths/agents/allowedDomain.yml'
   /1/agents/{agentId}/cache:
     $ref: 'paths/agents/agentCache.yml'
   /1/agents/{agentId}/completions:
@@ -70,7 +70,7 @@ paths:
   /1/agents/{agentId}/conversations:
     $ref: 'paths/conversations/conversations.yml'
   /1/agents/{agentId}/conversations/export:
-    $ref: 'paths/conversations/export.yml'
+    $ref: 'paths/conversations/conversationsExport.yml'
   /1/agents/{agentId}/conversations/{conversationId}:
     $ref: 'paths/conversations/conversation.yml'
   /1/agents/{agentId}/publish:
@@ -81,6 +81,24 @@ paths:
     $ref: 'paths/configuration/configuration.yml'
   /1/feedback:
     $ref: 'paths/feedback/feedback.yml'
+  /1/memory:
+    $ref: 'paths/memory/memory.yml'
+  /1/memory/consolidate:
+    $ref: 'paths/memory/consolidate.yml'
+  /1/memory/episodic:
+    $ref: 'paths/memory/episodic.yml'
+  /1/memory/extract/episodic:
+    $ref: 'paths/memory/extractEpisodic.yml'
+  /1/memory/extract/queries:
+    $ref: 'paths/memory/extractQueries.yml'
+  /1/memory/extract/semantic:
+    $ref: 'paths/memory/extractSemantic.yml'
+  /1/memory/search:
+    $ref: 'paths/memory/search.yml'
+  /1/memory/semantic:
+    $ref: 'paths/memory/semantic.yml'
+  /1/memory/{memoryId}:
+    $ref: 'paths/memory/{memory_id}.yml'
   /1/providers:
     $ref: 'paths/providers/providers.yml'
   /1/providers/models:
@@ -90,11 +108,11 @@ paths:
   /1/providers/{providerId}/models:
     $ref: 'paths/providers/providerModels.yml'
   /1/secret-keys:
-    $ref: 'paths/secret-keys/secret-keys.yml'
+    $ref: 'paths/secret-keys/secretKeys.yml'
   /1/secret-keys/{secretKeyId}:
-    $ref: 'paths/secret-keys/secret-key.yml'
+    $ref: 'paths/secret-keys/secretKey.yml'
   /1/user-data/{userToken}:
-    $ref: 'paths/user-data/user-data.yml'
+    $ref: 'paths/user-data/userData.yml'
   /{path}:
     $ref: '../common/paths/customRequest.yml'
   /setClientApiKey:

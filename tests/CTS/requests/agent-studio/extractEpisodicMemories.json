@@ -1,0 +1,23 @@
+[
+  {
+    "testName": "extractEpisodicMemories",
+    "parameters": {
+      "providerID": "5e33d805-7892-4329-bda7-b524dc3fd04a",
+      "model": "gpt-4o-mini",
+      "messages": [
+        {"role": "user", "content": "I had a great experience with the product"}
+      ]
+    },
+    "request": {
+      "path": "/1/memory/extract/episodic",
+      "method": "POST",
+      "body": {
+        "providerID": "5e33d805-7892-4329-bda7-b524dc3fd04a",
+        "model": "gpt-4o-mini",
+        "messages": [
+          {"role": "user", "content": "I had a great experience with the product"}
+        ]
+      }
+    }
+  }
+]

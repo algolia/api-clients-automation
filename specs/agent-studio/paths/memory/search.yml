@@ -1,0 +1,34 @@
+post:
+  tags:
+    - Memory
+  operationId: searchMemories
+  x-acl:
+    - logs
+  summary: Search Memories
+  description: |-
+    Search memories across multiple agents.
+
+    Examples:
+    - agent_ids: [] or None → search all agents
+    - agent_ids: ["agent1", "agent2"] → search specific agents + brand-level.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/MemorySearchRequest.yml#/MemorySearchRequest'
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            title: responseSearchmemories
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

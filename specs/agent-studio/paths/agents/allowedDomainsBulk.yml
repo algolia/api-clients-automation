@@ -1,11 +1,11 @@
-get:
+post:
   tags:
     - Allowed Domains
-  operationId: getAllowedDomain
+  operationId: bulkCreateAllowedDomains
   x-acl:
-    - settings
-  summary: Get Allowed Domain
-  description: Get a single allowed domain by id.
+    - editSettings
+  summary: Bulk Insert Allowed Domains
+  description: Add multiple allowed domain patterns. Duplicates are skipped.
   parameters:
     - name: agentId
       in: path
@@ -14,20 +14,19 @@ get:
         type: string
         title: agentId
       description: The agentId.
-    - name: domainId
-      in: path
-      required: true
-      schema:
-        type: string
-        title: domainId
-      description: The domainId.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/AllowedDomainBulkInsert.yml#/AllowedDomainBulkInsert'
   responses:
-    '200':
+    '201':
       description: Successful Response.
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/AllowedDomainResponse.yml#/AllowedDomainResponse'
+            $ref: '../../common/schemas/AllowedDomainListResponse.yml#/AllowedDomainListResponse'
     '422':
       description: Validation Error.
       content:
@@ -37,11 +36,11 @@ get:
 delete:
   tags:
     - Allowed Domains
-  operationId: deleteAllowedDomain
+  operationId: bulkDeleteAllowedDomains
   x-acl:
     - editSettings
-  summary: Delete Allowed Domain
-  description: Remove an allowed domain by id.
+  summary: Bulk Delete Allowed Domains
+  description: Delete allowed domains by id list.
   parameters:
     - name: agentId
       in: path
@@ -50,13 +49,12 @@ delete:
         type: string
         title: agentId
       description: The agentId.
-    - name: domainId
-      in: path
-      required: true
-      schema:
-        type: string
-        title: domainId
-      description: The domainId.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/AllowedDomainBulkDelete.yml#/AllowedDomainBulkDelete'
   responses:
     '204':
       description: Successful Response.

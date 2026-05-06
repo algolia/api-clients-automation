@@ -1,7 +1,7 @@
 FacetFilters-OutputUnion:
   oneOf:
     - items:
-        $ref: 'FacetFilters-OutputUnion.yml#/FacetFilters-OutputUnion'
+        $ref: 'FacetFiltersOutputUnion.yml#/FacetFilters-OutputUnion'
       type: array
     - type: string
     - type: 'null'

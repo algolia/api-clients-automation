@@ -1,0 +1,44 @@
+post:
+  tags:
+    - Memory
+  operationId: consolidateMemories
+  x-acl:
+    - logs
+  summary: Consolidate Memories
+  description: |-
+    Consolidate memories using LLM multi-turn reasoning (thinking slow).
+
+    Pure consolidation (stateless): Client provides existing memories, receives results.
+
+    Request body:
+    - provider_id + model: LLM configuration
+    - messages: New conversation to incorporate (can be [] for consolidation-only)
+    - existing_memories: Existing memories to consolidate (REQUIRED)
+    - target_memories: Target count after consolidation (default: 10)
+    - max_steps: LangMem iterations (default: 2 for Done tool support)
+
+    Returns:
+    - memories: Consolidated memories (not yet saved)
+    - deleted_ids: Memory IDs to delete (not yet deleted)
+    - message: Summary
+
+    Note: Client must save/delete using POST /memory/* and DELETE /memory/{id}.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/MemoryConsolidateRequest.yml#/MemoryConsolidateRequest'
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/MemoryConsolidateResponse.yml#/MemoryConsolidateResponse'
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

@@ -1,12 +1,19 @@
 get:
   tags:
     - Allowed Domains
-  operationId: listAgentAllowed-Domains
+  operationId: getAllowedDomain
   x-acl:
     - settings
-  summary: List Allowed Domains
-  description: List all allowed domain patterns for this agent.
+  summary: Get Allowed Domain
+  description: Get a single allowed domain by id.
   parameters:
+    - name: domainId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: domainId
+      description: The domainId.
     - name: agentId
       in: path
       required: true
@@ -20,23 +27,29 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/AllowedDomainListResponse.yml#/AllowedDomainListResponse'
+            $ref: '../../common/schemas/AllowedDomainResponse.yml#/AllowedDomainResponse'
     '422':
       description: Validation Error.
       content:
         application/json:
           schema:
             $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
-post:
+delete:
   tags:
     - Allowed Domains
-  operationId: createAgentAllowed-Domain
+  operationId: deleteAllowedDomain
   x-acl:
     - editSettings
-  summary: Create Allowed Domain
-  description: Add a single allowed domain pattern (e.g. https://app.example.com or
-    *.example.com).
+  summary: Delete Allowed Domain
+  description: Remove an allowed domain by id.
   parameters:
+    - name: domainId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: domainId
+      description: The domainId.
     - name: agentId
       in: path
       required: true
@@ -44,19 +57,9 @@ post:
         type: string
         title: agentId
       description: The agentId.
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          $ref: '../../common/schemas/AllowedDomainCreate.yml#/AllowedDomainCreate'
   responses:
-    '201':
+    '204':
       description: Successful Response.
-      content:
-        application/json:
-          schema:
-            $ref: '../../common/schemas/AllowedDomainResponse.yml#/AllowedDomainResponse'
     '422':
       description: Validation Error.
       content:

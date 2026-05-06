@@ -1,4 +1,4 @@
-AlgoliaSearchToolConfig-Output:
+AlgoliaSearchToolConfig-Input:
   properties:
     name:
       type: string
@@ -12,16 +12,11 @@ AlgoliaSearchToolConfig-Output:
       default: algolia_search_index
     indices:
       items:
-        $ref: 'AlgoliaSearchToolIndexConfig-Output.yml#/AlgoliaSearchToolIndexConfig-Output'
+        $ref: 'AlgoliaSearchToolIndexConfigInput.yml#/AlgoliaSearchToolIndexConfig-Input'
       type: array
       title: indices
-    description:
-      type: string
-      title: description
-      readOnly: true
   type: object
   required:
     - name
     - indices
-    - description
   title: algoliaSearchToolConfig

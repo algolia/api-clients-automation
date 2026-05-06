@@ -1,0 +1,132 @@
+get:
+  tags:
+    - Memory
+  operationId: getMemory
+  x-acl:
+    - logs
+  summary: Get Memory
+  description: Get a single memory by ID.
+  parameters:
+    - name: memoryId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: memoryId
+      description: The memoryId.
+    - name: agentIds
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: string
+          - type: 'null'
+        description: Comma-separated agent IDs for access control.
+        title: agentIds
+      description: Comma-separated agent IDs for access control.
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/MemoryRecord.yml#/MemoryRecord'
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
+patch:
+  tags:
+    - Memory
+  operationId: updateMemory
+  x-acl:
+    - logs
+  summary: Update Memory
+  description: |-
+    Update a memory.
+
+    Query param agent_ids: Used for access control (which agents can see this memory to update it)
+    Body agent_ids: Updates which agents have access to the memory (optional).
+  parameters:
+    - name: memoryId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: memoryId
+      description: The memoryId.
+    - name: agentIds
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: string
+          - type: 'null'
+        description: Comma-separated agent IDs for access control.
+        title: agentIds
+      description: Comma-separated agent IDs for access control.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/MemoryUpdateRequest.yml#/MemoryUpdateRequest'
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/MemorySaveResponse.yml#/MemorySaveResponse'
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
+delete:
+  tags:
+    - Memory
+  operationId: deleteMemory
+  x-acl:
+    - logs
+  summary: Delete Memory
+  description: Delete a memory.
+  parameters:
+    - name: memoryId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: memoryId
+      description: The memoryId.
+    - name: agentIds
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: string
+          - type: 'null'
+        description: Comma-separated agent IDs for access control.
+        title: agentIds
+      description: Comma-separated agent IDs for access control.
+    - name: wait
+      in: query
+      required: false
+      schema:
+        type: boolean
+        description: Block until deletion is indexed.
+        default: false
+        title: wait
+      description: Block until deletion is indexed.
+  responses:
+    '204':
+      description: Successful Response.
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

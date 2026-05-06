@@ -1,0 +1,26 @@
+MemoryConsolidateResponse:
+  properties:
+    memories:
+      items:
+        additionalProperties: true
+        type: object
+      type: array
+      title: memories
+      description: Consolidated memories (not yet saved).
+    deletedIds:
+      items:
+        type: string
+      type: array
+      title: deletedids
+      description: Memory IDs to delete (client must delete).
+    message:
+      type: string
+      title: message
+      description: Summary message.
+  type: object
+  required:
+    - memories
+    - deletedIds
+    - message
+  title: memoryConsolidateResponse
+  description: Response from memory consolidation (no autosave).

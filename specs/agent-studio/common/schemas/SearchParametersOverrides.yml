@@ -36,6 +36,8 @@ SearchParametersOverrides:
         - type: integer
         - type: 'null'
       title: personalizationimpact
+    optionalFilters:
+      $ref: 'OptionalFiltersUnion.yml#/OptionalFiltersUnion'
   additionalProperties: false
   type: object
   title: searchParametersOverrides

@@ -1,0 +1,36 @@
+post:
+  tags:
+    - Memory
+  operationId: extractSemanticMemories
+  x-acl:
+    - logs
+  summary: Extract Semantic Memories
+  description: |-
+    Extract semantic memories (facts, preferences) from conversation using LLM.
+
+    Pure extraction (thinking fast): Single-turn structured output, stateless.
+
+    Returns:
+    - memories: Extracted SemanticMemory objects (not yet saved)
+    - message: Summary
+
+    Note: Client must save memories explicitly using POST /memory/semantic.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/MemoryExtractionRequest.yml#/MemoryExtractionRequest'
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/MemoryExtractionResponse.yml#/MemoryExtractionResponse'
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

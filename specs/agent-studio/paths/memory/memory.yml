@@ -1,0 +1,84 @@
+get:
+  tags:
+    - Memory
+  operationId: listMemories
+  x-acl:
+    - logs
+  summary: List Memories
+  description: |-
+    List memories with optional agent filtering and date range.
+
+    Query params:
+    - agent_ids: "agent1,agent2" or "*" for all
+    - page, limit: Pagination
+    - memory_type: Filter by semantic/episodic
+    - start_date, end_date: Filter by updatedAt timestamp (ISO 8601 format).
+  parameters:
+    - name: agentIds
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: string
+          - type: 'null'
+        description: Comma-separated agent IDs.
+        title: agentIds
+      description: Comma-separated agent IDs.
+    - name: page
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+        title: page
+      description: The page.
+    - name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        maximum: 100
+        minimum: 1
+        default: 10
+        title: limit
+      description: The limit.
+    - name: memoryType
+      in: query
+      required: false
+      schema:
+        $ref: '../../common/schemas/Memory_typeUnion.yml#/Memory_typeUnion'
+      description: The memoryType.
+    - name: startDate
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: string
+          - type: 'null'
+        description: Filter memories updated from this date (ISO 8601).
+        title: startDate
+      description: Filter memories updated from this date (ISO 8601).
+    - name: endDate
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: string
+          - type: 'null'
+        description: Filter memories updated to this date (ISO 8601).
+        title: endDate
+      description: Filter memories updated to this date (ISO 8601).
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/PaginatedMemoriesResponse.yml#/PaginatedMemoriesResponse'
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

@@ -1,0 +1,6 @@
+FacetFilters-InputUnion:
+  oneOf:
+    - items:
+        $ref: 'FacetFiltersInputUnion.yml#/FacetFilters-InputUnion'
+      type: array
+    - type: string

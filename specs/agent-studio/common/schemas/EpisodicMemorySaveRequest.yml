@@ -1,0 +1,93 @@
+EpisodicMemorySaveRequest:
+  properties:
+    observation:
+      type: string
+      maxLength: 5000
+      minLength: 1
+      title: observation
+      description: What happened.
+    thoughts:
+      type: string
+      maxLength: 5000
+      minLength: 1
+      title: thoughts
+      description: Internal reasoning.
+    action:
+      type: string
+      maxLength: 5000
+      minLength: 1
+      title: action
+      description: What was done.
+    result:
+      type: string
+      maxLength: 5000
+      minLength: 1
+      title: result
+      description: Outcome and learnings.
+    text:
+      type: string
+      maxLength: 2000
+      minLength: 1
+      title: text
+      description: Memory summary.
+    rawExtract:
+      type: string
+      maxLength: 5000
+      minLength: 1
+      title: rawextract
+      description: Verbatim conversation extract.
+    keywords:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: keywords
+      description: 5-20 search keywords.
+    topics:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: topics
+      description: 2-4 topic categories.
+    tags:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: tags
+      description: Arbitrary labels/themes.
+    recallTriggers:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: recalltriggers
+      description: 3-5 recall phrases.
+    agentIds:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: agentids
+      description: Agent access control.
+    wait:
+      type: boolean
+      title: wait
+      description: Block until indexed.
+      default: false
+  type: object
+  required:
+    - observation
+    - thoughts
+    - action
+    - result
+    - text
+    - rawExtract
+  title: episodicMemorySaveRequest
+  description: Request model for saving an episodic memory with OTAR pattern.

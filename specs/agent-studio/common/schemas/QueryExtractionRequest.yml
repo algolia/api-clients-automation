@@ -1,0 +1,10 @@
+QueryExtractionRequest:
+  properties:
+    messages:
+      $ref: 'MessagesUnion.yml#/MessagesUnion'
+  type: object
+  required:
+    - messages
+  title: queryExtractionRequest
+  description: Request to extract optimized search queries from conversation (stateless
+    utility).

@@ -1,0 +1,68 @@
+MemoryUpdateRequest:
+  properties:
+    text:
+      oneOf:
+        - type: string
+          maxLength: 2000
+          minLength: 1
+        - type: 'null'
+      title: text
+      description: Updated memory text.
+    rawExtract:
+      oneOf:
+        - type: string
+          maxLength: 5000
+          minLength: 1
+        - type: 'null'
+      title: rawextract
+      description: Updated raw text.
+    keywords:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: keywords
+      description: Updated keywords.
+    topics:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: topics
+      description: Updated topics.
+    tags:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: tags
+      description: Updated tags.
+    recallTriggers:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: recalltriggers
+      description: Updated recall triggers.
+    agentIds:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: agentids
+      description: Updated agent access list (use '*' for all, '-agent1' to exclude
+        agent1).
+    wait:
+      type: boolean
+      title: wait
+      description: Wait for Algolia indexing to complete before returning (ensures
+        immediate searchability).
+      default: false
+  type: object
+  title: memoryUpdateRequest
+  description: Request model for updating a memory.

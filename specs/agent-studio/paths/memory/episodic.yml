@@ -1,0 +1,30 @@
+post:
+  tags:
+    - Memory
+  operationId: saveEpisodicMemory
+  x-acl:
+    - logs
+  summary: Save Episodic Memory
+  description: |-
+    Save an episodic memory (OTAR: Observation, Thoughts, Action, Result).
+
+    Multi-agent support via agent_ids field.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/EpisodicMemorySaveRequest.yml#/EpisodicMemorySaveRequest'
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/MemorySaveResponse.yml#/MemorySaveResponse'
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

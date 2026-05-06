@@ -1,2 +1,0 @@
-FacetFilters-Output:
-  $ref: 'FacetFilters-OutputUnion.yml#/FacetFilters-OutputUnion'

@@ -1,0 +1,49 @@
+MemorySearchRequest:
+  properties:
+    queries:
+      items:
+        type: string
+      type: array
+      maxItems: 5
+      minItems: 1
+      title: queries
+      description: 1-5 focused textual queries for multi-angle recall.
+    keywords:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: keywords
+      description: Optional keyword boosts to nudge relevant memories.
+    topics:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: topics
+      description: Optional topic boosts.
+    agentIds:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: agentids
+      description: 'Agent IDs to search: None/[] for all, [''agent1''] for specific
+        agents.'
+    memoryType:
+      $ref: 'MemoryTypeNullable.yml#/MemoryTypeNullable'
+    limit:
+      type: integer
+      maximum: 100.0
+      minimum: 1.0
+      title: limit
+      description: Max results per query.
+      default: 20
+  type: object
+  required:
+    - queries
+  title: memorySearchRequest
+  description: Request model for searching memories.

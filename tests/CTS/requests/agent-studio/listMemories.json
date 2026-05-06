@@ -1,0 +1,31 @@
+[
+  {
+    "testName": "listMemories with no params",
+    "parameters": {},
+    "request": {
+      "path": "/1/memory",
+      "method": "GET"
+    }
+  },
+  {
+    "testName": "listMemories with all parameters",
+    "parameters": {
+      "agentIds": "agent1,agent2",
+      "page": 2,
+      "limit": 10,
+      "startDate": "2024-01-01",
+      "endDate": "2024-12-31"
+    },
+    "request": {
+      "path": "/1/memory",
+      "method": "GET",
+      "queryParameters": {
+        "agentIds": "agent1,agent2",
+        "page": "2",
+        "limit": "10",
+        "startDate": "2024-01-01",
+        "endDate": "2024-12-31"
+      }
+    }
+  }
+]
