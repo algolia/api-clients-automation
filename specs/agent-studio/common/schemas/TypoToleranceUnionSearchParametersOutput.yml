@@ -1,5 +1,5 @@
 TypoToleranceUnionSearchParametersOutput:
   oneOf:
-    - type: boolean
-    - type: string
-    - type: 'null'
+  - type: boolean
+  - type: string
+  - type: 'null'

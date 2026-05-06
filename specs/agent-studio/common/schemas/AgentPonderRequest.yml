@@ -9,7 +9,7 @@ AgentPonderRequest:
       title: model
       description: Model name (e.g., gpt-4o-mini).
     messages:
-      $ref: 'MessagesUnion.yml#/MessagesUnion'
+      $ref: MessagesUnion.yml#/MessagesUnion
     targetMemories:
       type: integer
       maximum: 5.0
@@ -19,9 +19,9 @@ AgentPonderRequest:
       default: 1
     instructions:
       oneOf:
-        - type: string
-          maxLength: 50000
-        - type: 'null'
+      - type: string
+        maxLength: 50000
+      - type: 'null'
       title: instructions
       description: Optional domain-specific instructions to guide extraction or consolidation.
     wait:
@@ -31,8 +31,8 @@ AgentPonderRequest:
       default: false
   type: object
   required:
-    - providerID
-    - model
-    - messages
+  - providerID
+  - model
+  - messages
   title: agentPonderRequest
   description: Agent endpoint request that extracts and saves episodic memories.

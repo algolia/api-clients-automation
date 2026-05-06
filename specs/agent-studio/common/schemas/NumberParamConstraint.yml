@@ -2,13 +2,13 @@ NumberParamConstraint:
   properties:
     min:
       oneOf:
-        - type: integer
-        - type: 'null'
+      - type: integer
+      - type: 'null'
       title: min
     max:
       oneOf:
-        - type: integer
-        - type: 'null'
+      - type: integer
+      - type: 'null'
       title: max
   type: object
   title: numberParamConstraint

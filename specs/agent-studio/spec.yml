@@ -9,40 +9,40 @@ info:
 components:
   securitySchemes:
     appId:
-      $ref: '../common/securitySchemes.yml#/appId'
+      $ref: ../common/securitySchemes.yml#/appId
     apiKey:
-      $ref: '../common/securitySchemes.yml#/apiKey'
+      $ref: ../common/securitySchemes.yml#/apiKey
 servers:
-  - url: https://{APPLICATION_ID}.algolia.net/agent-studio
-    description: Agent Studio API.
-    variables:
-      APPLICATION_ID:
-        default: EXAMPLE
-        description: Your Algolia application ID.
+- url: https://{APPLICATION_ID}.algolia.net/agent-studio
+  description: Agent Studio API.
+  variables:
+    APPLICATION_ID:
+      default: EXAMPLE
+      description: Your Algolia application ID.
 security:
-  - appId: []
-    apiKey: []
+- appId: []
+  apiKey: []
 tags:
-  - name: Agents
-    description: Manage your agents.
-  - name: Allowed Domains
-    description: Manage allowed domain patterns for your agents.
-  - name: Completions
-    description: Generate completions.
-  - name: Configurations
-    description: Manage Agent Studio related application configurations.
-  - name: Conversations
-    description: Access and manage agent conversations and messages.
-  - name: Feedback
-    description: Submit feedback on agent responses.
-  - name: Internal
-    description: Endpoints that are needed for internal or integration logic.
-  - name: Providers
-    description: Manage your LLM providers.
-  - name: Secret Keys
-    description: Manage secret keys used to authenticate requests.
-  - name: User Data
-    description: Manage user-specific data and privacy.
+- name: Agents
+  description: Manage your agents.
+- name: Allowed Domains
+  description: Manage allowed domain patterns for your agents.
+- name: Completions
+  description: Generate completions.
+- name: Configurations
+  description: Manage Agent Studio related application configurations.
+- name: Conversations
+  description: Access and manage agent conversations and messages.
+- name: Feedback
+  description: Submit feedback on agent responses.
+- name: Internal
+  description: Endpoints that are needed for internal or integration logic.
+- name: Providers
+  description: Manage your LLM providers.
+- name: Secret Keys
+  description: Manage secret keys used to authenticate requests.
+- name: User Data
+  description: Manage user-specific data and privacy.
 x-timeouts:
   browser:
     connect: 25000
@@ -54,66 +54,48 @@ x-timeouts:
     write: 25000
 paths:
   /1/agents:
-    $ref: 'paths/agents/agents.yml'
+    $ref: paths/agents/agents.yml
   /1/agents/{agentId}:
-    $ref: 'paths/agents/agent.yml'
+    $ref: paths/agents/agent.yml
   /1/agents/{agentId}/allowed-domains:
-    $ref: 'paths/agents/agentAllowedDomains.yml'
+    $ref: paths/agents/agentAllowedDomains.yml
   /1/agents/{agentId}/allowed-domains/bulk:
-    $ref: 'paths/agents/allowedDomainsBulk.yml'
+    $ref: paths/agents/allowedDomainsBulk.yml
   /1/agents/{agentId}/allowed-domains/{domainId}:
-    $ref: 'paths/agents/allowedDomain.yml'
+    $ref: paths/agents/allowedDomain.yml
   /1/agents/{agentId}/cache:
-    $ref: 'paths/agents/agentCache.yml'
+    $ref: paths/agents/agentCache.yml
   /1/agents/{agentId}/completions:
-    $ref: 'paths/agents/agentCompletions.yml'
+    $ref: paths/agents/agentCompletions.yml
   /1/agents/{agentId}/conversations:
-    $ref: 'paths/conversations/conversations.yml'
+    $ref: paths/conversations/conversations.yml
   /1/agents/{agentId}/conversations/export:
-    $ref: 'paths/conversations/conversationsExport.yml'
+    $ref: paths/conversations/conversationsExport.yml
   /1/agents/{agentId}/conversations/{conversationId}:
-    $ref: 'paths/conversations/conversation.yml'
+    $ref: paths/conversations/conversation.yml
   /1/agents/{agentId}/publish:
-    $ref: 'paths/agents/agentPublish.yml'
+    $ref: paths/agents/agentPublish.yml
   /1/agents/{agentId}/unpublish:
-    $ref: 'paths/agents/agentUnpublish.yml'
+    $ref: paths/agents/agentUnpublish.yml
   /1/configuration:
-    $ref: 'paths/configuration/configuration.yml'
+    $ref: paths/configuration/configuration.yml
   /1/feedback:
-    $ref: 'paths/feedback/feedback.yml'
-  /1/memory:
-    $ref: 'paths/memory/memory.yml'
-  /1/memory/consolidate:
-    $ref: 'paths/memory/consolidate.yml'
-  /1/memory/episodic:
-    $ref: 'paths/memory/episodic.yml'
-  /1/memory/extract/episodic:
-    $ref: 'paths/memory/extractEpisodic.yml'
-  /1/memory/extract/queries:
-    $ref: 'paths/memory/extractQueries.yml'
-  /1/memory/extract/semantic:
-    $ref: 'paths/memory/extractSemantic.yml'
-  /1/memory/search:
-    $ref: 'paths/memory/search.yml'
-  /1/memory/semantic:
-    $ref: 'paths/memory/semantic.yml'
-  /1/memory/{memoryId}:
-    $ref: 'paths/memory/{memory_id}.yml'
+    $ref: paths/feedback/feedback.yml
   /1/providers:
-    $ref: 'paths/providers/providers.yml'
+    $ref: paths/providers/providers.yml
   /1/providers/models:
-    $ref: 'paths/providers/models.yml'
+    $ref: paths/providers/models.yml
   /1/providers/{providerId}:
-    $ref: 'paths/providers/provider.yml'
+    $ref: paths/providers/provider.yml
   /1/providers/{providerId}/models:
-    $ref: 'paths/providers/providerModels.yml'
+    $ref: paths/providers/providerModels.yml
   /1/secret-keys:
-    $ref: 'paths/secret-keys/secretKeys.yml'
+    $ref: paths/secret-keys/secretKeys.yml
   /1/secret-keys/{secretKeyId}:
-    $ref: 'paths/secret-keys/secretKey.yml'
+    $ref: paths/secret-keys/secretKey.yml
   /1/user-data/{userToken}:
-    $ref: 'paths/user-data/userData.yml'
+    $ref: paths/user-data/userData.yml
   /{path}:
-    $ref: '../common/paths/customRequest.yml'
+    $ref: ../common/paths/customRequest.yml
   /setClientApiKey:
-    $ref: '../common/helpers/setClientApiKey.yml#/method'
+    $ref: ../common/helpers/setClientApiKey.yml#/method

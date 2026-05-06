@@ -5,11 +5,11 @@ TextParam:
       title: exposed
     default:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
       title: default
   type: object
   required:
-    - exposed
+  - exposed
   title: textParam
   description: A text search parameter with exposure control.

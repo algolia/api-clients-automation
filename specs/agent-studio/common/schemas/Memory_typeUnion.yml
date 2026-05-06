@@ -1,4 +1,0 @@
-Memory_typeUnion:
-  oneOf:
-    - $ref: 'MemoryType.yml#/MemoryType'
-    - type: 'null'

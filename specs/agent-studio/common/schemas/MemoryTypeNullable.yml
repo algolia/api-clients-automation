@@ -1,4 +1,0 @@
-MemoryTypeNullable:
-  oneOf:
-    - $ref: 'MemoryType.yml#/MemoryType'
-    - type: 'null'

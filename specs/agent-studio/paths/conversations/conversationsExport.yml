@@ -1,40 +1,40 @@
 get:
   tags:
-    - Conversations
+  - Conversations
   operationId: exportConversations
   x-acl:
-    - logs
+  - logs
   x-streaming: true
   summary: Export Conversations
   description: Exports all conversations based on the passed filters.
   parameters:
-    - name: agentId
-      in: path
-      required: true
-      schema:
-        type: string
-        title: agentId
-      description: The agentId.
-    - name: startDate
-      in: query
-      required: false
-      schema:
-        oneOf:
-          - type: string
-          - type: 'null'
-        description: 'Filter conversations created after this date (format: YYYY-MM-DD).'
-        title: startdate
+  - name: agentId
+    in: path
+    required: true
+    schema:
+      type: string
+      title: agentId
+    description: The agentId.
+  - name: startDate
+    in: query
+    required: false
+    schema:
+      oneOf:
+      - type: string
+      - type: 'null'
       description: 'Filter conversations created after this date (format: YYYY-MM-DD).'
-    - name: endDate
-      in: query
-      required: false
-      schema:
-        oneOf:
-          - type: string
-          - type: 'null'
-        description: 'Filter conversations created before this date (format: YYYY-MM-DD).'
-        title: enddate
+      title: startdate
+    description: 'Filter conversations created after this date (format: YYYY-MM-DD).'
+  - name: endDate
+    in: query
+    required: false
+    schema:
+      oneOf:
+      - type: string
+      - type: 'null'
       description: 'Filter conversations created before this date (format: YYYY-MM-DD).'
+      title: enddate
+    description: 'Filter conversations created before this date (format: YYYY-MM-DD).'
   responses:
     '200':
       description: Successful Response.
@@ -48,4 +48,4 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
+            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError

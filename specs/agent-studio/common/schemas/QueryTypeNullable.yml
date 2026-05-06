@@ -1,4 +1,4 @@
 QueryTypeNullable:
   oneOf:
-    - $ref: 'QueryType.yml#/QueryType'
-    - type: 'null'
+  - $ref: QueryType.yml#/QueryType
+  - type: 'null'

@@ -13,14 +13,14 @@ AzureOpenAIProviderInput-Output:
       description: Azure model deployment name is required.
     apiVersion:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
       title: apiversion
       default: 2024-12-01-preview
   type: object
   required:
-    - apiKey
-    - azureEndpoint
-    - azureDeployment
+  - apiKey
+  - azureEndpoint
+  - azureDeployment
   title: azureOpenAIProviderInput
   description: Azure OpenAI-specific provider input.

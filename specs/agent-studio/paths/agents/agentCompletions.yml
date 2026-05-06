@@ -1,10 +1,10 @@
 post:
   tags:
-    - Completions
-    - Completions
+  - Completions
+  - Completions
   operationId: createAgentCompletion
   x-acl:
-    - search
+  - search
   x-streaming: true
   summary: Create Completion
   description: |-
@@ -18,73 +18,73 @@ post:
     - Request 1: User sends message -> Agent requests tool call -> Return approval request
     - Request 2: User approves -> Execute tool -> Agent continues with result.
   parameters:
-    - name: agentId
-      in: path
-      required: true
-      schema:
-        $ref: '../../common/schemas/AgentIdUnion.yml#/AgentIdUnion'
-      description: The agentId.
-    - name: compatibilityMode
-      in: query
-      required: true
-      schema:
-        $ref: '../../common/schemas/CompatibilityMode.yml#/CompatibilityMode'
-      description: Compatibility mode for the completion API.
-    - name: stream
-      in: query
-      required: false
-      schema:
-        type: boolean
-        description: Whether to stream the response or not.
-        default: true
-        title: stream
+  - name: agentId
+    in: path
+    required: true
+    schema:
+      $ref: ../../common/schemas/AgentIdUnion.yml#/AgentIdUnion
+    description: The agentId.
+  - name: compatibilityMode
+    in: query
+    required: true
+    schema:
+      $ref: ../../common/schemas/CompatibilityMode.yml#/CompatibilityMode
+    description: Compatibility mode for the completion API.
+  - name: stream
+    in: query
+    required: false
+    schema:
+      type: boolean
       description: Whether to stream the response or not.
-    - name: cache
-      in: query
-      required: false
-      schema:
-        type: boolean
-        description: Use cached responses if available.
-        default: true
-        title: cache
+      default: true
+      title: stream
+    description: Whether to stream the response or not.
+  - name: cache
+    in: query
+    required: false
+    schema:
+      type: boolean
       description: Use cached responses if available.
-    - name: memory
-      in: query
-      required: false
-      schema:
-        oneOf:
-          - const: false
-            type: boolean
-          - type: 'null'
-        description: Set to false to disable memory (enabled by default).
-        title: memory
-      description: Set to false to disable memory (enabled by default).
-    - name: analytics
-      in: query
-      required: false
-      schema:
+      default: true
+      title: cache
+    description: Use cached responses if available.
+  - name: memory
+    in: query
+    required: false
+    schema:
+      oneOf:
+      - const: false
         type: boolean
-        description: 'Set to false to skip Agent Studio analytics for this completion
-          (default: true).'
-        default: true
-        title: analytics
+      - type: 'null'
+      description: Set to false to disable memory (enabled by default).
+      title: memory
+    description: Set to false to disable memory (enabled by default).
+  - name: analytics
+    in: query
+    required: false
+    schema:
+      type: boolean
       description: 'Set to false to skip Agent Studio analytics for this completion
         (default: true).'
-    - name: X-Algolia-Secure-User-Token
-      in: header
-      required: false
-      schema:
-        oneOf:
-          - type: string
-          - type: 'null'
-        title: x-Algolia-Secure-User-Token
-      description: The X-Algolia-Secure-User-Token.
+      default: true
+      title: analytics
+    description: 'Set to false to skip Agent Studio analytics for this completion
+      (default: true).'
+  - name: X-Algolia-Secure-User-Token
+    in: header
+    required: false
+    schema:
+      oneOf:
+      - type: string
+      - type: 'null'
+      title: x-Algolia-Secure-User-Token
+    description: The X-Algolia-Secure-User-Token.
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: '../../common/schemas/AgentCompletionRequest.yml#/AgentCompletionRequest'
+          $ref: ../../common/schemas/AgentCompletionRequest.yml#/AgentCompletionRequest
   responses:
     '200':
       description: Successful Response.
@@ -98,4 +98,4 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
+            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError
