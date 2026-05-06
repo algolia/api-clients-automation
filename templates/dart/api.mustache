@@ -36,14 +36,14 @@ final class {{classname}} implements ApiClient {
             options: options,
             {{#hostWithAppID}}
             defaultHosts: () => [
-              Host(url: '$appId-dsn.algolia.net{{{serverPathSuffix}}}', callType: CallType.read),
-              Host(url: '$appId.algolia.net{{{serverPathSuffix}}}', callType: CallType.write),
+              Host(url: '$appId-dsn.algolia.net', callType: CallType.read),
+              Host(url: '$appId.algolia.net', callType: CallType.write),
             ] +
             (
                 [
-                  Host(url: '$appId-1.algolianet.com{{{serverPathSuffix}}}'),
-                  Host(url: '$appId-2.algolianet.com{{{serverPathSuffix}}}'),
-                  Host(url: '$appId-3.algolianet.com{{{serverPathSuffix}}}'),
+                  Host(url: '$appId-1.algolianet.com'),
+                  Host(url: '$appId-2.algolianet.com'),
+                  Host(url: '$appId-3.algolianet.com'),
                 ]..shuffle()
             ),
             {{/hostWithAppID}}
@@ -123,10 +123,10 @@ final class {{classname}} implements ApiClient {
     final request = ApiRequest(
         method: RequestMethod.{{#lambda.snakecase}}{{httpMethod}}{{/lambda.snakecase}},
         {{^vendorExtensions.x-is-custom-request}}
-        path: r'{{{path}}}'{{#pathParams}}.replaceAll('{' r'{{{baseName}}}' '}', Uri.encodeComponent({{{paramName}}}.toString())){{/pathParams}},
+        path: r'{{{serverPathSuffix}}}{{{path}}}'{{#pathParams}}.replaceAll('{' r'{{{baseName}}}' '}', Uri.encodeComponent({{{paramName}}}.toString())){{/pathParams}},
         {{/vendorExtensions.x-is-custom-request}}
         {{#vendorExtensions.x-is-custom-request}}
-        path: r'{{{path}}}'{{#pathParams}}.replaceAll('{' r'{{{baseName}}}' '}', {{{paramName}}}){{/pathParams}},
+        path: r'{{{serverPathSuffix}}}{{{path}}}'{{#pathParams}}.replaceAll('{' r'{{{baseName}}}' '}', {{{paramName}}}){{/pathParams}},
         {{/vendorExtensions.x-is-custom-request}}
         {{#vendorExtensions.x-use-read-transporter}}
         isRead : {{{vendorExtensions.x-use-read-transporter}}},

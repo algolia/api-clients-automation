@@ -146,7 +146,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         } elseif (false === ($clusterHosts = ClusterHosts::createFromCache($cacheKey))) {
             // We'll try to restore the ClusterHost from cache, if we cannot
             // we create a new instance and set the cache key
-            $clusterHosts = ClusterHosts::createFromAppId($config->getAppId(), '{{{serverPathSuffix}}}')
+            $clusterHosts = ClusterHosts::createFromAppId($config->getAppId())
                 ->setCacheKey($cacheKey);
         }
         {{/hostWithAppID}}
@@ -286,7 +286,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             {{/required}}
         {{/allParams}}
 
-        $resourcePath = '{{{path}}}';
+        $resourcePath = '{{{serverPathSuffix}}}{{{path}}}';
         $queryParameters = [];
         $headers = [];
         $httpBody = {{#bodyParam}}{{#required}}${{paramName}}{{/required}}{{^required}} isset(${{paramName}}) ? ${{paramName}} : []{{/required}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};

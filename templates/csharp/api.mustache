@@ -331,7 +331,7 @@ namespace Algolia.Search.Clients;
           requestOptions.ConnectTimeout ??= TimeSpan.FromMilliseconds({{connect}});
           {{/vendorExtensions.x-timeouts}}
           {{/vendorExtensions}}
-          {{#returnType}}return {{/returnType}}await _transport.ExecuteRequestAsync{{#returnType}}<{{> return_type}}>{{/returnType}}(new HttpMethod("{{httpMethod}}"),"{{{path}}}", requestOptions, cancellationToken).ConfigureAwait(false);
+          {{#returnType}}return {{/returnType}}await _transport.ExecuteRequestAsync{{#returnType}}<{{> return_type}}>{{/returnType}}(new HttpMethod("{{httpMethod}}"),"{{{serverPathSuffix}}}{{{path}}}", requestOptions, cancellationToken).ConfigureAwait(false);
       }
 
 
@@ -424,7 +424,7 @@ namespace Algolia.Search.Clients;
           requestOptions.ConnectTimeout ??= TimeSpan.FromMilliseconds({{connect}});
           {{/vendorExtensions.x-timeouts}}
           {{/vendorExtensions}}
-          return await _transport.ExecuteRequestAsync<AlgoliaHttpResponse>(new HttpMethod("{{httpMethod}}"),"{{{path}}}", requestOptions, cancellationToken).ConfigureAwait(false);
+          return await _transport.ExecuteRequestAsync<AlgoliaHttpResponse>(new HttpMethod("{{httpMethod}}"),"{{{serverPathSuffix}}}{{{path}}}", requestOptions, cancellationToken).ConfigureAwait(false);
       }
 
       /// <inheritdoc />

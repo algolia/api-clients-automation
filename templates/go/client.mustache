@@ -122,14 +122,14 @@ func getDefaultHosts(r Region) []transport.StatefulHost {
 func getDefaultHosts(appID string) []transport.StatefulHost {
 	hosts := make([]transport.StatefulHost, 0, 5)
 	hosts = append(hosts,
-		transport.NewStatefulHost("https", appID + "-dsn.algolia.net{{{serverPathSuffix}}}", call.IsRead),
-		transport.NewStatefulHost("https", appID + ".algolia.net{{{serverPathSuffix}}}", call.IsWrite),
+		transport.NewStatefulHost("https", appID + "-dsn.algolia.net", call.IsRead),
+		transport.NewStatefulHost("https", appID + ".algolia.net", call.IsWrite),
 	)
 	hosts = append(hosts, transport.Shuffle(
 		[]transport.StatefulHost{
-			transport.NewStatefulHost("https", fmt.Sprintf("%s-1.algolianet.com{{{serverPathSuffix}}}", appID), call.IsReadWrite),
-			transport.NewStatefulHost("https", fmt.Sprintf("%s-2.algolianet.com{{{serverPathSuffix}}}", appID), call.IsReadWrite),
-			transport.NewStatefulHost("https", fmt.Sprintf("%s-3.algolianet.com{{{serverPathSuffix}}}", appID), call.IsReadWrite),
+			transport.NewStatefulHost("https", fmt.Sprintf("%s-1.algolianet.com", appID), call.IsReadWrite),
+			transport.NewStatefulHost("https", fmt.Sprintf("%s-2.algolianet.com", appID), call.IsReadWrite),
+			transport.NewStatefulHost("https", fmt.Sprintf("%s-3.algolianet.com", appID), call.IsReadWrite),
 		},
 	)...)
 	return hosts

@@ -67,14 +67,14 @@ public struct {{#lambda.client-to-name}}{{{client}}}{{/lambda.client-to-name}}Cl
       }
 
       let hosts = try [
-        ("-dsn.algolia.net{{{serverPathSuffix}}}", .read),
-        (".algolia.net{{{serverPathSuffix}}}", .write),
+        ("-dsn.algolia.net", .read),
+        (".algolia.net", .write),
       ].map(buildHost)
 
       let commonHosts = try [
-        ("-1.algolianet.com{{{serverPathSuffix}}}", .universal),
-        ("-2.algolianet.com{{{serverPathSuffix}}}", .universal),
-        ("-3.algolianet.com{{{serverPathSuffix}}}", .universal),
+        ("-1.algolianet.com", .universal),
+        ("-2.algolianet.com", .universal),
+        ("-3.algolianet.com", .universal),
       ].map(buildHost).shuffled()
 
       self.hosts = hosts + commonHosts

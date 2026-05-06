@@ -52,11 +52,11 @@ module {{moduleName}}
       hosts << Transport::StatefulHost.new({{#fallbackToAliasHost}}region.nil? ? '{{{hostWithFallback}}}' : {{/fallbackToAliasHost}} '{{{regionalHost}}}'.sub('{region}', region), accept: CallType::READ | CallType::WRITE)
       {{/hasRegionalHost}}
       {{#hostWithAppID}}
-      hosts << Transport::StatefulHost.new("#{app_id}-dsn.algolia.net{{{serverPathSuffix}}}", accept: CallType::READ)
-      hosts << Transport::StatefulHost.new("#{app_id}.algolia.net{{{serverPathSuffix}}}", accept: CallType::WRITE)
+      hosts << Transport::StatefulHost.new("#{app_id}-dsn.algolia.net", accept: CallType::READ)
+      hosts << Transport::StatefulHost.new("#{app_id}.algolia.net", accept: CallType::WRITE)
 
       hosts += 1.upto(3).map do |i|
-        Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com{{{serverPathSuffix}}}", accept: CallType::READ | CallType::WRITE)
+        Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", accept: CallType::READ | CallType::WRITE)
       end.shuffle
       {{/hostWithAppID}}
       {{#hostsWithoutVariables.size}}
@@ -132,7 +132,7 @@ module {{moduleName}}
       {{/isNullable}}
       {{/allParams}}
       {{#vendorExtensions}}
-      path = '{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', {{#x-is-custom-request}}{{paramName}}.to_s{{/x-is-custom-request}}{{^x-is-custom-request}}Transport.encode_uri({{paramName}}.to_s){{/x-is-custom-request}}){{/pathParams}}
+      path = '{{{serverPathSuffix}}}{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', {{#x-is-custom-request}}{{paramName}}.to_s{{/x-is-custom-request}}{{^x-is-custom-request}}Transport.encode_uri({{paramName}}.to_s){{/x-is-custom-request}}){{/pathParams}}
       query_params = {}
       {{#queryParams}}
       {{#x-is-custom-request}}

@@ -53,16 +53,16 @@ final class ClusterHosts
         );
     }
 
-    public static function createFromAppId($applicationId, $pathSuffix = '')
+    public static function createFromAppId($applicationId)
     {
         $read = $write = [
-            $applicationId.'-1.algolianet.com'.$pathSuffix => 0,
-            $applicationId.'-2.algolianet.com'.$pathSuffix => 0,
-            $applicationId.'-3.algolianet.com'.$pathSuffix => 0,
+            $applicationId.'-1.algolianet.com' => 0,
+            $applicationId.'-2.algolianet.com' => 0,
+            $applicationId.'-3.algolianet.com' => 0,
         ];
 
-        $read[$applicationId.'-dsn.algolia.net'.$pathSuffix] = 10;
-        $write[$applicationId.'.algolia.net'.$pathSuffix] = 10;
+        $read[$applicationId.'-dsn.algolia.net'] = 10;
+        $write[$applicationId.'.algolia.net'] = 10;
 
         return self::create($read, $write)->shuffle();
     }

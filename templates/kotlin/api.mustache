@@ -32,12 +32,12 @@ public class {{classname}}(
   override val requester: Requester = requesterOf(clientName = "{{{baseName}}}", appId = appId, apiKey = apiKey, connectTimeout = {{x-timeouts.server.connect}}.milliseconds, readTimeout = {{x-timeouts.server.read}}.milliseconds, writeTimeout = {{x-timeouts.server.write}}.milliseconds, options = options) {
   {{#hostWithAppID}}
     listOf(
-      Host("$appId-dsn.algolia.net{{{serverPathSuffix}}}", CallType.Read),
-      Host("$appId.algolia.net{{{serverPathSuffix}}}", CallType.Write),
+      Host("$appId-dsn.algolia.net", CallType.Read),
+      Host("$appId.algolia.net", CallType.Write),
     ) + mutableListOf(
-      Host("$appId-1.algolianet.com{{{serverPathSuffix}}}"),
-      Host("$appId-2.algolianet.com{{{serverPathSuffix}}}"),
-      Host("$appId-3.algolianet.com{{{serverPathSuffix}}}")
+      Host("$appId-1.algolianet.com"),
+      Host("$appId-2.algolianet.com"),
+      Host("$appId-3.algolianet.com")
     ).apply { shuffle() }
   {{/hostWithAppID}}
   {{#hasRegionalHost}}
@@ -89,7 +89,7 @@ public class {{classname}}(
       {{/requiredParams}}
       val requestConfig = RequestConfig(
           method = RequestMethod.{{httpMethod}},
-          path = {{#vendorExtensions}}{{#x-is-custom-request}}"{{{path}}}".replace("{path}", path){{/x-is-custom-request}}{{^x-is-custom-request}}listOf({{#pathSegments}}{{{.}}}, {{/pathSegments}}){{/x-is-custom-request}}{{/vendorExtensions}},
+          path = {{#vendorExtensions}}{{#x-is-custom-request}}"{{{serverPathSuffix}}}{{{path}}}".replace("{path}", path){{/x-is-custom-request}}{{^x-is-custom-request}}"{{{serverPathSuffix}}}".split("/").filter { it.isNotBlank() } + listOf({{#pathSegments}}{{{.}}}, {{/pathSegments}}){{/x-is-custom-request}}{{/vendorExtensions}},
           {{#vendorExtensions.x-use-read-transporter}}
           isRead = {{{vendorExtensions.x-use-read-transporter}}},
           {{/vendorExtensions.x-use-read-transporter}}
