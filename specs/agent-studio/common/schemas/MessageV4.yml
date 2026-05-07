@@ -1,7 +1,7 @@
 MessageV4:
   oneOf:
-    - $ref: 'UserMessageV4.yml#/UserMessageV4'
-    - $ref: 'AssistantMessageV4.yml#/AssistantMessageV4'
+  - $ref: UserMessageV4.yml#/UserMessageV4
+  - $ref: AssistantMessageV4.yml#/AssistantMessageV4
   discriminator:
     propertyName: role
     mapping:

@@ -8,8 +8,8 @@ ConversationFullResponse:
       title: agentid
     title:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
       title: title
     createdAt:
       type: string
@@ -19,13 +19,13 @@ ConversationFullResponse:
       title: updatedat
     lastActivityAt:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
       title: lastactivityat
     userToken:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
       title: usertoken
     isFromDashboard:
       type: boolean
@@ -48,20 +48,20 @@ ConversationFullResponse:
       title: totaltokens
       default: 0
     conversationMetadata:
-      $ref: 'ConversationMetadataNullable.yml#/ConversationMetadataNullable'
+      $ref: ConversationMetadataNullable.yml#/ConversationMetadataNullable
     feedback:
-      $ref: 'FeedbackUnion.yml#/FeedbackUnion'
+      $ref: FeedbackUnion.yml#/FeedbackUnion
     messages:
       items:
-        $ref: 'MessageResponse.yml#/MessageResponse'
+        $ref: MessageResponse.yml#/MessageResponse
       type: array
       title: messages
   type: object
   required:
-    - id
-    - agentId
-    - createdAt
-    - updatedAt
-    - messages
+  - id
+  - agentId
+  - createdAt
+  - updatedAt
+  - messages
   title: conversationFullResponse
   description: Response model for a conversation with all its messages.

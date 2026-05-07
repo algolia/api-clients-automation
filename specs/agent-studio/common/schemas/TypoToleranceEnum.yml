@@ -1,10 +1,10 @@
 TypoToleranceEnum:
   type: string
   enum:
-    - min
-    - strict
-    - 'true'
-    - 'false'
+  - min
+  - strict
+  - 'true'
+  - 'false'
   title: typoToleranceEnum
   description: '- `min`. Return matches with the lowest number of typos.   For example,
     if you have matches without typos, only include those.   But if there are no matches

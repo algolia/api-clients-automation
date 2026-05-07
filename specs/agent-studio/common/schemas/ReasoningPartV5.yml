@@ -10,5 +10,5 @@ ReasoningPartV5:
       title: text
   type: object
   required:
-    - text
+  - text
   title: reasoningPartV5

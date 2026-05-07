@@ -1,4 +1,4 @@
 StringArrayParamConstraintNullable:
   oneOf:
-    - $ref: 'StringArrayParamConstraint.yml#/StringArrayParamConstraint'
-    - type: 'null'
+  - $ref: StringArrayParamConstraint.yml#/StringArrayParamConstraint
+  - type: 'null'

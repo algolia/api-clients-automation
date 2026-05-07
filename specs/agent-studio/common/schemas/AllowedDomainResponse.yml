@@ -20,11 +20,11 @@ AllowedDomainResponse:
       title: updatedat
   type: object
   required:
-    - id
-    - appId
-    - agentId
-    - domain
-    - createdAt
-    - updatedAt
+  - id
+  - appId
+  - agentId
+  - domain
+  - createdAt
+  - updatedAt
   title: allowedDomainResponse
   description: Single allowed domain in API responses.

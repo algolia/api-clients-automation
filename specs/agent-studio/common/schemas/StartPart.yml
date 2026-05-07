@@ -7,3 +7,5 @@ StartPart:
       default: start
   type: object
   title: startPart
+  required:
+  - type

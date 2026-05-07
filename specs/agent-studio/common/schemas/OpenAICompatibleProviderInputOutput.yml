@@ -14,9 +14,9 @@ OpenAICompatibleProviderInput-Output:
         when no model is specified at agent level.
   type: object
   required:
-    - apiKey
-    - baseUrl
-    - defaultModel
+  - apiKey
+  - baseUrl
+  - defaultModel
   title: openAICompatibleProviderInput
   description: |-
     OpenAI-compatible provider input.

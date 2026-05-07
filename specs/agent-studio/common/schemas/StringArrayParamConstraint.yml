@@ -2,10 +2,10 @@ StringArrayParamConstraint:
   properties:
     values:
       oneOf:
-        - items:
-            type: string
-          type: array
-        - type: 'null'
+      - items:
+          type: string
+        type: array
+      - type: 'null'
       title: values
   type: object
   title: stringArrayParamConstraint

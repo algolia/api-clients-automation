@@ -7,3 +7,5 @@ StartStepPart:
       default: start-step
   type: object
   title: startStepPart
+  required:
+  - type

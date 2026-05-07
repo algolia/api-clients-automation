@@ -10,5 +10,6 @@ ReasoningPart:
       title: text
   type: object
   required:
-    - text
+  - type
+  - text
   title: reasoningPart
