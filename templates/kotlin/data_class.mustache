@@ -20,7 +20,7 @@ import {{packageName}}.extensions.internal.*
 {{#additionalModelTypeAnnotations}}
 {{{.}}}
 {{/additionalModelTypeAnnotations}}
-public data class {{classname}}(
+public {{#vars.0}}data {{/vars.0}}class {{classname}}(
 {{#vendorExtensions.x-map-parent}}
 {{#vars}}
 
