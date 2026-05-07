@@ -174,14 +174,17 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     var savedModels = new HashMap<String, List<List<CodegenProperty>>>();
     for (var entry : objs.entrySet()) {
       var model = entry.getValue().getModels().get(0).getModel();
-      savedModels.put(entry.getKey(), List.of(
-        new ArrayList<>(model.vars),
-        new ArrayList<>(model.allVars),
-        new ArrayList<>(model.optionalVars),
-        new ArrayList<>(model.requiredVars),
-        new ArrayList<>(model.readOnlyVars),
-        new ArrayList<>(model.readWriteVars)
-      ));
+      savedModels.put(
+        entry.getKey(),
+        List.of(
+          new ArrayList<>(model.vars),
+          new ArrayList<>(model.allVars),
+          new ArrayList<>(model.optionalVars),
+          new ArrayList<>(model.requiredVars),
+          new ArrayList<>(model.readOnlyVars),
+          new ArrayList<>(model.readWriteVars)
+        )
+      );
     }
 
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
