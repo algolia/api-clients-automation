@@ -1,79 +1,79 @@
 get:
   tags:
-  - Conversations
+    - Conversations
   operationId: getConversation
   x-acl:
-  - logs
+    - logs
   summary: Get Conversation
   description: Retrieves the conversation and its messages for the given ID.
   parameters:
-  - name: conversationId
-    in: path
-    required: true
-    schema:
-      type: string
-      title: conversationId
-    description: The conversationId.
-  - name: agentId
-    in: path
-    required: true
-    schema:
-      $ref: ../../common/schemas/AgentIdUnion.yml#/AgentIdUnion
-    description: The agentId.
-  - name: includeFeedback
-    in: query
-    required: false
-    schema:
-      type: boolean
+    - name: conversationId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: conversationId
+      description: The conversationId.
+    - name: agentId
+      in: path
+      required: true
+      schema:
+        $ref: '../../common/schemas/AgentIdUnion.yml#/AgentIdUnion'
+      description: The agentId.
+    - name: includeFeedback
+      in: query
+      required: false
+      schema:
+        type: boolean
+        description: Include feedback for the conversation.
+        default: false
+        title: includefeedback
       description: Include feedback for the conversation.
-      default: false
-      title: includefeedback
-    description: Include feedback for the conversation.
-  - name: X-Algolia-Secure-User-Token
-    in: header
-    required: false
-    schema:
-      oneOf:
-      - type: string
-      - type: 'null'
-      title: x-Algolia-Secure-User-Token
-    description: The X-Algolia-Secure-User-Token.
+    - name: X-Algolia-Secure-User-Token
+      in: header
+      required: false
+      schema:
+        oneOf:
+          - type: string
+          - type: 'null'
+        title: x-Algolia-Secure-User-Token
+      description: The X-Algolia-Secure-User-Token.
   responses:
     '200':
       description: Successful Response.
       content:
         application/json:
           schema:
-            $ref: ../../common/schemas/ConversationFullResponse.yml#/ConversationFullResponse
+            $ref: '../../common/schemas/ConversationFullResponse.yml#/ConversationFullResponse'
     '422':
       description: Validation Error.
       content:
         application/json:
           schema:
-            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
 delete:
   tags:
-  - Conversations
+    - Conversations
   operationId: deleteConversation
   x-acl:
-  - logs
+    - logs
   summary: Delete Conversation
   description: Deletes the conversation with the given ID.
   parameters:
-  - name: conversationId
-    in: path
-    required: true
-    schema:
-      type: string
-      title: conversationId
-    description: The conversationId.
-  - name: agentId
-    in: path
-    required: true
-    schema:
-      type: string
-      title: agentId
-    description: The agentId.
+    - name: conversationId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: conversationId
+      description: The conversationId.
+    - name: agentId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: agentId
+      description: The agentId.
   responses:
     '204':
       description: Successful Response.
@@ -82,4 +82,4 @@ delete:
       content:
         application/json:
           schema:
-            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

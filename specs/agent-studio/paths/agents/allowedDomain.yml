@@ -1,62 +1,62 @@
 get:
   tags:
-  - Allowed Domains
+    - Allowed Domains
   operationId: getAllowedDomain
   x-acl:
-  - settings
+    - settings
   summary: Get Allowed Domain
   description: Get a single allowed domain by id.
   parameters:
-  - name: domainId
-    in: path
-    required: true
-    schema:
-      type: string
-      title: domainId
-    description: The domainId.
-  - name: agentId
-    in: path
-    required: true
-    schema:
-      type: string
-      title: agentId
-    description: The agentId.
+    - name: domainId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: domainId
+      description: The domainId.
+    - name: agentId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: agentId
+      description: The agentId.
   responses:
     '200':
       description: Successful Response.
       content:
         application/json:
           schema:
-            $ref: ../../common/schemas/AllowedDomainResponse.yml#/AllowedDomainResponse
+            $ref: '../../common/schemas/AllowedDomainResponse.yml#/AllowedDomainResponse'
     '422':
       description: Validation Error.
       content:
         application/json:
           schema:
-            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
 delete:
   tags:
-  - Allowed Domains
+    - Allowed Domains
   operationId: deleteAllowedDomain
   x-acl:
-  - editSettings
+    - editSettings
   summary: Delete Allowed Domain
   description: Remove an allowed domain by id.
   parameters:
-  - name: domainId
-    in: path
-    required: true
-    schema:
-      type: string
-      title: domainId
-    description: The domainId.
-  - name: agentId
-    in: path
-    required: true
-    schema:
-      type: string
-      title: agentId
-    description: The agentId.
+    - name: domainId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: domainId
+      description: The domainId.
+    - name: agentId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: agentId
+      description: The agentId.
   responses:
     '204':
       description: Successful Response.
@@ -65,4 +65,4 @@ delete:
       content:
         application/json:
           schema:
-            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
