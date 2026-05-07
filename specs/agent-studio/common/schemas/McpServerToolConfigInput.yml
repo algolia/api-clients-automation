@@ -27,15 +27,15 @@ McpServerToolConfig-Input:
       default: mcp_tools
     id:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
       title: id
       description: Stable unique identifier for this MCP tool.
     allowedTools:
-      $ref: 'AllowedToolsUnion.yml#/AllowedToolsUnion'
+      $ref: AllowedToolsUnion.yml#/AllowedToolsUnion
   type: object
   required:
-    - url
-    - headers
-    - name
+  - url
+  - headers
+  - name
   title: mcpServerToolConfig

@@ -6,8 +6,8 @@ ToolInvocationPartV4:
       title: type
       default: tool-invocation
     toolInvocation:
-      $ref: 'ToolInvocationV4.yml#/ToolInvocationV4'
+      $ref: ToolInvocationV4.yml#/ToolInvocationV4
   type: object
   required:
-    - toolInvocation
+  - toolInvocation
   title: toolInvocationPartV4

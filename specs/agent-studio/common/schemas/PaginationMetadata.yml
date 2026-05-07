@@ -14,8 +14,8 @@ PaginationMetadata:
       title: totalpages
   type: object
   required:
-    - page
-    - limit
-    - totalCount
-    - totalPages
+  - page
+  - limit
+  - totalCount
+  - totalPages
   title: paginationMetadata

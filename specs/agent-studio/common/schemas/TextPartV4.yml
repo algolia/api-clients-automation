@@ -10,5 +10,5 @@ TextPartV4:
       title: text
   type: object
   required:
-    - text
+  - text
   title: textPartV4

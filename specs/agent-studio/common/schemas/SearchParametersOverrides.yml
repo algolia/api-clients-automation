@@ -2,42 +2,42 @@ SearchParametersOverrides:
   properties:
     filters:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
       title: filters
     attributesToRetrieve:
       oneOf:
-        - items:
-            type: string
-          type: array
-        - type: 'null'
+      - items:
+          type: string
+        type: array
+      - type: 'null'
       title: attributestoretrieve
     restrictSearchableAttributes:
       oneOf:
-        - items:
-            type: string
-          type: array
-        - type: 'null'
+      - items:
+          type: string
+        type: array
+      - type: 'null'
       title: restrictsearchableattributes
     distinct:
-      $ref: 'DistinctUnion.yml#/DistinctUnion'
+      $ref: DistinctUnion.yml#/DistinctUnion
     userToken:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
       title: usertoken
     enablePersonalization:
       oneOf:
-        - type: boolean
-        - type: 'null'
+      - type: boolean
+      - type: 'null'
       title: enablepersonalization
     personalizationImpact:
       oneOf:
-        - type: integer
-        - type: 'null'
+      - type: integer
+      - type: 'null'
       title: personalizationimpact
     optionalFilters:
-      $ref: 'OptionalFiltersUnion.yml#/OptionalFiltersUnion'
+      $ref: OptionalFiltersUnion.yml#/OptionalFiltersUnion
   additionalProperties: false
   type: object
   title: searchParametersOverrides

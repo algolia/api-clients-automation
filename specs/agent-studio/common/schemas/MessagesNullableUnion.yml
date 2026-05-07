@@ -1,4 +1,4 @@
 MessagesNullableUnion:
   oneOf:
-    - $ref: 'MessagesNullableUnionUnion.yml#/MessagesNullableUnionUnion'
-    - type: 'null'
+  - $ref: MessagesNullableUnionUnion.yml#/MessagesNullableUnionUnion
+  - type: 'null'

@@ -1,4 +1,4 @@
 EpisodeNullable:
   oneOf:
-    - $ref: 'Episode.yml#/Episode'
-    - type: 'null'
+  - $ref: Episode.yml#/Episode
+  - type: 'null'

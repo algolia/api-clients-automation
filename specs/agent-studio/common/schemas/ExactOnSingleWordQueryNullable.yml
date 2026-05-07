@@ -1,4 +1,4 @@
 ExactOnSingleWordQueryNullable:
   oneOf:
-    - $ref: 'ExactOnSingleWordQuery.yml#/ExactOnSingleWordQuery'
-    - type: 'null'
+  - $ref: ExactOnSingleWordQuery.yml#/ExactOnSingleWordQuery
+  - type: 'null'

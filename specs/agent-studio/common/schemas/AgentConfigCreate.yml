@@ -5,18 +5,18 @@ AgentConfigCreate:
       title: name
     description:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
       title: description
     providerId:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
       title: providerid
     model:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
       title: model
     instructions:
       type: string
@@ -26,8 +26,8 @@ AgentConfigCreate:
         prompt'' field in the dashboard.'
     systemPrompt:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
       title: systemprompt
       description: 'The system prompt: defines system-level rules and constraints.
         Guides how the agent uses tools, features, and generates context. Prepended
@@ -37,8 +37,8 @@ AgentConfigCreate:
         in the dashboard.'
     templateType:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
       title: templatetype
     config:
       additionalProperties: true
@@ -54,11 +54,11 @@ AgentConfigCreate:
         features: '[memory]'
     tools:
       items:
-        $ref: 'ToolConfigInput.yml#/ToolConfigInput'
+        $ref: ToolConfigInput.yml#/ToolConfigInput
       type: array
       title: tools
   type: object
   required:
-    - name
-    - instructions
+  - name
+  - instructions
   title: agentConfigCreate

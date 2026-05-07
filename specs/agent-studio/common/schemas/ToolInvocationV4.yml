@@ -12,44 +12,44 @@ ToolInvocationV4:
       title: args
     result:
       oneOf:
-        - type: object
-          additionalProperties: true
-        - type: 'null'
+      - type: object
+        additionalProperties: true
+      - type: 'null'
       title: result
     step:
       oneOf:
-        - type: integer
-        - type: 'null'
+      - type: integer
+      - type: 'null'
       title: step
     state:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
       title: state
     providerOptions:
       oneOf:
-        - additionalProperties: true
-          type: object
-        - type: 'null'
+      - additionalProperties: true
+        type: object
+      - type: 'null'
       title: provideroptions
     requiresApproval:
       oneOf:
-        - type: boolean
-        - type: 'null'
+      - type: boolean
+      - type: 'null'
       title: requiresapproval
     description:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
       title: description
     argsHash:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
       title: argshash
   type: object
   required:
-    - toolCallId
-    - toolName
+  - toolCallId
+  - toolName
   title: toolInvocationV4
   description: Model for tool invocation in a Message.

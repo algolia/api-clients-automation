@@ -1,9 +1,9 @@
 QueryType:
   type: string
   enum:
-    - prefixLast
-    - prefixAll
-    - prefixNone
+  - prefixLast
+  - prefixAll
+  - prefixNone
   title: queryType
   description: Determines if and how query words are interpreted as prefixes.  By
     default, only the last query word is treated as a prefix (`prefixLast`). To turn
