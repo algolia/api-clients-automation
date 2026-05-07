@@ -9,5 +9,24 @@
       "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/allowed-domains/a1b2c3d4-5678-90ab-cdef-123456789abc",
       "method": "GET"
     }
+  },
+  {
+    "testName": "e2e get allowed domain",
+    "parameters": {
+      "domainId": "6486b782-6b4c-4c93-bbba-04849ae4d101",
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
+    },
+    "request": {
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/allowed-domains/6486b782-6b4c-4c93-bbba-04849ae4d101",
+      "method": "GET"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "id": "6486b782-6b4c-4c93-bbba-04849ae4d101",
+        "domain": "cts-e2e.algolia.com",
+        "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
+      }
+    }
   }
 ]

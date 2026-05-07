@@ -24,5 +24,18 @@
         "endDate": "2024-12-31"
       }
     }
+  },
+  {
+    "testName": "e2e export conversations",
+    "parameters": {
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
+    },
+    "request": {
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/conversations/export",
+      "method": "GET"
+    },
+    "response": {
+      "statusCode": 200
+    }
   }
 ]

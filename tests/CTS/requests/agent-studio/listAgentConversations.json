@@ -45,5 +45,37 @@
         }
       }
     }
+  },
+  {
+    "testName": "e2e list agent conversations",
+    "parameters": {
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
+      "page": 1,
+      "limit": 10
+    },
+    "request": {
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/conversations",
+      "method": "GET",
+      "queryParameters": {
+        "page": "1",
+        "limit": "10"
+      }
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "data": [
+          {
+            "id": "dashboard-eacdd4aa-9a80-4f5b-b657-f04b7fd34082",
+            "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
+            "title": "Greeting Message"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 10
+        }
+      }
+    }
   }
 ]
