@@ -104,6 +104,19 @@ object {{classname}} {
 object {{classname}}Serializer extends Serializer[{{classname}}] {
   override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), {{classname}}] = {
 
+    {{#discriminator}}
+    case (TypeInfo(clazz, _), json) if clazz == classOf[{{classname}}] => json match {
+      case jobject: JObject =>
+        (jobject \ "{{{propertyBaseName}}}") match {
+          {{#mappedModels}}
+          case JString("{{{mappingName}}}") => Extraction.extract[{{{modelName}}}](jobject)(format - this, manifest[{{{modelName}}}])
+          {{/mappedModels}}
+          case _ => throw new MappingException("Unknown discriminator value in {{classname}}")
+        }
+      case _ => throw new MappingException(s"Can't deserialize $json as {{classname}}")
+    }
+    {{/discriminator}}
+
     case (TypeInfo(clazz, _), json) if clazz == classOf[{{classname}}] => 
       json match {
         {{#composedSchemas.oneOf}}

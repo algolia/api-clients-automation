@@ -67,6 +67,15 @@ public sealed interface {{classname}} {
 
 internal class {{classname}}Serializer : JsonContentPolymorphicSerializer<{{classname}}>({{classname}}::class) {
     override fun selectDeserializer(element: JsonElement): DeserializationStrategy<{{classname}}> {
+        {{#discriminator}}
+        return when (element.jsonObject["{{{propertyBaseName}}}"]?.jsonPrimitive?.contentOrNull) {
+            {{#mappedModels}}
+            "{{{mappingName}}}" -> {{{modelName}}}.serializer()
+            {{/mappedModels}}
+            else -> throw AlgoliaClientException("Failed to deserialize json element: $element")
+        }
+        {{/discriminator}}
+        {{^discriminator}}
         return when {
             {{#composedSchemas.oneOf}}
             {{^isModel}}
@@ -118,5 +127,6 @@ internal class {{classname}}Serializer : JsonContentPolymorphicSerializer<{{clas
             {{/composedSchemas.oneOf}}
             else -> throw AlgoliaClientException("Failed to deserialize json element: $element")
         }
+        {{/discriminator}}
     }
 }
