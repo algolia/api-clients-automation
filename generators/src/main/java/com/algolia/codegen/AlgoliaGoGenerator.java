@@ -148,6 +148,7 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     for (CodegenOperation op : operations.getOperations().getOperation()) {
       if (op.operationId.equals("GetConfiguration")) {
         op.operationId = "GetApplicationConfiguration";
+        op.nickname = "GetApplicationConfiguration";
       }
     }
 
