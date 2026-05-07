@@ -170,7 +170,27 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
 
   @Override
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
+    // Save vars before super strips discriminator properties from child models
+    var savedVars = new HashMap<String, List<CodegenProperty>>();
+    for (var entry : objs.entrySet()) {
+      var model = entry.getValue().getModels().get(0).getModel();
+      if (model.vars != null && !model.vars.isEmpty()) {
+        savedVars.put(entry.getKey(), new ArrayList<>(model.vars));
+      }
+    }
+
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
+
+    // Restore discriminator properties only for models left completely empty
+    for (var entry : models.entrySet()) {
+      var model = entry.getValue().getModels().get(0).getModel();
+      var original = savedVars.get(entry.getKey());
+      if (original != null && model.vars.isEmpty()) {
+        model.vars = original;
+        model.allVars = original;
+      }
+    }
+
     replaceFreeFormMaps(models);
     OneOf.updateModelsOneOf(models, modelPackage);
     GenericPropagator.propagateGenericsToModels(models, true);
