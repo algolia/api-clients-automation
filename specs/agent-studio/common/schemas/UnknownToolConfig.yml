@@ -13,7 +13,7 @@ UnknownToolConfig:
   additionalProperties: true
   type: object
   required:
-  - name
+    - name
   title: unknownToolConfig
   description: Exists only to ensure that when you change branch from toolX to feat/toolY,
     your config stays valid.

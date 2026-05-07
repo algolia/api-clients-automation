@@ -5,11 +5,11 @@ OpenAIProviderInput-Output:
       title: apikey
     baseUrl:
       oneOf:
-      - type: string
-      - type: 'null'
+        - type: string
+        - type: 'null'
       title: baseurl
   type: object
   required:
-  - apiKey
+    - apiKey
   title: openAIProviderInput
   description: OpenAI-specific provider input.

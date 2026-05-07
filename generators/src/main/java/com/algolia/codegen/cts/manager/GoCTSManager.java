@@ -41,6 +41,14 @@ public class GoCTSManager implements CTSManager {
   }
 
   @Override
+  public String resolveMethodName(String operationId) {
+    if (operationId.equals("getConfiguration")) {
+      return "getApplicationConfiguration";
+    }
+    return operationId;
+  }
+
+  @Override
   public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles, String output) {
     supportingFiles.add(new SupportingFile("snippets/.golangci.mustache", output + "/go/.golangci.yml"));
     supportingFiles.add(new SupportingFile("snippets/go.mod.mustache", output + "/go/go.mod"));

@@ -12,7 +12,7 @@ AlgoliaRecommendToolConfig-Output:
       default: algolia_recommend
     allowedConfigs:
       items:
-        $ref: AlgoliaRecommendToolIndexConfig.yml#/AlgoliaRecommendToolIndexConfig
+        $ref: 'AlgoliaRecommendToolIndexConfig.yml#/AlgoliaRecommendToolIndexConfig'
       type: array
       title: allowedconfigs
       default: []
@@ -26,8 +26,8 @@ AlgoliaRecommendToolConfig-Output:
       readOnly: true
   type: object
   required:
-  - name
-  - description
+    - name
+    - description
   title: algoliaRecommendToolConfig
   description: |-
     Configuration for the Algolia Recommend tool.

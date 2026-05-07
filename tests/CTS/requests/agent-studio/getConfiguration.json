@@ -7,7 +7,7 @@
     }
   },
   {
-    "testName": "e2e getApplicationConfiguration",
+    "testName": "e2e getConfiguration",
     "parameters": {},
     "request": {
       "path": "/1/configuration",

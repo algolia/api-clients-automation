@@ -1,8 +1,8 @@
 ToolConfigInput:
   oneOf:
-  - $ref: ClientSideToolConfig.yml#/ClientSideToolConfig
-  - $ref: AlgoliaSearchToolConfigInput.yml#/AlgoliaSearchToolConfig-Input
-  - $ref: AlgoliaRecommendToolConfigInput.yml#/AlgoliaRecommendToolConfig-Input
-  - $ref: AlgoliaDisplayResultsToolConfig.yml#/AlgoliaDisplayResultsToolConfig
-  - $ref: McpServerToolConfigInput.yml#/McpServerToolConfig-Input
-  - $ref: UnknownToolConfig.yml#/UnknownToolConfig
+    - $ref: 'ClientSideToolConfig.yml#/ClientSideToolConfig'
+    - $ref: 'AlgoliaSearchToolConfigInput.yml#/AlgoliaSearchToolConfig-Input'
+    - $ref: 'AlgoliaRecommendToolConfigInput.yml#/AlgoliaRecommendToolConfig-Input'
+    - $ref: 'AlgoliaDisplayResultsToolConfig.yml#/AlgoliaDisplayResultsToolConfig'
+    - $ref: 'McpServerToolConfigInput.yml#/McpServerToolConfig-Input'
+    - $ref: 'UnknownToolConfig.yml#/UnknownToolConfig'

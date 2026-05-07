@@ -1,2 +1,2 @@
 FacetFilters-Input:
-  $ref: FacetFiltersInputUnion.yml#/FacetFilters-InputUnion
+  $ref: 'FacetFiltersInputUnion.yml#/FacetFilters-InputUnion'

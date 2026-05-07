@@ -49,17 +49,11 @@
   {
     "testName": "e2e list agent conversations",
     "parameters": {
-      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
-      "page": 1,
-      "limit": 10
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
     },
     "request": {
       "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/conversations",
-      "method": "GET",
-      "queryParameters": {
-        "page": "1",
-        "limit": "10"
-      }
+      "method": "GET"
     },
     "response": {
       "statusCode": 200,
@@ -70,11 +64,7 @@
             "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
             "title": "Greeting Message"
           }
-        ],
-        "pagination": {
-          "page": 1,
-          "limit": 10
-        }
+        ]
       }
     }
   }

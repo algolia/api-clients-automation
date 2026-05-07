@@ -43,4 +43,8 @@ public interface CTSManager {
   public default void addMustacheLambdas(Map<String, Lambda> lambdas) {
     // NO-OP
   }
+
+  public default String resolveMethodName(String operationId) {
+    return operationId;
+  }
 }

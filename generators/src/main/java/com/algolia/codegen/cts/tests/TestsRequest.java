@@ -131,7 +131,7 @@ public class TestsRequest extends TestsGenerator {
           );
           continue;
         }
-        test.put("method", operationId);
+        test.put("method", ctsManager.resolveMethodName(operationId));
         test.put("testName", req.testName == null ? operationId : req.testName);
         test.put("testIndex", i == 0 ? "" : i);
         if (ope.returnType != null && ope.returnType.length() > 0) {
