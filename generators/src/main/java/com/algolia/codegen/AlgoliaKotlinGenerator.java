@@ -170,24 +170,33 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
 
   @Override
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
-    // Save vars before super strips discriminator properties from child models
-    var savedVars = new HashMap<String, List<CodegenProperty>>();
+    // Save all var lists before super strips discriminator properties from child models
+    var savedModels = new HashMap<String, List<List<CodegenProperty>>>();
     for (var entry : objs.entrySet()) {
       var model = entry.getValue().getModels().get(0).getModel();
-      if (model.vars != null && !model.vars.isEmpty()) {
-        savedVars.put(entry.getKey(), new ArrayList<>(model.vars));
-      }
+      savedModels.put(entry.getKey(), List.of(
+        new ArrayList<>(model.vars),
+        new ArrayList<>(model.allVars),
+        new ArrayList<>(model.optionalVars),
+        new ArrayList<>(model.requiredVars),
+        new ArrayList<>(model.readOnlyVars),
+        new ArrayList<>(model.readWriteVars)
+      ));
     }
 
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
 
-    // Restore discriminator properties only for models left completely empty
+    // Restore discriminator properties stripped by KotlinClientCodegen
     for (var entry : models.entrySet()) {
       var model = entry.getValue().getModels().get(0).getModel();
-      var original = savedVars.get(entry.getKey());
-      if (original != null && model.vars.isEmpty()) {
-        model.vars = original;
-        model.allVars = original;
+      var saved = savedModels.get(entry.getKey());
+      if (saved != null && model.vars.size() < saved.get(0).size()) {
+        model.vars = saved.get(0);
+        model.allVars = saved.get(1);
+        model.optionalVars = saved.get(2);
+        model.requiredVars = saved.get(3);
+        model.readOnlyVars = saved.get(4);
+        model.readWriteVars = saved.get(5);
       }
     }
 
