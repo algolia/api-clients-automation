@@ -95,12 +95,15 @@ final class {{classname}} implements ApiClient {
   }
 
   {{#isSearchClient}}
+  /// Sets (or replaces) the ingestion transporter used by `*WithTransformation` helpers.
+  /// The new transporter is built from [transformationOptions]; any previously created transporter is disposed.
   void setTransformationOptions(TransformationOptions transformationOptions) {
     final previous = _ingestionTransporter;
     _ingestionTransporter = _buildIngestionTransporter(transformationOptions);
     previous?.dispose();
   }
 
+  /// The ingestion transporter used by `*WithTransformation` helpers, or `null` if not configured.
   ingestion.IngestionClient? get ingestionTransporter => _ingestionTransporter;
 
   ingestion.IngestionClient _buildIngestionTransporter(TransformationOptions opts) {
