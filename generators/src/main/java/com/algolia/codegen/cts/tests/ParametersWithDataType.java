@@ -86,8 +86,15 @@ public class ParametersWithDataType {
             parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
           }
           if (matched != parameters.size()) {
-            Set<String> specParamNames = operation.allParams.stream().map(sp -> sp.paramName).collect(Collectors.toSet());
-            String unknown = parameters.keySet().stream().filter(p -> !specParamNames.contains(p)).collect(Collectors.joining(", "));
+            Set<String> specParamNames = operation.allParams
+              .stream()
+              .map(sp -> sp.paramName)
+              .collect(Collectors.toSet());
+            String unknown = parameters
+              .keySet()
+              .stream()
+              .filter(p -> !specParamNames.contains(p))
+              .collect(Collectors.joining(", "));
             throw new CTSException("Unknown parameter(s) [" + unknown + "] not found in the root parameter");
           }
         } else {
