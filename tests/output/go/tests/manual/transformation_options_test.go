@@ -57,6 +57,7 @@ func TestSetTransformationOptionsCreatesTransporter(t *testing.T) {
 	require.ErrorContains(t, err, "TransformationOptions must be set")
 	require.NoError(t, client.SetTransformationOptions(search.TransformationOptions{Region: "us"}))
 	_, err = client.SaveObjectsWithTransformation("index", []map[string]any{{"objectID": "1"}})
+	require.Error(t, err)
 	require.NotContains(t, err.Error(), "TransformationOptions must be set")
 }
 
