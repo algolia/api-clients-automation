@@ -864,14 +864,19 @@ package object extension {
     private def ingestionToSearchWatchResponses(
         responses: Seq[IngestionWatchResponse]
     ): Seq[WatchResponse] = {
-      implicit val formats: Formats = JsonSupport.format
       Try {
-        Extraction.decompose(responses).extract[Seq[WatchResponse]]
+        val jValue = {
+          implicit val formats: Formats = algoliasearch.ingestion.JsonSupport.format
+          Extraction.decompose(responses)
+        }
+        implicit val formats: Formats = JsonSupport.format
+        jValue.extract[Seq[WatchResponse]]
       } match {
         case Success(converted) => converted
-        case Failure(_) =>
+        case Failure(e) =>
           throw new AlgoliaClientException(
-            "ingestion WatchResponse cannot be converted to a search WatchResponse"
+            "ingestion WatchResponse cannot be converted to a search WatchResponse",
+            e
           )
       }
     }
@@ -985,9 +990,10 @@ package object extension {
         jValue.extract[Seq[PushTaskRecords]]
       } match {
         case Success(records) => records
-        case Failure(_) =>
+        case Failure(e) =>
           throw new AlgoliaClientException(
-            "each object must have an `objectID` key in order to be indexed"
+            "each object must have an `objectID` key in order to be indexed",
+            e
           )
       }
     }
