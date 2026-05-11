@@ -8,6 +8,7 @@ method:
       - javascript
       - php
       - python
+      - scala
     tags:
       - Records
     x-acl:
