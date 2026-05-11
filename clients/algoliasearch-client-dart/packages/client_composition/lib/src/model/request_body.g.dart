@@ -16,6 +16,8 @@ RequestBody _$RequestBodyFromJson(Map<String, dynamic> json) => $checkedCreate(
               (v) => v == null
                   ? null
                   : Params.fromJson(v as Map<String, dynamic>)),
+          feedsOrder: $checkedConvert('feedsOrder',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
         );
         return val;
       },
@@ -31,5 +33,6 @@ Map<String, dynamic> _$RequestBodyToJson(RequestBody instance) {
   }
 
   writeNotNull('params', instance.params?.toJson());
+  writeNotNull('feedsOrder', instance.feedsOrder);
   return val;
 }

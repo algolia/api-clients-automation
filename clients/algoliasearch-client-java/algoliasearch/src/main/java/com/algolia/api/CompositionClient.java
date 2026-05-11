@@ -167,6 +167,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customDelete`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -187,6 +188,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customDelete`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -370,6 +372,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customGet`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -390,6 +393,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customGet`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -583,6 +587,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPost`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -610,6 +615,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPost`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -811,6 +817,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPut`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -838,6 +845,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPut`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -977,6 +985,7 @@ public class CompositionClient extends ApiClient {
   public CompletableFuture<TaskIDResponse> deleteCompositionAsync(@Nonnull String compositionID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `deleteComposition`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `deleteComposition`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/compositions/{compositionID}", compositionID).setMethod("DELETE").build();
     return executeAsync(request, requestOptions, new TypeReference<TaskIDResponse>() {});
@@ -995,6 +1004,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `deleteComposition`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `deleteComposition`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/compositions/{compositionID}", compositionID).setMethod("DELETE").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -1092,8 +1102,10 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `deleteCompositionRule`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `deleteCompositionRule`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `deleteCompositionRule`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `deleteCompositionRule`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/compositions/{compositionID}/rules/{objectID}", compositionID, objectID)
@@ -1117,8 +1129,10 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `deleteCompositionRule`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `deleteCompositionRule`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `deleteCompositionRule`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `deleteCompositionRule`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/compositions/{compositionID}/rules/{objectID}", compositionID, objectID)
@@ -1207,6 +1221,7 @@ public class CompositionClient extends ApiClient {
   public CompletableFuture<Composition> getCompositionAsync(@Nonnull String compositionID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `getComposition`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `getComposition`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/compositions/{compositionID}", compositionID).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Composition>() {});
@@ -1223,6 +1238,7 @@ public class CompositionClient extends ApiClient {
   public CompletableFuture<Response> getCompositionWithHTTPInfoAsync(@Nonnull String compositionID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `getComposition`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `getComposition`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/compositions/{compositionID}", compositionID).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -1318,8 +1334,10 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `getRule`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `getRule`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `getRule`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `getRule`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/compositions/{compositionID}/rules/{objectID}", compositionID, objectID)
@@ -1344,8 +1362,10 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `getRule`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `getRule`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `getRule`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `getRule`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/compositions/{compositionID}/rules/{objectID}", compositionID, objectID)
@@ -1445,6 +1465,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `getTask`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `getTask`.");
 
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getTask`.");
 
@@ -1470,6 +1491,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `getTask`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `getTask`.");
 
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getTask`.");
 
@@ -1887,6 +1909,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `putComposition`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `putComposition`.");
 
     Parameters.requireNonNull(composition, "Parameter `composition` is required when calling `putComposition`.");
 
@@ -1913,6 +1936,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `putComposition`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `putComposition`.");
 
     Parameters.requireNonNull(composition, "Parameter `composition` is required when calling `putComposition`.");
 
@@ -2040,8 +2064,10 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `putCompositionRule`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `putCompositionRule`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `putCompositionRule`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `putCompositionRule`.");
 
     Parameters.requireNonNull(compositionRule, "Parameter `compositionRule` is required when calling `putCompositionRule`.");
 
@@ -2071,8 +2097,10 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `putCompositionRule`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `putCompositionRule`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `putCompositionRule`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `putCompositionRule`.");
 
     Parameters.requireNonNull(compositionRule, "Parameter `compositionRule` is required when calling `putCompositionRule`.");
 
@@ -2191,6 +2219,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `saveRules`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `saveRules`.");
 
     Parameters.requireNonNull(rules, "Parameter `rules` is required when calling `saveRules`.");
 
@@ -2217,6 +2246,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `saveRules`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `saveRules`.");
 
     Parameters.requireNonNull(rules, "Parameter `rules` is required when calling `saveRules`.");
 
@@ -2335,6 +2365,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `search`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `search`.");
 
     Parameters.requireNonNull(requestBody, "Parameter `requestBody` is required when calling `search`.");
 
@@ -2364,6 +2395,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `search`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `search`.");
 
     Parameters.requireNonNull(requestBody, "Parameter `requestBody` is required when calling `search`.");
 
@@ -2531,6 +2563,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `searchCompositionRules`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `searchCompositionRules`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/compositions/{compositionID}/rules/search", compositionID)
@@ -2555,6 +2588,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `searchCompositionRules`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `searchCompositionRules`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/compositions/{compositionID}/rules/search", compositionID)
@@ -2826,8 +2860,10 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `searchForFacetValues`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `searchForFacetValues`.");
 
     Parameters.requireNonNull(facetName, "Parameter `facetName` is required when calling `searchForFacetValues`.");
+    Parameters.requireNonEmpty(facetName, "Parameter `facetName` is required when calling `searchForFacetValues`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/compositions/{compositionID}/facets/{facetName}/query", compositionID, facetName)
@@ -2859,8 +2895,10 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `searchForFacetValues`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `searchForFacetValues`.");
 
     Parameters.requireNonNull(facetName, "Parameter `facetName` is required when calling `searchForFacetValues`.");
+    Parameters.requireNonEmpty(facetName, "Parameter `facetName` is required when calling `searchForFacetValues`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/compositions/{compositionID}/facets/{facetName}/query", compositionID, facetName)
@@ -3088,6 +3126,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `updateSortingStrategyComposition`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `updateSortingStrategyComposition`.");
 
     Parameters.requireNonNull(requestBody, "Parameter `requestBody` is required when calling `updateSortingStrategyComposition`.");
 
@@ -3120,6 +3159,7 @@ public class CompositionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `updateSortingStrategyComposition`.");
+    Parameters.requireNonEmpty(compositionID, "Parameter `compositionID` is required when calling `updateSortingStrategyComposition`.");
 
     Parameters.requireNonNull(requestBody, "Parameter `requestBody` is required when calling `updateSortingStrategyComposition`.");
 

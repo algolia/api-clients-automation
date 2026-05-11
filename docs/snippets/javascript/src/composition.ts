@@ -1614,6 +1614,26 @@ export async function snippetForSearch2(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the search method.
+//
+// search
+export async function snippetForSearch3(): Promise<void> {
+  // >SEPARATOR search search
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    compositionID: 'foo',
+    requestBody: { params: { query: 'batman' }, feedsOrder: ['feed-movies', 'feed-comics'] },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the searchCompositionRules method.
 //
 // searchCompositionRules

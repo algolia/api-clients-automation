@@ -94,10 +94,10 @@ final class AbtestingV3Client implements ApiClient {
     Map<String, Object>? parameters,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      path.isNotEmpty,
-      'Parameter `path` is required when calling `customDelete`.',
-    );
+    if (path.isEmpty) {
+      throw ArgumentError(
+          'Parameter `path` is required when calling `customDelete`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.delete,
       path: r'/{path}'.replaceAll('{' r'path' '}', path),
@@ -127,10 +127,10 @@ final class AbtestingV3Client implements ApiClient {
     Map<String, Object>? parameters,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      path.isNotEmpty,
-      'Parameter `path` is required when calling `customGet`.',
-    );
+    if (path.isEmpty) {
+      throw ArgumentError(
+          'Parameter `path` is required when calling `customGet`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.get,
       path: r'/{path}'.replaceAll('{' r'path' '}', path),
@@ -162,10 +162,10 @@ final class AbtestingV3Client implements ApiClient {
     Object? body,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      path.isNotEmpty,
-      'Parameter `path` is required when calling `customPost`.',
-    );
+    if (path.isEmpty) {
+      throw ArgumentError(
+          'Parameter `path` is required when calling `customPost`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/{path}'.replaceAll('{' r'path' '}', path),
@@ -198,10 +198,10 @@ final class AbtestingV3Client implements ApiClient {
     Object? body,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      path.isNotEmpty,
-      'Parameter `path` is required when calling `customPut`.',
-    );
+    if (path.isEmpty) {
+      throw ArgumentError(
+          'Parameter `path` is required when calling `customPut`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.put,
       path: r'/{path}'.replaceAll('{' r'path' '}', path),

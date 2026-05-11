@@ -117,6 +117,7 @@ class RecommendClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[RecommendUpdatedAtResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `batchRecommendRules`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `batchRecommendRules`.")
     requireNotNull(model, "Parameter `model` is required when calling `batchRecommendRules`.")
 
     val request = HttpRequest
@@ -141,6 +142,7 @@ class RecommendClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customDelete`.")
 
     val request = HttpRequest
       .builder()
@@ -164,6 +166,7 @@ class RecommendClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customGet`.")
 
     val request = HttpRequest
       .builder()
@@ -190,6 +193,7 @@ class RecommendClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customPost`.")
 
     val request = HttpRequest
       .builder()
@@ -217,6 +221,7 @@ class RecommendClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customPut`.")
 
     val request = HttpRequest
       .builder()
@@ -247,8 +252,10 @@ class RecommendClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[DeletedAtResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `deleteRecommendRule`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `deleteRecommendRule`.")
     requireNotNull(model, "Parameter `model` is required when calling `deleteRecommendRule`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `deleteRecommendRule`.")
+    requireNotEmpty(objectID, "Parameter `objectID` is required when calling `deleteRecommendRule`.")
 
     val request = HttpRequest
       .builder()
@@ -277,8 +284,10 @@ class RecommendClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[RecommendRule] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getRecommendRule`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getRecommendRule`.")
     requireNotNull(model, "Parameter `model` is required when calling `getRecommendRule`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `getRecommendRule`.")
+    requireNotEmpty(objectID, "Parameter `objectID` is required when calling `getRecommendRule`.")
 
     val request = HttpRequest
       .builder()
@@ -309,6 +318,7 @@ class RecommendClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetRecommendTaskResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getRecommendStatus`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getRecommendStatus`.")
     requireNotNull(model, "Parameter `model` is required when calling `getRecommendStatus`.")
     requireNotNull(taskID, "Parameter `taskID` is required when calling `getRecommendStatus`.")
 
@@ -361,6 +371,7 @@ class RecommendClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[SearchRecommendRulesResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `searchRecommendRules`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `searchRecommendRules`.")
     requireNotNull(model, "Parameter `model` is required when calling `searchRecommendRules`.")
 
     val request = HttpRequest
