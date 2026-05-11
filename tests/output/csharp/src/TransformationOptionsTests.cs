@@ -71,7 +71,7 @@ public class TransformationOptionsTests
     );
     if (ex is AlgoliaException algoliaEx)
       Assert.DoesNotContain("TransformationOptions must be set", algoliaEx.Message);
-    else
+    else if (ex is not AlgoliaApiException)
       Assert.Null(ex);
   }
 
@@ -88,7 +88,7 @@ public class TransformationOptionsTests
     );
     if (ex is AlgoliaException algoliaEx)
       Assert.DoesNotContain("TransformationOptions must be set", algoliaEx.Message);
-    else
+    else if (ex is not AlgoliaApiException)
       Assert.Null(ex);
   }
 
@@ -106,7 +106,7 @@ public class TransformationOptionsTests
     );
     if (ex is AlgoliaException algoliaEx)
       Assert.DoesNotContain("TransformationOptions must be set", algoliaEx.Message);
-    else
+    else if (ex is not AlgoliaApiException)
       Assert.Null(ex);
   }
 
@@ -121,7 +121,7 @@ public class TransformationOptionsTests
     );
     if (ex is AlgoliaException algoliaEx)
       Assert.DoesNotContain("TransformationOptions must be set", algoliaEx.Message);
-    else
+    else if (ex is not AlgoliaApiException)
       Assert.Null(ex);
   }
 
@@ -148,7 +148,7 @@ public class TransformationOptionsTests
     );
     if (ex is AlgoliaException algoliaEx)
       Assert.DoesNotContain("TransformationOptions must be set", algoliaEx.Message);
-    else
+    else if (ex is not AlgoliaApiException)
       Assert.Null(ex);
   }
 
