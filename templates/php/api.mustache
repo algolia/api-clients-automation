@@ -657,7 +657,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
     public function replaceAllObjectsWithTransformation($indexName, $objects, $batchSize = 1000, $scopes = ['settings', 'rules', 'synonyms'], $requestOptions = [])
     {
         if (null == $this->ingestionTransporter) {
-            throw new \InvalidArgumentException('`transformationOptions` must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/');
+            throw new \InvalidArgumentException('`transformationOptions` must be set on `SearchConfig` before creating the client, or via `SearchClient::setTransformationOptions(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/');
         }
 
         $tmpIndexName = $indexName.'_tmp_'.rand(10000000, 99999999);
@@ -807,7 +807,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
     public function saveObjectsWithTransformation($indexName, $objects, $waitForTasks = false, $batchSize = 1000, $requestOptions = [])
     {
       if (null == $this->ingestionTransporter) {
-          throw new \InvalidArgumentException('`transformationOptions` must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/');
+          throw new \InvalidArgumentException('`transformationOptions` must be set on `SearchConfig` before creating the client, or via `SearchClient::setTransformationOptions(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/');
       }
 
       return $this->ingestionTransporter->chunkedPush($indexName, $objects, 'addObject', $waitForTasks, $batchSize, null, $requestOptions);
@@ -866,7 +866,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
     public function partialUpdateObjectsWithTransformation($indexName, $objects, $createIfNotExists, $waitForTasks = false, $batchSize = 1000, $requestOptions = [])
     {
       if (null == $this->ingestionTransporter) {
-          throw new \InvalidArgumentException('`transformationOptions` must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/');
+          throw new \InvalidArgumentException('`transformationOptions` must be set on `SearchConfig` before creating the client, or via `SearchClient::setTransformationOptions(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/');
       }
 
       return $this->ingestionTransporter->chunkedPush($indexName, $objects, ($createIfNotExists == TRUE) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, $batchSize, null, $requestOptions);
