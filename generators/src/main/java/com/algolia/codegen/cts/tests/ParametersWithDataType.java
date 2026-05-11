@@ -74,14 +74,21 @@ public class ParametersWithDataType {
           // Iterate in operation.allParams order to ensure generated method calls
           // pass arguments in the correct positional order (matching the method signature),
           // regardless of JSON key order in the CTS test definition.
+          int matched = 0;
           for (CodegenParameter sp : operation.allParams) {
             if (!parameters.containsKey(sp.paramName)) {
               continue;
             }
+            matched++;
             Object paramValue = parameters.get(sp.paramName);
             Map<String, Object> paramWithType = traverseParams(sp.paramName, paramValue, sp, "", 0, false);
             parametersWithDataType.add(paramWithType);
             parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
+          }
+          if (matched != parameters.size()) {
+            Set<String> specParamNames = operation.allParams.stream().map(sp -> sp.paramName).collect(Collectors.toSet());
+            String unknown = parameters.keySet().stream().filter(p -> !specParamNames.contains(p)).collect(Collectors.joining(", "));
+            throw new CTSException("Unknown parameter(s) [" + unknown + "] not found in the root parameter");
           }
         } else {
           for (Entry<String, Object> param : parameters.entrySet()) {
