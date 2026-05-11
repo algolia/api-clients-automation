@@ -118,6 +118,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customDelete`.")
 
     val request = HttpRequest
       .builder()
@@ -141,6 +142,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customGet`.")
 
     val request = HttpRequest
       .builder()
@@ -167,6 +169,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customPost`.")
 
     val request = HttpRequest
       .builder()
@@ -194,6 +197,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customPut`.")
 
     val request = HttpRequest
       .builder()
@@ -236,6 +240,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetAddToCartRateResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getAddToCartRate`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getAddToCartRate`.")
 
     val request = HttpRequest
       .builder()
@@ -278,6 +283,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetAverageClickPositionResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getAverageClickPosition`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getAverageClickPosition`.")
 
     val request = HttpRequest
       .builder()
@@ -318,6 +324,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetClickPositionsResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getClickPositions`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getClickPositions`.")
 
     val request = HttpRequest
       .builder()
@@ -359,6 +366,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetClickThroughRateResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getClickThroughRate`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getClickThroughRate`.")
 
     val request = HttpRequest
       .builder()
@@ -400,6 +408,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetConversionRateResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getConversionRate`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getConversionRate`.")
 
     val request = HttpRequest
       .builder()
@@ -439,6 +448,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetNoClickRateResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getNoClickRate`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getNoClickRate`.")
 
     val request = HttpRequest
       .builder()
@@ -478,6 +488,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetNoResultsRateResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getNoResultsRate`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getNoResultsRate`.")
 
     val request = HttpRequest
       .builder()
@@ -522,6 +533,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetPurchaseRateResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getPurchaseRate`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getPurchaseRate`.")
 
     val request = HttpRequest
       .builder()
@@ -563,6 +575,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetRevenue] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getRevenue`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getRevenue`.")
 
     val request = HttpRequest
       .builder()
@@ -601,6 +614,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetSearchesCountResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getSearchesCount`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getSearchesCount`.")
 
     val request = HttpRequest
       .builder()
@@ -645,6 +659,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetSearchesNoClicksResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getSearchesNoClicks`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getSearchesNoClicks`.")
 
     val request = HttpRequest
       .builder()
@@ -690,6 +705,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetSearchesNoResultsResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getSearchesNoResults`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getSearchesNoResults`.")
 
     val request = HttpRequest
       .builder()
@@ -719,6 +735,7 @@ class AnalyticsClient(
       ec: ExecutionContext
   ): Future[GetStatusResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getStatus`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getStatus`.")
 
     val request = HttpRequest
       .builder()
@@ -759,6 +776,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetTopCountriesResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getTopCountries`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getTopCountries`.")
 
     val request = HttpRequest
       .builder()
@@ -808,6 +826,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetTopFilterAttributesResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getTopFilterAttributes`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getTopFilterAttributes`.")
 
     val request = HttpRequest
       .builder()
@@ -861,7 +880,9 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetTopFilterForAttributeResponse] = Future {
     requireNotNull(attribute, "Parameter `attribute` is required when calling `getTopFilterForAttribute`.")
+    requireNotEmpty(attribute, "Parameter `attribute` is required when calling `getTopFilterForAttribute`.")
     requireNotNull(index, "Parameter `index` is required when calling `getTopFilterForAttribute`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getTopFilterForAttribute`.")
 
     val request = HttpRequest
       .builder()
@@ -913,6 +934,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetTopFiltersNoResultsResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getTopFiltersNoResults`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getTopFiltersNoResults`.")
 
     val request = HttpRequest
       .builder()
@@ -976,6 +998,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetTopHitsResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getTopHits`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getTopHits`.")
 
     val request = HttpRequest
       .builder()
@@ -1045,6 +1068,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetTopSearchesResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getTopSearches`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getTopSearches`.")
 
     val request = HttpRequest
       .builder()
@@ -1092,6 +1116,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetUsersCountResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getUsersCount`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getUsersCount`.")
 
     val request = HttpRequest
       .builder()

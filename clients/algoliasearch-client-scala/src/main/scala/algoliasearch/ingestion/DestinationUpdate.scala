@@ -18,8 +18,6 @@
   */
 package algoliasearch.ingestion
 
-import algoliasearch.ingestion.DestinationType._
-
 /** API request body for updating a destination.
   *
   * @param name
@@ -28,9 +26,8 @@ import algoliasearch.ingestion.DestinationType._
   *   Universally unique identifier (UUID) of an authentication resource.
   */
 case class DestinationUpdate(
-    `type`: Option[DestinationType] = scala.None,
     name: Option[String] = scala.None,
-    input: Option[DestinationInput] = scala.None,
+    input: Option[DestinationUpdateInput] = scala.None,
     authenticationID: Option[String] = scala.None,
     transformationIDs: Option[Seq[String]] = scala.None
 )

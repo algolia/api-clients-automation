@@ -99,6 +99,7 @@ class MonitoringClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customDelete`.")
 
     val request = HttpRequest
       .builder()
@@ -122,6 +123,7 @@ class MonitoringClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customGet`.")
 
     val request = HttpRequest
       .builder()
@@ -148,6 +150,7 @@ class MonitoringClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customPost`.")
 
     val request = HttpRequest
       .builder()
@@ -175,6 +178,7 @@ class MonitoringClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customPut`.")
 
     val request = HttpRequest
       .builder()
@@ -195,6 +199,7 @@ class MonitoringClient(
       ec: ExecutionContext
   ): Future[IncidentsResponse] = Future {
     requireNotNull(clusters, "Parameter `clusters` is required when calling `getClusterIncidents`.")
+    requireNotEmpty(clusters, "Parameter `clusters` is required when calling `getClusterIncidents`.")
 
     val request = HttpRequest
       .builder()
@@ -213,6 +218,7 @@ class MonitoringClient(
       ec: ExecutionContext
   ): Future[StatusResponse] = Future {
     requireNotNull(clusters, "Parameter `clusters` is required when calling `getClusterStatus`.")
+    requireNotEmpty(clusters, "Parameter `clusters` is required when calling `getClusterStatus`.")
 
     val request = HttpRequest
       .builder()
@@ -249,6 +255,7 @@ class MonitoringClient(
       ec: ExecutionContext
   ): Future[IndexingTimeResponse] = Future {
     requireNotNull(clusters, "Parameter `clusters` is required when calling `getIndexingTime`.")
+    requireNotEmpty(clusters, "Parameter `clusters` is required when calling `getIndexingTime`.")
 
     val request = HttpRequest
       .builder()
@@ -267,6 +274,7 @@ class MonitoringClient(
       ec: ExecutionContext
   ): Future[LatencyResponse] = Future {
     requireNotNull(clusters, "Parameter `clusters` is required when calling `getLatency`.")
+    requireNotEmpty(clusters, "Parameter `clusters` is required when calling `getLatency`.")
 
     val request = HttpRequest
       .builder()
@@ -312,6 +320,7 @@ class MonitoringClient(
       ec: ExecutionContext
   ): Future[Map[String, Map[String, Boolean]]] = Future {
     requireNotNull(clusters, "Parameter `clusters` is required when calling `getReachability`.")
+    requireNotEmpty(clusters, "Parameter `clusters` is required when calling `getReachability`.")
 
     val request = HttpRequest
       .builder()

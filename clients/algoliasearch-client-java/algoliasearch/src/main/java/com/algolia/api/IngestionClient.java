@@ -819,6 +819,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customDelete`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -839,6 +840,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customDelete`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -1022,6 +1024,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customGet`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -1042,6 +1045,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customGet`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -1235,6 +1239,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPost`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -1262,6 +1267,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPost`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -1463,6 +1469,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPut`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -1490,6 +1497,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPut`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -1636,6 +1644,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(authenticationID, "Parameter `authenticationID` is required when calling `deleteAuthentication`.");
+    Parameters.requireNonEmpty(authenticationID, "Parameter `authenticationID` is required when calling `deleteAuthentication`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/authentications/{authenticationID}", authenticationID)
@@ -1658,6 +1667,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(authenticationID, "Parameter `authenticationID` is required when calling `deleteAuthentication`.");
+    Parameters.requireNonEmpty(authenticationID, "Parameter `authenticationID` is required when calling `deleteAuthentication`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/authentications/{authenticationID}", authenticationID)
@@ -1747,6 +1757,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<DeleteResponse> deleteDestinationAsync(@Nonnull String destinationID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(destinationID, "Parameter `destinationID` is required when calling `deleteDestination`.");
+    Parameters.requireNonEmpty(destinationID, "Parameter `destinationID` is required when calling `deleteDestination`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/destinations/{destinationID}", destinationID).setMethod("DELETE").build();
     return executeAsync(request, requestOptions, new TypeReference<DeleteResponse>() {});
@@ -1766,6 +1777,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(destinationID, "Parameter `destinationID` is required when calling `deleteDestination`.");
+    Parameters.requireNonEmpty(destinationID, "Parameter `destinationID` is required when calling `deleteDestination`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/destinations/{destinationID}", destinationID).setMethod("DELETE").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -1850,6 +1862,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<DeleteResponse> deleteSourceAsync(@Nonnull String sourceID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `deleteSource`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `deleteSource`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/sources/{sourceID}", sourceID).setMethod("DELETE").build();
     return executeAsync(request, requestOptions, new TypeReference<DeleteResponse>() {});
@@ -1867,6 +1880,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> deleteSourceWithHTTPInfoAsync(@Nonnull String sourceID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `deleteSource`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `deleteSource`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/sources/{sourceID}", sourceID).setMethod("DELETE").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -1949,6 +1963,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<DeleteResponse> deleteTaskAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `deleteTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `deleteTask`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}", taskID).setMethod("DELETE").build();
 
@@ -1966,6 +1981,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> deleteTaskWithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `deleteTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `deleteTask`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}", taskID).setMethod("DELETE").build();
 
@@ -2057,6 +2073,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<DeleteResponse> deleteTaskV1Async(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `deleteTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `deleteTaskV1`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}", taskID).setMethod("DELETE").build();
 
@@ -2076,6 +2093,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> deleteTaskV1WithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `deleteTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `deleteTaskV1`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}", taskID).setMethod("DELETE").build();
 
@@ -2165,6 +2183,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `deleteTransformation`.");
+    Parameters.requireNonEmpty(transformationID, "Parameter `transformationID` is required when calling `deleteTransformation`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/transformations/{transformationID}", transformationID)
@@ -2186,6 +2205,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `deleteTransformation`.");
+    Parameters.requireNonEmpty(transformationID, "Parameter `transformationID` is required when calling `deleteTransformation`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/transformations/{transformationID}", transformationID)
@@ -2270,6 +2290,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<TaskUpdateResponse> disableTaskAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `disableTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `disableTask`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/disable", taskID).setMethod("PUT").build();
 
@@ -2287,6 +2308,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> disableTaskWithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `disableTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `disableTask`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/disable", taskID).setMethod("PUT").build();
 
@@ -2379,6 +2401,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<TaskUpdateResponse> disableTaskV1Async(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `disableTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `disableTaskV1`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/disable", taskID).setMethod("PUT").build();
 
@@ -2398,6 +2421,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> disableTaskV1WithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `disableTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `disableTaskV1`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/disable", taskID).setMethod("PUT").build();
 
@@ -2483,6 +2507,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<TaskUpdateResponse> enableTaskAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `enableTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `enableTask`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/enable", taskID).setMethod("PUT").build();
 
@@ -2500,6 +2525,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> enableTaskWithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `enableTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `enableTask`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/enable", taskID).setMethod("PUT").build();
 
@@ -2591,6 +2617,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<TaskUpdateResponse> enableTaskV1Async(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `enableTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `enableTaskV1`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/enable", taskID).setMethod("PUT").build();
 
@@ -2610,6 +2637,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> enableTaskV1WithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `enableTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `enableTaskV1`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/enable", taskID).setMethod("PUT").build();
 
@@ -2697,6 +2725,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Authentication> getAuthenticationAsync(@Nonnull String authenticationID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(authenticationID, "Parameter `authenticationID` is required when calling `getAuthentication`.");
+    Parameters.requireNonEmpty(authenticationID, "Parameter `authenticationID` is required when calling `getAuthentication`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/authentications/{authenticationID}", authenticationID).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Authentication>() {});
@@ -2715,6 +2744,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(authenticationID, "Parameter `authenticationID` is required when calling `getAuthentication`.");
+    Parameters.requireNonEmpty(authenticationID, "Parameter `authenticationID` is required when calling `getAuthentication`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/authentications/{authenticationID}", authenticationID).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -2796,6 +2826,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Destination> getDestinationAsync(@Nonnull String destinationID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(destinationID, "Parameter `destinationID` is required when calling `getDestination`.");
+    Parameters.requireNonEmpty(destinationID, "Parameter `destinationID` is required when calling `getDestination`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/destinations/{destinationID}", destinationID).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Destination>() {});
@@ -2812,6 +2843,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> getDestinationWithHTTPInfoAsync(@Nonnull String destinationID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(destinationID, "Parameter `destinationID` is required when calling `getDestination`.");
+    Parameters.requireNonEmpty(destinationID, "Parameter `destinationID` is required when calling `getDestination`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/destinations/{destinationID}", destinationID).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -2899,8 +2931,10 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Event> getEventAsync(@Nonnull String runID, @Nonnull String eventID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(runID, "Parameter `runID` is required when calling `getEvent`.");
+    Parameters.requireNonEmpty(runID, "Parameter `runID` is required when calling `getEvent`.");
 
     Parameters.requireNonNull(eventID, "Parameter `eventID` is required when calling `getEvent`.");
+    Parameters.requireNonEmpty(eventID, "Parameter `eventID` is required when calling `getEvent`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/runs/{runID}/events/{eventID}", runID, eventID).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Event>() {});
@@ -2921,8 +2955,10 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(runID, "Parameter `runID` is required when calling `getEvent`.");
+    Parameters.requireNonEmpty(runID, "Parameter `runID` is required when calling `getEvent`.");
 
     Parameters.requireNonNull(eventID, "Parameter `eventID` is required when calling `getEvent`.");
+    Parameters.requireNonEmpty(eventID, "Parameter `eventID` is required when calling `getEvent`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/runs/{runID}/events/{eventID}", runID, eventID).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -3005,6 +3041,7 @@ public class IngestionClient extends ApiClient {
    */
   public CompletableFuture<Run> getRunAsync(@Nonnull String runID, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(runID, "Parameter `runID` is required when calling `getRun`.");
+    Parameters.requireNonEmpty(runID, "Parameter `runID` is required when calling `getRun`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/runs/{runID}", runID).setMethod("GET").build();
 
@@ -3022,6 +3059,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> getRunWithHTTPInfoAsync(@Nonnull String runID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(runID, "Parameter `runID` is required when calling `getRun`.");
+    Parameters.requireNonEmpty(runID, "Parameter `runID` is required when calling `getRun`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/runs/{runID}", runID).setMethod("GET").build();
 
@@ -3103,6 +3141,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Source> getSourceAsync(@Nonnull String sourceID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `getSource`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `getSource`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/sources/{sourceID}", sourceID).setMethod("GET").build();
 
@@ -3120,6 +3159,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> getSourceWithHTTPInfoAsync(@Nonnull String sourceID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `getSource`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `getSource`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/sources/{sourceID}", sourceID).setMethod("GET").build();
 
@@ -3201,6 +3241,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Task> getTaskAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `getTask`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}", taskID).setMethod("GET").build();
 
@@ -3218,6 +3259,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> getTaskWithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `getTask`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}", taskID).setMethod("GET").build();
 
@@ -3309,6 +3351,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<TaskV1> getTaskV1Async(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `getTaskV1`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}", taskID).setMethod("GET").build();
 
@@ -3328,6 +3371,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> getTaskV1WithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `getTaskV1`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}", taskID).setMethod("GET").build();
 
@@ -3415,6 +3459,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Transformation> getTransformationAsync(@Nonnull String transformationID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `getTransformation`.");
+    Parameters.requireNonEmpty(transformationID, "Parameter `transformationID` is required when calling `getTransformation`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/transformations/{transformationID}", transformationID).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Transformation>() {});
@@ -3433,6 +3478,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `getTransformation`.");
+    Parameters.requireNonEmpty(transformationID, "Parameter `transformationID` is required when calling `getTransformation`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/transformations/{transformationID}", transformationID).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -4273,6 +4319,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(runID, "Parameter `runID` is required when calling `listEvents`.");
+    Parameters.requireNonEmpty(runID, "Parameter `runID` is required when calling `listEvents`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/runs/{runID}/events", runID)
@@ -4320,6 +4367,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(runID, "Parameter `runID` is required when calling `listEvents`.");
+    Parameters.requireNonEmpty(runID, "Parameter `runID` is required when calling `listEvents`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/runs/{runID}/events", runID)
@@ -6440,6 +6488,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `push`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `push`.");
 
     Parameters.requireNonNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `push`.");
 
@@ -6490,6 +6539,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `push`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `push`.");
 
     Parameters.requireNonNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `push`.");
 
@@ -6837,6 +6887,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `pushTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `pushTask`.");
 
     Parameters.requireNonNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `pushTask`.");
 
@@ -6880,6 +6931,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `pushTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `pushTask`.");
 
     Parameters.requireNonNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `pushTask`.");
 
@@ -7089,6 +7141,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `replaceTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `replaceTask`.");
 
     Parameters.requireNonNull(taskReplace, "Parameter `taskReplace` is required when calling `replaceTask`.");
 
@@ -7112,6 +7165,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `replaceTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `replaceTask`.");
 
     Parameters.requireNonNull(taskReplace, "Parameter `taskReplace` is required when calling `replaceTask`.");
 
@@ -7266,6 +7320,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `runSource`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `runSource`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/sources/{sourceID}/run", sourceID)
@@ -7291,6 +7346,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `runSource`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `runSource`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/sources/{sourceID}/run", sourceID)
@@ -7486,6 +7542,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `runTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `runTask`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/run", taskID).setMethod("POST").setBody(runTaskPayload).build();
     return executeAsync(request, requestOptions, new TypeReference<RunResponse>() {});
@@ -7507,6 +7564,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `runTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `runTask`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/run", taskID).setMethod("POST").setBody(runTaskPayload).build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -7715,6 +7773,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `runTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `runTaskV1`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/run", taskID).setMethod("POST").setBody(runTaskPayload).build();
     return executeAsync(request, requestOptions, new TypeReference<RunResponse>() {});
@@ -7738,6 +7797,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `runTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `runTaskV1`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/run", taskID).setMethod("POST").setBody(runTaskPayload).build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -8534,6 +8594,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/sources/{sourceID}/discover", sourceID).setMethod("POST").build();
     return executeAsync(
@@ -8561,6 +8622,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/sources/{sourceID}/discover", sourceID).setMethod("POST").build();
     return executeAsync(
@@ -8775,6 +8837,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`.");
+    Parameters.requireNonEmpty(transformationID, "Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`.");
 
     Parameters.requireNonNull(transformationTry, "Parameter `transformationTry` is required when calling `tryTransformationBeforeUpdate`.");
 
@@ -8801,6 +8864,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`.");
+    Parameters.requireNonEmpty(transformationID, "Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`.");
 
     Parameters.requireNonNull(transformationTry, "Parameter `transformationTry` is required when calling `tryTransformationBeforeUpdate`.");
 
@@ -8915,6 +8979,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(authenticationID, "Parameter `authenticationID` is required when calling `updateAuthentication`.");
+    Parameters.requireNonEmpty(authenticationID, "Parameter `authenticationID` is required when calling `updateAuthentication`.");
 
     Parameters.requireNonNull(authenticationUpdate, "Parameter `authenticationUpdate` is required when calling `updateAuthentication`.");
 
@@ -8941,6 +9006,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(authenticationID, "Parameter `authenticationID` is required when calling `updateAuthentication`.");
+    Parameters.requireNonEmpty(authenticationID, "Parameter `authenticationID` is required when calling `updateAuthentication`.");
 
     Parameters.requireNonNull(authenticationUpdate, "Parameter `authenticationUpdate` is required when calling `updateAuthentication`.");
 
@@ -9053,6 +9119,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(destinationID, "Parameter `destinationID` is required when calling `updateDestination`.");
+    Parameters.requireNonEmpty(destinationID, "Parameter `destinationID` is required when calling `updateDestination`.");
 
     Parameters.requireNonNull(destinationUpdate, "Parameter `destinationUpdate` is required when calling `updateDestination`.");
 
@@ -9079,6 +9146,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(destinationID, "Parameter `destinationID` is required when calling `updateDestination`.");
+    Parameters.requireNonEmpty(destinationID, "Parameter `destinationID` is required when calling `updateDestination`.");
 
     Parameters.requireNonNull(destinationUpdate, "Parameter `destinationUpdate` is required when calling `updateDestination`.");
 
@@ -9189,6 +9257,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `updateSource`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `updateSource`.");
 
     Parameters.requireNonNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `updateSource`.");
 
@@ -9211,6 +9280,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `updateSource`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `updateSource`.");
 
     Parameters.requireNonNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `updateSource`.");
 
@@ -9307,6 +9377,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `updateTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `updateTask`.");
 
     Parameters.requireNonNull(taskUpdate, "Parameter `taskUpdate` is required when calling `updateTask`.");
 
@@ -9329,6 +9400,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `updateTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `updateTask`.");
 
     Parameters.requireNonNull(taskUpdate, "Parameter `taskUpdate` is required when calling `updateTask`.");
 
@@ -9438,6 +9510,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `updateTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `updateTaskV1`.");
 
     Parameters.requireNonNull(taskUpdate, "Parameter `taskUpdate` is required when calling `updateTaskV1`.");
 
@@ -9462,6 +9535,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `updateTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `updateTaskV1`.");
 
     Parameters.requireNonNull(taskUpdate, "Parameter `taskUpdate` is required when calling `updateTaskV1`.");
 
@@ -9572,6 +9646,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `updateTransformation`.");
+    Parameters.requireNonEmpty(transformationID, "Parameter `transformationID` is required when calling `updateTransformation`.");
 
     Parameters.requireNonNull(transformationCreate, "Parameter `transformationCreate` is required when calling `updateTransformation`.");
 
@@ -9598,6 +9673,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `updateTransformation`.");
+    Parameters.requireNonEmpty(transformationID, "Parameter `transformationID` is required when calling `updateTransformation`.");
 
     Parameters.requireNonNull(transformationCreate, "Parameter `transformationCreate` is required when calling `updateTransformation`.");
 
@@ -9921,6 +9997,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.");
 
     Parameters.requireNonNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `validateSourceBeforeUpdate`.");
 
@@ -9956,6 +10033,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.");
 
     Parameters.requireNonNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `validateSourceBeforeUpdate`.");
 

@@ -59,10 +59,10 @@ final class SearchClient implements ApiClient {
     Object? body,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      path.isNotEmpty,
-      'Parameter `path` is required when calling `customPost`.',
-    );
+    if (path.isEmpty) {
+      throw ArgumentError(
+          'Parameter `path` is required when calling `customPost`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/{path}'.replaceAll('{' r'path' '}', path),
