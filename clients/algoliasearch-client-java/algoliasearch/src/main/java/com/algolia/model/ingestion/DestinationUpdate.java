@@ -12,31 +12,17 @@ import java.util.Objects;
 /** API request body for updating a destination. */
 public class DestinationUpdate {
 
-  @JsonProperty("type")
-  private DestinationType type;
-
   @JsonProperty("name")
   private String name;
 
   @JsonProperty("input")
-  private DestinationInput input;
+  private DestinationUpdateInput input;
 
   @JsonProperty("authenticationID")
   private String authenticationID;
 
   @JsonProperty("transformationIDs")
   private List<String> transformationIDs;
-
-  public DestinationUpdate setType(DestinationType type) {
-    this.type = type;
-    return this;
-  }
-
-  /** Get type */
-  @javax.annotation.Nullable
-  public DestinationType getType() {
-    return type;
-  }
 
   public DestinationUpdate setName(String name) {
     this.name = name;
@@ -49,14 +35,14 @@ public class DestinationUpdate {
     return name;
   }
 
-  public DestinationUpdate setInput(DestinationInput input) {
+  public DestinationUpdate setInput(DestinationUpdateInput input) {
     this.input = input;
     return this;
   }
 
   /** Get input */
   @javax.annotation.Nullable
-  public DestinationInput getInput() {
+  public DestinationUpdateInput getInput() {
     return input;
   }
 
@@ -100,7 +86,6 @@ public class DestinationUpdate {
     }
     DestinationUpdate destinationUpdate = (DestinationUpdate) o;
     return (
-      Objects.equals(this.type, destinationUpdate.type) &&
       Objects.equals(this.name, destinationUpdate.name) &&
       Objects.equals(this.input, destinationUpdate.input) &&
       Objects.equals(this.authenticationID, destinationUpdate.authenticationID) &&
@@ -110,14 +95,13 @@ public class DestinationUpdate {
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, name, input, authenticationID, transformationIDs);
+    return Objects.hash(name, input, authenticationID, transformationIDs);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class DestinationUpdate {\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    input: ").append(toIndentedString(input)).append("\n");
     sb.append("    authenticationID: ").append(toIndentedString(authenticationID)).append("\n");

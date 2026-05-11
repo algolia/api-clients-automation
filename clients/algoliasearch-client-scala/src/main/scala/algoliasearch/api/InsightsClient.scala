@@ -98,6 +98,7 @@ class InsightsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customDelete`.")
 
     val request = HttpRequest
       .builder()
@@ -121,6 +122,7 @@ class InsightsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customGet`.")
 
     val request = HttpRequest
       .builder()
@@ -147,6 +149,7 @@ class InsightsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customPost`.")
 
     val request = HttpRequest
       .builder()
@@ -174,6 +177,7 @@ class InsightsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customPut`.")
 
     val request = HttpRequest
       .builder()
@@ -199,6 +203,7 @@ class InsightsClient(
       ec: ExecutionContext
   ): Future[Unit] = Future {
     requireNotNull(userToken, "Parameter `userToken` is required when calling `deleteUserToken`.")
+    requireNotEmpty(userToken, "Parameter `userToken` is required when calling `deleteUserToken`.")
 
     val request = HttpRequest
       .builder()

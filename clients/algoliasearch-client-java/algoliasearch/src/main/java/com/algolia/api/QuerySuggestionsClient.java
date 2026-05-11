@@ -285,6 +285,7 @@ public class QuerySuggestionsClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customDelete`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -305,6 +306,7 @@ public class QuerySuggestionsClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customDelete`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -488,6 +490,7 @@ public class QuerySuggestionsClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customGet`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -508,6 +511,7 @@ public class QuerySuggestionsClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customGet`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -701,6 +705,7 @@ public class QuerySuggestionsClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPost`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -728,6 +733,7 @@ public class QuerySuggestionsClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPost`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -929,6 +935,7 @@ public class QuerySuggestionsClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPut`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -956,6 +963,7 @@ public class QuerySuggestionsClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPut`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -1104,6 +1112,7 @@ public class QuerySuggestionsClient extends ApiClient {
   public CompletableFuture<BaseResponse> deleteConfigAsync(@Nonnull String indexName, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `deleteConfig`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `deleteConfig`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/configs/{indexName}", indexName).setMethod("DELETE").build();
     return executeAsync(request, requestOptions, new TypeReference<BaseResponse>() {});
@@ -1122,6 +1131,7 @@ public class QuerySuggestionsClient extends ApiClient {
   public CompletableFuture<Response> deleteConfigWithHTTPInfoAsync(@Nonnull String indexName, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `deleteConfig`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `deleteConfig`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/configs/{indexName}", indexName).setMethod("DELETE").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -1293,6 +1303,7 @@ public class QuerySuggestionsClient extends ApiClient {
   public CompletableFuture<ConfigurationResponse> getConfigAsync(@Nonnull String indexName, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getConfig`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getConfig`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/configs/{indexName}", indexName).setMethod("GET").build();
 
@@ -1310,6 +1321,7 @@ public class QuerySuggestionsClient extends ApiClient {
   public CompletableFuture<Response> getConfigWithHTTPInfoAsync(@Nonnull String indexName, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getConfig`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getConfig`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/configs/{indexName}", indexName).setMethod("GET").build();
 
@@ -1392,6 +1404,7 @@ public class QuerySuggestionsClient extends ApiClient {
   public CompletableFuture<ConfigStatus> getConfigStatusAsync(@Nonnull String indexName, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getConfigStatus`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getConfigStatus`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/configs/{indexName}/status", indexName).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<ConfigStatus>() {});
@@ -1408,6 +1421,7 @@ public class QuerySuggestionsClient extends ApiClient {
   public CompletableFuture<Response> getConfigStatusWithHTTPInfoAsync(@Nonnull String indexName, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getConfigStatus`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getConfigStatus`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/configs/{indexName}/status", indexName).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -1489,6 +1503,7 @@ public class QuerySuggestionsClient extends ApiClient {
   public CompletableFuture<LogFile> getLogFileAsync(@Nonnull String indexName, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getLogFile`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getLogFile`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/logs/{indexName}", indexName).setMethod("GET").build();
 
@@ -1506,6 +1521,7 @@ public class QuerySuggestionsClient extends ApiClient {
   public CompletableFuture<Response> getLogFileWithHTTPInfoAsync(@Nonnull String indexName, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getLogFile`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getLogFile`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/logs/{indexName}", indexName).setMethod("GET").build();
 
@@ -1600,6 +1616,7 @@ public class QuerySuggestionsClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `updateConfig`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `updateConfig`.");
 
     Parameters.requireNonNull(configuration, "Parameter `configuration` is required when calling `updateConfig`.");
 
@@ -1626,6 +1643,7 @@ public class QuerySuggestionsClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `updateConfig`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `updateConfig`.");
 
     Parameters.requireNonNull(configuration, "Parameter `configuration` is required when calling `updateConfig`.");
 

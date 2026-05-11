@@ -144,25 +144,17 @@ final class SearchClient implements ApiClient {
     required Object body,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `addOrUpdateObject`.',
-    );
-    assert(
-      objectID.isNotEmpty,
-      'Parameter `objectID` is required when calling `addOrUpdateObject`.',
-    );
-    if (body is Map) {
-      assert(
-        body.isNotEmpty,
-        'Parameter `body` is required when calling `addOrUpdateObject`.',
-      );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `addOrUpdateObject`.');
     }
-    if (body is Map) {
-      assert(
-        body.isNotEmpty,
-        'Parameter `body ` is required when calling `addOrUpdateObject`.',
-      );
+    if (objectID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `objectID` is required when calling `addOrUpdateObject`.');
+    }
+    if (body is Map && body.isEmpty) {
+      throw ArgumentError(
+          'Parameter `body` is required when calling `addOrUpdateObject`.');
     }
     final request = ApiRequest(
       method: RequestMethod.put,
@@ -228,10 +220,10 @@ final class SearchClient implements ApiClient {
     required AssignUserIdParams assignUserIdParams,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      xAlgoliaUserID.isNotEmpty,
-      'Parameter `xAlgoliaUserID` is required when calling `assignUserId`.',
-    );
+    if (xAlgoliaUserID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `xAlgoliaUserID` is required when calling `assignUserId`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/clusters/mapping',
@@ -265,10 +257,10 @@ final class SearchClient implements ApiClient {
     required BatchWriteParams batchWriteParams,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `batch`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `batch`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/indexes/{indexName}/batch'.replaceAll(
@@ -301,10 +293,10 @@ final class SearchClient implements ApiClient {
     required BatchAssignUserIdsParams batchAssignUserIdsParams,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      xAlgoliaUserID.isNotEmpty,
-      'Parameter `xAlgoliaUserID` is required when calling `batchAssignUserIds`.',
-    );
+    if (xAlgoliaUserID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `xAlgoliaUserID` is required when calling `batchAssignUserIds`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/clusters/mapping/batch',
@@ -370,10 +362,10 @@ final class SearchClient implements ApiClient {
     dynamic browseParams,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `browse`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `browse`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/indexes/{indexName}/browse'.replaceAll(
@@ -404,10 +396,10 @@ final class SearchClient implements ApiClient {
     required String indexName,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `clearObjects`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `clearObjects`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/indexes/{indexName}/clear'.replaceAll(
@@ -438,10 +430,10 @@ final class SearchClient implements ApiClient {
     bool? forwardToReplicas,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `clearRules`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `clearRules`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/indexes/{indexName}/rules/clear'.replaceAll(
@@ -475,10 +467,10 @@ final class SearchClient implements ApiClient {
     bool? forwardToReplicas,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `clearSynonyms`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `clearSynonyms`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/indexes/{indexName}/synonyms/clear'.replaceAll(
@@ -509,10 +501,10 @@ final class SearchClient implements ApiClient {
     Map<String, Object>? parameters,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      path.isNotEmpty,
-      'Parameter `path` is required when calling `customDelete`.',
-    );
+    if (path.isEmpty) {
+      throw ArgumentError(
+          'Parameter `path` is required when calling `customDelete`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.delete,
       path: r'/{path}'.replaceAll('{' r'path' '}', path),
@@ -542,10 +534,10 @@ final class SearchClient implements ApiClient {
     Map<String, Object>? parameters,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      path.isNotEmpty,
-      'Parameter `path` is required when calling `customGet`.',
-    );
+    if (path.isEmpty) {
+      throw ArgumentError(
+          'Parameter `path` is required when calling `customGet`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.get,
       path: r'/{path}'.replaceAll('{' r'path' '}', path),
@@ -577,10 +569,10 @@ final class SearchClient implements ApiClient {
     Object? body,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      path.isNotEmpty,
-      'Parameter `path` is required when calling `customPost`.',
-    );
+    if (path.isEmpty) {
+      throw ArgumentError(
+          'Parameter `path` is required when calling `customPost`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/{path}'.replaceAll('{' r'path' '}', path),
@@ -613,10 +605,10 @@ final class SearchClient implements ApiClient {
     Object? body,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      path.isNotEmpty,
-      'Parameter `path` is required when calling `customPut`.',
-    );
+    if (path.isEmpty) {
+      throw ArgumentError(
+          'Parameter `path` is required when calling `customPut`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.put,
       path: r'/{path}'.replaceAll('{' r'path' '}', path),
@@ -648,10 +640,10 @@ final class SearchClient implements ApiClient {
     required String key,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      key.isNotEmpty,
-      'Parameter `key` is required when calling `deleteApiKey`.',
-    );
+    if (key.isEmpty) {
+      throw ArgumentError(
+          'Parameter `key` is required when calling `deleteApiKey`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.delete,
       path: r'/1/keys/{key}'
@@ -682,10 +674,10 @@ final class SearchClient implements ApiClient {
     required DeleteByParams deleteByParams,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `deleteBy`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `deleteBy`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/indexes/{indexName}/deleteByQuery'.replaceAll(
@@ -715,10 +707,10 @@ final class SearchClient implements ApiClient {
     required String indexName,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `deleteIndex`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `deleteIndex`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.delete,
       path: r'/1/indexes/{indexName}'.replaceAll(
@@ -749,14 +741,14 @@ final class SearchClient implements ApiClient {
     required String objectID,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `deleteObject`.',
-    );
-    assert(
-      objectID.isNotEmpty,
-      'Parameter `objectID` is required when calling `deleteObject`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `deleteObject`.');
+    }
+    if (objectID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `objectID` is required when calling `deleteObject`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.delete,
       path: r'/1/indexes/{indexName}/{objectID}'
@@ -792,14 +784,14 @@ final class SearchClient implements ApiClient {
     bool? forwardToReplicas,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `deleteRule`.',
-    );
-    assert(
-      objectID.isNotEmpty,
-      'Parameter `objectID` is required when calling `deleteRule`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `deleteRule`.');
+    }
+    if (objectID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `objectID` is required when calling `deleteRule`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.delete,
       path: r'/1/indexes/{indexName}/rules/{objectID}'
@@ -834,10 +826,10 @@ final class SearchClient implements ApiClient {
     required String source,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      source.isNotEmpty,
-      'Parameter `source` is required when calling `deleteSource`.',
-    );
+    if (source.isEmpty) {
+      throw ArgumentError(
+          'Parameter `source` is required when calling `deleteSource`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.delete,
       path: r'/1/security/sources/{source}'.replaceAll(
@@ -870,14 +862,14 @@ final class SearchClient implements ApiClient {
     bool? forwardToReplicas,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `deleteSynonym`.',
-    );
-    assert(
-      objectID.isNotEmpty,
-      'Parameter `objectID` is required when calling `deleteSynonym`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `deleteSynonym`.');
+    }
+    if (objectID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `objectID` is required when calling `deleteSynonym`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.delete,
       path: r'/1/indexes/{indexName}/synonyms/{objectID}'
@@ -912,10 +904,10 @@ final class SearchClient implements ApiClient {
     required String key,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      key.isNotEmpty,
-      'Parameter `key` is required when calling `getApiKey`.',
-    );
+    if (key.isEmpty) {
+      throw ArgumentError(
+          'Parameter `key` is required when calling `getApiKey`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.get,
       path: r'/1/keys/{key}'
@@ -1066,14 +1058,14 @@ final class SearchClient implements ApiClient {
     List<String>? attributesToRetrieve,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `getObject`.',
-    );
-    assert(
-      objectID.isNotEmpty,
-      'Parameter `objectID` is required when calling `getObject`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `getObject`.');
+    }
+    if (objectID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `objectID` is required when calling `getObject`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.get,
       path: r'/1/indexes/{indexName}/{objectID}'
@@ -1140,14 +1132,14 @@ final class SearchClient implements ApiClient {
     required String objectID,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `getRule`.',
-    );
-    assert(
-      objectID.isNotEmpty,
-      'Parameter `objectID` is required when calling `getRule`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `getRule`.');
+    }
+    if (objectID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `objectID` is required when calling `getRule`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.get,
       path: r'/1/indexes/{indexName}/rules/{objectID}'
@@ -1181,10 +1173,10 @@ final class SearchClient implements ApiClient {
     int? getVersion,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `getSettings`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `getSettings`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.get,
       path: r'/1/indexes/{indexName}/settings'.replaceAll(
@@ -1243,14 +1235,14 @@ final class SearchClient implements ApiClient {
     required String objectID,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `getSynonym`.',
-    );
-    assert(
-      objectID.isNotEmpty,
-      'Parameter `objectID` is required when calling `getSynonym`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `getSynonym`.');
+    }
+    if (objectID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `objectID` is required when calling `getSynonym`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.get,
       path: r'/1/indexes/{indexName}/synonyms/{objectID}'
@@ -1284,10 +1276,10 @@ final class SearchClient implements ApiClient {
     required int taskID,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `getTask`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `getTask`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.get,
       path: r'/1/indexes/{indexName}/task/{taskID}'
@@ -1346,10 +1338,10 @@ final class SearchClient implements ApiClient {
     required String userID,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      userID.isNotEmpty,
-      'Parameter `userID` is required when calling `getUserId`.',
-    );
+    if (userID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `userID` is required when calling `getUserId`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.get,
       path: r'/1/clusters/mapping/{userID}'.replaceAll(
@@ -1557,10 +1549,10 @@ final class SearchClient implements ApiClient {
     required OperationIndexParams operationIndexParams,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `operationIndex`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `operationIndex`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/indexes/{indexName}/operation'.replaceAll(
@@ -1596,25 +1588,17 @@ final class SearchClient implements ApiClient {
     bool? createIfNotExists,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `partialUpdateObject`.',
-    );
-    assert(
-      objectID.isNotEmpty,
-      'Parameter `objectID` is required when calling `partialUpdateObject`.',
-    );
-    if (attributesToUpdate is Map) {
-      assert(
-        attributesToUpdate.isNotEmpty,
-        'Parameter `attributesToUpdate` is required when calling `partialUpdateObject`.',
-      );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `partialUpdateObject`.');
     }
-    if (attributesToUpdate is Map) {
-      assert(
-        attributesToUpdate.isNotEmpty,
-        'Parameter `attributesToUpdate ` is required when calling `partialUpdateObject`.',
-      );
+    if (objectID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `objectID` is required when calling `partialUpdateObject`.');
+    }
+    if (attributesToUpdate is Map && attributesToUpdate.isEmpty) {
+      throw ArgumentError(
+          'Parameter `attributesToUpdate` is required when calling `partialUpdateObject`.');
     }
     final request = ApiRequest(
       method: RequestMethod.post,
@@ -1653,10 +1637,10 @@ final class SearchClient implements ApiClient {
     required String userID,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      userID.isNotEmpty,
-      'Parameter `userID` is required when calling `removeUserId`.',
-    );
+    if (userID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `userID` is required when calling `removeUserId`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.delete,
       path: r'/1/clusters/mapping/{userID}'.replaceAll(
@@ -1713,10 +1697,10 @@ final class SearchClient implements ApiClient {
     required String key,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      key.isNotEmpty,
-      'Parameter `key` is required when calling `restoreApiKey`.',
-    );
+    if (key.isEmpty) {
+      throw ArgumentError(
+          'Parameter `key` is required when calling `restoreApiKey`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/keys/{key}/restore'
@@ -1747,21 +1731,13 @@ final class SearchClient implements ApiClient {
     required Object body,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `saveObject`.',
-    );
-    if (body is Map) {
-      assert(
-        body.isNotEmpty,
-        'Parameter `body` is required when calling `saveObject`.',
-      );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `saveObject`.');
     }
-    if (body is Map) {
-      assert(
-        body.isNotEmpty,
-        'Parameter `body ` is required when calling `saveObject`.',
-      );
+    if (body is Map && body.isEmpty) {
+      throw ArgumentError(
+          'Parameter `body` is required when calling `saveObject`.');
     }
     final request = ApiRequest(
       method: RequestMethod.post,
@@ -1798,14 +1774,14 @@ final class SearchClient implements ApiClient {
     bool? forwardToReplicas,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `saveRule`.',
-    );
-    assert(
-      objectID.isNotEmpty,
-      'Parameter `objectID` is required when calling `saveRule`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `saveRule`.');
+    }
+    if (objectID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `objectID` is required when calling `saveRule`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.put,
       path: r'/1/indexes/{indexName}/rules/{objectID}'
@@ -1847,10 +1823,10 @@ final class SearchClient implements ApiClient {
     bool? clearExistingRules,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `saveRules`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `saveRules`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/indexes/{indexName}/rules/batch'.replaceAll(
@@ -1891,14 +1867,14 @@ final class SearchClient implements ApiClient {
     bool? forwardToReplicas,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `saveSynonym`.',
-    );
-    assert(
-      objectID.isNotEmpty,
-      'Parameter `objectID` is required when calling `saveSynonym`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `saveSynonym`.');
+    }
+    if (objectID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `objectID` is required when calling `saveSynonym`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.put,
       path: r'/1/indexes/{indexName}/synonyms/{objectID}'
@@ -1940,10 +1916,10 @@ final class SearchClient implements ApiClient {
     bool? replaceExistingSynonyms,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `saveSynonyms`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `saveSynonyms`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/indexes/{indexName}/synonyms/batch'.replaceAll(
@@ -2045,14 +2021,14 @@ final class SearchClient implements ApiClient {
     SearchForFacetValuesRequest? searchForFacetValuesRequest,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `searchForFacetValues`.',
-    );
-    assert(
-      facetName.isNotEmpty,
-      'Parameter `facetName` is required when calling `searchForFacetValues`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `searchForFacetValues`.');
+    }
+    if (facetName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `facetName` is required when calling `searchForFacetValues`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/indexes/{indexName}/facets/{facetName}/query'
@@ -2089,10 +2065,10 @@ final class SearchClient implements ApiClient {
     SearchRulesParams? searchRulesParams,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `searchRules`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `searchRules`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/indexes/{indexName}/rules/search'.replaceAll(
@@ -2125,10 +2101,10 @@ final class SearchClient implements ApiClient {
     dynamic searchParams,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `searchSingleIndex`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `searchSingleIndex`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/indexes/{indexName}/query'.replaceAll(
@@ -2161,10 +2137,10 @@ final class SearchClient implements ApiClient {
     SearchSynonymsParams? searchSynonymsParams,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `searchSynonyms`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `searchSynonyms`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/indexes/{indexName}/synonyms/search'.replaceAll(
@@ -2257,10 +2233,10 @@ final class SearchClient implements ApiClient {
     bool? forwardToReplicas,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `setSettings`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `setSettings`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.put,
       path: r'/1/indexes/{indexName}/settings'.replaceAll(
@@ -2295,10 +2271,10 @@ final class SearchClient implements ApiClient {
     required ApiKey apiKey,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      key.isNotEmpty,
-      'Parameter `key` is required when calling `updateApiKey`.',
-    );
+    if (key.isEmpty) {
+      throw ArgumentError(
+          'Parameter `key` is required when calling `updateApiKey`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.put,
       path: r'/1/keys/{key}'

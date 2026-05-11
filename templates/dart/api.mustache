@@ -156,11 +156,14 @@ final class {{classname}} implements ApiClient {
   }) async {
     {{#requiredParams}}
     {{#isString}}
-    assert({{paramName}}.isNotEmpty, 'Parameter `{{paramName}}` is required when calling `{{operationId}}`.',);
+    if ({{paramName}}.isEmpty) {
+      throw ArgumentError('Parameter `{{paramName}}` is required when calling `{{operationId}}`.');
+    }
     {{/isString}}
     {{#isFreeFormObject}}
-    if ({{paramName}} is Map) { assert({{paramName}}.isNotEmpty, 'Parameter `{{paramName}}` is required when calling `{{operationId}}`.',); }
-    if ({{paramName}} is Map) { assert({{paramName}} .isNotEmpty, 'Parameter `{{paramName}} ` is required when calling `{{operationId}}`.', ); }
+    if ({{paramName}} is Map && {{paramName}}.isEmpty) {
+      throw ArgumentError('Parameter `{{paramName}}` is required when calling `{{operationId}}`.');
+    }
     {{/isFreeFormObject}}
     {{/requiredParams}}
     final request = ApiRequest(
