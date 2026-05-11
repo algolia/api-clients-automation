@@ -124,8 +124,11 @@ class {{configClassname}} extends {{#hasRegionalHost}}ConfigWithRegion{{/hasRegi
     /**
      * Sets the region used by the transformation pipeline (via the `*WithTransformation` methods).
      *
-     * @deprecated Use {@see SearchConfig::setTransformationOptions()} for richer configuration
-     *             of the ingestion transporter (custom hosts, timeouts, headers, compression).
+     * @deprecated The old setter forwarded the parent `SearchConfig` (hosts, timeouts, headers,
+     *             compression) to the ingestion transporter, letting search settings bleed into
+     *             ingestion calls. Use {@see SearchConfig::setTransformationOptions()} instead — it
+     *             defaults to the Ingestion API defaults (25s timeouts, region-derived hosts, no
+     *             compression) and only overrides fields explicitly set on `TransformationOptions`.
      * @see https://www.algolia.com/doc/libraries/sdk/methods/ingestion/
      *
      * @param string $region the Algolia region for the Ingestion API (`"us"` or `"eu"`)
