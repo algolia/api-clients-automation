@@ -9,6 +9,7 @@ method:
       - php
       - python
       - ruby
+      - scala
     tags:
       - Records
     x-acl:

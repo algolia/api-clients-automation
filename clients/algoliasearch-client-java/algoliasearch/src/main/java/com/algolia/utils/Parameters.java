@@ -13,4 +13,10 @@ public class Parameters {
       throw new AlgoliaRuntimeException(error);
     }
   }
+
+  public static void requireNonEmpty(String param, String error) {
+    if (param == null || param.trim().isEmpty()) {
+      throw new AlgoliaRuntimeException(error);
+    }
+  }
 }

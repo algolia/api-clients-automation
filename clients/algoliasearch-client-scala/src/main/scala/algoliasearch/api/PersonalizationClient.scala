@@ -101,6 +101,7 @@ class PersonalizationClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customDelete`.")
 
     val request = HttpRequest
       .builder()
@@ -124,6 +125,7 @@ class PersonalizationClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customGet`.")
 
     val request = HttpRequest
       .builder()
@@ -150,6 +152,7 @@ class PersonalizationClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customPost`.")
 
     val request = HttpRequest
       .builder()
@@ -177,6 +180,7 @@ class PersonalizationClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customPut`.")
 
     val request = HttpRequest
       .builder()
@@ -201,6 +205,7 @@ class PersonalizationClient(
       ec: ExecutionContext
   ): Future[DeleteUserProfileResponse] = Future {
     requireNotNull(userToken, "Parameter `userToken` is required when calling `deleteUserProfile`.")
+    requireNotEmpty(userToken, "Parameter `userToken` is required when calling `deleteUserProfile`.")
 
     val request = HttpRequest
       .builder()
@@ -239,6 +244,7 @@ class PersonalizationClient(
       ec: ExecutionContext
   ): Future[GetUserTokenResponse] = Future {
     requireNotNull(userToken, "Parameter `userToken` is required when calling `getUserTokenProfile`.")
+    requireNotEmpty(userToken, "Parameter `userToken` is required when calling `getUserTokenProfile`.")
 
     val request = HttpRequest
       .builder()

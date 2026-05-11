@@ -4363,7 +4363,6 @@ paths:
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
               --data '
             {
-              "type": "search",
               "name": "lorem",
               "input": {
                 "indexName": "lorem",
@@ -17588,6 +17587,17 @@ components:
             $ref: '#/components/schemas/destinationID'
       required:
         - destinationIDs
+    DestinationUpdateInput:
+      type: object
+      additionalProperties: false
+      properties:
+        attributesToExclude:
+          $ref: '#/components/schemas/AttributesToExclude'
+        indexName:
+          type: string
+          description: Algolia index name (case-sensitive).
+        recordType:
+          $ref: '#/components/schemas/RecordType'
     DestinationUpdate:
       type: object
       additionalProperties: false
@@ -17596,13 +17606,11 @@ components:
         authenticationID:
           $ref: '#/components/schemas/authenticationID'
         input:
-          $ref: '#/components/schemas/DestinationInput'
+          $ref: '#/components/schemas/DestinationUpdateInput'
         name:
           $ref: '#/components/schemas/name'
         transformationIDs:
           $ref: '#/components/schemas/transformationIDs'
-        type:
-          $ref: '#/components/schemas/DestinationType'
     DestinationUpdateResponse:
       type: object
       additionalProperties: false

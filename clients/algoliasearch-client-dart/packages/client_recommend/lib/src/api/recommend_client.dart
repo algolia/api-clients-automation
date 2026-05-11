@@ -66,10 +66,10 @@ final class RecommendClient implements ApiClient {
     List<RecommendRule>? recommendRule,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `batchRecommendRules`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `batchRecommendRules`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/indexes/{indexName}/{model}/recommend/rules/batch'
@@ -100,10 +100,10 @@ final class RecommendClient implements ApiClient {
     Map<String, Object>? parameters,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      path.isNotEmpty,
-      'Parameter `path` is required when calling `customDelete`.',
-    );
+    if (path.isEmpty) {
+      throw ArgumentError(
+          'Parameter `path` is required when calling `customDelete`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.delete,
       path: r'/{path}'.replaceAll('{' r'path' '}', path),
@@ -133,10 +133,10 @@ final class RecommendClient implements ApiClient {
     Map<String, Object>? parameters,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      path.isNotEmpty,
-      'Parameter `path` is required when calling `customGet`.',
-    );
+    if (path.isEmpty) {
+      throw ArgumentError(
+          'Parameter `path` is required when calling `customGet`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.get,
       path: r'/{path}'.replaceAll('{' r'path' '}', path),
@@ -168,10 +168,10 @@ final class RecommendClient implements ApiClient {
     Object? body,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      path.isNotEmpty,
-      'Parameter `path` is required when calling `customPost`.',
-    );
+    if (path.isEmpty) {
+      throw ArgumentError(
+          'Parameter `path` is required when calling `customPost`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/{path}'.replaceAll('{' r'path' '}', path),
@@ -204,10 +204,10 @@ final class RecommendClient implements ApiClient {
     Object? body,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      path.isNotEmpty,
-      'Parameter `path` is required when calling `customPut`.',
-    );
+    if (path.isEmpty) {
+      throw ArgumentError(
+          'Parameter `path` is required when calling `customPut`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.put,
       path: r'/{path}'.replaceAll('{' r'path' '}', path),
@@ -243,14 +243,14 @@ final class RecommendClient implements ApiClient {
     required String objectID,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `deleteRecommendRule`.',
-    );
-    assert(
-      objectID.isNotEmpty,
-      'Parameter `objectID` is required when calling `deleteRecommendRule`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `deleteRecommendRule`.');
+    }
+    if (objectID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `objectID` is required when calling `deleteRecommendRule`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.delete,
       path: r'/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'
@@ -287,14 +287,14 @@ final class RecommendClient implements ApiClient {
     required String objectID,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `getRecommendRule`.',
-    );
-    assert(
-      objectID.isNotEmpty,
-      'Parameter `objectID` is required when calling `getRecommendRule`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `getRecommendRule`.');
+    }
+    if (objectID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `objectID` is required when calling `getRecommendRule`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.get,
       path: r'/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'
@@ -331,10 +331,10 @@ final class RecommendClient implements ApiClient {
     required int taskID,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `getRecommendStatus`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `getRecommendStatus`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.get,
       path: r'/1/indexes/{indexName}/{model}/task/{taskID}'
@@ -400,10 +400,10 @@ final class RecommendClient implements ApiClient {
     SearchRecommendRulesParams? searchRecommendRulesParams,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      indexName.isNotEmpty,
-      'Parameter `indexName` is required when calling `searchRecommendRules`.',
-    );
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `searchRecommendRules`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/indexes/{indexName}/{model}/recommend/rules/search'

@@ -67,10 +67,10 @@ final class CompositionClient implements ApiClient {
     Map<String, Object>? parameters,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      path.isNotEmpty,
-      'Parameter `path` is required when calling `customDelete`.',
-    );
+    if (path.isEmpty) {
+      throw ArgumentError(
+          'Parameter `path` is required when calling `customDelete`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.delete,
       path: r'/{path}'.replaceAll('{' r'path' '}', path),
@@ -100,10 +100,10 @@ final class CompositionClient implements ApiClient {
     Map<String, Object>? parameters,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      path.isNotEmpty,
-      'Parameter `path` is required when calling `customGet`.',
-    );
+    if (path.isEmpty) {
+      throw ArgumentError(
+          'Parameter `path` is required when calling `customGet`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.get,
       path: r'/{path}'.replaceAll('{' r'path' '}', path),
@@ -135,10 +135,10 @@ final class CompositionClient implements ApiClient {
     Object? body,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      path.isNotEmpty,
-      'Parameter `path` is required when calling `customPost`.',
-    );
+    if (path.isEmpty) {
+      throw ArgumentError(
+          'Parameter `path` is required when calling `customPost`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/{path}'.replaceAll('{' r'path' '}', path),
@@ -171,10 +171,10 @@ final class CompositionClient implements ApiClient {
     Object? body,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      path.isNotEmpty,
-      'Parameter `path` is required when calling `customPut`.',
-    );
+    if (path.isEmpty) {
+      throw ArgumentError(
+          'Parameter `path` is required when calling `customPut`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.put,
       path: r'/{path}'.replaceAll('{' r'path' '}', path),
@@ -206,10 +206,10 @@ final class CompositionClient implements ApiClient {
     required String compositionID,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      compositionID.isNotEmpty,
-      'Parameter `compositionID` is required when calling `deleteComposition`.',
-    );
+    if (compositionID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `compositionID` is required when calling `deleteComposition`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.delete,
       path: r'/1/compositions/{compositionID}'.replaceAll(
@@ -241,14 +241,14 @@ final class CompositionClient implements ApiClient {
     required String objectID,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      compositionID.isNotEmpty,
-      'Parameter `compositionID` is required when calling `deleteCompositionRule`.',
-    );
-    assert(
-      objectID.isNotEmpty,
-      'Parameter `objectID` is required when calling `deleteCompositionRule`.',
-    );
+    if (compositionID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `compositionID` is required when calling `deleteCompositionRule`.');
+    }
+    if (objectID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `objectID` is required when calling `deleteCompositionRule`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.delete,
       path: r'/1/compositions/{compositionID}/rules/{objectID}'
@@ -281,10 +281,10 @@ final class CompositionClient implements ApiClient {
     required String compositionID,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      compositionID.isNotEmpty,
-      'Parameter `compositionID` is required when calling `getComposition`.',
-    );
+    if (compositionID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `compositionID` is required when calling `getComposition`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.get,
       path: r'/1/compositions/{compositionID}'.replaceAll(
@@ -317,14 +317,14 @@ final class CompositionClient implements ApiClient {
     required String objectID,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      compositionID.isNotEmpty,
-      'Parameter `compositionID` is required when calling `getRule`.',
-    );
-    assert(
-      objectID.isNotEmpty,
-      'Parameter `objectID` is required when calling `getRule`.',
-    );
+    if (compositionID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `compositionID` is required when calling `getRule`.');
+    }
+    if (objectID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `objectID` is required when calling `getRule`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.get,
       path: r'/1/compositions/{compositionID}/rules/{objectID}'
@@ -362,10 +362,10 @@ final class CompositionClient implements ApiClient {
     required int taskID,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      compositionID.isNotEmpty,
-      'Parameter `compositionID` is required when calling `getTask`.',
-    );
+    if (compositionID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `compositionID` is required when calling `getTask`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.get,
       path: r'/1/compositions/{compositionID}/task/{taskID}'
@@ -461,10 +461,10 @@ final class CompositionClient implements ApiClient {
     required Composition composition,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      compositionID.isNotEmpty,
-      'Parameter `compositionID` is required when calling `putComposition`.',
-    );
+    if (compositionID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `compositionID` is required when calling `putComposition`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.put,
       path: r'/1/compositions/{compositionID}'.replaceAll(
@@ -499,14 +499,14 @@ final class CompositionClient implements ApiClient {
     required CompositionRule compositionRule,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      compositionID.isNotEmpty,
-      'Parameter `compositionID` is required when calling `putCompositionRule`.',
-    );
-    assert(
-      objectID.isNotEmpty,
-      'Parameter `objectID` is required when calling `putCompositionRule`.',
-    );
+    if (compositionID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `compositionID` is required when calling `putCompositionRule`.');
+    }
+    if (objectID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `objectID` is required when calling `putCompositionRule`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.put,
       path: r'/1/compositions/{compositionID}/rules/{objectID}'
@@ -541,10 +541,10 @@ final class CompositionClient implements ApiClient {
     required CompositionRulesBatchParams rules,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      compositionID.isNotEmpty,
-      'Parameter `compositionID` is required when calling `saveRules`.',
-    );
+    if (compositionID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `compositionID` is required when calling `saveRules`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/compositions/{compositionID}/rules/batch'.replaceAll(
@@ -577,10 +577,10 @@ final class CompositionClient implements ApiClient {
     required RequestBody requestBody,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      compositionID.isNotEmpty,
-      'Parameter `compositionID` is required when calling `search`.',
-    );
+    if (compositionID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `compositionID` is required when calling `search`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/compositions/{compositionID}/run'.replaceAll(
@@ -614,10 +614,10 @@ final class CompositionClient implements ApiClient {
     SearchCompositionRulesParams? searchCompositionRulesParams,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      compositionID.isNotEmpty,
-      'Parameter `compositionID` is required when calling `searchCompositionRules`.',
-    );
+    if (compositionID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `compositionID` is required when calling `searchCompositionRules`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/compositions/{compositionID}/rules/search'.replaceAll(
@@ -653,14 +653,14 @@ final class CompositionClient implements ApiClient {
     SearchForFacetValuesRequest? searchForFacetValuesRequest,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      compositionID.isNotEmpty,
-      'Parameter `compositionID` is required when calling `searchForFacetValues`.',
-    );
-    assert(
-      facetName.isNotEmpty,
-      'Parameter `facetName` is required when calling `searchForFacetValues`.',
-    );
+    if (compositionID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `compositionID` is required when calling `searchForFacetValues`.');
+    }
+    if (facetName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `facetName` is required when calling `searchForFacetValues`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/compositions/{compositionID}/facets/{facetName}/query'
@@ -697,10 +697,10 @@ final class CompositionClient implements ApiClient {
     required Map<String, String> requestBody,
     RequestOptions? requestOptions,
   }) async {
-    assert(
-      compositionID.isNotEmpty,
-      'Parameter `compositionID` is required when calling `updateSortingStrategyComposition`.',
-    );
+    if (compositionID.isEmpty) {
+      throw ArgumentError(
+          'Parameter `compositionID` is required when calling `updateSortingStrategyComposition`.');
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/compositions/{compositionID}/sortingStrategy'.replaceAll(

@@ -11,6 +11,7 @@ method:
       - php
       - python
       - ruby
+      - scala
     x-acl:
       - addObject
       - deleteIndex
