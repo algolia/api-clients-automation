@@ -2604,6 +2604,34 @@ class SnippetSearchClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the partialUpdateObjectsWithTransformation method.
+    *
+    * call partialUpdateObjectsWithTransformation with createIfNotExists=true
+    */
+  def snippetForSearchClientPartialUpdateObjectsWithTransformation(): Unit = {
+    // >SEPARATOR partialUpdateObjectsWithTransformation default
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.partialUpdateObjectsWithTransformation(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects = Seq(
+          JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+          JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit"))))
+        ),
+        createIfNotExists = true,
+        waitForTasks = true
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
   /** Snippet for the removeUserId method.
     *
     * removeUserId
@@ -2706,6 +2734,41 @@ class SnippetSearchClient {
           JObject(List(JField("objectID", JString("fine")), JField("body", JString("small obj")))),
           JObject(List(JField("objectID", JString("toolarge")), JField("body", JString("something bigger than 10KB"))))
         )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the replaceAllObjectsWithTransformation method.
+    *
+    * call replaceAllObjectsWithTransformation without error
+    */
+  def snippetForSearchClientReplaceAllObjectsWithTransformation(): Unit = {
+    // >SEPARATOR replaceAllObjectsWithTransformation default
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.replaceAllObjectsWithTransformation(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects = Seq(
+          JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+          JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit")))),
+          JObject(List(JField("objectID", JString("3")), JField("name", JString("Cyril")))),
+          JObject(List(JField("objectID", JString("4")), JField("name", JString("David")))),
+          JObject(List(JField("objectID", JString("5")), JField("name", JString("Eva")))),
+          JObject(List(JField("objectID", JString("6")), JField("name", JString("Fiona")))),
+          JObject(List(JField("objectID", JString("7")), JField("name", JString("Gael")))),
+          JObject(List(JField("objectID", JString("8")), JField("name", JString("Hugo")))),
+          JObject(List(JField("objectID", JString("9")), JField("name", JString("Igor")))),
+          JObject(List(JField("objectID", JString("10")), JField("name", JString("Julia"))))
+        ),
+        batchSize = 3
       ),
       Duration(100, "sec")
     )
@@ -2911,6 +2974,33 @@ class SnippetSearchClient {
             .withHeader("X-Algolia-User-ID", "*")
             .build()
         )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveObjectsWithTransformation method.
+    *
+    * call saveObjectsWithTransformation without error
+    */
+  def snippetForSearchClientSaveObjectsWithTransformation(): Unit = {
+    // >SEPARATOR saveObjectsWithTransformation default
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveObjectsWithTransformation(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects = Seq(
+          JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+          JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit"))))
+        ),
+        waitForTasks = true
       ),
       Duration(100, "sec")
     )
