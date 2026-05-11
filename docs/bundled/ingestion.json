@@ -2785,7 +2785,8 @@
           "java",
           "javascript",
           "php",
-          "python"
+          "python",
+          "scala"
         ],
         "x-acl": [
           "addObject",
