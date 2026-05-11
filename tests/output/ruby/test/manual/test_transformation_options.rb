@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "algolia"
-require "stringio"
 require "test/unit"
 
 class TestTransformationOptions < Test::Unit::TestCase
@@ -46,24 +45,6 @@ class TestTransformationOptions < Test::Unit::TestCase
     client.set_transformation_options(Algolia::TransformationOptions.new("us"))
 
     assert_not_nil(client.instance_variable_get(:@ingestion_transporter))
-  end
-
-  def test_set_transformation_region_deprecated_delegate
-    client = Algolia::SearchClient.create("test-app-id", "test-api-key")
-
-    assert_nil(client.instance_variable_get(:@ingestion_transporter))
-
-    stderr_output = StringIO.new
-    old_stderr = $stderr
-    $stderr = stderr_output
-    begin
-      client.set_transformation_region("us")
-    ensure
-      $stderr = old_stderr
-    end
-
-    assert_not_nil(client.instance_variable_get(:@ingestion_transporter))
-    assert_match(/deprecated/i, stderr_output.string)
   end
 
   def test_transformation_options_requires_region

@@ -1,3 +1,14 @@
+# Helper: Pushes objects to the given index in chunks, optionally waiting for each batch to be processed.
+#
+# @param index_name [String] the `index_name` where the operation will be performed. (required)
+# @param objects [Array] the array of objects to push to the given Algolia `index_name`. (required)
+# @param action [String] the push action to perform on the objects. (optional, default: addObject)
+# @param wait_for_tasks [Boolean] whether to wait until every task has been processed. (optional, default: false)
+# @param batch_size [Integer] the size of each chunk of objects sent in a single push call. (optional, default: 1000)
+# @param reference_index_name [String] the reference index name used for replace-all operations. (optional)
+# @param request_options [Hash] the request options to send along with the query. (optional)
+#
+# @return [Array<Ingestion::WatchResponse>]
 def chunked_push(index_name, objects, action = Ingestion::Action::ADD_OBJECT, wait_for_tasks = false, batch_size = 1000, reference_index_name = nil, request_options = {})
   responses = []
   offset = 0

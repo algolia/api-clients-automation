@@ -1,9 +1,9 @@
 # The parent search config MUST NOT leak into the ingestion transporter.
 def _build_ingestion_transporter(transformation_options)
-  co = transformation_options.client_options
+  client_options = transformation_options.client_options
 
-  hosts = if co&.hosts
-    co.hosts
+  hosts = if client_options&.hosts
+    client_options.hosts
   else
     [Transport::StatefulHost.new(
       "data.#{transformation_options.region}.algolia.com",
@@ -12,11 +12,11 @@ def _build_ingestion_transporter(transformation_options)
   end
 
   opts = {}
-  if co
-    opts[:connect_timeout] = co.connect_timeout unless co.connect_timeout.nil?
-    opts[:read_timeout] = co.read_timeout unless co.read_timeout.nil?
-    opts[:write_timeout] = co.write_timeout unless co.write_timeout.nil?
-    opts[:compression_type] = co.compression_type unless co.compression_type.nil?
+  if client_options
+    opts[:connect_timeout] = client_options.connect_timeout unless client_options.connect_timeout.nil?
+    opts[:read_timeout] = client_options.read_timeout unless client_options.read_timeout.nil?
+    opts[:write_timeout] = client_options.write_timeout unless client_options.write_timeout.nil?
+    opts[:compression_type] = client_options.compression_type unless client_options.compression_type.nil?
   end
 
   config = Algolia::Configuration.new(
@@ -27,29 +27,36 @@ def _build_ingestion_transporter(transformation_options)
     opts
   )
 
-  if co&.header_params
-    config.header_params = config.header_params.merge(co.header_params)
+  if client_options&.header_params
+    config.header_params = config.header_params.merge(client_options.header_params)
   end
 
   Algolia::IngestionClient.create_with_config(config)
 end
 
+# Helper: Sets (or replaces) the ingestion transporter used by *_with_transformation helpers.
+#
+# @param transformation_options [TransformationOptions] the transformation options including region and optional ingestion transporter overrides. (required)
 def set_transformation_options(transformation_options)
+  raise ArgumentError, "`transformation_options` must be a TransformationOptions instance, got #{transformation_options.inspect}" if transformation_options.nil?
   @ingestion_transporter = _build_ingestion_transporter(transformation_options)
-end
-
-# @deprecated Use {SearchClient.with_transformation} or {#set_transformation_options} instead.
-#   The old setter forwarded the parent search config to the ingestion transporter, causing search
-#   timeouts to bleed into ingestion calls. Use TransformationOptions to set Ingestion API defaults.
-def set_transformation_region(region)
-  warn '[DEPRECATION] set_transformation_region is deprecated. Use set_transformation_options with a TransformationOptions object instead.'
-  set_transformation_options(Algolia::TransformationOptions.new(region))
 end
 
 def assert_ingestion_transporter!
   raise ArgumentError, "`transformation_options` must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion/" if @ingestion_transporter.nil?
 end
 
+# Helper: Similar to the `save_objects` method but requires a Push connector to be created first,
+# in order to transform records before indexing them to Algolia.
+# `set_transformation_options` must have been called, or the client created via `SearchClient.with_transformation`.
+#
+# @param index_name [String] the `index_name` where the operation will be performed. (required)
+# @param objects [Array] the array of objects to store in the given Algolia `index_name`. (required)
+# @param wait_for_tasks [Boolean] whether to wait until every task has been processed. (optional, default: false)
+# @param batch_size [Integer] the size of each chunk of objects sent in a single push call. (optional, default: 1000)
+# @param request_options [Hash] the request options to send along with the query. (optional)
+#
+# @return [Array<Ingestion::WatchResponse>]
 def save_objects_with_transformation(index_name, objects, wait_for_tasks = false, batch_size = 1000, request_options = {})
   assert_ingestion_transporter!
 
@@ -64,6 +71,18 @@ def save_objects_with_transformation(index_name, objects, wait_for_tasks = false
   )
 end
 
+# Helper: Similar to the `partial_update_objects` method but requires a Push connector to be created first,
+# in order to transform records before indexing them to Algolia.
+# `set_transformation_options` must have been called, or the client created via `SearchClient.with_transformation`.
+#
+# @param index_name [String] the `index_name` where the operation will be performed. (required)
+# @param objects [Array] the array of objects to update in the given Algolia `index_name`. (required)
+# @param create_if_not_exists [Boolean] whether to create objects that do not exist. (optional, default: false)
+# @param wait_for_tasks [Boolean] whether to wait until every task has been processed. (optional, default: false)
+# @param batch_size [Integer] the size of each chunk of objects sent in a single push call. (optional, default: 1000)
+# @param request_options [Hash] the request options to send along with the query. (optional)
+#
+# @return [Array<Ingestion::WatchResponse>]
 def partial_update_objects_with_transformation(index_name, objects, create_if_not_exists = false, wait_for_tasks = false, batch_size = 1000, request_options = {})
   assert_ingestion_transporter!
 
@@ -80,6 +99,17 @@ def partial_update_objects_with_transformation(index_name, objects, create_if_no
   )
 end
 
+# Helper: Similar to the `replace_all_objects` method but requires a Push connector to be created first,
+# in order to transform records before indexing them to Algolia.
+# `set_transformation_options` must have been called, or the client created via `SearchClient.with_transformation`.
+#
+# @param index_name [String] the `index_name` to replace objects in. (required)
+# @param objects [Array] the array of objects to store in the given Algolia `index_name`. (required)
+# @param batch_size [Integer] the size of each chunk of objects sent in a single push call. (optional, default: 1000)
+# @param scopes [Array] the scopes to keep from the index. (optional, default: settings, rules, synonyms)
+# @param request_options [Hash] the request options to send along with the query. (optional)
+#
+# @return [Search::ReplaceAllObjectsWithTransformationResponse]
 def replace_all_objects_with_transformation(
   index_name,
   objects,

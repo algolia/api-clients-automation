@@ -37,7 +37,14 @@ module {{moduleName}}
     def initialize(region, client_options = nil)
       raise ArgumentError, "`region` is required in `TransformationOptions`. See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion" if region.nil? || region.to_s.strip.empty?
       @region = region
-      @client_options = client_options.is_a?(Hash) ? ClientOptions.new(client_options) : client_options
+      if client_options.is_a?(Hash)
+        valid_keys = %i[connect_timeout read_timeout write_timeout hosts compression_type header_params]
+        unknown = client_options.keys - valid_keys
+        raise ArgumentError, "Unknown ClientOptions keys: #{unknown.join(', ')}. Valid keys are: #{valid_keys.join(', ')}" unless unknown.empty?
+        @client_options = ClientOptions.new(client_options)
+      else
+        @client_options = client_options
+      end
     end
   end
 
