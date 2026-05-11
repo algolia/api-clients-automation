@@ -311,6 +311,7 @@ public class RecommendClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `batchRecommendRules`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `batchRecommendRules`.");
 
     Parameters.requireNonNull(model, "Parameter `model` is required when calling `batchRecommendRules`.");
 
@@ -351,6 +352,7 @@ public class RecommendClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `batchRecommendRules`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `batchRecommendRules`.");
 
     Parameters.requireNonNull(model, "Parameter `model` is required when calling `batchRecommendRules`.");
 
@@ -633,6 +635,7 @@ public class RecommendClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customDelete`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -653,6 +656,7 @@ public class RecommendClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customDelete`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -836,6 +840,7 @@ public class RecommendClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customGet`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -856,6 +861,7 @@ public class RecommendClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customGet`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -1049,6 +1055,7 @@ public class RecommendClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPost`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -1076,6 +1083,7 @@ public class RecommendClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPost`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -1277,6 +1285,7 @@ public class RecommendClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPut`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -1304,6 +1313,7 @@ public class RecommendClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPut`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -1477,10 +1487,12 @@ public class RecommendClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `deleteRecommendRule`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `deleteRecommendRule`.");
 
     Parameters.requireNonNull(model, "Parameter `model` is required when calling `deleteRecommendRule`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `deleteRecommendRule`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `deleteRecommendRule`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{model}/recommend/rules/{objectID}", indexName, model, objectID)
@@ -1508,10 +1520,12 @@ public class RecommendClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `deleteRecommendRule`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `deleteRecommendRule`.");
 
     Parameters.requireNonNull(model, "Parameter `model` is required when calling `deleteRecommendRule`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `deleteRecommendRule`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `deleteRecommendRule`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{model}/recommend/rules/{objectID}", indexName, model, objectID)
@@ -1648,10 +1662,12 @@ public class RecommendClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getRecommendRule`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getRecommendRule`.");
 
     Parameters.requireNonNull(model, "Parameter `model` is required when calling `getRecommendRule`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `getRecommendRule`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `getRecommendRule`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{model}/recommend/rules/{objectID}", indexName, model, objectID)
@@ -1680,10 +1696,12 @@ public class RecommendClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getRecommendRule`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getRecommendRule`.");
 
     Parameters.requireNonNull(model, "Parameter `model` is required when calling `getRecommendRule`.");
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `getRecommendRule`.");
+    Parameters.requireNonEmpty(objectID, "Parameter `objectID` is required when calling `getRecommendRule`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{model}/recommend/rules/{objectID}", indexName, model, objectID)
@@ -1831,6 +1849,7 @@ public class RecommendClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getRecommendStatus`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getRecommendStatus`.");
 
     Parameters.requireNonNull(model, "Parameter `model` is required when calling `getRecommendStatus`.");
 
@@ -1864,6 +1883,7 @@ public class RecommendClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getRecommendStatus`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getRecommendStatus`.");
 
     Parameters.requireNonNull(model, "Parameter `model` is required when calling `getRecommendStatus`.");
 
@@ -2214,6 +2234,7 @@ public class RecommendClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `searchRecommendRules`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `searchRecommendRules`.");
 
     Parameters.requireNonNull(model, "Parameter `model` is required when calling `searchRecommendRules`.");
 
@@ -2246,6 +2267,7 @@ public class RecommendClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `searchRecommendRules`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `searchRecommendRules`.");
 
     Parameters.requireNonNull(model, "Parameter `model` is required when calling `searchRecommendRules`.");
 

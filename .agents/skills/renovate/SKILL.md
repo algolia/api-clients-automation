@@ -95,7 +95,10 @@ When a template issue is detected, map each affected generated file to its likel
 | `clients/algoliasearch-client-java/**/build.gradle`       | `templates/java/tests/build.mustache`           |
 | `clients/algoliasearch-client-dart/pubspec.yaml`          | `templates/dart/pubspec.mustache`               |
 | `clients/algoliasearch-client-csharp/**/*.csproj`         | `templates/csharp/*.mustache`                   |
+| `clients/*/.github/workflows/issue.yml`                   | `templates/issue.yml` (single source file)      |
 | Other `clients/algoliasearch-client-<lang>/<file>`        | Check `templates/<lang>/` for `<stem>.mustache` |
+
+> **Symlink awareness:** Many per-language template files (e.g. `templates/{lang}/issue.yml`) are symlinks to a shared source (e.g. `templates/issue.yml`). When reporting a template issue, resolve symlinks with `ls -la` and report the single source file — not all 11 copies. The `.github/workflows/issue.yml` files across all client repos are generated from `templates/issue.yml`; the per-language copies in `templates/{lang}/issue.yml` are all symlinks to `../issue.yml`.
 
 **Step 4.4 — Scala version fix.**
 
@@ -118,6 +121,7 @@ If the PR only updates the `crossScalaVersions` 3.x entry or the 2.x `scalaVersi
 Close (do not merge) PRs that update these packages, and add them to the "Abandoned" report list with a note:
 
 - **Dart `json_serializable`**: Updating `json_serializable` requires updating `json_annotation`, which in turn requires bumping the minimum Dart SDK version. This is a breaking change for customers on older Dart versions. Close the PR.
+- **`@redocly/cli` beyond v2.27.0**: v2.27.1 introduces breaking changes (renaming components) that break our spec bundling. Pinned at v2.27.0 for now. Close the PR.
 
 **Step 4.6 — Dart caret versioning.**
 
