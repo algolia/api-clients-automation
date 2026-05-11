@@ -21,4 +21,5 @@ client, err = {{clientPrefix}}.NewClientWithConfig(cfg)
 {{#hasTransformationOptions}}
 require.NoError(t, err)
 err = client.SetTransformationOptions(transformationOptions)
+require.NoError(t, err)
 {{/hasTransformationOptions}}
