@@ -92,13 +92,13 @@ class {{configClassname}} extends {{#hasRegionalHost}}ConfigWithRegion{{/hasRegi
     }
 
     /**
-     * Sets the `TransformationOptions` used by the `*WithTransformation` helpers. The ingestion
-     * transporter is eagerly created in `SearchClient::createWithConfig` using the Ingestion API
-     * defaults (25s timeouts, region-derived hosts); only the fields set on `TransformationOptions`
-     * override those defaults — the parent `SearchConfig` is never forwarded.
+     * Sets the `TransformationOptions` used by the `*WithTransformation` helpers.
      *
-     * To replace the transporter after the client has been created, call
-     * `SearchClient::setTransformationOptions` instead.
+     * Read by `SearchClient::createWithConfig` to build the ingestion transporter; only the
+     * fields set on `TransformationOptions` override the Ingestion API defaults (25s timeouts,
+     * region-derived hosts) — the parent `SearchConfig` is never forwarded.
+     *
+     * To replace the transporter on an existing client, use `SearchClient::setTransformationOptions`.
      *
      * @see https://www.algolia.com/doc/libraries/sdk/methods/ingestion/
      *
@@ -124,12 +124,8 @@ class {{configClassname}} extends {{#hasRegionalHost}}ConfigWithRegion{{/hasRegi
     /**
      * Sets the region used by the transformation pipeline (via the `*WithTransformation` methods).
      *
-     * @deprecated Set `transformationOptions` via {@see SearchConfig::setTransformationOptions()}
-     *             before creating the client, or call {@see SearchClient::setTransformationOptions()}
-     *             to rebuild the ingestion transporter after the client has been created. Changes
-     *             made via this setter after `SearchClient::createWithConfig` do not affect the
-     *             existing ingestion transporter.
-     *
+     * @deprecated Use {@see SearchConfig::setTransformationOptions()} for richer configuration
+     *             of the ingestion transporter (custom hosts, timeouts, headers, compression).
      * @see https://www.algolia.com/doc/libraries/sdk/methods/ingestion/
      *
      * @param string $region the Algolia region for the Ingestion API (`"us"` or `"eu"`)
