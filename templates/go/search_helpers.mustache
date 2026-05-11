@@ -842,9 +842,9 @@ func (c *APIClient) PartialUpdateObjectsWithTransformation(indexName string, obj
 	}
 
 	return c.ingestionTransporter.ChunkedPush(
-  		indexName,
-  		objects,
-  		ingestion.Action(action),
-  		nil,
-  		toIngestionChunkedBatchOptions(partialUpdateObjectsToChunkedBatchOptions(opts))...) 
+		indexName,
+		objects,
+		ingestion.Action(action),
+		nil,
+		toIngestionChunkedBatchOptions(partialUpdateObjectsToChunkedBatchOptions(opts))...)
 }
