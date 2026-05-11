@@ -18,7 +18,6 @@ public class TransformationOptions
   /// <summary>
   /// Optional overrides for the ingestion transporter.
   /// Only fields explicitly set here replace the Ingestion API defaults.
-  /// Credentials and region are always taken from the parent <see cref="TransformationOptions"/>.
   /// </summary>
   public ClientOptions ClientOptions { get; }
 

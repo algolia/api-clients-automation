@@ -8,7 +8,7 @@ namespace Algolia.Search.Clients;
 /// <summary>
 /// Optional overrides for the ingestion transporter created by <c>*WithTransformation</c> helpers.
 /// Only fields explicitly set here replace the Ingestion API defaults (25 s timeouts, region-derived hosts, no compression).
-/// Credentials and region are always taken from the parent <see cref="TransformationOptions"/>.
+/// Credentials are always taken from the parent <see cref="SearchClient"/>; region from the containing <see cref="TransformationOptions"/>.
 /// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
 /// </summary>
 public class ClientOptions

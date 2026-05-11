@@ -219,6 +219,7 @@ namespace Algolia.Search.Clients;
       /// <paramref name="transformationOptions"/> to override specific defaults.
       /// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
       /// </summary>
+      /// <param name="transformationOptions">The transformation options including region and optional ingestion transporter overrides.</param>
       public void SetTransformationOptions(TransformationOptions transformationOptions)
       {
         if (transformationOptions == null)
@@ -267,6 +268,10 @@ namespace Algolia.Search.Clients;
       /// specific defaults.
       /// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
       /// </summary>
+      /// <param name="appId">Your Algolia application ID.</param>
+      /// <param name="apiKey">Your Algolia API key.</param>
+      /// <param name="transformationOptions">The transformation options including region and optional ingestion transporter overrides.</param>
+      /// <param name="loggerFactory">Logger factory.</param>
       public static {{classname}} WithTransformation(
         string appId,
         string apiKey,
@@ -287,6 +292,9 @@ namespace Algolia.Search.Clients;
       /// transporter.
       /// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
       /// </summary>
+      /// <param name="searchConfig">Custom search transporter configuration.</param>
+      /// <param name="transformationOptions">The transformation options including region and optional ingestion transporter overrides.</param>
+      /// <param name="loggerFactory">Logger factory.</param>
       public static {{classname}} WithTransformation(
         {{apiPackageName}}Config searchConfig,
         TransformationOptions transformationOptions,

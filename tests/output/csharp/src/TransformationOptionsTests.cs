@@ -70,9 +70,9 @@ public class TransformationOptionsTests
       client.SaveObjectsWithTransformation("index", new[] { new { objectID = "1" } })
     );
     if (ex is AlgoliaException algoliaEx)
-    {
       Assert.DoesNotContain("TransformationOptions must be set", algoliaEx.Message);
-    }
+    else
+      Assert.Null(ex);
   }
 
   [Fact]
@@ -82,6 +82,14 @@ public class TransformationOptionsTests
     var client = new SearchClient("app-id", "api-key");
     client.SetTransformationOptions(new TransformationOptions("us"));
     client.SetTransformationOptions(new TransformationOptions("eu"));
+
+    var ex = Record.Exception(() =>
+      client.SaveObjectsWithTransformation("index", new[] { new { objectID = "1" } })
+    );
+    if (ex is AlgoliaException algoliaEx)
+      Assert.DoesNotContain("TransformationOptions must be set", algoliaEx.Message);
+    else
+      Assert.Null(ex);
   }
 
   [Fact]
@@ -97,9 +105,9 @@ public class TransformationOptionsTests
       client.SaveObjectsWithTransformation("index", new[] { new { objectID = "1" } })
     );
     if (ex is AlgoliaException algoliaEx)
-    {
       Assert.DoesNotContain("TransformationOptions must be set", algoliaEx.Message);
-    }
+    else
+      Assert.Null(ex);
   }
 
   [Fact]
@@ -112,9 +120,9 @@ public class TransformationOptionsTests
       client.SaveObjectsWithTransformation("index", new[] { new { objectID = "1" } })
     );
     if (ex is AlgoliaException algoliaEx)
-    {
       Assert.DoesNotContain("TransformationOptions must be set", algoliaEx.Message);
-    }
+    else
+      Assert.Null(ex);
   }
 
   [Fact]
@@ -139,9 +147,9 @@ public class TransformationOptionsTests
       client.SaveObjectsWithTransformation("index", new[] { new { objectID = "1" } })
     );
     if (ex is AlgoliaException algoliaEx)
-    {
       Assert.DoesNotContain("TransformationOptions must be set", algoliaEx.Message);
-    }
+    else
+      Assert.Null(ex);
   }
 
   [Fact]
