@@ -28,18 +28,16 @@ public class TransformationOptionsTests
   {
     var opts = new TransformationOptions("us");
     Assert.Equal("us", opts.Region);
-    Assert.Null(opts.ClientOptions);
+    Assert.Null(opts.ReadTimeout);
   }
 
   [Fact]
   [Trait("Category", "unit")]
-  public void WithClientOptions_StoresComposition()
+  public void WithOverrides_StoresFields()
   {
-    var clientOptions = new ClientOptions { ReadTimeout = TimeSpan.FromSeconds(10) };
-    var opts = new TransformationOptions("eu", clientOptions);
+    var opts = new TransformationOptions("eu") { ReadTimeout = TimeSpan.FromSeconds(10) };
     Assert.Equal("eu", opts.Region);
-    Assert.Same(clientOptions, opts.ClientOptions);
-    Assert.Equal(TimeSpan.FromSeconds(10), opts.ClientOptions.ReadTimeout);
+    Assert.Equal(TimeSpan.FromSeconds(10), opts.ReadTimeout);
   }
 
   [Fact]
@@ -71,8 +69,11 @@ public class TransformationOptionsTests
     );
     if (ex is AlgoliaException algoliaEx)
       Assert.DoesNotContain("TransformationOptions must be set", algoliaEx.Message);
-    else if (ex is not AlgoliaApiException)
-      Assert.Null(ex);
+    else
+      Assert.True(
+        ex == null || ex is AlgoliaApiException,
+        $"Unexpected exception: {ex?.GetType().Name}: {ex?.Message}"
+      );
   }
 
   [Fact]
@@ -88,8 +89,11 @@ public class TransformationOptionsTests
     );
     if (ex is AlgoliaException algoliaEx)
       Assert.DoesNotContain("TransformationOptions must be set", algoliaEx.Message);
-    else if (ex is not AlgoliaApiException)
-      Assert.Null(ex);
+    else
+      Assert.True(
+        ex == null || ex is AlgoliaApiException,
+        $"Unexpected exception: {ex?.GetType().Name}: {ex?.Message}"
+      );
   }
 
   [Fact]
@@ -106,8 +110,11 @@ public class TransformationOptionsTests
     );
     if (ex is AlgoliaException algoliaEx)
       Assert.DoesNotContain("TransformationOptions must be set", algoliaEx.Message);
-    else if (ex is not AlgoliaApiException)
-      Assert.Null(ex);
+    else
+      Assert.True(
+        ex == null || ex is AlgoliaApiException,
+        $"Unexpected exception: {ex?.GetType().Name}: {ex?.Message}"
+      );
   }
 
   [Fact]
@@ -121,8 +128,11 @@ public class TransformationOptionsTests
     );
     if (ex is AlgoliaException algoliaEx)
       Assert.DoesNotContain("TransformationOptions must be set", algoliaEx.Message);
-    else if (ex is not AlgoliaApiException)
-      Assert.Null(ex);
+    else
+      Assert.True(
+        ex == null || ex is AlgoliaApiException,
+        $"Unexpected exception: {ex?.GetType().Name}: {ex?.Message}"
+      );
   }
 
   [Fact]
@@ -148,8 +158,11 @@ public class TransformationOptionsTests
     );
     if (ex is AlgoliaException algoliaEx)
       Assert.DoesNotContain("TransformationOptions must be set", algoliaEx.Message);
-    else if (ex is not AlgoliaApiException)
-      Assert.Null(ex);
+    else
+      Assert.True(
+        ex == null || ex is AlgoliaApiException,
+        $"Unexpected exception: {ex?.GetType().Name}: {ex?.Message}"
+      );
   }
 
   [Fact]

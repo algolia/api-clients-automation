@@ -215,8 +215,8 @@ namespace Algolia.Search.Clients;
       /// <summary>
       /// Sets (or replaces) the ingestion transporter used by *WithTransformation helpers.
       /// The ingestion transporter is created using the region from <paramref name="transformationOptions"/>
-      /// and Ingestion API defaults; pass an <see cref="ClientOptions"/> inside
-      /// <paramref name="transformationOptions"/> to override specific defaults.
+      /// and Ingestion API defaults; only fields explicitly set on <paramref name="transformationOptions"/>
+      /// replace those defaults.
       /// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
       /// </summary>
       /// <param name="transformationOptions">The transformation options including region and optional ingestion transporter overrides.</param>
@@ -231,15 +231,15 @@ namespace Algolia.Search.Clients;
           transformationOptions.Region
         );
 
-        if (transformationOptions.ClientOptions != null)
+        if (transformationOptions.CustomHosts != null) ingestionConfig.CustomHosts = transformationOptions.CustomHosts;
+        if (transformationOptions.ConnectTimeout.HasValue) ingestionConfig.ConnectTimeout = transformationOptions.ConnectTimeout;
+        if (transformationOptions.ReadTimeout.HasValue) ingestionConfig.ReadTimeout = transformationOptions.ReadTimeout;
+        if (transformationOptions.WriteTimeout.HasValue) ingestionConfig.WriteTimeout = transformationOptions.WriteTimeout;
+        if (transformationOptions.Compression.HasValue) ingestionConfig.Compression = transformationOptions.Compression.Value;
+        if (transformationOptions.DefaultHeaders != null)
         {
-          var opts = transformationOptions.ClientOptions;
-          if (opts.CustomHosts != null) ingestionConfig.CustomHosts = opts.CustomHosts;
-          if (opts.ConnectTimeout.HasValue) ingestionConfig.ConnectTimeout = opts.ConnectTimeout;
-          if (opts.ReadTimeout.HasValue) ingestionConfig.ReadTimeout = opts.ReadTimeout;
-          if (opts.WriteTimeout.HasValue) ingestionConfig.WriteTimeout = opts.WriteTimeout;
-          if (opts.Compression.HasValue) ingestionConfig.Compression = opts.Compression.Value;
-          if (opts.DefaultHeaders != null) ingestionConfig.DefaultHeaders = opts.DefaultHeaders;
+          foreach (var kvp in transformationOptions.DefaultHeaders)
+            ingestionConfig.DefaultHeaders[kvp.Key] = kvp.Value;
         }
 
         _ingestionTransporter = new IngestionClient(ingestionConfig, _loggerFactory);

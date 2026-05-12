@@ -1,6 +1,7 @@
 {{#hasTransformationRegion}}
 {{#hasTransformationCustomHosts}}
-var transformationOptions = new TransformationOptions("{{{transformationRegion}}}", new ClientOptions {
+var transformationOptions = new TransformationOptions("{{{transformationRegion}}}")
+{
   CustomHosts = new List<StatefulHost>
   {
     {{#transformationCustomHosts}}new () {
@@ -12,7 +13,7 @@ var transformationOptions = new TransformationOptions("{{{transformationRegion}}
       Accept = CallType.Read | CallType.Write,
     }{{^-last}},{{/-last}}{{/transformationCustomHosts}}
   }
-});
+};
 {{/hasTransformationCustomHosts}}
 {{^hasTransformationCustomHosts}}
 var transformationOptions = new TransformationOptions("{{{transformationRegion}}}");

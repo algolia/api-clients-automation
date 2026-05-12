@@ -20,7 +20,6 @@ export const patterns = [
   '!clients/algoliasearch-client-csharp/*',
   '!clients/algoliasearch-client-csharp/algoliasearch/Clients/AlgoliaConfig.cs',
   '!clients/algoliasearch-client-csharp/algoliasearch/Clients/TransformationOptions.cs',
-  '!clients/algoliasearch-client-csharp/algoliasearch/Clients/ClientOptions.cs',
   '!clients/algoliasearch-client-csharp/algoliasearch/Exceptions/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Serializer/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Utils/**',
