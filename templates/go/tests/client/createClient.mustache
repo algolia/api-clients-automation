@@ -1,5 +1,5 @@
 {{#hasTransformationOptions}}
-transformationOptions := search.TransformationOptions{Region: "{{{transformationRegion}}}"{{#hasTransformationCustomHosts}}, ClientOptions: &search.ClientOptions{Hosts: []transport.StatefulHost{ {{#transformationCustomHosts}}transport.NewStatefulHost("http", tests.GetLocalhost() + ":{{port}}", call.IsReadWrite),{{/transformationCustomHosts}} }}{{/hasTransformationCustomHosts}}}
+transformationOptions := search.TransformationOptions{Region: "{{{transformationRegion}}}"{{#hasTransformationCustomHosts}}, Hosts: []transport.StatefulHost{ {{#transformationCustomHosts}}transport.NewStatefulHost("http", tests.GetLocalhost() + ":{{port}}", call.IsReadWrite),{{/transformationCustomHosts}} }{{/hasTransformationCustomHosts}}}
 {{/hasTransformationOptions}}
 cfg = {{clientPrefix}}.{{clientName}}Configuration{
   Configuration: transport.Configuration{

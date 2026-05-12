@@ -10,26 +10,19 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
-// ClientOptions holds optional transport overrides for the ingestion transporter.
-// Only fields explicitly set here replace the Ingestion API defaults (25s timeouts, no compression).
-// Do not provide AppID, ApiKey, or Region here — those come from the search client and TransformationOptions.Region.
-type ClientOptions struct {
+// TransformationOptions configures the ingestion transporter used by *WithTransformation helpers.
+// When passed to NewClient or set via SetTransformationOptions, the transporter is eagerly created
+// using Ingestion API defaults (25s timeouts, no compression). Only fields explicitly set here override
+// those defaults. The parent search config is NOT forwarded to the ingestion transporter.
+// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+type TransformationOptions struct {
+	Region         ingestion.Region // required
 	ReadTimeout    time.Duration
 	WriteTimeout   time.Duration
 	ConnectTimeout time.Duration
 	Compression    compression.Compression
 	Hosts          []transport.StatefulHost
-	DefaultHeader map[string]string
-}
-
-// TransformationOptions configures the ingestion transporter used by *WithTransformation helpers.
-// When passed to NewClient or set via SetTransformationOptions, the transporter is eagerly created
-// using Ingestion API defaults (25s timeouts, no compression). Only fields set in ClientOptions override
-// those defaults. The parent search config is NOT forwarded to the ingestion transporter.
-// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
-type TransformationOptions struct {
-	Region        ingestion.Region // required
-	ClientOptions *ClientOptions
+	DefaultHeader  map[string]string
 }
 
 func (o TransformationOptions) validate() error {

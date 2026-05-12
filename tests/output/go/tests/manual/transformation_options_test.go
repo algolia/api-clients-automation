@@ -23,17 +23,16 @@ func TestTransformationOptionsRegionRequiredAtConstruction(t *testing.T) {
 	require.ErrorContains(t, err, "Region is required in TransformationOptions")
 }
 
-func TestTransformationOptionsRegionOnlyHasNilClientOptions(t *testing.T) {
+func TestTransformationOptionsRegionOnlyHasZeroOverrides(t *testing.T) {
 	opts := search.TransformationOptions{Region: "us"}
 	require.Equal(t, "us", string(opts.Region))
-	require.Nil(t, opts.ClientOptions)
+	require.Zero(t, opts.ReadTimeout)
 }
 
-func TestTransformationOptionsClientOptionsStored(t *testing.T) {
-	co := &search.ClientOptions{ReadTimeout: 50 * time.Second}
-	opts := search.TransformationOptions{Region: "eu", ClientOptions: co}
+func TestTransformationOptionsWithOverrides(t *testing.T) {
+	opts := search.TransformationOptions{Region: "eu", ReadTimeout: 50 * time.Second}
 	require.Equal(t, "eu", string(opts.Region))
-	require.Same(t, co, opts.ClientOptions)
+	require.Equal(t, 50*time.Second, opts.ReadTimeout)
 }
 
 func TestTransformationOptionsWithRegionOnly(t *testing.T) {
@@ -64,8 +63,8 @@ func TestSetTransformationOptionsCreatesTransporter(t *testing.T) {
 func TestWithTransformationOptionsFunctionalOption(t *testing.T) {
 	client, err := search.NewClient("appID", "apiKey",
 		search.WithTransformationOptions(search.TransformationOptions{
-			Region:        "us",
-			ClientOptions: &search.ClientOptions{ReadTimeout: 50 * time.Second},
+			Region:      "us",
+			ReadTimeout: 50 * time.Second,
 		}),
 	)
 	require.NoError(t, err)
