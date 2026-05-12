@@ -1,6 +1,5 @@
 /**
  * Shared configuration for chunked helpers that poll for task completion.
- * Designed to grow over time so future helper configs can be added without ballooning option types.
  */
 export type ChunkedHelperOptions = {
   /**
