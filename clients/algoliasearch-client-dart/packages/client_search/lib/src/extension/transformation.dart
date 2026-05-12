@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:algolia_client_core/algolia_client_core.dart';
