@@ -1,6 +1,5 @@
 {{#hasTransformationRegion}}
-{{#hasTransformationCustomHosts}}_ingestion_options = Algolia::ClientOptions.new(hosts: [{{#transformationCustomHosts}}Algolia::Transport::StatefulHost.new(ENV.fetch('CI', nil) == 'true' ? 'localhost' : 'host.docker.internal', protocol: 'http://', port: {{port}}, accept: CallType::READ | CallType::WRITE){{^-last}}, {{/-last}}{{/transformationCustomHosts}}])
-_transformation_options = Algolia::TransformationOptions.new('{{transformationRegion}}', _ingestion_options)
+{{#hasTransformationCustomHosts}}_transformation_options = Algolia::TransformationOptions.new('{{transformationRegion}}', hosts: [{{#transformationCustomHosts}}Algolia::Transport::StatefulHost.new(ENV.fetch('CI', nil) == 'true' ? 'localhost' : 'host.docker.internal', protocol: 'http://', port: {{port}}, accept: CallType::READ | CallType::WRITE){{^-last}}, {{/-last}}{{/transformationCustomHosts}}])
 {{/hasTransformationCustomHosts}}
 {{^hasTransformationCustomHosts}}_transformation_options = Algolia::TransformationOptions.new('{{transformationRegion}}')
 {{/hasTransformationCustomHosts}}

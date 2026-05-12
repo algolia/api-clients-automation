@@ -9,42 +9,27 @@ require 'base64'
 
 module {{moduleName}}
 {{#isSearchClient}}
-  # Optional transport overrides for the ingestion transporter.
-  # Only fields explicitly set here replace the Ingestion API defaults (25s timeouts, no compression).
-  # Do not provide app_id, api_key, or region here — those come from the search client and TransformationOptions.
-  class ClientOptions
-    attr_accessor :connect_timeout, :read_timeout, :write_timeout,
+  # Configuration options for the ingestion transporter used by *_with_transformation helpers.
+  # When passed to SearchClient.with_transformation or set via set_transformation_options,
+  # the ingestion transporter is eagerly created using Ingestion API defaults (25s timeouts,
+  # no compression). Only fields explicitly set here override those defaults.
+  # See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion
+  class TransformationOptions
+    attr_accessor :region, :connect_timeout, :read_timeout, :write_timeout,
                   :hosts, :compression_type, :header_params
 
-    def initialize(opts = {})
+    def initialize(region, opts = {})
+      raise ArgumentError, "`region` is required in `TransformationOptions`. See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion" if region.nil? || region.to_s.strip.empty?
+      valid_keys = %i[connect_timeout read_timeout write_timeout hosts compression_type header_params]
+      unknown = opts.keys - valid_keys
+      raise ArgumentError, "Unknown TransformationOptions keys: #{unknown.join(', ')}. Valid keys are: #{valid_keys.join(', ')}" unless unknown.empty?
+      @region = region
       @connect_timeout = opts[:connect_timeout]
       @read_timeout = opts[:read_timeout]
       @write_timeout = opts[:write_timeout]
       @hosts = opts[:hosts]
       @compression_type = opts[:compression_type]
       @header_params = opts[:header_params]
-    end
-  end
-
-  # Configuration options for the ingestion transporter used by *_with_transformation helpers.
-  # When passed to SearchClient.with_transformation or set via set_transformation_options,
-  # the ingestion transporter is eagerly created using Ingestion API defaults (25s timeouts,
-  # no compression). Pass a ClientOptions as the second argument to override specific defaults.
-  # See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion
-  class TransformationOptions
-    attr_accessor :region, :client_options
-
-    def initialize(region, client_options = nil)
-      raise ArgumentError, "`region` is required in `TransformationOptions`. See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion" if region.nil? || region.to_s.strip.empty?
-      @region = region
-      if client_options.is_a?(Hash)
-        valid_keys = %i[connect_timeout read_timeout write_timeout hosts compression_type header_params]
-        unknown = client_options.keys - valid_keys
-        raise ArgumentError, "Unknown ClientOptions keys: #{unknown.join(', ')}. Valid keys are: #{valid_keys.join(', ')}" unless unknown.empty?
-        @client_options = ClientOptions.new(client_options)
-      else
-        @client_options = client_options
-      end
     end
   end
 
@@ -123,9 +108,15 @@ module {{moduleName}}
     {{#isSearchClient}}
     # Creates a SearchClient configured with a TransformationOptions for use with
     # *_with_transformation helpers. The ingestion transporter is initialised eagerly using
-    # Ingestion API defaults (25s timeouts); pass a ClientOptions inside TransformationOptions
-    # to override specific defaults.
+    # Ingestion API defaults (25s timeouts); set override fields on TransformationOptions to
+    # change specific defaults.
     # See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion
+    #
+    # @param app_id [String] the Algolia application ID. (required)
+    # @param api_key [String] the Algolia API key. (required)
+    # @param transformation_options [TransformationOptions] the transformation options including region and optional ingestion transporter overrides. (required)
+    # @param opts [Hash] additional configuration options passed to the search client. (optional)
+    # @return [SearchClient]
     def self.with_transformation(app_id, api_key, transformation_options, opts = {})
       opts = opts.dup
       hosts = opts.delete(:hosts)

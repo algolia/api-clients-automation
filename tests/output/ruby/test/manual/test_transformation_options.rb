@@ -57,12 +57,11 @@ class TestTransformationOptions < Test::Unit::TestCase
     end
   end
 
-  def test_transformation_options_with_client_options
-    co = Algolia::ClientOptions.new(read_timeout: 50_000)
-    opts = Algolia::TransformationOptions.new("us", co)
+  def test_transformation_options_with_overrides
+    opts = Algolia::TransformationOptions.new("us", read_timeout: 50_000)
 
     assert_equal("us", opts.region)
-    assert_equal(50_000, opts.client_options.read_timeout)
+    assert_equal(50_000, opts.read_timeout)
   end
 
   def test_save_objects_with_transformation_raises_without_options

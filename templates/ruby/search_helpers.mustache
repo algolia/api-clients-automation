@@ -1,9 +1,7 @@
 # The parent search config MUST NOT leak into the ingestion transporter.
 def _build_ingestion_transporter(transformation_options)
-  client_options = transformation_options.client_options
-
-  hosts = if client_options&.hosts
-    client_options.hosts
+  hosts = if transformation_options.hosts
+    transformation_options.hosts
   else
     [Transport::StatefulHost.new(
       "data.#{transformation_options.region}.algolia.com",
@@ -12,12 +10,10 @@ def _build_ingestion_transporter(transformation_options)
   end
 
   opts = {}
-  if client_options
-    opts[:connect_timeout] = client_options.connect_timeout unless client_options.connect_timeout.nil?
-    opts[:read_timeout] = client_options.read_timeout unless client_options.read_timeout.nil?
-    opts[:write_timeout] = client_options.write_timeout unless client_options.write_timeout.nil?
-    opts[:compression_type] = client_options.compression_type unless client_options.compression_type.nil?
-  end
+  opts[:connect_timeout] = transformation_options.connect_timeout unless transformation_options.connect_timeout.nil?
+  opts[:read_timeout] = transformation_options.read_timeout unless transformation_options.read_timeout.nil?
+  opts[:write_timeout] = transformation_options.write_timeout unless transformation_options.write_timeout.nil?
+  opts[:compression_type] = transformation_options.compression_type unless transformation_options.compression_type.nil?
 
   config = Algolia::Configuration.new(
     @api_client.config.app_id,
@@ -27,8 +23,8 @@ def _build_ingestion_transporter(transformation_options)
     opts
   )
 
-  if client_options&.header_params
-    config.header_params = config.header_params.merge(client_options.header_params)
+  if transformation_options.header_params
+    config.header_params = config.header_params.merge(transformation_options.header_params)
   end
 
   Algolia::IngestionClient.create_with_config(config)
