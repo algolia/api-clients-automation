@@ -34,7 +34,11 @@ final class {{classname}} implements ApiClient {
   {{classname}}({
     required String appId,
     required String apiKey,
-    this.options = const ClientOptions(),
+    this.options = const ClientOptions(
+      connectTimeout: Duration(milliseconds: {{#x-timeouts}}{{#server}}{{connect}}{{/server}}{{/x-timeouts}}),
+      readTimeout: Duration(milliseconds: {{#x-timeouts}}{{#server}}{{read}}{{/server}}{{/x-timeouts}}),
+      writeTimeout: Duration(milliseconds: {{#x-timeouts}}{{#server}}{{write}}{{/server}}{{/x-timeouts}}),
+    ),
     {{#hasRegionalHost}}
     {{^fallbackToAliasHost}}required{{/fallbackToAliasHost}} this.region,
     {{/hasRegionalHost}}
