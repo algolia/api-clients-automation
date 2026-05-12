@@ -1,3 +1,7 @@
+## [2.41.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.40.1...2.41.0)
+
+- [a1a51b3591](https://github.com/algolia/api-clients-automation/commit/a1a51b3591) feat(scala): add withTransformation helpers and TransformationOptions… ([#6312](https://github.com/algolia/api-clients-automation/pull/6312)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+
 ## [2.40.1](https://github.com/algolia/algoliasearch-client-scala/compare/2.40.0...2.40.1)
 
 - [363cc2d91b](https://github.com/algolia/api-clients-automation/commit/363cc2d91b) fix(specs): Ingestion API - update destination payload ([#6320](https://github.com/algolia/api-clients-automation/pull/6320)) by [@sbellone](https://github.com/sbellone/)
