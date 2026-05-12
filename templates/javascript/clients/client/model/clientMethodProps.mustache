@@ -220,6 +220,11 @@ export type AccountCopyIndexOptions = {
    * The size of the chunk of `objects`. Defaults to 1000.
    */
   batchSize?: number | undefined;
+
+  /**
+   * The maximum number of retries when polling for task completion. 100 by default.
+   */
+  maxRetries?: number | undefined;
 };
 {{/isAlgoliasearchClient}}
 {{/isSearchClient}}
