@@ -38,7 +38,7 @@ jobs:
         run: yarn runScript index-maintenance/query-categorization/generateEvents.ts
 
       - name: notify slack on failure
-        uses: slackapi/slack-github-action@v3.0.1
+        uses: slackapi/slack-github-action@v3.0.3
         if: failure()
         with:
           method: chat.postMessage
