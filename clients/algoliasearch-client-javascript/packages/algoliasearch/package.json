@@ -106,7 +106,7 @@
     "@cloudflare/workers-types": "4.20251115.0",
     "@types/node": "25.1.0",
     "jsdom": "29.0.2",
-    "publint": "0.3.18",
+    "publint": "0.3.20",
     "rollup": "4.59.0",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
