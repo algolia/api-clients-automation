@@ -4,7 +4,6 @@ package recommend
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // RemoveWordsIfNoResults Strategy for removing words from the query when it doesn't return any results. This helps to avoid returning empty search results.  - `none`.   No words are removed when a query doesn't return results.  - `lastWords`.   Treat the last (then second to last, then third to last) word as optional,   until there are results or at most 5 words have been removed.  - `firstWords`.   Treat the first (then second, then third) word as optional,   until there are results or at most 5 words have been removed.  - `allOptional`.   Treat all words as optional.  For more information, see [Remove words to improve results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results).
@@ -46,10 +45,12 @@ func (v *RemoveWordsIfNoResults) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := RemoveWordsIfNoResults(value)
-	if slices.Contains(AllowedRemoveWordsIfNoResultsEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedRemoveWordsIfNoResultsEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid RemoveWordsIfNoResults", value)
@@ -57,7 +58,13 @@ func (v *RemoveWordsIfNoResults) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v RemoveWordsIfNoResults) IsValid() bool {
-	return slices.Contains(AllowedRemoveWordsIfNoResultsEnumValues, v)
+	for _, existing := range AllowedRemoveWordsIfNoResultsEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to removeWordsIfNoResults value.

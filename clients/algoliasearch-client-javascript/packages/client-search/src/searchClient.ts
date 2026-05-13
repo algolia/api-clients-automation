@@ -16,6 +16,7 @@ import {
   createTransporter,
   getAlgoliaAgent,
   shuffle,
+  validateRequired,
 } from '@algolia/client-common';
 
 import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
@@ -511,10 +512,18 @@ export function createSearchClient({
      * @param chunkedBatch.action - The `batch` `action` to perform on the given array of `objects`, defaults to `addObject`.
      * @param chunkedBatch.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
      * @param chunkedBatch.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param chunkedBatch.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
     async chunkedBatch(
-      { indexName, objects, action = 'addObject', waitForTasks, batchSize = 1000 }: ChunkedBatchOptions,
+      {
+        indexName,
+        objects,
+        action = 'addObject',
+        waitForTasks,
+        batchSize = 1000,
+        maxRetries = 100,
+      }: ChunkedBatchOptions,
       requestOptions?: RequestOptions,
     ): Promise<Array<BatchResponse>> {
       let requests: Array<BatchRequest> = [];
@@ -531,7 +540,7 @@ export function createSearchClient({
 
       if (waitForTasks) {
         for (const resp of responses) {
-          await this.waitForTask({ indexName, taskID: resp.taskID });
+          await this.waitForTask({ indexName, taskID: resp.taskID, maxRetries });
         }
       }
 
@@ -547,14 +556,15 @@ export function createSearchClient({
      * @param saveObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
      * @param saveObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param saveObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+     * @param saveObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
      */
     async saveObjects(
-      { indexName, objects, waitForTasks, batchSize }: SaveObjectsOptions,
+      { indexName, objects, waitForTasks, batchSize, maxRetries }: SaveObjectsOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
-        { indexName, objects, action: 'addObject', waitForTasks, batchSize },
+        { indexName, objects, action: 'addObject', waitForTasks, batchSize, maxRetries },
         requestOptions,
       );
     },
@@ -568,10 +578,11 @@ export function createSearchClient({
      * @param deleteObjects.objectIDs - The objectIDs to delete.
      * @param deleteObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param deleteObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+     * @param deleteObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
      */
     async deleteObjects(
-      { indexName, objectIDs, waitForTasks, batchSize }: DeleteObjectsOptions,
+      { indexName, objectIDs, waitForTasks, batchSize, maxRetries }: DeleteObjectsOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
@@ -581,6 +592,7 @@ export function createSearchClient({
           action: 'deleteObject',
           waitForTasks,
           batchSize,
+          maxRetries,
         },
         requestOptions,
       );
@@ -596,10 +608,11 @@ export function createSearchClient({
      * @param partialUpdateObjects.createIfNotExists - To be provided if non-existing objects are passed, otherwise, the call will fail.
      * @param partialUpdateObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param partialUpdateObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+     * @param partialUpdateObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
     async partialUpdateObjects(
-      { indexName, objects, createIfNotExists, waitForTasks, batchSize }: PartialUpdateObjectsOptions,
+      { indexName, objects, createIfNotExists, waitForTasks, batchSize, maxRetries }: PartialUpdateObjectsOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
@@ -609,6 +622,7 @@ export function createSearchClient({
           action: createIfNotExists ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate',
           batchSize,
           waitForTasks,
+          maxRetries,
         },
         requestOptions,
       );
@@ -624,10 +638,11 @@ export function createSearchClient({
      * @param replaceAllObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
      * @param replaceAllObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `objects.length / batchSize`. Defaults to 1000.
      * @param replaceAllObjects.scopes - The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
+     * @param replaceAllObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch`, `operationIndex` and `getTask` method and merged with the transporter requestOptions.
      */
     async replaceAllObjects(
-      { indexName, objects, batchSize, scopes }: ReplaceAllObjectsOptions,
+      { indexName, objects, batchSize, scopes, maxRetries = 100 }: ReplaceAllObjectsOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<ReplaceAllObjectsResponse> {
       const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
@@ -651,13 +666,14 @@ export function createSearchClient({
         );
 
         const batchResponses = await this.chunkedBatch(
-          { indexName: tmpIndexName, objects, waitForTasks: true, batchSize },
+          { indexName: tmpIndexName, objects, waitForTasks: true, batchSize, maxRetries },
           requestOptions,
         );
 
         await this.waitForTask({
           indexName: tmpIndexName,
           taskID: copyOperationResponse.taskID,
+          maxRetries,
         });
 
         copyOperationResponse = await this.operationIndex(
@@ -674,6 +690,7 @@ export function createSearchClient({
         await this.waitForTask({
           indexName: tmpIndexName,
           taskID: copyOperationResponse.taskID,
+          maxRetries,
         });
 
         const moveOperationResponse = await this.operationIndex(
@@ -686,6 +703,7 @@ export function createSearchClient({
         await this.waitForTask({
           indexName: tmpIndexName,
           taskID: moveOperationResponse.taskID,
+          maxRetries,
         });
 
         return { copyOperationResponse, batchResponses, moveOperationResponse };
@@ -749,13 +767,9 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     addApiKey(apiKey: ApiKey, requestOptions?: RequestOptions): Promise<AddApiKeyResponse> {
-      if (!apiKey) {
-        throw new Error('Parameter `apiKey` is required when calling `addApiKey`.');
-      }
+      validateRequired('apiKey', 'addApiKey', apiKey);
 
-      if (!apiKey.acl) {
-        throw new Error('Parameter `apiKey.acl` is required when calling `addApiKey`.');
-      }
+      validateRequired('apiKey.acl', 'addApiKey', apiKey.acl);
 
       const requestPath = '/1/keys';
       const headers: Headers = {};
@@ -787,17 +801,11 @@ export function createSearchClient({
       { indexName, objectID, body }: AddOrUpdateObjectProps<T>,
       requestOptions?: RequestOptions,
     ): Promise<UpdatedAtWithObjectIdResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `addOrUpdateObject`.');
-      }
+      validateRequired('indexName', 'addOrUpdateObject', indexName);
 
-      if (!objectID) {
-        throw new Error('Parameter `objectID` is required when calling `addOrUpdateObject`.');
-      }
+      validateRequired('objectID', 'addOrUpdateObject', objectID);
 
-      if (!body) {
-        throw new Error('Parameter `body` is required when calling `addOrUpdateObject`.');
-      }
+      validateRequired('body', 'addOrUpdateObject', body);
 
       const requestPath = '/1/indexes/{indexName}/{objectID}'
         .replace('{indexName}', encodeURIComponent(indexName))
@@ -825,13 +833,9 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     appendSource(source: Source, requestOptions?: RequestOptions): Promise<CreatedAtResponse> {
-      if (!source) {
-        throw new Error('Parameter `source` is required when calling `appendSource`.');
-      }
+      validateRequired('source', 'appendSource', source);
 
-      if (!source.source) {
-        throw new Error('Parameter `source.source` is required when calling `appendSource`.');
-      }
+      validateRequired('source.source', 'appendSource', source.source);
 
       const requestPath = '/1/security/sources/append';
       const headers: Headers = {};
@@ -864,17 +868,11 @@ export function createSearchClient({
       { xAlgoliaUserID, assignUserIdParams }: AssignUserIdProps,
       requestOptions?: RequestOptions,
     ): Promise<CreatedAtResponse> {
-      if (!xAlgoliaUserID) {
-        throw new Error('Parameter `xAlgoliaUserID` is required when calling `assignUserId`.');
-      }
+      validateRequired('xAlgoliaUserID', 'assignUserId', xAlgoliaUserID);
 
-      if (!assignUserIdParams) {
-        throw new Error('Parameter `assignUserIdParams` is required when calling `assignUserId`.');
-      }
+      validateRequired('assignUserIdParams', 'assignUserId', assignUserIdParams);
 
-      if (!assignUserIdParams.cluster) {
-        throw new Error('Parameter `assignUserIdParams.cluster` is required when calling `assignUserId`.');
-      }
+      validateRequired('assignUserIdParams.cluster', 'assignUserId', assignUserIdParams.cluster);
 
       const requestPath = '/1/clusters/mapping';
       const headers: Headers = {};
@@ -906,17 +904,11 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     batch({ indexName, batchWriteParams }: BatchProps, requestOptions?: RequestOptions): Promise<BatchResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `batch`.');
-      }
+      validateRequired('indexName', 'batch', indexName);
 
-      if (!batchWriteParams) {
-        throw new Error('Parameter `batchWriteParams` is required when calling `batch`.');
-      }
+      validateRequired('batchWriteParams', 'batch', batchWriteParams);
 
-      if (!batchWriteParams.requests) {
-        throw new Error('Parameter `batchWriteParams.requests` is required when calling `batch`.');
-      }
+      validateRequired('batchWriteParams.requests', 'batch', batchWriteParams.requests);
 
       const requestPath = '/1/indexes/{indexName}/batch'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
@@ -949,20 +941,12 @@ export function createSearchClient({
       { xAlgoliaUserID, batchAssignUserIdsParams }: BatchAssignUserIdsProps,
       requestOptions?: RequestOptions,
     ): Promise<CreatedAtResponse> {
-      if (!xAlgoliaUserID) {
-        throw new Error('Parameter `xAlgoliaUserID` is required when calling `batchAssignUserIds`.');
-      }
+      validateRequired('xAlgoliaUserID', 'batchAssignUserIds', xAlgoliaUserID);
 
-      if (!batchAssignUserIdsParams) {
-        throw new Error('Parameter `batchAssignUserIdsParams` is required when calling `batchAssignUserIds`.');
-      }
+      validateRequired('batchAssignUserIdsParams', 'batchAssignUserIds', batchAssignUserIdsParams);
 
-      if (!batchAssignUserIdsParams.cluster) {
-        throw new Error('Parameter `batchAssignUserIdsParams.cluster` is required when calling `batchAssignUserIds`.');
-      }
-      if (!batchAssignUserIdsParams.users) {
-        throw new Error('Parameter `batchAssignUserIdsParams.users` is required when calling `batchAssignUserIds`.');
-      }
+      validateRequired('batchAssignUserIdsParams.cluster', 'batchAssignUserIds', batchAssignUserIdsParams.cluster);
+      validateRequired('batchAssignUserIdsParams.users', 'batchAssignUserIds', batchAssignUserIdsParams.users);
 
       const requestPath = '/1/clusters/mapping/batch';
       const headers: Headers = {};
@@ -997,19 +981,15 @@ export function createSearchClient({
       { dictionaryName, batchDictionaryEntriesParams }: BatchDictionaryEntriesProps,
       requestOptions?: RequestOptions,
     ): Promise<UpdatedAtResponse> {
-      if (!dictionaryName) {
-        throw new Error('Parameter `dictionaryName` is required when calling `batchDictionaryEntries`.');
-      }
+      validateRequired('dictionaryName', 'batchDictionaryEntries', dictionaryName);
 
-      if (!batchDictionaryEntriesParams) {
-        throw new Error('Parameter `batchDictionaryEntriesParams` is required when calling `batchDictionaryEntries`.');
-      }
+      validateRequired('batchDictionaryEntriesParams', 'batchDictionaryEntries', batchDictionaryEntriesParams);
 
-      if (!batchDictionaryEntriesParams.requests) {
-        throw new Error(
-          'Parameter `batchDictionaryEntriesParams.requests` is required when calling `batchDictionaryEntries`.',
-        );
-      }
+      validateRequired(
+        'batchDictionaryEntriesParams.requests',
+        'batchDictionaryEntries',
+        batchDictionaryEntriesParams.requests,
+      );
 
       const requestPath = '/1/dictionaries/{dictionaryName}/batch'.replace(
         '{dictionaryName}',
@@ -1040,9 +1020,7 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     browse<T>({ indexName, browseParams }: BrowseProps, requestOptions?: RequestOptions): Promise<BrowseResponse<T>> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `browse`.');
-      }
+      validateRequired('indexName', 'browse', indexName);
 
       const requestPath = '/1/indexes/{indexName}/browse'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
@@ -1070,9 +1048,7 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     clearObjects({ indexName }: ClearObjectsProps, requestOptions?: RequestOptions): Promise<UpdatedAtResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `clearObjects`.');
-      }
+      validateRequired('indexName', 'clearObjects', indexName);
 
       const requestPath = '/1/indexes/{indexName}/clear'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
@@ -1102,9 +1078,7 @@ export function createSearchClient({
       { indexName, forwardToReplicas }: ClearRulesProps,
       requestOptions?: RequestOptions,
     ): Promise<UpdatedAtResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `clearRules`.');
-      }
+      validateRequired('indexName', 'clearRules', indexName);
 
       const requestPath = '/1/indexes/{indexName}/rules/clear'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
@@ -1138,9 +1112,7 @@ export function createSearchClient({
       { indexName, forwardToReplicas }: ClearSynonymsProps,
       requestOptions?: RequestOptions,
     ): Promise<UpdatedAtResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `clearSynonyms`.');
-      }
+      validateRequired('indexName', 'clearSynonyms', indexName);
 
       const requestPath = '/1/indexes/{indexName}/synonyms/clear'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
@@ -1171,9 +1143,7 @@ export function createSearchClient({
       { path, parameters }: CustomDeleteProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customDelete`.');
-      }
+      validateRequired('path', 'customDelete', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -1197,9 +1167,7 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     customGet({ path, parameters }: CustomGetProps, requestOptions?: RequestOptions): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customGet`.');
-      }
+      validateRequired('path', 'customGet', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -1227,9 +1195,7 @@ export function createSearchClient({
       { path, parameters, body }: CustomPostProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPost`.');
-      }
+      validateRequired('path', 'customPost', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -1258,9 +1224,7 @@ export function createSearchClient({
       { path, parameters, body }: CustomPutProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPut`.');
-      }
+      validateRequired('path', 'customPut', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -1287,9 +1251,7 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteApiKey({ key }: DeleteApiKeyProps, requestOptions?: RequestOptions): Promise<DeleteApiKeyResponse> {
-      if (!key) {
-        throw new Error('Parameter `key` is required when calling `deleteApiKey`.');
-      }
+      validateRequired('key', 'deleteApiKey', key);
 
       const requestPath = '/1/keys/{key}'.replace('{key}', encodeURIComponent(key));
       const headers: Headers = {};
@@ -1319,13 +1281,9 @@ export function createSearchClient({
       { indexName, deleteByParams }: DeleteByProps,
       requestOptions?: RequestOptions,
     ): Promise<UpdatedAtResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `deleteBy`.');
-      }
+      validateRequired('indexName', 'deleteBy', indexName);
 
-      if (!deleteByParams) {
-        throw new Error('Parameter `deleteByParams` is required when calling `deleteBy`.');
-      }
+      validateRequired('deleteByParams', 'deleteBy', deleteByParams);
 
       const requestPath = '/1/indexes/{indexName}/deleteByQuery'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
@@ -1352,9 +1310,7 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteIndex({ indexName }: DeleteIndexProps, requestOptions?: RequestOptions): Promise<DeletedAtResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `deleteIndex`.');
-      }
+      validateRequired('indexName', 'deleteIndex', indexName);
 
       const requestPath = '/1/indexes/{indexName}'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
@@ -1384,13 +1340,9 @@ export function createSearchClient({
       { indexName, objectID }: DeleteObjectProps,
       requestOptions?: RequestOptions,
     ): Promise<DeletedAtResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `deleteObject`.');
-      }
+      validateRequired('indexName', 'deleteObject', indexName);
 
-      if (!objectID) {
-        throw new Error('Parameter `objectID` is required when calling `deleteObject`.');
-      }
+      validateRequired('objectID', 'deleteObject', objectID);
 
       const requestPath = '/1/indexes/{indexName}/{objectID}'
         .replace('{indexName}', encodeURIComponent(indexName))
@@ -1423,13 +1375,9 @@ export function createSearchClient({
       { indexName, objectID, forwardToReplicas }: DeleteRuleProps,
       requestOptions?: RequestOptions,
     ): Promise<UpdatedAtResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `deleteRule`.');
-      }
+      validateRequired('indexName', 'deleteRule', indexName);
 
-      if (!objectID) {
-        throw new Error('Parameter `objectID` is required when calling `deleteRule`.');
-      }
+      validateRequired('objectID', 'deleteRule', objectID);
 
       const requestPath = '/1/indexes/{indexName}/rules/{objectID}'
         .replace('{indexName}', encodeURIComponent(indexName))
@@ -1461,9 +1409,7 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteSource({ source }: DeleteSourceProps, requestOptions?: RequestOptions): Promise<DeleteSourceResponse> {
-      if (!source) {
-        throw new Error('Parameter `source` is required when calling `deleteSource`.');
-      }
+      validateRequired('source', 'deleteSource', source);
 
       const requestPath = '/1/security/sources/{source}'.replace('{source}', encodeURIComponent(source));
       const headers: Headers = {};
@@ -1494,13 +1440,9 @@ export function createSearchClient({
       { indexName, objectID, forwardToReplicas }: DeleteSynonymProps,
       requestOptions?: RequestOptions,
     ): Promise<DeletedAtResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `deleteSynonym`.');
-      }
+      validateRequired('indexName', 'deleteSynonym', indexName);
 
-      if (!objectID) {
-        throw new Error('Parameter `objectID` is required when calling `deleteSynonym`.');
-      }
+      validateRequired('objectID', 'deleteSynonym', objectID);
 
       const requestPath = '/1/indexes/{indexName}/synonyms/{objectID}'
         .replace('{indexName}', encodeURIComponent(indexName))
@@ -1532,9 +1474,7 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getApiKey({ key }: GetApiKeyProps, requestOptions?: RequestOptions): Promise<GetApiKeyResponse> {
-      if (!key) {
-        throw new Error('Parameter `key` is required when calling `getApiKey`.');
-      }
+      validateRequired('key', 'getApiKey', key);
 
       const requestPath = '/1/keys/{key}'.replace('{key}', encodeURIComponent(key));
       const headers: Headers = {};
@@ -1560,9 +1500,7 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getAppTask({ taskID }: GetAppTaskProps, requestOptions?: RequestOptions): Promise<GetTaskResponse> {
-      if (!taskID) {
-        throw new Error('Parameter `taskID` is required when calling `getAppTask`.');
-      }
+      validateRequired('taskID', 'getAppTask', taskID);
 
       const requestPath = '/1/task/{taskID}'.replace('{taskID}', encodeURIComponent(taskID));
       const headers: Headers = {};
@@ -1683,13 +1621,9 @@ export function createSearchClient({
       { indexName, objectID, attributesToRetrieve }: GetObjectProps,
       requestOptions?: RequestOptions,
     ): Promise<T> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `getObject`.');
-      }
+      validateRequired('indexName', 'getObject', indexName);
 
-      if (!objectID) {
-        throw new Error('Parameter `objectID` is required when calling `getObject`.');
-      }
+      validateRequired('objectID', 'getObject', objectID);
 
       const requestPath = '/1/indexes/{indexName}/{objectID}'
         .replace('{indexName}', encodeURIComponent(indexName))
@@ -1720,13 +1654,9 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getObjects<T>(getObjectsParams: GetObjectsParams, requestOptions?: RequestOptions): Promise<GetObjectsResponse<T>> {
-      if (!getObjectsParams) {
-        throw new Error('Parameter `getObjectsParams` is required when calling `getObjects`.');
-      }
+      validateRequired('getObjectsParams', 'getObjects', getObjectsParams);
 
-      if (!getObjectsParams.requests) {
-        throw new Error('Parameter `getObjectsParams.requests` is required when calling `getObjects`.');
-      }
+      validateRequired('getObjectsParams.requests', 'getObjects', getObjectsParams.requests);
 
       const requestPath = '/1/indexes/*/objects';
       const headers: Headers = {};
@@ -1756,13 +1686,9 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getRule({ indexName, objectID }: GetRuleProps, requestOptions?: RequestOptions): Promise<Rule> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `getRule`.');
-      }
+      validateRequired('indexName', 'getRule', indexName);
 
-      if (!objectID) {
-        throw new Error('Parameter `objectID` is required when calling `getRule`.');
-      }
+      validateRequired('objectID', 'getRule', objectID);
 
       const requestPath = '/1/indexes/{indexName}/rules/{objectID}'
         .replace('{indexName}', encodeURIComponent(indexName))
@@ -1794,9 +1720,7 @@ export function createSearchClient({
       { indexName, getVersion }: GetSettingsProps,
       requestOptions?: RequestOptions,
     ): Promise<SettingsResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `getSettings`.');
-      }
+      validateRequired('indexName', 'getSettings', indexName);
 
       const requestPath = '/1/indexes/{indexName}/settings'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
@@ -1849,13 +1773,9 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSynonym({ indexName, objectID }: GetSynonymProps, requestOptions?: RequestOptions): Promise<SynonymHit> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `getSynonym`.');
-      }
+      validateRequired('indexName', 'getSynonym', indexName);
 
-      if (!objectID) {
-        throw new Error('Parameter `objectID` is required when calling `getSynonym`.');
-      }
+      validateRequired('objectID', 'getSynonym', objectID);
 
       const requestPath = '/1/indexes/{indexName}/synonyms/{objectID}'
         .replace('{indexName}', encodeURIComponent(indexName))
@@ -1884,13 +1804,9 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTask({ indexName, taskID }: GetTaskProps, requestOptions?: RequestOptions): Promise<GetTaskResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `getTask`.');
-      }
+      validateRequired('indexName', 'getTask', indexName);
 
-      if (!taskID) {
-        throw new Error('Parameter `taskID` is required when calling `getTask`.');
-      }
+      validateRequired('taskID', 'getTask', taskID);
 
       const requestPath = '/1/indexes/{indexName}/task/{taskID}'
         .replace('{indexName}', encodeURIComponent(indexName))
@@ -1944,9 +1860,7 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getUserId({ userID }: GetUserIdProps, requestOptions?: RequestOptions): Promise<UserId> {
-      if (!userID) {
-        throw new Error('Parameter `userID` is required when calling `getUserId`.');
-      }
+      validateRequired('userID', 'getUserId', userID);
 
       const requestPath = '/1/clusters/mapping/{userID}'.replace('{userID}', encodeURIComponent(userID));
       const headers: Headers = {};
@@ -2124,13 +2038,9 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     multipleBatch(batchParams: BatchParams, requestOptions?: RequestOptions): Promise<MultipleBatchResponse> {
-      if (!batchParams) {
-        throw new Error('Parameter `batchParams` is required when calling `multipleBatch`.');
-      }
+      validateRequired('batchParams', 'multipleBatch', batchParams);
 
-      if (!batchParams.requests) {
-        throw new Error('Parameter `batchParams.requests` is required when calling `multipleBatch`.');
-      }
+      validateRequired('batchParams.requests', 'multipleBatch', batchParams.requests);
 
       const requestPath = '/1/indexes/*/batch';
       const headers: Headers = {};
@@ -2161,20 +2071,12 @@ export function createSearchClient({
       { indexName, operationIndexParams }: OperationIndexProps,
       requestOptions?: RequestOptions,
     ): Promise<UpdatedAtResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `operationIndex`.');
-      }
+      validateRequired('indexName', 'operationIndex', indexName);
 
-      if (!operationIndexParams) {
-        throw new Error('Parameter `operationIndexParams` is required when calling `operationIndex`.');
-      }
+      validateRequired('operationIndexParams', 'operationIndex', operationIndexParams);
 
-      if (!operationIndexParams.operation) {
-        throw new Error('Parameter `operationIndexParams.operation` is required when calling `operationIndex`.');
-      }
-      if (!operationIndexParams.destination) {
-        throw new Error('Parameter `operationIndexParams.destination` is required when calling `operationIndex`.');
-      }
+      validateRequired('operationIndexParams.operation', 'operationIndex', operationIndexParams.operation);
+      validateRequired('operationIndexParams.destination', 'operationIndex', operationIndexParams.destination);
 
       const requestPath = '/1/indexes/{indexName}/operation'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
@@ -2207,17 +2109,11 @@ export function createSearchClient({
       { indexName, objectID, attributesToUpdate, createIfNotExists }: PartialUpdateObjectProps,
       requestOptions?: RequestOptions,
     ): Promise<UpdatedAtWithObjectIdResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `partialUpdateObject`.');
-      }
+      validateRequired('indexName', 'partialUpdateObject', indexName);
 
-      if (!objectID) {
-        throw new Error('Parameter `objectID` is required when calling `partialUpdateObject`.');
-      }
+      validateRequired('objectID', 'partialUpdateObject', objectID);
 
-      if (!attributesToUpdate) {
-        throw new Error('Parameter `attributesToUpdate` is required when calling `partialUpdateObject`.');
-      }
+      validateRequired('attributesToUpdate', 'partialUpdateObject', attributesToUpdate);
 
       const requestPath = '/1/indexes/{indexName}/{objectID}/partial'
         .replace('{indexName}', encodeURIComponent(indexName))
@@ -2252,9 +2148,7 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     removeUserId({ userID }: RemoveUserIdProps, requestOptions?: RequestOptions): Promise<RemoveUserIdResponse> {
-      if (!userID) {
-        throw new Error('Parameter `userID` is required when calling `removeUserId`.');
-      }
+      validateRequired('userID', 'removeUserId', userID);
 
       const requestPath = '/1/clusters/mapping/{userID}'.replace('{userID}', encodeURIComponent(userID));
       const headers: Headers = {};
@@ -2280,9 +2174,7 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     replaceSources({ source }: ReplaceSourcesProps, requestOptions?: RequestOptions): Promise<ReplaceSourceResponse> {
-      if (!source) {
-        throw new Error('Parameter `source` is required when calling `replaceSources`.');
-      }
+      validateRequired('source', 'replaceSources', source);
 
       const requestPath = '/1/security/sources';
       const headers: Headers = {};
@@ -2309,9 +2201,7 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     restoreApiKey({ key }: RestoreApiKeyProps, requestOptions?: RequestOptions): Promise<AddApiKeyResponse> {
-      if (!key) {
-        throw new Error('Parameter `key` is required when calling `restoreApiKey`.');
-      }
+      validateRequired('key', 'restoreApiKey', key);
 
       const requestPath = '/1/keys/{key}/restore'.replace('{key}', encodeURIComponent(key));
       const headers: Headers = {};
@@ -2341,13 +2231,9 @@ export function createSearchClient({
       { indexName, body }: SaveObjectProps<T>,
       requestOptions?: RequestOptions,
     ): Promise<SaveObjectResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `saveObject`.');
-      }
+      validateRequired('indexName', 'saveObject', indexName);
 
-      if (!body) {
-        throw new Error('Parameter `body` is required when calling `saveObject`.');
-      }
+      validateRequired('body', 'saveObject', body);
 
       const requestPath = '/1/indexes/{indexName}'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
@@ -2380,24 +2266,14 @@ export function createSearchClient({
       { indexName, objectID, rule, forwardToReplicas }: SaveRuleProps,
       requestOptions?: RequestOptions,
     ): Promise<UpdatedAtResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `saveRule`.');
-      }
+      validateRequired('indexName', 'saveRule', indexName);
 
-      if (!objectID) {
-        throw new Error('Parameter `objectID` is required when calling `saveRule`.');
-      }
+      validateRequired('objectID', 'saveRule', objectID);
 
-      if (!rule) {
-        throw new Error('Parameter `rule` is required when calling `saveRule`.');
-      }
+      validateRequired('rule', 'saveRule', rule);
 
-      if (!rule.objectID) {
-        throw new Error('Parameter `rule.objectID` is required when calling `saveRule`.');
-      }
-      if (!rule.consequence) {
-        throw new Error('Parameter `rule.consequence` is required when calling `saveRule`.');
-      }
+      validateRequired('rule.objectID', 'saveRule', rule.objectID);
+      validateRequired('rule.consequence', 'saveRule', rule.consequence);
 
       const requestPath = '/1/indexes/{indexName}/rules/{objectID}'
         .replace('{indexName}', encodeURIComponent(indexName))
@@ -2436,13 +2312,9 @@ export function createSearchClient({
       { indexName, rules, forwardToReplicas, clearExistingRules }: SaveRulesProps,
       requestOptions?: RequestOptions,
     ): Promise<UpdatedAtResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `saveRules`.');
-      }
+      validateRequired('indexName', 'saveRules', indexName);
 
-      if (!rules) {
-        throw new Error('Parameter `rules` is required when calling `saveRules`.');
-      }
+      validateRequired('rules', 'saveRules', rules);
 
       const requestPath = '/1/indexes/{indexName}/rules/batch'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
@@ -2483,24 +2355,14 @@ export function createSearchClient({
       { indexName, objectID, synonymHit, forwardToReplicas }: SaveSynonymProps,
       requestOptions?: RequestOptions,
     ): Promise<SaveSynonymResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `saveSynonym`.');
-      }
+      validateRequired('indexName', 'saveSynonym', indexName);
 
-      if (!objectID) {
-        throw new Error('Parameter `objectID` is required when calling `saveSynonym`.');
-      }
+      validateRequired('objectID', 'saveSynonym', objectID);
 
-      if (!synonymHit) {
-        throw new Error('Parameter `synonymHit` is required when calling `saveSynonym`.');
-      }
+      validateRequired('synonymHit', 'saveSynonym', synonymHit);
 
-      if (!synonymHit.objectID) {
-        throw new Error('Parameter `synonymHit.objectID` is required when calling `saveSynonym`.');
-      }
-      if (!synonymHit.type) {
-        throw new Error('Parameter `synonymHit.type` is required when calling `saveSynonym`.');
-      }
+      validateRequired('synonymHit.objectID', 'saveSynonym', synonymHit.objectID);
+      validateRequired('synonymHit.type', 'saveSynonym', synonymHit.type);
 
       const requestPath = '/1/indexes/{indexName}/synonyms/{objectID}'
         .replace('{indexName}', encodeURIComponent(indexName))
@@ -2539,13 +2401,9 @@ export function createSearchClient({
       { indexName, synonymHit, forwardToReplicas, replaceExistingSynonyms }: SaveSynonymsProps,
       requestOptions?: RequestOptions,
     ): Promise<UpdatedAtResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `saveSynonyms`.');
-      }
+      validateRequired('indexName', 'saveSynonyms', indexName);
 
-      if (!synonymHit) {
-        throw new Error('Parameter `synonymHit` is required when calling `saveSynonyms`.');
-      }
+      validateRequired('synonymHit', 'saveSynonyms', synonymHit);
 
       const requestPath = '/1/indexes/{indexName}/synonyms/batch'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
@@ -2606,13 +2464,9 @@ export function createSearchClient({
         searchMethodParams = newSignatureRequest;
       }
 
-      if (!searchMethodParams) {
-        throw new Error('Parameter `searchMethodParams` is required when calling `search`.');
-      }
+      validateRequired('searchMethodParams', 'search', searchMethodParams);
 
-      if (!searchMethodParams.requests) {
-        throw new Error('Parameter `searchMethodParams.requests` is required when calling `search`.');
-      }
+      validateRequired('searchMethodParams.requests', 'search', searchMethodParams.requests);
 
       const requestPath = '/1/indexes/*/queries';
       const headers: Headers = {};
@@ -2645,21 +2499,15 @@ export function createSearchClient({
       { dictionaryName, searchDictionaryEntriesParams }: SearchDictionaryEntriesProps,
       requestOptions?: RequestOptions,
     ): Promise<SearchDictionaryEntriesResponse> {
-      if (!dictionaryName) {
-        throw new Error('Parameter `dictionaryName` is required when calling `searchDictionaryEntries`.');
-      }
+      validateRequired('dictionaryName', 'searchDictionaryEntries', dictionaryName);
 
-      if (!searchDictionaryEntriesParams) {
-        throw new Error(
-          'Parameter `searchDictionaryEntriesParams` is required when calling `searchDictionaryEntries`.',
-        );
-      }
+      validateRequired('searchDictionaryEntriesParams', 'searchDictionaryEntries', searchDictionaryEntriesParams);
 
-      if (!searchDictionaryEntriesParams.query) {
-        throw new Error(
-          'Parameter `searchDictionaryEntriesParams.query` is required when calling `searchDictionaryEntries`.',
-        );
-      }
+      validateRequired(
+        'searchDictionaryEntriesParams.query',
+        'searchDictionaryEntries',
+        searchDictionaryEntriesParams.query,
+      );
 
       const requestPath = '/1/dictionaries/{dictionaryName}/search'.replace(
         '{dictionaryName}',
@@ -2696,13 +2544,9 @@ export function createSearchClient({
       { indexName, facetName, searchForFacetValuesRequest }: SearchForFacetValuesProps,
       requestOptions?: RequestOptions,
     ): Promise<SearchForFacetValuesResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `searchForFacetValues`.');
-      }
+      validateRequired('indexName', 'searchForFacetValues', indexName);
 
-      if (!facetName) {
-        throw new Error('Parameter `facetName` is required when calling `searchForFacetValues`.');
-      }
+      validateRequired('facetName', 'searchForFacetValues', facetName);
 
       const requestPath = '/1/indexes/{indexName}/facets/{facetName}/query'
         .replace('{indexName}', encodeURIComponent(indexName))
@@ -2737,9 +2581,7 @@ export function createSearchClient({
       { indexName, searchRulesParams }: SearchRulesProps,
       requestOptions?: RequestOptions,
     ): Promise<SearchRulesResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `searchRules`.');
-      }
+      validateRequired('indexName', 'searchRules', indexName);
 
       const requestPath = '/1/indexes/{indexName}/rules/search'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
@@ -2772,9 +2614,7 @@ export function createSearchClient({
       { indexName, searchParams }: SearchSingleIndexProps,
       requestOptions?: RequestOptions,
     ): Promise<SearchResponse<T>> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `searchSingleIndex`.');
-      }
+      validateRequired('indexName', 'searchSingleIndex', indexName);
 
       const requestPath = '/1/indexes/{indexName}/query'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
@@ -2807,9 +2647,7 @@ export function createSearchClient({
       { indexName, searchSynonymsParams }: SearchSynonymsProps,
       requestOptions?: RequestOptions,
     ): Promise<SearchSynonymsResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `searchSynonyms`.');
-      }
+      validateRequired('indexName', 'searchSynonyms', indexName);
 
       const requestPath = '/1/indexes/{indexName}/synonyms/search'.replace(
         '{indexName}',
@@ -2845,13 +2683,9 @@ export function createSearchClient({
       searchUserIdsParams: SearchUserIdsParams,
       requestOptions?: RequestOptions,
     ): Promise<SearchUserIdsResponse> {
-      if (!searchUserIdsParams) {
-        throw new Error('Parameter `searchUserIdsParams` is required when calling `searchUserIds`.');
-      }
+      validateRequired('searchUserIdsParams', 'searchUserIds', searchUserIdsParams);
 
-      if (!searchUserIdsParams.query) {
-        throw new Error('Parameter `searchUserIdsParams.query` is required when calling `searchUserIds`.');
-      }
+      validateRequired('searchUserIdsParams.query', 'searchUserIds', searchUserIdsParams.query);
 
       const requestPath = '/1/clusters/mapping/search';
       const headers: Headers = {};
@@ -2882,15 +2716,13 @@ export function createSearchClient({
       dictionarySettingsParams: DictionarySettingsParams,
       requestOptions?: RequestOptions,
     ): Promise<UpdatedAtResponse> {
-      if (!dictionarySettingsParams) {
-        throw new Error('Parameter `dictionarySettingsParams` is required when calling `setDictionarySettings`.');
-      }
+      validateRequired('dictionarySettingsParams', 'setDictionarySettings', dictionarySettingsParams);
 
-      if (!dictionarySettingsParams.disableStandardEntries) {
-        throw new Error(
-          'Parameter `dictionarySettingsParams.disableStandardEntries` is required when calling `setDictionarySettings`.',
-        );
-      }
+      validateRequired(
+        'dictionarySettingsParams.disableStandardEntries',
+        'setDictionarySettings',
+        dictionarySettingsParams.disableStandardEntries,
+      );
 
       const requestPath = '/1/dictionaries/*/settings';
       const headers: Headers = {};
@@ -2922,13 +2754,9 @@ export function createSearchClient({
       { indexName, indexSettings, forwardToReplicas }: SetSettingsProps,
       requestOptions?: RequestOptions,
     ): Promise<UpdatedAtResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `setSettings`.');
-      }
+      validateRequired('indexName', 'setSettings', indexName);
 
-      if (!indexSettings) {
-        throw new Error('Parameter `indexSettings` is required when calling `setSettings`.');
-      }
+      validateRequired('indexSettings', 'setSettings', indexSettings);
 
       const requestPath = '/1/indexes/{indexName}/settings'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
@@ -2960,17 +2788,11 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     updateApiKey({ key, apiKey }: UpdateApiKeyProps, requestOptions?: RequestOptions): Promise<UpdateApiKeyResponse> {
-      if (!key) {
-        throw new Error('Parameter `key` is required when calling `updateApiKey`.');
-      }
+      validateRequired('key', 'updateApiKey', key);
 
-      if (!apiKey) {
-        throw new Error('Parameter `apiKey` is required when calling `updateApiKey`.');
-      }
+      validateRequired('apiKey', 'updateApiKey', apiKey);
 
-      if (!apiKey.acl) {
-        throw new Error('Parameter `apiKey.acl` is required when calling `updateApiKey`.');
-      }
+      validateRequired('apiKey.acl', 'updateApiKey', apiKey.acl);
 
       const requestPath = '/1/keys/{key}'.replace('{key}', encodeURIComponent(key));
       const headers: Headers = {};

@@ -4,7 +4,6 @@ package suggestions
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // LogLevel Type of log entry.  - `SKIP`. A query is skipped because it doesn't match the conditions for successful inclusion. For example, when a query doesn't generate enough search results. - `INFO`. An informative log entry. - `ERROR`. The Query Suggestions process encountered an error.
@@ -44,10 +43,12 @@ func (v *LogLevel) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := LogLevel(value)
-	if slices.Contains(AllowedLogLevelEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedLogLevelEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid LogLevel", value)
@@ -55,7 +56,13 @@ func (v *LogLevel) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v LogLevel) IsValid() bool {
-	return slices.Contains(AllowedLogLevelEnumValues, v)
+	for _, existing := range AllowedLogLevelEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to LogLevel value.

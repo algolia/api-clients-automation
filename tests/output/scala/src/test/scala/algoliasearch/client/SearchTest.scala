@@ -677,6 +677,36 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
+  test("handles 204 No Content responses correctly") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6692)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.customDelete[JObject](
+        path = "1/test/no-content"
+      ),
+      Duration.Inf
+    )
+
+    assert(res == null)
+  }
+
   test("client throws with invalid parameters") {
 
     assertError("`appId` is missing.") {
@@ -810,6 +840,74 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
+  test("call partialUpdateObjectsWithTransformation with createIfNotExists=true") {
+
+    val ingestionClientOptions = ClientOptions
+      .builder()
+      .withHosts(
+        List(
+          Host(
+            if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+            Set(CallType.Read, CallType.Write),
+            "http",
+            Option(6688)
+          ),
+          Host(
+            if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+            Set(CallType.Read, CallType.Write),
+            "http",
+            Option(6689)
+          )
+        )
+      )
+      .build()
+    val transformationOptions = TransformationOptions(region = "us", clientOptions = Some(ingestionClientOptions))
+    val client = SearchClient.withTransformation(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      transformationOptions = transformationOptions,
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6688)
+            ),
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6689)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.partialUpdateObjectsWithTransformation(
+          indexName = "cts_e2e_partialUpdateObjectsWithTransformation_scala",
+          objects = Seq(
+            JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+            JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit"))))
+          ),
+          createIfNotExists = true,
+          waitForTasks = true
+        ),
+        Duration.Inf
+      )
+      assert(
+        parse(write(res)) == parse(
+          "[{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_scala\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82925\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}]"
+        )
+      )
+    }
+  }
+
   test("call replaceAllObjects without error") {
 
     val client = SearchClient(
@@ -931,6 +1029,69 @@ class SearchTest extends AnyFunSuite {
           )
         ),
         Duration.Inf
+      )
+    }
+  }
+
+  test("call replaceAllObjectsWithTransformation without error") {
+
+    val ingestionClientOptions = ClientOptions
+      .builder()
+      .withHosts(
+        List(
+          Host(
+            if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+            Set(CallType.Read, CallType.Write),
+            "http",
+            Option(6690)
+          )
+        )
+      )
+      .build()
+    val transformationOptions = TransformationOptions(region = "us", clientOptions = Some(ingestionClientOptions))
+    val client = SearchClient.withTransformation(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      transformationOptions = transformationOptions,
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6690)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.replaceAllObjectsWithTransformation(
+          indexName = "cts_e2e_replace_all_objects_with_transformation_scala",
+          objects = Seq(
+            JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+            JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit")))),
+            JObject(List(JField("objectID", JString("3")), JField("name", JString("Cyril")))),
+            JObject(List(JField("objectID", JString("4")), JField("name", JString("David")))),
+            JObject(List(JField("objectID", JString("5")), JField("name", JString("Eva")))),
+            JObject(List(JField("objectID", JString("6")), JField("name", JString("Fiona")))),
+            JObject(List(JField("objectID", JString("7")), JField("name", JString("Gael")))),
+            JObject(List(JField("objectID", JString("8")), JField("name", JString("Hugo")))),
+            JObject(List(JField("objectID", JString("9")), JField("name", JString("Igor")))),
+            JObject(List(JField("objectID", JString("10")), JField("name", JString("Julia"))))
+          ),
+          batchSize = 3
+        ),
+        Duration.Inf
+      )
+      assert(
+        parse(write(res)) == parse(
+          "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"watchResponses\":[{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_scala\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82921\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"},{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_scala\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82922\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"},{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_scala\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82923\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"},{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_scala\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82924\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}"
+        )
       )
     }
   }
@@ -1090,6 +1251,73 @@ class SearchTest extends AnyFunSuite {
           )
         ),
         Duration.Inf
+      )
+    }
+  }
+
+  test("call saveObjectsWithTransformation without error") {
+
+    val ingestionClientOptions = ClientOptions
+      .builder()
+      .withHosts(
+        List(
+          Host(
+            if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+            Set(CallType.Read, CallType.Write),
+            "http",
+            Option(6688)
+          ),
+          Host(
+            if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+            Set(CallType.Read, CallType.Write),
+            "http",
+            Option(6689)
+          )
+        )
+      )
+      .build()
+    val transformationOptions = TransformationOptions(region = "us", clientOptions = Some(ingestionClientOptions))
+    val client = SearchClient.withTransformation(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      transformationOptions = transformationOptions,
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6688)
+            ),
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6689)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.saveObjectsWithTransformation(
+          indexName = "cts_e2e_saveObjectsWithTransformation_scala",
+          objects = Seq(
+            JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+            JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit"))))
+          ),
+          waitForTasks = true
+        ),
+        Duration.Inf
+      )
+      assert(
+        parse(write(res)) == parse(
+          "[{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_scala\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82925\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}]"
+        )
       )
     }
   }

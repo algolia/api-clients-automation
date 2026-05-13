@@ -15,11 +15,11 @@ AlgoliaSearchToolIndexConfig-Output:
       title: enhanceddescription
       default: ''
     searchParameters:
-      $ref: SearchParametersOutputNullable.yml#/SearchParametersOutputNullable
+      $ref: 'SearchParametersOutputNullable.yml#/SearchParametersOutputNullable'
     searchControls:
-      $ref: IndexSearchParametersOutputNullable.yml#/IndexSearchParametersOutputNullable
+      $ref: 'IndexSearchParametersOutputNullable.yml#/IndexSearchParametersOutputNullable'
   type: object
   required:
-  - index
-  - description
+    - index
+    - description
   title: algoliaSearchToolIndexConfig

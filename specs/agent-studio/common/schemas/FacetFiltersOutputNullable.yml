@@ -1,4 +1,4 @@
 FacetFiltersOutputNullable:
   oneOf:
-  - $ref: FacetFiltersOutputUnion.yml#/FacetFilters-OutputUnion
-  - type: 'null'
+    - $ref: 'FacetFiltersOutputUnion.yml#/FacetFilters-OutputUnion'
+    - type: 'null'

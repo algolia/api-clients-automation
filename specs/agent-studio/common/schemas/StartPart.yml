@@ -8,4 +8,4 @@ StartPart:
   type: object
   title: startPart
   required:
-  - type
+    - type

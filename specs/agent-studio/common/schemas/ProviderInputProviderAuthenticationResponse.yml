@@ -1,7 +1,7 @@
 ProviderInputProviderAuthenticationResponse:
   oneOf:
-  - $ref: OpenAIProviderInputOutput.yml#/OpenAIProviderInput-Output
-  - $ref: AzureOpenAIProviderInputOutput.yml#/AzureOpenAIProviderInput-Output
-  - $ref: OpenAICompatibleProviderInputOutput.yml#/OpenAICompatibleProviderInput-Output
-  - $ref: BaseProviderInput.yml#/BaseProviderInput
-  - $ref: AnthropicProviderInputOutput.yml#/AnthropicProviderInput-Output
+    - $ref: 'OpenAIProviderInputOutput.yml#/OpenAIProviderInput-Output'
+    - $ref: 'AzureOpenAIProviderInputOutput.yml#/AzureOpenAIProviderInput-Output'
+    - $ref: 'OpenAICompatibleProviderInputOutput.yml#/OpenAICompatibleProviderInput-Output'
+    - $ref: 'BaseProviderInput.yml#/BaseProviderInput'
+    - $ref: 'AnthropicProviderInputOutput.yml#/AnthropicProviderInput-Output'

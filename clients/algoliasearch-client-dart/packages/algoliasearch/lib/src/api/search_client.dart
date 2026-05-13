@@ -75,6 +75,7 @@ final class SearchClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
+    if (response == null) return AlgoliaNoResponse();
     return deserialize<Object, Object>(
       response,
       'Object',

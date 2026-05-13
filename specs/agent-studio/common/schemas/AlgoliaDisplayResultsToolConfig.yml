@@ -34,4 +34,4 @@ AlgoliaDisplayResultsToolConfig:
   title: algoliaDisplayResultsToolConfig
   description: Configuration for the algolia_display_results tool.
   required:
-  - type
+    - type

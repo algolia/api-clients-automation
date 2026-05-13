@@ -4,7 +4,6 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // TaskSortKeys Property by which to sort the list of tasks.
@@ -48,10 +47,12 @@ func (v *TaskSortKeys) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := TaskSortKeys(value)
-	if slices.Contains(AllowedTaskSortKeysEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedTaskSortKeysEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid TaskSortKeys", value)
@@ -59,7 +60,13 @@ func (v *TaskSortKeys) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v TaskSortKeys) IsValid() bool {
-	return slices.Contains(AllowedTaskSortKeysEnumValues, v)
+	for _, existing := range AllowedTaskSortKeysEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to taskSortKeys value.

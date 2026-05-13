@@ -15,19 +15,19 @@ ToolCallPart:
       title: args
     requiresApproval:
       oneOf:
-      - type: boolean
-      - type: 'null'
+        - type: boolean
+        - type: 'null'
       title: requiresapproval
     providerOptions:
       oneOf:
-      - type: object
-        additionalProperties: true
-      - type: 'null'
+        - type: object
+          additionalProperties: true
+        - type: 'null'
       title: provideroptions
   type: object
   required:
-  - type
-  - toolCallId
-  - toolName
-  - args
+    - type
+    - toolCallId
+    - toolName
+    - args
   title: toolCallPart

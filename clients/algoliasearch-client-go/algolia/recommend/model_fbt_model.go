@@ -4,7 +4,6 @@ package recommend
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // FbtModel Frequently bought together model.  This model recommends items that have been purchased within 1 day with the item with the ID `objectID`.
@@ -40,10 +39,12 @@ func (v *FbtModel) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := FbtModel(value)
-	if slices.Contains(AllowedFbtModelEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedFbtModelEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid FbtModel", value)
@@ -51,7 +52,13 @@ func (v *FbtModel) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v FbtModel) IsValid() bool {
-	return slices.Contains(AllowedFbtModelEnumValues, v)
+	for _, existing := range AllowedFbtModelEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to fbtModel value.

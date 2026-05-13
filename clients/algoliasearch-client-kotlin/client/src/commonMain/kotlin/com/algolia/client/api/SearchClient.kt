@@ -60,7 +60,11 @@ public class SearchClient(
     requestOptions: RequestOptions? = null,
   ): AddApiKeyResponse {
     val requestConfig =
-      RequestConfig(method = RequestMethod.POST, path = listOf("1", "keys"), body = apiKey)
+      RequestConfig(
+        method = RequestMethod.POST,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "keys"),
+        body = apiKey,
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -98,7 +102,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.PUT,
-        path = listOf("1", "indexes", "$indexName", "$objectID"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "$objectID"),
         body = body,
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -120,7 +126,8 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "security", "sources", "append"),
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("1", "security", "sources", "append"),
         body = source,
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -149,7 +156,7 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "clusters", "mapping"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping"),
         headers = buildMap { put("X-Algolia-User-ID", xAlgoliaUserID) },
         body = assignUserIdParams,
       )
@@ -179,7 +186,8 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "$indexName", "batch"),
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "$indexName", "batch"),
         body = batchWriteParams,
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -207,7 +215,8 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "clusters", "mapping", "batch"),
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping", "batch"),
         headers = buildMap { put("X-Algolia-User-ID", xAlgoliaUserID) },
         body = batchAssignUserIdsParams,
       )
@@ -232,7 +241,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "dictionaries", "$dictionaryName", "batch"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "dictionaries", "$dictionaryName", "batch"),
         body = batchDictionaryEntriesParams,
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -266,7 +277,8 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "$indexName", "browse"),
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "$indexName", "browse"),
         isRead = true,
         body = browseParams,
       )
@@ -294,7 +306,8 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "$indexName", "clear"),
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "$indexName", "clear"),
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
@@ -320,7 +333,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "$indexName", "rules", "clear"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "rules", "clear"),
         query = buildMap { forwardToReplicas?.let { put("forwardToReplicas", it) } },
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -347,7 +362,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "$indexName", "synonyms", "clear"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "synonyms", "clear"),
         query = buildMap { forwardToReplicas?.let { put("forwardToReplicas", it) } },
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -462,7 +479,10 @@ public class SearchClient(
   ): DeleteApiKeyResponse {
     require(key.isNotBlank()) { "Parameter `key` is required when calling `deleteApiKey`." }
     val requestConfig =
-      RequestConfig(method = RequestMethod.DELETE, path = listOf("1", "keys", "$key"))
+      RequestConfig(
+        method = RequestMethod.DELETE,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "keys", "$key"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -491,7 +511,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "$indexName", "deleteByQuery"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "deleteByQuery"),
         body = deleteByParams,
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -519,7 +541,10 @@ public class SearchClient(
       "Parameter `indexName` is required when calling `deleteIndex`."
     }
     val requestConfig =
-      RequestConfig(method = RequestMethod.DELETE, path = listOf("1", "indexes", "$indexName"))
+      RequestConfig(
+        method = RequestMethod.DELETE,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "$indexName"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -550,7 +575,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.DELETE,
-        path = listOf("1", "indexes", "$indexName", "$objectID"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "$objectID"),
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
@@ -580,7 +607,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.DELETE,
-        path = listOf("1", "indexes", "$indexName", "rules", "$objectID"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "rules", "$objectID"),
         query = buildMap { forwardToReplicas?.let { put("forwardToReplicas", it) } },
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -603,7 +632,8 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.DELETE,
-        path = listOf("1", "security", "sources", "$source"),
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("1", "security", "sources", "$source"),
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
@@ -635,7 +665,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.DELETE,
-        path = listOf("1", "indexes", "$indexName", "synonyms", "$objectID"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "synonyms", "$objectID"),
         query = buildMap { forwardToReplicas?.let { put("forwardToReplicas", it) } },
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -659,7 +691,10 @@ public class SearchClient(
   ): GetApiKeyResponse {
     require(key.isNotBlank()) { "Parameter `key` is required when calling `getApiKey`." }
     val requestConfig =
-      RequestConfig(method = RequestMethod.GET, path = listOf("1", "keys", "$key"))
+      RequestConfig(
+        method = RequestMethod.GET,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "keys", "$key"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -677,7 +712,10 @@ public class SearchClient(
     requestOptions: RequestOptions? = null,
   ): GetTaskResponse {
     val requestConfig =
-      RequestConfig(method = RequestMethod.GET, path = listOf("1", "task", "$taskID"))
+      RequestConfig(
+        method = RequestMethod.GET,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "task", "$taskID"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -695,7 +733,8 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("1", "dictionaries", "*", "languages"),
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("1", "dictionaries", "*", "languages"),
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
@@ -712,7 +751,11 @@ public class SearchClient(
     requestOptions: RequestOptions? = null
   ): GetDictionarySettingsResponse {
     val requestConfig =
-      RequestConfig(method = RequestMethod.GET, path = listOf("1", "dictionaries", "*", "settings"))
+      RequestConfig(
+        method = RequestMethod.GET,
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("1", "dictionaries", "*", "settings"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -746,7 +789,7 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("1", "logs"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "logs"),
         query =
           buildMap {
             offset?.let { put("offset", it) }
@@ -786,7 +829,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("1", "indexes", "$indexName", "$objectID"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "$objectID"),
         query =
           buildMap {
             attributesToRetrieve?.let { put("attributesToRetrieve", it.joinToString(",")) }
@@ -812,7 +857,7 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "*", "objects"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "*", "objects"),
         isRead = true,
         body = getObjectsParams,
       )
@@ -840,7 +885,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("1", "indexes", "$indexName", "rules", "$objectID"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "rules", "$objectID"),
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
@@ -867,7 +914,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("1", "indexes", "$indexName", "settings"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "settings"),
         query = buildMap { getVersion?.let { put("getVersion", it) } },
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -883,7 +932,10 @@ public class SearchClient(
    */
   public suspend fun getSources(requestOptions: RequestOptions? = null): List<Source> {
     val requestConfig =
-      RequestConfig(method = RequestMethod.GET, path = listOf("1", "security", "sources"))
+      RequestConfig(
+        method = RequestMethod.GET,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "security", "sources"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -910,7 +962,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("1", "indexes", "$indexName", "synonyms", "$objectID"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "synonyms", "$objectID"),
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
@@ -937,7 +991,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("1", "indexes", "$indexName", "task", "$taskID"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "task", "$taskID"),
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
@@ -954,7 +1010,10 @@ public class SearchClient(
    */
   public suspend fun getTopUserIds(requestOptions: RequestOptions? = null): GetTopUserIdsResponse {
     val requestConfig =
-      RequestConfig(method = RequestMethod.GET, path = listOf("1", "clusters", "mapping", "top"))
+      RequestConfig(
+        method = RequestMethod.GET,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping", "top"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -974,7 +1033,8 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("1", "clusters", "mapping", "$userID"),
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping", "$userID"),
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
@@ -998,7 +1058,8 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("1", "clusters", "mapping", "pending"),
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping", "pending"),
         query = buildMap { getClusters?.let { put("getClusters", it) } },
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -1014,7 +1075,11 @@ public class SearchClient(
    * @param requestOptions additional request configuration.
    */
   public suspend fun listApiKeys(requestOptions: RequestOptions? = null): ListApiKeysResponse {
-    val requestConfig = RequestConfig(method = RequestMethod.GET, path = listOf("1", "keys"))
+    val requestConfig =
+      RequestConfig(
+        method = RequestMethod.GET,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "keys"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -1028,7 +1093,11 @@ public class SearchClient(
    * @deprecated
    */
   public suspend fun listClusters(requestOptions: RequestOptions? = null): ListClustersResponse {
-    val requestConfig = RequestConfig(method = RequestMethod.GET, path = listOf("1", "clusters"))
+    val requestConfig =
+      RequestConfig(
+        method = RequestMethod.GET,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -1051,7 +1120,7 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("1", "indexes"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes"),
         query =
           buildMap {
             page?.let { put("page", it) }
@@ -1081,7 +1150,7 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("1", "clusters", "mapping"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping"),
         query =
           buildMap {
             page?.let { put("page", it) }
@@ -1110,7 +1179,7 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "*", "batch"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "*", "batch"),
         body = batchParams,
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -1154,7 +1223,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "$indexName", "operation"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "operation"),
         body = operationIndexParams,
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -1215,7 +1286,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "$indexName", "$objectID", "partial"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "$objectID", "partial"),
         query = buildMap { createIfNotExists?.let { put("createIfNotExists", it) } },
         body = attributesToUpdate,
       )
@@ -1240,7 +1313,8 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.DELETE,
-        path = listOf("1", "clusters", "mapping", "$userID"),
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping", "$userID"),
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
@@ -1261,7 +1335,7 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.PUT,
-        path = listOf("1", "security", "sources"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "security", "sources"),
         body = source,
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -1284,7 +1358,10 @@ public class SearchClient(
   ): AddApiKeyResponse {
     require(key.isNotBlank()) { "Parameter `key` is required when calling `restoreApiKey`." }
     val requestConfig =
-      RequestConfig(method = RequestMethod.POST, path = listOf("1", "keys", "$key", "restore"))
+      RequestConfig(
+        method = RequestMethod.POST,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "keys", "$key", "restore"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -1320,7 +1397,7 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "$indexName"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "$indexName"),
         body = body,
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -1352,7 +1429,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.PUT,
-        path = listOf("1", "indexes", "$indexName", "rules", "$objectID"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "rules", "$objectID"),
         query = buildMap { forwardToReplicas?.let { put("forwardToReplicas", it) } },
         body = rule,
       )
@@ -1386,7 +1465,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "$indexName", "rules", "batch"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "rules", "batch"),
         query =
           buildMap {
             forwardToReplicas?.let { put("forwardToReplicas", it) }
@@ -1427,7 +1508,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.PUT,
-        path = listOf("1", "indexes", "$indexName", "synonyms", "$objectID"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "synonyms", "$objectID"),
         query = buildMap { forwardToReplicas?.let { put("forwardToReplicas", it) } },
         body = synonymHit,
       )
@@ -1462,7 +1545,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "$indexName", "synonyms", "batch"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "synonyms", "batch"),
         query =
           buildMap {
             forwardToReplicas?.let { put("forwardToReplicas", it) }
@@ -1493,7 +1578,7 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "*", "queries"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "*", "queries"),
         isRead = true,
         body = searchMethodParams,
       )
@@ -1518,7 +1603,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "dictionaries", "$dictionaryName", "search"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "dictionaries", "$dictionaryName", "search"),
         isRead = true,
         body = searchDictionaryEntriesParams,
       )
@@ -1555,7 +1642,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "$indexName", "facets", "$facetName", "query"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "facets", "$facetName", "query"),
         isRead = true,
         body = searchForFacetValuesRequest,
       )
@@ -1583,7 +1672,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "$indexName", "rules", "search"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "rules", "search"),
         isRead = true,
         body = searchRulesParams,
       )
@@ -1614,7 +1705,8 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "$indexName", "query"),
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "$indexName", "query"),
         isRead = true,
         body = searchParams,
       )
@@ -1642,7 +1734,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "$indexName", "synonyms", "search"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "synonyms", "search"),
         isRead = true,
         body = searchSynonymsParams,
       )
@@ -1670,7 +1764,8 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "clusters", "mapping", "search"),
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping", "search"),
         isRead = true,
         body = searchUserIdsParams,
       )
@@ -1693,7 +1788,8 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.PUT,
-        path = listOf("1", "dictionaries", "*", "settings"),
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("1", "dictionaries", "*", "settings"),
         body = dictionarySettingsParams,
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -1724,7 +1820,9 @@ public class SearchClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.PUT,
-        path = listOf("1", "indexes", "$indexName", "settings"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "settings"),
         query = buildMap { forwardToReplicas?.let { put("forwardToReplicas", it) } },
         body = indexSettings,
       )
@@ -1749,7 +1847,11 @@ public class SearchClient(
   ): UpdateApiKeyResponse {
     require(key.isNotBlank()) { "Parameter `key` is required when calling `updateApiKey`." }
     val requestConfig =
-      RequestConfig(method = RequestMethod.PUT, path = listOf("1", "keys", "$key"), body = apiKey)
+      RequestConfig(
+        method = RequestMethod.PUT,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "keys", "$key"),
+        body = apiKey,
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 }

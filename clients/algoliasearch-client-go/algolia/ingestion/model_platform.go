@@ -4,7 +4,6 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // Platform Name of an ecommerce platform with which to authenticate. This determines which authentication type you can select.
@@ -44,10 +43,12 @@ func (v *Platform) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := Platform(value)
-	if slices.Contains(AllowedPlatformEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedPlatformEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid Platform", value)
@@ -55,7 +56,13 @@ func (v *Platform) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v Platform) IsValid() bool {
-	return slices.Contains(AllowedPlatformEnumValues, v)
+	for _, existing := range AllowedPlatformEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to Platform value.

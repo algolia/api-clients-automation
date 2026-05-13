@@ -6,7 +6,6 @@ using Algolia.Search.Models.QuerySuggestions;
 using Algolia.Search.Serializer;
 using Algolia.Search.Tests.Utils;
 using dotenv.net;
-using Quibble.Xunit;
 using Xunit;
 
 namespace Algolia.Search.e2e;
@@ -53,10 +52,9 @@ public class QuerySuggestionsClientRequestTestsE2E
       // Check status code 200
       Assert.NotNull(resp);
 
-      JsonAssert.EqualOverrideDefault(
+      TestHelpers.LenientJsonAssert(
         "{\"appID\":\"T8JK9S7I7X\",\"allowSpecialCharacters\":true,\"enablePersonalization\":false,\"exclude\":[\"^cocaines$\"],\"indexName\":\"cts_e2e_browse_query_suggestions\",\"languages\":[],\"sourceIndices\":[{\"facets\":[{\"amount\":1,\"attribute\":\"title\"}],\"generate\":[[\"year\"]],\"indexName\":\"cts_e2e_browse\",\"minHits\":5,\"minLetters\":4,\"replicas\":false}]}",
-        JsonSerializer.Serialize(resp, JsonConfig.Options),
-        new JsonDiffConfig(true)
+        JsonSerializer.Serialize(resp, JsonConfig.Options)
       );
     }
     catch (Exception e)

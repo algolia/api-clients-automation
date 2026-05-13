@@ -4,7 +4,6 @@ package search
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // ApiKeyOperation the model 'ApiKeyOperation'.
@@ -44,10 +43,12 @@ func (v *ApiKeyOperation) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := ApiKeyOperation(value)
-	if slices.Contains(AllowedApiKeyOperationEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedApiKeyOperationEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid ApiKeyOperation", value)
@@ -55,7 +56,13 @@ func (v *ApiKeyOperation) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v ApiKeyOperation) IsValid() bool {
-	return slices.Contains(AllowedApiKeyOperationEnumValues, v)
+	for _, existing := range AllowedApiKeyOperationEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to apiKeyOperation value.

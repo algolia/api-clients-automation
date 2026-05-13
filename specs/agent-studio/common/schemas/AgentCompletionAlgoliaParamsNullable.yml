@@ -1,4 +1,4 @@
 AgentCompletionAlgoliaParamsNullable:
   oneOf:
-  - $ref: AgentCompletionAlgoliaParams.yml#/AgentCompletionAlgoliaParams
-  - type: 'null'
+    - $ref: 'AgentCompletionAlgoliaParams.yml#/AgentCompletionAlgoliaParams'
+    - type: 'null'

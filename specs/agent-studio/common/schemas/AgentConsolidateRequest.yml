@@ -9,7 +9,7 @@ AgentConsolidateRequest:
       title: model
       description: Model name (e.g., gpt-4o-mini).
     messages:
-      $ref: MessagesUnion.yml#/MessagesUnion
+      $ref: 'MessagesUnion.yml#/MessagesUnion'
     targetMemories:
       type: integer
       maximum: 50.0
@@ -19,9 +19,9 @@ AgentConsolidateRequest:
       default: 5
     instructions:
       oneOf:
-      - type: string
-        maxLength: 50000
-      - type: 'null'
+        - type: string
+          maxLength: 50000
+        - type: 'null'
       title: instructions
       description: Optional domain-specific instructions to guide extraction or consolidation.
     wait:
@@ -30,7 +30,7 @@ AgentConsolidateRequest:
       description: Wait for Algolia indexing to complete before returning.
       default: false
     memoryType:
-      $ref: MemoryType.yml#/MemoryType
+      $ref: 'MemoryType.yml#/MemoryType'
     maxExisting:
       type: integer
       maximum: 500.0
@@ -40,8 +40,8 @@ AgentConsolidateRequest:
       default: 50
   type: object
   required:
-  - providerID
-  - model
-  - messages
+    - providerID
+    - model
+    - messages
   title: agentConsolidateRequest
   description: Agent endpoint request for automatic memory consolidation.

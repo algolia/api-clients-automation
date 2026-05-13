@@ -13,8 +13,6 @@ import kotlin.test.*
 import kotlinx.coroutines.test.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
-import org.skyscreamer.jsonassert.JSONAssert
-import org.skyscreamer.jsonassert.JSONCompareMode
 
 class QuerySuggestionsTest {
 
@@ -44,10 +42,9 @@ class QuerySuggestionsTest {
     client.runTest(
       call = { getConfig(indexName = "cts_e2e_browse_query_suggestions") },
       response = {
-        JSONAssert.assertEquals(
+        lenientJsonAssert(
           "{\"appID\":\"T8JK9S7I7X\",\"allowSpecialCharacters\":true,\"enablePersonalization\":false,\"exclude\":[\"^cocaines$\"],\"indexName\":\"cts_e2e_browse_query_suggestions\",\"languages\":[],\"sourceIndices\":[{\"facets\":[{\"amount\":1,\"attribute\":\"title\"}],\"generate\":[[\"year\"]],\"indexName\":\"cts_e2e_browse\",\"minHits\":5,\"minLetters\":4,\"replicas\":false}]}",
           Json.encodeToString(it),
-          JSONCompareMode.LENIENT,
         )
       },
     )

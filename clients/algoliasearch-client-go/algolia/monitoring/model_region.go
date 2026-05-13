@@ -4,7 +4,6 @@ package monitoring
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // Region Region where the cluster is located.
@@ -68,10 +67,12 @@ func (v *Region) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := Region(value)
-	if slices.Contains(AllowedRegionEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedRegionEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid Region", value)
@@ -79,7 +80,13 @@ func (v *Region) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v Region) IsValid() bool {
-	return slices.Contains(AllowedRegionEnumValues, v)
+	for _, existing := range AllowedRegionEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to Region value.

@@ -108,6 +108,36 @@ object SearchClient {
     clientOptions = clientOptions
   )
 
+  /** Creates a new SearchClient configured with [[TransformationOptions]] for use with the `*WithTransformation`
+    * helpers. The ingestion transporter is built eagerly using Ingestion API defaults; pass
+    * [[TransformationOptions.clientOptions]] to override them.
+    *
+    * See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+    *
+    * @param appId
+    *   application ID
+    * @param apiKey
+    *   api key
+    * @param transformationOptions
+    *   ingestion transporter configuration; `region` is required
+    * @param clientOptions
+    *   search client options
+    */
+  def withTransformation(
+      appId: String,
+      apiKey: String,
+      transformationOptions: TransformationOptions,
+      clientOptions: ClientOptions = ClientOptions()
+  ): SearchClient = {
+    val client = new SearchClient(
+      appId = appId,
+      apiKey = apiKey,
+      clientOptions = clientOptions
+    )
+    client.setTransformationOptions(transformationOptions)
+    client
+  }
+
   private def readTimeout(): Duration = {
     Duration(5000, TimeUnit.MILLISECONDS)
   }
@@ -150,6 +180,33 @@ class SearchClient(
       formats = JsonSupport.format,
       options = clientOptions
     ) {
+
+  @volatile private[algoliasearch] var ingestionTransporter: Option[IngestionClient] = None
+
+  /** Sets (or replaces) the ingestion transporter used by `*WithTransformation` helpers. Closes the previous
+    * transporter if one exists. Thread-safe with respect to other `setTransformationOptions` and `close()` calls.
+    * Calling this while a `*WithTransformation` operation is in flight may cause that operation to fail — reconfigure
+    * between calls.
+    *
+    * See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+    */
+  def setTransformationOptions(transformationOptions: TransformationOptions): Unit = synchronized {
+    val previous = ingestionTransporter
+    ingestionTransporter = Some(
+      IngestionClient(
+        appId = appId,
+        apiKey = apiKey,
+        region = transformationOptions.region,
+        clientOptions = transformationOptions.clientOptions.getOrElse(ClientOptions())
+      )
+    )
+    previous.foreach(_.close())
+  }
+
+  override def close(): Unit = synchronized {
+    try ingestionTransporter.foreach(_.close())
+    finally super.close()
+  }
 
   /** Creates a new API key with specific permissions and restrictions.
     *

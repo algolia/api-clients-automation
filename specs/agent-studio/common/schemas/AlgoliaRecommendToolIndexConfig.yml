@@ -16,6 +16,6 @@ AlgoliaRecommendToolIndexConfig:
       default: ''
   type: object
   required:
-  - index
-  - modelName
+    - index
+    - modelName
   title: algoliaRecommendToolIndexConfig

@@ -4,7 +4,6 @@ package search
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // SortRemainingBy Order of facet values that aren't explicitly positioned with the `order` setting.  - `count`.   Order remaining facet values by decreasing count.   The count is the number of matching records containing this facet value.  - `alpha`.   Sort facet values alphabetically.  - `hidden`.   Don't show facet values that aren't explicitly positioned.
@@ -44,10 +43,12 @@ func (v *SortRemainingBy) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := SortRemainingBy(value)
-	if slices.Contains(AllowedSortRemainingByEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedSortRemainingByEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid SortRemainingBy", value)
@@ -55,7 +56,13 @@ func (v *SortRemainingBy) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v SortRemainingBy) IsValid() bool {
-	return slices.Contains(AllowedSortRemainingByEnumValues, v)
+	for _, existing := range AllowedSortRemainingByEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to sortRemainingBy value.

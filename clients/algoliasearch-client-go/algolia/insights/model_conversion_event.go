@@ -4,7 +4,6 @@ package insights
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // ConversionEvent the model 'ConversionEvent'.
@@ -40,10 +39,12 @@ func (v *ConversionEvent) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := ConversionEvent(value)
-	if slices.Contains(AllowedConversionEventEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedConversionEventEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid ConversionEvent", value)
@@ -51,7 +52,13 @@ func (v *ConversionEvent) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v ConversionEvent) IsValid() bool {
-	return slices.Contains(AllowedConversionEventEnumValues, v)
+	for _, existing := range AllowedConversionEventEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to ConversionEvent value.

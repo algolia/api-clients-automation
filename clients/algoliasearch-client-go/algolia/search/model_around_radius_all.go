@@ -4,7 +4,6 @@ package search
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // AroundRadiusAll Return all records with a valid `_geoloc` attribute. Don't filter by distance.
@@ -40,10 +39,12 @@ func (v *AroundRadiusAll) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := AroundRadiusAll(value)
-	if slices.Contains(AllowedAroundRadiusAllEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedAroundRadiusAllEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid AroundRadiusAll", value)
@@ -51,7 +52,13 @@ func (v *AroundRadiusAll) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v AroundRadiusAll) IsValid() bool {
-	return slices.Contains(AllowedAroundRadiusAllEnumValues, v)
+	for _, existing := range AllowedAroundRadiusAllEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to aroundRadiusAll value.

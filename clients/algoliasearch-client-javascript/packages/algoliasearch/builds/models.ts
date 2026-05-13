@@ -142,7 +142,6 @@ import type {
 } from '@algolia/client-abtesting';
 
 export * from '@algolia/abtesting';
-export * from '@algolia/agent-studio';
 export * from '@algolia/client-abtesting';
 export * from '@algolia/client-analytics';
 export * from '@algolia/client-insights';

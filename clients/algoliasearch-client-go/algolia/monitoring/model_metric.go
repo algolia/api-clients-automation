@@ -4,7 +4,6 @@ package monitoring
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // Metric the model 'Metric'.
@@ -50,10 +49,12 @@ func (v *Metric) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := Metric(value)
-	if slices.Contains(AllowedMetricEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedMetricEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid Metric", value)
@@ -61,7 +62,13 @@ func (v *Metric) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v Metric) IsValid() bool {
-	return slices.Contains(AllowedMetricEnumValues, v)
+	for _, existing := range AllowedMetricEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to Metric value.

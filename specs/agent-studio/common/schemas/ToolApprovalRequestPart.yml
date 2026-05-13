@@ -15,24 +15,24 @@ ToolApprovalRequestPart:
       title: args
     description:
       oneOf:
-      - type: string
-      - type: 'null'
+        - type: string
+        - type: 'null'
       title: description
     providerOptions:
       oneOf:
-      - type: object
-        additionalProperties: true
-      - type: 'null'
+        - type: object
+          additionalProperties: true
+        - type: 'null'
       title: provideroptions
     argsHash:
       oneOf:
-      - type: string
-      - type: 'null'
+        - type: string
+        - type: 'null'
       title: argshash
   type: object
   required:
-  - type
-  - toolCallId
-  - toolName
-  - args
+    - type
+    - toolCallId
+    - toolName
+    - args
   title: toolApprovalRequestPart

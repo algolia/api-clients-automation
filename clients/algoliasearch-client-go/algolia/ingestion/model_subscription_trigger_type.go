@@ -4,7 +4,6 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // SubscriptionTriggerType Task runs after receiving subscribed event.
@@ -40,10 +39,12 @@ func (v *SubscriptionTriggerType) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := SubscriptionTriggerType(value)
-	if slices.Contains(AllowedSubscriptionTriggerTypeEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedSubscriptionTriggerTypeEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid SubscriptionTriggerType", value)
@@ -51,7 +52,13 @@ func (v *SubscriptionTriggerType) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v SubscriptionTriggerType) IsValid() bool {
-	return slices.Contains(AllowedSubscriptionTriggerTypeEnumValues, v)
+	for _, existing := range AllowedSubscriptionTriggerTypeEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to SubscriptionTriggerType value.

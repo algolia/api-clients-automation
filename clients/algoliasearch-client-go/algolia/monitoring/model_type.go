@@ -4,7 +4,6 @@ package monitoring
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // Type the model 'Type'.
@@ -40,10 +39,12 @@ func (v *Type) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := Type(value)
-	if slices.Contains(AllowedTypeEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedTypeEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid Type", value)
@@ -51,7 +52,13 @@ func (v *Type) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v Type) IsValid() bool {
-	return slices.Contains(AllowedTypeEnumValues, v)
+	for _, existing := range AllowedTypeEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to Type value.

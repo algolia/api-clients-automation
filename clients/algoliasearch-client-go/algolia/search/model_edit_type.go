@@ -4,7 +4,6 @@ package search
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // EditType Type of edit.
@@ -42,10 +41,12 @@ func (v *EditType) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := EditType(value)
-	if slices.Contains(AllowedEditTypeEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedEditTypeEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid EditType", value)
@@ -53,7 +54,13 @@ func (v *EditType) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v EditType) IsValid() bool {
-	return slices.Contains(AllowedEditTypeEnumValues, v)
+	for _, existing := range AllowedEditTypeEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to editType value.

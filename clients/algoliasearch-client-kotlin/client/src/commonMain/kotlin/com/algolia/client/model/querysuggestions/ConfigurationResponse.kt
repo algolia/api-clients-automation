@@ -31,7 +31,7 @@ public data class ConfigurationResponse(
   /** Algolia indices from which to get the popular searches for query suggestions. */
   @SerialName(value = "sourceIndices") val sourceIndices: List<SourceIndex>,
   @SerialName(value = "languages") val languages: Languages,
-  @SerialName(value = "exclude") val exclude: List<String>,
+  @SerialName(value = "exclude") val exclude: List<String>? = null,
 
   /** Whether to turn on personalized query suggestions. */
   @SerialName(value = "enablePersonalization") val enablePersonalization: Boolean,

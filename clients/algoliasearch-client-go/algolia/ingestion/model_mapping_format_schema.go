@@ -4,7 +4,6 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // MappingFormatSchema Mapping format schema.
@@ -40,10 +39,12 @@ func (v *MappingFormatSchema) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := MappingFormatSchema(value)
-	if slices.Contains(AllowedMappingFormatSchemaEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedMappingFormatSchemaEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid MappingFormatSchema", value)
@@ -51,7 +52,13 @@ func (v *MappingFormatSchema) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v MappingFormatSchema) IsValid() bool {
-	return slices.Contains(AllowedMappingFormatSchemaEnumValues, v)
+	for _, existing := range AllowedMappingFormatSchemaEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to MappingFormatSchema value.
