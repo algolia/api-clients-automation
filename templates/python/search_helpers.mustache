@@ -3,7 +3,7 @@
         index_name: str,
         task_id: int,
         timeout: RetryTimeout = RetryTimeout(),
-        max_retries: int = 50,
+        max_retries: int = 100,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetTaskResponse:
         """
@@ -31,7 +31,7 @@
         self,
         task_id: int,
         timeout: RetryTimeout = RetryTimeout(),
-        max_retries: int = 50,
+        max_retries: int = 100,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetTaskResponse:
         """
@@ -60,7 +60,7 @@
         key: str,
         operation: str,
         api_key: Optional[Union[ApiKey, dict[str, Any]]] = None,
-        max_retries: int = 50,
+        max_retries: int = 100,
         timeout: RetryTimeout = RetryTimeout(),
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetApiKeyResponse | None:
