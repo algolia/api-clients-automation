@@ -4,6 +4,7 @@ package search
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // Action Which indexing operation to perform:  - `addObject`: adds records to an index.    Equivalent to the \"Add a new record (with auto-generated object ID)\" operation. - `updateObject`: adds or replaces records in an index.    Equivalent to the \"Add or replace a record\" operation. - `partialUpdateObject`: adds or updates attributes within records.    Equivalent to the \"Add or update attributes\" operation with the `createIfNoExists` parameter set to true.    (If a record with the specified `objectID` doesn't exist in the specified index, this action creates adds the record to the index) - `partialUpdateObjectNoCreate`: same as `partialUpdateObject`, but with `createIfNoExists` set to false.    (A record isn't added to the index if its `objectID` doesn't exist) - `deleteObject`: delete records from an index.   Equivalent to the \"Delete a record\" operation. - `delete`. Delete an index. Equivalent to the \"Delete an index\" operation. - `clear`: delete all records from an index. Equivalent to the \"Delete all records from an index operation\".
@@ -51,12 +52,10 @@ func (v *Action) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := Action(value)
-	for _, existing := range AllowedActionEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedActionEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid Action", value)
@@ -64,13 +63,7 @@ func (v *Action) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v Action) IsValid() bool {
-	for _, existing := range AllowedActionEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedActionEnumValues, v)
 }
 
 // Ptr returns reference to action value.

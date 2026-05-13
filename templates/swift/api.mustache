@@ -112,7 +112,7 @@ import Foundation
         }
 
         {{/required}}{{/isString}}{{/queryParams}}
-        {{^pathParams}}let{{/pathParams}}{{#pathParams}}{{#-first}}var{{/-first}}{{/pathParams}} resourcePath = "{{{path}}}"{{#pathParams}}
+        {{^pathParams}}let{{/pathParams}}{{#pathParams}}{{#-first}}var{{/-first}}{{/pathParams}} resourcePath = "{{{serverPathSuffix}}}{{{path}}}"{{#pathParams}}
         let {{paramName}}PreEscape = "\({{#isEnum}}{{paramName}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}.rawValue{{/isContainer}}{{/isEnum}}{{^isEnum}}APIHelper.mapValueToPathItem({{paramName}}){{/isEnum}})"{{^x-is-custom-request}}
         let {{paramName}}PostEscape = {{paramName}}PreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""{{/x-is-custom-request}}
         resourcePath = resourcePath.replacingOccurrences(of: "{{=<% %>=}}{<%baseName%>}<%={{ }}=%>", with: {{^x-is-custom-request}}{{paramName}}PostEscape{{/x-is-custom-request}}{{#x-is-custom-request}}{{paramName}}PreEscape{{/x-is-custom-request}}, options: .literal, range: nil){{/pathParams}}

@@ -4,6 +4,7 @@ package recommend
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // MatchLevel Whether the whole query string matches or only a part.
@@ -43,12 +44,10 @@ func (v *MatchLevel) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := MatchLevel(value)
-	for _, existing := range AllowedMatchLevelEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedMatchLevelEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid MatchLevel", value)
@@ -56,13 +55,7 @@ func (v *MatchLevel) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v MatchLevel) IsValid() bool {
-	for _, existing := range AllowedMatchLevelEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedMatchLevelEnumValues, v)
 }
 
 // Ptr returns reference to matchLevel value.

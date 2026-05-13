@@ -1,0 +1,13 @@
+AllowedDomainBulkDelete:
+  properties:
+    domainIds:
+      items:
+        type: string
+      type: array
+      title: domainids
+      description: IDs of allowed domain records to delete.
+  type: object
+  required:
+  - domainIds
+  title: allowedDomainBulkDelete
+  description: Request body for bulk delete by IDs.

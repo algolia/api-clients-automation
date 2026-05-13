@@ -1,0 +1,45 @@
+FeedbackResponse:
+  properties:
+    id:
+      type: string
+      title: id
+    agentId:
+      type: string
+      title: agentid
+    messageId:
+      type: string
+      title: messageid
+    vote:
+      type: integer
+      title: vote
+    tags:
+      items:
+        type: string
+      type: array
+      title: tags
+    notes:
+      oneOf:
+      - type: string
+      - type: 'null'
+      title: notes
+    model:
+      oneOf:
+      - type: string
+      - type: 'null'
+      title: model
+    createdAt:
+      type: string
+      title: createdat
+    updatedAt:
+      type: string
+      title: updatedat
+  type: object
+  required:
+  - id
+  - agentId
+  - messageId
+  - vote
+  - tags
+  - createdAt
+  - updatedAt
+  title: feedbackResponse

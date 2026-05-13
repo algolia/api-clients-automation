@@ -4,6 +4,7 @@ package composition
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // DedupPositioning Deduplication positioning configures how a duplicate result should be resolved between an injected item and main search results. Current configuration supports: - 'highest': always select the item in the highest position, and remove duplicates that appear lower in the results. - 'highestInjected': duplicate result will be moved to its highest possible injected position, but not higher.    If a duplicate appears higher in main search results, it will be removed to stay it's intended group position (which could be lower than main).
@@ -41,12 +42,10 @@ func (v *DedupPositioning) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := DedupPositioning(value)
-	for _, existing := range AllowedDedupPositioningEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedDedupPositioningEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid DedupPositioning", value)
@@ -54,13 +53,7 @@ func (v *DedupPositioning) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v DedupPositioning) IsValid() bool {
-	for _, existing := range AllowedDedupPositioningEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedDedupPositioningEnumValues, v)
 }
 
 // Ptr returns reference to dedupPositioning value.

@@ -1,0 +1,65 @@
+get:
+  tags:
+  - Allowed Domains
+  operationId: listAgentAllowedDomains
+  x-acl:
+  - settings
+  summary: List Allowed Domains
+  description: List all allowed domain patterns for this agent.
+  parameters:
+  - name: agentId
+    in: path
+    required: true
+    schema:
+      type: string
+      title: agentId
+    description: The agentId.
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: ../../common/schemas/AllowedDomainListResponse.yml#/AllowedDomainListResponse
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError
+post:
+  tags:
+  - Allowed Domains
+  operationId: createAgentAllowedDomain
+  x-acl:
+  - editSettings
+  summary: Create Allowed Domain
+  description: Add a single allowed domain pattern (e.g. https://app.example.com or
+    *.example.com).
+  parameters:
+  - name: agentId
+    in: path
+    required: true
+    schema:
+      type: string
+      title: agentId
+    description: The agentId.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../../common/schemas/AllowedDomainCreate.yml#/AllowedDomainCreate
+  responses:
+    '201':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: ../../common/schemas/AllowedDomainResponse.yml#/AllowedDomainResponse
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError

@@ -1,0 +1,101 @@
+openapi: 3.0.2
+info:
+  title: Agent Studio API
+  description: |-
+    Algolia's GenAI Toolkit API, building blocks for your dynamic LLM-enabled experiences.
+
+    Build generative AI experiences with your Algolia data. Combine large language models with Algolia’s Search API using Retrieval Augmented Generation (RAG) techniques.
+  version: 0.1.0
+components:
+  securitySchemes:
+    appId:
+      $ref: ../common/securitySchemes.yml#/appId
+    apiKey:
+      $ref: ../common/securitySchemes.yml#/apiKey
+servers:
+- url: https://{APPLICATION_ID}.algolia.net/agent-studio
+  description: Agent Studio API.
+  variables:
+    APPLICATION_ID:
+      default: EXAMPLE
+      description: Your Algolia application ID.
+security:
+- appId: []
+  apiKey: []
+tags:
+- name: Agents
+  description: Manage your agents.
+- name: Allowed Domains
+  description: Restrict where an agent's API key may be used.
+- name: Completions
+  description: Generate completions.
+- name: Configurations
+  description: Manage Agent Studio related application configurations.
+- name: Conversations
+  description: View, export, and delete conversation history.
+- name: Feedback
+  description: Capture user feedback on agent responses.
+- name: Internal
+  description: Endpoints that are needed for internal or integration logic.
+- name: Providers
+  description: Manage your LLM providers.
+- name: Secret Keys
+  description: Manage secret keys used to authenticate requests.
+- name: User Data
+  description: Manage end-user data associated with conversations.
+x-timeouts:
+  browser:
+    connect: 25000
+    read: 25000
+    write: 25000
+  server:
+    connect: 25000
+    read: 25000
+    write: 25000
+paths:
+  /1/agents:
+    $ref: paths/agents/agents.yml
+  /1/agents/{agentId}:
+    $ref: paths/agents/agent.yml
+  /1/agents/{agentId}/allowed-domains:
+    $ref: paths/agents/agentAllowedDomains.yml
+  /1/agents/{agentId}/allowed-domains/bulk:
+    $ref: paths/agents/allowedDomainsBulk.yml
+  /1/agents/{agentId}/allowed-domains/{domainId}:
+    $ref: paths/agents/allowedDomain.yml
+  /1/agents/{agentId}/cache:
+    $ref: paths/agents/agentCache.yml
+  /1/agents/{agentId}/completions:
+    $ref: paths/agents/agentCompletions.yml
+  /1/agents/{agentId}/conversations:
+    $ref: paths/conversations/conversations.yml
+  /1/agents/{agentId}/conversations/export:
+    $ref: paths/conversations/conversationsExport.yml
+  /1/agents/{agentId}/conversations/{conversationId}:
+    $ref: paths/conversations/conversation.yml
+  /1/agents/{agentId}/publish:
+    $ref: paths/agents/agentPublish.yml
+  /1/agents/{agentId}/unpublish:
+    $ref: paths/agents/agentUnpublish.yml
+  /1/configuration:
+    $ref: paths/configuration/configuration.yml
+  /1/feedback:
+    $ref: paths/feedback/feedback.yml
+  /1/providers:
+    $ref: paths/providers/providers.yml
+  /1/providers/models:
+    $ref: paths/providers/models.yml
+  /1/providers/{providerId}:
+    $ref: paths/providers/provider.yml
+  /1/providers/{providerId}/models:
+    $ref: paths/providers/providerModels.yml
+  /1/secret-keys:
+    $ref: paths/secret-keys/secretKeys.yml
+  /1/secret-keys/{secretKeyId}:
+    $ref: paths/secret-keys/secretKey.yml
+  /1/user-data/{userToken}:
+    $ref: paths/user-data/userData.yml
+  /{path}:
+    $ref: ../common/paths/customRequest.yml
+  /setClientApiKey:
+    $ref: ../common/helpers/setClientApiKey.yml#/method

@@ -1,0 +1,19 @@
+MessagePart:
+  oneOf:
+  - $ref: TextPart.yml#/TextPart
+  - $ref: ToolCallPart.yml#/ToolCallPart
+  - $ref: ToolResultPart.yml#/ToolResultPart
+  - $ref: StartPart.yml#/StartPart
+  - $ref: StartStepPart.yml#/StartStepPart
+  - $ref: ReasoningPart.yml#/ReasoningPart
+  - $ref: ToolApprovalRequestPart.yml#/ToolApprovalRequestPart
+  discriminator:
+    propertyName: type
+    mapping:
+      reasoning: ReasoningPart.yml#/ReasoningPart
+      start: StartPart.yml#/StartPart
+      start-step: StartStepPart.yml#/StartStepPart
+      text: TextPart.yml#/TextPart
+      tool-approval-request: ToolApprovalRequestPart.yml#/ToolApprovalRequestPart
+      tool-call: ToolCallPart.yml#/ToolCallPart
+      tool-result: ToolResultPart.yml#/ToolResultPart

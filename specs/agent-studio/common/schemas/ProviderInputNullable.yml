@@ -1,0 +1,8 @@
+ProviderInputNullable:
+  oneOf:
+  - $ref: OpenAIProviderInputInput.yml#/OpenAIProviderInput-Input
+  - $ref: AzureOpenAIProviderInputInput.yml#/AzureOpenAIProviderInput-Input
+  - $ref: OpenAICompatibleProviderInputInput.yml#/OpenAICompatibleProviderInput-Input
+  - $ref: BaseProviderInput.yml#/BaseProviderInput
+  - $ref: AnthropicProviderInputInput.yml#/AnthropicProviderInput-Input
+  - type: 'null'

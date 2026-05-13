@@ -15,6 +15,20 @@
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
+        {{#discriminator}}
+        if let jsonObject = try? container.decode([String: AnyCodable].self),
+           let discriminatorValue = jsonObject["{{{propertyBaseName}}}"]?.value as? String {
+            switch discriminatorValue {
+            {{#mappedModels}}
+            case "{{{mappingName}}}":
+                self = .{{#lambda.camelcase}}{{#lambda.type-to-name}}{{{modelName}}}{{/lambda.type-to-name}}{{/lambda.camelcase}}(try container.decode({{{modelName}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}.self))
+                return
+            {{/mappedModels}}
+            default:
+                break
+            }
+        }
+        {{/discriminator}}
         {{#composedSchemas.oneOf}}
         {{#-first}}
         if let value = try? container.decode({{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}.self) {

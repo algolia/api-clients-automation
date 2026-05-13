@@ -9943,7 +9943,7 @@ func (c *APIClient) ReplaceAllObjectsWithTransformation(
 	if err != nil {
 		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
 
-		return nil, err //nolint:wrapcheck
+		return nil, err
 	}
 
 	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
@@ -10141,7 +10141,7 @@ func (c *APIClient) SaveObjectsWithTransformation(
 		objects,
 		ingestion.Action(ACTION_ADD_OBJECT),
 		nil,
-		toIngestionChunkedBatchOptions(opts)...) //nolint:wrapcheck
+		toIngestionChunkedBatchOptions(opts)...)
 }
 
 /*
@@ -10184,5 +10184,5 @@ func (c *APIClient) PartialUpdateObjectsWithTransformation(
 		objects,
 		ingestion.Action(action),
 		nil,
-		toIngestionChunkedBatchOptions(partialUpdateObjectsToChunkedBatchOptions(opts))...) //nolint:wrapcheck
+		toIngestionChunkedBatchOptions(partialUpdateObjectsToChunkedBatchOptions(opts))...)
 }

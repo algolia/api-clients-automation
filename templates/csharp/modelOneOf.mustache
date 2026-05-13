@@ -214,6 +214,18 @@
         {{#vendorExtensions}}
         var jsonDocument = JsonDocument.ParseValue(ref reader);
         var root = jsonDocument.RootElement;
+        {{#discriminator}}
+        if (root.TryGetProperty("{{{propertyBaseName}}}", out JsonElement discriminatorElement))
+        {
+          string discriminatorValue = discriminatorElement.GetString();
+          {{#mappedModels}}
+          if (discriminatorValue == "{{{mappingName}}}")
+          {
+            return new {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}}(jsonDocument.Deserialize<{{{modelName}}}>(JsonConfig.Options));
+          }
+          {{/mappedModels}}
+        }
+        {{/discriminator}}
         {{#composedSchemas.oneOf}}
         if (root.ValueKind == JsonValueKind.{{#isModel}}Object{{#vendorExtensions.x-discriminator-fields}} && root.TryGetProperty("{{{.}}}", out _){{/vendorExtensions.x-discriminator-fields}}{{/isModel}}{{#isEnumRef}}String{{/isEnumRef}}{{#isArray}}Array{{/isArray}}{{#isInteger}}Number{{/isInteger}}{{#isLong}}Number{{/isLong}}{{#isDouble}}Number{{/isDouble}}{{#isBoolean}}True || root.ValueKind == JsonValueKind.False{{/isBoolean}}{{#isString}}String{{/isString}}{{^isEnumRef}}{{^isModel}}{{^isArray}}{{^isInteger}}{{^isLong}}{{^isDouble}}{{^isBoolean}}{{^isString}}Object{{/isString}}{{/isBoolean}}{{/isDouble}}{{/isLong}}{{/isInteger}}{{/isArray}}{{/isModel}}{{/isEnumRef}})
         {

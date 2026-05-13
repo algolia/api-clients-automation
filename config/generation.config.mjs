@@ -28,6 +28,7 @@ export const patterns = [
 
   'tests/output/csharp/src/Algolia.Search.Tests.csproj',
   '!tests/output/csharp/src/TimeoutIntegrationTests.cs',
+  '!tests/output/csharp/src/Utils/**',
 
   // Dart
   '!clients/algoliasearch-client-dart/**',
@@ -64,6 +65,7 @@ export const patterns = [
 
   'tests/output/java/build.gradle',
   '!tests/output/java/src/test/java/com/algolia/manual/**',
+  '!tests/output/java/src/test/java/com/algolia/utils/**',
 
   // JavaScript
   '!clients/algoliasearch-client-javascript/*',
@@ -91,6 +93,8 @@ export const patterns = [
   'clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/BuildConfig.kt',
   'clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/api/**',
   'clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/**',
+
+  '!tests/output/kotlin/src/commonTest/kotlin/com/algolia/utils/TestHelpers.kt',
 
   // PHP
   '!clients/algoliasearch-client-php/**',

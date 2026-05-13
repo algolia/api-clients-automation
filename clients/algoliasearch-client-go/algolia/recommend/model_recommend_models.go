@@ -4,6 +4,7 @@ package recommend
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // RecommendModels the model 'RecommendModels'.
@@ -45,12 +46,10 @@ func (v *RecommendModels) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := RecommendModels(value)
-	for _, existing := range AllowedRecommendModelsEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedRecommendModelsEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid RecommendModels", value)
@@ -58,13 +57,7 @@ func (v *RecommendModels) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v RecommendModels) IsValid() bool {
-	for _, existing := range AllowedRecommendModelsEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedRecommendModelsEnumValues, v)
 }
 
 // Ptr returns reference to recommendModels value.

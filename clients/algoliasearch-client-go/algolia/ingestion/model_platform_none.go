@@ -4,6 +4,7 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // PlatformNone Authentication resource not tied to any ecommerce platform, used for filtering.
@@ -39,12 +40,10 @@ func (v *PlatformNone) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := PlatformNone(value)
-	for _, existing := range AllowedPlatformNoneEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedPlatformNoneEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid PlatformNone", value)
@@ -52,13 +51,7 @@ func (v *PlatformNone) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v PlatformNone) IsValid() bool {
-	for _, existing := range AllowedPlatformNoneEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedPlatformNoneEnumValues, v)
 }
 
 // Ptr returns reference to platformNone value.

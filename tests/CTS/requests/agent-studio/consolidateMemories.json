@@ -1,0 +1,25 @@
+[
+  {
+    "testName": "consolidateMemories",
+    "parameters": {
+      "providerID": "5e33d805-7892-4329-bda7-b524dc3fd04a",
+      "model": "gpt-4o-mini",
+      "existingMemories": [
+        {"id": "mem-1", "text": "User likes dark mode"},
+        {"id": "mem-2", "text": "User prefers dark themes"}
+      ]
+    },
+    "request": {
+      "path": "/1/memory/consolidate",
+      "method": "POST",
+      "body": {
+        "providerID": "5e33d805-7892-4329-bda7-b524dc3fd04a",
+        "model": "gpt-4o-mini",
+        "existingMemories": [
+          {"id": "mem-1", "text": "User likes dark mode"},
+          {"id": "mem-2", "text": "User prefers dark themes"}
+        ]
+      }
+    }
+  }
+]

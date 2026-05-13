@@ -1,0 +1,11 @@
+AllowedDomainCreate:
+  properties:
+    domain:
+      type: string
+      title: domain
+      description: Domain or pattern, e.g. https://app.example.com or *.example.com.
+  type: object
+  required:
+  - domain
+  title: allowedDomainCreate
+  description: Request body to add a single allowed domain.

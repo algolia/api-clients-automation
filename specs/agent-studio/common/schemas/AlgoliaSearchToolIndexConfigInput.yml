@@ -1,0 +1,25 @@
+AlgoliaSearchToolIndexConfig-Input:
+  properties:
+    index:
+      type: string
+      maxLength: 100
+      minLength: 1
+      title: index
+    description:
+      type: string
+      maxLength: 3000
+      minLength: 1
+      title: description
+    enhancedDescription:
+      type: string
+      title: enhanceddescription
+      default: ''
+    searchParameters:
+      $ref: SearchParametersInputNullable.yml#/SearchParametersInputNullable
+    searchControls:
+      $ref: IndexSearchParametersInputNullable.yml#/IndexSearchParametersInputNullable
+  type: object
+  required:
+  - index
+  - description
+  title: algoliaSearchToolIndexConfig

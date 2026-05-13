@@ -1,5 +1,6 @@
 import http from 'http';
 import https from 'https';
+import { Readable } from 'stream';
 import { URL } from 'url';
 import zlib from 'zlib';
 
@@ -115,5 +116,54 @@ export function createHttpRequester({
     });
   }
 
-  return { send };
+  function sendStream(request: EndRequest): Promise<ReadableStream<Uint8Array>> {
+    return new Promise((resolve, reject) => {
+      const url = new URL(request.url);
+      const path = url.search === null ? url.pathname : `${url.pathname}${url.search}`;
+      const options: https.RequestOptions = {
+        agent: url.protocol === 'https:' ? httpsAgent : httpAgent,
+        hostname: url.hostname,
+        path,
+        method: request.method,
+        ...requesterOptions,
+        headers: {
+          ...request.headers,
+          ...requesterOptions.headers,
+        },
+      };
+
+      if (url.port && !requesterOptions.port) {
+        options.port = url.port;
+      }
+
+      const req = (url.protocol === 'https:' ? https : http).request(options, (response) => {
+        const statusCode = response.statusCode || 0;
+
+        if (statusCode < 200 || statusCode >= 300) {
+          let body = '';
+          response.on('data', (chunk) => {
+            body += chunk;
+          });
+          response.on('end', () => {
+            reject(new Error(`HTTP ${statusCode}: ${body}`));
+          });
+          return;
+        }
+
+        resolve(Readable.toWeb(response) as ReadableStream<Uint8Array>);
+      });
+
+      req.on('error', (error) => {
+        reject(error);
+      });
+
+      if (request.data !== undefined) {
+        req.write(request.data);
+      }
+
+      req.end();
+    });
+  }
+
+  return { send, sendStream };
 }

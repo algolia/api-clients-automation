@@ -938,8 +938,7 @@ public partial class AbtestingV3Client : IAbtestingV3Client
       new AbtestingV3Config(applicationId, apiKey, region),
       new AlgoliaHttpRequester(loggerFactory),
       loggerFactory
-    )
-  { }
+    ) { }
 
   /// <summary>
   /// Initialize a client with custom config

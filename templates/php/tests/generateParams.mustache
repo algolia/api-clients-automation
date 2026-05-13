@@ -9,7 +9,7 @@
   "{{#lambda.escapeJSON}}{{{value}}}{{/lambda.escapeJSON}}",
 {{/isString}}
 {{#isEnum}}
-  "{{{value}}}",
+  {{^isIntegerEnum}}"{{{value}}}"{{/isIntegerEnum}}{{#isIntegerEnum}}{{{value}}}{{/isIntegerEnum}},
 {{/isEnum}}
 {{#isInteger}}
   {{{value}}},

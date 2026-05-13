@@ -5582,8 +5582,7 @@ public partial class IngestionClient : IIngestionClient
       new IngestionConfig(applicationId, apiKey, region),
       new AlgoliaHttpRequester(loggerFactory),
       loggerFactory
-    )
-  { }
+    ) { }
 
   /// <summary>
   /// Initialize a client with custom config

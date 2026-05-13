@@ -4,6 +4,7 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // EntityType Type of entity to update.
@@ -41,12 +42,10 @@ func (v *EntityType) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := EntityType(value)
-	for _, existing := range AllowedEntityTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedEntityTypeEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid EntityType", value)
@@ -54,13 +53,7 @@ func (v *EntityType) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v EntityType) IsValid() bool {
-	for _, existing := range AllowedEntityTypeEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedEntityTypeEnumValues, v)
 }
 
 // Ptr returns reference to EntityType value.

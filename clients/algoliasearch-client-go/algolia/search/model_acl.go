@@ -4,6 +4,7 @@ package search
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // Acl Access control list permissions.
@@ -83,12 +84,10 @@ func (v *Acl) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := Acl(value)
-	for _, existing := range AllowedAclEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedAclEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid Acl", value)
@@ -96,13 +95,7 @@ func (v *Acl) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v Acl) IsValid() bool {
-	for _, existing := range AllowedAclEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedAclEnumValues, v)
 }
 
 // Ptr returns reference to acl value.

@@ -1,0 +1,33 @@
+[
+  {
+    "testName": "listAgentAllowed-Domains",
+    "parameters": {
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
+    },
+    "request": {
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/allowed-domains",
+      "method": "GET"
+    }
+  },
+  {
+    "testName": "e2e list agent allowed domains",
+    "parameters": {
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
+    },
+    "request": {
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/allowed-domains",
+      "method": "GET"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "domains": [
+          {
+            "id": "6486b782-6b4c-4c93-bbba-04849ae4d101",
+            "domain": "cts-e2e.algolia.com"
+          }
+        ]
+      }
+    }
+  }
+]

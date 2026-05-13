@@ -1,0 +1,25 @@
+UserMessageV4:
+  properties:
+    id:
+      oneOf:
+      - type: string
+      - type: 'null'
+      title: id
+    role:
+      type: string
+      const: user
+      title: role
+      default: user
+    content:
+      type: string
+      title: content
+    parts:
+      items:
+        $ref: TextPartV4.yml#/TextPartV4
+      type: array
+      title: parts
+  type: object
+  required:
+  - role
+  - content
+  title: userMessageV4

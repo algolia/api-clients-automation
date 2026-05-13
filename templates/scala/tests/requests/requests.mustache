@@ -46,7 +46,7 @@ class {{clientPrefix}}Test extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "{{{path}}}")
+    assert(res.path == "{{{serverPathSuffix}}}{{{path}}}")
     assert(res.method == "{{{method}}}")
     {{#body}}
     val expectedBody = parse("""{{{body}}}""")

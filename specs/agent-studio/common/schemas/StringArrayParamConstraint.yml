@@ -1,0 +1,12 @@
+StringArrayParamConstraint:
+  properties:
+    values:
+      oneOf:
+      - items:
+          type: string
+        type: array
+      - type: 'null'
+      title: values
+  type: object
+  title: stringArrayParamConstraint
+  description: Constraints for a string array parameter.

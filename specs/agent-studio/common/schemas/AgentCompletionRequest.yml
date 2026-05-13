@@ -1,0 +1,22 @@
+AgentCompletionRequest:
+  properties:
+    configuration:
+      $ref: AgentTestConfigurationNullable.yml#/AgentTestConfigurationNullable
+    messages:
+      $ref: MessagesNullableUnion.yml#/MessagesNullableUnion
+    id:
+      oneOf:
+      - type: string
+        maxLength: 128
+      - type: 'null'
+      title: id
+      description: Optional conversation id.
+    algolia:
+      $ref: AgentCompletionAlgoliaParamsNullable.yml#/AgentCompletionAlgoliaParamsNullable
+    toolApprovals:
+      type: object
+      title: toolApprovals
+      description: Approval decisions for pending tool calls keyed by toolCallId.
+  type: object
+  title: agentCompletionRequest
+  description: Request model for creating a completion for an assistant.

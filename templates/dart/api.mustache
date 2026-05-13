@@ -123,10 +123,10 @@ final class {{classname}} implements ApiClient {
     final request = ApiRequest(
         method: RequestMethod.{{#lambda.snakecase}}{{httpMethod}}{{/lambda.snakecase}},
         {{^vendorExtensions.x-is-custom-request}}
-        path: r'{{{path}}}'{{#pathParams}}.replaceAll('{' r'{{{baseName}}}' '}', Uri.encodeComponent({{{paramName}}}.toString())){{/pathParams}},
+        path: r'{{{serverPathSuffix}}}{{{path}}}'{{#pathParams}}.replaceAll('{' r'{{{baseName}}}' '}', Uri.encodeComponent({{{paramName}}}.toString())){{/pathParams}},
         {{/vendorExtensions.x-is-custom-request}}
         {{#vendorExtensions.x-is-custom-request}}
-        path: r'{{{path}}}'{{#pathParams}}.replaceAll('{' r'{{{baseName}}}' '}', {{{paramName}}}){{/pathParams}},
+        path: r'{{{serverPathSuffix}}}{{{path}}}'{{#pathParams}}.replaceAll('{' r'{{{baseName}}}' '}', {{{paramName}}}){{/pathParams}},
         {{/vendorExtensions.x-is-custom-request}}
         {{#vendorExtensions.x-use-read-transporter}}
         isRead : {{{vendorExtensions.x-use-read-transporter}}},
@@ -175,6 +175,9 @@ final class {{classname}} implements ApiClient {
       ) + {{/vendorExtensions.x-timeouts}}requestOptions,
     );
     {{#returnType}}
+    {{#vendorExtensions.x-is-custom-request}}
+    if (response == null) return AlgoliaNoResponse();
+    {{/vendorExtensions.x-is-custom-request}}
     return deserialize<{{{.}}}, {{{returnBaseType}}}>(response, '{{{.}}}', growable: true,);
     {{/returnType}}
   }  

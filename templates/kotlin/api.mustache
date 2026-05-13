@@ -89,7 +89,7 @@ public class {{classname}}(
       {{/requiredParams}}
       val requestConfig = RequestConfig(
           method = RequestMethod.{{httpMethod}},
-          path = {{#vendorExtensions}}{{#x-is-custom-request}}"{{{path}}}".replace("{path}", path){{/x-is-custom-request}}{{^x-is-custom-request}}listOf({{#pathSegments}}{{{.}}}, {{/pathSegments}}){{/x-is-custom-request}}{{/vendorExtensions}},
+          path = {{#vendorExtensions}}{{#x-is-custom-request}}"{{{serverPathSuffix}}}{{{path}}}".replace("{path}", path){{/x-is-custom-request}}{{^x-is-custom-request}}"{{{serverPathSuffix}}}".split("/").filter { it.isNotBlank() } + listOf({{#pathSegments}}{{{.}}}, {{/pathSegments}}){{/x-is-custom-request}}{{/vendorExtensions}},
           {{#vendorExtensions.x-use-read-transporter}}
           isRead = {{{vendorExtensions.x-use-read-transporter}}},
           {{/vendorExtensions.x-use-read-transporter}}

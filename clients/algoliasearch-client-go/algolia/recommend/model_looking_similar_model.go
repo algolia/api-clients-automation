@@ -4,6 +4,7 @@ package recommend
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // LookingSimilarModel Looking similar model.  This model recommends items that look similar to the item with the ID `objectID` based on image attributes in your index.
@@ -39,12 +40,10 @@ func (v *LookingSimilarModel) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := LookingSimilarModel(value)
-	for _, existing := range AllowedLookingSimilarModelEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedLookingSimilarModelEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid LookingSimilarModel", value)
@@ -52,13 +51,7 @@ func (v *LookingSimilarModel) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v LookingSimilarModel) IsValid() bool {
-	for _, existing := range AllowedLookingSimilarModelEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedLookingSimilarModelEnumValues, v)
 }
 
 // Ptr returns reference to lookingSimilarModel value.

@@ -1,0 +1,6 @@
+AssistantPartV5:
+  oneOf:
+  - $ref: StepStartPartV5.yml#/StepStartPartV5
+  - $ref: TextPartV5.yml#/TextPartV5
+  - $ref: ReasoningPartV5.yml#/ReasoningPartV5
+  - $ref: ToolPartV5.yml#/ToolPartV5
