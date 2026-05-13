@@ -856,7 +856,7 @@ public class SearchClientTests
   [Fact(DisplayName = "call partialUpdateObjectsWithTransformation with createIfNotExists=true")]
   public async Task PartialUpdateObjectsWithTransformationTest0()
   {
-    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    var transformationOptions = new TransformationOptions("us")
     {
       CustomHosts = new List<StatefulHost>
       {
@@ -886,8 +886,39 @@ public class SearchClientTests
         },
       },
     };
-    var client = new SearchClient(_config);
-    client.SetTransformationRegion("us");
+    var client = SearchClient.WithTransformation(
+      new SearchConfig("test-app-id", "test-api-key")
+      {
+        CustomHosts = new List<StatefulHost>
+        {
+          new()
+          {
+            Scheme = HttpScheme.Http,
+            Url =
+              Environment.GetEnvironmentVariable("CI") == "true"
+                ? "localhost"
+                : "host.docker.internal",
+            Port = 6688,
+            Up = true,
+            LastUse = DateTime.UtcNow,
+            Accept = CallType.Read | CallType.Write,
+          },
+          new()
+          {
+            Scheme = HttpScheme.Http,
+            Url =
+              Environment.GetEnvironmentVariable("CI") == "true"
+                ? "localhost"
+                : "host.docker.internal",
+            Port = 6689,
+            Up = true,
+            LastUse = DateTime.UtcNow,
+            Accept = CallType.Read | CallType.Write,
+          },
+        },
+      },
+      transformationOptions
+    );
 
     {
       var res = await client.PartialUpdateObjectsWithTransformationAsync(
@@ -1049,7 +1080,7 @@ public class SearchClientTests
   [Fact(DisplayName = "call replaceAllObjectsWithTransformation without error")]
   public async Task ReplaceAllObjectsWithTransformationTest0()
   {
-    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    var transformationOptions = new TransformationOptions("us")
     {
       CustomHosts = new List<StatefulHost>
       {
@@ -1067,8 +1098,27 @@ public class SearchClientTests
         },
       },
     };
-    var client = new SearchClient(_config);
-    client.SetTransformationRegion("us");
+    var client = SearchClient.WithTransformation(
+      new SearchConfig("test-app-id", "test-api-key")
+      {
+        CustomHosts = new List<StatefulHost>
+        {
+          new()
+          {
+            Scheme = HttpScheme.Http,
+            Url =
+              Environment.GetEnvironmentVariable("CI") == "true"
+                ? "localhost"
+                : "host.docker.internal",
+            Port = 6690,
+            Up = true,
+            LastUse = DateTime.UtcNow,
+            Accept = CallType.Read | CallType.Write,
+          },
+        },
+      },
+      transformationOptions
+    );
 
     {
       var res = await client.ReplaceAllObjectsWithTransformationAsync(
@@ -1266,7 +1316,7 @@ public class SearchClientTests
   [Fact(DisplayName = "call saveObjectsWithTransformation without error")]
   public async Task SaveObjectsWithTransformationTest0()
   {
-    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    var transformationOptions = new TransformationOptions("us")
     {
       CustomHosts = new List<StatefulHost>
       {
@@ -1296,8 +1346,39 @@ public class SearchClientTests
         },
       },
     };
-    var client = new SearchClient(_config);
-    client.SetTransformationRegion("us");
+    var client = SearchClient.WithTransformation(
+      new SearchConfig("test-app-id", "test-api-key")
+      {
+        CustomHosts = new List<StatefulHost>
+        {
+          new()
+          {
+            Scheme = HttpScheme.Http,
+            Url =
+              Environment.GetEnvironmentVariable("CI") == "true"
+                ? "localhost"
+                : "host.docker.internal",
+            Port = 6688,
+            Up = true,
+            LastUse = DateTime.UtcNow,
+            Accept = CallType.Read | CallType.Write,
+          },
+          new()
+          {
+            Scheme = HttpScheme.Http,
+            Url =
+              Environment.GetEnvironmentVariable("CI") == "true"
+                ? "localhost"
+                : "host.docker.internal",
+            Port = 6689,
+            Up = true,
+            LastUse = DateTime.UtcNow,
+            Accept = CallType.Read | CallType.Write,
+          },
+        },
+      },
+      transformationOptions
+    );
 
     {
       var res = await client.SaveObjectsWithTransformationAsync(
