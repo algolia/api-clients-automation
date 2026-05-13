@@ -24,7 +24,7 @@
             validate=lambda _resp: _resp.status == "published",
             timeout=lambda: timeout(_retry_count),
             error_validate=lambda _: _retry_count >= max_retries,
-            error_message=lambda _: f"The maximum number of retries exceeded. ({_retry_count}/{max_retries})",
+            error_message=lambda _: f"Stopped waiting for the task after {max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries.",
         )
 
     {{^isSyncClient}}async {{/isSyncClient}}def wait_for_app_task(
@@ -52,7 +52,7 @@
             validate=lambda _resp: _resp.status == "published",
             timeout=lambda: timeout(_retry_count),
             error_validate=lambda _: _retry_count >= max_retries,
-            error_message=lambda _: f"The maximum number of retries exceeded. ({_retry_count}/{max_retries})",
+            error_message=lambda _: f"Stopped waiting for the task after {max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries.",
         )
 
     {{^isSyncClient}}async {{/isSyncClient}}def wait_for_api_key(
@@ -115,7 +115,7 @@
             aggregator=_aggregator,
             timeout=lambda: timeout(_retry_count),
             error_validate=lambda _: _retry_count >= max_retries,
-            error_message=lambda _: f"The maximum number of retries exceeded. ({_retry_count}/{max_retries})",
+            error_message=lambda _: f"Stopped waiting for the API key operation after {max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries.",
         )
 
     {{^isSyncClient}}async {{/isSyncClient}}def browse_objects(

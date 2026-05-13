@@ -72,7 +72,7 @@
                         aggregator=_aggregator,
                         timeout=lambda: float(min(_retry_count * 1.5, 5)),
                         error_validate=lambda _: _retry_count >= chunked_options.max_retries,
-                        error_message=lambda _: f"Stopped waiting for the task after {chunked_options.max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher `max_retries`.",
+                        error_message=lambda _: f"Stopped waiting for the task after {chunked_options.max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries.",
                     )
                 offset += wait_batch_size
         return responses
