@@ -32,6 +32,8 @@ private <T> List<PushTaskRecords> objectsToPushTaskRecords(Iterable<T> objects) 
  *     to it (e.g. the source index name).
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded
  *     to the `getEvent` method and merged with the transporter requestOptions.
+ * @param chunkedOptions - Optional configuration for the helper (e.g. maxRetries). Defaults to
+ *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  */
 public <T> List<WatchResponse> chunkedPush(
   String indexName,
@@ -734,6 +736,8 @@ public CompletableFuture<List<SearchForFacetValuesResponse>> searchForFacetsAsyn
  *     equal to `length(objects) / batchSize`. Defaults to 1000.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded
  *     to the `getTask` method and merged with the transporter requestOptions.
+ * @param chunkedOptions - Optional configuration for the helper (e.g. maxRetries). Defaults to
+ *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  */
 public <T> List<BatchResponse> chunkedBatch(
   String indexName,
@@ -887,6 +891,8 @@ public <T> List<WatchResponse> saveObjectsWithTransformation(
  *     to `length(objects) / batchSize`.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+ *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  */
 public <T> List<WatchResponse> saveObjectsWithTransformation(
   String indexName,
@@ -970,6 +976,8 @@ public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects
  *     to `length(objects) / batchSize`.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+ *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  */
 public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects, boolean waitForTasks, int batchSize, RequestOptions requestOptions) {
   return saveObjects(indexName, objects, waitForTasks, batchSize, requestOptions, null);
@@ -1032,6 +1040,8 @@ public List<BatchResponse> deleteObjects(String indexName, List<String> objectID
  *     to `length(objects) / batchSize`.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+ *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  */
 public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs, boolean waitForTasks, int batchSize, RequestOptions requestOptions) {
   return deleteObjects(indexName, objectIDs, waitForTasks, batchSize, requestOptions, null);
@@ -1130,6 +1140,8 @@ public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
  *     to `length(objects) / batchSize`.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+ *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  */
 public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
   String indexName,
@@ -1248,6 +1260,8 @@ public <T> List<BatchResponse> partialUpdateObjects(
  *     to `length(objects) / batchSize`.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+ *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  */
 public <T> List<BatchResponse> partialUpdateObjects(
   String indexName,
@@ -1346,6 +1360,8 @@ public <T> ReplaceAllObjectsResponse replaceAllObjects(String indexName, Iterabl
  * @param scopes The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+ *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  * @throws AlgoliaRetryException When the retry has failed on all hosts
  * @throws AlgoliaApiException When the API sends an http error code
  * @throws AlgoliaRuntimeException When an error occurred during the serialization
@@ -1499,6 +1515,8 @@ public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTran
  *     'synonyms'].
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+ *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  * @throws AlgoliaRetryException When the retry has failed on all hosts
  * @throws AlgoliaApiException When the API sends an http error code
  * @throws AlgoliaRuntimeException When an error occurred during the serialization
