@@ -168,6 +168,8 @@ func (p partialUpdateObjectsOption) chunkedBatch() {}
 
 func (c chunkedBatchOption) partialUpdateObjects() {}
 
+func (c chunkedHelperOption) partialUpdateObjects() {}
+
 func (r requestOption) partialUpdateObjects() {}
 
 // WithCreateIfNotExists to be provided if non-existing objects are passed, otherwise, the call will fail.
@@ -201,6 +203,8 @@ func (p replaceAllObjectsOption) replaceAllObjects() {}
 func (p replaceAllObjectsOption) chunkedBatch() {}
 
 func (c chunkedBatchOption) replaceAllObjects() {}
+
+func (c chunkedHelperOption) replaceAllObjects() {}
 
 func (r requestOption) replaceAllObjects() {}
 
@@ -238,6 +242,8 @@ func (r requestOption) waitForApiKey() {}
 
 func (i iterableOption) waitForApiKey() {}
 
+func (c chunkedHelperOption) waitForApiKey() {}
+
 // WithApiKey necessary to know if an `update` operation has been processed, compare fields of the response with it. (optional - mandatory if operation is UPDATE).
 func WithApiKey(apiKey *ApiKey) waitForApiKeyOption {
 	return waitForApiKeyOption(func(c *config) {
@@ -269,6 +275,10 @@ func toIngestionChunkedBatchOptions(opts []ChunkedBatchOption) []ingestion.Chunk
 
 	if conf.batchSize > 0 {
 		ingestionOpts = append(ingestionOpts, ingestion.WithBatchSize(conf.batchSize))
+	}
+
+	if conf.maxRetries > 0 {
+		ingestionOpts = append(ingestionOpts, ingestion.WithMaxRetries(conf.maxRetries))
 	}
 
 	ingestionOpts = append(ingestionOpts, ingestion.WithWaitForTasks(conf.waitForTasks))

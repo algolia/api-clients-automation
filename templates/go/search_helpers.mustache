@@ -69,7 +69,7 @@ func (c *APIClient) WaitForTask(
   // provide a default timeout function
   opts = append([]IterableOption{WithTimeout(func(count int) time.Duration {
     return time.Duration(min(200*count, 5000)) * time.Millisecond
-  }), WithMaxRetries(50)}, opts...)
+  }), WithMaxRetries(100)}, opts...)
 
 	return CreateIterable( //nolint:wrapcheck
 		func(*GetTaskResponse, error) (*GetTaskResponse, error) {
@@ -103,7 +103,7 @@ func (c *APIClient) WaitForAppTask(
   // provide a default timeout function
   opts = append([]IterableOption{WithTimeout(func(count int) time.Duration {
     return time.Duration(min(200*count, 5000)) * time.Millisecond
-  }), WithMaxRetries(50)}, opts...)
+  }), WithMaxRetries(100)}, opts...)
 
 	return CreateIterable( //nolint:wrapcheck
 		func(*GetTaskResponse, error) (*GetTaskResponse, error) {
@@ -565,7 +565,7 @@ func (c *APIClient) ChunkedBatch(indexName string, objects []map[string]any, act
     waitForTasks: false,
     batchSize:    1000,
   }
-	
+
   for _, opt := range opts {
     opt.apply(&conf)
   }
