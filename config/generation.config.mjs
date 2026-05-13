@@ -19,6 +19,7 @@ export const patterns = [
   'clients/algoliasearch-client-csharp/**',
   '!clients/algoliasearch-client-csharp/*',
   '!clients/algoliasearch-client-csharp/algoliasearch/Clients/AlgoliaConfig.cs',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Clients/TransformationOptions.cs',
   '!clients/algoliasearch-client-csharp/algoliasearch/Exceptions/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Serializer/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Utils/**',
@@ -28,6 +29,7 @@ export const patterns = [
 
   'tests/output/csharp/src/Algolia.Search.Tests.csproj',
   '!tests/output/csharp/src/TimeoutIntegrationTests.cs',
+  '!tests/output/csharp/src/TransformationOptionsTests.cs',
 
   // Dart
   '!clients/algoliasearch-client-dart/**',
