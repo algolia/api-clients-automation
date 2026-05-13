@@ -249,16 +249,32 @@ namespace Algolia.Search.Clients;
       /// Sets the region of the transformation pipeline.
       /// </summary>
       /// <param name="region">The region ("us" or "eu")</param>
-      /// <param name="factory">Logger factory (ignored, kept for source compatibility)</param>
+      /// <param name="factory">Logger factory.</param>
       [Obsolete(
         "SetTransformationRegion is deprecated. Use SetTransformationOptions instead. "
-          + "The old setter forwarded the parent search config to the ingestion transporter. "
-          + "The new approach defaults to Ingestion API defaults and only overrides what's explicitly specified. "
           + "See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
       )]
       public void SetTransformationRegion(string region, ILoggerFactory factory = null)
       {
-        SetTransformationOptions(new TransformationOptions(region));
+        if (string.IsNullOrWhiteSpace(region))
+          throw new ArgumentException("`region` must be provided when leveraging the transformation pipeline");
+
+        if (string.IsNullOrWhiteSpace(_transport._algoliaConfig.AppId) ||
+            string.IsNullOrWhiteSpace(_transport._algoliaConfig.ApiKey))
+          throw new ArgumentException("AppId and ApiKey are required for transformation pipeline");
+
+        _ingestionTransporter = new IngestionClient(
+          new IngestionConfig(_transport._algoliaConfig.AppId, _transport._algoliaConfig.ApiKey, region)
+          {
+            DefaultHeaders = _transport._algoliaConfig.DefaultHeaders,
+            ConnectTimeout = _transport._algoliaConfig.ConnectTimeout,
+            ReadTimeout    = _transport._algoliaConfig.ReadTimeout,
+            WriteTimeout   = _transport._algoliaConfig.WriteTimeout,
+            Compression    = _transport._algoliaConfig.Compression,
+            CustomHosts    = _transport._algoliaConfig.CustomHosts,
+          },
+          factory ?? _loggerFactory
+        );
       }
 
       /// <summary>
