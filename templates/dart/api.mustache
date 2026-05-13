@@ -34,11 +34,7 @@ final class {{classname}} implements ApiClient {
   {{classname}}({
     required String appId,
     required String apiKey,
-    this.options = const ClientOptions(
-      connectTimeout: Duration(milliseconds: {{{serverConnectTimeout}}}),
-      readTimeout: Duration(milliseconds: {{{serverReadTimeout}}}),
-      writeTimeout: Duration(milliseconds: {{{serverWriteTimeout}}}),
-    ),
+    this.options = const ClientOptions(),
     {{#hasRegionalHost}}
     {{^fallbackToAliasHost}}required{{/fallbackToAliasHost}} this.region,
     {{/hasRegionalHost}}
@@ -225,6 +221,10 @@ final class {{classname}} implements ApiClient {
           writeTimeout: Duration(milliseconds: {{write}}),
           readTimeout: Duration(milliseconds: {{read}}),
           connectTimeout: Duration(milliseconds: {{connect}}),
+      ) + {{/vendorExtensions.x-timeouts}}{{^vendorExtensions.x-timeouts}}RequestOptions(
+          writeTimeout: Duration(milliseconds: {{{serverWriteTimeout}}}),
+          readTimeout: Duration(milliseconds: {{{serverReadTimeout}}}),
+          connectTimeout: Duration(milliseconds: {{{serverConnectTimeout}}}),
       ) + {{/vendorExtensions.x-timeouts}}requestOptions,
     );
     {{#returnType}}
