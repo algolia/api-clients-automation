@@ -168,23 +168,33 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     return segments;
   }
 
+  private record SavedVarLists(
+    List<CodegenProperty> vars,
+    List<CodegenProperty> allVars,
+    List<CodegenProperty> optionalVars,
+    List<CodegenProperty> requiredVars,
+    List<CodegenProperty> readOnlyVars,
+    List<CodegenProperty> readWriteVars
+  ) {
+    SavedVarLists(CodegenModel model) {
+      this(
+        new ArrayList<>(model.vars),
+        new ArrayList<>(model.allVars),
+        new ArrayList<>(model.optionalVars),
+        new ArrayList<>(model.requiredVars),
+        new ArrayList<>(model.readOnlyVars),
+        new ArrayList<>(model.readWriteVars)
+      );
+    }
+  }
+
   @Override
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
     // Save all var lists before super strips discriminator properties from child models
-    var savedModels = new HashMap<String, List<List<CodegenProperty>>>();
+    var savedModels = new HashMap<String, SavedVarLists>();
     for (var entry : objs.entrySet()) {
       var model = entry.getValue().getModels().get(0).getModel();
-      savedModels.put(
-        entry.getKey(),
-        List.of(
-          new ArrayList<>(model.vars),
-          new ArrayList<>(model.allVars),
-          new ArrayList<>(model.optionalVars),
-          new ArrayList<>(model.requiredVars),
-          new ArrayList<>(model.readOnlyVars),
-          new ArrayList<>(model.readWriteVars)
-        )
-      );
+      savedModels.put(entry.getKey(), new SavedVarLists(model));
     }
 
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
@@ -193,13 +203,13 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     for (var entry : models.entrySet()) {
       var model = entry.getValue().getModels().get(0).getModel();
       var saved = savedModels.get(entry.getKey());
-      if (saved != null && model.vars.size() < saved.get(0).size()) {
-        model.vars = saved.get(0);
-        model.allVars = saved.get(1);
-        model.optionalVars = saved.get(2);
-        model.requiredVars = saved.get(3);
-        model.readOnlyVars = saved.get(4);
-        model.readWriteVars = saved.get(5);
+      if (saved != null && model.vars.size() < saved.vars().size()) {
+        model.vars = saved.vars();
+        model.allVars = saved.allVars();
+        model.optionalVars = saved.optionalVars();
+        model.requiredVars = saved.requiredVars();
+        model.readOnlyVars = saved.readOnlyVars();
+        model.readWriteVars = saved.readWriteVars();
       }
     }
 
