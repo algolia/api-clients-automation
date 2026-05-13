@@ -46,5 +46,12 @@ public class Timeouts {
     }
 
     bundle.put("x-timeouts", specTimeouts);
+
+    // Flat server-timeout values for templates that can't traverse nested Java objects.
+    Map<String, Long> serverTimeouts = new HashMap<>();
+    serverTimeouts.put("connect", specTimeouts.server.connect);
+    serverTimeouts.put("read", specTimeouts.server.read);
+    serverTimeouts.put("write", specTimeouts.server.write);
+    bundle.put("serverTimeouts", serverTimeouts);
   }
 }

@@ -35,9 +35,9 @@ final class {{classname}} implements ApiClient {
     required String appId,
     required String apiKey,
     this.options = const ClientOptions(
-      connectTimeout: Duration(milliseconds: {{#x-timeouts}}{{#server}}{{connect}}{{/server}}{{/x-timeouts}}),
-      readTimeout: Duration(milliseconds: {{#x-timeouts}}{{#server}}{{read}}{{/server}}{{/x-timeouts}}),
-      writeTimeout: Duration(milliseconds: {{#x-timeouts}}{{#server}}{{write}}{{/server}}{{/x-timeouts}}),
+      connectTimeout: Duration(milliseconds: {{#serverTimeouts}}{{connect}}{{/serverTimeouts}}),
+      readTimeout: Duration(milliseconds: {{#serverTimeouts}}{{read}}{{/serverTimeouts}}),
+      writeTimeout: Duration(milliseconds: {{#serverTimeouts}}{{write}}{{/serverTimeouts}}),
     ),
     {{#hasRegionalHost}}
     {{^fallbackToAliasHost}}required{{/fallbackToAliasHost}} this.region,
