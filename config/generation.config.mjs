@@ -101,6 +101,7 @@ export const patterns = [
   'clients/algoliasearch-client-php/lib/Configuration/*',
   '!clients/algoliasearch-client-php/lib/Configuration/Configuration.php',
   '!clients/algoliasearch-client-php/lib/Configuration/ConfigWithRegion.php',
+  '!clients/algoliasearch-client-php/lib/Configuration/TransformationOptions.php',
   'clients/algoliasearch-client-php/composer.json',
   '!tests/output/php/src/manual/**',
 
