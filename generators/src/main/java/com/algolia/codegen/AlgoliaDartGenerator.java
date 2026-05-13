@@ -111,9 +111,14 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
   }
 
   @Override
-  public void processOpenAPI(OpenAPI openAPI) {
+  public void processOpenAPI(OpenAPI openAPI) throws RuntimeException {
     super.processOpenAPI(openAPI);
     Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
+    try {
+      Timeouts.enrichBundle(openAPI, additionalProperties);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Override
