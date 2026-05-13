@@ -316,11 +316,12 @@
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Saves the given array of objects in the given index. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
         """
-        return {{^isSyncClient}}await {{/isSyncClient}}self.chunked_batch(index_name=index_name, objects=objects, action=Action.ADDOBJECT, wait_for_tasks=wait_for_tasks, batch_size=batch_size, request_options=request_options)
+        return {{^isSyncClient}}await {{/isSyncClient}}self.chunked_batch(index_name=index_name, objects=objects, action=Action.ADDOBJECT, wait_for_tasks=wait_for_tasks, batch_size=batch_size, request_options=request_options, chunked_options=chunked_options)
 
     {{^isSyncClient}}async {{/isSyncClient}}def save_objects_with_transformation(
         self,
@@ -329,13 +330,14 @@
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[IngestionWatchResponse]:
         """
         Helper: Similar to the `save_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. `transformation_options` must be set on `SearchConfig` before creating the client, or via `client.set_transformation_options(...)`.
         """
         if self._ingestion_transporter is None:
             raise ValueError("`transformation_options` must be set on `SearchConfig` before creating the client, or via `client.set_transformation_options(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/")
-        return {{^isSyncClient}}await {{/isSyncClient}}self._ingestion_transporter.chunked_push(index_name=index_name, objects=objects, action=IngestionAction.ADDOBJECT, wait_for_tasks=wait_for_tasks, batch_size=batch_size, request_options=request_options)
+        return {{^isSyncClient}}await {{/isSyncClient}}self._ingestion_transporter.chunked_push(index_name=index_name, objects=objects, action=IngestionAction.ADDOBJECT, wait_for_tasks=wait_for_tasks, batch_size=batch_size, request_options=request_options, chunked_options=chunked_options)
 
     {{^isSyncClient}}async {{/isSyncClient}}def delete_objects(
         self,
@@ -344,11 +346,12 @@
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Deletes every records for the given objectIDs. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
         """
-        return {{^isSyncClient}}await {{/isSyncClient}}self.chunked_batch(index_name=index_name, objects=[{"objectID": id} for id in object_ids], action=Action.DELETEOBJECT, wait_for_tasks=wait_for_tasks, batch_size=batch_size, request_options=request_options)
+        return {{^isSyncClient}}await {{/isSyncClient}}self.chunked_batch(index_name=index_name, objects=[{"objectID": id} for id in object_ids], action=Action.DELETEOBJECT, wait_for_tasks=wait_for_tasks, batch_size=batch_size, request_options=request_options, chunked_options=chunked_options)
 
     {{^isSyncClient}}async {{/isSyncClient}}def partial_update_objects(
         self,
@@ -358,11 +361,12 @@
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
         """
-        return {{^isSyncClient}}await {{/isSyncClient}}self.chunked_batch(index_name=index_name, objects=objects, action=Action.PARTIALUPDATEOBJECT if create_if_not_exists else Action.PARTIALUPDATEOBJECTNOCREATE, wait_for_tasks=wait_for_tasks, batch_size=batch_size, request_options=request_options)
+        return {{^isSyncClient}}await {{/isSyncClient}}self.chunked_batch(index_name=index_name, objects=objects, action=Action.PARTIALUPDATEOBJECT if create_if_not_exists else Action.PARTIALUPDATEOBJECTNOCREATE, wait_for_tasks=wait_for_tasks, batch_size=batch_size, request_options=request_options, chunked_options=chunked_options)
 
     {{^isSyncClient}}async {{/isSyncClient}}def partial_update_objects_with_transformation(
         self,
@@ -372,13 +376,14 @@
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[IngestionWatchResponse]:
         """
         Helper: Similar to the `partial_update_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. `transformation_options` must be set on `SearchConfig` before creating the client, or via `client.set_transformation_options(...)`.
         """
         if self._ingestion_transporter is None:
             raise ValueError("`transformation_options` must be set on `SearchConfig` before creating the client, or via `client.set_transformation_options(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/")
-        return {{^isSyncClient}}await {{/isSyncClient}}self._ingestion_transporter.chunked_push(index_name=index_name, objects=objects, action=IngestionAction.PARTIALUPDATEOBJECT if create_if_not_exists else IngestionAction.PARTIALUPDATEOBJECTNOCREATE, wait_for_tasks=wait_for_tasks, batch_size=batch_size, request_options=request_options)
+        return {{^isSyncClient}}await {{/isSyncClient}}self._ingestion_transporter.chunked_push(index_name=index_name, objects=objects, action=IngestionAction.PARTIALUPDATEOBJECT if create_if_not_exists else IngestionAction.PARTIALUPDATEOBJECTNOCREATE, wait_for_tasks=wait_for_tasks, batch_size=batch_size, request_options=request_options, chunked_options=chunked_options)
 
     {{^isSyncClient}}async {{/isSyncClient}}def chunked_batch(
         self,
@@ -388,10 +393,12 @@
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
         """
+        chunked_options = chunked_options or ChunkedHelperOptions()
         requests: List[BatchRequest] = []
         responses: List[BatchResponse] = []
         for i, obj in enumerate(objects):
@@ -408,7 +415,7 @@
         if wait_for_tasks:
             for response in responses:
                 {{^isSyncClient}}await {{/isSyncClient}}self.wait_for_task(
-                    index_name=index_name, task_id=response.task_id
+                    index_name=index_name, task_id=response.task_id, max_retries=chunked_options.max_retries
                 )
         return responses
 
@@ -419,6 +426,7 @@
         batch_size: int = 1000,
         scopes = ["settings", "rules", "synonyms"],
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> ReplaceAllObjectsWithTransformationResponse:
         """
         Helper: Similar to the `replaceAllObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. `transformation_options` must be set on `SearchConfig` before creating the client, or via `client.set_transformation_options(...)`.
@@ -427,6 +435,7 @@
         """
         if self._ingestion_transporter is None:
             raise ValueError("`transformation_options` must be set on `SearchConfig` before creating the client, or via `client.set_transformation_options(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/")
+        chunked_options = chunked_options or ChunkedHelperOptions()
         tmp_index_name = self.create_temporary_name(index_name)
 
         try:
@@ -450,15 +459,16 @@
               batch_size=batch_size,
               reference_index_name=index_name,
               request_options=request_options,
+              chunked_options=chunked_options,
           )
 
           {{^isSyncClient}}await {{/isSyncClient}}self.wait_for_task(
-              index_name=tmp_index_name, task_id=copy_operation_response.task_id
+              index_name=tmp_index_name, task_id=copy_operation_response.task_id, max_retries=chunked_options.max_retries
           )
 
           copy_operation_response = {{^isSyncClient}}await {{/isSyncClient}}_copy()
           {{^isSyncClient}}await {{/isSyncClient}}self.wait_for_task(
-              index_name=tmp_index_name, task_id=copy_operation_response.task_id
+              index_name=tmp_index_name, task_id=copy_operation_response.task_id, max_retries=chunked_options.max_retries
           )
 
           move_operation_response = {{^isSyncClient}}await {{/isSyncClient}}self.operation_index(
@@ -470,7 +480,7 @@
               request_options=request_options,
           )
           {{^isSyncClient}}await {{/isSyncClient}}self.wait_for_task(
-              index_name=tmp_index_name, task_id=move_operation_response.task_id
+              index_name=tmp_index_name, task_id=move_operation_response.task_id, max_retries=chunked_options.max_retries
           )
 
           search_watch_responses: List[WatchResponse] = [WatchResponse.model_validate(wr.model_dump()) for wr in watch_responses]
@@ -492,12 +502,14 @@
         batch_size: int = 1000,
         scopes = ["settings", "rules", "synonyms"],
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> ReplaceAllObjectsResponse:
         """
         Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
 
         See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
         """
+        chunked_options = chunked_options or ChunkedHelperOptions()
         tmp_index_name = self.create_temporary_name(index_name)
 
         try:
@@ -520,15 +532,16 @@
               wait_for_tasks=True,
               batch_size=batch_size,
               request_options=request_options,
+              chunked_options=chunked_options,
           )
 
           {{^isSyncClient}}await {{/isSyncClient}}self.wait_for_task(
-              index_name=tmp_index_name, task_id=copy_operation_response.task_id
+              index_name=tmp_index_name, task_id=copy_operation_response.task_id, max_retries=chunked_options.max_retries
           )
 
           copy_operation_response = {{^isSyncClient}}await {{/isSyncClient}}_copy()
           {{^isSyncClient}}await {{/isSyncClient}}self.wait_for_task(
-              index_name=tmp_index_name, task_id=copy_operation_response.task_id
+              index_name=tmp_index_name, task_id=copy_operation_response.task_id, max_retries=chunked_options.max_retries
           )
 
           move_operation_response = {{^isSyncClient}}await {{/isSyncClient}}self.operation_index(
@@ -540,7 +553,7 @@
               request_options=request_options,
           )
           {{^isSyncClient}}await {{/isSyncClient}}self.wait_for_task(
-              index_name=tmp_index_name, task_id=move_operation_response.task_id
+              index_name=tmp_index_name, task_id=move_operation_response.task_id, max_retries=chunked_options.max_retries
           )
 
           return ReplaceAllObjectsResponse(
