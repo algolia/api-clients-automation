@@ -41,10 +41,12 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
      */
     protected $api;
 
+    {{#isSearchClient}}
     /**
      * @var IngestionClient
      */
     protected $ingestionTransporter;
+    {{/isSearchClient}}
 
     /**
      * @var {{configClassname}}
