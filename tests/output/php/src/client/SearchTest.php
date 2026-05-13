@@ -6,6 +6,7 @@ namespace Algolia\AlgoliaSearch\Test\Client;
 
 use Algolia\AlgoliaSearch\Api\SearchClient;
 use Algolia\AlgoliaSearch\Configuration\SearchConfig;
+use Algolia\AlgoliaSearch\Configuration\TransformationOptions;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
@@ -601,7 +602,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('call partialUpdateObjectsWithTransformation with createIfNotExists=true')]
     public function test0partialUpdateObjectsWithTransformation(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6688', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6689'])->setTransformationRegion('us'));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6688', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6689'])->setTransformationOptions((new TransformationOptions('us'))->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6688', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6689'])));
 
         $res = $client->partialUpdateObjectsWithTransformation(
             'cts_e2e_partialUpdateObjectsWithTransformation_php',
@@ -735,7 +736,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('call replaceAllObjectsWithTransformation without error')]
     public function test0replaceAllObjectsWithTransformation(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6690'])->setTransformationRegion('us'));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6690'])->setTransformationOptions((new TransformationOptions('us'))->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6690'])));
 
         $res = $client->replaceAllObjectsWithTransformation(
             'cts_e2e_replace_all_objects_with_transformation_php',
@@ -881,7 +882,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('call saveObjectsWithTransformation without error')]
     public function test0saveObjectsWithTransformation(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6688', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6689'])->setTransformationRegion('us'));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6688', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6689'])->setTransformationOptions((new TransformationOptions('us'))->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6688', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6689'])));
 
         $res = $client->saveObjectsWithTransformation(
             'cts_e2e_saveObjectsWithTransformation_php',
