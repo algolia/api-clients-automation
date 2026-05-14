@@ -172,7 +172,7 @@ def replace_all_objects_with_transformation(
       watch_responses: search_watch_responses,
       move_operation_response: move_operation_response
     )
-  rescue StandardError => e
+  rescue Exception => e
     delete_index(tmp_index_name)
 
     raise e
