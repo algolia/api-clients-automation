@@ -12,7 +12,8 @@
 def chunked_push(index_name, objects, action = Ingestion::Action::ADD_OBJECT, wait_for_tasks = false, batch_size = 1000, reference_index_name = nil, request_options = {})
   responses = []
   offset = 0
-  wait_batch_size = [batch_size / 10, 1].max
+  wait_batch_size = batch_size / 10
+  wait_batch_size = batch_size if wait_batch_size < 1
   total_batches = (objects.length.to_f / batch_size).ceil
   max_retries = 50
 
