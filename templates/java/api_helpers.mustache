@@ -32,8 +32,6 @@ private <T> List<PushTaskRecords> objectsToPushTaskRecords(Iterable<T> objects) 
  *     to it (e.g. the source index name).
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded
  *     to the `getEvent` method and merged with the transporter requestOptions.
- * @param chunkedOptions - Optional configuration for the helper (e.g. maxRetries). Defaults to
- *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  */
 public <T> List<WatchResponse> chunkedPush(
   String indexName,
@@ -47,6 +45,29 @@ public <T> List<WatchResponse> chunkedPush(
   return chunkedPush(indexName, objects, action, waitForTasks, batchSize, referenceIndexName, requestOptions, null);
 }
 
+/**
+ * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit
+ * in `push` requests by leveraging the Transformation pipeline setup in the Push connector
+ * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
+ *
+ * @summary Helper: Chunks the given `objects` list in subset of 1000 elements max in order to
+ *     make it fit in `batch` requests.
+ * @param indexName - The `indexName` to replace `objects` in.
+ * @param objects - The array of `objects` to store in the given Algolia `indexName`.
+ * @param action - The `batch` `action` to perform on the given array of `objects`.
+ * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+ *     processed, this operation may slow the total execution time of this method but is more
+ *     reliable.
+ * @param batchSize - The size of the chunk of `objects`. The number of `batch` calls will be
+ *     equal to `length(objects) / batchSize`. Defaults to 1000.
+ * @param referenceIndexName - This is required when targeting an index that does not have a push
+ *     connector setup (e.g. a tmp index), but you wish to attach another index's transformation
+ *     to it (e.g. the source index name).
+ * @param requestOptions - The requestOptions to send along with the query, they will be forwarded
+ *     to the `getEvent` method and merged with the transporter requestOptions.
+ * @param chunkedOptions - Optional configuration for the helper (e.g. maxRetries). Defaults to
+ *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
+ */
 public <T> List<WatchResponse> chunkedPush(
   String indexName,
   Iterable<T> objects,
@@ -736,8 +757,6 @@ public CompletableFuture<List<SearchForFacetValuesResponse>> searchForFacetsAsyn
  *     equal to `length(objects) / batchSize`. Defaults to 1000.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded
  *     to the `getTask` method and merged with the transporter requestOptions.
- * @param chunkedOptions - Optional configuration for the helper (e.g. maxRetries). Defaults to
- *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  */
 public <T> List<BatchResponse> chunkedBatch(
   String indexName,
@@ -750,6 +769,25 @@ public <T> List<BatchResponse> chunkedBatch(
   return chunkedBatch(indexName, objects, action, waitForTasks, batchSize, requestOptions, null);
 }
 
+/**
+ * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit
+ * in `batch` requests.
+ *
+ * @summary Helper: Chunks the given `objects` list in subset of 1000 elements max in order to
+ *     make it fit in `batch` requests.
+ * @param indexName - The `indexName` to replace `objects` in.
+ * @param objects - The array of `objects` to store in the given Algolia `indexName`.
+ * @param action - The `batch` `action` to perform on the given array of `objects`.
+ * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+ *     processed, this operation may slow the total execution time of this method but is more
+ *     reliable.
+ * @param batchSize - The size of the chunk of `objects`. The number of `batch` calls will be
+ *     equal to `length(objects) / batchSize`. Defaults to 1000.
+ * @param requestOptions - The requestOptions to send along with the query, they will be forwarded
+ *     to the `getTask` method and merged with the transporter requestOptions.
+ * @param chunkedOptions - Optional configuration for the helper (e.g. maxRetries). Defaults to
+ *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
+ */
 public <T> List<BatchResponse> chunkedBatch(
   String indexName,
   Iterable<T> objects,
@@ -876,6 +914,16 @@ public <T> List<WatchResponse> saveObjectsWithTransformation(
   return saveObjectsWithTransformation(indexName, objects, waitForTasks, 1000, requestOptions);
 }
 
+public <T> List<WatchResponse> saveObjectsWithTransformation(
+  String indexName,
+  Iterable<T> objects,
+  boolean waitForTasks,
+  int batchSize,
+  RequestOptions requestOptions
+) {
+  return saveObjectsWithTransformation(indexName, objects, waitForTasks, batchSize, requestOptions, null);
+}
+
 /**
  * Helper: Similar to the `saveObjects` method but requires a Push connector
  * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
@@ -894,16 +942,6 @@ public <T> List<WatchResponse> saveObjectsWithTransformation(
  * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
  *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  */
-public <T> List<WatchResponse> saveObjectsWithTransformation(
-  String indexName,
-  Iterable<T> objects,
-  boolean waitForTasks,
-  int batchSize,
-  RequestOptions requestOptions
-) {
-  return saveObjectsWithTransformation(indexName, objects, waitForTasks, batchSize, requestOptions, null);
-}
-
 public <T> List<WatchResponse> saveObjectsWithTransformation(
   String indexName,
   Iterable<T> objects,
@@ -963,6 +1001,10 @@ public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects
   return saveObjects(indexName, objects, waitForTasks, 1000, requestOptions);
 }
 
+public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects, boolean waitForTasks, int batchSize, RequestOptions requestOptions) {
+  return saveObjects(indexName, objects, waitForTasks, batchSize, requestOptions, null);
+}
+
 /**
  * Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used
  * under the hood, which creates a `batch` requests with at most 1000 objects in it.
@@ -979,10 +1021,6 @@ public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects
  * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
  *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  */
-public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects, boolean waitForTasks, int batchSize, RequestOptions requestOptions) {
-  return saveObjects(indexName, objects, waitForTasks, batchSize, requestOptions, null);
-}
-
 public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects, boolean waitForTasks, int batchSize, RequestOptions requestOptions, ChunkedHelperOptions chunkedOptions) {
   return chunkedBatch(indexName, objects, Action.ADD_OBJECT, waitForTasks, batchSize, requestOptions, chunkedOptions);
 }
@@ -1027,6 +1065,10 @@ public List<BatchResponse> deleteObjects(String indexName, List<String> objectID
   return deleteObjects(indexName, objectIDs, false, 1000, null);
 }
 
+public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs, boolean waitForTasks, int batchSize, RequestOptions requestOptions) {
+  return deleteObjects(indexName, objectIDs, waitForTasks, batchSize, requestOptions, null);
+}
+
 /**
  * Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under
  * the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
@@ -1043,10 +1085,6 @@ public List<BatchResponse> deleteObjects(String indexName, List<String> objectID
  * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
  *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  */
-public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs, boolean waitForTasks, int batchSize, RequestOptions requestOptions) {
-  return deleteObjects(indexName, objectIDs, waitForTasks, batchSize, requestOptions, null);
-}
-
 public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs, boolean waitForTasks, int batchSize, RequestOptions requestOptions, ChunkedHelperOptions chunkedOptions) {
   List<Map<String, String>> objects = new ArrayList<>();
 
@@ -1123,6 +1161,17 @@ public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
   return partialUpdateObjectsWithTransformation(indexName, objects, createIfNotExists, waitForTasks, 1000, requestOptions);
 }
 
+public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
+  String indexName,
+  Iterable<T> objects,
+  boolean createIfNotExists,
+  boolean waitForTasks,
+  int batchSize,
+  RequestOptions requestOptions
+) {
+  return partialUpdateObjectsWithTransformation(indexName, objects, createIfNotExists, waitForTasks, batchSize, requestOptions, null);
+}
+
 /**
  * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector
  * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
@@ -1143,17 +1192,6 @@ public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
  * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
  *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  */
-public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
-  String indexName,
-  Iterable<T> objects,
-  boolean createIfNotExists,
-  boolean waitForTasks,
-  int batchSize,
-  RequestOptions requestOptions
-) {
-  return partialUpdateObjectsWithTransformation(indexName, objects, createIfNotExists, waitForTasks, batchSize, requestOptions, null);
-}
-
 public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
   String indexName,
   Iterable<T> objects,
@@ -1244,6 +1282,17 @@ public <T> List<BatchResponse> partialUpdateObjects(
   return partialUpdateObjects(indexName, objects, createIfNotExists, waitForTasks, 1000, null);
 }
 
+public <T> List<BatchResponse> partialUpdateObjects(
+  String indexName,
+  Iterable<T> objects,
+  boolean createIfNotExists,
+  boolean waitForTasks,
+  int batchSize,
+  RequestOptions requestOptions
+) {
+  return partialUpdateObjects(indexName, objects, createIfNotExists, waitForTasks, batchSize, requestOptions, null);
+}
+
 /**
  * Helper: Replaces object content of all the given objects according to their respective
  * `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch`
@@ -1263,17 +1312,6 @@ public <T> List<BatchResponse> partialUpdateObjects(
  * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
  *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  */
-public <T> List<BatchResponse> partialUpdateObjects(
-  String indexName,
-  Iterable<T> objects,
-  boolean createIfNotExists,
-  boolean waitForTasks,
-  int batchSize,
-  RequestOptions requestOptions
-) {
-  return partialUpdateObjects(indexName, objects, createIfNotExists, waitForTasks, batchSize, requestOptions, null);
-}
-
 public <T> List<BatchResponse> partialUpdateObjects(
   String indexName,
   Iterable<T> objects,
@@ -1347,6 +1385,16 @@ public <T> ReplaceAllObjectsResponse replaceAllObjects(String indexName, Iterabl
   return replaceAllObjects(indexName, objects, batchSize, scopes, null);
 }
 
+public <T> ReplaceAllObjectsResponse replaceAllObjects(
+  String indexName,
+  Iterable<T> objects,
+  int batchSize,
+  List<ScopeType> scopes,
+  RequestOptions requestOptions
+) {
+  return replaceAllObjects(indexName, objects, batchSize, scopes, requestOptions, null);
+}
+
 /**
  * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
  * untouched. Replace all records in an index without any downtime. See
@@ -1366,16 +1414,6 @@ public <T> ReplaceAllObjectsResponse replaceAllObjects(String indexName, Iterabl
  * @throws AlgoliaApiException When the API sends an http error code
  * @throws AlgoliaRuntimeException When an error occurred during the serialization
  */
-public <T> ReplaceAllObjectsResponse replaceAllObjects(
-  String indexName,
-  Iterable<T> objects,
-  int batchSize,
-  List<ScopeType> scopes,
-  RequestOptions requestOptions
-) {
-  return replaceAllObjects(indexName, objects, batchSize, scopes, requestOptions, null);
-}
-
 public <T> ReplaceAllObjectsResponse replaceAllObjects(
   String indexName,
   Iterable<T> objects,
@@ -1501,6 +1539,16 @@ public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTran
   return replaceAllObjectsWithTransformation(indexName, objects, batchSize, scopes, null);
 }
 
+public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTransformation(
+  String indexName,
+  Iterable<T> objects,
+  int batchSize,
+  List<ScopeType> scopes,
+  RequestOptions requestOptions
+) {
+  return replaceAllObjectsWithTransformation(indexName, objects, batchSize, scopes, requestOptions, null);
+}
+
 /**
  * Helper: Similar to the `saveObjects` method but requires a Push connector
  * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
@@ -1521,16 +1569,6 @@ public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTran
  * @throws AlgoliaApiException When the API sends an http error code
  * @throws AlgoliaRuntimeException When an error occurred during the serialization
  */
-public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTransformation(
-  String indexName,
-  Iterable<T> objects,
-  int batchSize,
-  List<ScopeType> scopes,
-  RequestOptions requestOptions
-) {
-  return replaceAllObjectsWithTransformation(indexName, objects, batchSize, scopes, requestOptions, null);
-}
-
 public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTransformation(
   String indexName,
   Iterable<T> objects,
@@ -1719,6 +1757,6 @@ public boolean indexExists(String indexName) {
     }
     throw e;
   }
-  return true;
+  return true;maxRetries < 1
 }
 {{/isSearchClient}}

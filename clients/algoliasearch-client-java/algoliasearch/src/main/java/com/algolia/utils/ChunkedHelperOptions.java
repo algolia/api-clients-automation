@@ -10,6 +10,9 @@ public class ChunkedHelperOptions {
   }
 
   public ChunkedHelperOptions setMaxRetries(int maxRetries) {
+    if (maxRetries < 1) {
+      throw new IllegalArgumentException("`maxRetries` must be greater than 0");
+    }
     this.maxRetries = maxRetries;
     return this;
   }
