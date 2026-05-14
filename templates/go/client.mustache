@@ -202,6 +202,7 @@ func (c *APIClient) SetTransformationOptions(opts TransformationOptions) error {
     return err //nolint:wrapcheck
   }
   c.ingestionTransporter = ingestionClient
+  c.cfg.TransformationOptions = &opts
   return nil
 }
 
