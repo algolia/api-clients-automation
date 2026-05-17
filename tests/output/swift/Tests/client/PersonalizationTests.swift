@@ -54,7 +54,7 @@ final class PersonalizationClientClientTests: XCTestCase {
     }
 
     /// throws when region is not given
-    func testParametersTest0() async throws {
+    func testParametersTest0() throws {
         do {
             let configuration = try PersonalizationClientConfiguration(
                 appID: "my-app-id",
@@ -71,7 +71,7 @@ final class PersonalizationClientClientTests: XCTestCase {
     }
 
     /// throws when incorrect region is given
-    func testParametersTest1() async throws {
+    func testParametersTest1() throws {
         do {
             let configuration = try PersonalizationClientConfiguration(
                 appID: "my-app-id",
@@ -88,7 +88,7 @@ final class PersonalizationClientClientTests: XCTestCase {
     }
 
     /// does not throw when region is given
-    func testParametersTest2() async throws {
+    func testParametersTest2() throws {
         let configuration = try PersonalizationClientConfiguration(
             appID: "my-app-id",
             apiKey: "my-api-key",

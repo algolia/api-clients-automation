@@ -86,7 +86,7 @@ final class InsightsClientClientTests: XCTestCase {
     }
 
     /// throws when incorrect region is given
-    func testParametersTest2() async throws {
+    func testParametersTest2() throws {
         do {
             let configuration = try InsightsClientConfiguration(
                 appID: "my-app-id",
