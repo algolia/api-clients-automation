@@ -161,7 +161,7 @@ final class IngestionClientClientTests: XCTestCase {
     }
 
     /// throws when incorrect region is given
-    func testParametersTest1() async throws {
+    func testParametersTest1() throws {
         do {
             let configuration = try IngestionClientConfiguration(
                 appID: "my-app-id",
