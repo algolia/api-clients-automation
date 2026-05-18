@@ -40,6 +40,7 @@ class TestClientInsightsClient < Test::Unit::TestCase
 
       {requester: Algolia::Transport::EchoRequester.new}
     )
+
     req = client.push_events_with_http_info(
       Algolia::Insights::InsightsEvents.new(
         events: [
@@ -69,6 +70,7 @@ class TestClientInsightsClient < Test::Unit::TestCase
       "us",
       {requester: Algolia::Transport::EchoRequester.new}
     )
+
     req = client.custom_delete_with_http_info("test")
     assert_equal("insights.us.algolia.io", req.host.url)
   end
@@ -83,6 +85,7 @@ class TestClientInsightsClient < Test::Unit::TestCase
         "not_a_region",
         {requester: Algolia::Transport::EchoRequester.new}
       )
+
       assert(false, "An error should have been raised")
     rescue => e
       assert_equal(
@@ -112,6 +115,7 @@ class TestClientInsightsClient < Test::Unit::TestCase
         "insightsClient"
       )
     )
+
     req = client.custom_get("check-api-key/1")
     assert_equal({:"headerAPIKeyValue" => "test-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
     client.set_client_api_key("updated-api-key")
