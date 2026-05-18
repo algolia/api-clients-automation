@@ -711,7 +711,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
 
       - name: notify failures
-        uses: slackapi/slack-github-action@v3.0.2
+        uses: slackapi/slack-github-action@v3.0.3
         if: ${{ steps.waitForAllReleases.outputs.FAILED_RELEASES != '' }}
         with:
           method: chat.postMessage
