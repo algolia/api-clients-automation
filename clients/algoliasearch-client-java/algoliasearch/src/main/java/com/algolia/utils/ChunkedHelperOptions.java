@@ -9,6 +9,12 @@ public class ChunkedHelperOptions {
     return maxRetries;
   }
 
+  /**
+   * Sets the maximum number of retries for polling task completion.
+   *
+   * @param maxRetries must be greater than 0.
+   * @return this instance for chaining.
+   */
   public ChunkedHelperOptions setMaxRetries(int maxRetries) {
     if (maxRetries < 1) {
       throw new IllegalArgumentException("`maxRetries` must be greater than 0");

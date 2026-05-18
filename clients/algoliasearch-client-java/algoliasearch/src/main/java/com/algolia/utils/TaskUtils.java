@@ -37,6 +37,10 @@ public class TaskUtils {
 
       retryCount++;
     }
-    throw new AlgoliaRetriesExceededException("The maximum number of retries exceeded. (" + (retryCount + 1) + "/" + maxRetries + ")");
+    throw new AlgoliaRetriesExceededException(
+      "Stopped waiting for the task after " + maxRetries + " retries. " +
+      "This does not mean the operation failed; it may still complete. " +
+      "If you need to keep polling, retry with a higher maxRetries."
+    );
   }
 }

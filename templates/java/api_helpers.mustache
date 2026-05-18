@@ -32,6 +32,7 @@ private <T> List<PushTaskRecords> objectsToPushTaskRecords(Iterable<T> objects) 
  *     to it (e.g. the source index name).
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded
  *     to the `getEvent` method and merged with the transporter requestOptions.
+ * @see ChunkedHelperOptions
  */
 public <T> List<WatchResponse> chunkedPush(
   String indexName,
@@ -757,6 +758,7 @@ public CompletableFuture<List<SearchForFacetValuesResponse>> searchForFacetsAsyn
  *     equal to `length(objects) / batchSize`. Defaults to 1000.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded
  *     to the `getTask` method and merged with the transporter requestOptions.
+ * @see ChunkedHelperOptions
  */
 public <T> List<BatchResponse> chunkedBatch(
   String indexName,
@@ -904,6 +906,7 @@ public <T> List<WatchResponse> saveObjectsWithTransformation(String indexName, I
  *     reliable.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @see ChunkedHelperOptions
  */
 public <T> List<WatchResponse> saveObjectsWithTransformation(
   String indexName,
@@ -996,6 +999,7 @@ public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects
  *     reliable.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @see ChunkedHelperOptions
  */
 public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects, boolean waitForTasks, RequestOptions requestOptions) {
   return saveObjects(indexName, objects, waitForTasks, 1000, requestOptions);
@@ -1060,6 +1064,7 @@ public List<BatchResponse> deleteObjects(String indexName, List<String> objectID
  *     reliable.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @see ChunkedHelperOptions
  */
 public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs, boolean waitForTasks,RequestOptions requestOptions) {
   return deleteObjects(indexName, objectIDs, false, 1000, null);
@@ -1150,6 +1155,7 @@ public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
  *     reliable.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @see ChunkedHelperOptions
  */
 public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
   String indexName,
@@ -1271,6 +1277,7 @@ public <T> List<BatchResponse> partialUpdateObjects(
  *     reliable.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @see ChunkedHelperOptions
  */
 public <T> List<BatchResponse> partialUpdateObjects(
   String indexName,
@@ -1380,6 +1387,7 @@ public <T> ReplaceAllObjectsResponse replaceAllObjects(String indexName, Iterabl
  * @throws AlgoliaRetryException When the retry has failed on all hosts
  * @throws AlgoliaApiException When the API sends an http error code
  * @throws AlgoliaRuntimeException When an error occurred during the serialization
+ * @see ChunkedHelperOptions
  */
 public <T> ReplaceAllObjectsResponse replaceAllObjects(String indexName, Iterable<T> objects, int batchSize, List<ScopeType> scopes) {
   return replaceAllObjects(indexName, objects, batchSize, scopes, null);
@@ -1534,6 +1542,7 @@ public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTran
  * @throws AlgoliaRetryException When the retry has failed on all hosts
  * @throws AlgoliaApiException When the API sends an http error code
  * @throws AlgoliaRuntimeException When an error occurred during the serialization
+ * @see ChunkedHelperOptions
  */
 public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTransformation(String indexName, Iterable<T> objects, int batchSize, List<ScopeType> scopes) {
   return replaceAllObjectsWithTransformation(indexName, objects, batchSize, scopes, null);
