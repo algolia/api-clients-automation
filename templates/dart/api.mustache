@@ -215,7 +215,7 @@ final class {{classname}} implements ApiClient {
       // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
       // fall back to the spec-level server defaults so callers get the API's intended timeouts
       // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
-      options: {{#vendorExtensions.x-timeouts}}new RequestOptions(
+      options: {{#vendorExtensions.x-timeouts}}RequestOptions(
           writeTimeout: Duration(milliseconds: {{write}}),
           readTimeout: Duration(milliseconds: {{read}}),
           connectTimeout: Duration(milliseconds: {{connect}}),
