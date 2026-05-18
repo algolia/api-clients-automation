@@ -58,12 +58,8 @@ func (i iterableOption) iterable() {}
 
 // --------- Chunked helper options ---------
 //
-// chunkedHelperOption is the shared option type for configuration that applies
-// to chunked helpers (`ChunkedBatch`, `SaveObjects`, `ReplaceAllObjects`, ...)
-// AND to the polling layer (`WaitForTask`, `CreateIterable`). The sibling
-// language clients group this config under a `ChunkedHelperOptions` type;
-// in Go we keep the variadic functional-option idiom and bridge it across the
-// chunked-helper and iterable interfaces.
+// chunkedHelperOption is the shared option type for chunked helpers
+// (ChunkedBatch, SaveObjects, ...) and the polling layer (WaitForTask, CreateIterable).
 
 type chunkedHelperOption func(*config)
 
@@ -133,7 +129,7 @@ func CreateIterable[T any](execute func(*T, error) (*T, error), validate func(*T
     }
 
 		if conf.maxRetries >= 0 && retryCount >= conf.maxRetries {
-			return nil, errs.NewWaitError(fmt.Sprintf("The maximum number of retries exceeded. (%d/%d)", retryCount, conf.maxRetries))
+			return nil, errs.NewWaitError(fmt.Sprintf("Stopped waiting for the task after %d retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries.", conf.maxRetries))
 		}
 
 		time.Sleep(conf.timeout(retryCount))
