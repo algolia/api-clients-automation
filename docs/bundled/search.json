@@ -4281,6 +4281,7 @@
         ],
         "x-available-languages": [
           "csharp",
+          "dart",
           "go",
           "java",
           "javascript",
@@ -4544,6 +4545,7 @@
         ],
         "x-available-languages": [
           "csharp",
+          "dart",
           "go",
           "java",
           "javascript",
@@ -4836,6 +4838,7 @@
         "x-helper": true,
         "x-available-languages": [
           "csharp",
+          "dart",
           "go",
           "java",
           "javascript",

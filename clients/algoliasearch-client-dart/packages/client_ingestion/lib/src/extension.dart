@@ -18,7 +18,8 @@ extension IngestionClientExt on IngestionClient {
     ChunkedHelperOptions? chunkedOptions,
     RequestOptions? requestOptions,
   }) async {
-    if (batchSize < 1) throw ArgumentError('`batchSize` must be greater than 0');
+    if (batchSize < 1)
+      throw ArgumentError('`batchSize` must be greater than 0');
     final effectiveMaxRetries = chunkedOptions?.maxRetries ?? defaultMaxRetries;
 
     final responses = <WatchResponse>[];
@@ -36,7 +37,8 @@ extension IngestionClientExt on IngestionClient {
       if (batch.length == batchSize || isLast) {
         final response = await push(
           indexName: indexName,
-          pushTaskPayload: PushTaskPayload(action: action, records: List.of(batch)),
+          pushTaskPayload:
+              PushTaskPayload(action: action, records: List.of(batch)),
           referenceIndexName: referenceIndexName,
           requestOptions: requestOptions,
         );
@@ -116,7 +118,8 @@ Future<void> _waitForEvent({
 PushTaskRecords _toRecord(Map<String, dynamic> obj) {
   final objectID = obj['objectID'];
   if (objectID == null || objectID is! String) {
-    throw ArgumentError('each object must have an `objectID` key in order to be indexed');
+    throw ArgumentError(
+        'each object must have an `objectID` key in order to be indexed');
   }
   final rest = Map<String, dynamic>.from(obj)..remove('objectID');
   return PushTaskRecords(objectID: objectID, additionalProperties: rest);

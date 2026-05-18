@@ -73,7 +73,15 @@ final class SearchClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<Object, Object>(
       response,
@@ -102,7 +110,15 @@ final class SearchClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<GetRecommendationsResponse, GetRecommendationsResponse>(
       response,
@@ -131,7 +147,15 @@ final class SearchClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<SearchResponses, SearchResponses>(
       response,
@@ -152,5 +176,7 @@ final class SearchClient implements ApiClient {
   }
 
   @override
-  void dispose() => _retryStrategy.dispose();
+  void dispose() {
+    _retryStrategy.dispose();
+  }
 }

@@ -217,7 +217,224 @@
       "default": "var client = new IngestionClient(\n  new IngestionConfig(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\")\n);"
     }
   },
-  "dart": {},
+  "dart": {
+    "import": {
+      "default": "import 'package:algolia_client_ingestion/algolia_client_ingestion.dart';"
+    },
+    "createAuthentication": {
+      "createAuthenticationOAuth": "final response = await client.createAuthentication(\n  authenticationCreate: AuthenticationCreate(\n    type: AuthenticationType.fromJson(\"oauth\"),\n    name: \"authName\",\n    input: AuthOAuth(\n      url: \"http://test.oauth\",\n      clientId: \"myID\",\n      clientSecret: \"mySecret\",\n    ),\n  ),\n);",
+      "createAuthenticationAlgolia": "final response = await client.createAuthentication(\n  authenticationCreate: AuthenticationCreate(\n    type: AuthenticationType.fromJson(\"algolia\"),\n    name: \"authName\",\n    input: AuthAlgolia(\n      appID: \"ALGOLIA_APPLICATION_ID\",\n      apiKey: \"ALGOLIA_API_KEY\",\n    ),\n  ),\n);"
+    },
+    "createDestination": {
+      "createDestination": "final response = await client.createDestination(\n  destinationCreate: DestinationCreate(\n    type: DestinationType.fromJson(\"search\"),\n    name: \"destinationName\",\n    input: DestinationInput(\n      indexName: \"<YOUR_INDEX_NAME>\",\n    ),\n    authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ),\n);",
+      "with transformationIDs": "final response = await client.createDestination(\n  destinationCreate: DestinationCreate(\n    type: DestinationType.fromJson(\"search\"),\n    name: \"destinationName\",\n    input: DestinationInput(\n      indexName: \"<YOUR_INDEX_NAME>\",\n    ),\n    transformationIDs: [\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    ],\n  ),\n);"
+    },
+    "createSource": {
+      "createSource": "final response = await client.createSource(\n  sourceCreate: SourceCreate(\n    type: SourceType.fromJson(\"commercetools\"),\n    name: \"sourceName\",\n    input: SourceCommercetools(\n      storeKeys: [\n        \"myStore\",\n      ],\n      locales: [\n        \"de\",\n      ],\n      url: \"http://commercetools.com\",\n      projectKey: \"keyID\",\n      productQueryPredicate:\n          \"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\",\n    ),\n    authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ),\n);",
+      "push": "final response = await client.createSource(\n  sourceCreate: SourceCreate(\n    type: SourceType.fromJson(\"push\"),\n    name: \"pushezpourentrer\",\n  ),\n);"
+    },
+    "createTask": {
+      "task without cron": "final response = await client.createTask(\n  taskCreate: TaskCreate(\n    sourceID: \"search\",\n    destinationID: \"destinationID\",\n    action: ActionType.fromJson(\"replace\"),\n  ),\n);",
+      "task with cron": "final response = await client.createTask(\n  taskCreate: TaskCreate(\n    sourceID: \"search\",\n    destinationID: \"destinationID\",\n    cron: \"* * * * *\",\n    action: ActionType.fromJson(\"replace\"),\n    notifications: Notifications(\n      email: EmailNotifications(\n        enabled: true,\n      ),\n    ),\n    policies: Policies(\n      criticalThreshold: 8,\n    ),\n  ),\n);",
+      "task shopify": "final response = await client.createTask(\n  taskCreate: TaskCreate(\n    sourceID: \"search\",\n    destinationID: \"destinationID\",\n    cron: \"* * * * *\",\n    action: ActionType.fromJson(\"replace\"),\n    input: DockerStreamsInput(\n      streams: [\n        DockerStreams(\n          name: \"foo\",\n          syncMode: DockerStreamsSyncMode.fromJson(\"incremental\"),\n        ),\n      ],\n    ),\n  ),\n);"
+    },
+    "createTaskV1": {
+      "createTaskOnDemand": "final response = await client.createTaskV1(\n  taskCreate: TaskCreateV1(\n    sourceID: \"search\",\n    destinationID: \"destinationName\",\n    trigger: OnDemandTriggerInput(\n      type: OnDemandTriggerType.fromJson(\"onDemand\"),\n    ),\n    action: ActionType.fromJson(\"replace\"),\n  ),\n);",
+      "createTaskSchedule": "final response = await client.createTaskV1(\n  taskCreate: TaskCreateV1(\n    sourceID: \"search\",\n    destinationID: \"destinationName\",\n    trigger: ScheduleTriggerInput(\n      type: ScheduleTriggerType.fromJson(\"schedule\"),\n      cron: \"* * * * *\",\n    ),\n    action: ActionType.fromJson(\"replace\"),\n  ),\n);",
+      "createTaskSubscription": "final response = await client.createTaskV1(\n  taskCreate: TaskCreateV1(\n    sourceID: \"search\",\n    destinationID: \"destinationName\",\n    trigger: OnDemandTriggerInput(\n      type: OnDemandTriggerType.fromJson(\"onDemand\"),\n    ),\n    action: ActionType.fromJson(\"replace\"),\n  ),\n);",
+      "task shopify": "final response = await client.createTaskV1(\n  taskCreate: TaskCreateV1(\n    sourceID: \"search\",\n    destinationID: \"destinationName\",\n    trigger: OnDemandTriggerInput(\n      type: OnDemandTriggerType.fromJson(\"onDemand\"),\n    ),\n    action: ActionType.fromJson(\"replace\"),\n    input: DockerStreamsInput(\n      streams: [\n        DockerStreams(\n          name: \"foo\",\n          syncMode: DockerStreamsSyncMode.fromJson(\"incremental\"),\n        ),\n      ],\n    ),\n  ),\n);"
+    },
+    "createTransformation": {
+      "default": "final response = await client.createTransformation(\n  transformationCreate: TransformationCreate(\n    input: TransformationCode(\n      code: \"foo\",\n    ),\n    type: TransformationType.fromJson(\"code\"),\n    name: \"bar\",\n    description: \"baz\",\n  ),\n);"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "final response = await client.customDelete(\n  path: \"test/minimal\",\n);",
+      "allow del method for a custom path with all parameters": "final response = await client.customDelete(\n  path: \"test/all\",\n  parameters: {\n    'query': \"parameters\",\n  },\n);"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "final response = await client.customGet(\n  path: \"test/minimal\",\n);",
+      "allow get method for a custom path with all parameters": "final response = await client.customGet(\n  path: \"test/all\",\n  parameters: {\n    'query': \"parameters with space\",\n  },\n);",
+      "requestOptions should be escaped too": "final response = await client.customGet(\n  path: \"test/all\",\n  parameters: {\n    'query': \"to be overridden\",\n  },\n  requestOptions: RequestOptions(\n    headers: {\n      'x-header-1': 'spaces are left alone',\n    },\n    urlParameters: {\n      'query': \"parameters with space\",\n      'and an array': [\n        \"array\",\n        \"with spaces\",\n      ],\n    },\n  ),\n);"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "final response = await client.customPost(\n  path: \"test/minimal\",\n);",
+      "allow post method for a custom path with all parameters": "final response = await client.customPost(\n  path: \"test/all\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'body': \"parameters\",\n  },\n);",
+      "requestOptions can override default query parameters": "final response = await client.customPost(\n  path: \"test/requestOptions\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'facet': \"filters\",\n  },\n  requestOptions: RequestOptions(\n    urlParameters: {\n      'query': \"myQueryParameter\",\n    },\n  ),\n);",
+      "requestOptions merges query parameters with default ones": "final response = await client.customPost(\n  path: \"test/requestOptions\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'facet': \"filters\",\n  },\n  requestOptions: RequestOptions(\n    urlParameters: {\n      'query2': \"myQueryParameter\",\n    },\n  ),\n);",
+      "requestOptions can override default headers": "final response = await client.customPost(\n  path: \"test/requestOptions\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'facet': \"filters\",\n  },\n  requestOptions: RequestOptions(\n    headers: {\n      'x-algolia-api-key': 'ALGOLIA_API_KEY',\n    },\n  ),\n);",
+      "requestOptions merges headers with default ones": "final response = await client.customPost(\n  path: \"test/requestOptions\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'facet': \"filters\",\n  },\n  requestOptions: RequestOptions(\n    headers: {\n      'x-algolia-api-key': 'ALGOLIA_API_KEY',\n    },\n  ),\n);",
+      "requestOptions queryParameters accepts booleans": "final response = await client.customPost(\n  path: \"test/requestOptions\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'facet': \"filters\",\n  },\n  requestOptions: RequestOptions(\n    urlParameters: {\n      'isItWorking': true,\n    },\n  ),\n);",
+      "requestOptions queryParameters accepts integers": "final response = await client.customPost(\n  path: \"test/requestOptions\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'facet': \"filters\",\n  },\n  requestOptions: RequestOptions(\n    urlParameters: {\n      'myParam': 2,\n    },\n  ),\n);",
+      "requestOptions queryParameters accepts list of string": "final response = await client.customPost(\n  path: \"test/requestOptions\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'facet': \"filters\",\n  },\n  requestOptions: RequestOptions(\n    urlParameters: {\n      'myParam': [\n        \"b and c\",\n        \"d\",\n      ],\n    },\n  ),\n);",
+      "requestOptions queryParameters accepts list of booleans": "final response = await client.customPost(\n  path: \"test/requestOptions\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'facet': \"filters\",\n  },\n  requestOptions: RequestOptions(\n    urlParameters: {\n      'myParam': [\n        true,\n        true,\n        false,\n      ],\n    },\n  ),\n);",
+      "requestOptions queryParameters accepts list of integers": "final response = await client.customPost(\n  path: \"test/requestOptions\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'facet': \"filters\",\n  },\n  requestOptions: RequestOptions(\n    urlParameters: {\n      'myParam': [\n        1,\n        2,\n      ],\n    },\n  ),\n);"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "final response = await client.customPut(\n  path: \"test/minimal\",\n);",
+      "allow put method for a custom path with all parameters": "final response = await client.customPut(\n  path: \"test/all\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'body': \"parameters\",\n  },\n);"
+    },
+    "deleteAuthentication": {
+      "default": "final response = await client.deleteAuthentication(\n  authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n);"
+    },
+    "deleteDestination": {
+      "default": "final response = await client.deleteDestination(\n  destinationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n);"
+    },
+    "deleteSource": {
+      "default": "final response = await client.deleteSource(\n  sourceID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n);"
+    },
+    "deleteTask": {
+      "default": "final response = await client.deleteTask(\n  taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n);"
+    },
+    "deleteTaskV1": {
+      "default": "final response = await client.deleteTaskV1(\n  taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n);"
+    },
+    "deleteTransformation": {
+      "default": "final response = await client.deleteTransformation(\n  transformationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n);"
+    },
+    "disableTask": {
+      "default": "final response = await client.disableTask(\n  taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n);"
+    },
+    "disableTaskV1": {
+      "default": "final response = await client.disableTaskV1(\n  taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n);"
+    },
+    "enableTask": {
+      "default": "final response = await client.enableTask(\n  taskID: \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n);"
+    },
+    "enableTaskV1": {
+      "default": "final response = await client.enableTaskV1(\n  taskID: \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n);"
+    },
+    "getAuthentication": {
+      "default": "final response = await client.getAuthentication(\n  authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n);"
+    },
+    "getDestination": {
+      "default": "final response = await client.getDestination(\n  destinationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n);"
+    },
+    "getEvent": {
+      "default": "final response = await client.getEvent(\n  runID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  eventID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0c\",\n);"
+    },
+    "getRun": {
+      "default": "final response = await client.getRun(\n  runID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n);"
+    },
+    "getSource": {
+      "default": "final response = await client.getSource(\n  sourceID: \"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\n);"
+    },
+    "getTask": {
+      "default": "final response = await client.getTask(\n  taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n);"
+    },
+    "getTaskV1": {
+      "default": "final response = await client.getTaskV1(\n  taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n);"
+    },
+    "getTransformation": {
+      "default": "final response = await client.getTransformation(\n  transformationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n);"
+    },
+    "listAuthentications": {
+      "getAuthentications": "final response = await client.listAuthentications();",
+      "getAuthentications with query params": "final response = await client.listAuthentications(\n  itemsPerPage: 2,\n  page: 1,\n  type: [\n    AuthenticationType.fromJson(\"basic\"),\n    AuthenticationType.fromJson(\"algolia\"),\n  ],\n  platform: [\n    PlatformNone.fromJson(\"none\"),\n  ],\n  sort: AuthenticationSortKeys.fromJson(\"createdAt\"),\n  order: OrderKeys.fromJson(\"asc\"),\n);"
+    },
+    "listDestinations": {
+      "default": "final response = await client.listDestinations();"
+    },
+    "listEvents": {
+      "default": "final response = await client.listEvents(\n  runID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n);"
+    },
+    "listRuns": {
+      "default": "final response = await client.listRuns();"
+    },
+    "listSources": {
+      "default": "final response = await client.listSources();"
+    },
+    "listTasks": {
+      "default": "final response = await client.listTasks();"
+    },
+    "listTasksV1": {
+      "default": "final response = await client.listTasksV1();"
+    },
+    "listTransformations": {
+      "listTransformations": "final response = await client.listTransformations();",
+      "list with every parameters": "final response = await client.listTransformations(\n  itemsPerPage: 2,\n  page: 1,\n  sort: TransformationSortKeys.fromJson(\"createdAt\"),\n  order: OrderKeys.fromJson(\"asc\"),\n  type: TransformationType.fromJson(\"noCode\"),\n);"
+    },
+    "push": {
+      "global push": "final response = await client.push(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  pushTaskPayload: PushTaskPayload(\n    action: Action.fromJson(\"addObject\"),\n    records: [\n      PushTaskRecords(\n        objectID: \"o\",\n        additionalProperties: {\n          'key': \"bar\",\n          'foo': \"1\",\n        },\n      ),\n      PushTaskRecords(\n        objectID: \"k\",\n        additionalProperties: {\n          'key': \"baz\",\n          'foo': \"2\",\n        },\n      ),\n    ],\n  ),\n);",
+      "global push with watch mode": "final response = await client.push(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  pushTaskPayload: PushTaskPayload(\n    action: Action.fromJson(\"addObject\"),\n    records: [\n      PushTaskRecords(\n        objectID: \"o\",\n        additionalProperties: {\n          'key': \"bar\",\n          'foo': \"1\",\n        },\n      ),\n      PushTaskRecords(\n        objectID: \"k\",\n        additionalProperties: {\n          'key': \"baz\",\n          'foo': \"2\",\n        },\n      ),\n    ],\n  ),\n  watch: true,\n  referenceIndexName: \"foo\",\n);"
+    },
+    "pushTask": {
+      "pushTask": "final response = await client.pushTask(\n  taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  pushTaskPayload: PushTaskPayload(\n    action: Action.fromJson(\"addObject\"),\n    records: [\n      PushTaskRecords(\n        objectID: \"o\",\n        additionalProperties: {\n          'key': \"bar\",\n          'foo': \"1\",\n        },\n      ),\n      PushTaskRecords(\n        objectID: \"k\",\n        additionalProperties: {\n          'key': \"baz\",\n          'foo': \"2\",\n        },\n      ),\n    ],\n  ),\n);",
+      "allows for watch query parameter": "final response = await client.pushTask(\n  taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  pushTaskPayload: PushTaskPayload(\n    action: Action.fromJson(\"addObject\"),\n    records: [\n      PushTaskRecords(\n        objectID: \"o\",\n        additionalProperties: {\n          'key': \"bar\",\n          'foo': \"1\",\n        },\n      ),\n      PushTaskRecords(\n        objectID: \"k\",\n        additionalProperties: {\n          'key': \"baz\",\n          'foo': \"2\",\n        },\n      ),\n    ],\n  ),\n  watch: true,\n);"
+    },
+    "replaceTask": {
+      "fully replace task without cron": "final response = await client.replaceTask(\n  taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  taskReplace: TaskReplace(\n    destinationID: \"destinationID\",\n    action: ActionType.fromJson(\"replace\"),\n  ),\n);",
+      "fully replace task with cron": "final response = await client.replaceTask(\n  taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  taskReplace: TaskReplace(\n    destinationID: \"destinationID\",\n    cron: \"* * * * *\",\n    action: ActionType.fromJson(\"replace\"),\n    notifications: Notifications(\n      email: EmailNotifications(\n        enabled: true,\n      ),\n    ),\n    policies: Policies(\n      criticalThreshold: 8,\n    ),\n  ),\n);",
+      "fully replace task shopify": "final response = await client.replaceTask(\n  taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  taskReplace: TaskReplace(\n    destinationID: \"destinationID\",\n    cron: \"* * * * *\",\n    action: ActionType.fromJson(\"replace\"),\n    input: DockerStreamsInput(\n      streams: [\n        DockerStreams(\n          name: \"foo\",\n          syncMode: DockerStreamsSyncMode.fromJson(\"incremental\"),\n        ),\n      ],\n    ),\n  ),\n);"
+    },
+    "runSource": {
+      "default": "final response = await client.runSource(\n  sourceID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  runSourcePayload: RunSourcePayload(\n    indexToInclude: [\n      \"products_us\",\n      \"products eu\",\n    ],\n    entityIDs: [\n      \"1234\",\n      \"5678\",\n    ],\n    entityType: EntityType.fromJson(\"product\"),\n  ),\n);"
+    },
+    "runTask": {
+      "default": "final response = await client.runTask(\n  taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n);"
+    },
+    "runTaskV1": {
+      "default": "final response = await client.runTaskV1(\n  taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n);"
+    },
+    "searchAuthentications": {
+      "default": "final response = await client.searchAuthentications(\n  authenticationSearch: AuthenticationSearch(\n    authenticationIDs: [\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n    ],\n  ),\n);"
+    },
+    "searchDestinations": {
+      "default": "final response = await client.searchDestinations(\n  destinationSearch: DestinationSearch(\n    destinationIDs: [\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n    ],\n  ),\n);"
+    },
+    "searchSources": {
+      "default": "final response = await client.searchSources(\n  sourceSearch: SourceSearch(\n    sourceIDs: [\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n    ],\n  ),\n);"
+    },
+    "searchTasks": {
+      "default": "final response = await client.searchTasks(\n  taskSearch: TaskSearch(\n    taskIDs: [\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n    ],\n  ),\n);"
+    },
+    "searchTasksV1": {
+      "default": "final response = await client.searchTasksV1(\n  taskSearch: TaskSearch(\n    taskIDs: [\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n    ],\n  ),\n);"
+    },
+    "searchTransformations": {
+      "default": "final response = await client.searchTransformations(\n  transformationSearch: TransformationSearch(\n    transformationIDs: [\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n    ],\n  ),\n);"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey(\n  apiKey: \"updated-api-key\",\n);"
+    },
+    "triggerDockerSourceDiscover": {
+      "default": "final response = await client.triggerDockerSourceDiscover(\n  sourceID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n);"
+    },
+    "tryTransformation": {
+      "tryTransformation": "final response = await client.tryTransformation(\n  transformationTry: TransformationTry(\n    type: TransformationType.fromJson(\"code\"),\n    input: TransformationCode(\n      code: \"foo\",\n    ),\n    sampleRecord: {\n      'bar': \"baz\",\n    },\n  ),\n);",
+      "with authentications": "final response = await client.tryTransformation(\n  transformationTry: TransformationTry(\n    type: TransformationType.fromJson(\"code\"),\n    input: TransformationCode(\n      code: \"foo\",\n    ),\n    sampleRecord: {\n      'bar': \"baz\",\n    },\n    authentications: [\n      AuthenticationCreate(\n        type: AuthenticationType.fromJson(\"oauth\"),\n        name: \"authName\",\n        input: AuthOAuth(\n          url: \"http://test.oauth\",\n          clientId: \"myID\",\n          clientSecret: \"mySecret\",\n        ),\n      ),\n    ],\n  ),\n);"
+    },
+    "tryTransformationBeforeUpdate": {
+      "tryTransformationBeforeUpdate": "final response = await client.tryTransformationBeforeUpdate(\n  transformationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  transformationTry: TransformationTry(\n    type: TransformationType.fromJson(\"code\"),\n    input: TransformationCode(\n      code: \"foo\",\n    ),\n    sampleRecord: {\n      'bar': \"baz\",\n    },\n  ),\n);",
+      "existing with authentications": "final response = await client.tryTransformationBeforeUpdate(\n  transformationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  transformationTry: TransformationTry(\n    type: TransformationType.fromJson(\"code\"),\n    input: TransformationCode(\n      code: \"foo\",\n    ),\n    sampleRecord: {\n      'bar': \"baz\",\n    },\n    authentications: [\n      AuthenticationCreate(\n        type: AuthenticationType.fromJson(\"oauth\"),\n        name: \"authName\",\n        input: AuthOAuth(\n          url: \"http://test.oauth\",\n          clientId: \"myID\",\n          clientSecret: \"mySecret\",\n        ),\n      ),\n    ],\n  ),\n);"
+    },
+    "updateAuthentication": {
+      "default": "final response = await client.updateAuthentication(\n  authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  authenticationUpdate: AuthenticationUpdate(\n    name: \"newName\",\n  ),\n);"
+    },
+    "updateDestination": {
+      "default": "final response = await client.updateDestination(\n  destinationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  destinationUpdate: DestinationUpdate(\n    name: \"newName\",\n  ),\n);"
+    },
+    "updateSource": {
+      "default": "final response = await client.updateSource(\n  sourceID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  sourceUpdate: SourceUpdate(\n    name: \"newName\",\n  ),\n);"
+    },
+    "updateTask": {
+      "default": "final response = await client.updateTask(\n  taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  taskUpdate: TaskUpdate(\n    enabled: false,\n    cron: \"* * * * *\",\n  ),\n);"
+    },
+    "updateTaskV1": {
+      "default": "final response = await client.updateTaskV1(\n  taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  taskUpdate: TaskUpdateV1(\n    enabled: false,\n  ),\n);"
+    },
+    "updateTransformation": {
+      "default": "final response = await client.updateTransformation(\n  transformationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  transformationCreate: TransformationCreate(\n    input: TransformationCode(\n      code: \"foo\",\n    ),\n    type: TransformationType.fromJson(\"code\"),\n    name: \"bar\",\n    description: \"baz\",\n  ),\n);"
+    },
+    "validateSource": {
+      "default": "final response = await client.validateSource(\n  sourceCreate: SourceCreate(\n    type: SourceType.fromJson(\"commercetools\"),\n    name: \"sourceName\",\n    input: SourceCommercetools(\n      storeKeys: [\n        \"myStore\",\n      ],\n      locales: [\n        \"de\",\n      ],\n      url: \"http://commercetools.com\",\n      projectKey: \"keyID\",\n    ),\n    authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ),\n);"
+    },
+    "validateSourceBeforeUpdate": {
+      "default": "final response = await client.validateSourceBeforeUpdate(\n  sourceID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  sourceUpdate: SourceUpdate(\n    name: \"newName\",\n  ),\n);"
+    },
+    "init": {
+      "default": "final client = IngestionClient(\n    appId: 'ALGOLIA_APPLICATION_ID',\n    apiKey: 'ALGOLIA_API_KEY',\n    region: 'ALGOLIA_APPLICATION_REGION');"
+    }
+  },
   "go": {
     "import": {
       "default": "import (\n\t\"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion\""

@@ -1,7 +1,8 @@
 import 'dart:math';
 
 import 'package:algolia_client_core/algolia_client_core.dart';
-import 'package:algolia_client_ingestion/algolia_client_ingestion.dart' as ingestion;
+import 'package:algolia_client_ingestion/algolia_client_ingestion.dart'
+    as ingestion;
 import 'package:algolia_client_search/src/api/search_client.dart';
 import 'package:algolia_client_search/src/extension/wait_task.dart';
 import 'package:algolia_client_search/src/model/event.dart';
@@ -91,7 +92,8 @@ extension Transformation on SearchClient {
 
   /// Replaces all objects in [indexName] via the Ingestion pipeline without downtime.
   /// Requires [TransformationOptions] to be set.
-  Future<ReplaceAllObjectsWithTransformationResponse> replaceAllObjectsWithTransformation({
+  Future<ReplaceAllObjectsWithTransformationResponse>
+      replaceAllObjectsWithTransformation({
     required String indexName,
     required Iterable<Map<String, dynamic>> objects,
     int batchSize = 1000,
@@ -102,7 +104,8 @@ extension Transformation on SearchClient {
     if (ingestionTransporter == null) throw StateError(_notSetError);
 
     final effectiveMaxRetries = chunkedOptions?.maxRetries ?? defaultMaxRetries;
-    final effectiveScopes = scopes ?? [ScopeType.settings, ScopeType.rules, ScopeType.synonyms];
+    final effectiveScopes =
+        scopes ?? [ScopeType.settings, ScopeType.rules, ScopeType.synonyms];
     final tmpIndex = '${indexName}_tmp_${Random().nextInt(900000) + 100000}';
 
     try {
@@ -188,7 +191,9 @@ WatchResponse _convertWatchResponse(ingestion.WatchResponse r) {
         ?.map((e) => Event(
               eventID: e.eventID,
               runID: e.runID,
-              status: e.status != null ? EventStatus.fromJson(e.status!.toJson()) : null,
+              status: e.status != null
+                  ? EventStatus.fromJson(e.status!.toJson())
+                  : null,
               type: EventType.fromJson(e.type.toJson()),
               batchSize: e.batchSize,
               data: e.data,

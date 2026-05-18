@@ -80,7 +80,15 @@ final class CompositionClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<Object, Object>(
       response,
@@ -113,7 +121,15 @@ final class CompositionClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<Object, Object>(
       response,
@@ -149,7 +165,15 @@ final class CompositionClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<Object, Object>(
       response,
@@ -185,7 +209,15 @@ final class CompositionClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<Object, Object>(
       response,
@@ -218,7 +250,15 @@ final class CompositionClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<TaskIDResponse, TaskIDResponse>(
       response,
@@ -259,7 +299,15 @@ final class CompositionClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<TaskIDResponse, TaskIDResponse>(
       response,
@@ -293,7 +341,15 @@ final class CompositionClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<Composition, Composition>(
       response,
@@ -335,7 +391,15 @@ final class CompositionClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<CompositionRule, CompositionRule>(
       response,
@@ -376,7 +440,15 @@ final class CompositionClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<GetTaskResponse, GetTaskResponse>(
       response,
@@ -410,7 +482,15 @@ final class CompositionClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<ListCompositionsResponse, ListCompositionsResponse>(
       response,
@@ -438,7 +518,15 @@ final class CompositionClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<MultipleBatchResponse, MultipleBatchResponse>(
       response,
@@ -474,7 +562,15 @@ final class CompositionClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<TaskIDResponse, TaskIDResponse>(
       response,
@@ -518,7 +614,15 @@ final class CompositionClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<TaskIDResponse, TaskIDResponse>(
       response,
@@ -554,7 +658,15 @@ final class CompositionClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<RulesMultipleBatchResponse, RulesMultipleBatchResponse>(
       response,
@@ -591,7 +703,15 @@ final class CompositionClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<SearchResponse, SearchResponse>(
       response,
@@ -627,7 +747,15 @@ final class CompositionClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<SearchCompositionRulesResponse,
         SearchCompositionRulesResponse>(
@@ -673,7 +801,15 @@ final class CompositionClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<SearchForFacetValuesResponse,
         SearchForFacetValuesResponse>(
@@ -710,7 +846,15 @@ final class CompositionClient implements ApiClient {
     );
     final response = await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      // Operations with explicit x-timeouts use those; operations without (e.g. customGet/customPost)
+      // fall back to the spec-level server defaults so callers get the API's intended timeouts
+      // rather than Dart's ClientOptions defaults. Removing this fallback breaks CTS timeout tests.
+      options: RequestOptions(
+            writeTimeout: Duration(milliseconds: 30000),
+            readTimeout: Duration(milliseconds: 5000),
+            connectTimeout: Duration(milliseconds: 2000),
+          ) +
+          requestOptions,
     );
     return deserialize<TaskIDResponse, TaskIDResponse>(
       response,
@@ -720,5 +864,7 @@ final class CompositionClient implements ApiClient {
   }
 
   @override
-  void dispose() => _retryStrategy.dispose();
+  void dispose() {
+    _retryStrategy.dispose();
+  }
 }
