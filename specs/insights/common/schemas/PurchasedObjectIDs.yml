@@ -27,6 +27,8 @@ properties:
     $ref: './EventAttributes.yml#/timestamp'
   value:
     $ref: './EventAttributes.yml#/value'
+  agent:
+    $ref: './EventAttributes.yml#/agent'
 required:
   - eventName
   - eventType
