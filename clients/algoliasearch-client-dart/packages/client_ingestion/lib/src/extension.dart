@@ -1,10 +1,10 @@
 import 'package:algolia_client_core/algolia_client_core.dart';
 
-import '../api/ingestion_client.dart';
-import '../model/action.dart';
-import '../model/push_task_payload.dart';
-import '../model/push_task_records.dart';
-import '../model/watch_response.dart';
+import 'api/ingestion_client.dart';
+import 'model/action.dart';
+import 'model/push_task_payload.dart';
+import 'model/push_task_records.dart';
+import 'model/watch_response.dart';
 
 extension IngestionClientExt on IngestionClient {
   /// Chunks [objects] and pushes them through the Ingestion pipeline with [action].
