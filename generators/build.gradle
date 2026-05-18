@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.openapitools:openapi-generator:7.16.0'
+    compileOnly 'org.openapitools:openapi-generator:7.22.0'
 }
 
 tasks.withType(JavaCompile) {
