@@ -3,13 +3,12 @@ import '{{{import}}}';
 import 'package:algolia_test/algolia_test.dart';
 import 'package:test/test.dart';
 import 'package:test_api/hooks.dart';
-import 'dart:io' show Platform;
+import 'dart:io' as io;
 
 void main() {
   {{#blocksClient}}
   {{#tests}}
-  {{^isHelper}} {{! Helper tests are not supported yet}}
-  test('{{{testName}}}', () async { 
+  test('{{{testName}}}', () async {
     final requester = RequestInterceptor();
     {{#autoCreateClient}}
     final client =  {{client}}(
@@ -56,7 +55,6 @@ void main() {
     }
   );
 
-  {{/isHelper}}
   {{/tests}}
   {{/blocksClient}}
 }

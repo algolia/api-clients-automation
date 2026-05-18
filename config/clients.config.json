@@ -49,6 +49,10 @@
         "output": "clients/algoliasearch-client-dart/packages/client_composition"
       },
       {
+        "name": "ingestion",
+        "output": "clients/algoliasearch-client-dart/packages/client_ingestion"
+      },
+      {
         "name": "insights",
         "output": "clients/algoliasearch-client-dart/packages/client_insights"
       },

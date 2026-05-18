@@ -3,6 +3,7 @@ method:
     x-helper: true
     x-available-languages:
       - csharp
+      - dart
       - go
       - java
       - javascript
