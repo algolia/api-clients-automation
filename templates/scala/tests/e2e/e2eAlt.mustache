@@ -1,0 +1,70 @@
+// {{generationBanner}}
+package algoliasearch.e2eAlt
+
+import algoliasearch.api.{{client}}
+import algoliasearch.config.*
+import algoliasearch.{{import}}.*
+import org.json4s.*
+import org.json4s.native.JsonParser.*
+import org.scalatest.funsuite.AnyFunSuite
+import io.github.cdimascio.dotenv.Dotenv
+import org.json4s.native.Serialization
+import org.json4s.native.Serialization.write
+
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContextExecutor}
+
+class {{clientPrefix}}AltTest extends AnyFunSuite {
+  implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
+  implicit val formats: Formats = JsonSupport.format
+
+  def testClient(): {{client}} = {
+    {{#hasRegionalHost}}
+    val region = {{#fallbackToAliasHost}}Some("{{defaultRegion}}"){{/fallbackToAliasHost}}{{^fallbackToAliasHost}}"{{defaultRegion}}"{{/fallbackToAliasHost}}
+    {{/hasRegionalHost}}
+    if (System.getenv("CI") == "true") {
+      {{client}}(
+        appId = System.getenv("METIS_APPLICATION_ID"),
+        apiKey = System.getenv("METIS_API_KEY"){{#hasRegionalHost}},
+        region = region{{/hasRegionalHost}}
+      )
+    } else {
+      val dotenv = Dotenv.configure.directory("../../").load
+      {{client}}(
+        appId = dotenv.get("METIS_APPLICATION_ID"),
+        apiKey = dotenv.get("METIS_API_KEY"){{#hasRegionalHost}},
+        region = region{{/hasRegionalHost}}
+      )
+    }
+  }
+
+  {{#blocksE2E}}
+  {{#tests}}
+  
+  test("{{{testName}}}{{testIndex}}") {
+    val client = testClient()
+    val future = {{> tests/method}}
+
+    val response = Await.result(future, Duration.Inf)
+    {{#response}}
+    {{#body}}
+    val expected = parse("""{{{body}}}""")
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}")
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
+    {{/body}}
+    {{/response}}
+  }
+  
+  {{/tests}}
+  {{/blocksE2E}}
+}

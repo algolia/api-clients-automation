@@ -1,0 +1,71 @@
+// {{generationBanner}}
+package e2eAlt
+
+import (
+  "encoding/json"
+  "os"
+	"testing"
+
+	"github.com/stretchr/testify/require"
+  "github.com/kinbiko/jsonassert"
+	"github.com/joho/godotenv"
+
+  "gotests/tests"
+
+  "github.com/algolia/algoliasearch-client-go/v4/algolia/{{clientImport}}"
+)
+
+func createE2E{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t *testing.T) *{{clientPrefix}}.APIClient {
+  t.Helper()
+
+  appID := os.Getenv("METIS_APPLICATION_ID")
+  if appID == "" && os.Getenv("CI") != "true" {
+    err := godotenv.Load("../../../../.env")
+    require.NoError(t, err)
+    appID = os.Getenv("METIS_APPLICATION_ID")
+  }
+  apiKey := os.Getenv("METIS_API_KEY")
+  client, err := {{clientPrefix}}.NewClient(appID, apiKey, {{#hasRegionalHost}}{{clientPrefix}}.{{#lambda.uppercase}}{{defaultRegion}}{{/lambda.uppercase}},{{/hasRegionalHost}})
+  require.NoError(t, err)
+
+  return client
+}
+
+{{#blocksE2E}}
+func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}E2E_{{#lambda.titlecase}}{{operationId}}{{/lambda.titlecase}}(t *testing.T) {
+    t.Parallel()
+    {{#tests}}
+    t.Run("{{{testName}}}", func(t *testing.T) {
+      t.Parallel()
+
+      client := createE2E{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t)
+      res, err := {{> tests/method}}
+      require.NoError(t, err)
+      _ = res
+
+      {{#response}}
+      {{#body}}
+      rawBody, err := json.Marshal(res)
+      require.NoError(t, err)
+
+      var rawBodyMap any
+      err = json.Unmarshal(rawBody, &rawBodyMap)
+      require.NoError(t, err)
+
+      expectedBodyRaw := `{{{.}}}`
+      var expectedBody any
+      err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+      require.NoError(t, err)
+
+      unionBody := tests.Union(t, expectedBody, rawBodyMap)
+      unionBodyRaw, err := json.Marshal(unionBody)
+      require.NoError(t, err)
+
+      jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
+      {{/body}}
+      {{/response}}
+    })
+{{/tests}}
+}
+
+{{/blocksE2E}}

@@ -43,7 +43,18 @@ public class TestsRequest extends TestsGenerator {
         Helpers.createClientName(client, language) + extension
       )
     );
+
     if (new File("templates/" + language + "/tests/e2e/e2e.mustache").exists()) {
+      if (this.client.equals("search")) {
+        supportingFiles.add(
+          new SupportingFile(
+            "tests/e2e/e2eAlt.mustache",
+            "tests/output/" + language + "/" + outputFolder + "/e2eAlt",
+            Helpers.createClientName(client, language) + extension
+          )
+        );
+      }
+
       supportingFiles.add(
         new SupportingFile(
           "tests/e2e/e2e.mustache",
