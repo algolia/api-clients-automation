@@ -533,7 +533,9 @@ void main() {
               body: DictionaryEntry(
                 objectID: "1",
                 language: SupportedLanguage.fromJson("en"),
-                additionalProperties: {'additional': 'try me'},
+                additionalProperties: {
+                  'additional': "try me",
+                },
               ),
             ),
           ],

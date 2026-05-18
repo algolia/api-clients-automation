@@ -1,7 +1,8 @@
 import 'dart:math';
 
 import 'package:algolia_client_core/algolia_client_core.dart';
-import 'package:algolia_client_ingestion/algolia_client_ingestion.dart' as ingestion;
+import 'package:algolia_client_ingestion/algolia_client_ingestion.dart'
+    as ingestion;
 import 'package:algolia_client_search/src/api/search_client.dart';
 import 'package:algolia_client_search/src/extension/wait_task.dart';
 import 'package:algolia_client_search/src/model/event.dart';
@@ -29,7 +30,8 @@ extension Transformation on SearchClient {
     String? referenceIndexName,
     RequestOptions? requestOptions,
   }) async {
-    if (batchSize < 1) throw ArgumentError('`batchSize` must be greater than 0');
+    if (batchSize < 1)
+      throw ArgumentError('`batchSize` must be greater than 0');
     final transporter = ingestionTransporter;
     if (transporter == null) throw StateError(_notSetError);
 
@@ -48,15 +50,15 @@ extension Transformation on SearchClient {
       if (batch.length == batchSize || isLast) {
         final raw = await transporter.push(
           indexName: indexName,
-          pushTaskPayload: ingestion.PushTaskPayload(action: action, records: List.of(batch)),
+          pushTaskPayload: ingestion.PushTaskPayload(
+              action: action, records: List.of(batch)),
           referenceIndexName: referenceIndexName,
           requestOptions: requestOptions,
         );
         responses.add(_convertWatchResponse(raw));
         batch.clear();
 
-        if (waitForTasks &&
-            (responses.length % pollInterval == 0 || isLast)) {
+        if (waitForTasks && (responses.length % pollInterval == 0 || isLast)) {
           await _pollBatch(
             transporter: transporter,
             responses: responses,
@@ -115,7 +117,8 @@ extension Transformation on SearchClient {
 
   /// Replaces all objects in [indexName] via the Ingestion pipeline without downtime.
   /// Requires [TransformationOptions] to be set.
-  Future<ReplaceAllObjectsWithTransformationResponse> replaceAllObjectsWithTransformation({
+  Future<ReplaceAllObjectsWithTransformationResponse>
+      replaceAllObjectsWithTransformation({
     required String indexName,
     required Iterable<Map<String, dynamic>> objects,
     int batchSize = 1000,
@@ -124,7 +127,8 @@ extension Transformation on SearchClient {
   }) async {
     if (ingestionTransporter == null) throw StateError(_notSetError);
 
-    final effectiveScopes = scopes ?? [ScopeType.settings, ScopeType.rules, ScopeType.synonyms];
+    final effectiveScopes =
+        scopes ?? [ScopeType.settings, ScopeType.rules, ScopeType.synonyms];
     final tmpIndex = '${indexName}_tmp_${Random().nextInt(900000) + 100000}';
 
     try {
@@ -148,7 +152,10 @@ extension Transformation on SearchClient {
         requestOptions: requestOptions,
       );
 
-      await waitTask(indexName: tmpIndex, taskID: copyResponse.taskID, requestOptions: requestOptions);
+      await waitTask(
+          indexName: tmpIndex,
+          taskID: copyResponse.taskID,
+          requestOptions: requestOptions);
 
       copyResponse = await operationIndex(
         indexName: indexName,
@@ -159,7 +166,10 @@ extension Transformation on SearchClient {
         ),
         requestOptions: requestOptions,
       );
-      await waitTask(indexName: tmpIndex, taskID: copyResponse.taskID, requestOptions: requestOptions);
+      await waitTask(
+          indexName: tmpIndex,
+          taskID: copyResponse.taskID,
+          requestOptions: requestOptions);
 
       final moveResponse = await operationIndex(
         indexName: tmpIndex,
@@ -169,7 +179,10 @@ extension Transformation on SearchClient {
         ),
         requestOptions: requestOptions,
       );
-      await waitTask(indexName: tmpIndex, taskID: moveResponse.taskID, requestOptions: requestOptions);
+      await waitTask(
+          indexName: tmpIndex,
+          taskID: moveResponse.taskID,
+          requestOptions: requestOptions);
 
       return ReplaceAllObjectsWithTransformationResponse(
         copyOperationResponse: copyResponse,
@@ -234,10 +247,12 @@ Future<void> _waitForEvent({
 ingestion.PushTaskRecords _toRecord(Map<String, dynamic> obj) {
   final objectID = obj['objectID'];
   if (objectID == null || objectID is! String) {
-    throw ArgumentError('each object must have an `objectID` key in order to be indexed');
+    throw ArgumentError(
+        'each object must have an `objectID` key in order to be indexed');
   }
   final rest = Map<String, dynamic>.from(obj)..remove('objectID');
-  return ingestion.PushTaskRecords(objectID: objectID, additionalProperties: rest);
+  return ingestion.PushTaskRecords(
+      objectID: objectID, additionalProperties: rest);
 }
 
 WatchResponse _convertWatchResponse(ingestion.WatchResponse r) {
@@ -249,7 +264,9 @@ WatchResponse _convertWatchResponse(ingestion.WatchResponse r) {
         ?.map((e) => Event(
               eventID: e.eventID,
               runID: e.runID,
-              status: e.status != null ? EventStatus.fromJson(e.status!.toJson()) : null,
+              status: e.status != null
+                  ? EventStatus.fromJson(e.status!.toJson())
+                  : null,
               type: EventType.fromJson(e.type.toJson()),
               batchSize: e.batchSize,
               data: e.data,

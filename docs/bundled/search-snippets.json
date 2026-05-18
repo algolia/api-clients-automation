@@ -639,7 +639,7 @@
     "batchDictionaryEntries": {
       "replace": "final response = await client.batchDictionaryEntries(\n  dictionaryName: DictionaryType.fromJson(\"plurals\"),\n  batchDictionaryEntriesParams: BatchDictionaryEntriesParams(\n    clearExistingDictionaryEntries: true,\n    requests: [\n      BatchDictionaryEntriesRequest(\n        action: DictionaryAction.fromJson(\"addEntry\"),\n        body: DictionaryEntry(\n          objectID: \"1\",\n          language: SupportedLanguage.fromJson(\"en\"),\n          word: \"fancy\",\n          words: [\n            \"believe\",\n            \"algolia\",\n          ],\n          decomposition: [\n            \"trust\",\n            \"algolia\",\n          ],\n          state: DictionaryEntryState.fromJson(\"enabled\"),\n        ),\n      ),\n    ],\n  ),\n);",
       "delete": "final response = await client.batchDictionaryEntries(\n  dictionaryName: DictionaryType.fromJson(\"plurals\"),\n  batchDictionaryEntriesParams: BatchDictionaryEntriesParams(\n    clearExistingDictionaryEntries: true,\n    requests: [\n      BatchDictionaryEntriesRequest(\n        action: DictionaryAction.fromJson(\"deleteEntry\"),\n        body: DictionaryEntry(\n          objectID: \"1\",\n        ),\n      ),\n    ],\n  ),\n);",
-      "append": "final response = await client.batchDictionaryEntries(\n  dictionaryName: DictionaryType.fromJson(\"stopwords\"),\n  batchDictionaryEntriesParams: BatchDictionaryEntriesParams(\n    requests: [\n      BatchDictionaryEntriesRequest(\n        action: DictionaryAction.fromJson(\"addEntry\"),\n        body: DictionaryEntry(\n          objectID: \"1\",\n          language: SupportedLanguage.fromJson(\"en\"),\n          additionalProperties: {'additional': 'try me'},\n        ),\n      ),\n    ],\n  ),\n);"
+      "append": "final response = await client.batchDictionaryEntries(\n  dictionaryName: DictionaryType.fromJson(\"stopwords\"),\n  batchDictionaryEntriesParams: BatchDictionaryEntriesParams(\n    requests: [\n      BatchDictionaryEntriesRequest(\n        action: DictionaryAction.fromJson(\"addEntry\"),\n        body: DictionaryEntry(\n          objectID: \"1\",\n          language: SupportedLanguage.fromJson(\"en\"),\n          additionalProperties: {\n            'additional': \"try me\",\n          },\n        ),\n      ),\n    ],\n  ),\n);"
     },
     "browse": {
       "browse with minimal parameters": "final response = await client.browse(\n  indexName: \"<YOUR_INDEX_NAME>\",\n);",
@@ -786,8 +786,14 @@
       "add men pant": "final response = await client.partialUpdateObject(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objectID: \"productId\",\n  attributesToUpdate: {\n    'categoryPageId': {\n      '_operation': \"Add\",\n      'value': \"men-clothing-pants\",\n    },\n  },\n);",
       "remove men pant": "final response = await client.partialUpdateObject(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objectID: \"productId\",\n  attributesToUpdate: {\n    'categoryPageId': {\n      '_operation': \"Remove\",\n      'value': \"men-clothing-pants\",\n    },\n  },\n);"
     },
+    "partialUpdateObjectsWithTransformation": {
+      "default": "final response = await client.partialUpdateObjectsWithTransformation(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objects: [\n    {\n      'objectID': \"1\",\n      'name': \"Adam\",\n    },\n    {\n      'objectID': \"2\",\n      'name': \"Benoit\",\n    },\n  ],\n  createIfNotExists: true,\n  waitForTasks: true,\n);"
+    },
     "removeUserId": {
       "default": "final response = await client.removeUserId(\n  userID: \"uniqueID\",\n);"
+    },
+    "replaceAllObjectsWithTransformation": {
+      "default": "final response = await client.replaceAllObjectsWithTransformation(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objects: [\n    {\n      'objectID': \"1\",\n      'name': \"Adam\",\n    },\n    {\n      'objectID': \"2\",\n      'name': \"Benoit\",\n    },\n    {\n      'objectID': \"3\",\n      'name': \"Cyril\",\n    },\n    {\n      'objectID': \"4\",\n      'name': \"David\",\n    },\n    {\n      'objectID': \"5\",\n      'name': \"Eva\",\n    },\n    {\n      'objectID': \"6\",\n      'name': \"Fiona\",\n    },\n    {\n      'objectID': \"7\",\n      'name': \"Gael\",\n    },\n    {\n      'objectID': \"8\",\n      'name': \"Hugo\",\n    },\n    {\n      'objectID': \"9\",\n      'name': \"Igor\",\n    },\n    {\n      'objectID': \"10\",\n      'name': \"Julia\",\n    },\n  ],\n  batchSize: 3,\n);"
     },
     "replaceSources": {
       "default": "final response = await client.replaceSources(\n  source: [\n    Source(\n      source: \"theSource\",\n      description: \"theDescription\",\n    ),\n  ],\n);"
@@ -797,6 +803,9 @@
     },
     "saveObject": {
       "default": "final response = await client.saveObject(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  body: {\n    'name': \"Black T-shirt\",\n    'color': \"#000000||black\",\n    'availableIn': \"https://source.unsplash.com/100x100/?paris||Paris\",\n    'objectID': \"myID\",\n  },\n);"
+    },
+    "saveObjectsWithTransformation": {
+      "default": "final response = await client.saveObjectsWithTransformation(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objects: [\n    {\n      'objectID': \"1\",\n      'name': \"Adam\",\n    },\n    {\n      'objectID': \"2\",\n      'name': \"Benoit\",\n    },\n  ],\n  waitForTasks: true,\n);"
     },
     "saveRule": {
       "saveRule with minimal parameters": "final response = await client.saveRule(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objectID: \"id1\",\n  rule: Rule(\n    objectID: \"id1\",\n    conditions: [\n      Condition(\n        pattern: \"apple\",\n        anchoring: Anchoring.fromJson(\"contains\"),\n      ),\n    ],\n    consequence: Consequence(\n      params: ConsequenceParams(\n        filters: \"brand:xiaomi\",\n      ),\n    ),\n  ),\n);",
