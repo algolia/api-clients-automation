@@ -14,6 +14,7 @@ func (c *APIClient) ChunkedPush(indexName string, objects []map[string]any, acti
 		headerParams: map[string]string{},
 		waitForTasks: false,
 		batchSize:    1000,
+		maxRetries:   100,
 	}
 
 	for _, opt := range opts {
@@ -92,7 +93,7 @@ func (c *APIClient) ChunkedPush(indexName string, objects []map[string]any, acti
 
 						return true, err
 					},
-					WithTimeout(func(count int) time.Duration { return time.Duration(min(1500*count, 5000)) * time.Millisecond }), WithMaxRetries(50),
+					WithTimeout(func(count int) time.Duration { return time.Duration(min(1500*count, 5000)) * time.Millisecond }), WithMaxRetries(conf.maxRetries),
 				)
 				if err != nil {
 					return nil, err
