@@ -55,8 +55,7 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
     ): Promise<TValue> {
       return yieldToMain().then(() => {
         const namespace = getFilteredNamespace();
-        const keyAsString = JSON.stringify(key);
-        const cachedItem = namespace[keyAsString];
+        const cachedItem = namespace[JSON.stringify(key)];
 
         setNamespace(namespace);
 
