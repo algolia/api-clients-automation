@@ -210,7 +210,8 @@ Future<void> _waitForEvent({
   required String eventID,
   RequestOptions? requestOptions,
 }) async {
-  for (var retries = 0; retries < 50; retries++) {
+  const maxRetries = 100;
+  for (var retries = 0; retries < maxRetries; retries++) {
     try {
       await transporter.getEvent(
         runID: runID,
@@ -225,6 +226,9 @@ Future<void> _waitForEvent({
       Duration(milliseconds: (retries * 1500).clamp(0, 5000)),
     );
   }
+  throw StateError(
+    'The maximum number of retries exceeded. ($maxRetries/$maxRetries)',
+  );
 }
 
 ingestion.PushTaskRecords _toRecord(Map<String, dynamic> obj) {

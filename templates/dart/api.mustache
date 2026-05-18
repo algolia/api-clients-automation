@@ -108,23 +108,18 @@ final class {{classname}} implements ApiClient {
 
   ingestion.IngestionClient _buildIngestionTransporter(TransformationOptions opts) {
     final ingestionOpts = opts.ingestionClientOptions;
+    if (ingestionOpts != null) {
+      return ingestion.IngestionClient(
+        appId: _appId,
+        apiKey: _apiKey,
+        region: opts.region,
+        options: ingestionOpts,
+      );
+    }
     return ingestion.IngestionClient(
       appId: _appId,
       apiKey: _apiKey,
       region: opts.region,
-      options: ClientOptions(
-        connectTimeout: ingestionOpts?.connectTimeout ?? const Duration(seconds: 25),
-        readTimeout: ingestionOpts?.readTimeout ?? const Duration(seconds: 25),
-        writeTimeout: ingestionOpts?.writeTimeout ?? const Duration(seconds: 25),
-        hosts: ingestionOpts?.hosts,
-        headers: ingestionOpts?.headers,
-        requester: ingestionOpts?.requester,
-        logger: ingestionOpts?.logger,
-        interceptors: ingestionOpts?.interceptors,
-        httpClientAdapter: ingestionOpts?.httpClientAdapter,
-        compression: ingestionOpts?.compression,
-        agentSegments: ingestionOpts?.agentSegments,
-      ),
     );
   }
   {{/isSearchClient}}
@@ -221,10 +216,6 @@ final class {{classname}} implements ApiClient {
           writeTimeout: Duration(milliseconds: {{write}}),
           readTimeout: Duration(milliseconds: {{read}}),
           connectTimeout: Duration(milliseconds: {{connect}}),
-      ) + {{/vendorExtensions.x-timeouts}}{{^vendorExtensions.x-timeouts}}RequestOptions(
-          writeTimeout: Duration(milliseconds: {{{serverWriteTimeout}}}),
-          readTimeout: Duration(milliseconds: {{{serverReadTimeout}}}),
-          connectTimeout: Duration(milliseconds: {{{serverConnectTimeout}}}),
       ) + {{/vendorExtensions.x-timeouts}}requestOptions,
     );
     {{#returnType}}

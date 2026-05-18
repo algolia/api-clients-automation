@@ -114,7 +114,6 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
   public void processOpenAPI(OpenAPI openAPI) {
     super.processOpenAPI(openAPI);
     Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
-    Timeouts.enrichBundle(openAPI, additionalProperties);
   }
 
   @Override
