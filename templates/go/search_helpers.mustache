@@ -237,7 +237,7 @@ func (c *APIClient) WaitForApiKey(
   // provide a default timeout function
   opts = append([]WaitForApiKeyOption{WithTimeout(func(count int) time.Duration {
     return time.Duration(min(200*count, 5000)) * time.Millisecond
-  }), WithMaxRetries(50)}, opts...)
+  }), WithMaxRetries(100)}, opts...)
 
 	return CreateIterable( //nolint:wrapcheck
 		func(*GetApiKeyResponse, error) (*GetApiKeyResponse, error) {
