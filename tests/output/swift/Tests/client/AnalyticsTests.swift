@@ -74,7 +74,7 @@ final class AnalyticsClientClientTests: XCTestCase {
     }
 
     /// throws when incorrect region is given
-    func testParametersTest2() async throws {
+    func testParametersTest2() throws {
         do {
             let configuration = try AnalyticsClientConfiguration(
                 appID: "my-app-id",
@@ -91,7 +91,7 @@ final class AnalyticsClientClientTests: XCTestCase {
     }
 
     /// getAverageClickPosition throws without index
-    func testParametersTest3() async throws {
+    func testParametersTest3() throws {
         let configuration = try AnalyticsClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)

@@ -312,7 +312,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// api key basic
-    func testGenerateSecuredApiKeyTest0() async throws {
+    func testGenerateSecuredApiKeyTest0() throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -331,7 +331,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// with searchParams
-    func testGenerateSecuredApiKeyTest1() async throws {
+    func testGenerateSecuredApiKeyTest1() throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -367,7 +367,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// with filters
-    func testGenerateSecuredApiKeyTest2() async throws {
+    func testGenerateSecuredApiKeyTest2() throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -383,7 +383,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// with visible_by filter
-    func testGenerateSecuredApiKeyTest3() async throws {
+    func testGenerateSecuredApiKeyTest3() throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -397,7 +397,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// with userID
-    func testGenerateSecuredApiKeyTest4() async throws {
+    func testGenerateSecuredApiKeyTest4() throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -411,7 +411,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// mcm with filters
-    func testGenerateSecuredApiKeyTest5() async throws {
+    func testGenerateSecuredApiKeyTest5() throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -425,7 +425,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// mcm with user token
-    func testGenerateSecuredApiKeyTest6() async throws {
+    func testGenerateSecuredApiKeyTest6() throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -495,7 +495,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// client throws with invalid parameters
-    func testParametersTest0() async throws {
+    func testParametersTest0() throws {
         do {
             let configuration = try SearchClientConfiguration(appID: "", apiKey: "")
             let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
@@ -526,14 +526,14 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// `addApiKey` throws with invalid parameters
-    func testParametersTest1() async throws {
+    func testParametersTest1() throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
     }
 
     /// `addOrUpdateObject` throws with invalid parameters
-    func testParametersTest2() async throws {
+    func testParametersTest2() throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)

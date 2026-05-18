@@ -70,7 +70,7 @@ final class AbtestingV3ClientClientTests: XCTestCase {
     }
 
     /// throws when incorrect region is given
-    func testParametersTest1() async throws {
+    func testParametersTest1() throws {
         do {
             let configuration = try AbtestingV3ClientConfiguration(
                 appID: "my-app-id",
