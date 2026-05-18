@@ -26,55 +26,24 @@ extension Transformation on SearchClient {
     required ingestion.Action action,
     bool waitForTasks = false,
     int batchSize = 1000,
-    int maxRetries = 100,
     String? referenceIndexName,
+    ChunkedHelperOptions? chunkedOptions,
     RequestOptions? requestOptions,
   }) async {
-    if (batchSize < 1) throw ArgumentError('`batchSize` must be greater than 0');
-    if (maxRetries < 1) throw ArgumentError('`maxRetries` must be greater than 0');
     final transporter = ingestionTransporter;
     if (transporter == null) throw StateError(_notSetError);
 
-    final responses = <WatchResponse>[];
-    final batch = <ingestion.PushTaskRecords>[];
-    final pollInterval = (batchSize ~/ 10).clamp(1, batchSize);
-    int polledUpTo = 0;
-
-    final iter = objects.iterator;
-    if (!iter.moveNext()) return responses;
-
-    while (true) {
-      batch.add(_toRecord(iter.current));
-      final isLast = !iter.moveNext();
-
-      if (batch.length == batchSize || isLast) {
-        final raw = await transporter.push(
-          indexName: indexName,
-          pushTaskPayload: ingestion.PushTaskPayload(action: action, records: List.of(batch)),
-          referenceIndexName: referenceIndexName,
-          requestOptions: requestOptions,
-        );
-        responses.add(_convertWatchResponse(raw));
-        batch.clear();
-
-        if (waitForTasks &&
-            (responses.length % pollInterval == 0 || isLast)) {
-          await _pollBatch(
-            transporter: transporter,
-            responses: responses,
-            from: polledUpTo,
-            to: responses.length,
-            maxRetries: maxRetries,
-            requestOptions: requestOptions,
-          );
-          polledUpTo = responses.length;
-        }
-      }
-
-      if (isLast) break;
-    }
-
-    return responses;
+    final raw = await transporter.chunkedPush(
+      indexName: indexName,
+      objects: objects,
+      action: action,
+      waitForTasks: waitForTasks,
+      batchSize: batchSize,
+      referenceIndexName: referenceIndexName,
+      chunkedOptions: chunkedOptions,
+      requestOptions: requestOptions,
+    );
+    return raw.map(_convertWatchResponse).toList();
   }
 
   /// Saves objects through the Ingestion pipeline. Requires [TransformationOptions] to be set.
@@ -83,7 +52,7 @@ extension Transformation on SearchClient {
     required Iterable<Map<String, dynamic>> objects,
     bool waitForTasks = false,
     int batchSize = 1000,
-    int maxRetries = 100,
+    ChunkedHelperOptions? chunkedOptions,
     RequestOptions? requestOptions,
   }) {
     return chunkedPush(
@@ -92,7 +61,7 @@ extension Transformation on SearchClient {
       action: ingestion.Action.addObject,
       waitForTasks: waitForTasks,
       batchSize: batchSize,
-      maxRetries: maxRetries,
+      chunkedOptions: chunkedOptions,
       requestOptions: requestOptions,
     );
   }
@@ -104,7 +73,7 @@ extension Transformation on SearchClient {
     bool createIfNotExists = true,
     bool waitForTasks = false,
     int batchSize = 1000,
-    int maxRetries = 100,
+    ChunkedHelperOptions? chunkedOptions,
     RequestOptions? requestOptions,
   }) {
     return chunkedPush(
@@ -115,7 +84,7 @@ extension Transformation on SearchClient {
           : ingestion.Action.partialUpdateObjectNoCreate,
       waitForTasks: waitForTasks,
       batchSize: batchSize,
-      maxRetries: maxRetries,
+      chunkedOptions: chunkedOptions,
       requestOptions: requestOptions,
     );
   }
@@ -126,12 +95,13 @@ extension Transformation on SearchClient {
     required String indexName,
     required Iterable<Map<String, dynamic>> objects,
     int batchSize = 1000,
-    int maxRetries = 100,
+    ChunkedHelperOptions? chunkedOptions,
     List<ScopeType>? scopes,
     RequestOptions? requestOptions,
   }) async {
     if (ingestionTransporter == null) throw StateError(_notSetError);
 
+    final effectiveMaxRetries = chunkedOptions?.maxRetries ?? defaultMaxRetries;
     final effectiveScopes = scopes ?? [ScopeType.settings, ScopeType.rules, ScopeType.synonyms];
     final tmpIndex = '${indexName}_tmp_${Random().nextInt(900000) + 100000}';
 
@@ -152,12 +122,17 @@ extension Transformation on SearchClient {
         action: ingestion.Action.addObject,
         waitForTasks: true,
         batchSize: batchSize,
-        maxRetries: maxRetries,
+        chunkedOptions: chunkedOptions,
         referenceIndexName: indexName,
         requestOptions: requestOptions,
       );
 
-      await waitTask(indexName: tmpIndex, taskID: copyResponse.taskID, maxRetries: maxRetries, requestOptions: requestOptions);
+      await waitTask(
+        indexName: tmpIndex,
+        taskID: copyResponse.taskID,
+        params: WaitParams(maxRetries: effectiveMaxRetries),
+        requestOptions: requestOptions,
+      );
 
       copyResponse = await operationIndex(
         indexName: indexName,
@@ -168,7 +143,12 @@ extension Transformation on SearchClient {
         ),
         requestOptions: requestOptions,
       );
-      await waitTask(indexName: tmpIndex, taskID: copyResponse.taskID, maxRetries: maxRetries, requestOptions: requestOptions);
+      await waitTask(
+        indexName: tmpIndex,
+        taskID: copyResponse.taskID,
+        params: WaitParams(maxRetries: effectiveMaxRetries),
+        requestOptions: requestOptions,
+      );
 
       final moveResponse = await operationIndex(
         indexName: tmpIndex,
@@ -178,7 +158,12 @@ extension Transformation on SearchClient {
         ),
         requestOptions: requestOptions,
       );
-      await waitTask(indexName: tmpIndex, taskID: moveResponse.taskID, maxRetries: maxRetries, requestOptions: requestOptions);
+      await waitTask(
+        indexName: tmpIndex,
+        taskID: moveResponse.taskID,
+        params: WaitParams(maxRetries: effectiveMaxRetries),
+        requestOptions: requestOptions,
+      );
 
       return ReplaceAllObjectsWithTransformationResponse(
         copyOperationResponse: copyResponse,
@@ -192,63 +177,6 @@ extension Transformation on SearchClient {
       rethrow;
     }
   }
-}
-
-Future<void> _pollBatch({
-  required ingestion.IngestionClient transporter,
-  required List<WatchResponse> responses,
-  required int from,
-  required int to,
-  required int maxRetries,
-  RequestOptions? requestOptions,
-}) async {
-  for (final resp in responses.sublist(from, to)) {
-    final eventID = resp.eventID;
-    if (eventID == null) continue;
-    await _waitForEvent(
-      transporter: transporter,
-      runID: resp.runID,
-      eventID: eventID,
-      maxRetries: maxRetries,
-      requestOptions: requestOptions,
-    );
-  }
-}
-
-Future<void> _waitForEvent({
-  required ingestion.IngestionClient transporter,
-  required String runID,
-  required String eventID,
-  required int maxRetries,
-  RequestOptions? requestOptions,
-}) async {
-  for (var retries = 0; retries < maxRetries; retries++) {
-    try {
-      await transporter.getEvent(
-        runID: runID,
-        eventID: eventID,
-        requestOptions: requestOptions,
-      );
-      return;
-    } on AlgoliaApiException catch (e) {
-      if (e.statusCode != 404) rethrow;
-    }
-    await Future<void>.delayed(
-      Duration(milliseconds: (retries * 1500).clamp(0, 5000)),
-    );
-  }
-  throw StateError(
-    'The maximum number of retries exceeded. ($maxRetries/$maxRetries)',
-  );
-}
-
-ingestion.PushTaskRecords _toRecord(Map<String, dynamic> obj) {
-  final objectID = obj['objectID'];
-  if (objectID == null || objectID is! String) {
-    throw ArgumentError('each object must have an `objectID` key in order to be indexed');
-  }
-  final rest = Map<String, dynamic>.from(obj)..remove('objectID');
-  return ingestion.PushTaskRecords(objectID: objectID, additionalProperties: rest);
 }
 
 WatchResponse _convertWatchResponse(ingestion.WatchResponse r) {
