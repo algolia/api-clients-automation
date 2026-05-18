@@ -47,7 +47,7 @@ extension WaitTask on SearchClient {
   ///  Wait on an API key creation operation.
   Future<void> waitKeyCreation({
     required String key,
-    int maxRetries = 50,
+    int maxRetries = defaultMaxRetries,
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
@@ -108,7 +108,7 @@ class WaitParams {
   final Duration maxDelay;
 
   const WaitParams({
-    this.maxRetries = 50,
+    this.maxRetries = defaultMaxRetries,
     this.timeout,
     this.initialDelay = const Duration(milliseconds: 200),
     this.maxDelay = const Duration(seconds: 5),
