@@ -32,6 +32,7 @@ private <T> List<PushTaskRecords> objectsToPushTaskRecords(Iterable<T> objects) 
  *     to it (e.g. the source index name).
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded
  *     to the `getEvent` method and merged with the transporter requestOptions.
+ * @see ChunkedHelperOptions
  */
 public <T> List<WatchResponse> chunkedPush(
   String indexName,
@@ -42,9 +43,47 @@ public <T> List<WatchResponse> chunkedPush(
   String referenceIndexName,
   RequestOptions requestOptions
 ) {
+  return chunkedPush(indexName, objects, action, waitForTasks, batchSize, referenceIndexName, requestOptions, null);
+}
+
+/**
+ * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit
+ * in `push` requests by leveraging the Transformation pipeline setup in the Push connector
+ * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
+ *
+ * @summary Helper: Chunks the given `objects` list in subset of 1000 elements max in order to
+ *     make it fit in `batch` requests.
+ * @param indexName - The `indexName` to replace `objects` in.
+ * @param objects - The array of `objects` to store in the given Algolia `indexName`.
+ * @param action - The `batch` `action` to perform on the given array of `objects`.
+ * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+ *     processed, this operation may slow the total execution time of this method but is more
+ *     reliable.
+ * @param batchSize - The size of the chunk of `objects`. The number of `batch` calls will be
+ *     equal to `length(objects) / batchSize`. Defaults to 1000.
+ * @param referenceIndexName - This is required when targeting an index that does not have a push
+ *     connector setup (e.g. a tmp index), but you wish to attach another index's transformation
+ *     to it (e.g. the source index name).
+ * @param requestOptions - The requestOptions to send along with the query, they will be forwarded
+ *     to the `getEvent` method and merged with the transporter requestOptions.
+ * @param chunkedOptions - Optional configuration for the helper (e.g. maxRetries). Defaults to
+ *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
+ */
+public <T> List<WatchResponse> chunkedPush(
+  String indexName,
+  Iterable<T> objects,
+  Action action,
+  boolean waitForTasks,
+  int batchSize,
+  String referenceIndexName,
+  RequestOptions requestOptions,
+  ChunkedHelperOptions chunkedOptions
+) {
   if (batchSize < 1) {
       throw new AlgoliaRuntimeException("`batchSize` must be greater than 0");
   }
+
+  int maxRetries = chunkedOptions != null ? chunkedOptions.getMaxRetries() : TaskUtils.DEFAULT_MAX_RETRIES;
 
   List<WatchResponse> responses = new ArrayList<>();
   List<T> records = new ArrayList<>();
@@ -57,7 +96,7 @@ public <T> List<WatchResponse> chunkedPush(
   if (!it.hasNext()) {
     return responses;
   }
-  
+
   T current = it.next();
 
   while (true) {
@@ -98,7 +137,7 @@ public <T> List<WatchResponse> chunkedPush(
             (Event resp) -> {
               return resp != null;
             },
-            50,
+            maxRetries,
             (retries) -> Math.min(retries * 1500, 5000)
           );
         });
@@ -122,7 +161,7 @@ public <T> List<WatchResponse> chunkedPush(
  *
  * @param indexName The `indexName` where the operation was performed.
  * @param taskID The `taskID` returned in the method response.
- * @param maxRetries The maximum number of retry. 50 by default. (optional)
+ * @param maxRetries The maximum number of retry. 100 by default. (optional)
  * @param timeout The function to decide how long to wait between retries. min(retries * 200,
  *     5000) by default. (optional)
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -160,7 +199,7 @@ public GetTaskResponse waitForTask(String indexName, Long taskID, RequestOptions
  *
  * @param indexName The `indexName` where the operation was performed.
  * @param taskID The `taskID` returned in the method response.
- * @param maxRetries The maximum number of retry. 50 by default. (optional)
+ * @param maxRetries The maximum number of retry. 100 by default. (optional)
  * @param timeout The function to decide how long to wait between retries. min(retries * 200,
  *     5000) by default. (optional)
  */
@@ -182,7 +221,7 @@ public GetTaskResponse waitForTask(String indexName, Long taskID) {
  * Helper: Wait for a application-level task to complete with `taskID`.
  *
  * @param taskID The `taskID` returned in the method response.
- * @param maxRetries The maximum number of retry. 50 by default. (optional)
+ * @param maxRetries The maximum number of retry. 100 by default. (optional)
  * @param timeout The function to decide how long to wait between retries. min(retries * 200,
  *     5000) by default. (optional)
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -212,7 +251,7 @@ public GetTaskResponse waitForAppTask(Long taskID, RequestOptions requestOptions
  * Helper: Wait for an application-level task to complete with `taskID`.
  *
  * @param taskID The `taskID` returned in the method response.
- * @param maxRetries The maximum number of retry. 50 by default. (optional)
+ * @param maxRetries The maximum number of retry. 100 by default. (optional)
  * @param timeout The function to decide how long to wait between retries. min(retries * 200,
  *     5000) by default. (optional)
  */
@@ -236,7 +275,7 @@ public GetTaskResponse waitForAppTask(Long taskID) {
  * @param key The `key` that has been added, deleted or updated.
  * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of
  *     the response with it.
- * @param maxRetries The maximum number of retry. 50 by default. (optional)
+ * @param maxRetries The maximum number of retry. 100 by default. (optional)
  * @param timeout The function to decide how long to wait between retries. min(retries * 200,
  *     5000) by default. (optional)
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -312,7 +351,7 @@ public GetApiKeyResponse waitForApiKey(
  *
  * @param key The `key` that has been added or deleted.
  * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
- * @param maxRetries The maximum number of retry. 50 by default. (optional)
+ * @param maxRetries The maximum number of retry. 100 by default. (optional)
  * @param timeout The function to decide how long to wait between retries. min(retries * 200,
  *     5000) by default. (optional)
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -361,7 +400,7 @@ public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation, Re
  * @param operation The `operation` that was done on a `key`.
  * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of
  *     the response with it.
- * @param maxRetries The maximum number of retry. 50 by default. (optional)
+ * @param maxRetries The maximum number of retry. 100 by default. (optional)
  * @param timeout The function to decide how long to wait between retries. min(retries * 200,
  *     5000) by default. (optional)
  */
@@ -374,7 +413,7 @@ public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation, Ap
  *
  * @param key The `key` that has been added or deleted.
  * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
- * @param maxRetries The maximum number of retry. 50 by default. (optional)
+ * @param maxRetries The maximum number of retry. 100 by default. (optional)
  * @param timeout The function to decide how long to wait between retries. min(retries * 200,
  *     5000) by default. (optional)
  */
@@ -719,6 +758,7 @@ public CompletableFuture<List<SearchForFacetValuesResponse>> searchForFacetsAsyn
  *     equal to `length(objects) / batchSize`. Defaults to 1000.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded
  *     to the `getTask` method and merged with the transporter requestOptions.
+ * @see ChunkedHelperOptions
  */
 public <T> List<BatchResponse> chunkedBatch(
   String indexName,
@@ -728,6 +768,38 @@ public <T> List<BatchResponse> chunkedBatch(
   int batchSize,
   RequestOptions requestOptions
 ) {
+  return chunkedBatch(indexName, objects, action, waitForTasks, batchSize, requestOptions, null);
+}
+
+/**
+ * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit
+ * in `batch` requests.
+ *
+ * @summary Helper: Chunks the given `objects` list in subset of 1000 elements max in order to
+ *     make it fit in `batch` requests.
+ * @param indexName - The `indexName` to replace `objects` in.
+ * @param objects - The array of `objects` to store in the given Algolia `indexName`.
+ * @param action - The `batch` `action` to perform on the given array of `objects`.
+ * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+ *     processed, this operation may slow the total execution time of this method but is more
+ *     reliable.
+ * @param batchSize - The size of the chunk of `objects`. The number of `batch` calls will be
+ *     equal to `length(objects) / batchSize`. Defaults to 1000.
+ * @param requestOptions - The requestOptions to send along with the query, they will be forwarded
+ *     to the `getTask` method and merged with the transporter requestOptions.
+ * @param chunkedOptions - Optional configuration for the helper (e.g. maxRetries). Defaults to
+ *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
+ */
+public <T> List<BatchResponse> chunkedBatch(
+  String indexName,
+  Iterable<T> objects,
+  Action action,
+  boolean waitForTasks,
+  int batchSize,
+  RequestOptions requestOptions,
+  ChunkedHelperOptions chunkedOptions
+) {
+  int maxRetries = chunkedOptions != null ? chunkedOptions.getMaxRetries() : TaskUtils.DEFAULT_MAX_RETRIES;
   List<BatchResponse> responses = new ArrayList<>();
   List<BatchRequest> requests = new ArrayList<>();
 
@@ -747,7 +819,7 @@ public <T> List<BatchResponse> chunkedBatch(
   }
 
   if (waitForTasks) {
-    responses.forEach(response -> waitForTask(indexName, response.getTaskID(), requestOptions));
+    responses.forEach(response -> waitForTask(indexName, response.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions));
   }
 
   return responses;
@@ -834,6 +906,7 @@ public <T> List<WatchResponse> saveObjectsWithTransformation(String indexName, I
  *     reliable.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @see ChunkedHelperOptions
  */
 public <T> List<WatchResponse> saveObjectsWithTransformation(
   String indexName,
@@ -842,6 +915,16 @@ public <T> List<WatchResponse> saveObjectsWithTransformation(
   RequestOptions requestOptions
 ) {
   return saveObjectsWithTransformation(indexName, objects, waitForTasks, 1000, requestOptions);
+}
+
+public <T> List<WatchResponse> saveObjectsWithTransformation(
+  String indexName,
+  Iterable<T> objects,
+  boolean waitForTasks,
+  int batchSize,
+  RequestOptions requestOptions
+) {
+  return saveObjectsWithTransformation(indexName, objects, waitForTasks, batchSize, requestOptions, null);
 }
 
 /**
@@ -859,13 +942,16 @@ public <T> List<WatchResponse> saveObjectsWithTransformation(
  *     to `length(objects) / batchSize`.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+ *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  */
 public <T> List<WatchResponse> saveObjectsWithTransformation(
   String indexName,
   Iterable<T> objects,
   boolean waitForTasks,
   int batchSize,
-  RequestOptions requestOptions
+  RequestOptions requestOptions,
+  ChunkedHelperOptions chunkedOptions
 ) {
   if (this.ingestionTransporter == null) {
     throw new AlgoliaRuntimeException(
@@ -875,7 +961,7 @@ public <T> List<WatchResponse> saveObjectsWithTransformation(
     );
   }
 
-  return this.ingestionTransporter.chunkedPush(indexName, objects, com.algolia.model.ingestion.Action.ADD_OBJECT, waitForTasks, batchSize, null, requestOptions);
+  return this.ingestionTransporter.chunkedPush(indexName, objects, com.algolia.model.ingestion.Action.ADD_OBJECT, waitForTasks, batchSize, null, requestOptions, chunkedOptions);
 }
 
 /**
@@ -913,9 +999,14 @@ public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects
  *     reliable.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @see ChunkedHelperOptions
  */
 public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects, boolean waitForTasks, RequestOptions requestOptions) {
   return saveObjects(indexName, objects, waitForTasks, 1000, requestOptions);
+}
+
+public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects, boolean waitForTasks, int batchSize, RequestOptions requestOptions) {
+  return saveObjects(indexName, objects, waitForTasks, batchSize, requestOptions, null);
 }
 
 /**
@@ -931,9 +1022,11 @@ public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects
  *     to `length(objects) / batchSize`.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+ *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  */
-public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects, boolean waitForTasks, int batchSize, RequestOptions requestOptions) {
-  return chunkedBatch(indexName, objects, Action.ADD_OBJECT, waitForTasks, batchSize, requestOptions);
+public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects, boolean waitForTasks, int batchSize, RequestOptions requestOptions, ChunkedHelperOptions chunkedOptions) {
+  return chunkedBatch(indexName, objects, Action.ADD_OBJECT, waitForTasks, batchSize, requestOptions, chunkedOptions);
 }
 
 /**
@@ -971,9 +1064,14 @@ public List<BatchResponse> deleteObjects(String indexName, List<String> objectID
  *     reliable.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @see ChunkedHelperOptions
  */
 public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs, boolean waitForTasks,RequestOptions requestOptions) {
   return deleteObjects(indexName, objectIDs, false, 1000, null);
+}
+
+public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs, boolean waitForTasks, int batchSize, RequestOptions requestOptions) {
+  return deleteObjects(indexName, objectIDs, waitForTasks, batchSize, requestOptions, null);
 }
 
 /**
@@ -989,8 +1087,10 @@ public List<BatchResponse> deleteObjects(String indexName, List<String> objectID
  *     to `length(objects) / batchSize`.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+ *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  */
-public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs, boolean waitForTasks, int batchSize, RequestOptions requestOptions) {
+public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs, boolean waitForTasks, int batchSize, RequestOptions requestOptions, ChunkedHelperOptions chunkedOptions) {
   List<Map<String, String>> objects = new ArrayList<>();
 
   for (String id : objectIDs) {
@@ -999,7 +1099,7 @@ public List<BatchResponse> deleteObjects(String indexName, List<String> objectID
     objects.add(obj);
   }
 
-  return chunkedBatch(indexName, objects, Action.DELETE_OBJECT, waitForTasks, batchSize, requestOptions);
+  return chunkedBatch(indexName, objects, Action.DELETE_OBJECT, waitForTasks, batchSize, requestOptions, chunkedOptions);
 }
 
 /**
@@ -1055,6 +1155,7 @@ public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
  *     reliable.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @see ChunkedHelperOptions
  */
 public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
   String indexName,
@@ -1064,6 +1165,17 @@ public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
   RequestOptions requestOptions
 ) {
   return partialUpdateObjectsWithTransformation(indexName, objects, createIfNotExists, waitForTasks, 1000, requestOptions);
+}
+
+public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
+  String indexName,
+  Iterable<T> objects,
+  boolean createIfNotExists,
+  boolean waitForTasks,
+  int batchSize,
+  RequestOptions requestOptions
+) {
+  return partialUpdateObjectsWithTransformation(indexName, objects, createIfNotExists, waitForTasks, batchSize, requestOptions, null);
 }
 
 /**
@@ -1083,6 +1195,8 @@ public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
  *     to `length(objects) / batchSize`.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+ *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  */
 public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
   String indexName,
@@ -1090,7 +1204,8 @@ public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
   boolean createIfNotExists,
   boolean waitForTasks,
   int batchSize,
-  RequestOptions requestOptions
+  RequestOptions requestOptions,
+  ChunkedHelperOptions chunkedOptions
 ) {
   if (this.ingestionTransporter == null) {
     throw new AlgoliaRuntimeException(
@@ -1107,7 +1222,8 @@ public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
     waitForTasks,
     batchSize,
     null,
-    requestOptions
+    requestOptions,
+    chunkedOptions
   );
 }
 
@@ -1161,6 +1277,7 @@ public <T> List<BatchResponse> partialUpdateObjects(
  *     reliable.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @see ChunkedHelperOptions
  */
 public <T> List<BatchResponse> partialUpdateObjects(
   String indexName,
@@ -1170,6 +1287,17 @@ public <T> List<BatchResponse> partialUpdateObjects(
   RequestOptions requestOptions
 ) {
   return partialUpdateObjects(indexName, objects, createIfNotExists, waitForTasks, 1000, null);
+}
+
+public <T> List<BatchResponse> partialUpdateObjects(
+  String indexName,
+  Iterable<T> objects,
+  boolean createIfNotExists,
+  boolean waitForTasks,
+  int batchSize,
+  RequestOptions requestOptions
+) {
+  return partialUpdateObjects(indexName, objects, createIfNotExists, waitForTasks, batchSize, requestOptions, null);
 }
 
 /**
@@ -1188,6 +1316,8 @@ public <T> List<BatchResponse> partialUpdateObjects(
  *     to `length(objects) / batchSize`.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+ *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  */
 public <T> List<BatchResponse> partialUpdateObjects(
   String indexName,
@@ -1195,7 +1325,8 @@ public <T> List<BatchResponse> partialUpdateObjects(
   boolean createIfNotExists,
   boolean waitForTasks,
   int batchSize,
-  RequestOptions requestOptions
+  RequestOptions requestOptions,
+  ChunkedHelperOptions chunkedOptions
 ) {
   return chunkedBatch(
     indexName,
@@ -1203,7 +1334,8 @@ public <T> List<BatchResponse> partialUpdateObjects(
     createIfNotExists ? Action.PARTIAL_UPDATE_OBJECT : Action.PARTIAL_UPDATE_OBJECT_NO_CREATE,
     waitForTasks,
     batchSize,
-    requestOptions
+    requestOptions,
+    chunkedOptions
   );
 }
 
@@ -1255,9 +1387,20 @@ public <T> ReplaceAllObjectsResponse replaceAllObjects(String indexName, Iterabl
  * @throws AlgoliaRetryException When the retry has failed on all hosts
  * @throws AlgoliaApiException When the API sends an http error code
  * @throws AlgoliaRuntimeException When an error occurred during the serialization
+ * @see ChunkedHelperOptions
  */
 public <T> ReplaceAllObjectsResponse replaceAllObjects(String indexName, Iterable<T> objects, int batchSize, List<ScopeType> scopes) {
   return replaceAllObjects(indexName, objects, batchSize, scopes, null);
+}
+
+public <T> ReplaceAllObjectsResponse replaceAllObjects(
+  String indexName,
+  Iterable<T> objects,
+  int batchSize,
+  List<ScopeType> scopes,
+  RequestOptions requestOptions
+) {
+  return replaceAllObjects(indexName, objects, batchSize, scopes, requestOptions, null);
 }
 
 /**
@@ -1273,6 +1416,8 @@ public <T> ReplaceAllObjectsResponse replaceAllObjects(String indexName, Iterabl
  * @param scopes The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+ *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  * @throws AlgoliaRetryException When the retry has failed on all hosts
  * @throws AlgoliaApiException When the API sends an http error code
  * @throws AlgoliaRuntimeException When an error occurred during the serialization
@@ -1282,8 +1427,10 @@ public <T> ReplaceAllObjectsResponse replaceAllObjects(
   Iterable<T> objects,
   int batchSize,
   List<ScopeType> scopes,
-  RequestOptions requestOptions
+  RequestOptions requestOptions,
+  ChunkedHelperOptions chunkedOptions
 ) {
+  int maxRetries = chunkedOptions != null ? chunkedOptions.getMaxRetries() : TaskUtils.DEFAULT_MAX_RETRIES;
   Random rnd = new Random();
   String tmpIndexName = indexName + "_tmp_" + rnd.nextInt(100);
 
@@ -1313,9 +1460,9 @@ public <T> ReplaceAllObjectsResponse replaceAllObjects(
     );
 
     // Save new objects
-    List<BatchResponse> batchResponses = chunkedBatch(tmpIndexName, objects, Action.ADD_OBJECT, true, batchSize, requestOptions);
+    List<BatchResponse> batchResponses = chunkedBatch(tmpIndexName, objects, Action.ADD_OBJECT, true, batchSize, requestOptions, chunkedOptions);
 
-    waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
+    waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
 
     copyOperationResponse = operationIndex(
       indexName,
@@ -1325,7 +1472,7 @@ public <T> ReplaceAllObjectsResponse replaceAllObjects(
         .setScope(scopes),
       requestOptions
     );
-    waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
+    waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
 
     // Move temporary index to source index
     UpdatedAtResponse moveOperationResponse = operationIndex(
@@ -1333,7 +1480,7 @@ public <T> ReplaceAllObjectsResponse replaceAllObjects(
       new OperationIndexParams().setOperation(OperationType.MOVE).setDestination(indexName),
       requestOptions
     );
-    waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), requestOptions);
+    waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
 
     return new ReplaceAllObjectsResponse()
       .setCopyOperationResponse(copyOperationResponse)
@@ -1395,9 +1542,20 @@ public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTran
  * @throws AlgoliaRetryException When the retry has failed on all hosts
  * @throws AlgoliaApiException When the API sends an http error code
  * @throws AlgoliaRuntimeException When an error occurred during the serialization
+ * @see ChunkedHelperOptions
  */
 public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTransformation(String indexName, Iterable<T> objects, int batchSize, List<ScopeType> scopes) {
   return replaceAllObjectsWithTransformation(indexName, objects, batchSize, scopes, null);
+}
+
+public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTransformation(
+  String indexName,
+  Iterable<T> objects,
+  int batchSize,
+  List<ScopeType> scopes,
+  RequestOptions requestOptions
+) {
+  return replaceAllObjectsWithTransformation(indexName, objects, batchSize, scopes, requestOptions, null);
 }
 
 /**
@@ -1414,6 +1572,8 @@ public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTran
  *     'synonyms'].
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
+ * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+ *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
  * @throws AlgoliaRetryException When the retry has failed on all hosts
  * @throws AlgoliaApiException When the API sends an http error code
  * @throws AlgoliaRuntimeException When an error occurred during the serialization
@@ -1423,7 +1583,8 @@ public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTran
   Iterable<T> objects,
   int batchSize,
   List<ScopeType> scopes,
-  RequestOptions requestOptions
+  RequestOptions requestOptions,
+  ChunkedHelperOptions chunkedOptions
 ) {
   if (this.ingestionTransporter == null) {
     throw new AlgoliaRuntimeException(
@@ -1433,6 +1594,7 @@ public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTran
     );
   }
 
+  int maxRetries = chunkedOptions != null ? chunkedOptions.getMaxRetries() : TaskUtils.DEFAULT_MAX_RETRIES;
   Random rnd = new Random();
   String tmpIndexName = indexName + "_tmp_" + rnd.nextInt(100);
 
@@ -1467,17 +1629,18 @@ public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTran
           true,
           batchSize,
           indexName,
-          requestOptions
+          requestOptions,
+          chunkedOptions
         );
 
-    waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
+    waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
 
     copyOperationResponse = operationIndex(
       indexName,
       new OperationIndexParams().setOperation(OperationType.COPY).setDestination(tmpIndexName).setScope(scopes),
       requestOptions
     );
-    waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
+    waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
 
     // Move temporary index to source index
     UpdatedAtResponse moveOperationResponse = operationIndex(
@@ -1485,7 +1648,7 @@ public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTran
       new OperationIndexParams().setOperation(OperationType.MOVE).setDestination(indexName),
       requestOptions
     );
-    waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), requestOptions);
+    waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
 
     return new ReplaceAllObjectsWithTransformationResponse()
       .setCopyOperationResponse(copyOperationResponse)
