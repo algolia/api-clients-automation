@@ -26,6 +26,7 @@ extension Transformation on SearchClient {
     required ingestion.Action action,
     bool waitForTasks = false,
     int batchSize = 1000,
+    int maxRetries = 100,
     String? referenceIndexName,
     RequestOptions? requestOptions,
   }) async {
@@ -62,6 +63,7 @@ extension Transformation on SearchClient {
             responses: responses,
             from: polledUpTo,
             to: responses.length,
+            maxRetries: maxRetries,
             requestOptions: requestOptions,
           );
           polledUpTo = responses.length;
@@ -80,6 +82,7 @@ extension Transformation on SearchClient {
     required Iterable<Map<String, dynamic>> objects,
     bool waitForTasks = false,
     int batchSize = 1000,
+    int maxRetries = 100,
     RequestOptions? requestOptions,
   }) {
     return chunkedPush(
@@ -88,6 +91,7 @@ extension Transformation on SearchClient {
       action: ingestion.Action.addObject,
       waitForTasks: waitForTasks,
       batchSize: batchSize,
+      maxRetries: maxRetries,
       requestOptions: requestOptions,
     );
   }
@@ -99,6 +103,7 @@ extension Transformation on SearchClient {
     bool createIfNotExists = true,
     bool waitForTasks = false,
     int batchSize = 1000,
+    int maxRetries = 100,
     RequestOptions? requestOptions,
   }) {
     return chunkedPush(
@@ -109,6 +114,7 @@ extension Transformation on SearchClient {
           : ingestion.Action.partialUpdateObjectNoCreate,
       waitForTasks: waitForTasks,
       batchSize: batchSize,
+      maxRetries: maxRetries,
       requestOptions: requestOptions,
     );
   }
@@ -119,6 +125,7 @@ extension Transformation on SearchClient {
     required String indexName,
     required Iterable<Map<String, dynamic>> objects,
     int batchSize = 1000,
+    int maxRetries = 100,
     List<ScopeType>? scopes,
     RequestOptions? requestOptions,
   }) async {
@@ -144,6 +151,7 @@ extension Transformation on SearchClient {
         action: ingestion.Action.addObject,
         waitForTasks: true,
         batchSize: batchSize,
+        maxRetries: maxRetries,
         referenceIndexName: indexName,
         requestOptions: requestOptions,
       );
@@ -190,6 +198,7 @@ Future<void> _pollBatch({
   required List<WatchResponse> responses,
   required int from,
   required int to,
+  required int maxRetries,
   RequestOptions? requestOptions,
 }) async {
   for (final resp in responses.sublist(from, to)) {
@@ -199,6 +208,7 @@ Future<void> _pollBatch({
       transporter: transporter,
       runID: resp.runID,
       eventID: eventID,
+      maxRetries: maxRetries,
       requestOptions: requestOptions,
     );
   }
@@ -208,9 +218,9 @@ Future<void> _waitForEvent({
   required ingestion.IngestionClient transporter,
   required String runID,
   required String eventID,
+  required int maxRetries,
   RequestOptions? requestOptions,
 }) async {
-  const maxRetries = 100;
   for (var retries = 0; retries < maxRetries; retries++) {
     try {
       await transporter.getEvent(
