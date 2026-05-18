@@ -155,6 +155,7 @@ type partialUpdateObjectsOption func(*config)
 var (
 	_ PartialUpdateObjectsOption = (*partialUpdateObjectsOption)(nil)
   _ PartialUpdateObjectsOption = (*chunkedBatchOption)(nil)
+	_ PartialUpdateObjectsOption = (*chunkedHelperOption)(nil)
 	_ PartialUpdateObjectsOption = (*requestOption)(nil)
 )
 
@@ -191,6 +192,7 @@ type replaceAllObjectsOption func(*config)
 var (
 	_ ReplaceAllObjectsOption = (*replaceAllObjectsOption)(nil)
   _ ReplaceAllObjectsOption = (*chunkedBatchOption)(nil)
+	_ ReplaceAllObjectsOption = (*chunkedHelperOption)(nil)
 	_ ReplaceAllObjectsOption = (*requestOption)(nil)
 )
 
@@ -227,6 +229,7 @@ type waitForApiKeyOption func(*config)
 var (
   _ WaitForApiKeyOption = (*waitForApiKeyOption)(nil)
 	_ WaitForApiKeyOption = (*iterableOption)(nil)
+	_ WaitForApiKeyOption = (*chunkedHelperOption)(nil)
 	_ WaitForApiKeyOption = (*requestOption)(nil)
 )
 
