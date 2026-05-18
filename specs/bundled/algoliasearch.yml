@@ -3989,10 +3989,6 @@ components:
       properties:
         order:
           $ref: '#/components/schemas/order'
-    properties-reRankingApplyFilter:
-      oneOf:
-        - $ref: '#/components/schemas/reRankingApplyFilter'
-        - type: 'null'
     baseRecommendIndexSettings:
       type: object
       additionalProperties: false
@@ -4072,7 +4068,9 @@ components:
         enableReRanking:
           $ref: '#/components/schemas/enableReRanking'
         reRankingApplyFilter:
-          $ref: '#/components/schemas/properties-reRankingApplyFilter'
+          oneOf:
+            - $ref: '#/components/schemas/reRankingApplyFilter'
+            - type: 'null'
     recommendIndexSettings:
       description: Index settings.
       allOf:
