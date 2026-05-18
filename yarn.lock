@@ -5428,15 +5428,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"folder-hash@npm:4.1.2":
-  version: 4.1.2
-  resolution: "folder-hash@npm:4.1.2"
+"folder-hash@npm:4.1.3":
+  version: 4.1.3
+  resolution: "folder-hash@npm:4.1.3"
   dependencies:
     debug: "npm:4.4.0"
     minimatch: "npm:7.4.9"
   bin:
     folder-hash: bin/folder-hash
-  checksum: 10/4c07c54c2cd3b33b868bcc11fb710879e5b4bf5bd4161bfa11e634b6e6801a23d9c603b479957d05ea10fdf5080ad66b98dd8da54deaca2216db93c137b4ef95
+  checksum: 10/8f8e2233b6c7dadba9d2808921b30f8d4f0b0cdd703cc9d48e56d1f782e43f40574bddaad242f2c55ea64e1e3417a56e8e247065f59afcd3b2b98d14b92cabb3
   languageName: node
   linkType: hard
 
@@ -8454,7 +8454,7 @@ __metadata:
     esbuild: "npm:0.28.0"
     execa: "npm:9.6.1"
     express: "npm:5.2.1"
-    folder-hash: "npm:4.1.2"
+    folder-hash: "npm:4.1.3"
     fs-extra: "npm:11.3.5"
     js-yaml: "npm:4.1.1"
     knip: "npm:6.12.2"
