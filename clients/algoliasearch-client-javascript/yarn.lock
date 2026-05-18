@@ -14,7 +14,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.52.1"
     "@algolia/requester-node-http": "npm:5.52.1"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:25.1.0"
+    "@types/node": "npm:25.8.0"
     publint: "npm:0.3.20"
     rollup: "npm:4.60.3"
     tsup: "npm:8.5.1"
@@ -31,7 +31,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.52.1"
     "@algolia/requester-node-http": "npm:5.52.1"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:25.1.0"
+    "@types/node": "npm:25.8.0"
     publint: "npm:0.3.20"
     rollup: "npm:4.60.3"
     tsup: "npm:8.5.1"
@@ -165,7 +165,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.52.1"
     "@algolia/requester-node-http": "npm:5.52.1"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:25.1.0"
+    "@types/node": "npm:25.8.0"
     publint: "npm:0.3.20"
     rollup: "npm:4.60.3"
     tsup: "npm:8.5.1"
@@ -2887,6 +2887,15 @@ __metadata:
   dependencies:
     undici-types: "npm:~7.16.0"
   checksum: 10/ad15db75cfaec9e6311a1db7f3a91799be4c2698e1cfb0f74cc4d6e4398361550d00a4070921e1de7d9a10db83e41fd29f3a640dfacdabbd1c74ae16d8ce943a
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:25.8.0":
+  version: 25.8.0
+  resolution: "@types/node@npm:25.8.0"
+  dependencies:
+    undici-types: "npm:>=7.24.0 <7.24.7"
+  checksum: 10/1b1eb14c4f5294ff12de0c668c0ed786b377e2e878fe4c9f84e5219d06d0e2fbf9ea7d7a95077360d2ed1329f56e7a94afc65768fe9f3afdb6c95977f89eb2e2
   languageName: node
   linkType: hard
 
@@ -8944,6 +8953,13 @@ __metadata:
   bin:
     uglifyjs: bin/uglifyjs
   checksum: 10/6b9639c1985d24580b01bb0ab68e78de310d38eeba7db45bec7850ab4093d8ee464d80ccfaceda9c68d1c366efbee28573b52f95e69ac792354c145acd380b11
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:>=7.24.0 <7.24.7":
+  version: 7.24.6
+  resolution: "undici-types@npm:7.24.6"
+  checksum: 10/defc9538b952e3c15b8526596c591f7c1f0c7605ad27a2b7feddbea7ef2e3003f3eda2cdb051a3cb1a2185e3893100fd9cb925c799db99d48131ea63b5233d10
   languageName: node
   linkType: hard
 
