@@ -31,6 +31,7 @@ extension Transformation on SearchClient {
     RequestOptions? requestOptions,
   }) async {
     if (batchSize < 1) throw ArgumentError('`batchSize` must be greater than 0');
+    if (maxRetries < 1) throw ArgumentError('`maxRetries` must be greater than 0');
     final transporter = ingestionTransporter;
     if (transporter == null) throw StateError(_notSetError);
 
@@ -156,7 +157,7 @@ extension Transformation on SearchClient {
         requestOptions: requestOptions,
       );
 
-      await waitTask(indexName: tmpIndex, taskID: copyResponse.taskID, requestOptions: requestOptions);
+      await waitTask(indexName: tmpIndex, taskID: copyResponse.taskID, maxRetries: maxRetries, requestOptions: requestOptions);
 
       copyResponse = await operationIndex(
         indexName: indexName,
@@ -167,7 +168,7 @@ extension Transformation on SearchClient {
         ),
         requestOptions: requestOptions,
       );
-      await waitTask(indexName: tmpIndex, taskID: copyResponse.taskID, requestOptions: requestOptions);
+      await waitTask(indexName: tmpIndex, taskID: copyResponse.taskID, maxRetries: maxRetries, requestOptions: requestOptions);
 
       final moveResponse = await operationIndex(
         indexName: tmpIndex,
@@ -177,7 +178,7 @@ extension Transformation on SearchClient {
         ),
         requestOptions: requestOptions,
       );
-      await waitTask(indexName: tmpIndex, taskID: moveResponse.taskID, requestOptions: requestOptions);
+      await waitTask(indexName: tmpIndex, taskID: moveResponse.taskID, maxRetries: maxRetries, requestOptions: requestOptions);
 
       return ReplaceAllObjectsWithTransformationResponse(
         copyOperationResponse: copyResponse,
