@@ -25,14 +25,19 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
     return new Promise((resolve) => setTimeout(resolve, 0));
   }
 
-  function getFilteredNamespace(): Record<string, BrowserLocalStorageCacheItem> {
+  function getFilteredNamespace(): {
+    namespace: Record<string, BrowserLocalStorageCacheItem>;
+    changed: boolean;
+  } {
     const timeToLive = options.timeToLive ? options.timeToLive * 1000 : null;
     const namespace = getNamespace<BrowserLocalStorageCacheItem>();
     const currentTime = new Date().getTime();
+    let changed = false;
 
-    return Object.fromEntries(
+    const filtered = Object.fromEntries(
       Object.entries(namespace).filter(([, cacheItem]) => {
         if (!cacheItem || cacheItem.timestamp === undefined) {
+          changed = true;
           return false;
         }
 
@@ -40,9 +45,16 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
           return true;
         }
 
-        return cacheItem.timestamp + timeToLive >= currentTime;
+        if (cacheItem.timestamp + timeToLive < currentTime) {
+          changed = true;
+          return false;
+        }
+
+        return true;
       }),
     );
+
+    return { namespace: filtered, changed };
   }
 
   return {
@@ -54,10 +66,12 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
       },
     ): Promise<TValue> {
       return yieldToMain().then(() => {
-        const namespace = getFilteredNamespace();
+        const { namespace, changed } = getFilteredNamespace();
         const cachedItem = namespace[JSON.stringify(key)];
 
-        setNamespace(namespace);
+        if (changed) {
+          setNamespace(namespace);
+        }
 
         if (cachedItem) {
           return cachedItem.value as TValue;
