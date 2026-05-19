@@ -39,6 +39,9 @@ export async function generateOpenapitools(
       'openapi-normalizer': {
         // if this is set to true, it causes a breaking change on PlatformWithNone, this can be removed in the next major
         SIMPLIFY_ONEOF_ANYOF_ENUM: false,
+        // defaulted to true in 7.17.0 (PR #22180), restructures allOf schemas with properties
+        // which breaks model hierarchies and oneOf member resolution across all languages
+        REFACTOR_ALLOF_WITH_PROPERTIES_ONLY: false,
       },
     };
   }
@@ -48,7 +51,7 @@ export async function generateOpenapitools(
     JSON.stringify(
       {
         'generator-cli': {
-          version: '7.16.0',
+          version: '7.22.0',
           generators,
         },
       },
