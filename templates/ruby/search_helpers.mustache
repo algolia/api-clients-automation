@@ -34,7 +34,7 @@ end
 #
 # @param transformation_options [TransformationOptions] the transformation options including region and optional ingestion transporter overrides. (required)
 def set_transformation_options(transformation_options)
-  raise ArgumentError, "`transformation_options` must be a TransformationOptions instance, got #{transformation_options.inspect}" if transformation_options.nil?
+  raise ArgumentError, "`transformation_options` must not be nil" if transformation_options.nil?
   @ingestion_transporter = _build_ingestion_transporter(transformation_options)
 end
 
