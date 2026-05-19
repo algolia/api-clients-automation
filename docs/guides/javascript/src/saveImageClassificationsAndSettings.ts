@@ -8,7 +8,7 @@ interface Image extends Record<string, unknown> {
 
 async function saveImageClassifications() {
   // Retrieve labels
-  function getImageLabels(imageURL, objectID, scoreLimit): Image {
+  function getImageLabels(_imageURL, _objectID, _scoreLimit): Image {
     // Implement your image classification logic here
     return { imageURL: '', objectID: '', objects: [] };
   }

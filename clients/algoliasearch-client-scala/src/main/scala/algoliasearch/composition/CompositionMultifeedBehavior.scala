@@ -28,6 +28,8 @@
   */
 package algoliasearch.composition
 
+import algoliasearch.composition.Multifeed
+
 /** An object containing a `multifeed` behavior.
   */
 case class CompositionMultifeedBehavior(

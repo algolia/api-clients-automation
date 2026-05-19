@@ -28,6 +28,8 @@
   */
 package algoliasearch.analytics
 
+import algoliasearch.analytics.TopSearchWithAnalytics
+
 /** TopSearchesResponseWithAnalytics
   *
   * @param searches

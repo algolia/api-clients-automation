@@ -32,6 +32,13 @@
   */
 package algoliasearch.search
 
+import algoliasearch.search.Exhaustive
+import algoliasearch.search.FacetStats
+import algoliasearch.search.Hit
+import algoliasearch.search.Redirect
+import algoliasearch.search.RenderingContent
+import algoliasearch.search.ResponseExtensions
+
 import org.json4s._
 
 /** SearchResponse

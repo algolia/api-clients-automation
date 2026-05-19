@@ -594,7 +594,7 @@ final class ConsequenceParams {
       attributeCriteriaComputedByMinProximity.hashCode +
       renderingContent.hashCode +
       enableReRanking.hashCode +
-      reRankingApplyFilter.hashCode +
+      (reRankingApplyFilter == null ? 0 : reRankingApplyFilter.hashCode) +
       query.hashCode +
       automaticFacetFilters.hashCode +
       automaticOptionalFacetFilters.hashCode;
