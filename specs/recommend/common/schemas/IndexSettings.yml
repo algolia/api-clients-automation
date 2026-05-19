@@ -83,4 +83,6 @@ baseRecommendIndexSettings:
     enableReRanking:
       $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/enableReRanking'
     reRankingApplyFilter:
-      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/reRankingApplyFilter'
+      oneOf:
+        - $ref: '../../../common/schemas/IndexSettings.yml#/reRankingApplyFilter'
+        - type: 'null'
