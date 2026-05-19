@@ -5,13 +5,13 @@ OpenAIProviderInput-Input:
       title: apikey
     baseUrl:
       oneOf:
-      - type: string
-        maxLength: 2083
-        minLength: 1
-      - type: 'null'
+        - type: string
+          maxLength: 2083
+          minLength: 1
+        - type: 'null'
       title: baseurl
   type: object
   required:
-  - apiKey
+    - apiKey
   title: openAIProviderInput
   description: OpenAI-specific provider input.

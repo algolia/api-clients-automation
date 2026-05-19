@@ -1,0 +1,4 @@
+UserMessageMetadataV5Nullable:
+  oneOf:
+    - $ref: 'UserMessageMetadataV5.yml#/UserMessageMetadataV5'
+    - type: 'null'

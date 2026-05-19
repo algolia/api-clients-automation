@@ -1,22 +1,22 @@
 IndexSearchParameters-Input:
   properties:
     query:
-      $ref: TextParamNullable.yml#/TextParamNullable
+      $ref: 'TextParamNullable.yml#/TextParamNullable'
     hitsPerPage:
-      $ref: NumberParam.yml#/NumberParam
+      $ref: 'NumberParam.yml#/NumberParam'
     page:
-      $ref: NumberParam.yml#/NumberParam
+      $ref: 'NumberParam.yml#/NumberParam'
     attributesToRetrieve:
-      $ref: StringArrayParam.yml#/StringArrayParam
+      $ref: 'StringArrayParam.yml#/StringArrayParam'
     responseFields:
-      $ref: StringArrayParam.yml#/StringArrayParam
+      $ref: 'StringArrayParam.yml#/StringArrayParam'
     facets:
-      $ref: FacetsParamNullable.yml#/FacetsParamNullable
+      $ref: 'FacetsParamNullable.yml#/FacetsParamNullable'
     custom:
       oneOf:
-      - additionalProperties: true
-        type: object
-      - type: 'null'
+        - additionalProperties: true
+          type: object
+        - type: 'null'
       title: custom
   type: object
   title: indexSearchParameters

@@ -1,10 +1,10 @@
 RemoveWordsIfNoResults:
   type: string
   enum:
-  - none
-  - lastWords
-  - firstWords
-  - allOptional
+    - none
+    - lastWords
+    - firstWords
+    - allOptional
   title: removeWordsIfNoResults
   description: Strategy for removing words from the query when it doesn't return any
     results. This helps to avoid returning empty search results.  - `none`.   No words

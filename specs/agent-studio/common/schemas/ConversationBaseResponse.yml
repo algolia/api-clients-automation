@@ -8,8 +8,8 @@ ConversationBaseResponse:
       title: agentid
     title:
       oneOf:
-      - type: string
-      - type: 'null'
+        - type: string
+        - type: 'null'
       title: title
     createdAt:
       type: string
@@ -19,13 +19,13 @@ ConversationBaseResponse:
       title: updatedat
     lastActivityAt:
       oneOf:
-      - type: string
-      - type: 'null'
+        - type: string
+        - type: 'null'
       title: lastactivityat
     userToken:
       oneOf:
-      - type: string
-      - type: 'null'
+        - type: string
+        - type: 'null'
       title: usertoken
     isFromDashboard:
       type: boolean
@@ -48,14 +48,14 @@ ConversationBaseResponse:
       title: totaltokens
       default: 0
     conversationMetadata:
-      $ref: ConversationMetadataNullable.yml#/ConversationMetadataNullable
+      $ref: 'ConversationMetadataNullable.yml#/ConversationMetadataNullable'
     feedback:
-      $ref: FeedbackUnion.yml#/FeedbackUnion
+      $ref: 'FeedbackUnion.yml#/FeedbackUnion'
   type: object
   required:
-  - id
-  - agentId
-  - createdAt
-  - updatedAt
+    - id
+    - agentId
+    - createdAt
+    - updatedAt
   title: conversationBaseResponse
   description: Lightweight response model without its messages.

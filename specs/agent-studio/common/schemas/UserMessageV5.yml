@@ -2,8 +2,8 @@ UserMessageV5:
   properties:
     id:
       oneOf:
-      - type: string
-      - type: 'null'
+        - type: string
+        - type: 'null'
       title: id
     role:
       type: string
@@ -12,10 +12,12 @@ UserMessageV5:
       default: user
     parts:
       items:
-        $ref: TextPartV5.yml#/TextPartV5
+        $ref: 'TextPartV5.yml#/TextPartV5'
       type: array
       title: parts
+    metadata:
+      $ref: 'UserMessageMetadataV5Nullable.yml#/UserMessageMetadataV5Nullable'
   type: object
   title: userMessageV5
   required:
-  - role
+    - role

@@ -16,11 +16,11 @@ ClientSideToolConfig:
       minLength: 1
       title: description
     inputSchema:
-      $ref: ClientToolsArgsSchema.yml#/ClientToolsArgsSchema
+      $ref: 'ClientToolsArgsSchema.yml#/ClientToolsArgsSchema'
   type: object
   required:
-  - type
-  - name
-  - description
-  - inputSchema
+    - type
+    - name
+    - description
+    - inputSchema
   title: clientSideToolConfig

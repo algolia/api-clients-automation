@@ -1,4 +1,4 @@
 TextParamNullable:
   oneOf:
-  - $ref: TextParam.yml#/TextParam
-  - type: 'null'
+    - $ref: 'TextParam.yml#/TextParam'
+    - type: 'null'

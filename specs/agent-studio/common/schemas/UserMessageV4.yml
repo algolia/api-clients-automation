@@ -2,8 +2,8 @@ UserMessageV4:
   properties:
     id:
       oneOf:
-      - type: string
-      - type: 'null'
+        - type: string
+        - type: 'null'
       title: id
     role:
       type: string
@@ -15,11 +15,19 @@ UserMessageV4:
       title: content
     parts:
       items:
-        $ref: TextPartV4.yml#/TextPartV4
+        $ref: 'TextPartV4.yml#/TextPartV4'
       type: array
       title: parts
+    annotations:
+      oneOf:
+        - items:
+            additionalProperties: true
+            type: object
+          type: array
+        - type: 'null'
+      title: annotations
   type: object
   required:
-  - role
-  - content
+    - role
+    - content
   title: userMessageV4
