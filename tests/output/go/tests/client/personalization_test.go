@@ -93,6 +93,7 @@ func TestPersonalizationparameters0(t *testing.T) {
 		Region: personalization.Region(""),
 	}
 	client, err = personalization.NewClientWithConfig(cfg)
+
 	require.EqualError(t, err, "`region` is required and must be one of the following: eu, us")
 }
 
@@ -122,6 +123,7 @@ func TestPersonalizationparameters1(t *testing.T) {
 		Region: personalization.Region("not_a_region"),
 	}
 	client, err = personalization.NewClientWithConfig(cfg)
+
 	require.EqualError(t, err, "`region` is required and must be one of the following: eu, us")
 }
 
@@ -151,6 +153,7 @@ func TestPersonalizationparameters2(t *testing.T) {
 		Region: personalization.Region("us"),
 	}
 	client, err = personalization.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 }
 
@@ -180,6 +183,7 @@ func TestPersonalizationsetClientApiKey0(t *testing.T) {
 		Region: personalization.Region("us"),
 	}
 	client, err = personalization.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(

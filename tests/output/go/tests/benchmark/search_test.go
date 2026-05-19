@@ -37,6 +37,7 @@ func TestSearchbenchmark0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 
 	for i := 0; i < 2000; i++ {
