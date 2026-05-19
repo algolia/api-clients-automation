@@ -26,7 +26,7 @@
   */
 package algoliasearch.insights
 
-import algoliasearch.insights.ViewEvent._
+import algoliasearch.insights.ViewEvent
 
 /** Use this event to track when users viewed items in the search results.
   *

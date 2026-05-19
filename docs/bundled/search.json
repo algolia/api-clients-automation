@@ -4285,7 +4285,8 @@
           "java",
           "javascript",
           "php",
-          "python"
+          "python",
+          "scala"
         ],
         "x-acl": [
           "addObject",
@@ -4547,7 +4548,8 @@
           "java",
           "javascript",
           "php",
-          "python"
+          "python",
+          "scala"
         ],
         "x-acl": [
           "addObject",
@@ -4838,7 +4840,8 @@
           "java",
           "javascript",
           "php",
-          "python"
+          "python",
+          "scala"
         ],
         "tags": [
           "Records"

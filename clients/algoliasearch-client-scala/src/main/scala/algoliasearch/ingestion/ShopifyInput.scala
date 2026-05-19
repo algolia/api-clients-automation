@@ -18,6 +18,9 @@
   */
 package algoliasearch.ingestion
 
+import algoliasearch.ingestion.ShopifyMarket
+import algoliasearch.ingestion.ShopifyMetafield
+
 /** Represents the required elements of the task input when using a `shopify` source.
   */
 case class ShopifyInput(

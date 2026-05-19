@@ -16,11 +16,11 @@
     "test:bundle": "lerna run test:bundle --verbose --include-dependencies"
   },
   "devDependencies": {
-    "@types/node": "24.12.2",
+    "@types/node": "24.12.4",
     "bundlewatch": "0.4.2",
     "execa": "9.6.1",
     "lerna": "9.0.7",
-    "rollup": "4.59.0",
+    "rollup": "4.60.4",
     "typescript": "5.9.3"
   },
   "bundlewatch": {
@@ -84,7 +84,7 @@
     ]
   },
   "resolutions": {
-    "axios": "^1.15.0",
+    "axios": "^1.16.0",
     "follow-redirects": "^1.16.0"
   },
   "engines": {

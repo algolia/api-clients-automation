@@ -70,6 +70,7 @@ export type Algoliasearch = SearchClient & {
    * @param saveObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
    * @param saveObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
    * @param saveObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+   * @param saveObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
    * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `push` method and merged with the transporter requestOptions.
    */
   saveObjectsWithTransformation: (
@@ -87,6 +88,7 @@ export type Algoliasearch = SearchClient & {
    * @param partialUpdateObjects.createIfNotExists - To be provided if non-existing objects are passed, otherwise, the call will fail.
    * @param partialUpdateObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
    * @param partialUpdateObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+   * @param partialUpdateObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
    * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `push` method and merged with the transporter requestOptions.
    */
   partialUpdateObjectsWithTransformation: (
@@ -103,6 +105,7 @@ export type Algoliasearch = SearchClient & {
    * @param replaceAllObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
    * @param replaceAllObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `objects.length / batchSize`. Defaults to 1000.
    * @param replaceAllObjects.scopes - The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
+   * @param replaceAllObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
    * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `push`, `operationIndex` and `getEvent` method and merged with the transporter requestOptions.
    */
   replaceAllObjectsWithTransformation: (
@@ -165,7 +168,7 @@ export function algoliasearch(
     ...client,
 
     async saveObjectsWithTransformation(
-      { indexName, objects, waitForTasks },
+      { indexName, objects, waitForTasks, maxRetries },
       requestOptions,
     ): Promise<Array<WatchResponse>> {
       if (!ingestionTransporter) {
@@ -175,13 +178,13 @@ export function algoliasearch(
       }
 
       return ingestionTransporter.chunkedPush(
-        { indexName, objects, action: 'addObject', waitForTasks },
+        { indexName, objects, action: 'addObject', waitForTasks, maxRetries },
         requestOptions,
       );
     },
 
     async partialUpdateObjectsWithTransformation(
-      { indexName, objects, createIfNotExists, waitForTasks },
+      { indexName, objects, createIfNotExists, waitForTasks, maxRetries },
       requestOptions,
     ): Promise<Array<WatchResponse>> {
       if (!ingestionTransporter) {
@@ -196,13 +199,14 @@ export function algoliasearch(
           objects,
           action: createIfNotExists ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate',
           waitForTasks,
+          maxRetries,
         },
         requestOptions,
       );
     },
 
     async replaceAllObjectsWithTransformation(
-      { indexName, objects, batchSize, scopes }: ReplaceAllObjectsOptions,
+      { indexName, objects, batchSize, scopes, maxRetries = 100 }: ReplaceAllObjectsOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<ReplaceAllObjectsWithTransformationResponse> {
       if (!ingestionTransporter) {
@@ -232,13 +236,21 @@ export function algoliasearch(
         );
 
         const watchResponses = await ingestionTransporter.chunkedPush(
-          { indexName: tmpIndexName, objects, waitForTasks: true, batchSize, referenceIndexName: indexName },
+          {
+            indexName: tmpIndexName,
+            objects,
+            waitForTasks: true,
+            batchSize,
+            referenceIndexName: indexName,
+            maxRetries,
+          },
           requestOptions,
         );
 
         await this.waitForTask({
           indexName: tmpIndexName,
           taskID: copyOperationResponse.taskID,
+          maxRetries,
         });
 
         copyOperationResponse = await this.operationIndex(
@@ -255,6 +267,7 @@ export function algoliasearch(
         await this.waitForTask({
           indexName: tmpIndexName,
           taskID: copyOperationResponse.taskID,
+          maxRetries,
         });
 
         const moveOperationResponse = await this.operationIndex(
@@ -267,6 +280,7 @@ export function algoliasearch(
         await this.waitForTask({
           indexName: tmpIndexName,
           taskID: moveOperationResponse.taskID,
+          maxRetries,
         });
 
         return { copyOperationResponse, watchResponses, moveOperationResponse };

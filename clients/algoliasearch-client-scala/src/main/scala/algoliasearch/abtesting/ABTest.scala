@@ -29,6 +29,21 @@ import algoliasearch.abtesting.Status._
   *
   * @param abTestID
   *   Unique A/B test identifier.
+  * @param clickSignificance
+  *   A/B test significance calculated from click events. Values of 0.95 or higher can be considered significant, that
+  *   is, the difference between A and B variants is _not_ due to random variations. Lower values have a.
+  * @param conversionSignificance
+  *   A/B test significance calculated from conversion events. Values of 0.95 or higher can be considered significant,
+  *   that is, the difference between A and B variants is _not_ due to random variations.
+  * @param addToCartSignificance
+  *   A/B test significance calculated from add-to-cart events. Values of 0.95 or higher can be considered significant,
+  *   that is, the difference between A and B variants is _not_ due to random variations.
+  * @param purchaseSignificance
+  *   A/B test significance calculated from purchase events. Values of 0.95 or higher can be considered significant,
+  *   that is, the difference between A and B variants is _not_ due to random variations.
+  * @param revenueSignificance
+  *   A/B test significance calculated from revenue data. Values of 0.95 or higher can be considered significant, that
+  *   is, the difference between A and B variants is _not_ due to random variations.
   * @param updatedAt
   *   Date and time when the A/B test was last updated, in RFC 3339 format.
   * @param createdAt

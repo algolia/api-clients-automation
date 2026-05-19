@@ -10,6 +10,7 @@ method:
       - javascript
       - php
       - python
+      - scala
     x-acl:
       - addObject
       - deleteIndex

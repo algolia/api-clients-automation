@@ -56,6 +56,7 @@ func TestSearchapi0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"test"))
@@ -88,6 +89,7 @@ func TestSearchapi1(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 		"indexName"))
@@ -120,6 +122,7 @@ func TestSearchapi2(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"test"))
@@ -156,6 +159,7 @@ func TestSearchapi3(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test/retry/go"))
@@ -190,6 +194,7 @@ func TestSearchapi4(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test/hang/go"))
@@ -229,6 +234,7 @@ func TestSearchapi5(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test/error/go"))
@@ -264,6 +270,7 @@ func TestSearchapi6(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test/gzip",
@@ -303,6 +310,7 @@ func TestSearchapi7(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test/gzip-response"))
@@ -375,6 +383,7 @@ func TestSearchapi10(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.GetSettings(client.NewApiGetSettingsRequest(
 		"cts_e2e_unknownField_go"))
@@ -409,6 +418,7 @@ func TestSearchapi11(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.GetRule(client.NewApiGetRuleRequest(
 		"cts_e2e_unknownFieldNested_go", "ruleObjectID"))
@@ -446,6 +456,7 @@ func TestSearchapi12(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(
@@ -526,6 +537,7 @@ func TestSearchdeleteObjects0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.DeleteObjects(
@@ -716,6 +728,7 @@ func TestSearchindexExists0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.IndexExists(
@@ -750,6 +763,7 @@ func TestSearchindexExists1(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.IndexExists(
@@ -784,6 +798,7 @@ func TestSearchindexExists2(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.IndexExists(
 		"indexExistsERROR")
@@ -815,6 +830,7 @@ func TestSearchparameters0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.EqualError(t, err, "`appId` is missing.")
 
 	cfg = search.SearchConfiguration{
@@ -825,6 +841,7 @@ func TestSearchparameters0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.EqualError(t, err, "`appId` is missing.")
 
 	cfg = search.SearchConfiguration{
@@ -835,6 +852,7 @@ func TestSearchparameters0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.EqualError(t, err, "`apiKey` is missing.")
 }
 
@@ -899,6 +917,7 @@ func TestSearchpartialUpdateObjects0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.PartialUpdateObjects(
@@ -936,6 +955,7 @@ func TestSearchpartialUpdateObjects1(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.PartialUpdateObjects(
@@ -965,6 +985,13 @@ func TestSearchpartialUpdateObjectsWithTransformation0(t *testing.T) {
 
 	_ = client
 	_ = echo
+	transformationOptions := search.TransformationOptions{
+		Region: "us",
+		Hosts: []transport.StatefulHost{
+			transport.NewStatefulHost("http", tests.GetLocalhost()+":6688", call.IsReadWrite),
+			transport.NewStatefulHost("http", tests.GetLocalhost()+":6689", call.IsReadWrite),
+		},
+	}
 	cfg = search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
@@ -974,9 +1001,12 @@ func TestSearchpartialUpdateObjectsWithTransformation0(t *testing.T) {
 				transport.NewStatefulHost("http", tests.GetLocalhost()+":6689", call.IsReadWrite),
 			},
 		},
-		Transformation: &search.TransformationConfiguration{Region: "us"},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	err = client.SetTransformationOptions(transformationOptions)
+	require.NoError(t, err)
+
 	require.NoError(t, err)
 	{
 		res, err = client.PartialUpdateObjectsWithTransformation(
@@ -1024,6 +1054,7 @@ func TestSearchreplaceAllObjects0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.ReplaceAllObjects(
@@ -1078,6 +1109,7 @@ func TestSearchreplaceAllObjects1(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.ReplaceAllObjects(
@@ -1120,6 +1152,7 @@ func TestSearchreplaceAllObjects2(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.ReplaceAllObjects(
 		"cts_e2e_replace_all_objects_too_big_go",
@@ -1144,15 +1177,22 @@ func TestSearchreplaceAllObjectsWithTransformation0(t *testing.T) {
 
 	_ = client
 	_ = echo
+	transformationOptions := search.TransformationOptions{
+		Region: "us",
+		Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6690", call.IsReadWrite)},
+	}
 	cfg = search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
 			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6690", call.IsReadWrite)},
 		},
-		Transformation: &search.TransformationConfiguration{Region: "us"},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	err = client.SetTransformationOptions(transformationOptions)
+	require.NoError(t, err)
+
 	require.NoError(t, err)
 	{
 		res, err = client.ReplaceAllObjectsWithTransformation(
@@ -1207,6 +1247,7 @@ func TestSearchsaveObjects0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.SaveObjects(
@@ -1244,6 +1285,7 @@ func TestSearchsaveObjects1(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.SaveObjects(
 		"cts_e2e_saveObjects_go",
@@ -1276,6 +1318,7 @@ func TestSearchsaveObjects2(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.SaveObjects(
@@ -1319,6 +1362,7 @@ func TestSearchsaveObjects3(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.SaveObjects(
@@ -1357,6 +1401,13 @@ func TestSearchsaveObjectsWithTransformation0(t *testing.T) {
 
 	_ = client
 	_ = echo
+	transformationOptions := search.TransformationOptions{
+		Region: "us",
+		Hosts: []transport.StatefulHost{
+			transport.NewStatefulHost("http", tests.GetLocalhost()+":6688", call.IsReadWrite),
+			transport.NewStatefulHost("http", tests.GetLocalhost()+":6689", call.IsReadWrite),
+		},
+	}
 	cfg = search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
@@ -1366,9 +1417,12 @@ func TestSearchsaveObjectsWithTransformation0(t *testing.T) {
 				transport.NewStatefulHost("http", tests.GetLocalhost()+":6689", call.IsReadWrite),
 			},
 		},
-		Transformation: &search.TransformationConfiguration{Region: "us"},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	err = client.SetTransformationOptions(transformationOptions)
+	require.NoError(t, err)
+
 	require.NoError(t, err)
 	{
 		res, err = client.SaveObjectsWithTransformation(
@@ -1410,6 +1464,7 @@ func TestSearchsearchSingleIndex0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 		"playlists").WithSearchParams(search.SearchParamsObjectAsSearchParams(
@@ -1442,6 +1497,7 @@ func TestSearchsetClientApiKey0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(
@@ -1491,6 +1547,7 @@ func TestSearchwaitForApiKey0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.WaitForApiKey(
@@ -1531,6 +1588,7 @@ func TestSearchwaitForApiKey1(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.WaitForApiKey(
@@ -1575,6 +1633,7 @@ func TestSearchwaitForApiKey2(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.WaitForApiKey(
@@ -1609,6 +1668,7 @@ func TestSearchwaitForAppTask0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.WaitForAppTask(
@@ -1645,6 +1705,7 @@ func TestSearchwaitForTask0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.WaitForTask(

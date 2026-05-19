@@ -93,6 +93,7 @@ func TestAbtestingV3parameters0(t *testing.T) {
 		Region: abtestingV3.Region("us"),
 	}
 	client, err = abtestingV3.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.GetABTest(client.NewApiGetABTestRequest(
 		123))
@@ -126,6 +127,7 @@ func TestAbtestingV3parameters1(t *testing.T) {
 		Region: abtestingV3.Region("not_a_region"),
 	}
 	client, err = abtestingV3.NewClientWithConfig(cfg)
+
 	require.EqualError(t, err, "`region` must be one of the following: de, us")
 }
 
@@ -155,6 +157,7 @@ func TestAbtestingV3setClientApiKey0(t *testing.T) {
 		Region: abtestingV3.Region("us"),
 	}
 	client, err = abtestingV3.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(

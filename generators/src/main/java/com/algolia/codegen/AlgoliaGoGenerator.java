@@ -54,6 +54,10 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     supportingFiles.add(new SupportingFile("configuration.mustache", "", "configuration.go"));
     supportingFiles.add(new SupportingFile("client.mustache", "", "client.go"));
 
+    if ("search".equals(client)) {
+      supportingFiles.add(new SupportingFile("transformation_options.mustache", "", "transformation_options.go"));
+    }
+
     Helpers.addCommonSupportingFiles(supportingFiles, "../../");
 
     try {
