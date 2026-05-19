@@ -1,3 +1,8 @@
+## [4.44.0](https://github.com/algolia/algoliasearch-client-php/compare/4.43.1...4.44.0)
+
+- [3e6df652cb](https://github.com/algolia/api-clients-automation/commit/3e6df652cb) feat(php): expose maximum number of retries ([#6401](https://github.com/algolia/api-clients-automation/pull/6401)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [dced3f23ff](https://github.com/algolia/api-clients-automation/commit/dced3f23ff) feat(php): add TransformationOptions for ingestion transporter ([#6349](https://github.com/algolia/api-clients-automation/pull/6349)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+
 ## [4.43.1](https://github.com/algolia/algoliasearch-client-php/compare/4.43.0...4.43.1)
 
 - [363cc2d91b](https://github.com/algolia/api-clients-automation/commit/363cc2d91b) fix(specs): Ingestion API - update destination payload ([#6320](https://github.com/algolia/api-clients-automation/pull/6320)) by [@sbellone](https://github.com/sbellone/)

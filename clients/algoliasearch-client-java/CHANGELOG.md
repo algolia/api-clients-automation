@@ -1,3 +1,7 @@
+## [4.38.2](https://github.com/algolia/algoliasearch-client-java/compare/4.38.1...4.38.2)
+
+- [84ebc480a8](https://github.com/algolia/api-clients-automation/commit/84ebc480a8) chore(deps): dependencies 2026-05-15 ([#6400](https://github.com/algolia/api-clients-automation/pull/6400)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [4.38.1](https://github.com/algolia/algoliasearch-client-java/compare/4.38.0...4.38.1)
 
 - [363cc2d91b](https://github.com/algolia/api-clients-automation/commit/363cc2d91b) fix(specs): Ingestion API - update destination payload ([#6320](https://github.com/algolia/api-clients-automation/pull/6320)) by [@sbellone](https://github.com/sbellone/)

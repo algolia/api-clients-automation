@@ -1,3 +1,7 @@
+## [4.40.0](https://github.com/algolia/algoliasearch-client-go/compare/4.39.1...4.40.0)
+
+- [46e45d3eb6](https://github.com/algolia/api-clients-automation/commit/46e45d3eb6) feat(go): expose number of retries ([#6406](https://github.com/algolia/api-clients-automation/pull/6406)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+
 ## [4.39.1](https://github.com/algolia/algoliasearch-client-go/compare/4.39.0...4.39.1)
 
 - [363cc2d91b](https://github.com/algolia/api-clients-automation/commit/363cc2d91b) fix(specs): Ingestion API - update destination payload ([#6320](https://github.com/algolia/api-clients-automation/pull/6320)) by [@sbellone](https://github.com/sbellone/)

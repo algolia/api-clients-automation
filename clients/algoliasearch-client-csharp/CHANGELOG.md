@@ -1,3 +1,8 @@
+## [7.43.0](https://github.com/algolia/algoliasearch-client-csharp/compare/7.42.0...7.43.0)
+
+- [df08087fd2](https://github.com/algolia/api-clients-automation/commit/df08087fd2) feat(csharp): add TransformationOptions for ingestion transporter configuration ([#6292](https://github.com/algolia/api-clients-automation/pull/6292)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [84ebc480a8](https://github.com/algolia/api-clients-automation/commit/84ebc480a8) chore(deps): dependencies 2026-05-15 ([#6400](https://github.com/algolia/api-clients-automation/pull/6400)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [7.42.0](https://github.com/algolia/algoliasearch-client-csharp/compare/7.41.0...7.42.0)
 
 - [363cc2d91b](https://github.com/algolia/api-clients-automation/commit/363cc2d91b) fix(specs): Ingestion API - update destination payload ([#6320](https://github.com/algolia/api-clients-automation/pull/6320)) by [@sbellone](https://github.com/sbellone/)
