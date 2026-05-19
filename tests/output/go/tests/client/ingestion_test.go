@@ -58,6 +58,7 @@ func TestIngestionapi0(t *testing.T) {
 		Region: ingestion.Region("us"),
 	}
 	client, err = ingestion.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/html-error"))
@@ -124,6 +125,7 @@ func TestIngestionapi3(t *testing.T) {
 		Region: ingestion.Region("us"),
 	}
 	client, err = ingestion.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/long-wait"))
@@ -231,6 +233,7 @@ func TestIngestionparameters0(t *testing.T) {
 		Region: ingestion.Region("us"),
 	}
 	client, err = ingestion.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.GetSource(client.NewApiGetSourceRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
@@ -264,6 +267,7 @@ func TestIngestionparameters1(t *testing.T) {
 		Region: ingestion.Region("not_a_region"),
 	}
 	client, err = ingestion.NewClientWithConfig(cfg)
+
 	require.EqualError(t, err, "`region` is required and must be one of the following: eu, us")
 }
 
@@ -293,6 +297,7 @@ func TestIngestionsetClientApiKey0(t *testing.T) {
 		Region: ingestion.Region("us"),
 	}
 	client, err = ingestion.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(

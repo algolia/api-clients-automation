@@ -91,6 +91,7 @@ func TestMonitoringparameters0(t *testing.T) {
 		},
 	}
 	client, err = monitoring.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomDelete(client.NewApiCustomDeleteRequest(
 		"test"))
@@ -123,6 +124,7 @@ func TestMonitoringsetClientApiKey0(t *testing.T) {
 		},
 	}
 	client, err = monitoring.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(

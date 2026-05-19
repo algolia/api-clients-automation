@@ -56,6 +56,7 @@ func TestCompositionapi0(t *testing.T) {
 		},
 	}
 	client, err = composition.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"test"))
@@ -88,6 +89,7 @@ func TestCompositionapi1(t *testing.T) {
 		},
 	}
 	client, err = composition.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"test"))
@@ -121,6 +123,7 @@ func TestCompositionapi2(t *testing.T) {
 		},
 	}
 	client, err = composition.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test/gzip",
@@ -160,6 +163,7 @@ func TestCompositionapi3(t *testing.T) {
 		},
 	}
 	client, err = composition.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test/gzip-response"))
@@ -234,6 +238,7 @@ func TestCompositionsetClientApiKey0(t *testing.T) {
 		},
 	}
 	client, err = composition.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(
