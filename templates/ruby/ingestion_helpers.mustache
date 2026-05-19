@@ -30,7 +30,7 @@ def chunked_push(index_name, objects, action = Ingestion::Action::ADD_OBJECT, wa
     if wait_for_tasks && (responses.length % wait_batch_size == 0 || batch_index == total_batches - 1)
       responses[offset, wait_batch_size].each do |watch_response|
         if watch_response.event_id.nil?
-          raise ArgumentError, "received unexpected response from the push endpoint, eventID must not be undefined"
+          raise ArgumentError, "received unexpected response from the push endpoint, eventID must not be nil"
         end
 
         retries = 0
