@@ -2,7 +2,7 @@
   {
     "testName": "extractSemanticMemories",
     "parameters": {
-      "providerID": "5e33d805-7892-4329-bda7-b524dc3fd04a",
+      "providerID": "78918b91-3116-41c2-8b2a-eb1755c20da5",
       "model": "gpt-4o-mini",
       "messages": [
         {"role": "user", "content": "I prefer dark mode and minimal UI"}
@@ -12,7 +12,7 @@
       "path": "/1/memory/extract/semantic",
       "method": "POST",
       "body": {
-        "providerID": "5e33d805-7892-4329-bda7-b524dc3fd04a",
+        "providerID": "78918b91-3116-41c2-8b2a-eb1755c20da5",
         "model": "gpt-4o-mini",
         "messages": [
           {"role": "user", "content": "I prefer dark mode and minimal UI"}

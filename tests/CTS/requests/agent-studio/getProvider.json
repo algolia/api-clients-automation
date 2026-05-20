@@ -2,26 +2,26 @@
   {
     "testName": "getProvider",
     "parameters": {
-      "providerId": "5e33d805-7892-4329-bda7-b524dc3fd04a"
+      "providerId": "78918b91-3116-41c2-8b2a-eb1755c20da5"
     },
     "request": {
-      "path": "/1/providers/5e33d805-7892-4329-bda7-b524dc3fd04a",
+      "path": "/1/providers/78918b91-3116-41c2-8b2a-eb1755c20da5",
       "method": "GET"
     }
   },
   {
     "testName": "e2e get provider",
     "parameters": {
-      "providerId": "5e33d805-7892-4329-bda7-b524dc3fd04a"
+      "providerId": "78918b91-3116-41c2-8b2a-eb1755c20da5"
     },
     "request": {
-      "path": "/1/providers/5e33d805-7892-4329-bda7-b524dc3fd04a",
+      "path": "/1/providers/78918b91-3116-41c2-8b2a-eb1755c20da5",
       "method": "GET"
     },
     "response": {
       "statusCode": 200,
       "body": {
-        "id": "5e33d805-7892-4329-bda7-b524dc3fd04a",
+        "id": "78918b91-3116-41c2-8b2a-eb1755c20da5",
         "name": "cts_e2e_provider",
         "providerName": "openai"
       }

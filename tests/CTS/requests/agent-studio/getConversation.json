@@ -13,19 +13,19 @@
   {
     "testName": "e2e get conversation",
     "parameters": {
-      "conversationId": "dashboard-eacdd4aa-9a80-4f5b-b657-f04b7fd34082",
+      "conversationId": "alg_cnv_miss_hXiYGHnROalfMHk8",
       "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
     },
     "request": {
-      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/conversations/dashboard-eacdd4aa-9a80-4f5b-b657-f04b7fd34082",
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/conversations/alg_cnv_miss_hXiYGHnROalfMHk8",
       "method": "GET"
     },
     "response": {
       "statusCode": 200,
       "body": {
-        "id": "dashboard-eacdd4aa-9a80-4f5b-b657-f04b7fd34082",
+        "id": "alg_cnv_miss_hXiYGHnROalfMHk8",
         "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
-        "title": "Greeting Message"
+        "title": "Greeting Message for CTS E2E Testing"
       }
     }
   }

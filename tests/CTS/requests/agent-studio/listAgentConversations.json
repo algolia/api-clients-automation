@@ -60,9 +60,9 @@
       "body": {
         "data": [
           {
-            "id": "dashboard-eacdd4aa-9a80-4f5b-b657-f04b7fd34082",
+            "id": "alg_cnv_miss_hXiYGHnROalfMHk8",
             "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
-            "title": "Greeting Message"
+            "title": "Greeting Message for CTS E2E Testing"
           }
         ]
       }
