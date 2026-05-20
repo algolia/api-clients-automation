@@ -5734,10 +5734,6 @@ components:
         - type: string
           x-categories:
             - Filtering
-    properties-reRankingApplyFilter:
-      oneOf:
-        - $ref: '#/components/schemas/reRankingApplyFilter'
-        - type: 'null'
     baseRecommendIndexSettings:
       type: object
       additionalProperties: false
@@ -5807,7 +5803,9 @@ components:
         replaceSynonymsInHighlight:
           $ref: '#/components/schemas/replaceSynonymsInHighlight'
         reRankingApplyFilter:
-          $ref: '#/components/schemas/properties-reRankingApplyFilter'
+          oneOf:
+            - $ref: '#/components/schemas/reRankingApplyFilter'
+            - type: 'null'
         responseFields:
           $ref: '#/components/schemas/responseFields'
         restrictHighlightAndSnippetArrays:
@@ -6248,7 +6246,9 @@ components:
           x-categories:
             - Ranking
         reRankingApplyFilter:
-          $ref: '#/components/schemas/properties-reRankingApplyFilter'
+          oneOf:
+            - $ref: '#/components/schemas/reRankingApplyFilter'
+            - type: 'null'
         responseFields:
           $ref: '#/components/schemas/responseFields'
         restrictHighlightAndSnippetArrays:

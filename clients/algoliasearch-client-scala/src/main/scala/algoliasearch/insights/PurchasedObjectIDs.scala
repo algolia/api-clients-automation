@@ -26,8 +26,10 @@
   */
 package algoliasearch.insights
 
-import algoliasearch.insights.ConversionEvent._
-import algoliasearch.insights.PurchaseEvent._
+import algoliasearch.insights.ConversionEvent
+import algoliasearch.insights.ObjectData
+import algoliasearch.insights.PurchaseEvent
+import algoliasearch.insights.Value
 
 /** Use this event to track when users make a purchase unrelated to a previous Algolia request. For example, if you
   * don't use Algolia to build your category pages, use this event. To track purchase events related to Algolia

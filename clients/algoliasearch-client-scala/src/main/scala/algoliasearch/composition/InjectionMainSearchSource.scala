@@ -28,6 +28,8 @@
   */
 package algoliasearch.composition
 
+import algoliasearch.composition.MainSearch
+
 /** Organic result set will originate from a search request performed on the specified index.
   */
 case class InjectionMainSearchSource(

@@ -28,6 +28,8 @@
   */
 package algoliasearch.composition
 
+import algoliasearch.composition.MainRecommend
+
 /** Organic result set will originate from a recommend request.
   */
 case class InjectionMainRecommendSource(

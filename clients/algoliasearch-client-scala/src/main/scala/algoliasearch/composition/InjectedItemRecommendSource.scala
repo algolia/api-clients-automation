@@ -28,6 +28,8 @@
   */
 package algoliasearch.composition
 
+import algoliasearch.composition.Recommend
+
 /** Injected items will originate from a recommendation request performed on the specified index.
   */
 case class InjectedItemRecommendSource(

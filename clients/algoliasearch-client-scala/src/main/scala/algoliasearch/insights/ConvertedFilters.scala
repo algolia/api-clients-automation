@@ -26,7 +26,7 @@
   */
 package algoliasearch.insights
 
-import algoliasearch.insights.ConversionEvent._
+import algoliasearch.insights.ConversionEvent
 
 /** ConvertedFilters
   *
