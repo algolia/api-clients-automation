@@ -4286,6 +4286,7 @@
           "javascript",
           "php",
           "python",
+          "ruby",
           "scala"
         ],
         "x-acl": [
@@ -4549,6 +4550,7 @@
           "javascript",
           "php",
           "python",
+          "ruby",
           "scala"
         ],
         "x-acl": [
@@ -4841,6 +4843,7 @@
           "javascript",
           "php",
           "python",
+          "ruby",
           "scala"
         ],
         "tags": [
