@@ -36,14 +36,12 @@ export function createHttpRequester({
       let connectTimeout: NodeJS.Timeout | undefined;
       const url = new URL(request.url);
       const path = url.search === null ? url.pathname : `${url.pathname}${url.search}`;
-      const headers: Record<string, string> = {
+      const privateHeaders: Record<string, string> = {
         'accept-encoding': 'gzip',
-        ...request.headers,
-        ...requesterOptions.headers,
       };
 
-      if (request.data !== undefined && request.method === 'DELETE' && headers['content-length'] === undefined) {
-        headers['content-length'] = String(
+      if (request.data !== undefined && request.method === 'DELETE') {
+        privateHeaders['content-length'] = String(
           typeof request.data === 'string'
             ? Buffer.byteLength(request.data)
             : (request.data as Uint8Array).byteLength,
@@ -56,7 +54,11 @@ export function createHttpRequester({
         path,
         method: request.method,
         ...requesterOptions,
-        headers,
+        headers: {
+          ...privateHeaders,
+          ...request.headers,
+          ...requesterOptions.headers,
+        },
       };
 
       if (url.port && !requesterOptions.port) {
