@@ -20,6 +20,7 @@ class TestClientIngestionClient < Test::Unit::TestCase
         "ingestionClient"
       )
     )
+
     begin
       client.custom_get("1/html-error")
       assert(false, "An error should have been raised")
@@ -77,6 +78,7 @@ class TestClientIngestionClient < Test::Unit::TestCase
         "ingestionClient"
       )
     )
+
     req = client.custom_get("1/long-wait")
     assert_equal({:"message" => "OK"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
@@ -151,6 +153,7 @@ class TestClientIngestionClient < Test::Unit::TestCase
       "us",
       {requester: Algolia::Transport::EchoRequester.new}
     )
+
     req = client.get_source_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
     assert_equal("data.us.algolia.com", req.host.url)
   end
@@ -165,6 +168,7 @@ class TestClientIngestionClient < Test::Unit::TestCase
         "not_a_region",
         {requester: Algolia::Transport::EchoRequester.new}
       )
+
       assert(false, "An error should have been raised")
     rescue => e
       assert_equal(
@@ -194,6 +198,7 @@ class TestClientIngestionClient < Test::Unit::TestCase
         "ingestionClient"
       )
     )
+
     req = client.custom_get("check-api-key/1")
     assert_equal({:"headerAPIKeyValue" => "test-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
     client.set_client_api_key("updated-api-key")

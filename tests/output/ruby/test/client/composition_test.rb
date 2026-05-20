@@ -12,6 +12,7 @@ class TestClientCompositionClient < Test::Unit::TestCase
 
       {requester: Algolia::Transport::EchoRequester.new}
     )
+
     req = client.custom_get_with_http_info("test")
     assert_equal("test-app-id-dsn.algolia.net", req.host.url)
   end
@@ -25,6 +26,7 @@ class TestClientCompositionClient < Test::Unit::TestCase
 
       {requester: Algolia::Transport::EchoRequester.new}
     )
+
     req = client.custom_post_with_http_info("test")
     assert_equal("test-app-id.algolia.net", req.host.url)
   end
@@ -47,6 +49,7 @@ class TestClientCompositionClient < Test::Unit::TestCase
         compression_type: "gzip"
       )
     )
+
     req = client.custom_post(
       "1/test/gzip",
       {},
@@ -82,6 +85,7 @@ class TestClientCompositionClient < Test::Unit::TestCase
         "compositionClient"
       )
     )
+
     req = client.custom_get("1/test/gzip-response")
     assert_equal(
       {
@@ -137,6 +141,7 @@ class TestClientCompositionClient < Test::Unit::TestCase
         "compositionClient"
       )
     )
+
     req = client.custom_get("check-api-key/1")
     assert_equal({:"headerAPIKeyValue" => "test-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
     client.set_client_api_key("updated-api-key")
