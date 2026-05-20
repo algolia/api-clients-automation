@@ -12,6 +12,7 @@ class TestClientSearchClient < Test::Unit::TestCase
 
       {requester: Algolia::Transport::EchoRequester.new}
     )
+
     req = client.custom_get_with_http_info("test")
     assert_equal("test-app-id-dsn.algolia.net", req.host.url)
   end
@@ -25,6 +26,7 @@ class TestClientSearchClient < Test::Unit::TestCase
 
       {requester: Algolia::Transport::EchoRequester.new}
     )
+
     req = client.search_single_index_with_http_info("indexName")
     assert_equal("test-app-id-dsn.algolia.net", req.host.url)
   end
@@ -38,6 +40,7 @@ class TestClientSearchClient < Test::Unit::TestCase
 
       {requester: Algolia::Transport::EchoRequester.new}
     )
+
     req = client.custom_post_with_http_info("test")
     assert_equal("test-app-id.algolia.net", req.host.url)
   end
@@ -71,6 +74,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.custom_get("1/test/retry/ruby")
     assert_equal({:"message" => "ok test server response"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
@@ -92,6 +96,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     begin
       client.custom_get("1/test/hang/ruby")
       assert(false, "An error should have been raised")
@@ -133,6 +138,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.custom_post("1/test/error/ruby")
     assert_equal({:"status" => "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
@@ -155,6 +161,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         compression_type: "gzip"
       )
     )
+
     req = client.custom_post(
       "1/test/gzip",
       {},
@@ -190,6 +197,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.custom_get("1/test/gzip-response")
     assert_equal(
       {
@@ -243,6 +251,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.get_settings("cts_e2e_unknownField_ruby")
     assert_equal(
       {:"minWordSizefor1Typo" => 12, :"minWordSizefor2Typos" => 13, :"hitsPerPage" => 14},
@@ -267,6 +276,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.get_rule("cts_e2e_unknownFieldNested_ruby", "ruleObjectID")
     assert_equal(
       {:"objectID" => "ruleObjectID", :"consequence" => {:"promote" => [{:"objectID" => "1", :"position" => 10}]}},
@@ -297,6 +307,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.custom_get("1/test/calling/ruby")
     assert_equal({:"message" => "success server response"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
     req = client.custom_get("1/test/calling/ruby")
@@ -348,6 +359,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.delete_objects("cts_e2e_deleteObjects_ruby", ["1", "2"])
     assert_equal([{:"taskID" => 666, :"objectIDs" => ["1", "2"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
@@ -491,6 +503,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.index_exists?("indexExistsYES")
     assert_equal(true, req)
   end
@@ -512,6 +525,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.index_exists?("indexExistsNO")
     assert_equal(false, req)
   end
@@ -533,6 +547,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     begin
       client.index_exists?("indexExistsERROR")
       assert(false, "An error should have been raised")
@@ -554,6 +569,7 @@ class TestClientSearchClient < Test::Unit::TestCase
 
         {requester: Algolia::Transport::EchoRequester.new}
       )
+
       assert(false, "An error should have been raised")
     rescue => e
       assert_equal(
@@ -570,6 +586,7 @@ class TestClientSearchClient < Test::Unit::TestCase
 
         {requester: Algolia::Transport::EchoRequester.new}
       )
+
       assert(false, "An error should have been raised")
     rescue => e
       assert_equal(
@@ -586,6 +603,7 @@ class TestClientSearchClient < Test::Unit::TestCase
 
         {requester: Algolia::Transport::EchoRequester.new}
       )
+
       assert(false, "An error should have been raised")
     rescue => e
       assert_equal(
@@ -685,6 +703,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.partial_update_objects(
       "cts_e2e_partialUpdateObjects_ruby",
       [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}],
@@ -710,12 +729,73 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.partial_update_objects(
       "cts_e2e_partialUpdateObjects_ruby",
       [{objectID: "3", name: "Cyril"}, {objectID: "4", name: "David"}],
       false
     )
     assert_equal([{:"taskID" => 555, :"objectIDs" => ["3", "4"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+  end
+
+  # call partialUpdateObjectsWithTransformation with createIfNotExists=true
+  def test_partial_update_objects_with_transformation0
+    _transformation_options = Algolia::TransformationOptions.new(
+      "us",
+      hosts: [
+        Algolia::Transport::StatefulHost.new(
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+          protocol: "http://",
+          port: 6688,
+          accept: CallType::READ | CallType::WRITE
+        ),
+        Algolia::Transport::StatefulHost.new(
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+          protocol: "http://",
+          port: 6689,
+          accept: CallType::READ | CallType::WRITE
+        )
+      ]
+    )
+    client = Algolia::SearchClient.with_transformation(
+      "test-app-id",
+      "test-api-key",
+      _transformation_options,
+      {
+        hosts: [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6688,
+            accept: CallType::READ | CallType::WRITE
+          ),
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6689,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ]
+      }
+    )
+
+    req = client.partial_update_objects_with_transformation(
+      "cts_e2e_partialUpdateObjectsWithTransformation_ruby",
+      [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}],
+      true,
+      true
+    )
+    assert_equal(
+      [
+        {
+          :"runID" => "b1b7a982-524c-40d2-bb7f-48aab075abda_ruby",
+          :"eventID" => "113b2068-6337-4c85-b5c2-e7b213d82925",
+          :"message" => "OK",
+          :"createdAt" => "2022-05-12T06:24:30.049Z"
+        }
+      ],
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
   end
 
   # call replaceAllObjects without error
@@ -735,6 +815,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.replace_all_objects(
       "cts_e2e_replace_all_objects_ruby",
       [
@@ -783,6 +864,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.replace_all_objects(
       "cts_e2e_replace_all_objects_scopes_ruby",
       [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}],
@@ -816,6 +898,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     begin
       client.replace_all_objects(
         "cts_e2e_replace_all_objects_too_big_ruby",
@@ -831,6 +914,86 @@ class TestClientSearchClient < Test::Unit::TestCase
         e.message
       )
     end
+  end
+
+  # call replaceAllObjectsWithTransformation without error
+  def test_replace_all_objects_with_transformation0
+    _transformation_options = Algolia::TransformationOptions.new(
+      "us",
+      hosts: [
+        Algolia::Transport::StatefulHost.new(
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+          protocol: "http://",
+          port: 6690,
+          accept: CallType::READ | CallType::WRITE
+        )
+      ]
+    )
+    client = Algolia::SearchClient.with_transformation(
+      "test-app-id",
+      "test-api-key",
+      _transformation_options,
+      {
+        hosts: [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6690,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ]
+      }
+    )
+
+    req = client.replace_all_objects_with_transformation(
+      "cts_e2e_replace_all_objects_with_transformation_ruby",
+      [
+        {objectID: "1", name: "Adam"},
+        {objectID: "2", name: "Benoit"},
+        {objectID: "3", name: "Cyril"},
+        {objectID: "4", name: "David"},
+        {objectID: "5", name: "Eva"},
+        {objectID: "6", name: "Fiona"},
+        {objectID: "7", name: "Gael"},
+        {objectID: "8", name: "Hugo"},
+        {objectID: "9", name: "Igor"},
+        {objectID: "10", name: "Julia"}
+      ],
+      3
+    )
+    assert_equal(
+      {
+        :"copyOperationResponse" => {:"taskID" => 125, :"updatedAt" => "2021-01-01T00:00:00.000Z"},
+        :"watchResponses" => [
+          {
+            :"runID" => "b1b7a982-524c-40d2-bb7f-48aab075abda_ruby",
+            :"eventID" => "113b2068-6337-4c85-b5c2-e7b213d82921",
+            :"message" => "OK",
+            :"createdAt" => "2022-05-12T06:24:30.049Z"
+          },
+          {
+            :"runID" => "b1b7a982-524c-40d2-bb7f-48aab075abda_ruby",
+            :"eventID" => "113b2068-6337-4c85-b5c2-e7b213d82922",
+            :"message" => "OK",
+            :"createdAt" => "2022-05-12T06:24:30.049Z"
+          },
+          {
+            :"runID" => "b1b7a982-524c-40d2-bb7f-48aab075abda_ruby",
+            :"eventID" => "113b2068-6337-4c85-b5c2-e7b213d82923",
+            :"message" => "OK",
+            :"createdAt" => "2022-05-12T06:24:30.049Z"
+          },
+          {
+            :"runID" => "b1b7a982-524c-40d2-bb7f-48aab075abda_ruby",
+            :"eventID" => "113b2068-6337-4c85-b5c2-e7b213d82924",
+            :"message" => "OK",
+            :"createdAt" => "2022-05-12T06:24:30.049Z"
+          }
+        ],
+        :"moveOperationResponse" => {:"taskID" => 777, :"updatedAt" => "2021-01-01T00:00:00.000Z"}
+      },
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
   end
 
   # call saveObjects without error
@@ -850,6 +1013,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.save_objects(
       "cts_e2e_saveObjects_ruby",
       [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}]
@@ -874,6 +1038,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     begin
       client.save_objects(
         "cts_e2e_saveObjects_ruby",
@@ -908,6 +1073,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.save_objects(
       "playlists",
       [
@@ -939,6 +1105,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.save_objects(
       "playlists",
       [
@@ -953,6 +1120,65 @@ class TestClientSearchClient < Test::Unit::TestCase
       false,
       1000,
       {:header_params => {"X-Algolia-User-ID" => "*"}}
+    )
+  end
+
+  # call saveObjectsWithTransformation without error
+  def test_save_objects_with_transformation0
+    _transformation_options = Algolia::TransformationOptions.new(
+      "us",
+      hosts: [
+        Algolia::Transport::StatefulHost.new(
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+          protocol: "http://",
+          port: 6688,
+          accept: CallType::READ | CallType::WRITE
+        ),
+        Algolia::Transport::StatefulHost.new(
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+          protocol: "http://",
+          port: 6689,
+          accept: CallType::READ | CallType::WRITE
+        )
+      ]
+    )
+    client = Algolia::SearchClient.with_transformation(
+      "test-app-id",
+      "test-api-key",
+      _transformation_options,
+      {
+        hosts: [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6688,
+            accept: CallType::READ | CallType::WRITE
+          ),
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6689,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ]
+      }
+    )
+
+    req = client.save_objects_with_transformation(
+      "cts_e2e_saveObjectsWithTransformation_ruby",
+      [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}],
+      true
+    )
+    assert_equal(
+      [
+        {
+          :"runID" => "b1b7a982-524c-40d2-bb7f-48aab075abda_ruby",
+          :"eventID" => "113b2068-6337-4c85-b5c2-e7b213d82925",
+          :"message" => "OK",
+          :"createdAt" => "2022-05-12T06:24:30.049Z"
+        }
+      ],
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
     )
   end
 
@@ -973,6 +1199,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.search_single_index(
       "playlists",
       Algolia::Search::SearchParamsObject.new(query: "foo"),
@@ -997,6 +1224,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.custom_get("check-api-key/1")
     assert_equal({:"headerAPIKeyValue" => "test-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
     client.set_client_api_key("updated-api-key")
@@ -1021,6 +1249,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.wait_for_api_key("api-key-add-operation-test-ruby", "add")
     assert_equal(
       {
@@ -1053,6 +1282,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.wait_for_api_key(
       "api-key-update-operation-test-ruby",
       "update",
@@ -1099,6 +1329,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.wait_for_api_key("api-key-delete-operation-test-ruby", "delete")
     assert_equal(nil, req)
   end
@@ -1120,6 +1351,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.wait_for_app_task(123)
     assert_equal({:"status" => "published"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
@@ -1141,6 +1373,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     req = client.wait_for_task("wait-task-ruby", 123)
     assert_equal({:"status" => "published"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
