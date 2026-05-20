@@ -38,9 +38,11 @@ public class TaskUtils {
       retryCount++;
     }
     throw new AlgoliaRetriesExceededException(
-      "Stopped waiting for the task after " + maxRetries + " retries. " +
-      "This does not mean the operation failed; it may still complete. " +
-      "If you need to keep polling, retry with a higher maxRetries."
+      "Stopped waiting for the task after " +
+        maxRetries +
+        " retries. " +
+        "This does not mean the operation failed; it may still complete. " +
+        "If you need to keep polling, retry with a higher maxRetries."
     );
   }
 }
