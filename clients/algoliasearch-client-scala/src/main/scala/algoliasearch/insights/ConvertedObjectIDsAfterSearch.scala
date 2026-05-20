@@ -26,7 +26,7 @@
   */
 package algoliasearch.insights
 
-import algoliasearch.insights.ConversionEvent._
+import algoliasearch.insights.ConversionEvent
 
 /** Use this event to track when users convert after a previous Algolia request. For example, a user clicks on an item
   * in the search results to view the product detail page. Then, the user adds the item to their shopping cart. If

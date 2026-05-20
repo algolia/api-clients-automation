@@ -28,7 +28,9 @@
   */
 package algoliasearch.recommend
 
-import algoliasearch.recommend.RelatedModel._
+import algoliasearch.recommend.FallbackParams
+import algoliasearch.recommend.RecommendSearchParams
+import algoliasearch.recommend.RelatedModel
 
 /** RelatedQuery
   *

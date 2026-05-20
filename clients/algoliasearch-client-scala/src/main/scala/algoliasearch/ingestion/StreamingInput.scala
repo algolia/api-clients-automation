@@ -18,6 +18,8 @@
   */
 package algoliasearch.ingestion
 
+import algoliasearch.ingestion.MappingInput
+
 /** Input for a `streaming` task whose source is of type `ga4BigqueryExport` and for which extracted data is
   * continuously streamed.
   */

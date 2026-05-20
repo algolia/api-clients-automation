@@ -28,6 +28,8 @@
   */
 package algoliasearch.composition
 
+import algoliasearch.composition.InjectedItemSearch
+
 /** Injected items will originate from a search request performed on the specified index.
   */
 case class InjectedItemSearchSource(

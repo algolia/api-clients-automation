@@ -26,7 +26,7 @@
   */
 package algoliasearch.insights
 
-import algoliasearch.insights.ClickEvent._
+import algoliasearch.insights.ClickEvent
 
 /** Click event after an Algolia request. Use this event to track when users click items in the search results. If
   * you're building your category pages with Algolia, you'll also use this event.
