@@ -28,6 +28,8 @@
   */
 package algoliasearch.composition
 
+import algoliasearch.composition.Injection
+
 /** An object containing an `injection` behavior.
   */
 case class CompositionInjectionBehavior(

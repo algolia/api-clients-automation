@@ -18,6 +18,8 @@
   */
 package algoliasearch.ingestion
 
+import algoliasearch.ingestion.DockerStreams
+
 /** The selected streams of an airbyte connector.
   */
 case class DockerStreamsInput(

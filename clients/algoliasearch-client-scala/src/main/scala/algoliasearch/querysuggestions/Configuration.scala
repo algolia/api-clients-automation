@@ -26,6 +26,8 @@ package algoliasearch.querysuggestions
   *
   * @param sourceIndices
   *   Algolia indices from which to get the popular searches for query suggestions.
+  * @param exclude
+  *   Words or regular expressions to exclude from the suggestions.
   * @param enablePersonalization
   *   Whether to turn on personalized query suggestions.
   * @param allowSpecialCharacters

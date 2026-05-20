@@ -26,7 +26,7 @@
   */
 package algoliasearch.insights
 
-import algoliasearch.insights.ViewEvent._
+import algoliasearch.insights.ViewEvent
 
 /** Use this method to capture active filters. For example, when browsing a category page, users see content filtered on
   * that specific category.

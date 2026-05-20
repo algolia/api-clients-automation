@@ -26,7 +26,7 @@
   */
 package algoliasearch.insights
 
-import algoliasearch.insights.ClickEvent._
+import algoliasearch.insights.ClickEvent
 
 /** Use this event to track when users click facet filters in your user interface.
   *

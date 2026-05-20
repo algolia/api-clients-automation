@@ -105,6 +105,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
 
     additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
     typeMapping.put("AnyType", "Any");
+    typeMapping.put("object", "Any");
 
     try {
       additionalProperties.put("packageVersion", Helpers.getClientConfigField("scala", "packageVersion"));
@@ -245,7 +246,11 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
 
   @Override
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
+    Map<String, ModelsMap> allModels = new HashMap<>(objs);
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
+    for (Map.Entry<String, ModelsMap> entry : allModels.entrySet()) {
+      models.putIfAbsent(entry.getKey(), entry.getValue());
+    }
     GenericPropagator.propagateGenericsToModels(models, true);
     OneOf.updateModelsOneOf(models, modelPackage);
     OneOf.addOneOfMetadata(models);
