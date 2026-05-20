@@ -1992,6 +1992,28 @@ def snippet_for_partial_update_objects1
   # SEPARATOR<
 end
 
+# Snippet for the partialUpdateObjectsWithTransformation method.
+#
+# call partialUpdateObjectsWithTransformation with createIfNotExists=true
+def snippet_for_partial_update_objects_with_transformation
+  # >SEPARATOR partialUpdateObjectsWithTransformation default
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.partial_update_objects_with_transformation(
+    "<YOUR_INDEX_NAME>",
+    [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}],
+    true,
+    true
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
 # Snippet for the removeUserId method.
 #
 # removeUserId
@@ -2075,6 +2097,38 @@ def snippet_for_replace_all_objects2
   response = client.replace_all_objects(
     "<YOUR_INDEX_NAME>",
     [{objectID: "fine", body: "small obj"}, {objectID: "toolarge", body: "something bigger than 10KB"}]
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the replaceAllObjectsWithTransformation method.
+#
+# call replaceAllObjectsWithTransformation without error
+def snippet_for_replace_all_objects_with_transformation
+  # >SEPARATOR replaceAllObjectsWithTransformation default
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.replace_all_objects_with_transformation(
+    "<YOUR_INDEX_NAME>",
+    [
+      {objectID: "1", name: "Adam"},
+      {objectID: "2", name: "Benoit"},
+      {objectID: "3", name: "Cyril"},
+      {objectID: "4", name: "David"},
+      {objectID: "5", name: "Eva"},
+      {objectID: "6", name: "Fiona"},
+      {objectID: "7", name: "Gael"},
+      {objectID: "8", name: "Hugo"},
+      {objectID: "9", name: "Igor"},
+      {objectID: "10", name: "Julia"}
+    ],
+    3
   )
 
   # >LOG
@@ -2233,6 +2287,27 @@ def snippet_for_save_objects3
     false,
     1000,
     {:header_params => {"X-Algolia-User-ID" => "*"}}
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the saveObjectsWithTransformation method.
+#
+# call saveObjectsWithTransformation without error
+def snippet_for_save_objects_with_transformation
+  # >SEPARATOR saveObjectsWithTransformation default
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_objects_with_transformation(
+    "<YOUR_INDEX_NAME>",
+    [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}],
+    true
   )
 
   # >LOG

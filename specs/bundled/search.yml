@@ -3651,6 +3651,7 @@ paths:
         - javascript
         - php
         - python
+        - ruby
         - scala
       x-acl:
         - addObject
@@ -3884,6 +3885,7 @@ paths:
         - javascript
         - php
         - python
+        - ruby
         - scala
       x-acl:
         - addObject
@@ -4118,6 +4120,7 @@ paths:
         - javascript
         - php
         - python
+        - ruby
         - scala
       tags:
         - search
