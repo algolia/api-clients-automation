@@ -1,4 +1,4 @@
-SearchParameters-Input:
+SearchParameters:
   properties:
     queryType:
       oneOf:
@@ -56,7 +56,7 @@ SearchParameters-Input:
       title: filters
     facetFilters:
       oneOf:
-        - $ref: 'FacetFiltersInputUnion.yml#/FacetFilters-InputUnion'
+        - $ref: 'FacetFiltersUnion.yml#/FacetFiltersUnion'
         - type: 'null'
     facets:
       $ref: 'FacetsUnion.yml#/FacetsUnion'

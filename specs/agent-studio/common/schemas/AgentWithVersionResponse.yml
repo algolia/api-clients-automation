@@ -37,7 +37,7 @@ AgentWithVersionResponse:
       title: config
     tools:
       items:
-        $ref: 'ToolConfigOutput.yml#/ToolConfigOutput'
+        $ref: 'ToolConfigInput.yml#/ToolConfigInput'
       type: array
       title: tools
     templateType:

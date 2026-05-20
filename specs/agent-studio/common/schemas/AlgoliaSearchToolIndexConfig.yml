@@ -1,4 +1,4 @@
-AlgoliaSearchToolIndexConfig-Input:
+AlgoliaSearchToolIndexConfig:
   properties:
     index:
       type: string
@@ -16,11 +16,11 @@ AlgoliaSearchToolIndexConfig-Input:
       default: ''
     searchParameters:
       oneOf:
-        - $ref: 'SearchParametersInput.yml#/SearchParameters-Input'
+        - $ref: 'SearchParameters.yml#/SearchParameters'
         - type: 'null'
     searchControls:
       oneOf:
-        - $ref: 'IndexSearchParametersInput.yml#/IndexSearchParameters-Input'
+        - $ref: 'IndexSearchParameters.yml#/IndexSearchParameters'
         - type: 'null'
   type: object
   required:

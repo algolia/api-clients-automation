@@ -1,10 +1,12 @@
-AzureOpenAIProviderInput-Output:
+AzureOpenAIProviderInput:
   properties:
     apiKey:
       type: string
       title: apikey
     azureEndpoint:
       type: string
+      maxLength: 2083
+      minLength: 1
       title: azureendpoint
     azureDeployment:
       type: string

@@ -1,4 +1,4 @@
-McpServerToolConfig-Input:
+McpServerToolConfig:
   properties:
     url:
       type: string

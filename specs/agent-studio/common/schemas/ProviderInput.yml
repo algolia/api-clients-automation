@@ -1,7 +1,7 @@
 ProviderInput:
   oneOf:
-    - $ref: 'OpenAIProviderInputInput.yml#/OpenAIProviderInput-Input'
-    - $ref: 'AzureOpenAIProviderInputInput.yml#/AzureOpenAIProviderInput-Input'
-    - $ref: 'OpenAICompatibleProviderInputInput.yml#/OpenAICompatibleProviderInput-Input'
+    - $ref: 'OpenAIProviderInput.yml#/OpenAIProviderInput'
+    - $ref: 'AzureOpenAIProviderInput.yml#/AzureOpenAIProviderInput'
+    - $ref: 'OpenAICompatibleProviderInput.yml#/OpenAICompatibleProviderInput'
     - $ref: 'BaseProviderInput.yml#/BaseProviderInput'
-    - $ref: 'AnthropicProviderInputInput.yml#/AnthropicProviderInput-Input'
+    - $ref: 'AnthropicProviderInput.yml#/AnthropicProviderInput'

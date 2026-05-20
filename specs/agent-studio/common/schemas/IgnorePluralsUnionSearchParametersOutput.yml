@@ -1,7 +1,0 @@
-IgnorePluralsUnionSearchParametersOutput:
-  oneOf:
-    - type: boolean
-    - items:
-        type: string
-      type: array
-    - type: 'null'

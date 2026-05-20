@@ -26,7 +26,6 @@ AlgoliaRecommendToolConfig-Output:
       readOnly: true
   type: object
   required:
-    - type
     - name
     - description
   title: algoliaRecommendToolConfig

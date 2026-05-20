@@ -1,4 +1,4 @@
-IndexSearchParameters-Input:
+IndexSearchParameters:
   properties:
     query:
       oneOf:

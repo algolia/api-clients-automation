@@ -1,4 +1,4 @@
-OpenAIProviderInput-Output:
+OpenAIProviderInput:
   properties:
     apiKey:
       type: string
@@ -6,6 +6,8 @@ OpenAIProviderInput-Output:
     baseUrl:
       oneOf:
         - type: string
+          maxLength: 2083
+          minLength: 1
         - type: 'null'
       title: baseurl
   type: object

@@ -1,5 +1,0 @@
-TypoToleranceUnionSearchParametersOutput:
-  oneOf:
-    - type: boolean
-    - type: string
-    - type: 'null'

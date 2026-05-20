@@ -1,10 +1,12 @@
-OpenAICompatibleProviderInput-Output:
+OpenAICompatibleProviderInput:
   properties:
     apiKey:
       type: string
       title: apikey
     baseUrl:
       type: string
+      maxLength: 2083
+      minLength: 1
       title: baseurl
     defaultModel:
       type: string

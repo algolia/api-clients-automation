@@ -29,6 +29,11 @@ ToolApprovalRequestPart:
         - type: string
         - type: 'null'
       title: argshash
+    appId:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: appid
   type: object
   required:
     - type
