@@ -5,6 +5,11 @@ public class ChunkedHelperOptions {
 
   private int maxRetries = TaskUtils.DEFAULT_MAX_RETRIES;
 
+  /**
+   * Returns the maximum number of retries for polling task completion.
+   *
+   * @return the maximum number of retries.
+   */
   public int getMaxRetries() {
     return maxRetries;
   }
