@@ -40,6 +40,7 @@ class TestClientAbtestingClient < Test::Unit::TestCase
 
       {requester: Algolia::Transport::EchoRequester.new}
     )
+
     req = client.get_ab_test_with_http_info(123)
     assert_equal("analytics.algolia.com", req.host.url)
   end
@@ -53,6 +54,7 @@ class TestClientAbtestingClient < Test::Unit::TestCase
       "us",
       {requester: Algolia::Transport::EchoRequester.new}
     )
+
     req = client.get_ab_test_with_http_info(123)
     assert_equal("analytics.us.algolia.com", req.host.url)
   end
@@ -67,6 +69,7 @@ class TestClientAbtestingClient < Test::Unit::TestCase
         "not_a_region",
         {requester: Algolia::Transport::EchoRequester.new}
       )
+
       assert(false, "An error should have been raised")
     rescue => e
       assert_equal(
@@ -96,6 +99,7 @@ class TestClientAbtestingClient < Test::Unit::TestCase
         "abtestingClient"
       )
     )
+
     req = client.custom_get("check-api-key/1")
     assert_equal({:"headerAPIKeyValue" => "test-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
     client.set_client_api_key("updated-api-key")

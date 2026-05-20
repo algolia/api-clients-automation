@@ -40,6 +40,7 @@ class TestClientAnalyticsClient < Test::Unit::TestCase
 
       {requester: Algolia::Transport::EchoRequester.new}
     )
+
     req = client.get_average_click_position_with_http_info("my-index")
     assert_equal("analytics.algolia.com", req.host.url)
   end
@@ -53,6 +54,7 @@ class TestClientAnalyticsClient < Test::Unit::TestCase
       "de",
       {requester: Algolia::Transport::EchoRequester.new}
     )
+
     req = client.custom_post_with_http_info("test")
     assert_equal("analytics.de.algolia.com", req.host.url)
   end
@@ -67,6 +69,7 @@ class TestClientAnalyticsClient < Test::Unit::TestCase
         "not_a_region",
         {requester: Algolia::Transport::EchoRequester.new}
       )
+
       assert(false, "An error should have been raised")
     rescue => e
       assert_equal(
@@ -118,6 +121,7 @@ class TestClientAnalyticsClient < Test::Unit::TestCase
         "analyticsClient"
       )
     )
+
     req = client.custom_get("check-api-key/1")
     assert_equal({:"headerAPIKeyValue" => "test-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
     client.set_client_api_key("updated-api-key")
