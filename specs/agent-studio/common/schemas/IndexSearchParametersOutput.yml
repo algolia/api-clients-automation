@@ -1,7 +1,9 @@
 IndexSearchParameters-Output:
   properties:
     query:
-      $ref: 'TextParamNullable.yml#/TextParamNullable'
+      oneOf:
+        - $ref: 'TextParam.yml#/TextParam'
+        - type: 'null'
     hitsPerPage:
       $ref: 'NumberParam.yml#/NumberParam'
     page:
@@ -11,7 +13,9 @@ IndexSearchParameters-Output:
     responseFields:
       $ref: 'StringArrayParam.yml#/StringArrayParam'
     facets:
-      $ref: 'FacetsParamNullable.yml#/FacetsParamNullable'
+      oneOf:
+        - $ref: 'FacetsParam.yml#/FacetsParam'
+        - type: 'null'
     custom:
       oneOf:
         - additionalProperties: true

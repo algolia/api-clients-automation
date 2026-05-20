@@ -15,9 +15,13 @@ AlgoliaSearchToolIndexConfig-Input:
       title: enhanceddescription
       default: ''
     searchParameters:
-      $ref: 'SearchParametersInputNullable.yml#/SearchParametersInputNullable'
+      oneOf:
+        - $ref: 'SearchParametersInput.yml#/SearchParameters-Input'
+        - type: 'null'
     searchControls:
-      $ref: 'IndexSearchParametersInputNullable.yml#/IndexSearchParametersInputNullable'
+      oneOf:
+        - $ref: 'IndexSearchParametersInput.yml#/IndexSearchParameters-Input'
+        - type: 'null'
   type: object
   required:
     - index

@@ -1,4 +1,0 @@
-ConversationMetadataNullable:
-  oneOf:
-    - $ref: 'ConversationMetadata.yml#/ConversationMetadata'
-    - type: 'null'

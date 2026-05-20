@@ -1,7 +1,9 @@
 AgentCompletionRequest:
   properties:
     configuration:
-      $ref: 'AgentTestConfigurationNullable.yml#/AgentTestConfigurationNullable'
+      oneOf:
+        - $ref: 'AgentTestConfiguration.yml#/AgentTestConfiguration'
+        - type: 'null'
     messages:
       $ref: 'MessagesUnion.yml#/MessagesUnion'
     id:
@@ -12,7 +14,9 @@ AgentCompletionRequest:
       title: id
       description: Optional conversation id.
     algolia:
-      $ref: 'AgentCompletionAlgoliaParamsNullable.yml#/AgentCompletionAlgoliaParamsNullable'
+      oneOf:
+        - $ref: 'AgentCompletionAlgoliaParams.yml#/AgentCompletionAlgoliaParams'
+        - type: 'null'
     toolApprovals:
       type: object
       title: toolApprovals

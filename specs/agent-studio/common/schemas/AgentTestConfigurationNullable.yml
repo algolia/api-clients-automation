@@ -1,4 +1,0 @@
-AgentTestConfigurationNullable:
-  oneOf:
-    - $ref: 'AgentTestConfiguration.yml#/AgentTestConfiguration'
-    - type: 'null'

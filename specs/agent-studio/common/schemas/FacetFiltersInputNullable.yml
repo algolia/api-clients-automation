@@ -1,4 +1,0 @@
-FacetFiltersInputNullable:
-  oneOf:
-    - $ref: 'FacetFiltersInputUnion.yml#/FacetFilters-InputUnion'
-    - type: 'null'

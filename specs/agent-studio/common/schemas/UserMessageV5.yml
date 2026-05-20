@@ -16,7 +16,9 @@ UserMessageV5:
       type: array
       title: parts
     metadata:
-      $ref: 'UserMessageMetadataV5Nullable.yml#/UserMessageMetadataV5Nullable'
+      oneOf:
+        - $ref: 'UserMessageMetadataV5.yml#/UserMessageMetadataV5'
+        - type: 'null'
   type: object
   title: userMessageV5
   required:

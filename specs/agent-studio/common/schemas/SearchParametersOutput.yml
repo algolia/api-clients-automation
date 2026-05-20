@@ -1,7 +1,9 @@
 SearchParameters-Output:
   properties:
     queryType:
-      $ref: 'QueryTypeNullable.yml#/QueryTypeNullable'
+      oneOf:
+        - $ref: 'QueryType.yml#/QueryType'
+        - type: 'null'
     similarQuery:
       oneOf:
         - type: string
@@ -53,7 +55,9 @@ SearchParameters-Output:
         - type: 'null'
       title: filters
     facetFilters:
-      $ref: 'FacetFiltersOutputNullable.yml#/FacetFiltersOutputNullable'
+      oneOf:
+        - $ref: 'FacetFiltersOutputUnion.yml#/FacetFilters-OutputUnion'
+        - type: 'null'
     facets:
       $ref: 'FacetsUnion.yml#/FacetsUnion'
     maxValuesPerFacet:
@@ -213,7 +217,9 @@ SearchParameters-Output:
     ignorePlurals:
       $ref: 'IgnorePluralsUnionSearchParametersOutput.yml#/IgnorePluralsUnionSearchParametersOutput'
     removeWordsIfNoResults:
-      $ref: 'RemoveWordsIfNoResultsNullable.yml#/RemoveWordsIfNoResultsNullable'
+      oneOf:
+        - $ref: 'RemoveWordsIfNoResults.yml#/RemoveWordsIfNoResults'
+        - type: 'null'
     optionalWords:
       $ref: 'OptionalWordsUnion.yml#/OptionalWordsUnion'
     optionalFilters:
@@ -265,7 +271,9 @@ SearchParameters-Output:
         - type: 'null'
       title: disableexactonattributes
     exactOnSingleWordQuery:
-      $ref: 'ExactOnSingleWordQueryNullable.yml#/ExactOnSingleWordQueryNullable'
+      oneOf:
+        - $ref: 'ExactOnSingleWordQuery.yml#/ExactOnSingleWordQuery'
+        - type: 'null'
     naturalLanguages:
       $ref: 'NaturalLanguagesUnion.yml#/NaturalLanguagesUnion'
     percentileComputation:

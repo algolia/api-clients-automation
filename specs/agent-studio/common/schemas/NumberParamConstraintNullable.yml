@@ -1,4 +1,0 @@
-NumberParamConstraintNullable:
-  oneOf:
-    - $ref: 'NumberParamConstraint.yml#/NumberParamConstraint'
-    - type: 'null'

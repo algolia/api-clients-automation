@@ -1,4 +1,0 @@
-IndexSearchParametersOutputNullable:
-  oneOf:
-    - $ref: 'IndexSearchParametersOutput.yml#/IndexSearchParameters-Output'
-    - type: 'null'

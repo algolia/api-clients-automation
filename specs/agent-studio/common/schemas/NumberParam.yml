@@ -9,7 +9,9 @@ NumberParam:
         - type: 'null'
       title: default
     constraint:
-      $ref: 'NumberParamConstraintNullable.yml#/NumberParamConstraintNullable'
+      oneOf:
+        - $ref: 'NumberParamConstraint.yml#/NumberParamConstraint'
+        - type: 'null'
   type: object
   required:
     - exposed

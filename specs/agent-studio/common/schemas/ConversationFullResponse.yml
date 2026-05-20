@@ -48,7 +48,9 @@ ConversationFullResponse:
       title: totaltokens
       default: 0
     conversationMetadata:
-      $ref: 'ConversationMetadataNullable.yml#/ConversationMetadataNullable'
+      oneOf:
+        - $ref: 'ConversationMetadata.yml#/ConversationMetadata'
+        - type: 'null'
     feedback:
       $ref: 'FeedbackUnion.yml#/FeedbackUnion'
     messages:

@@ -11,7 +11,9 @@ StringArrayParam:
         - type: 'null'
       title: default
     constraint:
-      $ref: 'StringArrayParamConstraintNullable.yml#/StringArrayParamConstraintNullable'
+      oneOf:
+        - $ref: 'StringArrayParamConstraint.yml#/StringArrayParamConstraint'
+        - type: 'null'
     merge:
       oneOf:
         - type: boolean
