@@ -3,29 +3,29 @@
     "testName": "getAllowedDomain",
     "parameters": {
       "domainId": "a1b2c3d4-5678-90ab-cdef-123456789abc",
-      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
+      "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4"
     },
     "request": {
-      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/allowed-domains/a1b2c3d4-5678-90ab-cdef-123456789abc",
+      "path": "/1/agents/8fccf97b-d896-433d-af3b-81385ffff1a4/allowed-domains/a1b2c3d4-5678-90ab-cdef-123456789abc",
       "method": "GET"
     }
   },
   {
     "testName": "e2e get allowed domain",
     "parameters": {
-      "domainId": "6486b782-6b4c-4c93-bbba-04849ae4d101",
-      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
+      "domainId": "317c3dd8-7fc0-4f5a-8075-c8b5a165d109",
+      "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4"
     },
     "request": {
-      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/allowed-domains/6486b782-6b4c-4c93-bbba-04849ae4d101",
+      "path": "/1/agents/8fccf97b-d896-433d-af3b-81385ffff1a4/allowed-domains/317c3dd8-7fc0-4f5a-8075-c8b5a165d109",
       "method": "GET"
     },
     "response": {
       "statusCode": 200,
       "body": {
-        "id": "6486b782-6b4c-4c93-bbba-04849ae4d101",
+        "id": "317c3dd8-7fc0-4f5a-8075-c8b5a165d109",
         "domain": "cts-e2e.algolia.com",
-        "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
+        "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4"
       }
     }
   }

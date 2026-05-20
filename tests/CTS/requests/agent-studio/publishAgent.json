@@ -2,10 +2,10 @@
   {
     "testName": "publishAgent",
     "parameters": {
-      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
+      "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4"
     },
     "request": {
-      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/publish",
+      "path": "/1/agents/8fccf97b-d896-433d-af3b-81385ffff1a4/publish",
       "method": "POST"
     }
   }

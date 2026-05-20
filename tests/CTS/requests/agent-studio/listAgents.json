@@ -12,7 +12,7 @@
     "parameters": {
       "page": 2,
       "limit": 5,
-      "providerId": "78918b91-3116-41c2-8b2a-eb1755c20da5"
+      "providerId": "f2a20a41-5a82-428a-90a9-0fbf22a6846d"
     },
     "request": {
       "path": "/1/agents",
@@ -20,7 +20,7 @@
       "queryParameters": {
         "page": "2",
         "limit": "5",
-        "providerId": "78918b91-3116-41c2-8b2a-eb1755c20da5"
+        "providerId": "f2a20a41-5a82-428a-90a9-0fbf22a6846d"
       }
     }
   },

@@ -2,13 +2,13 @@
   {
     "testName": "updateAgent with minimal parameters",
     "parameters": {
-      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
+      "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4",
       "agentConfigUpdate": {
         "name": "updated-agent-name"
       }
     },
     "request": {
-      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
+      "path": "/1/agents/8fccf97b-d896-433d-af3b-81385ffff1a4",
       "method": "PATCH",
       "body": {
         "name": "updated-agent-name"
@@ -18,7 +18,7 @@
   {
     "testName": "updateAgent with all parameters",
     "parameters": {
-      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
+      "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4",
       "agentConfigUpdate": {
         "name": "updated-agent",
         "description": "Updated description",
@@ -32,7 +32,7 @@
       }
     },
     "request": {
-      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
+      "path": "/1/agents/8fccf97b-d896-433d-af3b-81385ffff1a4",
       "method": "PATCH",
       "body": {
         "name": "updated-agent",

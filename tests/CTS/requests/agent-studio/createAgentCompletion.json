@@ -2,7 +2,7 @@
   {
     "testName": "createAgentCompletion with v4 messages",
     "parameters": {
-      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
+      "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4",
       "compatibilityMode": "ai-sdk-4",
       "agentCompletionRequest": {
         "messages": [
@@ -14,7 +14,7 @@
       }
     },
     "request": {
-      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/completions",
+      "path": "/1/agents/8fccf97b-d896-433d-af3b-81385ffff1a4/completions",
       "method": "POST",
       "queryParameters": {
         "compatibilityMode": "ai-sdk-4"
@@ -33,7 +33,7 @@
     "testName": "createAgentCompletion streaming with simple messages",
     "isStreaming": true,
     "parameters": {
-      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
+      "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4",
       "compatibilityMode": "ai-sdk-5",
       "agentCompletionRequest": {
         "messages": [
@@ -45,7 +45,7 @@
       }
     },
     "request": {
-      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/completions",
+      "path": "/1/agents/8fccf97b-d896-433d-af3b-81385ffff1a4/completions",
       "method": "POST",
       "queryParameters": {
         "compatibilityMode": "ai-sdk-5"
@@ -65,7 +65,7 @@
     "testName": "createAgentCompletion streaming with v5 messages and all query params",
     "isStreaming": true,
     "parameters": {
-      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
+      "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4",
       "compatibilityMode": "ai-sdk-5",
       "agentCompletionRequest": {
         "messages": [
@@ -86,7 +86,7 @@
       "memory": false
     },
     "request": {
-      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/completions",
+      "path": "/1/agents/8fccf97b-d896-433d-af3b-81385ffff1a4/completions",
       "method": "POST",
       "queryParameters": {
         "compatibilityMode": "ai-sdk-5",
@@ -115,7 +115,7 @@
     "testName": "createAgentCompletion streaming with test configuration",
     "isStreaming": true,
     "parameters": {
-      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
+      "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4",
       "compatibilityMode": "ai-sdk-5",
       "agentCompletionRequest": {
         "messages": [
@@ -134,7 +134,7 @@
       }
     },
     "request": {
-      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/completions",
+      "path": "/1/agents/8fccf97b-d896-433d-af3b-81385ffff1a4/completions",
       "method": "POST",
       "queryParameters": {
         "compatibilityMode": "ai-sdk-5"

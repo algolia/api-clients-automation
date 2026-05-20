@@ -3,10 +3,10 @@
     "testName": "deleteConversation",
     "parameters": {
       "conversationId": "test-conversation-id",
-      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
+      "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4"
     },
     "request": {
-      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/conversations/test-conversation-id",
+      "path": "/1/agents/8fccf97b-d896-433d-af3b-81385ffff1a4/conversations/test-conversation-id",
       "method": "DELETE"
     }
   }

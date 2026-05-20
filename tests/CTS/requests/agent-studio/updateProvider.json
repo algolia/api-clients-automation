@@ -2,13 +2,13 @@
   {
     "testName": "updateProvider",
     "parameters": {
-      "providerId": "78918b91-3116-41c2-8b2a-eb1755c20da5",
+      "providerId": "f2a20a41-5a82-428a-90a9-0fbf22a6846d",
       "providerAuthenticationPatch": {
         "name": "Updated Provider Name"
       }
     },
     "request": {
-      "path": "/1/providers/78918b91-3116-41c2-8b2a-eb1755c20da5",
+      "path": "/1/providers/f2a20a41-5a82-428a-90a9-0fbf22a6846d",
       "method": "PATCH",
       "body": {
         "name": "Updated Provider Name"
@@ -18,7 +18,7 @@
   {
     "testName": "updateProvider with input",
     "parameters": {
-      "providerId": "78918b91-3116-41c2-8b2a-eb1755c20da5",
+      "providerId": "f2a20a41-5a82-428a-90a9-0fbf22a6846d",
       "providerAuthenticationPatch": {
         "name": "Updated Provider",
         "input": {
@@ -27,7 +27,7 @@
       }
     },
     "request": {
-      "path": "/1/providers/78918b91-3116-41c2-8b2a-eb1755c20da5",
+      "path": "/1/providers/f2a20a41-5a82-428a-90a9-0fbf22a6846d",
       "method": "PATCH",
       "body": {
         "name": "Updated Provider",

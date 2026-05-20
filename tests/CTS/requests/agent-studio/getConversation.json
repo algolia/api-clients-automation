@@ -3,29 +3,29 @@
     "testName": "getConversation",
     "parameters": {
       "conversationId": "test-conversation-id",
-      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
+      "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4"
     },
     "request": {
-      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/conversations/test-conversation-id",
+      "path": "/1/agents/8fccf97b-d896-433d-af3b-81385ffff1a4/conversations/test-conversation-id",
       "method": "GET"
     }
   },
   {
     "testName": "e2e get conversation",
     "parameters": {
-      "conversationId": "alg_cnv_miss_hXiYGHnROalfMHk8",
-      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
+      "conversationId": "alg_cnv_miss_VHtysEm1ncEyvVxN",
+      "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4"
     },
     "request": {
-      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/conversations/alg_cnv_miss_hXiYGHnROalfMHk8",
+      "path": "/1/agents/8fccf97b-d896-433d-af3b-81385ffff1a4/conversations/alg_cnv_miss_VHtysEm1ncEyvVxN",
       "method": "GET"
     },
     "response": {
       "statusCode": 200,
       "body": {
-        "id": "alg_cnv_miss_hXiYGHnROalfMHk8",
-        "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
-        "title": "Greeting Message for CTS E2E Testing"
+        "id": "alg_cnv_miss_VHtysEm1ncEyvVxN",
+        "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4",
+        "title": "New Conversation"
       }
     }
   }
