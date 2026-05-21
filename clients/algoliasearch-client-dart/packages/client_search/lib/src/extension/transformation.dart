@@ -223,7 +223,7 @@ Future<void> _waitForEvent({
       if (e.statusCode != 404) rethrow;
     }
     await Future<void>.delayed(
-      Duration(milliseconds: (retries * 1500).clamp(0, 5000)),
+      Duration(milliseconds: min((retries + 1) * 1500, 5000)),
     );
   }
   throw StateError(

@@ -11,13 +11,13 @@ final class ClientOptions {
   final Iterable<Host>? hosts;
 
   /// The maximum duration to wait for a connection to establish before timing out.
-  final Duration connectTimeout;
+  final Duration? connectTimeout;
 
   /// The maximum duration to wait for a write operation to complete before timing out.
-  final Duration writeTimeout;
+  final Duration? writeTimeout;
 
   /// The maximum duration to wait for a read operation to complete before timing out.
-  final Duration readTimeout;
+  final Duration? readTimeout;
 
   /// Default headers to include in each HTTP request.
   final Map<String, dynamic>? headers;
@@ -48,9 +48,9 @@ final class ClientOptions {
 
   /// Constructs a [ClientOptions] instance with the provided parameters.
   const ClientOptions({
-    this.connectTimeout = const Duration(seconds: 2),
-    this.writeTimeout = const Duration(seconds: 30),
-    this.readTimeout = const Duration(seconds: 5),
+    this.connectTimeout,
+    this.writeTimeout,
+    this.readTimeout,
     this.hosts,
     this.headers,
     this.agentSegments,
