@@ -450,7 +450,7 @@ final class RecommendIndexSettings {
       attributeCriteriaComputedByMinProximity.hashCode +
       renderingContent.hashCode +
       enableReRanking.hashCode +
-      reRankingApplyFilter.hashCode;
+      (reRankingApplyFilter == null ? 0 : reRankingApplyFilter.hashCode);
 
   factory RecommendIndexSettings.fromJson(Map<String, dynamic> json) =>
       _$RecommendIndexSettingsFromJson(json);

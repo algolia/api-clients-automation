@@ -69,6 +69,12 @@ fetchedIndex:
       description: Only present if the index is a [virtual replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
       x-categories:
         - Ranking
+    abTest:
+      $ref: '#/fetchedIndexAbTest'
+    sourceABTest:
+      type: string
+      description: Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index.
+      example: 'movies_dev_a'
   required:
     - name
     - createdAt
@@ -79,3 +85,69 @@ fetchedIndex:
     - lastBuildTimeS
     - pendingTask
     - numberOfPendingTasks
+
+fetchedIndexAbTest:
+  title: abTest
+  type: object
+  description: A/B test metadata. Only present if the index is part of an active A/B test.
+  properties:
+    id:
+      type: integer
+      description: A/B test ID.
+      example: 12345
+    isDark:
+      type: boolean
+      description: Whether the A/B test is a dark test (server-side measured, not user-facing). Only present when true.
+    version:
+      type: integer
+      description: A/B test schema version. Only present for v2 and later tests.
+      example: 2
+    type:
+      type: string
+      description: A/B test type. Only present for v2 and later tests. Currently always `index-configuration`.
+      example: 'index-configuration'
+    target:
+      $ref: '#/fetchedIndexAbTestTarget'
+    variants:
+      type: array
+      description: A/B test variants.
+      items:
+        $ref: '#/fetchedIndexAbTestVariant'
+  required:
+    - id
+    - variants
+
+fetchedIndexAbTestTarget:
+  title: abTestTarget
+  type: object
+  description: A/B test target criteria. Only present for v2 and later tests.
+  properties:
+    indexName:
+      type: string
+      description: Index name to match. Use `*` to target the entire application.
+      example: 'movies'
+  required:
+    - indexName
+
+fetchedIndexAbTestVariant:
+  title: abTestVariant
+  type: object
+  description: A/B test variant for an index.
+  properties:
+    indexName:
+      type: string
+      description: Index name of the variant. Only present for v0/v1 tests; in v2 this moves into `payload`.
+      example: 'movies'
+    percentage:
+      type: integer
+      description: Percentage of search traffic routed to this variant.
+      example: 50
+    customSearchParameters:
+      type: string
+      description: URL-encoded custom search parameters applied to this variant. Only present for v0/v1 tests; in v2 this moves into `payload`.
+    payload:
+      type: object
+      additionalProperties: true
+      description: Type-specific configuration. Only present for v2 and later tests. Shape depends on the parent A/B test's `type`.
+  required:
+    - percentage

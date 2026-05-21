@@ -74,7 +74,10 @@ public class SourceIndex {
     return this;
   }
 
-  /** Get analyticsTags */
+  /**
+   * Analytics tags for filtering the popular searches. For more information, see [Segment your
+   * analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   */
   @javax.annotation.Nullable
   public List<String> getAnalyticsTags() {
     return analyticsTags;
@@ -93,7 +96,10 @@ public class SourceIndex {
     return this;
   }
 
-  /** Get facets */
+  /**
+   * Facets to use as top categories with your suggestions. If provided, Query Suggestions adds the
+   * top facet values to each suggestion.
+   */
   @javax.annotation.Nullable
   public List<Facet> getFacets() {
     return facets;
@@ -140,7 +146,12 @@ public class SourceIndex {
     return this;
   }
 
-  /** Get generate */
+  /**
+   * Facets used for generating query suggestions from facet values. For example, if you set
+   * `generate: [\"color\", \"brand\"]`, combinations from the facet values are added as query
+   * suggestions, such as \"blue adidas\", \"red adidas\", \"blue nike\", \"red nike\", etc. You can
+   * include nested lists.
+   */
   @javax.annotation.Nullable
   public List<List<String>> getGenerate() {
     return generate;
@@ -159,7 +170,14 @@ public class SourceIndex {
     return this;
   }
 
-  /** Get external */
+  /**
+   * Algolia indices with popular searches to use as query suggestions. Records of these indices
+   * must have these attributes: - `query`: search query which will be added as a suggestion -
+   * `count`: measure of popularity of that search query For example, you can export popular
+   * searches from an external analytics provider, such as Google Analytics or Adobe Analytics, and
+   * feed this data into an Algolia index. You can use this index to generate query suggestions
+   * until your Algolia Analytics has collected enough data.
+   */
   @javax.annotation.Nullable
   public List<String> getExternal() {
     return external;

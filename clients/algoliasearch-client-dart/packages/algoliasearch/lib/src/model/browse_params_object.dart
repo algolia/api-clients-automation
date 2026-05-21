@@ -583,7 +583,7 @@ final class BrowseParamsObject {
       attributeCriteriaComputedByMinProximity.hashCode +
       renderingContent.hashCode +
       enableReRanking.hashCode +
-      reRankingApplyFilter.hashCode +
+      (reRankingApplyFilter == null ? 0 : reRankingApplyFilter.hashCode) +
       cursor.hashCode;
 
   factory BrowseParamsObject.fromJson(Map<String, dynamic> json) =>

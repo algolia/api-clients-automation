@@ -28,6 +28,10 @@
   */
 package algoliasearch.recommend
 
+import algoliasearch.recommend.HighlightResult
+import algoliasearch.recommend.RankingInfo
+import algoliasearch.recommend.SnippetResult
+
 import org.json4s._
 
 /** Recommend hit.

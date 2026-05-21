@@ -32,14 +32,29 @@
   */
 package algoliasearch.search
 
-import algoliasearch.search.AdvancedSyntaxFeatures._
-import algoliasearch.search.AlternativesAsExact._
-import algoliasearch.search.ExactOnSingleWordQuery._
-import algoliasearch.search.Mode._
-import algoliasearch.search.QueryType._
-import algoliasearch.search.RemoveWordsIfNoResults._
-import algoliasearch.search.SearchTypeFacet._
-import algoliasearch.search.SupportedLanguage._
+import algoliasearch.search.AdvancedSyntaxFeatures
+import algoliasearch.search.AlternativesAsExact
+import algoliasearch.search.AroundPrecision
+import algoliasearch.search.AroundRadius
+import algoliasearch.search.Distinct
+import algoliasearch.search.ExactOnSingleWordQuery
+import algoliasearch.search.FacetFilters
+import algoliasearch.search.IgnorePlurals
+import algoliasearch.search.InsideBoundingBox
+import algoliasearch.search.Mode
+import algoliasearch.search.NumericFilters
+import algoliasearch.search.OptionalFilters
+import algoliasearch.search.OptionalWords
+import algoliasearch.search.QueryType
+import algoliasearch.search.ReRankingApplyFilter
+import algoliasearch.search.RemoveStopWords
+import algoliasearch.search.RemoveWordsIfNoResults
+import algoliasearch.search.RenderingContent
+import algoliasearch.search.SearchTypeFacet
+import algoliasearch.search.SemanticSearch
+import algoliasearch.search.SupportedLanguage
+import algoliasearch.search.TagFilters
+import algoliasearch.search.TypoTolerance
 
 /** SearchForFacets
   *

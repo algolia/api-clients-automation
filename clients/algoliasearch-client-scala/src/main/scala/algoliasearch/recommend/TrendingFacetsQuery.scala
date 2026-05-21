@@ -28,7 +28,7 @@
   */
 package algoliasearch.recommend
 
-import algoliasearch.recommend.TrendingFacetsModel._
+import algoliasearch.recommend.TrendingFacetsModel
 
 /** TrendingFacetsQuery
   *

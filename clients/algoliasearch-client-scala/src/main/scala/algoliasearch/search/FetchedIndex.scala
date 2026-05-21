@@ -59,6 +59,9 @@ package algoliasearch.search
   * @param virtual
   *   Only present if the index is a [virtual
   *   replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
+  * @param sourceABTest
+  *   Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test
+  *   configured on another index.
   */
 case class FetchedIndex(
     name: String,
@@ -72,5 +75,7 @@ case class FetchedIndex(
     pendingTask: Boolean,
     primary: Option[String] = scala.None,
     replicas: Option[Seq[String]] = scala.None,
-    virtual: Option[Boolean] = scala.None
+    virtual: Option[Boolean] = scala.None,
+    abTest: Option[FetchedIndexAbTest] = scala.None,
+    sourceABTest: Option[String] = scala.None
 )

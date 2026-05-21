@@ -28,6 +28,8 @@
   */
 package algoliasearch.composition
 
+import algoliasearch.composition.InjectedItemExternal
+
 /** Injected items will originate from externally provided objectIDs (that must exist in the index) given at runtime in
   * the run request payload.
   */

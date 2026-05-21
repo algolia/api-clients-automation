@@ -31,18 +31,34 @@ final class {{classname}} implements ApiClient {
   ingestion.IngestionClient? _ingestionTransporter;
   {{/isSearchClient}}
 
+  static ClientOptions _withDefaults(ClientOptions opts) => ClientOptions(
+    connectTimeout: opts.connectTimeout ?? const Duration(milliseconds: {{{serverConnectTimeout}}}),
+    readTimeout: opts.readTimeout ?? const Duration(milliseconds: {{{serverReadTimeout}}}),
+    writeTimeout: opts.writeTimeout ?? const Duration(milliseconds: {{{serverWriteTimeout}}}),
+    hosts: opts.hosts,
+    headers: opts.headers,
+    agentSegments: opts.agentSegments,
+    logger: opts.logger,
+    requester: opts.requester,
+    interceptors: opts.interceptors,
+    httpClientAdapter: opts.httpClientAdapter,
+    compression: opts.compression,
+    transformationOptions: opts.transformationOptions,
+  );
+
   {{classname}}({
     required String appId,
     required String apiKey,
-    this.options = const ClientOptions(),
+    ClientOptions options = const ClientOptions(),
     {{#hasRegionalHost}}
     {{^fallbackToAliasHost}}required{{/fallbackToAliasHost}} this.region,
     {{/hasRegionalHost}}
-  }) : {{#isSearchClient}}_appId = appId, _apiKey = apiKey, {{/isSearchClient}}_retryStrategy = RetryStrategy.create(
+  }) : {{#isSearchClient}}_appId = appId, _apiKey = apiKey, {{/isSearchClient}}options = _withDefaults(options),
+    _retryStrategy = RetryStrategy.create(
             segment: AgentSegment(value: "{{{baseName}}}", version: packageVersion),
             appId: appId,
             apiKey: apiKey,
-            options: options,
+            options: _withDefaults(options),
             {{#hostWithAppID}}
             defaultHosts: () => [
               Host(url: '$appId-dsn.algolia.net', callType: CallType.read),
@@ -82,8 +98,8 @@ final class {{classname}} implements ApiClient {
     assert(appId.isNotEmpty, '`appId` is missing.');
     assert(apiKey.isNotEmpty, '`apiKey` is missing.');
     {{#isSearchClient}}
-    if (options.transformationOptions != null) {
-      _ingestionTransporter = _buildIngestionTransporter(options.transformationOptions!);
+    if (this.options.transformationOptions != null) {
+      _ingestionTransporter = _buildIngestionTransporter(this.options.transformationOptions!);
     }
     {{/isSearchClient}}
   }
@@ -212,14 +228,10 @@ final class {{classname}} implements ApiClient {
     );  
     {{#returnType}}final response = {{/returnType}}await _retryStrategy.execute(
       request: request,
-      options: {{#vendorExtensions.x-timeouts}}new RequestOptions(
+      options: {{#vendorExtensions.x-timeouts}}RequestOptions(
           writeTimeout: Duration(milliseconds: {{write}}),
           readTimeout: Duration(milliseconds: {{read}}),
           connectTimeout: Duration(milliseconds: {{connect}}),
-      ) + {{/vendorExtensions.x-timeouts}}{{^vendorExtensions.x-timeouts}}RequestOptions(
-          writeTimeout: Duration(milliseconds: {{{serverWriteTimeout}}}),
-          readTimeout: Duration(milliseconds: {{{serverReadTimeout}}}),
-          connectTimeout: Duration(milliseconds: {{{serverConnectTimeout}}}),
       ) + {{/vendorExtensions.x-timeouts}}requestOptions,
     );
     {{#returnType}}

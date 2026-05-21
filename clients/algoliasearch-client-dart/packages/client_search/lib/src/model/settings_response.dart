@@ -479,7 +479,7 @@ final class SettingsResponse {
       attributeCriteriaComputedByMinProximity.hashCode +
       renderingContent.hashCode +
       enableReRanking.hashCode +
-      reRankingApplyFilter.hashCode +
+      (reRankingApplyFilter == null ? 0 : reRankingApplyFilter.hashCode) +
       primary.hashCode;
 
   factory SettingsResponse.fromJson(Map<String, dynamic> json) =>

@@ -179,6 +179,61 @@ extension Transformation on SearchClient {
   }
 }
 
+Future<void> _pollBatch({
+  required ingestion.IngestionClient transporter,
+  required List<WatchResponse> responses,
+  required int from,
+  required int to,
+  RequestOptions? requestOptions,
+}) async {
+  for (final resp in responses.sublist(from, to)) {
+    final eventID = resp.eventID;
+    if (eventID == null) continue;
+    await _waitForEvent(
+      transporter: transporter,
+      runID: resp.runID,
+      eventID: eventID,
+      requestOptions: requestOptions,
+    );
+  }
+}
+
+Future<void> _waitForEvent({
+  required ingestion.IngestionClient transporter,
+  required String runID,
+  required String eventID,
+  RequestOptions? requestOptions,
+}) async {
+  const maxRetries = 100;
+  for (var retries = 0; retries < maxRetries; retries++) {
+    try {
+      await transporter.getEvent(
+        runID: runID,
+        eventID: eventID,
+        requestOptions: requestOptions,
+      );
+      return;
+    } on AlgoliaApiException catch (e) {
+      if (e.statusCode != 404) rethrow;
+    }
+    await Future<void>.delayed(
+      Duration(milliseconds: min((retries + 1) * 1500, 5000)),
+    );
+  }
+  throw StateError(
+    'The maximum number of retries exceeded. ($maxRetries/$maxRetries)',
+  );
+}
+
+ingestion.PushTaskRecords _toRecord(Map<String, dynamic> obj) {
+  final objectID = obj['objectID'];
+  if (objectID == null || objectID is! String) {
+    throw ArgumentError('each object must have an `objectID` key in order to be indexed');
+  }
+  final rest = Map<String, dynamic>.from(obj)..remove('objectID');
+  return ingestion.PushTaskRecords(objectID: objectID, additionalProperties: rest);
+}
+
 WatchResponse _convertWatchResponse(ingestion.WatchResponse r) {
   return WatchResponse(
     runID: r.runID,

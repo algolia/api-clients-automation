@@ -92,7 +92,7 @@ public class ConfigurationResponse {
     return this;
   }
 
-  /** Get exclude */
+  /** Words or regular expressions to exclude from the suggestions. */
   @javax.annotation.Nullable
   public List<String> getExclude() {
     return exclude;

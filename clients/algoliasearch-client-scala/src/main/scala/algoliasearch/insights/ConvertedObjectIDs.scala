@@ -26,7 +26,7 @@
   */
 package algoliasearch.insights
 
-import algoliasearch.insights.ConversionEvent._
+import algoliasearch.insights.ConversionEvent
 
 /** Use this event to track when users convert on items unrelated to a previous Algolia request. For example, if you
   * don't use Algolia to build your category pages, use this event. To track conversion events related to Algolia
