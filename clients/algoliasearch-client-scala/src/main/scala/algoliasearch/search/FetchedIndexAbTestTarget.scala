@@ -32,50 +32,11 @@
   */
 package algoliasearch.search
 
-/** FetchedIndex
+/** A/B test target criteria. Only present for v2 and later tests.
   *
-  * @param name
-  *   Index name.
-  * @param createdAt
-  *   Index creation date. An empty string means that the index has no records.
-  * @param updatedAt
-  *   Date and time when the object was updated, in RFC 3339 format.
-  * @param entries
-  *   Number of records contained in the index.
-  * @param dataSize
-  *   Number of bytes of the index in minified format.
-  * @param fileSize
-  *   Number of bytes of the index binary file.
-  * @param lastBuildTimeS
-  *   Last build time.
-  * @param numberOfPendingTasks
-  *   Number of pending indexing operations. This value is deprecated and should not be used.
-  * @param pendingTask
-  *   A boolean which says whether the index has pending tasks. This value is deprecated and should not be used.
-  * @param primary
-  *   Only present if the index is a replica. Contains the name of the related primary index.
-  * @param replicas
-  *   Only present if the index is a primary index with replicas. Contains the names of all linked replicas.
-  * @param virtual
-  *   Only present if the index is a [virtual
-  *   replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
-  * @param sourceABTest
-  *   Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test
-  *   configured on another index.
+  * @param indexName
+  *   Index name to match. Use `*` to target the entire application.
   */
-case class FetchedIndex(
-    name: String,
-    createdAt: String,
-    updatedAt: String,
-    entries: Int,
-    dataSize: Long,
-    fileSize: Long,
-    lastBuildTimeS: Int,
-    numberOfPendingTasks: Int,
-    pendingTask: Boolean,
-    primary: Option[String] = scala.None,
-    replicas: Option[Seq[String]] = scala.None,
-    virtual: Option[Boolean] = scala.None,
-    abTest: Option[FetchedIndexAbTest] = scala.None,
-    sourceABTest: Option[String] = scala.None
+case class FetchedIndexAbTestTarget(
+    indexName: String
 )

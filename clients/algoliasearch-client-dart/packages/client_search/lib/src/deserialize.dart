@@ -66,6 +66,9 @@ import 'package:algolia_client_search/src/model/facet_ordering.dart';
 import 'package:algolia_client_search/src/model/facet_stats.dart';
 import 'package:algolia_client_search/src/model/facets.dart';
 import 'package:algolia_client_search/src/model/fetched_index.dart';
+import 'package:algolia_client_search/src/model/fetched_index_ab_test.dart';
+import 'package:algolia_client_search/src/model/fetched_index_ab_test_target.dart';
+import 'package:algolia_client_search/src/model/fetched_index_ab_test_variant.dart';
 import 'package:algolia_client_search/src/model/get_api_key_response.dart';
 import 'package:algolia_client_search/src/model/get_dictionary_settings_response.dart';
 import 'package:algolia_client_search/src/model/get_logs_response.dart';
@@ -358,6 +361,15 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return Facets.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'FetchedIndex':
       return FetchedIndex.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'FetchedIndexAbTest':
+      return FetchedIndexAbTest.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'FetchedIndexAbTestTarget':
+      return FetchedIndexAbTestTarget.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'FetchedIndexAbTestVariant':
+      return FetchedIndexAbTestVariant.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'GetApiKeyResponse':
       return GetApiKeyResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
