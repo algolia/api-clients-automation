@@ -47,7 +47,6 @@ extension WaitTask on SearchClient {
   ///  Wait on an API key creation operation.
   Future<void> waitKeyCreation({
     required String key,
-    int maxRetries = defaultMaxRetries,
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
