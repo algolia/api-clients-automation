@@ -43,7 +43,7 @@ public class GoCTSManager implements CTSManager {
   @Override
   public String resolveMethodName(String operationId) {
     if (operationId.equals("getConfiguration")) {
-      return "getApplicationConfiguration";
+      return "agent-studio".equals(client) ? "getAgentStudioConfiguration" : "getApplicationConfiguration";
     }
     return operationId;
   }
