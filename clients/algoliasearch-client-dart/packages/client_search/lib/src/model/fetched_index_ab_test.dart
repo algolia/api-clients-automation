@@ -12,7 +12,6 @@ final class FetchedIndexAbTest {
   /// Returns a new [FetchedIndexAbTest] instance.
   const FetchedIndexAbTest({
     required this.id,
-    this.isDark,
     this.version,
     this.type,
     this.target,
@@ -22,10 +21,6 @@ final class FetchedIndexAbTest {
   /// A/B test ID.
   @JsonKey(name: r'id')
   final int id;
-
-  /// Whether the A/B test is a dark test (server-side measured, not user-facing). Only present when true.
-  @JsonKey(name: r'isDark')
-  final bool? isDark;
 
   /// A/B test schema version. Only present for v2 and later tests.
   @JsonKey(name: r'version')
@@ -47,7 +42,6 @@ final class FetchedIndexAbTest {
       identical(this, other) ||
       other is FetchedIndexAbTest &&
           other.id == id &&
-          other.isDark == isDark &&
           other.version == version &&
           other.type == type &&
           other.target == target &&
@@ -56,7 +50,6 @@ final class FetchedIndexAbTest {
   @override
   int get hashCode =>
       id.hashCode +
-      isDark.hashCode +
       version.hashCode +
       type.hashCode +
       target.hashCode +
