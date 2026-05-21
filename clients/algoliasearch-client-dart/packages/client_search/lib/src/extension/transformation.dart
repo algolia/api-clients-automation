@@ -30,20 +30,50 @@ extension Transformation on SearchClient {
     ChunkedHelperOptions? chunkedOptions,
     RequestOptions? requestOptions,
   }) async {
+    if (batchSize < 1) throw ArgumentError('`batchSize` must be greater than 0');
     final transporter = ingestionTransporter;
     if (transporter == null) throw StateError(_notSetError);
 
-    final raw = await transporter.chunkedPush(
-      indexName: indexName,
-      objects: objects,
-      action: action,
-      waitForTasks: waitForTasks,
-      batchSize: batchSize,
-      referenceIndexName: referenceIndexName,
-      chunkedOptions: chunkedOptions,
-      requestOptions: requestOptions,
-    );
-    return raw.map(_convertWatchResponse).toList();
+    final maxRetries = chunkedOptions?.maxRetries ?? defaultMaxRetries;
+    final responses = <WatchResponse>[];
+    final batch = <ingestion.PushTaskRecords>[];
+    final pollInterval = (batchSize ~/ 10).clamp(1, batchSize);
+    int polledUpTo = 0;
+
+    final iter = objects.iterator;
+    if (!iter.moveNext()) return responses;
+
+    while (true) {
+      batch.add(_toRecord(iter.current));
+      final isLast = !iter.moveNext();
+
+      if (batch.length == batchSize || isLast) {
+        final raw = await transporter.push(
+          indexName: indexName,
+          pushTaskPayload: ingestion.PushTaskPayload(action: action, records: List.of(batch)),
+          referenceIndexName: referenceIndexName,
+          requestOptions: requestOptions,
+        );
+        responses.add(_convertWatchResponse(raw));
+        batch.clear();
+
+        if (waitForTasks && (responses.length % pollInterval == 0 || isLast)) {
+          await _pollBatch(
+            transporter: transporter,
+            responses: responses,
+            from: polledUpTo,
+            to: responses.length,
+            maxRetries: maxRetries,
+            requestOptions: requestOptions,
+          );
+          polledUpTo = responses.length;
+        }
+      }
+
+      if (isLast) break;
+    }
+
+    return responses;
   }
 
   /// Saves objects through the Ingestion pipeline. Requires [TransformationOptions] to be set.
@@ -184,6 +214,7 @@ Future<void> _pollBatch({
   required List<WatchResponse> responses,
   required int from,
   required int to,
+  required int maxRetries,
   RequestOptions? requestOptions,
 }) async {
   for (final resp in responses.sublist(from, to)) {
@@ -193,6 +224,7 @@ Future<void> _pollBatch({
       transporter: transporter,
       runID: resp.runID,
       eventID: eventID,
+      maxRetries: maxRetries,
       requestOptions: requestOptions,
     );
   }
@@ -202,9 +234,9 @@ Future<void> _waitForEvent({
   required ingestion.IngestionClient transporter,
   required String runID,
   required String eventID,
+  required int maxRetries,
   RequestOptions? requestOptions,
 }) async {
-  const maxRetries = 100;
   for (var retries = 0; retries < maxRetries; retries++) {
     try {
       await transporter.getEvent(
