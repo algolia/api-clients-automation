@@ -3,28 +3,28 @@
     "testName": "getConversation",
     "parameters": {
       "conversationId": "test-conversation-id",
-      "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4"
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15"
     },
     "request": {
-      "path": "/1/agents/8fccf97b-d896-433d-af3b-81385ffff1a4/conversations/test-conversation-id",
+      "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/test-conversation-id",
       "method": "GET"
     }
   },
   {
     "testName": "e2e get conversation",
     "parameters": {
-      "conversationId": "alg_cnv_miss_VHtysEm1ncEyvVxN",
-      "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4"
+      "conversationId": "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15"
     },
     "request": {
-      "path": "/1/agents/8fccf97b-d896-433d-af3b-81385ffff1a4/conversations/alg_cnv_miss_VHtysEm1ncEyvVxN",
+      "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/alg_cnv_miss_yqcZtaOSPTF8bJsJ",
       "method": "GET"
     },
     "response": {
       "statusCode": 200,
       "body": {
-        "id": "alg_cnv_miss_VHtysEm1ncEyvVxN",
-        "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4",
+        "id": "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
+        "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
         "title": "New Conversation"
       }
     }

@@ -2,7 +2,7 @@
   {
     "testName": "extractEpisodicMemories",
     "parameters": {
-      "providerID": "f2a20a41-5a82-428a-90a9-0fbf22a6846d",
+      "providerID": "c2905529-b933-4b69-87ec-75f9829d5f59",
       "model": "gpt-4o-mini",
       "messages": [
         {"role": "user", "content": "I had a great experience with the product"}
@@ -12,7 +12,7 @@
       "path": "/1/memory/extract/episodic",
       "method": "POST",
       "body": {
-        "providerID": "f2a20a41-5a82-428a-90a9-0fbf22a6846d",
+        "providerID": "c2905529-b933-4b69-87ec-75f9829d5f59",
         "model": "gpt-4o-mini",
         "messages": [
           {"role": "user", "content": "I had a great experience with the product"}

@@ -2,20 +2,20 @@
   {
     "testName": "listProviderModels",
     "parameters": {
-      "providerId": "f2a20a41-5a82-428a-90a9-0fbf22a6846d"
+      "providerId": "c2905529-b933-4b69-87ec-75f9829d5f59"
     },
     "request": {
-      "path": "/1/providers/f2a20a41-5a82-428a-90a9-0fbf22a6846d/models",
+      "path": "/1/providers/c2905529-b933-4b69-87ec-75f9829d5f59/models",
       "method": "GET"
     }
   },
   {
     "testName": "e2e list provider models",
     "parameters": {
-      "providerId": "f2a20a41-5a82-428a-90a9-0fbf22a6846d"
+      "providerId": "c2905529-b933-4b69-87ec-75f9829d5f59"
     },
     "request": {
-      "path": "/1/providers/f2a20a41-5a82-428a-90a9-0fbf22a6846d/models",
+      "path": "/1/providers/c2905529-b933-4b69-87ec-75f9829d5f59/models",
       "method": "GET"
     },
     "response": {

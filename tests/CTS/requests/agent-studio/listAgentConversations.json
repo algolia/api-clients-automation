@@ -2,17 +2,17 @@
   {
     "testName": "listAgentConversations with minimal parameters",
     "parameters": {
-      "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4"
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15"
     },
     "request": {
-      "path": "/1/agents/8fccf97b-d896-433d-af3b-81385ffff1a4/conversations",
+      "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations",
       "method": "GET"
     }
   },
   {
     "testName": "listAgentConversations with all parameters",
     "parameters": {
-      "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4",
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
       "startDate": "2024-01-01",
       "endDate": "2024-12-31",
       "includeFeedback": true,
@@ -22,7 +22,7 @@
       "xAlgoliaSecureUserToken": null
     },
     "request": {
-      "path": "/1/agents/8fccf97b-d896-433d-af3b-81385ffff1a4/conversations",
+      "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations",
       "method": "GET",
       "queryParameters": {
         "startDate": "2024-01-01",
@@ -49,10 +49,10 @@
   {
     "testName": "e2e list agent conversations",
     "parameters": {
-      "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4"
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15"
     },
     "request": {
-      "path": "/1/agents/8fccf97b-d896-433d-af3b-81385ffff1a4/conversations",
+      "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations",
       "method": "GET"
     },
     "response": {
@@ -60,8 +60,8 @@
       "body": {
         "data": [
           {
-            "id": "alg_cnv_miss_VHtysEm1ncEyvVxN",
-            "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4",
+            "id": "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
+            "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
             "title": "New Conversation"
           }
         ]

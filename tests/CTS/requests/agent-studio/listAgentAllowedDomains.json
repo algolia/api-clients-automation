@@ -2,20 +2,20 @@
   {
     "testName": "listAgentAllowed-Domains",
     "parameters": {
-      "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4"
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15"
     },
     "request": {
-      "path": "/1/agents/8fccf97b-d896-433d-af3b-81385ffff1a4/allowed-domains",
+      "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/allowed-domains",
       "method": "GET"
     }
   },
   {
     "testName": "e2e list agent allowed domains",
     "parameters": {
-      "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4"
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15"
     },
     "request": {
-      "path": "/1/agents/8fccf97b-d896-433d-af3b-81385ffff1a4/allowed-domains",
+      "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/allowed-domains",
       "method": "GET"
     },
     "response": {
@@ -23,7 +23,7 @@
       "body": {
         "domains": [
           {
-            "id": "317c3dd8-7fc0-4f5a-8075-c8b5a165d109",
+            "id": "6e8a0441-9a41-477c-a1d6-679a461e0990",
             "domain": "cts-e2e.algolia.com"
           }
         ]

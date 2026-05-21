@@ -2,13 +2,13 @@
   {
     "testName": "createAgentAllowedDomain",
     "parameters": {
-      "agentId": "8fccf97b-d896-433d-af3b-81385ffff1a4",
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
       "allowedDomainCreate": {
         "domain": "https://app.example.com"
       }
     },
     "request": {
-      "path": "/1/agents/8fccf97b-d896-433d-af3b-81385ffff1a4/allowed-domains",
+      "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/allowed-domains",
       "method": "POST",
       "body": {
         "domain": "https://app.example.com"
