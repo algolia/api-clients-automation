@@ -95,9 +95,6 @@ fetchedIndexAbTest:
       type: integer
       description: A/B test ID.
       example: 12345
-    isDark:
-      type: boolean
-      description: Whether the A/B test is a dark test (server-side measured, not user-facing). Only present when true.
     version:
       type: integer
       description: A/B test schema version. Only present for v2 and later tests.
