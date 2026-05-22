@@ -18,14 +18,10 @@ FeedbackResponse:
       type: array
       title: tags
     notes:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: notes
     model:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: model
     createdAt:
       type: string

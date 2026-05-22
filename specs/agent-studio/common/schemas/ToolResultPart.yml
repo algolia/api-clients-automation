@@ -14,10 +14,8 @@ ToolResultPart:
     output:
       $ref: 'ToolResultOutput.yml#/ToolResultOutput'
     providerOptions:
-      oneOf:
-        - type: object
-          additionalProperties: true
-        - type: 'null'
+      type: object
+      additionalProperties: true
       title: provideroptions
   type: object
   required:

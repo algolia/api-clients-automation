@@ -1,7 +1,9 @@
 ApplicationConfigPatch:
   properties:
     maxRetentionDays:
-      type: integer
+      oneOf:
+        - type: integer
+        - type: 'null'
       title: maxretentiondays
       description: 'Maximum number of days to retain data. Valid values: [0, 30, 60,
         90].'

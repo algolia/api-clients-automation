@@ -1,9 +1,7 @@
 ConversationMetadata:
   properties:
     cachedAt:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: cachedat
   type: object
   title: conversationMetadata

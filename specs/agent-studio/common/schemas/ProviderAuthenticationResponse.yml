@@ -18,9 +18,7 @@ ProviderAuthenticationResponse:
       type: string
       title: updatedat
     lastUsedAt:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: lastusedat
   type: object
   required:

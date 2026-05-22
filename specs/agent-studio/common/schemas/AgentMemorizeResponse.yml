@@ -7,9 +7,7 @@ AgentMemorizeResponse:
       title: savedmemories
       description: Memories saved to Algolia.
     taskId:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: taskid
       description: Algolia task ID for the save operation.
     message:

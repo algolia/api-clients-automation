@@ -3,9 +3,7 @@ MemoryRecord:
     memoryType:
       $ref: 'MemoryType.yml#/MemoryType'
     episode:
-      oneOf:
-        - $ref: 'Episode.yml#/Episode'
-        - type: 'null'
+      $ref: 'Episode.yml#/Episode'
     text:
       type: string
       maxLength: 2000
@@ -47,9 +45,7 @@ MemoryRecord:
       title: recalltriggers
       description: 3-5 natural phrases that should trigger this memory.
     objectID:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: objectid
       description: ObjectID of existing memory to update. Leave empty for new memory.
     appId:

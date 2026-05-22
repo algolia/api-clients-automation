@@ -1,25 +1,37 @@
 AgentConfigUpdate:
   properties:
     name:
-      type: string
+      oneOf:
+        - type: string
+        - type: 'null'
       title: name
     description:
-      type: string
+      oneOf:
+        - type: string
+        - type: 'null'
       title: description
     providerId:
-      type: string
+      oneOf:
+        - type: string
+        - type: 'null'
       title: providerid
     model:
-      type: string
+      oneOf:
+        - type: string
+        - type: 'null'
       title: model
     instructions:
-      type: string
+      oneOf:
+        - type: string
+        - type: 'null'
       title: instructions
       description: 'The agent prompt: defines the agent''s role, tone, and goals.
         Guides how it answers using the provided context. Corresponds to the ''Agent
         prompt'' field in the dashboard.'
     systemPrompt:
-      type: string
+      oneOf:
+        - type: string
+        - type: 'null'
       title: systemprompt
       description: 'The system prompt: defines system-level rules and constraints.
         Guides how the agent uses tools, features, and generates context. Prepended
@@ -28,16 +40,22 @@ AgentConfigUpdate:
         tool usage, or response accuracy. Corresponds to the ''System prompt'' field
         in the dashboard.'
     config:
-      additionalProperties: true
-      type: object
+      oneOf:
+        - additionalProperties: true
+          type: object
+        - type: 'null'
       title: config
     tools:
-      items:
-        $ref: 'ToolConfigInput.yml#/ToolConfigInput'
-      type: array
+      oneOf:
+        - items:
+            $ref: 'ToolConfigInput.yml#/ToolConfigInput'
+          type: array
+        - type: 'null'
       title: tools
     templateType:
-      type: string
+      oneOf:
+        - type: string
+        - type: 'null'
       title: templatetype
   type: object
   title: agentConfigUpdate

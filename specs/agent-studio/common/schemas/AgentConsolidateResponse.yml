@@ -13,9 +13,7 @@ AgentConsolidateResponse:
       title: deletedids
       description: Memory object IDs deleted during consolidation.
     saveTaskId:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: savetaskid
       description: Algolia task ID for save batch.
     deleteTaskIds:

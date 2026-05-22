@@ -7,29 +7,21 @@ AgentWithVersionResponse:
       type: string
       title: name
     description:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: description
     status:
       $ref: 'AgentStatus.yml#/AgentStatus'
     providerId:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: providerid
     model:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: model
     instructions:
       type: string
       title: instructions
     systemPrompt:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: systemprompt
     config:
       additionalProperties: true
@@ -41,22 +33,16 @@ AgentWithVersionResponse:
       type: array
       title: tools
     templateType:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: templatetype
     createdAt:
       type: string
       title: createdat
     updatedAt:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: updatedat
     lastUsedAt:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: lastusedat
   type: object
   required:
