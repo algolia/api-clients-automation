@@ -9,19 +9,15 @@ FeedbackCreationRequest:
     vote:
       $ref: 'VoteEnum.yml#/VoteEnum'
     tags:
-      oneOf:
-        - items:
-            type: string
-            maxLength: 50
-          type: array
-          maxItems: 10
-        - type: 'null'
+      items:
+        type: string
+        maxLength: 50
+      type: array
+      maxItems: 10
       title: tags
     notes:
-      oneOf:
-        - type: string
-          maxLength: 1000
-        - type: 'null'
+      type: string
+      maxLength: 1000
       title: notes
   type: object
   required:

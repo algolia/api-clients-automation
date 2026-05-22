@@ -13,36 +13,24 @@ ToolPartV5:
       type: object
       title: input
     output:
-      oneOf:
-        - type: object
-          additionalProperties: true
-        - type: 'null'
+      type: object
+      additionalProperties: true
       title: output
     errorText:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: errortext
     providerOptions:
-      oneOf:
-        - additionalProperties: true
-          type: object
-        - type: 'null'
+      additionalProperties: true
+      type: object
       title: provideroptions
     requiresApproval:
-      oneOf:
-        - type: boolean
-        - type: 'null'
+      type: boolean
       title: requiresapproval
     description:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: description
     argsHash:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: argshash
   type: object
   required:

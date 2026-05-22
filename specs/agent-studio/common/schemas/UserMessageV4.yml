@@ -1,9 +1,7 @@
 UserMessageV4:
   properties:
     id:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: id
     role:
       type: string
@@ -19,12 +17,10 @@ UserMessageV4:
       type: array
       title: parts
     annotations:
-      oneOf:
-        - items:
-            additionalProperties: true
-            type: object
-          type: array
-        - type: 'null'
+      items:
+        additionalProperties: true
+        type: object
+      type: array
       title: annotations
   type: object
   required:

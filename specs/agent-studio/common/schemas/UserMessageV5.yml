@@ -1,9 +1,7 @@
 UserMessageV5:
   properties:
     id:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: id
     role:
       type: string
@@ -16,9 +14,7 @@ UserMessageV5:
       type: array
       title: parts
     metadata:
-      oneOf:
-        - $ref: 'UserMessageMetadataV5.yml#/UserMessageMetadataV5'
-        - type: 'null'
+      $ref: 'UserMessageMetadataV5.yml#/UserMessageMetadataV5'
   type: object
   title: userMessageV5
   required:

@@ -1,11 +1,9 @@
 ProviderAuthenticationPatch:
   properties:
     name:
-      oneOf:
-        - type: string
-          maxLength: 128
-          minLength: 1
-        - type: 'null'
+      type: string
+      maxLength: 128
+      minLength: 1
       title: name
     input:
       $ref: 'ProviderInputNullable.yml#/ProviderInputNullable'

@@ -1,27 +1,19 @@
 AgentTestConfiguration:
   properties:
     id:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: id
     providerId:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: providerid
     model:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: model
     instructions:
       type: string
       title: instructions
     systemPrompt:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: systemprompt
     config:
       additionalProperties: true

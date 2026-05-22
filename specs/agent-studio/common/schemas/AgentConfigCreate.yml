@@ -4,19 +4,13 @@ AgentConfigCreate:
       type: string
       title: name
     description:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: description
     providerId:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: providerid
     model:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: model
     instructions:
       type: string
@@ -25,9 +19,7 @@ AgentConfigCreate:
         Guides how it answers using the provided context. Corresponds to the ''Agent
         prompt'' field in the dashboard.'
     systemPrompt:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: systemprompt
       description: 'The system prompt: defines system-level rules and constraints.
         Guides how the agent uses tools, features, and generates context. Prepended
@@ -36,9 +28,7 @@ AgentConfigCreate:
         tool usage, or response accuracy. Corresponds to the ''System prompt'' field
         in the dashboard.'
     templateType:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: templatetype
     config:
       additionalProperties: true

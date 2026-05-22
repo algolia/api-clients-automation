@@ -1,9 +1,7 @@
 AssistantMessageV5:
   properties:
     id:
-      oneOf:
-        - type: string
-        - type: 'null'
+      type: string
       title: id
     role:
       type: string

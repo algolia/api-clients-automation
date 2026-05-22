@@ -18,10 +18,8 @@ AgentPonderRequest:
       description: Maximum episodic memories to extract.
       default: 1
     instructions:
-      oneOf:
-        - type: string
-          maxLength: 50000
-        - type: 'null'
+      type: string
+      maxLength: 50000
       title: instructions
       description: Optional domain-specific instructions to guide extraction or consolidation.
     wait:

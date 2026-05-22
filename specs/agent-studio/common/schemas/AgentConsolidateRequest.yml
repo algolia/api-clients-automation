@@ -18,10 +18,8 @@ AgentConsolidateRequest:
       description: Maximum memories to extract/consolidate in this operation.
       default: 5
     instructions:
-      oneOf:
-        - type: string
-          maxLength: 50000
-        - type: 'null'
+      type: string
+      maxLength: 50000
       title: instructions
       description: Optional domain-specific instructions to guide extraction or consolidation.
     wait:
