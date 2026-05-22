@@ -8,6 +8,7 @@ library;
 export 'src/algolia_exception.dart';
 export 'src/api_client.dart';
 export 'src/config/agent_segment.dart';
+export 'src/config/chunked_helper_options.dart';
 export 'src/config/client_options.dart';
 export 'src/config/host.dart';
 export 'src/config/transformation_options.dart';
