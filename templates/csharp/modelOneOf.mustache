@@ -45,7 +45,7 @@
           /// with a {{#lambdaCref}}{{{dataType}}}{{/lambdaCref}}
           /// </summary>
           /// <param name="actualInstance">An instance of {{{dataType}}}.</param>
-          public {{classname}}(object actualInstance)
+          public {{classname}}({{{dataType}}}<T> actualInstance)
           {
               ActualInstance = actualInstance{{^model.isNullable}}{{^isPrimitiveType}}{{^allowableValues}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/allowableValues}}{{/isPrimitiveType}}{{#isPrimitiveType}}{{#isArray}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isArray}}{{#isFreeFormObject}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isFreeFormObject}}{{#isString}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isString}}{{/isPrimitiveType}}{{/model.isNullable}};
           }
