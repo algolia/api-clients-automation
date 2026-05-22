@@ -14,17 +14,25 @@ ToolApprovalRequestPart:
     args:
       title: args
     description:
-      type: string
+      oneOf:
+        - type: string
+        - type: 'null'
       title: description
     providerOptions:
-      type: object
-      additionalProperties: true
+      oneOf:
+        - type: object
+          additionalProperties: true
+        - type: 'null'
       title: provideroptions
     argsHash:
-      type: string
+      oneOf:
+        - type: string
+        - type: 'null'
       title: argshash
     appId:
-      type: string
+      oneOf:
+        - type: string
+        - type: 'null'
       title: appid
   type: object
   required:

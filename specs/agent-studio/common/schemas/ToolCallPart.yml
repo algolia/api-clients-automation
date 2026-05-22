@@ -14,11 +14,15 @@ ToolCallPart:
     args:
       title: args
     requiresApproval:
-      type: boolean
+      oneOf:
+        - type: boolean
+        - type: 'null'
       title: requiresapproval
     providerOptions:
-      type: object
-      additionalProperties: true
+      oneOf:
+        - type: object
+          additionalProperties: true
+        - type: 'null'
       title: provideroptions
   type: object
   required:

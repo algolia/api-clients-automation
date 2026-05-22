@@ -20,18 +20,26 @@ MessageResponse:
       type: string
       title: updatedat
     model:
-      type: string
+      oneOf:
+        - type: string
+        - type: 'null'
       title: model
     inputTokens:
-      type: integer
+      oneOf:
+        - type: integer
+        - type: 'null'
       title: inputtokens
     outputTokens:
-      type: integer
+      oneOf:
+        - type: integer
+        - type: 'null'
       title: outputtokens
     turnContext:
-      additionalProperties:
-        type: string
-      type: object
+      oneOf:
+        - additionalProperties:
+            type: string
+          type: object
+        - type: 'null'
       title: turncontext
   type: object
   required:

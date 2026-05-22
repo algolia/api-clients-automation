@@ -7,7 +7,9 @@ ConversationFullResponse:
       type: string
       title: agentid
     title:
-      type: string
+      oneOf:
+        - type: string
+        - type: 'null'
       title: title
     createdAt:
       type: string
@@ -16,10 +18,14 @@ ConversationFullResponse:
       type: string
       title: updatedat
     lastActivityAt:
-      type: string
+      oneOf:
+        - type: string
+        - type: 'null'
       title: lastactivityat
     userToken:
-      type: string
+      oneOf:
+        - type: string
+        - type: 'null'
       title: usertoken
     isFromDashboard:
       type: boolean
@@ -42,7 +48,9 @@ ConversationFullResponse:
       title: totaltokens
       default: 0
     conversationMetadata:
-      $ref: 'ConversationMetadata.yml#/ConversationMetadata'
+      oneOf:
+        - $ref: 'ConversationMetadata.yml#/ConversationMetadata'
+        - type: 'null'
     feedback:
       $ref: 'FeedbackUnion.yml#/FeedbackUnion'
     messages:
