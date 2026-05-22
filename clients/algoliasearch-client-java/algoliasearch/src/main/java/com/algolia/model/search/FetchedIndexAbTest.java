@@ -15,9 +15,6 @@ public class FetchedIndexAbTest {
   @JsonProperty("id")
   private Integer id;
 
-  @JsonProperty("isDark")
-  private Boolean isDark;
-
   @JsonProperty("version")
   private Integer version;
 
@@ -39,20 +36,6 @@ public class FetchedIndexAbTest {
   @javax.annotation.Nonnull
   public Integer getId() {
     return id;
-  }
-
-  public FetchedIndexAbTest setIsDark(Boolean isDark) {
-    this.isDark = isDark;
-    return this;
-  }
-
-  /**
-   * Whether the A/B test is a dark test (server-side measured, not user-facing). Only present when
-   * true.
-   */
-  @javax.annotation.Nullable
-  public Boolean getIsDark() {
-    return isDark;
   }
 
   public FetchedIndexAbTest setVersion(Integer version) {
@@ -115,7 +98,6 @@ public class FetchedIndexAbTest {
     FetchedIndexAbTest fetchedIndexAbTest = (FetchedIndexAbTest) o;
     return (
       Objects.equals(this.id, fetchedIndexAbTest.id) &&
-      Objects.equals(this.isDark, fetchedIndexAbTest.isDark) &&
       Objects.equals(this.version, fetchedIndexAbTest.version) &&
       Objects.equals(this.type, fetchedIndexAbTest.type) &&
       Objects.equals(this.target, fetchedIndexAbTest.target) &&
@@ -125,7 +107,7 @@ public class FetchedIndexAbTest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, isDark, version, type, target, variants);
+    return Objects.hash(id, version, type, target, variants);
   }
 
   @Override
@@ -133,7 +115,6 @@ public class FetchedIndexAbTest {
     StringBuilder sb = new StringBuilder();
     sb.append("class FetchedIndexAbTest {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    isDark: ").append(toIndentedString(isDark)).append("\n");
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    target: ").append(toIndentedString(target)).append("\n");

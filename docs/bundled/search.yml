@@ -26814,11 +26814,6 @@ components:
           description: A/B test variants.
           items:
             $ref: '#/components/schemas/fetchedIndexAbTestVariant'
-        isDark:
-          type: boolean
-          description: >-
-            Whether the A/B test is a dark test (server-side measured, not
-            user-facing). Only present when true.
         target:
           $ref: '#/components/schemas/fetchedIndexAbTestTarget'
         type:
