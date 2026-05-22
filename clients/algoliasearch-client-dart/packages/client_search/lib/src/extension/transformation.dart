@@ -125,8 +125,8 @@ extension Transformation on SearchClient {
     required String indexName,
     required Iterable<Map<String, dynamic>> objects,
     int batchSize = 1000,
-    ChunkedHelperOptions? chunkedOptions,
     List<ScopeType>? scopes,
+    ChunkedHelperOptions? chunkedOptions,
     RequestOptions? requestOptions,
   }) async {
     if (ingestionTransporter == null) throw StateError(_notSetError);
