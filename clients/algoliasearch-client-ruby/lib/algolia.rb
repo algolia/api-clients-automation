@@ -5,6 +5,7 @@
 # Common files
 require "algolia/api_client"
 require "algolia/api_error"
+require "algolia/chunked_helper_options"
 require "algolia/defaults"
 require "algolia/error"
 require "algolia/version"

@@ -9,13 +9,13 @@
 # @param request_options [Hash] the request options to send along with the query. (optional)
 #
 # @return [Array<Ingestion::WatchResponse>]
-def chunked_push(index_name, objects, action = Ingestion::Action::ADD_OBJECT, wait_for_tasks = false, batch_size = 1000, reference_index_name = nil, request_options = {})
+def chunked_push(index_name, objects, action = Ingestion::Action::ADD_OBJECT, wait_for_tasks = false, batch_size = 1000, reference_index_name = nil, request_options = {}, chunked_options = nil)
   responses = []
   offset = 0
   wait_batch_size = batch_size / 10
   wait_batch_size = batch_size if wait_batch_size < 1
   total_batches = (objects.length.to_f / batch_size).ceil
-  max_retries = 50
+  max_retries = chunked_options&.max_retries || Algolia::ChunkedHelperOptions::DEFAULT_MAX_RETRIES
 
   objects.each_slice(batch_size).with_index do |chunk, batch_index|
     response = push(
