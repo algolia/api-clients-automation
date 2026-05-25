@@ -22,7 +22,7 @@ public extension SearchClient {
     func waitForTask(
         indexName: String,
         taskID: Int64,
-        maxRetries: Int = 50,
+        maxRetries: Int = ChunkedHelperOptions.defaultMaxRetries,
         timeout: (Int) -> TimeInterval = { count in
             min(TimeInterval(count) * 0.2, 5)
         },
@@ -63,7 +63,7 @@ public extension SearchClient {
     @discardableResult
     func waitForAppTask(
         taskID: Int64,
-        maxRetries: Int = 50,
+        maxRetries: Int = ChunkedHelperOptions.defaultMaxRetries,
         timeout: (Int) -> TimeInterval = { count in
             min(TimeInterval(count) * 0.2, 5)
         },
@@ -108,7 +108,7 @@ public extension SearchClient {
         key: String,
         operation: ApiKeyOperation,
         apiKey: ApiKey? = nil,
-        maxRetries: Int = 50,
+        maxRetries: Int = ChunkedHelperOptions.defaultMaxRetries,
         timeout: (Int) -> TimeInterval = { retryCount in
             min(TimeInterval(retryCount) * 0.2, 5)
         },
@@ -426,6 +426,8 @@ public extension SearchClient {
     /// - parameter waitForTasks: If we should wait for the batch task to be finished before processing the next one
     /// - parameter batchSize: The maximum number of objects to include in a batch
     /// - parameter requestOptions: The request options
+    /// - parameter chunkedOptions: Shared options forwarded to every nested `waitForTask` call (currently
+    ///   `maxRetries`).
     /// - returns: [BatchResponse]
     func chunkedBatch(
         indexName: String,
@@ -433,8 +435,10 @@ public extension SearchClient {
         action: SearchAction = .addObject,
         waitForTasks: Bool = false,
         batchSize: Int = 1000,
-        requestOptions: RequestOptions? = nil
+        requestOptions: RequestOptions? = nil,
+        chunkedOptions: ChunkedHelperOptions? = nil
     ) async throws -> [BatchResponse] {
+        let maxRetries = chunkedOptions?.maxRetries ?? ChunkedHelperOptions.defaultMaxRetries
         let batches = stride(from: 0, to: objects.count, by: batchSize).map {
             Array(objects[$0 ..< min($0 + batchSize, objects.count)])
         }
@@ -459,6 +463,7 @@ public extension SearchClient {
                 try await self.waitForTask(
                     indexName: indexName,
                     taskID: batchResponse.taskID,
+                    maxRetries: maxRetries,
                     requestOptions: requestOptions
                 )
             }
@@ -474,13 +479,15 @@ public extension SearchClient {
     /// - parameter waitForTasks: If we should wait for the batch task to be finished before processing the next one
     /// - parameter batchSize: The maximum number of objects to include in a batch
     /// - parameter requestOptions: The request options
+    /// - parameter chunkedOptions: Shared options forwarded to the nested `chunkedBatch` call.
     /// - returns: [BatchResponse]
     func saveObjects(
         indexName: String,
         objects: [some Encodable],
         waitForTasks: Bool = false,
         batchSize: Int = 1000,
-        requestOptions: RequestOptions? = nil
+        requestOptions: RequestOptions? = nil,
+        chunkedOptions: ChunkedHelperOptions? = nil
     ) async throws -> [BatchResponse] {
         try await self.chunkedBatch(
             indexName: indexName,
@@ -488,7 +495,8 @@ public extension SearchClient {
             action: .addObject,
             waitForTasks: waitForTasks,
             batchSize: batchSize,
-            requestOptions: requestOptions
+            requestOptions: requestOptions,
+            chunkedOptions: chunkedOptions
         )
     }
 
@@ -499,13 +507,15 @@ public extension SearchClient {
     /// - parameter waitForTasks: If we should wait for the batch task to be finished before processing the next one
     /// - parameter batchSize: The maximum number of objects to include in a batch
     /// - parameter requestOptions: The request options
+    /// - parameter chunkedOptions: Shared options forwarded to the nested `chunkedBatch` call.
     /// - returns: [BatchResponse]
     func deleteObjects(
         indexName: String,
         objectIDs: [String],
         waitForTasks: Bool = false,
         batchSize: Int = 1000,
-        requestOptions: RequestOptions? = nil
+        requestOptions: RequestOptions? = nil,
+        chunkedOptions: ChunkedHelperOptions? = nil
     ) async throws -> [BatchResponse] {
         try await self.chunkedBatch(
             indexName: indexName,
@@ -513,7 +523,8 @@ public extension SearchClient {
             action: .deleteObject,
             waitForTasks: waitForTasks,
             batchSize: batchSize,
-            requestOptions: requestOptions
+            requestOptions: requestOptions,
+            chunkedOptions: chunkedOptions
         )
     }
 
@@ -526,6 +537,7 @@ public extension SearchClient {
     /// - parameter waitForTasks: If we should wait for the batch task to be finished before processing the next one
     /// - parameter batchSize: The maximum number of objects to include in a batch
     /// - parameter requestOptions: The request options
+    /// - parameter chunkedOptions: Shared options forwarded to the nested `chunkedBatch` call.
     /// - returns: [BatchResponse]
     func partialUpdateObjects(
         indexName: String,
@@ -533,7 +545,8 @@ public extension SearchClient {
         createIfNotExists: Bool = false,
         waitForTasks: Bool = false,
         batchSize: Int = 1000,
-        requestOptions: RequestOptions? = nil
+        requestOptions: RequestOptions? = nil,
+        chunkedOptions: ChunkedHelperOptions? = nil
     ) async throws -> [BatchResponse] {
         try await self.chunkedBatch(
             indexName: indexName,
@@ -541,7 +554,8 @@ public extension SearchClient {
             action: createIfNotExists ? .partialUpdateObject : .partialUpdateObjectNoCreate,
             waitForTasks: waitForTasks,
             batchSize: batchSize,
-            requestOptions: requestOptions
+            requestOptions: requestOptions,
+            chunkedOptions: chunkedOptions
         )
     }
 
@@ -554,6 +568,8 @@ public extension SearchClient {
     /// - parameter batchSize: The maximum number of objects to include in a batch
     /// - parameter scopes: The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms']
     /// - parameter requestOptions: The request options
+    /// - parameter chunkedOptions: Shared options forwarded to the nested `chunkedBatch` call and to every
+    ///   internal `waitForTask` call (copy, copy-rules, move).
     /// - returns: ReplaceAllObjectsResponse
     @discardableResult
     func replaceAllObjects(
@@ -561,8 +577,10 @@ public extension SearchClient {
         objects: [some Encodable],
         batchSize: Int = 1000,
         scopes: [ScopeType] = [.settings, .rules, .synonyms],
-        requestOptions: RequestOptions? = nil
+        requestOptions: RequestOptions? = nil,
+        chunkedOptions: ChunkedHelperOptions? = nil
     ) async throws -> ReplaceAllObjectsResponse {
+        let maxRetries = chunkedOptions?.maxRetries ?? ChunkedHelperOptions.defaultMaxRetries
         let tmpIndexName = "\(indexName)_tmp_\(Int.random(in: 1_000_000 ..< 10_000_000))"
 
         do {
@@ -581,9 +599,14 @@ public extension SearchClient {
                 objects: objects,
                 waitForTasks: true,
                 batchSize: batchSize,
-                requestOptions: requestOptions
+                requestOptions: requestOptions,
+                chunkedOptions: chunkedOptions
             )
-            try await self.waitForTask(indexName: tmpIndexName, taskID: copyOperationResponse.taskID)
+            try await self.waitForTask(
+                indexName: tmpIndexName,
+                taskID: copyOperationResponse.taskID,
+                maxRetries: maxRetries
+            )
 
             copyOperationResponse = try await operationIndex(
                 indexName: indexName,
@@ -594,7 +617,11 @@ public extension SearchClient {
                 ),
                 requestOptions: requestOptions
             )
-            try await self.waitForTask(indexName: tmpIndexName, taskID: copyOperationResponse.taskID)
+            try await self.waitForTask(
+                indexName: tmpIndexName,
+                taskID: copyOperationResponse.taskID,
+                maxRetries: maxRetries
+            )
 
             let moveOperationResponse = try await self.operationIndex(
                 indexName: tmpIndexName,
@@ -604,7 +631,11 @@ public extension SearchClient {
                 ),
                 requestOptions: requestOptions
             )
-            try await self.waitForTask(indexName: tmpIndexName, taskID: moveOperationResponse.taskID)
+            try await self.waitForTask(
+                indexName: tmpIndexName,
+                taskID: moveOperationResponse.taskID,
+                maxRetries: maxRetries
+            )
 
             return ReplaceAllObjectsResponse(
                 copyOperationResponse: copyOperationResponse,
