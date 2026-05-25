@@ -20,6 +20,9 @@ facets:
     facetAll:
       summary: Retrieve all facets
       value: ['*']
+    mix:
+      summary: Retrieve all facets and specify which one are disjunctive
+      value: ['*', 'disjunctive(brand)']
   x-categories:
     - Faceting
 
