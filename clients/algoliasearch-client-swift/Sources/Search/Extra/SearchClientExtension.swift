@@ -48,7 +48,7 @@ public extension SearchClient {
                     retryCount >= maxRetries
                 },
                 message: { _ in
-                    "The maximum number of retries exceeded. (\(retryCount)/\(maxRetries))"
+                    "Stopped waiting for the task after \(maxRetries) retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries."
                 }
             )
         )
@@ -89,7 +89,7 @@ public extension SearchClient {
                     retryCount >= maxRetries
                 },
                 message: { _ in
-                    "The maximum number of retries exceeded. (\(retryCount)/\(maxRetries))"
+                    "Stopped waiting for the task after \(maxRetries) retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries."
                 }
             )
         )
@@ -177,7 +177,7 @@ public extension SearchClient {
                         retryCount >= maxRetries
                     },
                     message: { _ in
-                        "The maximum number of retries exceeded. (\(retryCount)/\(maxRetries))"
+                        "Stopped waiting for the task after \(maxRetries) retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries."
                     }
                 )
             )
@@ -220,7 +220,7 @@ public extension SearchClient {
                     retryCount >= maxRetries
                 },
                 message: { _ in
-                    "The maximum number of retries exceeded. (\(retryCount)/\(maxRetries))"
+                    "Stopped waiting for the task after \(maxRetries) retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries."
                 }
             )
         )
