@@ -202,7 +202,7 @@ def wait_for_task(index_name, task_id, max_retries = Algolia::ChunkedHelperOptio
     retries += 1
     sleep(timeout.call(retries) / 1000.0)
   end
-  raise ApiError, "The maximum number of retries exceeded. (#{max_retries})"
+  raise ApiError, "Stopped waiting for the task after #{max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries."
 end
 
 # Helper: Wait for an application-level task to be published (completed) for a given `task_id`.
@@ -222,7 +222,7 @@ def wait_for_app_task(task_id, max_retries = Algolia::ChunkedHelperOptions::DEFA
     retries += 1
     sleep(timeout.call(retries) / 1000.0)
   end
-  raise ApiError, "The maximum number of retries exceeded. (#{max_retries})"
+  raise ApiError, "Stopped waiting for the task after #{max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries."
 end
 
 # Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
@@ -254,7 +254,7 @@ def wait_for_api_key(key, operation, api_key = Search::ApiKey.new, max_retries =
       sleep(timeout.call(retries) / 1000.0)
     end
   
-    raise ApiError, "The maximum number of retries exceeded. (#{max_retries})"
+    raise ApiError, "Stopped waiting for the task after #{max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries."
   end
 
   while retries < max_retries
@@ -273,7 +273,7 @@ def wait_for_api_key(key, operation, api_key = Search::ApiKey.new, max_retries =
     sleep(timeout.call(retries) / 1000.0)
   end
 
-  raise ApiError, "The maximum number of retries exceeded. (#{max_retries})"
+  raise ApiError, "Stopped waiting for the task after #{max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries."
 end
 
 # Helper: Iterate on the `browse` method of the client to allow aggregating objects of an index.

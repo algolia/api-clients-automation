@@ -42,7 +42,7 @@ def chunked_push(index_name, objects, action = Ingestion::Action::ADD_OBJECT, wa
             raise e unless e.code == 404
           end
           retries += 1
-          raise ApiError, "The maximum number of retries exceeded. (#{max_retries})" if retries >= max_retries
+          raise ApiError, "Stopped waiting for the task after #{max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries." if retries >= max_retries
           sleep([retries * 1.5, 5].min)
         end
       end
