@@ -63,7 +63,9 @@ public extension SearchClient {
                 }
                 var rest = obj
                 rest.removeValue(forKey: "objectID")
-                return PushTaskRecords(objectID: objectID, additionalProperties: rest)
+                var record = PushTaskRecords(objectID: objectID)
+                record.additionalProperties = rest
+                return record
             }
 
             let response = try await ingestionClient.push(

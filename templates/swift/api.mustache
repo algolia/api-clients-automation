@@ -19,7 +19,7 @@ import Foundation
     public private(set) var configuration: {{classname}}Configuration
     private var transporter: Transporter
     {{#isSearchClient}}
-    private var _ingestionClient: IngestionClient?
+    var _ingestionClient: IngestionClient?
     {{/isSearchClient}}
 
     var appID: String {
