@@ -140,7 +140,7 @@ def replace_all_objects_with_transformation(
       batch_size,
       index_name,
       request_options,
-      chunked_options
+      opts
     )
 
     wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries)
@@ -559,7 +559,7 @@ def replace_all_objects(index_name, objects, batch_size = 1000, scopes = [Search
       true,
       batch_size,
       request_options,
-      chunked_options
+      opts
     )
 
     wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries)
