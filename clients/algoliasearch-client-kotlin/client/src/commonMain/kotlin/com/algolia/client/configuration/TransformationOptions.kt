@@ -1,32 +1,22 @@
 package com.algolia.client.configuration
 
-import kotlin.time.Duration
-
 /**
  * Configuration options for the ingestion transporter used by the `*WithTransformation` helpers on
  * [com.algolia.client.api.SearchClient].
  *
  * When installed on a `SearchClient` via [com.algolia.client.api.SearchClient.withTransformation] or
  * [com.algolia.client.api.SearchClient.setTransformationOptions], an
- * [com.algolia.client.api.IngestionClient] is eagerly built using Ingestion API defaults (25 s
- * connect/read/write timeouts, region-derived hosts, no compression). Only the fields explicitly set on
- * this object override those defaults; the parent search [ClientOptions] is never forwarded to the
- * ingestion transporter.
+ * [com.algolia.client.api.IngestionClient] is eagerly built. Pass a [ClientOptions] to override the
+ * Ingestion API defaults (25 s connect/read/write timeouts, region-derived hosts, no compression);
+ * only the fields explicitly set there replace the defaults. The parent search [ClientOptions] is
+ * never forwarded to the ingestion transporter.
  *
  * @param region Algolia region for the Ingestion API (e.g. `"us"` or `"eu"`). Required.
- * @param connectTimeout Optional connect timeout for the ingestion transporter.
- * @param readTimeout Optional read timeout for the ingestion transporter.
- * @param writeTimeout Optional write timeout for the ingestion transporter.
- * @param hosts Optional custom list of hosts for the ingestion transporter.
- * @param defaultHeaders Optional default headers applied to every ingestion request.
+ * @param clientOptions Optional [ClientOptions] forwarded to the ingestion transporter.
  */
 public data class TransformationOptions(
   public val region: String,
-  public val connectTimeout: Duration? = null,
-  public val readTimeout: Duration? = null,
-  public val writeTimeout: Duration? = null,
-  public val hosts: List<Host>? = null,
-  public val defaultHeaders: Map<String, String>? = null,
+  public val clientOptions: ClientOptions? = null,
 ) {
   init {
     require(region.isNotBlank()) {

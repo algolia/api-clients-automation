@@ -89,13 +89,7 @@ public class {{classname}}(
       appId = appId,
       apiKey = apiKey,
       region = transformationOptions.region,
-      options = ClientOptions(
-        connectTimeout = transformationOptions.connectTimeout,
-        readTimeout = transformationOptions.readTimeout,
-        writeTimeout = transformationOptions.writeTimeout,
-        hosts = transformationOptions.hosts,
-        defaultHeaders = transformationOptions.defaultHeaders,
-      ),
+      options = transformationOptions.clientOptions ?: ClientOptions(),
     )
   }
 
