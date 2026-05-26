@@ -45,26 +45,6 @@ import Foundation
     }
 
     {{#isSearchClient}}
-    /// Creates a SearchClient configured with TransformationOptions for use with `*WithTransformation` helpers.
-    /// An ingestion transporter is eagerly created using Ingestion API defaults (25 s timeouts);
-    /// set override fields on TransformationOptions to replace specific defaults.
-    /// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
-    /// - parameter appID: The Algolia application ID.
-    /// - parameter apiKey: The Algolia API key.
-    /// - parameter transformationOptions: The transformation options including region and optional ingestion transporter overrides.
-    public static func withTransformation(
-        appID: String,
-        apiKey: String,
-        transformationOptions: TransformationOptions
-    ) throws -> {{classname}} {
-        let configuration = try {{classname}}Configuration(
-            appID: appID,
-            apiKey: apiKey,
-            transformationOptions: transformationOptions
-        )
-        return {{classname}}(configuration: configuration)
-    }
-
     private static func makeIngestionClient(
         appID: String,
         apiKey: String,
