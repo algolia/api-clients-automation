@@ -20,6 +20,7 @@ class BenchmarkClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
+
     for i in 1..2000
       req = client.search(
         Algolia::Search::SearchMethodParams.new(

@@ -92,6 +92,7 @@ func TestAnalyticsparameters0(t *testing.T) {
 		},
 	}
 	client, err = analytics.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.GetAverageClickPosition(client.NewApiGetAverageClickPositionRequest(
 		"my-index"))
@@ -125,6 +126,7 @@ func TestAnalyticsparameters1(t *testing.T) {
 		Region: analytics.Region("de"),
 	}
 	client, err = analytics.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"test"))
@@ -158,6 +160,7 @@ func TestAnalyticsparameters2(t *testing.T) {
 		Region: analytics.Region("not_a_region"),
 	}
 	client, err = analytics.NewClientWithConfig(cfg)
+
 	require.EqualError(t, err, "`region` must be one of the following: de, us")
 }
 
@@ -202,6 +205,7 @@ func TestAnalyticssetClientApiKey0(t *testing.T) {
 		Region: analytics.Region("us"),
 	}
 	client, err = analytics.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(

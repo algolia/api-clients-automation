@@ -12441,7 +12441,7 @@ public class SearchClient extends ApiClient {
    *
    * @param indexName The `indexName` where the operation was performed.
    * @param taskID The `taskID` returned in the method response.
-   * @param maxRetries The maximum number of retry. 50 by default. (optional)
+   * @param maxRetries The maximum number of retry. 100 by default. (optional)
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -12479,7 +12479,7 @@ public class SearchClient extends ApiClient {
    *
    * @param indexName The `indexName` where the operation was performed.
    * @param taskID The `taskID` returned in the method response.
-   * @param maxRetries The maximum number of retry. 50 by default. (optional)
+   * @param maxRetries The maximum number of retry. 100 by default. (optional)
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
    */
@@ -12501,7 +12501,7 @@ public class SearchClient extends ApiClient {
    * Helper: Wait for a application-level task to complete with `taskID`.
    *
    * @param taskID The `taskID` returned in the method response.
-   * @param maxRetries The maximum number of retry. 50 by default. (optional)
+   * @param maxRetries The maximum number of retry. 100 by default. (optional)
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -12531,7 +12531,7 @@ public class SearchClient extends ApiClient {
    * Helper: Wait for an application-level task to complete with `taskID`.
    *
    * @param taskID The `taskID` returned in the method response.
-   * @param maxRetries The maximum number of retry. 50 by default. (optional)
+   * @param maxRetries The maximum number of retry. 100 by default. (optional)
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
    */
@@ -12555,7 +12555,7 @@ public class SearchClient extends ApiClient {
    * @param key The `key` that has been added, deleted or updated.
    * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of
    *     the response with it.
-   * @param maxRetries The maximum number of retry. 50 by default. (optional)
+   * @param maxRetries The maximum number of retry. 100 by default. (optional)
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -12631,7 +12631,7 @@ public class SearchClient extends ApiClient {
    *
    * @param key The `key` that has been added or deleted.
    * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
-   * @param maxRetries The maximum number of retry. 50 by default. (optional)
+   * @param maxRetries The maximum number of retry. 100 by default. (optional)
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -12680,7 +12680,7 @@ public class SearchClient extends ApiClient {
    * @param operation The `operation` that was done on a `key`.
    * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of
    *     the response with it.
-   * @param maxRetries The maximum number of retry. 50 by default. (optional)
+   * @param maxRetries The maximum number of retry. 100 by default. (optional)
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
    */
@@ -12693,7 +12693,7 @@ public class SearchClient extends ApiClient {
    *
    * @param key The `key` that has been added or deleted.
    * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
-   * @param maxRetries The maximum number of retry. 50 by default. (optional)
+   * @param maxRetries The maximum number of retry. 100 by default. (optional)
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
    */
@@ -13055,6 +13055,39 @@ public class SearchClient extends ApiClient {
     int batchSize,
     RequestOptions requestOptions
   ) {
+    return chunkedBatch(indexName, objects, action, waitForTasks, batchSize, requestOptions, null);
+  }
+
+  /**
+   * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit
+   * in `batch` requests.
+   *
+   * @summary Helper: Chunks the given `objects` list in subset of 1000 elements max in order to
+   *     make it fit in `batch` requests.
+   * @param indexName - The `indexName` to replace `objects` in.
+   * @param objects - The array of `objects` to store in the given Algolia `indexName`.
+   * @param action - The `batch` `action` to perform on the given array of `objects`.
+   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+   *     processed, this operation may slow the total execution time of this method but is more
+   *     reliable.
+   * @param batchSize - The size of the chunk of `objects`. The number of `batch` calls will be
+   *     equal to `length(objects) / batchSize`. Defaults to 1000.
+   * @param requestOptions - The requestOptions to send along with the query, they will be forwarded
+   *     to the `getTask` method and merged with the transporter requestOptions.
+   * @param chunkedOptions - Optional configuration for the helper (e.g. maxRetries). Defaults to
+   *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
+   * @see ChunkedHelperOptions
+   */
+  public <T> List<BatchResponse> chunkedBatch(
+    String indexName,
+    Iterable<T> objects,
+    Action action,
+    boolean waitForTasks,
+    int batchSize,
+    RequestOptions requestOptions,
+    ChunkedHelperOptions chunkedOptions
+  ) {
+    int maxRetries = chunkedOptions != null ? chunkedOptions.getMaxRetries() : TaskUtils.DEFAULT_MAX_RETRIES;
     List<BatchResponse> responses = new ArrayList<>();
     List<BatchRequest> requests = new ArrayList<>();
 
@@ -13074,7 +13107,7 @@ public class SearchClient extends ApiClient {
     }
 
     if (waitForTasks) {
-      responses.forEach(response -> waitForTask(indexName, response.getTaskID(), requestOptions));
+      responses.forEach(response -> waitForTask(indexName, response.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions));
     }
 
     return responses;
@@ -13184,9 +13217,7 @@ public class SearchClient extends ApiClient {
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
-   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
-   *     processed, this operation may slow the total execution time of this method but is more
-   *     reliable.
+   * @param waitForTasks Whether or not we should wait until every `batch` tasks has been processed.
    * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
    *     to `length(objects) / batchSize`.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -13198,6 +13229,37 @@ public class SearchClient extends ApiClient {
     boolean waitForTasks,
     int batchSize,
     RequestOptions requestOptions
+  ) {
+    return saveObjectsWithTransformation(indexName, objects, waitForTasks, batchSize, requestOptions, null);
+  }
+
+  /**
+   * Helper: Similar to the `saveObjects` method but requires a Push connector
+   * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+   * to be created first, in order to transform records before indexing them to Algolia. The {@link
+   * TransformationOptions} must have been passed to the client constructor or set via {@link
+   * #setTransformationOptions}.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+   *     processed, this operation may slow the total execution time of this method but is more
+   *     reliable.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+   *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
+   * @see ChunkedHelperOptions
+   */
+  public <T> List<WatchResponse> saveObjectsWithTransformation(
+    String indexName,
+    Iterable<T> objects,
+    boolean waitForTasks,
+    int batchSize,
+    RequestOptions requestOptions,
+    ChunkedHelperOptions chunkedOptions
   ) {
     if (this.ingestionTransporter == null) {
       throw new AlgoliaRuntimeException(
@@ -13214,7 +13276,8 @@ public class SearchClient extends ApiClient {
       waitForTasks,
       batchSize,
       null,
-      requestOptions
+      requestOptions,
+      chunkedOptions
     );
   }
 
@@ -13264,9 +13327,7 @@ public class SearchClient extends ApiClient {
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
-   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
-   *     processed, this operation may slow the total execution time of this method but is more
-   *     reliable.
+   * @param waitForTasks Whether or not we should wait until every `batch` tasks has been processed.
    * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
    *     to `length(objects) / batchSize`.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -13279,7 +13340,35 @@ public class SearchClient extends ApiClient {
     int batchSize,
     RequestOptions requestOptions
   ) {
-    return chunkedBatch(indexName, objects, Action.ADD_OBJECT, waitForTasks, batchSize, requestOptions);
+    return saveObjects(indexName, objects, waitForTasks, batchSize, requestOptions, null);
+  }
+
+  /**
+   * Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used
+   * under the hood, which creates a `batch` requests with at most 1000 objects in it.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+   *     processed, this operation may slow the total execution time of this method but is more
+   *     reliable.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+   *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
+   * @see ChunkedHelperOptions
+   */
+  public <T> List<BatchResponse> saveObjects(
+    String indexName,
+    Iterable<T> objects,
+    boolean waitForTasks,
+    int batchSize,
+    RequestOptions requestOptions,
+    ChunkedHelperOptions chunkedOptions
+  ) {
+    return chunkedBatch(indexName, objects, Action.ADD_OBJECT, waitForTasks, batchSize, requestOptions, chunkedOptions);
   }
 
   /**
@@ -13319,7 +13408,29 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions. (optional)
    */
   public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs, boolean waitForTasks, RequestOptions requestOptions) {
-    return deleteObjects(indexName, objectIDs, false, 1000, null);
+    return deleteObjects(indexName, objectIDs, waitForTasks, 1000, requestOptions);
+  }
+
+  /**
+   * Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under
+   * the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
+   *
+   * @param indexName The `indexName` to delete `objectIDs` from.
+   * @param objectIDs The array of `objectIDs` to delete from the `indexName`.
+   * @param waitForTasks Whether or not we should wait until every `batch` tasks has been processed.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public List<BatchResponse> deleteObjects(
+    String indexName,
+    List<String> objectIDs,
+    boolean waitForTasks,
+    int batchSize,
+    RequestOptions requestOptions
+  ) {
+    return deleteObjects(indexName, objectIDs, waitForTasks, batchSize, requestOptions, null);
   }
 
   /**
@@ -13335,13 +13446,17 @@ public class SearchClient extends ApiClient {
    *     to `length(objects) / batchSize`.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
+   * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+   *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
+   * @see ChunkedHelperOptions
    */
   public List<BatchResponse> deleteObjects(
     String indexName,
     List<String> objectIDs,
     boolean waitForTasks,
     int batchSize,
-    RequestOptions requestOptions
+    RequestOptions requestOptions,
+    ChunkedHelperOptions chunkedOptions
   ) {
     List<Map<String, String>> objects = new ArrayList<>();
 
@@ -13351,7 +13466,7 @@ public class SearchClient extends ApiClient {
       objects.add(obj);
     }
 
-    return chunkedBatch(indexName, objects, Action.DELETE_OBJECT, waitForTasks, batchSize, requestOptions);
+    return chunkedBatch(indexName, objects, Action.DELETE_OBJECT, waitForTasks, batchSize, requestOptions, chunkedOptions);
   }
 
   /**
@@ -13432,9 +13547,7 @@ public class SearchClient extends ApiClient {
    * @param objects The array of `objects` to update in the given Algolia `indexName`.
    * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call
    *     will fail.
-   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
-   *     processed, this operation may slow the total execution time of this method but is more
-   *     reliable.
+   * @param waitForTasks Whether or not we should wait until every `batch` tasks has been processed.
    * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
    *     to `length(objects) / batchSize`.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -13447,6 +13560,40 @@ public class SearchClient extends ApiClient {
     boolean waitForTasks,
     int batchSize,
     RequestOptions requestOptions
+  ) {
+    return partialUpdateObjectsWithTransformation(indexName, objects, createIfNotExists, waitForTasks, batchSize, requestOptions, null);
+  }
+
+  /**
+   * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector
+   * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+   * to be created first, in order to transform records before indexing them to Algolia. The {@link
+   * TransformationOptions} must have been passed to the client constructor or set via {@link
+   * #setTransformationOptions}.
+   *
+   * @param indexName The `indexName` to update `objects` in.
+   * @param objects The array of `objects` to update in the given Algolia `indexName`.
+   * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call
+   *     will fail.
+   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+   *     processed, this operation may slow the total execution time of this method but is more
+   *     reliable.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+   *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
+   * @see ChunkedHelperOptions
+   */
+  public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
+    String indexName,
+    Iterable<T> objects,
+    boolean createIfNotExists,
+    boolean waitForTasks,
+    int batchSize,
+    RequestOptions requestOptions,
+    ChunkedHelperOptions chunkedOptions
   ) {
     if (this.ingestionTransporter == null) {
       throw new AlgoliaRuntimeException(
@@ -13465,7 +13612,8 @@ public class SearchClient extends ApiClient {
       waitForTasks,
       batchSize,
       null,
-      requestOptions
+      requestOptions,
+      chunkedOptions
     );
   }
 
@@ -13527,7 +13675,33 @@ public class SearchClient extends ApiClient {
     boolean waitForTasks,
     RequestOptions requestOptions
   ) {
-    return partialUpdateObjects(indexName, objects, createIfNotExists, waitForTasks, 1000, null);
+    return partialUpdateObjects(indexName, objects, createIfNotExists, waitForTasks, 1000, requestOptions);
+  }
+
+  /**
+   * Helper: Replaces object content of all the given objects according to their respective
+   * `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch`
+   * requests with at most 1000 objects in it.
+   *
+   * @param indexName The `indexName` to update `objects` in.
+   * @param objects The array of `objects` to update in the given Algolia `indexName`.
+   * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call
+   *     will fail.
+   * @param waitForTasks Whether or not we should wait until every `batch` tasks has been processed.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public <T> List<BatchResponse> partialUpdateObjects(
+    String indexName,
+    Iterable<T> objects,
+    boolean createIfNotExists,
+    boolean waitForTasks,
+    int batchSize,
+    RequestOptions requestOptions
+  ) {
+    return partialUpdateObjects(indexName, objects, createIfNotExists, waitForTasks, batchSize, requestOptions, null);
   }
 
   /**
@@ -13546,6 +13720,9 @@ public class SearchClient extends ApiClient {
    *     to `length(objects) / batchSize`.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
+   * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+   *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
+   * @see ChunkedHelperOptions
    */
   public <T> List<BatchResponse> partialUpdateObjects(
     String indexName,
@@ -13553,7 +13730,8 @@ public class SearchClient extends ApiClient {
     boolean createIfNotExists,
     boolean waitForTasks,
     int batchSize,
-    RequestOptions requestOptions
+    RequestOptions requestOptions,
+    ChunkedHelperOptions chunkedOptions
   ) {
     return chunkedBatch(
       indexName,
@@ -13561,7 +13739,8 @@ public class SearchClient extends ApiClient {
       createIfNotExists ? Action.PARTIAL_UPDATE_OBJECT : Action.PARTIAL_UPDATE_OBJECT_NO_CREATE,
       waitForTasks,
       batchSize,
-      requestOptions
+      requestOptions,
+      chunkedOptions
     );
   }
 
@@ -13644,6 +13823,39 @@ public class SearchClient extends ApiClient {
     List<ScopeType> scopes,
     RequestOptions requestOptions
   ) {
+    return replaceAllObjects(indexName, objects, batchSize, scopes, requestOptions, null);
+  }
+
+  /**
+   * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
+   * untouched. Replace all records in an index without any downtime. See
+   * https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for
+   * implementation details.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param scopes The `scopes` to keep from the index. Defaults to ['settings', 'rules',
+   *     'synonyms'].
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+   *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
+   * @throws AlgoliaRetryException When the retry has failed on all hosts
+   * @throws AlgoliaApiException When the API sends an http error code
+   * @throws AlgoliaRuntimeException When an error occurred during the serialization
+   * @see ChunkedHelperOptions
+   */
+  public <T> ReplaceAllObjectsResponse replaceAllObjects(
+    String indexName,
+    Iterable<T> objects,
+    int batchSize,
+    List<ScopeType> scopes,
+    RequestOptions requestOptions,
+    ChunkedHelperOptions chunkedOptions
+  ) {
+    int maxRetries = chunkedOptions != null ? chunkedOptions.getMaxRetries() : TaskUtils.DEFAULT_MAX_RETRIES;
     Random rnd = new Random();
     String tmpIndexName = indexName + "_tmp_" + rnd.nextInt(100);
 
@@ -13670,16 +13882,24 @@ public class SearchClient extends ApiClient {
       );
 
       // Save new objects
-      List<BatchResponse> batchResponses = chunkedBatch(tmpIndexName, objects, Action.ADD_OBJECT, true, batchSize, requestOptions);
+      List<BatchResponse> batchResponses = chunkedBatch(
+        tmpIndexName,
+        objects,
+        Action.ADD_OBJECT,
+        true,
+        batchSize,
+        requestOptions,
+        chunkedOptions
+      );
 
-      waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
+      waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
 
       copyOperationResponse = operationIndex(
         indexName,
         new OperationIndexParams().setOperation(OperationType.COPY).setDestination(tmpIndexName).setScope(scopes),
         requestOptions
       );
-      waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
+      waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
 
       // Move temporary index to source index
       UpdatedAtResponse moveOperationResponse = operationIndex(
@@ -13687,7 +13907,7 @@ public class SearchClient extends ApiClient {
         new OperationIndexParams().setOperation(OperationType.MOVE).setDestination(indexName),
         requestOptions
       );
-      waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), requestOptions);
+      waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
 
       return new ReplaceAllObjectsResponse()
         .setCopyOperationResponse(copyOperationResponse)
@@ -13792,6 +14012,39 @@ public class SearchClient extends ApiClient {
     List<ScopeType> scopes,
     RequestOptions requestOptions
   ) {
+    return replaceAllObjectsWithTransformation(indexName, objects, batchSize, scopes, requestOptions, null);
+  }
+
+  /**
+   * Helper: Similar to the `saveObjects` method but requires a Push connector
+   * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+   * to be created first, in order to transform records before indexing them to Algolia. The {@link
+   * TransformationOptions} must have been passed to the client constructor or set via {@link
+   * #setTransformationOptions}.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param scopes The `scopes` to keep from the index. Defaults to ['settings', 'rules',
+   *     'synonyms'].
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   * @param chunkedOptions Optional configuration for the helper (e.g. maxRetries). Defaults to
+   *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
+   * @throws AlgoliaRetryException When the retry has failed on all hosts
+   * @throws AlgoliaApiException When the API sends an http error code
+   * @throws AlgoliaRuntimeException When an error occurred during the serialization
+   * @see ChunkedHelperOptions
+   */
+  public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTransformation(
+    String indexName,
+    Iterable<T> objects,
+    int batchSize,
+    List<ScopeType> scopes,
+    RequestOptions requestOptions,
+    ChunkedHelperOptions chunkedOptions
+  ) {
     if (this.ingestionTransporter == null) {
       throw new AlgoliaRuntimeException(
         "transformationOptions must be set in the client config before calling this method." +
@@ -13800,6 +14053,7 @@ public class SearchClient extends ApiClient {
       );
     }
 
+    int maxRetries = chunkedOptions != null ? chunkedOptions.getMaxRetries() : TaskUtils.DEFAULT_MAX_RETRIES;
     Random rnd = new Random();
     String tmpIndexName = indexName + "_tmp_" + rnd.nextInt(100);
 
@@ -13833,17 +14087,18 @@ public class SearchClient extends ApiClient {
         true,
         batchSize,
         indexName,
-        requestOptions
+        requestOptions,
+        chunkedOptions
       );
 
-      waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
+      waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
 
       copyOperationResponse = operationIndex(
         indexName,
         new OperationIndexParams().setOperation(OperationType.COPY).setDestination(tmpIndexName).setScope(scopes),
         requestOptions
       );
-      waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
+      waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
 
       // Move temporary index to source index
       UpdatedAtResponse moveOperationResponse = operationIndex(
@@ -13851,7 +14106,7 @@ public class SearchClient extends ApiClient {
         new OperationIndexParams().setOperation(OperationType.MOVE).setDestination(indexName),
         requestOptions
       );
-      waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), requestOptions);
+      waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
 
       return new ReplaceAllObjectsWithTransformationResponse()
         .setCopyOperationResponse(copyOperationResponse)

@@ -32,6 +32,8 @@
   */
 package algoliasearch.search
 
+import algoliasearch.search.FacetHits
+
 /** SearchForFacetValuesResponse
   *
   * @param facetHits

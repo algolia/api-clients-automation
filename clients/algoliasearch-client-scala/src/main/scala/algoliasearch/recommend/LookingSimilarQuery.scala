@@ -28,7 +28,9 @@
   */
 package algoliasearch.recommend
 
-import algoliasearch.recommend.LookingSimilarModel._
+import algoliasearch.recommend.FallbackParams
+import algoliasearch.recommend.LookingSimilarModel
+import algoliasearch.recommend.RecommendSearchParams
 
 /** LookingSimilarQuery
   *

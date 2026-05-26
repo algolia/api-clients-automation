@@ -72,7 +72,11 @@ public class ABTest {
     return this;
   }
 
-  /** Get clickSignificance */
+  /**
+   * A/B test significance calculated from click events. Values of 0.95 or higher can be considered
+   * significant, that is, the difference between A and B variants is _not_ due to random
+   * variations. Lower values have a.
+   */
   @javax.annotation.Nullable
   public Double getClickSignificance() {
     return clickSignificance;
@@ -83,7 +87,11 @@ public class ABTest {
     return this;
   }
 
-  /** Get conversionSignificance */
+  /**
+   * A/B test significance calculated from conversion events. Values of 0.95 or higher can be
+   * considered significant, that is, the difference between A and B variants is _not_ due to random
+   * variations.
+   */
   @javax.annotation.Nullable
   public Double getConversionSignificance() {
     return conversionSignificance;
@@ -94,7 +102,11 @@ public class ABTest {
     return this;
   }
 
-  /** Get addToCartSignificance */
+  /**
+   * A/B test significance calculated from add-to-cart events. Values of 0.95 or higher can be
+   * considered significant, that is, the difference between A and B variants is _not_ due to random
+   * variations.
+   */
   @javax.annotation.Nullable
   public Double getAddToCartSignificance() {
     return addToCartSignificance;
@@ -105,7 +117,11 @@ public class ABTest {
     return this;
   }
 
-  /** Get purchaseSignificance */
+  /**
+   * A/B test significance calculated from purchase events. Values of 0.95 or higher can be
+   * considered significant, that is, the difference between A and B variants is _not_ due to random
+   * variations.
+   */
   @javax.annotation.Nullable
   public Double getPurchaseSignificance() {
     return purchaseSignificance;
@@ -124,7 +140,11 @@ public class ABTest {
     return this;
   }
 
-  /** Get revenueSignificance */
+  /**
+   * A/B test significance calculated from revenue data. Values of 0.95 or higher can be considered
+   * significant, that is, the difference between A and B variants is _not_ due to random
+   * variations.
+   */
   @javax.annotation.Nullable
   public Map<String, Double> getRevenueSignificance() {
     return revenueSignificance;

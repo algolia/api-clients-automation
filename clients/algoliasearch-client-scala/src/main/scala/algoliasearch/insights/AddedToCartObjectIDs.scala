@@ -26,8 +26,10 @@
   */
 package algoliasearch.insights
 
-import algoliasearch.insights.AddToCartEvent._
-import algoliasearch.insights.ConversionEvent._
+import algoliasearch.insights.AddToCartEvent
+import algoliasearch.insights.ConversionEvent
+import algoliasearch.insights.ObjectData
+import algoliasearch.insights.Value
 
 /** Use this event to track when users add items to their shopping cart unrelated to a previous Algolia request. For
   * example, if you don't use Algolia to build your category pages, use this event. To track add-to-cart events related

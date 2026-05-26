@@ -11,7 +11,7 @@ public class TaskUtils {
     // Empty.
   }
 
-  public static final int DEFAULT_MAX_RETRIES = 50;
+  public static final int DEFAULT_MAX_RETRIES = 100;
   public static final IntUnaryOperator DEFAULT_TIMEOUT = (int retries) -> Math.min(retries * 200, 5000);
 
   public static <T> T retryUntil(Supplier<T> func, Predicate<T> validate, int maxRetries, IntUnaryOperator timeout)
@@ -37,6 +37,12 @@ public class TaskUtils {
 
       retryCount++;
     }
-    throw new AlgoliaRetriesExceededException("The maximum number of retries exceeded. (" + (retryCount + 1) + "/" + maxRetries + ")");
+    throw new AlgoliaRetriesExceededException(
+      "Stopped waiting for the task after " +
+        maxRetries +
+        " retries. " +
+        "This does not mean the operation failed; it may still complete. " +
+        "If you need to keep polling, retry with a higher maxRetries."
+    );
   }
 }

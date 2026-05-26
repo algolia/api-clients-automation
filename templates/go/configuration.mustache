@@ -20,22 +20,12 @@ const (
 // {{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{/lambda.titlecase}}Configuration stores the configuration of the API client.
 type {{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{/lambda.titlecase}}Configuration struct {
 	transport.Configuration
-  
+
   {{#hasRegionalHost}}Region Region{{/hasRegionalHost}}
   {{#isSearchClient}}
-  Transformation *TransformationConfiguration
+  // TransformationOptions configures the ingestion transporter used by *WithTransformation helpers.
+  // When set, the transporter is eagerly created using Ingestion API defaults.
+  TransformationOptions *TransformationOptions
   {{/isSearchClient}}
 }
 
-{{#isSearchClient}}
-type TransformationConfiguration struct {
-  Region ingestion.Region
-}
-
-// SetTransformationRegion sets the region of the current algolia application to the configuration, this is required to be called if you wish to leverage the transformation pipeline (via the *WithTransformation methods).
-func (s *SearchConfiguration) SetTransformationRegion(region ingestion.Region) {
-  s.Transformation = &TransformationConfiguration{
-    Region: region,
-  }
-}
-{{/isSearchClient}}

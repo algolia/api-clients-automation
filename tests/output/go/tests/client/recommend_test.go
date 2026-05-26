@@ -55,6 +55,7 @@ func TestRecommendapi0(t *testing.T) {
 		},
 	}
 	client, err = recommend.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"test"))
@@ -87,6 +88,7 @@ func TestRecommendapi1(t *testing.T) {
 		},
 	}
 	client, err = recommend.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"test"))
@@ -155,6 +157,7 @@ func TestRecommendsetClientApiKey0(t *testing.T) {
 		},
 	}
 	client, err = recommend.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(

@@ -48,6 +48,12 @@ public class FetchedIndex {
   @JsonProperty("virtual")
   private Boolean virtual;
 
+  @JsonProperty("abTest")
+  private FetchedIndexAbTest abTest;
+
+  @JsonProperty("sourceABTest")
+  private String sourceABTest;
+
   public FetchedIndex setName(String name) {
     this.name = name;
     return this;
@@ -197,6 +203,31 @@ public class FetchedIndex {
     return virtual;
   }
 
+  public FetchedIndex setAbTest(FetchedIndexAbTest abTest) {
+    this.abTest = abTest;
+    return this;
+  }
+
+  /** Get abTest */
+  @javax.annotation.Nullable
+  public FetchedIndexAbTest getAbTest() {
+    return abTest;
+  }
+
+  public FetchedIndex setSourceABTest(String sourceABTest) {
+    this.sourceABTest = sourceABTest;
+    return this;
+  }
+
+  /**
+   * Name of the index that owns the A/B test configuration. Only present when this index
+   * participates in an A/B test configured on another index.
+   */
+  @javax.annotation.Nullable
+  public String getSourceABTest() {
+    return sourceABTest;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -218,7 +249,9 @@ public class FetchedIndex {
       Objects.equals(this.pendingTask, fetchedIndex.pendingTask) &&
       Objects.equals(this.primary, fetchedIndex.primary) &&
       Objects.equals(this.replicas, fetchedIndex.replicas) &&
-      Objects.equals(this.virtual, fetchedIndex.virtual)
+      Objects.equals(this.virtual, fetchedIndex.virtual) &&
+      Objects.equals(this.abTest, fetchedIndex.abTest) &&
+      Objects.equals(this.sourceABTest, fetchedIndex.sourceABTest)
     );
   }
 
@@ -236,7 +269,9 @@ public class FetchedIndex {
       pendingTask,
       primary,
       replicas,
-      virtual
+      virtual,
+      abTest,
+      sourceABTest
     );
   }
 
@@ -256,6 +291,8 @@ public class FetchedIndex {
     sb.append("    primary: ").append(toIndentedString(primary)).append("\n");
     sb.append("    replicas: ").append(toIndentedString(replicas)).append("\n");
     sb.append("    virtual: ").append(toIndentedString(virtual)).append("\n");
+    sb.append("    abTest: ").append(toIndentedString(abTest)).append("\n");
+    sb.append("    sourceABTest: ").append(toIndentedString(sourceABTest)).append("\n");
     sb.append("}");
     return sb.toString();
   }

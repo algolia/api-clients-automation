@@ -1,3 +1,21 @@
+{{#hasTransformationRegion}}
+{{#hasTransformationCustomHosts}}_transformation_options = Algolia::TransformationOptions.new('{{transformationRegion}}', hosts: [{{#transformationCustomHosts}}Algolia::Transport::StatefulHost.new(ENV.fetch('CI', nil) == 'true' ? 'localhost' : 'host.docker.internal', protocol: 'http://', port: {{port}}, accept: CallType::READ | CallType::WRITE){{^-last}}, {{/-last}}{{/transformationCustomHosts}}])
+{{/hasTransformationCustomHosts}}
+{{^hasTransformationCustomHosts}}_transformation_options = Algolia::TransformationOptions.new('{{transformationRegion}}')
+{{/hasTransformationCustomHosts}}
+{{#hasCustomHosts}}client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.with_transformation(
+  '{{parametersWithDataTypeMap.appId.value}}',
+  '{{parametersWithDataTypeMap.apiKey.value}}',
+  _transformation_options,
+  {hosts: [{{#customHosts}}Algolia::Transport::StatefulHost.new(ENV.fetch('CI', nil) == 'true' ? 'localhost' : 'host.docker.internal', protocol: 'http://', port: {{port}}, accept: CallType::READ | CallType::WRITE){{^-last}}, {{/-last}}{{/customHosts}}]}
+){{/hasCustomHosts}}
+{{^hasCustomHosts}}client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.with_transformation(
+  '{{parametersWithDataTypeMap.appId.value}}',
+  '{{parametersWithDataTypeMap.apiKey.value}}',
+  _transformation_options
+){{/hasCustomHosts}}
+{{/hasTransformationRegion}}
+{{^hasTransformationRegion}}
 {{#hasCustomHosts}}
 client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create_with_config(Algolia::Configuration.new(
   '{{parametersWithDataTypeMap.appId.value}}',
@@ -12,3 +30,4 @@ client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.creat
   {{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}}'{{parametersWithDataTypeMap.region.value}}',{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}}
   { requester: Algolia::Transport::EchoRequester.new }
 ){{/hasCustomHosts}}
+{{/hasTransformationRegion}}

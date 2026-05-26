@@ -11,6 +11,7 @@ public struct QuerySuggestionsConfiguration: Codable, JSONEncodable {
     /// Algolia indices from which to get the popular searches for query suggestions.
     public var sourceIndices: [SourceIndex]
     public var languages: QuerySuggestionsLanguages?
+    /// Words or regular expressions to exclude from the suggestions.
     public var exclude: [String]?
     /// Whether to turn on personalized query suggestions.
     public var enablePersonalization: Bool?
@@ -51,15 +52,7 @@ public struct QuerySuggestionsConfiguration: Codable, JSONEncodable {
     }
 }
 
-extension QuerySuggestionsConfiguration: Equatable {
-    public static func ==(lhs: QuerySuggestionsConfiguration, rhs: QuerySuggestionsConfiguration) -> Bool {
-        lhs.sourceIndices == rhs.sourceIndices &&
-            lhs.languages == rhs.languages &&
-            lhs.exclude == rhs.exclude &&
-            lhs.enablePersonalization == rhs.enablePersonalization &&
-            lhs.allowSpecialCharacters == rhs.allowSpecialCharacters
-    }
-}
+extension QuerySuggestionsConfiguration: Equatable {}
 
 extension QuerySuggestionsConfiguration: Hashable {
     public func hash(into hasher: inout Hasher) {

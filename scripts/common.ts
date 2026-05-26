@@ -318,6 +318,12 @@ export async function setupAndGen(
   await generateOpenapitools(generators, mode, additionalProperties);
   await buildCustomGenerators();
 
+  // Ensure the standard openapi-generator JAR is downloaded before generation.
+  // Since v2.31.1, openapi-generator-cli skips downloading it when --custom-generator
+  // is present, then falls back to `java -jar custom.jar` which fails because our
+  // custom generator is a library JAR without a Main-Class manifest attribute.
+  await run('yarn openapi-generator-cli version', { language: 'java' });
+
   for (const gen of generators) {
     const spinner = createSpinner(`generating ${mode} for ${gen.key}`);
     await fn(gen);

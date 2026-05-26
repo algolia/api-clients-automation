@@ -44,6 +44,11 @@ module Algolia
       # Only present if the index is a [virtual replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
       attr_accessor :virtual
 
+      attr_accessor :ab_test
+
+      # Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index.
+      attr_accessor :source_ab_test
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -58,7 +63,9 @@ module Algolia
           :pending_task => :pendingTask,
           :primary => :primary,
           :replicas => :replicas,
-          :virtual => :virtual
+          :virtual => :virtual,
+          :ab_test => :abTest,
+          :source_ab_test => :sourceABTest
         }
       end
 
@@ -76,7 +83,9 @@ module Algolia
           :pending_task => :"Boolean",
           :primary => :"String",
           :replicas => :"Array<String>",
-          :virtual => :"Boolean"
+          :virtual => :"Boolean",
+          :ab_test => :"FetchedIndexAbTest",
+          :source_ab_test => :"String"
         }
       end
 
@@ -177,6 +186,14 @@ module Algolia
         if attributes.key?(:virtual)
           self.virtual = attributes[:virtual]
         end
+
+        if attributes.key?(:ab_test)
+          self.ab_test = attributes[:ab_test]
+        end
+
+        if attributes.key?(:source_ab_test)
+          self.source_ab_test = attributes[:source_ab_test]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -195,7 +212,9 @@ module Algolia
           pending_task == other.pending_task &&
           primary == other.primary &&
           replicas == other.replicas &&
-          virtual == other.virtual
+          virtual == other.virtual &&
+          ab_test == other.ab_test &&
+          source_ab_test == other.source_ab_test
       end
 
       # @see the `==` method
@@ -219,7 +238,9 @@ module Algolia
           pending_task,
           primary,
           replicas,
-          virtual
+          virtual,
+          ab_test,
+          source_ab_test
         ].hash
       end
 

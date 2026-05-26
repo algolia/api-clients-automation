@@ -28,7 +28,9 @@
   */
 package algoliasearch.recommend
 
-import algoliasearch.recommend.TrendingItemsModel._
+import algoliasearch.recommend.FallbackParams
+import algoliasearch.recommend.RecommendSearchParams
+import algoliasearch.recommend.TrendingItemsModel
 
 /** TrendingItemsQuery
   *

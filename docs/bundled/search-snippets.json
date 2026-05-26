@@ -4988,6 +4988,9 @@
       "call partialUpdateObjects with createIfNotExists=true": "response = client.partial_update_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"1\", name: \"Adam\"}, {objectID: \"2\", name: \"Benoit\"}],\n  true\n)",
       "call partialUpdateObjects with createIfNotExists=false": "response = client.partial_update_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"3\", name: \"Cyril\"}, {objectID: \"4\", name: \"David\"}],\n  false\n)"
     },
+    "partialUpdateObjectsWithTransformation": {
+      "default": "response = client.partial_update_objects_with_transformation(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"1\", name: \"Adam\"}, {objectID: \"2\", name: \"Benoit\"}],\n  true,\n  true\n)"
+    },
     "removeUserId": {
       "default": "response = client.remove_user_id(\"uniqueID\")"
     },
@@ -4995,6 +4998,9 @@
       "call replaceAllObjects without error": "response = client.replace_all_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [\n    {objectID: \"1\", name: \"Adam\"},\n    {objectID: \"2\", name: \"Benoit\"},\n    {objectID: \"3\", name: \"Cyril\"},\n    {objectID: \"4\", name: \"David\"},\n    {objectID: \"5\", name: \"Eva\"},\n    {objectID: \"6\", name: \"Fiona\"},\n    {objectID: \"7\", name: \"Gael\"},\n    {objectID: \"8\", name: \"Hugo\"},\n    {objectID: \"9\", name: \"Igor\"},\n    {objectID: \"10\", name: \"Julia\"}\n  ],\n  3\n)",
       "call replaceAllObjects with partial scopes": "response = client.replace_all_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"1\", name: \"Adam\"}, {objectID: \"2\", name: \"Benoit\"}],\n  77,\n  [\"settings\", \"synonyms\"]\n)",
       "replaceAllObjects should cleanup on failure": "response = client.replace_all_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"fine\", body: \"small obj\"}, {objectID: \"toolarge\", body: \"something bigger than 10KB\"}]\n)"
+    },
+    "replaceAllObjectsWithTransformation": {
+      "default": "response = client.replace_all_objects_with_transformation(\n  \"<YOUR_INDEX_NAME>\",\n  [\n    {objectID: \"1\", name: \"Adam\"},\n    {objectID: \"2\", name: \"Benoit\"},\n    {objectID: \"3\", name: \"Cyril\"},\n    {objectID: \"4\", name: \"David\"},\n    {objectID: \"5\", name: \"Eva\"},\n    {objectID: \"6\", name: \"Fiona\"},\n    {objectID: \"7\", name: \"Gael\"},\n    {objectID: \"8\", name: \"Hugo\"},\n    {objectID: \"9\", name: \"Igor\"},\n    {objectID: \"10\", name: \"Julia\"}\n  ],\n  3\n)"
     },
     "replaceSources": {
       "default": "response = client.replace_sources([Algolia::Search::Source.new(source: \"theSource\", description: \"theDescription\")])"
@@ -5010,6 +5016,9 @@
       "saveObjects should report errors": "response = client.save_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"1\", name: \"Adam\"}, {objectID: \"2\", name: \"Benoit\"}]\n)",
       "saveObjectsPlaylist": "response = client.save_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [\n    {\n      objectID: \"1\",\n      visibility: \"public\",\n      name: \"Hot 100 Billboard Charts\",\n      playlistId: \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n      createdAt: \"1500240452\"\n    }\n  ]\n)",
       "saveObjectsPublicUser": "response = client.save_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [\n    {\n      objectID: \"1\",\n      visibility: \"public\",\n      name: \"Hot 100 Billboard Charts\",\n      playlistId: \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n      createdAt: \"1500240452\"\n    }\n  ],\n  false,\n  1000,\n  {:header_params => {\"X-Algolia-User-ID\" => \"*\"}}\n)"
+    },
+    "saveObjectsWithTransformation": {
+      "default": "response = client.save_objects_with_transformation(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"1\", name: \"Adam\"}, {objectID: \"2\", name: \"Benoit\"}],\n  true\n)"
     },
     "saveRule": {
       "saveRule with minimal parameters": "response = client.save_rule(\n  \"<YOUR_INDEX_NAME>\",\n  \"id1\",\n  Algolia::Search::Rule.new(\n    algolia_object_id: \"id1\",\n    conditions: [Algolia::Search::Condition.new(pattern: \"apple\", anchoring: \"contains\")],\n    consequence: Algolia::Search::Consequence.new(\n      params: Algolia::Search::ConsequenceParams.new(filters: \"brand:xiaomi\")\n    )\n  )\n)",

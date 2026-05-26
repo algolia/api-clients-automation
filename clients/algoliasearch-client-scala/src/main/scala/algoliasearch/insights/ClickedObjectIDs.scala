@@ -26,7 +26,7 @@
   */
 package algoliasearch.insights
 
-import algoliasearch.insights.ClickEvent._
+import algoliasearch.insights.ClickEvent
 
 /** Use this event to track when users click items unrelated to a previous Algolia request. For example, if you don't
   * use Algolia to build your category pages, use this event. To track click events related to Algolia requests, use the
