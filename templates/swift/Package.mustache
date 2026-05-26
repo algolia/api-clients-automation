@@ -56,12 +56,19 @@ products.append(
 [{{#packageList}}
   "{{#lambda.client-to-name}}{{.}}{{/lambda.client-to-name}}"{{^-last}},{{/-last}}{{/packageList}}
 ].enumerated().forEach { (_, library) in
+  var dependencies: [Target.Dependency] = [
+    .target(name: "AlgoliaCore"),
+  ]
+  // The Search target exposes `*WithTransformation` helpers backed by the Ingestion API, so it
+  // needs to import `AlgoliaIngestion` directly.
+  if library == "Search" {
+    dependencies.append(.target(name: "AlgoliaIngestion"))
+  }
+
   targets.append(
     .target(
       name: "Algolia\(library)",
-      dependencies: [
-        .target(name: "AlgoliaCore"),
-      ] + extraTargetDependencies,
+      dependencies: dependencies + extraTargetDependencies,
       path: "Sources/\(library)",
       resources: [
         .copy("../../PrivacyInfo.xcprivacy")

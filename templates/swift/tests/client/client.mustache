@@ -5,6 +5,9 @@ import Utils
 
 @testable import AlgoliaCore
 @testable import Algolia{{import}}
+{{#isSearchClient}}
+@testable import AlgoliaIngestion
+{{/isSearchClient}}
 
 final class {{client}}ClientTests: XCTestCase {
 

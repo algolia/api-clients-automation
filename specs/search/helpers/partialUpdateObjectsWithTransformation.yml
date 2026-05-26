@@ -10,6 +10,7 @@ method:
       - python
       - ruby
       - scala
+      - swift
     tags:
       - Records
     x-acl:

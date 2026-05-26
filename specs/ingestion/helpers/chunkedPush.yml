@@ -12,6 +12,7 @@ method:
       - python
       - ruby
       - scala
+      - swift
     x-acl:
       - addObject
       - deleteIndex
