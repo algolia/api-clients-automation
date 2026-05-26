@@ -25,8 +25,8 @@ import com.algolia.client.model.ingestion.Action as IngestionAction
 import com.algolia.client.model.ingestion.WatchResponse as IngestionWatchResponse
 
 private const val TRANSFORMATION_OPTIONS_REQUIRED =
-  "`transformationOptions` must be set in the client config before calling this method. " +
-    "It defaults to the Ingestion API defaults. " +
+  "`transformationOptions` must be installed on the client before calling this method. " +
+    "Use `SearchClient.withTransformation(...)` or `searchClient.setTransformationOptions(...)`. " +
     "See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
 
 private fun SearchClient.requireIngestionTransporter(): IngestionClient =
@@ -749,7 +749,7 @@ public suspend fun SearchClient.browseSynonyms(
 /**
  * Helper: Similar to the `saveObjects` method but requires a Push connector to be created first, in
  * order to transform records before indexing them to Algolia. The [TransformationOptions] must have
- * been set on the client via [ClientOptions.transformationOptions] or
+ * been installed on the client via [SearchClient.withTransformation] or
  * [SearchClient.setTransformationOptions].
  *
  * @param indexName The index in which to perform the request.
@@ -781,7 +781,7 @@ public suspend fun SearchClient.saveObjectsWithTransformation(
 /**
  * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector to be created
  * first, in order to transform records before indexing them to Algolia. The [TransformationOptions]
- * must have been set on the client via [ClientOptions.transformationOptions] or
+ * must have been installed on the client via [SearchClient.withTransformation] or
  * [SearchClient.setTransformationOptions].
  *
  * @param indexName The index in which to perform the request.
@@ -817,8 +817,8 @@ public suspend fun SearchClient.partialUpdateObjectsWithTransformation(
 
 /**
  * Helper: Replaces all records in an index with a new set of records by leveraging the
- * Transformation pipeline. The [TransformationOptions] must have been set on the client via
- * [ClientOptions.transformationOptions] or [SearchClient.setTransformationOptions].
+ * Transformation pipeline. The [TransformationOptions] must have been installed on the client via
+ * [SearchClient.withTransformation] or [SearchClient.setTransformationOptions].
  *
  * Internally, this method copies the existing index settings, synonyms and query rules, pushes the
  * new records to a temporary index through the ingestion pipeline, and finally moves the temporary
