@@ -13,6 +13,9 @@ import kotlin.time.Duration.Companion.milliseconds
 {{#isCompositionClient}}
 import {{modelPackage}}.RequestBody
 {{/isCompositionClient}}
+{{#isSearchClient}}
+import {{packageName}}.configuration.TransformationOptions
+{{/isSearchClient}}
 
 {{#operations}}
 public class {{classname}}(
@@ -59,6 +62,72 @@ public class {{classname}}(
   )
   {{/hostsWithoutVariables.size}}
   }
+
+  {{#isSearchClient}}
+  /**
+   * Ingestion transporter used by the `*WithTransformation` helpers on this client. Lazily set
+   * via [setTransformationOptions] or eagerly populated from [ClientOptions.transformationOptions]
+   * at construction time. `null` until at least one of those paths runs.
+   */
+  @kotlin.concurrent.Volatile
+  public var ingestionTransporter: IngestionClient? = options.transformationOptions?.let { opts ->
+    IngestionClient(
+      appId = appId,
+      apiKey = apiKey,
+      region = opts.region,
+      options = ClientOptions(
+        connectTimeout = opts.connectTimeout,
+        readTimeout = opts.readTimeout,
+        writeTimeout = opts.writeTimeout,
+        hosts = opts.hosts,
+        defaultHeaders = opts.defaultHeaders,
+      ),
+    )
+  }
+    private set
+
+  /**
+   * Replaces the ingestion transporter used by the `*WithTransformation` helpers. Builds a fresh
+   * [IngestionClient] from the supplied [TransformationOptions], applying Ingestion API defaults
+   * for any field left unset.
+   *
+   * The write to [ingestionTransporter] is annotated [kotlin.concurrent.Volatile]; concurrent
+   * readers in `*WithTransformation` helpers will observe either the old or new transporter,
+   * never a torn reference. Calling this while a `*WithTransformation` operation is in flight may
+   * cause that operation to fail — callers SHOULD avoid in-flight reconfiguration.
+   */
+  public fun setTransformationOptions(transformationOptions: TransformationOptions) {
+    ingestionTransporter = IngestionClient(
+      appId = appId,
+      apiKey = apiKey,
+      region = transformationOptions.region,
+      options = ClientOptions(
+        connectTimeout = transformationOptions.connectTimeout,
+        readTimeout = transformationOptions.readTimeout,
+        writeTimeout = transformationOptions.writeTimeout,
+        hosts = transformationOptions.hosts,
+        defaultHeaders = transformationOptions.defaultHeaders,
+      ),
+    )
+  }
+
+  public companion object {
+    /**
+     * Creates a [SearchClient] preconfigured with a [TransformationOptions] for use with the
+     * `*WithTransformation` helpers. The ingestion transporter is initialised eagerly using
+     * Ingestion API defaults; only fields explicitly set on [transformationOptions] override
+     * those defaults.
+     */
+    public fun withTransformation(
+      appId: String,
+      apiKey: String,
+      transformationOptions: TransformationOptions,
+      options: ClientOptions = ClientOptions(),
+    ): SearchClient = SearchClient(appId = appId, apiKey = apiKey, options = options).apply {
+      setTransformationOptions(transformationOptions)
+    }
+  }
+  {{/isSearchClient}}
 
   {{#operation}}
 
