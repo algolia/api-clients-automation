@@ -67,10 +67,11 @@ public class {{classname}}(
   /**
    * Ingestion transporter used by the `*WithTransformation` helpers on this client. Set via
    * [setTransformationOptions] or the [withTransformation] companion factory; `null` until one of
-   * those paths runs.
+   * those paths runs. Internal to the module — consumers reconfigure through the public setter and
+   * factory, matching the encapsulation chosen by every other language's client.
    */
   @kotlin.concurrent.Volatile
-  public var ingestionTransporter: IngestionClient? = null
+  internal var ingestionTransporter: IngestionClient? = null
     private set
 
   /**
