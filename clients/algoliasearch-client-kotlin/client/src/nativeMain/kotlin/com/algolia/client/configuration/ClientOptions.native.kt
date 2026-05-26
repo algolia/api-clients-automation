@@ -23,7 +23,7 @@ actual constructor(
   jsonConfig: ((JsonBuilder) -> Unit)?,
   public actual val requester: Requester?,
   public actual val algoliaAgentSegments: List<AgentSegment>,
-  public actual val transformationOptions: TransformationOptions? = null,
+  public actual val transformationOptions: TransformationOptions?,
 ) {
 
   public actual val json: Json = buildJson(jsonConfig)
