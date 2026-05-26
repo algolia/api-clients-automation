@@ -56,7 +56,7 @@ class TestClientRecommendClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.39.1\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.40.0\).*/))
   end
 
   # switch API key
