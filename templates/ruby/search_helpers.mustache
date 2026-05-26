@@ -118,7 +118,7 @@ def replace_all_objects_with_transformation(
 )
   assert_ingestion_transporter!
 
-  max_retries = chunked_options&.max_retries || Algolia::ChunkedHelperOptions::DEFAULT_MAX_RETRIES
+  opts = Algolia::ChunkedHelperOptions.resolve(chunked_options)
   tmp_index_name = index_name + '_tmp_' + rand(10_000_000).to_s
 
   begin
@@ -143,7 +143,7 @@ def replace_all_objects_with_transformation(
       chunked_options
     )
 
-    wait_for_task(tmp_index_name, copy_operation_response.task_id, max_retries)
+    wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries)
 
     copy_operation_response = operation_index(
       index_name,
@@ -155,7 +155,7 @@ def replace_all_objects_with_transformation(
       request_options
     )
 
-    wait_for_task(tmp_index_name, copy_operation_response.task_id, max_retries)
+    wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries)
 
     move_operation_response = operation_index(
       tmp_index_name,
@@ -166,7 +166,7 @@ def replace_all_objects_with_transformation(
       request_options
     )
 
-    wait_for_task(tmp_index_name, move_operation_response.task_id, max_retries)
+    wait_for_task(tmp_index_name, move_operation_response.task_id, opts.max_retries)
 
     search_watch_responses = watch_responses.map do |wr|
       Search::WatchResponse.build_from_hash(wr.to_hash)
@@ -509,7 +509,7 @@ end
 # @return [Array<BatchResponse>]
 #
 def chunked_batch(index_name, objects, action = Action::ADD_OBJECT, wait_for_tasks = false, batch_size = 1000, request_options = {}, chunked_options = nil)
-  max_retries = chunked_options&.max_retries || Algolia::ChunkedHelperOptions::DEFAULT_MAX_RETRIES
+  opts = Algolia::ChunkedHelperOptions.resolve(chunked_options)
   responses = []
   objects.each_slice(batch_size) do |chunk|
     requests = chunk.map do |object|
@@ -521,7 +521,7 @@ def chunked_batch(index_name, objects, action = Action::ADD_OBJECT, wait_for_tas
 
   if wait_for_tasks
     responses.each do |response|
-      wait_for_task(index_name, response.task_id, max_retries)
+      wait_for_task(index_name, response.task_id, opts.max_retries)
     end
   end
 
@@ -538,7 +538,7 @@ end
 #
 # @return [Array<ReplaceAllObjectsResponse>]
 def replace_all_objects(index_name, objects, batch_size = 1000, scopes = [Search::ScopeType::SETTINGS, Search::ScopeType::RULES, Search::ScopeType::SYNONYMS], request_options = {}, chunked_options = nil)
-  max_retries = chunked_options&.max_retries || Algolia::ChunkedHelperOptions::DEFAULT_MAX_RETRIES
+  opts = Algolia::ChunkedHelperOptions.resolve(chunked_options)
   tmp_index_name = index_name + '_tmp_' + rand(10_000_000).to_s
 
   begin
@@ -562,7 +562,7 @@ def replace_all_objects(index_name, objects, batch_size = 1000, scopes = [Search
       chunked_options
     )
 
-    wait_for_task(tmp_index_name, copy_operation_response.task_id, max_retries)
+    wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries)
 
     copy_operation_response = operation_index(
       index_name,
@@ -574,7 +574,7 @@ def replace_all_objects(index_name, objects, batch_size = 1000, scopes = [Search
       request_options
     )
 
-    wait_for_task(tmp_index_name, copy_operation_response.task_id, max_retries)
+    wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries)
 
     move_operation_response = operation_index(
       tmp_index_name,
@@ -585,7 +585,7 @@ def replace_all_objects(index_name, objects, batch_size = 1000, scopes = [Search
       request_options
     )
 
-    wait_for_task(tmp_index_name, move_operation_response.task_id, max_retries)
+    wait_for_task(tmp_index_name, move_operation_response.task_id, opts.max_retries)
 
     Search::ReplaceAllObjectsResponse.new(
       copy_operation_response: copy_operation_response,

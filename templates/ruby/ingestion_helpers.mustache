@@ -15,7 +15,7 @@ def chunked_push(index_name, objects, action = Ingestion::Action::ADD_OBJECT, wa
   wait_batch_size = batch_size / 10
   wait_batch_size = batch_size if wait_batch_size < 1
   total_batches = (objects.length.to_f / batch_size).ceil
-  max_retries = chunked_options&.max_retries || Algolia::ChunkedHelperOptions::DEFAULT_MAX_RETRIES
+  opts = Algolia::ChunkedHelperOptions.resolve(chunked_options)
 
   objects.each_slice(batch_size).with_index do |chunk, batch_index|
     response = push(
@@ -42,7 +42,7 @@ def chunked_push(index_name, objects, action = Ingestion::Action::ADD_OBJECT, wa
             raise e unless e.code == 404
           end
           retries += 1
-          raise ApiError, "Stopped waiting for the task after #{max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries." if retries >= max_retries
+          raise ApiError, "Stopped waiting for the task after #{opts.max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries." if retries >= opts.max_retries
           sleep([retries * 1.5, 5].min)
         end
       end
