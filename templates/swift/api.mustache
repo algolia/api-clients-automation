@@ -4,6 +4,11 @@ import Foundation
 #if canImport(AlgoliaCore)
     import AlgoliaCore
 #endif
+{{#isSearchClient}}
+#if canImport(AlgoliaIngestion)
+    import AlgoliaIngestion
+#endif
+{{/isSearchClient}}
 
 {{#description}}
 /**
@@ -13,6 +18,9 @@ import Foundation
 
     public private(set) var configuration: {{classname}}Configuration
     private var transporter: Transporter
+    {{#isSearchClient}}
+    private var _ingestionClient: IngestionClient?
+    {{/isSearchClient}}
 
     var appID: String {
         self.configuration.appID
@@ -25,7 +33,55 @@ import Foundation
 
     public convenience init(configuration: {{classname}}Configuration) {
         self.init(configuration: configuration, transporter: Transporter(configuration: configuration))
+        {{#isSearchClient}}
+        if let opts = configuration.transformationOptions {
+            self._ingestionClient = try? {{classname}}.makeIngestionClient(
+                appID: configuration.appID,
+                apiKey: configuration.apiKey,
+                options: opts
+            )
+        }
+        {{/isSearchClient}}
     }
+
+    /// Creates a SearchClient configured with TransformationOptions for use with `*WithTransformation` helpers.
+    /// An ingestion transporter is eagerly created using Ingestion API defaults (25 s timeouts);
+    /// set override fields on TransformationOptions to replace specific defaults.
+    /// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+    /// - parameter appID: The Algolia application ID.
+    /// - parameter apiKey: The Algolia API key.
+    /// - parameter transformationOptions: The transformation options including region and optional ingestion transporter overrides.
+    public static func withTransformation(
+        appID: String,
+        apiKey: String,
+        transformationOptions: TransformationOptions
+    ) throws -> {{classname}} {
+        let configuration = try {{classname}}Configuration(
+            appID: appID,
+            apiKey: apiKey,
+            transformationOptions: transformationOptions
+        )
+        return {{classname}}(configuration: configuration)
+    }
+
+    private static func makeIngestionClient(
+        appID: String,
+        apiKey: String,
+        options: TransformationOptions
+    ) throws -> IngestionClient {
+        let ingestionConfig = try IngestionClientConfiguration(
+            appID: appID,
+            apiKey: apiKey,
+            region: options.region,
+            writeTimeout: options.writeTimeout ?? 25,
+            readTimeout: options.readTimeout ?? 25,
+            defaultHeaders: options.defaultHeaders,
+            hosts: options.hosts,
+            compression: options.compression ?? .none
+        )
+        return IngestionClient(configuration: ingestionConfig)
+    }
+    {{/isSearchClient}}
 
     public convenience init(appID: String, apiKey: String{{#hasRegionalHost}}, region: Region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}{{/hasRegionalHost}}) throws {
         self.init(configuration: try {{classname}}Configuration(appID: appID, apiKey: apiKey{{#hasRegionalHost}}, region: region{{/hasRegionalHost}}))

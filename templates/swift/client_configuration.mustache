@@ -21,6 +21,11 @@ public struct {{#lambda.client-to-name}}{{{client}}}{{/lambda.client-to-name}}Cl
   public var defaultHeaders: [String: String]?
   public var hosts: [RetryableHost]
   public let compression: CompressionAlgorithm
+  {{#isSearchClient}}
+
+  /// Options for the ingestion transporter used by `*WithTransformation` helpers.
+  public var transformationOptions: TransformationOptions?
+  {{/isSearchClient}}
 
   public init(appID: String,
       apiKey: String,{{#hasRegionalHost}}
@@ -30,7 +35,8 @@ public struct {{#lambda.client-to-name}}{{{client}}}{{/lambda.client-to-name}}Cl
       logLevel: LogLevel = DefaultConfiguration.default.logLevel,
       defaultHeaders: [String: String]? = DefaultConfiguration.default.defaultHeaders,
       hosts: [RetryableHost]? = nil,
-      compression: CompressionAlgorithm = .none
+      compression: CompressionAlgorithm = .none{{#isSearchClient}},
+      transformationOptions: TransformationOptions? = nil{{/isSearchClient}}
   ) throws {
     guard !appID.isEmpty else {
       throw AlgoliaError.invalidCredentials("appId")
@@ -51,6 +57,9 @@ public struct {{#lambda.client-to-name}}{{{client}}}{{/lambda.client-to-name}}Cl
       "Content-Type": "application/json"
     ].merging(defaultHeaders ?? [:]) { (_, new) in new }
     self.compression = compression
+    {{#isSearchClient}}
+    self.transformationOptions = transformationOptions
+    {{/isSearchClient}}
 
     UserAgentController.append(UserAgent(title: "{{#lambda.client-to-name}}{{client}}{{/lambda.client-to-name}}", version: Version.current.description))
 
