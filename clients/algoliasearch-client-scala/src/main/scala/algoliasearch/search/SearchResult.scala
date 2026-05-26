@@ -50,7 +50,8 @@ object SearchResultSerializer extends Serializer[SearchResult] {
         case value: JObject if value.obj.exists(_._1 == "hits") => Extraction.extract[SearchResponse](value)
         case value: JObject if value.obj.exists(_._1 == "facetHits") =>
           Extraction.extract[SearchForFacetValuesResponse](value)
-        case _ => throw new MappingException("Can't convert " + json + " to SearchResult")
+        case value: JObject => Extraction.extract[SearchResponsePartial](value)
+        case _              => throw new MappingException("Can't convert " + json + " to SearchResult")
       }
   }
 
@@ -58,6 +59,7 @@ object SearchResultSerializer extends Serializer[SearchResult] {
     value match {
       case value: SearchResponse               => Extraction.decompose(value)(format - this)
       case value: SearchForFacetValuesResponse => Extraction.decompose(value)(format - this)
+      case value: SearchResponsePartial        => Extraction.decompose(value)(format - this)
     }
   }
 }
