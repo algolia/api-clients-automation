@@ -546,8 +546,11 @@ public suspend fun SearchClient.replaceAllObjects(
 
     return ReplaceAllObjectsResponse(copy, batchResponses, move)
   } catch (e: Exception) {
-    deleteIndex(tmpIndexName)
-
+    try {
+      deleteIndex(tmpIndexName)
+    } catch (rollback: Throwable) {
+      e.addSuppressed(rollback)
+    }
     throw e
   }
 }
@@ -896,7 +899,11 @@ public suspend fun SearchClient.replaceAllObjectsWithTransformation(
       moveOperationResponse = move,
     )
   } catch (e: Exception) {
-    deleteIndex(tmpIndexName)
+    try {
+      deleteIndex(tmpIndexName)
+    } catch (rollback: Throwable) {
+      e.addSuppressed(rollback)
+    }
     throw e
   }
 }
