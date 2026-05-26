@@ -6,7 +6,8 @@ import kotlin.time.Duration
  * Configuration options for the ingestion transporter used by the `*WithTransformation` helpers on
  * [com.algolia.client.api.SearchClient].
  *
- * When supplied via [ClientOptions.transformationOptions] or [SearchClient.setTransformationOptions], an
+ * When installed on a `SearchClient` via [com.algolia.client.api.SearchClient.withTransformation] or
+ * [com.algolia.client.api.SearchClient.setTransformationOptions], an
  * [com.algolia.client.api.IngestionClient] is eagerly built using Ingestion API defaults (25 s
  * connect/read/write timeouts, region-derived hosts, no compression). Only the fields explicitly set on
  * this object override those defaults; the parent search [ClientOptions] is never forwarded to the
