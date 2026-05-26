@@ -44,6 +44,7 @@ import Foundation
         {{/isSearchClient}}
     }
 
+    {{#isSearchClient}}
     /// Creates a SearchClient configured with TransformationOptions for use with `*WithTransformation` helpers.
     /// An ingestion transporter is eagerly created using Ingestion API defaults (25 s timeouts);
     /// set override fields on TransformationOptions to replace specific defaults.
