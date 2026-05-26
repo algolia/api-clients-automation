@@ -1,3 +1,13 @@
+## [5.53.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.52.1...5.53.0)
+
+- [c95cbc1d2e](https://github.com/algolia/api-clients-automation/commit/c95cbc1d2e) fix(javascript): handle response stream error in `createHttpRequester` ([#6347](https://github.com/algolia/api-clients-automation/pull/6347)) by [@zigzagdev](https://github.com/zigzagdev/)
+- [c55851671e](https://github.com/algolia/api-clients-automation/commit/c55851671e) feat(javascript): expose maximum number of retries ([#6353](https://github.com/algolia/api-clients-automation/pull/6353)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [84ebc480a8](https://github.com/algolia/api-clients-automation/commit/84ebc480a8) chore(deps): dependencies 2026-05-15 ([#6400](https://github.com/algolia/api-clients-automation/pull/6400)) by [@Fluf22](https://github.com/Fluf22/)
+- [fc36d63e9f](https://github.com/algolia/api-clients-automation/commit/fc36d63e9f) fix(javascript): improve caching performance ([#6431](https://github.com/algolia/api-clients-automation/pull/6431)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [90da6bf0ae](https://github.com/algolia/api-clients-automation/commit/90da6bf0ae) chore(deps): dependencies 2026-05-18 ([#6429](https://github.com/algolia/api-clients-automation/pull/6429)) by [@Fluf22](https://github.com/Fluf22/)
+- [eddd51e349](https://github.com/algolia/api-clients-automation/commit/eddd51e349) fix(specs): document abTest field on listIndices response ([#6443](https://github.com/algolia/api-clients-automation/pull/6443)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [1d3f2c149b](https://github.com/algolia/api-clients-automation/commit/1d3f2c149b) fix(specs): clean up abTest schema on listIndices response ([#6448](https://github.com/algolia/api-clients-automation/pull/6448)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [5.52.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.52.0...5.52.1)
 
 - [363cc2d91b](https://github.com/algolia/api-clients-automation/commit/363cc2d91b) fix(specs): Ingestion API - update destination payload ([#6320](https://github.com/algolia/api-clients-automation/pull/6320)) by [@sbellone](https://github.com/sbellone/)

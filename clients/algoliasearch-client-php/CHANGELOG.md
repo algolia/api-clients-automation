@@ -1,3 +1,11 @@
+## [4.44.0](https://github.com/algolia/algoliasearch-client-php/compare/4.43.1...4.44.0)
+
+- [3e6df652cb](https://github.com/algolia/api-clients-automation/commit/3e6df652cb) feat(php): expose maximum number of retries ([#6401](https://github.com/algolia/api-clients-automation/pull/6401)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [dced3f23ff](https://github.com/algolia/api-clients-automation/commit/dced3f23ff) feat(php): add TransformationOptions for ingestion transporter ([#6349](https://github.com/algolia/api-clients-automation/pull/6349)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [90da6bf0ae](https://github.com/algolia/api-clients-automation/commit/90da6bf0ae) chore(deps): dependencies 2026-05-18 ([#6429](https://github.com/algolia/api-clients-automation/pull/6429)) by [@Fluf22](https://github.com/Fluf22/)
+- [eddd51e349](https://github.com/algolia/api-clients-automation/commit/eddd51e349) fix(specs): document abTest field on listIndices response ([#6443](https://github.com/algolia/api-clients-automation/pull/6443)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [1d3f2c149b](https://github.com/algolia/api-clients-automation/commit/1d3f2c149b) fix(specs): clean up abTest schema on listIndices response ([#6448](https://github.com/algolia/api-clients-automation/pull/6448)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [4.43.1](https://github.com/algolia/algoliasearch-client-php/compare/4.43.0...4.43.1)
 
 - [363cc2d91b](https://github.com/algolia/api-clients-automation/commit/363cc2d91b) fix(specs): Ingestion API - update destination payload ([#6320](https://github.com/algolia/api-clients-automation/pull/6320)) by [@sbellone](https://github.com/sbellone/)
