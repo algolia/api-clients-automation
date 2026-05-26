@@ -22,7 +22,6 @@ public actual class ClientOptions(
   public actual val requester: Requester? = null,
   jsonConfig: ((JsonBuilder) -> Unit)? = null,
   public actual val algoliaAgentSegments: List<AgentSegment> = emptyList(),
-  public actual val transformationOptions: TransformationOptions? = null,
   public val compressionType: CompressionType,
 ) {
 
@@ -41,7 +40,6 @@ public actual class ClientOptions(
     jsonConfig: ((JsonBuilder) -> Unit)?,
     requester: Requester?,
     algoliaAgentSegments: List<AgentSegment>,
-    transformationOptions: TransformationOptions?,
   ) : this(
     connectTimeout = connectTimeout,
     writeTimeout = writeTimeout,
@@ -55,7 +53,6 @@ public actual class ClientOptions(
     jsonConfig = jsonConfig,
     requester = requester,
     algoliaAgentSegments = algoliaAgentSegments,
-    transformationOptions = transformationOptions,
     compressionType = CompressionType.NONE,
   )
 }

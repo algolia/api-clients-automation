@@ -65,25 +65,12 @@ public class {{classname}}(
 
   {{#isSearchClient}}
   /**
-   * Ingestion transporter used by the `*WithTransformation` helpers on this client. Lazily set
-   * via [setTransformationOptions] or eagerly populated from [ClientOptions.transformationOptions]
-   * at construction time. `null` until at least one of those paths runs.
+   * Ingestion transporter used by the `*WithTransformation` helpers on this client. Set via
+   * [setTransformationOptions] or the [withTransformation] companion factory; `null` until one of
+   * those paths runs.
    */
   @kotlin.concurrent.Volatile
-  public var ingestionTransporter: IngestionClient? = options.transformationOptions?.let { opts ->
-    IngestionClient(
-      appId = appId,
-      apiKey = apiKey,
-      region = opts.region,
-      options = ClientOptions(
-        connectTimeout = opts.connectTimeout,
-        readTimeout = opts.readTimeout,
-        writeTimeout = opts.writeTimeout,
-        hosts = opts.hosts,
-        defaultHeaders = opts.defaultHeaders,
-      ),
-    )
-  }
+  public var ingestionTransporter: IngestionClient? = null
     private set
 
   /**

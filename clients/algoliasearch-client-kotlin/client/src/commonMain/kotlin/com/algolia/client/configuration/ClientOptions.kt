@@ -21,7 +21,6 @@ public expect class ClientOptions(
   jsonConfig: ((JsonBuilder) -> Unit)? = null,
   requester: Requester? = null,
   algoliaAgentSegments: List<AgentSegment> = emptyList(),
-  transformationOptions: TransformationOptions? = null,
 ) {
 
   /** Connect timeout for each request */
@@ -59,12 +58,4 @@ public expect class ClientOptions(
 
   /** List of Algolia agent segments */
   public val algoliaAgentSegments: List<AgentSegment>
-
-  /**
-   * Optional [TransformationOptions] used to configure the ingestion transporter for the
-   * `*WithTransformation` helpers on the search client. When set, an ingestion transporter is
-   * eagerly built using Ingestion API defaults (25 s timeouts, region-derived hosts, no
-   * compression); only fields explicitly set on [TransformationOptions] override those defaults.
-   */
-  public val transformationOptions: TransformationOptions?
 }
