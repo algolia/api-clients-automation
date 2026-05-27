@@ -4,8 +4,8 @@ package com.algolia.client.configuration
  * Configuration options for the ingestion transporter used by the `*WithTransformation` helpers on
  * [com.algolia.client.api.SearchClient].
  *
- * When installed on a `SearchClient` via [com.algolia.client.api.SearchClient.withTransformation] or
- * [com.algolia.client.api.SearchClient.setTransformationOptions], an
+ * When installed on a `SearchClient` via [com.algolia.client.api.SearchClient.withTransformation]
+ * or [com.algolia.client.api.SearchClient.setTransformationOptions], an
  * [com.algolia.client.api.IngestionClient] is eagerly built. Pass a [ClientOptions] to override the
  * Ingestion API defaults (25 s connect/read/write timeouts, region-derived hosts, no compression);
  * only the fields explicitly set there replace the defaults. The parent search [ClientOptions] is

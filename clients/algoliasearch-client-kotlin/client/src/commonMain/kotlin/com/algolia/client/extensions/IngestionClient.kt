@@ -17,11 +17,11 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
 /**
- * Helper: Chunks the given `objects` list into requests of at most `batchSize` records and pushes each
- * chunk through the Ingestion API's transformation pipeline using [IngestionClient.push].
+ * Helper: Chunks the given `objects` list into requests of at most `batchSize` records and pushes
+ * each chunk through the Ingestion API's transformation pipeline using [IngestionClient.push].
  *
- * If [waitForTasks] is true, the helper polls the Ingestion API after every `max(1, batchSize / 10)`
- * pushes for the corresponding events, providing backpressure on long jobs.
+ * If [waitForTasks] is true, the helper polls the Ingestion API after every `max(1, batchSize /
+ * 10)` pushes for the corresponding events, providing backpressure on long jobs.
  *
  * @param indexName The index in which to perform the request.
  * @param objects The list of objects to push.
@@ -72,7 +72,9 @@ public suspend fun IngestionClient.chunkedPush(
 private fun JsonObject.toPushTaskRecord(): PushTaskRecords {
   val objectID =
     this["objectID"]?.jsonPrimitive?.content
-      ?: throw AlgoliaClientException("each object must have an `objectID` key in order to be indexed")
+      ?: throw AlgoliaClientException(
+        "each object must have an `objectID` key in order to be indexed"
+      )
 
   return PushTaskRecords(
     objectID = objectID,
@@ -87,7 +89,7 @@ private suspend fun IngestionClient.pollEvent(
   val eventID =
     response.eventID
       ?: throw AlgoliaClientException(
-        "received unexpected response from the push endpoint, eventID must not be undefined",
+        "received unexpected response from the push endpoint, eventID must not be undefined"
       )
   return retryUntil(
       retry = {

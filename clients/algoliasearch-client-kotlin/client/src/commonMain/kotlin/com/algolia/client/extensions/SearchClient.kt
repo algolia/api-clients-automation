@@ -9,6 +9,8 @@ import com.algolia.client.extensions.internal.DisjunctiveFaceting
 import com.algolia.client.extensions.internal.buildRestrictionString
 import com.algolia.client.extensions.internal.encodeKeySHA256
 import com.algolia.client.extensions.internal.retryUntil
+import com.algolia.client.model.ingestion.Action as IngestionAction
+import com.algolia.client.model.ingestion.WatchResponse as IngestionWatchResponse
 import com.algolia.client.model.search.*
 import com.algolia.client.transport.RequestOptions
 import io.ktor.util.*
@@ -21,8 +23,6 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.*
 import kotlinx.serialization.json.JsonObject
-import com.algolia.client.model.ingestion.Action as IngestionAction
-import com.algolia.client.model.ingestion.WatchResponse as IngestionWatchResponse
 
 private const val TRANSFORMATION_OPTIONS_REQUIRED =
   "`transformationOptions` must be installed on the client before calling this method. " +
@@ -33,11 +33,12 @@ private fun SearchClient.requireIngestionTransporter(): IngestionClient =
   ingestionTransporter ?: throw AlgoliaClientException(TRANSFORMATION_OPTIONS_REQUIRED)
 
 private fun SearchClient.ingestionToSearchWatchResponses(
-  responses: List<IngestionWatchResponse>,
+  responses: List<IngestionWatchResponse>
 ): List<WatchResponse> {
   return try {
     val json = options.json
-    val encoded = json.encodeToString(ListSerializer(IngestionWatchResponse.serializer()), responses)
+    val encoded =
+      json.encodeToString(ListSerializer(IngestionWatchResponse.serializer()), responses)
     json.decodeFromString(ListSerializer(WatchResponse.serializer()), encoded)
   } catch (e: Throwable) {
     throw AlgoliaClientException(
