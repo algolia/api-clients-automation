@@ -19,9 +19,11 @@
         let exp = Int(Date().timeIntervalSince1970) + expiresIn
         let payload = base64URLEncode(Data("{\"sub\":\"\(userId)\",\"exp\":\(exp)}".utf8))
 
-        let key = SymmetricKey(data: Data(secretKey.utf8))
-        let signatureData = HMAC<SHA256>.authenticationCode(for: Data("\(header).\(payload)".utf8), using: key)
-        let signature = base64URLEncode(Data(signatureData))
+        let hmacHex = "\(header).\(payload)".hmac256(withKey: secretKey)
+        let hmacBytes = stride(from: 0, to: hmacHex.count, by: 2).map {
+            UInt8(hmacHex[hmacHex.index(hmacHex.startIndex, offsetBy: $0)..<hmacHex.index(hmacHex.startIndex, offsetBy: $0 + 2)], radix: 16)!
+        }
+        let signature = base64URLEncode(Data(hmacBytes))
 
         return "\(header).\(payload).\(signature)"
     }

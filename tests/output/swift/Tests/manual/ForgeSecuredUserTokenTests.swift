@@ -1,8 +1,8 @@
-import CryptoKit
 import Foundation
 import XCTest
 
 @testable import AlgoliaAgentStudio
+@testable import AlgoliaCore
 
 final class ForgeSecuredUserTokenTests: XCTestCase {
     func testForgeSecuredUserToken() throws {
@@ -30,9 +30,11 @@ final class ForgeSecuredUserTokenTests: XCTestCase {
         let expectedExp = Int(Date().timeIntervalSince1970) + 24 * 3600
         XCTAssertEqual(Double(exp), Double(expectedExp), accuracy: 5)
 
-        let key = SymmetricKey(data: Data("my-secret-key".utf8))
-        let signatureData = HMAC<SHA256>.authenticationCode(for: Data("\(parts[0]).\(parts[1])".utf8), using: key)
-        let expectedSig = Data(signatureData).base64URLEncodedString()
+        let hmacHex = "\(parts[0]).\(parts[1])".hmac256(withKey: "my-secret-key")
+        let hmacBytes = stride(from: 0, to: hmacHex.count, by: 2).map {
+            UInt8(hmacHex[hmacHex.index(hmacHex.startIndex, offsetBy: $0)..<hmacHex.index(hmacHex.startIndex, offsetBy: $0 + 2)], radix: 16)!
+        }
+        let expectedSig = Data(hmacBytes).base64URLEncodedString()
         XCTAssertEqual(parts[2], expectedSig)
     }
 

@@ -3,7 +3,6 @@ package com.algolia.client
 import com.algolia.client.api.AgentStudioClient
 import com.algolia.client.extensions.internal.encodeKeySHA256
 import kotlin.io.encoding.Base64
-import kotlin.io.encoding.ExperimentalEncodingApi
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -12,7 +11,6 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
-@OptIn(ExperimentalEncodingApi::class)
 class TestForgeSecuredUserToken {
 
   @Test
@@ -35,9 +33,13 @@ class TestForgeSecuredUserToken {
     assertEquals("user-123", payload["sub"]!!.jsonPrimitive.content)
     val exp = payload["exp"]!!.jsonPrimitive.content.toLong()
     val expectedExp = Clock.System.now().epochSeconds + 24 * 3600
-    assertTrue(kotlin.math.abs(exp - expectedExp) < 5, "exp $exp should be within 5s of $expectedExp")
+    assertTrue(
+      kotlin.math.abs(exp - expectedExp) < 5,
+      "exp $exp should be within 5s of $expectedExp",
+    )
 
-    val expectedHmacHex = encodeKeySHA256(key = "my-secret-key", message = "${parts[0]}.${parts[1]}")
+    val expectedHmacHex =
+      encodeKeySHA256(key = "my-secret-key", message = "${parts[0]}.${parts[1]}")
     val actualSigBytes = Base64.UrlSafe.decode(parts[2])
     val actualSigHex = actualSigBytes.joinToString("") { "%02x".format(it) }
     assertEquals(expectedHmacHex, actualSigHex)
@@ -54,6 +56,9 @@ class TestForgeSecuredUserToken {
     val payload = Json.decodeFromString<JsonObject>(payloadJson)
     val exp = payload["exp"]!!.jsonPrimitive.content.toLong()
     val expectedExp = Clock.System.now().epochSeconds + 3600
-    assertTrue(kotlin.math.abs(exp - expectedExp) < 5, "exp $exp should be within 5s of $expectedExp")
+    assertTrue(
+      kotlin.math.abs(exp - expectedExp) < 5,
+      "exp $exp should be within 5s of $expectedExp",
+    )
   }
 }

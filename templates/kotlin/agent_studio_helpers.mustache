@@ -9,7 +9,7 @@
    */
   public fun forgeSecuredUserToken(secretKey: String, secretKeyId: String, userId: String, expiresIn: Int = 24 * 3600): String {
     fun base64UrlEncode(data: ByteArray): String =
-      io.ktor.util.encodeBase64(data).replace('+', '-').replace('/', '_').trimEnd('=')
+      kotlin.io.encoding.Base64.UrlSafe.encode(data).trimEnd('=')
 
     fun hmacSHA256(key: String, message: String): ByteArray {
       val hex = com.algolia.client.extensions.internal.encodeKeySHA256(key, message)
