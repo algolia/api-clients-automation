@@ -184,14 +184,30 @@ export async function runCts(
     assertChunkWrapperValid(languages.length - skip('dart'));
     assertValidReplaceAllObjects(languages.length - skip('dart'));
     assertValidReplaceAllObjectsWithTransformation(
-      only('javascript') + only('go') + only('python') + only('java') + only('php') + only('csharp') + only('scala') + only('ruby'),
+      only('javascript') +
+        only('go') +
+        only('python') +
+        only('java') +
+        only('php') +
+        only('csharp') +
+        only('scala') +
+        only('ruby') +
+        only('kotlin'),
     );
     assertValidAccountCopyIndex(only('javascript'));
     assertValidReplaceAllObjectsFailed(languages.length - skip('dart'));
     assertValidReplaceAllObjectsScopes(languages.length - skip('dart'));
     assertValidWaitForApiKey(languages.length - skip('dart'));
     assertPushMockValid(
-      only('javascript') + only('go') + only('python') + only('java') + only('php') + only('csharp') + only('scala') + only('ruby'),
+      only('javascript') +
+        only('go') +
+        only('python') +
+        only('java') +
+        only('php') +
+        only('csharp') +
+        only('scala') +
+        only('ruby') +
+        only('kotlin'),
     );
   }
   if (withBenchmarkServer) {
