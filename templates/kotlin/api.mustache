@@ -13,9 +13,6 @@ import kotlin.time.Duration.Companion.milliseconds
 {{#isCompositionClient}}
 import {{modelPackage}}.RequestBody
 {{/isCompositionClient}}
-{{#isSearchClient}}
-import {{packageName}}.configuration.TransformationOptions
-{{/isSearchClient}}
 
 {{#operations}}
 public class {{classname}}(
