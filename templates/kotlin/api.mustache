@@ -124,5 +124,9 @@ public class {{classname}}(
       )
   }
   {{/operation}}
+
+{{#isAgentStudioClient}}
+{{> agent_studio_helpers}}
+{{/isAgentStudioClient}}
 }
 {{/operations}}

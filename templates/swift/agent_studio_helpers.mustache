@@ -1,0 +1,27 @@
+    /// Helper: Forges a secured user token (JWT) for Agent Studio authenticated requests.
+    ///
+    /// - Parameters:
+    ///   - secretKey: The secret key to sign the token with.
+    ///   - secretKeyId: The key ID to include in the JWT header (kid).
+    ///   - userId: The user identifier to include as the subject (sub) claim.
+    ///   - expiresIn: The token expiration in seconds from now. Defaults to 86400 (24 hours).
+    /// - Returns: The signed JWT token.
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func forgeSecuredUserToken(secretKey: String, secretKeyId: String, userId: String, expiresIn: Int = 86400) -> String {
+        func base64URLEncode(_ data: Data) -> String {
+            data.base64EncodedString()
+                .replacingOccurrences(of: "+", with: "-")
+                .replacingOccurrences(of: "/", with: "_")
+                .replacingOccurrences(of: "=", with: "")
+        }
+
+        let header = base64URLEncode(Data("{\"alg\":\"HS256\",\"typ\":\"JWT\",\"kid\":\"\(secretKeyId)\"}".utf8))
+        let exp = Int(Date().timeIntervalSince1970) + expiresIn
+        let payload = base64URLEncode(Data("{\"sub\":\"\(userId)\",\"exp\":\(exp)}".utf8))
+
+        let key = SymmetricKey(data: Data(secretKey.utf8))
+        let signatureData = HMAC<SHA256>.authenticationCode(for: Data("\(header).\(payload)".utf8), using: key)
+        let signature = base64URLEncode(Data(signatureData))
+
+        return "\(header).\(payload).\(signature)"
+    }

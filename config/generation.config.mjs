@@ -31,6 +31,7 @@ export const patterns = [
   '!tests/output/csharp/src/TimeoutIntegrationTests.cs',
   '!tests/output/csharp/src/Utils/**',
   '!tests/output/csharp/src/TransformationOptionsTests.cs',
+  '!tests/output/csharp/src/ForgeSecuredUserTokenTests.cs',
 
   // Dart
   '!clients/algoliasearch-client-dart/**',
@@ -82,6 +83,7 @@ export const patterns = [
   '!clients/algoliasearch-client-javascript/packages/client-common/**',
   '!clients/algoliasearch-client-javascript/packages/logger-console/**',
   '!clients/algoliasearch-client-javascript/packages/algoliasearch/__tests__/**',
+  '!clients/algoliasearch-client-javascript/packages/agent-studio/__tests__/**',
   '!clients/algoliasearch-client-javascript/packages/algoliasearch/vitest.config.ts',
 
   'tests/output/javascript/package.json',
@@ -152,6 +154,8 @@ export const patterns = [
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/internal/**',
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/config/**',
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/extension/**',
+
+  '!tests/output/scala/src/test/scala/algoliasearch/manual/**',
 
   // Swift
   'clients/algoliasearch-client-swift/**',

@@ -161,6 +161,9 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
     {{#isIngestionClient}}
 {{> ingestion_helpers}}
     {{/isIngestionClient}}
+    {{#isAgentStudioClient}}
+{{> agent_studio_helpers}}
+    {{/isAgentStudioClient}}
 
     {{#operation}}
 

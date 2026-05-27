@@ -51,6 +51,15 @@ import com.algolia.model.ingestion.PushTaskRecords;
 import com.algolia.model.ingestion.WatchResponse;
 {{/isSearchClient}}
 
+{{#isAgentStudioClient}}
+import java.time.Instant;
+import java.util.Base64;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+{{/isAgentStudioClient}}
+
 {{#operations}}
 public class {{classname}} extends ApiClient {
     {{#isSearchClient}}

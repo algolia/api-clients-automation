@@ -6,6 +6,10 @@
 require 'openssl'
 require 'base64'
 {{/isSearchClient}}
+{{#isAgentStudioClient}}
+require 'openssl'
+require 'base64'
+{{/isAgentStudioClient}}
 
 module {{moduleName}}
 {{#isSearchClient}}
@@ -261,6 +265,9 @@ module {{moduleName}}
 {{#isSearchClient}}
 {{> search_helpers}}
 {{/isSearchClient}}
+{{#isAgentStudioClient}}
+{{> agent_studio_helpers}}
+{{/isAgentStudioClient}}
   end
 {{/operations}}
 end

@@ -1,6 +1,9 @@
 {{#operations}}// {{{generationBanner}}}
 
 import Foundation
+{{#isAgentStudioClient}}
+import CryptoKit
+{{/isAgentStudioClient}}
 #if canImport(AlgoliaCore)
     import AlgoliaCore
 #endif
@@ -153,5 +156,9 @@ import Foundation
         )
     }{{/vendorExtensions}}
 {{/operation}}
+
+{{#isAgentStudioClient}}
+{{> agent_studio_helpers}}
+{{/isAgentStudioClient}}
 }
 {{/operations}}

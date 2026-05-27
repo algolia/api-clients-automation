@@ -20,6 +20,11 @@ import (
   "slices"
   "sort"
   {{/isSearchClient}}
+  {{#isAgentStudioClient}}
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/base64"
+  {{/isAgentStudioClient}}
   "time"
 
   "github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
@@ -64,6 +69,11 @@ type config struct {
   // -- WaitForApiKey options
   apiKey *ApiKey
   {{/isSearchClient}}
+
+  {{#isAgentStudioClient}}
+  // -- ForgeSecuredUserToken options
+  expiresIn int
+  {{/isAgentStudioClient}}
 }
 
 type RequestOption interface {
@@ -350,6 +360,15 @@ func replaceAllObjectsToChunkBatchOptions(opts []ReplaceAllObjectsOption) []Chun
 }
 {{/isSearchClient}}
 
+{{#isAgentStudioClient}}
+// -- ForgeSecuredUserToken options
+func WithExpiresIn(expiresIn int) requestOption {
+	return requestOption(func(c *config) {
+		c.expiresIn = expiresIn
+	})
+}
+{{/isAgentStudioClient}}
+
 {{#operation}}
   {{#hasParams}}
 func (r *{{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request) UnmarshalJSON(b []byte) error {
@@ -576,3 +595,7 @@ func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}
 
 {{> ingestion_helpers}}
 {{/isIngestionClient}}
+
+{{#isAgentStudioClient}}
+{{> agent_studio_helpers}}
+{{/isAgentStudioClient}}

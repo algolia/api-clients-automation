@@ -516,5 +516,9 @@ namespace Algolia.Search.Clients;
 
       {{/supportsAsync}}
       {{/operation}}
+
+      {{#isAgentStudioClient}}
+{{> agent_studio_helpers}}
+      {{/isAgentStudioClient}}
   }
   {{/operations}}
