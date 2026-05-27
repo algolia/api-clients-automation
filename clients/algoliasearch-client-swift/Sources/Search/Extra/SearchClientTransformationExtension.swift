@@ -2,8 +2,8 @@
 //  SearchClientTransformationExtension.swift
 //
 //  Helpers that push records through the Algolia Ingestion pipeline before indexing.
-//  TransformationOptions must have been set via SearchClientConfiguration(transformationOptions:)
-//  or SearchClient.withTransformation(...) before calling these methods.
+//  TransformationOptions must be set via SearchClientConfiguration(transformationOptions:)
+//  or SearchClient.setTransformationOptions(_:) before calling these methods.
 //
 //  See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
 
@@ -95,7 +95,7 @@ public extension SearchClient {
     // MARK: - Public helpers
 
     /// Helper: Similar to `saveObjects` but routes records through the Ingestion transformation pipeline.
-    /// `transformationOptions` must be set via `SearchClientConfiguration` or `SearchClient.withTransformation(...)`.
+    /// `transformationOptions` must be set via `SearchClientConfiguration` or `SearchClient.setTransformationOptions(_:)`.
     /// - parameter indexName: The index to save objects into.
     /// - parameter objects: The objects to save. Each must include an `objectID` key.
     /// - parameter waitForTasks: Whether to wait for ingestion tasks to complete. Defaults to `false`.
@@ -121,7 +121,7 @@ public extension SearchClient {
     }
 
     /// Helper: Similar to `partialUpdateObjects` but routes records through the Ingestion transformation pipeline.
-    /// `transformationOptions` must be set via `SearchClientConfiguration` or `SearchClient.withTransformation(...)`.
+    /// `transformationOptions` must be set via `SearchClientConfiguration` or `SearchClient.setTransformationOptions(_:)`.
     /// - parameter indexName: The index to update objects in.
     /// - parameter objects: The objects to update. Each must include an `objectID` key.
     /// - parameter createIfNotExists: Whether to create the object if it does not exist. Defaults to `true`.
@@ -149,7 +149,7 @@ public extension SearchClient {
     }
 
     /// Helper: Similar to `replaceAllObjects` but routes records through the Ingestion transformation pipeline.
-    /// `transformationOptions` must be set via `SearchClientConfiguration` or `SearchClient.withTransformation(...)`.
+    /// `transformationOptions` must be set via `SearchClientConfiguration` or `SearchClient.setTransformationOptions(_:)`.
     /// - parameter indexName: The index to replace objects in.
     /// - parameter objects: The new objects. Each must include an `objectID` key.
     /// - parameter batchSize: Number of records per push call. Defaults to 1000.

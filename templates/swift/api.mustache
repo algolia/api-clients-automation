@@ -49,18 +49,6 @@ import Foundation
     }
 
     {{#isSearchClient}}
-    /// Replaces the ingestion transporter used by `*WithTransformation` helpers.
-    /// - parameter transformationOptions: The new transformation options including region and optional overrides.
-    /// - throws: `AlgoliaError` if the region is not a valid Ingestion API region.
-    public func setTransformationOptions(_ transformationOptions: TransformationOptions) throws {
-        self._ingestionClient = try {{classname}}.makeIngestionClient(
-            appID: configuration.appID,
-            apiKey: configuration.apiKey,
-            options: transformationOptions
-        )
-        self.configuration.transformationOptions = transformationOptions
-    }
-
     private static func makeIngestionClient(
         appID: String,
         apiKey: String,
