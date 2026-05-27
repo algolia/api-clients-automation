@@ -13,6 +13,7 @@ final class SearchResponses {
   });
 
   /// One of types:
+  /// - [SearchResponsePartial]
   /// - [SearchForFacetValuesResponse]
   /// - [SearchResponse]
   @JsonKey(name: r'results')

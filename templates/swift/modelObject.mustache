@@ -75,7 +75,7 @@
           throw GenericError(description: "Failed to cast")
         }
         self.{{{name}}} = {{{name}}}{{/required}}{{^required}}
-        self.{{{name}}} = dictionary["{{{name}}}"]?.value as? {{{datatype}}}
+        self.{{{name}}} = dictionary["{{{name}}}"]?.value as? {{> generic_type}}
         {{/required}}
       {{/vars}}
 

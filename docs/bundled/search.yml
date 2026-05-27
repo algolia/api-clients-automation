@@ -23380,10 +23380,46 @@ components:
                 type: string
         processingTimeMS:
           $ref: '#/components/schemas/processingTimeMS'
+    searchResponsePartial:
+      description: >
+        Partial search response returned when the `responseFields` parameter
+        excludes
+
+        fields like `hits`. Contains all possible search response properties but
+
+        none are required, so it acts as an unconditional fallback during oneOf
+
+        deserialization.
+      additionalProperties: true
+      allOf:
+        - $ref: '#/components/schemas/baseSearchResponse'
+        - $ref: '#/components/schemas/SearchPagination'
+        - type: object
+          additionalProperties: true
+          properties:
+            extensions:
+              $ref: '#/components/schemas/responseExtensions'
+            hits:
+              type: array
+              description: >
+                Search results (hits).
+
+
+                Hits are records from your index that match the search criteria,
+                augmented with additional attributes, such as, for highlighting.
+              items:
+                $ref: '#/components/schemas/hit'
+            params:
+              type: string
+              description: URL-encoded string of all search parameters.
+              example: query=a&hitsPerPage=20
+            query:
+              $ref: '#/components/schemas/query'
     searchResult:
       oneOf:
         - $ref: '#/components/schemas/searchResponse'
         - $ref: '#/components/schemas/searchForFacetValuesResponse'
+        - $ref: '#/components/schemas/searchResponsePartial'
     cursor:
       type: object
       additionalProperties: false
