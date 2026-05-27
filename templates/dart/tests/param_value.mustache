@@ -1,4 +1,4 @@
-{{#isNull}}empty(){{/isNull}}
+{{#isNull}}{{#isSnippet}}null{{/isSnippet}}{{^isSnippet}}empty(){{/isSnippet}}{{/isNull}}
 {{#isVerbatim}}{{{value}}}{{/isVerbatim}}
 {{#isString}}"{{#lambda.escapeQuotes}}{{#lambda.escapeDollar}}{{{value}}}{{/lambda.escapeDollar}}{{/lambda.escapeQuotes}}"{{/isString}}
 {{#isNumber}}{{{value}}}{{/isNumber}}
