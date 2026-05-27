@@ -109,6 +109,7 @@ object JsonSupport {
     new LogQuerySerializer() :+
     new SearchHitsSerializer() :+
     new SearchResponseSerializer() :+
+    new SearchResponsePartialSerializer() :+
     new SearchSynonymsResponseSerializer() :+
     new UserHitSerializer()
 
