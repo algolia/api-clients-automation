@@ -1,6 +1,7 @@
 package com.algolia.client.extensions
 
 import com.algolia.client.api.IngestionClient
+import com.algolia.client.configuration.ChunkedHelperOptions
 import com.algolia.client.exception.AlgoliaApiException
 import com.algolia.client.exception.AlgoliaClientException
 import com.algolia.client.extensions.internal.retryUntil
@@ -31,6 +32,8 @@ import kotlinx.serialization.json.jsonPrimitive
  * @param referenceIndexName Required when targeting an index that does not have a push connector
  *   setup, but you wish to attach another index's transformation to it.
  * @param requestOptions Additional request configuration.
+ * @param chunkedOptions Optional [ChunkedHelperOptions] controlling the polling budget on each
+ *   `pollEvent` call. When `null`, the default (100 retries) is used.
  * @return The list of responses from each push request.
  */
 public suspend fun IngestionClient.chunkedPush(
@@ -41,9 +44,11 @@ public suspend fun IngestionClient.chunkedPush(
   batchSize: Int = 1000,
   referenceIndexName: String? = null,
   requestOptions: RequestOptions? = null,
+  chunkedOptions: ChunkedHelperOptions? = null,
 ): List<WatchResponse> {
   require(batchSize > 0) { "`batchSize` must be greater than 0" }
 
+  val maxRetries = chunkedOptions?.maxRetries ?: 100
   val responses = mutableListOf<WatchResponse>()
   val pollInterval = maxOf(1, batchSize / 10)
 
@@ -62,7 +67,7 @@ public suspend fun IngestionClient.chunkedPush(
     responses += pushed
 
     if (waitForTasks) {
-      pushed.forEach { pollEvent(it, requestOptions) }
+      pushed.forEach { pollEvent(it, maxRetries, requestOptions) }
     }
   }
 
@@ -82,6 +87,7 @@ private fun JsonObject.toPushTaskRecord(): PushTaskRecords {
 
 private suspend fun IngestionClient.pollEvent(
   response: WatchResponse,
+  maxRetries: Int,
   requestOptions: RequestOptions?,
 ): Event {
   val eventID =
@@ -98,7 +104,7 @@ private suspend fun IngestionClient.pollEvent(
         }
       },
       until = { it.isSuccess },
-      maxRetries = 50,
+      maxRetries = maxRetries,
       timeout = Duration.INFINITE,
       initialDelay = 1500.milliseconds,
       maxDelay = 5.seconds,
