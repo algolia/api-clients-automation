@@ -3,7 +3,7 @@
 {{#isString}}"{{#lambda.escapeQuotes}}{{#lambda.escapeDollar}}{{{value}}}{{/lambda.escapeDollar}}{{/lambda.escapeQuotes}}"{{/isString}}
 {{#isNumber}}{{{value}}}{{/isNumber}}
 {{#isBoolean}}{{{value}}}{{/isBoolean}}
-{{#isEnum}}{{{objectName}}}.fromJson("{{value}}"){{/isEnum}}
+{{#isEnum}}{{{objectName}}}.fromJson({{#isIntegerEnum}}{{value}}{{/isIntegerEnum}}{{^isIntegerEnum}}"{{value}}"{{/isIntegerEnum}}){{/isEnum}}
 {{#isArray}}[{{#value}}{{> tests/param_value}},{{/value}}]{{/isArray}}
 {{#isFreeFormObject}}
 {{#isAnyType}}{ {{#value}}{{#entrySet}}'{{{key}}}' : '{{{value}}}',{{/entrySet}}}{{/value}}{{/isAnyType}}

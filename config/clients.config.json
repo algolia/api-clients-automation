@@ -58,6 +58,10 @@
         "output": "clients/algoliasearch-client-dart/packages/client_recommend"
       },
       {
+        "name": "agent-studio",
+        "output": "clients/algoliasearch-client-dart/packages/client_agent_studio"
+      },
+      {
         "name": "search",
         "output": "clients/algoliasearch-client-dart/packages/client_search"
       }
