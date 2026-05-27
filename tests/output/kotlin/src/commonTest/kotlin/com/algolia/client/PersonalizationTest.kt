@@ -58,6 +58,7 @@ class PersonalizationTest {
   fun `throws when region is not given`() = runTest {
     assertFails {
         val client = PersonalizationClient(appId = "my-app-id", apiKey = "my-api-key", "")
+
       }
       .let { error ->
         assertError(
@@ -76,6 +77,7 @@ class PersonalizationTest {
     assertFails {
         val client =
           PersonalizationClient(appId = "my-app-id", apiKey = "my-api-key", "not_a_region")
+
       }
       .let { error ->
         assertError(
@@ -113,6 +115,7 @@ class PersonalizationTest {
               )
           ),
       )
+
     client.runTest(
       call = { customGet(path = "check-api-key/1") },
       response = {
