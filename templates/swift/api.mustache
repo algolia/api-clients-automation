@@ -35,21 +35,43 @@ import Foundation
         self.init(configuration: configuration, transporter: Transporter(configuration: configuration))
         {{#isSearchClient}}
         if let opts = configuration.transformationOptions {
-            self._ingestionClient = try? {{classname}}.makeIngestionClient(
-                appID: configuration.appID,
-                apiKey: configuration.apiKey,
-                options: opts
-            )
+            do {
+                self._ingestionClient = try {{classname}}.makeIngestionClient(
+                    appID: configuration.appID,
+                    apiKey: configuration.apiKey,
+                    options: opts
+                )
+            } catch {
+                fatalError("Invalid TransformationOptions: \(error.localizedDescription)")
+            }
         }
         {{/isSearchClient}}
     }
 
     {{#isSearchClient}}
+    /// Replaces the ingestion transporter used by `*WithTransformation` helpers.
+    /// - parameter transformationOptions: The new transformation options including region and optional overrides.
+    /// - throws: `AlgoliaError` if the region is not a valid Ingestion API region.
+    public func setTransformationOptions(_ transformationOptions: TransformationOptions) throws {
+        self._ingestionClient = try {{classname}}.makeIngestionClient(
+            appID: configuration.appID,
+            apiKey: configuration.apiKey,
+            options: transformationOptions
+        )
+        self.configuration.transformationOptions = transformationOptions
+    }
+
     private static func makeIngestionClient(
         appID: String,
         apiKey: String,
         options: TransformationOptions
     ) throws -> IngestionClient {
+        let authorizedRegions: [Region] = [.eu, .us]
+        guard authorizedRegions.contains(options.region) else {
+            throw AlgoliaError.runtimeError(
+                "region is required in TransformationOptions and must be one of the following: \(authorizedRegions.map { $0.rawValue }.joined(separator: ", ")). See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
+            )
+        }
         let ingestionConfig = try IngestionClientConfiguration(
             appID: appID,
             apiKey: apiKey,
