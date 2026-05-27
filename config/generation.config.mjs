@@ -129,6 +129,7 @@ export const patterns = [
   'clients/algoliasearch-client-ruby/lib/algolia/**',
   '!clients/algoliasearch-client-ruby/lib/algolia/api_client.rb',
   '!clients/algoliasearch-client-ruby/lib/algolia/api_error.rb',
+  '!clients/algoliasearch-client-ruby/lib/algolia/chunked_helper_options.rb',
   '!clients/algoliasearch-client-ruby/lib/algolia/defaults.rb',
   '!clients/algoliasearch-client-ruby/lib/algolia/error.rb',
   '!clients/algoliasearch-client-ruby/lib/algolia/configuration.rb',
