@@ -1,22 +1,17 @@
-  /**
-   * Helper: Forges a secured user token (JWT) for Agent Studio authenticated requests.
-   *
-   * @param secretKey The secret key to sign the token with.
-   * @param secretKeyId The key ID to include in the JWT header (kid).
-   * @param userId The user identifier to include as the subject (sub) claim.
-   * @param expiresIn The token expiration in seconds from now. Defaults to 86400 (24 hours).
-   * @return The signed JWT token.
-   */
+  @OptIn(kotlin.io.encoding.ExperimentalEncodingApi::class)
   public fun forgeSecuredUserToken(secretKey: String, secretKeyId: String, userId: String, expiresIn: Int = 24 * 3600): String {
     fun base64UrlEncode(data: ByteArray): String =
-      java.util.Base64.getUrlEncoder().withoutPadding().encodeToString(data)
+      kotlin.io.encoding.Base64.UrlSafe.encode(data).trimEnd('=')
 
-    val header = base64UrlEncode("""{"alg":"HS256","typ":"JWT","kid":"$secretKeyId"}""".toByteArray(Charsets.UTF_8))
-    val payload = base64UrlEncode("""{"sub":"$userId","exp":${java.time.Instant.now().epochSecond + expiresIn}}""".toByteArray(Charsets.UTF_8))
+    fun hmacSHA256(key: String, message: String): ByteArray {
+      val hex = com.algolia.client.extensions.internal.encodeKeySHA256(key, message)
+      return hex.chunked(2).map { it.toInt(16).toByte() }.toByteArray()
+    }
 
-    val mac = javax.crypto.Mac.getInstance("HmacSHA256")
-    mac.init(javax.crypto.spec.SecretKeySpec(secretKey.toByteArray(Charsets.UTF_8), "HmacSHA256"))
-    val signature = base64UrlEncode(mac.doFinal("$header.$payload".toByteArray(Charsets.UTF_8)))
+    val now = kotlinx.datetime.Clock.System.now().epochSeconds
+    val header = base64UrlEncode("""{"alg":"HS256","typ":"JWT","kid":"$secretKeyId"}""".encodeToByteArray())
+    val payload = base64UrlEncode("""{"sub":"$userId","exp":${now + expiresIn}}""".encodeToByteArray())
+    val signature = base64UrlEncode(hmacSHA256(secretKey, "$header.$payload"))
 
     return "$header.$payload.$signature"
   }
