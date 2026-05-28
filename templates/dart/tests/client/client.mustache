@@ -12,14 +12,19 @@ void main() {
     final requester = RequestInterceptor();
     {{#autoCreateClient}}
     final client =  {{client}}(
-      appId: 'appId', 
+      appId: 'appId',
       apiKey: 'apiKey',
       {{#hasRegionalHost}}
       region: '{{defaultRegion}}',
       {{/hasRegionalHost}}
-      options: ClientOptions(requester: requester),
+      options: ClientOptions(
+        connectTimeout: Duration(milliseconds: {{{serverConnectTimeout}}}),
+        readTimeout: Duration(milliseconds: {{{serverReadTimeout}}}),
+        writeTimeout: Duration(milliseconds: {{{serverWriteTimeout}}}),
+        requester: requester,
+      ),
     );
-    {{/autoCreateClient}}    
+    {{/autoCreateClient}}
     {{#steps}}
     {{#isError}}
     await expectError(
