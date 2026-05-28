@@ -17,12 +17,7 @@ void main() {
       {{#hasRegionalHost}}
       region: '{{defaultRegion}}',
       {{/hasRegionalHost}}
-      options: ClientOptions(
-        connectTimeout: Duration(milliseconds: {{{serverConnectTimeout}}}),
-        readTimeout: Duration(milliseconds: {{{serverReadTimeout}}}),
-        writeTimeout: Duration(milliseconds: {{{serverWriteTimeout}}}),
-        requester: requester,
-      ),
+      options: ClientOptions(requester: requester),
     );
     {{/autoCreateClient}}
     {{#steps}}
