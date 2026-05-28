@@ -35,6 +35,21 @@ public class DartCTSManager implements CTSManager {
       bundle.put("import", "package:" + packageName + "/" + packageName + ".dart");
       bundle.put("client", WordUtils.capitalizeFully(client, '-').replace("-", "") + "Client");
     }
+
+    // Spec server timeouts per client, mirroring what Timeouts.enrichBundle exposes
+    // to the production api.mustache. Used by tests/client templates to construct
+    // ClientOptions with the same defaults the generated client would supply.
+    long connect = 2000;
+    long read = 5000;
+    long write = 30000;
+    if (client.equals("ingestion")) {
+      connect = 25000;
+      read = 25000;
+      write = 25000;
+    }
+    bundle.put("serverConnectTimeout", connect);
+    bundle.put("serverReadTimeout", read);
+    bundle.put("serverWriteTimeout", write);
   }
 
   @Override
