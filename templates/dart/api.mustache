@@ -31,36 +31,22 @@ final class {{classname}} implements ApiClient {
   ingestion.IngestionClient? _ingestionTransporter;
   {{/isSearchClient}}
 
-  static ClientOptions _withDefaults(ClientOptions opts) => ClientOptions(
-    connectTimeout: opts.connectTimeout,
-    readTimeout: opts.readTimeout,
-    writeTimeout: opts.writeTimeout,
-    hosts: opts.hosts,
-    headers: opts.headers,
-    agentSegments: opts.agentSegments,
-    logger: opts.logger,
-    requester: opts.requester,
-    interceptors: opts.interceptors,
-    httpClientAdapter: opts.httpClientAdapter,
-    compression: opts.compression,
-  );
-
   {{classname}}({
     required String appId,
     required String apiKey,
-    ClientOptions options = const ClientOptions(),
+    this.options = const ClientOptions(),
     {{#hasRegionalHost}}
     {{^fallbackToAliasHost}}required{{/fallbackToAliasHost}} this.region,
     {{/hasRegionalHost}}
     {{#isSearchClient}}
     TransformationOptions? transformationOptions,
     {{/isSearchClient}}
-  }) : {{#isSearchClient}}_appId = appId, _apiKey = apiKey, {{/isSearchClient}}options = _withDefaults(options),
+  }) : {{#isSearchClient}}_appId = appId, _apiKey = apiKey, {{/isSearchClient}}
     _retryStrategy = RetryStrategy.create(
             segment: AgentSegment(value: "{{{baseName}}}", version: packageVersion),
             appId: appId,
             apiKey: apiKey,
-            options: _withDefaults(options),
+            options: options,
             {{#hostWithAppID}}
             defaultHosts: () => [
               Host(url: '$appId-dsn.algolia.net', callType: CallType.read),
