@@ -6,6 +6,7 @@
 - [1d3f2c149b](https://github.com/algolia/api-clients-automation/commit/1d3f2c149b) fix(specs): clean up abTest schema on listIndices response ([#6448](https://github.com/algolia/api-clients-automation/pull/6448)) by [@Fluf22](https://github.com/Fluf22/)
 - [2a1802e459](https://github.com/algolia/api-clients-automation/commit/2a1802e459) fix(swift): preserve host URL path prefix in Transporter ([#6445](https://github.com/algolia/api-clients-automation/pull/6445)) by [@Fluf22](https://github.com/Fluf22/)
 - [35bf16c848](https://github.com/algolia/api-clients-automation/commit/35bf16c848) fix(specs): add searchResponsePartial fallback to searchResult oneOf ([#6350](https://github.com/algolia/api-clients-automation/pull/6350)) by [@Fluf22](https://github.com/Fluf22/)
+  - For those of you who want really clean responses without hits nor facets, we added a third fallback type to the search response. It should not impact the rest of the users, but just to be careful, be sure you have a default case in your Swift switch, since they need to be exhaustive.
 
 ## [9.43.1](https://github.com/algolia/algoliasearch-client-swift/compare/9.43.0...9.43.1)
 
