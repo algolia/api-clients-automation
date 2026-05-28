@@ -43,7 +43,6 @@ final class {{classname}} implements ApiClient {
     interceptors: opts.interceptors,
     httpClientAdapter: opts.httpClientAdapter,
     compression: opts.compression,
-    transformationOptions: opts.transformationOptions,
   );
 
   {{classname}}({
@@ -53,6 +52,9 @@ final class {{classname}} implements ApiClient {
     {{#hasRegionalHost}}
     {{^fallbackToAliasHost}}required{{/fallbackToAliasHost}} this.region,
     {{/hasRegionalHost}}
+    {{#isSearchClient}}
+    TransformationOptions? transformationOptions,
+    {{/isSearchClient}}
   }) : {{#isSearchClient}}_appId = appId, _apiKey = apiKey, {{/isSearchClient}}options = _withDefaults(options),
     _retryStrategy = RetryStrategy.create(
             segment: AgentSegment(value: "{{{baseName}}}", version: packageVersion),
@@ -98,8 +100,8 @@ final class {{classname}} implements ApiClient {
     assert(appId.isNotEmpty, '`appId` is missing.');
     assert(apiKey.isNotEmpty, '`apiKey` is missing.');
     {{#isSearchClient}}
-    if (this.options.transformationOptions != null) {
-      _ingestionTransporter = _buildIngestionTransporter(this.options.transformationOptions!);
+    if (transformationOptions != null) {
+      _ingestionTransporter = _buildIngestionTransporter(transformationOptions);
     }
     {{/isSearchClient}}
   }
