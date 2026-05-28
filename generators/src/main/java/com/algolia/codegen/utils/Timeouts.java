@@ -46,10 +46,5 @@ public class Timeouts {
     }
 
     bundle.put("x-timeouts", specTimeouts);
-
-    // Flat scalars for templates that cannot traverse nested Java objects via Mustache.
-    bundle.put("serverConnectTimeout", specTimeouts.server.connect);
-    bundle.put("serverReadTimeout", specTimeouts.server.read);
-    bundle.put("serverWriteTimeout", specTimeouts.server.write);
   }
 }
