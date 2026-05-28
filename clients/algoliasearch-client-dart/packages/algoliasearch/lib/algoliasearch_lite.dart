@@ -96,6 +96,7 @@ export 'src/model/search_params_object.dart';
 export 'src/model/search_params_query.dart';
 export 'src/model/search_params_string.dart';
 export 'src/model/search_response.dart';
+export 'src/model/search_response_partial.dart';
 export 'src/model/search_responses.dart';
 export 'src/model/search_strategy.dart';
 export 'src/model/search_type_default.dart';
