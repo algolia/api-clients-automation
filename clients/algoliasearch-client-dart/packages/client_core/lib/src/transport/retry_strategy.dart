@@ -30,8 +30,8 @@ final class RetryStrategy {
     required Iterable<Host> Function() defaultHosts,
     ClientOptions options = const ClientOptions(),
   }) : this(
-          readTimeout: options.readTimeout ?? const Duration(seconds: 5),
-          writeTimeout: options.writeTimeout ?? const Duration(seconds: 30),
+          readTimeout: options.readTimeout,
+          writeTimeout: options.writeTimeout,
           hosts: options.hosts ?? defaultHosts.call(),
           requester: options.requester ??
               DioRequester(

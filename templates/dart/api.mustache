@@ -32,9 +32,9 @@ final class {{classname}} implements ApiClient {
   {{/isSearchClient}}
 
   static ClientOptions _withDefaults(ClientOptions opts) => ClientOptions(
-    connectTimeout: opts.connectTimeout ?? const Duration(milliseconds: {{{serverConnectTimeout}}}),
-    readTimeout: opts.readTimeout ?? const Duration(milliseconds: {{{serverReadTimeout}}}),
-    writeTimeout: opts.writeTimeout ?? const Duration(milliseconds: {{{serverWriteTimeout}}}),
+    connectTimeout: opts.connectTimeout,
+    readTimeout: opts.readTimeout,
+    writeTimeout: opts.writeTimeout,
     hosts: opts.hosts,
     headers: opts.headers,
     agentSegments: opts.agentSegments,
