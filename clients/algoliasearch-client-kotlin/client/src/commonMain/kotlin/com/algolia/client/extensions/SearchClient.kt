@@ -778,6 +778,7 @@ public suspend fun SearchClient.browseSynonyms(
  * @param batchSize The size of the batch. Default is 1000.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *   the transporter requestOptions.
+ * @param chunkedOptions Optional shared configuration for chunked helpers (e.g. `maxRetries`).
  * @return The list of ingestion `WatchResponse`s, one per push request.
  */
 public suspend fun SearchClient.saveObjectsWithTransformation(
@@ -786,6 +787,7 @@ public suspend fun SearchClient.saveObjectsWithTransformation(
   waitForTasks: Boolean = false,
   batchSize: Int = 1000,
   requestOptions: RequestOptions? = null,
+  chunkedOptions: ChunkedHelperOptions? = null,
 ): List<IngestionWatchResponse> =
   requireIngestionTransporter()
     .chunkedPush(
@@ -796,6 +798,7 @@ public suspend fun SearchClient.saveObjectsWithTransformation(
       batchSize = batchSize,
       referenceIndexName = null,
       requestOptions = requestOptions,
+      chunkedOptions = chunkedOptions,
     )
 
 /**
@@ -812,6 +815,7 @@ public suspend fun SearchClient.saveObjectsWithTransformation(
  * @param batchSize The size of the batch. Default is 1000.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *   the transporter requestOptions.
+ * @param chunkedOptions Optional shared configuration for chunked helpers (e.g. `maxRetries`).
  * @return The list of ingestion `WatchResponse`s, one per push request.
  */
 public suspend fun SearchClient.partialUpdateObjectsWithTransformation(
@@ -821,6 +825,7 @@ public suspend fun SearchClient.partialUpdateObjectsWithTransformation(
   waitForTasks: Boolean = false,
   batchSize: Int = 1000,
   requestOptions: RequestOptions? = null,
+  chunkedOptions: ChunkedHelperOptions? = null,
 ): List<IngestionWatchResponse> =
   requireIngestionTransporter()
     .chunkedPush(
@@ -833,6 +838,7 @@ public suspend fun SearchClient.partialUpdateObjectsWithTransformation(
       batchSize = batchSize,
       referenceIndexName = null,
       requestOptions = requestOptions,
+      chunkedOptions = chunkedOptions,
     )
 
 /**
@@ -850,6 +856,7 @@ public suspend fun SearchClient.partialUpdateObjectsWithTransformation(
  * @param scopes The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *   the transporter requestOptions.
+ * @param chunkedOptions Optional shared configuration for chunked helpers (e.g. `maxRetries`).
  * @return The responses from the three-step operations: copy, push, move.
  */
 public suspend fun SearchClient.replaceAllObjectsWithTransformation(
@@ -858,8 +865,10 @@ public suspend fun SearchClient.replaceAllObjectsWithTransformation(
   batchSize: Int = 1000,
   scopes: List<ScopeType> = listOf(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms),
   requestOptions: RequestOptions? = null,
+  chunkedOptions: ChunkedHelperOptions? = null,
 ): ReplaceAllObjectsWithTransformationResponse {
   val transporter = requireIngestionTransporter()
+  val maxRetries = chunkedOptions?.maxRetries ?: DEFAULT_MAX_RETRIES
   val tmpIndexName = "${indexName}_tmp_${Random.nextInt(from = 0, until = 100)}"
 
   try {
@@ -884,9 +893,10 @@ public suspend fun SearchClient.replaceAllObjectsWithTransformation(
         batchSize = batchSize,
         referenceIndexName = indexName,
         requestOptions = requestOptions,
+        chunkedOptions = chunkedOptions,
       )
 
-    waitForTask(indexName = tmpIndexName, taskID = copy.taskID)
+    waitForTask(indexName = tmpIndexName, taskID = copy.taskID, maxRetries = maxRetries)
 
     copy =
       operationIndex(
@@ -899,7 +909,7 @@ public suspend fun SearchClient.replaceAllObjectsWithTransformation(
           ),
         requestOptions = requestOptions,
       )
-    waitForTask(indexName = tmpIndexName, taskID = copy.taskID)
+    waitForTask(indexName = tmpIndexName, taskID = copy.taskID, maxRetries = maxRetries)
 
     val move =
       operationIndex(
@@ -908,7 +918,7 @@ public suspend fun SearchClient.replaceAllObjectsWithTransformation(
           OperationIndexParams(operation = OperationType.Move, destination = indexName),
         requestOptions = requestOptions,
       )
-    waitForTask(indexName = tmpIndexName, taskID = move.taskID)
+    waitForTask(indexName = tmpIndexName, taskID = move.taskID, maxRetries = maxRetries)
 
     return ReplaceAllObjectsWithTransformationResponse(
       copyOperationResponse = copy,
