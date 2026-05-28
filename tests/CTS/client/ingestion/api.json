@@ -42,7 +42,6 @@
   },
   {
     "testName": "calls api with default read timeouts",
-    "skipLanguages": ["dart"],
     "steps": [
       {
         "type": "method",
@@ -62,7 +61,6 @@
   },
   {
     "testName": "calls api with default write timeouts",
-    "skipLanguages": ["dart"],
     "steps": [
       {
         "type": "method",
@@ -83,7 +81,6 @@
   {
     "testName": "can leave call opened for a long time",
     "autoCreateClient": false,
-    "skipLanguages": ["dart"],
     "steps": [
       {
         "type": "createClient",

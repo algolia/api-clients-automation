@@ -43,4 +43,9 @@ public interface CTSManager {
   public default void addMustacheLambdas(Map<String, Lambda> lambdas) {
     // NO-OP
   }
+
+  /** Test names (from `tests/CTS/client/<client>/api.json`) that this language cannot satisfy. */
+  public default Set<String> skippedClientTests() {
+    return Collections.emptySet();
+  }
 }

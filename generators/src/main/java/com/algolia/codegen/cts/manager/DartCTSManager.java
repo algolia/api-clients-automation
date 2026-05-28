@@ -5,11 +5,25 @@ import com.algolia.codegen.utils.*;
 import com.samskivert.mustache.Mustache.Lambda;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.WordUtils;
 import org.openapitools.codegen.SupportingFile;
 
 public class DartCTSManager implements CTSManager {
+
+  /**
+   * Tests that rely on per-client default timeouts being applied when the caller passes a partial
+   * `ClientOptions` (without timeouts). Dart's non-nullable
+   * `ClientOptions.connectTimeout/readTimeout/writeTimeout` cannot distinguish "user didn't set"
+   * from "user set to the SDK default", so these tests would be circular if we injected the spec
+   * timeouts into the test client setup. Skipped here instead.
+   */
+  private static final Set<String> SKIPPED_CLIENT_TESTS = Set.of(
+    "calls api with default read timeouts",
+    "calls api with default write timeouts",
+    "can leave call opened for a long time"
+  );
 
   private final String client;
 
@@ -50,6 +64,11 @@ public class DartCTSManager implements CTSManager {
     supportingFiles.add(new SupportingFile("analysis_options.tests.mustache", "tests/output/dart/analysis_options.yaml"));
     supportingFiles.add(new SupportingFile("pubspec.tests.mustache", "tests/output/dart/pubspec.yaml"));
     supportingFiles.add(new SupportingFile("pubspec_overrides.tests.mustache", "tests/output/dart/pubspec_overrides.yaml"));
+  }
+
+  @Override
+  public Set<String> skippedClientTests() {
+    return SKIPPED_CLIENT_TESTS;
   }
 
   @Override

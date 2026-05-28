@@ -70,7 +70,7 @@ public class TestsClient extends TestsGenerator {
       List<Object> tests = new ArrayList<>();
       int testIndex = 0;
       skipTest: for (ClientTestData test : blockEntry.getValue()) {
-        if (test.skipLanguages != null && test.skipLanguages.contains(language)) {
+        if (ctsManager.skippedClientTests().contains(test.testName)) {
           continue skipTest;
         }
         try {

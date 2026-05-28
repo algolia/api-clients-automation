@@ -6,7 +6,6 @@ public class ClientTestData {
 
   public String testName;
   public boolean autoCreateClient = true;
-  public List<String> skipLanguages;
   public List<Step> steps;
 
   public String toString() {
@@ -14,7 +13,6 @@ public class ClientTestData {
     sb.append("class ClientTestData {\n");
     sb.append("    testName: ").append(testName).append("\n");
     sb.append("    autoCreateClient: ").append(autoCreateClient).append("\n");
-    sb.append("    skipLanguages: ").append(skipLanguages).append("\n");
     sb.append("    steps: ").append(steps).append("\n");
     sb.append("}");
     return sb.toString();
