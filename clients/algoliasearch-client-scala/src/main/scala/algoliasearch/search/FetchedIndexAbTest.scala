@@ -36,8 +36,6 @@ package algoliasearch.search
   *
   * @param id
   *   A/B test ID.
-  * @param isDark
-  *   Whether the A/B test is a dark test (server-side measured, not user-facing). Only present when true.
   * @param version
   *   A/B test schema version. Only present for v2 and later tests.
   * @param `type`
@@ -47,7 +45,6 @@ package algoliasearch.search
   */
 case class FetchedIndexAbTest(
     id: Int,
-    isDark: Option[Boolean] = scala.None,
     version: Option[Int] = scala.None,
     `type`: Option[String] = scala.None,
     target: Option[FetchedIndexAbTestTarget] = scala.None,
