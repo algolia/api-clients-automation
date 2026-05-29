@@ -16,7 +16,7 @@ import {
 } from '../../common.ts';
 import { getNbGitDiff } from '../utils.ts';
 import { parseChangelogToMdx } from './parseChangelogToMdx.ts';
-import type { ChangelogsToPush, GuidesToPush, RepositoryConfiguration, SpecsToPush, SnippetsToPush } from './types.ts';
+import type { ChangelogsToPush, GuidesToPush, RepositoryConfiguration, SnippetsToPush, SpecsToPush } from './types.ts';
 import { pushToRepositoryConfiguration } from './types.ts';
 
 import { getClientsConfigField } from '../../config.ts';
@@ -227,7 +227,7 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
       title: task.commitMessage,
       body: [
         'This PR is automatically created by https://github.com/algolia/api-clients-automation',
-        'It contains the latest generated guides.',
+        'It contains the latest generated files.',
       ].join('\n\n'),
       base: config.baseBranch,
       head: newBranch,

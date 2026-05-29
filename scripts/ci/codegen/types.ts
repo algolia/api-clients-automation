@@ -36,7 +36,10 @@ export type SpecsToPush = {
 };
 
 export type SnippetsToPush = {
+  // the type of changes to push to the repository
   type: 'snippets';
+
+  // the name of the directory to push the files to
   output: string;
 };
 
@@ -67,7 +70,13 @@ export type RepositoryConfiguration = {
 };
 
 export const pushToRepositoryConfiguration: {
-  [k in 'AlgoliaWeb' | 'go' | 'mcp-node' | 'docs-new' | 'n8n-nodes-algolia' | 'api-clients-mcp']: RepositoryConfiguration;
+  [k in
+    | 'AlgoliaWeb'
+    | 'go'
+    | 'mcp-node'
+    | 'docs-new'
+    | 'n8n-nodes-algolia'
+    | 'api-clients-mcp']: RepositoryConfiguration;
 } = {
   AlgoliaWeb: {
     baseBranch: 'develop',
@@ -165,7 +174,7 @@ export const pushToRepositoryConfiguration: {
     baseBranch: 'main',
     tasks: [
       {
-        prBranch: 'feat/automated-update-snippets',
+        prBranch: 'feat/automated-update-for-snippets',
         commitMessage: 'feat: update snippets',
         files: {
           type: 'snippets',
