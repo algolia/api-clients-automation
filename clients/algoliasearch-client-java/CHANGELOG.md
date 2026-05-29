@@ -1,5 +1,7 @@
 ## [4.39.0](https://github.com/algolia/algoliasearch-client-java/compare/4.38.1...4.39.0)
 
+BREAKING CHANGES: this minor version includes breaking changes. See below for more details.
+
 - [84ebc480a8](https://github.com/algolia/api-clients-automation/commit/84ebc480a8) chore(deps): dependencies 2026-05-15 ([#6400](https://github.com/algolia/api-clients-automation/pull/6400)) by [@Fluf22](https://github.com/Fluf22/)
 - [90da6bf0ae](https://github.com/algolia/api-clients-automation/commit/90da6bf0ae) chore(deps): dependencies 2026-05-18 ([#6429](https://github.com/algolia/api-clients-automation/pull/6429)) by [@Fluf22](https://github.com/Fluf22/)
 - [2d18c138a8](https://github.com/algolia/api-clients-automation/commit/2d18c138a8) feat(java): configurable retries on chunked helpers via ChunkedHelperOptions ([#6405](https://github.com/algolia/api-clients-automation/pull/6405)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)

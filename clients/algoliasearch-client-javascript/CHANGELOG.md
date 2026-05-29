@@ -1,5 +1,7 @@
 ## [5.53.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.52.1...5.53.0)
 
+BREAKING CHANGES: this minor version includes breaking changes. See below for more details.
+
 - [c95cbc1d2e](https://github.com/algolia/api-clients-automation/commit/c95cbc1d2e) fix(javascript): handle response stream error in `createHttpRequester` ([#6347](https://github.com/algolia/api-clients-automation/pull/6347)) by [@zigzagdev](https://github.com/zigzagdev/)
 - [c55851671e](https://github.com/algolia/api-clients-automation/commit/c55851671e) feat(javascript): expose maximum number of retries ([#6353](https://github.com/algolia/api-clients-automation/pull/6353)) by [@eric-zaharia](https://github.com/eric-zaharia/)
   - We updated the default number of retries to account for customers with huge indices, and made it configurable if you prefer to fail early. The impact is that the retry time will be longer in case of issue, but it shouldn't impact most customers: those who don't have issues.

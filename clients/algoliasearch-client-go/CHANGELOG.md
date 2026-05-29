@@ -1,5 +1,7 @@
 ## [4.40.0](https://github.com/algolia/algoliasearch-client-go/compare/4.39.1...4.40.0)
 
+BREAKING CHANGES: this minor version includes breaking changes. See below for more details.
+
 - [46e45d3eb6](https://github.com/algolia/api-clients-automation/commit/46e45d3eb6) feat(go): expose number of retries ([#6406](https://github.com/algolia/api-clients-automation/pull/6406)) by [@eric-zaharia](https://github.com/eric-zaharia/)
   - We updated the default number of retries to account for customers with huge indices, and made it configurable if you prefer to fail early. The impact is that the retry time will be longer in case of issue, but it shouldn't impact most customers: those who don't have issues.
 - [d996f98fda](https://github.com/algolia/api-clients-automation/commit/d996f98fda) feat(go): add TransformationOptions for ingestion transporter configuration ([#6293](https://github.com/algolia/api-clients-automation/pull/6293)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)

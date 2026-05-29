@@ -1,5 +1,7 @@
 ## [4.41.0](https://github.com/algolia/algoliasearch-client-python/compare/4.40.1...4.41.0)
 
+BREAKING CHANGES: this minor version includes breaking changes. See below for more details.
+
 - [dc0f9dacc5](https://github.com/algolia/api-clients-automation/commit/dc0f9dacc5) feat(python): expose maximum number of retries ([#6404](https://github.com/algolia/api-clients-automation/pull/6404)) by [@eric-zaharia](https://github.com/eric-zaharia/)
   - We updated the default number of retries to account for customers with huge indices, and made it configurable if you prefer to fail early. The impact is that the retry time will be longer in case of issue, but it shouldn't impact most customers: those who don't have issues.
 - [84ebc480a8](https://github.com/algolia/api-clients-automation/commit/84ebc480a8) chore(deps): dependencies 2026-05-15 ([#6400](https://github.com/algolia/api-clients-automation/pull/6400)) by [@Fluf22](https://github.com/Fluf22/)

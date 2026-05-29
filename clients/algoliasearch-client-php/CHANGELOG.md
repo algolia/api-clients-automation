@@ -1,5 +1,7 @@
 ## [4.44.0](https://github.com/algolia/algoliasearch-client-php/compare/4.43.1...4.44.0)
 
+BREAKING CHANGES: this minor version includes breaking changes. See below for more details.
+
 - [3e6df652cb](https://github.com/algolia/api-clients-automation/commit/3e6df652cb) feat(php): expose maximum number of retries ([#6401](https://github.com/algolia/api-clients-automation/pull/6401)) by [@eric-zaharia](https://github.com/eric-zaharia/)
   - We updated the default number of retries to account for customers with huge indices, and made it configurable if you prefer to fail early. The impact is that the retry time will be longer in case of issue, but it shouldn't impact most customers: those who don't have issues.
 - [dced3f23ff](https://github.com/algolia/api-clients-automation/commit/dced3f23ff) feat(php): add TransformationOptions for ingestion transporter ([#6349](https://github.com/algolia/api-clients-automation/pull/6349)) by [@eric-zaharia](https://github.com/eric-zaharia/)

@@ -1,5 +1,7 @@
 ## [2.41.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.40.1...2.41.0)
 
+BREAKING CHANGES: this minor version includes breaking changes. See below for more details.
+
 - [a1a51b3591](https://github.com/algolia/api-clients-automation/commit/a1a51b3591) feat(scala): add withTransformation helpers and TransformationOptions… ([#6312](https://github.com/algolia/api-clients-automation/pull/6312)) by [@eric-zaharia](https://github.com/eric-zaharia/)
 - [84ebc480a8](https://github.com/algolia/api-clients-automation/commit/84ebc480a8) chore(deps): dependencies 2026-05-15 ([#6400](https://github.com/algolia/api-clients-automation/pull/6400)) by [@Fluf22](https://github.com/Fluf22/)
 - [90da6bf0ae](https://github.com/algolia/api-clients-automation/commit/90da6bf0ae) chore(deps): dependencies 2026-05-18 ([#6429](https://github.com/algolia/api-clients-automation/pull/6429)) by [@Fluf22](https://github.com/Fluf22/)

@@ -1,5 +1,7 @@
 ## [3.40.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.39.1...3.40.0)
 
+BREAKING CHANGES: this minor version includes breaking changes. See below for more details.
+
 - [84ebc480a8](https://github.com/algolia/api-clients-automation/commit/84ebc480a8) chore(deps): dependencies 2026-05-15 ([#6400](https://github.com/algolia/api-clients-automation/pull/6400)) by [@Fluf22](https://github.com/Fluf22/)
 - [90da6bf0ae](https://github.com/algolia/api-clients-automation/commit/90da6bf0ae) chore(deps): dependencies 2026-05-18 ([#6429](https://github.com/algolia/api-clients-automation/pull/6429)) by [@Fluf22](https://github.com/Fluf22/)
 - [77cfd0447b](https://github.com/algolia/api-clients-automation/commit/77cfd0447b) feat(ruby): add TransformationOptions for ingestion transporter configuration ([#6313](https://github.com/algolia/api-clients-automation/pull/6313)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
