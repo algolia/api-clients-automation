@@ -36,6 +36,7 @@ jobs:
           app-id: ${{ secrets.ALGOLIA_BOT_APP_ID }}
           private-key: ${{ secrets.ALGOLIA_BOT_PRIVATE_KEY }}
           owner: algolia
+          repositories: ${{ inputs.name }}
 
       - run: yarn workspace scripts pushToRepository ${{ inputs.name }} 
         env:
