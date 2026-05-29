@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// The selected streams of an airbyte connector.
@@ -26,11 +26,7 @@ public struct DockerStreamsInput: Codable, JSONEncodable {
     }
 }
 
-extension DockerStreamsInput: Equatable {
-    public static func ==(lhs: DockerStreamsInput, rhs: DockerStreamsInput) -> Bool {
-        lhs.streams == rhs.streams
-    }
-}
+extension DockerStreamsInput: Equatable {}
 
 extension DockerStreamsInput: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct LogQuery: Codable, JSONEncodable {
@@ -36,13 +36,7 @@ public struct LogQuery: Codable, JSONEncodable {
     }
 }
 
-extension LogQuery: Equatable {
-    public static func ==(lhs: LogQuery, rhs: LogQuery) -> Bool {
-        lhs.indexName == rhs.indexName &&
-            lhs.userToken == rhs.userToken &&
-            lhs.queryId == rhs.queryId
-    }
-}
+extension LogQuery: Equatable {}
 
 extension LogQuery: Hashable {
     public func hash(into hasher: inout Hasher) {

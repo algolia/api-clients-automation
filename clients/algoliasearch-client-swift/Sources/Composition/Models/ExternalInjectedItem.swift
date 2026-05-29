@@ -2,10 +2,11 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
+/// Contains a list of objects to inject from an external source.
 public struct ExternalInjectedItem: Codable, JSONEncodable {
     public var items: [ExternalInjection]
 
@@ -25,11 +26,7 @@ public struct ExternalInjectedItem: Codable, JSONEncodable {
     }
 }
 
-extension ExternalInjectedItem: Equatable {
-    public static func ==(lhs: ExternalInjectedItem, rhs: ExternalInjectedItem) -> Bool {
-        lhs.items == rhs.items
-    }
-}
+extension ExternalInjectedItem: Equatable {}
 
 extension ExternalInjectedItem: Hashable {
     public func hash(into hasher: inout Hasher) {

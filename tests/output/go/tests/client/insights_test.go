@@ -64,7 +64,7 @@ func TestInsightscommonApi1(t *testing.T) {
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, `^Algolia for Go \(4.35.0\).*`, echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.40.0\).*`, echo.Header.Get("User-Agent"))
 }
 
 // fallbacks to the alias when region is not given.
@@ -92,6 +92,7 @@ func TestInsightsparameters0(t *testing.T) {
 		},
 	}
 	client, err = insights.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.PushEvents(client.NewApiPushEventsRequest(
 
@@ -130,6 +131,7 @@ func TestInsightsparameters1(t *testing.T) {
 		Region: insights.Region("us"),
 	}
 	client, err = insights.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomDelete(client.NewApiCustomDeleteRequest(
 		"test"))
@@ -163,6 +165,7 @@ func TestInsightsparameters2(t *testing.T) {
 		Region: insights.Region("not_a_region"),
 	}
 	client, err = insights.NewClientWithConfig(cfg)
+
 	require.EqualError(t, err, "`region` must be one of the following: de, us")
 }
 
@@ -192,6 +195,7 @@ func TestInsightssetClientApiKey0(t *testing.T) {
 		Region: insights.Region("us"),
 	}
 	client, err = insights.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(

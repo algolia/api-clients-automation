@@ -2,7 +2,7 @@ post:
   operationId: deleteCrawlRun
   summary: Crawler run record deletion
   description: |
-    The Crawler Logs file allows you to monitor and debug your crawler’s activity by recording
+    The Crawler Logs file lets you monitor and debug your crawler’s activity by recording
     detailed logs for each crawl run. This delete the existing crawler log record, not the actual crawler.
   tags:
     - crawlers

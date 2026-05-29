@@ -15,17 +15,17 @@ import java.util.Objects;
 public class Multifeed {
 
   @JsonProperty("feeds")
-  private Map<String, Injection> feeds = new HashMap<>();
+  private Map<String, FeedInjection> feeds = new HashMap<>();
 
   @JsonProperty("feedsOrder")
   private List<String> feedsOrder;
 
-  public Multifeed setFeeds(Map<String, Injection> feeds) {
+  public Multifeed setFeeds(Map<String, FeedInjection> feeds) {
     this.feeds = feeds;
     return this;
   }
 
-  public Multifeed putFeeds(String key, Injection feedsItem) {
+  public Multifeed putFeeds(String key, FeedInjection feedsItem) {
     this.feeds.put(key, feedsItem);
     return this;
   }
@@ -34,7 +34,7 @@ public class Multifeed {
    * A key-value store of Feed ID to Feed. Currently, the only supported Feed type is an Injection.
    */
   @javax.annotation.Nonnull
-  public Map<String, Injection> getFeeds() {
+  public Map<String, FeedInjection> getFeeds() {
     return feeds;
   }
 

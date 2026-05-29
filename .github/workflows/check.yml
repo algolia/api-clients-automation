@@ -27,7 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: marocchino/sticky-pull-request-comment@v2
+      - uses: marocchino/sticky-pull-request-comment@v3
         with:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
           message: |
@@ -105,7 +105,7 @@ jobs:
 
       - name: Lint json files
         run: |
-          yarn eslint --ext=json .
+          yarn eslint '**/*.json'
           echo 'Use yarn fix:json to fix issues'
 
     outputs:
@@ -164,7 +164,7 @@ jobs:
         run: yarn cli build specs -s
 
       - name: Store bundled specs
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           if-no-files-found: error
           name: specs
@@ -228,11 +228,9 @@ jobs:
         run: cd clients/algoliasearch-client-javascript && yarn test
 
       - name: Test JavaScript bundle size
-        if: ${{ startsWith(github.head_ref, 'chore/prepare-release-') }}
         run: cd clients/algoliasearch-client-javascript && yarn test:size
 
       - name: Test JavaScript bundle and types
-        if: ${{ startsWith(github.head_ref, 'chore/prepare-release-') }}
         run: cd clients/algoliasearch-client-javascript && yarn test:bundle
 
       - name: Remove previous CTS output
@@ -291,7 +289,7 @@ jobs:
         run: zip -r -y clients-javascript.zip clients/algoliasearch-client-javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).testsToStore }} ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).guidesToStore }} -x "**/node_modules**" "**/.yarn/cache/**" "**/.yarn/install-state.gz" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/.nx/**"
 
       - name: Store javascript clients
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           if-no-files-found: error
           name: clients-javascript
@@ -414,7 +412,7 @@ jobs:
 
       - name: Store ${{ matrix.client.language }} clients
         if: ${{ matrix.client.isMainVersion }}
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           if-no-files-found: error
           name: clients-${{matrix.client.language }}
@@ -593,7 +591,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: update generation comment
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         if: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT == '' }}
         with:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
@@ -606,7 +604,7 @@ jobs:
             ${{ steps.benchmark.outputs.BENCHMARK_SECTION }}
 
       - name: update generation comment
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         if: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT != '' }}
         with:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
@@ -711,9 +709,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
-        
+
       - name: notify failures
-        uses: slackapi/slack-github-action@v2.1.1
+        uses: slackapi/slack-github-action@v3.0.3
         if: ${{ steps.waitForAllReleases.outputs.FAILED_RELEASES != '' }}
         with:
           method: chat.postMessage

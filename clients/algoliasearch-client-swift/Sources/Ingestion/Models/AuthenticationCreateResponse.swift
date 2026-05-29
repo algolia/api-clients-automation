@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// API response for the successful creation of an authentication resource.
@@ -12,7 +12,7 @@ public struct AuthenticationCreateResponse: Codable, JSONEncodable {
     public var authenticationID: String
     /// Descriptive name for the resource.
     public var name: String
-    /// Date of creation in RFC 3339 format.
+    /// Date and time when the resource was created, in RFC 3339 format.
     public var createdAt: String
 
     public init(authenticationID: String, name: String, createdAt: String) {
@@ -37,13 +37,7 @@ public struct AuthenticationCreateResponse: Codable, JSONEncodable {
     }
 }
 
-extension AuthenticationCreateResponse: Equatable {
-    public static func ==(lhs: AuthenticationCreateResponse, rhs: AuthenticationCreateResponse) -> Bool {
-        lhs.authenticationID == rhs.authenticationID &&
-            lhs.name == rhs.name &&
-            lhs.createdAt == rhs.createdAt
-    }
-}
+extension AuthenticationCreateResponse: Equatable {}
 
 extension AuthenticationCreateResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

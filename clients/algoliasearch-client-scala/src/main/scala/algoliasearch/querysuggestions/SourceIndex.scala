@@ -2,18 +2,18 @@
   * external suggestions, or facet values. In your user interface, you can query the Query Suggestions indices like
   * regular indices and add [suggested
   * searches](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/query-suggestions/js) to guide
-  * users and speed up their search. ## Base URLs The base URLs for requests to the Query Suggestions API are: -
+  * users and speed up their search. ## Base URLs Base URLs for the Query Suggestions API: -
   * `https://query-suggestions.us.algolia.com` - `https://query-suggestions.eu.algolia.com` Use the URL that matches
   * your [analytics region](https://dashboard.algolia.com/account/infrastructure/analytics). **All requests must use
-  * HTTPS.** ## Authentication To authenticate your API requests, add these headers: - `x-algolia-application-id`. Your
-  * Algolia application ID. - `x-algolia-api-key`. An API key with the necessary permissions to make the request. The
-  * required access control list (ACL) to make a request is listed in each endpoint's reference. You can find your
-  * application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys). ## Request
-  * format Request bodies must be JSON objects. ## Response status and errors Response bodies are JSON objects. Deleting
-  * a user token returns an empty response body with rate-limiting information as headers. Successful responses return a
-  * `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status. Error responses
-  * have a `message` property with more information. ## Version The current version of the Query Suggestions API is
-  * version 1, as indicated by the `/1/` in each endpoint's URL.
+  * HTTPS.** ## Authentication Add these headers to authenticate requests: - `x-algolia-application-id`. Your Algolia
+  * application ID. - `x-algolia-api-key`. An API key with the necessary permissions to make the request. The required
+  * access control list (ACL) to make a request is listed in each endpoint's reference. You can find your application ID
+  * and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys). ## Request format Request
+  * bodies must be JSON objects. ## Response status and errors Response bodies are JSON objects. Deleting a user token
+  * returns an empty response body with rate-limiting information as headers. Successful responses return `2xx`
+  * statuses. Client errors return `4xx` statuses. Server errors return `5xx` statuses. Error responses have a `message`
+  * property with more information. ## Version The current version of the Query Suggestions API is version 1, indicated
+  * by the `/1/` in each endpoint's URL.
   *
   * The version of the OpenAPI document: 1.0.0
   *
@@ -29,12 +29,28 @@ package algoliasearch.querysuggestions
   * @param replicas
   *   If true, Query Suggestions uses all replica indices to find popular searches. If false, only the primary index is
   *   used.
+  * @param analyticsTags
+  *   Analytics tags for filtering the popular searches. For more information, see [Segment your analytics
+  *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+  * @param facets
+  *   Facets to use as top categories with your suggestions. If provided, Query Suggestions adds the top facet values to
+  *   each suggestion.
   * @param minHits
   *   Minimum number of hits required to be included as a suggestion. A search query must at least generate `minHits`
   *   search results to be included in the Query Suggestions index.
   * @param minLetters
   *   Minimum letters required to be included as a suggestion. A search query must be at least `minLetters` long to be
   *   included in the Query Suggestions index.
+  * @param generate
+  *   Facets used for generating query suggestions from facet values. For example, if you set `generate: [\"color\",
+  *   \"brand\"]`, combinations from the facet values are added as query suggestions, such as \"blue adidas\", \"red
+  *   adidas\", \"blue nike\", \"red nike\", etc. You can include nested lists.
+  * @param external
+  *   Algolia indices with popular searches to use as query suggestions. Records of these indices must have these
+  *   attributes: - `query`: search query which will be added as a suggestion - `count`: measure of popularity of that
+  *   search query For example, you can export popular searches from an external analytics provider, such as Google
+  *   Analytics or Adobe Analytics, and feed this data into an Algolia index. You can use this index to generate query
+  *   suggestions until your Algolia Analytics has collected enough data.
   */
 case class SourceIndex(
     indexName: String,

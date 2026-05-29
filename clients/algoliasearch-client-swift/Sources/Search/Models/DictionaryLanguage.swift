@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Dictionary type. If `null`, this dictionary type isn't supported for the language.
@@ -27,11 +27,7 @@ public struct DictionaryLanguage: Codable, JSONEncodable {
     }
 }
 
-extension DictionaryLanguage: Equatable {
-    public static func ==(lhs: DictionaryLanguage, rhs: DictionaryLanguage) -> Bool {
-        lhs.nbCustomEntries == rhs.nbCustomEntries
-    }
-}
+extension DictionaryLanguage: Equatable {}
 
 extension DictionaryLanguage: Hashable {
     public func hash(into hasher: inout Hasher) {

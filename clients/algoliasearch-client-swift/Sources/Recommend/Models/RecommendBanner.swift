@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Banner with image and link to redirect users.
@@ -30,12 +30,7 @@ public struct RecommendBanner: Codable, JSONEncodable {
     }
 }
 
-extension RecommendBanner: Equatable {
-    public static func ==(lhs: RecommendBanner, rhs: RecommendBanner) -> Bool {
-        lhs.image == rhs.image &&
-            lhs.link == rhs.link
-    }
-}
+extension RecommendBanner: Equatable {}
 
 extension RecommendBanner: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Settings for the semantic search part of NeuralSearch. Only used when `mode` is `neuralSearch`.
@@ -28,11 +28,7 @@ public struct SearchSemanticSearch: Codable, JSONEncodable {
     }
 }
 
-extension SearchSemanticSearch: Equatable {
-    public static func ==(lhs: SearchSemanticSearch, rhs: SearchSemanticSearch) -> Bool {
-        lhs.eventSources == rhs.eventSources
-    }
-}
+extension SearchSemanticSearch: Equatable {}
 
 extension SearchSemanticSearch: Hashable {
     public func hash(into hasher: inout Hasher) {

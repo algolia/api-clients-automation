@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// API request body for searching destinations.
@@ -26,11 +26,7 @@ public struct DestinationSearch: Codable, JSONEncodable {
     }
 }
 
-extension DestinationSearch: Equatable {
-    public static func ==(lhs: DestinationSearch, rhs: DestinationSearch) -> Bool {
-        lhs.destinationIDs == rhs.destinationIDs
-    }
-}
+extension DestinationSearch: Equatable {}
 
 extension DestinationSearch: Hashable {
     public func hash(into hasher: inout Hasher) {

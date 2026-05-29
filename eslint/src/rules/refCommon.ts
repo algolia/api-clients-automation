@@ -1,18 +1,14 @@
-// @ts-ignore
-import { createRule } from 'eslint-plugin-yml/lib/utils';
+import type { Rule } from 'eslint';
 
 import { isPairWithKey, isScalar } from '../utils.js';
 
 import clientsConfig from '../../../config/clients.config.json' with { type: 'json' };
 
-export const refCommon = createRule('refCommon', {
+export const refCommon: Rule.RuleModule = {
   meta: {
     docs: {
       description:
         'the $ref must target the current spec, or the common spec. If you intended to use a model from an other spec, move it to the common folder',
-      categories: null,
-      extensionRule: false,
-      layout: false,
     },
     messages: {
       refCommon: '$ref to another spec',
@@ -21,10 +17,6 @@ export const refCommon = createRule('refCommon', {
     schema: [],
   },
   create(context) {
-    if (!context.getSourceCode().parserServices?.isYAML) {
-      return {};
-    }
-
     return {
       YAMLPair(node): void {
         if (!isPairWithKey(node, '$ref')) {
@@ -40,7 +32,7 @@ export const refCommon = createRule('refCommon', {
           return;
         }
 
-        const spec = context.getFilename().match(/specs\/([a-z-]+?)\//)?.[1];
+        const spec = context.filename.match(/specs\/([a-z-]+?)\//)?.[1];
         if (!spec) {
           return;
         }
@@ -59,4 +51,4 @@ export const refCommon = createRule('refCommon', {
       },
     };
   },
-});
+};

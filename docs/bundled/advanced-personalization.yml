@@ -15,8 +15,8 @@ info:
     Agreement](https://www.algolia.com/policies/sla).
 
 
-    See: [Algolia's
-    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem)
+    For more information, see [Algolia's
+    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem).
 
 
     ## Base URLs
@@ -41,7 +41,7 @@ info:
     ## Authentication
 
 
-    To authenticate your API requests, add these headers:
+    Add these headers to authenticate requests:
 
 
     - `x-algolia-application-id`. Your Algolia application ID.
@@ -69,8 +69,8 @@ info:
     of attributes in the API response.
 
 
-    Successful responses return a `2xx` status. Client errors return a `4xx`
-    status. Server errors are indicated by a `5xx` status.
+    Successful responses return `2xx` statuses. Client errors return `4xx`
+    statuses. Server errors return `5xx` statuses.
 
     Error responses have a `message` property with more information.
 
@@ -90,14 +90,14 @@ info:
     - `x-ratelimit-remaining`: The number of requests remaining in the current
     60 second period.
 
-    - `x-ratelimit-reset`: [Unix timestamp](https://www.unixtimestamp.com) of
-    the next time period.
+    - `x-ratelimit-reset`: Timestamp when the next time period starts, measured
+    in seconds since the Unix epoch.
 
 
     ## Version
 
 
-    The current version of the Advanced Personalization API is version 2, as
+    The current version of the Advanced Personalization API is version 2,
     indicated by the `/2/` in each endpoint's URL.
   version: 2.0.0
 servers:
@@ -409,18 +409,20 @@ paths:
               title: configurationParameters
               type: object
               properties:
+                features:
+                  $ref: '#/components/schemas/features'
                 indices:
                   type: array
                   items:
                     title: configurationParametersObject
                     type: object
                     properties:
-                      index:
-                        type: string
                       affinities:
                         type: array
                         items:
                           type: string
+                      index:
+                        type: string
                       source:
                         title: source
                         type: object
@@ -439,8 +441,6 @@ paths:
                   $ref: '#/components/schemas/personalizationReRanking'
                 profileType:
                   $ref: '#/components/schemas/profileType'
-                features:
-                  $ref: '#/components/schemas/features'
               required:
                 - indices
                 - personalizationReRanking
@@ -455,18 +455,18 @@ paths:
                 title: putConfigResponse
                 type: object
                 properties:
-                  status:
-                    type: number
                   errors:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/issue'
-                  warnings:
                     type: array
                     items:
                       $ref: '#/components/schemas/issue'
                   message:
                     type: string
+                  status:
+                    type: number
+                  warnings:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/issue'
                 required:
                   - status
                   - errors
@@ -516,7 +516,58 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"indices":[{"index":"lorem","affinities":["lorem"],"source":{"type":"insights","events":{"viewDetails":[{"type":"view","subtype":"addToCart","name":"lorem"}],"viewListing":[{"type":"view","subtype":"addToCart","name":"lorem"}],"addToCart":[{"type":"view","subtype":"addToCart","name":"lorem"}],"purchase":[{"type":"view","subtype":"addToCart","name":"lorem"}]}}}],"personalizationReRanking":"none","profileType":"basic","features":{"realtime":{"enabled":true}}}'
+              --data '
+            {
+              "indices": [
+                {
+                  "index": "lorem",
+                  "affinities": [
+                    "lorem"
+                  ],
+                  "source": {
+                    "type": "insights",
+                    "events": {
+                      "viewDetails": [
+                        {
+                          "type": "view",
+                          "subtype": "addToCart",
+                          "name": "lorem"
+                        }
+                      ],
+                      "viewListing": [
+                        {
+                          "type": "view",
+                          "subtype": "addToCart",
+                          "name": "lorem"
+                        }
+                      ],
+                      "addToCart": [
+                        {
+                          "type": "view",
+                          "subtype": "addToCart",
+                          "name": "lorem"
+                        }
+                      ],
+                      "purchase": [
+                        {
+                          "type": "view",
+                          "subtype": "addToCart",
+                          "name": "lorem"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ],
+              "personalizationReRanking": "none",
+              "profileType": "basic",
+              "features": {
+                "realtime": {
+                  "enabled": true
+                }
+              }
+            }
+            '
   /2/users:
     get:
       tags:
@@ -531,13 +582,13 @@ paths:
         Retrieves a list of user profiles in [lexicographical
         order](https://www.educative.io/answers/what-is-a-lexicographic-order).
       parameters:
-        - $ref: '#/components/parameters/startDate'
+        - $ref: '#/components/parameters/affinity'
         - $ref: '#/components/parameters/endDate'
         - $ref: '#/components/parameters/indices'
-        - $ref: '#/components/parameters/affinity'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/nextPageToken'
         - $ref: '#/components/parameters/previousPageToken'
+        - $ref: '#/components/parameters/startDate'
       responses:
         '200':
           description: OK
@@ -551,9 +602,9 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/user'
-                  previousPageToken:
-                    type: string
                   nextPageToken:
+                    type: string
+                  previousPageToken:
                     type: string
                 required:
                   - users
@@ -674,15 +725,15 @@ paths:
                 title: deleteUserResponse
                 type: object
                 properties:
+                  deletedAt:
+                    type: string
+                  deletedUntil:
+                    type: string
                   message:
                     type: string
                   status:
                     type: integer
                   userID:
-                    type: string
-                  deletedUntil:
-                    type: string
-                  deletedAt:
                     type: string
         '400':
           $ref: '#/components/responses/BadUserID'
@@ -876,7 +927,7 @@ components:
     startDate:
       name: startDate
       description: |
-        Filter users by start date (in RFC3339 format).
+        Filter users by start date and time, in RFC 3339 format.
         Only users that were updated after the passed date will be returned.
       in: query
       schema:
@@ -885,7 +936,7 @@ components:
     endDate:
       name: endDate
       description: |
-        Filter users by end date (in RFC3339 format).
+        Filter users by end date and time, in RFC 3339 format.
         Only users that were updated before the passed date will be returned.
       in: query
       schema:
@@ -1010,31 +1061,31 @@ components:
     event:
       type: object
       properties:
+        name:
+          type: string
         type:
           $ref: '#/components/schemas/eventType'
         subtype:
           $ref: '#/components/schemas/subtype'
-        name:
-          type: string
       required:
         - type
         - name
     events:
       type: object
       properties:
-        viewDetails:
-          type: array
-          items:
-            $ref: '#/components/schemas/event'
-        viewListing:
-          type: array
-          items:
-            $ref: '#/components/schemas/event'
         addToCart:
           type: array
           items:
             $ref: '#/components/schemas/event'
         purchase:
+          type: array
+          items:
+            $ref: '#/components/schemas/event'
+        viewDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/event'
+        viewListing:
           type: array
           items:
             $ref: '#/components/schemas/event'
@@ -1101,14 +1152,14 @@ components:
     Configuration_status:
       type: object
       properties:
-        type:
-          $ref: '#/components/schemas/status'
         errors:
           type: array
           items:
             $ref: '#/components/schemas/errorCodes'
         lastUpdatedAt:
           type: string
+        type:
+          $ref: '#/components/schemas/status'
     realtime:
       type: object
       properties:
@@ -1123,36 +1174,38 @@ components:
     configurationObject:
       type: object
       properties:
+        features:
+          $ref: '#/components/schemas/features'
         indices:
           type: array
           items:
             title: configurationObject
             type: object
             properties:
-              index:
-                type: string
               affinities:
                 type: array
                 items:
                   type: string
-              source:
-                title: source
-                type: object
-                properties:
-                  type:
-                    $ref: '#/components/schemas/sourceType'
-                  events:
-                    $ref: '#/components/schemas/events'
               errors:
                 type: array
                 items:
                   $ref: '#/components/schemas/issue'
+              index:
+                type: string
+              lastUpdatedAt:
+                type: string
+              source:
+                title: source
+                type: object
+                properties:
+                  events:
+                    $ref: '#/components/schemas/events'
+                  type:
+                    $ref: '#/components/schemas/sourceType'
               warnings:
                 type: array
                 items:
                   $ref: '#/components/schemas/issue'
-              lastUpdatedAt:
-                type: string
             required:
               - index
               - affinities
@@ -1160,14 +1213,12 @@ components:
               - errors
               - warnings
               - lastUpdatedAt
-        personalizationReRanking:
-          $ref: '#/components/schemas/personalizationReRanking'
         profileType:
           $ref: '#/components/schemas/profileType'
         status:
           $ref: '#/components/schemas/Configuration_status'
-        features:
-          $ref: '#/components/schemas/features'
+        personalizationReRanking:
+          $ref: '#/components/schemas/personalizationReRanking'
       required:
         - indices
         - personalzationReRanking
@@ -1187,10 +1238,10 @@ components:
     ErrorResponses_unauthorized:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/unauthorized'
         message:
           $ref: '#/components/schemas/ErrorMessages_unauthorized'
+        status:
+          $ref: '#/components/schemas/unauthorized'
     internalServerError:
       type: integer
       description: HTTP status code for an internal server error.
@@ -1204,10 +1255,10 @@ components:
     ErrorResponses_internalServerError:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/internalServerError'
         message:
           $ref: '#/components/schemas/ErrorMessages_internalServerError'
+        status:
+          $ref: '#/components/schemas/internalServerError'
     badRequest:
       type: integer
       description: HTTP status code for a bad request error.
@@ -1221,10 +1272,10 @@ components:
     ErrorResponses_badRequest:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/badRequest'
         message:
           $ref: '#/components/schemas/ErrorMessages_badRequest'
+        status:
+          $ref: '#/components/schemas/badRequest'
     paymentRequired:
       type: integer
       description: HTTP status code for a payment required error.
@@ -1243,10 +1294,10 @@ components:
     ErrorResponses_featureNotEnabled:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/paymentRequired'
         message:
           $ref: '#/components/schemas/featureNotEnabled'
+        status:
+          $ref: '#/components/schemas/paymentRequired'
     userType:
       title: userType
       type: string
@@ -1257,30 +1308,26 @@ components:
     user:
       type: object
       properties:
-        userID:
-          type: string
-        type:
-          $ref: '#/components/schemas/userType'
         affinities:
           type: array
           items:
             title: affinity
             type: object
             properties:
-              name:
-                type: string
               indices:
                 type: array
                 items:
                   type: string
                   minimum: 1
-              value:
+              lastUpdatedAt:
+                type: string
+              name:
                 type: string
               score:
                 type: number
                 minimum: 1
                 maximum: 20
-              lastUpdatedAt:
+              value:
                 type: string
             required:
               - name
@@ -1289,6 +1336,10 @@ components:
               - score
               - lastUpdatedAt
         lastUpdatedAt:
+          type: string
+        type:
+          $ref: '#/components/schemas/userType'
+        userID:
           type: string
       required:
         - userID
@@ -1308,10 +1359,10 @@ components:
     ErrorResponses_genericUnprocessableEntity:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/unprocessableEntity'
         message:
           $ref: '#/components/schemas/genericUnprocessableEntity'
+        status:
+          $ref: '#/components/schemas/unprocessableEntity'
     badUserID:
       type: string
       description: Details about the response, such as error messages.
@@ -1320,10 +1371,10 @@ components:
     ErrorResponses_badUserID:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/badRequest'
         message:
           $ref: '#/components/schemas/badUserID'
+        status:
+          $ref: '#/components/schemas/badRequest'
     notFound:
       type: integer
       description: HTTP status code for a not found error.
@@ -1337,10 +1388,10 @@ components:
     ErrorResponses_genericNotFound:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/notFound'
         message:
           $ref: '#/components/schemas/genericNotFound'
+        status:
+          $ref: '#/components/schemas/notFound'
     invalidUserID:
       type: string
       description: Details about the response, such as error messages.
@@ -1355,10 +1406,10 @@ components:
     ErrorResponses_invalidUserID:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/unprocessableEntity'
         message:
           $ref: '#/components/schemas/invalidUserID'
+        status:
+          $ref: '#/components/schemas/unprocessableEntity'
     userToken:
       type: string
       description: >
@@ -1393,6 +1444,8 @@ components:
       type: object
       additionalProperties: false
       properties:
+        filters:
+          $ref: '#/components/schemas/searchFilter'
         indices:
           type: array
           items:
@@ -1403,8 +1456,6 @@ components:
             - storefront_price_desc
         strategy:
           $ref: '#/components/schemas/strategy'
-        filters:
-          $ref: '#/components/schemas/searchFilter'
     RealtimeUser:
       title: RealtimeUser
       type: object
@@ -1415,12 +1466,6 @@ components:
         - lastUpdatedAt
         - search
       properties:
-        version:
-          type: string
-          description: Version of the response format.
-        userID:
-          type: string
-          description: User ID of the user.
         lastUpdatedAt:
           type: string
           description: >-
@@ -1433,6 +1478,12 @@ components:
             Index personalization filters by index name.
           additionalProperties:
             $ref: '#/components/schemas/searchFilters'
+        userID:
+          type: string
+          description: User ID of the user.
+        version:
+          type: string
+          description: Version of the response format.
   responses:
     BadRequest:
       description: Bad request or request arguments.
@@ -1518,14 +1569,14 @@ components:
               - status
               - message
             properties:
-              status:
-                type: integer
-                example: 421
-                description: Status code.
               message:
                 type: string
                 example: Too Many Requests
                 description: Response message.
+              status:
+                type: integer
+                example: 421
+                description: Status code.
     InternalError:
       description: Internal error.
       content:
@@ -1544,14 +1595,14 @@ components:
               - status
               - message
             properties:
-              status:
-                type: integer
-                example: 202
-                description: Status code.
               message:
                 type: string
                 example: Accepted
                 description: Response message.
+              status:
+                type: integer
+                example: 202
+                description: Status code.
     Conflict:
       description: Conflict.
       content:
@@ -1564,14 +1615,14 @@ components:
               - status
               - message
             properties:
-              status:
-                type: integer
-                example: 409
-                description: Status code.
               message:
                 type: string
                 example: Conflict
                 description: Response message.
+              status:
+                type: integer
+                example: 409
+                description: Status code.
     StatusUnprocessableEntity:
       description: Unprocessable Entity.
       content:

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct SourceUpdate: Codable, JSONEncodable {
@@ -35,13 +35,7 @@ public struct SourceUpdate: Codable, JSONEncodable {
     }
 }
 
-extension SourceUpdate: Equatable {
-    public static func ==(lhs: SourceUpdate, rhs: SourceUpdate) -> Bool {
-        lhs.name == rhs.name &&
-            lhs.input == rhs.input &&
-            lhs.authenticationID == rhs.authenticationID
-    }
-}
+extension SourceUpdate: Equatable {}
 
 extension SourceUpdate: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct GetClickPositionsResponse: Codable, JSONEncodable {
@@ -26,11 +26,7 @@ public struct GetClickPositionsResponse: Codable, JSONEncodable {
     }
 }
 
-extension GetClickPositionsResponse: Equatable {
-    public static func ==(lhs: GetClickPositionsResponse, rhs: GetClickPositionsResponse) -> Bool {
-        lhs.positions == rhs.positions
-    }
-}
+extension GetClickPositionsResponse: Equatable {}
 
 extension GetClickPositionsResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

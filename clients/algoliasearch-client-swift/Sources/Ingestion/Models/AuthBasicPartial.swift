@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Credentials for authenticating with user name and password.
@@ -32,12 +32,7 @@ public struct AuthBasicPartial: Codable, JSONEncodable {
     }
 }
 
-extension AuthBasicPartial: Equatable {
-    public static func ==(lhs: AuthBasicPartial, rhs: AuthBasicPartial) -> Bool {
-        lhs.username == rhs.username &&
-            lhs.password == rhs.password
-    }
-}
+extension AuthBasicPartial: Equatable {}
 
 extension AuthBasicPartial: Hashable {
     public func hash(into hasher: inout Hasher) {

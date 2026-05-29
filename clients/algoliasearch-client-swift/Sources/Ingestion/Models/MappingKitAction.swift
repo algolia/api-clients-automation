@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Describes how a destination object should be resolved by means of applying a set of directives.
@@ -42,14 +42,7 @@ public struct MappingKitAction: Codable, JSONEncodable {
     }
 }
 
-extension MappingKitAction: Equatable {
-    public static func ==(lhs: MappingKitAction, rhs: MappingKitAction) -> Bool {
-        lhs.id == rhs.id &&
-            lhs.enabled == rhs.enabled &&
-            lhs.trigger == rhs.trigger &&
-            lhs.fieldDirectives == rhs.fieldDirectives
-    }
-}
+extension MappingKitAction: Equatable {}
 
 extension MappingKitAction: Hashable {
     public func hash(into hasher: inout Hasher) {

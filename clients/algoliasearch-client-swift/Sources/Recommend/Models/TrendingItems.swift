@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct TrendingItems: Codable, JSONEncodable {
@@ -46,14 +46,7 @@ public struct TrendingItems: Codable, JSONEncodable {
     }
 }
 
-extension TrendingItems: Equatable {
-    public static func ==(lhs: TrendingItems, rhs: TrendingItems) -> Bool {
-        lhs.facetName == rhs.facetName &&
-            lhs.facetValue == rhs.facetValue &&
-            lhs.model == rhs.model &&
-            lhs.fallbackParameters == rhs.fallbackParameters
-    }
-}
+extension TrendingItems: Equatable {}
 
 extension TrendingItems: Hashable {
     public func hash(into hasher: inout Hasher) {

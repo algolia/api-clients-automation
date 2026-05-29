@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// The redirect rule container.
@@ -26,11 +26,7 @@ public struct RecommendRedirectURL: Codable, JSONEncodable {
     }
 }
 
-extension RecommendRedirectURL: Equatable {
-    public static func ==(lhs: RecommendRedirectURL, rhs: RecommendRedirectURL) -> Bool {
-        lhs.url == rhs.url
-    }
-}
+extension RecommendRedirectURL: Equatable {}
 
 extension RecommendRedirectURL: Hashable {
     public func hash(into hasher: inout Hasher) {

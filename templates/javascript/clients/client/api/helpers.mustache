@@ -6,7 +6,7 @@
  * @param waitForTaskOptions - The `waitForTaskOptions` object.
  * @param waitForTaskOptions.indexName - The `indexName` where the operation was performed.
  * @param waitForTaskOptions.taskID - The `taskID` returned in the method response.
- * @param waitForTaskOptions.maxRetries - The maximum number of retries. 50 by default.
+ * @param waitForTaskOptions.maxRetries - The maximum number of retries. 100 by default.
  * @param waitForTaskOptions.timeout - The function to decide how long to wait between retries.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
  */
@@ -14,7 +14,7 @@ waitForTask(
   {
     indexName,
     taskID,
-    maxRetries = 50,
+    maxRetries = 100,
     timeout = (retryCount: number): number =>
       Math.min(retryCount * 200, 5000),
   }: WaitForTaskOptions,
@@ -29,7 +29,7 @@ waitForTask(
     error: {
       validate: () => retryCount >= maxRetries,
       message: () =>
-        `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+        `Stopped waiting for the task after ${maxRetries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries.`,
     },
     timeout: () => timeout(retryCount),
   });
@@ -41,14 +41,14 @@ waitForTask(
  * @summary Helper method that waits for a task to be published (completed).
  * @param waitForAppTaskOptions - The `waitForTaskOptions` object.
  * @param waitForAppTaskOptions.taskID - The `taskID` returned in the method response.
- * @param waitForAppTaskOptions.maxRetries - The maximum number of retries. 50 by default.
+ * @param waitForAppTaskOptions.maxRetries - The maximum number of retries. 100 by default.
  * @param waitForAppTaskOptions.timeout - The function to decide how long to wait between retries.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
  */
 waitForAppTask(
   {
     taskID,
-    maxRetries = 50,
+    maxRetries = 100,
     timeout = (retryCount: number): number =>
       Math.min(retryCount * 200, 5000),
   }: WaitForAppTaskOptions,
@@ -63,7 +63,7 @@ waitForAppTask(
     error: {
       validate: () => retryCount >= maxRetries,
       message: () =>
-        `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+        `Stopped waiting for the task after ${maxRetries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries.`,
     },
     timeout: () => timeout(retryCount),
   });
@@ -77,7 +77,7 @@ waitForAppTask(
  * @param waitForApiKeyOptions.operation - The `operation` that was done on a `key`.
  * @param waitForApiKeyOptions.key - The `key` that has been added, deleted or updated.
  * @param waitForApiKeyOptions.apiKey - Necessary to know if an `update` operation has been processed, compare fields of the response with it.
- * @param waitForApiKeyOptions.maxRetries - The maximum number of retries. 50 by default.
+ * @param waitForApiKeyOptions.maxRetries - The maximum number of retries. 100 by default.
  * @param waitForApiKeyOptions.timeout - The function to decide how long to wait between retries.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getApikey` method and merged with the transporter requestOptions.
  */
@@ -86,7 +86,7 @@ waitForApiKey(
     operation,
     key,
     apiKey,
-    maxRetries = 50,
+    maxRetries = 100,
     timeout = (retryCount: number): number =>
       Math.min(retryCount * 200, 5000),
   }: WaitForApiKeyOptions,
@@ -100,7 +100,7 @@ waitForApiKey(
     error: {
       validate: () => retryCount >= maxRetries,
       message: () =>
-        `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+        `Stopped waiting for the API key operation after ${maxRetries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries.`,
     },
     timeout: () => timeout(retryCount),
   };
@@ -287,9 +287,10 @@ browseSynonyms(
  * @param chunkedBatch.action - The `batch` `action` to perform on the given array of `objects`, defaults to `addObject`.
  * @param chunkedBatch.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
  * @param chunkedBatch.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+ * @param chunkedBatch.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
  */
-async chunkedBatch({ indexName, objects, action = 'addObject', waitForTasks, batchSize = 1000 }: ChunkedBatchOptions, requestOptions?: RequestOptions): Promise<Array<BatchResponse>> {
+async chunkedBatch({ indexName, objects, action = 'addObject', waitForTasks, batchSize = 1000, maxRetries = 100 }: ChunkedBatchOptions, requestOptions?: RequestOptions): Promise<Array<BatchResponse>> {
   let requests: Array<BatchRequest> = [];
   const responses: Array<BatchResponse> = [];
 
@@ -304,7 +305,7 @@ async chunkedBatch({ indexName, objects, action = 'addObject', waitForTasks, bat
 
   if (waitForTasks) {
     for (const resp of responses) {
-      await this.waitForTask({indexName, taskID: resp.taskID});
+      await this.waitForTask({indexName, taskID: resp.taskID, maxRetries});
     }
   }
 
@@ -320,14 +321,15 @@ async chunkedBatch({ indexName, objects, action = 'addObject', waitForTasks, bat
  * @param saveObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
  * @param saveObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
  * @param saveObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+ * @param saveObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
  */
 async saveObjects(
-  { indexName, objects, waitForTasks, batchSize }: SaveObjectsOptions,
+  { indexName, objects, waitForTasks, batchSize, maxRetries }: SaveObjectsOptions,
   requestOptions?: RequestOptions | undefined
 ): Promise<BatchResponse[]> {
   return await this.chunkedBatch(
-    { indexName, objects, action: 'addObject', waitForTasks, batchSize },
+    { indexName, objects, action: 'addObject', waitForTasks, batchSize, maxRetries },
     requestOptions
   );
 },
@@ -341,10 +343,11 @@ async saveObjects(
  * @param deleteObjects.objectIDs - The objectIDs to delete.
  * @param deleteObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
  * @param deleteObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+ * @param deleteObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
  */
 async deleteObjects(
-  { indexName, objectIDs, waitForTasks, batchSize }: DeleteObjectsOptions,
+  { indexName, objectIDs, waitForTasks, batchSize, maxRetries }: DeleteObjectsOptions,
   requestOptions?: RequestOptions | undefined
 ): Promise<BatchResponse[]> {
   return await this.chunkedBatch(
@@ -354,6 +357,7 @@ async deleteObjects(
       action: 'deleteObject',
       waitForTasks,
       batchSize,
+      maxRetries,
     },
     requestOptions
   );
@@ -369,10 +373,11 @@ async deleteObjects(
  * @param partialUpdateObjects.createIfNotExists - To be provided if non-existing objects are passed, otherwise, the call will fail.
  * @param partialUpdateObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
  * @param partialUpdateObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+ * @param partialUpdateObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
  */
 async partialUpdateObjects(
-  { indexName, objects, createIfNotExists, waitForTasks, batchSize }: PartialUpdateObjectsOptions,
+  { indexName, objects, createIfNotExists, waitForTasks, batchSize, maxRetries }: PartialUpdateObjectsOptions,
   requestOptions?: RequestOptions | undefined
 ): Promise<BatchResponse[]> {
   return await this.chunkedBatch(
@@ -383,7 +388,8 @@ async partialUpdateObjects(
         ? 'partialUpdateObject'
         : 'partialUpdateObjectNoCreate',
       batchSize,
-      waitForTasks
+      waitForTasks,
+      maxRetries,
     },
     requestOptions
   );
@@ -399,10 +405,11 @@ async partialUpdateObjects(
  * @param replaceAllObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
  * @param replaceAllObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `objects.length / batchSize`. Defaults to 1000.
  * @param replaceAllObjects.scopes - The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
+ * @param replaceAllObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch`, `operationIndex` and `getTask` method and merged with the transporter requestOptions.
  */
 async replaceAllObjects(
-  { indexName, objects, batchSize, scopes }: ReplaceAllObjectsOptions,
+  { indexName, objects, batchSize, scopes, maxRetries = 100 }: ReplaceAllObjectsOptions,
   requestOptions?: RequestOptions | undefined
 ): Promise<ReplaceAllObjectsResponse> {
   const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
@@ -426,13 +433,14 @@ async replaceAllObjects(
     );
 
     const batchResponses = await this.chunkedBatch(
-      { indexName: tmpIndexName, objects, waitForTasks: true, batchSize },
+      { indexName: tmpIndexName, objects, waitForTasks: true, batchSize, maxRetries },
       requestOptions
     );
 
     await this.waitForTask({
       indexName: tmpIndexName,
       taskID: copyOperationResponse.taskID,
+      maxRetries,
     });
 
     copyOperationResponse = await this.operationIndex(
@@ -449,6 +457,7 @@ async replaceAllObjects(
     await this.waitForTask({
       indexName: tmpIndexName,
       taskID: copyOperationResponse.taskID,
+      maxRetries,
     });
 
     const moveOperationResponse = await this.operationIndex(
@@ -461,6 +470,7 @@ async replaceAllObjects(
     await this.waitForTask({
       indexName: tmpIndexName,
       taskID: moveOperationResponse.taskID,
+      maxRetries,
     });
 
     return { copyOperationResponse, batchResponses, moveOperationResponse };

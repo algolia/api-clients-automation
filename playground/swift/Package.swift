@@ -22,7 +22,7 @@ var executableTargets: [Target] = []
             name: "\(library)-playground",
             dependencies: [
                 .product(
-                    name: name,
+                    name: "Algolia\(name)",
                     package: "algoliasearch-client-swift"
                 ),
                 .product(name: "DotEnv", package: "DotEnv")

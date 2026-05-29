@@ -24,6 +24,11 @@ Consequence _$ConsequenceFromJson(Map<String, dynamic> json) => $checkedCreate(
                   ?.map((e) =>
                       ConsequenceHide.fromJson(e as Map<String, dynamic>))
                   .toList()),
+          redirect: $checkedConvert(
+              'redirect',
+              (v) => v == null
+                  ? null
+                  : ConsequenceRedirect.fromJson(v as Map<String, dynamic>)),
           userData: $checkedConvert('userData', (v) => v),
         );
         return val;
@@ -43,6 +48,7 @@ Map<String, dynamic> _$ConsequenceToJson(Consequence instance) {
   writeNotNull('promote', instance.promote?.toList());
   writeNotNull('filterPromotes', instance.filterPromotes);
   writeNotNull('hide', instance.hide?.map((e) => e.toJson()).toList());
+  writeNotNull('redirect', instance.redirect?.toJson());
   writeNotNull('userData', instance.userData);
   return val;
 }

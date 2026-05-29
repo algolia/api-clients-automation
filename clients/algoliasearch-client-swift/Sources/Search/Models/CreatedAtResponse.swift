@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Response and creation timestamp.
@@ -27,11 +27,7 @@ public struct CreatedAtResponse: Codable, JSONEncodable {
     }
 }
 
-extension CreatedAtResponse: Equatable {
-    public static func ==(lhs: CreatedAtResponse, rhs: CreatedAtResponse) -> Bool {
-        lhs.createdAt == rhs.createdAt
-    }
-}
+extension CreatedAtResponse: Equatable {}
 
 extension CreatedAtResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

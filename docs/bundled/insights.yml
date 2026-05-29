@@ -19,7 +19,7 @@ info:
     Use Algolia's API clients, libraries, and integrations to collect events
     from your UI and send them to the Insights API.
 
-    See: [Algolia's
+    For more information, see [Algolia's
     ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem).
 
 
@@ -43,7 +43,7 @@ info:
     ## Authentication
 
 
-    To authenticate your API requests, add these headers:
+    Add these headers to authenticate requests:
 
 
     - `x-algolia-application-id`. Your Algolia application ID.
@@ -71,8 +71,8 @@ info:
     information as headers.
 
 
-    Successful responses return a `2xx` status. Client errors return a `4xx`
-    status. Server errors are indicated by a `5xx` status.
+    Successful responses return `2xx` statuses. Client errors return `4xx`
+    statuses. Server errors return `5xx` statuses.
 
     Error responses have a `message` property with more information.
 
@@ -93,8 +93,8 @@ info:
     ## Version
 
 
-    The current version of the Insights API is version 1, as indicated by the
-    `/1/` in each endpoint's URL.
+    The current version of the Insights API is version 1, indicated by the `/1/`
+    in each endpoint's URL.
   version: 1.0.0
 servers:
   - url: https://insights.{region}.algolia.io
@@ -1510,7 +1510,7 @@ paths:
                   summary: Timestamp too old
                   value:
                     status: 422
-                    message: The timestamp must be at most 4 days in the past
+                    message: The timestamp is too far in the past
                 TooManyEvents:
                   summary: Too many events
                   description: You can include up to 1,000 events in a single API request.
@@ -1913,13 +1913,32 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"events":[{"eventName":"Products Clicked","eventType":"click","index":"test-index","userToken":"anonymous-user-1","authenticatedUserToken":"user-1","objectIDs":["object-1"],"positions":[1],"queryID":"7dfe2ada7bca48bdd0629649df0bee07"}]}'
+              --data '
+            {
+              "events": [
+                {
+                  "eventName": "Products Clicked",
+                  "eventType": "click",
+                  "index": "test-index",
+                  "userToken": "anonymous-user-1",
+                  "authenticatedUserToken": "user-1",
+                  "objectIDs": [
+                    "object-1"
+                  ],
+                  "positions": [
+                    1
+                  ],
+                  "queryID": "7dfe2ada7bca48bdd0629649df0bee07"
+                }
+              ]
+            }
+            '
   /1/usertokens/{userToken}:
     delete:
       tags:
         - usertokens
       operationId: deleteUserToken
-      summary: Delete user token
+      summary: Delete user token events
       description: >
         Deletes all events related to the specified user token from events
         metrics and analytics.
@@ -2274,9 +2293,9 @@ components:
       format: int64
       description: >
         Timestamp of the event, measured in milliseconds since the Unix epoch.
+        Must be no older than 30 days.
 
-        By default, the Insights API uses the time it receives an event as its
-        timestamp.
+        If not provided, we use the time at which the request was received.
       example: 1687193127
     ClickedObjectIDsAfterSearch:
       type: object
@@ -2365,6 +2384,12 @@ components:
       type: object
       additionalProperties: false
       properties:
+        discount:
+          $ref: '#/components/schemas/discount'
+        price:
+          $ref: '#/components/schemas/price'
+        quantity:
+          $ref: '#/components/schemas/quantity'
         queryID:
           type: string
           pattern: '[0-9a-f]{32}'
@@ -2374,12 +2399,6 @@ components:
             Unique identifier for a search query, used to track purchase events
             with multiple records that originate from different searches.
           example: 3e48cd0616e466948dd85abf5c3fbbe2
-        price:
-          $ref: '#/components/schemas/price'
-        quantity:
-          $ref: '#/components/schemas/quantity'
-        discount:
-          $ref: '#/components/schemas/discount'
     objectDataAfterSearchList:
       type: array
       description: >
@@ -2415,16 +2434,16 @@ components:
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
-        eventType:
-          $ref: '#/components/schemas/ConversionEvent'
         eventSubtype:
           $ref: '#/components/schemas/AddToCartEvent'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
         index:
           $ref: '#/components/schemas/index'
-        queryID:
-          $ref: '#/components/schemas/queryID'
         objectIDs:
           $ref: '#/components/schemas/objectIDs'
+        queryID:
+          $ref: '#/components/schemas/queryID'
         userToken:
           $ref: '#/components/schemas/userToken'
         authenticatedUserToken:
@@ -2466,12 +2485,14 @@ components:
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
-        eventType:
-          $ref: '#/components/schemas/ConversionEvent'
         eventSubtype:
           $ref: '#/components/schemas/PurchaseEvent'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
         index:
           $ref: '#/components/schemas/index'
+        objectData:
+          $ref: '#/components/schemas/objectDataAfterSearchList'
         objectIDs:
           $ref: '#/components/schemas/objectIDs'
         userToken:
@@ -2480,8 +2501,6 @@ components:
           $ref: '#/components/schemas/authenticatedUserToken'
         currency:
           $ref: '#/components/schemas/currency'
-        objectData:
-          $ref: '#/components/schemas/objectDataAfterSearchList'
         timestamp:
           $ref: '#/components/schemas/timestamp'
         value:
@@ -2583,12 +2602,12 @@ components:
       type: object
       additionalProperties: false
       properties:
+        discount:
+          $ref: '#/components/schemas/discount'
         price:
           $ref: '#/components/schemas/price'
         quantity:
           $ref: '#/components/schemas/quantity'
-        discount:
-          $ref: '#/components/schemas/discount'
     objectDataList:
       type: array
       description: >
@@ -2615,10 +2634,10 @@ components:
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
-        eventType:
-          $ref: '#/components/schemas/ConversionEvent'
         eventSubtype:
           $ref: '#/components/schemas/PurchaseEvent'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
         index:
           $ref: '#/components/schemas/index'
         objectIDs:
@@ -2660,10 +2679,10 @@ components:
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
-        eventType:
-          $ref: '#/components/schemas/ConversionEvent'
         eventSubtype:
           $ref: '#/components/schemas/AddToCartEvent'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
         index:
           $ref: '#/components/schemas/index'
         objectIDs:
@@ -2752,10 +2771,10 @@ components:
           $ref: '#/components/schemas/eventName'
         eventType:
           $ref: '#/components/schemas/ClickEvent'
-        index:
-          $ref: '#/components/schemas/index'
         filters:
           $ref: '#/components/schemas/filters'
+        index:
+          $ref: '#/components/schemas/index'
         userToken:
           $ref: '#/components/schemas/userToken'
         authenticatedUserToken:
@@ -2779,10 +2798,10 @@ components:
           $ref: '#/components/schemas/eventName'
         eventType:
           $ref: '#/components/schemas/ConversionEvent'
-        index:
-          $ref: '#/components/schemas/index'
         filters:
           $ref: '#/components/schemas/filters'
+        index:
+          $ref: '#/components/schemas/index'
         userToken:
           $ref: '#/components/schemas/userToken'
         authenticatedUserToken:
@@ -2842,10 +2861,10 @@ components:
           $ref: '#/components/schemas/eventName'
         eventType:
           $ref: '#/components/schemas/ViewEvent'
-        index:
-          $ref: '#/components/schemas/index'
         filters:
           $ref: '#/components/schemas/filters'
+        index:
+          $ref: '#/components/schemas/index'
         userToken:
           $ref: '#/components/schemas/userToken'
         authenticatedUserToken:
@@ -2924,7 +2943,7 @@ components:
         type: integer
     x-ratelimit-reset:
       description: >-
-        Timstamp when the rate limit will reset, measured in seconds since the
+        Timestamp when the rate limit will reset, measured in seconds since the
         Unix epoch.
       example: 1710682486
       schema:

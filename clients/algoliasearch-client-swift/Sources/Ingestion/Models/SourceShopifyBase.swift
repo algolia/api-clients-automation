@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct SourceShopifyBase: Codable, JSONEncodable {
@@ -26,11 +26,7 @@ public struct SourceShopifyBase: Codable, JSONEncodable {
     }
 }
 
-extension SourceShopifyBase: Equatable {
-    public static func ==(lhs: SourceShopifyBase, rhs: SourceShopifyBase) -> Bool {
-        lhs.shopURL == rhs.shopURL
-    }
-}
+extension SourceShopifyBase: Equatable {}
 
 extension SourceShopifyBase: Hashable {
     public func hash(into hasher: inout Hasher) {

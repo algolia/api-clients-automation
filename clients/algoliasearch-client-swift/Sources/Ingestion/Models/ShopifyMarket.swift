@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Represents a market in Shopify.
@@ -34,13 +34,7 @@ public struct ShopifyMarket: Codable, JSONEncodable {
     }
 }
 
-extension ShopifyMarket: Equatable {
-    public static func ==(lhs: ShopifyMarket, rhs: ShopifyMarket) -> Bool {
-        lhs.countries == rhs.countries &&
-            lhs.currencies == rhs.currencies &&
-            lhs.locales == rhs.locales
-    }
-}
+extension ShopifyMarket: Equatable {}
 
 extension ShopifyMarket: Hashable {
     public func hash(into hasher: inout Hasher) {

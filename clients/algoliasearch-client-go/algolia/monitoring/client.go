@@ -31,7 +31,7 @@ type APIClient struct {
 
 // NewClient creates a new API client with appID and apiKey.
 func NewClient(appID, apiKey string) (*APIClient, error) {
-	return NewClientWithConfig(MonitoringConfiguration{
+	cfg := MonitoringConfiguration{
 		Configuration: transport.Configuration{
 			AppID:         appID,
 			ApiKey:        apiKey,
@@ -39,7 +39,9 @@ func NewClient(appID, apiKey string) (*APIClient, error) {
 			UserAgent:     getUserAgent(),
 			Requester:     transport.NewDefaultRequester(nil),
 		},
-	})
+	}
+
+	return NewClientWithConfig(cfg)
 }
 
 // NewClientWithConfig creates a new API client with the given configuration to fully customize the client behaviour.
@@ -90,7 +92,7 @@ func getDefaultHosts() []transport.StatefulHost {
 }
 
 func getUserAgent() string {
-	return fmt.Sprintf("Algolia for Go (4.35.0); Go (%s); Monitoring (4.35.0)", runtime.Version())
+	return fmt.Sprintf("Algolia for Go (4.40.0); Go (%s); Monitoring (4.40.0)", runtime.Version())
 }
 
 // AddDefaultHeader adds a new HTTP header to the default header in the request.

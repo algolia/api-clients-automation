@@ -64,7 +64,7 @@ func TestAbtestingcommonApi1(t *testing.T) {
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, `^Algolia for Go \(4.35.0\).*`, echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.40.0\).*`, echo.Header.Get("User-Agent"))
 }
 
 // fallbacks to the alias when region is not given.
@@ -92,6 +92,7 @@ func TestAbtestingparameters0(t *testing.T) {
 		},
 	}
 	client, err = abtesting.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.GetABTest(client.NewApiGetABTestRequest(
 		123))
@@ -125,6 +126,7 @@ func TestAbtestingparameters1(t *testing.T) {
 		Region: abtesting.Region("us"),
 	}
 	client, err = abtesting.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.GetABTest(client.NewApiGetABTestRequest(
 		123))
@@ -158,6 +160,7 @@ func TestAbtestingparameters2(t *testing.T) {
 		Region: abtesting.Region("not_a_region"),
 	}
 	client, err = abtesting.NewClientWithConfig(cfg)
+
 	require.EqualError(t, err, "`region` must be one of the following: de, us")
 }
 
@@ -187,6 +190,7 @@ func TestAbtestingsetClientApiKey0(t *testing.T) {
 		Region: abtesting.Region("us"),
 	}
 	client, err = abtesting.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(

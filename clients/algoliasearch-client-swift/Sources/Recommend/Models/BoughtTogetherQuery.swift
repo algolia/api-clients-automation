@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct BoughtTogetherQuery: Codable, JSONEncodable {
@@ -63,17 +63,7 @@ public struct BoughtTogetherQuery: Codable, JSONEncodable {
     }
 }
 
-extension BoughtTogetherQuery: Equatable {
-    public static func ==(lhs: BoughtTogetherQuery, rhs: BoughtTogetherQuery) -> Bool {
-        lhs.indexName == rhs.indexName &&
-            lhs.threshold == rhs.threshold &&
-            lhs.maxRecommendations == rhs.maxRecommendations &&
-            lhs.queryParameters == rhs.queryParameters &&
-            lhs.model == rhs.model &&
-            lhs.objectID == rhs.objectID &&
-            lhs.fallbackParameters == rhs.fallbackParameters
-    }
-}
+extension BoughtTogetherQuery: Equatable {}
 
 extension BoughtTogetherQuery: Hashable {
     public func hash(into hasher: inout Hasher) {

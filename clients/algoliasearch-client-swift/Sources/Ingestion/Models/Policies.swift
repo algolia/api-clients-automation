@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Set of rules for a task.
@@ -27,11 +27,7 @@ public struct Policies: Codable, JSONEncodable {
     }
 }
 
-extension Policies: Equatable {
-    public static func ==(lhs: Policies, rhs: Policies) -> Bool {
-        lhs.criticalThreshold == rhs.criticalThreshold
-    }
-}
+extension Policies: Equatable {}
 
 extension Policies: Hashable {
     public func hash(into hasher: inout Hasher) {

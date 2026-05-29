@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Parameters to apply to this search.  You can use all search parameters, plus special `automaticFacetFilters`,
@@ -44,14 +44,7 @@ public struct SearchParams: Codable, JSONEncodable {
     }
 }
 
-extension SearchParams: Equatable {
-    public static func ==(lhs: SearchParams, rhs: SearchParams) -> Bool {
-        lhs.query == rhs.query &&
-            lhs.automaticFacetFilters == rhs.automaticFacetFilters &&
-            lhs.automaticOptionalFacetFilters == rhs.automaticOptionalFacetFilters &&
-            lhs.renderingContent == rhs.renderingContent
-    }
-}
+extension SearchParams: Equatable {}
 
 extension SearchParams: Hashable {
     public func hash(into hasher: inout Hasher) {

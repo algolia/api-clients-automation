@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Represents a metafield in Shopify.
@@ -34,13 +34,7 @@ public struct ShopifyMetafield: Codable, JSONEncodable {
     }
 }
 
-extension ShopifyMetafield: Equatable {
-    public static func ==(lhs: ShopifyMetafield, rhs: ShopifyMetafield) -> Bool {
-        lhs.namespace == rhs.namespace &&
-            lhs.key == rhs.key &&
-            lhs.value == rhs.value
-    }
-}
+extension ShopifyMetafield: Equatable {}
 
 extension ShopifyMetafield: Hashable {
     public func hash(into hasher: inout Hasher) {

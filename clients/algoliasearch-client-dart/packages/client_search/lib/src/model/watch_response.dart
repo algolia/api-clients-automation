@@ -38,7 +38,7 @@ final class WatchResponse {
   @JsonKey(name: r'message')
   final String? message;
 
-  /// Date of creation in RFC 3339 format.
+  /// Date and time when the resource was created, in RFC 3339 format.
   @JsonKey(name: r'createdAt')
   final String? createdAt;
 

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Input for a `streaming` task whose source is of type `ga4BigqueryExport` and for which extracted data is
@@ -27,11 +27,7 @@ public struct StreamingInput: Codable, JSONEncodable {
     }
 }
 
-extension StreamingInput: Equatable {
-    public static func ==(lhs: StreamingInput, rhs: StreamingInput) -> Bool {
-        lhs.mapping == rhs.mapping
-    }
-}
+extension StreamingInput: Equatable {}
 
 extension StreamingInput: Hashable {
     public func hash(into hasher: inout Hasher) {

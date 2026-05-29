@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct Timeseries: Codable, JSONEncodable {
@@ -32,12 +32,7 @@ public struct Timeseries: Codable, JSONEncodable {
     }
 }
 
-extension Timeseries: Equatable {
-    public static func ==(lhs: Timeseries, rhs: Timeseries) -> Bool {
-        lhs.abTestID == rhs.abTestID &&
-            lhs.variants == rhs.variants
-    }
-}
+extension Timeseries: Equatable {}
 
 extension Timeseries: Hashable {
     public func hash(into hasher: inout Hasher) {

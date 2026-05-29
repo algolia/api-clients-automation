@@ -1216,6 +1216,283 @@ def snippet_for_put_composition4():
     # SEPARATOR<
 
 
+def snippet_for_put_composition5():
+    """
+    Snippet for the putComposition method.
+
+    putComposition
+    """
+    # >SEPARATOR putComposition putComposition
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.put_composition(
+        composition_id="my-recommend-compo",
+        composition={
+            "objectID": "my-recommend-compo",
+            "name": "my recommend composition",
+            "behavior": {
+                "injection": {
+                    "main": {
+                        "source": {
+                            "recommend": {
+                                "indexName": "<YOUR_INDEX_NAME>",
+                                "model": "trending-items",
+                                "threshold": 50,
+                            },
+                        },
+                    },
+                    "injectedItems": [
+                        {
+                            "key": "injected-recommend-key",
+                            "source": {
+                                "recommend": {
+                                    "indexName": "<YOUR_INDEX_NAME>",
+                                    "model": "trending-items",
+                                    "threshold": 30,
+                                    "fallbackParameters": {
+                                        "filters": "category:electronics",
+                                    },
+                                },
+                            },
+                            "position": 3,
+                            "length": 2,
+                        },
+                    ],
+                },
+            },
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_put_composition6():
+    """
+    Snippet for the putComposition method.
+
+    putComposition
+    """
+    # >SEPARATOR putComposition putComposition
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.put_composition(
+        composition_id="my-search-and-recommend-compo",
+        composition={
+            "objectID": "my-search-and-recommend-compo",
+            "name": "my search main with recommend injection",
+            "behavior": {
+                "injection": {
+                    "main": {
+                        "source": {
+                            "search": {
+                                "index": "products",
+                                "params": {
+                                    "filters": "brand:nike",
+                                },
+                            },
+                        },
+                    },
+                    "injectedItems": [
+                        {
+                            "key": "injected-recommend-key",
+                            "source": {
+                                "recommend": {
+                                    "indexName": "<YOUR_INDEX_NAME>",
+                                    "model": "trending-items",
+                                    "threshold": 40,
+                                },
+                            },
+                            "position": 1,
+                            "length": 3,
+                        },
+                    ],
+                },
+            },
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_put_composition7():
+    """
+    Snippet for the putComposition method.
+
+    putComposition
+    """
+    # >SEPARATOR putComposition putComposition
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.put_composition(
+        composition_id="my-multifeed-recommend-compo",
+        composition={
+            "objectID": "my-multifeed-recommend-compo",
+            "name": "multifeed with recommend main",
+            "behavior": {
+                "multifeed": {
+                    "feeds": {
+                        "trending": {
+                            "injection": {
+                                "main": {
+                                    "source": {
+                                        "recommend": {
+                                            "indexName": "<YOUR_INDEX_NAME>",
+                                            "model": "trending-items",
+                                            "threshold": 50,
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "feedsOrder": [
+                        "trending",
+                    ],
+                },
+            },
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_put_composition8():
+    """
+    Snippet for the putComposition method.
+
+    putComposition
+    """
+    # >SEPARATOR putComposition putComposition
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.put_composition(
+        composition_id="my-compo",
+        composition={
+            "objectID": "my-compo",
+            "name": "my composition",
+            "behavior": {
+                "multifeed": {
+                    "feeds": {
+                        "products": {
+                            "injection": {
+                                "main": {
+                                    "source": {
+                                        "search": {
+                                            "index": "products",
+                                            "params": {
+                                                "hitsPerPage": 12,
+                                            },
+                                        },
+                                    },
+                                },
+                                "injectedItems": [
+                                    {
+                                        "key": "featured-products",
+                                        "source": {
+                                            "search": {
+                                                "index": "products",
+                                                "params": {
+                                                    "filters": "featured:true",
+                                                },
+                                            },
+                                        },
+                                        "position": 0,
+                                        "length": 2,
+                                    },
+                                ],
+                            },
+                        },
+                        "articles": {
+                            "injection": {
+                                "main": {
+                                    "source": {
+                                        "search": {
+                                            "index": "articles",
+                                            "params": {
+                                                "hitsPerPage": 5,
+                                                "attributesToRetrieve": [
+                                                    "title",
+                                                    "excerpt",
+                                                    "publishedAt",
+                                                ],
+                                            },
+                                        },
+                                    },
+                                },
+                                "injectedItems": [
+                                    {
+                                        "key": "editorial-picks",
+                                        "source": {
+                                            "search": {
+                                                "index": "articles",
+                                                "params": {
+                                                    "filters": "editorial_pick:true",
+                                                },
+                                            },
+                                        },
+                                        "position": 0,
+                                        "length": 1,
+                                    },
+                                ],
+                            },
+                        },
+                        "videos": {
+                            "injection": {
+                                "main": {
+                                    "source": {
+                                        "search": {
+                                            "index": "videos",
+                                            "params": {
+                                                "hitsPerPage": 3,
+                                                "attributesToRetrieve": [
+                                                    "title",
+                                                    "thumbnail",
+                                                    "duration",
+                                                ],
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "feedsOrder": [
+                        "products",
+                        "articles",
+                        "videos",
+                    ],
+                },
+            },
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_put_composition_rule():
     """
     Snippet for the putCompositionRule method.
@@ -1714,6 +1991,206 @@ def snippet_for_save_rules3():
 
     # Call the API
     response = client.save_rules(
+        composition_id="rule-with-recommend",
+        rules={
+            "requests": [
+                {
+                    "action": "upsert",
+                    "body": {
+                        "objectID": "rule-with-recommend",
+                        "conditions": [
+                            {
+                                "anchoring": "is",
+                                "pattern": "trending",
+                            },
+                        ],
+                        "consequence": {
+                            "behavior": {
+                                "injection": {
+                                    "main": {
+                                        "source": {
+                                            "recommend": {
+                                                "indexName": "<YOUR_INDEX_NAME>",
+                                                "model": "trending-items",
+                                                "threshold": 50,
+                                            },
+                                        },
+                                    },
+                                    "injectedItems": [
+                                        {
+                                            "key": "injected-recommend-from-rule-key",
+                                            "source": {
+                                                "recommend": {
+                                                    "indexName": "<YOUR_INDEX_NAME>",
+                                                    "model": "trending-items",
+                                                    "threshold": 30,
+                                                    "fallbackParameters": {
+                                                        "filters": "category:electronics",
+                                                    },
+                                                },
+                                            },
+                                            "position": 2,
+                                            "length": 3,
+                                        },
+                                    ],
+                                },
+                            },
+                        },
+                    },
+                },
+            ],
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_save_rules4():
+    """
+    Snippet for the saveRules method.
+
+    saveRules
+    """
+    # >SEPARATOR saveRules saveRules
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.save_rules(
+        composition_id="rule-with-search-and-recommend",
+        rules={
+            "requests": [
+                {
+                    "action": "upsert",
+                    "body": {
+                        "objectID": "rule-with-search-and-recommend",
+                        "conditions": [
+                            {
+                                "anchoring": "contains",
+                                "pattern": "shoes",
+                            },
+                        ],
+                        "consequence": {
+                            "behavior": {
+                                "injection": {
+                                    "main": {
+                                        "source": {
+                                            "search": {
+                                                "index": "products",
+                                                "params": {
+                                                    "filters": "category:shoes",
+                                                },
+                                            },
+                                        },
+                                    },
+                                    "injectedItems": [
+                                        {
+                                            "key": "injected-recommend-from-rule-key",
+                                            "source": {
+                                                "recommend": {
+                                                    "indexName": "<YOUR_INDEX_NAME>",
+                                                    "model": "trending-items",
+                                                    "threshold": 40,
+                                                },
+                                            },
+                                            "position": 1,
+                                            "length": 2,
+                                        },
+                                    ],
+                                },
+                            },
+                        },
+                    },
+                },
+            ],
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_save_rules5():
+    """
+    Snippet for the saveRules method.
+
+    saveRules
+    """
+    # >SEPARATOR saveRules saveRules
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.save_rules(
+        composition_id="rule-with-multifeed-recommend",
+        rules={
+            "requests": [
+                {
+                    "action": "upsert",
+                    "body": {
+                        "objectID": "rule-with-multifeed-recommend",
+                        "conditions": [
+                            {
+                                "anchoring": "is",
+                                "pattern": "trending",
+                            },
+                        ],
+                        "consequence": {
+                            "behavior": {
+                                "multifeed": {
+                                    "feeds": {
+                                        "trending": {
+                                            "injection": {
+                                                "main": {
+                                                    "source": {
+                                                        "recommend": {
+                                                            "indexName": "<YOUR_INDEX_NAME>",
+                                                            "model": "trending-items",
+                                                            "threshold": 50,
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    },
+                                    "feedsOrder": [
+                                        "trending",
+                                    ],
+                                },
+                            },
+                        },
+                    },
+                },
+            ],
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_save_rules6():
+    """
+    Snippet for the saveRules method.
+
+    saveRules
+    """
+    # >SEPARATOR saveRules saveRules
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.save_rules(
         composition_id="my-compo",
         rules={
             "requests": [
@@ -1863,6 +2340,37 @@ def snippet_for_search2():
                 "query": "batman",
                 "sortBy": "Price (asc)",
             },
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_search3():
+    """
+    Snippet for the search method.
+
+    search
+    """
+    # >SEPARATOR search search
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.search(
+        composition_id="foo",
+        request_body={
+            "params": {
+                "query": "batman",
+            },
+            "feedsOrder": [
+                "feed-movies",
+                "feed-comics",
+            ],
         },
     )
 

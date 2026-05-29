@@ -13,31 +13,31 @@ import java.util.Objects;
 public class Injection {
 
   @JsonProperty("main")
-  private Main main;
+  private InjectionMain main;
 
   @JsonProperty("injectedItems")
-  private List<InjectedItem> injectedItems;
+  private List<InjectionInjectedItem> injectedItems;
 
   @JsonProperty("deduplication")
   private Deduplication deduplication;
 
-  public Injection setMain(Main main) {
+  public Injection setMain(InjectionMain main) {
     this.main = main;
     return this;
   }
 
   /** Get main */
   @javax.annotation.Nonnull
-  public Main getMain() {
+  public InjectionMain getMain() {
     return main;
   }
 
-  public Injection setInjectedItems(List<InjectedItem> injectedItems) {
+  public Injection setInjectedItems(List<InjectionInjectedItem> injectedItems) {
     this.injectedItems = injectedItems;
     return this;
   }
 
-  public Injection addInjectedItems(InjectedItem injectedItemsItem) {
+  public Injection addInjectedItems(InjectionInjectedItem injectedItemsItem) {
     if (this.injectedItems == null) {
       this.injectedItems = new ArrayList<>();
     }
@@ -47,7 +47,7 @@ public class Injection {
 
   /** list of injected items of the current Composition. */
   @javax.annotation.Nullable
-  public List<InjectedItem> getInjectedItems() {
+  public List<InjectionInjectedItem> getInjectedItems() {
     return injectedItems;
   }
 

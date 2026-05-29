@@ -2,19 +2,19 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct Multifeed: Codable, JSONEncodable {
     /// A key-value store of Feed ID to Feed. Currently, the only supported Feed type is an Injection.
-    public var feeds: [String: Injection]
+    public var feeds: [String: FeedInjection]
     /// A list of Feed IDs that specifies the order in which to order the results in the response. The IDs should be a
     /// subset of those in the Feeds object, and only those specified will be processed. When this field is not set, all
     /// Feeds are processed and returned with a default ordering.
     public var feedsOrder: [String]?
 
-    public init(feeds: [String: Injection], feedsOrder: [String]? = nil) {
+    public init(feeds: [String: FeedInjection], feedsOrder: [String]? = nil) {
         self.feeds = feeds
         self.feedsOrder = feedsOrder
     }
@@ -33,12 +33,7 @@ public struct Multifeed: Codable, JSONEncodable {
     }
 }
 
-extension Multifeed: Equatable {
-    public static func ==(lhs: Multifeed, rhs: Multifeed) -> Bool {
-        lhs.feeds == rhs.feeds &&
-            lhs.feedsOrder == rhs.feedsOrder
-    }
-}
+extension Multifeed: Equatable {}
 
 extension Multifeed: Hashable {
     public func hash(into hasher: inout Hasher) {

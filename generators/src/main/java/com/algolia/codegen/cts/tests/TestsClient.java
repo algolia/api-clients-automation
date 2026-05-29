@@ -102,14 +102,22 @@ public class TestsClient extends TestsGenerator {
                 stepOut.put("transformationRegion", step.parameters.get("transformationRegion"));
               }
 
-              boolean gzipEncoding = step.parameters != null && step.parameters.getOrDefault("gzip", false).equals(true);
-              // many languages don't support gzip yet
-              if (
-                gzipEncoding &&
-                (language.equals("javascript") || language.equals("dart") || language.equals("python") || language.equals("php"))
-              ) {
-                continue skipTest;
+              boolean hasTransformationOptions = step.parameters != null && step.parameters.containsKey("transformationOptions");
+              if (hasTransformationOptions) {
+                testOut.put("useEchoRequester", false);
+                Map<String, Object> transformationOptions = (Map<String, Object>) step.parameters.get("transformationOptions");
+                stepOut.put("transformationRegion", transformationOptions.get("region"));
+                stepOut.put("hasTransformationRegion", true);
+
+                boolean hasTransformationCustomHosts = transformationOptions.containsKey("customHosts");
+                stepOut.put("hasTransformationCustomHosts", hasTransformationCustomHosts);
+                if (hasTransformationCustomHosts) {
+                  stepOut.put("transformationCustomHosts", transformationOptions.get("customHosts"));
+                }
               }
+              stepOut.put("hasTransformationOptions", hasTransformationOptions);
+
+              boolean gzipEncoding = step.parameters != null && step.parameters.getOrDefault("gzip", false).equals(true);
               stepOut.put("gzipEncoding", gzipEncoding);
             } else if (step.type.equals("method")) {
               ope = operations.get(step.method);
@@ -134,6 +142,7 @@ public class TestsClient extends TestsGenerator {
               stepOut.put("isMethod", true); // TODO: remove once kotlin is converted
               stepOut.put("hasParams", ope.getHasParams());
               stepOut.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
+              stepOut.put("isReturnGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-return-is-generic", false));
               if (ope.returnType != null && ope.returnType.length() > 0) {
                 stepOut.put("returnType", Helpers.toPascalCase(ope.returnType));
                 stepOut.put("returnsBoolean", ope.returnType.equals("Boolean")); // ruby requires a ? for boolean functions.

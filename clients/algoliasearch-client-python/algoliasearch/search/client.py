@@ -28,6 +28,7 @@ else:
 
 from algoliasearch.http.api_response import ApiResponse
 from algoliasearch.http.base_config import BaseConfig
+from algoliasearch.http.chunked_helper_options import ChunkedHelperOptions
 from algoliasearch.http.exceptions import RequestException, ValidUntilNotFoundException
 from algoliasearch.http.helpers import (
     RetryTimeout,
@@ -43,7 +44,7 @@ from algoliasearch.ingestion.client import IngestionClient, IngestionClientSync
 from algoliasearch.ingestion.config import IngestionConfig
 from algoliasearch.ingestion.models import Action as IngestionAction
 from algoliasearch.ingestion.models import WatchResponse as IngestionWatchResponse
-from algoliasearch.search.config import SearchConfig
+from algoliasearch.search.config import SearchConfig, TransformationOptions
 from algoliasearch.search.models import (
     Action,
     AddApiKeyResponse,
@@ -160,6 +161,12 @@ class SearchClient:
             transporter = Transporter(config)
         self._transporter = transporter
 
+        self._ingestion_transporter = None
+        if config.transformation_options is not None:
+            self._ingestion_transporter = self._build_ingestion_transporter(
+                config.transformation_options
+            )
+
     @classmethod
     def create_with_config(
         cls, config: SearchConfig, transporter: Optional[Transporter] = None
@@ -180,19 +187,8 @@ class SearchClient:
         if transporter is None:
             transporter = Transporter(config)
 
-        _ingestion_transporter: Optional[IngestionClient] = None
-
-        if config.region is not None:
-            ingestion_config = IngestionConfig(
-                config.app_id, config.api_key, config.region
-            )
-
-            if config.hosts is not None:
-                ingestion_config.hosts = config.hosts
-
-            _ingestion_transporter = IngestionClient.create_with_config(
-                ingestion_config
-            )
+        if config.transformation_options is None and config.region:
+            config.transformation_options = TransformationOptions(region=config.region)
 
         client = SearchClient(
             app_id=config.app_id,
@@ -200,9 +196,6 @@ class SearchClient:
             transporter=transporter,
             config=config,
         )
-
-        if _ingestion_transporter is not None:
-            client._ingestion_transporter = _ingestion_transporter
 
         return client
 
@@ -215,7 +208,11 @@ class SearchClient:
 
     async def close(self) -> None:
         """Closes the underlying `transporter` of the API client."""
-        return await self._transporter.close()
+        try:
+            if self._ingestion_transporter is not None:
+                await self._ingestion_transporter.close()
+        finally:
+            await self._transporter.close()
 
     async def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
@@ -230,7 +227,7 @@ class SearchClient:
         index_name: str,
         task_id: int,
         timeout: RetryTimeout = RetryTimeout(),
-        max_retries: int = 50,
+        max_retries: int = 100,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetTaskResponse:
         """
@@ -251,14 +248,14 @@ class SearchClient:
             validate=lambda _resp: _resp.status == "published",
             timeout=lambda: timeout(_retry_count),
             error_validate=lambda _: _retry_count >= max_retries,
-            error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${max_retries})",
+            error_message=lambda _: f"Stopped waiting for the task after {max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries.",
         )
 
     async def wait_for_app_task(
         self,
         task_id: int,
         timeout: RetryTimeout = RetryTimeout(),
-        max_retries: int = 50,
+        max_retries: int = 100,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetTaskResponse:
         """
@@ -279,7 +276,7 @@ class SearchClient:
             validate=lambda _resp: _resp.status == "published",
             timeout=lambda: timeout(_retry_count),
             error_validate=lambda _: _retry_count >= max_retries,
-            error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${max_retries})",
+            error_message=lambda _: f"Stopped waiting for the task after {max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries.",
         )
 
     async def wait_for_api_key(
@@ -287,7 +284,7 @@ class SearchClient:
         key: str,
         operation: str,
         api_key: Optional[Union[ApiKey, dict[str, Any]]] = None,
-        max_retries: int = 50,
+        max_retries: int = 100,
         timeout: RetryTimeout = RetryTimeout(),
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetApiKeyResponse | None:
@@ -347,7 +344,7 @@ class SearchClient:
             aggregator=_aggregator,
             timeout=lambda: timeout(_retry_count),
             error_validate=lambda _: _retry_count >= max_retries,
-            error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${max_retries})",
+            error_message=lambda _: f"Stopped waiting for the API key operation after {max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries.",
         )
 
     async def browse_objects(
@@ -515,6 +512,51 @@ class SearchClient:
         """
         return "{}_tmp_{}".format(index_name, randint(1000000, 9999999))
 
+    def _build_ingestion_transporter(
+        self, transformation_options: "TransformationOptions"
+    ) -> IngestionClient:
+        config = self._config
+        ingestion_config = IngestionConfig(
+            config.app_id, config.api_key, transformation_options.region
+        )
+        if transformation_options.connect_timeout is not None:
+            ingestion_config.connect_timeout = transformation_options.connect_timeout
+        if transformation_options.read_timeout is not None:
+            ingestion_config.read_timeout = transformation_options.read_timeout
+        if transformation_options.write_timeout is not None:
+            ingestion_config.write_timeout = transformation_options.write_timeout
+        if transformation_options.hosts is not None:
+            ingestion_config.hosts = transformation_options.hosts
+        if transformation_options.proxies is not None:
+            ingestion_config.proxies = transformation_options.proxies
+        if transformation_options.headers is not None:
+            ingestion_config.headers = {
+                **ingestion_config.headers,
+                **transformation_options.headers,
+            }
+        if transformation_options.compression_type is not None:
+            ingestion_config.compression_type = transformation_options.compression_type
+        if transformation_options.compression_threshold is not None:
+            ingestion_config.compression_threshold = (
+                transformation_options.compression_threshold
+            )
+        if transformation_options.wait_task_time_before_retry is not None:
+            ingestion_config.wait_task_time_before_retry = (
+                transformation_options.wait_task_time_before_retry
+            )
+        return IngestionClient.create_with_config(ingestion_config)
+
+    async def set_transformation_options(
+        self, transformation_options: "TransformationOptions"
+    ):
+        """Set transformation options and create the ingestion transporter. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"""
+        old_ingestion_transporter = self._ingestion_transporter
+        self._ingestion_transporter = self._build_ingestion_transporter(
+            transformation_options
+        )
+        if old_ingestion_transporter is not None:
+            await old_ingestion_transporter.close()
+
     async def save_objects(
         self,
         index_name: str,
@@ -522,6 +564,7 @@ class SearchClient:
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Saves the given array of objects in the given index. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
@@ -533,6 +576,7 @@ class SearchClient:
             wait_for_tasks=wait_for_tasks,
             batch_size=batch_size,
             request_options=request_options,
+            chunked_options=chunked_options,
         )
 
     async def save_objects_with_transformation(
@@ -542,13 +586,14 @@ class SearchClient:
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[IngestionWatchResponse]:
         """
-        Helper: Similar to the `save_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client's config at instantiation.
+        Helper: Similar to the `save_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. `transformation_options` must be set on `SearchConfig` before creating the client, or via `client.set_transformation_options(...)`.
         """
         if self._ingestion_transporter is None:
             raise ValueError(
-                "`region` must be provided at client instantiation before calling this method."
+                "`transformation_options` must be set on `SearchConfig` before creating the client, or via `client.set_transformation_options(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"
             )
         return await self._ingestion_transporter.chunked_push(
             index_name=index_name,
@@ -557,6 +602,7 @@ class SearchClient:
             wait_for_tasks=wait_for_tasks,
             batch_size=batch_size,
             request_options=request_options,
+            chunked_options=chunked_options,
         )
 
     async def delete_objects(
@@ -566,6 +612,7 @@ class SearchClient:
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Deletes every records for the given objectIDs. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
@@ -577,6 +624,7 @@ class SearchClient:
             wait_for_tasks=wait_for_tasks,
             batch_size=batch_size,
             request_options=request_options,
+            chunked_options=chunked_options,
         )
 
     async def partial_update_objects(
@@ -587,6 +635,7 @@ class SearchClient:
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
@@ -600,6 +649,7 @@ class SearchClient:
             wait_for_tasks=wait_for_tasks,
             batch_size=batch_size,
             request_options=request_options,
+            chunked_options=chunked_options,
         )
 
     async def partial_update_objects_with_transformation(
@@ -610,13 +660,14 @@ class SearchClient:
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[IngestionWatchResponse]:
         """
-        Helper: Similar to the `partial_update_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client instantiation method.
+        Helper: Similar to the `partial_update_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. `transformation_options` must be set on `SearchConfig` before creating the client, or via `client.set_transformation_options(...)`.
         """
         if self._ingestion_transporter is None:
             raise ValueError(
-                "`region` must be provided at client instantiation before calling this method."
+                "`transformation_options` must be set on `SearchConfig` before creating the client, or via `client.set_transformation_options(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"
             )
         return await self._ingestion_transporter.chunked_push(
             index_name=index_name,
@@ -627,6 +678,7 @@ class SearchClient:
             wait_for_tasks=wait_for_tasks,
             batch_size=batch_size,
             request_options=request_options,
+            chunked_options=chunked_options,
         )
 
     async def chunked_batch(
@@ -637,10 +689,12 @@ class SearchClient:
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
         """
+        chunked_options = chunked_options or ChunkedHelperOptions()
         requests: List[BatchRequest] = []
         responses: List[BatchResponse] = []
         for i, obj in enumerate(objects):
@@ -657,7 +711,9 @@ class SearchClient:
         if wait_for_tasks:
             for response in responses:
                 await self.wait_for_task(
-                    index_name=index_name, task_id=response.task_id
+                    index_name=index_name,
+                    task_id=response.task_id,
+                    max_retries=chunked_options.max_retries,
                 )
         return responses
 
@@ -668,16 +724,18 @@ class SearchClient:
         batch_size: int = 1000,
         scopes=["settings", "rules", "synonyms"],
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> ReplaceAllObjectsWithTransformationResponse:
         """
-        Helper: Similar to the `replaceAllObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must have been passed to the client instantiation method.
+        Helper: Similar to the `replaceAllObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. `transformation_options` must be set on `SearchConfig` before creating the client, or via `client.set_transformation_options(...)`.
 
         See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
         """
         if self._ingestion_transporter is None:
             raise ValueError(
-                "`region` must be provided at client instantiation before calling this method."
+                "`transformation_options` must be set on `SearchConfig` before creating the client, or via `client.set_transformation_options(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"
             )
+        chunked_options = chunked_options or ChunkedHelperOptions()
         tmp_index_name = self.create_temporary_name(index_name)
 
         try:
@@ -702,15 +760,20 @@ class SearchClient:
                 batch_size=batch_size,
                 reference_index_name=index_name,
                 request_options=request_options,
+                chunked_options=chunked_options,
             )
 
             await self.wait_for_task(
-                index_name=tmp_index_name, task_id=copy_operation_response.task_id
+                index_name=tmp_index_name,
+                task_id=copy_operation_response.task_id,
+                max_retries=chunked_options.max_retries,
             )
 
             copy_operation_response = await _copy()
             await self.wait_for_task(
-                index_name=tmp_index_name, task_id=copy_operation_response.task_id
+                index_name=tmp_index_name,
+                task_id=copy_operation_response.task_id,
+                max_retries=chunked_options.max_retries,
             )
 
             move_operation_response = await self.operation_index(
@@ -722,7 +785,9 @@ class SearchClient:
                 request_options=request_options,
             )
             await self.wait_for_task(
-                index_name=tmp_index_name, task_id=move_operation_response.task_id
+                index_name=tmp_index_name,
+                task_id=move_operation_response.task_id,
+                max_retries=chunked_options.max_retries,
             )
 
             search_watch_responses: List[WatchResponse] = [
@@ -746,12 +811,14 @@ class SearchClient:
         batch_size: int = 1000,
         scopes=["settings", "rules", "synonyms"],
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> ReplaceAllObjectsResponse:
         """
         Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
 
         See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
         """
+        chunked_options = chunked_options or ChunkedHelperOptions()
         tmp_index_name = self.create_temporary_name(index_name)
 
         try:
@@ -775,15 +842,20 @@ class SearchClient:
                 wait_for_tasks=True,
                 batch_size=batch_size,
                 request_options=request_options,
+                chunked_options=chunked_options,
             )
 
             await self.wait_for_task(
-                index_name=tmp_index_name, task_id=copy_operation_response.task_id
+                index_name=tmp_index_name,
+                task_id=copy_operation_response.task_id,
+                max_retries=chunked_options.max_retries,
             )
 
             copy_operation_response = await _copy()
             await self.wait_for_task(
-                index_name=tmp_index_name, task_id=copy_operation_response.task_id
+                index_name=tmp_index_name,
+                task_id=copy_operation_response.task_id,
+                max_retries=chunked_options.max_retries,
             )
 
             move_operation_response = await self.operation_index(
@@ -795,7 +867,9 @@ class SearchClient:
                 request_options=request_options,
             )
             await self.wait_for_task(
-                index_name=tmp_index_name, task_id=move_operation_response.task_id
+                index_name=tmp_index_name,
+                task_id=move_operation_response.task_id,
+                max_retries=chunked_options.max_retries,
             )
 
             return ReplaceAllObjectsResponse(
@@ -912,7 +986,17 @@ class SearchClient:
                 "Parameter `index_name` is required when calling `add_or_update_object`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `add_or_update_object`."
+            )
+
         if object_id is None:
+            raise ValueError(
+                "Parameter `object_id` is required when calling `add_or_update_object`."
+            )
+
+        if not object_id:
             raise ValueError(
                 "Parameter `object_id` is required when calling `add_or_update_object`."
             )
@@ -1066,6 +1150,11 @@ class SearchClient:
                 "Parameter `x_algolia_user_id` is required when calling `assign_user_id`."
             )
 
+        if not x_algolia_user_id:
+            raise ValueError(
+                "Parameter `x_algolia_user_id` is required when calling `assign_user_id`."
+            )
+
         if assign_user_id_params is None:
             raise ValueError(
                 "Parameter `assign_user_id_params` is required when calling `assign_user_id`."
@@ -1148,6 +1237,9 @@ class SearchClient:
         if index_name is None:
             raise ValueError("Parameter `index_name` is required when calling `batch`.")
 
+        if not index_name:
+            raise ValueError("Parameter `index_name` is required when calling `batch`.")
+
         if batch_write_params is None:
             raise ValueError(
                 "Parameter `batch_write_params` is required when calling `batch`."
@@ -1226,6 +1318,11 @@ class SearchClient:
         warn("POST /1/clusters/mapping/batch is deprecated.", DeprecationWarning)
 
         if x_algolia_user_id is None:
+            raise ValueError(
+                "Parameter `x_algolia_user_id` is required when calling `batch_assign_user_ids`."
+            )
+
+        if not x_algolia_user_id:
             raise ValueError(
                 "Parameter `x_algolia_user_id` is required when calling `batch_assign_user_ids`."
             )
@@ -1380,7 +1477,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they'll be ignored.
+        Retrieves records from an index, up to 1,000 per request.  Searching returns _hits_ (records augmented with highlighting and ranking details). Browsing returns matching records only. Use browse to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance, number of matched words, proximity, or geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they're ignored.
 
         Required API Key ACLs:
           - browse
@@ -1394,6 +1491,11 @@ class SearchClient:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `browse`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `browse`."
             )
@@ -1424,7 +1526,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> BrowseResponse:
         """
-        Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they'll be ignored.
+        Retrieves records from an index, up to 1,000 per request.  Searching returns _hits_ (records augmented with highlighting and ranking details). Browsing returns matching records only. Use browse to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance, number of matched words, proximity, or geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they're ignored.
 
         Required API Key ACLs:
           - browse
@@ -1462,6 +1564,11 @@ class SearchClient:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `clear_objects`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `clear_objects`."
             )
@@ -1526,6 +1633,11 @@ class SearchClient:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `clear_rules`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `clear_rules`."
             )
@@ -1608,6 +1720,11 @@ class SearchClient:
                 "Parameter `index_name` is required when calling `clear_synonyms`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `clear_synonyms`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if forward_to_replicas is not None:
@@ -1684,6 +1801,11 @@ class SearchClient:
                 "Parameter `path` is required when calling `custom_delete`."
             )
 
+        if not path:
+            raise ValueError(
+                "Parameter `path` is required when calling `custom_delete`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
@@ -1753,6 +1875,9 @@ class SearchClient:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_get`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -1828,6 +1953,9 @@ class SearchClient:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_post`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -1918,6 +2046,9 @@ class SearchClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
+        if not path:
+            raise ValueError("Parameter `path` is required when calling `custom_put`.")
+
         _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
@@ -1995,6 +2126,11 @@ class SearchClient:
                 "Parameter `key` is required when calling `delete_api_key`."
             )
 
+        if not key:
+            raise ValueError(
+                "Parameter `key` is required when calling `delete_api_key`."
+            )
+
         return await self._transporter.request(
             verb=Verb.DELETE,
             path="/1/keys/{key}".replace("{key}", quote(str(key), safe="")),
@@ -2033,7 +2169,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        This operation doesn't accept empty filters.  This operation is resource-intensive. You should only use it if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        This operation doesn't accept empty filters.  This operation is resource-intensive. Use it only if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
         Required API Key ACLs:
           - deleteIndex
@@ -2047,6 +2183,11 @@ class SearchClient:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `delete_by`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `delete_by`."
             )
@@ -2082,7 +2223,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> UpdatedAtResponse:
         """
-        This operation doesn't accept empty filters.  This operation is resource-intensive. You should only use it if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        This operation doesn't accept empty filters.  This operation is resource-intensive. Use it only if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
         Required API Key ACLs:
           - deleteIndex
@@ -2120,6 +2261,11 @@ class SearchClient:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `delete_index`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `delete_index`."
             )
@@ -2185,7 +2331,17 @@ class SearchClient:
                 "Parameter `index_name` is required when calling `delete_object`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `delete_object`."
+            )
+
         if object_id is None:
+            raise ValueError(
+                "Parameter `object_id` is required when calling `delete_object`."
+            )
+
+        if not object_id:
             raise ValueError(
                 "Parameter `object_id` is required when calling `delete_object`."
             )
@@ -2264,7 +2420,17 @@ class SearchClient:
                 "Parameter `index_name` is required when calling `delete_rule`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `delete_rule`."
+            )
+
         if object_id is None:
+            raise ValueError(
+                "Parameter `object_id` is required when calling `delete_rule`."
+            )
+
+        if not object_id:
             raise ValueError(
                 "Parameter `object_id` is required when calling `delete_rule`."
             )
@@ -2345,6 +2511,11 @@ class SearchClient:
                 "Parameter `source` is required when calling `delete_source`."
             )
 
+        if not source:
+            raise ValueError(
+                "Parameter `source` is required when calling `delete_source`."
+            )
+
         return await self._transporter.request(
             verb=Verb.DELETE,
             path="/1/security/sources/{source}".replace(
@@ -2413,7 +2584,17 @@ class SearchClient:
                 "Parameter `index_name` is required when calling `delete_synonym`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `delete_synonym`."
+            )
+
         if object_id is None:
+            raise ValueError(
+                "Parameter `object_id` is required when calling `delete_synonym`."
+            )
+
+        if not object_id:
             raise ValueError(
                 "Parameter `object_id` is required when calling `delete_synonym`."
             )
@@ -2488,6 +2669,9 @@ class SearchClient:
         """
 
         if key is None:
+            raise ValueError("Parameter `key` is required when calling `get_api_key`.")
+
+        if not key:
             raise ValueError("Parameter `key` is required when calling `get_api_key`.")
 
         return await self._transporter.request(
@@ -2797,7 +2981,17 @@ class SearchClient:
                 "Parameter `index_name` is required when calling `get_object`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `get_object`."
+            )
+
         if object_id is None:
+            raise ValueError(
+                "Parameter `object_id` is required when calling `get_object`."
+            )
+
+        if not object_id:
             raise ValueError(
                 "Parameter `object_id` is required when calling `get_object`."
             )
@@ -2947,7 +3141,17 @@ class SearchClient:
                 "Parameter `index_name` is required when calling `get_rule`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `get_rule`."
+            )
+
         if object_id is None:
+            raise ValueError(
+                "Parameter `object_id` is required when calling `get_rule`."
+            )
+
+        if not object_id:
             raise ValueError(
                 "Parameter `object_id` is required when calling `get_rule`."
             )
@@ -3021,6 +3225,11 @@ class SearchClient:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `get_settings`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `get_settings`."
             )
@@ -3141,7 +3350,17 @@ class SearchClient:
                 "Parameter `index_name` is required when calling `get_synonym`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `get_synonym`."
+            )
+
         if object_id is None:
+            raise ValueError(
+                "Parameter `object_id` is required when calling `get_synonym`."
+            )
+
+        if not object_id:
             raise ValueError(
                 "Parameter `object_id` is required when calling `get_synonym`."
             )
@@ -3210,6 +3429,11 @@ class SearchClient:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `get_task`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `get_task`."
             )
@@ -3321,6 +3545,11 @@ class SearchClient:
         warn("GET /1/clusters/mapping/{userID} is deprecated.", DeprecationWarning)
 
         if user_id is None:
+            raise ValueError(
+                "Parameter `user_id` is required when calling `get_user_id`."
+            )
+
+        if not user_id:
             raise ValueError(
                 "Parameter `user_id` is required when calling `get_user_id`."
             )
@@ -3726,7 +3955,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        Copies or moves (renames) an index within the same Algolia application.  Notes: - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it's created. - This operation is resource-intensive.  **Copy**  - If the source index doesn't exist, copying creates a new index with 0 records and default settings. - API keys from the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - For more information, see [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).  **Move**  - If the source index doesn't exist, moving is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - For more information, see [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
         Required API Key ACLs:
           - addObject
@@ -3740,6 +3969,11 @@ class SearchClient:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `operation_index`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `operation_index`."
             )
@@ -3775,7 +4009,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> UpdatedAtResponse:
         """
-        Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        Copies or moves (renames) an index within the same Algolia application.  Notes: - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it's created. - This operation is resource-intensive.  **Copy**  - If the source index doesn't exist, copying creates a new index with 0 records and default settings. - API keys from the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - For more information, see [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).  **Move**  - If the source index doesn't exist, moving is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - For more information, see [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
         Required API Key ACLs:
           - addObject
@@ -3809,7 +4043,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - Use first-level attributes only. Nested attributes aren't supported.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update attributes without replacing the full record, use these built-in operations. These operations are useful when the initial data isn't available.  - `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. - `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching number or string elements from an array attribute made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a numeric integer attribute only if the provided value matches the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the API ignores the update.   If the object doesn't exist, the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the provided value is greater than the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1, the API updates the object.   If the object doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.  Specify an operation by providing an object with the attribute to update as the key and its value as an object with these properties:  - `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument to the operation, for example, increment or decrement step, or a value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
         Required API Key ACLs:
           - addObject
@@ -3831,7 +4065,17 @@ class SearchClient:
                 "Parameter `index_name` is required when calling `partial_update_object`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `partial_update_object`."
+            )
+
         if object_id is None:
+            raise ValueError(
+                "Parameter `object_id` is required when calling `partial_update_object`."
+            )
+
+        if not object_id:
             raise ValueError(
                 "Parameter `object_id` is required when calling `partial_update_object`."
             )
@@ -3880,7 +4124,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> UpdatedAtWithObjectIdResponse:
         """
-        Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - Use first-level attributes only. Nested attributes aren't supported.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update attributes without replacing the full record, use these built-in operations. These operations are useful when the initial data isn't available.  - `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. - `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching number or string elements from an array attribute made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a numeric integer attribute only if the provided value matches the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the API ignores the update.   If the object doesn't exist, the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the provided value is greater than the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1, the API updates the object.   If the object doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.  Specify an operation by providing an object with the attribute to update as the key and its value as an object with these properties:  - `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument to the operation, for example, increment or decrement step, or a value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
         Required API Key ACLs:
           - addObject
@@ -3932,6 +4176,11 @@ class SearchClient:
         warn("DELETE /1/clusters/mapping/{userID} is deprecated.", DeprecationWarning)
 
         if user_id is None:
+            raise ValueError(
+                "Parameter `user_id` is required when calling `remove_user_id`."
+            )
+
+        if not user_id:
             raise ValueError(
                 "Parameter `user_id` is required when calling `remove_user_id`."
             )
@@ -4056,6 +4305,11 @@ class SearchClient:
                 "Parameter `key` is required when calling `restore_api_key`."
             )
 
+        if not key:
+            raise ValueError(
+                "Parameter `key` is required when calling `restore_api_key`."
+            )
+
         return await self._transporter.request(
             verb=Verb.POST,
             path="/1/keys/{key}/restore".replace("{key}", quote(str(key), safe="")),
@@ -4113,6 +4367,11 @@ class SearchClient:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `save_object`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `save_object`."
             )
@@ -4205,7 +4464,17 @@ class SearchClient:
                 "Parameter `index_name` is required when calling `save_rule`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `save_rule`."
+            )
+
         if object_id is None:
+            raise ValueError(
+                "Parameter `object_id` is required when calling `save_rule`."
+            )
+
+        if not object_id:
             raise ValueError(
                 "Parameter `object_id` is required when calling `save_rule`."
             )
@@ -4311,6 +4580,11 @@ class SearchClient:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `save_rules`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `save_rules`."
             )
@@ -4426,7 +4700,17 @@ class SearchClient:
                 "Parameter `index_name` is required when calling `save_synonym`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `save_synonym`."
+            )
+
         if object_id is None:
+            raise ValueError(
+                "Parameter `object_id` is required when calling `save_synonym`."
+            )
+
+        if not object_id:
             raise ValueError(
                 "Parameter `object_id` is required when calling `save_synonym`."
             )
@@ -4538,6 +4822,11 @@ class SearchClient:
                 "Parameter `index_name` is required when calling `save_synonyms`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `save_synonyms`."
+            )
+
         if synonym_hit is None:
             raise ValueError(
                 "Parameter `synonym_hit` is required when calling `save_synonyms`."
@@ -4618,7 +4907,7 @@ class SearchClient:
             Annotated[
                 SearchMethodParams,
                 Field(
-                    description="Muli-search request body. Results are returned in the same order as the requests."
+                    description="Multi-query search request body. Results are returned in the same order as the requests."
                 ),
             ],
             dict[str, Any],
@@ -4626,12 +4915,12 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
+        Runs multiple search queries against one or more indices in a single API request.  Use cases include:  - Searching different indices, such as products and marketing content. - Run multiple queries on the same index with different parameters or filters.  If you know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
 
         Required API Key ACLs:
           - search
 
-        :param search_method_params: Muli-search request body. Results are returned in the same order as the requests. (required)
+        :param search_method_params: Multi-query search request body. Results are returned in the same order as the requests. (required)
         :type search_method_params: SearchMethodParams
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the raw algoliasearch 'APIResponse' object.
@@ -4662,7 +4951,7 @@ class SearchClient:
             Annotated[
                 SearchMethodParams,
                 Field(
-                    description="Muli-search request body. Results are returned in the same order as the requests."
+                    description="Multi-query search request body. Results are returned in the same order as the requests."
                 ),
             ],
             dict[str, Any],
@@ -4670,12 +4959,12 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchResponses:
         """
-        Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
+        Runs multiple search queries against one or more indices in a single API request.  Use cases include:  - Searching different indices, such as products and marketing content. - Run multiple queries on the same index with different parameters or filters.  If you know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
 
         Required API Key ACLs:
           - search
 
-        :param search_method_params: Muli-search request body. Results are returned in the same order as the requests. (required)
+        :param search_method_params: Multi-query search request body. Results are returned in the same order as the requests. (required)
         :type search_method_params: SearchMethodParams
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchResponses' result object.
@@ -4805,7 +5094,17 @@ class SearchClient:
                 "Parameter `index_name` is required when calling `search_for_facet_values`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `search_for_facet_values`."
+            )
+
         if facet_name is None:
+            raise ValueError(
+                "Parameter `facet_name` is required when calling `search_for_facet_values`."
+            )
+
+        if not facet_name:
             raise ValueError(
                 "Parameter `facet_name` is required when calling `search_for_facet_values`."
             )
@@ -4891,6 +5190,11 @@ class SearchClient:
                 "Parameter `index_name` is required when calling `search_rules`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `search_rules`."
+            )
+
         _data = {}
         if search_rules_params is not None:
             _data = search_rules_params
@@ -4958,6 +5262,11 @@ class SearchClient:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `search_single_index`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `search_single_index`."
             )
@@ -5035,6 +5344,11 @@ class SearchClient:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `search_synonyms`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `search_synonyms`."
             )
@@ -5240,6 +5554,11 @@ class SearchClient:
                 "Parameter `index_name` is required when calling `set_settings`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `set_settings`."
+            )
+
         if index_settings is None:
             raise ValueError(
                 "Parameter `index_settings` is required when calling `set_settings`."
@@ -5321,6 +5640,11 @@ class SearchClient:
         """
 
         if key is None:
+            raise ValueError(
+                "Parameter `key` is required when calling `update_api_key`."
+            )
+
+        if not key:
             raise ValueError(
                 "Parameter `key` is required when calling `update_api_key`."
             )
@@ -5411,6 +5735,12 @@ class SearchClientSync:
             transporter = TransporterSync(config)
         self._transporter = transporter
 
+        self._ingestion_transporter = None
+        if config.transformation_options is not None:
+            self._ingestion_transporter = self._build_ingestion_transporter(
+                config.transformation_options
+            )
+
     @classmethod
     def create_with_config(
         cls, config: SearchConfig, transporter: Optional[TransporterSync] = None
@@ -5431,19 +5761,8 @@ class SearchClientSync:
         if transporter is None:
             transporter = TransporterSync(config)
 
-        _ingestion_transporter: Optional[IngestionClientSync] = None
-
-        if config.region is not None:
-            ingestion_config = IngestionConfig(
-                config.app_id, config.api_key, config.region
-            )
-
-            if config.hosts is not None:
-                ingestion_config.hosts = config.hosts
-
-            _ingestion_transporter = IngestionClientSync.create_with_config(
-                ingestion_config
-            )
+        if config.transformation_options is None and config.region:
+            config.transformation_options = TransformationOptions(region=config.region)
 
         client = SearchClientSync(
             app_id=config.app_id,
@@ -5451,9 +5770,6 @@ class SearchClientSync:
             transporter=transporter,
             config=config,
         )
-
-        if _ingestion_transporter is not None:
-            client._ingestion_transporter = _ingestion_transporter
 
         return client
 
@@ -5465,7 +5781,11 @@ class SearchClientSync:
         self.close()
 
     def close(self) -> None:
-        return self._transporter.close()
+        try:
+            if self._ingestion_transporter is not None:
+                self._ingestion_transporter.close()
+        finally:
+            self._transporter.close()
 
     def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
@@ -5480,7 +5800,7 @@ class SearchClientSync:
         index_name: str,
         task_id: int,
         timeout: RetryTimeout = RetryTimeout(),
-        max_retries: int = 50,
+        max_retries: int = 100,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetTaskResponse:
         """
@@ -5501,14 +5821,14 @@ class SearchClientSync:
             validate=lambda _resp: _resp.status == "published",
             timeout=lambda: timeout(_retry_count),
             error_validate=lambda _: _retry_count >= max_retries,
-            error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${max_retries})",
+            error_message=lambda _: f"Stopped waiting for the task after {max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries.",
         )
 
     def wait_for_app_task(
         self,
         task_id: int,
         timeout: RetryTimeout = RetryTimeout(),
-        max_retries: int = 50,
+        max_retries: int = 100,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetTaskResponse:
         """
@@ -5529,7 +5849,7 @@ class SearchClientSync:
             validate=lambda _resp: _resp.status == "published",
             timeout=lambda: timeout(_retry_count),
             error_validate=lambda _: _retry_count >= max_retries,
-            error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${max_retries})",
+            error_message=lambda _: f"Stopped waiting for the task after {max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries.",
         )
 
     def wait_for_api_key(
@@ -5537,7 +5857,7 @@ class SearchClientSync:
         key: str,
         operation: str,
         api_key: Optional[Union[ApiKey, dict[str, Any]]] = None,
-        max_retries: int = 50,
+        max_retries: int = 100,
         timeout: RetryTimeout = RetryTimeout(),
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetApiKeyResponse | None:
@@ -5597,7 +5917,7 @@ class SearchClientSync:
             aggregator=_aggregator,
             timeout=lambda: timeout(_retry_count),
             error_validate=lambda _: _retry_count >= max_retries,
-            error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${max_retries})",
+            error_message=lambda _: f"Stopped waiting for the API key operation after {max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries.",
         )
 
     def browse_objects(
@@ -5765,6 +6085,51 @@ class SearchClientSync:
         """
         return "{}_tmp_{}".format(index_name, randint(1000000, 9999999))
 
+    def _build_ingestion_transporter(
+        self, transformation_options: "TransformationOptions"
+    ) -> IngestionClientSync:
+        config = self._config
+        ingestion_config = IngestionConfig(
+            config.app_id, config.api_key, transformation_options.region
+        )
+        if transformation_options.connect_timeout is not None:
+            ingestion_config.connect_timeout = transformation_options.connect_timeout
+        if transformation_options.read_timeout is not None:
+            ingestion_config.read_timeout = transformation_options.read_timeout
+        if transformation_options.write_timeout is not None:
+            ingestion_config.write_timeout = transformation_options.write_timeout
+        if transformation_options.hosts is not None:
+            ingestion_config.hosts = transformation_options.hosts
+        if transformation_options.proxies is not None:
+            ingestion_config.proxies = transformation_options.proxies
+        if transformation_options.headers is not None:
+            ingestion_config.headers = {
+                **ingestion_config.headers,
+                **transformation_options.headers,
+            }
+        if transformation_options.compression_type is not None:
+            ingestion_config.compression_type = transformation_options.compression_type
+        if transformation_options.compression_threshold is not None:
+            ingestion_config.compression_threshold = (
+                transformation_options.compression_threshold
+            )
+        if transformation_options.wait_task_time_before_retry is not None:
+            ingestion_config.wait_task_time_before_retry = (
+                transformation_options.wait_task_time_before_retry
+            )
+        return IngestionClientSync.create_with_config(ingestion_config)
+
+    def set_transformation_options(
+        self, transformation_options: "TransformationOptions"
+    ):
+        """Set transformation options and create the ingestion transporter. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"""
+        old_ingestion_transporter = self._ingestion_transporter
+        self._ingestion_transporter = self._build_ingestion_transporter(
+            transformation_options
+        )
+        if old_ingestion_transporter is not None:
+            old_ingestion_transporter.close()
+
     def save_objects(
         self,
         index_name: str,
@@ -5772,6 +6137,7 @@ class SearchClientSync:
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Saves the given array of objects in the given index. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
@@ -5783,6 +6149,7 @@ class SearchClientSync:
             wait_for_tasks=wait_for_tasks,
             batch_size=batch_size,
             request_options=request_options,
+            chunked_options=chunked_options,
         )
 
     def save_objects_with_transformation(
@@ -5792,13 +6159,14 @@ class SearchClientSync:
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[IngestionWatchResponse]:
         """
-        Helper: Similar to the `save_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client's config at instantiation.
+        Helper: Similar to the `save_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. `transformation_options` must be set on `SearchConfig` before creating the client, or via `client.set_transformation_options(...)`.
         """
         if self._ingestion_transporter is None:
             raise ValueError(
-                "`region` must be provided at client instantiation before calling this method."
+                "`transformation_options` must be set on `SearchConfig` before creating the client, or via `client.set_transformation_options(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"
             )
         return self._ingestion_transporter.chunked_push(
             index_name=index_name,
@@ -5807,6 +6175,7 @@ class SearchClientSync:
             wait_for_tasks=wait_for_tasks,
             batch_size=batch_size,
             request_options=request_options,
+            chunked_options=chunked_options,
         )
 
     def delete_objects(
@@ -5816,6 +6185,7 @@ class SearchClientSync:
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Deletes every records for the given objectIDs. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
@@ -5827,6 +6197,7 @@ class SearchClientSync:
             wait_for_tasks=wait_for_tasks,
             batch_size=batch_size,
             request_options=request_options,
+            chunked_options=chunked_options,
         )
 
     def partial_update_objects(
@@ -5837,6 +6208,7 @@ class SearchClientSync:
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
@@ -5850,6 +6222,7 @@ class SearchClientSync:
             wait_for_tasks=wait_for_tasks,
             batch_size=batch_size,
             request_options=request_options,
+            chunked_options=chunked_options,
         )
 
     def partial_update_objects_with_transformation(
@@ -5860,13 +6233,14 @@ class SearchClientSync:
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[IngestionWatchResponse]:
         """
-        Helper: Similar to the `partial_update_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client instantiation method.
+        Helper: Similar to the `partial_update_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. `transformation_options` must be set on `SearchConfig` before creating the client, or via `client.set_transformation_options(...)`.
         """
         if self._ingestion_transporter is None:
             raise ValueError(
-                "`region` must be provided at client instantiation before calling this method."
+                "`transformation_options` must be set on `SearchConfig` before creating the client, or via `client.set_transformation_options(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"
             )
         return self._ingestion_transporter.chunked_push(
             index_name=index_name,
@@ -5877,6 +6251,7 @@ class SearchClientSync:
             wait_for_tasks=wait_for_tasks,
             batch_size=batch_size,
             request_options=request_options,
+            chunked_options=chunked_options,
         )
 
     def chunked_batch(
@@ -5887,10 +6262,12 @@ class SearchClientSync:
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
         """
+        chunked_options = chunked_options or ChunkedHelperOptions()
         requests: List[BatchRequest] = []
         responses: List[BatchResponse] = []
         for i, obj in enumerate(objects):
@@ -5906,7 +6283,11 @@ class SearchClientSync:
                 requests = []
         if wait_for_tasks:
             for response in responses:
-                self.wait_for_task(index_name=index_name, task_id=response.task_id)
+                self.wait_for_task(
+                    index_name=index_name,
+                    task_id=response.task_id,
+                    max_retries=chunked_options.max_retries,
+                )
         return responses
 
     def replace_all_objects_with_transformation(
@@ -5916,16 +6297,18 @@ class SearchClientSync:
         batch_size: int = 1000,
         scopes=["settings", "rules", "synonyms"],
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> ReplaceAllObjectsWithTransformationResponse:
         """
-        Helper: Similar to the `replaceAllObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must have been passed to the client instantiation method.
+        Helper: Similar to the `replaceAllObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. `transformation_options` must be set on `SearchConfig` before creating the client, or via `client.set_transformation_options(...)`.
 
         See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
         """
         if self._ingestion_transporter is None:
             raise ValueError(
-                "`region` must be provided at client instantiation before calling this method."
+                "`transformation_options` must be set on `SearchConfig` before creating the client, or via `client.set_transformation_options(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"
             )
+        chunked_options = chunked_options or ChunkedHelperOptions()
         tmp_index_name = self.create_temporary_name(index_name)
 
         try:
@@ -5950,15 +6333,20 @@ class SearchClientSync:
                 batch_size=batch_size,
                 reference_index_name=index_name,
                 request_options=request_options,
+                chunked_options=chunked_options,
             )
 
             self.wait_for_task(
-                index_name=tmp_index_name, task_id=copy_operation_response.task_id
+                index_name=tmp_index_name,
+                task_id=copy_operation_response.task_id,
+                max_retries=chunked_options.max_retries,
             )
 
             copy_operation_response = _copy()
             self.wait_for_task(
-                index_name=tmp_index_name, task_id=copy_operation_response.task_id
+                index_name=tmp_index_name,
+                task_id=copy_operation_response.task_id,
+                max_retries=chunked_options.max_retries,
             )
 
             move_operation_response = self.operation_index(
@@ -5970,7 +6358,9 @@ class SearchClientSync:
                 request_options=request_options,
             )
             self.wait_for_task(
-                index_name=tmp_index_name, task_id=move_operation_response.task_id
+                index_name=tmp_index_name,
+                task_id=move_operation_response.task_id,
+                max_retries=chunked_options.max_retries,
             )
 
             search_watch_responses: List[WatchResponse] = [
@@ -5994,12 +6384,14 @@ class SearchClientSync:
         batch_size: int = 1000,
         scopes=["settings", "rules", "synonyms"],
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> ReplaceAllObjectsResponse:
         """
         Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
 
         See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
         """
+        chunked_options = chunked_options or ChunkedHelperOptions()
         tmp_index_name = self.create_temporary_name(index_name)
 
         try:
@@ -6023,15 +6415,20 @@ class SearchClientSync:
                 wait_for_tasks=True,
                 batch_size=batch_size,
                 request_options=request_options,
+                chunked_options=chunked_options,
             )
 
             self.wait_for_task(
-                index_name=tmp_index_name, task_id=copy_operation_response.task_id
+                index_name=tmp_index_name,
+                task_id=copy_operation_response.task_id,
+                max_retries=chunked_options.max_retries,
             )
 
             copy_operation_response = _copy()
             self.wait_for_task(
-                index_name=tmp_index_name, task_id=copy_operation_response.task_id
+                index_name=tmp_index_name,
+                task_id=copy_operation_response.task_id,
+                max_retries=chunked_options.max_retries,
             )
 
             move_operation_response = self.operation_index(
@@ -6043,7 +6440,9 @@ class SearchClientSync:
                 request_options=request_options,
             )
             self.wait_for_task(
-                index_name=tmp_index_name, task_id=move_operation_response.task_id
+                index_name=tmp_index_name,
+                task_id=move_operation_response.task_id,
+                max_retries=chunked_options.max_retries,
             )
 
             return ReplaceAllObjectsResponse(
@@ -6160,7 +6559,17 @@ class SearchClientSync:
                 "Parameter `index_name` is required when calling `add_or_update_object`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `add_or_update_object`."
+            )
+
         if object_id is None:
+            raise ValueError(
+                "Parameter `object_id` is required when calling `add_or_update_object`."
+            )
+
+        if not object_id:
             raise ValueError(
                 "Parameter `object_id` is required when calling `add_or_update_object`."
             )
@@ -6314,6 +6723,11 @@ class SearchClientSync:
                 "Parameter `x_algolia_user_id` is required when calling `assign_user_id`."
             )
 
+        if not x_algolia_user_id:
+            raise ValueError(
+                "Parameter `x_algolia_user_id` is required when calling `assign_user_id`."
+            )
+
         if assign_user_id_params is None:
             raise ValueError(
                 "Parameter `assign_user_id_params` is required when calling `assign_user_id`."
@@ -6396,6 +6810,9 @@ class SearchClientSync:
         if index_name is None:
             raise ValueError("Parameter `index_name` is required when calling `batch`.")
 
+        if not index_name:
+            raise ValueError("Parameter `index_name` is required when calling `batch`.")
+
         if batch_write_params is None:
             raise ValueError(
                 "Parameter `batch_write_params` is required when calling `batch`."
@@ -6474,6 +6891,11 @@ class SearchClientSync:
         warn("POST /1/clusters/mapping/batch is deprecated.", DeprecationWarning)
 
         if x_algolia_user_id is None:
+            raise ValueError(
+                "Parameter `x_algolia_user_id` is required when calling `batch_assign_user_ids`."
+            )
+
+        if not x_algolia_user_id:
             raise ValueError(
                 "Parameter `x_algolia_user_id` is required when calling `batch_assign_user_ids`."
             )
@@ -6628,7 +7050,7 @@ class SearchClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they'll be ignored.
+        Retrieves records from an index, up to 1,000 per request.  Searching returns _hits_ (records augmented with highlighting and ranking details). Browsing returns matching records only. Use browse to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance, number of matched words, proximity, or geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they're ignored.
 
         Required API Key ACLs:
           - browse
@@ -6642,6 +7064,11 @@ class SearchClientSync:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `browse`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `browse`."
             )
@@ -6672,7 +7099,7 @@ class SearchClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> BrowseResponse:
         """
-        Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they'll be ignored.
+        Retrieves records from an index, up to 1,000 per request.  Searching returns _hits_ (records augmented with highlighting and ranking details). Browsing returns matching records only. Use browse to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance, number of matched words, proximity, or geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they're ignored.
 
         Required API Key ACLs:
           - browse
@@ -6708,6 +7135,11 @@ class SearchClientSync:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `clear_objects`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `clear_objects`."
             )
@@ -6772,6 +7204,11 @@ class SearchClientSync:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `clear_rules`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `clear_rules`."
             )
@@ -6854,6 +7291,11 @@ class SearchClientSync:
                 "Parameter `index_name` is required when calling `clear_synonyms`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `clear_synonyms`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if forward_to_replicas is not None:
@@ -6930,6 +7372,11 @@ class SearchClientSync:
                 "Parameter `path` is required when calling `custom_delete`."
             )
 
+        if not path:
+            raise ValueError(
+                "Parameter `path` is required when calling `custom_delete`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
@@ -6997,6 +7444,9 @@ class SearchClientSync:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_get`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -7072,6 +7522,9 @@ class SearchClientSync:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_post`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -7160,6 +7613,9 @@ class SearchClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
+        if not path:
+            raise ValueError("Parameter `path` is required when calling `custom_put`.")
+
         _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
@@ -7235,6 +7691,11 @@ class SearchClientSync:
                 "Parameter `key` is required when calling `delete_api_key`."
             )
 
+        if not key:
+            raise ValueError(
+                "Parameter `key` is required when calling `delete_api_key`."
+            )
+
         return self._transporter.request(
             verb=Verb.DELETE,
             path="/1/keys/{key}".replace("{key}", quote(str(key), safe="")),
@@ -7273,7 +7734,7 @@ class SearchClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        This operation doesn't accept empty filters.  This operation is resource-intensive. You should only use it if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        This operation doesn't accept empty filters.  This operation is resource-intensive. Use it only if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
         Required API Key ACLs:
           - deleteIndex
@@ -7287,6 +7748,11 @@ class SearchClientSync:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `delete_by`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `delete_by`."
             )
@@ -7322,7 +7788,7 @@ class SearchClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> UpdatedAtResponse:
         """
-        This operation doesn't accept empty filters.  This operation is resource-intensive. You should only use it if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        This operation doesn't accept empty filters.  This operation is resource-intensive. Use it only if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
         Required API Key ACLs:
           - deleteIndex
@@ -7360,6 +7826,11 @@ class SearchClientSync:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `delete_index`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `delete_index`."
             )
@@ -7425,7 +7896,17 @@ class SearchClientSync:
                 "Parameter `index_name` is required when calling `delete_object`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `delete_object`."
+            )
+
         if object_id is None:
+            raise ValueError(
+                "Parameter `object_id` is required when calling `delete_object`."
+            )
+
+        if not object_id:
             raise ValueError(
                 "Parameter `object_id` is required when calling `delete_object`."
             )
@@ -7502,7 +7983,17 @@ class SearchClientSync:
                 "Parameter `index_name` is required when calling `delete_rule`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `delete_rule`."
+            )
+
         if object_id is None:
+            raise ValueError(
+                "Parameter `object_id` is required when calling `delete_rule`."
+            )
+
+        if not object_id:
             raise ValueError(
                 "Parameter `object_id` is required when calling `delete_rule`."
             )
@@ -7583,6 +8074,11 @@ class SearchClientSync:
                 "Parameter `source` is required when calling `delete_source`."
             )
 
+        if not source:
+            raise ValueError(
+                "Parameter `source` is required when calling `delete_source`."
+            )
+
         return self._transporter.request(
             verb=Verb.DELETE,
             path="/1/security/sources/{source}".replace(
@@ -7651,7 +8147,17 @@ class SearchClientSync:
                 "Parameter `index_name` is required when calling `delete_synonym`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `delete_synonym`."
+            )
+
         if object_id is None:
+            raise ValueError(
+                "Parameter `object_id` is required when calling `delete_synonym`."
+            )
+
+        if not object_id:
             raise ValueError(
                 "Parameter `object_id` is required when calling `delete_synonym`."
             )
@@ -7726,6 +8232,9 @@ class SearchClientSync:
         """
 
         if key is None:
+            raise ValueError("Parameter `key` is required when calling `get_api_key`.")
+
+        if not key:
             raise ValueError("Parameter `key` is required when calling `get_api_key`.")
 
         return self._transporter.request(
@@ -8035,7 +8544,17 @@ class SearchClientSync:
                 "Parameter `index_name` is required when calling `get_object`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `get_object`."
+            )
+
         if object_id is None:
+            raise ValueError(
+                "Parameter `object_id` is required when calling `get_object`."
+            )
+
+        if not object_id:
             raise ValueError(
                 "Parameter `object_id` is required when calling `get_object`."
             )
@@ -8183,7 +8702,17 @@ class SearchClientSync:
                 "Parameter `index_name` is required when calling `get_rule`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `get_rule`."
+            )
+
         if object_id is None:
+            raise ValueError(
+                "Parameter `object_id` is required when calling `get_rule`."
+            )
+
+        if not object_id:
             raise ValueError(
                 "Parameter `object_id` is required when calling `get_rule`."
             )
@@ -8255,6 +8784,11 @@ class SearchClientSync:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `get_settings`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `get_settings`."
             )
@@ -8375,7 +8909,17 @@ class SearchClientSync:
                 "Parameter `index_name` is required when calling `get_synonym`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `get_synonym`."
+            )
+
         if object_id is None:
+            raise ValueError(
+                "Parameter `object_id` is required when calling `get_synonym`."
+            )
+
+        if not object_id:
             raise ValueError(
                 "Parameter `object_id` is required when calling `get_synonym`."
             )
@@ -8442,6 +8986,11 @@ class SearchClientSync:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `get_task`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `get_task`."
             )
@@ -8553,6 +9102,11 @@ class SearchClientSync:
         warn("GET /1/clusters/mapping/{userID} is deprecated.", DeprecationWarning)
 
         if user_id is None:
+            raise ValueError(
+                "Parameter `user_id` is required when calling `get_user_id`."
+            )
+
+        if not user_id:
             raise ValueError(
                 "Parameter `user_id` is required when calling `get_user_id`."
             )
@@ -8952,7 +9506,7 @@ class SearchClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        Copies or moves (renames) an index within the same Algolia application.  Notes: - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it's created. - This operation is resource-intensive.  **Copy**  - If the source index doesn't exist, copying creates a new index with 0 records and default settings. - API keys from the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - For more information, see [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).  **Move**  - If the source index doesn't exist, moving is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - For more information, see [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
         Required API Key ACLs:
           - addObject
@@ -8966,6 +9520,11 @@ class SearchClientSync:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `operation_index`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `operation_index`."
             )
@@ -9001,7 +9560,7 @@ class SearchClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> UpdatedAtResponse:
         """
-        Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        Copies or moves (renames) an index within the same Algolia application.  Notes: - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it's created. - This operation is resource-intensive.  **Copy**  - If the source index doesn't exist, copying creates a new index with 0 records and default settings. - API keys from the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - For more information, see [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).  **Move**  - If the source index doesn't exist, moving is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - For more information, see [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
         Required API Key ACLs:
           - addObject
@@ -9035,7 +9594,7 @@ class SearchClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - Use first-level attributes only. Nested attributes aren't supported.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update attributes without replacing the full record, use these built-in operations. These operations are useful when the initial data isn't available.  - `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. - `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching number or string elements from an array attribute made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a numeric integer attribute only if the provided value matches the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the API ignores the update.   If the object doesn't exist, the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the provided value is greater than the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1, the API updates the object.   If the object doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.  Specify an operation by providing an object with the attribute to update as the key and its value as an object with these properties:  - `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument to the operation, for example, increment or decrement step, or a value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
         Required API Key ACLs:
           - addObject
@@ -9057,7 +9616,17 @@ class SearchClientSync:
                 "Parameter `index_name` is required when calling `partial_update_object`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `partial_update_object`."
+            )
+
         if object_id is None:
+            raise ValueError(
+                "Parameter `object_id` is required when calling `partial_update_object`."
+            )
+
+        if not object_id:
             raise ValueError(
                 "Parameter `object_id` is required when calling `partial_update_object`."
             )
@@ -9106,7 +9675,7 @@ class SearchClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> UpdatedAtWithObjectIdResponse:
         """
-        Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - Use first-level attributes only. Nested attributes aren't supported.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update attributes without replacing the full record, use these built-in operations. These operations are useful when the initial data isn't available.  - `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. - `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching number or string elements from an array attribute made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a numeric integer attribute only if the provided value matches the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the API ignores the update.   If the object doesn't exist, the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the provided value is greater than the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1, the API updates the object.   If the object doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.  Specify an operation by providing an object with the attribute to update as the key and its value as an object with these properties:  - `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument to the operation, for example, increment or decrement step, or a value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
         Required API Key ACLs:
           - addObject
@@ -9158,6 +9727,11 @@ class SearchClientSync:
         warn("DELETE /1/clusters/mapping/{userID} is deprecated.", DeprecationWarning)
 
         if user_id is None:
+            raise ValueError(
+                "Parameter `user_id` is required when calling `remove_user_id`."
+            )
+
+        if not user_id:
             raise ValueError(
                 "Parameter `user_id` is required when calling `remove_user_id`."
             )
@@ -9282,6 +9856,11 @@ class SearchClientSync:
                 "Parameter `key` is required when calling `restore_api_key`."
             )
 
+        if not key:
+            raise ValueError(
+                "Parameter `key` is required when calling `restore_api_key`."
+            )
+
         return self._transporter.request(
             verb=Verb.POST,
             path="/1/keys/{key}/restore".replace("{key}", quote(str(key), safe="")),
@@ -9339,6 +9918,11 @@ class SearchClientSync:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `save_object`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `save_object`."
             )
@@ -9431,7 +10015,17 @@ class SearchClientSync:
                 "Parameter `index_name` is required when calling `save_rule`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `save_rule`."
+            )
+
         if object_id is None:
+            raise ValueError(
+                "Parameter `object_id` is required when calling `save_rule`."
+            )
+
+        if not object_id:
             raise ValueError(
                 "Parameter `object_id` is required when calling `save_rule`."
             )
@@ -9537,6 +10131,11 @@ class SearchClientSync:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `save_rules`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `save_rules`."
             )
@@ -9652,7 +10251,17 @@ class SearchClientSync:
                 "Parameter `index_name` is required when calling `save_synonym`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `save_synonym`."
+            )
+
         if object_id is None:
+            raise ValueError(
+                "Parameter `object_id` is required when calling `save_synonym`."
+            )
+
+        if not object_id:
             raise ValueError(
                 "Parameter `object_id` is required when calling `save_synonym`."
             )
@@ -9764,6 +10373,11 @@ class SearchClientSync:
                 "Parameter `index_name` is required when calling `save_synonyms`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `save_synonyms`."
+            )
+
         if synonym_hit is None:
             raise ValueError(
                 "Parameter `synonym_hit` is required when calling `save_synonyms`."
@@ -9844,7 +10458,7 @@ class SearchClientSync:
             Annotated[
                 SearchMethodParams,
                 Field(
-                    description="Muli-search request body. Results are returned in the same order as the requests."
+                    description="Multi-query search request body. Results are returned in the same order as the requests."
                 ),
             ],
             dict[str, Any],
@@ -9852,12 +10466,12 @@ class SearchClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
+        Runs multiple search queries against one or more indices in a single API request.  Use cases include:  - Searching different indices, such as products and marketing content. - Run multiple queries on the same index with different parameters or filters.  If you know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
 
         Required API Key ACLs:
           - search
 
-        :param search_method_params: Muli-search request body. Results are returned in the same order as the requests. (required)
+        :param search_method_params: Multi-query search request body. Results are returned in the same order as the requests. (required)
         :type search_method_params: SearchMethodParams
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the raw algoliasearch 'APIResponse' object.
@@ -9888,7 +10502,7 @@ class SearchClientSync:
             Annotated[
                 SearchMethodParams,
                 Field(
-                    description="Muli-search request body. Results are returned in the same order as the requests."
+                    description="Multi-query search request body. Results are returned in the same order as the requests."
                 ),
             ],
             dict[str, Any],
@@ -9896,12 +10510,12 @@ class SearchClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchResponses:
         """
-        Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
+        Runs multiple search queries against one or more indices in a single API request.  Use cases include:  - Searching different indices, such as products and marketing content. - Run multiple queries on the same index with different parameters or filters.  If you know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
 
         Required API Key ACLs:
           - search
 
-        :param search_method_params: Muli-search request body. Results are returned in the same order as the requests. (required)
+        :param search_method_params: Multi-query search request body. Results are returned in the same order as the requests. (required)
         :type search_method_params: SearchMethodParams
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchResponses' result object.
@@ -10031,7 +10645,17 @@ class SearchClientSync:
                 "Parameter `index_name` is required when calling `search_for_facet_values`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `search_for_facet_values`."
+            )
+
         if facet_name is None:
+            raise ValueError(
+                "Parameter `facet_name` is required when calling `search_for_facet_values`."
+            )
+
+        if not facet_name:
             raise ValueError(
                 "Parameter `facet_name` is required when calling `search_for_facet_values`."
             )
@@ -10117,6 +10741,11 @@ class SearchClientSync:
                 "Parameter `index_name` is required when calling `search_rules`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `search_rules`."
+            )
+
         _data = {}
         if search_rules_params is not None:
             _data = search_rules_params
@@ -10184,6 +10813,11 @@ class SearchClientSync:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `search_single_index`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `search_single_index`."
             )
@@ -10261,6 +10895,11 @@ class SearchClientSync:
         """
 
         if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `search_synonyms`."
+            )
+
+        if not index_name:
             raise ValueError(
                 "Parameter `index_name` is required when calling `search_synonyms`."
             )
@@ -10466,6 +11105,11 @@ class SearchClientSync:
                 "Parameter `index_name` is required when calling `set_settings`."
             )
 
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `set_settings`."
+            )
+
         if index_settings is None:
             raise ValueError(
                 "Parameter `index_settings` is required when calling `set_settings`."
@@ -10547,6 +11191,11 @@ class SearchClientSync:
         """
 
         if key is None:
+            raise ValueError(
+                "Parameter `key` is required when calling `update_api_key`."
+            )
+
+        if not key:
             raise ValueError(
                 "Parameter `key` is required when calling `update_api_key`."
             )

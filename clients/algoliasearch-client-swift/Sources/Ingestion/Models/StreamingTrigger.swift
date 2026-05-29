@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Trigger input for continuously running tasks.
@@ -26,11 +26,7 @@ public struct StreamingTrigger: Codable, JSONEncodable {
     }
 }
 
-extension StreamingTrigger: Equatable {
-    public static func ==(lhs: StreamingTrigger, rhs: StreamingTrigger) -> Bool {
-        lhs.type == rhs.type
-    }
-}
+extension StreamingTrigger: Equatable {}
 
 extension StreamingTrigger: Hashable {
     public func hash(into hasher: inout Hasher) {

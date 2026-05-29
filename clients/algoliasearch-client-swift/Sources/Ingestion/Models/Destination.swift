@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Destinations are Algolia resources like indices or event streams.
@@ -16,9 +16,9 @@ public struct Destination: Codable, JSONEncodable {
     /// Owner of the resource.
     public var owner: String?
     public var input: DestinationInput
-    /// Date of creation in RFC 3339 format.
+    /// Date and time when the resource was created, in RFC 3339 format.
     public var createdAt: String
-    /// Date of last update in RFC 3339 format.
+    /// Date and time when the resource was last updated, in RFC 3339 format.
     public var updatedAt: String
     /// Universally unique identifier (UUID) of an authentication resource.
     public var authenticationID: String?
@@ -74,19 +74,7 @@ public struct Destination: Codable, JSONEncodable {
     }
 }
 
-extension Destination: Equatable {
-    public static func ==(lhs: Destination, rhs: Destination) -> Bool {
-        lhs.destinationID == rhs.destinationID &&
-            lhs.type == rhs.type &&
-            lhs.name == rhs.name &&
-            lhs.owner == rhs.owner &&
-            lhs.input == rhs.input &&
-            lhs.createdAt == rhs.createdAt &&
-            lhs.updatedAt == rhs.updatedAt &&
-            lhs.authenticationID == rhs.authenticationID &&
-            lhs.transformationIDs == rhs.transformationIDs
-    }
-}
+extension Destination: Equatable {}
 
 extension Destination: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -154,8 +154,8 @@ pathAliases:
 
     It doesn't replace:
 
-    - URLs in the `startUrls`, `sitemaps`, `pathsToMatch`, and other settings.
-    - Paths found in extracted text.
+    - URLs in the `startUrls`, `sitemaps`, `pathsToMatch`, and other settings
+    - Paths found in extracted text
 
     The crawl continues from the _transformed_ URLs.
     

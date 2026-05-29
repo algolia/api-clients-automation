@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Trigger for a task update.
@@ -27,11 +27,7 @@ public struct TriggerUpdateInput: Codable, JSONEncodable {
     }
 }
 
-extension TriggerUpdateInput: Equatable {
-    public static func ==(lhs: TriggerUpdateInput, rhs: TriggerUpdateInput) -> Bool {
-        lhs.cron == rhs.cron
-    }
-}
+extension TriggerUpdateInput: Equatable {}
 
 extension TriggerUpdateInput: Hashable {
     public func hash(into hasher: inout Hasher) {

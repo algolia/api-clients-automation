@@ -8,7 +8,7 @@ info:
 
     ## Base URLs
 
-    The base URLs for requests to the Query Suggestions API are:
+    Base URLs for the Query Suggestions API:
 
     - `https://query-suggestions.us.algolia.com`
     - `https://query-suggestions.eu.algolia.com`
@@ -19,7 +19,7 @@ info:
 
     ## Authentication
 
-    To authenticate your API requests, add these headers:
+    Add these headers to authenticate requests:
 
     - `x-algolia-application-id`. Your Algolia application ID.
     - `x-algolia-api-key`. An API key with the necessary permissions to make the request.
@@ -36,12 +36,12 @@ info:
     Response bodies are JSON objects.
     Deleting a user token returns an empty response body with rate-limiting information as headers.
 
-    Successful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.
+    Successful responses return `2xx` statuses. Client errors return `4xx` statuses. Server errors return `5xx` statuses.
     Error responses have a `message` property with more information.
 
     ## Version
 
-    The current version of the Query Suggestions API is version 1, as indicated by the `/1/` in each endpoint's URL.
+    The current version of the Query Suggestions API is version 1, indicated by the `/1/` in each endpoint's URL.
   version: 1.0.0
 components:
   securitySchemes:

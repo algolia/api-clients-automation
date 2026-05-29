@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// [Redirect results to a
@@ -28,11 +28,7 @@ public struct RecommendRedirect: Codable, JSONEncodable {
     }
 }
 
-extension RecommendRedirect: Equatable {
-    public static func ==(lhs: RecommendRedirect, rhs: RecommendRedirect) -> Bool {
-        lhs.index == rhs.index
-    }
-}
+extension RecommendRedirect: Equatable {}
 
 extension RecommendRedirect: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -1,0 +1,42 @@
+package com.algolia;
+
+{{> snippets/import}}
+
+public class abTestImplementationChecklist {
+
+  private static String getUserToken() {
+    // Implement your logic here
+    return "";
+  }
+
+  public static void main(String[] args) throws Exception {
+    {{> snippets/init}}
+
+    // Set the query and get the current user token
+    String query = "User search query";
+    String userToken = getUserToken();
+
+    // Set the searchParams
+    SearchParamsObject searchParams = new SearchParamsObject()
+      .setQuery(query);
+
+    // Is the user token anonymous?
+    if (userToken == null || userToken.isEmpty() || userToken.equals("YOUR_ANONYMOUS_USER_TOKEN")) {
+      // Disable A/B testing for this request
+      searchParams.setEnableABTest(false);
+    } else {
+      // Set the user token to the current user token
+      searchParams.setUserToken(userToken);
+    }
+
+    try {
+      // Perform the searchSingleIndex
+      SearchResponse result = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+      // SearchSingleIndex results
+      System.out.println(result);
+    } catch (Exception err) {
+      // SearchSingleIndex errors
+      System.err.println(err);
+    }
+  }
+}

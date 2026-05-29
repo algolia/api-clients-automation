@@ -1,10 +1,18 @@
 package algoliasearch
 
-import algoliasearch.api.SearchClient
-import algoliasearch.config.RequestOptions
-import algoliasearch.exception.AlgoliaApiException
+import algoliasearch.api.{IngestionClient, SearchClient}
+import algoliasearch.config.{RequestOptions, TransformationOptions}
+import algoliasearch.exception.{AlgoliaApiException, AlgoliaClientException}
+import algoliasearch.extension.ChunkedHelperOptions.DefaultMaxRetries
 import algoliasearch.extension.internal.Iterable.createIterable
 import algoliasearch.extension.internal.RetryUntil.{DEFAULT_DELAY, retryUntil}
+import algoliasearch.ingestion.{
+  Action => IngestionAction,
+  Event => IngestionEvent,
+  PushTaskPayload,
+  PushTaskRecords,
+  WatchResponse => IngestionWatchResponse
+}
 import algoliasearch.internal.util.{escape, paramToString}
 import algoliasearch.search._
 import org.json4s.native.Serialization.read
@@ -20,6 +28,11 @@ import scala.util.matching.Regex
 import scala.util.{Failure, Success, Try}
 
 package object extension {
+
+  private val transformationOptionsRequired: String =
+    "transformationOptions must be set in the client config before calling this method." +
+      " It defaults to the Ingestion API defaults." +
+      " See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
 
   implicit class SecuredApiKeyRestrictionsExtension(val restrictions: SecuredApiKeyRestrictions) {
 
@@ -70,7 +83,7 @@ package object extension {
       * @param apiKey
       *   Required for `update` operation, to compare the response with the given key.
       * @param maxRetries
-      *   The maximum number of retries. 50 by default. (optional)
+      *   The maximum number of retries. 100 by default. (optional)
       * @param requestOptions
       *   Additional request configuration.
       * @return
@@ -84,7 +97,7 @@ package object extension {
         operation: ApiKeyOperation,
         key: String,
         apiKey: Option[ApiKey] = None,
-        maxRetries: Int = 50,
+        maxRetries: Int = DefaultMaxRetries,
         delay: Long => Long = DEFAULT_DELAY,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Option[GetApiKeyResponse]] = {
@@ -117,7 +130,7 @@ package object extension {
         indexName: String,
         taskID: Long,
         delay: Long => Long = DEFAULT_DELAY,
-        maxRetries: Int = 50,
+        maxRetries: Int = DefaultMaxRetries,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[GetTaskResponse] = {
       retryUntil(
@@ -133,7 +146,7 @@ package object extension {
         indexName: String,
         taskID: Long,
         delay: Long => Long = DEFAULT_DELAY,
-        maxRetries: Int = 50,
+        maxRetries: Int = DefaultMaxRetries,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[TaskStatus] = {
       waitForTask(indexName, taskID, delay, maxRetries, requestOptions).map(_.status)
@@ -151,7 +164,7 @@ package object extension {
     def waitForAppTask(
         taskID: Long,
         delay: Long => Long = DEFAULT_DELAY,
-        maxRetries: Int = 50,
+        maxRetries: Int = DefaultMaxRetries,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[GetTaskResponse] = {
       retryUntil(
@@ -166,7 +179,7 @@ package object extension {
     def waitAppTask(
         taskID: Long,
         delay: Long => Long = DEFAULT_DELAY,
-        maxRetries: Int = 50,
+        maxRetries: Int = DefaultMaxRetries,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[TaskStatus] = {
       waitForAppTask(taskID, delay, maxRetries, requestOptions).map(_.status)
@@ -186,7 +199,7 @@ package object extension {
     def waitKeyUpdate(
         key: String,
         apiKey: ApiKey,
-        maxRetries: Int = 50,
+        maxRetries: Int = DefaultMaxRetries,
         delay: Long => Long = DEFAULT_DELAY,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Option[GetApiKeyResponse]] = {
@@ -219,7 +232,7 @@ package object extension {
       */
     def waitKeyCreation(
         key: String,
-        maxRetries: Int = 50,
+        maxRetries: Int = DefaultMaxRetries,
         delay: Long => Long = DEFAULT_DELAY,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Option[GetApiKeyResponse]] = {
@@ -246,7 +259,7 @@ package object extension {
       */
     def waitKeyDelete(
         key: String,
-        maxRetries: Int = 50,
+        maxRetries: Int = DefaultMaxRetries,
         delay: Long => Long = DEFAULT_DELAY,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Option[GetApiKeyResponse]] = {
@@ -283,6 +296,9 @@ package object extension {
       *   The size of the batch. Default is 1000.
       * @param requestOptions
       *   Additional request configuration.
+      * @param chunkedOptions
+      *   Shared chunked-helper configuration. Currently exposes `maxRetries` for the internal `waitForTask` polling
+      *   loop. Defaults to `ChunkedHelperOptions()` (maxRetries = 100).
       * @return
       *   A future containing the response of the batch operations.
       */
@@ -292,7 +308,8 @@ package object extension {
         action: Action = Action.AddObject,
         waitForTasks: Boolean,
         batchSize: Int = 1000,
-        requestOptions: Option[RequestOptions] = None
+        requestOptions: Option[RequestOptions] = None,
+        chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
       val batches = objects.grouped(batchSize).toSeq
 
@@ -313,7 +330,16 @@ package object extension {
       if (waitForTasks)
         futureResponses.flatMap(rs =>
           Future
-            .sequence(rs.map(r => client.waitForTask(indexName, r.taskID, requestOptions = requestOptions)))
+            .sequence(
+              rs.map(r =>
+                client.waitForTask(
+                  indexName,
+                  r.taskID,
+                  maxRetries = chunkedOptions.maxRetries,
+                  requestOptions = requestOptions
+                )
+              )
+            )
             .map(_ => rs)
         )
       else futureResponses
@@ -340,9 +366,10 @@ package object extension {
         objects: Seq[Any],
         waitForTasks: Boolean = false,
         batchSize: Int = 1000,
-        requestOptions: Option[RequestOptions] = None
+        requestOptions: Option[RequestOptions] = None,
+        chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
-      chunkedBatch(indexName, objects, Action.AddObject, waitForTasks, batchSize, requestOptions)
+      chunkedBatch(indexName, objects, Action.AddObject, waitForTasks, batchSize, requestOptions, chunkedOptions)
     }
 
     /** Helper: Deletes every objects for the given objectIDs. The `chunkedBatch` helper is used under the hood, which
@@ -366,7 +393,8 @@ package object extension {
         objectIDs: Seq[String],
         waitForTasks: Boolean = false,
         batchSize: Int = 1000,
-        requestOptions: Option[RequestOptions] = None
+        requestOptions: Option[RequestOptions] = None,
+        chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
       chunkedBatch(
         indexName,
@@ -374,7 +402,8 @@ package object extension {
         Action.DeleteObject,
         waitForTasks,
         batchSize,
-        requestOptions
+        requestOptions,
+        chunkedOptions
       )
     }
 
@@ -402,7 +431,8 @@ package object extension {
         createIfNotExists: Boolean = false,
         waitForTasks: Boolean = false,
         batchSize: Int = 1000,
-        requestOptions: Option[RequestOptions] = None
+        requestOptions: Option[RequestOptions] = None,
+        chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
       chunkedBatch(
         indexName,
@@ -410,7 +440,8 @@ package object extension {
         if (createIfNotExists) Action.PartialUpdateObject else Action.PartialUpdateObjectNoCreate,
         waitForTasks,
         batchSize,
-        requestOptions
+        requestOptions,
+        chunkedOptions
       )
     }
 
@@ -440,7 +471,8 @@ package object extension {
         objects: Seq[Any],
         batchSize: Int = 1000,
         scopes: Option[Seq[ScopeType]] = Some(Seq(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms)),
-        requestOptions: Option[RequestOptions] = None
+        requestOptions: Option[RequestOptions] = None,
+        chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
     )(implicit ec: ExecutionContext): Future[ReplaceAllObjectsResponse] = {
       val tmpIndexName = s"${indexName}_tmp_${scala.util.Random.nextInt(100)}"
 
@@ -461,10 +493,16 @@ package object extension {
           action = Action.AddObject,
           waitForTasks = true,
           batchSize = batchSize,
-          requestOptions = requestOptions
+          requestOptions = requestOptions,
+          chunkedOptions = chunkedOptions
         )
 
-        _ <- client.waitForTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
+        _ <- client.waitForTask(
+          indexName = tmpIndexName,
+          taskID = copy.taskID,
+          maxRetries = chunkedOptions.maxRetries,
+          requestOptions = requestOptions
+        )
 
         copy <- client.operationIndex(
           indexName = indexName,
@@ -475,25 +513,33 @@ package object extension {
           ),
           requestOptions = requestOptions
         )
-        _ <- client.waitForTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
+        _ <- client.waitForTask(
+          indexName = tmpIndexName,
+          taskID = copy.taskID,
+          maxRetries = chunkedOptions.maxRetries,
+          requestOptions = requestOptions
+        )
 
         move <- client.operationIndex(
           indexName = tmpIndexName,
           operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
           requestOptions = requestOptions
         )
-        _ <- client.waitForTask(indexName = tmpIndexName, taskID = move.taskID, requestOptions = requestOptions)
+        _ <- client.waitForTask(
+          indexName = tmpIndexName,
+          taskID = move.taskID,
+          maxRetries = chunkedOptions.maxRetries,
+          requestOptions = requestOptions
+        )
       } yield ReplaceAllObjectsResponse(
         copyOperationResponse = copy,
         batchResponses = batchResponses,
         moveOperationResponse = move
       )
 
-      steps.recover({ case e: Throwable =>
-        client.deleteIndex(tmpIndexName)
-
-        throw e
-      })
+      steps.recoverWith { case e: Throwable =>
+        client.deleteIndex(tmpIndexName).transformWith(_ => Future.failed(e))
+      }
     }
 
     /** Check if an index exists.
@@ -679,6 +725,335 @@ package object extension {
           }
         }
         case _ => None
+      }
+    }
+
+    /** Helper: Similar to the `saveObjects` method but requires a Push connector
+      * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be
+      * created first, in order to transform records before indexing them to Algolia. The [[TransformationOptions]] must
+      * have been passed to the client via [[SearchClient.withTransformation]].
+      *
+      * @param indexName
+      *   The `indexName` to save `objects` in.
+      * @param objects
+      *   The array of `objects` to store in the given Algolia `indexName`.
+      * @param waitForTasks
+      *   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total
+      *   execution time of this method but is more reliable.
+      * @param batchSize
+      *   The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) /
+      *   batchSize`.
+      * @param requestOptions
+      *   The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+      */
+    def saveObjectsWithTransformation(
+        indexName: String,
+        objects: Seq[Any],
+        waitForTasks: Boolean = false,
+        batchSize: Int = 1000,
+        requestOptions: Option[RequestOptions] = None,
+        chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
+    )(implicit ec: ExecutionContext): Future[Seq[IngestionWatchResponse]] = {
+      client.ingestionTransporter match {
+        case None => Future.failed(new AlgoliaClientException(transformationOptionsRequired))
+        case Some(transporter) =>
+          transporter.chunkedPush(
+            indexName = indexName,
+            objects = objects,
+            action = IngestionAction.AddObject,
+            waitForTasks = waitForTasks,
+            batchSize = batchSize,
+            referenceIndexName = None,
+            requestOptions = requestOptions,
+            chunkedOptions = chunkedOptions
+          )
+      }
+    }
+
+    /** Helper: Similar to the `partialUpdateObjects` method but requires a Push connector
+      * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be
+      * created first, in order to transform records before indexing them to Algolia. The [[TransformationOptions]] must
+      * have been passed to the client via [[SearchClient.withTransformation]].
+      *
+      * @param indexName
+      *   The `indexName` to update `objects` in.
+      * @param objects
+      *   The array of `objects` to update in the given Algolia `indexName`.
+      * @param createIfNotExists
+      *   To be provided if non-existing objects are passed, otherwise, the call will fail.
+      * @param waitForTasks
+      *   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total
+      *   execution time of this method but is more reliable.
+      * @param batchSize
+      *   The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) /
+      *   batchSize`.
+      * @param requestOptions
+      *   The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+      */
+    def partialUpdateObjectsWithTransformation(
+        indexName: String,
+        objects: Seq[Any],
+        createIfNotExists: Boolean = false,
+        waitForTasks: Boolean = false,
+        batchSize: Int = 1000,
+        requestOptions: Option[RequestOptions] = None,
+        chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
+    )(implicit ec: ExecutionContext): Future[Seq[IngestionWatchResponse]] = {
+      client.ingestionTransporter match {
+        case None => Future.failed(new AlgoliaClientException(transformationOptionsRequired))
+        case Some(transporter) =>
+          transporter.chunkedPush(
+            indexName = indexName,
+            objects = objects,
+            action =
+              if (createIfNotExists) IngestionAction.PartialUpdateObject
+              else IngestionAction.PartialUpdateObjectNoCreate,
+            waitForTasks = waitForTasks,
+            batchSize = batchSize,
+            referenceIndexName = None,
+            requestOptions = requestOptions,
+            chunkedOptions = chunkedOptions
+          )
+      }
+    }
+
+    /** Helper: Similar to the `replaceAllObjects` method but requires a Push connector
+      * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be
+      * created first, in order to transform records before indexing them to Algolia. The [[TransformationOptions]] must
+      * have been passed to the client via [[SearchClient.withTransformation]].
+      *
+      * See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation
+      * details.
+      *
+      * @param indexName
+      *   The `indexName` to replace `objects` in.
+      * @param objects
+      *   The array of `objects` to store in the given Algolia `indexName`.
+      * @param batchSize
+      *   The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) /
+      *   batchSize`.
+      * @param scopes
+      *   The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
+      * @param requestOptions
+      *   The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+      */
+    def replaceAllObjectsWithTransformation(
+        indexName: String,
+        objects: Seq[Any],
+        batchSize: Int = 1000,
+        scopes: Option[Seq[ScopeType]] = Some(Seq(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms)),
+        requestOptions: Option[RequestOptions] = None,
+        chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
+    )(implicit ec: ExecutionContext): Future[ReplaceAllObjectsWithTransformationResponse] = {
+      client.ingestionTransporter match {
+        case None => Future.failed(new AlgoliaClientException(transformationOptionsRequired))
+        case Some(transporter) =>
+          val tmpIndexName = s"${indexName}_tmp_${scala.util.Random.nextInt(100)}"
+
+          val steps = for {
+            copy <- client.operationIndex(
+              indexName = indexName,
+              operationIndexParams = OperationIndexParams(
+                operation = OperationType.Copy,
+                destination = tmpIndexName,
+                scope = scopes
+              ),
+              requestOptions = requestOptions
+            )
+
+            watchResponses <- transporter.chunkedPush(
+              indexName = tmpIndexName,
+              objects = objects,
+              action = IngestionAction.AddObject,
+              waitForTasks = true,
+              batchSize = batchSize,
+              referenceIndexName = Some(indexName),
+              requestOptions = requestOptions,
+              chunkedOptions = chunkedOptions
+            )
+
+            _ <- client.waitForTask(
+              indexName = tmpIndexName,
+              taskID = copy.taskID,
+              maxRetries = chunkedOptions.maxRetries,
+              requestOptions = requestOptions
+            )
+
+            copy <- client.operationIndex(
+              indexName = indexName,
+              operationIndexParams = OperationIndexParams(
+                operation = OperationType.Copy,
+                destination = tmpIndexName,
+                scope = scopes
+              ),
+              requestOptions = requestOptions
+            )
+            _ <- client.waitForTask(
+              indexName = tmpIndexName,
+              taskID = copy.taskID,
+              maxRetries = chunkedOptions.maxRetries,
+              requestOptions = requestOptions
+            )
+
+            move <- client.operationIndex(
+              indexName = tmpIndexName,
+              operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
+              requestOptions = requestOptions
+            )
+            _ <- client.waitForTask(
+              indexName = tmpIndexName,
+              taskID = move.taskID,
+              maxRetries = chunkedOptions.maxRetries,
+              requestOptions = requestOptions
+            )
+          } yield ReplaceAllObjectsWithTransformationResponse(
+            copyOperationResponse = copy,
+            watchResponses = ingestionToSearchWatchResponses(watchResponses),
+            moveOperationResponse = move
+          )
+
+          steps.recoverWith { case e: Throwable =>
+            client.deleteIndex(tmpIndexName).transformWith(_ => Future.failed(e))
+          }
+      }
+    }
+
+    private def ingestionToSearchWatchResponses(
+        responses: Seq[IngestionWatchResponse]
+    ): Seq[WatchResponse] = {
+      Try {
+        val jValue = {
+          implicit val formats: Formats = algoliasearch.ingestion.JsonSupport.format
+          Extraction.decompose(responses)
+        }
+        implicit val formats: Formats = JsonSupport.format
+        jValue.extract[Seq[WatchResponse]]
+      } match {
+        case Success(converted) => converted
+        case Failure(e) =>
+          throw new AlgoliaClientException(
+            "ingestion WatchResponse cannot be converted to a search WatchResponse",
+            e
+          )
+      }
+    }
+  }
+
+  implicit class IngestionClientExtensions(val client: IngestionClient) {
+
+    /** Helper: Chunks `objects` into requests of at most `batchSize` records and pushes each chunk through the
+      * Ingestion API's transformation pipeline.
+      *
+      * If `waitForTasks` is true, the helper polls the Ingestion API after every `max(1, batchSize / 10)` pushes for
+      * the corresponding events, providing backpressure on long jobs.
+      *
+      * @param indexName
+      *   The index in which to perform the request.
+      * @param objects
+      *   The list of objects to push.
+      * @param action
+      *   The action to perform on the objects.
+      * @param waitForTasks
+      *   Whether to wait for the server to finish processing each push.
+      * @param batchSize
+      *   The size of the chunk. Default is 1000.
+      * @param referenceIndexName
+      *   Required when targeting an index that does not have a push connector setup, but you wish to attach another
+      *   index's transformation to it.
+      * @param requestOptions
+      *   Additional request configuration.
+      * @return
+      *   A future containing the responses from each push.
+      */
+    def chunkedPush(
+        indexName: String,
+        objects: Seq[Any],
+        action: IngestionAction,
+        waitForTasks: Boolean,
+        batchSize: Int = 1000,
+        referenceIndexName: Option[String] = None,
+        requestOptions: Option[RequestOptions] = None,
+        chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
+    )(implicit ec: ExecutionContext): Future[Seq[IngestionWatchResponse]] = {
+      if (batchSize < 1) return Future.failed(new AlgoliaClientException("`batchSize` must be greater than 0"))
+
+      val batches = objects.grouped(batchSize).toSeq
+      if (batches.isEmpty) return Future.successful(Seq.empty)
+
+      val pollInterval = math.max(1, batchSize / 10)
+      val superBatches = batches.grouped(pollInterval).toSeq
+
+      def pushSuperBatch(superBatch: Seq[Seq[Any]]): Future[Seq[IngestionWatchResponse]] =
+        superBatch.foldLeft(Future.successful(Vector.empty[IngestionWatchResponse])) { (acc, batch) =>
+          acc.flatMap { rs =>
+            client
+              .push(
+                indexName = indexName,
+                pushTaskPayload = PushTaskPayload(action = action, records = objectsToPushTaskRecords(batch)),
+                watch = Some(false),
+                referenceIndexName = referenceIndexName,
+                requestOptions = requestOptions
+              )
+              .map(rs :+ _)
+          }
+        }
+
+      superBatches
+        .foldLeft(Future.successful(Vector.empty[IngestionWatchResponse])) { (acc, superBatch) =>
+          for {
+            responsesSoFar <- acc
+            pushed <- pushSuperBatch(superBatch)
+            _ <-
+              if (waitForTasks)
+                pushed.foldLeft(Future.unit) { (a, r) =>
+                  a.flatMap(_ => pollEvent(r, requestOptions, chunkedOptions.maxRetries).map(_ => ()))
+                }
+              else Future.unit
+          } yield responsesSoFar ++ pushed
+        }
+        .map(_.toSeq)
+    }
+
+    private def pollEvent(
+        response: IngestionWatchResponse,
+        requestOptions: Option[RequestOptions],
+        maxRetries: Int
+    )(implicit ec: ExecutionContext): Future[Option[IngestionEvent]] = {
+      response.eventID match {
+        case None =>
+          Future.failed(
+            new AlgoliaClientException(
+              "received unexpected response from the push endpoint, eventID must not be undefined"
+            )
+          )
+        case Some(eventID) =>
+          retryUntil(
+            retry = () =>
+              client
+                .getEvent(response.runID, eventID, requestOptions)
+                .map(Option(_))
+                .recover {
+                  case e: AlgoliaApiException if e.httpErrorCode == 404 => None
+                },
+            until = (event: Option[IngestionEvent]) => event.isDefined,
+            maxRetries = maxRetries,
+            delay = retries => math.min(retries * 1500, 5000L)
+          )
+      }
+    }
+
+    private def objectsToPushTaskRecords(objects: Seq[Any]): Seq[PushTaskRecords] = {
+      implicit val formats: Formats = algoliasearch.ingestion.JsonSupport.format
+      Try {
+        val jValue = Extraction.decompose(objects)
+        jValue.extract[Seq[PushTaskRecords]]
+      } match {
+        case Success(records) => records
+        case Failure(e) =>
+          throw new AlgoliaClientException(
+            "each object must have an `objectID` key in order to be indexed",
+            e
+          )
       }
     }
   }

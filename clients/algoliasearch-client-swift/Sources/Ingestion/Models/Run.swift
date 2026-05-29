@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct Run: Codable, JSONEncodable {
@@ -21,11 +21,11 @@ public struct Run: Codable, JSONEncodable {
     public var reason: String?
     public var reasonCode: RunReasonCode?
     public var type: RunType
-    /// Date of creation in RFC 3339 format.
+    /// Date and time when the resource was created, in RFC 3339 format.
     public var createdAt: String
-    /// Date of start in RFC 3339 format.
+    /// Date and time when the task started, in RFC 3339 format.
     public var startedAt: String?
-    /// Date of finish in RFC 3339 format.
+    /// Date and time when the task finished, in RFC 3339 format.
     public var finishedAt: String?
 
     public init(
@@ -94,23 +94,7 @@ public struct Run: Codable, JSONEncodable {
     }
 }
 
-extension Run: Equatable {
-    public static func ==(lhs: Run, rhs: Run) -> Bool {
-        lhs.runID == rhs.runID &&
-            lhs.appID == rhs.appID &&
-            lhs.taskID == rhs.taskID &&
-            lhs.status == rhs.status &&
-            lhs.progress == rhs.progress &&
-            lhs.outcome == rhs.outcome &&
-            lhs.failureThreshold == rhs.failureThreshold &&
-            lhs.reason == rhs.reason &&
-            lhs.reasonCode == rhs.reasonCode &&
-            lhs.type == rhs.type &&
-            lhs.createdAt == rhs.createdAt &&
-            lhs.startedAt == rhs.startedAt &&
-            lhs.finishedAt == rhs.finishedAt
-    }
-}
+extension Run: Equatable {}
 
 extension Run: Hashable {
     public func hash(into hasher: inout Hasher) {

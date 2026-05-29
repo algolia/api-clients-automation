@@ -17,7 +17,7 @@ private[internal] class HeaderInterceptor(headers: Map[String, String]) extends 
     val requestHeaders = request.headers()
 
     immutableHeaders.foreach { case (key, value) =>
-      if (requestHeaders.get(key) != null) {
+      if (requestHeaders.get(key) == null) {
         builder.header(key, value)
       }
     }

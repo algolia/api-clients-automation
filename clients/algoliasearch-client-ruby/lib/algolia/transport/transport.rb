@@ -42,8 +42,8 @@ module Algolia
         retry_errors = []
 
         @retry_strategy.get_tryable_hosts(call_type).each do |host|
-          opts[:timeout] ||= get_timeout(call_type) * (host.retry_count + 1)
-          opts[:connect_timeout] ||= @config.connect_timeout * (host.retry_count + 1)
+          opts[:timeout] ||= get_timeout(call_type)
+          opts[:connect_timeout] ||= (@config.connect_timeout || Defaults::CONNECT_TIMEOUT) * (host.retry_count + 1)
 
           request_options = RequestOptions.new(@config)
           request_options.create(opts)
@@ -136,7 +136,6 @@ module Algolia
       def generate_header_params(body, request_options)
         header_params = request_options.header_params.transform_keys(&:downcase)
         header_params = @config.header_params.merge(header_params)
-        header_params["accept-encoding"] = "gzip" if request_options.compression_type == "gzip"
         if request_options.compression_type == "gzip" && body.is_a?(String) && !body.to_s.strip.empty?
           header_params["content-encoding"] = "gzip"
         end
@@ -153,9 +152,9 @@ module Algolia
       def get_timeout(call_type)
         case call_type
         when READ
-          @config.read_timeout
+          @config.read_timeout || Defaults::READ_TIMEOUT
         else
-          @config.write_timeout
+          @config.write_timeout || Defaults::WRITE_TIMEOUT
         end
       end
     end

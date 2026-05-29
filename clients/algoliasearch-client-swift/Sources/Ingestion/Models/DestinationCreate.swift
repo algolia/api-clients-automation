@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// API request body for creating a new destination.
@@ -50,15 +50,7 @@ public struct DestinationCreate: Codable, JSONEncodable {
     }
 }
 
-extension DestinationCreate: Equatable {
-    public static func ==(lhs: DestinationCreate, rhs: DestinationCreate) -> Bool {
-        lhs.type == rhs.type &&
-            lhs.name == rhs.name &&
-            lhs.input == rhs.input &&
-            lhs.authenticationID == rhs.authenticationID &&
-            lhs.transformationIDs == rhs.transformationIDs
-    }
-}
+extension DestinationCreate: Equatable {}
 
 extension DestinationCreate: Hashable {
     public func hash(into hasher: inout Hasher) {

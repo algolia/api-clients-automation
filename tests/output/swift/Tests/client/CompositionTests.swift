@@ -4,8 +4,8 @@ import XCTest
 
 import Utils
 
-@testable import Composition
-@testable import Core
+@testable import AlgoliaComposition
+@testable import AlgoliaCore
 
 final class CompositionClientClientTests: XCTestCase {
     let APPLICATION_ID = "my_application_id"
@@ -50,12 +50,33 @@ final class CompositionClientClientTests: XCTestCase {
         let response = try await client.customPost(
             path: "1/test/gzip",
             parameters: [String: AnyCodable](),
-            body: ["message": "this is a compressed body"]
+            body: [
+                "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien.",
+            ]
         )
 
         XTCJSONEquals(
             received: response,
-            expected: "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this is a compressed body\"}}"
+            expected: "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien.\"}}"
+        )
+    }
+
+    /// test the response decompression strategy
+    func testApiTest3() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6691")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+        let response = try await client.customGet(path: "1/test/gzip-response")
+
+        XTCJSONEquals(
+            received: response,
+            expected: "{\"message\":\"ok decompression test server response\",\"data\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"}"
         )
     }
 
@@ -86,7 +107,7 @@ final class CompositionClientClientTests: XCTestCase {
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
-        let pattern = "^Algolia for Swift \\(9.37.4\\).*"
+        let pattern = "^Algolia for Swift \\(9.43.2\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern

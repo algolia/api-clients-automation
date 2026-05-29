@@ -132,9 +132,51 @@ public class OneOf {
       if (isMultiArrayOneOfs(oneOfs)) model.vendorExtensions.put("x-is-multi-array", true);
       if (isMultiMapOneOfs(oneOfs)) model.vendorExtensions.put("x-is-multi-map", true);
       if (hasAtModelOrEnum(oneOfs)) model.vendorExtensions.put("x-has-model", true);
+      inferDiscriminatorFields(models, oneOfs);
       if (hasDiscriminators(oneOfs)) model.vendorExtensions.put("x-has-discriminator", true);
       markOneOfModels(oneOfs);
       sortOneOfs(oneOfs);
+    }
+  }
+
+  /**
+   * For oneOf variants that lack explicit x-discriminator-fields, infer them from required fields
+   * that are unique to each variant. This enables key-presence checks in generated unmarshalers
+   * without manual spec annotations.
+   */
+  private static void inferDiscriminatorFields(Map<String, ModelsMap> models, List<CodegenProperty> oneOfs) {
+    // Collect required field names (JSON keys) for all model variants
+    var allRequired = new LinkedHashMap<CodegenProperty, Set<String>>();
+    for (var prop : oneOfs) {
+      if (!prop.isModel) continue;
+      var modelsMap = models.get(prop.dataType);
+      if (modelsMap == null) continue;
+      var variantModel = modelsMap.getModels().get(0).getModel();
+      var required = new HashSet<String>();
+      for (var v : variantModel.requiredVars) {
+        required.add(v.baseName);
+      }
+      allRequired.put(prop, required);
+    }
+
+    // For each variant without an explicit discriminator, compute unique required fields
+    for (var entry : allRequired.entrySet()) {
+      var prop = entry.getKey();
+      if (prop.vendorExtensions.containsKey("x-discriminator-fields")) continue;
+
+      var required = entry.getValue();
+      if (required.isEmpty()) continue;
+
+      var unique = new ArrayList<>(required);
+      for (var other : allRequired.entrySet()) {
+        if (other.getKey() == prop) continue;
+        unique.removeAll(other.getValue());
+      }
+
+      if (!unique.isEmpty()) {
+        Collections.sort(unique);
+        prop.vendorExtensions.put("x-discriminator-fields", unique);
+      }
     }
   }
 

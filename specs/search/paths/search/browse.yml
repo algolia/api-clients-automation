@@ -9,13 +9,13 @@ post:
   description: |
     Retrieves records from an index, up to 1,000 per request.
 
-    While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details),
-    browsing _just_ returns matching records.
-    This can be useful if you want to export your indices.
+    Searching returns _hits_ (records augmented with highlighting and ranking details).
+    Browsing returns matching records only.
+    Use browse to export your indices.
 
     - The Analytics API doesn't collect data when using `browse`.
     - Records are ranked by attributes and custom ranking.
-    - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.
+    - There's no ranking for typo tolerance, number of matched words, proximity, or geo distance.
 
     Browse requests automatically apply these settings:
 
@@ -31,7 +31,7 @@ post:
     - `optionalFilters`: `[]`
     - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)
 
-    If you send these parameters with your browse requests, they'll be ignored.
+    If you send these parameters with your browse requests, they're ignored.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:

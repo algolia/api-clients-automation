@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Specific configuration attributes of a `bigcommerce` source.
@@ -49,15 +49,7 @@ public struct SourceBigCommerce: Codable, JSONEncodable {
     }
 }
 
-extension SourceBigCommerce: Equatable {
-    public static func ==(lhs: SourceBigCommerce, rhs: SourceBigCommerce) -> Bool {
-        lhs.storeHash == rhs.storeHash &&
-            lhs.channel == rhs.channel &&
-            lhs.customFields == rhs.customFields &&
-            lhs.productMetafields == rhs.productMetafields &&
-            lhs.variantMetafields == rhs.variantMetafields
-    }
-}
+extension SourceBigCommerce: Equatable {}
 
 extension SourceBigCommerce: Hashable {
     public func hash(into hasher: inout Hasher) {

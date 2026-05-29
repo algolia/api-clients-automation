@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Defines a metric to be retrieved during an A/B test.
@@ -32,12 +32,7 @@ public struct CreateMetric: Codable, JSONEncodable {
     }
 }
 
-extension CreateMetric: Equatable {
-    public static func ==(lhs: CreateMetric, rhs: CreateMetric) -> Bool {
-        lhs.name == rhs.name &&
-            lhs.dimension == rhs.dimension
-    }
-}
+extension CreateMetric: Equatable {}
 
 extension CreateMetric: Hashable {
     public func hash(into hasher: inout Hasher) {

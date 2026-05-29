@@ -4,8 +4,8 @@ import XCTest
 
 import Utils
 
-@testable import Core
-@testable import Personalization
+@testable import AlgoliaCore
+@testable import AlgoliaPersonalization
 
 final class PersonalizationClientClientTests: XCTestCase {
     let APPLICATION_ID = "my_application_id"
@@ -46,7 +46,7 @@ final class PersonalizationClientClientTests: XCTestCase {
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
-        let pattern = "^Algolia for Swift \\(9.37.4\\).*"
+        let pattern = "^Algolia for Swift \\(9.43.2\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
@@ -54,7 +54,7 @@ final class PersonalizationClientClientTests: XCTestCase {
     }
 
     /// throws when region is not given
-    func testParametersTest0() async throws {
+    func testParametersTest0() throws {
         do {
             let configuration = try PersonalizationClientConfiguration(
                 appID: "my-app-id",
@@ -71,7 +71,7 @@ final class PersonalizationClientClientTests: XCTestCase {
     }
 
     /// throws when incorrect region is given
-    func testParametersTest1() async throws {
+    func testParametersTest1() throws {
         do {
             let configuration = try PersonalizationClientConfiguration(
                 appID: "my-app-id",
@@ -88,7 +88,7 @@ final class PersonalizationClientClientTests: XCTestCase {
     }
 
     /// does not throw when region is given
-    func testParametersTest2() async throws {
+    func testParametersTest2() throws {
         let configuration = try PersonalizationClientConfiguration(
             appID: "my-app-id",
             apiKey: "my-api-key",

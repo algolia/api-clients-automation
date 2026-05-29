@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct ConfigStatus: Codable, JSONEncodable {
@@ -52,15 +52,7 @@ public struct ConfigStatus: Codable, JSONEncodable {
     }
 }
 
-extension ConfigStatus: Equatable {
-    public static func ==(lhs: ConfigStatus, rhs: ConfigStatus) -> Bool {
-        lhs.indexName == rhs.indexName &&
-            lhs.isRunning == rhs.isRunning &&
-            lhs.lastBuiltAt == rhs.lastBuiltAt &&
-            lhs.lastSuccessfulBuiltAt == rhs.lastSuccessfulBuiltAt &&
-            lhs.lastSuccessfulBuildDuration == rhs.lastSuccessfulBuildDuration
-    }
-}
+extension ConfigStatus: Equatable {}
 
 extension ConfigStatus: Hashable {
     public func hash(into hasher: inout Hasher) {

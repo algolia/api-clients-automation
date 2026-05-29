@@ -28,7 +28,7 @@ class TestClientMonitoringClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.34.4\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.40.0\).*/))
   end
 
   # use the correct host
@@ -40,6 +40,7 @@ class TestClientMonitoringClient < Test::Unit::TestCase
 
       {requester: Algolia::Transport::EchoRequester.new}
     )
+
     req = client.custom_delete_with_http_info("test")
     assert_equal("status.algolia.com", req.host.url)
   end
@@ -61,6 +62,7 @@ class TestClientMonitoringClient < Test::Unit::TestCase
         "monitoringClient"
       )
     )
+
     req = client.custom_get("check-api-key/1")
     assert_equal({:"headerAPIKeyValue" => "test-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
     client.set_client_api_key("updated-api-key")

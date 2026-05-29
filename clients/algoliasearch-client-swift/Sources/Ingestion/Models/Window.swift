@@ -2,15 +2,15 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Time window by which to filter the observability data.
 public struct Window: Codable, JSONEncodable {
-    /// Date in RFC 3339 format representing the oldest data in the time window.
+    /// Date and time representing the oldest data in the time window, in RFC 3339 format.
     public var startDate: String
-    /// Date in RFC 3339 format representing the newest data in the time window.
+    /// Date and time representing the newest data in the time window, in RFC 3339 format.
     public var endDate: String
 
     public init(startDate: String, endDate: String) {
@@ -32,12 +32,7 @@ public struct Window: Codable, JSONEncodable {
     }
 }
 
-extension Window: Equatable {
-    public static func ==(lhs: Window, rhs: Window) -> Bool {
-        lhs.startDate == rhs.startDate &&
-            lhs.endDate == rhs.endDate
-    }
-}
+extension Window: Equatable {}
 
 extension Window: Hashable {
     public func hash(into hasher: inout Hasher) {

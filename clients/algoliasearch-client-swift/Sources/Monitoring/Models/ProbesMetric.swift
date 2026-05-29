@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct ProbesMetric: Codable, JSONEncodable {
@@ -31,12 +31,7 @@ public struct ProbesMetric: Codable, JSONEncodable {
     }
 }
 
-extension ProbesMetric: Equatable {
-    public static func ==(lhs: ProbesMetric, rhs: ProbesMetric) -> Bool {
-        lhs.t == rhs.t &&
-            lhs.v == rhs.v
-    }
-}
+extension ProbesMetric: Equatable {}
 
 extension ProbesMetric: Hashable {
     public func hash(into hasher: inout Hasher) {

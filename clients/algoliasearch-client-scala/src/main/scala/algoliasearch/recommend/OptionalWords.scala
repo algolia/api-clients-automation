@@ -1,25 +1,25 @@
 /** Recommend API ## Client libraries Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with
   * your apps. The official API clients are covered by Algolia's [Service Level
-  * Agreement](https://www.algolia.com/policies/sla). See: [Algolia's
-  * ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem) ## Base URLs The
-  * base URLs for requests to the Recommend API are: - `https://{APPLICATION_ID}.algolia.net` -
+  * Agreement](https://www.algolia.com/policies/sla). For more information, see [Algolia's
+  * ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem). ## Base URLs
+  * Base URLs for the Recommend API: - `https://{APPLICATION_ID}.algolia.net` -
   * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
   * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
   * URLs provide high availability by distributing requests with load balancing. **All requests must use HTTPS.** ##
   * Retry strategy To guarantee a high availability, implement a retry strategy for all API requests using the URLs of
   * your servers as fallbacks: - `https://{APPLICATION_ID}-1.algolianet.com` -
   * `https://{APPLICATION_ID}-2.algolianet.com` - `https://{APPLICATION_ID}-3.algolianet.com` These URLs use a different
-  * DNS provider than the primary URLs. You should randomize this list to ensure an even load across the three servers.
-  * All Algolia API clients implement this retry strategy. ## Authentication To authenticate your API requests, add
-  * these headers: - `x-algolia-application-id`. Your Algolia application ID. - `x-algolia-api-key`. An API key with the
-  * necessary permissions to make the request. The required access control list (ACL) to make a request is listed in
-  * each endpoint's reference. You can find your application ID and API key in the [Algolia
+  * DNS provider than the primary URLs. Randomize this list to ensure an even load across the three servers. All Algolia
+  * API clients implement this retry strategy. ## Authentication Add these headers to authenticate requests: -
+  * `x-algolia-application-id`. Your Algolia application ID. - `x-algolia-api-key`. An API key with the necessary
+  * permissions to make the request. The required access control list (ACL) to make a request is listed in each
+  * endpoint's reference. You can find your application ID and API key in the [Algolia
   * dashboard](https://dashboard.algolia.com/account/api-keys). ## Request format Request bodies must be JSON objects.
   * ## Response status and errors The Recommend API returns JSON responses. Since JSON doesn't guarantee any specific
-  * ordering, don't rely on the order of attributes in the API response. Successful responses return a `2xx` status.
-  * Client errors return a `4xx` status. Server errors are indicated by a `5xx` status. Error responses have a `message`
-  * property with more information. ## Version The current version of the Recommend API is version 1, as indicated by
-  * the `/1/` in each endpoint's URL.
+  * ordering, don't rely on the order of attributes in the API response. Successful responses return `2xx` statuses.
+  * Client errors return `4xx` statuses. Server errors return `5xx` statuses. Error responses have a `message` property
+  * with more information. ## Version The current version of the Recommend API is version 1, indicated by the `/1/` in
+  * each endpoint's URL.
   *
   * The version of the OpenAPI document: 1.0.0
   *
@@ -31,16 +31,16 @@ package algoliasearch.recommend
 import org.json4s._
 
 /** Words that should be considered optional when found in the query. By default, records must match all words in the
-  * search query to be included in the search results. Adding optional words can help to increase the number of search
-  * results by running an additional search query that doesn't include the optional words. For example, if the search
-  * query is \"action video\" and \"video\" is an optional word, the search engine runs two queries. One for \"action
-  * video\" and one for \"action\". Records that match all words are ranked higher. For a search query with 4 or more
-  * words **and** all its words are optional, the number of matched words required for a record to be included in the
-  * search results increases for every 1,000 records: - If `optionalWords` has less than 10 words, the required number
-  * of matched words increases by 1: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched
-  * words. - If `optionalWords` has 10 or more words, the number of required matched words increases by the number of
-  * optional words divided by 5 (rounded down). For example, with 18 optional words: results 1 to 1,000 require 1
-  * matched word, results 1,001 to 2000 need 4 matched words. For more information, see [Optional
+  * search query to be included in the search results. Adding optional words can increase the number of search results
+  * by running an additional search query that doesn't include the optional words. For example, if the search query is
+  * \"action video\" and \"video\" is optional, the search engine runs two queries: one for \"action video\" and one for
+  * \"action\". Records that match all words are ranked higher. For a search query with 4 or more words **and** all its
+  * words are optional, the number of matched words required for a record to be included in the search results increases
+  * for every 1,000 records: - If `optionalWords` has fewer than 10 words, the required number of matched words
+  * increases by 1: results 1 to 1,000 require 1 matched word; results 1,001 to 2,000 need 2 matched words. - If
+  * `optionalWords` has 10 or more words, the required number of matched words increases by the number of optional words
+  * divided by 5 (rounded down). Example: with 18 optional words, results 1 to 1,000 require 1 matched word; results
+  * 1,001 to 2,000 need 4 matched words. For more information, see [Optional
   * words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
   */
 sealed trait OptionalWords

@@ -2,11 +2,11 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
-/// The V1 task object, please use methods and types that don't contain the V1 suffix.
+/// The V1 task object. Use methods and types that don't contain the V1 suffix.
 @available(*, deprecated, message: "This schema is deprecated.")
 public struct TaskV1: Codable, JSONEncodable {
     /// Universally unique identifier (UUID) of a task.
@@ -22,13 +22,13 @@ public struct TaskV1: Codable, JSONEncodable {
     /// Maximum accepted percentage of failures for a task run to finish successfully.
     public var failureThreshold: Int?
     public var action: ActionType?
-    /// Date of the last cursor in RFC 3339 format.
+    /// Date and time when the last cursor was created, in RFC 3339 format.
     public var cursor: String?
     public var notifications: Notifications?
     public var policies: Policies?
-    /// Date of creation in RFC 3339 format.
+    /// Date and time when the resource was created, in RFC 3339 format.
     public var createdAt: String
-    /// Date of last update in RFC 3339 format.
+    /// Date and time when the resource was last updated, in RFC 3339 format.
     public var updatedAt: String
 
     public init(
@@ -97,23 +97,7 @@ public struct TaskV1: Codable, JSONEncodable {
     }
 }
 
-extension TaskV1: Equatable {
-    public static func ==(lhs: TaskV1, rhs: TaskV1) -> Bool {
-        lhs.taskID == rhs.taskID &&
-            lhs.sourceID == rhs.sourceID &&
-            lhs.destinationID == rhs.destinationID &&
-            lhs.trigger == rhs.trigger &&
-            lhs.input == rhs.input &&
-            lhs.enabled == rhs.enabled &&
-            lhs.failureThreshold == rhs.failureThreshold &&
-            lhs.action == rhs.action &&
-            lhs.cursor == rhs.cursor &&
-            lhs.notifications == rhs.notifications &&
-            lhs.policies == rhs.policies &&
-            lhs.createdAt == rhs.createdAt &&
-            lhs.updatedAt == rhs.updatedAt
-    }
-}
+extension TaskV1: Equatable {}
 
 extension TaskV1: Hashable {
     public func hash(into hasher: inout Hasher) {

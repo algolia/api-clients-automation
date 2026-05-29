@@ -79,8 +79,13 @@ SearchResponse _$SearchResponseFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>)
                   .map((e) => Hit.fromJson(e as Map<String, dynamic>))
                   .toList()),
-          query: $checkedConvert('query', (v) => v as String),
-          params: $checkedConvert('params', (v) => v as String),
+          query: $checkedConvert('query', (v) => v as String?),
+          params: $checkedConvert('params', (v) => v as String?),
+          extensions: $checkedConvert(
+              'extensions',
+              (v) => v == null
+                  ? null
+                  : ResponseExtensions.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -131,7 +136,8 @@ Map<String, dynamic> _$SearchResponseToJson(SearchResponse instance) {
   writeNotNull('nbPages', instance.nbPages);
   writeNotNull('hitsPerPage', instance.hitsPerPage);
   val['hits'] = instance.hits.map((e) => e.toJson()).toList();
-  val['query'] = instance.query;
-  val['params'] = instance.params;
+  writeNotNull('query', instance.query);
+  writeNotNull('params', instance.params);
+  writeNotNull('extensions', instance.extensions?.toJson());
   return val;
 }

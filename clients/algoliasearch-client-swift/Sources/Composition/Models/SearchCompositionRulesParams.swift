@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Composition Rules search parameters.
@@ -69,16 +69,7 @@ public struct SearchCompositionRulesParams: Codable, JSONEncodable {
     }
 }
 
-extension SearchCompositionRulesParams: Equatable {
-    public static func ==(lhs: SearchCompositionRulesParams, rhs: SearchCompositionRulesParams) -> Bool {
-        lhs.query == rhs.query &&
-            lhs.anchoring == rhs.anchoring &&
-            lhs.context == rhs.context &&
-            lhs.page == rhs.page &&
-            lhs.hitsPerPage == rhs.hitsPerPage &&
-            lhs.enabled == rhs.enabled
-    }
-}
+extension SearchCompositionRulesParams: Equatable {}
 
 extension SearchCompositionRulesParams: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Configuration for the smallest difference between test variants you want to detect.
@@ -32,12 +32,7 @@ public struct AbtestingMinimumDetectableEffect: Codable, JSONEncodable {
     }
 }
 
-extension AbtestingMinimumDetectableEffect: Equatable {
-    public static func ==(lhs: AbtestingMinimumDetectableEffect, rhs: AbtestingMinimumDetectableEffect) -> Bool {
-        lhs.size == rhs.size &&
-            lhs.metric == rhs.metric
-    }
-}
+extension AbtestingMinimumDetectableEffect: Equatable {}
 
 extension AbtestingMinimumDetectableEffect: Hashable {
     public func hash(into hasher: inout Hasher) {

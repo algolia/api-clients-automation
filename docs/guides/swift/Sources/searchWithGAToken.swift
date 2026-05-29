@@ -3,8 +3,8 @@ import Foundation
     import FoundationNetworking
 #endif
 
-import Core
-import Search
+import AlgoliaCore
+import AlgoliaSearch
 
 let getGoogleAnalyticsUserIdFromBrowserCookie = { (_: String) in
     "" // Implement your logic here

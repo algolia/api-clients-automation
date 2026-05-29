@@ -17,7 +17,7 @@ type Requester = keyof typeof requesters;
 
 export function getBaseConfig(cwd: string): Options {
   return {
-    clean: true,
+    clean: false,
     sourcemap: true,
     splitting: false,
     tsconfig: path.resolve(cwd, 'tsconfig.json'),
@@ -44,11 +44,16 @@ export function getDependencies(pkg: PKG, requester: Requester): string[] {
   }
 }
 
-export function getBaseNodeOptions(pkg: PKG, cwd: string, requester: Requester = 'http'): Options {
+export function getBaseNodeOptions(
+  pkg: PKG,
+  cwd: string,
+  requester: Requester = 'http',
+  target: string = 'node14',
+): Options {
   return {
     ...getBaseConfig(cwd),
     platform: 'node',
-    target: 'node14',
+    target,
     external: [...getDependencies(pkg, requester), 'node:crypto'],
   };
 }

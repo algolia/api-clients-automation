@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Dictionary language.
@@ -34,13 +34,7 @@ public struct SearchLanguages: Codable, JSONEncodable {
     }
 }
 
-extension SearchLanguages: Equatable {
-    public static func ==(lhs: SearchLanguages, rhs: SearchLanguages) -> Bool {
-        lhs.plurals == rhs.plurals &&
-            lhs.stopwords == rhs.stopwords &&
-            lhs.compounds == rhs.compounds
-    }
-}
+extension SearchLanguages: Equatable {}
 
 extension SearchLanguages: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Facet attribute. Only recommendations with the same value (or only recommendations with a different value) as the
@@ -34,12 +34,7 @@ public struct AutoFacetFilter: Codable, JSONEncodable {
     }
 }
 
-extension AutoFacetFilter: Equatable {
-    public static func ==(lhs: AutoFacetFilter, rhs: AutoFacetFilter) -> Bool {
-        lhs.facet == rhs.facet &&
-            lhs.negative == rhs.negative
-    }
-}
+extension AutoFacetFilter: Equatable {}
 
 extension AutoFacetFilter: Hashable {
     public func hash(into hasher: inout Hasher) {

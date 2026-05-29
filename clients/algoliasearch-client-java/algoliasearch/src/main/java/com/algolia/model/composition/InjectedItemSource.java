@@ -21,22 +21,37 @@ public interface InjectedItemSource {
     @Override
     public InjectedItemSource deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-      // deserialize SearchSource
-      if (tree.isObject()) {
+      // deserialize InjectedItemSearchSource
+      if (tree.isObject() && tree.has("search")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(SearchSource.class);
+          return parser.readValueAs(InjectedItemSearchSource.class);
         } catch (Exception e) {
           // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf SearchSource (error: " + e.getMessage() + ") (type: SearchSource)");
+          LOGGER.finest(
+            "Failed to deserialize oneOf InjectedItemSearchSource (error: " + e.getMessage() + ") (type: InjectedItemSearchSource)"
+          );
         }
       }
-      // deserialize ExternalSource
-      if (tree.isObject()) {
+      // deserialize InjectedItemExternalSource
+      if (tree.isObject() && tree.has("external")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(ExternalSource.class);
+          return parser.readValueAs(InjectedItemExternalSource.class);
         } catch (Exception e) {
           // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf ExternalSource (error: " + e.getMessage() + ") (type: ExternalSource)");
+          LOGGER.finest(
+            "Failed to deserialize oneOf InjectedItemExternalSource (error: " + e.getMessage() + ") (type: InjectedItemExternalSource)"
+          );
+        }
+      }
+      // deserialize InjectedItemRecommendSource
+      if (tree.isObject() && tree.has("recommend")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(InjectedItemRecommendSource.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf InjectedItemRecommendSource (error: " + e.getMessage() + ") (type: InjectedItemRecommendSource)"
+          );
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));

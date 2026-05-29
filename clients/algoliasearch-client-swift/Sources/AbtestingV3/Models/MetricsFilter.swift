@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Boolean filter applied to the A/B test population. Each filter targets a boolean metric and decides whether to
@@ -43,14 +43,7 @@ public struct MetricsFilter: Codable, JSONEncodable {
     }
 }
 
-extension MetricsFilter: Equatable {
-    public static func ==(lhs: MetricsFilter, rhs: MetricsFilter) -> Bool {
-        lhs.domain == rhs.domain &&
-            lhs.name == rhs.name &&
-            lhs.trackEffects == rhs.trackEffects &&
-            lhs.includes == rhs.includes
-    }
-}
+extension MetricsFilter: Equatable {}
 
 extension MetricsFilter: Hashable {
     public func hash(into hasher: inout Hasher) {

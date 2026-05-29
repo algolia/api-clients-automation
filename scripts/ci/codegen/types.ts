@@ -40,6 +40,14 @@ export type SnippetsToPush = {
   output: string;
 };
 
+export type ChangelogsToPush = {
+  // the type of changes to push to the repository
+  type: 'changelogs';
+
+  // the name of the directory to push the files to
+  output: string;
+};
+
 type RepositoryTask = {
   // the name of the pull request branch
   prBranch: string;
@@ -47,7 +55,7 @@ type RepositoryTask = {
   // the commit message of the pull request (will also be used as the title)
   commitMessage: string;
 
-  files: GuidesToPush | SpecsToPush | SnippetsToPush;
+  files: GuidesToPush | SpecsToPush | SnippetsToPush | ChangelogsToPush;
 };
 
 export type RepositoryConfiguration = {
@@ -59,7 +67,7 @@ export type RepositoryConfiguration = {
 };
 
 export const pushToRepositoryConfiguration: {
-  [k in 'AlgoliaWeb' | 'mcp-node' | 'docs-new' | 'n8n-nodes-algolia' | 'api-clients-mcp']: RepositoryConfiguration;
+  [k in 'AlgoliaWeb' | 'go' | 'mcp-node' | 'docs-new' | 'n8n-nodes-algolia' | 'api-clients-mcp']: RepositoryConfiguration;
 } = {
   AlgoliaWeb: {
     baseBranch: 'develop',
@@ -112,6 +120,14 @@ export const pushToRepositoryConfiguration: {
           output: 'specs/guides.json',
         },
       },
+      {
+        prBranch: 'feat/automated-update-for-changelogs',
+        commitMessage: 'feat: update SDK changelogs',
+        files: {
+          type: 'changelogs',
+          output: 'snippets/sdk/changelogs',
+        },
+      },
     ],
   },
   'mcp-node': {
@@ -154,6 +170,21 @@ export const pushToRepositoryConfiguration: {
         files: {
           type: 'snippets',
           output: 'snippets',
+        },
+      },
+    ],
+  },
+  go: {
+    baseBranch: 'master',
+    tasks: [
+      {
+        prBranch: 'feat/automated-update-for-insights-spec',
+        commitMessage: 'chore(insights-api): update OpenAPI spec',
+        files: {
+          type: 'specs',
+          ext: 'yml',
+          output: 'internal/insights/api/spec',
+          clients: ['insights'],
         },
       },
     ],

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Use this event to track when users click items unrelated to a previous Algolia request. For example, if you don't
@@ -27,8 +27,8 @@ public struct ClickedObjectIDs: Codable, JSONEncodable {
     /// user tokens. For more information, see [User
     /// token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
     public var authenticatedUserToken: String?
-    /// Timestamp of the event, measured in milliseconds since the Unix epoch. By default, the Insights API uses the
-    /// time it receives an event as its timestamp.
+    /// Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30 days. If not
+    /// provided, we use the time at which the request was received.
     public var timestamp: Int64?
 
     public init(
@@ -73,17 +73,7 @@ public struct ClickedObjectIDs: Codable, JSONEncodable {
     }
 }
 
-extension ClickedObjectIDs: Equatable {
-    public static func ==(lhs: ClickedObjectIDs, rhs: ClickedObjectIDs) -> Bool {
-        lhs.eventName == rhs.eventName &&
-            lhs.eventType == rhs.eventType &&
-            lhs.index == rhs.index &&
-            lhs.objectIDs == rhs.objectIDs &&
-            lhs.userToken == rhs.userToken &&
-            lhs.authenticatedUserToken == rhs.authenticatedUserToken &&
-            lhs.timestamp == rhs.timestamp
-    }
-}
+extension ClickedObjectIDs: Equatable {}
 
 extension ClickedObjectIDs: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Trigger information for manually-triggered tasks.
@@ -26,11 +26,7 @@ public struct OnDemandTriggerInput: Codable, JSONEncodable {
     }
 }
 
-extension OnDemandTriggerInput: Equatable {
-    public static func ==(lhs: OnDemandTriggerInput, rhs: OnDemandTriggerInput) -> Bool {
-        lhs.type == rhs.type
-    }
-}
+extension OnDemandTriggerInput: Equatable {}
 
 extension OnDemandTriggerInput: Hashable {
     public func hash(into hasher: inout Hasher) {

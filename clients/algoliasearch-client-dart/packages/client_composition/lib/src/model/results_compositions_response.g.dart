@@ -13,6 +13,7 @@ ResultsCompositionsResponse _$ResultsCompositionsResponseFromJson(
       json,
       ($checkedConvert) {
         final val = ResultsCompositionsResponse(
+          feedID: $checkedConvert('feedID', (v) => v as String?),
           compositions: $checkedConvert(
               'compositions',
               (v) => (v as Map<String, dynamic>).map(
@@ -27,8 +28,17 @@ ResultsCompositionsResponse _$ResultsCompositionsResponseFromJson(
     );
 
 Map<String, dynamic> _$ResultsCompositionsResponseToJson(
-        ResultsCompositionsResponse instance) =>
-    <String, dynamic>{
-      'compositions':
-          instance.compositions.map((k, e) => MapEntry(k, e.toJson())),
-    };
+    ResultsCompositionsResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('feedID', instance.feedID);
+  val['compositions'] =
+      instance.compositions.map((k, e) => MapEntry(k, e.toJson()));
+  return val;
+}

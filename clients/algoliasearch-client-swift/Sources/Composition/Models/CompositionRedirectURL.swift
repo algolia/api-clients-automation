@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// The redirect rule container.
@@ -26,11 +26,7 @@ public struct CompositionRedirectURL: Codable, JSONEncodable {
     }
 }
 
-extension CompositionRedirectURL: Equatable {
-    public static func ==(lhs: CompositionRedirectURL, rhs: CompositionRedirectURL) -> Bool {
-        lhs.url == rhs.url
-    }
-}
+extension CompositionRedirectURL: Equatable {}
 
 extension CompositionRedirectURL: Hashable {
     public func hash(into hasher: inout Hasher) {

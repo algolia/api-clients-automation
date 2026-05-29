@@ -17,10 +17,12 @@ use {{invokerPackage}}\RetryStrategy\ApiWrapper;
 use {{invokerPackage}}\RetryStrategy\ApiWrapperInterface;
 use {{invokerPackage}}\RetryStrategy\AlgoliaResponse;
 use {{invokerPackage}}\RetryStrategy\ClusterHosts;
+use {{invokerPackage}}\Support\ChunkedHelperOptions;
 use {{invokerPackage}}\Support\Helpers;
 
 {{#isSearchClient}}
 use {{invokerPackage}}\Configuration\IngestionConfig;
+use {{invokerPackage}}\Configuration\TransformationOptions;
 {{/isSearchClient}}
 
 use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
@@ -39,10 +41,12 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
      */
     protected $api;
 
+    {{#isSearchClient}}
     /**
      * @var IngestionClient
      */
     protected $ingestionTransporter;
+    {{/isSearchClient}}
 
     /**
      * @var {{configClassname}}
@@ -106,20 +110,14 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         $client = new static($apiWrapper, $config);
 
         {{#isSearchClient}}
-        if (null !== $config->getTransformationRegion()) {
-            $ingestionConfig = IngestionConfig::create($config->getAppId(), $config->getAlgoliaApiKey(), $config->getTransformationRegion());
-
-            if ($hosts = $config->getHosts()) {
-                if ($config->getHasFullHosts()) {
-                    $ingestionConfig = $ingestionConfig->setFullHosts($hosts);
-                } else {
-                    $ingestionConfig = $ingestionConfig->setHosts($hosts);
-                }
-            }
-
-            $client->ingestionTransporter = IngestionClient::createWithConfig($ingestionConfig);
+        if (null !== $config->getTransformationOptions()) {
+            $client->ingestionTransporter = self::buildIngestionTransporter($config, $config->getTransformationOptions());
         }
         {{/isSearchClient}}
+
+        $logger = Algolia::getLogger();
+        $logger->info('Algolia API client: Algolia {{classname}} initialized (appId: '.$config->getAppId().')');
+        Algolia::logDebugWarningOnce();
 
         return $client;
     }
@@ -194,6 +192,67 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
     public function setClientApiKey($apiKey) {
       $this->config->setClientApiKey($apiKey);
     }
+
+    {{#isSearchClient}}
+    /**
+     * Sets (or replaces) the ingestion transporter used by the `*WithTransformation` helpers.
+     * The transporter is built from the Ingestion API defaults (25s timeouts, region-derived
+     * hosts); only the fields set on `$transformationOptions` override those defaults — the
+     * parent `SearchConfig` is never forwarded.
+     *
+     * @see https://www.algolia.com/doc/libraries/sdk/methods/ingestion/
+     *
+     * @return void
+     */
+    public function setTransformationOptions(TransformationOptions $transformationOptions)
+    {
+        $this->config->setTransformationOptions($transformationOptions);
+        $this->ingestionTransporter = self::buildIngestionTransporter($this->config, $transformationOptions);
+    }
+
+    /**
+     * Builds an ingestion transporter from a `TransformationOptions`, using the Ingestion API
+     * defaults and overriding only the fields explicitly set on `$transformationOptions`.
+     *
+     * @return IngestionClient
+     */
+    private static function buildIngestionTransporter({{configClassname}} $config, TransformationOptions $transformationOptions)
+    {
+        $ingestionConfig = IngestionConfig::create(
+            $config->getAppId(),
+            $config->getAlgoliaApiKey(),
+            $transformationOptions->getRegion()
+        );
+
+        if (null !== ($hosts = $transformationOptions->getHosts())) {
+            if ($transformationOptions->getHasFullHosts()) {
+                $ingestionConfig->setFullHosts($hosts);
+            } else {
+                $ingestionConfig->setHosts($hosts);
+            }
+        }
+        if (null !== ($readTimeout = $transformationOptions->getReadTimeout())) {
+            $ingestionConfig->setReadTimeout($readTimeout);
+        }
+        if (null !== ($writeTimeout = $transformationOptions->getWriteTimeout())) {
+            $ingestionConfig->setWriteTimeout($writeTimeout);
+        }
+        if (null !== ($connectTimeout = $transformationOptions->getConnectTimeout())) {
+            $ingestionConfig->setConnectTimeout($connectTimeout);
+        }
+        if (null !== ($waitTaskTimeBeforeRetry = $transformationOptions->getWaitTaskTimeBeforeRetry())) {
+            $ingestionConfig->setWaitTaskTimeBeforeRetry($waitTaskTimeBeforeRetry);
+        }
+        if (null !== ($defaultHeaders = $transformationOptions->getDefaultHeaders())) {
+            $ingestionConfig->setDefaultHeaders($defaultHeaders);
+        }
+        if (null !== ($compressionType = $transformationOptions->getCompressionType())) {
+            $ingestionConfig->setCompressionType($compressionType);
+        }
+
+        return IngestionClient::createWithConfig($ingestionConfig);
+    }
+    {{/isSearchClient}}
 
 {{#operation}}
     /**
@@ -271,6 +330,14 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
                 'Parameter `{{paramName}}` is required when calling `{{operationId}}`.'
                 );
                 }
+                {{#isString}}
+                // verify the required parameter '{{paramName}}' is not empty
+                if (isset(${{paramName}}) && ${{paramName}} === '') {
+                throw new \InvalidArgumentException(
+                'Parameter `{{paramName}}` is required when calling `{{operationId}}`.'
+                );
+                }
+                {{/isString}}
             {{/required}}
         {{/allParams}}
 
@@ -355,6 +422,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
     * @param array  $batchSize          The size of the chunk of `objects`. The number of `push` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
     * @param array  $referenceIndexName This is required when targeting an index that does not have a push connector setup (e.g. a tmp index), but you wish to attach another index's transformation to it (e.g. the source index name).
     * @param array  $requestOptions Request options
+    * @param ChunkedHelperOptions|null $chunkedOptions Optional configuration shared across chunked helpers (e.g. `maxRetries`).
     */
     public function chunkedPush(
         $indexName,
@@ -363,8 +431,10 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         $waitForTasks = true,
         $batchSize = 1000,
         $referenceIndexName = null,
-        $requestOptions = []
+        $requestOptions = [],
+        ?ChunkedHelperOptions $chunkedOptions = null
     ) {
+        $maxRetries = $chunkedOptions?->maxRetries ?? 100;
         $responses = [];
         $records = [];
         $count = 0;
@@ -374,6 +444,11 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             $waitBatchSize = $batchSize;
         }
 
+        $logger = Algolia::getLogger();
+        $totalObjects = count($objects);
+        $startTime = microtime(true);
+        $logger->info('Algolia API client: Batch operation started: '.$action.' on '.$indexName);
+
         foreach ($objects as $object) {
             $records[] = $object;
             $ok = false;
@@ -382,15 +457,14 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             if (sizeof($records) === $batchSize || $count === sizeof($objects)) {
                 $responses[] = $this->push($indexName, ['action' => $action, 'records' => $records], false, $referenceIndexName, $requestOptions);
                 $records = [];
+                $logger->info('Algolia API client: Batch progress: '.$count.'/'.$totalObjects.' objects processed');
             }
 
             if ($waitForTasks && !empty($responses) && (0 === sizeof($responses) % $waitBatchSize || $count === sizeof($objects))) {
-                $timeoutCalculation = 'Algolia\AlgoliaSearch\Support\Helpers::linearTimeout';
-
                 foreach (array_slice($responses, $offset, $waitBatchSize) as $response) {
                     $retry = 0;
 
-                    while ($retry < 50) {
+                    while ($retry < $maxRetries) {
                         try {
                             $this->getEvent($response['runID'], $response['eventID']);
 
@@ -402,18 +476,19 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
                         }
 
                         ++$retry;
-                        usleep(
-                            call_user_func_array($timeoutCalculation, [$this->config->getWaitTaskTimeBeforeRetry(), $retry])
-                        );
+                        usleep(min($retry * 1500, 5000) * 1000);
                     }
 
                     if (false === $ok) {
-                        throw new ExceededRetriesException('Maximum number of retries (50) exceeded.');
+                        throw new ExceededRetriesException('Stopped waiting for the task after '.$maxRetries.' retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher $maxRetries.');
                     }
                 }
                 $offset = $offset + $waitBatchSize;
             }
         }
+
+        $durationMs = round((microtime(true) - $startTime) * 1000);
+        $logger->info('Algolia API client: Batch operation completed: '.$totalObjects.' objects in '.$durationMs.'ms');
 
         return $responses;
     }
@@ -572,17 +647,24 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
     }
 
     /**
-    * Helper: Similar to the `replaceAllObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must have been passed to the client instantiation method.
+    * Helper: Similar to the `replaceAllObjects` method but requires a Push connector
+    * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+    * to be created first, in order to transform records before indexing them to Algolia.
+    * `transformationOptions` must be set on the `SearchConfig` before creating the client,
+    * or via `SearchClient::setTransformationOptions()` before calling this method.
+    *
+    * @see https://www.algolia.com/doc/libraries/sdk/methods/ingestion/
     *
     * @param string $indexName      The `indexName` to replace `objects` in.
     * @param array  $objects        The array of `objects` to store in the given Algolia `indexName`.
     * @param array  $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
     * @param array  $requestOptions Request options
+    * @param ChunkedHelperOptions|null $chunkedOptions Optional configuration shared across chunked helpers (e.g. `maxRetries`).
     */
-    public function replaceAllObjectsWithTransformation($indexName, $objects, $batchSize = 1000, $scopes = ['settings', 'rules', 'synonyms'], $requestOptions = [])
+    public function replaceAllObjectsWithTransformation($indexName, $objects, $batchSize = 1000, $scopes = ['settings', 'rules', 'synonyms'], $requestOptions = [], ?ChunkedHelperOptions $chunkedOptions = null)
     {
         if (null == $this->ingestionTransporter) {
-            throw new \InvalidArgumentException('`setTransformationRegion` must have been called before calling this method.');
+            throw new \InvalidArgumentException('`transformationOptions` must be set on `SearchConfig` before creating the client, or via `SearchClient::setTransformationOptions(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/');
         }
 
         $tmpIndexName = $indexName.'_tmp_'.rand(10000000, 99999999);
@@ -598,9 +680,9 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             $requestOptions
           );
 
-          $watchResponses = $this->ingestionTransporter->chunkedPush($tmpIndexName, $objects, 'addObject', true, $batchSize, $indexName, $requestOptions);
+          $watchResponses = $this->ingestionTransporter->chunkedPush($tmpIndexName, $objects, 'addObject', true, $batchSize, $indexName, $requestOptions, $chunkedOptions);
 
-          $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID']);
+          $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID'], [], $chunkedOptions?->maxRetries);
 
           $copyOperationResponse = $this->operationIndex(
             $indexName,
@@ -612,7 +694,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             $requestOptions
           );
 
-          $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID']);
+          $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID'], [], $chunkedOptions?->maxRetries);
 
           $moveOperationResponse = $this->operationIndex(
             $tmpIndexName,
@@ -623,7 +705,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             $requestOptions
           );
 
-          $this->waitForTask($tmpIndexName, $moveOperationResponse['taskID']);
+          $this->waitForTask($tmpIndexName, $moveOperationResponse['taskID'], [], $chunkedOptions?->maxRetries);
 
           return [
             'copyOperationResponse' => $copyOperationResponse,
@@ -645,8 +727,9 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
     * @param array  $objects        The array of `objects` to store in the given Algolia `indexName`.
     * @param array  $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
     * @param array  $requestOptions Request options
+    * @param ChunkedHelperOptions|null $chunkedOptions Optional configuration shared across chunked helpers (e.g. `maxRetries`).
     */
-    public function replaceAllObjects($indexName, $objects, $batchSize = 1000, $scopes = ['settings', 'rules', 'synonyms'], $requestOptions = [])
+    public function replaceAllObjects($indexName, $objects, $batchSize = 1000, $scopes = ['settings', 'rules', 'synonyms'], $requestOptions = [], ?ChunkedHelperOptions $chunkedOptions = null)
     {
         $tmpIndexName = $indexName.'_tmp_'.rand(10000000, 99999999);
 
@@ -661,9 +744,9 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             $requestOptions
           );
 
-          $batchResponses = $this->chunkedBatch($tmpIndexName, $objects, 'addObject', true, $batchSize, $requestOptions);
+          $batchResponses = $this->chunkedBatch($tmpIndexName, $objects, 'addObject', true, $batchSize, $requestOptions, $chunkedOptions);
 
-          $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID']);
+          $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID'], [], $chunkedOptions?->maxRetries);
 
           $copyOperationResponse = $this->operationIndex(
             $indexName,
@@ -675,7 +758,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             $requestOptions
           );
 
-          $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID']);
+          $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID'], [], $chunkedOptions?->maxRetries);
 
           $moveOperationResponse = $this->operationIndex(
             $tmpIndexName,
@@ -686,7 +769,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             $requestOptions
           );
 
-          $this->waitForTask($tmpIndexName, $moveOperationResponse['taskID']);
+          $this->waitForTask($tmpIndexName, $moveOperationResponse['taskID'], [], $chunkedOptions?->maxRetries);
 
           return [
             'copyOperationResponse' => $copyOperationResponse,
@@ -708,31 +791,36 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
     * @param bool   $waitForTasks   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
     * @param int    $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
     * @param array  $requestOptions Request options
+    * @param ChunkedHelperOptions|null $chunkedOptions Optional configuration shared across chunked helpers (e.g. `maxRetries`).
     */
-    public function saveObjects($indexName, $objects, $waitForTasks = false, $batchSize = 1000, $requestOptions = [])
+    public function saveObjects($indexName, $objects, $waitForTasks = false, $batchSize = 1000, $requestOptions = [], ?ChunkedHelperOptions $chunkedOptions = null)
     {
-      return $this->chunkedBatch($indexName, $objects, 'addObject', $waitForTasks, $batchSize, $requestOptions);
+      return $this->chunkedBatch($indexName, $objects, 'addObject', $waitForTasks, $batchSize, $requestOptions, $chunkedOptions);
     }
 
     /**
      * Helper: Similar to the `saveObjects` method but requires a Push connector
      * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
-     * to be created first, in order to transform records before indexing them to Algolia. The
-     * `region` must have been passed to the client instantiation method.
+     * to be created first, in order to transform records before indexing them to Algolia.
+     * `transformationOptions` must be set on the `SearchConfig` before creating the client,
+     * or via `SearchClient::setTransformationOptions()` before calling this method.
+     *
+     * @see https://www.algolia.com/doc/libraries/sdk/methods/ingestion/
      *
      * @param string $indexName      the `indexName` to replace `objects` in
      * @param array  $objects        the array of `objects` to store in the given Algolia `indexName`
      * @param bool   $waitForTasks   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
      * @param int    $batchSize      The size of the chunk of `objects`. The number of `push` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param array  $requestOptions Request options
+     * @param ChunkedHelperOptions|null $chunkedOptions Optional configuration shared across chunked helpers (e.g. `maxRetries`).
      */
-    public function saveObjectsWithTransformation($indexName, $objects, $waitForTasks = false, $batchSize = 1000, $requestOptions = [])
+    public function saveObjectsWithTransformation($indexName, $objects, $waitForTasks = false, $batchSize = 1000, $requestOptions = [], ?ChunkedHelperOptions $chunkedOptions = null)
     {
       if (null == $this->ingestionTransporter) {
-          throw new \InvalidArgumentException('`setTransformationRegion` must have been called before calling this method.');
+          throw new \InvalidArgumentException('`transformationOptions` must be set on `SearchConfig` before creating the client, or via `SearchClient::setTransformationOptions(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/');
       }
 
-      return $this->ingestionTransporter->chunkedPush($indexName, $objects, 'addObject', $waitForTasks, $batchSize, $requestOptions);
+      return $this->ingestionTransporter->chunkedPush($indexName, $objects, 'addObject', $waitForTasks, $batchSize, null, $requestOptions, $chunkedOptions);
     }
 
     /**
@@ -743,8 +831,9 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
     * @param bool   $waitForTasks   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
     * @param int    $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
     * @param array  $requestOptions Request options
+    * @param ChunkedHelperOptions|null $chunkedOptions Optional configuration shared across chunked helpers (e.g. `maxRetries`).
     */
-    public function deleteObjects($indexName, $objectIDs, $waitForTasks = false, $batchSize = 1000, $requestOptions = [])
+    public function deleteObjects($indexName, $objectIDs, $waitForTasks = false, $batchSize = 1000, $requestOptions = [], ?ChunkedHelperOptions $chunkedOptions = null)
     {
         $objects = [];
 
@@ -752,7 +841,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             $objects[] = ['objectID' => $id];
         }
 
-        return $this->chunkedBatch($indexName, $objects, 'deleteObject', $waitForTasks, $batchSize, $requestOptions);
+        return $this->chunkedBatch($indexName, $objects, 'deleteObject', $waitForTasks, $batchSize, $requestOptions, $chunkedOptions);
     }
 
     /**
@@ -764,16 +853,20 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
     * @param bool   $waitForTasks      Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
     * @param int    $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
     * @param array  $requestOptions    Request options
+    * @param ChunkedHelperOptions|null $chunkedOptions Optional configuration shared across chunked helpers (e.g. `maxRetries`).
     */
-    public function partialUpdateObjects($indexName, $objects, $createIfNotExists, $waitForTasks = false, $batchSize = 1000, $requestOptions = []) {
-      return $this->chunkedBatch($indexName, $objects, ($createIfNotExists == TRUE) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, $batchSize, $requestOptions);
+    public function partialUpdateObjects($indexName, $objects, $createIfNotExists, $waitForTasks = false, $batchSize = 1000, $requestOptions = [], ?ChunkedHelperOptions $chunkedOptions = null) {
+      return $this->chunkedBatch($indexName, $objects, ($createIfNotExists == TRUE) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, $batchSize, $requestOptions, $chunkedOptions);
     }
 
     /**
      * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector
      * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
-     * to be created first, in order to transform records before indexing them to Algolia. The
-     * `region` must have been passed to the client instantiation method.
+     * to be created first, in order to transform records before indexing them to Algolia.
+     * `transformationOptions` must be set on the `SearchConfig` before creating the client,
+     * or via `SearchClient::setTransformationOptions()` before calling this method.
+     *
+     * @see https://www.algolia.com/doc/libraries/sdk/methods/ingestion/
      *
      * @param string $indexName         the `indexName` to replace `objects` in
      * @param array  $objects           the array of `objects` to store in the given Algolia `indexName`
@@ -781,14 +874,15 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
      * @param bool   $waitForTasks      Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
      * @param int    $batchSize         The size of the chunk of `objects`. The number of `push` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param array  $requestOptions    Request options
+     * @param ChunkedHelperOptions|null $chunkedOptions Optional configuration shared across chunked helpers (e.g. `maxRetries`).
      */
-    public function partialUpdateObjectsWithTransformation($indexName, $objects, $createIfNotExists, $waitForTasks = false, $batchSize = 1000, $requestOptions = [])
+    public function partialUpdateObjectsWithTransformation($indexName, $objects, $createIfNotExists, $waitForTasks = false, $batchSize = 1000, $requestOptions = [], ?ChunkedHelperOptions $chunkedOptions = null)
     {
       if (null == $this->ingestionTransporter) {
-          throw new \InvalidArgumentException('`setTransformationRegion` must have been called before calling this method.');
+          throw new \InvalidArgumentException('`transformationOptions` must be set on `SearchConfig` before creating the client, or via `SearchClient::setTransformationOptions(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/');
       }
 
-      return $this->ingestionTransporter->chunkedPush($indexName, $objects, ($createIfNotExists == TRUE) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, $batchSize, $requestOptions);
+      return $this->ingestionTransporter->chunkedPush($indexName, $objects, ($createIfNotExists == TRUE) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, $batchSize, null, $requestOptions, $chunkedOptions);
     }
 
     /**
@@ -800,6 +894,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
     * @param bool   $waitForTasks   whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
     * @param int    $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
     * @param array  $requestOptions Request options
+    * @param ChunkedHelperOptions|null $chunkedOptions Optional configuration shared across chunked helpers (e.g. `maxRetries`).
     */
     public function chunkedBatch(
         $indexName,
@@ -807,11 +902,17 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         $action = 'addObject',
         $waitForTasks = true,
         $batchSize = 1000,
-        $requestOptions = []
+        $requestOptions = [],
+        ?ChunkedHelperOptions $chunkedOptions = null
     ) {
         $responses = [];
         $requests = [];
         $count = 0;
+
+        $logger = Algolia::getLogger();
+        $totalObjects = count($objects);
+        $startTime = microtime(true);
+        $logger->info('Algolia API client: Batch operation started: '.$action.' on '.$indexName);
 
         foreach ($objects as $object) {
             $requests[] = [
@@ -819,24 +920,29 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
                 'body' => $object,
             ];
 
-            if (sizeof($requests) === $batchSize || $count === sizeof($objects) - 1) {
+            ++$count;
+
+            if (sizeof($requests) === $batchSize || $count === sizeof($objects)) {
                 $responses[] = $this->batch($indexName, ['requests' => $requests], $requestOptions);
                 $requests = [];
-            }
 
-            ++$count;
+                $logger->info('Algolia API client: Batch progress: '.min($count, $totalObjects).'/'.$totalObjects.' objects processed');
+            }
         }
 
         if (!empty($requests)) {
             $responses[] = $this->batch($indexName, ['requests' => $requests], $requestOptions);
+            $logger->info('Algolia API client: Batch progress: '.$totalObjects.'/'.$totalObjects.' objects processed');
         }
 
         if ($waitForTasks && !empty($responses)) {
             foreach ($responses as $response) {
-                $this->waitForTask($indexName, $response['taskID']);
+                $this->waitForTask($indexName, $response['taskID'], [], $chunkedOptions?->maxRetries);
             }
         }
 
+        $durationMs = round((microtime(true) - $startTime) * 1000);
+        $logger->info('Algolia API client: Batch operation completed: '.$totalObjects.' objects in '.$durationMs.'ms');
         return $responses;
     }
 

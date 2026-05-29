@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Credentials for authenticating with a Google service account, such as BigQuery.
@@ -32,12 +32,7 @@ public struct AuthGoogleServiceAccountPartial: Codable, JSONEncodable {
     }
 }
 
-extension AuthGoogleServiceAccountPartial: Equatable {
-    public static func ==(lhs: AuthGoogleServiceAccountPartial, rhs: AuthGoogleServiceAccountPartial) -> Bool {
-        lhs.clientEmail == rhs.clientEmail &&
-            lhs.privateKey == rhs.privateKey
-    }
-}
+extension AuthGoogleServiceAccountPartial: Equatable {}
 
 extension AuthGoogleServiceAccountPartial: Hashable {
     public func hash(into hasher: inout Hasher) {

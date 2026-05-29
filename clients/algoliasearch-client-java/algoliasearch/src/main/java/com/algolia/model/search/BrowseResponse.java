@@ -113,6 +113,9 @@ public class BrowseResponse<T> {
   @JsonProperty("params")
   private String params;
 
+  @JsonProperty("extensions")
+  private ResponseExtensions extensions;
+
   @JsonProperty("cursor")
   private String cursor;
 
@@ -530,7 +533,7 @@ public class BrowseResponse<T> {
   }
 
   /** Search query. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public String getQuery() {
     return query;
   }
@@ -541,9 +544,20 @@ public class BrowseResponse<T> {
   }
 
   /** URL-encoded string of all search parameters. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public String getParams() {
     return params;
+  }
+
+  public BrowseResponse<T> setExtensions(ResponseExtensions extensions) {
+    this.extensions = extensions;
+    return this;
+  }
+
+  /** Get extensions */
+  @javax.annotation.Nullable
+  public ResponseExtensions getExtensions() {
+    return extensions;
   }
 
   public BrowseResponse<T> setCursor(String cursor) {
@@ -604,6 +618,7 @@ public class BrowseResponse<T> {
       Objects.equals(this.hits, browseResponse.hits) &&
       Objects.equals(this.query, browseResponse.query) &&
       Objects.equals(this.params, browseResponse.params) &&
+      Objects.equals(this.extensions, browseResponse.extensions) &&
       Objects.equals(this.cursor, browseResponse.cursor)
     );
   }
@@ -644,6 +659,7 @@ public class BrowseResponse<T> {
       hits,
       query,
       params,
+      extensions,
       cursor
     );
   }
@@ -685,6 +701,7 @@ public class BrowseResponse<T> {
     sb.append("    hits: ").append(toIndentedString(hits)).append("\n");
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb.append("    params: ").append(toIndentedString(params)).append("\n");
+    sb.append("    extensions: ").append(toIndentedString(extensions)).append("\n");
     sb.append("    cursor: ").append(toIndentedString(cursor)).append("\n");
     sb.append("}");
     return sb.toString();

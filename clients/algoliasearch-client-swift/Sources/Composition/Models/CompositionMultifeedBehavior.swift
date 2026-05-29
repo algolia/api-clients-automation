@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// An object containing a `multifeed` behavior.
@@ -26,11 +26,7 @@ public struct CompositionMultifeedBehavior: Codable, JSONEncodable {
     }
 }
 
-extension CompositionMultifeedBehavior: Equatable {
-    public static func ==(lhs: CompositionMultifeedBehavior, rhs: CompositionMultifeedBehavior) -> Bool {
-        lhs.multifeed == rhs.multifeed
-    }
-}
+extension CompositionMultifeedBehavior: Equatable {}
 
 extension CompositionMultifeedBehavior: Hashable {
     public func hash(into hasher: inout Hasher) {

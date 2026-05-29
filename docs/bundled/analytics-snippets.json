@@ -1061,7 +1061,7 @@
   },
   "swift": {
     "import": {
-      "default": "import Analytics"
+      "default": "import AlgoliaAnalytics"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "let response = try await client.customDelete(path: \"test/minimal\")",

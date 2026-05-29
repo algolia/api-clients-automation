@@ -3606,6 +3606,31 @@ export async function snippetForSearch15(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the search method.
+//
+// withQueryCategorization
+export async function snippetForSearch16(): Promise<void> {
+  // >SEPARATOR search withQueryCategorization
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    requests: [
+      {
+        indexName: 'cts_e2e_query_categorization',
+        query: 'sofa',
+        extensions: { queryCategorization: { enableCategoriesRetrieval: true, enableAutoFiltering: false } },
+      },
+    ],
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the searchDictionaryEntries method.
 //
 // get searchDictionaryEntries results with minimal parameters
@@ -3855,8 +3880,52 @@ export async function snippetForSearchSingleIndex6(): Promise<void> {
 
 // Snippet for the searchSingleIndex method.
 //
-// filters boolean
+// customRankingWithoutCategories
 export async function snippetForSearchSingleIndex7(): Promise<void> {
+  // >SEPARATOR searchSingleIndex customRankingWithoutCategories
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { query: 'User search query', facetingAfterDistinct: true, filters: 'ranked_category:none' },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// customRankingWithCategories
+export async function snippetForSearchSingleIndex8(): Promise<void> {
+  // >SEPARATOR searchSingleIndex customRankingWithCategories
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: {
+      query: 'User search query',
+      facetingAfterDistinct: true,
+      filters: 'category:{{currentCategory}} AND (ranked_category:{{currentCategory}} OR ranked_category:none)',
+    },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filters boolean
+export async function snippetForSearchSingleIndex9(): Promise<void> {
   // >SEPARATOR searchSingleIndex filters boolean
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -3876,7 +3945,7 @@ export async function snippetForSearchSingleIndex7(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // distinct
-export async function snippetForSearchSingleIndex8(): Promise<void> {
+export async function snippetForSearchSingleIndex10(): Promise<void> {
   // >SEPARATOR searchSingleIndex distinct
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -3893,7 +3962,7 @@ export async function snippetForSearchSingleIndex8(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // filtersNumeric
-export async function snippetForSearchSingleIndex9(): Promise<void> {
+export async function snippetForSearchSingleIndex11(): Promise<void> {
   // >SEPARATOR searchSingleIndex filtersNumeric
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -3910,7 +3979,7 @@ export async function snippetForSearchSingleIndex9(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // filtersTimestamp
-export async function snippetForSearchSingleIndex10(): Promise<void> {
+export async function snippetForSearchSingleIndex12(): Promise<void> {
   // >SEPARATOR searchSingleIndex filtersTimestamp
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -3929,8 +3998,28 @@ export async function snippetForSearchSingleIndex10(): Promise<void> {
 
 // Snippet for the searchSingleIndex method.
 //
+// filtersWithScores
+export async function snippetForSearchSingleIndex13(): Promise<void> {
+  // >SEPARATOR searchSingleIndex filtersWithScores
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { filters: '(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)' },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
 // filtersSumOrFiltersScoresFalse
-export async function snippetForSearchSingleIndex11(): Promise<void> {
+export async function snippetForSearchSingleIndex14(): Promise<void> {
   // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresFalse
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -3953,7 +4042,7 @@ export async function snippetForSearchSingleIndex11(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // filtersSumOrFiltersScoresTrue
-export async function snippetForSearchSingleIndex12(): Promise<void> {
+export async function snippetForSearchSingleIndex15(): Promise<void> {
   // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresTrue
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -3976,7 +4065,7 @@ export async function snippetForSearchSingleIndex12(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // filtersStephenKing
-export async function snippetForSearchSingleIndex13(): Promise<void> {
+export async function snippetForSearchSingleIndex16(): Promise<void> {
   // >SEPARATOR searchSingleIndex filtersStephenKing
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -3996,7 +4085,7 @@ export async function snippetForSearchSingleIndex13(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // filtersNotTags
-export async function snippetForSearchSingleIndex14(): Promise<void> {
+export async function snippetForSearchSingleIndex17(): Promise<void> {
   // >SEPARATOR searchSingleIndex filtersNotTags
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4015,8 +4104,48 @@ export async function snippetForSearchSingleIndex14(): Promise<void> {
 
 // Snippet for the searchSingleIndex method.
 //
+// filtersTheNotTags
+export async function snippetForSearchSingleIndex18(): Promise<void> {
+  // >SEPARATOR searchSingleIndex filtersTheNotTags
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { filters: 'NOT _tags:non-fiction' },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filtersNumericGreaterThan
+export async function snippetForSearchSingleIndex19(): Promise<void> {
+  // >SEPARATOR searchSingleIndex filtersNumericGreaterThan
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { numericFilters: 'price>20' },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
 // facetFiltersList
-export async function snippetForSearchSingleIndex15(): Promise<void> {
+export async function snippetForSearchSingleIndex20(): Promise<void> {
   // >SEPARATOR searchSingleIndex facetFiltersList
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4036,7 +4165,7 @@ export async function snippetForSearchSingleIndex15(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // facetFiltersBook
-export async function snippetForSearchSingleIndex16(): Promise<void> {
+export async function snippetForSearchSingleIndex21(): Promise<void> {
   // >SEPARATOR searchSingleIndex facetFiltersBook
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4056,7 +4185,7 @@ export async function snippetForSearchSingleIndex16(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // facetFiltersAND
-export async function snippetForSearchSingleIndex17(): Promise<void> {
+export async function snippetForSearchSingleIndex22(): Promise<void> {
   // >SEPARATOR searchSingleIndex facetFiltersAND
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4076,7 +4205,7 @@ export async function snippetForSearchSingleIndex17(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // facetFiltersOR
-export async function snippetForSearchSingleIndex18(): Promise<void> {
+export async function snippetForSearchSingleIndex23(): Promise<void> {
   // >SEPARATOR searchSingleIndex facetFiltersOR
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4096,7 +4225,7 @@ export async function snippetForSearchSingleIndex18(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // facetFiltersCombined
-export async function snippetForSearchSingleIndex19(): Promise<void> {
+export async function snippetForSearchSingleIndex24(): Promise<void> {
   // >SEPARATOR searchSingleIndex facetFiltersCombined
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4116,7 +4245,7 @@ export async function snippetForSearchSingleIndex19(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // facetFiltersNeg
-export async function snippetForSearchSingleIndex20(): Promise<void> {
+export async function snippetForSearchSingleIndex25(): Promise<void> {
   // >SEPARATOR searchSingleIndex facetFiltersNeg
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4136,7 +4265,7 @@ export async function snippetForSearchSingleIndex20(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // filtersAndFacetFilters
-export async function snippetForSearchSingleIndex21(): Promise<void> {
+export async function snippetForSearchSingleIndex26(): Promise<void> {
   // >SEPARATOR searchSingleIndex filtersAndFacetFilters
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4156,7 +4285,7 @@ export async function snippetForSearchSingleIndex21(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // facet author genre
-export async function snippetForSearchSingleIndex22(): Promise<void> {
+export async function snippetForSearchSingleIndex27(): Promise<void> {
   // >SEPARATOR searchSingleIndex facet author genre
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4176,7 +4305,7 @@ export async function snippetForSearchSingleIndex22(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // facet wildcard
-export async function snippetForSearchSingleIndex23(): Promise<void> {
+export async function snippetForSearchSingleIndex28(): Promise<void> {
   // >SEPARATOR searchSingleIndex facet wildcard
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4193,7 +4322,7 @@ export async function snippetForSearchSingleIndex23(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // maxValuesPerFacet
-export async function snippetForSearchSingleIndex24(): Promise<void> {
+export async function snippetForSearchSingleIndex29(): Promise<void> {
   // >SEPARATOR searchSingleIndex maxValuesPerFacet
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4213,7 +4342,7 @@ export async function snippetForSearchSingleIndex24(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // aroundLatLng
-export async function snippetForSearchSingleIndex25(): Promise<void> {
+export async function snippetForSearchSingleIndex30(): Promise<void> {
   // >SEPARATOR searchSingleIndex aroundLatLng
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4233,7 +4362,7 @@ export async function snippetForSearchSingleIndex25(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // aroundLatLngViaIP
-export async function snippetForSearchSingleIndex26(): Promise<void> {
+export async function snippetForSearchSingleIndex31(): Promise<void> {
   // >SEPARATOR searchSingleIndex aroundLatLngViaIP
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4253,7 +4382,7 @@ export async function snippetForSearchSingleIndex26(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // aroundRadius
-export async function snippetForSearchSingleIndex27(): Promise<void> {
+export async function snippetForSearchSingleIndex32(): Promise<void> {
   // >SEPARATOR searchSingleIndex aroundRadius
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4273,7 +4402,7 @@ export async function snippetForSearchSingleIndex27(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // insideBoundingBox
-export async function snippetForSearchSingleIndex28(): Promise<void> {
+export async function snippetForSearchSingleIndex33(): Promise<void> {
   // >SEPARATOR searchSingleIndex insideBoundingBox
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4293,7 +4422,7 @@ export async function snippetForSearchSingleIndex28(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // insidePolygon
-export async function snippetForSearchSingleIndex29(): Promise<void> {
+export async function snippetForSearchSingleIndex34(): Promise<void> {
   // >SEPARATOR searchSingleIndex insidePolygon
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4321,7 +4450,7 @@ export async function snippetForSearchSingleIndex29(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // optionalFilters
-export async function snippetForSearchSingleIndex30(): Promise<void> {
+export async function snippetForSearchSingleIndex35(): Promise<void> {
   // >SEPARATOR searchSingleIndex optionalFilters
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4341,7 +4470,7 @@ export async function snippetForSearchSingleIndex30(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // optionalFiltersMany
-export async function snippetForSearchSingleIndex31(): Promise<void> {
+export async function snippetForSearchSingleIndex36(): Promise<void> {
   // >SEPARATOR searchSingleIndex optionalFiltersMany
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4361,7 +4490,7 @@ export async function snippetForSearchSingleIndex31(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // optionalFiltersSimple
-export async function snippetForSearchSingleIndex32(): Promise<void> {
+export async function snippetForSearchSingleIndex37(): Promise<void> {
   // >SEPARATOR searchSingleIndex optionalFiltersSimple
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4381,7 +4510,7 @@ export async function snippetForSearchSingleIndex32(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // restrictSearchableAttributes
-export async function snippetForSearchSingleIndex33(): Promise<void> {
+export async function snippetForSearchSingleIndex38(): Promise<void> {
   // >SEPARATOR searchSingleIndex restrictSearchableAttributes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4400,8 +4529,28 @@ export async function snippetForSearchSingleIndex33(): Promise<void> {
 
 // Snippet for the searchSingleIndex method.
 //
+// restrictSearchableAttributesWolf
+export async function snippetForSearchSingleIndex39(): Promise<void> {
+  // >SEPARATOR searchSingleIndex restrictSearchableAttributesWolf
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { query: 'wolf', restrictSearchableAttributes: ['title_fr'] },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
 // getRankingInfo
-export async function snippetForSearchSingleIndex34(): Promise<void> {
+export async function snippetForSearchSingleIndex40(): Promise<void> {
   // >SEPARATOR searchSingleIndex getRankingInfo
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4418,7 +4567,7 @@ export async function snippetForSearchSingleIndex34(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // clickAnalytics
-export async function snippetForSearchSingleIndex35(): Promise<void> {
+export async function snippetForSearchSingleIndex41(): Promise<void> {
   // >SEPARATOR searchSingleIndex clickAnalytics
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4435,7 +4584,7 @@ export async function snippetForSearchSingleIndex35(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // clickAnalyticsUserToken
-export async function snippetForSearchSingleIndex36(): Promise<void> {
+export async function snippetForSearchSingleIndex42(): Promise<void> {
   // >SEPARATOR searchSingleIndex clickAnalyticsUserToken
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4455,7 +4604,7 @@ export async function snippetForSearchSingleIndex36(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // enablePersonalization
-export async function snippetForSearchSingleIndex37(): Promise<void> {
+export async function snippetForSearchSingleIndex43(): Promise<void> {
   // >SEPARATOR searchSingleIndex enablePersonalization
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4475,7 +4624,7 @@ export async function snippetForSearchSingleIndex37(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // userToken
-export async function snippetForSearchSingleIndex38(): Promise<void> {
+export async function snippetForSearchSingleIndex44(): Promise<void> {
   // >SEPARATOR searchSingleIndex userToken
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4492,7 +4641,7 @@ export async function snippetForSearchSingleIndex38(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // userToken1234
-export async function snippetForSearchSingleIndex39(): Promise<void> {
+export async function snippetForSearchSingleIndex45(): Promise<void> {
   // >SEPARATOR searchSingleIndex userToken1234
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4512,7 +4661,7 @@ export async function snippetForSearchSingleIndex39(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // analyticsTag
-export async function snippetForSearchSingleIndex40(): Promise<void> {
+export async function snippetForSearchSingleIndex46(): Promise<void> {
   // >SEPARATOR searchSingleIndex analyticsTag
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4532,7 +4681,7 @@ export async function snippetForSearchSingleIndex40(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // facetFiltersUsers
-export async function snippetForSearchSingleIndex41(): Promise<void> {
+export async function snippetForSearchSingleIndex47(): Promise<void> {
   // >SEPARATOR searchSingleIndex facetFiltersUsers
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4552,7 +4701,7 @@ export async function snippetForSearchSingleIndex41(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // buildTheQuery
-export async function snippetForSearchSingleIndex42(): Promise<void> {
+export async function snippetForSearchSingleIndex48(): Promise<void> {
   // >SEPARATOR searchSingleIndex buildTheQuery
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4572,7 +4721,7 @@ export async function snippetForSearchSingleIndex42(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // attributesToHighlightOverride
-export async function snippetForSearchSingleIndex43(): Promise<void> {
+export async function snippetForSearchSingleIndex49(): Promise<void> {
   // >SEPARATOR searchSingleIndex attributesToHighlightOverride
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4592,7 +4741,7 @@ export async function snippetForSearchSingleIndex43(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // disableTypoToleranceOnAttributes
-export async function snippetForSearchSingleIndex44(): Promise<void> {
+export async function snippetForSearchSingleIndex50(): Promise<void> {
   // >SEPARATOR searchSingleIndex disableTypoToleranceOnAttributes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4612,7 +4761,7 @@ export async function snippetForSearchSingleIndex44(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // search query
-export async function snippetForSearchSingleIndex45(): Promise<void> {
+export async function snippetForSearchSingleIndex51(): Promise<void> {
   // >SEPARATOR searchSingleIndex search query
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4629,7 +4778,7 @@ export async function snippetForSearchSingleIndex45(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // search_everything
-export async function snippetForSearchSingleIndex46(): Promise<void> {
+export async function snippetForSearchSingleIndex52(): Promise<void> {
   // >SEPARATOR searchSingleIndex search_everything
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4646,7 +4795,7 @@ export async function snippetForSearchSingleIndex46(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // api_filtering_range_example
-export async function snippetForSearchSingleIndex47(): Promise<void> {
+export async function snippetForSearchSingleIndex53(): Promise<void> {
   // >SEPARATOR searchSingleIndex api_filtering_range_example
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4666,7 +4815,7 @@ export async function snippetForSearchSingleIndex47(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // similarQuery
-export async function snippetForSearchSingleIndex48(): Promise<void> {
+export async function snippetForSearchSingleIndex54(): Promise<void> {
   // >SEPARATOR searchSingleIndex similarQuery
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4690,7 +4839,7 @@ export async function snippetForSearchSingleIndex48(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_retrievable_attributes
-export async function snippetForSearchSingleIndex49(): Promise<void> {
+export async function snippetForSearchSingleIndex55(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_retrievable_attributes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4710,7 +4859,7 @@ export async function snippetForSearchSingleIndex49(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // restrict_searchable_attributes
-export async function snippetForSearchSingleIndex50(): Promise<void> {
+export async function snippetForSearchSingleIndex56(): Promise<void> {
   // >SEPARATOR searchSingleIndex restrict_searchable_attributes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4730,7 +4879,7 @@ export async function snippetForSearchSingleIndex50(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_relevancy
-export async function snippetForSearchSingleIndex51(): Promise<void> {
+export async function snippetForSearchSingleIndex57(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_default_relevancy
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4750,7 +4899,7 @@ export async function snippetForSearchSingleIndex51(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // apply_filters
-export async function snippetForSearchSingleIndex52(): Promise<void> {
+export async function snippetForSearchSingleIndex58(): Promise<void> {
   // >SEPARATOR searchSingleIndex apply_filters
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4770,7 +4919,7 @@ export async function snippetForSearchSingleIndex52(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // apply_all_filters
-export async function snippetForSearchSingleIndex53(): Promise<void> {
+export async function snippetForSearchSingleIndex59(): Promise<void> {
   // >SEPARATOR searchSingleIndex apply_all_filters
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4794,7 +4943,7 @@ export async function snippetForSearchSingleIndex53(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // escape_spaces
-export async function snippetForSearchSingleIndex54(): Promise<void> {
+export async function snippetForSearchSingleIndex60(): Promise<void> {
   // >SEPARATOR searchSingleIndex escape_spaces
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4814,7 +4963,7 @@ export async function snippetForSearchSingleIndex54(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // escape_keywords
-export async function snippetForSearchSingleIndex55(): Promise<void> {
+export async function snippetForSearchSingleIndex61(): Promise<void> {
   // >SEPARATOR searchSingleIndex escape_keywords
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4834,7 +4983,7 @@ export async function snippetForSearchSingleIndex55(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // escape_single_quotes
-export async function snippetForSearchSingleIndex56(): Promise<void> {
+export async function snippetForSearchSingleIndex62(): Promise<void> {
   // >SEPARATOR searchSingleIndex escape_single_quotes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4854,7 +5003,7 @@ export async function snippetForSearchSingleIndex56(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // escape_double_quotes
-export async function snippetForSearchSingleIndex57(): Promise<void> {
+export async function snippetForSearchSingleIndex63(): Promise<void> {
   // >SEPARATOR searchSingleIndex escape_double_quotes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4874,7 +5023,7 @@ export async function snippetForSearchSingleIndex57(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // apply_optional_filters
-export async function snippetForSearchSingleIndex58(): Promise<void> {
+export async function snippetForSearchSingleIndex64(): Promise<void> {
   // >SEPARATOR searchSingleIndex apply_optional_filters
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4894,7 +5043,7 @@ export async function snippetForSearchSingleIndex58(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // apply_negative_filters
-export async function snippetForSearchSingleIndex59(): Promise<void> {
+export async function snippetForSearchSingleIndex65(): Promise<void> {
   // >SEPARATOR searchSingleIndex apply_negative_filters
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4914,7 +5063,7 @@ export async function snippetForSearchSingleIndex59(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // apply_negative_filters_restaurants
-export async function snippetForSearchSingleIndex60(): Promise<void> {
+export async function snippetForSearchSingleIndex66(): Promise<void> {
   // >SEPARATOR searchSingleIndex apply_negative_filters_restaurants
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4934,7 +5083,7 @@ export async function snippetForSearchSingleIndex60(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // apply_numeric_filters
-export async function snippetForSearchSingleIndex61(): Promise<void> {
+export async function snippetForSearchSingleIndex67(): Promise<void> {
   // >SEPARATOR searchSingleIndex apply_numeric_filters
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4954,7 +5103,7 @@ export async function snippetForSearchSingleIndex61(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // apply_tag_filters
-export async function snippetForSearchSingleIndex62(): Promise<void> {
+export async function snippetForSearchSingleIndex68(): Promise<void> {
   // >SEPARATOR searchSingleIndex apply_tag_filters
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4974,7 +5123,7 @@ export async function snippetForSearchSingleIndex62(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // set_sum_or_filters_scores
-export async function snippetForSearchSingleIndex63(): Promise<void> {
+export async function snippetForSearchSingleIndex69(): Promise<void> {
   // >SEPARATOR searchSingleIndex set_sum_or_filters_scores
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -4994,7 +5143,7 @@ export async function snippetForSearchSingleIndex63(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // facets_all
-export async function snippetForSearchSingleIndex64(): Promise<void> {
+export async function snippetForSearchSingleIndex70(): Promise<void> {
   // >SEPARATOR searchSingleIndex facets_all
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5014,7 +5163,7 @@ export async function snippetForSearchSingleIndex64(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // retrieve_only_some_facets
-export async function snippetForSearchSingleIndex65(): Promise<void> {
+export async function snippetForSearchSingleIndex71(): Promise<void> {
   // >SEPARATOR searchSingleIndex retrieve_only_some_facets
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5034,7 +5183,7 @@ export async function snippetForSearchSingleIndex65(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_max_values_per_facet
-export async function snippetForSearchSingleIndex66(): Promise<void> {
+export async function snippetForSearchSingleIndex72(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_default_max_values_per_facet
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5054,7 +5203,7 @@ export async function snippetForSearchSingleIndex66(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // enable_faceting_after_distinct
-export async function snippetForSearchSingleIndex67(): Promise<void> {
+export async function snippetForSearchSingleIndex73(): Promise<void> {
   // >SEPARATOR searchSingleIndex enable_faceting_after_distinct
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5074,7 +5223,7 @@ export async function snippetForSearchSingleIndex67(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // sort_facet_values_alphabetically
-export async function snippetForSearchSingleIndex68(): Promise<void> {
+export async function snippetForSearchSingleIndex74(): Promise<void> {
   // >SEPARATOR searchSingleIndex sort_facet_values_alphabetically
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5094,7 +5243,7 @@ export async function snippetForSearchSingleIndex68(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_attributes_to_snippet
-export async function snippetForSearchSingleIndex69(): Promise<void> {
+export async function snippetForSearchSingleIndex75(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_attributes_to_snippet
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5114,7 +5263,7 @@ export async function snippetForSearchSingleIndex69(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_highlight_pre_tag
-export async function snippetForSearchSingleIndex70(): Promise<void> {
+export async function snippetForSearchSingleIndex76(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_default_highlight_pre_tag
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5134,7 +5283,7 @@ export async function snippetForSearchSingleIndex70(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_highlight_post_tag
-export async function snippetForSearchSingleIndex71(): Promise<void> {
+export async function snippetForSearchSingleIndex77(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_default_highlight_post_tag
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5154,7 +5303,7 @@ export async function snippetForSearchSingleIndex71(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_snippet_ellipsis_text
-export async function snippetForSearchSingleIndex72(): Promise<void> {
+export async function snippetForSearchSingleIndex78(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_default_snippet_ellipsis_text
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5174,7 +5323,7 @@ export async function snippetForSearchSingleIndex72(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // enable_restrict_highlight_and_snippet_arrays
-export async function snippetForSearchSingleIndex73(): Promise<void> {
+export async function snippetForSearchSingleIndex79(): Promise<void> {
   // >SEPARATOR searchSingleIndex enable_restrict_highlight_and_snippet_arrays
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5194,7 +5343,7 @@ export async function snippetForSearchSingleIndex73(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // access_page
-export async function snippetForSearchSingleIndex74(): Promise<void> {
+export async function snippetForSearchSingleIndex80(): Promise<void> {
   // >SEPARATOR searchSingleIndex access_page
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5214,7 +5363,7 @@ export async function snippetForSearchSingleIndex74(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_hits_per_page
-export async function snippetForSearchSingleIndex75(): Promise<void> {
+export async function snippetForSearchSingleIndex81(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_default_hits_per_page
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5233,8 +5382,28 @@ export async function snippetForSearchSingleIndex75(): Promise<void> {
 
 // Snippet for the searchSingleIndex method.
 //
+// overrideDefaultPageAndHitsPerPage
+export async function snippetForSearchSingleIndex82(): Promise<void> {
+  // >SEPARATOR searchSingleIndex overrideDefaultPageAndHitsPerPage
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { query: 'query', page: 2, hitsPerPage: 5 },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
 // get_nth_hit
-export async function snippetForSearchSingleIndex76(): Promise<void> {
+export async function snippetForSearchSingleIndex83(): Promise<void> {
   // >SEPARATOR searchSingleIndex get_nth_hit
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5254,7 +5423,7 @@ export async function snippetForSearchSingleIndex76(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // get_n_results
-export async function snippetForSearchSingleIndex77(): Promise<void> {
+export async function snippetForSearchSingleIndex84(): Promise<void> {
   // >SEPARATOR searchSingleIndex get_n_results
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5274,7 +5443,7 @@ export async function snippetForSearchSingleIndex77(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_min_word_size_for_one_typo
-export async function snippetForSearchSingleIndex78(): Promise<void> {
+export async function snippetForSearchSingleIndex85(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_default_min_word_size_for_one_typo
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5294,7 +5463,7 @@ export async function snippetForSearchSingleIndex78(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_min_word_size_for_two_typos
-export async function snippetForSearchSingleIndex79(): Promise<void> {
+export async function snippetForSearchSingleIndex86(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_default_min_word_size_for_two_typos
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5314,7 +5483,7 @@ export async function snippetForSearchSingleIndex79(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_typo_tolerance_mode
-export async function snippetForSearchSingleIndex80(): Promise<void> {
+export async function snippetForSearchSingleIndex87(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_default_typo_tolerance_mode
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5334,7 +5503,7 @@ export async function snippetForSearchSingleIndex80(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // disable_typos_on_numeric_tokens_at_search_time
-export async function snippetForSearchSingleIndex81(): Promise<void> {
+export async function snippetForSearchSingleIndex88(): Promise<void> {
   // >SEPARATOR searchSingleIndex disable_typos_on_numeric_tokens_at_search_time
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5354,7 +5523,7 @@ export async function snippetForSearchSingleIndex81(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // search_around_a_position
-export async function snippetForSearchSingleIndex82(): Promise<void> {
+export async function snippetForSearchSingleIndex89(): Promise<void> {
   // >SEPARATOR searchSingleIndex search_around_a_position
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5374,7 +5543,7 @@ export async function snippetForSearchSingleIndex82(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // search_around_server_ip
-export async function snippetForSearchSingleIndex83(): Promise<void> {
+export async function snippetForSearchSingleIndex90(): Promise<void> {
   // >SEPARATOR searchSingleIndex search_around_server_ip
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5383,9 +5552,29 @@ export async function snippetForSearchSingleIndex83(): Promise<void> {
   const response = await client.searchSingleIndex(
     { indexName: 'indexName', searchParams: { query: 'query', aroundLatLngViaIP: true } },
     {
-      headers: {
-        'x-forwarded-for': '94.228.178.246 // should be replaced with the actual IP you would like to search around',
-      },
+      headers: { 'x-forwarded-for': 'XX.XXX.XXX.XXX' },
+    },
+  );
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// forwardUserIpAddress
+export async function snippetForSearchSingleIndex91(): Promise<void> {
+  // >SEPARATOR searchSingleIndex forwardUserIpAddress
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex(
+    { indexName: 'indexName', searchParams: {} },
+    {
+      headers: { 'x-forwarded-for': 'XX.XXX.XXX.XXX' },
     },
   );
 
@@ -5398,7 +5587,7 @@ export async function snippetForSearchSingleIndex83(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // set_around_radius
-export async function snippetForSearchSingleIndex84(): Promise<void> {
+export async function snippetForSearchSingleIndex92(): Promise<void> {
   // >SEPARATOR searchSingleIndex set_around_radius
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5418,7 +5607,7 @@ export async function snippetForSearchSingleIndex84(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // disable_automatic_radius
-export async function snippetForSearchSingleIndex85(): Promise<void> {
+export async function snippetForSearchSingleIndex93(): Promise<void> {
   // >SEPARATOR searchSingleIndex disable_automatic_radius
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5438,7 +5627,7 @@ export async function snippetForSearchSingleIndex85(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // set_geo_search_precision
-export async function snippetForSearchSingleIndex86(): Promise<void> {
+export async function snippetForSearchSingleIndex94(): Promise<void> {
   // >SEPARATOR searchSingleIndex set_geo_search_precision
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5458,7 +5647,7 @@ export async function snippetForSearchSingleIndex86(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // set_geo_search_precision_non_linear
-export async function snippetForSearchSingleIndex87(): Promise<void> {
+export async function snippetForSearchSingleIndex95(): Promise<void> {
   // >SEPARATOR searchSingleIndex set_geo_search_precision_non_linear
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5484,7 +5673,7 @@ export async function snippetForSearchSingleIndex87(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // set_minimum_geo_search_radius
-export async function snippetForSearchSingleIndex88(): Promise<void> {
+export async function snippetForSearchSingleIndex96(): Promise<void> {
   // >SEPARATOR searchSingleIndex set_minimum_geo_search_radius
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5504,7 +5693,7 @@ export async function snippetForSearchSingleIndex88(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // search_inside_rectangular_area
-export async function snippetForSearchSingleIndex89(): Promise<void> {
+export async function snippetForSearchSingleIndex97(): Promise<void> {
   // >SEPARATOR searchSingleIndex search_inside_rectangular_area
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5527,7 +5716,7 @@ export async function snippetForSearchSingleIndex89(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // search_inside_multiple_rectangular_areas
-export async function snippetForSearchSingleIndex90(): Promise<void> {
+export async function snippetForSearchSingleIndex98(): Promise<void> {
   // >SEPARATOR searchSingleIndex search_inside_multiple_rectangular_areas
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5553,7 +5742,7 @@ export async function snippetForSearchSingleIndex90(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // search_inside_polygon_area
-export async function snippetForSearchSingleIndex91(): Promise<void> {
+export async function snippetForSearchSingleIndex99(): Promise<void> {
   // >SEPARATOR searchSingleIndex search_inside_polygon_area
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5578,7 +5767,7 @@ export async function snippetForSearchSingleIndex91(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // search_inside_multiple_polygon_areas
-export async function snippetForSearchSingleIndex92(): Promise<void> {
+export async function snippetForSearchSingleIndex100(): Promise<void> {
   // >SEPARATOR searchSingleIndex search_inside_multiple_polygon_areas
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5607,7 +5796,7 @@ export async function snippetForSearchSingleIndex92(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // set_querylanguages_override
-export async function snippetForSearchSingleIndex93(): Promise<void> {
+export async function snippetForSearchSingleIndex101(): Promise<void> {
   // >SEPARATOR searchSingleIndex set_querylanguages_override
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5627,7 +5816,7 @@ export async function snippetForSearchSingleIndex93(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // set_querylanguages_with_japanese_query
-export async function snippetForSearchSingleIndex94(): Promise<void> {
+export async function snippetForSearchSingleIndex102(): Promise<void> {
   // >SEPARATOR searchSingleIndex set_querylanguages_with_japanese_query
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5647,7 +5836,7 @@ export async function snippetForSearchSingleIndex94(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // set_natural_languages
-export async function snippetForSearchSingleIndex95(): Promise<void> {
+export async function snippetForSearchSingleIndex103(): Promise<void> {
   // >SEPARATOR searchSingleIndex set_natural_languages
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5667,7 +5856,7 @@ export async function snippetForSearchSingleIndex95(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_natural_languages_with_query
-export async function snippetForSearchSingleIndex96(): Promise<void> {
+export async function snippetForSearchSingleIndex104(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_natural_languages_with_query
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5687,7 +5876,7 @@ export async function snippetForSearchSingleIndex96(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // enable_decompound_query_search_time
-export async function snippetForSearchSingleIndex97(): Promise<void> {
+export async function snippetForSearchSingleIndex105(): Promise<void> {
   // >SEPARATOR searchSingleIndex enable_decompound_query_search_time
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5707,7 +5896,7 @@ export async function snippetForSearchSingleIndex97(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // enable_rules_search_time
-export async function snippetForSearchSingleIndex98(): Promise<void> {
+export async function snippetForSearchSingleIndex106(): Promise<void> {
   // >SEPARATOR searchSingleIndex enable_rules_search_time
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5727,7 +5916,7 @@ export async function snippetForSearchSingleIndex98(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // set_rule_contexts
-export async function snippetForSearchSingleIndex99(): Promise<void> {
+export async function snippetForSearchSingleIndex107(): Promise<void> {
   // >SEPARATOR searchSingleIndex set_rule_contexts
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5747,7 +5936,7 @@ export async function snippetForSearchSingleIndex99(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // enable_personalization
-export async function snippetForSearchSingleIndex100(): Promise<void> {
+export async function snippetForSearchSingleIndex108(): Promise<void> {
   // >SEPARATOR searchSingleIndex enable_personalization
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5767,7 +5956,7 @@ export async function snippetForSearchSingleIndex100(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // enable_personalization_with_user_token
-export async function snippetForSearchSingleIndex101(): Promise<void> {
+export async function snippetForSearchSingleIndex109(): Promise<void> {
   // >SEPARATOR searchSingleIndex enable_personalization_with_user_token
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5787,7 +5976,7 @@ export async function snippetForSearchSingleIndex101(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // personalization_impact
-export async function snippetForSearchSingleIndex102(): Promise<void> {
+export async function snippetForSearchSingleIndex110(): Promise<void> {
   // >SEPARATOR searchSingleIndex personalization_impact
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5807,7 +5996,7 @@ export async function snippetForSearchSingleIndex102(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // set_user_token
-export async function snippetForSearchSingleIndex103(): Promise<void> {
+export async function snippetForSearchSingleIndex111(): Promise<void> {
   // >SEPARATOR searchSingleIndex set_user_token
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5827,7 +6016,7 @@ export async function snippetForSearchSingleIndex103(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // set_user_token_with_personalization
-export async function snippetForSearchSingleIndex104(): Promise<void> {
+export async function snippetForSearchSingleIndex112(): Promise<void> {
   // >SEPARATOR searchSingleIndex set_user_token_with_personalization
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5847,7 +6036,7 @@ export async function snippetForSearchSingleIndex104(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_query_type
-export async function snippetForSearchSingleIndex105(): Promise<void> {
+export async function snippetForSearchSingleIndex113(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_default_query_type
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5867,7 +6056,7 @@ export async function snippetForSearchSingleIndex105(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_remove_words_if_no_results
-export async function snippetForSearchSingleIndex106(): Promise<void> {
+export async function snippetForSearchSingleIndex114(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_default_remove_words_if_no_results
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5887,7 +6076,7 @@ export async function snippetForSearchSingleIndex106(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // enable_advanced_syntax_search_time
-export async function snippetForSearchSingleIndex107(): Promise<void> {
+export async function snippetForSearchSingleIndex115(): Promise<void> {
   // >SEPARATOR searchSingleIndex enable_advanced_syntax_search_time
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5907,7 +6096,7 @@ export async function snippetForSearchSingleIndex107(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // overide_default_optional_words
-export async function snippetForSearchSingleIndex108(): Promise<void> {
+export async function snippetForSearchSingleIndex116(): Promise<void> {
   // >SEPARATOR searchSingleIndex overide_default_optional_words
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5927,7 +6116,7 @@ export async function snippetForSearchSingleIndex108(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // disabling_exact_for_some_attributes_search_time
-export async function snippetForSearchSingleIndex109(): Promise<void> {
+export async function snippetForSearchSingleIndex117(): Promise<void> {
   // >SEPARATOR searchSingleIndex disabling_exact_for_some_attributes_search_time
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5947,7 +6136,7 @@ export async function snippetForSearchSingleIndex109(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_exact_single_word_query
-export async function snippetForSearchSingleIndex110(): Promise<void> {
+export async function snippetForSearchSingleIndex118(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_default_exact_single_word_query
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5967,7 +6156,7 @@ export async function snippetForSearchSingleIndex110(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_aternative_as_exact
-export async function snippetForSearchSingleIndex111(): Promise<void> {
+export async function snippetForSearchSingleIndex119(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_default_aternative_as_exact
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -5987,7 +6176,7 @@ export async function snippetForSearchSingleIndex111(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // enable_advanced_syntax_exact_phrase
-export async function snippetForSearchSingleIndex112(): Promise<void> {
+export async function snippetForSearchSingleIndex120(): Promise<void> {
   // >SEPARATOR searchSingleIndex enable_advanced_syntax_exact_phrase
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -6007,7 +6196,7 @@ export async function snippetForSearchSingleIndex112(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // enable_advanced_syntax_exclude_words
-export async function snippetForSearchSingleIndex113(): Promise<void> {
+export async function snippetForSearchSingleIndex121(): Promise<void> {
   // >SEPARATOR searchSingleIndex enable_advanced_syntax_exclude_words
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -6027,7 +6216,7 @@ export async function snippetForSearchSingleIndex113(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_distinct
-export async function snippetForSearchSingleIndex114(): Promise<void> {
+export async function snippetForSearchSingleIndex122(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_distinct
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -6047,7 +6236,7 @@ export async function snippetForSearchSingleIndex114(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // get_ranking_info
-export async function snippetForSearchSingleIndex115(): Promise<void> {
+export async function snippetForSearchSingleIndex123(): Promise<void> {
   // >SEPARATOR searchSingleIndex get_ranking_info
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -6067,7 +6256,7 @@ export async function snippetForSearchSingleIndex115(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // disable_click_analytics
-export async function snippetForSearchSingleIndex116(): Promise<void> {
+export async function snippetForSearchSingleIndex124(): Promise<void> {
   // >SEPARATOR searchSingleIndex disable_click_analytics
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -6087,7 +6276,7 @@ export async function snippetForSearchSingleIndex116(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // enable_click_analytics
-export async function snippetForSearchSingleIndex117(): Promise<void> {
+export async function snippetForSearchSingleIndex125(): Promise<void> {
   // >SEPARATOR searchSingleIndex enable_click_analytics
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -6107,7 +6296,7 @@ export async function snippetForSearchSingleIndex117(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // disable_analytics
-export async function snippetForSearchSingleIndex118(): Promise<void> {
+export async function snippetForSearchSingleIndex126(): Promise<void> {
   // >SEPARATOR searchSingleIndex disable_analytics
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -6127,7 +6316,7 @@ export async function snippetForSearchSingleIndex118(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // add_analytics_tags
-export async function snippetForSearchSingleIndex119(): Promise<void> {
+export async function snippetForSearchSingleIndex127(): Promise<void> {
   // >SEPARATOR searchSingleIndex add_analytics_tags
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -6147,7 +6336,7 @@ export async function snippetForSearchSingleIndex119(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // disable_synonyms
-export async function snippetForSearchSingleIndex120(): Promise<void> {
+export async function snippetForSearchSingleIndex128(): Promise<void> {
   // >SEPARATOR searchSingleIndex disable_synonyms
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -6167,7 +6356,7 @@ export async function snippetForSearchSingleIndex120(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_replace_synonyms_in_highlights
-export async function snippetForSearchSingleIndex121(): Promise<void> {
+export async function snippetForSearchSingleIndex129(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_replace_synonyms_in_highlights
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -6187,7 +6376,7 @@ export async function snippetForSearchSingleIndex121(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_min_proximity
-export async function snippetForSearchSingleIndex122(): Promise<void> {
+export async function snippetForSearchSingleIndex130(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_min_proximity
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -6207,7 +6396,7 @@ export async function snippetForSearchSingleIndex122(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_field
-export async function snippetForSearchSingleIndex123(): Promise<void> {
+export async function snippetForSearchSingleIndex131(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_default_field
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -6227,7 +6416,7 @@ export async function snippetForSearchSingleIndex123(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // override_percentile_computation
-export async function snippetForSearchSingleIndex124(): Promise<void> {
+export async function snippetForSearchSingleIndex132(): Promise<void> {
   // >SEPARATOR searchSingleIndex override_percentile_computation
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -6247,7 +6436,7 @@ export async function snippetForSearchSingleIndex124(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // set_ab_test
-export async function snippetForSearchSingleIndex125(): Promise<void> {
+export async function snippetForSearchSingleIndex133(): Promise<void> {
   // >SEPARATOR searchSingleIndex set_ab_test
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -6267,7 +6456,7 @@ export async function snippetForSearchSingleIndex125(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // set_enable_re_ranking
-export async function snippetForSearchSingleIndex126(): Promise<void> {
+export async function snippetForSearchSingleIndex134(): Promise<void> {
   // >SEPARATOR searchSingleIndex set_enable_re_ranking
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -6287,7 +6476,7 @@ export async function snippetForSearchSingleIndex126(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // with algolia user id
-export async function snippetForSearchSingleIndex127(): Promise<void> {
+export async function snippetForSearchSingleIndex135(): Promise<void> {
   // >SEPARATOR searchSingleIndex with algolia user id
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -6309,7 +6498,7 @@ export async function snippetForSearchSingleIndex127(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // mcm with algolia user id
-export async function snippetForSearchSingleIndex128(): Promise<void> {
+export async function snippetForSearchSingleIndex136(): Promise<void> {
   // >SEPARATOR searchSingleIndex mcm with algolia user id
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7510,8 +7699,32 @@ export async function snippetForSetSettings52(): Promise<void> {
 
 // Snippet for the setSettings method.
 //
-// attributesToHighlightStar
+// highlightWithCustomPrePostTags
 export async function snippetForSetSettings53(): Promise<void> {
+  // >SEPARATOR setSettings highlightWithCustomPrePostTags
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: {
+      attributesToHighlight: ['author', 'title', 'content'],
+      highlightPreTag: '<em class="search-highlight">',
+      highlightPostTag: '</em>',
+    },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesToHighlightStar
+export async function snippetForSetSettings54(): Promise<void> {
   // >SEPARATOR setSettings attributesToHighlightStar
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7531,7 +7744,7 @@ export async function snippetForSetSettings53(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // everything
-export async function snippetForSetSettings54(): Promise<void> {
+export async function snippetForSetSettings55(): Promise<void> {
   // >SEPARATOR setSettings everything
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7615,7 +7828,7 @@ export async function snippetForSetSettings54(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributesWithCustomRankingsAndAttributesForFaceting
-export async function snippetForSetSettings55(): Promise<void> {
+export async function snippetForSetSettings56(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributesWithCustomRankingsAndAttributesForFaceting
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7639,7 +7852,7 @@ export async function snippetForSetSettings55(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributesOrdering
-export async function snippetForSetSettings56(): Promise<void> {
+export async function snippetForSetSettings57(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributesOrdering
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7659,7 +7872,7 @@ export async function snippetForSetSettings56(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributesProductReferenceSuffixes
-export async function snippetForSetSettings57(): Promise<void> {
+export async function snippetForSetSettings58(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributesProductReferenceSuffixes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7679,7 +7892,7 @@ export async function snippetForSetSettings57(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // queryLanguageAndIgnorePlurals
-export async function snippetForSetSettings58(): Promise<void> {
+export async function snippetForSetSettings59(): Promise<void> {
   // >SEPARATOR setSettings queryLanguageAndIgnorePlurals
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7699,7 +7912,7 @@ export async function snippetForSetSettings58(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributesInMovies
-export async function snippetForSetSettings59(): Promise<void> {
+export async function snippetForSetSettings60(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributesInMovies
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7719,7 +7932,7 @@ export async function snippetForSetSettings59(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // disablePrefixOnAttributes
-export async function snippetForSetSettings60(): Promise<void> {
+export async function snippetForSetSettings61(): Promise<void> {
   // >SEPARATOR setSettings disablePrefixOnAttributes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7739,7 +7952,7 @@ export async function snippetForSetSettings60(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // disableTypoToleranceOnAttributes
-export async function snippetForSetSettings61(): Promise<void> {
+export async function snippetForSetSettings62(): Promise<void> {
   // >SEPARATOR setSettings disableTypoToleranceOnAttributes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7759,7 +7972,7 @@ export async function snippetForSetSettings61(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributesSimpleExample
-export async function snippetForSetSettings62(): Promise<void> {
+export async function snippetForSetSettings63(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributesSimpleExample
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7779,7 +7992,7 @@ export async function snippetForSetSettings62(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributesSimpleExampleAlt
-export async function snippetForSetSettings63(): Promise<void> {
+export async function snippetForSetSettings64(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributesSimpleExampleAlt
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7799,7 +8012,7 @@ export async function snippetForSetSettings63(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_searchable_attributes
-export async function snippetForSetSettings64(): Promise<void> {
+export async function snippetForSetSettings65(): Promise<void> {
   // >SEPARATOR setSettings set_searchable_attributes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7821,7 +8034,7 @@ export async function snippetForSetSettings64(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_attributes_for_faceting
-export async function snippetForSetSettings65(): Promise<void> {
+export async function snippetForSetSettings66(): Promise<void> {
   // >SEPARATOR setSettings set_attributes_for_faceting
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7849,7 +8062,7 @@ export async function snippetForSetSettings65(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // unretrievable_attributes
-export async function snippetForSetSettings66(): Promise<void> {
+export async function snippetForSetSettings67(): Promise<void> {
   // >SEPARATOR setSettings unretrievable_attributes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7869,7 +8082,7 @@ export async function snippetForSetSettings66(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_retrievable_attributes
-export async function snippetForSetSettings67(): Promise<void> {
+export async function snippetForSetSettings68(): Promise<void> {
   // >SEPARATOR setSettings set_retrievable_attributes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7889,7 +8102,7 @@ export async function snippetForSetSettings67(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_all_attributes_as_retrievable
-export async function snippetForSetSettings68(): Promise<void> {
+export async function snippetForSetSettings69(): Promise<void> {
   // >SEPARATOR setSettings set_all_attributes_as_retrievable
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7909,7 +8122,7 @@ export async function snippetForSetSettings68(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // specify_attributes_not_to_retrieve
-export async function snippetForSetSettings69(): Promise<void> {
+export async function snippetForSetSettings70(): Promise<void> {
   // >SEPARATOR setSettings specify_attributes_not_to_retrieve
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7929,7 +8142,7 @@ export async function snippetForSetSettings69(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // neural_search
-export async function snippetForSetSettings70(): Promise<void> {
+export async function snippetForSetSettings71(): Promise<void> {
   // >SEPARATOR setSettings neural_search
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7946,7 +8159,7 @@ export async function snippetForSetSettings70(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // keyword_search
-export async function snippetForSetSettings71(): Promise<void> {
+export async function snippetForSetSettings72(): Promise<void> {
   // >SEPARATOR setSettings keyword_search
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7963,7 +8176,7 @@ export async function snippetForSetSettings71(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_ranking
-export async function snippetForSetSettings72(): Promise<void> {
+export async function snippetForSetSettings73(): Promise<void> {
   // >SEPARATOR setSettings set_default_ranking
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7983,7 +8196,7 @@ export async function snippetForSetSettings72(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_ranking_by_attribute_asc
-export async function snippetForSetSettings73(): Promise<void> {
+export async function snippetForSetSettings74(): Promise<void> {
   // >SEPARATOR setSettings set_ranking_by_attribute_asc
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8005,7 +8218,7 @@ export async function snippetForSetSettings73(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_ranking_by_attribute_desc
-export async function snippetForSetSettings74(): Promise<void> {
+export async function snippetForSetSettings75(): Promise<void> {
   // >SEPARATOR setSettings set_ranking_by_attribute_desc
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8027,7 +8240,7 @@ export async function snippetForSetSettings74(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_custom_ranking
-export async function snippetForSetSettings75(): Promise<void> {
+export async function snippetForSetSettings76(): Promise<void> {
   // >SEPARATOR setSettings set_custom_ranking
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8047,7 +8260,7 @@ export async function snippetForSetSettings75(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_relevancy
-export async function snippetForSetSettings76(): Promise<void> {
+export async function snippetForSetSettings77(): Promise<void> {
   // >SEPARATOR setSettings set_default_relevancy
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8064,7 +8277,7 @@ export async function snippetForSetSettings76(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_replicas
-export async function snippetForSetSettings77(): Promise<void> {
+export async function snippetForSetSettings78(): Promise<void> {
   // >SEPARATOR setSettings set_replicas
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8084,7 +8297,7 @@ export async function snippetForSetSettings77(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_max_values_per_facet
-export async function snippetForSetSettings78(): Promise<void> {
+export async function snippetForSetSettings79(): Promise<void> {
   // >SEPARATOR setSettings set_default_max_values_per_facet
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8101,7 +8314,7 @@ export async function snippetForSetSettings78(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_sort_facet_values_by
-export async function snippetForSetSettings79(): Promise<void> {
+export async function snippetForSetSettings80(): Promise<void> {
   // >SEPARATOR setSettings set_default_sort_facet_values_by
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8121,7 +8334,7 @@ export async function snippetForSetSettings79(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_attributes_to_snippet
-export async function snippetForSetSettings80(): Promise<void> {
+export async function snippetForSetSettings81(): Promise<void> {
   // >SEPARATOR setSettings set_attributes_to_snippet
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8141,7 +8354,7 @@ export async function snippetForSetSettings80(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_all_attributes_to_snippet
-export async function snippetForSetSettings81(): Promise<void> {
+export async function snippetForSetSettings82(): Promise<void> {
   // >SEPARATOR setSettings set_all_attributes_to_snippet
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8161,7 +8374,7 @@ export async function snippetForSetSettings81(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_highlight_pre_tag
-export async function snippetForSetSettings82(): Promise<void> {
+export async function snippetForSetSettings83(): Promise<void> {
   // >SEPARATOR setSettings set_default_highlight_pre_tag
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8178,7 +8391,7 @@ export async function snippetForSetSettings82(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_highlight_post_tag
-export async function snippetForSetSettings83(): Promise<void> {
+export async function snippetForSetSettings84(): Promise<void> {
   // >SEPARATOR setSettings set_default_highlight_post_tag
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8198,7 +8411,7 @@ export async function snippetForSetSettings83(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_snippet_ellipsis_text
-export async function snippetForSetSettings84(): Promise<void> {
+export async function snippetForSetSettings85(): Promise<void> {
   // >SEPARATOR setSettings set_default_snippet_ellipsis_text
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8215,7 +8428,7 @@ export async function snippetForSetSettings84(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // enable_restrict_highlight_and_snippet_arrays_by_default
-export async function snippetForSetSettings85(): Promise<void> {
+export async function snippetForSetSettings86(): Promise<void> {
   // >SEPARATOR setSettings enable_restrict_highlight_and_snippet_arrays_by_default
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8235,7 +8448,7 @@ export async function snippetForSetSettings85(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_hits_per_page
-export async function snippetForSetSettings86(): Promise<void> {
+export async function snippetForSetSettings87(): Promise<void> {
   // >SEPARATOR setSettings set_default_hits_per_page
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8252,7 +8465,7 @@ export async function snippetForSetSettings86(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_pagination_limit
-export async function snippetForSetSettings87(): Promise<void> {
+export async function snippetForSetSettings88(): Promise<void> {
   // >SEPARATOR setSettings set_pagination_limit
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8272,7 +8485,7 @@ export async function snippetForSetSettings87(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_min_word_size_for_one_typo
-export async function snippetForSetSettings88(): Promise<void> {
+export async function snippetForSetSettings89(): Promise<void> {
   // >SEPARATOR setSettings set_default_min_word_size_for_one_typo
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8289,7 +8502,7 @@ export async function snippetForSetSettings88(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_min_word_size_for_two_typos
-export async function snippetForSetSettings89(): Promise<void> {
+export async function snippetForSetSettings90(): Promise<void> {
   // >SEPARATOR setSettings set_default_min_word_size_for_two_typos
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8306,7 +8519,7 @@ export async function snippetForSetSettings89(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_typo_tolerance_mode
-export async function snippetForSetSettings90(): Promise<void> {
+export async function snippetForSetSettings91(): Promise<void> {
   // >SEPARATOR setSettings set_default_typo_tolerance_mode
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8323,7 +8536,7 @@ export async function snippetForSetSettings90(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // disable_typos_on_numeric_tokens_by_default
-export async function snippetForSetSettings91(): Promise<void> {
+export async function snippetForSetSettings92(): Promise<void> {
   // >SEPARATOR setSettings disable_typos_on_numeric_tokens_by_default
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8343,7 +8556,7 @@ export async function snippetForSetSettings91(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // disable_typo_tolerance_for_words
-export async function snippetForSetSettings92(): Promise<void> {
+export async function snippetForSetSettings93(): Promise<void> {
   // >SEPARATOR setSettings disable_typo_tolerance_for_words
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8363,7 +8576,7 @@ export async function snippetForSetSettings92(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_separators_to_index
-export async function snippetForSetSettings93(): Promise<void> {
+export async function snippetForSetSettings94(): Promise<void> {
   // >SEPARATOR setSettings set_separators_to_index
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8380,7 +8593,7 @@ export async function snippetForSetSettings93(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_querylanguage_ignoreplurals
-export async function snippetForSetSettings94(): Promise<void> {
+export async function snippetForSetSettings95(): Promise<void> {
   // >SEPARATOR setSettings set_querylanguage_ignoreplurals
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8400,7 +8613,7 @@ export async function snippetForSetSettings94(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_attributes_to_transliterate
-export async function snippetForSetSettings95(): Promise<void> {
+export async function snippetForSetSettings96(): Promise<void> {
   // >SEPARATOR setSettings set_attributes_to_transliterate
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8420,7 +8633,7 @@ export async function snippetForSetSettings95(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_querylanguage_removestopwords
-export async function snippetForSetSettings96(): Promise<void> {
+export async function snippetForSetSettings97(): Promise<void> {
   // >SEPARATOR setSettings set_querylanguage_removestopwords
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8440,7 +8653,7 @@ export async function snippetForSetSettings96(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_camel_case_attributes
-export async function snippetForSetSettings97(): Promise<void> {
+export async function snippetForSetSettings98(): Promise<void> {
   // >SEPARATOR setSettings set_camel_case_attributes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8460,7 +8673,7 @@ export async function snippetForSetSettings97(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_decompounded_attributes
-export async function snippetForSetSettings98(): Promise<void> {
+export async function snippetForSetSettings99(): Promise<void> {
   // >SEPARATOR setSettings set_decompounded_attributes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8480,7 +8693,7 @@ export async function snippetForSetSettings98(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_decompounded_multiple_attributes
-export async function snippetForSetSettings99(): Promise<void> {
+export async function snippetForSetSettings100(): Promise<void> {
   // >SEPARATOR setSettings set_decompounded_multiple_attributes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8500,7 +8713,7 @@ export async function snippetForSetSettings99(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_keep_diacritics_on_characters
-export async function snippetForSetSettings100(): Promise<void> {
+export async function snippetForSetSettings101(): Promise<void> {
   // >SEPARATOR setSettings set_keep_diacritics_on_characters
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8520,7 +8733,7 @@ export async function snippetForSetSettings100(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_custom_normalization
-export async function snippetForSetSettings101(): Promise<void> {
+export async function snippetForSetSettings102(): Promise<void> {
   // >SEPARATOR setSettings set_custom_normalization
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8540,7 +8753,7 @@ export async function snippetForSetSettings101(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_querylanguage_both
-export async function snippetForSetSettings102(): Promise<void> {
+export async function snippetForSetSettings103(): Promise<void> {
   // >SEPARATOR setSettings set_querylanguage_both
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8560,7 +8773,7 @@ export async function snippetForSetSettings102(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_indexlanguages
-export async function snippetForSetSettings103(): Promise<void> {
+export async function snippetForSetSettings104(): Promise<void> {
   // >SEPARATOR setSettings set_indexlanguages
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8577,7 +8790,7 @@ export async function snippetForSetSettings103(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // enable_decompound_query_by_default
-export async function snippetForSetSettings104(): Promise<void> {
+export async function snippetForSetSettings105(): Promise<void> {
   // >SEPARATOR setSettings enable_decompound_query_by_default
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8594,7 +8807,7 @@ export async function snippetForSetSettings104(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // enable_rules_syntax_by_default
-export async function snippetForSetSettings105(): Promise<void> {
+export async function snippetForSetSettings106(): Promise<void> {
   // >SEPARATOR setSettings enable_rules_syntax_by_default
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8611,7 +8824,7 @@ export async function snippetForSetSettings105(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // enable_personalization_settings
-export async function snippetForSetSettings106(): Promise<void> {
+export async function snippetForSetSettings107(): Promise<void> {
   // >SEPARATOR setSettings enable_personalization_settings
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8631,7 +8844,7 @@ export async function snippetForSetSettings106(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_query_type
-export async function snippetForSetSettings107(): Promise<void> {
+export async function snippetForSetSettings108(): Promise<void> {
   // >SEPARATOR setSettings set_default_query_type
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8648,7 +8861,7 @@ export async function snippetForSetSettings107(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_remove_words_if_no_result
-export async function snippetForSetSettings108(): Promise<void> {
+export async function snippetForSetSettings109(): Promise<void> {
   // >SEPARATOR setSettings set_default_remove_words_if_no_result
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8668,7 +8881,7 @@ export async function snippetForSetSettings108(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // enable_advanced_syntax_by_default
-export async function snippetForSetSettings109(): Promise<void> {
+export async function snippetForSetSettings110(): Promise<void> {
   // >SEPARATOR setSettings enable_advanced_syntax_by_default
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8685,7 +8898,7 @@ export async function snippetForSetSettings109(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_optional_words
-export async function snippetForSetSettings110(): Promise<void> {
+export async function snippetForSetSettings111(): Promise<void> {
   // >SEPARATOR setSettings set_default_optional_words
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8705,7 +8918,7 @@ export async function snippetForSetSettings110(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // disabling_prefix_search_for_some_attributes_by_default
-export async function snippetForSetSettings111(): Promise<void> {
+export async function snippetForSetSettings112(): Promise<void> {
   // >SEPARATOR setSettings disabling_prefix_search_for_some_attributes_by_default
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8725,7 +8938,7 @@ export async function snippetForSetSettings111(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // disabling_exact_for_some_attributes_by_default
-export async function snippetForSetSettings112(): Promise<void> {
+export async function snippetForSetSettings113(): Promise<void> {
   // >SEPARATOR setSettings disabling_exact_for_some_attributes_by_default
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8745,7 +8958,7 @@ export async function snippetForSetSettings112(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_exact_single_word_query
-export async function snippetForSetSettings113(): Promise<void> {
+export async function snippetForSetSettings114(): Promise<void> {
   // >SEPARATOR setSettings set_default_exact_single_word_query
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8765,7 +8978,7 @@ export async function snippetForSetSettings113(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_aternative_as_exact
-export async function snippetForSetSettings114(): Promise<void> {
+export async function snippetForSetSettings115(): Promise<void> {
   // >SEPARATOR setSettings set_default_aternative_as_exact
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8785,7 +8998,7 @@ export async function snippetForSetSettings114(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_numeric_attributes_for_filtering
-export async function snippetForSetSettings115(): Promise<void> {
+export async function snippetForSetSettings116(): Promise<void> {
   // >SEPARATOR setSettings set_numeric_attributes_for_filtering
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8805,7 +9018,7 @@ export async function snippetForSetSettings115(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // enable_compression_of_integer_array
-export async function snippetForSetSettings116(): Promise<void> {
+export async function snippetForSetSettings117(): Promise<void> {
   // >SEPARATOR setSettings enable_compression_of_integer_array
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8825,7 +9038,7 @@ export async function snippetForSetSettings116(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_attributes_for_distinct
-export async function snippetForSetSettings117(): Promise<void> {
+export async function snippetForSetSettings118(): Promise<void> {
   // >SEPARATOR setSettings set_attributes_for_distinct
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8845,7 +9058,7 @@ export async function snippetForSetSettings117(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_distinct
-export async function snippetForSetSettings118(): Promise<void> {
+export async function snippetForSetSettings119(): Promise<void> {
   // >SEPARATOR setSettings set_distinct
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8865,7 +9078,7 @@ export async function snippetForSetSettings118(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_replace_synonyms_in_highlights
-export async function snippetForSetSettings119(): Promise<void> {
+export async function snippetForSetSettings120(): Promise<void> {
   // >SEPARATOR setSettings set_replace_synonyms_in_highlights
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8885,7 +9098,7 @@ export async function snippetForSetSettings119(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_min_proximity
-export async function snippetForSetSettings120(): Promise<void> {
+export async function snippetForSetSettings121(): Promise<void> {
   // >SEPARATOR setSettings set_min_proximity
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8902,7 +9115,7 @@ export async function snippetForSetSettings120(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_field
-export async function snippetForSetSettings121(): Promise<void> {
+export async function snippetForSetSettings122(): Promise<void> {
   // >SEPARATOR setSettings set_default_field
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8922,7 +9135,7 @@ export async function snippetForSetSettings121(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_max_facet_hits
-export async function snippetForSetSettings122(): Promise<void> {
+export async function snippetForSetSettings123(): Promise<void> {
   // >SEPARATOR setSettings set_max_facet_hits
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8939,7 +9152,7 @@ export async function snippetForSetSettings122(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_attribute_criteria_computed_by_min_proximity
-export async function snippetForSetSettings123(): Promise<void> {
+export async function snippetForSetSettings124(): Promise<void> {
   // >SEPARATOR setSettings set_attribute_criteria_computed_by_min_proximity
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8959,7 +9172,7 @@ export async function snippetForSetSettings123(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_user_data
-export async function snippetForSetSettings124(): Promise<void> {
+export async function snippetForSetSettings125(): Promise<void> {
   // >SEPARATOR setSettings set_user_data
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8979,7 +9192,7 @@ export async function snippetForSetSettings124(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_rendering_content
-export async function snippetForSetSettings125(): Promise<void> {
+export async function snippetForSetSettings126(): Promise<void> {
   // >SEPARATOR setSettings set_rendering_content
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8998,6 +9211,80 @@ export async function snippetForSetSettings125(): Promise<void> {
         },
       },
     },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// typoToleranceMin
+export async function snippetForSetSettings127(): Promise<void> {
+  // >SEPARATOR setSettings typoToleranceMin
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { typoTolerance: 'min' } });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// minWordSizefor1Typo5
+export async function snippetForSetSettings128(): Promise<void> {
+  // >SEPARATOR setSettings minWordSizefor1Typo5
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { minWordSizefor1Typo: 5 } });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesToSnippetBodyTitle
+export async function snippetForSetSettings129(): Promise<void> {
+  // >SEPARATOR setSettings attributesToSnippetBodyTitle
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { attributesToSnippet: ['body:20', 'title'] },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// snippetEllipsisTextHellip
+export async function snippetForSetSettings130(): Promise<void> {
+  // >SEPARATOR setSettings snippetEllipsisTextHellip
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { snippetEllipsisText: '[&hellip;]' },
   });
 
   // >LOG

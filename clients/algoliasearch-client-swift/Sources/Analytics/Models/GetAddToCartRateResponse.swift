@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct GetAddToCartRateResponse: Codable, JSONEncodable {
@@ -43,14 +43,7 @@ public struct GetAddToCartRateResponse: Codable, JSONEncodable {
     }
 }
 
-extension GetAddToCartRateResponse: Equatable {
-    public static func ==(lhs: GetAddToCartRateResponse, rhs: GetAddToCartRateResponse) -> Bool {
-        lhs.rate == rhs.rate &&
-            lhs.trackedSearchCount == rhs.trackedSearchCount &&
-            lhs.addToCartCount == rhs.addToCartCount &&
-            lhs.dates == rhs.dates
-    }
-}
+extension GetAddToCartRateResponse: Equatable {}
 
 extension GetAddToCartRateResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

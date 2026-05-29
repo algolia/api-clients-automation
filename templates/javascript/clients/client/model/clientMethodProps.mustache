@@ -15,8 +15,11 @@ import type { {{classname}} } from '{{filename}}';
 {{! Imports for the helpers method of the search client }}
 {{#isSearchClient}}
 import type { createSearchClient } from '../src/searchClient';
-import type { CreateIterablePromise } from '@algolia/client-common';
+import type { ChunkedHelperOptions, CreateIterablePromise } from '@algolia/client-common';
 {{/isSearchClient}}
+{{#isIngestionClient}}
+import type { ChunkedHelperOptions } from '@algolia/client-common';
+{{/isIngestionClient}}
 
 {{#operations}}
 {{#operation}}
@@ -58,7 +61,7 @@ export type BrowseOptions<T> = Partial<
 
 type WaitForOptions = Partial<{
   /**
-   * The maximum number of retries. 50 by default.
+   * The maximum number of retries. 100 by default.
    */
   maxRetries: number;
 
@@ -134,7 +137,7 @@ export type SearchClientNodeHelpers = {
 };
 {{/isSearchClient}}
 
-export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'waitForTasks' | 'batchSize'> & {
+export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'waitForTasks' | 'batchSize'> & ChunkedHelperOptions & {
   /**
    * The objectIDs to delete.
    */
@@ -144,7 +147,7 @@ export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'wait
 export type PartialUpdateObjectsOptions = Pick<
   ChunkedBatchOptions,
   'indexName' | 'objects' | 'waitForTasks' | 'batchSize'
-> & {
+> & ChunkedHelperOptions & {
   /**
    *To be provided if non-existing objects are passed, otherwise, the call will fail.
    */
@@ -154,7 +157,7 @@ export type PartialUpdateObjectsOptions = Pick<
 export type SaveObjectsOptions = Pick<
   ChunkedBatchOptions,
   'indexName' | 'objects' | 'waitForTasks' | 'batchSize'
->;
+> & ChunkedHelperOptions;
 
 export type ChunkedBatchOptions = ReplaceAllObjectsOptions & {
   /**
@@ -168,7 +171,7 @@ export type ChunkedBatchOptions = ReplaceAllObjectsOptions & {
   waitForTasks?: boolean | undefined;
 }
 
-export type ReplaceAllObjectsOptions = {
+export type ReplaceAllObjectsOptions = ChunkedHelperOptions & {
   /**
    * The `indexName` to replace `objects` in.
    */
@@ -190,7 +193,7 @@ export type ReplaceAllObjectsOptions = {
   scopes?: Array<ScopeType> | undefined;
 }
 
-export type AccountCopyIndexOptions = {
+export type AccountCopyIndexOptions = ChunkedHelperOptions & {
   /**
    * The name of the index to copy to the `destinationClient`.
    */
@@ -221,7 +224,7 @@ export type AccountCopyIndexOptions = {
 {{#isCompositionClient}}
 export type WaitForCompositionTaskOptions = {
   /**
-   * The maximum number of retries. 50 by default.
+   * The maximum number of retries. 100 by default.
    */
   maxRetries?: number | undefined;
 
@@ -242,7 +245,7 @@ export type WaitForCompositionTaskOptions = {
 };
 {{/isCompositionClient}}
 {{#isIngestionClient}}
-export type ChunkedPushOptions = {
+export type ChunkedPushOptions = ChunkedHelperOptions & {
   /**
    * The `indexName` to replace `objects` in.
    */

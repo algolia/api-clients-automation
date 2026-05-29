@@ -52,7 +52,7 @@ public interface AuthInput {
     public AuthInput deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
       // deserialize AuthOAuth
-      if (tree.isObject() && tree.has("url") && tree.has("client_id") && tree.has("client_secret")) {
+      if (tree.isObject() && tree.has("url") && tree.has("client_id") && tree.has("client_secret") && tree.has("code")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(AuthOAuth.class);
         } catch (Exception e) {

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Rule metadata.
@@ -27,11 +27,7 @@ public struct RuleMetadata: Codable, JSONEncodable {
     }
 }
 
-extension RuleMetadata: Equatable {
-    public static func ==(lhs: RuleMetadata, rhs: RuleMetadata) -> Bool {
-        lhs.lastUpdate == rhs.lastUpdate
-    }
-}
+extension RuleMetadata: Equatable {}
 
 extension RuleMetadata: Hashable {
     public func hash(into hasher: inout Hasher) {

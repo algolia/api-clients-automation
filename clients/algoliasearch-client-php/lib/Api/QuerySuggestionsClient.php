@@ -26,17 +26,12 @@ use GuzzleHttp\Psr7\Query;
  */
 class QuerySuggestionsClient
 {
-    public const VERSION = '4.37.3';
+    public const VERSION = '4.44.0';
 
     /**
      * @var ApiWrapperInterface
      */
     protected $api;
-
-    /**
-     * @var IngestionClient
-     */
-    protected $ingestionTransporter;
 
     /**
      * @var QuerySuggestionsConfig
@@ -79,6 +74,10 @@ class QuerySuggestionsClient
         );
 
         $client = new static($apiWrapper, $config);
+
+        $logger = Algolia::getLogger();
+        $logger->info('Algolia API client: Algolia QuerySuggestionsClient initialized (appId: '.$config->getAppId().')');
+        Algolia::logDebugWarningOnce();
 
         return $client;
     }
@@ -307,7 +306,7 @@ class QuerySuggestionsClient
      * @param array|Configuration $configuration configuration (required)
      *                                           - $configuration['sourceIndices'] => (array) Algolia indices from which to get the popular searches for query suggestions. (required)
      *                                           - $configuration['languages'] => (array)
-     *                                           - $configuration['exclude'] => (array)
+     *                                           - $configuration['exclude'] => (array) Words or regular expressions to exclude from the suggestions.
      *                                           - $configuration['enablePersonalization'] => (bool) Whether to turn on personalized query suggestions.
      *                                           - $configuration['allowSpecialCharacters'] => (bool) Whether to include suggestions with special characters.
      *
@@ -374,6 +373,12 @@ class QuerySuggestionsClient
                 'Parameter `path` is required when calling `customDelete`.'
             );
         }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customDelete`.'
+            );
+        }
 
         $resourcePath = '/{path}';
         $queryParameters = [];
@@ -412,6 +417,12 @@ class QuerySuggestionsClient
     {
         // verify the required parameter 'path' is set
         if (!isset($path)) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customGet`.'
+            );
+        }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
             throw new \InvalidArgumentException(
                 'Parameter `path` is required when calling `customGet`.'
             );
@@ -459,6 +470,12 @@ class QuerySuggestionsClient
                 'Parameter `path` is required when calling `customPost`.'
             );
         }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customPost`.'
+            );
+        }
 
         $resourcePath = '/{path}';
         $queryParameters = [];
@@ -502,6 +519,12 @@ class QuerySuggestionsClient
                 'Parameter `path` is required when calling `customPut`.'
             );
         }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customPut`.'
+            );
+        }
 
         $resourcePath = '/{path}';
         $queryParameters = [];
@@ -541,6 +564,12 @@ class QuerySuggestionsClient
     {
         // verify the required parameter 'indexName' is set
         if (!isset($indexName)) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `deleteConfig`.'
+            );
+        }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
             throw new \InvalidArgumentException(
                 'Parameter `indexName` is required when calling `deleteConfig`.'
             );
@@ -606,6 +635,12 @@ class QuerySuggestionsClient
                 'Parameter `indexName` is required when calling `getConfig`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `getConfig`.'
+            );
+        }
 
         $resourcePath = '/1/configs/{indexName}';
         $queryParameters = [];
@@ -641,6 +676,12 @@ class QuerySuggestionsClient
     {
         // verify the required parameter 'indexName' is set
         if (!isset($indexName)) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `getConfigStatus`.'
+            );
+        }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
             throw new \InvalidArgumentException(
                 'Parameter `indexName` is required when calling `getConfigStatus`.'
             );
@@ -684,6 +725,12 @@ class QuerySuggestionsClient
                 'Parameter `indexName` is required when calling `getLogFile`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `getLogFile`.'
+            );
+        }
 
         $resourcePath = '/1/logs/{indexName}';
         $queryParameters = [];
@@ -720,6 +767,12 @@ class QuerySuggestionsClient
     {
         // verify the required parameter 'indexName' is set
         if (!isset($indexName)) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `updateConfig`.'
+            );
+        }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
             throw new \InvalidArgumentException(
                 'Parameter `indexName` is required when calling `updateConfig`.'
             );

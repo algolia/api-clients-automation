@@ -4,8 +4,8 @@ import XCTest
 
 import Utils
 
-@testable import Analytics
-@testable import Core
+@testable import AlgoliaAnalytics
+@testable import AlgoliaCore
 
 final class AnalyticsClientClientTests: XCTestCase {
     let APPLICATION_ID = "my_application_id"
@@ -38,7 +38,7 @@ final class AnalyticsClientClientTests: XCTestCase {
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
-        let pattern = "^Algolia for Swift \\(9.37.4\\).*"
+        let pattern = "^Algolia for Swift \\(9.43.2\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
@@ -74,7 +74,7 @@ final class AnalyticsClientClientTests: XCTestCase {
     }
 
     /// throws when incorrect region is given
-    func testParametersTest2() async throws {
+    func testParametersTest2() throws {
         do {
             let configuration = try AnalyticsClientConfiguration(
                 appID: "my-app-id",
@@ -91,7 +91,7 @@ final class AnalyticsClientClientTests: XCTestCase {
     }
 
     /// getAverageClickPosition throws without index
-    func testParametersTest3() async throws {
+    func testParametersTest3() throws {
         let configuration = try AnalyticsClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)

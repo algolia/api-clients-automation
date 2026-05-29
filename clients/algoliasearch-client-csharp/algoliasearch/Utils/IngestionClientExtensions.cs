@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
 using System.Threading;
@@ -9,6 +10,7 @@ using Algolia.Search.Http;
 using Algolia.Search.Models.Ingestion;
 using Algolia.Search.Serializer;
 using Algolia.Search.Utils;
+using Microsoft.Extensions.Logging;
 
 namespace Algolia.Search.Clients;
 
@@ -26,7 +28,8 @@ public partial interface IIngestionClient
     int batchSize = 1000,
     string referenceIndexName = null,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    ChunkedHelperOptions chunkedOptions = null
   );
 
   /// <summary>
@@ -40,7 +43,8 @@ public partial interface IIngestionClient
     int batchSize = 1000,
     string referenceIndexName = null,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    ChunkedHelperOptions chunkedOptions = null
   );
 }
 
@@ -59,6 +63,7 @@ public partial class IngestionClient : IIngestionClient
   /// <param name="referenceIndexName">This is required when targeting an index that does not have a push connector setup (e.g. a tmp index), but you wish to attach another index's transformation to it (e.g. the source index name).</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation token to cancel the request</param>
+  /// <param name="chunkedOptions">Optional configuration for the helper.</param>
   /// <returns>List of WatchResponse objects from the push operations</returns>
   public async Task<List<WatchResponse>> ChunkedPushAsync(
     string indexName,
@@ -68,13 +73,28 @@ public partial class IngestionClient : IIngestionClient
     int batchSize = 1000,
     string referenceIndexName = null,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    ChunkedHelperOptions chunkedOptions = null
   )
   {
+    var maxRetries = chunkedOptions?.MaxRetries ?? RetryHelper.DefaultMaxRetries;
     var objectsList = objects.ToList();
+    var totalObjects = objectsList.Count;
     var responses = new List<WatchResponse>();
     var waitBatchSize = Math.Max(batchSize / 10, 1);
     var offset = 0;
+    var processedObjects = 0;
+
+    var sw = Stopwatch.StartNew();
+    if (_logger.IsEnabled(LogLevel.Information))
+    {
+      _logger.LogInformation(
+        "Batch operation started: {Action} on {Index} ({Total} objects)",
+        action,
+        indexName,
+        totalObjects
+      );
+    }
 
     for (var i = 0; i < objectsList.Count; i += batchSize)
     {
@@ -101,6 +121,16 @@ public partial class IngestionClient : IIngestionClient
         .ConfigureAwait(false);
 
       responses.Add(response);
+      processedObjects += Math.Min(batchSize, objectsList.Count - i);
+
+      if (_logger.IsEnabled(LogLevel.Information))
+      {
+        _logger.LogInformation(
+          "Batch progress: {Processed}/{Total} objects processed",
+          processedObjects,
+          totalObjects
+        );
+      }
 
       if (
         waitForTasks
@@ -137,13 +167,24 @@ public partial class IngestionClient : IIngestionClient
                 }
               },
               eventResponse => eventResponse != null,
-              maxRetries: 50,
+              maxRetries: maxRetries,
+              timeout: retryCount => Math.Min(retryCount * 1500, 5000),
               ct: cancellationToken
             )
             .ConfigureAwait(false);
         }
         offset = responses.Count;
       }
+    }
+
+    sw.Stop();
+    if (_logger.IsEnabled(LogLevel.Information))
+    {
+      _logger.LogInformation(
+        "Batch operation completed: {Total} objects in {Duration}ms",
+        totalObjects,
+        sw.ElapsedMilliseconds
+      );
     }
 
     return responses;
@@ -160,7 +201,8 @@ public partial class IngestionClient : IIngestionClient
     int batchSize = 1000,
     string referenceIndexName = null,
     RequestOptions options = null,
-    CancellationToken cancellationToken = default
+    CancellationToken cancellationToken = default,
+    ChunkedHelperOptions chunkedOptions = null
   ) =>
     AsyncHelper.RunSync(() =>
       ChunkedPushAsync(
@@ -171,7 +213,8 @@ public partial class IngestionClient : IIngestionClient
         batchSize,
         referenceIndexName,
         options,
-        cancellationToken
+        cancellationToken,
+        chunkedOptions
       )
     );
 }

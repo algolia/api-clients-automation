@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct DailyNoClickRates: Codable, JSONEncodable {
@@ -42,14 +42,7 @@ public struct DailyNoClickRates: Codable, JSONEncodable {
     }
 }
 
-extension DailyNoClickRates: Equatable {
-    public static func ==(lhs: DailyNoClickRates, rhs: DailyNoClickRates) -> Bool {
-        lhs.rate == rhs.rate &&
-            lhs.count == rhs.count &&
-            lhs.noClickCount == rhs.noClickCount &&
-            lhs.date == rhs.date
-    }
-}
+extension DailyNoClickRates: Equatable {}
 
 extension DailyNoClickRates: Hashable {
     public func hash(into hasher: inout Hasher) {

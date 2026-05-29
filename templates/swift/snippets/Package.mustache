@@ -24,7 +24,7 @@ let package = Package(
       name: "AlgoliaSearchClientSnippets",
       dependencies: [{{#packageList}}
         .product(
-          name: "{{{.}}}",
+          name: "Algolia{{{.}}}",
           package: "algoliasearch-client-swift"
         ),{{/packageList}}
       ]

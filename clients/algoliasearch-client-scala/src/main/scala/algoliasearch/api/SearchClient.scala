@@ -108,6 +108,36 @@ object SearchClient {
     clientOptions = clientOptions
   )
 
+  /** Creates a new SearchClient configured with [[TransformationOptions]] for use with the `*WithTransformation`
+    * helpers. The ingestion transporter is built eagerly using Ingestion API defaults; pass
+    * [[TransformationOptions.clientOptions]] to override them.
+    *
+    * See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+    *
+    * @param appId
+    *   application ID
+    * @param apiKey
+    *   api key
+    * @param transformationOptions
+    *   ingestion transporter configuration; `region` is required
+    * @param clientOptions
+    *   search client options
+    */
+  def withTransformation(
+      appId: String,
+      apiKey: String,
+      transformationOptions: TransformationOptions,
+      clientOptions: ClientOptions = ClientOptions()
+  ): SearchClient = {
+    val client = new SearchClient(
+      appId = appId,
+      apiKey = apiKey,
+      clientOptions = clientOptions
+    )
+    client.setTransformationOptions(transformationOptions)
+    client
+  }
+
   private def readTimeout(): Duration = {
     Duration(5000, TimeUnit.MILLISECONDS)
   }
@@ -151,6 +181,33 @@ class SearchClient(
       options = clientOptions
     ) {
 
+  @volatile private[algoliasearch] var ingestionTransporter: Option[IngestionClient] = None
+
+  /** Sets (or replaces) the ingestion transporter used by `*WithTransformation` helpers. Closes the previous
+    * transporter if one exists. Thread-safe with respect to other `setTransformationOptions` and `close()` calls.
+    * Calling this while a `*WithTransformation` operation is in flight may cause that operation to fail — reconfigure
+    * between calls.
+    *
+    * See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+    */
+  def setTransformationOptions(transformationOptions: TransformationOptions): Unit = synchronized {
+    val previous = ingestionTransporter
+    ingestionTransporter = Some(
+      IngestionClient(
+        appId = appId,
+        apiKey = apiKey,
+        region = transformationOptions.region,
+        clientOptions = transformationOptions.clientOptions.getOrElse(ClientOptions())
+      )
+    )
+    previous.foreach(_.close())
+  }
+
+  override def close(): Unit = synchronized {
+    try ingestionTransporter.foreach(_.close())
+    finally super.close()
+  }
+
   /** Creates a new API key with specific permissions and restrictions.
     *
     * Required API Key ACLs:
@@ -191,7 +248,9 @@ class SearchClient(
       implicit ec: ExecutionContext
   ): Future[UpdatedAtWithObjectIdResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `addOrUpdateObject`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `addOrUpdateObject`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `addOrUpdateObject`.")
+    requireNotEmpty(objectID, "Parameter `objectID` is required when calling `addOrUpdateObject`.")
     requireNotNull(body, "Parameter `body` is required when calling `addOrUpdateObject`.")
 
     val request = HttpRequest
@@ -242,6 +301,7 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[CreatedAtResponse] = Future {
     requireNotNull(xAlgoliaUserID, "Parameter `xAlgoliaUserID` is required when calling `assignUserId`.")
+    requireNotEmpty(xAlgoliaUserID, "Parameter `xAlgoliaUserID` is required when calling `assignUserId`.")
     requireNotNull(assignUserIdParams, "Parameter `assignUserIdParams` is required when calling `assignUserId`.")
 
     val request = HttpRequest
@@ -269,6 +329,7 @@ class SearchClient(
       implicit ec: ExecutionContext
   ): Future[BatchResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `batch`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `batch`.")
     requireNotNull(batchWriteParams, "Parameter `batchWriteParams` is required when calling `batch`.")
 
     val request = HttpRequest
@@ -296,6 +357,7 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[CreatedAtResponse] = Future {
     requireNotNull(xAlgoliaUserID, "Parameter `xAlgoliaUserID` is required when calling `batchAssignUserIds`.")
+    requireNotEmpty(xAlgoliaUserID, "Parameter `xAlgoliaUserID` is required when calling `batchAssignUserIds`.")
     requireNotNull(
       batchAssignUserIdsParams,
       "Parameter `batchAssignUserIdsParams` is required when calling `batchAssignUserIds`."
@@ -339,15 +401,15 @@ class SearchClient(
     execute[UpdatedAtResponse](request, requestOptions)
   }
 
-  /** Retrieves records from an index, up to 1,000 per request. While searching retrieves _hits_ (records augmented with
-    * attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if
-    * you want to export your indices. - The Analytics API doesn't collect data when using `browse`. - Records are
-    * ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words,
-    * proximity, geo distance. Browse requests automatically apply these settings: - `advancedSyntax`: `false` -
-    * `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`:
-    * `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` -
-    * `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send
-    * these parameters with your browse requests, they'll be ignored.
+  /** Retrieves records from an index, up to 1,000 per request. Searching returns _hits_ (records augmented with
+    * highlighting and ranking details). Browsing returns matching records only. Use browse to export your indices. -
+    * The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking.
+    * \- There's no ranking for typo tolerance, number of matched words, proximity, or geo distance. Browse requests
+    * automatically apply these settings: - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` -
+    * `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` -
+    * `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`:
+    * `true` or `false` (`min` and `strict` evaluate to `true`) If you send these parameters with your browse requests,
+    * they're ignored.
     *
     * Required API Key ACLs:
     *   - browse
@@ -361,6 +423,7 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[BrowseResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `browse`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `browse`.")
 
     val request = HttpRequest
       .builder()
@@ -386,6 +449,7 @@ class SearchClient(
       ec: ExecutionContext
   ): Future[UpdatedAtResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `clearObjects`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `clearObjects`.")
 
     val request = HttpRequest
       .builder()
@@ -411,6 +475,7 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `clearRules`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `clearRules`.")
 
     val request = HttpRequest
       .builder()
@@ -437,6 +502,7 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `clearSynonyms`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `clearSynonyms`.")
 
     val request = HttpRequest
       .builder()
@@ -460,6 +526,7 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customDelete`.")
 
     val request = HttpRequest
       .builder()
@@ -483,6 +550,7 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customGet`.")
 
     val request = HttpRequest
       .builder()
@@ -509,6 +577,7 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customPost`.")
 
     val request = HttpRequest
       .builder()
@@ -536,6 +605,7 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customPut`.")
 
     val request = HttpRequest
       .builder()
@@ -559,6 +629,7 @@ class SearchClient(
       ec: ExecutionContext
   ): Future[DeleteApiKeyResponse] = Future {
     requireNotNull(key, "Parameter `key` is required when calling `deleteApiKey`.")
+    requireNotEmpty(key, "Parameter `key` is required when calling `deleteApiKey`.")
 
     val request = HttpRequest
       .builder()
@@ -568,10 +639,10 @@ class SearchClient(
     execute[DeleteApiKeyResponse](request, requestOptions)
   }
 
-  /** This operation doesn't accept empty filters. This operation is resource-intensive. You should only use it if you
-    * can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with
-    * the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using
-    * the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This operation is subject to [indexing
+  /** This operation doesn't accept empty filters. This operation is resource-intensive. Use it only if you can't get
+    * the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the
+    * [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the
+    * [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This operation is subject to [indexing
     * rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     *
     * Required API Key ACLs:
@@ -584,6 +655,7 @@ class SearchClient(
       implicit ec: ExecutionContext
   ): Future[UpdatedAtResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `deleteBy`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `deleteBy`.")
     requireNotNull(deleteByParams, "Parameter `deleteByParams` is required when calling `deleteBy`.")
 
     val request = HttpRequest
@@ -612,6 +684,7 @@ class SearchClient(
       ec: ExecutionContext
   ): Future[DeletedAtResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `deleteIndex`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `deleteIndex`.")
 
     val request = HttpRequest
       .builder()
@@ -637,7 +710,9 @@ class SearchClient(
       ec: ExecutionContext
   ): Future[DeletedAtResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `deleteObject`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `deleteObject`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `deleteObject`.")
+    requireNotEmpty(objectID, "Parameter `objectID` is required when calling `deleteObject`.")
 
     val request = HttpRequest
       .builder()
@@ -667,7 +742,9 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `deleteRule`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `deleteRule`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `deleteRule`.")
+    requireNotEmpty(objectID, "Parameter `objectID` is required when calling `deleteRule`.")
 
     val request = HttpRequest
       .builder()
@@ -690,6 +767,7 @@ class SearchClient(
       ec: ExecutionContext
   ): Future[DeleteSourceResponse] = Future {
     requireNotNull(source, "Parameter `source` is required when calling `deleteSource`.")
+    requireNotEmpty(source, "Parameter `source` is required when calling `deleteSource`.")
 
     val request = HttpRequest
       .builder()
@@ -719,7 +797,9 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[DeletedAtResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `deleteSynonym`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `deleteSynonym`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `deleteSynonym`.")
+    requireNotEmpty(objectID, "Parameter `objectID` is required when calling `deleteSynonym`.")
 
     val request = HttpRequest
       .builder()
@@ -744,6 +824,7 @@ class SearchClient(
       ec: ExecutionContext
   ): Future[GetApiKeyResponse] = Future {
     requireNotNull(key, "Parameter `key` is required when calling `getApiKey`.")
+    requireNotEmpty(key, "Parameter `key` is required when calling `getApiKey`.")
 
     val request = HttpRequest
       .builder()
@@ -868,7 +949,9 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[Any] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getObject`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getObject`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `getObject`.")
+    requireNotEmpty(objectID, "Parameter `objectID` is required when calling `getObject`.")
 
     val request = HttpRequest
       .builder()
@@ -918,7 +1001,9 @@ class SearchClient(
       ec: ExecutionContext
   ): Future[Rule] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getRule`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getRule`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `getRule`.")
+    requireNotEmpty(objectID, "Parameter `objectID` is required when calling `getRule`.")
 
     val request = HttpRequest
       .builder()
@@ -943,6 +1028,7 @@ class SearchClient(
       implicit ec: ExecutionContext
   ): Future[SettingsResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getSettings`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getSettings`.")
 
     val request = HttpRequest
       .builder()
@@ -984,7 +1070,9 @@ class SearchClient(
       ec: ExecutionContext
   ): Future[SynonymHit] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getSynonym`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getSynonym`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `getSynonym`.")
+    requireNotEmpty(objectID, "Parameter `objectID` is required when calling `getSynonym`.")
 
     val request = HttpRequest
       .builder()
@@ -1010,6 +1098,7 @@ class SearchClient(
       ec: ExecutionContext
   ): Future[GetTaskResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getTask`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getTask`.")
     requireNotNull(taskID, "Parameter `taskID` is required when calling `getTask`.")
 
     val request = HttpRequest
@@ -1055,6 +1144,7 @@ class SearchClient(
       ec: ExecutionContext
   ): Future[UserId] = Future {
     requireNotNull(userID, "Parameter `userID` is required when calling `getUserId`.")
+    requireNotEmpty(userID, "Parameter `userID` is required when calling `getUserId`.")
 
     val request = HttpRequest
       .builder()
@@ -1202,20 +1292,20 @@ class SearchClient(
     execute[MultipleBatchResponse](request, requestOptions)
   }
 
-  /** Copies or moves (renames) an index within the same Algolia application. - Existing destination indices are
-    * overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created. -
-    * This operation is resource-intensive. **Copy** - Copying a source index that doesn't exist creates a new index
-    * with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the
+  /** Copies or moves (renames) an index within the same Algolia application. Notes: - Existing destination indices are
+    * overwritten, except for their analytics data. - If the destination index doesn't exist yet, it's created. - This
+    * operation is resource-intensive. **Copy** - If the source index doesn't exist, copying creates a new index with 0
+    * records and default settings. - API keys from the source index are merged with the existing keys in the
     * destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a
     * destination index that already has replicas. - Be aware of the [size
     * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). -
-    * Related guide: [Copy
-    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)
-    * **Move** - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index,
-    * the analytics data keeps its original name, and a new set of analytics data is started for the new name. To access
-    * the original analytics in the dashboard, create an index with the original name. - If the destination index has
-    * replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide:
-    * [Move
+    * For more information, see [Copy
+    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).
+    * **Move** - If the source index doesn't exist, moving is ignored without returning an error. - When moving an
+    * index, the analytics data keeps its original name, and a new set of analytics data is started for the new name. To
+    * access the original analytics in the dashboard, create an index with the original name. - If the destination index
+    * has replicas, moving will overwrite the existing index and copy the data to the replica indices. - For more
+    * information, see [Move
     * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
     * This operation is subject to [indexing rate
     * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
@@ -1232,6 +1322,7 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `operationIndex`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `operationIndex`.")
     requireNotNull(operationIndexParams, "Parameter `operationIndexParams` is required when calling `operationIndex`.")
 
     val request = HttpRequest
@@ -1245,25 +1336,25 @@ class SearchClient(
 
   /** Adds new attributes to a record, or updates existing ones. - If a record with the specified object ID doesn't
     * exist, a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet,
-    * this method creates a new index. - You can use any first-level attribute but not nested attributes. If you specify
-    * a nested attribute, this operation replaces its first-level ancestor. To update an attribute without pushing the
-    * entire record, you can use these built-in operations. These operations can be helpful if you don't have access to
-    * your initial data. - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add:
-    * append a number or string element to an array attribute - Remove: remove all matching number or string elements
-    * from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array
-    * attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer
-    * attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For
-    * example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute
-    * is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an
-    * IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is
-    * greater than the current value, and otherwise ignore the whole object update. For example, if you pass an
-    * IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates
-    * the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater
-    * than 0. You can specify an operation by providing an object with the attribute to update as the key and its value
-    * being an object with the following properties: - _operation: the operation to apply on the attribute - value: the
-    * right-hand side argument to the operation, for example, increment or decrement step, value to add or remove. When
-    * updating multiple attributes or using multiple operations targeting the same record, you should use a single
-    * partial update for faster processing. This operation is subject to [indexing rate
+    * this method creates a new index. - Use first-level attributes only. Nested attributes aren't supported. If you
+    * specify a nested attribute, this operation replaces its first-level ancestor. To update attributes without
+    * replacing the full record, use these built-in operations. These operations are useful when the initial data isn't
+    * available. - `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. - `Add`:
+    * append a number or string element to an array attribute. - `Remove`: remove all matching number or string elements
+    * from an array attribute made of numbers or strings. - `AddUnique`: add a number or string element to an array
+    * attribute made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a numeric
+    * integer attribute only if the provided value matches the current value. Otherwise, the update is ignored. Example:
+    * If you pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the API ignores
+    * the update. If the object doesn't exist, the API only creates it if you pass an `IncrementFrom` value of 0. -
+    * `IncrementSet`: increment a numeric integer attribute only if the provided value is greater than the current
+    * value. Otherwise, the update is ignored. Example: If you pass an `IncrementSet` value of 2 for the `version`
+    * attribute and the current value is 1, the API updates the object. If the object doesn't exist yet, the API only
+    * creates it if you pass an `IncrementSet` value greater than 0. Specify an operation by providing an object with
+    * the attribute to update as the key and its value as an object with these properties: - `_operation`: the operation
+    * to apply on the attribute. - `value`: the right-hand side argument to the operation, for example, increment or
+    * decrement step, or a value to add or remove. When updating multiple attributes or using multiple operations
+    * targeting the same record, use a single partial update for faster processing. This operation is subject to
+    * [indexing rate
     * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     *
     * Required API Key ACLs:
@@ -1286,7 +1377,9 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtWithObjectIdResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `partialUpdateObject`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `partialUpdateObject`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `partialUpdateObject`.")
+    requireNotEmpty(objectID, "Parameter `objectID` is required when calling `partialUpdateObject`.")
     requireNotNull(attributesToUpdate, "Parameter `attributesToUpdate` is required when calling `partialUpdateObject`.")
 
     val request = HttpRequest
@@ -1313,6 +1406,7 @@ class SearchClient(
       ec: ExecutionContext
   ): Future[RemoveUserIdResponse] = Future {
     requireNotNull(userID, "Parameter `userID` is required when calling `removeUserId`.")
+    requireNotEmpty(userID, "Parameter `userID` is required when calling `removeUserId`.")
 
     val request = HttpRequest
       .builder()
@@ -1357,6 +1451,7 @@ class SearchClient(
       ec: ExecutionContext
   ): Future[AddApiKeyResponse] = Future {
     requireNotNull(key, "Parameter `key` is required when calling `restoreApiKey`.")
+    requireNotEmpty(key, "Parameter `key` is required when calling `restoreApiKey`.")
 
     val request = HttpRequest
       .builder()
@@ -1387,6 +1482,7 @@ class SearchClient(
       ec: ExecutionContext
   ): Future[SaveObjectResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `saveObject`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `saveObject`.")
     requireNotNull(body, "Parameter `body` is required when calling `saveObject`.")
 
     val request = HttpRequest
@@ -1420,7 +1516,9 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `saveRule`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `saveRule`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `saveRule`.")
+    requireNotEmpty(objectID, "Parameter `objectID` is required when calling `saveRule`.")
     requireNotNull(rule, "Parameter `rule` is required when calling `saveRule`.")
 
     val request = HttpRequest
@@ -1455,6 +1553,7 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `saveRules`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `saveRules`.")
     requireNotNull(rules, "Parameter `rules` is required when calling `saveRules`.")
 
     val request = HttpRequest
@@ -1490,7 +1589,9 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[SaveSynonymResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `saveSynonym`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `saveSynonym`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `saveSynonym`.")
+    requireNotEmpty(objectID, "Parameter `objectID` is required when calling `saveSynonym`.")
     requireNotNull(synonymHit, "Parameter `synonymHit` is required when calling `saveSynonym`.")
 
     val request = HttpRequest
@@ -1525,6 +1626,7 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `saveSynonyms`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `saveSynonyms`.")
     requireNotNull(synonymHit, "Parameter `synonymHit` is required when calling `saveSynonyms`.")
 
     val request = HttpRequest
@@ -1538,16 +1640,16 @@ class SearchClient(
     execute[UpdatedAtResponse](request, requestOptions)
   }
 
-  /** Sends multiple search requests to one or more indices. This can be useful in these cases: - Different indices for
-    * different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the
-    * same index—for example, with different filters. Use the helper `searchForHits` or `searchForFacets` to get the
-    * results in a more convenient format, if you already know the return type you want.
+  /** Runs multiple search queries against one or more indices in a single API request. Use cases include: - Searching
+    * different indices, such as products and marketing content. - Run multiple queries on the same index with different
+    * parameters or filters. If you know the expected result type, use the `searchForHits` or `searchForFacets` helper
+    * to simplify the response format.
     *
     * Required API Key ACLs:
     *   - search
     *
     * @param searchMethodParams
-    *   Muli-search request body. Results are returned in the same order as the requests.
+    *   Multi-query search request body. Results are returned in the same order as the requests.
     */
   def search(searchMethodParams: SearchMethodParams, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -1613,7 +1715,9 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[SearchForFacetValuesResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `searchForFacetValues`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `searchForFacetValues`.")
     requireNotNull(facetName, "Parameter `facetName` is required when calling `searchForFacetValues`.")
+    requireNotEmpty(facetName, "Parameter `facetName` is required when calling `searchForFacetValues`.")
 
     val request = HttpRequest
       .builder()
@@ -1639,6 +1743,7 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[SearchRulesResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `searchRules`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `searchRules`.")
 
     val request = HttpRequest
       .builder()
@@ -1666,6 +1771,7 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[SearchResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `searchSingleIndex`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `searchSingleIndex`.")
 
     val request = HttpRequest
       .builder()
@@ -1693,6 +1799,7 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[SearchSynonymsResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `searchSynonyms`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `searchSynonyms`.")
 
     val request = HttpRequest
       .builder()
@@ -1771,6 +1878,7 @@ class SearchClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `setSettings`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `setSettings`.")
     requireNotNull(indexSettings, "Parameter `indexSettings` is required when calling `setSettings`.")
 
     val request = HttpRequest
@@ -1796,6 +1904,7 @@ class SearchClient(
       ec: ExecutionContext
   ): Future[UpdateApiKeyResponse] = Future {
     requireNotNull(key, "Parameter `key` is required when calling `updateApiKey`.")
+    requireNotEmpty(key, "Parameter `key` is required when calling `updateApiKey`.")
     requireNotNull(apiKey, "Parameter `apiKey` is required when calling `updateApiKey`.")
 
     val request = HttpRequest

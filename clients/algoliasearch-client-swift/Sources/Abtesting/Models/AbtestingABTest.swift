@@ -2,17 +2,27 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct AbtestingABTest: Codable, JSONEncodable {
     /// Unique A/B test identifier.
     public var abTestID: Int
+    /// A/B test significance calculated from click events.  Values of 0.95 or higher can be considered significant,
+    /// that is, the difference between A and B variants is _not_ due to random variations. Lower values have a.
     public var clickSignificance: Double?
+    /// A/B test significance calculated from conversion events.  Values of 0.95 or higher can be considered
+    /// significant, that is, the difference between A and B variants is _not_ due to random variations.
     public var conversionSignificance: Double?
+    /// A/B test significance calculated from add-to-cart events.  Values of 0.95 or higher can be considered
+    /// significant, that is, the difference between A and B variants is _not_ due to random variations.
     public var addToCartSignificance: Double?
+    /// A/B test significance calculated from purchase events.  Values of 0.95 or higher can be considered significant,
+    /// that is, the difference between A and B variants is _not_ due to random variations.
     public var purchaseSignificance: Double?
+    /// A/B test significance calculated from revenue data.  Values of 0.95 or higher can be considered significant,
+    /// that is, the difference between A and B variants is _not_ due to random variations.
     public var revenueSignificance: [String: Double]?
     /// Date and time when the A/B test was last updated, in RFC 3339 format.
     public var updatedAt: String
@@ -100,24 +110,7 @@ public struct AbtestingABTest: Codable, JSONEncodable {
     }
 }
 
-extension AbtestingABTest: Equatable {
-    public static func ==(lhs: AbtestingABTest, rhs: AbtestingABTest) -> Bool {
-        lhs.abTestID == rhs.abTestID &&
-            lhs.clickSignificance == rhs.clickSignificance &&
-            lhs.conversionSignificance == rhs.conversionSignificance &&
-            lhs.addToCartSignificance == rhs.addToCartSignificance &&
-            lhs.purchaseSignificance == rhs.purchaseSignificance &&
-            lhs.revenueSignificance == rhs.revenueSignificance &&
-            lhs.updatedAt == rhs.updatedAt &&
-            lhs.createdAt == rhs.createdAt &&
-            lhs.endAt == rhs.endAt &&
-            lhs.stoppedAt == rhs.stoppedAt &&
-            lhs.name == rhs.name &&
-            lhs.status == rhs.status &&
-            lhs.variants == rhs.variants &&
-            lhs.configuration == rhs.configuration
-    }
-}
+extension AbtestingABTest: Equatable {}
 
 extension AbtestingABTest: Hashable {
     public func hash(into hasher: inout Hasher) {

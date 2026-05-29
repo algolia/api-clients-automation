@@ -21,6 +21,17 @@ public partial class SearchResult<T> : AbstractSchema
 {
   /// <summary>
   /// Initializes a new instance of the SearchResult class
+  /// with a SearchResponse
+  /// </summary>
+  /// <param name="actualInstance">An instance of SearchResponse.</param>
+  public SearchResult(SearchResponse<T> actualInstance)
+  {
+    ActualInstance =
+      actualInstance ?? throw new ArgumentException("Invalid instance found. Must not be null.");
+  }
+
+  /// <summary>
+  /// Initializes a new instance of the SearchResult class
   /// with a SearchForFacetValuesResponse
   /// </summary>
   /// <param name="actualInstance">An instance of SearchForFacetValuesResponse.</param>
@@ -32,10 +43,10 @@ public partial class SearchResult<T> : AbstractSchema
 
   /// <summary>
   /// Initializes a new instance of the SearchResult class
-  /// with a SearchResponse
+  /// with a SearchResponsePartial
   /// </summary>
-  /// <param name="actualInstance">An instance of SearchResponse.</param>
-  public SearchResult(object actualInstance)
+  /// <param name="actualInstance">An instance of SearchResponsePartial.</param>
+  public SearchResult(SearchResponsePartial<T> actualInstance)
   {
     ActualInstance =
       actualInstance ?? throw new ArgumentException("Invalid instance found. Must not be null.");
@@ -45,16 +56,6 @@ public partial class SearchResult<T> : AbstractSchema
   /// Gets or Sets ActualInstance
   /// </summary>
   public sealed override object ActualInstance { get; set; }
-
-  /// <summary>
-  /// Get the actual instance of `SearchForFacetValuesResponse`. If the actual instance is not `SearchForFacetValuesResponse`,
-  /// the InvalidClassException will be thrown
-  /// </summary>
-  /// <returns>An instance of SearchForFacetValuesResponse</returns>
-  public SearchForFacetValuesResponse AsSearchForFacetValuesResponse()
-  {
-    return (SearchForFacetValuesResponse)ActualInstance;
-  }
 
   /// <summary>
   /// Get the actual instance of `SearchResponse`. If the actual instance is not `SearchResponse`,
@@ -67,12 +68,23 @@ public partial class SearchResult<T> : AbstractSchema
   }
 
   /// <summary>
-  /// Check if the actual instance is of `SearchForFacetValuesResponse` type.
+  /// Get the actual instance of `SearchForFacetValuesResponse`. If the actual instance is not `SearchForFacetValuesResponse`,
+  /// the InvalidClassException will be thrown
   /// </summary>
-  /// <returns>Whether or not the instance is the type</returns>
-  public bool IsSearchForFacetValuesResponse()
+  /// <returns>An instance of SearchForFacetValuesResponse</returns>
+  public SearchForFacetValuesResponse AsSearchForFacetValuesResponse()
   {
-    return ActualInstance.GetType() == typeof(SearchForFacetValuesResponse);
+    return (SearchForFacetValuesResponse)ActualInstance;
+  }
+
+  /// <summary>
+  /// Get the actual instance of `SearchResponsePartial`. If the actual instance is not `SearchResponsePartial`,
+  /// the InvalidClassException will be thrown
+  /// </summary>
+  /// <returns>An instance of SearchResponsePartial</returns>
+  public SearchResponsePartial<T> AsSearchResponsePartial()
+  {
+    return (SearchResponsePartial<T>)ActualInstance;
   }
 
   /// <summary>
@@ -82,6 +94,24 @@ public partial class SearchResult<T> : AbstractSchema
   public bool IsSearchResponse()
   {
     return ActualInstance.GetType() == typeof(SearchResponse<T>);
+  }
+
+  /// <summary>
+  /// Check if the actual instance is of `SearchForFacetValuesResponse` type.
+  /// </summary>
+  /// <returns>Whether or not the instance is the type</returns>
+  public bool IsSearchForFacetValuesResponse()
+  {
+    return ActualInstance.GetType() == typeof(SearchForFacetValuesResponse);
+  }
+
+  /// <summary>
+  /// Check if the actual instance is of `SearchResponsePartial` type.
+  /// </summary>
+  /// <returns>Whether or not the instance is the type</returns>
+  public bool IsSearchResponsePartial()
+  {
+    return ActualInstance.GetType() == typeof(SearchResponsePartial<T>);
   }
 
   /// <summary>
@@ -206,6 +236,20 @@ public class SearchResultJsonConverter<T> : JsonConverter<SearchResult<T>>
   {
     var jsonDocument = JsonDocument.ParseValue(ref reader);
     var root = jsonDocument.RootElement;
+    if (root.ValueKind == JsonValueKind.Object && root.TryGetProperty("hits", out _))
+    {
+      try
+      {
+        return new SearchResult<T>(jsonDocument.Deserialize<SearchResponse<T>>(JsonConfig.Options));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine(
+          $"Failed to deserialize into SearchResponse: {exception}"
+        );
+      }
+    }
     if (root.ValueKind == JsonValueKind.Object && root.TryGetProperty("facetHits", out _))
     {
       try
@@ -226,13 +270,15 @@ public class SearchResultJsonConverter<T> : JsonConverter<SearchResult<T>>
     {
       try
       {
-        return new SearchResult<T>(jsonDocument.Deserialize<SearchResponse<T>>(JsonConfig.Options));
+        return new SearchResult<T>(
+          jsonDocument.Deserialize<SearchResponsePartial<T>>(JsonConfig.Options)
+        );
       }
       catch (Exception exception)
       {
         // deserialization failed, try the next one
         System.Diagnostics.Debug.WriteLine(
-          $"Failed to deserialize into SearchResponse: {exception}"
+          $"Failed to deserialize into SearchResponsePartial: {exception}"
         );
       }
     }

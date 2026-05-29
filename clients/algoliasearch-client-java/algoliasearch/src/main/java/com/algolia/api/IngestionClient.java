@@ -484,7 +484,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Creates a new task using the v1 endpoint, please use `createTask` instead.
+   * Creates a new task using the v1 endpoint. Use `createTask` instead.
    *
    * @param taskCreate Request body for creating a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -499,7 +499,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Creates a new task using the v1 endpoint, please use `createTask` instead.
+   * Creates a new task using the v1 endpoint. Use `createTask` instead.
    *
    * @param taskCreate Request body for creating a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -514,7 +514,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Creates a new task using the v1 endpoint, please use `createTask` instead.
+   * Creates a new task using the v1 endpoint. Use `createTask` instead.
    *
    * @param taskCreate Request body for creating a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -526,7 +526,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Creates a new task using the v1 endpoint, please use `createTask` instead.
+   * Creates a new task using the v1 endpoint. Use `createTask` instead.
    *
    * @param taskCreate Request body for creating a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -538,7 +538,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Creates a new task using the v1 endpoint, please use `createTask` instead.
+   * (asynchronously) Creates a new task using the v1 endpoint. Use `createTask` instead.
    *
    * @param taskCreate Request body for creating a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -557,7 +557,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Creates a new task using the v1 endpoint, please use `createTask` instead.
+   * (asynchronously) Creates a new task using the v1 endpoint. Use `createTask` instead.
    *
    * @param taskCreate Request body for creating a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -578,7 +578,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Creates a new task using the v1 endpoint, please use `createTask` instead.
+   * (asynchronously) Creates a new task using the v1 endpoint. Use `createTask` instead.
    *
    * @param taskCreate Request body for creating a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -590,7 +590,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Creates a new task using the v1 endpoint, please use `createTask` instead.
+   * (asynchronously) Creates a new task using the v1 endpoint. Use `createTask` instead.
    *
    * @param taskCreate Request body for creating a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -819,6 +819,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customDelete`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -839,6 +840,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customDelete`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -1022,6 +1024,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customGet`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -1042,6 +1045,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customGet`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -1235,6 +1239,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPost`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -1262,6 +1267,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPost`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -1463,6 +1469,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPut`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -1490,6 +1497,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPut`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -1636,6 +1644,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(authenticationID, "Parameter `authenticationID` is required when calling `deleteAuthentication`.");
+    Parameters.requireNonEmpty(authenticationID, "Parameter `authenticationID` is required when calling `deleteAuthentication`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/authentications/{authenticationID}", authenticationID)
@@ -1658,6 +1667,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(authenticationID, "Parameter `authenticationID` is required when calling `deleteAuthentication`.");
+    Parameters.requireNonEmpty(authenticationID, "Parameter `authenticationID` is required when calling `deleteAuthentication`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/authentications/{authenticationID}", authenticationID)
@@ -1747,6 +1757,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<DeleteResponse> deleteDestinationAsync(@Nonnull String destinationID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(destinationID, "Parameter `destinationID` is required when calling `deleteDestination`.");
+    Parameters.requireNonEmpty(destinationID, "Parameter `destinationID` is required when calling `deleteDestination`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/destinations/{destinationID}", destinationID).setMethod("DELETE").build();
     return executeAsync(request, requestOptions, new TypeReference<DeleteResponse>() {});
@@ -1766,6 +1777,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(destinationID, "Parameter `destinationID` is required when calling `deleteDestination`.");
+    Parameters.requireNonEmpty(destinationID, "Parameter `destinationID` is required when calling `deleteDestination`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/destinations/{destinationID}", destinationID).setMethod("DELETE").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -1850,6 +1862,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<DeleteResponse> deleteSourceAsync(@Nonnull String sourceID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `deleteSource`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `deleteSource`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/sources/{sourceID}", sourceID).setMethod("DELETE").build();
     return executeAsync(request, requestOptions, new TypeReference<DeleteResponse>() {});
@@ -1867,6 +1880,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> deleteSourceWithHTTPInfoAsync(@Nonnull String sourceID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `deleteSource`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `deleteSource`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/sources/{sourceID}", sourceID).setMethod("DELETE").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -1949,6 +1963,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<DeleteResponse> deleteTaskAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `deleteTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `deleteTask`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}", taskID).setMethod("DELETE").build();
 
@@ -1966,6 +1981,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> deleteTaskWithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `deleteTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `deleteTask`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}", taskID).setMethod("DELETE").build();
 
@@ -1993,7 +2009,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+   * Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2007,7 +2023,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+   * Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2021,7 +2037,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+   * Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2033,7 +2049,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+   * Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2045,8 +2061,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Deletes a task by its ID using the v1 endpoint, please use `deleteTask`
-   * instead.
+   * (asynchronously) Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2058,6 +2073,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<DeleteResponse> deleteTaskV1Async(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `deleteTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `deleteTaskV1`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}", taskID).setMethod("DELETE").build();
 
@@ -2065,8 +2081,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Deletes a task by its ID using the v1 endpoint, please use `deleteTask`
-   * instead.
+   * (asynchronously) Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2078,6 +2093,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> deleteTaskV1WithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `deleteTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `deleteTaskV1`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}", taskID).setMethod("DELETE").build();
 
@@ -2085,8 +2101,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Deletes a task by its ID using the v1 endpoint, please use `deleteTask`
-   * instead.
+   * (asynchronously) Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2098,8 +2113,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Deletes a task by its ID using the v1 endpoint, please use `deleteTask`
-   * instead.
+   * (asynchronously) Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2169,6 +2183,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `deleteTransformation`.");
+    Parameters.requireNonEmpty(transformationID, "Parameter `transformationID` is required when calling `deleteTransformation`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/transformations/{transformationID}", transformationID)
@@ -2190,6 +2205,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `deleteTransformation`.");
+    Parameters.requireNonEmpty(transformationID, "Parameter `transformationID` is required when calling `deleteTransformation`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/transformations/{transformationID}", transformationID)
@@ -2274,6 +2290,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<TaskUpdateResponse> disableTaskAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `disableTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `disableTask`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/disable", taskID).setMethod("PUT").build();
 
@@ -2291,6 +2308,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> disableTaskWithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `disableTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `disableTask`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/disable", taskID).setMethod("PUT").build();
 
@@ -2318,7 +2336,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Disables a task using the v1 endpoint, please use `disableTask` instead.
+   * Disables a task using the v1 endpoint. Use `disableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2332,7 +2350,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Disables a task using the v1 endpoint, please use `disableTask` instead.
+   * Disables a task using the v1 endpoint. Use `disableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2347,7 +2365,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Disables a task using the v1 endpoint, please use `disableTask` instead.
+   * Disables a task using the v1 endpoint. Use `disableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2359,7 +2377,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Disables a task using the v1 endpoint, please use `disableTask` instead.
+   * Disables a task using the v1 endpoint. Use `disableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2371,7 +2389,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Disables a task using the v1 endpoint, please use `disableTask` instead.
+   * (asynchronously) Disables a task using the v1 endpoint. Use `disableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2383,6 +2401,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<TaskUpdateResponse> disableTaskV1Async(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `disableTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `disableTaskV1`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/disable", taskID).setMethod("PUT").build();
 
@@ -2390,7 +2409,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Disables a task using the v1 endpoint, please use `disableTask` instead.
+   * (asynchronously) Disables a task using the v1 endpoint. Use `disableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2402,6 +2421,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> disableTaskV1WithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `disableTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `disableTaskV1`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/disable", taskID).setMethod("PUT").build();
 
@@ -2409,7 +2429,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Disables a task using the v1 endpoint, please use `disableTask` instead.
+   * (asynchronously) Disables a task using the v1 endpoint. Use `disableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2421,7 +2441,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Disables a task using the v1 endpoint, please use `disableTask` instead.
+   * (asynchronously) Disables a task using the v1 endpoint. Use `disableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2487,6 +2507,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<TaskUpdateResponse> enableTaskAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `enableTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `enableTask`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/enable", taskID).setMethod("PUT").build();
 
@@ -2504,6 +2525,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> enableTaskWithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `enableTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `enableTask`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/enable", taskID).setMethod("PUT").build();
 
@@ -2531,7 +2553,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Enables a task using the v1 endpoint, please use `enableTask` instead.
+   * Enables a task using the v1 endpoint. Use `enableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2545,7 +2567,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Enables a task using the v1 endpoint, please use `enableTask` instead.
+   * Enables a task using the v1 endpoint. Use `enableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2559,7 +2581,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Enables a task using the v1 endpoint, please use `enableTask` instead.
+   * Enables a task using the v1 endpoint. Use `enableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2571,7 +2593,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Enables a task using the v1 endpoint, please use `enableTask` instead.
+   * Enables a task using the v1 endpoint. Use `enableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2583,7 +2605,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Enables a task using the v1 endpoint, please use `enableTask` instead.
+   * (asynchronously) Enables a task using the v1 endpoint. Use `enableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2595,6 +2617,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<TaskUpdateResponse> enableTaskV1Async(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `enableTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `enableTaskV1`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/enable", taskID).setMethod("PUT").build();
 
@@ -2602,7 +2625,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Enables a task using the v1 endpoint, please use `enableTask` instead.
+   * (asynchronously) Enables a task using the v1 endpoint. Use `enableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2614,6 +2637,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> enableTaskV1WithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `enableTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `enableTaskV1`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/enable", taskID).setMethod("PUT").build();
 
@@ -2621,7 +2645,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Enables a task using the v1 endpoint, please use `enableTask` instead.
+   * (asynchronously) Enables a task using the v1 endpoint. Use `enableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2633,7 +2657,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Enables a task using the v1 endpoint, please use `enableTask` instead.
+   * (asynchronously) Enables a task using the v1 endpoint. Use `enableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2701,6 +2725,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Authentication> getAuthenticationAsync(@Nonnull String authenticationID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(authenticationID, "Parameter `authenticationID` is required when calling `getAuthentication`.");
+    Parameters.requireNonEmpty(authenticationID, "Parameter `authenticationID` is required when calling `getAuthentication`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/authentications/{authenticationID}", authenticationID).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Authentication>() {});
@@ -2719,6 +2744,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(authenticationID, "Parameter `authenticationID` is required when calling `getAuthentication`.");
+    Parameters.requireNonEmpty(authenticationID, "Parameter `authenticationID` is required when calling `getAuthentication`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/authentications/{authenticationID}", authenticationID).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -2800,6 +2826,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Destination> getDestinationAsync(@Nonnull String destinationID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(destinationID, "Parameter `destinationID` is required when calling `getDestination`.");
+    Parameters.requireNonEmpty(destinationID, "Parameter `destinationID` is required when calling `getDestination`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/destinations/{destinationID}", destinationID).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Destination>() {});
@@ -2816,6 +2843,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> getDestinationWithHTTPInfoAsync(@Nonnull String destinationID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(destinationID, "Parameter `destinationID` is required when calling `getDestination`.");
+    Parameters.requireNonEmpty(destinationID, "Parameter `destinationID` is required when calling `getDestination`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/destinations/{destinationID}", destinationID).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -2903,8 +2931,10 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Event> getEventAsync(@Nonnull String runID, @Nonnull String eventID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(runID, "Parameter `runID` is required when calling `getEvent`.");
+    Parameters.requireNonEmpty(runID, "Parameter `runID` is required when calling `getEvent`.");
 
     Parameters.requireNonNull(eventID, "Parameter `eventID` is required when calling `getEvent`.");
+    Parameters.requireNonEmpty(eventID, "Parameter `eventID` is required when calling `getEvent`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/runs/{runID}/events/{eventID}", runID, eventID).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Event>() {});
@@ -2925,8 +2955,10 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(runID, "Parameter `runID` is required when calling `getEvent`.");
+    Parameters.requireNonEmpty(runID, "Parameter `runID` is required when calling `getEvent`.");
 
     Parameters.requireNonNull(eventID, "Parameter `eventID` is required when calling `getEvent`.");
+    Parameters.requireNonEmpty(eventID, "Parameter `eventID` is required when calling `getEvent`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/runs/{runID}/events/{eventID}", runID, eventID).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -3009,6 +3041,7 @@ public class IngestionClient extends ApiClient {
    */
   public CompletableFuture<Run> getRunAsync(@Nonnull String runID, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(runID, "Parameter `runID` is required when calling `getRun`.");
+    Parameters.requireNonEmpty(runID, "Parameter `runID` is required when calling `getRun`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/runs/{runID}", runID).setMethod("GET").build();
 
@@ -3026,6 +3059,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> getRunWithHTTPInfoAsync(@Nonnull String runID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(runID, "Parameter `runID` is required when calling `getRun`.");
+    Parameters.requireNonEmpty(runID, "Parameter `runID` is required when calling `getRun`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/runs/{runID}", runID).setMethod("GET").build();
 
@@ -3107,6 +3141,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Source> getSourceAsync(@Nonnull String sourceID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `getSource`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `getSource`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/sources/{sourceID}", sourceID).setMethod("GET").build();
 
@@ -3124,6 +3159,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> getSourceWithHTTPInfoAsync(@Nonnull String sourceID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `getSource`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `getSource`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/sources/{sourceID}", sourceID).setMethod("GET").build();
 
@@ -3205,6 +3241,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Task> getTaskAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `getTask`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}", taskID).setMethod("GET").build();
 
@@ -3222,6 +3259,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> getTaskWithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `getTask`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}", taskID).setMethod("GET").build();
 
@@ -3249,7 +3287,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+   * Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3263,7 +3301,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+   * Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3277,7 +3315,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+   * Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3289,7 +3327,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+   * Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3301,8 +3339,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a task by its ID using the v1 endpoint, please use `getTask`
-   * instead.
+   * (asynchronously) Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3314,6 +3351,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<TaskV1> getTaskV1Async(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `getTaskV1`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}", taskID).setMethod("GET").build();
 
@@ -3321,8 +3359,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a task by its ID using the v1 endpoint, please use `getTask`
-   * instead.
+   * (asynchronously) Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3334,6 +3371,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Response> getTaskV1WithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `getTaskV1`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}", taskID).setMethod("GET").build();
 
@@ -3341,8 +3379,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a task by its ID using the v1 endpoint, please use `getTask`
-   * instead.
+   * (asynchronously) Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3354,8 +3391,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a task by its ID using the v1 endpoint, please use `getTask`
-   * instead.
+   * (asynchronously) Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3423,6 +3459,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Transformation> getTransformationAsync(@Nonnull String transformationID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `getTransformation`.");
+    Parameters.requireNonEmpty(transformationID, "Parameter `transformationID` is required when calling `getTransformation`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/transformations/{transformationID}", transformationID).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Transformation>() {});
@@ -3441,6 +3478,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `getTransformation`.");
+    Parameters.requireNonEmpty(transformationID, "Parameter `transformationID` is required when calling `getTransformation`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/transformations/{transformationID}", transformationID).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -4281,6 +4319,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(runID, "Parameter `runID` is required when calling `listEvents`.");
+    Parameters.requireNonEmpty(runID, "Parameter `runID` is required when calling `listEvents`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/runs/{runID}/events", runID)
@@ -4328,6 +4367,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(runID, "Parameter `runID` is required when calling `listEvents`.");
+    Parameters.requireNonEmpty(runID, "Parameter `runID` is required when calling `listEvents`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/runs/{runID}/events", runID)
@@ -4460,10 +4500,10 @@ public class IngestionClient extends ApiClient {
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
-   *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
-   *     day is used. (optional)
+   * @param startDate Date and time for the earliest run to retrieve, in RFC 3339 format. By
+   *     default, the current day minus seven days is used. (optional)
+   * @param endDate Date and time for the latest run to retrieve, in RFC 3339 format. By default,
+   *     the current day is used. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4493,10 +4533,10 @@ public class IngestionClient extends ApiClient {
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
-   *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
-   *     day is used. (optional)
+   * @param startDate Date and time for the earliest run to retrieve, in RFC 3339 format. By
+   *     default, the current day minus seven days is used. (optional)
+   * @param endDate Date and time for the latest run to retrieve, in RFC 3339 format. By default,
+   *     the current day is used. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4528,10 +4568,10 @@ public class IngestionClient extends ApiClient {
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
-   *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
-   *     day is used. (optional)
+   * @param startDate Date and time for the earliest run to retrieve, in RFC 3339 format. By
+   *     default, the current day minus seven days is used. (optional)
+   * @param endDate Date and time for the latest run to retrieve, in RFC 3339 format. By default,
+   *     the current day is used. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RunListResponse listRuns(
@@ -4558,10 +4598,10 @@ public class IngestionClient extends ApiClient {
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
-   *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
-   *     day is used. (optional)
+   * @param startDate Date and time for the earliest run to retrieve, in RFC 3339 format. By
+   *     default, the current day minus seven days is used. (optional)
+   * @param endDate Date and time for the latest run to retrieve, in RFC 3339 format. By default,
+   *     the current day is used. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Response listRunsWithHTTPInfo(
@@ -4628,10 +4668,10 @@ public class IngestionClient extends ApiClient {
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
-   *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
-   *     day is used. (optional)
+   * @param startDate Date and time for the earliest run to retrieve, in RFC 3339 format. By
+   *     default, the current day minus seven days is used. (optional)
+   * @param endDate Date and time for the latest run to retrieve, in RFC 3339 format. By default,
+   *     the current day is used. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4674,10 +4714,10 @@ public class IngestionClient extends ApiClient {
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
-   *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
-   *     day is used. (optional)
+   * @param startDate Date and time for the earliest run to retrieve, in RFC 3339 format. By
+   *     default, the current day minus seven days is used. (optional)
+   * @param endDate Date and time for the latest run to retrieve, in RFC 3339 format. By default,
+   *     the current day is used. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4720,10 +4760,10 @@ public class IngestionClient extends ApiClient {
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
-   *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
-   *     day is used. (optional)
+   * @param startDate Date and time for the earliest run to retrieve, in RFC 3339 format. By
+   *     default, the current day minus seven days is used. (optional)
+   * @param endDate Date and time for the latest run to retrieve, in RFC 3339 format. By default,
+   *     the current day is used. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<RunListResponse> listRunsAsync(
@@ -4750,10 +4790,10 @@ public class IngestionClient extends ApiClient {
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
-   *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
-   *     day is used. (optional)
+   * @param startDate Date and time for the earliest run to retrieve, in RFC 3339 format. By
+   *     default, the current day minus seven days is used. (optional)
+   * @param endDate Date and time for the latest run to retrieve, in RFC 3339 format. By default,
+   *     the current day is used. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Response> listRunsWithHTTPInfoAsync(
@@ -5575,7 +5615,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   * Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
@@ -5610,7 +5650,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   * Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
@@ -5645,7 +5685,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   * Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
@@ -5675,7 +5715,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   * Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
@@ -5705,7 +5745,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   * Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -5716,7 +5756,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   * Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -5727,7 +5767,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   * Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -5736,7 +5776,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   * Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -5745,8 +5785,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
-   * instead.
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
@@ -5792,8 +5831,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
-   * instead.
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
@@ -5839,8 +5877,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
-   * instead.
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
@@ -5870,8 +5907,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
-   * instead.
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
@@ -5901,8 +5937,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
-   * instead.
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -5913,8 +5948,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
-   * instead.
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -5925,8 +5959,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
-   * instead.
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -5935,8 +5968,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
-   * instead.
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -6456,6 +6488,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `push`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `push`.");
 
     Parameters.requireNonNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `push`.");
 
@@ -6506,6 +6539,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `push`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `push`.");
 
     Parameters.requireNonNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `push`.");
 
@@ -6853,6 +6887,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `pushTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `pushTask`.");
 
     Parameters.requireNonNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `pushTask`.");
 
@@ -6896,6 +6931,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `pushTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `pushTask`.");
 
     Parameters.requireNonNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `pushTask`.");
 
@@ -7105,6 +7141,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `replaceTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `replaceTask`.");
 
     Parameters.requireNonNull(taskReplace, "Parameter `taskReplace` is required when calling `replaceTask`.");
 
@@ -7128,6 +7165,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `replaceTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `replaceTask`.");
 
     Parameters.requireNonNull(taskReplace, "Parameter `taskReplace` is required when calling `replaceTask`.");
 
@@ -7282,6 +7320,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `runSource`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `runSource`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/sources/{sourceID}/run", sourceID)
@@ -7307,6 +7346,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `runSource`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `runSource`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/sources/{sourceID}/run", sourceID)
@@ -7502,6 +7542,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `runTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `runTask`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/run", taskID).setMethod("POST").setBody(runTaskPayload).build();
     return executeAsync(request, requestOptions, new TypeReference<RunResponse>() {});
@@ -7523,6 +7564,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `runTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `runTask`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/run", taskID).setMethod("POST").setBody(runTaskPayload).build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -7604,8 +7646,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
-   * task runs with the observability endpoints.
+   * Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs
+   * with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param runTaskPayload (optional)
@@ -7621,8 +7663,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
-   * task runs with the observability endpoints.
+   * Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs
+   * with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param runTaskPayload (optional)
@@ -7638,8 +7680,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
-   * task runs with the observability endpoints.
+   * Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs
+   * with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param runTaskPayload (optional)
@@ -7652,8 +7694,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
-   * task runs with the observability endpoints.
+   * Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs
+   * with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param runTaskPayload (optional)
@@ -7666,8 +7708,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
-   * task runs with the observability endpoints.
+   * Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs
+   * with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -7679,8 +7721,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
-   * task runs with the observability endpoints.
+   * Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs
+   * with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -7692,8 +7734,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
-   * task runs with the observability endpoints.
+   * Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs
+   * with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -7703,8 +7745,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
-   * task runs with the observability endpoints.
+   * Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs
+   * with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -7714,8 +7756,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
-   * the status of task runs with the observability endpoints.
+   * (asynchronously) Runs a task using the v1 endpoint. Use `runTask` instead. You can check the
+   * status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param runTaskPayload (optional)
@@ -7731,14 +7773,15 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `runTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `runTaskV1`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/run", taskID).setMethod("POST").setBody(runTaskPayload).build();
     return executeAsync(request, requestOptions, new TypeReference<RunResponse>() {});
   }
 
   /**
-   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
-   * the status of task runs with the observability endpoints.
+   * (asynchronously) Runs a task using the v1 endpoint. Use `runTask` instead. You can check the
+   * status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param runTaskPayload (optional)
@@ -7754,14 +7797,15 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `runTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `runTaskV1`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/run", taskID).setMethod("POST").setBody(runTaskPayload).build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
   }
 
   /**
-   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
-   * the status of task runs with the observability endpoints.
+   * (asynchronously) Runs a task using the v1 endpoint. Use `runTask` instead. You can check the
+   * status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param runTaskPayload (optional)
@@ -7775,8 +7819,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
-   * the status of task runs with the observability endpoints.
+   * (asynchronously) Runs a task using the v1 endpoint. Use `runTask` instead. You can check the
+   * status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param runTaskPayload (optional)
@@ -7790,8 +7834,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
-   * the status of task runs with the observability endpoints.
+   * (asynchronously) Runs a task using the v1 endpoint. Use `runTask` instead. You can check the
+   * status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -7804,8 +7848,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
-   * the status of task runs with the observability endpoints.
+   * (asynchronously) Runs a task using the v1 endpoint. Use `runTask` instead. You can check the
+   * status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -7818,8 +7862,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
-   * the status of task runs with the observability endpoints.
+   * (asynchronously) Runs a task using the v1 endpoint. Use `runTask` instead. You can check the
+   * status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -7829,8 +7873,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
-   * the status of task runs with the observability endpoints.
+   * (asynchronously) Runs a task using the v1 endpoint. Use `runTask` instead. You can check the
+   * status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -8257,7 +8301,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   * Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
    *
    * @param taskSearch (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -8272,7 +8316,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   * Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
    *
    * @param taskSearch (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -8287,7 +8331,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   * Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
    *
    * @param taskSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -8299,7 +8343,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   * Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
    *
    * @param taskSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -8311,7 +8355,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   * (asynchronously) Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
    *
    * @param taskSearch (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -8329,7 +8373,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   * (asynchronously) Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
    *
    * @param taskSearch (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -8347,7 +8391,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   * (asynchronously) Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
    *
    * @param taskSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -8359,7 +8403,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   * (asynchronously) Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
    *
    * @param taskSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -8550,6 +8594,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/sources/{sourceID}/discover", sourceID).setMethod("POST").build();
     return executeAsync(
@@ -8577,6 +8622,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/sources/{sourceID}/discover", sourceID).setMethod("POST").build();
     return executeAsync(
@@ -8791,6 +8837,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`.");
+    Parameters.requireNonEmpty(transformationID, "Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`.");
 
     Parameters.requireNonNull(transformationTry, "Parameter `transformationTry` is required when calling `tryTransformationBeforeUpdate`.");
 
@@ -8817,6 +8864,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`.");
+    Parameters.requireNonEmpty(transformationID, "Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`.");
 
     Parameters.requireNonNull(transformationTry, "Parameter `transformationTry` is required when calling `tryTransformationBeforeUpdate`.");
 
@@ -8931,6 +8979,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(authenticationID, "Parameter `authenticationID` is required when calling `updateAuthentication`.");
+    Parameters.requireNonEmpty(authenticationID, "Parameter `authenticationID` is required when calling `updateAuthentication`.");
 
     Parameters.requireNonNull(authenticationUpdate, "Parameter `authenticationUpdate` is required when calling `updateAuthentication`.");
 
@@ -8957,6 +9006,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(authenticationID, "Parameter `authenticationID` is required when calling `updateAuthentication`.");
+    Parameters.requireNonEmpty(authenticationID, "Parameter `authenticationID` is required when calling `updateAuthentication`.");
 
     Parameters.requireNonNull(authenticationUpdate, "Parameter `authenticationUpdate` is required when calling `updateAuthentication`.");
 
@@ -9069,6 +9119,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(destinationID, "Parameter `destinationID` is required when calling `updateDestination`.");
+    Parameters.requireNonEmpty(destinationID, "Parameter `destinationID` is required when calling `updateDestination`.");
 
     Parameters.requireNonNull(destinationUpdate, "Parameter `destinationUpdate` is required when calling `updateDestination`.");
 
@@ -9095,6 +9146,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(destinationID, "Parameter `destinationID` is required when calling `updateDestination`.");
+    Parameters.requireNonEmpty(destinationID, "Parameter `destinationID` is required when calling `updateDestination`.");
 
     Parameters.requireNonNull(destinationUpdate, "Parameter `destinationUpdate` is required when calling `updateDestination`.");
 
@@ -9205,6 +9257,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `updateSource`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `updateSource`.");
 
     Parameters.requireNonNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `updateSource`.");
 
@@ -9227,6 +9280,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `updateSource`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `updateSource`.");
 
     Parameters.requireNonNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `updateSource`.");
 
@@ -9323,6 +9377,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `updateTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `updateTask`.");
 
     Parameters.requireNonNull(taskUpdate, "Parameter `taskUpdate` is required when calling `updateTask`.");
 
@@ -9345,6 +9400,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `updateTask`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `updateTask`.");
 
     Parameters.requireNonNull(taskUpdate, "Parameter `taskUpdate` is required when calling `updateTask`.");
 
@@ -9377,7 +9433,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+   * Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
@@ -9393,7 +9449,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+   * Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
@@ -9412,7 +9468,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+   * Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
@@ -9425,7 +9481,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+   * Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
@@ -9438,8 +9494,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Updates a task by its ID using the v1 endpoint, please use `updateTask`
-   * instead.
+   * (asynchronously) Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
@@ -9455,6 +9510,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `updateTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `updateTaskV1`.");
 
     Parameters.requireNonNull(taskUpdate, "Parameter `taskUpdate` is required when calling `updateTaskV1`.");
 
@@ -9463,8 +9519,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Updates a task by its ID using the v1 endpoint, please use `updateTask`
-   * instead.
+   * (asynchronously) Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
@@ -9480,6 +9535,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `updateTaskV1`.");
+    Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `updateTaskV1`.");
 
     Parameters.requireNonNull(taskUpdate, "Parameter `taskUpdate` is required when calling `updateTaskV1`.");
 
@@ -9488,8 +9544,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Updates a task by its ID using the v1 endpoint, please use `updateTask`
-   * instead.
+   * (asynchronously) Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
@@ -9503,8 +9558,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Updates a task by its ID using the v1 endpoint, please use `updateTask`
-   * instead.
+   * (asynchronously) Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
@@ -9592,6 +9646,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `updateTransformation`.");
+    Parameters.requireNonEmpty(transformationID, "Parameter `transformationID` is required when calling `updateTransformation`.");
 
     Parameters.requireNonNull(transformationCreate, "Parameter `transformationCreate` is required when calling `updateTransformation`.");
 
@@ -9618,6 +9673,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `updateTransformation`.");
+    Parameters.requireNonEmpty(transformationID, "Parameter `transformationID` is required when calling `updateTransformation`.");
 
     Parameters.requireNonNull(transformationCreate, "Parameter `transformationCreate` is required when calling `updateTransformation`.");
 
@@ -9941,6 +9997,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.");
 
     Parameters.requireNonNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `validateSourceBeforeUpdate`.");
 
@@ -9976,6 +10033,7 @@ public class IngestionClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.");
+    Parameters.requireNonEmpty(sourceID, "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.");
 
     Parameters.requireNonNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `validateSourceBeforeUpdate`.");
 
@@ -10064,19 +10122,66 @@ public class IngestionClient extends ApiClient {
     String referenceIndexName,
     RequestOptions requestOptions
   ) {
+    return chunkedPush(indexName, objects, action, waitForTasks, batchSize, referenceIndexName, requestOptions, null);
+  }
+
+  /**
+   * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit
+   * in `push` requests by leveraging the Transformation pipeline setup in the Push connector
+   * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
+   *
+   * @summary Helper: Chunks the given `objects` list in subset of 1000 elements max in order to
+   *     make it fit in `batch` requests.
+   * @param indexName - The `indexName` to replace `objects` in.
+   * @param objects - The array of `objects` to store in the given Algolia `indexName`.
+   * @param action - The `batch` `action` to perform on the given array of `objects`.
+   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+   *     processed, this operation may slow the total execution time of this method but is more
+   *     reliable.
+   * @param batchSize - The size of the chunk of `objects`. The number of `batch` calls will be
+   *     equal to `length(objects) / batchSize`. Defaults to 1000.
+   * @param referenceIndexName - This is required when targeting an index that does not have a push
+   *     connector setup (e.g. a tmp index), but you wish to attach another index's transformation
+   *     to it (e.g. the source index name).
+   * @param requestOptions - The requestOptions to send along with the query, they will be forwarded
+   *     to the `getEvent` method and merged with the transporter requestOptions.
+   * @param chunkedOptions - Optional configuration for the helper (e.g. maxRetries). Defaults to
+   *     {@link TaskUtils#DEFAULT_MAX_RETRIES}. (optional)
+   * @see ChunkedHelperOptions
+   */
+  public <T> List<WatchResponse> chunkedPush(
+    String indexName,
+    Iterable<T> objects,
+    Action action,
+    boolean waitForTasks,
+    int batchSize,
+    String referenceIndexName,
+    RequestOptions requestOptions,
+    ChunkedHelperOptions chunkedOptions
+  ) {
+    if (batchSize < 1) {
+      throw new AlgoliaRuntimeException("`batchSize` must be greater than 0");
+    }
+
+    int maxRetries = chunkedOptions != null ? chunkedOptions.getMaxRetries() : TaskUtils.DEFAULT_MAX_RETRIES;
+
     List<WatchResponse> responses = new ArrayList<>();
     List<T> records = new ArrayList<>();
     int offset = 0;
-    int waitBatchSize = batchSize / 10;
-    if (waitBatchSize < 1) {
-      waitBatchSize = batchSize;
-    }
+    // Poll for task completion every 10% of total batches to balance throughput and feedback.
+    int pollInterval = Math.max(1, batchSize / 10);
 
     Iterator<T> it = objects.iterator();
+
+    if (!it.hasNext()) {
+      return responses;
+    }
+
     T current = it.next();
 
     while (true) {
       records.add(current);
+      boolean pushed = false;
 
       if (records.size() == batchSize || !it.hasNext()) {
         WatchResponse watch = this.push(
@@ -10088,11 +10193,14 @@ public class IngestionClient extends ApiClient {
         );
         responses.add(watch);
         records.clear();
+        pushed = true;
       }
 
-      if (waitForTasks && responses.size() > 0 && (responses.size() % waitBatchSize == 0 || !it.hasNext())) {
+      if (waitForTasks && pushed && responses.size() > 0 && (responses.size() % pollInterval == 0 || !it.hasNext())) {
+        int nextOffset = Math.min(offset + pollInterval, responses.size());
+
         responses
-          .subList(offset, Math.min(offset + waitBatchSize, responses.size()))
+          .subList(offset, nextOffset)
           .forEach(response -> {
             TaskUtils.retryUntil(
               () -> {
@@ -10109,12 +10217,12 @@ public class IngestionClient extends ApiClient {
               (Event resp) -> {
                 return resp != null;
               },
-              50,
-              null
+              maxRetries,
+              retries -> Math.min(retries * 1500, 5000)
             );
           });
 
-        offset += waitBatchSize;
+        offset = nextOffset;
       }
 
       if (!it.hasNext()) {

@@ -22,12 +22,9 @@ else:
 
 from algoliasearch.http.api_response import ApiResponse
 from algoliasearch.http.base_config import BaseConfig
+from algoliasearch.http.chunked_helper_options import ChunkedHelperOptions
 from algoliasearch.http.exceptions import RequestException
-from algoliasearch.http.helpers import (
-    RetryTimeout,
-    create_iterable,
-    create_iterable_sync,
-)
+from algoliasearch.http.helpers import create_iterable, create_iterable_sync
 from algoliasearch.http.request_options import RequestOptions
 from algoliasearch.http.serializer import body_serializer
 from algoliasearch.http.transporter import Transporter
@@ -196,7 +193,7 @@ class IngestionClient:
 
     async def close(self) -> None:
         """Closes the underlying `transporter` of the API client."""
-        return await self._transporter.close()
+        await self._transporter.close()
 
     async def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
@@ -215,10 +212,12 @@ class IngestionClient:
         batch_size: int = 1000,
         reference_index_name: Optional[str] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[WatchResponse]:
         """
         Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `push` requests by leveraging the Transformation pipeline setup in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
         """
+        chunked_options = chunked_options or ChunkedHelperOptions()
         offset = 0
         records: List[PushTaskRecords] = []
         responses: List[WatchResponse] = []
@@ -272,15 +271,14 @@ class IngestionClient:
                     def _validate(_resp: Event | None) -> bool:
                         return _resp is not None
 
-                    timeout = RetryTimeout()
-
                     await create_iterable(
                         func=_func,
                         validate=_validate,
                         aggregator=_aggregator,
-                        timeout=lambda: timeout(_retry_count),
-                        error_validate=lambda _: _retry_count >= 50,
-                        error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${50})",
+                        timeout=lambda: float(min(_retry_count * 1.5, 5)),
+                        error_validate=lambda _: _retry_count
+                        >= chunked_options.max_retries,
+                        error_message=lambda _: f"Stopped waiting for the task after {chunked_options.max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries.",
                     )
                 offset += wait_batch_size
         return responses
@@ -547,7 +545,7 @@ class IngestionClient:
     ) -> ApiResponse[str]:
         """
         (Deprecated) create_task_v1
-        Creates a new task using the v1 endpoint, please use `createTask` instead.
+        Creates a new task using the v1 endpoint. Use `createTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -593,7 +591,7 @@ class IngestionClient:
     ) -> TaskCreateResponse:
         """
         (Deprecated) create_task_v1
-        Creates a new task using the v1 endpoint, please use `createTask` instead.
+        Creates a new task using the v1 endpoint. Use `createTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -710,6 +708,11 @@ class IngestionClient:
                 "Parameter `path` is required when calling `custom_delete`."
             )
 
+        if not path:
+            raise ValueError(
+                "Parameter `path` is required when calling `custom_delete`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
@@ -779,6 +782,9 @@ class IngestionClient:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_get`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -854,6 +860,9 @@ class IngestionClient:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_post`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -944,6 +953,9 @@ class IngestionClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
+        if not path:
+            raise ValueError("Parameter `path` is required when calling `custom_put`.")
+
         _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
@@ -1026,6 +1038,11 @@ class IngestionClient:
                 "Parameter `authentication_id` is required when calling `delete_authentication`."
             )
 
+        if not authentication_id:
+            raise ValueError(
+                "Parameter `authentication_id` is required when calling `delete_authentication`."
+            )
+
         return await self._transporter.request(
             verb=Verb.DELETE,
             path="/1/authentications/{authenticationID}".replace(
@@ -1085,6 +1102,11 @@ class IngestionClient:
         """
 
         if destination_id is None:
+            raise ValueError(
+                "Parameter `destination_id` is required when calling `delete_destination`."
+            )
+
+        if not destination_id:
             raise ValueError(
                 "Parameter `destination_id` is required when calling `delete_destination`."
             )
@@ -1151,6 +1173,11 @@ class IngestionClient:
                 "Parameter `source_id` is required when calling `delete_source`."
             )
 
+        if not source_id:
+            raise ValueError(
+                "Parameter `source_id` is required when calling `delete_source`."
+            )
+
         return await self._transporter.request(
             verb=Verb.DELETE,
             path="/1/sources/{sourceID}".replace(
@@ -1211,6 +1238,11 @@ class IngestionClient:
                 "Parameter `task_id` is required when calling `delete_task`."
             )
 
+        if not task_id:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `delete_task`."
+            )
+
         return await self._transporter.request(
             verb=Verb.DELETE,
             path="/2/tasks/{taskID}".replace("{taskID}", quote(str(task_id), safe="")),
@@ -1252,7 +1284,7 @@ class IngestionClient:
     ) -> ApiResponse[str]:
         """
         (Deprecated) delete_task_v1
-        Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+        Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -1268,6 +1300,11 @@ class IngestionClient:
         warn("DELETE /1/tasks/{taskID} is deprecated.", DeprecationWarning)
 
         if task_id is None:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `delete_task_v1`."
+            )
+
+        if not task_id:
             raise ValueError(
                 "Parameter `task_id` is required when calling `delete_task_v1`."
             )
@@ -1290,7 +1327,7 @@ class IngestionClient:
     ) -> DeleteResponse:
         """
         (Deprecated) delete_task_v1
-        Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+        Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -1327,6 +1364,11 @@ class IngestionClient:
         """
 
         if transformation_id is None:
+            raise ValueError(
+                "Parameter `transformation_id` is required when calling `delete_transformation`."
+            )
+
+        if not transformation_id:
             raise ValueError(
                 "Parameter `transformation_id` is required when calling `delete_transformation`."
             )
@@ -1393,6 +1435,11 @@ class IngestionClient:
                 "Parameter `task_id` is required when calling `disable_task`."
             )
 
+        if not task_id:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `disable_task`."
+            )
+
         return await self._transporter.request(
             verb=Verb.PUT,
             path="/2/tasks/{taskID}/disable".replace(
@@ -1436,7 +1483,7 @@ class IngestionClient:
     ) -> ApiResponse[str]:
         """
         (Deprecated) disable_task_v1
-        Disables a task using the v1 endpoint, please use `disableTask` instead.
+        Disables a task using the v1 endpoint. Use `disableTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -1452,6 +1499,11 @@ class IngestionClient:
         warn("PUT /1/tasks/{taskID}/disable is deprecated.", DeprecationWarning)
 
         if task_id is None:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `disable_task_v1`."
+            )
+
+        if not task_id:
             raise ValueError(
                 "Parameter `task_id` is required when calling `disable_task_v1`."
             )
@@ -1476,7 +1528,7 @@ class IngestionClient:
     ) -> TaskUpdateResponse:
         """
         (Deprecated) disable_task_v1
-        Disables a task using the v1 endpoint, please use `disableTask` instead.
+        Disables a task using the v1 endpoint. Use `disableTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -1513,6 +1565,11 @@ class IngestionClient:
         """
 
         if task_id is None:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `enable_task`."
+            )
+
+        if not task_id:
             raise ValueError(
                 "Parameter `task_id` is required when calling `enable_task`."
             )
@@ -1560,7 +1617,7 @@ class IngestionClient:
     ) -> ApiResponse[str]:
         """
         (Deprecated) enable_task_v1
-        Enables a task using the v1 endpoint, please use `enableTask` instead.
+        Enables a task using the v1 endpoint. Use `enableTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -1576,6 +1633,11 @@ class IngestionClient:
         warn("PUT /1/tasks/{taskID}/enable is deprecated.", DeprecationWarning)
 
         if task_id is None:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `enable_task_v1`."
+            )
+
+        if not task_id:
             raise ValueError(
                 "Parameter `task_id` is required when calling `enable_task_v1`."
             )
@@ -1600,7 +1662,7 @@ class IngestionClient:
     ) -> TaskUpdateResponse:
         """
         (Deprecated) enable_task_v1
-        Enables a task using the v1 endpoint, please use `enableTask` instead.
+        Enables a task using the v1 endpoint. Use `enableTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -1638,6 +1700,11 @@ class IngestionClient:
         """
 
         if authentication_id is None:
+            raise ValueError(
+                "Parameter `authentication_id` is required when calling `get_authentication`."
+            )
+
+        if not authentication_id:
             raise ValueError(
                 "Parameter `authentication_id` is required when calling `get_authentication`."
             )
@@ -1701,6 +1768,11 @@ class IngestionClient:
         """
 
         if destination_id is None:
+            raise ValueError(
+                "Parameter `destination_id` is required when calling `get_destination`."
+            )
+
+        if not destination_id:
             raise ValueError(
                 "Parameter `destination_id` is required when calling `get_destination`."
             )
@@ -1770,7 +1842,15 @@ class IngestionClient:
         if run_id is None:
             raise ValueError("Parameter `run_id` is required when calling `get_event`.")
 
+        if not run_id:
+            raise ValueError("Parameter `run_id` is required when calling `get_event`.")
+
         if event_id is None:
+            raise ValueError(
+                "Parameter `event_id` is required when calling `get_event`."
+            )
+
+        if not event_id:
             raise ValueError(
                 "Parameter `event_id` is required when calling `get_event`."
             )
@@ -1838,6 +1918,9 @@ class IngestionClient:
         if run_id is None:
             raise ValueError("Parameter `run_id` is required when calling `get_run`.")
 
+        if not run_id:
+            raise ValueError("Parameter `run_id` is required when calling `get_run`.")
+
         return await self._transporter.request(
             verb=Verb.GET,
             path="/1/runs/{runID}".replace("{runID}", quote(str(run_id), safe="")),
@@ -1892,6 +1975,11 @@ class IngestionClient:
         """
 
         if source_id is None:
+            raise ValueError(
+                "Parameter `source_id` is required when calling `get_source`."
+            )
+
+        if not source_id:
             raise ValueError(
                 "Parameter `source_id` is required when calling `get_source`."
             )
@@ -1954,6 +2042,9 @@ class IngestionClient:
         if task_id is None:
             raise ValueError("Parameter `task_id` is required when calling `get_task`.")
 
+        if not task_id:
+            raise ValueError("Parameter `task_id` is required when calling `get_task`.")
+
         return await self._transporter.request(
             verb=Verb.GET,
             path="/2/tasks/{taskID}".replace("{taskID}", quote(str(task_id), safe="")),
@@ -1995,7 +2086,7 @@ class IngestionClient:
     ) -> ApiResponse[str]:
         """
         (Deprecated) get_task_v1
-        Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+        Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -2011,6 +2102,11 @@ class IngestionClient:
         warn("GET /1/tasks/{taskID} is deprecated.", DeprecationWarning)
 
         if task_id is None:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `get_task_v1`."
+            )
+
+        if not task_id:
             raise ValueError(
                 "Parameter `task_id` is required when calling `get_task_v1`."
             )
@@ -2033,7 +2129,7 @@ class IngestionClient:
     ) -> TaskV1:
         """
         (Deprecated) get_task_v1
-        Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+        Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -2070,6 +2166,11 @@ class IngestionClient:
         """
 
         if transformation_id is None:
+            raise ValueError(
+                "Parameter `transformation_id` is required when calling `get_transformation`."
+            )
+
+        if not transformation_id:
             raise ValueError(
                 "Parameter `transformation_id` is required when calling `get_transformation`."
             )
@@ -2549,6 +2650,11 @@ class IngestionClient:
                 "Parameter `run_id` is required when calling `list_events`."
             )
 
+        if not run_id:
+            raise ValueError(
+                "Parameter `run_id` is required when calling `list_events`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if items_per_page is not None:
@@ -2729,13 +2835,13 @@ class IngestionClient:
         start_date: Annotated[
             Optional[StrictStr],
             Field(
-                description="Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used."
+                description="Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used."
             ),
         ] = None,
         end_date: Annotated[
             Optional[StrictStr],
             Field(
-                description="Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used."
+                description="Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used."
             ),
         ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -2762,9 +2868,9 @@ class IngestionClient:
         :type sort: RunSortKeys
         :param order: Sort order of the response, ascending or descending.
         :type order: OrderKeys
-        :param start_date: Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+        :param start_date: Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used.
         :type start_date: str
-        :param end_date: Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
+        :param end_date: Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used.
         :type end_date: str
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the raw algoliasearch 'APIResponse' object.
@@ -2848,13 +2954,13 @@ class IngestionClient:
         start_date: Annotated[
             Optional[StrictStr],
             Field(
-                description="Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used."
+                description="Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used."
             ),
         ] = None,
         end_date: Annotated[
             Optional[StrictStr],
             Field(
-                description="Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used."
+                description="Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used."
             ),
         ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -2881,9 +2987,9 @@ class IngestionClient:
         :type sort: RunSortKeys
         :param order: Sort order of the response, ascending or descending.
         :type order: OrderKeys
-        :param start_date: Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+        :param start_date: Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used.
         :type start_date: str
-        :param end_date: Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
+        :param end_date: Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used.
         :type end_date: str
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'RunListResponse' result object.
@@ -3381,7 +3487,7 @@ class IngestionClient:
     ) -> ApiResponse[str]:
         """
         (Deprecated) list_tasks_v1
-        Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+        Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
 
         Required API Key ACLs:
           - addObject
@@ -3503,7 +3609,7 @@ class IngestionClient:
     ) -> ListTasksResponseV1:
         """
         (Deprecated) list_tasks_v1
-        Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+        Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
 
         Required API Key ACLs:
           - addObject
@@ -3738,6 +3844,9 @@ class IngestionClient:
         if index_name is None:
             raise ValueError("Parameter `index_name` is required when calling `push`.")
 
+        if not index_name:
+            raise ValueError("Parameter `index_name` is required when calling `push`.")
+
         if push_task_payload is None:
             raise ValueError(
                 "Parameter `push_task_payload` is required when calling `push`."
@@ -3854,6 +3963,11 @@ class IngestionClient:
                 "Parameter `task_id` is required when calling `push_task`."
             )
 
+        if not task_id:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `push_task`."
+            )
+
         if push_task_payload is None:
             raise ValueError(
                 "Parameter `push_task_payload` is required when calling `push_task`."
@@ -3951,6 +4065,11 @@ class IngestionClient:
                 "Parameter `task_id` is required when calling `replace_task`."
             )
 
+        if not task_id:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `replace_task`."
+            )
+
         if task_replace is None:
             raise ValueError(
                 "Parameter `task_replace` is required when calling `replace_task`."
@@ -4027,6 +4146,11 @@ class IngestionClient:
                 "Parameter `source_id` is required when calling `run_source`."
             )
 
+        if not source_id:
+            raise ValueError(
+                "Parameter `source_id` is required when calling `run_source`."
+            )
+
         _data = {}
         if run_source_payload is not None:
             _data = run_source_payload
@@ -4098,6 +4222,9 @@ class IngestionClient:
         if task_id is None:
             raise ValueError("Parameter `task_id` is required when calling `run_task`.")
 
+        if not task_id:
+            raise ValueError("Parameter `task_id` is required when calling `run_task`.")
+
         _data = {}
         if run_task_payload is not None:
             _data = run_task_payload
@@ -4152,7 +4279,7 @@ class IngestionClient:
     ) -> ApiResponse[str]:
         """
         (Deprecated) run_task_v1
-        Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of task runs with the observability endpoints.
+        Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs with the observability endpoints.
 
         Required API Key ACLs:
           - addObject
@@ -4170,6 +4297,11 @@ class IngestionClient:
         warn("POST /1/tasks/{taskID}/run is deprecated.", DeprecationWarning)
 
         if task_id is None:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `run_task_v1`."
+            )
+
+        if not task_id:
             raise ValueError(
                 "Parameter `task_id` is required when calling `run_task_v1`."
             )
@@ -4200,7 +4332,7 @@ class IngestionClient:
     ) -> RunResponse:
         """
         (Deprecated) run_task_v1
-        Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of task runs with the observability endpoints.
+        Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs with the observability endpoints.
 
         Required API Key ACLs:
           - addObject
@@ -4466,7 +4598,7 @@ class IngestionClient:
     ) -> ApiResponse[str]:
         """
         (Deprecated) search_tasks_v1
-        Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+        Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
 
         Required API Key ACLs:
           - addObject
@@ -4507,7 +4639,7 @@ class IngestionClient:
     ) -> List[TaskV1]:
         """
         (Deprecated) search_tasks_v1
-        Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+        Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
 
         Required API Key ACLs:
           - addObject
@@ -4605,6 +4737,11 @@ class IngestionClient:
         """
 
         if source_id is None:
+            raise ValueError(
+                "Parameter `source_id` is required when calling `trigger_docker_source_discover`."
+            )
+
+        if not source_id:
             raise ValueError(
                 "Parameter `source_id` is required when calling `trigger_docker_source_discover`."
             )
@@ -4740,6 +4877,11 @@ class IngestionClient:
                 "Parameter `transformation_id` is required when calling `try_transformation_before_update`."
             )
 
+        if not transformation_id:
+            raise ValueError(
+                "Parameter `transformation_id` is required when calling `try_transformation_before_update`."
+            )
+
         if transformation_try is None:
             raise ValueError(
                 "Parameter `transformation_try` is required when calling `try_transformation_before_update`."
@@ -4815,6 +4957,11 @@ class IngestionClient:
         """
 
         if authentication_id is None:
+            raise ValueError(
+                "Parameter `authentication_id` is required when calling `update_authentication`."
+            )
+
+        if not authentication_id:
             raise ValueError(
                 "Parameter `authentication_id` is required when calling `update_authentication`."
             )
@@ -4898,6 +5045,11 @@ class IngestionClient:
                 "Parameter `destination_id` is required when calling `update_destination`."
             )
 
+        if not destination_id:
+            raise ValueError(
+                "Parameter `destination_id` is required when calling `update_destination`."
+            )
+
         if destination_update is None:
             raise ValueError(
                 "Parameter `destination_update` is required when calling `update_destination`."
@@ -4972,6 +5124,11 @@ class IngestionClient:
         """
 
         if source_id is None:
+            raise ValueError(
+                "Parameter `source_id` is required when calling `update_source`."
+            )
+
+        if not source_id:
             raise ValueError(
                 "Parameter `source_id` is required when calling `update_source`."
             )
@@ -5054,6 +5211,11 @@ class IngestionClient:
                 "Parameter `task_id` is required when calling `update_task`."
             )
 
+        if not task_id:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `update_task`."
+            )
+
         if task_update is None:
             raise ValueError(
                 "Parameter `task_update` is required when calling `update_task`."
@@ -5111,7 +5273,7 @@ class IngestionClient:
     ) -> ApiResponse[str]:
         """
         (Deprecated) update_task_v1
-        Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+        Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -5129,6 +5291,11 @@ class IngestionClient:
         warn("PATCH /1/tasks/{taskID} is deprecated.", DeprecationWarning)
 
         if task_id is None:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `update_task_v1`."
+            )
+
+        if not task_id:
             raise ValueError(
                 "Parameter `task_id` is required when calling `update_task_v1`."
             )
@@ -5162,7 +5329,7 @@ class IngestionClient:
     ) -> TaskUpdateResponse:
         """
         (Deprecated) update_task_v1
-        Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+        Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -5206,6 +5373,11 @@ class IngestionClient:
         """
 
         if transformation_id is None:
+            raise ValueError(
+                "Parameter `transformation_id` is required when calling `update_transformation`."
+            )
+
+        if not transformation_id:
             raise ValueError(
                 "Parameter `transformation_id` is required when calling `update_transformation`."
             )
@@ -5343,6 +5515,11 @@ class IngestionClient:
         """
 
         if source_id is None:
+            raise ValueError(
+                "Parameter `source_id` is required when calling `validate_source_before_update`."
+            )
+
+        if not source_id:
             raise ValueError(
                 "Parameter `source_id` is required when calling `validate_source_before_update`."
             )
@@ -5486,7 +5663,7 @@ class IngestionClientSync:
         self.close()
 
     def close(self) -> None:
-        return self._transporter.close()
+        self._transporter.close()
 
     def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
@@ -5505,10 +5682,12 @@ class IngestionClientSync:
         batch_size: int = 1000,
         reference_index_name: Optional[str] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
+        chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[WatchResponse]:
         """
         Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `push` requests by leveraging the Transformation pipeline setup in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
         """
+        chunked_options = chunked_options or ChunkedHelperOptions()
         offset = 0
         records: List[PushTaskRecords] = []
         responses: List[WatchResponse] = []
@@ -5562,15 +5741,14 @@ class IngestionClientSync:
                     def _validate(_resp: Event | None) -> bool:
                         return _resp is not None
 
-                    timeout = RetryTimeout()
-
                     create_iterable_sync(
                         func=_func,
                         validate=_validate,
                         aggregator=_aggregator,
-                        timeout=lambda: timeout(_retry_count),
-                        error_validate=lambda _: _retry_count >= 50,
-                        error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${50})",
+                        timeout=lambda: float(min(_retry_count * 1.5, 5)),
+                        error_validate=lambda _: _retry_count
+                        >= chunked_options.max_retries,
+                        error_message=lambda _: f"Stopped waiting for the task after {chunked_options.max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries.",
                     )
                 offset += wait_batch_size
         return responses
@@ -5837,7 +6015,7 @@ class IngestionClientSync:
     ) -> ApiResponse[str]:
         """
         (Deprecated) create_task_v1
-        Creates a new task using the v1 endpoint, please use `createTask` instead.
+        Creates a new task using the v1 endpoint. Use `createTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -5883,7 +6061,7 @@ class IngestionClientSync:
     ) -> TaskCreateResponse:
         """
         (Deprecated) create_task_v1
-        Creates a new task using the v1 endpoint, please use `createTask` instead.
+        Creates a new task using the v1 endpoint. Use `createTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -6000,6 +6178,11 @@ class IngestionClientSync:
                 "Parameter `path` is required when calling `custom_delete`."
             )
 
+        if not path:
+            raise ValueError(
+                "Parameter `path` is required when calling `custom_delete`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
@@ -6067,6 +6250,9 @@ class IngestionClientSync:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_get`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -6142,6 +6328,9 @@ class IngestionClientSync:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_post`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -6230,6 +6419,9 @@ class IngestionClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
+        if not path:
+            raise ValueError("Parameter `path` is required when calling `custom_put`.")
+
         _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
@@ -6310,6 +6502,11 @@ class IngestionClientSync:
                 "Parameter `authentication_id` is required when calling `delete_authentication`."
             )
 
+        if not authentication_id:
+            raise ValueError(
+                "Parameter `authentication_id` is required when calling `delete_authentication`."
+            )
+
         return self._transporter.request(
             verb=Verb.DELETE,
             path="/1/authentications/{authenticationID}".replace(
@@ -6369,6 +6566,11 @@ class IngestionClientSync:
         """
 
         if destination_id is None:
+            raise ValueError(
+                "Parameter `destination_id` is required when calling `delete_destination`."
+            )
+
+        if not destination_id:
             raise ValueError(
                 "Parameter `destination_id` is required when calling `delete_destination`."
             )
@@ -6433,6 +6635,11 @@ class IngestionClientSync:
                 "Parameter `source_id` is required when calling `delete_source`."
             )
 
+        if not source_id:
+            raise ValueError(
+                "Parameter `source_id` is required when calling `delete_source`."
+            )
+
         return self._transporter.request(
             verb=Verb.DELETE,
             path="/1/sources/{sourceID}".replace(
@@ -6493,6 +6700,11 @@ class IngestionClientSync:
                 "Parameter `task_id` is required when calling `delete_task`."
             )
 
+        if not task_id:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `delete_task`."
+            )
+
         return self._transporter.request(
             verb=Verb.DELETE,
             path="/2/tasks/{taskID}".replace("{taskID}", quote(str(task_id), safe="")),
@@ -6534,7 +6746,7 @@ class IngestionClientSync:
     ) -> ApiResponse[str]:
         """
         (Deprecated) delete_task_v1
-        Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+        Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -6550,6 +6762,11 @@ class IngestionClientSync:
         warn("DELETE /1/tasks/{taskID} is deprecated.", DeprecationWarning)
 
         if task_id is None:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `delete_task_v1`."
+            )
+
+        if not task_id:
             raise ValueError(
                 "Parameter `task_id` is required when calling `delete_task_v1`."
             )
@@ -6572,7 +6789,7 @@ class IngestionClientSync:
     ) -> DeleteResponse:
         """
         (Deprecated) delete_task_v1
-        Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+        Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -6609,6 +6826,11 @@ class IngestionClientSync:
         """
 
         if transformation_id is None:
+            raise ValueError(
+                "Parameter `transformation_id` is required when calling `delete_transformation`."
+            )
+
+        if not transformation_id:
             raise ValueError(
                 "Parameter `transformation_id` is required when calling `delete_transformation`."
             )
@@ -6675,6 +6897,11 @@ class IngestionClientSync:
                 "Parameter `task_id` is required when calling `disable_task`."
             )
 
+        if not task_id:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `disable_task`."
+            )
+
         return self._transporter.request(
             verb=Verb.PUT,
             path="/2/tasks/{taskID}/disable".replace(
@@ -6718,7 +6945,7 @@ class IngestionClientSync:
     ) -> ApiResponse[str]:
         """
         (Deprecated) disable_task_v1
-        Disables a task using the v1 endpoint, please use `disableTask` instead.
+        Disables a task using the v1 endpoint. Use `disableTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -6734,6 +6961,11 @@ class IngestionClientSync:
         warn("PUT /1/tasks/{taskID}/disable is deprecated.", DeprecationWarning)
 
         if task_id is None:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `disable_task_v1`."
+            )
+
+        if not task_id:
             raise ValueError(
                 "Parameter `task_id` is required when calling `disable_task_v1`."
             )
@@ -6758,7 +6990,7 @@ class IngestionClientSync:
     ) -> TaskUpdateResponse:
         """
         (Deprecated) disable_task_v1
-        Disables a task using the v1 endpoint, please use `disableTask` instead.
+        Disables a task using the v1 endpoint. Use `disableTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -6795,6 +7027,11 @@ class IngestionClientSync:
         """
 
         if task_id is None:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `enable_task`."
+            )
+
+        if not task_id:
             raise ValueError(
                 "Parameter `task_id` is required when calling `enable_task`."
             )
@@ -6842,7 +7079,7 @@ class IngestionClientSync:
     ) -> ApiResponse[str]:
         """
         (Deprecated) enable_task_v1
-        Enables a task using the v1 endpoint, please use `enableTask` instead.
+        Enables a task using the v1 endpoint. Use `enableTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -6858,6 +7095,11 @@ class IngestionClientSync:
         warn("PUT /1/tasks/{taskID}/enable is deprecated.", DeprecationWarning)
 
         if task_id is None:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `enable_task_v1`."
+            )
+
+        if not task_id:
             raise ValueError(
                 "Parameter `task_id` is required when calling `enable_task_v1`."
             )
@@ -6882,7 +7124,7 @@ class IngestionClientSync:
     ) -> TaskUpdateResponse:
         """
         (Deprecated) enable_task_v1
-        Enables a task using the v1 endpoint, please use `enableTask` instead.
+        Enables a task using the v1 endpoint. Use `enableTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -6920,6 +7162,11 @@ class IngestionClientSync:
         """
 
         if authentication_id is None:
+            raise ValueError(
+                "Parameter `authentication_id` is required when calling `get_authentication`."
+            )
+
+        if not authentication_id:
             raise ValueError(
                 "Parameter `authentication_id` is required when calling `get_authentication`."
             )
@@ -6987,6 +7234,11 @@ class IngestionClientSync:
                 "Parameter `destination_id` is required when calling `get_destination`."
             )
 
+        if not destination_id:
+            raise ValueError(
+                "Parameter `destination_id` is required when calling `get_destination`."
+            )
+
         return self._transporter.request(
             verb=Verb.GET,
             path="/1/destinations/{destinationID}".replace(
@@ -7050,7 +7302,15 @@ class IngestionClientSync:
         if run_id is None:
             raise ValueError("Parameter `run_id` is required when calling `get_event`.")
 
+        if not run_id:
+            raise ValueError("Parameter `run_id` is required when calling `get_event`.")
+
         if event_id is None:
+            raise ValueError(
+                "Parameter `event_id` is required when calling `get_event`."
+            )
+
+        if not event_id:
             raise ValueError(
                 "Parameter `event_id` is required when calling `get_event`."
             )
@@ -7118,6 +7378,9 @@ class IngestionClientSync:
         if run_id is None:
             raise ValueError("Parameter `run_id` is required when calling `get_run`.")
 
+        if not run_id:
+            raise ValueError("Parameter `run_id` is required when calling `get_run`.")
+
         return self._transporter.request(
             verb=Verb.GET,
             path="/1/runs/{runID}".replace("{runID}", quote(str(run_id), safe="")),
@@ -7172,6 +7435,11 @@ class IngestionClientSync:
         """
 
         if source_id is None:
+            raise ValueError(
+                "Parameter `source_id` is required when calling `get_source`."
+            )
+
+        if not source_id:
             raise ValueError(
                 "Parameter `source_id` is required when calling `get_source`."
             )
@@ -7234,6 +7502,9 @@ class IngestionClientSync:
         if task_id is None:
             raise ValueError("Parameter `task_id` is required when calling `get_task`.")
 
+        if not task_id:
+            raise ValueError("Parameter `task_id` is required when calling `get_task`.")
+
         return self._transporter.request(
             verb=Verb.GET,
             path="/2/tasks/{taskID}".replace("{taskID}", quote(str(task_id), safe="")),
@@ -7275,7 +7546,7 @@ class IngestionClientSync:
     ) -> ApiResponse[str]:
         """
         (Deprecated) get_task_v1
-        Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+        Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -7291,6 +7562,11 @@ class IngestionClientSync:
         warn("GET /1/tasks/{taskID} is deprecated.", DeprecationWarning)
 
         if task_id is None:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `get_task_v1`."
+            )
+
+        if not task_id:
             raise ValueError(
                 "Parameter `task_id` is required when calling `get_task_v1`."
             )
@@ -7313,7 +7589,7 @@ class IngestionClientSync:
     ) -> TaskV1:
         """
         (Deprecated) get_task_v1
-        Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+        Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -7350,6 +7626,11 @@ class IngestionClientSync:
         """
 
         if transformation_id is None:
+            raise ValueError(
+                "Parameter `transformation_id` is required when calling `get_transformation`."
+            )
+
+        if not transformation_id:
             raise ValueError(
                 "Parameter `transformation_id` is required when calling `get_transformation`."
             )
@@ -7829,6 +8110,11 @@ class IngestionClientSync:
                 "Parameter `run_id` is required when calling `list_events`."
             )
 
+        if not run_id:
+            raise ValueError(
+                "Parameter `run_id` is required when calling `list_events`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if items_per_page is not None:
@@ -8009,13 +8295,13 @@ class IngestionClientSync:
         start_date: Annotated[
             Optional[StrictStr],
             Field(
-                description="Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used."
+                description="Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used."
             ),
         ] = None,
         end_date: Annotated[
             Optional[StrictStr],
             Field(
-                description="Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used."
+                description="Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used."
             ),
         ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -8042,9 +8328,9 @@ class IngestionClientSync:
         :type sort: RunSortKeys
         :param order: Sort order of the response, ascending or descending.
         :type order: OrderKeys
-        :param start_date: Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+        :param start_date: Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used.
         :type start_date: str
-        :param end_date: Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
+        :param end_date: Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used.
         :type end_date: str
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the raw algoliasearch 'APIResponse' object.
@@ -8128,13 +8414,13 @@ class IngestionClientSync:
         start_date: Annotated[
             Optional[StrictStr],
             Field(
-                description="Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used."
+                description="Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used."
             ),
         ] = None,
         end_date: Annotated[
             Optional[StrictStr],
             Field(
-                description="Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used."
+                description="Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used."
             ),
         ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -8161,9 +8447,9 @@ class IngestionClientSync:
         :type sort: RunSortKeys
         :param order: Sort order of the response, ascending or descending.
         :type order: OrderKeys
-        :param start_date: Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+        :param start_date: Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used.
         :type start_date: str
-        :param end_date: Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
+        :param end_date: Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used.
         :type end_date: str
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'RunListResponse' result object.
@@ -8661,7 +8947,7 @@ class IngestionClientSync:
     ) -> ApiResponse[str]:
         """
         (Deprecated) list_tasks_v1
-        Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+        Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
 
         Required API Key ACLs:
           - addObject
@@ -8783,7 +9069,7 @@ class IngestionClientSync:
     ) -> ListTasksResponseV1:
         """
         (Deprecated) list_tasks_v1
-        Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+        Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
 
         Required API Key ACLs:
           - addObject
@@ -9018,6 +9304,9 @@ class IngestionClientSync:
         if index_name is None:
             raise ValueError("Parameter `index_name` is required when calling `push`.")
 
+        if not index_name:
+            raise ValueError("Parameter `index_name` is required when calling `push`.")
+
         if push_task_payload is None:
             raise ValueError(
                 "Parameter `push_task_payload` is required when calling `push`."
@@ -9134,6 +9423,11 @@ class IngestionClientSync:
                 "Parameter `task_id` is required when calling `push_task`."
             )
 
+        if not task_id:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `push_task`."
+            )
+
         if push_task_payload is None:
             raise ValueError(
                 "Parameter `push_task_payload` is required when calling `push_task`."
@@ -9231,6 +9525,11 @@ class IngestionClientSync:
                 "Parameter `task_id` is required when calling `replace_task`."
             )
 
+        if not task_id:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `replace_task`."
+            )
+
         if task_replace is None:
             raise ValueError(
                 "Parameter `task_replace` is required when calling `replace_task`."
@@ -9301,6 +9600,11 @@ class IngestionClientSync:
         """
 
         if source_id is None:
+            raise ValueError(
+                "Parameter `source_id` is required when calling `run_source`."
+            )
+
+        if not source_id:
             raise ValueError(
                 "Parameter `source_id` is required when calling `run_source`."
             )
@@ -9376,6 +9680,9 @@ class IngestionClientSync:
         if task_id is None:
             raise ValueError("Parameter `task_id` is required when calling `run_task`.")
 
+        if not task_id:
+            raise ValueError("Parameter `task_id` is required when calling `run_task`.")
+
         _data = {}
         if run_task_payload is not None:
             _data = run_task_payload
@@ -9428,7 +9735,7 @@ class IngestionClientSync:
     ) -> ApiResponse[str]:
         """
         (Deprecated) run_task_v1
-        Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of task runs with the observability endpoints.
+        Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs with the observability endpoints.
 
         Required API Key ACLs:
           - addObject
@@ -9446,6 +9753,11 @@ class IngestionClientSync:
         warn("POST /1/tasks/{taskID}/run is deprecated.", DeprecationWarning)
 
         if task_id is None:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `run_task_v1`."
+            )
+
+        if not task_id:
             raise ValueError(
                 "Parameter `task_id` is required when calling `run_task_v1`."
             )
@@ -9476,7 +9788,7 @@ class IngestionClientSync:
     ) -> RunResponse:
         """
         (Deprecated) run_task_v1
-        Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of task runs with the observability endpoints.
+        Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs with the observability endpoints.
 
         Required API Key ACLs:
           - addObject
@@ -9742,7 +10054,7 @@ class IngestionClientSync:
     ) -> ApiResponse[str]:
         """
         (Deprecated) search_tasks_v1
-        Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+        Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
 
         Required API Key ACLs:
           - addObject
@@ -9783,7 +10095,7 @@ class IngestionClientSync:
     ) -> List[TaskV1]:
         """
         (Deprecated) search_tasks_v1
-        Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+        Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
 
         Required API Key ACLs:
           - addObject
@@ -9881,6 +10193,11 @@ class IngestionClientSync:
         """
 
         if source_id is None:
+            raise ValueError(
+                "Parameter `source_id` is required when calling `trigger_docker_source_discover`."
+            )
+
+        if not source_id:
             raise ValueError(
                 "Parameter `source_id` is required when calling `trigger_docker_source_discover`."
             )
@@ -10016,6 +10333,11 @@ class IngestionClientSync:
                 "Parameter `transformation_id` is required when calling `try_transformation_before_update`."
             )
 
+        if not transformation_id:
+            raise ValueError(
+                "Parameter `transformation_id` is required when calling `try_transformation_before_update`."
+            )
+
         if transformation_try is None:
             raise ValueError(
                 "Parameter `transformation_try` is required when calling `try_transformation_before_update`."
@@ -10091,6 +10413,11 @@ class IngestionClientSync:
         """
 
         if authentication_id is None:
+            raise ValueError(
+                "Parameter `authentication_id` is required when calling `update_authentication`."
+            )
+
+        if not authentication_id:
             raise ValueError(
                 "Parameter `authentication_id` is required when calling `update_authentication`."
             )
@@ -10174,6 +10501,11 @@ class IngestionClientSync:
                 "Parameter `destination_id` is required when calling `update_destination`."
             )
 
+        if not destination_id:
+            raise ValueError(
+                "Parameter `destination_id` is required when calling `update_destination`."
+            )
+
         if destination_update is None:
             raise ValueError(
                 "Parameter `destination_update` is required when calling `update_destination`."
@@ -10248,6 +10580,11 @@ class IngestionClientSync:
         """
 
         if source_id is None:
+            raise ValueError(
+                "Parameter `source_id` is required when calling `update_source`."
+            )
+
+        if not source_id:
             raise ValueError(
                 "Parameter `source_id` is required when calling `update_source`."
             )
@@ -10330,6 +10667,11 @@ class IngestionClientSync:
                 "Parameter `task_id` is required when calling `update_task`."
             )
 
+        if not task_id:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `update_task`."
+            )
+
         if task_update is None:
             raise ValueError(
                 "Parameter `task_update` is required when calling `update_task`."
@@ -10385,7 +10727,7 @@ class IngestionClientSync:
     ) -> ApiResponse[str]:
         """
         (Deprecated) update_task_v1
-        Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+        Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -10403,6 +10745,11 @@ class IngestionClientSync:
         warn("PATCH /1/tasks/{taskID} is deprecated.", DeprecationWarning)
 
         if task_id is None:
+            raise ValueError(
+                "Parameter `task_id` is required when calling `update_task_v1`."
+            )
+
+        if not task_id:
             raise ValueError(
                 "Parameter `task_id` is required when calling `update_task_v1`."
             )
@@ -10436,7 +10783,7 @@ class IngestionClientSync:
     ) -> TaskUpdateResponse:
         """
         (Deprecated) update_task_v1
-        Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+        Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
 
         Required API Key ACLs:
           - addObject
@@ -10478,6 +10825,11 @@ class IngestionClientSync:
         """
 
         if transformation_id is None:
+            raise ValueError(
+                "Parameter `transformation_id` is required when calling `update_transformation`."
+            )
+
+        if not transformation_id:
             raise ValueError(
                 "Parameter `transformation_id` is required when calling `update_transformation`."
             )
@@ -10615,6 +10967,11 @@ class IngestionClientSync:
         """
 
         if source_id is None:
+            raise ValueError(
+                "Parameter `source_id` is required when calling `validate_source_before_update`."
+            )
+
+        if not source_id:
             raise ValueError(
                 "Parameter `source_id` is required when calling `validate_source_before_update`."
             )

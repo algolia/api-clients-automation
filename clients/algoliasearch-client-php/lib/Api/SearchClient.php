@@ -7,6 +7,7 @@ namespace Algolia\AlgoliaSearch\Api;
 use Algolia\AlgoliaSearch\Algolia;
 use Algolia\AlgoliaSearch\Configuration\IngestionConfig;
 use Algolia\AlgoliaSearch\Configuration\SearchConfig;
+use Algolia\AlgoliaSearch\Configuration\TransformationOptions;
 use Algolia\AlgoliaSearch\Exceptions\ExceededRetriesException;
 use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
 use Algolia\AlgoliaSearch\Exceptions\ValidUntilNotFoundException;
@@ -76,6 +77,7 @@ use Algolia\AlgoliaSearch\RetryStrategy\AlgoliaResponse;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use Algolia\AlgoliaSearch\Support\ChunkedHelperOptions;
 use Algolia\AlgoliaSearch\Support\Helpers;
 use GuzzleHttp\Psr7\Query;
 
@@ -86,7 +88,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class SearchClient
 {
-    public const VERSION = '4.37.3';
+    public const VERSION = '4.44.0';
 
     /**
      * @var ApiWrapperInterface
@@ -137,19 +139,13 @@ class SearchClient
 
         $client = new static($apiWrapper, $config);
 
-        if (null !== $config->getTransformationRegion()) {
-            $ingestionConfig = IngestionConfig::create($config->getAppId(), $config->getAlgoliaApiKey(), $config->getTransformationRegion());
-
-            if ($hosts = $config->getHosts()) {
-                if ($config->getHasFullHosts()) {
-                    $ingestionConfig = $ingestionConfig->setFullHosts($hosts);
-                } else {
-                    $ingestionConfig = $ingestionConfig->setHosts($hosts);
-                }
-            }
-
-            $client->ingestionTransporter = IngestionClient::createWithConfig($ingestionConfig);
+        if (null !== $config->getTransformationOptions()) {
+            $client->ingestionTransporter = self::buildIngestionTransporter($config, $config->getTransformationOptions());
         }
+
+        $logger = Algolia::getLogger();
+        $logger->info('Algolia API client: Algolia SearchClient initialized (appId: '.$config->getAppId().')');
+        Algolia::logDebugWarningOnce();
 
         return $client;
     }
@@ -196,6 +192,20 @@ class SearchClient
     }
 
     /**
+     * Sets (or replaces) the ingestion transporter used by the `*WithTransformation` helpers.
+     * The transporter is built from the Ingestion API defaults (25s timeouts, region-derived
+     * hosts); only the fields set on `$transformationOptions` override those defaults — the
+     * parent `SearchConfig` is never forwarded.
+     *
+     * @see https://www.algolia.com/doc/libraries/sdk/methods/ingestion/
+     */
+    public function setTransformationOptions(TransformationOptions $transformationOptions)
+    {
+        $this->config->setTransformationOptions($transformationOptions);
+        $this->ingestionTransporter = self::buildIngestionTransporter($this->config, $transformationOptions);
+    }
+
+    /**
      * Creates a new API key with specific permissions and restrictions.
      *
      * Required API Key ACLs:
@@ -204,7 +214,7 @@ class SearchClient
      * @param ApiKey|array $apiKey apiKey (required)
      *                             - $apiKey['acl'] => (array) Permissions that determine the type of API requests this key can make. The required ACL is listed in each endpoint's reference. For more information, see [access control list](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). (required)
      *                             - $apiKey['description'] => (string) Description of an API key to help you identify this API key.
-     *                             - $apiKey['indexes'] => (array) Index names or patterns that this API key can access. By default, an API key can access all indices in the same application.  You can use leading and trailing wildcard characters (`*`):  - `dev_*` matches all indices starting with \"dev_\". - `*_dev` matches all indices ending with \"_dev\". - `*_products_*` matches all indices containing \"_products_\".
+     *                             - $apiKey['indexes'] => (array) Index names or patterns that this API key can access. By default, an API key can access all indices in the same application.  You can use leading and trailing wildcard characters (`*`):  - `dev_*` matches all indices starting with \"dev_\" - `*_dev` matches all indices ending with \"_dev\" - `*_products_*` matches all indices containing \"_products_\".
      *                             - $apiKey['maxHitsPerQuery'] => (int) Maximum number of results this API key can retrieve in one query. By default, there's no limit.
      *                             - $apiKey['maxQueriesPerIPPerHour'] => (int) Maximum number of API requests allowed per IP address or [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken) per hour.  If this limit is reached, the API returns an error with status code `429`. By default, there's no limit.
      *                             - $apiKey['queryParameters'] => (string) Query parameters to add when making API requests with this API key.  To restrict this API key to specific IP addresses, add the `restrictSources` parameter. You can only add a single source, but you can provide a range of IP addresses.  Creating an API key fails if the request is made from an IP address outside the restricted range.
@@ -366,7 +376,7 @@ class SearchClient
     }
 
     /**
-     * Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they'll be ignored.
+     * Retrieves records from an index, up to 1,000 per request.  Searching returns _hits_ (records augmented with highlighting and ranking details). Browsing returns matching records only. Use browse to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance, number of matched words, proximity, or geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they're ignored.
      *
      * Required API Key ACLs:
      *  - browse
@@ -528,7 +538,7 @@ class SearchClient
     }
 
     /**
-     * This operation doesn't accept empty filters.  This operation is resource-intensive. You should only use it if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+     * This operation doesn't accept empty filters.  This operation is resource-intensive. Use it only if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
      *
      * Required API Key ACLs:
      *  - deleteIndex
@@ -536,7 +546,7 @@ class SearchClient
      * @param string               $indexName      Name of the index on which to perform the operation. (required)
      * @param array|DeleteByParams $deleteByParams deleteByParams (required)
      *                                             - $deleteByParams['facetFilters'] => (array)
-     *                                             - $deleteByParams['filters'] => (string) Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
+     *                                             - $deleteByParams['filters'] => (string) Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>`, where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>`, where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes if the facet attribute name or facet value contains spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
      *                                             - $deleteByParams['numericFilters'] => (array)
      *                                             - $deleteByParams['tagFilters'] => (array)
      *                                             - $deleteByParams['aroundLatLng'] => (string) Coordinates for the center of a circle, expressed as a comma-separated string of latitude and longitude.  Only records included within a circle around this central location are included in the results. The radius of the circle is determined by the `aroundRadius` and `minimumAroundRadius` settings. This parameter is ignored if you also specify `insidePolygon` or `insideBoundingBox`.
@@ -1036,7 +1046,7 @@ class SearchClient
     }
 
     /**
-     * Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+     * Copies or moves (renames) an index within the same Algolia application.  Notes: - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it's created. - This operation is resource-intensive.  **Copy**  - If the source index doesn't exist, copying creates a new index with 0 records and default settings. - API keys from the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - For more information, see [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).  **Move**  - If the source index doesn't exist, moving is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - For more information, see [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
      *
      * Required API Key ACLs:
      *  - addObject
@@ -1061,7 +1071,7 @@ class SearchClient
     }
 
     /**
-     * Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+     * Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - Use first-level attributes only. Nested attributes aren't supported.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update attributes without replacing the full record, use these built-in operations. These operations are useful when the initial data isn't available.  - `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. - `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching number or string elements from an array attribute made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a numeric integer attribute only if the provided value matches the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the API ignores the update.   If the object doesn't exist, the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the provided value is greater than the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1, the API updates the object.   If the object doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.  Specify an operation by providing an object with the attribute to update as the key and its value as an object with these properties:  - `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument to the operation, for example, increment or decrement step, or a value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
      *
      * Required API Key ACLs:
      *  - addObject
@@ -1173,6 +1183,7 @@ class SearchClient
      *                              - $rule['validity'] => (array) Time periods when the rule is active.
      *                              - $rule['tags'] => (array)
      *                              - $rule['scope'] => (string)
+     *                              - $rule['condition'] => (array)
      *
      * @see Rule
      *
@@ -1263,12 +1274,12 @@ class SearchClient
     }
 
     /**
-     * Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
+     * Runs multiple search queries against one or more indices in a single API request.  Use cases include:  - Searching different indices, such as products and marketing content. - Run multiple queries on the same index with different parameters or filters.  If you know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
      *
      * Required API Key ACLs:
      *  - search
      *
-     * @param array|SearchMethodParams $searchMethodParams Muli-search request body. Results are returned in the same order as the requests. (required)
+     * @param array|SearchMethodParams $searchMethodParams Multi-query search request body. Results are returned in the same order as the requests. (required)
      *                                                     - $searchMethodParams['requests'] => (array)  (required)
      *                                                     - $searchMethodParams['strategy'] => (array)
      *
@@ -1495,7 +1506,7 @@ class SearchClient
      * @param ApiKey|array $apiKey apiKey (required)
      *                             - $apiKey['acl'] => (array) Permissions that determine the type of API requests this key can make. The required ACL is listed in each endpoint's reference. For more information, see [access control list](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). (required)
      *                             - $apiKey['description'] => (string) Description of an API key to help you identify this API key.
-     *                             - $apiKey['indexes'] => (array) Index names or patterns that this API key can access. By default, an API key can access all indices in the same application.  You can use leading and trailing wildcard characters (`*`):  - `dev_*` matches all indices starting with \"dev_\". - `*_dev` matches all indices ending with \"_dev\". - `*_products_*` matches all indices containing \"_products_\".
+     *                             - $apiKey['indexes'] => (array) Index names or patterns that this API key can access. By default, an API key can access all indices in the same application.  You can use leading and trailing wildcard characters (`*`):  - `dev_*` matches all indices starting with \"dev_\" - `*_dev` matches all indices ending with \"_dev\" - `*_products_*` matches all indices containing \"_products_\".
      *                             - $apiKey['maxHitsPerQuery'] => (int) Maximum number of results this API key can retrieve in one query. By default, there's no limit.
      *                             - $apiKey['maxQueriesPerIPPerHour'] => (int) Maximum number of API requests allowed per IP address or [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken) per hour.  If this limit is reached, the API returns an error with status code `429`. By default, there's no limit.
      *                             - $apiKey['queryParameters'] => (string) Query parameters to add when making API requests with this API key.  To restrict this API key to specific IP addresses, add the `restrictSources` parameter. You can only add a single source, but you can provide a range of IP addresses.  Creating an API key fails if the request is made from an IP address outside the restricted range.
@@ -1568,8 +1579,20 @@ class SearchClient
                 'Parameter `indexName` is required when calling `addOrUpdateObject`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `addOrUpdateObject`.'
+            );
+        }
         // verify the required parameter 'objectID' is set
         if (!isset($objectID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `objectID` is required when calling `addOrUpdateObject`.'
+            );
+        }
+        // verify the required parameter 'objectID' is not empty
+        if (isset($objectID) && '' === $objectID) {
             throw new \InvalidArgumentException(
                 'Parameter `objectID` is required when calling `addOrUpdateObject`.'
             );
@@ -1659,6 +1682,12 @@ class SearchClient
                 'Parameter `xAlgoliaUserID` is required when calling `assignUserId`.'
             );
         }
+        // verify the required parameter 'xAlgoliaUserID' is not empty
+        if (isset($xAlgoliaUserID) && '' === $xAlgoliaUserID) {
+            throw new \InvalidArgumentException(
+                'Parameter `xAlgoliaUserID` is required when calling `assignUserId`.'
+            );
+        }
         // verify the required parameter 'assignUserIdParams' is set
         if (!isset($assignUserIdParams)) {
             throw new \InvalidArgumentException(
@@ -1694,6 +1723,12 @@ class SearchClient
     {
         // verify the required parameter 'indexName' is set
         if (!isset($indexName)) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `batch`.'
+            );
+        }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
             throw new \InvalidArgumentException(
                 'Parameter `indexName` is required when calling `batch`.'
             );
@@ -1740,6 +1775,12 @@ class SearchClient
     {
         // verify the required parameter 'xAlgoliaUserID' is set
         if (!isset($xAlgoliaUserID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `xAlgoliaUserID` is required when calling `batchAssignUserIds`.'
+            );
+        }
+        // verify the required parameter 'xAlgoliaUserID' is not empty
+        if (isset($xAlgoliaUserID) && '' === $xAlgoliaUserID) {
             throw new \InvalidArgumentException(
                 'Parameter `xAlgoliaUserID` is required when calling `batchAssignUserIds`.'
             );
@@ -1811,7 +1852,7 @@ class SearchClient
      * Browse for records (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
-     * Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they'll be ignored.
+     * Retrieves records from an index, up to 1,000 per request.  Searching returns _hits_ (records augmented with highlighting and ranking details). Browsing returns matching records only. Use browse to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance, number of matched words, proximity, or geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they're ignored.
      * Required API Key ACLs:
      *  - browse
      *
@@ -1825,6 +1866,12 @@ class SearchClient
     {
         // verify the required parameter 'indexName' is set
         if (!isset($indexName)) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `browse`.'
+            );
+        }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
             throw new \InvalidArgumentException(
                 'Parameter `indexName` is required when calling `browse`.'
             );
@@ -1868,6 +1915,12 @@ class SearchClient
                 'Parameter `indexName` is required when calling `clearObjects`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `clearObjects`.'
+            );
+        }
 
         $resourcePath = '/1/indexes/{indexName}/clear';
         $queryParameters = [];
@@ -1904,6 +1957,12 @@ class SearchClient
     {
         // verify the required parameter 'indexName' is set
         if (!isset($indexName)) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `clearRules`.'
+            );
+        }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
             throw new \InvalidArgumentException(
                 'Parameter `indexName` is required when calling `clearRules`.'
             );
@@ -1952,6 +2011,12 @@ class SearchClient
                 'Parameter `indexName` is required when calling `clearSynonyms`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `clearSynonyms`.'
+            );
+        }
 
         $resourcePath = '/1/indexes/{indexName}/synonyms/clear';
         $queryParameters = [];
@@ -1994,6 +2059,12 @@ class SearchClient
                 'Parameter `path` is required when calling `customDelete`.'
             );
         }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customDelete`.'
+            );
+        }
 
         $resourcePath = '/{path}';
         $queryParameters = [];
@@ -2032,6 +2103,12 @@ class SearchClient
     {
         // verify the required parameter 'path' is set
         if (!isset($path)) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customGet`.'
+            );
+        }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
             throw new \InvalidArgumentException(
                 'Parameter `path` is required when calling `customGet`.'
             );
@@ -2079,6 +2156,12 @@ class SearchClient
                 'Parameter `path` is required when calling `customPost`.'
             );
         }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customPost`.'
+            );
+        }
 
         $resourcePath = '/{path}';
         $queryParameters = [];
@@ -2118,6 +2201,12 @@ class SearchClient
     {
         // verify the required parameter 'path' is set
         if (!isset($path)) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customPut`.'
+            );
+        }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
             throw new \InvalidArgumentException(
                 'Parameter `path` is required when calling `customPut`.'
             );
@@ -2165,6 +2254,12 @@ class SearchClient
                 'Parameter `key` is required when calling `deleteApiKey`.'
             );
         }
+        // verify the required parameter 'key' is not empty
+        if (isset($key) && '' === $key) {
+            throw new \InvalidArgumentException(
+                'Parameter `key` is required when calling `deleteApiKey`.'
+            );
+        }
 
         $resourcePath = '/1/keys/{key}';
         $queryParameters = [];
@@ -2187,7 +2282,7 @@ class SearchClient
      * Delete records matching a filter (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
-     * This operation doesn't accept empty filters.  This operation is resource-intensive. You should only use it if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+     * This operation doesn't accept empty filters.  This operation is resource-intensive. Use it only if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
      * Required API Key ACLs:
      *  - deleteIndex
      *
@@ -2201,6 +2296,12 @@ class SearchClient
     {
         // verify the required parameter 'indexName' is set
         if (!isset($indexName)) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `deleteBy`.'
+            );
+        }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
             throw new \InvalidArgumentException(
                 'Parameter `indexName` is required when calling `deleteBy`.'
             );
@@ -2250,6 +2351,12 @@ class SearchClient
                 'Parameter `indexName` is required when calling `deleteIndex`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `deleteIndex`.'
+            );
+        }
 
         $resourcePath = '/1/indexes/{indexName}';
         $queryParameters = [];
@@ -2290,8 +2397,20 @@ class SearchClient
                 'Parameter `indexName` is required when calling `deleteObject`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `deleteObject`.'
+            );
+        }
         // verify the required parameter 'objectID' is set
         if (!isset($objectID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `objectID` is required when calling `deleteObject`.'
+            );
+        }
+        // verify the required parameter 'objectID' is not empty
+        if (isset($objectID) && '' === $objectID) {
             throw new \InvalidArgumentException(
                 'Parameter `objectID` is required when calling `deleteObject`.'
             );
@@ -2346,8 +2465,20 @@ class SearchClient
                 'Parameter `indexName` is required when calling `deleteRule`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `deleteRule`.'
+            );
+        }
         // verify the required parameter 'objectID' is set
         if (!isset($objectID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `objectID` is required when calling `deleteRule`.'
+            );
+        }
+        // verify the required parameter 'objectID' is not empty
+        if (isset($objectID) && '' === $objectID) {
             throw new \InvalidArgumentException(
                 'Parameter `objectID` is required when calling `deleteRule`.'
             );
@@ -2404,6 +2535,12 @@ class SearchClient
                 'Parameter `source` is required when calling `deleteSource`.'
             );
         }
+        // verify the required parameter 'source' is not empty
+        if (isset($source) && '' === $source) {
+            throw new \InvalidArgumentException(
+                'Parameter `source` is required when calling `deleteSource`.'
+            );
+        }
 
         $resourcePath = '/1/security/sources/{source}';
         $queryParameters = [];
@@ -2445,8 +2582,20 @@ class SearchClient
                 'Parameter `indexName` is required when calling `deleteSynonym`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `deleteSynonym`.'
+            );
+        }
         // verify the required parameter 'objectID' is set
         if (!isset($objectID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `objectID` is required when calling `deleteSynonym`.'
+            );
+        }
+        // verify the required parameter 'objectID' is not empty
+        if (isset($objectID) && '' === $objectID) {
             throw new \InvalidArgumentException(
                 'Parameter `objectID` is required when calling `deleteSynonym`.'
             );
@@ -2499,6 +2648,12 @@ class SearchClient
     {
         // verify the required parameter 'key' is set
         if (!isset($key)) {
+            throw new \InvalidArgumentException(
+                'Parameter `key` is required when calling `getApiKey`.'
+            );
+        }
+        // verify the required parameter 'key' is not empty
+        if (isset($key) && '' === $key) {
             throw new \InvalidArgumentException(
                 'Parameter `key` is required when calling `getApiKey`.'
             );
@@ -2669,8 +2824,20 @@ class SearchClient
                 'Parameter `indexName` is required when calling `getObject`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `getObject`.'
+            );
+        }
         // verify the required parameter 'objectID' is set
         if (!isset($objectID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `objectID` is required when calling `getObject`.'
+            );
+        }
+        // verify the required parameter 'objectID' is not empty
+        if (isset($objectID) && '' === $objectID) {
             throw new \InvalidArgumentException(
                 'Parameter `objectID` is required when calling `getObject`.'
             );
@@ -2758,8 +2925,20 @@ class SearchClient
                 'Parameter `indexName` is required when calling `getRule`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `getRule`.'
+            );
+        }
         // verify the required parameter 'objectID' is set
         if (!isset($objectID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `objectID` is required when calling `getRule`.'
+            );
+        }
+        // verify the required parameter 'objectID' is not empty
+        if (isset($objectID) && '' === $objectID) {
             throw new \InvalidArgumentException(
                 'Parameter `objectID` is required when calling `getRule`.'
             );
@@ -2809,6 +2988,12 @@ class SearchClient
     {
         // verify the required parameter 'indexName' is set
         if (!isset($indexName)) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `getSettings`.'
+            );
+        }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
             throw new \InvalidArgumentException(
                 'Parameter `indexName` is required when calling `getSettings`.'
             );
@@ -2879,8 +3064,20 @@ class SearchClient
                 'Parameter `indexName` is required when calling `getSynonym`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `getSynonym`.'
+            );
+        }
         // verify the required parameter 'objectID' is set
         if (!isset($objectID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `objectID` is required when calling `getSynonym`.'
+            );
+        }
+        // verify the required parameter 'objectID' is not empty
+        if (isset($objectID) && '' === $objectID) {
             throw new \InvalidArgumentException(
                 'Parameter `objectID` is required when calling `getSynonym`.'
             );
@@ -2930,6 +3127,12 @@ class SearchClient
     {
         // verify the required parameter 'indexName' is set
         if (!isset($indexName)) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `getTask`.'
+            );
+        }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
             throw new \InvalidArgumentException(
                 'Parameter `indexName` is required when calling `getTask`.'
             );
@@ -3006,6 +3209,12 @@ class SearchClient
     {
         // verify the required parameter 'userID' is set
         if (!isset($userID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `userID` is required when calling `getUserId`.'
+            );
+        }
+        // verify the required parameter 'userID' is not empty
+        if (isset($userID) && '' === $userID) {
             throw new \InvalidArgumentException(
                 'Parameter `userID` is required when calling `getUserId`.'
             );
@@ -3197,7 +3406,7 @@ class SearchClient
      * Copy or move an index (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
-     * Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+     * Copies or moves (renames) an index within the same Algolia application.  Notes: - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it's created. - This operation is resource-intensive.  **Copy**  - If the source index doesn't exist, copying creates a new index with 0 records and default settings. - API keys from the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - For more information, see [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).  **Move**  - If the source index doesn't exist, moving is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - For more information, see [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
      * Required API Key ACLs:
      *  - addObject
      *
@@ -3211,6 +3420,12 @@ class SearchClient
     {
         // verify the required parameter 'indexName' is set
         if (!isset($indexName)) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `operationIndex`.'
+            );
+        }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
             throw new \InvalidArgumentException(
                 'Parameter `indexName` is required when calling `operationIndex`.'
             );
@@ -3243,7 +3458,7 @@ class SearchClient
      * Add or update attributes (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
-     * Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+     * Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - Use first-level attributes only. Nested attributes aren't supported.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update attributes without replacing the full record, use these built-in operations. These operations are useful when the initial data isn't available.  - `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. - `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching number or string elements from an array attribute made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a numeric integer attribute only if the provided value matches the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the API ignores the update.   If the object doesn't exist, the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the provided value is greater than the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1, the API updates the object.   If the object doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.  Specify an operation by providing an object with the attribute to update as the key and its value as an object with these properties:  - `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument to the operation, for example, increment or decrement step, or a value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
      * Required API Key ACLs:
      *  - addObject
      *
@@ -3263,8 +3478,20 @@ class SearchClient
                 'Parameter `indexName` is required when calling `partialUpdateObject`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `partialUpdateObject`.'
+            );
+        }
         // verify the required parameter 'objectID' is set
         if (!isset($objectID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `objectID` is required when calling `partialUpdateObject`.'
+            );
+        }
+        // verify the required parameter 'objectID' is not empty
+        if (isset($objectID) && '' === $objectID) {
             throw new \InvalidArgumentException(
                 'Parameter `objectID` is required when calling `partialUpdateObject`.'
             );
@@ -3323,6 +3550,12 @@ class SearchClient
     {
         // verify the required parameter 'userID' is set
         if (!isset($userID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `userID` is required when calling `removeUserId`.'
+            );
+        }
+        // verify the required parameter 'userID' is not empty
+        if (isset($userID) && '' === $userID) {
             throw new \InvalidArgumentException(
                 'Parameter `userID` is required when calling `removeUserId`.'
             );
@@ -3396,6 +3629,12 @@ class SearchClient
                 'Parameter `key` is required when calling `restoreApiKey`.'
             );
         }
+        // verify the required parameter 'key' is not empty
+        if (isset($key) && '' === $key) {
+            throw new \InvalidArgumentException(
+                'Parameter `key` is required when calling `restoreApiKey`.'
+            );
+        }
 
         $resourcePath = '/1/keys/{key}/restore';
         $queryParameters = [];
@@ -3432,6 +3671,12 @@ class SearchClient
     {
         // verify the required parameter 'indexName' is set
         if (!isset($indexName)) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `saveObject`.'
+            );
+        }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
             throw new \InvalidArgumentException(
                 'Parameter `indexName` is required when calling `saveObject`.'
             );
@@ -3484,8 +3729,20 @@ class SearchClient
                 'Parameter `indexName` is required when calling `saveRule`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `saveRule`.'
+            );
+        }
         // verify the required parameter 'objectID' is set
         if (!isset($objectID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `objectID` is required when calling `saveRule`.'
+            );
+        }
+        // verify the required parameter 'objectID' is not empty
+        if (isset($objectID) && '' === $objectID) {
             throw new \InvalidArgumentException(
                 'Parameter `objectID` is required when calling `saveRule`.'
             );
@@ -3551,6 +3808,12 @@ class SearchClient
                 'Parameter `indexName` is required when calling `saveRules`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `saveRules`.'
+            );
+        }
         // verify the required parameter 'rules' is set
         if (!isset($rules)) {
             throw new \InvalidArgumentException(
@@ -3607,8 +3870,20 @@ class SearchClient
                 'Parameter `indexName` is required when calling `saveSynonym`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `saveSynonym`.'
+            );
+        }
         // verify the required parameter 'objectID' is set
         if (!isset($objectID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `objectID` is required when calling `saveSynonym`.'
+            );
+        }
+        // verify the required parameter 'objectID' is not empty
+        if (isset($objectID) && '' === $objectID) {
             throw new \InvalidArgumentException(
                 'Parameter `objectID` is required when calling `saveSynonym`.'
             );
@@ -3674,6 +3949,12 @@ class SearchClient
                 'Parameter `indexName` is required when calling `saveSynonyms`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `saveSynonyms`.'
+            );
+        }
         // verify the required parameter 'synonymHit' is set
         if (!isset($synonymHit)) {
             throw new \InvalidArgumentException(
@@ -3707,14 +3988,14 @@ class SearchClient
     }
 
     /**
-     * Search multiple indices (with HTTP info).
+     * Search multiple queries (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
-     * Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
+     * Runs multiple search queries against one or more indices in a single API request.  Use cases include:  - Searching different indices, such as products and marketing content. - Run multiple queries on the same index with different parameters or filters.  If you know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
      * Required API Key ACLs:
      *  - search
      *
-     * @param array|SearchMethodParams $searchMethodParams Muli-search request body. Results are returned in the same order as the requests. (required)
+     * @param array|SearchMethodParams $searchMethodParams Multi-query search request body. Results are returned in the same order as the requests. (required)
      * @param array                    $requestOptions     Request options
      *
      * @return AlgoliaResponse
@@ -3805,8 +4086,20 @@ class SearchClient
                 'Parameter `indexName` is required when calling `searchForFacetValues`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `searchForFacetValues`.'
+            );
+        }
         // verify the required parameter 'facetName' is set
         if (!isset($facetName)) {
+            throw new \InvalidArgumentException(
+                'Parameter `facetName` is required when calling `searchForFacetValues`.'
+            );
+        }
+        // verify the required parameter 'facetName' is not empty
+        if (isset($facetName) && '' === $facetName) {
             throw new \InvalidArgumentException(
                 'Parameter `facetName` is required when calling `searchForFacetValues`.'
             );
@@ -3860,6 +4153,12 @@ class SearchClient
                 'Parameter `indexName` is required when calling `searchRules`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `searchRules`.'
+            );
+        }
 
         $resourcePath = '/1/indexes/{indexName}/rules/search';
         $queryParameters = [];
@@ -3900,6 +4199,12 @@ class SearchClient
                 'Parameter `indexName` is required when calling `searchSingleIndex`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `searchSingleIndex`.'
+            );
+        }
 
         $resourcePath = '/1/indexes/{indexName}/query';
         $queryParameters = [];
@@ -3936,6 +4241,12 @@ class SearchClient
     {
         // verify the required parameter 'indexName' is set
         if (!isset($indexName)) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `searchSynonyms`.'
+            );
+        }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
             throw new \InvalidArgumentException(
                 'Parameter `indexName` is required when calling `searchSynonyms`.'
             );
@@ -4041,6 +4352,12 @@ class SearchClient
                 'Parameter `indexName` is required when calling `setSettings`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `setSettings`.'
+            );
+        }
         // verify the required parameter 'indexSettings' is set
         if (!isset($indexSettings)) {
             throw new \InvalidArgumentException(
@@ -4087,6 +4404,12 @@ class SearchClient
     {
         // verify the required parameter 'key' is set
         if (!isset($key)) {
+            throw new \InvalidArgumentException(
+                'Parameter `key` is required when calling `updateApiKey`.'
+            );
+        }
+        // verify the required parameter 'key' is not empty
+        if (isset($key) && '' === $key) {
             throw new \InvalidArgumentException(
                 'Parameter `key` is required when calling `updateApiKey`.'
             );
@@ -4260,18 +4583,25 @@ class SearchClient
     }
 
     /**
-     * Helper: Similar to the `replaceAllObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must have been passed to the client instantiation method.
+     * Helper: Similar to the `replaceAllObjects` method but requires a Push connector
+     * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+     * to be created first, in order to transform records before indexing them to Algolia.
+     * `transformationOptions` must be set on the `SearchConfig` before creating the client,
+     * or via `SearchClient::setTransformationOptions()` before calling this method.
      *
-     * @param string $indexName      the `indexName` to replace `objects` in
-     * @param array  $objects        the array of `objects` to store in the given Algolia `indexName`
-     * @param array  $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
-     * @param array  $requestOptions Request options
-     * @param mixed  $scopes
+     * @see https://www.algolia.com/doc/libraries/sdk/methods/ingestion/
+     *
+     * @param string                    $indexName      the `indexName` to replace `objects` in
+     * @param array                     $objects        the array of `objects` to store in the given Algolia `indexName`
+     * @param array                     $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param array                     $requestOptions Request options
+     * @param null|ChunkedHelperOptions $chunkedOptions Optional configuration shared across chunked helpers (e.g. `maxRetries`).
+     * @param mixed                     $scopes
      */
-    public function replaceAllObjectsWithTransformation($indexName, $objects, $batchSize = 1000, $scopes = ['settings', 'rules', 'synonyms'], $requestOptions = [])
+    public function replaceAllObjectsWithTransformation($indexName, $objects, $batchSize = 1000, $scopes = ['settings', 'rules', 'synonyms'], $requestOptions = [], ?ChunkedHelperOptions $chunkedOptions = null)
     {
         if (null == $this->ingestionTransporter) {
-            throw new \InvalidArgumentException('`setTransformationRegion` must have been called before calling this method.');
+            throw new \InvalidArgumentException('`transformationOptions` must be set on `SearchConfig` before creating the client, or via `SearchClient::setTransformationOptions(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/');
         }
 
         $tmpIndexName = $indexName.'_tmp_'.rand(10000000, 99999999);
@@ -4287,9 +4617,9 @@ class SearchClient
                 $requestOptions
             );
 
-            $watchResponses = $this->ingestionTransporter->chunkedPush($tmpIndexName, $objects, 'addObject', true, $batchSize, $indexName, $requestOptions);
+            $watchResponses = $this->ingestionTransporter->chunkedPush($tmpIndexName, $objects, 'addObject', true, $batchSize, $indexName, $requestOptions, $chunkedOptions);
 
-            $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID']);
+            $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID'], [], $chunkedOptions?->maxRetries);
 
             $copyOperationResponse = $this->operationIndex(
                 $indexName,
@@ -4301,7 +4631,7 @@ class SearchClient
                 $requestOptions
             );
 
-            $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID']);
+            $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID'], [], $chunkedOptions?->maxRetries);
 
             $moveOperationResponse = $this->operationIndex(
                 $tmpIndexName,
@@ -4312,7 +4642,7 @@ class SearchClient
                 $requestOptions
             );
 
-            $this->waitForTask($tmpIndexName, $moveOperationResponse['taskID']);
+            $this->waitForTask($tmpIndexName, $moveOperationResponse['taskID'], [], $chunkedOptions?->maxRetries);
 
             return [
                 'copyOperationResponse' => $copyOperationResponse,
@@ -4330,13 +4660,14 @@ class SearchClient
      * Helper: Replace all objects in an index using a temporary one.
      * See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
      *
-     * @param string $indexName      the `indexName` to replace `objects` in
-     * @param array  $objects        the array of `objects` to store in the given Algolia `indexName`
-     * @param array  $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
-     * @param array  $requestOptions Request options
-     * @param mixed  $scopes
+     * @param string                    $indexName      the `indexName` to replace `objects` in
+     * @param array                     $objects        the array of `objects` to store in the given Algolia `indexName`
+     * @param array                     $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param array                     $requestOptions Request options
+     * @param null|ChunkedHelperOptions $chunkedOptions Optional configuration shared across chunked helpers (e.g. `maxRetries`).
+     * @param mixed                     $scopes
      */
-    public function replaceAllObjects($indexName, $objects, $batchSize = 1000, $scopes = ['settings', 'rules', 'synonyms'], $requestOptions = [])
+    public function replaceAllObjects($indexName, $objects, $batchSize = 1000, $scopes = ['settings', 'rules', 'synonyms'], $requestOptions = [], ?ChunkedHelperOptions $chunkedOptions = null)
     {
         $tmpIndexName = $indexName.'_tmp_'.rand(10000000, 99999999);
 
@@ -4351,9 +4682,9 @@ class SearchClient
                 $requestOptions
             );
 
-            $batchResponses = $this->chunkedBatch($tmpIndexName, $objects, 'addObject', true, $batchSize, $requestOptions);
+            $batchResponses = $this->chunkedBatch($tmpIndexName, $objects, 'addObject', true, $batchSize, $requestOptions, $chunkedOptions);
 
-            $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID']);
+            $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID'], [], $chunkedOptions?->maxRetries);
 
             $copyOperationResponse = $this->operationIndex(
                 $indexName,
@@ -4365,7 +4696,7 @@ class SearchClient
                 $requestOptions
             );
 
-            $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID']);
+            $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID'], [], $chunkedOptions?->maxRetries);
 
             $moveOperationResponse = $this->operationIndex(
                 $tmpIndexName,
@@ -4376,7 +4707,7 @@ class SearchClient
                 $requestOptions
             );
 
-            $this->waitForTask($tmpIndexName, $moveOperationResponse['taskID']);
+            $this->waitForTask($tmpIndexName, $moveOperationResponse['taskID'], [], $chunkedOptions?->maxRetries);
 
             return [
                 'copyOperationResponse' => $copyOperationResponse,
@@ -4393,48 +4724,54 @@ class SearchClient
     /**
      * Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
      *
-     * @param string $indexName      the `indexName` to replace `objects` in
-     * @param array  $objects        the array of `objects` to store in the given Algolia `indexName`
-     * @param bool   $waitForTasks   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
-     * @param int    $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
-     * @param array  $requestOptions Request options
+     * @param string                    $indexName      the `indexName` to replace `objects` in
+     * @param array                     $objects        the array of `objects` to store in the given Algolia `indexName`
+     * @param bool                      $waitForTasks   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
+     * @param int                       $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param array                     $requestOptions Request options
+     * @param null|ChunkedHelperOptions $chunkedOptions Optional configuration shared across chunked helpers (e.g. `maxRetries`).
      */
-    public function saveObjects($indexName, $objects, $waitForTasks = false, $batchSize = 1000, $requestOptions = [])
+    public function saveObjects($indexName, $objects, $waitForTasks = false, $batchSize = 1000, $requestOptions = [], ?ChunkedHelperOptions $chunkedOptions = null)
     {
-        return $this->chunkedBatch($indexName, $objects, 'addObject', $waitForTasks, $batchSize, $requestOptions);
+        return $this->chunkedBatch($indexName, $objects, 'addObject', $waitForTasks, $batchSize, $requestOptions, $chunkedOptions);
     }
 
     /**
      * Helper: Similar to the `saveObjects` method but requires a Push connector
      * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
-     * to be created first, in order to transform records before indexing them to Algolia. The
-     * `region` must have been passed to the client instantiation method.
+     * to be created first, in order to transform records before indexing them to Algolia.
+     * `transformationOptions` must be set on the `SearchConfig` before creating the client,
+     * or via `SearchClient::setTransformationOptions()` before calling this method.
      *
-     * @param string $indexName      the `indexName` to replace `objects` in
-     * @param array  $objects        the array of `objects` to store in the given Algolia `indexName`
-     * @param bool   $waitForTasks   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
-     * @param int    $batchSize      The size of the chunk of `objects`. The number of `push` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
-     * @param array  $requestOptions Request options
+     * @see https://www.algolia.com/doc/libraries/sdk/methods/ingestion/
+     *
+     * @param string                    $indexName      the `indexName` to replace `objects` in
+     * @param array                     $objects        the array of `objects` to store in the given Algolia `indexName`
+     * @param bool                      $waitForTasks   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
+     * @param int                       $batchSize      The size of the chunk of `objects`. The number of `push` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param array                     $requestOptions Request options
+     * @param null|ChunkedHelperOptions $chunkedOptions Optional configuration shared across chunked helpers (e.g. `maxRetries`).
      */
-    public function saveObjectsWithTransformation($indexName, $objects, $waitForTasks = false, $batchSize = 1000, $requestOptions = [])
+    public function saveObjectsWithTransformation($indexName, $objects, $waitForTasks = false, $batchSize = 1000, $requestOptions = [], ?ChunkedHelperOptions $chunkedOptions = null)
     {
         if (null == $this->ingestionTransporter) {
-            throw new \InvalidArgumentException('`setTransformationRegion` must have been called before calling this method.');
+            throw new \InvalidArgumentException('`transformationOptions` must be set on `SearchConfig` before creating the client, or via `SearchClient::setTransformationOptions(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/');
         }
 
-        return $this->ingestionTransporter->chunkedPush($indexName, $objects, 'addObject', $waitForTasks, $batchSize, $requestOptions);
+        return $this->ingestionTransporter->chunkedPush($indexName, $objects, 'addObject', $waitForTasks, $batchSize, null, $requestOptions, $chunkedOptions);
     }
 
     /**
      * Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
      *
-     * @param string $indexName      the `indexName` to delete `objectIDs` from
-     * @param array  $objectIDs      the `objectIDs` to delete
-     * @param bool   $waitForTasks   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
-     * @param int    $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
-     * @param array  $requestOptions Request options
+     * @param string                    $indexName      the `indexName` to delete `objectIDs` from
+     * @param array                     $objectIDs      the `objectIDs` to delete
+     * @param bool                      $waitForTasks   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
+     * @param int                       $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param array                     $requestOptions Request options
+     * @param null|ChunkedHelperOptions $chunkedOptions Optional configuration shared across chunked helpers (e.g. `maxRetries`).
      */
-    public function deleteObjects($indexName, $objectIDs, $waitForTasks = false, $batchSize = 1000, $requestOptions = [])
+    public function deleteObjects($indexName, $objectIDs, $waitForTasks = false, $batchSize = 1000, $requestOptions = [], ?ChunkedHelperOptions $chunkedOptions = null)
     {
         $objects = [];
 
@@ -4442,55 +4779,61 @@ class SearchClient
             $objects[] = ['objectID' => $id];
         }
 
-        return $this->chunkedBatch($indexName, $objects, 'deleteObject', $waitForTasks, $batchSize, $requestOptions);
+        return $this->chunkedBatch($indexName, $objects, 'deleteObject', $waitForTasks, $batchSize, $requestOptions, $chunkedOptions);
     }
 
     /**
      * Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
      *
-     * @param string $indexName         the `indexName` to replace `objects` in
-     * @param array  $objects           the array of `objects` to store in the given Algolia `indexName`
-     * @param bool   $createIfNotExists to be provided if non-existing objects are passed, otherwise, the call will fail
-     * @param bool   $waitForTasks      Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
-     * @param int    $batchSize         The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
-     * @param array  $requestOptions    Request options
+     * @param string                    $indexName         the `indexName` to replace `objects` in
+     * @param array                     $objects           the array of `objects` to store in the given Algolia `indexName`
+     * @param bool                      $createIfNotExists to be provided if non-existing objects are passed, otherwise, the call will fail
+     * @param bool                      $waitForTasks      Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
+     * @param int                       $batchSize         The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param array                     $requestOptions    Request options
+     * @param null|ChunkedHelperOptions $chunkedOptions    Optional configuration shared across chunked helpers (e.g. `maxRetries`).
      */
-    public function partialUpdateObjects($indexName, $objects, $createIfNotExists, $waitForTasks = false, $batchSize = 1000, $requestOptions = [])
+    public function partialUpdateObjects($indexName, $objects, $createIfNotExists, $waitForTasks = false, $batchSize = 1000, $requestOptions = [], ?ChunkedHelperOptions $chunkedOptions = null)
     {
-        return $this->chunkedBatch($indexName, $objects, (true == $createIfNotExists) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, $batchSize, $requestOptions);
+        return $this->chunkedBatch($indexName, $objects, (true == $createIfNotExists) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, $batchSize, $requestOptions, $chunkedOptions);
     }
 
     /**
      * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector
      * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
-     * to be created first, in order to transform records before indexing them to Algolia. The
-     * `region` must have been passed to the client instantiation method.
+     * to be created first, in order to transform records before indexing them to Algolia.
+     * `transformationOptions` must be set on the `SearchConfig` before creating the client,
+     * or via `SearchClient::setTransformationOptions()` before calling this method.
      *
-     * @param string $indexName         the `indexName` to replace `objects` in
-     * @param array  $objects           the array of `objects` to store in the given Algolia `indexName`
-     * @param bool   $createIfNotExists to be provided if non-existing objects are passed, otherwise, the call will fail
-     * @param bool   $waitForTasks      Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
-     * @param int    $batchSize         The size of the chunk of `objects`. The number of `push` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
-     * @param array  $requestOptions    Request options
+     * @see https://www.algolia.com/doc/libraries/sdk/methods/ingestion/
+     *
+     * @param string                    $indexName         the `indexName` to replace `objects` in
+     * @param array                     $objects           the array of `objects` to store in the given Algolia `indexName`
+     * @param bool                      $createIfNotExists to be provided if non-existing objects are passed, otherwise, the call will fail
+     * @param bool                      $waitForTasks      Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
+     * @param int                       $batchSize         The size of the chunk of `objects`. The number of `push` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param array                     $requestOptions    Request options
+     * @param null|ChunkedHelperOptions $chunkedOptions    Optional configuration shared across chunked helpers (e.g. `maxRetries`).
      */
-    public function partialUpdateObjectsWithTransformation($indexName, $objects, $createIfNotExists, $waitForTasks = false, $batchSize = 1000, $requestOptions = [])
+    public function partialUpdateObjectsWithTransformation($indexName, $objects, $createIfNotExists, $waitForTasks = false, $batchSize = 1000, $requestOptions = [], ?ChunkedHelperOptions $chunkedOptions = null)
     {
         if (null == $this->ingestionTransporter) {
-            throw new \InvalidArgumentException('`setTransformationRegion` must have been called before calling this method.');
+            throw new \InvalidArgumentException('`transformationOptions` must be set on `SearchConfig` before creating the client, or via `SearchClient::setTransformationOptions(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/');
         }
 
-        return $this->ingestionTransporter->chunkedPush($indexName, $objects, (true == $createIfNotExists) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, $batchSize, $requestOptions);
+        return $this->ingestionTransporter->chunkedPush($indexName, $objects, (true == $createIfNotExists) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, $batchSize, null, $requestOptions, $chunkedOptions);
     }
 
     /**
      * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
      *
-     * @param string $indexName      the `indexName` to replace `objects` in
-     * @param array  $objects        the array of `objects` to store in the given Algolia `indexName`
-     * @param array  $action         the `batch` `action` to perform on the given array of `objects`, defaults to `addObject`
-     * @param bool   $waitForTasks   whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
-     * @param int    $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
-     * @param array  $requestOptions Request options
+     * @param string                    $indexName      the `indexName` to replace `objects` in
+     * @param array                     $objects        the array of `objects` to store in the given Algolia `indexName`
+     * @param array                     $action         the `batch` `action` to perform on the given array of `objects`, defaults to `addObject`
+     * @param bool                      $waitForTasks   whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
+     * @param int                       $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param array                     $requestOptions Request options
+     * @param null|ChunkedHelperOptions $chunkedOptions Optional configuration shared across chunked helpers (e.g. `maxRetries`).
      */
     public function chunkedBatch(
         $indexName,
@@ -4498,11 +4841,17 @@ class SearchClient
         $action = 'addObject',
         $waitForTasks = true,
         $batchSize = 1000,
-        $requestOptions = []
+        $requestOptions = [],
+        ?ChunkedHelperOptions $chunkedOptions = null
     ) {
         $responses = [];
         $requests = [];
         $count = 0;
+
+        $logger = Algolia::getLogger();
+        $totalObjects = count($objects);
+        $startTime = microtime(true);
+        $logger->info('Algolia API client: Batch operation started: '.$action.' on '.$indexName);
 
         foreach ($objects as $object) {
             $requests[] = [
@@ -4510,23 +4859,29 @@ class SearchClient
                 'body' => $object,
             ];
 
-            if (sizeof($requests) === $batchSize || $count === sizeof($objects) - 1) {
+            ++$count;
+
+            if (sizeof($requests) === $batchSize || $count === sizeof($objects)) {
                 $responses[] = $this->batch($indexName, ['requests' => $requests], $requestOptions);
                 $requests = [];
-            }
 
-            ++$count;
+                $logger->info('Algolia API client: Batch progress: '.min($count, $totalObjects).'/'.$totalObjects.' objects processed');
+            }
         }
 
         if (!empty($requests)) {
             $responses[] = $this->batch($indexName, ['requests' => $requests], $requestOptions);
+            $logger->info('Algolia API client: Batch progress: '.$totalObjects.'/'.$totalObjects.' objects processed');
         }
 
         if ($waitForTasks && !empty($responses)) {
             foreach ($responses as $response) {
-                $this->waitForTask($indexName, $response['taskID']);
+                $this->waitForTask($indexName, $response['taskID'], [], $chunkedOptions?->maxRetries);
             }
         }
+
+        $durationMs = round((microtime(true) - $startTime) * 1000);
+        $logger->info('Algolia API client: Batch operation completed: '.$totalObjects.' objects in '.$durationMs.'ms');
 
         return $responses;
     }
@@ -4590,6 +4945,49 @@ class SearchClient
         }
 
         return true;
+    }
+
+    /**
+     * Builds an ingestion transporter from a `TransformationOptions`, using the Ingestion API
+     * defaults and overriding only the fields explicitly set on `$transformationOptions`.
+     *
+     * @return IngestionClient
+     */
+    private static function buildIngestionTransporter(SearchConfig $config, TransformationOptions $transformationOptions)
+    {
+        $ingestionConfig = IngestionConfig::create(
+            $config->getAppId(),
+            $config->getAlgoliaApiKey(),
+            $transformationOptions->getRegion()
+        );
+
+        if (null !== ($hosts = $transformationOptions->getHosts())) {
+            if ($transformationOptions->getHasFullHosts()) {
+                $ingestionConfig->setFullHosts($hosts);
+            } else {
+                $ingestionConfig->setHosts($hosts);
+            }
+        }
+        if (null !== ($readTimeout = $transformationOptions->getReadTimeout())) {
+            $ingestionConfig->setReadTimeout($readTimeout);
+        }
+        if (null !== ($writeTimeout = $transformationOptions->getWriteTimeout())) {
+            $ingestionConfig->setWriteTimeout($writeTimeout);
+        }
+        if (null !== ($connectTimeout = $transformationOptions->getConnectTimeout())) {
+            $ingestionConfig->setConnectTimeout($connectTimeout);
+        }
+        if (null !== ($waitTaskTimeBeforeRetry = $transformationOptions->getWaitTaskTimeBeforeRetry())) {
+            $ingestionConfig->setWaitTaskTimeBeforeRetry($waitTaskTimeBeforeRetry);
+        }
+        if (null !== ($defaultHeaders = $transformationOptions->getDefaultHeaders())) {
+            $ingestionConfig->setDefaultHeaders($defaultHeaders);
+        }
+        if (null !== ($compressionType = $transformationOptions->getCompressionType())) {
+            $ingestionConfig->setCompressionType($compressionType);
+        }
+
+        return IngestionClient::createWithConfig($ingestionConfig);
     }
 
     private function sendRequestWithHttpInfo($method, $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions, $useReadTransporter = false)

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Trigger input for subscription tasks.
@@ -26,11 +26,7 @@ public struct SubscriptionTrigger: Codable, JSONEncodable {
     }
 }
 
-extension SubscriptionTrigger: Equatable {
-    public static func ==(lhs: SubscriptionTrigger, rhs: SubscriptionTrigger) -> Bool {
-        lhs.type == rhs.type
-    }
-}
+extension SubscriptionTrigger: Equatable {}
 
 extension SubscriptionTrigger: Hashable {
     public func hash(into hasher: inout Hasher) {

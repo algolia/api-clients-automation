@@ -683,9 +683,9 @@ void main() {
                 name: "my first composition",
                 behavior: CompositionInjectionBehavior(
                   injection: Injection(
-                    main: Main(
-                      source: CompositionSource(
-                        search: CompositionSourceSearch(
+                    main: InjectionMain(
+                      source: InjectionMainSearchSource(
+                        search: MainSearch(
                           index: "bar",
                         ),
                       ),
@@ -731,18 +731,18 @@ void main() {
                 name: "my first composition",
                 behavior: CompositionInjectionBehavior(
                   injection: Injection(
-                    main: Main(
-                      source: CompositionSource(
-                        search: CompositionSourceSearch(
+                    main: InjectionMain(
+                      source: InjectionMainSearchSource(
+                        search: MainSearch(
                           index: "foo",
                         ),
                       ),
                     ),
                     injectedItems: [
-                      InjectedItem(
+                      InjectionInjectedItem(
                         key: "my-unique-external-group-key",
-                        source: ExternalSource(
-                          external_: External(
+                        source: InjectedItemExternalSource(
+                          external_: InjectedItemExternal(
                             index: "foo",
                             ordering: ExternalOrdering.fromJson("userDefined"),
                             params: BaseInjectionQueryParameters(
@@ -789,9 +789,9 @@ void main() {
                 name: "my composition",
                 behavior: CompositionInjectionBehavior(
                   injection: Injection(
-                    main: Main(
-                      source: CompositionSource(
-                        search: CompositionSourceSearch(
+                    main: InjectionMain(
+                      source: InjectionMainSearchSource(
+                        search: MainSearch(
                           index: "foo",
                           params: MainInjectionQueryParameters(
                             filters: "brand:adidas",
@@ -800,10 +800,10 @@ void main() {
                       ),
                     ),
                     injectedItems: [
-                      InjectedItem(
+                      InjectionInjectedItem(
                         key: "my-unique-group-key",
-                        source: SearchSource(
-                          search: Search(
+                        source: InjectedItemSearchSource(
+                          search: InjectedItemSearch(
                             index: "foo",
                             params: BaseInjectionQueryParameters(
                               filters: "brand:adidas",
@@ -826,10 +826,10 @@ void main() {
                           ),
                         ),
                       ),
-                      InjectedItem(
+                      InjectionInjectedItem(
                         key: "my-unique-group-key",
-                        source: SearchSource(
-                          search: Search(
+                        source: InjectedItemSearchSource(
+                          search: InjectedItemSearch(
                             index: "foo",
                             params: BaseInjectionQueryParameters(
                               filters: "brand:puma",
@@ -888,18 +888,18 @@ void main() {
                 name: "my composition",
                 behavior: CompositionInjectionBehavior(
                   injection: Injection(
-                    main: Main(
-                      source: CompositionSource(
-                        search: CompositionSourceSearch(
+                    main: InjectionMain(
+                      source: InjectionMainSearchSource(
+                        search: MainSearch(
                           index: "foo",
                         ),
                       ),
                     ),
                     injectedItems: [
-                      InjectedItem(
+                      InjectionInjectedItem(
                         key: "my-unique-injected-item-key",
-                        source: SearchSource(
-                          search: Search(
+                        source: InjectedItemSearchSource(
+                          search: InjectedItemSearch(
                             index: "foo",
                           ),
                         ),
@@ -942,18 +942,18 @@ void main() {
           name: "my first composition",
           behavior: CompositionInjectionBehavior(
             injection: Injection(
-              main: Main(
-                source: CompositionSource(
-                  search: CompositionSourceSearch(
+              main: InjectionMain(
+                source: InjectionMainSearchSource(
+                  search: MainSearch(
                     index: "foo",
                   ),
                 ),
               ),
               injectedItems: [
-                InjectedItem(
+                InjectionInjectedItem(
                   key: "my-unique-group-key",
-                  source: SearchSource(
-                    search: Search(
+                  source: InjectedItemSearchSource(
+                    search: InjectedItemSearch(
                       index: "foo",
                     ),
                   ),
@@ -990,18 +990,18 @@ void main() {
           name: "my first composition",
           behavior: CompositionInjectionBehavior(
             injection: Injection(
-              main: Main(
-                source: CompositionSource(
-                  search: CompositionSourceSearch(
+              main: InjectionMain(
+                source: InjectionMainSearchSource(
+                  search: MainSearch(
                     index: "foo",
                   ),
                 ),
               ),
               injectedItems: [
-                InjectedItem(
+                InjectionInjectedItem(
                   key: "my-unique-external-group-key",
-                  source: ExternalSource(
-                    external_: External(
+                  source: InjectedItemExternalSource(
+                    external_: InjectedItemExternal(
                       index: "foo",
                       ordering: ExternalOrdering.fromJson("userDefined"),
                       params: BaseInjectionQueryParameters(
@@ -1042,9 +1042,9 @@ void main() {
           name: "my composition",
           behavior: CompositionInjectionBehavior(
             injection: Injection(
-              main: Main(
-                source: CompositionSource(
-                  search: CompositionSourceSearch(
+              main: InjectionMain(
+                source: InjectionMainSearchSource(
+                  search: MainSearch(
                     index: "foo",
                     params: MainInjectionQueryParameters(
                       filters: "brand:adidas",
@@ -1053,10 +1053,10 @@ void main() {
                 ),
               ),
               injectedItems: [
-                InjectedItem(
+                InjectionInjectedItem(
                   key: "my-unique-group-key",
-                  source: SearchSource(
-                    search: Search(
+                  source: InjectedItemSearchSource(
+                    search: InjectedItemSearch(
                       index: "foo",
                       params: BaseInjectionQueryParameters(
                         filters: "brand:adidas",
@@ -1079,10 +1079,10 @@ void main() {
                     ),
                   ),
                 ),
-                InjectedItem(
+                InjectionInjectedItem(
                   key: "my-unique-group-key",
-                  source: SearchSource(
-                    search: Search(
+                  source: InjectedItemSearchSource(
+                    search: InjectedItemSearch(
                       index: "foo",
                       params: BaseInjectionQueryParameters(
                         filters: "brand:puma",
@@ -1135,9 +1135,9 @@ void main() {
           name: "my composition",
           behavior: CompositionInjectionBehavior(
             injection: Injection(
-              main: Main(
-                source: CompositionSource(
-                  search: CompositionSourceSearch(
+              main: InjectionMain(
+                source: InjectionMainSearchSource(
+                  search: MainSearch(
                     index: "foo",
                     params: MainInjectionQueryParameters(
                       filters: "brand:adidas",
@@ -1146,10 +1146,10 @@ void main() {
                 ),
               ),
               injectedItems: [
-                InjectedItem(
+                InjectionInjectedItem(
                   key: "my-unique-injected-item-key",
-                  source: SearchSource(
-                    search: Search(
+                  source: InjectedItemSearchSource(
+                    search: InjectedItemSearch(
                       index: "foo",
                     ),
                   ),
@@ -1193,9 +1193,9 @@ void main() {
           },
           behavior: CompositionInjectionBehavior(
             injection: Injection(
-              main: Main(
-                source: CompositionSource(
-                  search: CompositionSourceSearch(
+              main: InjectionMain(
+                source: InjectionMainSearchSource(
+                  search: MainSearch(
                     index: "products",
                   ),
                 ),
@@ -1209,6 +1209,281 @@ void main() {
         expect(request.method, 'put');
         expectBody(request.body,
             """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}}""");
+      },
+    ),
+  );
+
+  // putComposition
+  test(
+    'putComposition',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.putComposition(
+        compositionID: "my-recommend-compo",
+        composition: Composition(
+          objectID: "my-recommend-compo",
+          name: "my recommend composition",
+          behavior: CompositionInjectionBehavior(
+            injection: Injection(
+              main: InjectionMain(
+                source: InjectionMainRecommendSource(
+                  recommend: MainRecommend(
+                    indexName: "products",
+                    model: Model.fromJson("trending-items"),
+                    threshold: 50,
+                  ),
+                ),
+              ),
+              injectedItems: [
+                InjectionInjectedItem(
+                  key: "injected-recommend-key",
+                  source: InjectedItemRecommendSource(
+                    recommend: Recommend(
+                      indexName: "products",
+                      model: Model.fromJson("trending-items"),
+                      threshold: 30,
+                      fallbackParameters: BaseInjectionQueryParameters(
+                        filters: "category:electronics",
+                      ),
+                    ),
+                  ),
+                  position: 3,
+                  length: 2,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/my-recommend-compo');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"my-recommend-compo","name":"my recommend composition","behavior":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}},"injectedItems":[{"key":"injected-recommend-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":30,"fallbackParameters":{"filters":"category:electronics"}}},"position":3,"length":2}]}}}""");
+      },
+    ),
+  );
+
+  // putComposition
+  test(
+    'putComposition',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.putComposition(
+        compositionID: "my-search-and-recommend-compo",
+        composition: Composition(
+          objectID: "my-search-and-recommend-compo",
+          name: "my search main with recommend injection",
+          behavior: CompositionInjectionBehavior(
+            injection: Injection(
+              main: InjectionMain(
+                source: InjectionMainSearchSource(
+                  search: MainSearch(
+                    index: "products",
+                    params: MainInjectionQueryParameters(
+                      filters: "brand:nike",
+                    ),
+                  ),
+                ),
+              ),
+              injectedItems: [
+                InjectionInjectedItem(
+                  key: "injected-recommend-key",
+                  source: InjectedItemRecommendSource(
+                    recommend: Recommend(
+                      indexName: "products",
+                      model: Model.fromJson("trending-items"),
+                      threshold: 40,
+                    ),
+                  ),
+                  position: 1,
+                  length: 3,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(
+            request.path, '/1/compositions/my-search-and-recommend-compo');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"my-search-and-recommend-compo","name":"my search main with recommend injection","behavior":{"injection":{"main":{"source":{"search":{"index":"products","params":{"filters":"brand:nike"}}}},"injectedItems":[{"key":"injected-recommend-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":40}},"position":1,"length":3}]}}}""");
+      },
+    ),
+  );
+
+  // putComposition
+  test(
+    'putComposition',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.putComposition(
+        compositionID: "my-multifeed-recommend-compo",
+        composition: Composition(
+          objectID: "my-multifeed-recommend-compo",
+          name: "multifeed with recommend main",
+          behavior: CompositionMultifeedBehavior(
+            multifeed: Multifeed(
+              feeds: {
+                'trending': FeedInjection(
+                  injection: Injection(
+                    main: InjectionMain(
+                      source: InjectionMainRecommendSource(
+                        recommend: MainRecommend(
+                          indexName: "products",
+                          model: Model.fromJson("trending-items"),
+                          threshold: 50,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              },
+              feedsOrder: [
+                "trending",
+              ],
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(
+            request.path, '/1/compositions/my-multifeed-recommend-compo');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"my-multifeed-recommend-compo","name":"multifeed with recommend main","behavior":{"multifeed":{"feeds":{"trending":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}}}}},"feedsOrder":["trending"]}}}""");
+      },
+    ),
+  );
+
+  // putComposition
+  test(
+    'putComposition',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.putComposition(
+        compositionID: "my-compo",
+        composition: Composition(
+          objectID: "my-compo",
+          name: "my composition",
+          behavior: CompositionMultifeedBehavior(
+            multifeed: Multifeed(
+              feeds: {
+                'products': FeedInjection(
+                  injection: Injection(
+                    main: InjectionMain(
+                      source: InjectionMainSearchSource(
+                        search: MainSearch(
+                          index: "products",
+                          params: MainInjectionQueryParameters(
+                            hitsPerPage: 12,
+                          ),
+                        ),
+                      ),
+                    ),
+                    injectedItems: [
+                      InjectionInjectedItem(
+                        key: "featured-products",
+                        source: InjectedItemSearchSource(
+                          search: InjectedItemSearch(
+                            index: "products",
+                            params: BaseInjectionQueryParameters(
+                              filters: "featured:true",
+                            ),
+                          ),
+                        ),
+                        position: 0,
+                        length: 2,
+                      ),
+                    ],
+                  ),
+                ),
+                'articles': FeedInjection(
+                  injection: Injection(
+                    main: InjectionMain(
+                      source: InjectionMainSearchSource(
+                        search: MainSearch(
+                          index: "articles",
+                          params: MainInjectionQueryParameters(
+                            hitsPerPage: 5,
+                            attributesToRetrieve: [
+                              "title",
+                              "excerpt",
+                              "publishedAt",
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    injectedItems: [
+                      InjectionInjectedItem(
+                        key: "editorial-picks",
+                        source: InjectedItemSearchSource(
+                          search: InjectedItemSearch(
+                            index: "articles",
+                            params: BaseInjectionQueryParameters(
+                              filters: "editorial_pick:true",
+                            ),
+                          ),
+                        ),
+                        position: 0,
+                        length: 1,
+                      ),
+                    ],
+                  ),
+                ),
+                'videos': FeedInjection(
+                  injection: Injection(
+                    main: InjectionMain(
+                      source: InjectionMainSearchSource(
+                        search: MainSearch(
+                          index: "videos",
+                          params: MainInjectionQueryParameters(
+                            hitsPerPage: 3,
+                            attributesToRetrieve: [
+                              "title",
+                              "thumbnail",
+                              "duration",
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              },
+              feedsOrder: [
+                "products",
+                "articles",
+                "videos",
+              ],
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/my-compo');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"my-compo","name":"my composition","behavior":{"multifeed":{"feeds":{"products":{"injection":{"main":{"source":{"search":{"index":"products","params":{"hitsPerPage":12}}}},"injectedItems":[{"key":"featured-products","source":{"search":{"index":"products","params":{"filters":"featured:true"}}},"position":0,"length":2}]}},"articles":{"injection":{"main":{"source":{"search":{"index":"articles","params":{"hitsPerPage":5,"attributesToRetrieve":["title","excerpt","publishedAt"]}}}},"injectedItems":[{"key":"editorial-picks","source":{"search":{"index":"articles","params":{"filters":"editorial_pick:true"}}},"position":0,"length":1}]}},"videos":{"injection":{"main":{"source":{"search":{"index":"videos","params":{"hitsPerPage":3,"attributesToRetrieve":["title","thumbnail","duration"]}}}}}}},"feedsOrder":["products","articles","videos"]}}}""");
       },
     ),
   );
@@ -1236,18 +1511,18 @@ void main() {
           consequence: CompositionRuleConsequence(
             behavior: CompositionInjectionBehavior(
               injection: Injection(
-                main: Main(
-                  source: CompositionSource(
-                    search: CompositionSourceSearch(
+                main: InjectionMain(
+                  source: InjectionMainSearchSource(
+                    search: MainSearch(
                       index: "foo",
                     ),
                   ),
                 ),
                 injectedItems: [
-                  InjectedItem(
+                  InjectionInjectedItem(
                     key: "my-unique-group-from-rule-key",
-                    source: SearchSource(
-                      search: Search(
+                    source: InjectedItemSearchSource(
+                      search: InjectedItemSearch(
                         index: "foo",
                       ),
                     ),
@@ -1292,18 +1567,18 @@ void main() {
           consequence: CompositionRuleConsequence(
             behavior: CompositionInjectionBehavior(
               injection: Injection(
-                main: Main(
-                  source: CompositionSource(
-                    search: CompositionSourceSearch(
+                main: InjectionMain(
+                  source: InjectionMainSearchSource(
+                    search: MainSearch(
                       index: "foo",
                     ),
                   ),
                 ),
                 injectedItems: [
-                  InjectedItem(
+                  InjectionInjectedItem(
                     key: "my-unique-group-from-rule-key",
-                    source: SearchSource(
-                      search: Search(
+                    source: InjectedItemSearchSource(
+                      search: InjectedItemSearch(
                         index: "foo",
                         params: BaseInjectionQueryParameters(
                           filters: "brand:adidas",
@@ -1381,9 +1656,9 @@ void main() {
           consequence: CompositionRuleConsequence(
             behavior: CompositionInjectionBehavior(
               injection: Injection(
-                main: Main(
-                  source: CompositionSource(
-                    search: CompositionSourceSearch(
+                main: InjectionMain(
+                  source: InjectionMainSearchSource(
+                    search: MainSearch(
                       index: "my-index",
                       params: MainInjectionQueryParameters(
                         filters: "brand:adidas",
@@ -1392,10 +1667,10 @@ void main() {
                   ),
                 ),
                 injectedItems: [
-                  InjectedItem(
+                  InjectionInjectedItem(
                     key: "my-unique-external-group-from-rule-key",
-                    source: ExternalSource(
-                      external_: External(
+                    source: InjectedItemExternalSource(
+                      external_: InjectedItemExternal(
                         index: "my-index",
                         params: BaseInjectionQueryParameters(
                           filters: "brand:adidas",
@@ -1447,18 +1722,18 @@ void main() {
           consequence: CompositionRuleConsequence(
             behavior: CompositionInjectionBehavior(
               injection: Injection(
-                main: Main(
-                  source: CompositionSource(
-                    search: CompositionSourceSearch(
+                main: InjectionMain(
+                  source: InjectionMainSearchSource(
+                    search: MainSearch(
                       index: "my-index",
                     ),
                   ),
                 ),
                 injectedItems: [
-                  InjectedItem(
+                  InjectionInjectedItem(
                     key: "my-unique-injected-item-key",
-                    source: SearchSource(
-                      search: Search(
+                    source: InjectedItemSearchSource(
+                      search: InjectedItemSearch(
                         index: "my-index",
                       ),
                     ),
@@ -1509,9 +1784,9 @@ void main() {
                 consequence: CompositionRuleConsequence(
                   behavior: CompositionInjectionBehavior(
                     injection: Injection(
-                      main: Main(
-                        source: CompositionSource(
-                          search: CompositionSourceSearch(
+                      main: InjectionMain(
+                        source: InjectionMainSearchSource(
+                          search: MainSearch(
                             index: "<YOUR_INDEX_NAME>",
                           ),
                         ),
@@ -1559,18 +1834,18 @@ void main() {
                 consequence: CompositionRuleConsequence(
                   behavior: CompositionInjectionBehavior(
                     injection: Injection(
-                      main: Main(
-                        source: CompositionSource(
-                          search: CompositionSourceSearch(
+                      main: InjectionMain(
+                        source: InjectionMainSearchSource(
+                          search: MainSearch(
                             index: "foo",
                           ),
                         ),
                       ),
                       injectedItems: [
-                        InjectedItem(
+                        InjectionInjectedItem(
                           key: "my-unique-group-from-rule-key",
-                          source: SearchSource(
-                            search: Search(
+                          source: InjectedItemSearchSource(
+                            search: InjectedItemSearch(
                               index: "foo",
                               params: BaseInjectionQueryParameters(
                                 filters: "brand:adidas",
@@ -1654,9 +1929,9 @@ void main() {
                 consequence: CompositionRuleConsequence(
                   behavior: CompositionInjectionBehavior(
                     injection: Injection(
-                      main: Main(
-                        source: CompositionSource(
-                          search: CompositionSourceSearch(
+                      main: InjectionMain(
+                        source: InjectionMainSearchSource(
+                          search: MainSearch(
                             index: "my-index",
                             params: MainInjectionQueryParameters(
                               filters: "brand:adidas",
@@ -1665,10 +1940,10 @@ void main() {
                         ),
                       ),
                       injectedItems: [
-                        InjectedItem(
+                        InjectionInjectedItem(
                           key: "my-unique-external-group-from-rule-key",
-                          source: ExternalSource(
-                            external_: External(
+                          source: InjectedItemExternalSource(
+                            external_: InjectedItemExternal(
                               index: "my-index",
                               params: BaseInjectionQueryParameters(
                                 filters: "brand:adidas",
@@ -1709,6 +1984,206 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.saveRules(
+        compositionID: "rule-with-recommend",
+        rules: CompositionRulesBatchParams(
+          requests: [
+            RulesMultipleBatchRequest(
+              action: Action.fromJson("upsert"),
+              body: CompositionRule(
+                objectID: "rule-with-recommend",
+                conditions: [
+                  Condition(
+                    anchoring: Anchoring.fromJson("is"),
+                    pattern: "trending",
+                  ),
+                ],
+                consequence: CompositionRuleConsequence(
+                  behavior: CompositionInjectionBehavior(
+                    injection: Injection(
+                      main: InjectionMain(
+                        source: InjectionMainRecommendSource(
+                          recommend: MainRecommend(
+                            indexName: "products",
+                            model: Model.fromJson("trending-items"),
+                            threshold: 50,
+                          ),
+                        ),
+                      ),
+                      injectedItems: [
+                        InjectionInjectedItem(
+                          key: "injected-recommend-from-rule-key",
+                          source: InjectedItemRecommendSource(
+                            recommend: Recommend(
+                              indexName: "products",
+                              model: Model.fromJson("trending-items"),
+                              threshold: 30,
+                              fallbackParameters: BaseInjectionQueryParameters(
+                                filters: "category:electronics",
+                              ),
+                            ),
+                          ),
+                          position: 2,
+                          length: 3,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(
+            request.path, '/1/compositions/rule-with-recommend/rules/batch');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-recommend","conditions":[{"anchoring":"is","pattern":"trending"}],"consequence":{"behavior":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}},"injectedItems":[{"key":"injected-recommend-from-rule-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":30,"fallbackParameters":{"filters":"category:electronics"}}},"position":2,"length":3}]}}}}}]}""");
+      },
+    ),
+  );
+
+  // saveRules
+  test(
+    'saveRules',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRules(
+        compositionID: "rule-with-search-and-recommend",
+        rules: CompositionRulesBatchParams(
+          requests: [
+            RulesMultipleBatchRequest(
+              action: Action.fromJson("upsert"),
+              body: CompositionRule(
+                objectID: "rule-with-search-and-recommend",
+                conditions: [
+                  Condition(
+                    anchoring: Anchoring.fromJson("contains"),
+                    pattern: "shoes",
+                  ),
+                ],
+                consequence: CompositionRuleConsequence(
+                  behavior: CompositionInjectionBehavior(
+                    injection: Injection(
+                      main: InjectionMain(
+                        source: InjectionMainSearchSource(
+                          search: MainSearch(
+                            index: "products",
+                            params: MainInjectionQueryParameters(
+                              filters: "category:shoes",
+                            ),
+                          ),
+                        ),
+                      ),
+                      injectedItems: [
+                        InjectionInjectedItem(
+                          key: "injected-recommend-from-rule-key",
+                          source: InjectedItemRecommendSource(
+                            recommend: Recommend(
+                              indexName: "products",
+                              model: Model.fromJson("trending-items"),
+                              threshold: 40,
+                            ),
+                          ),
+                          position: 1,
+                          length: 2,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/compositions/rule-with-search-and-recommend/rules/batch');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-search-and-recommend","conditions":[{"anchoring":"contains","pattern":"shoes"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"products","params":{"filters":"category:shoes"}}}},"injectedItems":[{"key":"injected-recommend-from-rule-key","source":{"recommend":{"indexName":"products","model":"trending-items","threshold":40}},"position":1,"length":2}]}}}}}]}""");
+      },
+    ),
+  );
+
+  // saveRules
+  test(
+    'saveRules',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRules(
+        compositionID: "rule-with-multifeed-recommend",
+        rules: CompositionRulesBatchParams(
+          requests: [
+            RulesMultipleBatchRequest(
+              action: Action.fromJson("upsert"),
+              body: CompositionRule(
+                objectID: "rule-with-multifeed-recommend",
+                conditions: [
+                  Condition(
+                    anchoring: Anchoring.fromJson("is"),
+                    pattern: "trending",
+                  ),
+                ],
+                consequence: CompositionRuleConsequence(
+                  behavior: CompositionMultifeedBehavior(
+                    multifeed: Multifeed(
+                      feeds: {
+                        'trending': FeedInjection(
+                          injection: Injection(
+                            main: InjectionMain(
+                              source: InjectionMainRecommendSource(
+                                recommend: MainRecommend(
+                                  indexName: "products",
+                                  model: Model.fromJson("trending-items"),
+                                  threshold: 50,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      },
+                      feedsOrder: [
+                        "trending",
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/compositions/rule-with-multifeed-recommend/rules/batch');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-multifeed-recommend","conditions":[{"anchoring":"is","pattern":"trending"}],"consequence":{"behavior":{"multifeed":{"feeds":{"trending":{"injection":{"main":{"source":{"recommend":{"indexName":"products","model":"trending-items","threshold":50}}}}}},"feedsOrder":["trending"]}}}}}]}""");
+      },
+    ),
+  );
+
+  // saveRules
+  test(
+    'saveRules',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRules(
         compositionID: "my-compo",
         rules: CompositionRulesBatchParams(
           requests: [
@@ -1730,18 +2205,18 @@ void main() {
                 consequence: CompositionRuleConsequence(
                   behavior: CompositionInjectionBehavior(
                     injection: Injection(
-                      main: Main(
-                        source: CompositionSource(
-                          search: CompositionSourceSearch(
+                      main: InjectionMain(
+                        source: InjectionMainSearchSource(
+                          search: MainSearch(
                             index: "my-index",
                           ),
                         ),
                       ),
                       injectedItems: [
-                        InjectedItem(
+                        InjectionInjectedItem(
                           key: "my-unique-injected-item-key",
-                          source: SearchSource(
-                            search: Search(
+                          source: InjectedItemSearchSource(
+                            search: InjectedItemSearch(
                               index: "my-index",
                             ),
                           ),
@@ -1864,6 +2339,36 @@ void main() {
         expect(request.method, 'post');
         expectBody(request.body,
             """{"params":{"query":"batman","sortBy":"Price (asc)"}}""");
+      },
+    ),
+  );
+
+  // search
+  test(
+    'search',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        compositionID: "foo",
+        requestBody: RequestBody(
+          params: Params(
+            query: "batman",
+          ),
+          feedsOrder: [
+            "feed-movies",
+            "feed-comics",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/foo/run');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"params":{"query":"batman"},"feedsOrder":["feed-movies","feed-comics"]}""");
       },
     ),
   );

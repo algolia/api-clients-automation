@@ -122,7 +122,7 @@ class MonitoringClient:
 
     async def close(self) -> None:
         """Closes the underlying `transporter` of the API client."""
-        return await self._transporter.close()
+        await self._transporter.close()
 
     async def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
@@ -157,6 +157,11 @@ class MonitoringClient:
         """
 
         if path is None:
+            raise ValueError(
+                "Parameter `path` is required when calling `custom_delete`."
+            )
+
+        if not path:
             raise ValueError(
                 "Parameter `path` is required when calling `custom_delete`."
             )
@@ -232,6 +237,9 @@ class MonitoringClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
+        if not path:
+            raise ValueError("Parameter `path` is required when calling `custom_get`.")
+
         _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
@@ -305,6 +313,9 @@ class MonitoringClient:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_post`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -395,6 +406,9 @@ class MonitoringClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
+        if not path:
+            raise ValueError("Parameter `path` is required when calling `custom_put`.")
+
         _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
@@ -472,6 +486,11 @@ class MonitoringClient:
                 "Parameter `clusters` is required when calling `get_cluster_incidents`."
             )
 
+        if not clusters:
+            raise ValueError(
+                "Parameter `clusters` is required when calling `get_cluster_incidents`."
+            )
+
         return await self._transporter.request(
             verb=Verb.GET,
             path="/1/incidents/{clusters}".replace(
@@ -522,6 +541,11 @@ class MonitoringClient:
         """
 
         if clusters is None:
+            raise ValueError(
+                "Parameter `clusters` is required when calling `get_cluster_status`."
+            )
+
+        if not clusters:
             raise ValueError(
                 "Parameter `clusters` is required when calling `get_cluster_status`."
             )
@@ -597,7 +621,7 @@ class MonitoringClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Retrieves average times for indexing operations for selected clusters.
+        Retrieves indexing latency metrics for selected clusters.  This endpoint is intended for infrastructure-level monitoring and availability checks. The returned value reflects latency measured on Algolia's internal monitoring index and is reported in milliseconds.  This metric isn't intended to represent the indexing performance of an individual application or index. To measure when an indexing operation has completed for your application, use the `waitTask` method.
 
 
         :param clusters: Subset of clusters, separated by commas. (required)
@@ -607,6 +631,11 @@ class MonitoringClient:
         """
 
         if clusters is None:
+            raise ValueError(
+                "Parameter `clusters` is required when calling `get_indexing_time`."
+            )
+
+        if not clusters:
             raise ValueError(
                 "Parameter `clusters` is required when calling `get_indexing_time`."
             )
@@ -630,7 +659,7 @@ class MonitoringClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> IndexingTimeResponse:
         """
-        Retrieves average times for indexing operations for selected clusters.
+        Retrieves indexing latency metrics for selected clusters.  This endpoint is intended for infrastructure-level monitoring and availability checks. The returned value reflects latency measured on Algolia's internal monitoring index and is reported in milliseconds.  This metric isn't intended to represent the indexing performance of an individual application or index. To measure when an indexing operation has completed for your application, use the `waitTask` method.
 
 
         :param clusters: Subset of clusters, separated by commas. (required)
@@ -659,6 +688,11 @@ class MonitoringClient:
         """
 
         if clusters is None:
+            raise ValueError(
+                "Parameter `clusters` is required when calling `get_latency`."
+            )
+
+        if not clusters:
             raise ValueError(
                 "Parameter `clusters` is required when calling `get_latency`."
             )
@@ -802,6 +836,11 @@ class MonitoringClient:
         """
 
         if clusters is None:
+            raise ValueError(
+                "Parameter `clusters` is required when calling `get_reachability`."
+            )
+
+        if not clusters:
             raise ValueError(
                 "Parameter `clusters` is required when calling `get_reachability`."
             )
@@ -985,7 +1024,7 @@ class MonitoringClientSync:
         self.close()
 
     def close(self) -> None:
-        return self._transporter.close()
+        self._transporter.close()
 
     def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
@@ -1020,6 +1059,11 @@ class MonitoringClientSync:
         """
 
         if path is None:
+            raise ValueError(
+                "Parameter `path` is required when calling `custom_delete`."
+            )
+
+        if not path:
             raise ValueError(
                 "Parameter `path` is required when calling `custom_delete`."
             )
@@ -1091,6 +1135,9 @@ class MonitoringClientSync:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_get`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -1166,6 +1213,9 @@ class MonitoringClientSync:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_post`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -1254,6 +1304,9 @@ class MonitoringClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
+        if not path:
+            raise ValueError("Parameter `path` is required when calling `custom_put`.")
+
         _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
@@ -1329,6 +1382,11 @@ class MonitoringClientSync:
                 "Parameter `clusters` is required when calling `get_cluster_incidents`."
             )
 
+        if not clusters:
+            raise ValueError(
+                "Parameter `clusters` is required when calling `get_cluster_incidents`."
+            )
+
         return self._transporter.request(
             verb=Verb.GET,
             path="/1/incidents/{clusters}".replace(
@@ -1377,6 +1435,11 @@ class MonitoringClientSync:
         """
 
         if clusters is None:
+            raise ValueError(
+                "Parameter `clusters` is required when calling `get_cluster_status`."
+            )
+
+        if not clusters:
             raise ValueError(
                 "Parameter `clusters` is required when calling `get_cluster_status`."
             )
@@ -1452,7 +1515,7 @@ class MonitoringClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Retrieves average times for indexing operations for selected clusters.
+        Retrieves indexing latency metrics for selected clusters.  This endpoint is intended for infrastructure-level monitoring and availability checks. The returned value reflects latency measured on Algolia's internal monitoring index and is reported in milliseconds.  This metric isn't intended to represent the indexing performance of an individual application or index. To measure when an indexing operation has completed for your application, use the `waitTask` method.
 
 
         :param clusters: Subset of clusters, separated by commas. (required)
@@ -1462,6 +1525,11 @@ class MonitoringClientSync:
         """
 
         if clusters is None:
+            raise ValueError(
+                "Parameter `clusters` is required when calling `get_indexing_time`."
+            )
+
+        if not clusters:
             raise ValueError(
                 "Parameter `clusters` is required when calling `get_indexing_time`."
             )
@@ -1485,7 +1553,7 @@ class MonitoringClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> IndexingTimeResponse:
         """
-        Retrieves average times for indexing operations for selected clusters.
+        Retrieves indexing latency metrics for selected clusters.  This endpoint is intended for infrastructure-level monitoring and availability checks. The returned value reflects latency measured on Algolia's internal monitoring index and is reported in milliseconds.  This metric isn't intended to represent the indexing performance of an individual application or index. To measure when an indexing operation has completed for your application, use the `waitTask` method.
 
 
         :param clusters: Subset of clusters, separated by commas. (required)
@@ -1514,6 +1582,11 @@ class MonitoringClientSync:
         """
 
         if clusters is None:
+            raise ValueError(
+                "Parameter `clusters` is required when calling `get_latency`."
+            )
+
+        if not clusters:
             raise ValueError(
                 "Parameter `clusters` is required when calling `get_latency`."
             )
@@ -1657,6 +1730,11 @@ class MonitoringClientSync:
         """
 
         if clusters is None:
+            raise ValueError(
+                "Parameter `clusters` is required when calling `get_reachability`."
+            )
+
+        if not clusters:
             raise ValueError(
                 "Parameter `clusters` is required when calling `get_reachability`."
             )

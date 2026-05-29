@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Specific configuration attributes of a `ga4BigqueryExport` source.
@@ -37,13 +37,7 @@ public struct SourceGA4BigQueryExport: Codable, JSONEncodable {
     }
 }
 
-extension SourceGA4BigQueryExport: Equatable {
-    public static func ==(lhs: SourceGA4BigQueryExport, rhs: SourceGA4BigQueryExport) -> Bool {
-        lhs.projectID == rhs.projectID &&
-            lhs.datasetID == rhs.datasetID &&
-            lhs.tablePrefix == rhs.tablePrefix
-    }
-}
+extension SourceGA4BigQueryExport: Equatable {}
 
 extension SourceGA4BigQueryExport: Hashable {
     public func hash(into hasher: inout Hasher) {

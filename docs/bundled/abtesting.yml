@@ -8,7 +8,7 @@ info:
     ## Base URLs
 
 
-    The base URLs for requests to the A/B testing API are:
+    Base URLs for the A/B testing API:
 
 
     - `https://analytics.us.algolia.com`
@@ -32,7 +32,7 @@ info:
     Elevate plans](https://www.algolia.com/pricing).
 
 
-    To authenticate your API requests, add these headers:
+    Add these headers to authenticate requests:
 
 
     - `x-algolia-application-id`. Your Algolia application ID.
@@ -74,8 +74,8 @@ info:
     of attributes in the API response.
 
 
-    Successful responses return a `2xx` status. Client errors return a `4xx`
-    status. Server errors are indicated by a `5xx` status.
+    Successful responses return `2xx` statuses. Client errors return `4xx`
+    statuses. Server errors return `5xx` statuses.
 
     Error responses have a `message` property with more information.
 
@@ -83,7 +83,7 @@ info:
     ## Version
 
 
-    The current version of the A/B Testing API is version 2, as indicated by the
+    The current version of the A/B Testing API is version 2, indicated by the
     `/2/` in each endpoint's URL.
   version: 2.0.0
 servers:
@@ -1021,6 +1021,8 @@ paths:
               type: object
               additionalProperties: false
               properties:
+                endAt:
+                  $ref: '#/components/schemas/endAt'
                 name:
                   $ref: '#/components/schemas/name'
                 variants:
@@ -1030,8 +1032,6 @@ paths:
                   maxItems: 2
                   items:
                     $ref: '#/components/schemas/AddABTestsVariant'
-                endAt:
-                  $ref: '#/components/schemas/endAt'
               required:
                 - name
                 - variants
@@ -1368,7 +1368,24 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"name":"Custom ranking sales rank test","variants":[{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"},{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"}],"endAt":"2023-06-17T00:00:00Z"}'
+              --data '
+            {
+              "name": "Custom ranking sales rank test",
+              "variants": [
+                {
+                  "index": "delcourt_production",
+                  "trafficPercentage": 60,
+                  "description": "Current production index"
+                },
+                {
+                  "index": "delcourt_production",
+                  "trafficPercentage": 60,
+                  "description": "Current production index"
+                }
+              ],
+              "endAt": "2023-06-17T00:00:00Z"
+            }
+            '
     get:
       tags:
         - abtest
@@ -1379,21 +1396,6 @@ paths:
       summary: List all A/B tests
       description: Lists all A/B tests you configured for this application.
       parameters:
-        - name: offset
-          in: query
-          description: Position of the first item to return.
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - name: limit
-          in: query
-          description: Number of items to return.
-          required: false
-          schema:
-            type: integer
-            default: 10
         - name: indexPrefix
           in: query
           description: >-
@@ -1410,6 +1412,21 @@ paths:
           example: _development
           schema:
             type: string
+        - name: limit
+          in: query
+          description: Number of items to return.
+          required: false
+          schema:
+            type: integer
+            default: 10
+        - name: offset
+          in: query
+          description: Position of the first item to return.
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
       responses:
         '200':
           description: OK
@@ -2395,14 +2412,14 @@ paths:
                     A/B test configuration for estimating the sample size and
                     duration using minimum detectable effect.
                   properties:
+                    minimumDetectableEffect:
+                      $ref: '#/components/schemas/MinimumDetectableEffect'
+                    emptySearch:
+                      $ref: '#/components/schemas/EmptySearch'
                     featureFilters:
                       $ref: '#/components/schemas/FeatureFilters'
                     outliers:
                       $ref: '#/components/schemas/Outliers'
-                    emptySearch:
-                      $ref: '#/components/schemas/EmptySearch'
-                    minimumDetectableEffect:
-                      $ref: '#/components/schemas/MinimumDetectableEffect'
                   required:
                     - minimumDetectableEffect
                 variants:
@@ -2798,7 +2815,39 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"configuration":{"featureFilters":{"dynamicReRanking":true,"aiPerso":true,"multiSignalRanking":true},"outliers":{"exclude":true},"emptySearch":{"exclude":true},"minimumDetectableEffect":{"size":0,"metric":"addToCartRate"}},"variants":[{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"},{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"}]}'
+              --data '
+            {
+              "configuration": {
+                "featureFilters": {
+                  "dynamicReRanking": true,
+                  "aiPerso": true,
+                  "multiSignalRanking": true
+                },
+                "outliers": {
+                  "exclude": true
+                },
+                "emptySearch": {
+                  "exclude": true
+                },
+                "minimumDetectableEffect": {
+                  "size": 0,
+                  "metric": "addToCartRate"
+                }
+              },
+              "variants": [
+                {
+                  "index": "delcourt_production",
+                  "trafficPercentage": 60,
+                  "description": "Current production index"
+                },
+                {
+                  "index": "delcourt_production",
+                  "trafficPercentage": 60,
+                  "description": "Current production index"
+                }
+              ]
+            }
+            '
 components:
   securitySchemes:
     appId:
@@ -2905,16 +2954,16 @@ components:
           type: string
           description: Currency code.
           example: USD
-        revenue:
-          type: number
-          format: double
-          description: Revenue for this currency.
-          example: 120
         mean:
           type: number
           format: double
           description: Mean for this currency.
           example: 53.7
+        revenue:
+          type: number
+          format: double
+          description: Revenue for this currency.
+          example: 120
         standardDeviation:
           type: number
           format: double
@@ -2954,24 +3003,6 @@ components:
       type: object
       description: A/B test filter effects resulting from configuration settings.
       properties:
-        outliers:
-          title: outliersFilter
-          type: object
-          description: >-
-            Outliers removed from the A/B test as a result of configuration
-            settings.
-          example:
-            usersCount: 1
-            trackedSearchesCount: 237
-          properties:
-            usersCount:
-              type: integer
-              description: Number of users removed from the A/B test.
-              example: 1
-            trackedSearchesCount:
-              type: integer
-              description: Number of tracked searches removed from the A/B test.
-              example: 237
         emptySearch:
           title: emptySearchFilter
           type: object
@@ -2982,14 +3013,32 @@ components:
             usersCount: 1
             trackedSearchesCount: 237
           properties:
-            usersCount:
-              type: integer
-              description: Number of users removed from the A/B test.
-              example: 1
             trackedSearchesCount:
               type: integer
               description: Number of tracked searches removed from the A/B test.
               example: 237
+            usersCount:
+              type: integer
+              description: Number of users removed from the A/B test.
+              example: 1
+        outliers:
+          title: outliersFilter
+          type: object
+          description: >-
+            Outliers removed from the A/B test as a result of configuration
+            settings.
+          example:
+            usersCount: 1
+            trackedSearchesCount: 237
+          properties:
+            trackedSearchesCount:
+              type: integer
+              description: Number of tracked searches removed from the A/B test.
+              example: 237
+            usersCount:
+              type: integer
+              description: Number of users removed from the A/B test.
+              example: 1
     index:
       type: string
       description: Index name of the A/B test variant (case-sensitive).
@@ -3015,6 +3064,49 @@ components:
           type: integer
           description: Number of add-to-cart events for this variant.
           example: 0
+        clickCount:
+          type: integer
+          description: Number of click events for this variant.
+          example: 65131
+        conversionCount:
+          type: integer
+          description: Number of click events for this variant.
+          example: 4785
+        index:
+          $ref: '#/components/schemas/index'
+        noResultCount:
+          oneOf:
+            - type: integer
+              description: >-
+                Number of [searches without
+                results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results)
+                for this variant.
+              example: 0
+            - type: 'null'
+        purchaseCount:
+          type: integer
+          description: Number of purchase events for this variant.
+          example: 0
+        searchCount:
+          oneOf:
+            - type: integer
+              description: Number of searches for this variant.
+              example: 86269
+            - type: 'null'
+        trackedUserCount:
+          oneOf:
+            - type: integer
+              description: Number of users that made tracked searches to this variant.
+              example: 55501
+            - type: 'null'
+        trafficPercentage:
+          $ref: '#/components/schemas/trafficPercentage'
+        userCount:
+          oneOf:
+            - type: integer
+              description: Number of users that made searches to this variant.
+              example: 55501
+            - type: 'null'
         addToCartRate:
           oneOf:
             - type: number
@@ -3035,10 +3127,6 @@ components:
                 for this variant.
               example: 29.12342
             - type: 'null'
-        clickCount:
-          type: integer
-          description: Number of click events for this variant.
-          example: 65131
         clickThroughRate:
           oneOf:
             - type: number
@@ -3049,10 +3137,6 @@ components:
                 for this variant.
               example: 0.22219857724813036
             - type: 'null'
-        conversionCount:
-          type: integer
-          description: Number of click events for this variant.
-          example: 4785
         conversionRate:
           oneOf:
             - type: number
@@ -3079,21 +3163,6 @@ components:
           example: 0
         filterEffects:
           $ref: '#/components/schemas/filterEffects'
-        index:
-          $ref: '#/components/schemas/index'
-        noResultCount:
-          oneOf:
-            - type: integer
-              description: >-
-                Number of [searches without
-                results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results)
-                for this variant.
-              example: 0
-            - type: 'null'
-        purchaseCount:
-          type: integer
-          description: Number of purchase events for this variant.
-          example: 0
         purchaseRate:
           oneOf:
             - type: number
@@ -3104,28 +3173,8 @@ components:
                 for this variant.
               example: 0
             - type: 'null'
-        searchCount:
-          oneOf:
-            - type: integer
-              description: Number of searches for this variant.
-              example: 86269
-            - type: 'null'
         trackedSearchCount:
           $ref: '#/components/schemas/trackedSearchCount'
-        trafficPercentage:
-          $ref: '#/components/schemas/trafficPercentage'
-        userCount:
-          oneOf:
-            - type: integer
-              description: Number of users that made searches to this variant.
-              example: 55501
-            - type: 'null'
-        trackedUserCount:
-          oneOf:
-            - type: integer
-              description: Number of users that made tracked searches to this variant.
-              example: 55501
-            - type: 'null'
       required:
         - userCount
         - trackedUserCount
@@ -3156,12 +3205,12 @@ components:
         Configuration of feature-based filters applied to the A/B test
         population.
       properties:
-        dynamicReRanking:
-          type: boolean
-          description: Whether to apply Dynamic Re-Ranking feature filters.
         aiPerso:
           type: boolean
           description: Whether to apply AI Personalization feature filters.
+        dynamicReRanking:
+          type: boolean
+          description: Whether to apply Dynamic Re-Ranking feature filters.
         multiSignalRanking:
           type: boolean
           description: Whether to apply Multi-Signal Re-Ranking feature filters.
@@ -3194,6 +3243,8 @@ components:
         Configuration for the smallest difference between test variants you want
         to detect.
       properties:
+        metric:
+          $ref: '#/components/schemas/EffectMetric'
         size:
           type: number
           format: double
@@ -3204,8 +3255,6 @@ components:
 
             For example, to detect a 10% difference between variants, set this
             value to 0.1.
-        metric:
-          $ref: '#/components/schemas/EffectMetric'
       required:
         - size
         - metric
@@ -3214,20 +3263,46 @@ components:
       type: object
       description: A/B test configuration.
       properties:
-        featureFilters:
-          $ref: '#/components/schemas/FeatureFilters'
-        outliers:
-          $ref: '#/components/schemas/Outliers'
         emptySearch:
           $ref: '#/components/schemas/EmptySearch'
+        featureFilters:
+          $ref: '#/components/schemas/FeatureFilters'
         minimumDetectableEffect:
           $ref: '#/components/schemas/MinimumDetectableEffect'
+        outliers:
+          $ref: '#/components/schemas/Outliers'
     ABTest:
       type: object
       additionalProperties: false
       properties:
         abTestID:
           $ref: '#/components/schemas/abTestID'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        endAt:
+          $ref: '#/components/schemas/endAt'
+        name:
+          $ref: '#/components/schemas/name'
+        status:
+          $ref: '#/components/schemas/Status'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+        variants:
+          $ref: '#/components/schemas/variants'
+        addToCartSignificance:
+          description: >
+            A/B test significance calculated from add-to-cart events.
+
+
+            Values of 0.95 or higher can be considered significant,
+
+            that is, the difference between A and B variants is _not_ due to
+            random variations.
+          oneOf:
+            - type: number
+              format: double
+              example: 1
+            - type: 'null'
         clickSignificance:
           description: >
             A/B test significance calculated from click events.
@@ -3244,23 +3319,11 @@ components:
               format: double
               example: 1
             - type: 'null'
+        configuration:
+          $ref: '#/components/schemas/ABTestConfiguration'
         conversionSignificance:
           description: >
             A/B test significance calculated from conversion events.
-
-
-            Values of 0.95 or higher can be considered significant,
-
-            that is, the difference between A and B variants is _not_ due to
-            random variations.
-          oneOf:
-            - type: number
-              format: double
-              example: 1
-            - type: 'null'
-        addToCartSignificance:
-          description: >
-            A/B test significance calculated from add-to-cart events.
 
 
             Values of 0.95 or higher can be considered significant,
@@ -3305,22 +3368,8 @@ components:
                 USD: 1
                 EUR: 0.87
             - type: 'null'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-        endAt:
-          $ref: '#/components/schemas/endAt'
         stoppedAt:
           $ref: '#/components/schemas/stoppedAt'
-        name:
-          $ref: '#/components/schemas/name'
-        status:
-          $ref: '#/components/schemas/Status'
-        variants:
-          $ref: '#/components/schemas/variants'
-        configuration:
-          $ref: '#/components/schemas/ABTestConfiguration'
       required:
         - status
         - name
@@ -3396,10 +3445,10 @@ components:
       type: object
       additionalProperties: false
       properties:
-        index:
-          $ref: '#/components/schemas/index'
         abTestID:
           $ref: '#/components/schemas/abTestID'
+        index:
+          $ref: '#/components/schemas/index'
         taskID:
           $ref: '#/components/schemas/taskID'
       required:
@@ -3470,7 +3519,7 @@ components:
         type: integer
     x-ratelimit-reset:
       description: >-
-        Timstamp when the rate limit will reset, measured in seconds since the
+        Timestamp when the rate limit will reset, measured in seconds since the
         Unix epoch.
       example: 1710682486
       schema:

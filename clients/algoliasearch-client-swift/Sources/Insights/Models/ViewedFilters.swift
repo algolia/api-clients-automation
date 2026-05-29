@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Use this method to capture active filters. For example, when browsing a category page, users see content filtered on
@@ -27,8 +27,8 @@ public struct ViewedFilters: Codable, JSONEncodable {
     /// user tokens. For more information, see [User
     /// token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
     public var authenticatedUserToken: String?
-    /// Timestamp of the event, measured in milliseconds since the Unix epoch. By default, the Insights API uses the
-    /// time it receives an event as its timestamp.
+    /// Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30 days. If not
+    /// provided, we use the time at which the request was received.
     public var timestamp: Int64?
 
     public init(
@@ -73,17 +73,7 @@ public struct ViewedFilters: Codable, JSONEncodable {
     }
 }
 
-extension ViewedFilters: Equatable {
-    public static func ==(lhs: ViewedFilters, rhs: ViewedFilters) -> Bool {
-        lhs.eventName == rhs.eventName &&
-            lhs.eventType == rhs.eventType &&
-            lhs.index == rhs.index &&
-            lhs.filters == rhs.filters &&
-            lhs.userToken == rhs.userToken &&
-            lhs.authenticatedUserToken == rhs.authenticatedUserToken &&
-            lhs.timestamp == rhs.timestamp
-    }
-}
+extension ViewedFilters: Equatable {}
 
 extension ViewedFilters: Hashable {
     public func hash(into hasher: inout Hasher) {

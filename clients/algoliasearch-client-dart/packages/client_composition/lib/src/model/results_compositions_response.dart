@@ -10,8 +10,13 @@ part 'results_compositions_response.g.dart';
 final class ResultsCompositionsResponse {
   /// Returns a new [ResultsCompositionsResponse] instance.
   const ResultsCompositionsResponse({
+    this.feedID,
     required this.compositions,
   });
+
+  /// The ID of the feed.
+  @JsonKey(name: r'feedID')
+  final String? feedID;
 
   @JsonKey(name: r'compositions')
   final Map<String, ResultsCompositionInfoResponse> compositions;
@@ -20,10 +25,11 @@ final class ResultsCompositionsResponse {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is ResultsCompositionsResponse &&
+          other.feedID == feedID &&
           other.compositions == compositions;
 
   @override
-  int get hashCode => compositions.hashCode;
+  int get hashCode => feedID.hashCode + compositions.hashCode;
 
   factory ResultsCompositionsResponse.fromJson(Map<String, dynamic> json) =>
       _$ResultsCompositionsResponseFromJson(json);

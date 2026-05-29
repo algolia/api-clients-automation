@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Specific configuration attributes of a `commercetools` source.
@@ -63,17 +63,7 @@ public struct SourceUpdateCommercetools: Codable, JSONEncodable {
     }
 }
 
-extension SourceUpdateCommercetools: Equatable {
-    public static func ==(lhs: SourceUpdateCommercetools, rhs: SourceUpdateCommercetools) -> Bool {
-        lhs.storeKeys == rhs.storeKeys &&
-            lhs.locales == rhs.locales &&
-            lhs.url == rhs.url &&
-            lhs.fallbackIsInStockValue == rhs.fallbackIsInStockValue &&
-            lhs.productQueryPredicate == rhs.productQueryPredicate &&
-            lhs.useImagesObjects == rhs.useImagesObjects &&
-            lhs.customFields == rhs.customFields
-    }
-}
+extension SourceUpdateCommercetools: Equatable {}
 
 extension SourceUpdateCommercetools: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct BaseRecommendSearchParams: Codable, JSONEncodable {
@@ -15,16 +15,16 @@ public struct BaseRecommendSearchParams: Codable, JSONEncodable {
     public var similarQuery: String?
     /// Filter expression to only include items that match the filter criteria in the response.  You can use these
     /// filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`,
-    /// `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and
-    /// upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet
+    /// `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>`, where `<lower>` and `<upper>` are the lower and
+    /// upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>`, where `<facet>` is a facet
     /// attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>`
     /// (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and
     /// `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.  
     /// **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not
     /// supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not
-    /// supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes around your filters, if the facet
-    /// attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an
-    /// array, the filter matches if it matches at least one element of the array.  For more information, see
+    /// supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes if the facet attribute name or facet
+    /// value contains spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter
+    /// matches if it matches at least one element of the array.  For more information, see
     /// [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
     public var filters: String?
     public var facetFilters: RecommendFacetFilters?
@@ -219,38 +219,7 @@ public struct BaseRecommendSearchParams: Codable, JSONEncodable {
     }
 }
 
-extension BaseRecommendSearchParams: Equatable {
-    public static func ==(lhs: BaseRecommendSearchParams, rhs: BaseRecommendSearchParams) -> Bool {
-        lhs.similarQuery == rhs.similarQuery &&
-            lhs.filters == rhs.filters &&
-            lhs.facetFilters == rhs.facetFilters &&
-            lhs.optionalFilters == rhs.optionalFilters &&
-            lhs.numericFilters == rhs.numericFilters &&
-            lhs.tagFilters == rhs.tagFilters &&
-            lhs.sumOrFiltersScores == rhs.sumOrFiltersScores &&
-            lhs.restrictSearchableAttributes == rhs.restrictSearchableAttributes &&
-            lhs.facets == rhs.facets &&
-            lhs.facetingAfterDistinct == rhs.facetingAfterDistinct &&
-            lhs.aroundLatLng == rhs.aroundLatLng &&
-            lhs.aroundLatLngViaIP == rhs.aroundLatLngViaIP &&
-            lhs.aroundRadius == rhs.aroundRadius &&
-            lhs.aroundPrecision == rhs.aroundPrecision &&
-            lhs.minimumAroundRadius == rhs.minimumAroundRadius &&
-            lhs.insideBoundingBox == rhs.insideBoundingBox &&
-            lhs.insidePolygon == rhs.insidePolygon &&
-            lhs.naturalLanguages == rhs.naturalLanguages &&
-            lhs.ruleContexts == rhs.ruleContexts &&
-            lhs.personalizationImpact == rhs.personalizationImpact &&
-            lhs.userToken == rhs.userToken &&
-            lhs.getRankingInfo == rhs.getRankingInfo &&
-            lhs.synonyms == rhs.synonyms &&
-            lhs.clickAnalytics == rhs.clickAnalytics &&
-            lhs.analytics == rhs.analytics &&
-            lhs.analyticsTags == rhs.analyticsTags &&
-            lhs.percentileComputation == rhs.percentileComputation &&
-            lhs.enableABTest == rhs.enableABTest
-    }
-}
+extension BaseRecommendSearchParams: Equatable {}
 
 extension BaseRecommendSearchParams: Hashable {
     public func hash(into hasher: inout Hasher) {

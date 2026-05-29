@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// A/B test configuration for estimating the sample size and duration using minimum detectable effect.
@@ -31,12 +31,7 @@ public struct AbtestingV3EstimateConfiguration: Codable, JSONEncodable {
     }
 }
 
-extension AbtestingV3EstimateConfiguration: Equatable {
-    public static func ==(lhs: AbtestingV3EstimateConfiguration, rhs: AbtestingV3EstimateConfiguration) -> Bool {
-        lhs.filters == rhs.filters &&
-            lhs.minimumDetectableEffect == rhs.minimumDetectableEffect
-    }
-}
+extension AbtestingV3EstimateConfiguration: Equatable {}
 
 extension AbtestingV3EstimateConfiguration: Hashable {
     public func hash(into hasher: inout Hasher) {

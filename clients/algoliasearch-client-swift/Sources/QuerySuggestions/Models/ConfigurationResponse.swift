@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// API response for retrieving Query Suggestions configurations.
@@ -15,6 +15,7 @@ public struct ConfigurationResponse: Codable, JSONEncodable {
     /// Algolia indices from which to get the popular searches for query suggestions.
     public var sourceIndices: [SourceIndex]
     public var languages: QuerySuggestionsLanguages
+    /// Words or regular expressions to exclude from the suggestions.
     public var exclude: [String]?
     /// Whether to turn on personalized query suggestions.
     public var enablePersonalization: Bool
@@ -63,17 +64,7 @@ public struct ConfigurationResponse: Codable, JSONEncodable {
     }
 }
 
-extension ConfigurationResponse: Equatable {
-    public static func ==(lhs: ConfigurationResponse, rhs: ConfigurationResponse) -> Bool {
-        lhs.appID == rhs.appID &&
-            lhs.indexName == rhs.indexName &&
-            lhs.sourceIndices == rhs.sourceIndices &&
-            lhs.languages == rhs.languages &&
-            lhs.exclude == rhs.exclude &&
-            lhs.enablePersonalization == rhs.enablePersonalization &&
-            lhs.allowSpecialCharacters == rhs.allowSpecialCharacters
-    }
-}
+extension ConfigurationResponse: Equatable {}
 
 extension ConfigurationResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

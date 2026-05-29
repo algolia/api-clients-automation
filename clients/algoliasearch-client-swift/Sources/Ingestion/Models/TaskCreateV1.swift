@@ -2,12 +2,11 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
-/// API request body for creating a task using the V1 shape, please use methods and types that don't contain the V1
-/// suffix.
+/// API request body for creating a task using the V1 shape. Use methods and types that don't contain the V1 suffix.
 @available(*, deprecated, message: "This schema is deprecated.")
 public struct TaskCreateV1: Codable, JSONEncodable {
     /// Universally uniqud identifier (UUID) of a source.
@@ -21,7 +20,7 @@ public struct TaskCreateV1: Codable, JSONEncodable {
     /// Maximum accepted percentage of failures for a task run to finish successfully.
     public var failureThreshold: Int?
     public var input: TaskInput?
-    /// Date of the last cursor in RFC 3339 format.
+    /// Date and time when the last cursor was created, in RFC 3339 format.
     public var cursor: String?
 
     public init(
@@ -70,18 +69,7 @@ public struct TaskCreateV1: Codable, JSONEncodable {
     }
 }
 
-extension TaskCreateV1: Equatable {
-    public static func ==(lhs: TaskCreateV1, rhs: TaskCreateV1) -> Bool {
-        lhs.sourceID == rhs.sourceID &&
-            lhs.destinationID == rhs.destinationID &&
-            lhs.trigger == rhs.trigger &&
-            lhs.action == rhs.action &&
-            lhs.enabled == rhs.enabled &&
-            lhs.failureThreshold == rhs.failureThreshold &&
-            lhs.input == rhs.input &&
-            lhs.cursor == rhs.cursor
-    }
-}
+extension TaskCreateV1: Equatable {}
 
 extension TaskCreateV1: Hashable {
     public func hash(into hasher: inout Hasher) {

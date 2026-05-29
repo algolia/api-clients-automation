@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Order of facet names.
@@ -28,11 +28,7 @@ public struct CompositionIndexSettingsFacets: Codable, JSONEncodable {
     }
 }
 
-extension CompositionIndexSettingsFacets: Equatable {
-    public static func ==(lhs: CompositionIndexSettingsFacets, rhs: CompositionIndexSettingsFacets) -> Bool {
-        lhs.order == rhs.order
-    }
-}
+extension CompositionIndexSettingsFacets: Equatable {}
 
 extension CompositionIndexSettingsFacets: Hashable {
     public func hash(into hasher: inout Hasher) {

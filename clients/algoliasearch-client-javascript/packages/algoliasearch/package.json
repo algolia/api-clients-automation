@@ -1,5 +1,5 @@
 {
-  "version": "5.47.0",
+  "version": "5.53.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
@@ -18,6 +18,10 @@
   "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
   "exports": {
     ".": {
+      "react-native": {
+        "types": "./dist/browser.d.ts",
+        "default": "./dist/browser.js"
+      },
       "node": {
         "types": {
           "import": "./dist/node.d.ts",
@@ -40,6 +44,10 @@
       }
     },
     "./lite": {
+      "react-native": {
+        "types": "./dist/lite/browser.d.ts",
+        "default": "./dist/lite/builds/browser.js"
+      },
       "node": {
         "types": {
           "import": "./dist/lite/node.d.ts",
@@ -58,7 +66,9 @@
       }
     },
     "./dist/*": "./dist/*.js",
-    "./dist/lite/builds/*": "./dist/lite/builds/*.js"
+    "./dist/*.js": "./dist/*.js",
+    "./dist/lite/builds/*": "./dist/lite/builds/*.js",
+    "./dist/lite/builds/*.js": "./dist/lite/builds/*.js"
   },
   "jsdelivr": "./dist/algoliasearch.umd.js",
   "unpkg": "./dist/algoliasearch.umd.js",
@@ -74,33 +84,33 @@
     "lite.d.ts"
   ],
   "dependencies": {
-    "@algolia/abtesting": "1.13.0",
-    "@algolia/client-abtesting": "5.47.0",
-    "@algolia/client-analytics": "5.47.0",
-    "@algolia/client-common": "5.47.0",
-    "@algolia/client-insights": "5.47.0",
-    "@algolia/client-personalization": "5.47.0",
-    "@algolia/client-query-suggestions": "5.47.0",
-    "@algolia/client-search": "5.47.0",
-    "@algolia/ingestion": "1.47.0",
-    "@algolia/monitoring": "1.47.0",
-    "@algolia/recommend": "5.47.0",
-    "@algolia/requester-browser-xhr": "5.47.0",
-    "@algolia/requester-fetch": "5.47.0",
-    "@algolia/requester-node-http": "5.47.0"
+    "@algolia/abtesting": "1.19.0",
+    "@algolia/client-abtesting": "5.53.0",
+    "@algolia/client-analytics": "5.53.0",
+    "@algolia/client-common": "5.53.0",
+    "@algolia/client-insights": "5.53.0",
+    "@algolia/client-personalization": "5.53.0",
+    "@algolia/client-query-suggestions": "5.53.0",
+    "@algolia/client-search": "5.53.0",
+    "@algolia/ingestion": "1.53.0",
+    "@algolia/monitoring": "1.53.0",
+    "@algolia/recommend": "5.53.0",
+    "@algolia/requester-browser-xhr": "5.53.0",
+    "@algolia/requester-fetch": "5.53.0",
+    "@algolia/requester-node-http": "5.53.0"
   },
   "devDependencies": {
-    "@algolia/requester-testing": "5.47.0",
+    "@algolia/requester-testing": "5.53.0",
     "@arethetypeswrong/cli": "0.18.2",
-    "@cloudflare/vitest-pool-workers": "0.12.6",
-    "@cloudflare/workers-types": "4.20251115.0",
-    "@types/node": "25.0.10",
-    "jsdom": "27.4.0",
-    "publint": "0.3.17",
-    "rollup": "4.56.0",
+    "@cloudflare/vitest-pool-workers": "0.16.6",
+    "@cloudflare/workers-types": "4.20260515.1",
+    "@types/node": "25.8.0",
+    "jsdom": "29.1.1",
+    "publint": "0.3.21",
+    "rollup": "4.60.4",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
-    "vitest": "4.0.18"
+    "vitest": "4.1.6"
   },
   "engines": {
     "node": ">= 14.0.0"

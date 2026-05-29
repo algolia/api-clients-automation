@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct PersonalizationStrategyParams: Codable, JSONEncodable {
@@ -39,13 +39,7 @@ public struct PersonalizationStrategyParams: Codable, JSONEncodable {
     }
 }
 
-extension PersonalizationStrategyParams: Equatable {
-    public static func ==(lhs: PersonalizationStrategyParams, rhs: PersonalizationStrategyParams) -> Bool {
-        lhs.eventsScoring == rhs.eventsScoring &&
-            lhs.facetsScoring == rhs.facetsScoring &&
-            lhs.personalizationImpact == rhs.personalizationImpact
-    }
-}
+extension PersonalizationStrategyParams: Equatable {}
 
 extension PersonalizationStrategyParams: Hashable {
     public func hash(into hasher: inout Hasher) {

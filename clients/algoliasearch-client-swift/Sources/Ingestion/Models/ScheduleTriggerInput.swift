@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Trigger input for scheduled tasks.
@@ -31,12 +31,7 @@ public struct ScheduleTriggerInput: Codable, JSONEncodable {
     }
 }
 
-extension ScheduleTriggerInput: Equatable {
-    public static func ==(lhs: ScheduleTriggerInput, rhs: ScheduleTriggerInput) -> Bool {
-        lhs.type == rhs.type &&
-            lhs.cron == rhs.cron
-    }
-}
+extension ScheduleTriggerInput: Equatable {}
 
 extension ScheduleTriggerInput: Hashable {
     public func hash(into hasher: inout Hasher) {

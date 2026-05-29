@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Use this event to track when users add items to their shopping cart unrelated to a previous Algolia request. For
@@ -33,8 +33,8 @@ public struct AddedToCartObjectIDs: Codable, JSONEncodable {
     /// Extra information about the records involved in a purchase or add-to-cart event.  If specified, it must have the
     /// same length as `objectIDs`.
     public var objectData: [ObjectData]?
-    /// Timestamp of the event, measured in milliseconds since the Unix epoch. By default, the Insights API uses the
-    /// time it receives an event as its timestamp.
+    /// Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30 days. If not
+    /// provided, we use the time at which the request was received.
     public var timestamp: Int64?
     public var value: InsightsValue?
 
@@ -96,21 +96,7 @@ public struct AddedToCartObjectIDs: Codable, JSONEncodable {
     }
 }
 
-extension AddedToCartObjectIDs: Equatable {
-    public static func ==(lhs: AddedToCartObjectIDs, rhs: AddedToCartObjectIDs) -> Bool {
-        lhs.eventName == rhs.eventName &&
-            lhs.eventType == rhs.eventType &&
-            lhs.eventSubtype == rhs.eventSubtype &&
-            lhs.index == rhs.index &&
-            lhs.objectIDs == rhs.objectIDs &&
-            lhs.userToken == rhs.userToken &&
-            lhs.authenticatedUserToken == rhs.authenticatedUserToken &&
-            lhs.currency == rhs.currency &&
-            lhs.objectData == rhs.objectData &&
-            lhs.timestamp == rhs.timestamp &&
-            lhs.value == rhs.value
-    }
-}
+extension AddedToCartObjectIDs: Equatable {}
 
 extension AddedToCartObjectIDs: Hashable {
     public func hash(into hasher: inout Hasher) {

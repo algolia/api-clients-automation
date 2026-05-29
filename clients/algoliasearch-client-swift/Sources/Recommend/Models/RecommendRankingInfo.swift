@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Object with detailed information about the record's ranking.
@@ -100,23 +100,7 @@ public struct RecommendRankingInfo: Codable, JSONEncodable {
     }
 }
 
-extension RecommendRankingInfo: Equatable {
-    public static func ==(lhs: RecommendRankingInfo, rhs: RecommendRankingInfo) -> Bool {
-        lhs.filters == rhs.filters &&
-            lhs.firstMatchedWord == rhs.firstMatchedWord &&
-            lhs.geoDistance == rhs.geoDistance &&
-            lhs.geoPrecision == rhs.geoPrecision &&
-            lhs.matchedGeoLocation == rhs.matchedGeoLocation &&
-            lhs.personalization == rhs.personalization &&
-            lhs.nbExactWords == rhs.nbExactWords &&
-            lhs.nbTypos == rhs.nbTypos &&
-            lhs.promoted == rhs.promoted &&
-            lhs.proximityDistance == rhs.proximityDistance &&
-            lhs.userScore == rhs.userScore &&
-            lhs.words == rhs.words &&
-            lhs.promotedByReRanking == rhs.promotedByReRanking
-    }
-}
+extension RecommendRankingInfo: Equatable {}
 
 extension RecommendRankingInfo: Hashable {
     public func hash(into hasher: inout Hasher) {

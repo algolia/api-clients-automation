@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Currency code.
@@ -32,12 +32,7 @@ public struct CurrencyCode: Codable, JSONEncodable {
     }
 }
 
-extension CurrencyCode: Equatable {
-    public static func ==(lhs: CurrencyCode, rhs: CurrencyCode) -> Bool {
-        lhs.currency == rhs.currency &&
-            lhs.revenue == rhs.revenue
-    }
-}
+extension CurrencyCode: Equatable {}
 
 extension CurrencyCode: Hashable {
     public func hash(into hasher: inout Hasher) {

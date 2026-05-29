@@ -2,14 +2,14 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct SearchTimeRange: Codable, JSONEncodable {
-    /// When the rule should start to be active, in Unix epoch time.
+    /// Timestamp when the rule should start to be active, measured in seconds since the Unix epoch.
     public var from: Int64?
-    /// When the rule should stop to be active, in Unix epoch time.
+    /// Timestamp when the rule should stop to be active, measured in seconds since the Unix epoch.
     public var until: Int64?
 
     public init(from: Int64? = nil, until: Int64? = nil) {
@@ -31,12 +31,7 @@ public struct SearchTimeRange: Codable, JSONEncodable {
     }
 }
 
-extension SearchTimeRange: Equatable {
-    public static func ==(lhs: SearchTimeRange, rhs: SearchTimeRange) -> Bool {
-        lhs.from == rhs.from &&
-            lhs.until == rhs.until
-    }
-}
+extension SearchTimeRange: Equatable {}
 
 extension SearchTimeRange: Hashable {
     public func hash(into hasher: inout Hasher) {

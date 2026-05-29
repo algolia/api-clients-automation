@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct GetClickThroughRateResponse: Codable, JSONEncodable {
@@ -43,14 +43,7 @@ public struct GetClickThroughRateResponse: Codable, JSONEncodable {
     }
 }
 
-extension GetClickThroughRateResponse: Equatable {
-    public static func ==(lhs: GetClickThroughRateResponse, rhs: GetClickThroughRateResponse) -> Bool {
-        lhs.rate == rhs.rate &&
-            lhs.clickCount == rhs.clickCount &&
-            lhs.trackedSearchCount == rhs.trackedSearchCount &&
-            lhs.dates == rhs.dates
-    }
-}
+extension GetClickThroughRateResponse: Equatable {}
 
 extension GetClickThroughRateResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

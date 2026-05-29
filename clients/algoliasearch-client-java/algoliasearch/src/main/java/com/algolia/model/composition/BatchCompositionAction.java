@@ -22,7 +22,7 @@ public interface BatchCompositionAction {
     public BatchCompositionAction deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
       // deserialize Composition
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("behavior") && tree.has("name")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(Composition.class);
         } catch (Exception e) {

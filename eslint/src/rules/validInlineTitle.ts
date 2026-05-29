@@ -1,15 +1,11 @@
-// @ts-ignore
-import { createRule } from 'eslint-plugin-yml/lib/utils';
+import type { Rule } from 'eslint';
 
 import { isNullable, isPairWithKey } from '../utils.js';
 
-export const validInlineTitle = createRule('validInlineTitle', {
+export const validInlineTitle: Rule.RuleModule = {
   meta: {
     docs: {
       description: 'title must be set in inline models, should be the first property and start with a lowercase',
-      categories: null,
-      extensionRule: false,
-      layout: false,
     },
     messages: {
       inlineTitleExists: 'title must be set in inline models',
@@ -21,10 +17,6 @@ export const validInlineTitle = createRule('validInlineTitle', {
     schema: [],
   },
   create(context) {
-    if (!context.getSourceCode().parserServices?.isYAML) {
-      return {};
-    }
-
     return {
       YAMLPair(node): void {
         if (!isPairWithKey(node, 'type') || node.value?.type !== 'YAMLScalar' || node.value.value !== 'object') {
@@ -91,4 +83,4 @@ export const validInlineTitle = createRule('validInlineTitle', {
       },
     };
   },
-});
+};

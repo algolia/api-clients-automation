@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Use this event to track when users make a purchase after a previous Algolia request. If you're building your
@@ -32,8 +32,8 @@ public struct PurchasedObjectIDsAfterSearch: Codable, JSONEncodable {
     /// Extra information about the records involved in a purchase or add-to-cart events.  If provided, it must be the
     /// same length as `objectIDs`.
     public var objectData: [ObjectDataAfterSearch]
-    /// Timestamp of the event, measured in milliseconds since the Unix epoch. By default, the Insights API uses the
-    /// time it receives an event as its timestamp.
+    /// Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30 days. If not
+    /// provided, we use the time at which the request was received.
     public var timestamp: Int64?
     public var value: InsightsValue?
 
@@ -95,21 +95,7 @@ public struct PurchasedObjectIDsAfterSearch: Codable, JSONEncodable {
     }
 }
 
-extension PurchasedObjectIDsAfterSearch: Equatable {
-    public static func ==(lhs: PurchasedObjectIDsAfterSearch, rhs: PurchasedObjectIDsAfterSearch) -> Bool {
-        lhs.eventName == rhs.eventName &&
-            lhs.eventType == rhs.eventType &&
-            lhs.eventSubtype == rhs.eventSubtype &&
-            lhs.index == rhs.index &&
-            lhs.objectIDs == rhs.objectIDs &&
-            lhs.userToken == rhs.userToken &&
-            lhs.authenticatedUserToken == rhs.authenticatedUserToken &&
-            lhs.currency == rhs.currency &&
-            lhs.objectData == rhs.objectData &&
-            lhs.timestamp == rhs.timestamp &&
-            lhs.value == rhs.value
-    }
-}
+extension PurchasedObjectIDsAfterSearch: Equatable {}
 
 extension PurchasedObjectIDsAfterSearch: Hashable {
     public func hash(into hasher: inout Hasher) {

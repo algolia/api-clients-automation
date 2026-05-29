@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Request body for updating an authentication resource.
@@ -31,12 +31,7 @@ public struct AuthenticationUpdate: Codable, JSONEncodable {
     }
 }
 
-extension AuthenticationUpdate: Equatable {
-    public static func ==(lhs: AuthenticationUpdate, rhs: AuthenticationUpdate) -> Bool {
-        lhs.name == rhs.name &&
-            lhs.input == rhs.input
-    }
-}
+extension AuthenticationUpdate: Equatable {}
 
 extension AuthenticationUpdate: Hashable {
     public func hash(into hasher: inout Hasher) {

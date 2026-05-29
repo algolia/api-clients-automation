@@ -138,7 +138,7 @@ class AnalyticsClient:
 
     async def close(self) -> None:
         """Closes the underlying `transporter` of the API client."""
-        return await self._transporter.close()
+        await self._transporter.close()
 
     async def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
@@ -173,6 +173,11 @@ class AnalyticsClient:
         """
 
         if path is None:
+            raise ValueError(
+                "Parameter `path` is required when calling `custom_delete`."
+            )
+
+        if not path:
             raise ValueError(
                 "Parameter `path` is required when calling `custom_delete`."
             )
@@ -248,6 +253,9 @@ class AnalyticsClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
+        if not path:
+            raise ValueError("Parameter `path` is required when calling `custom_get`.")
+
         _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
@@ -321,6 +329,9 @@ class AnalyticsClient:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_post`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -409,6 +420,9 @@ class AnalyticsClient:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_put`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -508,6 +522,11 @@ class AnalyticsClient:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_add_to_cart_rate`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_add_to_cart_rate`."
             )
@@ -624,6 +643,11 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_average_click_position`."
             )
 
+        if not index:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_average_click_position`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
@@ -732,6 +756,11 @@ class AnalyticsClient:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_click_positions`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_click_positions`."
             )
@@ -848,6 +877,11 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_click_through_rate`."
             )
 
+        if not index:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_click_through_rate`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
@@ -956,6 +990,11 @@ class AnalyticsClient:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_conversion_rate`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_conversion_rate`."
             )
@@ -1072,6 +1111,11 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_no_click_rate`."
             )
 
+        if not index:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_no_click_rate`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
@@ -1184,6 +1228,11 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_no_results_rate`."
             )
 
+        if not index:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_no_results_rate`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
@@ -1274,7 +1323,7 @@ class AnalyticsClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  The rate is the number of purchase conversion events divided by the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+        Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days, including the current day.  The rate is purchase conversion events divided by tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means there were queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
 
         Required API Key ACLs:
           - analytics
@@ -1292,6 +1341,11 @@ class AnalyticsClient:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_purchase_rate`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_purchase_rate`."
             )
@@ -1341,7 +1395,7 @@ class AnalyticsClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetPurchaseRateResponse:
         """
-        Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  The rate is the number of purchase conversion events divided by the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+        Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days, including the current day.  The rate is purchase conversion events divided by tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means there were queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
 
         Required API Key ACLs:
           - analytics
@@ -1404,6 +1458,11 @@ class AnalyticsClient:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_revenue`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_revenue`."
             )
@@ -1516,6 +1575,11 @@ class AnalyticsClient:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_searches_count`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_searches_count`."
             )
@@ -1640,6 +1704,11 @@ class AnalyticsClient:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_searches_no_clicks`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_searches_no_clicks`."
             )
@@ -1784,6 +1853,11 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_searches_no_results`."
             )
 
+        if not index:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_searches_no_results`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
@@ -1886,6 +1960,9 @@ class AnalyticsClient:
         if index is None:
             raise ValueError("Parameter `index` is required when calling `get_status`.")
 
+        if not index:
+            raise ValueError("Parameter `index` is required when calling `get_status`.")
+
         _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
@@ -1974,6 +2051,11 @@ class AnalyticsClient:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_top_countries`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_top_countries`."
             )
@@ -2119,6 +2201,11 @@ class AnalyticsClient:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_top_filter_attributes`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_top_filter_attributes`."
             )
@@ -2278,7 +2365,17 @@ class AnalyticsClient:
                 "Parameter `attribute` is required when calling `get_top_filter_for_attribute`."
             )
 
+        if not attribute:
+            raise ValueError(
+                "Parameter `attribute` is required when calling `get_top_filter_for_attribute`."
+            )
+
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_top_filter_for_attribute`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_top_filter_for_attribute`."
             )
@@ -2448,6 +2545,11 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_top_filters_no_results`."
             )
 
+        if not index:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_top_filters_no_results`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
@@ -2584,7 +2686,7 @@ class AnalyticsClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to true, the response also includes:  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+        Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to `true`, the response also includes:  - Tracked searches count.   Tracked searches are Search API requests with `clickAnalytics` set to `true`.   This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
 
         Required API Key ACLs:
           - analytics
@@ -2612,6 +2714,11 @@ class AnalyticsClient:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_top_hits`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_top_hits`."
             )
@@ -2694,7 +2801,7 @@ class AnalyticsClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetTopHitsResponse:
         """
-        Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to true, the response also includes:  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+        Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to `true`, the response also includes:  - Tracked searches count.   Tracked searches are Search API requests with `clickAnalytics` set to `true`.   This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
 
         Required API Key ACLs:
           - analytics
@@ -2796,7 +2903,7 @@ class AnalyticsClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+        Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes:  - Tracked searches count   Tracked searches are Search API requests with `clickAnalytics` set to `true`.   This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
 
         Required API Key ACLs:
           - analytics
@@ -2826,6 +2933,11 @@ class AnalyticsClient:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_top_searches`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_top_searches`."
             )
@@ -2925,7 +3037,7 @@ class AnalyticsClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetTopSearchesResponse:
         """
-        Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+        Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes:  - Tracked searches count   Tracked searches are Search API requests with `clickAnalytics` set to `true`.   This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
 
         Required API Key ACLs:
           - analytics
@@ -3010,6 +3122,11 @@ class AnalyticsClient:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_users_count`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_users_count`."
             )
@@ -3165,7 +3282,7 @@ class AnalyticsClientSync:
         self.close()
 
     def close(self) -> None:
-        return self._transporter.close()
+        self._transporter.close()
 
     def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
@@ -3200,6 +3317,11 @@ class AnalyticsClientSync:
         """
 
         if path is None:
+            raise ValueError(
+                "Parameter `path` is required when calling `custom_delete`."
+            )
+
+        if not path:
             raise ValueError(
                 "Parameter `path` is required when calling `custom_delete`."
             )
@@ -3271,6 +3393,9 @@ class AnalyticsClientSync:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_get`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -3346,6 +3471,9 @@ class AnalyticsClientSync:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_post`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -3432,6 +3560,9 @@ class AnalyticsClientSync:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_put`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -3529,6 +3660,11 @@ class AnalyticsClientSync:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_add_to_cart_rate`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_add_to_cart_rate`."
             )
@@ -3645,6 +3781,11 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_average_click_position`."
             )
 
+        if not index:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_average_click_position`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
@@ -3753,6 +3894,11 @@ class AnalyticsClientSync:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_click_positions`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_click_positions`."
             )
@@ -3869,6 +4015,11 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_click_through_rate`."
             )
 
+        if not index:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_click_through_rate`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
@@ -3977,6 +4128,11 @@ class AnalyticsClientSync:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_conversion_rate`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_conversion_rate`."
             )
@@ -4093,6 +4249,11 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_no_click_rate`."
             )
 
+        if not index:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_no_click_rate`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
@@ -4205,6 +4366,11 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_no_results_rate`."
             )
 
+        if not index:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_no_results_rate`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
@@ -4295,7 +4461,7 @@ class AnalyticsClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  The rate is the number of purchase conversion events divided by the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+        Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days, including the current day.  The rate is purchase conversion events divided by tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means there were queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
 
         Required API Key ACLs:
           - analytics
@@ -4313,6 +4479,11 @@ class AnalyticsClientSync:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_purchase_rate`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_purchase_rate`."
             )
@@ -4362,7 +4533,7 @@ class AnalyticsClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetPurchaseRateResponse:
         """
-        Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  The rate is the number of purchase conversion events divided by the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+        Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days, including the current day.  The rate is purchase conversion events divided by tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means there were queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
 
         Required API Key ACLs:
           - analytics
@@ -4425,6 +4596,11 @@ class AnalyticsClientSync:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_revenue`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_revenue`."
             )
@@ -4537,6 +4713,11 @@ class AnalyticsClientSync:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_searches_count`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_searches_count`."
             )
@@ -4661,6 +4842,11 @@ class AnalyticsClientSync:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_searches_no_clicks`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_searches_no_clicks`."
             )
@@ -4805,6 +4991,11 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_searches_no_results`."
             )
 
+        if not index:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_searches_no_results`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
@@ -4907,6 +5098,9 @@ class AnalyticsClientSync:
         if index is None:
             raise ValueError("Parameter `index` is required when calling `get_status`.")
 
+        if not index:
+            raise ValueError("Parameter `index` is required when calling `get_status`.")
+
         _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
@@ -4995,6 +5189,11 @@ class AnalyticsClientSync:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_top_countries`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_top_countries`."
             )
@@ -5140,6 +5339,11 @@ class AnalyticsClientSync:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_top_filter_attributes`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_top_filter_attributes`."
             )
@@ -5299,7 +5503,17 @@ class AnalyticsClientSync:
                 "Parameter `attribute` is required when calling `get_top_filter_for_attribute`."
             )
 
+        if not attribute:
+            raise ValueError(
+                "Parameter `attribute` is required when calling `get_top_filter_for_attribute`."
+            )
+
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_top_filter_for_attribute`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_top_filter_for_attribute`."
             )
@@ -5469,6 +5683,11 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_top_filters_no_results`."
             )
 
+        if not index:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_top_filters_no_results`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
@@ -5605,7 +5824,7 @@ class AnalyticsClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to true, the response also includes:  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+        Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to `true`, the response also includes:  - Tracked searches count.   Tracked searches are Search API requests with `clickAnalytics` set to `true`.   This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
 
         Required API Key ACLs:
           - analytics
@@ -5633,6 +5852,11 @@ class AnalyticsClientSync:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_top_hits`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_top_hits`."
             )
@@ -5715,7 +5939,7 @@ class AnalyticsClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetTopHitsResponse:
         """
-        Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to true, the response also includes:  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+        Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to `true`, the response also includes:  - Tracked searches count.   Tracked searches are Search API requests with `clickAnalytics` set to `true`.   This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
 
         Required API Key ACLs:
           - analytics
@@ -5817,7 +6041,7 @@ class AnalyticsClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+        Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes:  - Tracked searches count   Tracked searches are Search API requests with `clickAnalytics` set to `true`.   This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
 
         Required API Key ACLs:
           - analytics
@@ -5847,6 +6071,11 @@ class AnalyticsClientSync:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_top_searches`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_top_searches`."
             )
@@ -5946,7 +6175,7 @@ class AnalyticsClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetTopSearchesResponse:
         """
-        Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+        Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes:  - Tracked searches count   Tracked searches are Search API requests with `clickAnalytics` set to `true`.   This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
 
         Required API Key ACLs:
           - analytics
@@ -6031,6 +6260,11 @@ class AnalyticsClientSync:
         """
 
         if index is None:
+            raise ValueError(
+                "Parameter `index` is required when calling `get_users_count`."
+            )
+
+        if not index:
             raise ValueError(
                 "Parameter `index` is required when calling `get_users_count`."
             )

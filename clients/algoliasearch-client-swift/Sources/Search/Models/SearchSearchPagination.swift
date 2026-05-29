@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct SearchSearchPagination: Codable, JSONEncodable {
@@ -41,14 +41,7 @@ public struct SearchSearchPagination: Codable, JSONEncodable {
     }
 }
 
-extension SearchSearchPagination: Equatable {
-    public static func ==(lhs: SearchSearchPagination, rhs: SearchSearchPagination) -> Bool {
-        lhs.page == rhs.page &&
-            lhs.nbHits == rhs.nbHits &&
-            lhs.nbPages == rhs.nbPages &&
-            lhs.hitsPerPage == rhs.hitsPerPage
-    }
-}
+extension SearchSearchPagination: Equatable {}
 
 extension SearchSearchPagination: Hashable {
     public func hash(into hasher: inout Hasher) {

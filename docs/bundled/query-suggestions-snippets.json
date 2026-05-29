@@ -521,7 +521,7 @@
   },
   "swift": {
     "import": {
-      "default": "import QuerySuggestions"
+      "default": "import AlgoliaQuerySuggestions"
     },
     "createConfig": {
       "default": "let response = try await client.createConfig(configurationWithIndex: ConfigurationWithIndex(\n    sourceIndices: [SourceIndex(\n        indexName: \"<YOUR_INDEX_NAME>\",\n        facets: [Facet(attribute: \"test\")],\n        generate: [[\"facetA\", \"facetB\"], [\"facetC\"]]\n    )],\n    languages: QuerySuggestionsLanguages.arrayOfString([\"french\"]),\n    exclude: [\"test\"],\n    indexName: \"<YOUR_INDEX_NAME>\"\n))"

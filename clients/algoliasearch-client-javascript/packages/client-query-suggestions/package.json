@@ -1,5 +1,5 @@
 {
-  "version": "5.47.0",
+  "version": "5.53.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
@@ -17,6 +17,10 @@
   "description": "JavaScript client for client-query-suggestions",
   "exports": {
     ".": {
+      "react-native": {
+        "types": "./dist/browser.d.ts",
+        "default": "./dist/builds/browser.js"
+      },
       "node": {
         "types": {
           "import": "./dist/node.d.ts",
@@ -38,7 +42,8 @@
         "default": "./dist/builds/browser.umd.js"
       }
     },
-    "./dist/builds/*": "./dist/builds/*.js"
+    "./dist/builds/*": "./dist/builds/*.js",
+    "./dist/builds/*.js": "./dist/builds/*.js"
   },
   "jsdelivr": "./dist/builds/browser.umd.js",
   "unpkg": "./dist/builds/browser.umd.js",
@@ -49,16 +54,16 @@
     "index.d.ts"
   ],
   "dependencies": {
-    "@algolia/client-common": "5.47.0",
-    "@algolia/requester-browser-xhr": "5.47.0",
-    "@algolia/requester-fetch": "5.47.0",
-    "@algolia/requester-node-http": "5.47.0"
+    "@algolia/client-common": "5.53.0",
+    "@algolia/requester-browser-xhr": "5.53.0",
+    "@algolia/requester-fetch": "5.53.0",
+    "@algolia/requester-node-http": "5.53.0"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
-    "@types/node": "25.0.10",
-    "publint": "0.3.17",
-    "rollup": "4.56.0",
+    "@types/node": "25.8.0",
+    "publint": "0.3.21",
+    "rollup": "4.60.4",
     "tsup": "8.5.1",
     "typescript": "5.9.3"
   },

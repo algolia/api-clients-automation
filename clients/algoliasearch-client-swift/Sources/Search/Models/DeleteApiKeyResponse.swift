@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct DeleteApiKeyResponse: Codable, JSONEncodable {
@@ -26,11 +26,7 @@ public struct DeleteApiKeyResponse: Codable, JSONEncodable {
     }
 }
 
-extension DeleteApiKeyResponse: Equatable {
-    public static func ==(lhs: DeleteApiKeyResponse, rhs: DeleteApiKeyResponse) -> Bool {
-        lhs.deletedAt == rhs.deletedAt
-    }
-}
+extension DeleteApiKeyResponse: Equatable {}
 
 extension DeleteApiKeyResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

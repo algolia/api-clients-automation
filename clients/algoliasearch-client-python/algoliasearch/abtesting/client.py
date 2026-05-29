@@ -122,7 +122,7 @@ class AbtestingClient:
 
     async def close(self) -> None:
         """Closes the underlying `transporter` of the API client."""
-        return await self._transporter.close()
+        await self._transporter.close()
 
     async def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
@@ -218,6 +218,11 @@ class AbtestingClient:
                 "Parameter `path` is required when calling `custom_delete`."
             )
 
+        if not path:
+            raise ValueError(
+                "Parameter `path` is required when calling `custom_delete`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
@@ -287,6 +292,9 @@ class AbtestingClient:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_get`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -362,6 +370,9 @@ class AbtestingClient:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_post`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -450,6 +461,9 @@ class AbtestingClient:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_put`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -902,7 +916,7 @@ class AbtestingClientSync:
         self.close()
 
     def close(self) -> None:
-        return self._transporter.close()
+        self._transporter.close()
 
     def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
@@ -996,6 +1010,11 @@ class AbtestingClientSync:
                 "Parameter `path` is required when calling `custom_delete`."
             )
 
+        if not path:
+            raise ValueError(
+                "Parameter `path` is required when calling `custom_delete`."
+            )
+
         _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
@@ -1063,6 +1082,9 @@ class AbtestingClientSync:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_get`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -1138,6 +1160,9 @@ class AbtestingClientSync:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_post`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
         _query_parameters: Dict[str, Any] = {}
@@ -1224,6 +1249,9 @@ class AbtestingClientSync:
         """
 
         if path is None:
+            raise ValueError("Parameter `path` is required when calling `custom_put`.")
+
+        if not path:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
         _query_parameters: Dict[str, Any] = {}

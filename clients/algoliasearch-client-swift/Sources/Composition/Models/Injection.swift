@@ -2,17 +2,21 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct Injection: Codable, JSONEncodable {
-    public var main: CompositionMain
+    public var main: InjectionMain
     /// list of injected items of the current Composition.
-    public var injectedItems: [InjectedItem]?
+    public var injectedItems: [InjectionInjectedItem]?
     public var deduplication: Deduplication?
 
-    public init(main: CompositionMain, injectedItems: [InjectedItem]? = nil, deduplication: Deduplication? = nil) {
+    public init(
+        main: InjectionMain,
+        injectedItems: [InjectionInjectedItem]? = nil,
+        deduplication: Deduplication? = nil
+    ) {
         self.main = main
         self.injectedItems = injectedItems
         self.deduplication = deduplication
@@ -34,13 +38,7 @@ public struct Injection: Codable, JSONEncodable {
     }
 }
 
-extension Injection: Equatable {
-    public static func ==(lhs: Injection, rhs: Injection) -> Bool {
-        lhs.main == rhs.main &&
-            lhs.injectedItems == rhs.injectedItems &&
-            lhs.deduplication == rhs.deduplication
-    }
-}
+extension Injection: Equatable {}
 
 extension Injection: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -164,7 +164,7 @@ Configuration:
       description: |
         Limits the number of URLs your crawler processes.
 
-        Change it to a low value, such as 100, for quick crawling tests.
+        Change it to a low value, such as 100, for short crawling tests.
         Change it to a higher explicit value for full crawls to prevent it from getting "lost" in complex site structures.
         Because the Crawler works on many pages simultaneously, `maxUrls` doesn't guarantee finding the same pages each time it runs.
       minimum: 1
@@ -178,22 +178,21 @@ Configuration:
         A higher rate limit means more crawls per second.
         Algolia prevents system overload by ensuring the number of URLs added in the last second and the number of URLs being processed is less than the rate limit:
 
-
         ```
         max(new_urls_added, active_urls_processing) <= rateLimit
         ```
 
         Start with a low value (for example, 2) and increase it if you need faster crawling.
-        Be aware that a high `rateLimit` can have a huge impact on bandwidth cost and server resource consumption.
+        A high `rateLimit` can significantly increase bandwidth cost and server resource consumption.
 
-        The number of pages processed per second depends on the average time it takes to fetch, process, and upload a URL. 
-        For a given `rateLimit` if fetching, processing, and uploading URLs takes (on average):
+        The number of pages processed per second depends on the average time it takes to fetch, process, and upload a URL.
+        For a given `rateLimit`, if fetching, processing, and uploading URLs takes (on average):
 
         - Less than a second, your crawler processes up to `rateLimit` pages per second.
         - Four seconds, your crawler processes up to `rateLimit / 4` pages per second.
 
-        In the latter case, increasing `rateLimit` improves performance, up to a point. 
-        However, if the processing time remains at four seconds, increasing `rateLimit` won't increase the number of pages processed per second.
+        In the latter case, increasing `rateLimit` improves performance up to a point.
+        If the processing time remains at four seconds, increasing `rateLimit` won't increase the number of pages processed per second.
       minimum: 1
       maximum: 100
       example: 4

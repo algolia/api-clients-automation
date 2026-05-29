@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct BaseInjectionQueryParameters: Codable, JSONEncodable {
@@ -28,8 +28,6 @@ public struct BaseInjectionQueryParameters: Codable, JSONEncodable {
     /// matches - `singleWordSynonym`.   Single-word synonyms, such as \"NY\" = \"NYC\", are considered exact matches -
     /// `multiWordsSynonym`.   Multi-word synonyms, such as \"NY\" = \"New York\", are considered exact matches.
     public var alternativesAsExact: [CompositionAlternativesAsExact]?
-    /// Whether this search will be included in Analytics.
-    public var analytics: Bool?
     /// Whether the best matching attribute should be determined by minimum proximity This setting only affects ranking
     /// if the Attribute ranking criterion comes before Proximity in the `ranking` setting. If true, the best matching
     /// attribute is selected based on the minimum proximity of multiple matches. Otherwise, the best matching attribute
@@ -56,12 +54,6 @@ public struct BaseInjectionQueryParameters: Codable, JSONEncodable {
     /// and is required for tracking [click and conversion
     /// events](https://www.algolia.com/doc/guides/sending-events/getting-started).
     public var clickAnalytics: Bool?
-    /// Whether to split compound words in the query into their building blocks For more information, see [Word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words).
-    /// Word segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and Norwegian.
-    /// Decompounding doesn't work for words with [non-spacing mark Unicode
-    /// characters](https://www.charactercodes.net/category/non-spacing_mark). For example, `Gartenstühle` won't be
-    /// decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).
-    public var decompoundQuery: Bool?
     /// Searchable attributes for which you want to [turn off the Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).
     /// Attribute names are case-sensitive This can be useful for attributes with long values, where the likelihood of
     /// an exact match is high, such as product descriptions. Turning off the Exact ranking criterion for these
@@ -89,16 +81,16 @@ public struct BaseInjectionQueryParameters: Codable, JSONEncodable {
     public var facetFilters: CompositionFacetFilters?
     /// Filter expression to only include items that match the filter criteria in the response.  You can use these
     /// filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`,
-    /// `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and
-    /// upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet
+    /// `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>`, where `<lower>` and `<upper>` are the lower and
+    /// upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>`, where `<facet>` is a facet
     /// attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>`
     /// (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and
     /// `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.  
     /// **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not
     /// supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not
-    /// supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes around your filters, if the facet
-    /// attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an
-    /// array, the filter matches if it matches at least one element of the array.  For more information, see
+    /// supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes if the facet attribute name or facet
+    /// value contains spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter
+    /// matches if it matches at least one element of the array.  For more information, see
     /// [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
     public var filters: String?
     /// Whether the search response should include detailed ranking information.
@@ -108,9 +100,6 @@ public struct BaseInjectionQueryParameters: Codable, JSONEncodable {
     /// HTML tag to insert before the highlighted parts in all highlighted results and snippets.
     public var highlightPreTag: String?
     public var ignorePlurals: CompositionIgnorePlurals?
-    /// Maximum number of facet values to return when [searching for facet
-    /// values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
-    public var maxFacetHits: Int?
     /// Minimum proximity score for two matching words This adjusts the [Proximity ranking criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity)
     /// by equally scoring matches that are farther apart For example, if `minProximity` is 2, neighboring matches and
     /// matches with one word between them would have the same score.
@@ -133,10 +122,10 @@ public struct BaseInjectionQueryParameters: Codable, JSONEncodable {
     /// determines the ranking compared to other factors. For more information, see [Understanding Personalization impact](https://www.algolia.com/doc/guides/personalization/personalizing-results/in-depth/configuring-personalization/#understanding-personalization-impact).
     public var personalizationImpact: Int?
     /// Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection
-    /// dictionaries  This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals`
+    /// dictionaries. This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals`
     /// settings. This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk)
-    /// languages. To support this, you must place the CJK language **first**  **You should always specify a query
-    /// language.** If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
+    /// languages. To support this, place the CJK language **first**. **Always specify a query language.** If you don't
+    /// specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
     /// or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to
     /// unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
     public var queryLanguages: [CompositionSupportedLanguage]?
@@ -176,13 +165,11 @@ public struct BaseInjectionQueryParameters: Codable, JSONEncodable {
         advancedSyntaxFeatures: [CompositionAdvancedSyntaxFeatures]? = nil,
         allowTyposOnNumericTokens: Bool? = nil,
         alternativesAsExact: [CompositionAlternativesAsExact]? = nil,
-        analytics: Bool? = nil,
         attributeCriteriaComputedByMinProximity: Bool? = nil,
         attributesToHighlight: [String]? = nil,
         attributesToRetrieve: [String]? = nil,
         attributesToSnippet: [String]? = nil,
         clickAnalytics: Bool? = nil,
-        decompoundQuery: Bool? = nil,
         disableExactOnAttributes: [String]? = nil,
         disableTypoToleranceOnAttributes: [String]? = nil,
         distinct: CompositionDistinct? = nil,
@@ -197,7 +184,6 @@ public struct BaseInjectionQueryParameters: Codable, JSONEncodable {
         highlightPostTag: String? = nil,
         highlightPreTag: String? = nil,
         ignorePlurals: CompositionIgnorePlurals? = nil,
-        maxFacetHits: Int? = nil,
         minProximity: Int? = nil,
         minWordSizefor1Typo: Int? = nil,
         minWordSizefor2Typos: Int? = nil,
@@ -224,13 +210,11 @@ public struct BaseInjectionQueryParameters: Codable, JSONEncodable {
         self.advancedSyntaxFeatures = advancedSyntaxFeatures
         self.allowTyposOnNumericTokens = allowTyposOnNumericTokens
         self.alternativesAsExact = alternativesAsExact
-        self.analytics = analytics
         self.attributeCriteriaComputedByMinProximity = attributeCriteriaComputedByMinProximity
         self.attributesToHighlight = attributesToHighlight
         self.attributesToRetrieve = attributesToRetrieve
         self.attributesToSnippet = attributesToSnippet
         self.clickAnalytics = clickAnalytics
-        self.decompoundQuery = decompoundQuery
         self.disableExactOnAttributes = disableExactOnAttributes
         self.disableTypoToleranceOnAttributes = disableTypoToleranceOnAttributes
         self.distinct = distinct
@@ -245,7 +229,6 @@ public struct BaseInjectionQueryParameters: Codable, JSONEncodable {
         self.highlightPostTag = highlightPostTag
         self.highlightPreTag = highlightPreTag
         self.ignorePlurals = ignorePlurals
-        self.maxFacetHits = maxFacetHits
         self.minProximity = minProximity
         self.minWordSizefor1Typo = minWordSizefor1Typo
         self.minWordSizefor2Typos = minWordSizefor2Typos
@@ -274,13 +257,11 @@ public struct BaseInjectionQueryParameters: Codable, JSONEncodable {
         case advancedSyntaxFeatures
         case allowTyposOnNumericTokens
         case alternativesAsExact
-        case analytics
         case attributeCriteriaComputedByMinProximity
         case attributesToHighlight
         case attributesToRetrieve
         case attributesToSnippet
         case clickAnalytics
-        case decompoundQuery
         case disableExactOnAttributes
         case disableTypoToleranceOnAttributes
         case distinct
@@ -295,7 +276,6 @@ public struct BaseInjectionQueryParameters: Codable, JSONEncodable {
         case highlightPostTag
         case highlightPreTag
         case ignorePlurals
-        case maxFacetHits
         case minProximity
         case minWordSizefor1Typo
         case minWordSizefor2Typos
@@ -327,7 +307,6 @@ public struct BaseInjectionQueryParameters: Codable, JSONEncodable {
         try container.encodeIfPresent(self.advancedSyntaxFeatures, forKey: .advancedSyntaxFeatures)
         try container.encodeIfPresent(self.allowTyposOnNumericTokens, forKey: .allowTyposOnNumericTokens)
         try container.encodeIfPresent(self.alternativesAsExact, forKey: .alternativesAsExact)
-        try container.encodeIfPresent(self.analytics, forKey: .analytics)
         try container.encodeIfPresent(
             self.attributeCriteriaComputedByMinProximity,
             forKey: .attributeCriteriaComputedByMinProximity
@@ -336,7 +315,6 @@ public struct BaseInjectionQueryParameters: Codable, JSONEncodable {
         try container.encodeIfPresent(self.attributesToRetrieve, forKey: .attributesToRetrieve)
         try container.encodeIfPresent(self.attributesToSnippet, forKey: .attributesToSnippet)
         try container.encodeIfPresent(self.clickAnalytics, forKey: .clickAnalytics)
-        try container.encodeIfPresent(self.decompoundQuery, forKey: .decompoundQuery)
         try container.encodeIfPresent(self.disableExactOnAttributes, forKey: .disableExactOnAttributes)
         try container.encodeIfPresent(self.disableTypoToleranceOnAttributes, forKey: .disableTypoToleranceOnAttributes)
         try container.encodeIfPresent(self.distinct, forKey: .distinct)
@@ -351,7 +329,6 @@ public struct BaseInjectionQueryParameters: Codable, JSONEncodable {
         try container.encodeIfPresent(self.highlightPostTag, forKey: .highlightPostTag)
         try container.encodeIfPresent(self.highlightPreTag, forKey: .highlightPreTag)
         try container.encodeIfPresent(self.ignorePlurals, forKey: .ignorePlurals)
-        try container.encodeIfPresent(self.maxFacetHits, forKey: .maxFacetHits)
         try container.encodeIfPresent(self.minProximity, forKey: .minProximity)
         try container.encodeIfPresent(self.minWordSizefor1Typo, forKey: .minWordSizefor1Typo)
         try container.encodeIfPresent(self.minWordSizefor2Typos, forKey: .minWordSizefor2Typos)
@@ -379,57 +356,7 @@ public struct BaseInjectionQueryParameters: Codable, JSONEncodable {
     }
 }
 
-extension BaseInjectionQueryParameters: Equatable {
-    public static func ==(lhs: BaseInjectionQueryParameters, rhs: BaseInjectionQueryParameters) -> Bool {
-        lhs.advancedSyntax == rhs.advancedSyntax &&
-            lhs.advancedSyntaxFeatures == rhs.advancedSyntaxFeatures &&
-            lhs.allowTyposOnNumericTokens == rhs.allowTyposOnNumericTokens &&
-            lhs.alternativesAsExact == rhs.alternativesAsExact &&
-            lhs.analytics == rhs.analytics &&
-            lhs.attributeCriteriaComputedByMinProximity == rhs.attributeCriteriaComputedByMinProximity &&
-            lhs.attributesToHighlight == rhs.attributesToHighlight &&
-            lhs.attributesToRetrieve == rhs.attributesToRetrieve &&
-            lhs.attributesToSnippet == rhs.attributesToSnippet &&
-            lhs.clickAnalytics == rhs.clickAnalytics &&
-            lhs.decompoundQuery == rhs.decompoundQuery &&
-            lhs.disableExactOnAttributes == rhs.disableExactOnAttributes &&
-            lhs.disableTypoToleranceOnAttributes == rhs.disableTypoToleranceOnAttributes &&
-            lhs.distinct == rhs.distinct &&
-            lhs.enableABTest == rhs.enableABTest &&
-            lhs.enablePersonalization == rhs.enablePersonalization &&
-            lhs.enableReRanking == rhs.enableReRanking &&
-            lhs.enableRules == rhs.enableRules &&
-            lhs.exactOnSingleWordQuery == rhs.exactOnSingleWordQuery &&
-            lhs.facetFilters == rhs.facetFilters &&
-            lhs.filters == rhs.filters &&
-            lhs.getRankingInfo == rhs.getRankingInfo &&
-            lhs.highlightPostTag == rhs.highlightPostTag &&
-            lhs.highlightPreTag == rhs.highlightPreTag &&
-            lhs.ignorePlurals == rhs.ignorePlurals &&
-            lhs.maxFacetHits == rhs.maxFacetHits &&
-            lhs.minProximity == rhs.minProximity &&
-            lhs.minWordSizefor1Typo == rhs.minWordSizefor1Typo &&
-            lhs.minWordSizefor2Typos == rhs.minWordSizefor2Typos &&
-            lhs.naturalLanguages == rhs.naturalLanguages &&
-            lhs.numericFilters == rhs.numericFilters &&
-            lhs.optionalFilters == rhs.optionalFilters &&
-            lhs.optionalWords == rhs.optionalWords &&
-            lhs.percentileComputation == rhs.percentileComputation &&
-            lhs.personalizationImpact == rhs.personalizationImpact &&
-            lhs.queryLanguages == rhs.queryLanguages &&
-            lhs.queryType == rhs.queryType &&
-            lhs.removeStopWords == rhs.removeStopWords &&
-            lhs.removeWordsIfNoResults == rhs.removeWordsIfNoResults &&
-            lhs.replaceSynonymsInHighlight == rhs.replaceSynonymsInHighlight &&
-            lhs.responseFields == rhs.responseFields &&
-            lhs.restrictHighlightAndSnippetArrays == rhs.restrictHighlightAndSnippetArrays &&
-            lhs.restrictSearchableAttributes == rhs.restrictSearchableAttributes &&
-            lhs.ruleContexts == rhs.ruleContexts &&
-            lhs.snippetEllipsisText == rhs.snippetEllipsisText &&
-            lhs.synonyms == rhs.synonyms &&
-            lhs.typoTolerance == rhs.typoTolerance
-    }
-}
+extension BaseInjectionQueryParameters: Equatable {}
 
 extension BaseInjectionQueryParameters: Hashable {
     public func hash(into hasher: inout Hasher) {
@@ -437,13 +364,11 @@ extension BaseInjectionQueryParameters: Hashable {
         hasher.combine(self.advancedSyntaxFeatures?.hashValue)
         hasher.combine(self.allowTyposOnNumericTokens?.hashValue)
         hasher.combine(self.alternativesAsExact?.hashValue)
-        hasher.combine(self.analytics?.hashValue)
         hasher.combine(self.attributeCriteriaComputedByMinProximity?.hashValue)
         hasher.combine(self.attributesToHighlight?.hashValue)
         hasher.combine(self.attributesToRetrieve?.hashValue)
         hasher.combine(self.attributesToSnippet?.hashValue)
         hasher.combine(self.clickAnalytics?.hashValue)
-        hasher.combine(self.decompoundQuery?.hashValue)
         hasher.combine(self.disableExactOnAttributes?.hashValue)
         hasher.combine(self.disableTypoToleranceOnAttributes?.hashValue)
         hasher.combine(self.distinct?.hashValue)
@@ -458,7 +383,6 @@ extension BaseInjectionQueryParameters: Hashable {
         hasher.combine(self.highlightPostTag?.hashValue)
         hasher.combine(self.highlightPreTag?.hashValue)
         hasher.combine(self.ignorePlurals?.hashValue)
-        hasher.combine(self.maxFacetHits?.hashValue)
         hasher.combine(self.minProximity?.hashValue)
         hasher.combine(self.minWordSizefor1Typo?.hashValue)
         hasher.combine(self.minWordSizefor2Typos?.hashValue)

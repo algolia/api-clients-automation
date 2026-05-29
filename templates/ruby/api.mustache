@@ -8,6 +8,32 @@ require 'base64'
 {{/isSearchClient}}
 
 module {{moduleName}}
+{{#isSearchClient}}
+  # Configuration options for the ingestion transporter used by *_with_transformation helpers.
+  # When passed to SearchClient.with_transformation or set via set_transformation_options,
+  # the ingestion transporter is eagerly created using Ingestion API defaults (25s timeouts,
+  # no compression). Only fields explicitly set here override those defaults.
+  # See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion
+  class TransformationOptions
+    attr_accessor :region, :connect_timeout, :read_timeout, :write_timeout,
+                  :hosts, :compression_type, :header_params
+
+    def initialize(region, opts = {})
+      raise ArgumentError, "`region` is required in `TransformationOptions`. See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion" if region.nil? || region.to_s.strip.empty?
+      valid_keys = %i[connect_timeout read_timeout write_timeout hosts compression_type header_params]
+      unknown = opts.keys - valid_keys
+      raise ArgumentError, "Unknown TransformationOptions keys: #{unknown.join(', ')}. Valid keys are: #{valid_keys.join(', ')}" unless unknown.empty?
+      @region = region
+      @connect_timeout = opts[:connect_timeout]
+      @read_timeout = opts[:read_timeout]
+      @write_timeout = opts[:write_timeout]
+      @hosts = opts[:hosts]
+      @compression_type = opts[:compression_type]
+      @header_params = opts[:header_params]
+    end
+  end
+
+{{/isSearchClient}}
 {{#operations}}
   class {{classname}}
     attr_accessor :api_client
@@ -30,6 +56,12 @@ module {{moduleName}}
       end
 
       @api_client = Algolia::ApiClient.new(config)
+      {{#isSearchClient}}
+      @ingestion_transporter = nil
+      if config.transformation_options
+        @ingestion_transporter = _build_ingestion_transporter(config.transformation_options)
+      end
+      {{/isSearchClient}}
     end
 
     def self.create(app_id, api_key{{#hasRegionalHost}}, region = nil{{/hasRegionalHost}}, opts = {})
@@ -72,6 +104,32 @@ module {{moduleName}}
     def self.create_with_config(config)
       new(config)
     end
+
+    {{#isSearchClient}}
+    # Creates a SearchClient configured with a TransformationOptions for use with
+    # *_with_transformation helpers. The ingestion transporter is initialised eagerly using
+    # Ingestion API defaults (25s timeouts); set override fields on TransformationOptions to
+    # change specific defaults.
+    # See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion
+    #
+    # @param app_id [String] the Algolia application ID. (required)
+    # @param api_key [String] the Algolia API key. (required)
+    # @param transformation_options [TransformationOptions] the transformation options including region and optional ingestion transporter overrides. (required)
+    # @param opts [Hash] additional configuration options passed to the search client. (optional)
+    # @return [SearchClient]
+    def self.with_transformation(app_id, api_key, transformation_options, opts = {})
+      opts = opts.dup
+      hosts = opts.delete(:hosts)
+      if hosts
+        config = Algolia::Configuration.new(app_id, api_key, hosts, '{{{baseName}}}', opts)
+        client = new(config)
+      else
+        client = create(app_id, api_key, opts)
+      end
+      client.set_transformation_options(transformation_options)
+      client
+    end
+    {{/isSearchClient}}
 
     # Helper method to switch the API key used to authenticate the requests.
     #
@@ -122,6 +180,12 @@ module {{moduleName}}
       if @api_client.config.client_side_validation && {{{paramName}}}.nil?
         raise ArgumentError, "Parameter `{{paramName}}` is required when calling `{{operationId}}`."
       end
+      {{#isString}}
+      # verify the required parameter '{{paramName}}' is not empty
+      if @api_client.config.client_side_validation && {{{paramName}}}.empty?
+        raise ArgumentError, "Parameter `{{paramName}}` is required when calling `{{operationId}}`."
+      end
+      {{/isString}}
       {{/required}}
       {{/isNullable}}
       {{/allParams}}
@@ -191,6 +255,9 @@ module {{moduleName}}
 {{/-last}}
 {{/operation}}
 
+{{#isIngestionClient}}
+{{> ingestion_helpers}}
+{{/isIngestionClient}}
 {{#isSearchClient}}
 {{> search_helpers}}
 {{/isSearchClient}}

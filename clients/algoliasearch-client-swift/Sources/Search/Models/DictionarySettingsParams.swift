@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Turn on or off the built-in Algolia stop words for a specific language.
@@ -26,11 +26,7 @@ public struct DictionarySettingsParams: Codable, JSONEncodable {
     }
 }
 
-extension DictionarySettingsParams: Equatable {
-    public static func ==(lhs: DictionarySettingsParams, rhs: DictionarySettingsParams) -> Bool {
-        lhs.disableStandardEntries == rhs.disableStandardEntries
-    }
-}
+extension DictionarySettingsParams: Equatable {}
 
 extension DictionarySettingsParams: Hashable {
     public func hash(into hasher: inout Hasher) {

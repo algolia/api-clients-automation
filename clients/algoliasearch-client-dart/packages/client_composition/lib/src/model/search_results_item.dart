@@ -48,6 +48,7 @@ final class SearchResultsItem {
     this.page,
     this.params,
     this.query,
+    this.feedID,
     required this.compositions,
   });
 
@@ -184,6 +185,10 @@ final class SearchResultsItem {
   @JsonKey(name: r'query')
   final String? query;
 
+  /// The ID of the feed.
+  @JsonKey(name: r'feedID')
+  final String? feedID;
+
   @JsonKey(name: r'compositions')
   final Map<String, ResultsCompositionInfoResponse> compositions;
 
@@ -221,6 +226,7 @@ final class SearchResultsItem {
           other.page == page &&
           other.params == params &&
           other.query == query &&
+          other.feedID == feedID &&
           other.compositions == compositions;
 
   @override
@@ -255,6 +261,7 @@ final class SearchResultsItem {
       page.hashCode +
       params.hashCode +
       query.hashCode +
+      feedID.hashCode +
       compositions.hashCode;
 
   factory SearchResultsItem.fromJson(Map<String, dynamic> json) =>

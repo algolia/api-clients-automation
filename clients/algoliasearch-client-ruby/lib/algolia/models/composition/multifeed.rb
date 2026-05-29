@@ -25,7 +25,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :feeds => :"Hash<String, Injection>",
+          :feeds => :"Hash<String, FeedInjection>",
           :feeds_order => :"Array<String>"
         }
       end

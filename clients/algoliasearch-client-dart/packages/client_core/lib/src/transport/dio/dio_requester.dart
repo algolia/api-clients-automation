@@ -5,6 +5,7 @@ import 'package:algolia_client_core/src/config/agent_segment.dart';
 import 'package:algolia_client_core/src/transport/algolia_agent.dart';
 import 'package:algolia_client_core/src/transport/dio/agent_interceptor.dart';
 import 'package:algolia_client_core/src/transport/dio/auth_interceptor.dart';
+import 'package:algolia_client_core/src/transport/dio/gzip_interceptor.dart';
 import 'package:algolia_client_core/src/transport/dio/platform/platform.dart';
 import 'package:algolia_client_core/src/transport/requester.dart';
 import 'package:algolia_client_core/src/version.dart';
@@ -29,6 +30,7 @@ class DioRequester implements Requester {
     Function(Object?)? logger,
     Iterable<Interceptor>? interceptors,
     HttpClientAdapter? httpClientAdapter,
+    String? compression,
   }) : _authInterceptor = AuthInterceptor(
           appId: appId,
           apiKey: apiKey,
@@ -45,6 +47,7 @@ class DioRequester implements Requester {
             ..addAll(clientSegments ?? const [])
             ..addAll(Platform.agentSegments()),
         ),
+        if (compression == 'gzip') GzipInterceptor(),
         if (logger != null)
           LogInterceptor(
             requestBody: true,
@@ -84,18 +87,25 @@ class DioRequester implements Requester {
 
   /// Executes the [request] and returns the response as an [HttpResponse].
   Future<HttpResponse> execute(HttpRequest request) async {
-    final response = await _client.requestUri<Map<String, dynamic>>(
-      requestUri(request),
-      data: request.body,
-      options: Options(
-        method: request.method,
-        headers: request.headers,
-        contentType: request.body != null ? Headers.jsonContentType : null,
-        sendTimeout: request.timeout,
-        receiveTimeout: request.timeout,
-      ),
-    );
-    return HttpResponse(response.statusCode, response.data);
+    final previousConnectTimeout = _client.options.connectTimeout;
+    _client.options.connectTimeout = request.connectTimeout;
+
+    try {
+      final response = await _client.requestUri<Map<String, dynamic>>(
+        requestUri(request),
+        data: request.body,
+        options: Options(
+          method: request.method,
+          headers: request.headers,
+          contentType: request.body != null ? Headers.jsonContentType : null,
+          sendTimeout: request.timeout,
+          receiveTimeout: request.timeout,
+        ),
+      );
+      return HttpResponse(response.statusCode, response.data);
+    } finally {
+      _client.options.connectTimeout = previousConnectTimeout;
+    }
   }
 
   /// Constructs the request URI from the [request] details.

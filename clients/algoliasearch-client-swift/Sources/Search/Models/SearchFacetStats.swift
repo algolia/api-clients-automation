@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct SearchFacetStats: Codable, JSONEncodable {
@@ -41,14 +41,7 @@ public struct SearchFacetStats: Codable, JSONEncodable {
     }
 }
 
-extension SearchFacetStats: Equatable {
-    public static func ==(lhs: SearchFacetStats, rhs: SearchFacetStats) -> Bool {
-        lhs.min == rhs.min &&
-            lhs.max == rhs.max &&
-            lhs.avg == rhs.avg &&
-            lhs.sum == rhs.sum
-    }
-}
+extension SearchFacetStats: Equatable {}
 
 extension SearchFacetStats: Hashable {
     public func hash(into hasher: inout Hasher) {

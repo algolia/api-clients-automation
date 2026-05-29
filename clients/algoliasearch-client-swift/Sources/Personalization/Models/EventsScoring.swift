@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct EventsScoring: Codable, JSONEncodable {
@@ -35,13 +35,7 @@ public struct EventsScoring: Codable, JSONEncodable {
     }
 }
 
-extension EventsScoring: Equatable {
-    public static func ==(lhs: EventsScoring, rhs: EventsScoring) -> Bool {
-        lhs.score == rhs.score &&
-            lhs.eventName == rhs.eventName &&
-            lhs.eventType == rhs.eventType
-    }
-}
+extension EventsScoring: Equatable {}
 
 extension EventsScoring: Hashable {
     public func hash(into hasher: inout Hasher) {

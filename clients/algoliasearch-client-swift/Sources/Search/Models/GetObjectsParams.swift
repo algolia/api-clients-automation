@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Request parameters.
@@ -26,11 +26,7 @@ public struct GetObjectsParams: Codable, JSONEncodable {
     }
 }
 
-extension GetObjectsParams: Equatable {
-    public static func ==(lhs: GetObjectsParams, rhs: GetObjectsParams) -> Bool {
-        lhs.requests == rhs.requests
-    }
-}
+extension GetObjectsParams: Equatable {}
 
 extension GetObjectsParams: Hashable {
     public func hash(into hasher: inout Hasher) {

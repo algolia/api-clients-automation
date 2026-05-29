@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct HasPendingMappingsResponse: Codable, JSONEncodable {
@@ -31,12 +31,7 @@ public struct HasPendingMappingsResponse: Codable, JSONEncodable {
     }
 }
 
-extension HasPendingMappingsResponse: Equatable {
-    public static func ==(lhs: HasPendingMappingsResponse, rhs: HasPendingMappingsResponse) -> Bool {
-        lhs.pending == rhs.pending &&
-            lhs.clusters == rhs.clusters
-    }
-}
+extension HasPendingMappingsResponse: Equatable {}
 
 extension HasPendingMappingsResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

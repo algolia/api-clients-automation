@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct RelatedProducts: Codable, JSONEncodable {
@@ -34,13 +34,7 @@ public struct RelatedProducts: Codable, JSONEncodable {
     }
 }
 
-extension RelatedProducts: Equatable {
-    public static func ==(lhs: RelatedProducts, rhs: RelatedProducts) -> Bool {
-        lhs.model == rhs.model &&
-            lhs.objectID == rhs.objectID &&
-            lhs.fallbackParameters == rhs.fallbackParameters
-    }
-}
+extension RelatedProducts: Equatable {}
 
 extension RelatedProducts: Hashable {
     public func hash(into hasher: inout Hasher) {

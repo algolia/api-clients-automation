@@ -22,7 +22,7 @@ public interface CompositionBehavior {
     public CompositionBehavior deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
       // deserialize CompositionInjectionBehavior
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("injection")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(CompositionInjectionBehavior.class);
         } catch (Exception e) {
@@ -33,7 +33,7 @@ public interface CompositionBehavior {
         }
       }
       // deserialize CompositionMultifeedBehavior
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("multifeed")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(CompositionMultifeedBehavior.class);
         } catch (Exception e) {

@@ -75,11 +75,49 @@ public class CompositionClientTests
     var res = await client.CustomPostAsync(
       "1/test/gzip",
       new Dictionary<string, object> { },
-      new Dictionary<string, string> { { "message", "this is a compressed body" } }
+      new Dictionary<string, string>
+      {
+        {
+          "message",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."
+        },
+      }
     );
 
     JsonAssert.EqualOverrideDefault(
-      "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this is a compressed body\"}}",
+      "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien.\"}}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "test the response decompression strategy")]
+  public async Task ApiTest3()
+  {
+    CompositionConfig _config = new CompositionConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6691,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new CompositionClient(_config);
+
+    var res = await client.CustomGetAsync("1/test/gzip-response");
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"message\":\"ok decompression test server response\",\"data\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"}",
       JsonSerializer.Serialize(res, JsonConfig.Options),
       new JsonDiffConfig(false)
     );
@@ -106,7 +144,7 @@ public class CompositionClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.36.2\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.43.0\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }

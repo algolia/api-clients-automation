@@ -3,7 +3,7 @@
   "info": {
     "title": "Crawler API",
     "summary": "The Crawler API lets you manage and run your crawlers",
-    "description": "## Base URL\n\nThe base URL for making requests to the Crawler API is:\n\n- `https://crawler.algolia.com/api`\n\n**All requests must use HTTPS.**\n\n## Availability and authentication\n\nTo authenticate your API requests, use the **basic authentication** header:\n\n- `Authorization: Basic <credentials>`\n\nWhere `<credentials>` is a base64-encoded string `<user-id>:<api-key>`.\n\n- `<user-id>`. The Crawler user ID.\n- `<api-key>`. The Crawler API key.\n\nYou can find both on the [Crawler settings](https://dashboard.algolia.com/crawler/settings) page in the Algolia dashboard.\nThe Crawler credentials are different from your regular Algolia credentials.\n\n## Request format\n\nRequest bodies must be JSON objects.\n\n## Parameters\n\nParameters are passed as query parameters for GET requests,\nand in the request body for POST and PATCH requests.\n\nQuery parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).\nNon-ASCII characters must be UTF-8 encoded.\n\n## Response status and errors\n\nThe Crawler API returns JSON responses.\nSince JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return a `2xx` status. Client errors return a `4xx` status.\nServer errors are indicated by a `5xx` status.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Crawler API is version 1, as indicated by the `/1/` in each endpoint's URL.\n",
+    "description": "## Base URL\n\nThe base URL for making requests to the Crawler API is:\n\n- `https://crawler.algolia.com/api`\n\n**All requests must use HTTPS.**\n\n## Availability and authentication\n\nTo authenticate your API requests, use the **basic authentication** header:\n\n- `Authorization: Basic <credentials>`\n\nWhere `<credentials>` is a base64-encoded string `<user-id>:<api-key>`.\n\n- `<user-id>`. The Crawler user ID.\n- `<api-key>`. The Crawler API key.\n\nYou can find both on the [Crawler settings](https://dashboard.algolia.com/crawler/settings) page in the Algolia dashboard.\nThe Crawler credentials are different from your regular Algolia credentials.\n\n## Request format\n\nRequest bodies must be JSON objects.\n\n## Parameters\n\nParameters are passed as query parameters for GET requests,\nand in the request body for POST and PATCH requests.\n\nQuery parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).\nNon-ASCII characters must be UTF-8 encoded.\n\n## Response status and errors\n\nThe Crawler API returns JSON responses.\nSince JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return a `2xx` status. Client errors return a `4xx` status.\nServer errors are indicated by a `5xx` status.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Crawler API is version 1, indicated by the `/1/` in each endpoint's URL.\n",
     "version": "1.0.0"
   },
   "servers": [
@@ -579,7 +579,7 @@
       "post": {
         "operationId": "crawlUrls",
         "summary": "Crawl URLs",
-        "description": "Crawls the specified URLs, extracts records from them, and adds them to the index.\nIf a crawl is currently running (the crawler's `reindexing` property is `true`),\nthe records are added to a temporary index.\n\nThis operation is rate-limited to 500 requests every 24 hours.\n",
+        "description": "Crawls the specified URLs, extracts records from them, and adds them to the index.\nIf a crawl is running (the crawler's `reindexing` property is `true`),\nthe records are added to a temporary index.\n\nThis operation is rate-limited to 500 requests every 24 hours.\n",
         "tags": [
           "actions"
         ],
@@ -693,7 +693,7 @@
       "get": {
         "operationId": "listCrawlRuns",
         "summary": "List crawler runs",
-        "description": "The Crawler Logs feature allows you to monitor and debug your crawler’s activity by recording\ndetailed logs for each crawl run. Logs are useful for troubleshooting crawl issues,\nverifying site coverage, and monitoring crawler performance over time.\n",
+        "description": "The Crawler Logs feature lets you monitor and debug your crawler’s activity by recording\ndetailed logs for each crawl run. Logs are useful for troubleshooting crawl issues,\nverifying site coverage, and monitoring crawler performance over time.\n",
         "tags": [
           "crawlers"
         ],
@@ -743,7 +743,7 @@
       "get": {
         "operationId": "getCrawlRunFile",
         "summary": "Crawler run file",
-        "description": "The Crawler Logs file allows you to monitor and debug your crawler’s activity by recording\ndetailed logs for each crawl run. Logs are useful for troubleshooting crawl issues,\nverifying site coverage, and monitoring crawler performance over time.\n",
+        "description": "The Crawler Logs file lets you monitor and debug your crawler’s activity by recording\ndetailed logs for each crawl run. Logs are useful for troubleshooting crawl issues,\nverifying site coverage, and monitoring crawler performance over time.\n",
         "tags": [
           "crawlers"
         ],
@@ -778,7 +778,7 @@
       "post": {
         "operationId": "deleteCrawlRun",
         "summary": "Crawler run record deletion",
-        "description": "The Crawler Logs file allows you to monitor and debug your crawler’s activity by recording\ndetailed logs for each crawl run. This delete the existing crawler log record, not the actual crawler.\n",
+        "description": "The Crawler Logs file lets you monitor and debug your crawler’s activity by recording\ndetailed logs for each crawl run. This delete the existing crawler log record, not the actual crawler.\n",
         "tags": [
           "crawlers"
         ],
@@ -1234,7 +1234,7 @@
             "/foo": "/bar"
           }
         },
-        "description": "Key-value pairs to replace matching paths with new values.\n\nIt doesn't replace:\n\n- URLs in the `startUrls`, `sitemaps`, `pathsToMatch`, and other settings.\n- Paths found in extracted text.\n\nThe crawl continues from the _transformed_ URLs.\n\n\nFor example, if you create a mapping for `{ \"dev.example.com\": { '/foo': '/bar' } }` and the crawler encounters `https://dev.example.com/foo/hello/`,\nit’s transformed to `https://dev.example.com/bar/hello/`.\n\n\n> Compare with the `hostnameAliases` action.\n",
+        "description": "Key-value pairs to replace matching paths with new values.\n\nIt doesn't replace:\n\n- URLs in the `startUrls`, `sitemaps`, `pathsToMatch`, and other settings\n- Paths found in extracted text\n\nThe crawl continues from the _transformed_ URLs.\n\n\nFor example, if you create a mapping for `{ \"dev.example.com\": { '/foo': '/bar' } }` and the crawler encounters `https://dev.example.com/foo/hello/`,\nit’s transformed to `https://dev.example.com/bar/hello/`.\n\n\n> Compare with the `hostnameAliases` action.\n",
         "additionalProperties": {
           "type": "object",
           "description": "Hostname for which matching paths should be replaced.",
@@ -1580,7 +1580,7 @@
             "example": [
               "ja"
             ],
-            "description": "Languages for language-specific processing steps, such as word detection and dictionary settings.\n\n**You should always specify an indexing language.**\nIf you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),\nor the languages you specified with the `ignorePlurals` or `removeStopWords` parameters.\nThis can lead to unexpected search results.\nFor more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).\n",
+            "description": "Languages for language-specific processing steps, such as word detection and dictionary settings.\n\n**Always specify an indexing language.**\nIf you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),\nor the languages you specified with the `ignorePlurals` or `removeStopWords` parameters.\nThis can lead to unexpected search results.\nFor more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).\n",
             "default": [],
             "x-categories": [
               "Languages"
@@ -1878,7 +1878,7 @@
         ]
       },
       "ignorePlurals": {
-        "description": "Treat singular, plurals, and other forms of declensions as equivalent.\nYou should only use this feature for the languages used in your index.\n",
+        "description": "Treat singular, plurals, and other forms of declensions as equivalent.\nOnly use this feature for the languages used in your index.\n",
         "example": [
           "ca",
           "es"
@@ -1905,7 +1905,7 @@
         ]
       },
       "removeStopWords": {
-        "description": "Removes stop words from the search query.\n\nStop words are common words like articles, conjunctions, prepositions, or pronouns that have little or no meaning on their own.\nIn English, \"the\", \"a\", or \"and\" are stop words.\n\nYou should only use this feature for the languages used in your index.\n",
+        "description": "Removes stop words from the search query.\n\nStop words are common words like articles, conjunctions, prepositions, or pronouns that have little or no meaning on their own.\nIn English, \"the\", \"a\", or \"and\" are stop words.\n\nOnly use this feature for the languages used in your index.\n",
         "example": [
           "ca",
           "es"
@@ -1936,7 +1936,7 @@
         "example": [
           "es"
         ],
-        "description": "Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries \nThis setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings.\nThis setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages.\nTo support this, you must place the CJK language **first** \n**You should always specify a query language.**\nIf you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),\nor the languages you specified with the `ignorePlurals` or `removeStopWords` parameters.\nThis can lead to unexpected search results.\nFor more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).\n",
+        "description": "Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries.\nThis setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings.\nThis setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages.\nTo support this, place the CJK language **first**.\n**Always specify a query language.**\nIf you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),\nor the languages you specified with the `ignorePlurals` or `removeStopWords` parameters.\nThis can lead to unexpected search results.\nFor more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).\n",
         "default": [],
         "x-categories": [
           "Languages"
@@ -2050,7 +2050,7 @@
         ]
       },
       "optionalWords": {
-        "description": "Words that should be considered optional when found in the query.\n\nBy default, records must match all words in the search query to be included in the search results.\nAdding optional words can help to increase the number of search results by running an additional search query that doesn't include the optional words.\nFor example, if the search query is \"action video\" and \"video\" is an optional word,\nthe search engine runs two queries. One for \"action video\" and one for \"action\".\nRecords that match all words are ranked higher.\n\nFor a search query with 4 or more words **and** all its words are optional,\nthe number of matched words required for a record to be included in the search results increases for every 1,000 records:\n\n- If `optionalWords` has less than 10 words, the required number of matched words increases by 1:\n  results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words.\n- If `optionalWords` has 10 or more words, the number of required matched words increases by the number of optional words divided by 5 (rounded down).\n  For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.\n\nFor more information, see [Optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).\n",
+        "description": "Words that should be considered optional when found in the query.\n\nBy default, records must match all words in the search query to be included in the search results.\nAdding optional words can increase the number of search results by running an additional search query that doesn't include the optional words.\nFor example, if the search query is \"action video\" and \"video\" is optional,\nthe search engine runs two queries: one for \"action video\" and one for \"action\".\nRecords that match all words are ranked higher.\n\nFor a search query with 4 or more words **and** all its words are optional,\nthe number of matched words required for a record to be included in the search results increases for every 1,000 records:\n\n- If `optionalWords` has fewer than 10 words, the required number of matched words increases by 1:\n  results 1 to 1,000 require 1 matched word; results 1,001 to 2,000 need 2 matched words.\n- If `optionalWords` has 10 or more words, the required number of matched words increases by the number of optional words divided by 5 (rounded down).\n  Example: with 18 optional words, results 1 to 1,000 require 1 matched word; results 1,001 to 2,000 need 4 matched words.\n\nFor more information, see [Optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).\n",
         "oneOf": [
           {
             "type": "string"
@@ -2417,7 +2417,7 @@
             "items": {
               "type": "string"
             },
-            "description": "Determines the order in which Algolia returns your results.\n\nBy default, each entry corresponds to a [ranking criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria).\nThe tie-breaking algorithm sequentially applies each criterion in the order they're specified.\nIf you configure a replica index for [sorting by an attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute),\nyou put the sorting attribute at the top of the list.\n\n**Modifiers**\n\n- `asc(\"ATTRIBUTE\")`.\n  Sort the index by the values of an attribute, in ascending order.\n- `desc(\"ATTRIBUTE\")`.\n  Sort the index by the values of an attribute, in descending order.\n\nBefore you modify the default setting,\nyou should test your changes in the dashboard,\nand by [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing).\n",
+            "description": "Determines the order in which Algolia returns your results.\n\nBy default, each entry corresponds to a [ranking criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria).\nThe tie-breaking algorithm sequentially applies each criterion in the order they're specified.\nIf you configure a replica index for [sorting by an attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute),\nyou put the sorting attribute at the top of the list.\n\n**Modifiers**\n\n- `asc(\"ATTRIBUTE\")`.\n  Sort the index by the values of an attribute, in ascending order.\n- `desc(\"ATTRIBUTE\")`.\n  Sort the index by the values of an attribute, in descending order.\n\nBefore you modify the default setting,\ntest your changes in the dashboard,\nand by [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing).\n",
             "default": [
               "typo",
               "geo",
@@ -3023,14 +3023,14 @@
           },
           "maxUrls": {
             "type": "integer",
-            "description": "Limits the number of URLs your crawler processes.\n\nChange it to a low value, such as 100, for quick crawling tests.\nChange it to a higher explicit value for full crawls to prevent it from getting \"lost\" in complex site structures.\nBecause the Crawler works on many pages simultaneously, `maxUrls` doesn't guarantee finding the same pages each time it runs.\n",
+            "description": "Limits the number of URLs your crawler processes.\n\nChange it to a low value, such as 100, for short crawling tests.\nChange it to a higher explicit value for full crawls to prevent it from getting \"lost\" in complex site structures.\nBecause the Crawler works on many pages simultaneously, `maxUrls` doesn't guarantee finding the same pages each time it runs.\n",
             "minimum": 1,
             "maximum": 15000000,
             "example": 250
           },
           "rateLimit": {
             "type": "integer",
-            "description": "Determines the number of concurrent tasks per second that can run for this configuration.\n\nA higher rate limit means more crawls per second.\nAlgolia prevents system overload by ensuring the number of URLs added in the last second and the number of URLs being processed is less than the rate limit:\n\n\n```\nmax(new_urls_added, active_urls_processing) <= rateLimit\n```\n\nStart with a low value (for example, 2) and increase it if you need faster crawling.\nBe aware that a high `rateLimit` can have a huge impact on bandwidth cost and server resource consumption.\n\nThe number of pages processed per second depends on the average time it takes to fetch, process, and upload a URL. \nFor a given `rateLimit` if fetching, processing, and uploading URLs takes (on average):\n\n- Less than a second, your crawler processes up to `rateLimit` pages per second.\n- Four seconds, your crawler processes up to `rateLimit / 4` pages per second.\n\nIn the latter case, increasing `rateLimit` improves performance, up to a point. \nHowever, if the processing time remains at four seconds, increasing `rateLimit` won't increase the number of pages processed per second.\n",
+            "description": "Determines the number of concurrent tasks per second that can run for this configuration.\n\nA higher rate limit means more crawls per second.\nAlgolia prevents system overload by ensuring the number of URLs added in the last second and the number of URLs being processed is less than the rate limit:\n\n```\nmax(new_urls_added, active_urls_processing) <= rateLimit\n```\n\nStart with a low value (for example, 2) and increase it if you need faster crawling.\nA high `rateLimit` can significantly increase bandwidth cost and server resource consumption.\n\nThe number of pages processed per second depends on the average time it takes to fetch, process, and upload a URL.\nFor a given `rateLimit`, if fetching, processing, and uploading URLs takes (on average):\n\n- Less than a second, your crawler processes up to `rateLimit` pages per second.\n- Four seconds, your crawler processes up to `rateLimit / 4` pages per second.\n\nIn the latter case, increasing `rateLimit` improves performance up to a point.\nIf the processing time remains at four seconds, increasing `rateLimit` won't increase the number of pages processed per second.\n",
             "minimum": 1,
             "maximum": 100,
             "example": 4
@@ -3104,7 +3104,7 @@
           },
           "blocked": {
             "type": "boolean",
-            "description": "Whether this crawler is currently blocked.\n\nIf `true`, you can unblock it from the [Crawler page](https://dashboard.algolia.com/crawler) in the Algolia dashboard\nor by [cancelling the blocking task](https://www.algolia.com/doc/rest-api/crawler/cancel-blocking-action).\n"
+            "description": "Whether this crawler is blocked.\n\nIf `true`, you can unblock it from the [Crawler page](https://dashboard.algolia.com/crawler) in the Algolia dashboard\nor by [cancelling the blocking task](https://www.algolia.com/doc/rest-api/crawler/cancel-blocking-action).\n"
           },
           "blockingError": {
             "type": "string",

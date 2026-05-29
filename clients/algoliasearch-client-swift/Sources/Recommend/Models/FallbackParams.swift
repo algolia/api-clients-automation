@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct FallbackParams: Codable, JSONEncodable {
@@ -15,16 +15,16 @@ public struct FallbackParams: Codable, JSONEncodable {
     public var similarQuery: String?
     /// Filter expression to only include items that match the filter criteria in the response.  You can use these
     /// filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`,
-    /// `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and
-    /// upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet
+    /// `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>`, where `<lower>` and `<upper>` are the lower and
+    /// upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>`, where `<facet>` is a facet
     /// attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>`
     /// (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and
     /// `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.  
     /// **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not
     /// supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not
-    /// supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes around your filters, if the facet
-    /// attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an
-    /// array, the filter matches if it matches at least one element of the array.  For more information, see
+    /// supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes if the facet attribute name or facet
+    /// value contains spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter
+    /// matches if it matches at least one element of the array.  For more information, see
     /// [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
     public var filters: String?
     public var facetFilters: RecommendFacetFilters?
@@ -142,9 +142,8 @@ public struct FallbackParams: Codable, JSONEncodable {
     /// Unicode characters](https://www.charactercodes.net/category/non-spacing_mark). For example, `Gartenstühle` won't
     /// be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).
     public var decompoundedAttributes: AnyCodable?
-    /// Languages for language-specific processing steps, such as word detection and dictionary settings.  **You should
-    /// always specify an indexing language.** If you don't specify an indexing language, the search engine uses all
-    /// [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
+    /// Languages for language-specific processing steps, such as word detection and dictionary settings.  **Always
+    /// specify an indexing language.** If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
     /// or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to
     /// unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
     public var indexLanguages: [RecommendSupportedLanguage]?
@@ -215,8 +214,8 @@ public struct FallbackParams: Codable, JSONEncodable {
     /// attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute),
     /// you put the sorting attribute at the top of the list.  **Modifiers**  - `asc(\"ATTRIBUTE\")`.   Sort the index
     /// by the values of an attribute, in ascending order. - `desc(\"ATTRIBUTE\")`.   Sort the index by the values of an
-    /// attribute, in descending order.  Before you modify the default setting, you should test your changes in the
-    /// dashboard, and by [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing).
+    /// attribute, in descending order.  Before you modify the default setting, test your changes in the dashboard, and
+    /// by [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing).
     public var ranking: [String]?
     /// Relevancy threshold below which less relevant results aren't included in the results You can only set
     /// `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
@@ -260,10 +259,10 @@ public struct FallbackParams: Codable, JSONEncodable {
     public var ignorePlurals: RecommendIgnorePlurals?
     public var removeStopWords: RecommendRemoveStopWords?
     /// Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection
-    /// dictionaries  This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals`
+    /// dictionaries. This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals`
     /// settings. This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk)
-    /// languages. To support this, you must place the CJK language **first**  **You should always specify a query
-    /// language.** If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
+    /// languages. To support this, place the CJK language **first**. **Always specify a query language.** If you don't
+    /// specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
     /// or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to
     /// unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
     public var queryLanguages: [RecommendSupportedLanguage]?
@@ -711,97 +710,7 @@ public struct FallbackParams: Codable, JSONEncodable {
     }
 }
 
-extension FallbackParams: Equatable {
-    public static func ==(lhs: FallbackParams, rhs: FallbackParams) -> Bool {
-        lhs.similarQuery == rhs.similarQuery &&
-            lhs.filters == rhs.filters &&
-            lhs.facetFilters == rhs.facetFilters &&
-            lhs.optionalFilters == rhs.optionalFilters &&
-            lhs.numericFilters == rhs.numericFilters &&
-            lhs.tagFilters == rhs.tagFilters &&
-            lhs.sumOrFiltersScores == rhs.sumOrFiltersScores &&
-            lhs.restrictSearchableAttributes == rhs.restrictSearchableAttributes &&
-            lhs.facets == rhs.facets &&
-            lhs.facetingAfterDistinct == rhs.facetingAfterDistinct &&
-            lhs.aroundLatLng == rhs.aroundLatLng &&
-            lhs.aroundLatLngViaIP == rhs.aroundLatLngViaIP &&
-            lhs.aroundRadius == rhs.aroundRadius &&
-            lhs.aroundPrecision == rhs.aroundPrecision &&
-            lhs.minimumAroundRadius == rhs.minimumAroundRadius &&
-            lhs.insideBoundingBox == rhs.insideBoundingBox &&
-            lhs.insidePolygon == rhs.insidePolygon &&
-            lhs.naturalLanguages == rhs.naturalLanguages &&
-            lhs.ruleContexts == rhs.ruleContexts &&
-            lhs.personalizationImpact == rhs.personalizationImpact &&
-            lhs.userToken == rhs.userToken &&
-            lhs.getRankingInfo == rhs.getRankingInfo &&
-            lhs.synonyms == rhs.synonyms &&
-            lhs.clickAnalytics == rhs.clickAnalytics &&
-            lhs.analytics == rhs.analytics &&
-            lhs.analyticsTags == rhs.analyticsTags &&
-            lhs.percentileComputation == rhs.percentileComputation &&
-            lhs.enableABTest == rhs.enableABTest &&
-            lhs.query == rhs.query &&
-            lhs.attributesForFaceting == rhs.attributesForFaceting &&
-            lhs.replicas == rhs.replicas &&
-            lhs.paginationLimitedTo == rhs.paginationLimitedTo &&
-            lhs.unretrievableAttributes == rhs.unretrievableAttributes &&
-            lhs.disableTypoToleranceOnWords == rhs.disableTypoToleranceOnWords &&
-            lhs.attributesToTransliterate == rhs.attributesToTransliterate &&
-            lhs.camelCaseAttributes == rhs.camelCaseAttributes &&
-            lhs.decompoundedAttributes == rhs.decompoundedAttributes &&
-            lhs.indexLanguages == rhs.indexLanguages &&
-            lhs.disablePrefixOnAttributes == rhs.disablePrefixOnAttributes &&
-            lhs.allowCompressionOfIntegerArray == rhs.allowCompressionOfIntegerArray &&
-            lhs.numericAttributesForFiltering == rhs.numericAttributesForFiltering &&
-            lhs.separatorsToIndex == rhs.separatorsToIndex &&
-            lhs.searchableAttributes == rhs.searchableAttributes &&
-            lhs.userData == rhs.userData &&
-            lhs.customNormalization == rhs.customNormalization &&
-            lhs.attributeForDistinct == rhs.attributeForDistinct &&
-            lhs.maxFacetHits == rhs.maxFacetHits &&
-            lhs.keepDiacriticsOnCharacters == rhs.keepDiacriticsOnCharacters &&
-            lhs.customRanking == rhs.customRanking &&
-            lhs.attributesToRetrieve == rhs.attributesToRetrieve &&
-            lhs.ranking == rhs.ranking &&
-            lhs.relevancyStrictness == rhs.relevancyStrictness &&
-            lhs.attributesToHighlight == rhs.attributesToHighlight &&
-            lhs.attributesToSnippet == rhs.attributesToSnippet &&
-            lhs.highlightPreTag == rhs.highlightPreTag &&
-            lhs.highlightPostTag == rhs.highlightPostTag &&
-            lhs.snippetEllipsisText == rhs.snippetEllipsisText &&
-            lhs.restrictHighlightAndSnippetArrays == rhs.restrictHighlightAndSnippetArrays &&
-            lhs.minWordSizefor1Typo == rhs.minWordSizefor1Typo &&
-            lhs.minWordSizefor2Typos == rhs.minWordSizefor2Typos &&
-            lhs.typoTolerance == rhs.typoTolerance &&
-            lhs.allowTyposOnNumericTokens == rhs.allowTyposOnNumericTokens &&
-            lhs.disableTypoToleranceOnAttributes == rhs.disableTypoToleranceOnAttributes &&
-            lhs.ignorePlurals == rhs.ignorePlurals &&
-            lhs.removeStopWords == rhs.removeStopWords &&
-            lhs.queryLanguages == rhs.queryLanguages &&
-            lhs.decompoundQuery == rhs.decompoundQuery &&
-            lhs.enableRules == rhs.enableRules &&
-            lhs.enablePersonalization == rhs.enablePersonalization &&
-            lhs.queryType == rhs.queryType &&
-            lhs.removeWordsIfNoResults == rhs.removeWordsIfNoResults &&
-            lhs.advancedSyntax == rhs.advancedSyntax &&
-            lhs.optionalWords == rhs.optionalWords &&
-            lhs.disableExactOnAttributes == rhs.disableExactOnAttributes &&
-            lhs.exactOnSingleWordQuery == rhs.exactOnSingleWordQuery &&
-            lhs.alternativesAsExact == rhs.alternativesAsExact &&
-            lhs.advancedSyntaxFeatures == rhs.advancedSyntaxFeatures &&
-            lhs.distinct == rhs.distinct &&
-            lhs.replaceSynonymsInHighlight == rhs.replaceSynonymsInHighlight &&
-            lhs.minProximity == rhs.minProximity &&
-            lhs.responseFields == rhs.responseFields &&
-            lhs.maxValuesPerFacet == rhs.maxValuesPerFacet &&
-            lhs.sortFacetValuesBy == rhs.sortFacetValuesBy &&
-            lhs.attributeCriteriaComputedByMinProximity == rhs.attributeCriteriaComputedByMinProximity &&
-            lhs.renderingContent == rhs.renderingContent &&
-            lhs.enableReRanking == rhs.enableReRanking &&
-            lhs.reRankingApplyFilter == rhs.reRankingApplyFilter
-    }
-}
+extension FallbackParams: Equatable {}
 
 extension FallbackParams: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -1100,6 +1100,230 @@ class SnippetCompositionClient
     }
 
     /**
+     * Snippet for the PutComposition method.
+     *
+     * putComposition
+     */
+    public function snippetForPutComposition5(): void
+    {
+        // >SEPARATOR putComposition putComposition
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->putComposition(
+            'my-recommend-compo',
+            ['objectID' => 'my-recommend-compo',
+                'name' => 'my recommend composition',
+                'behavior' => ['injection' => ['main' => ['source' => ['recommend' => ['indexName' => '<YOUR_INDEX_NAME>',
+                    'model' => 'trending-items',
+                    'threshold' => 50,
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'injected-recommend-key',
+                            'source' => ['recommend' => ['indexName' => '<YOUR_INDEX_NAME>',
+                                'model' => 'trending-items',
+                                'threshold' => 30,
+                                'fallbackParameters' => ['filters' => 'category:electronics',
+                                ],
+                            ],
+                            ],
+                            'position' => 3,
+                            'length' => 2,
+                        ],
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PutComposition method.
+     *
+     * putComposition
+     */
+    public function snippetForPutComposition6(): void
+    {
+        // >SEPARATOR putComposition putComposition
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->putComposition(
+            'my-search-and-recommend-compo',
+            ['objectID' => 'my-search-and-recommend-compo',
+                'name' => 'my search main with recommend injection',
+                'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'products',
+                    'params' => ['filters' => 'brand:nike',
+                    ],
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'injected-recommend-key',
+                            'source' => ['recommend' => ['indexName' => '<YOUR_INDEX_NAME>',
+                                'model' => 'trending-items',
+                                'threshold' => 40,
+                            ],
+                            ],
+                            'position' => 1,
+                            'length' => 3,
+                        ],
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PutComposition method.
+     *
+     * putComposition
+     */
+    public function snippetForPutComposition7(): void
+    {
+        // >SEPARATOR putComposition putComposition
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->putComposition(
+            'my-multifeed-recommend-compo',
+            ['objectID' => 'my-multifeed-recommend-compo',
+                'name' => 'multifeed with recommend main',
+                'behavior' => ['multifeed' => ['feeds' => ['trending' => ['injection' => ['main' => ['source' => ['recommend' => ['indexName' => '<YOUR_INDEX_NAME>',
+                    'model' => 'trending-items',
+                    'threshold' => 50,
+                ],
+                ],
+                ],
+                ],
+                ],
+                ],
+                    'feedsOrder' => [
+                        'trending',
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PutComposition method.
+     *
+     * putComposition
+     */
+    public function snippetForPutComposition8(): void
+    {
+        // >SEPARATOR putComposition putComposition
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->putComposition(
+            'my-compo',
+            ['objectID' => 'my-compo',
+                'name' => 'my composition',
+                'behavior' => ['multifeed' => ['feeds' => ['products' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'products',
+                    'params' => ['hitsPerPage' => 12,
+                    ],
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'featured-products',
+                            'source' => ['search' => ['index' => 'products',
+                                'params' => ['filters' => 'featured:true',
+                                ],
+                            ],
+                            ],
+                            'position' => 0,
+                            'length' => 2,
+                        ],
+                    ],
+                ],
+                ],
+                    'articles' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'articles',
+                        'params' => ['hitsPerPage' => 5,
+                            'attributesToRetrieve' => [
+                                'title',
+
+                                'excerpt',
+
+                                'publishedAt',
+                            ],
+                        ],
+                    ],
+                    ],
+                    ],
+                        'injectedItems' => [
+                            ['key' => 'editorial-picks',
+                                'source' => ['search' => ['index' => 'articles',
+                                    'params' => ['filters' => 'editorial_pick:true',
+                                    ],
+                                ],
+                                ],
+                                'position' => 0,
+                                'length' => 1,
+                            ],
+                        ],
+                    ],
+                    ],
+                    'videos' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'videos',
+                        'params' => ['hitsPerPage' => 3,
+                            'attributesToRetrieve' => [
+                                'title',
+
+                                'thumbnail',
+
+                                'duration',
+                            ],
+                        ],
+                    ],
+                    ],
+                    ],
+                    ],
+                    ],
+                ],
+                    'feedsOrder' => [
+                        'products',
+
+                        'articles',
+
+                        'videos',
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the PutCompositionRule method.
      *
      * putCompositionRule
@@ -1502,6 +1726,165 @@ class SnippetCompositionClient
 
         // Call the API
         $response = $client->saveRules(
+            'rule-with-recommend',
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'rule-with-recommend',
+                        'conditions' => [
+                            ['anchoring' => 'is',
+                                'pattern' => 'trending',
+                            ],
+                        ],
+                        'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['recommend' => ['indexName' => '<YOUR_INDEX_NAME>',
+                            'model' => 'trending-items',
+                            'threshold' => 50,
+                        ],
+                        ],
+                        ],
+                            'injectedItems' => [
+                                ['key' => 'injected-recommend-from-rule-key',
+                                    'source' => ['recommend' => ['indexName' => '<YOUR_INDEX_NAME>',
+                                        'model' => 'trending-items',
+                                        'threshold' => 30,
+                                        'fallbackParameters' => ['filters' => 'category:electronics',
+                                        ],
+                                    ],
+                                    ],
+                                    'position' => 2,
+                                    'length' => 3,
+                                ],
+                            ],
+                        ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRules method.
+     *
+     * saveRules
+     */
+    public function snippetForSaveRules4(): void
+    {
+        // >SEPARATOR saveRules saveRules
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRules(
+            'rule-with-search-and-recommend',
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'rule-with-search-and-recommend',
+                        'conditions' => [
+                            ['anchoring' => 'contains',
+                                'pattern' => 'shoes',
+                            ],
+                        ],
+                        'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'products',
+                            'params' => ['filters' => 'category:shoes',
+                            ],
+                        ],
+                        ],
+                        ],
+                            'injectedItems' => [
+                                ['key' => 'injected-recommend-from-rule-key',
+                                    'source' => ['recommend' => ['indexName' => '<YOUR_INDEX_NAME>',
+                                        'model' => 'trending-items',
+                                        'threshold' => 40,
+                                    ],
+                                    ],
+                                    'position' => 1,
+                                    'length' => 2,
+                                ],
+                            ],
+                        ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRules method.
+     *
+     * saveRules
+     */
+    public function snippetForSaveRules5(): void
+    {
+        // >SEPARATOR saveRules saveRules
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRules(
+            'rule-with-multifeed-recommend',
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'rule-with-multifeed-recommend',
+                        'conditions' => [
+                            ['anchoring' => 'is',
+                                'pattern' => 'trending',
+                            ],
+                        ],
+                        'consequence' => ['behavior' => ['multifeed' => ['feeds' => ['trending' => ['injection' => ['main' => ['source' => ['recommend' => ['indexName' => '<YOUR_INDEX_NAME>',
+                            'model' => 'trending-items',
+                            'threshold' => 50,
+                        ],
+                        ],
+                        ],
+                        ],
+                        ],
+                        ],
+                            'feedsOrder' => [
+                                'trending',
+                            ],
+                        ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRules method.
+     *
+     * saveRules
+     */
+    public function snippetForSaveRules6(): void
+    {
+        // >SEPARATOR saveRules saveRules
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRules(
             'my-compo',
             ['requests' => [
                 ['action' => 'upsert',
@@ -1627,6 +2010,36 @@ class SnippetCompositionClient
             ['params' => ['query' => 'batman',
                 'sortBy' => 'Price (asc)',
             ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the Search method.
+     *
+     * search
+     */
+    public function snippetForSearch3(): void
+    {
+        // >SEPARATOR search search
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->search(
+            'foo',
+            ['params' => ['query' => 'batman',
+            ],
+                'feedsOrder' => [
+                    'feed-movies',
+
+                    'feed-comics',
+                ],
             ],
         );
 

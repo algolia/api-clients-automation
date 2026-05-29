@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct ReplaceAllObjectsResponse: Codable, JSONEncodable {
@@ -38,13 +38,7 @@ public struct ReplaceAllObjectsResponse: Codable, JSONEncodable {
     }
 }
 
-extension ReplaceAllObjectsResponse: Equatable {
-    public static func ==(lhs: ReplaceAllObjectsResponse, rhs: ReplaceAllObjectsResponse) -> Bool {
-        lhs.copyOperationResponse == rhs.copyOperationResponse &&
-            lhs.batchResponses == rhs.batchResponses &&
-            lhs.moveOperationResponse == rhs.moveOperationResponse
-    }
-}
+extension ReplaceAllObjectsResponse: Equatable {}
 
 extension ReplaceAllObjectsResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

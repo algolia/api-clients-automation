@@ -4,8 +4,8 @@ import XCTest
 
 import Utils
 
-@testable import Composition
-@testable import Core
+@testable import AlgoliaComposition
+@testable import AlgoliaCore
 
 final class CompositionClientRequestsTests: XCTestCase {
     static let APPLICATION_ID = "my_application_id"
@@ -832,11 +832,10 @@ final class CompositionClientRequestsTests: XCTestCase {
                     behavior: CompositionBehavior
                         .compositionInjectionBehavior(
                             CompositionInjectionBehavior(
-                                injection: Injection(
-                                    main: CompositionMain(
-                                        source: CompositionSource(search: CompositionSourceSearch(index: "bar"))
-                                    )
-                                )
+                                injection: Injection(main: InjectionMain(source: InjectionMainSource
+                                        .injectionMainSearchSource(
+                                            InjectionMainSearchSource(search: MainSearch(index: "bar"))
+                                        )))
                             )
                         )
                 ))
@@ -881,16 +880,20 @@ final class CompositionClientRequestsTests: XCTestCase {
                     name: "my first composition",
                     behavior: CompositionBehavior
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
-                            main: CompositionMain(
-                                source: CompositionSource(search: CompositionSourceSearch(index: "foo"))
-                            ),
-                            injectedItems: [InjectedItem(
+                            main: InjectionMain(source: InjectionMainSource
+                                .injectionMainSearchSource(
+                                    InjectionMainSearchSource(search: MainSearch(index: "foo"))
+                                )),
+                            injectedItems: [InjectionInjectedItem(
                                 key: "my-unique-external-group-key",
-                                source: InjectedItemSource.externalSource(ExternalSource(external: External(
-                                    index: "foo",
-                                    params: BaseInjectionQueryParameters(filters: "brand:adidas"),
-                                    ordering: ExternalOrdering.userDefined
-                                ))),
+                                source: InjectedItemSource
+                                    .injectedItemExternalSource(
+                                        InjectedItemExternalSource(external: InjectedItemExternal(
+                                            index: "foo",
+                                            params: BaseInjectionQueryParameters(filters: "brand:adidas"),
+                                            ordering: ExternalOrdering.userDefined
+                                        ))
+                                    ),
                                 position: 2,
                                 length: 1
                             )]
@@ -932,15 +935,16 @@ final class CompositionClientRequestsTests: XCTestCase {
                     name: "my composition",
                     behavior: CompositionBehavior
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
-                            main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
-                                index: "foo",
-                                params: MainInjectionQueryParameters(filters: "brand:adidas")
-                            ))),
+                            main: InjectionMain(source: InjectionMainSource
+                                .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                    index: "foo",
+                                    params: MainInjectionQueryParameters(filters: "brand:adidas")
+                                )))),
                             injectedItems: [
-                                InjectedItem(
+                                InjectionInjectedItem(
                                     key: "my-unique-group-key",
                                     source: InjectedItemSource
-                                        .compositionSearchSource(CompositionSearchSource(search: Search(
+                                        .injectedItemSearchSource(InjectedItemSearchSource(search: InjectedItemSearch(
                                             index: "foo",
                                             params: BaseInjectionQueryParameters(filters: "brand:adidas")
                                         ))),
@@ -956,10 +960,10 @@ final class CompositionClientRequestsTests: XCTestCase {
                                         ]
                                     ))
                                 ),
-                                InjectedItem(
+                                InjectionInjectedItem(
                                     key: "my-unique-group-key",
                                     source: InjectedItemSource
-                                        .compositionSearchSource(CompositionSearchSource(search: Search(
+                                        .injectedItemSearchSource(InjectedItemSearchSource(search: InjectedItemSearch(
                                             index: "foo",
                                             params: BaseInjectionQueryParameters(filters: "brand:puma")
                                         ))),
@@ -1014,13 +1018,16 @@ final class CompositionClientRequestsTests: XCTestCase {
                     name: "my composition",
                     behavior: CompositionBehavior
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
-                            main: CompositionMain(
-                                source: CompositionSource(search: CompositionSourceSearch(index: "foo"))
-                            ),
-                            injectedItems: [InjectedItem(
+                            main: InjectionMain(source: InjectionMainSource
+                                .injectionMainSearchSource(
+                                    InjectionMainSearchSource(search: MainSearch(index: "foo"))
+                                )),
+                            injectedItems: [InjectionInjectedItem(
                                 key: "my-unique-injected-item-key",
                                 source: InjectedItemSource
-                                    .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
+                                    .injectedItemSearchSource(
+                                        InjectedItemSearchSource(search: InjectedItemSearch(index: "foo"))
+                                    ),
                                 position: 2,
                                 length: 1
                             )],
@@ -1062,11 +1069,14 @@ final class CompositionClientRequestsTests: XCTestCase {
                 name: "my first composition",
                 behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
-                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
-                        injectedItems: [InjectedItem(
+                        main: InjectionMain(source: InjectionMainSource
+                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(index: "foo")))),
+                        injectedItems: [InjectionInjectedItem(
                             key: "my-unique-group-key",
                             source: InjectedItemSource
-                                .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
+                                .injectedItemSearchSource(
+                                    InjectedItemSearchSource(search: InjectedItemSearch(index: "foo"))
+                                ),
                             position: 2,
                             length: 1
                         )]
@@ -1107,14 +1117,16 @@ final class CompositionClientRequestsTests: XCTestCase {
                 name: "my first composition",
                 behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
-                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
-                        injectedItems: [InjectedItem(
+                        main: InjectionMain(source: InjectionMainSource
+                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(index: "foo")))),
+                        injectedItems: [InjectionInjectedItem(
                             key: "my-unique-external-group-key",
-                            source: InjectedItemSource.externalSource(ExternalSource(external: External(
-                                index: "foo",
-                                params: BaseInjectionQueryParameters(filters: "brand:adidas"),
-                                ordering: ExternalOrdering.userDefined
-                            ))),
+                            source: InjectedItemSource
+                                .injectedItemExternalSource(InjectedItemExternalSource(external: InjectedItemExternal(
+                                    index: "foo",
+                                    params: BaseInjectionQueryParameters(filters: "brand:adidas"),
+                                    ordering: ExternalOrdering.userDefined
+                                ))),
                             position: 2,
                             length: 1
                         )]
@@ -1155,15 +1167,16 @@ final class CompositionClientRequestsTests: XCTestCase {
                 name: "my composition",
                 behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
-                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
-                            index: "foo",
-                            params: MainInjectionQueryParameters(filters: "brand:adidas")
-                        ))),
+                        main: InjectionMain(source: InjectionMainSource
+                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                index: "foo",
+                                params: MainInjectionQueryParameters(filters: "brand:adidas")
+                            )))),
                         injectedItems: [
-                            InjectedItem(
+                            InjectionInjectedItem(
                                 key: "my-unique-group-key",
                                 source: InjectedItemSource
-                                    .compositionSearchSource(CompositionSearchSource(search: Search(
+                                    .injectedItemSearchSource(InjectedItemSearchSource(search: InjectedItemSearch(
                                         index: "foo",
                                         params: BaseInjectionQueryParameters(filters: "brand:adidas")
                                     ))),
@@ -1179,10 +1192,10 @@ final class CompositionClientRequestsTests: XCTestCase {
                                     ]
                                 ))
                             ),
-                            InjectedItem(
+                            InjectionInjectedItem(
                                 key: "my-unique-group-key",
                                 source: InjectedItemSource
-                                    .compositionSearchSource(CompositionSearchSource(search: Search(
+                                    .injectedItemSearchSource(InjectedItemSearchSource(search: InjectedItemSearch(
                                         index: "foo",
                                         params: BaseInjectionQueryParameters(filters: "brand:puma")
                                     ))),
@@ -1236,14 +1249,17 @@ final class CompositionClientRequestsTests: XCTestCase {
                 name: "my composition",
                 behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
-                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
-                            index: "foo",
-                            params: MainInjectionQueryParameters(filters: "brand:adidas")
-                        ))),
-                        injectedItems: [InjectedItem(
+                        main: InjectionMain(source: InjectionMainSource
+                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                index: "foo",
+                                params: MainInjectionQueryParameters(filters: "brand:adidas")
+                            )))),
+                        injectedItems: [InjectionInjectedItem(
                             key: "my-unique-injected-item-key",
                             source: InjectedItemSource
-                                .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
+                                .injectedItemSearchSource(
+                                    InjectedItemSearchSource(search: InjectedItemSearch(index: "foo"))
+                                ),
                             position: 2,
                             length: 1
                         )],
@@ -1285,11 +1301,12 @@ final class CompositionClientRequestsTests: XCTestCase {
                 name: "my composition",
                 behavior: CompositionBehavior
                     .compositionInjectionBehavior(
-                        CompositionInjectionBehavior(injection: Injection(
-                            main: CompositionMain(source: CompositionSource(
-                                search: CompositionSourceSearch(index: "products")
-                            ))
-                        ))
+                        CompositionInjectionBehavior(
+                            injection: Injection(main: InjectionMain(source: InjectionMainSource
+                                    .injectionMainSearchSource(
+                                        InjectionMainSearchSource(search: MainSearch(index: "products"))
+                                    )))
+                        )
                     ),
                 sortingStrategy: ["Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"]
             )
@@ -1301,6 +1318,249 @@ final class CompositionClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData = "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"sortingStrategy\":{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"},\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\"}}}}}}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/my-compo")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// putComposition
+    func testPutCompositionTest5() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.putCompositionWithHTTPInfo(
+            compositionID: "my-recommend-compo",
+            composition: Composition(
+                objectID: "my-recommend-compo",
+                name: "my recommend composition",
+                behavior: CompositionBehavior
+                    .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                        main: InjectionMain(source: InjectionMainSource
+                            .injectionMainRecommendSource(InjectionMainRecommendSource(recommend: MainRecommend(
+                                indexName: "products",
+                                model: Model.trendingItems,
+                                threshold: 50
+                            )))),
+                        injectedItems: [InjectionInjectedItem(
+                            key: "injected-recommend-key",
+                            source: InjectedItemSource
+                                .injectedItemRecommendSource(InjectedItemRecommendSource(recommend: Recommend(
+                                    indexName: "products",
+                                    model: Model.trendingItems,
+                                    threshold: 30,
+                                    fallbackParameters: BaseInjectionQueryParameters(filters: "category:electronics")
+                                ))),
+                            position: 3,
+                            length: 2
+                        )]
+                    )))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"objectID\":\"my-recommend-compo\",\"name\":\"my recommend composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}},\"injectedItems\":[{\"key\":\"injected-recommend-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":30,\"fallbackParameters\":{\"filters\":\"category:electronics\"}}},\"position\":3,\"length\":2}]}}}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/my-recommend-compo")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// putComposition
+    func testPutCompositionTest6() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.putCompositionWithHTTPInfo(
+            compositionID: "my-search-and-recommend-compo",
+            composition: Composition(
+                objectID: "my-search-and-recommend-compo",
+                name: "my search main with recommend injection",
+                behavior: CompositionBehavior
+                    .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                        main: InjectionMain(source: InjectionMainSource
+                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                index: "products",
+                                params: MainInjectionQueryParameters(filters: "brand:nike")
+                            )))),
+                        injectedItems: [InjectionInjectedItem(
+                            key: "injected-recommend-key",
+                            source: InjectedItemSource
+                                .injectedItemRecommendSource(InjectedItemRecommendSource(recommend: Recommend(
+                                    indexName: "products",
+                                    model: Model.trendingItems,
+                                    threshold: 40
+                                ))),
+                            position: 1,
+                            length: 3
+                        )]
+                    )))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"objectID\":\"my-search-and-recommend-compo\",\"name\":\"my search main with recommend injection\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"filters\":\"brand:nike\"}}}},\"injectedItems\":[{\"key\":\"injected-recommend-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":40}},\"position\":1,\"length\":3}]}}}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/my-search-and-recommend-compo")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// putComposition
+    func testPutCompositionTest7() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.putCompositionWithHTTPInfo(
+            compositionID: "my-multifeed-recommend-compo",
+            composition: Composition(
+                objectID: "my-multifeed-recommend-compo",
+                name: "multifeed with recommend main",
+                behavior: CompositionBehavior
+                    .compositionMultifeedBehavior(CompositionMultifeedBehavior(multifeed: Multifeed(
+                        feeds: [
+                            "trending": FeedInjection(
+                                injection: Injection(main: InjectionMain(source: InjectionMainSource
+                                        .injectionMainRecommendSource(
+                                            InjectionMainRecommendSource(recommend: MainRecommend(
+                                                indexName: "products",
+                                                model: Model.trendingItems,
+                                                threshold: 50
+                                            ))
+                                        )))
+                            ),
+                        ],
+                        feedsOrder: ["trending"]
+                    )))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"objectID\":\"my-multifeed-recommend-compo\",\"name\":\"multifeed with recommend main\",\"behavior\":{\"multifeed\":{\"feeds\":{\"trending\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}}}}},\"feedsOrder\":[\"trending\"]}}}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/my-multifeed-recommend-compo")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// putComposition
+    func testPutCompositionTest8() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.putCompositionWithHTTPInfo(
+            compositionID: "my-compo",
+            composition: Composition(
+                objectID: "my-compo",
+                name: "my composition",
+                behavior: CompositionBehavior
+                    .compositionMultifeedBehavior(CompositionMultifeedBehavior(multifeed: Multifeed(
+                        feeds: [
+                            "products": FeedInjection(injection: Injection(
+                                main: InjectionMain(source: InjectionMainSource
+                                    .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                        index: "products",
+                                        params: MainInjectionQueryParameters(hitsPerPage: 12)
+                                    )))),
+                                injectedItems: [InjectionInjectedItem(
+                                    key: "featured-products",
+                                    source: InjectedItemSource
+                                        .injectedItemSearchSource(InjectedItemSearchSource(search: InjectedItemSearch(
+                                            index: "products",
+                                            params: BaseInjectionQueryParameters(filters: "featured:true")
+                                        ))),
+                                    position: 0,
+                                    length: 2
+                                )]
+                            )),
+                            "articles": FeedInjection(injection: Injection(
+                                main: InjectionMain(source: InjectionMainSource
+                                    .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                        index: "articles",
+                                        params: MainInjectionQueryParameters(
+                                            attributesToRetrieve: ["title", "excerpt", "publishedAt"],
+                                            hitsPerPage: 5
+                                        )
+                                    )))),
+                                injectedItems: [InjectionInjectedItem(
+                                    key: "editorial-picks",
+                                    source: InjectedItemSource
+                                        .injectedItemSearchSource(InjectedItemSearchSource(search: InjectedItemSearch(
+                                            index: "articles",
+                                            params: BaseInjectionQueryParameters(filters: "editorial_pick:true")
+                                        ))),
+                                    position: 0,
+                                    length: 1
+                                )]
+                            )),
+                            "videos": FeedInjection(injection: Injection(main: InjectionMain(source: InjectionMainSource
+                                    .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                        index: "videos",
+                                        params: MainInjectionQueryParameters(
+                                            attributesToRetrieve: ["title", "thumbnail", "duration"],
+                                            hitsPerPage: 3
+                                        )
+                                    )))))),
+                        ],
+                        feedsOrder: ["products", "articles", "videos"]
+                    )))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"behavior\":{\"multifeed\":{\"feeds\":{\"products\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"hitsPerPage\":12}}}},\"injectedItems\":[{\"key\":\"featured-products\",\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"filters\":\"featured:true\"}}},\"position\":0,\"length\":2}]}},\"articles\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"articles\",\"params\":{\"hitsPerPage\":5,\"attributesToRetrieve\":[\"title\",\"excerpt\",\"publishedAt\"]}}}},\"injectedItems\":[{\"key\":\"editorial-picks\",\"source\":{\"search\":{\"index\":\"articles\",\"params\":{\"filters\":\"editorial_pick:true\"}}},\"position\":0,\"length\":1}]}},\"videos\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"videos\",\"params\":{\"hitsPerPage\":3,\"attributesToRetrieve\":[\"title\",\"thumbnail\",\"duration\"]}}}}}}},\"feedsOrder\":[\"products\",\"articles\",\"videos\"]}}}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -1329,11 +1589,14 @@ final class CompositionClientRequestsTests: XCTestCase {
                 conditions: [CompositionCondition(pattern: "test", anchoring: CompositionAnchoring.`is`)],
                 consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
-                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
-                        injectedItems: [InjectedItem(
+                        main: InjectionMain(source: InjectionMainSource
+                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(index: "foo")))),
+                        injectedItems: [InjectionInjectedItem(
                             key: "my-unique-group-from-rule-key",
                             source: InjectedItemSource
-                                .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
+                                .injectedItemSearchSource(
+                                    InjectedItemSearchSource(search: InjectedItemSearch(index: "foo"))
+                                ),
                             position: 2,
                             length: 1
                         )]
@@ -1375,13 +1638,15 @@ final class CompositionClientRequestsTests: XCTestCase {
                 conditions: [CompositionCondition(pattern: "test", anchoring: CompositionAnchoring.`is`)],
                 consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
-                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
-                        injectedItems: [InjectedItem(
+                        main: InjectionMain(source: InjectionMainSource
+                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(index: "foo")))),
+                        injectedItems: [InjectionInjectedItem(
                             key: "my-unique-group-from-rule-key",
-                            source: InjectedItemSource.compositionSearchSource(CompositionSearchSource(search: Search(
-                                index: "foo",
-                                params: BaseInjectionQueryParameters(filters: "brand:adidas")
-                            ))),
+                            source: InjectedItemSource
+                                .injectedItemSearchSource(InjectedItemSearchSource(search: InjectedItemSearch(
+                                    index: "foo",
+                                    params: BaseInjectionQueryParameters(filters: "brand:adidas")
+                                ))),
                             position: 2,
                             length: 1,
                             metadata: InjectedItemMetadata(hits: InjectedItemHitsMetadata(
@@ -1435,17 +1700,19 @@ final class CompositionClientRequestsTests: XCTestCase {
                 ],
                 consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
-                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
-                            index: "my-index",
-                            params: MainInjectionQueryParameters(filters: "brand:adidas")
-                        ))),
-                        injectedItems: [InjectedItem(
-                            key: "my-unique-external-group-from-rule-key",
-                            source: InjectedItemSource.externalSource(ExternalSource(external: External(
+                        main: InjectionMain(source: InjectionMainSource
+                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
                                 index: "my-index",
-                                params: BaseInjectionQueryParameters(filters: "brand:adidas"),
-                                ordering: ExternalOrdering.userDefined
-                            ))),
+                                params: MainInjectionQueryParameters(filters: "brand:adidas")
+                            )))),
+                        injectedItems: [InjectionInjectedItem(
+                            key: "my-unique-external-group-from-rule-key",
+                            source: InjectedItemSource
+                                .injectedItemExternalSource(InjectedItemExternalSource(external: InjectedItemExternal(
+                                    index: "my-index",
+                                    params: BaseInjectionQueryParameters(filters: "brand:adidas"),
+                                    ordering: ExternalOrdering.userDefined
+                                ))),
                             position: 0,
                             length: 3
                         )]
@@ -1491,13 +1758,16 @@ final class CompositionClientRequestsTests: XCTestCase {
                 conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
                 consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
-                        main: CompositionMain(
-                            source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
-                        ),
-                        injectedItems: [InjectedItem(
+                        main: InjectionMain(source: InjectionMainSource
+                            .injectionMainSearchSource(
+                                InjectionMainSearchSource(search: MainSearch(index: "my-index"))
+                            )),
+                        injectedItems: [InjectionInjectedItem(
                             key: "my-unique-injected-item-key",
                             source: InjectedItemSource
-                                .compositionSearchSource(CompositionSearchSource(search: Search(index: "my-index"))),
+                                .injectedItemSearchSource(
+                                    InjectedItemSearchSource(search: InjectedItemSearch(index: "my-index"))
+                                ),
                             position: 0,
                             length: 3
                         )],
@@ -1543,11 +1813,12 @@ final class CompositionClientRequestsTests: XCTestCase {
                     conditions: [CompositionCondition(pattern: "a")],
                     consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                         .compositionInjectionBehavior(
-                            CompositionInjectionBehavior(injection: Injection(
-                                main: CompositionMain(source: CompositionSource(
-                                    search: CompositionSourceSearch(index: "<YOUR_INDEX_NAME>")
-                                ))
-                            ))
+                            CompositionInjectionBehavior(
+                                injection: Injection(main: InjectionMain(source: InjectionMainSource
+                                        .injectionMainSearchSource(
+                                            InjectionMainSearchSource(search: MainSearch(index: "<YOUR_INDEX_NAME>"))
+                                        )))
+                            )
                         ))
                 ))
             )])
@@ -1588,13 +1859,14 @@ final class CompositionClientRequestsTests: XCTestCase {
                     conditions: [CompositionCondition(pattern: "test", anchoring: CompositionAnchoring.`is`)],
                     consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
-                            main: CompositionMain(
-                                source: CompositionSource(search: CompositionSourceSearch(index: "foo"))
-                            ),
-                            injectedItems: [InjectedItem(
+                            main: InjectionMain(source: InjectionMainSource
+                                .injectionMainSearchSource(
+                                    InjectionMainSearchSource(search: MainSearch(index: "foo"))
+                                )),
+                            injectedItems: [InjectionInjectedItem(
                                 key: "my-unique-group-from-rule-key",
                                 source: InjectedItemSource
-                                    .compositionSearchSource(CompositionSearchSource(search: Search(
+                                    .injectedItemSearchSource(InjectedItemSearchSource(search: InjectedItemSearch(
                                         index: "foo",
                                         params: BaseInjectionQueryParameters(filters: "brand:adidas")
                                     ))),
@@ -1653,17 +1925,21 @@ final class CompositionClientRequestsTests: XCTestCase {
                     ],
                     consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
-                            main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
-                                index: "my-index",
-                                params: MainInjectionQueryParameters(filters: "brand:adidas")
-                            ))),
-                            injectedItems: [InjectedItem(
-                                key: "my-unique-external-group-from-rule-key",
-                                source: InjectedItemSource.externalSource(ExternalSource(external: External(
+                            main: InjectionMain(source: InjectionMainSource
+                                .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
                                     index: "my-index",
-                                    params: BaseInjectionQueryParameters(filters: "brand:adidas"),
-                                    ordering: ExternalOrdering.userDefined
-                                ))),
+                                    params: MainInjectionQueryParameters(filters: "brand:adidas")
+                                )))),
+                            injectedItems: [InjectionInjectedItem(
+                                key: "my-unique-external-group-from-rule-key",
+                                source: InjectedItemSource
+                                    .injectedItemExternalSource(
+                                        InjectedItemExternalSource(external: InjectedItemExternal(
+                                            index: "my-index",
+                                            params: BaseInjectionQueryParameters(filters: "brand:adidas"),
+                                            ordering: ExternalOrdering.userDefined
+                                        ))
+                                    ),
                                 position: 0,
                                 length: 3
                             )]
@@ -1703,6 +1979,175 @@ final class CompositionClientRequestsTests: XCTestCase {
         let client = CompositionClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.saveRulesWithHTTPInfo(
+            compositionID: "rule-with-recommend",
+            rules: CompositionRulesBatchParams(requests: [RulesMultipleBatchRequest(
+                action: CompositionAction.upsert,
+                body: RulesBatchCompositionAction.compositionRule(CompositionRule(
+                    objectID: "rule-with-recommend",
+                    conditions: [CompositionCondition(pattern: "trending", anchoring: CompositionAnchoring.`is`)],
+                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                        .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                            main: InjectionMain(source: InjectionMainSource
+                                .injectionMainRecommendSource(InjectionMainRecommendSource(recommend: MainRecommend(
+                                    indexName: "products",
+                                    model: Model.trendingItems,
+                                    threshold: 50
+                                )))),
+                            injectedItems: [InjectionInjectedItem(
+                                key: "injected-recommend-from-rule-key",
+                                source: InjectedItemSource
+                                    .injectedItemRecommendSource(InjectedItemRecommendSource(recommend: Recommend(
+                                        indexName: "products",
+                                        model: Model.trendingItems,
+                                        threshold: 30,
+                                        fallbackParameters: BaseInjectionQueryParameters(
+                                            filters: "category:electronics"
+                                        )
+                                    ))),
+                                position: 2,
+                                length: 3
+                            )]
+                        ))))
+                ))
+            )])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-recommend\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"trending\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}},\"injectedItems\":[{\"key\":\"injected-recommend-from-rule-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":30,\"fallbackParameters\":{\"filters\":\"category:electronics\"}}},\"position\":2,\"length\":3}]}}}}}]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/rule-with-recommend/rules/batch")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// saveRules
+    func testSaveRulesTest4() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRulesWithHTTPInfo(
+            compositionID: "rule-with-search-and-recommend",
+            rules: CompositionRulesBatchParams(requests: [RulesMultipleBatchRequest(
+                action: CompositionAction.upsert,
+                body: RulesBatchCompositionAction.compositionRule(CompositionRule(
+                    objectID: "rule-with-search-and-recommend",
+                    conditions: [CompositionCondition(pattern: "shoes", anchoring: CompositionAnchoring.contains)],
+                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                        .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                            main: InjectionMain(source: InjectionMainSource
+                                .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                    index: "products",
+                                    params: MainInjectionQueryParameters(filters: "category:shoes")
+                                )))),
+                            injectedItems: [InjectionInjectedItem(
+                                key: "injected-recommend-from-rule-key",
+                                source: InjectedItemSource
+                                    .injectedItemRecommendSource(InjectedItemRecommendSource(recommend: Recommend(
+                                        indexName: "products",
+                                        model: Model.trendingItems,
+                                        threshold: 40
+                                    ))),
+                                position: 1,
+                                length: 2
+                            )]
+                        ))))
+                ))
+            )])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-search-and-recommend\",\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"shoes\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"filters\":\"category:shoes\"}}}},\"injectedItems\":[{\"key\":\"injected-recommend-from-rule-key\",\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":40}},\"position\":1,\"length\":2}]}}}}}]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/rule-with-search-and-recommend/rules/batch")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// saveRules
+    func testSaveRulesTest5() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRulesWithHTTPInfo(
+            compositionID: "rule-with-multifeed-recommend",
+            rules: CompositionRulesBatchParams(requests: [RulesMultipleBatchRequest(
+                action: CompositionAction.upsert,
+                body: RulesBatchCompositionAction.compositionRule(CompositionRule(
+                    objectID: "rule-with-multifeed-recommend",
+                    conditions: [CompositionCondition(pattern: "trending", anchoring: CompositionAnchoring.`is`)],
+                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                        .compositionMultifeedBehavior(CompositionMultifeedBehavior(multifeed: Multifeed(
+                            feeds: [
+                                "trending": FeedInjection(
+                                    injection: Injection(main: InjectionMain(source: InjectionMainSource
+                                            .injectionMainRecommendSource(
+                                                InjectionMainRecommendSource(recommend: MainRecommend(
+                                                    indexName: "products",
+                                                    model: Model.trendingItems,
+                                                    threshold: 50
+                                                ))
+                                            )))
+                                ),
+                            ],
+                            feedsOrder: ["trending"]
+                        ))))
+                ))
+            )])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-multifeed-recommend\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"trending\"}],\"consequence\":{\"behavior\":{\"multifeed\":{\"feeds\":{\"trending\":{\"injection\":{\"main\":{\"source\":{\"recommend\":{\"indexName\":\"products\",\"model\":\"trending-items\",\"threshold\":50}}}}}},\"feedsOrder\":[\"trending\"]}}}}}]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/rule-with-multifeed-recommend/rules/batch")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// saveRules
+    func testSaveRulesTest6() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRulesWithHTTPInfo(
             compositionID: "my-compo",
             rules: CompositionRulesBatchParams(requests: [RulesMultipleBatchRequest(
                 action: CompositionAction.upsert,
@@ -1714,14 +2159,15 @@ final class CompositionClientRequestsTests: XCTestCase {
                     ],
                     consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
-                            main: CompositionMain(
-                                source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
-                            ),
-                            injectedItems: [InjectedItem(
+                            main: InjectionMain(source: InjectionMainSource
+                                .injectionMainSearchSource(
+                                    InjectionMainSearchSource(search: MainSearch(index: "my-index"))
+                                )),
+                            injectedItems: [InjectionInjectedItem(
                                 key: "my-unique-injected-item-key",
                                 source: InjectedItemSource
-                                    .compositionSearchSource(
-                                        CompositionSearchSource(search: Search(index: "my-index"))
+                                    .injectedItemSearchSource(
+                                        InjectedItemSearchSource(search: InjectedItemSearch(index: "my-index"))
                                     ),
                                 position: 0,
                                 length: 3
@@ -1846,6 +2292,40 @@ final class CompositionClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData = "{\"params\":{\"query\":\"batman\",\"sortBy\":\"Price (asc)\"}}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/foo/run")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// search
+    func testSearchTest3() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<CompositionSearchResponse<CompositionHit>> = try await client.searchWithHTTPInfo(
+            compositionID: "foo",
+            requestBody: RequestBody(
+                params: CompositionParams(query: "batman"),
+                feedsOrder: ["feed-movies", "feed-comics"]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"params\":{\"query\":\"batman\"},\"feedsOrder\":[\"feed-movies\",\"feed-comics\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)

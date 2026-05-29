@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Widgets returned from any rules that are applied to the current search.
@@ -27,11 +27,7 @@ public struct CompositionWidgets: Codable, JSONEncodable {
     }
 }
 
-extension CompositionWidgets: Equatable {
-    public static func ==(lhs: CompositionWidgets, rhs: CompositionWidgets) -> Bool {
-        lhs.banners == rhs.banners
-    }
-}
+extension CompositionWidgets: Equatable {}
 
 extension CompositionWidgets: Hashable {
     public func hash(into hasher: inout Hasher) {

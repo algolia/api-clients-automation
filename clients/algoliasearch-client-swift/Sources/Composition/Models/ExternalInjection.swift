@@ -2,12 +2,12 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct ExternalInjection: Codable, JSONEncodable {
-    /// An objectID injected into an external source.
+    /// An objectID injected from an external source and also present in the targeted index.
     public var objectID: String
     /// User-defined key-values that will be added to the injected item in the response. This is identical to Hits
     /// metadata defined in Composition or Composition Rule, with the benefit of being set at runtime.
@@ -32,12 +32,7 @@ public struct ExternalInjection: Codable, JSONEncodable {
     }
 }
 
-extension ExternalInjection: Equatable {
-    public static func ==(lhs: ExternalInjection, rhs: ExternalInjection) -> Bool {
-        lhs.objectID == rhs.objectID &&
-            lhs.metadata == rhs.metadata
-    }
-}
+extension ExternalInjection: Equatable {}
 
 extension ExternalInjection: Hashable {
     public func hash(into hasher: inout Hasher) {

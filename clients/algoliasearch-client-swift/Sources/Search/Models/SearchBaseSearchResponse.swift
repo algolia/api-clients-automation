@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct SearchBaseSearchResponse: Codable, JSONEncodable {
@@ -332,37 +332,7 @@ public struct SearchBaseSearchResponse: Codable, JSONEncodable {
     }
 }
 
-extension SearchBaseSearchResponse: Equatable {
-    public static func ==(lhs: SearchBaseSearchResponse, rhs: SearchBaseSearchResponse) -> Bool {
-        lhs.abTestID == rhs.abTestID &&
-            lhs.abTestVariantID == rhs.abTestVariantID &&
-            lhs.aroundLatLng == rhs.aroundLatLng &&
-            lhs.automaticRadius == rhs.automaticRadius &&
-            lhs.exhaustive == rhs.exhaustive &&
-            lhs.appliedRules == rhs.appliedRules &&
-            lhs.exhaustiveFacetsCount == rhs.exhaustiveFacetsCount &&
-            lhs.exhaustiveNbHits == rhs.exhaustiveNbHits &&
-            lhs.exhaustiveTypo == rhs.exhaustiveTypo &&
-            lhs.facets == rhs.facets &&
-            lhs.facetsStats == rhs.facetsStats &&
-            lhs.index == rhs.index &&
-            lhs.indexUsed == rhs.indexUsed &&
-            lhs.message == rhs.message &&
-            lhs.nbSortedHits == rhs.nbSortedHits &&
-            lhs.parsedQuery == rhs.parsedQuery &&
-            lhs.processingTimeMS == rhs.processingTimeMS &&
-            lhs.processingTimingsMS == rhs.processingTimingsMS &&
-            lhs.queryAfterRemoval == rhs.queryAfterRemoval &&
-            lhs.redirect == rhs.redirect &&
-            lhs.renderingContent == rhs.renderingContent &&
-            lhs.serverTimeMS == rhs.serverTimeMS &&
-            lhs.serverUsed == rhs.serverUsed &&
-            lhs.userData == rhs.userData &&
-            lhs.queryID == rhs.queryID &&
-            lhs.automaticInsights == rhs.automaticInsights
-            && lhs.additionalProperties == rhs.additionalProperties
-    }
-}
+extension SearchBaseSearchResponse: Equatable {}
 
 extension SearchBaseSearchResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

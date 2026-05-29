@@ -1,0 +1,7 @@
+import(time)
+
+require "algolia"
+
+client = Algolia::SearchClient.create(app_id, api_key)
+client.api_client.config.header_params["X-Algolia-UserToken"] = "test-user-123"
+puts(client.api_client.config.header_params)

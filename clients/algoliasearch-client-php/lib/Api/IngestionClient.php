@@ -65,6 +65,8 @@ use Algolia\AlgoliaSearch\RetryStrategy\AlgoliaResponse;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use Algolia\AlgoliaSearch\Support\ChunkedHelperOptions;
+use Algolia\AlgoliaSearch\Support\Helpers;
 use GuzzleHttp\Psr7\Query;
 
 /**
@@ -74,17 +76,12 @@ use GuzzleHttp\Psr7\Query;
  */
 class IngestionClient
 {
-    public const VERSION = '4.37.3';
+    public const VERSION = '4.44.0';
 
     /**
      * @var ApiWrapperInterface
      */
     protected $api;
-
-    /**
-     * @var IngestionClient
-     */
-    protected $ingestionTransporter;
 
     /**
      * @var IngestionConfig
@@ -127,6 +124,10 @@ class IngestionClient
         );
 
         $client = new static($apiWrapper, $config);
+
+        $logger = Algolia::getLogger();
+        $logger->info('Algolia API client: Algolia IngestionClient initialized (appId: '.$config->getAppId().')');
+        Algolia::logDebugWarningOnce();
 
         return $client;
     }
@@ -268,7 +269,7 @@ class IngestionClient
      *                                     - $taskCreate['enabled'] => (bool) Whether the task is enabled.
      *                                     - $taskCreate['failureThreshold'] => (int) Maximum accepted percentage of failures for a task run to finish successfully.
      *                                     - $taskCreate['input'] => (array)
-     *                                     - $taskCreate['cursor'] => (string) Date of the last cursor in RFC 3339 format.
+     *                                     - $taskCreate['cursor'] => (string) Date and time when the last cursor was created, in RFC 3339 format.
      *                                     - $taskCreate['notifications'] => (array)
      *                                     - $taskCreate['policies'] => (array)
      *
@@ -286,7 +287,7 @@ class IngestionClient
     }
 
     /**
-     * Creates a new task using the v1 endpoint, please use `createTask` instead.
+     * Creates a new task using the v1 endpoint. Use `createTask` instead.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -301,7 +302,7 @@ class IngestionClient
      *                                       - $taskCreate['enabled'] => (bool) Whether the task is enabled.
      *                                       - $taskCreate['failureThreshold'] => (int) Maximum accepted percentage of failures for a task run to finish successfully.
      *                                       - $taskCreate['input'] => (array)
-     *                                       - $taskCreate['cursor'] => (string) Date of the last cursor in RFC 3339 format.
+     *                                       - $taskCreate['cursor'] => (string) Date and time when the last cursor was created, in RFC 3339 format.
      *
      * @see TaskCreateV1
      *
@@ -494,7 +495,7 @@ class IngestionClient
     }
 
     /**
-     * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+     * Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -556,7 +557,7 @@ class IngestionClient
     }
 
     /**
-     * Disables a task using the v1 endpoint, please use `disableTask` instead.
+     * Disables a task using the v1 endpoint. Use `disableTask` instead.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -598,7 +599,7 @@ class IngestionClient
     }
 
     /**
-     * Enables a task using the v1 endpoint, please use `enableTask` instead.
+     * Enables a task using the v1 endpoint. Use `enableTask` instead.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -741,7 +742,7 @@ class IngestionClient
     }
 
     /**
-     * Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+     * Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -876,8 +877,8 @@ class IngestionClient
      * @param string $taskID         Task ID for filtering the list of task runs. (optional)
      * @param array  $sort           Property by which to sort the list of task runs. (optional)
      * @param array  $order          Sort order of the response, ascending or descending. (optional)
-     * @param string $startDate      Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used. (optional)
-     * @param string $endDate        Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used. (optional)
+     * @param string $startDate      Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used. (optional)
+     * @param string $endDate        Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used. (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return array<string, mixed>|RunListResponse
@@ -945,7 +946,7 @@ class IngestionClient
     }
 
     /**
-     * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+     * Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -1070,7 +1071,7 @@ class IngestionClient
      *                                       - $taskReplace['enabled'] => (bool) Whether the task is enabled.
      *                                       - $taskReplace['failureThreshold'] => (int) Maximum accepted percentage of failures for a task run to finish successfully.
      *                                       - $taskReplace['input'] => (array)
-     *                                       - $taskReplace['cursor'] => (string) Date of the last cursor in RFC 3339 format.
+     *                                       - $taskReplace['cursor'] => (string) Date and time when the last cursor was created, in RFC 3339 format.
      *                                       - $taskReplace['notifications'] => (array)
      *                                       - $taskReplace['policies'] => (array)
      *
@@ -1142,7 +1143,7 @@ class IngestionClient
     }
 
     /**
-     * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of task runs with the observability endpoints.
+     * Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs with the observability endpoints.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -1265,7 +1266,7 @@ class IngestionClient
     }
 
     /**
-     * Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+     * Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -1427,7 +1428,6 @@ class IngestionClient
      *
      * @param string                  $destinationID     Unique identifier of a destination. (required)
      * @param array|DestinationUpdate $destinationUpdate destinationUpdate (required)
-     *                                                   - $destinationUpdate['type'] => (array)
      *                                                   - $destinationUpdate['name'] => (string) Descriptive name for the resource.
      *                                                   - $destinationUpdate['input'] => (array)
      *                                                   - $destinationUpdate['authenticationID'] => (string) Universally unique identifier (UUID) of an authentication resource.
@@ -1506,7 +1506,7 @@ class IngestionClient
     }
 
     /**
-     * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+     * Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -1752,7 +1752,7 @@ class IngestionClient
      * Create a task V1 (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
-     * Creates a new task using the v1 endpoint, please use `createTask` instead.
+     * Creates a new task using the v1 endpoint. Use `createTask` instead.
      * Required API Key ACLs:
      *  - addObject
      *  - deleteIndex
@@ -1832,6 +1832,12 @@ class IngestionClient
                 'Parameter `path` is required when calling `customDelete`.'
             );
         }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customDelete`.'
+            );
+        }
 
         $resourcePath = '/{path}';
         $queryParameters = [];
@@ -1870,6 +1876,12 @@ class IngestionClient
     {
         // verify the required parameter 'path' is set
         if (!isset($path)) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customGet`.'
+            );
+        }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
             throw new \InvalidArgumentException(
                 'Parameter `path` is required when calling `customGet`.'
             );
@@ -1917,6 +1929,12 @@ class IngestionClient
                 'Parameter `path` is required when calling `customPost`.'
             );
         }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customPost`.'
+            );
+        }
 
         $resourcePath = '/{path}';
         $queryParameters = [];
@@ -1956,6 +1974,12 @@ class IngestionClient
     {
         // verify the required parameter 'path' is set
         if (!isset($path)) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customPut`.'
+            );
+        }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
             throw new \InvalidArgumentException(
                 'Parameter `path` is required when calling `customPut`.'
             );
@@ -2005,6 +2029,12 @@ class IngestionClient
                 'Parameter `authenticationID` is required when calling `deleteAuthentication`.'
             );
         }
+        // verify the required parameter 'authenticationID' is not empty
+        if (isset($authenticationID) && '' === $authenticationID) {
+            throw new \InvalidArgumentException(
+                'Parameter `authenticationID` is required when calling `deleteAuthentication`.'
+            );
+        }
 
         $resourcePath = '/1/authentications/{authenticationID}';
         $queryParameters = [];
@@ -2042,6 +2072,12 @@ class IngestionClient
     {
         // verify the required parameter 'destinationID' is set
         if (!isset($destinationID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `destinationID` is required when calling `deleteDestination`.'
+            );
+        }
+        // verify the required parameter 'destinationID' is not empty
+        if (isset($destinationID) && '' === $destinationID) {
             throw new \InvalidArgumentException(
                 'Parameter `destinationID` is required when calling `deleteDestination`.'
             );
@@ -2087,6 +2123,12 @@ class IngestionClient
                 'Parameter `sourceID` is required when calling `deleteSource`.'
             );
         }
+        // verify the required parameter 'sourceID' is not empty
+        if (isset($sourceID) && '' === $sourceID) {
+            throw new \InvalidArgumentException(
+                'Parameter `sourceID` is required when calling `deleteSource`.'
+            );
+        }
 
         $resourcePath = '/1/sources/{sourceID}';
         $queryParameters = [];
@@ -2128,6 +2170,12 @@ class IngestionClient
                 'Parameter `taskID` is required when calling `deleteTask`.'
             );
         }
+        // verify the required parameter 'taskID' is not empty
+        if (isset($taskID) && '' === $taskID) {
+            throw new \InvalidArgumentException(
+                'Parameter `taskID` is required when calling `deleteTask`.'
+            );
+        }
 
         $resourcePath = '/2/tasks/{taskID}';
         $queryParameters = [];
@@ -2150,7 +2198,7 @@ class IngestionClient
      * Delete a task (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
-     * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+     * Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
      * Required API Key ACLs:
      *  - addObject
      *  - deleteIndex
@@ -2165,6 +2213,12 @@ class IngestionClient
     {
         // verify the required parameter 'taskID' is set
         if (!isset($taskID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `taskID` is required when calling `deleteTaskV1`.'
+            );
+        }
+        // verify the required parameter 'taskID' is not empty
+        if (isset($taskID) && '' === $taskID) {
             throw new \InvalidArgumentException(
                 'Parameter `taskID` is required when calling `deleteTaskV1`.'
             );
@@ -2210,6 +2264,12 @@ class IngestionClient
                 'Parameter `transformationID` is required when calling `deleteTransformation`.'
             );
         }
+        // verify the required parameter 'transformationID' is not empty
+        if (isset($transformationID) && '' === $transformationID) {
+            throw new \InvalidArgumentException(
+                'Parameter `transformationID` is required when calling `deleteTransformation`.'
+            );
+        }
 
         $resourcePath = '/1/transformations/{transformationID}';
         $queryParameters = [];
@@ -2251,6 +2311,12 @@ class IngestionClient
                 'Parameter `taskID` is required when calling `disableTask`.'
             );
         }
+        // verify the required parameter 'taskID' is not empty
+        if (isset($taskID) && '' === $taskID) {
+            throw new \InvalidArgumentException(
+                'Parameter `taskID` is required when calling `disableTask`.'
+            );
+        }
 
         $resourcePath = '/2/tasks/{taskID}/disable';
         $queryParameters = [];
@@ -2273,7 +2339,7 @@ class IngestionClient
      * Disable a task V1 (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
-     * Disables a task using the v1 endpoint, please use `disableTask` instead.
+     * Disables a task using the v1 endpoint. Use `disableTask` instead.
      * Required API Key ACLs:
      *  - addObject
      *  - deleteIndex
@@ -2288,6 +2354,12 @@ class IngestionClient
     {
         // verify the required parameter 'taskID' is set
         if (!isset($taskID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `taskID` is required when calling `disableTaskV1`.'
+            );
+        }
+        // verify the required parameter 'taskID' is not empty
+        if (isset($taskID) && '' === $taskID) {
             throw new \InvalidArgumentException(
                 'Parameter `taskID` is required when calling `disableTaskV1`.'
             );
@@ -2333,6 +2405,12 @@ class IngestionClient
                 'Parameter `taskID` is required when calling `enableTask`.'
             );
         }
+        // verify the required parameter 'taskID' is not empty
+        if (isset($taskID) && '' === $taskID) {
+            throw new \InvalidArgumentException(
+                'Parameter `taskID` is required when calling `enableTask`.'
+            );
+        }
 
         $resourcePath = '/2/tasks/{taskID}/enable';
         $queryParameters = [];
@@ -2355,7 +2433,7 @@ class IngestionClient
      * Enable a task V1 (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
-     * Enables a task using the v1 endpoint, please use `enableTask` instead.
+     * Enables a task using the v1 endpoint. Use `enableTask` instead.
      * Required API Key ACLs:
      *  - addObject
      *  - deleteIndex
@@ -2370,6 +2448,12 @@ class IngestionClient
     {
         // verify the required parameter 'taskID' is set
         if (!isset($taskID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `taskID` is required when calling `enableTaskV1`.'
+            );
+        }
+        // verify the required parameter 'taskID' is not empty
+        if (isset($taskID) && '' === $taskID) {
             throw new \InvalidArgumentException(
                 'Parameter `taskID` is required when calling `enableTaskV1`.'
             );
@@ -2415,6 +2499,12 @@ class IngestionClient
                 'Parameter `authenticationID` is required when calling `getAuthentication`.'
             );
         }
+        // verify the required parameter 'authenticationID' is not empty
+        if (isset($authenticationID) && '' === $authenticationID) {
+            throw new \InvalidArgumentException(
+                'Parameter `authenticationID` is required when calling `getAuthentication`.'
+            );
+        }
 
         $resourcePath = '/1/authentications/{authenticationID}';
         $queryParameters = [];
@@ -2452,6 +2542,12 @@ class IngestionClient
     {
         // verify the required parameter 'destinationID' is set
         if (!isset($destinationID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `destinationID` is required when calling `getDestination`.'
+            );
+        }
+        // verify the required parameter 'destinationID' is not empty
+        if (isset($destinationID) && '' === $destinationID) {
             throw new \InvalidArgumentException(
                 'Parameter `destinationID` is required when calling `getDestination`.'
             );
@@ -2498,8 +2594,20 @@ class IngestionClient
                 'Parameter `runID` is required when calling `getEvent`.'
             );
         }
+        // verify the required parameter 'runID' is not empty
+        if (isset($runID) && '' === $runID) {
+            throw new \InvalidArgumentException(
+                'Parameter `runID` is required when calling `getEvent`.'
+            );
+        }
         // verify the required parameter 'eventID' is set
         if (!isset($eventID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `eventID` is required when calling `getEvent`.'
+            );
+        }
+        // verify the required parameter 'eventID' is not empty
+        if (isset($eventID) && '' === $eventID) {
             throw new \InvalidArgumentException(
                 'Parameter `eventID` is required when calling `getEvent`.'
             );
@@ -2554,6 +2662,12 @@ class IngestionClient
                 'Parameter `runID` is required when calling `getRun`.'
             );
         }
+        // verify the required parameter 'runID' is not empty
+        if (isset($runID) && '' === $runID) {
+            throw new \InvalidArgumentException(
+                'Parameter `runID` is required when calling `getRun`.'
+            );
+        }
 
         $resourcePath = '/1/runs/{runID}';
         $queryParameters = [];
@@ -2591,6 +2705,12 @@ class IngestionClient
     {
         // verify the required parameter 'sourceID' is set
         if (!isset($sourceID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `sourceID` is required when calling `getSource`.'
+            );
+        }
+        // verify the required parameter 'sourceID' is not empty
+        if (isset($sourceID) && '' === $sourceID) {
             throw new \InvalidArgumentException(
                 'Parameter `sourceID` is required when calling `getSource`.'
             );
@@ -2636,6 +2756,12 @@ class IngestionClient
                 'Parameter `taskID` is required when calling `getTask`.'
             );
         }
+        // verify the required parameter 'taskID' is not empty
+        if (isset($taskID) && '' === $taskID) {
+            throw new \InvalidArgumentException(
+                'Parameter `taskID` is required when calling `getTask`.'
+            );
+        }
 
         $resourcePath = '/2/tasks/{taskID}';
         $queryParameters = [];
@@ -2658,7 +2784,7 @@ class IngestionClient
      * Retrieve a task V1 (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
-     * Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+     * Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
      * Required API Key ACLs:
      *  - addObject
      *  - deleteIndex
@@ -2673,6 +2799,12 @@ class IngestionClient
     {
         // verify the required parameter 'taskID' is set
         if (!isset($taskID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `taskID` is required when calling `getTaskV1`.'
+            );
+        }
+        // verify the required parameter 'taskID' is not empty
+        if (isset($taskID) && '' === $taskID) {
             throw new \InvalidArgumentException(
                 'Parameter `taskID` is required when calling `getTaskV1`.'
             );
@@ -2714,6 +2846,12 @@ class IngestionClient
     {
         // verify the required parameter 'transformationID' is set
         if (!isset($transformationID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `transformationID` is required when calling `getTransformation`.'
+            );
+        }
+        // verify the required parameter 'transformationID' is not empty
+        if (isset($transformationID) && '' === $transformationID) {
             throw new \InvalidArgumentException(
                 'Parameter `transformationID` is required when calling `getTransformation`.'
             );
@@ -2895,6 +3033,12 @@ class IngestionClient
                 'Parameter `runID` is required when calling `listEvents`.'
             );
         }
+        // verify the required parameter 'runID' is not empty
+        if (isset($runID) && '' === $runID) {
+            throw new \InvalidArgumentException(
+                'Parameter `runID` is required when calling `listEvents`.'
+            );
+        }
 
         $resourcePath = '/1/runs/{runID}/events';
         $queryParameters = [];
@@ -2962,8 +3106,8 @@ class IngestionClient
      * @param string $taskID         Task ID for filtering the list of task runs. (optional)
      * @param array  $sort           Property by which to sort the list of task runs. (optional)
      * @param array  $order          Sort order of the response, ascending or descending. (optional)
-     * @param string $startDate      Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used. (optional)
-     * @param string $endDate        Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used. (optional)
+     * @param string $startDate      Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used. (optional)
+     * @param string $endDate        Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used. (optional)
      * @param array  $requestOptions Request options
      *
      * @return AlgoliaResponse
@@ -3172,7 +3316,7 @@ class IngestionClient
      * List tasks V1 (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
-     * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+     * Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
      * Required API Key ACLs:
      *  - addObject
      *  - deleteIndex
@@ -3324,6 +3468,12 @@ class IngestionClient
                 'Parameter `indexName` is required when calling `push`.'
             );
         }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `push`.'
+            );
+        }
         // verify the required parameter 'pushTaskPayload' is set
         if (!isset($pushTaskPayload)) {
             throw new \InvalidArgumentException(
@@ -3391,6 +3541,12 @@ class IngestionClient
                 'Parameter `taskID` is required when calling `pushTask`.'
             );
         }
+        // verify the required parameter 'taskID' is not empty
+        if (isset($taskID) && '' === $taskID) {
+            throw new \InvalidArgumentException(
+                'Parameter `taskID` is required when calling `pushTask`.'
+            );
+        }
         // verify the required parameter 'pushTaskPayload' is set
         if (!isset($pushTaskPayload)) {
             throw new \InvalidArgumentException(
@@ -3453,6 +3609,12 @@ class IngestionClient
                 'Parameter `taskID` is required when calling `replaceTask`.'
             );
         }
+        // verify the required parameter 'taskID' is not empty
+        if (isset($taskID) && '' === $taskID) {
+            throw new \InvalidArgumentException(
+                'Parameter `taskID` is required when calling `replaceTask`.'
+            );
+        }
         // verify the required parameter 'taskReplace' is set
         if (!isset($taskReplace)) {
             throw new \InvalidArgumentException(
@@ -3501,6 +3663,12 @@ class IngestionClient
                 'Parameter `sourceID` is required when calling `runSource`.'
             );
         }
+        // verify the required parameter 'sourceID' is not empty
+        if (isset($sourceID) && '' === $sourceID) {
+            throw new \InvalidArgumentException(
+                'Parameter `sourceID` is required when calling `runSource`.'
+            );
+        }
 
         $resourcePath = '/1/sources/{sourceID}/run';
         $queryParameters = [];
@@ -3543,6 +3711,12 @@ class IngestionClient
                 'Parameter `taskID` is required when calling `runTask`.'
             );
         }
+        // verify the required parameter 'taskID' is not empty
+        if (isset($taskID) && '' === $taskID) {
+            throw new \InvalidArgumentException(
+                'Parameter `taskID` is required when calling `runTask`.'
+            );
+        }
 
         $resourcePath = '/2/tasks/{taskID}/run';
         $queryParameters = [];
@@ -3565,7 +3739,7 @@ class IngestionClient
      * Run a task V1 (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
-     * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of task runs with the observability endpoints.
+     * Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs with the observability endpoints.
      * Required API Key ACLs:
      *  - addObject
      *  - deleteIndex
@@ -3581,6 +3755,12 @@ class IngestionClient
     {
         // verify the required parameter 'taskID' is set
         if (!isset($taskID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `taskID` is required when calling `runTaskV1`.'
+            );
+        }
+        // verify the required parameter 'taskID' is not empty
+        if (isset($taskID) && '' === $taskID) {
             throw new \InvalidArgumentException(
                 'Parameter `taskID` is required when calling `runTaskV1`.'
             );
@@ -3735,7 +3915,7 @@ class IngestionClient
      * Search for tasks V1 (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
-     * Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+     * Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
      * Required API Key ACLs:
      *  - addObject
      *  - deleteIndex
@@ -3814,6 +3994,12 @@ class IngestionClient
     {
         // verify the required parameter 'sourceID' is set
         if (!isset($sourceID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.'
+            );
+        }
+        // verify the required parameter 'sourceID' is not empty
+        if (isset($sourceID) && '' === $sourceID) {
             throw new \InvalidArgumentException(
                 'Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.'
             );
@@ -3902,6 +4088,12 @@ class IngestionClient
                 'Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`.'
             );
         }
+        // verify the required parameter 'transformationID' is not empty
+        if (isset($transformationID) && '' === $transformationID) {
+            throw new \InvalidArgumentException(
+                'Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`.'
+            );
+        }
         // verify the required parameter 'transformationTry' is set
         if (!isset($transformationTry)) {
             throw new \InvalidArgumentException(
@@ -3946,6 +4138,12 @@ class IngestionClient
     {
         // verify the required parameter 'authenticationID' is set
         if (!isset($authenticationID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `authenticationID` is required when calling `updateAuthentication`.'
+            );
+        }
+        // verify the required parameter 'authenticationID' is not empty
+        if (isset($authenticationID) && '' === $authenticationID) {
             throw new \InvalidArgumentException(
                 'Parameter `authenticationID` is required when calling `updateAuthentication`.'
             );
@@ -3998,6 +4196,12 @@ class IngestionClient
                 'Parameter `destinationID` is required when calling `updateDestination`.'
             );
         }
+        // verify the required parameter 'destinationID' is not empty
+        if (isset($destinationID) && '' === $destinationID) {
+            throw new \InvalidArgumentException(
+                'Parameter `destinationID` is required when calling `updateDestination`.'
+            );
+        }
         // verify the required parameter 'destinationUpdate' is set
         if (!isset($destinationUpdate)) {
             throw new \InvalidArgumentException(
@@ -4042,6 +4246,12 @@ class IngestionClient
     {
         // verify the required parameter 'sourceID' is set
         if (!isset($sourceID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `sourceID` is required when calling `updateSource`.'
+            );
+        }
+        // verify the required parameter 'sourceID' is not empty
+        if (isset($sourceID) && '' === $sourceID) {
             throw new \InvalidArgumentException(
                 'Parameter `sourceID` is required when calling `updateSource`.'
             );
@@ -4094,6 +4304,12 @@ class IngestionClient
                 'Parameter `taskID` is required when calling `updateTask`.'
             );
         }
+        // verify the required parameter 'taskID' is not empty
+        if (isset($taskID) && '' === $taskID) {
+            throw new \InvalidArgumentException(
+                'Parameter `taskID` is required when calling `updateTask`.'
+            );
+        }
         // verify the required parameter 'taskUpdate' is set
         if (!isset($taskUpdate)) {
             throw new \InvalidArgumentException(
@@ -4122,7 +4338,7 @@ class IngestionClient
      * Update a task V1 (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
-     * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+     * Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
      * Required API Key ACLs:
      *  - addObject
      *  - deleteIndex
@@ -4138,6 +4354,12 @@ class IngestionClient
     {
         // verify the required parameter 'taskID' is set
         if (!isset($taskID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `taskID` is required when calling `updateTaskV1`.'
+            );
+        }
+        // verify the required parameter 'taskID' is not empty
+        if (isset($taskID) && '' === $taskID) {
             throw new \InvalidArgumentException(
                 'Parameter `taskID` is required when calling `updateTaskV1`.'
             );
@@ -4186,6 +4408,12 @@ class IngestionClient
     {
         // verify the required parameter 'transformationID' is set
         if (!isset($transformationID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `transformationID` is required when calling `updateTransformation`.'
+            );
+        }
+        // verify the required parameter 'transformationID' is not empty
+        if (isset($transformationID) && '' === $transformationID) {
             throw new \InvalidArgumentException(
                 'Parameter `transformationID` is required when calling `updateTransformation`.'
             );
@@ -4273,6 +4501,12 @@ class IngestionClient
                 'Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.'
             );
         }
+        // verify the required parameter 'sourceID' is not empty
+        if (isset($sourceID) && '' === $sourceID) {
+            throw new \InvalidArgumentException(
+                'Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.'
+            );
+        }
         // verify the required parameter 'sourceUpdate' is set
         if (!isset($sourceUpdate)) {
             throw new \InvalidArgumentException(
@@ -4310,13 +4544,14 @@ class IngestionClient
     /**
      * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
      *
-     * @param string $indexName          the `indexName` to replace `objects` in
-     * @param array  $objects            the array of `objects` to store in the given Algolia `indexName`
-     * @param array  $action             the `batch` `action` to perform on the given array of `objects`, defaults to `addObject`
-     * @param bool   $waitForTasks       whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
-     * @param array  $batchSize          The size of the chunk of `objects`. The number of `push` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
-     * @param array  $referenceIndexName This is required when targeting an index that does not have a push connector setup (e.g. a tmp index), but you wish to attach another index's transformation to it (e.g. the source index name).
-     * @param array  $requestOptions     Request options
+     * @param string                    $indexName          the `indexName` to replace `objects` in
+     * @param array                     $objects            the array of `objects` to store in the given Algolia `indexName`
+     * @param array                     $action             the `batch` `action` to perform on the given array of `objects`, defaults to `addObject`
+     * @param bool                      $waitForTasks       whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
+     * @param array                     $batchSize          The size of the chunk of `objects`. The number of `push` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param array                     $referenceIndexName This is required when targeting an index that does not have a push connector setup (e.g. a tmp index), but you wish to attach another index's transformation to it (e.g. the source index name).
+     * @param array                     $requestOptions     Request options
+     * @param null|ChunkedHelperOptions $chunkedOptions     Optional configuration shared across chunked helpers (e.g. `maxRetries`).
      */
     public function chunkedPush(
         $indexName,
@@ -4325,8 +4560,10 @@ class IngestionClient
         $waitForTasks = true,
         $batchSize = 1000,
         $referenceIndexName = null,
-        $requestOptions = []
+        $requestOptions = [],
+        ?ChunkedHelperOptions $chunkedOptions = null
     ) {
+        $maxRetries = $chunkedOptions?->maxRetries ?? 100;
         $responses = [];
         $records = [];
         $count = 0;
@@ -4336,6 +4573,11 @@ class IngestionClient
             $waitBatchSize = $batchSize;
         }
 
+        $logger = Algolia::getLogger();
+        $totalObjects = count($objects);
+        $startTime = microtime(true);
+        $logger->info('Algolia API client: Batch operation started: '.$action.' on '.$indexName);
+
         foreach ($objects as $object) {
             $records[] = $object;
             $ok = false;
@@ -4344,15 +4586,14 @@ class IngestionClient
             if (sizeof($records) === $batchSize || $count === sizeof($objects)) {
                 $responses[] = $this->push($indexName, ['action' => $action, 'records' => $records], false, $referenceIndexName, $requestOptions);
                 $records = [];
+                $logger->info('Algolia API client: Batch progress: '.$count.'/'.$totalObjects.' objects processed');
             }
 
             if ($waitForTasks && !empty($responses) && (0 === sizeof($responses) % $waitBatchSize || $count === sizeof($objects))) {
-                $timeoutCalculation = 'Algolia\AlgoliaSearch\Support\Helpers::linearTimeout';
-
                 foreach (array_slice($responses, $offset, $waitBatchSize) as $response) {
                     $retry = 0;
 
-                    while ($retry < 50) {
+                    while ($retry < $maxRetries) {
                         try {
                             $this->getEvent($response['runID'], $response['eventID']);
 
@@ -4364,18 +4605,19 @@ class IngestionClient
                         }
 
                         ++$retry;
-                        usleep(
-                            call_user_func_array($timeoutCalculation, [$this->config->getWaitTaskTimeBeforeRetry(), $retry])
-                        );
+                        usleep(min($retry * 1500, 5000) * 1000);
                     }
 
                     if (false === $ok) {
-                        throw new ExceededRetriesException('Maximum number of retries (50) exceeded.');
+                        throw new ExceededRetriesException('Stopped waiting for the task after '.$maxRetries.' retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher $maxRetries.');
                     }
                 }
                 $offset = $offset + $waitBatchSize;
             }
         }
+
+        $durationMs = round((microtime(true) - $startTime) * 1000);
+        $logger->info('Algolia API client: Batch operation completed: '.$totalObjects.' objects in '.$durationMs.'ms');
 
         return $responses;
     }

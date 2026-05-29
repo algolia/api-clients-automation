@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct CompositionPersonalization: Codable, JSONEncodable {
@@ -36,13 +36,7 @@ public struct CompositionPersonalization: Codable, JSONEncodable {
     }
 }
 
-extension CompositionPersonalization: Equatable {
-    public static func ==(lhs: CompositionPersonalization, rhs: CompositionPersonalization) -> Bool {
-        lhs.filtersScore == rhs.filtersScore &&
-            lhs.rankingScore == rhs.rankingScore &&
-            lhs.score == rhs.score
-    }
-}
+extension CompositionPersonalization: Equatable {}
 
 extension CompositionPersonalization: Hashable {
     public func hash(into hasher: inout Hasher) {

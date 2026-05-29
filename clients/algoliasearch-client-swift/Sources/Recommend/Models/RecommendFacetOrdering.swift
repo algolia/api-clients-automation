@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Order of facet names and facet values in your UI.
@@ -31,12 +31,7 @@ public struct RecommendFacetOrdering: Codable, JSONEncodable {
     }
 }
 
-extension RecommendFacetOrdering: Equatable {
-    public static func ==(lhs: RecommendFacetOrdering, rhs: RecommendFacetOrdering) -> Bool {
-        lhs.facets == rhs.facets &&
-            lhs.values == rhs.values
-    }
-}
+extension RecommendFacetOrdering: Equatable {}
 
 extension RecommendFacetOrdering: Hashable {
     public func hash(into hasher: inout Hasher) {

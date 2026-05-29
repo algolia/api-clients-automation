@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct CompositionRankingInfo: Codable, JSONEncodable {
@@ -25,11 +25,7 @@ public struct CompositionRankingInfo: Codable, JSONEncodable {
     }
 }
 
-extension CompositionRankingInfo: Equatable {
-    public static func ==(lhs: CompositionRankingInfo, rhs: CompositionRankingInfo) -> Bool {
-        lhs.composed == rhs.composed
-    }
-}
+extension CompositionRankingInfo: Equatable {}
 
 extension CompositionRankingInfo: Hashable {
     public func hash(into hasher: inout Hasher) {

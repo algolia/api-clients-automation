@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Credentials for authenticating with Algolia.
@@ -33,12 +33,7 @@ public struct AuthAlgolia: Codable, JSONEncodable {
     }
 }
 
-extension AuthAlgolia: Equatable {
-    public static func ==(lhs: AuthAlgolia, rhs: AuthAlgolia) -> Bool {
-        lhs.appID == rhs.appID &&
-            lhs.apiKey == rhs.apiKey
-    }
-}
+extension AuthAlgolia: Equatable {}
 
 extension AuthAlgolia: Hashable {
     public func hash(into hasher: inout Hasher) {

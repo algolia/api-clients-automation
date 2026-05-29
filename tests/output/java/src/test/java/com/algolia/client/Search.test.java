@@ -213,14 +213,69 @@ class SearchClientClientTests {
       },
       new HashMap() {
         {
-          put("message", "this is a compressed body");
+          put(
+            "message",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus" +
+              " porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a," +
+              " aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at" +
+              " et enim. Donec mattis tortor at placerat pharetra. In lorem tellus," +
+              " dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus" +
+              " accumsan enim diam, a tempus est ornare quis. Interdum et malesuada" +
+              " fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac" +
+              " ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula" +
+              " vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras" +
+              " consectetur, tellus ac aliquam varius, nibh neque vestibulum neque," +
+              " eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."
+          );
         }
       }
     );
 
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this" + " is a compressed body\"}}",
+        "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"Lorem" +
+          " ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor" +
+          " leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam." +
+          " Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec" +
+          " mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui" +
+          " tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a" +
+          " tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in" +
+          " faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam" +
+          " nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor." +
+          " Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh" +
+          " neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris" +
+          " pharetra blandit sapien.\"}}",
+        json.writeValueAsString(res),
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("test the response decompression strategy")
+  void apiTest7() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6691
+          )
+        ),
+        false
+      )
+    );
+
+    Object res = client.customGet("1/test/gzip-response");
+
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"message\":\"ok decompression test server response\",\"data\":\"Lorem ipsum" +
+          " dolor sit amet, consectetur adipiscing elit.\"}",
         json.writeValueAsString(res),
         JSONCompareMode.STRICT
       )
@@ -229,7 +284,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("calls api with default read timeouts")
-  void apiTest7() {
+  void apiTest8() {
     SearchClient client = createClient();
 
     client.customGet("1/test");
@@ -240,7 +295,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("calls api with default write timeouts")
-  void apiTest8() {
+  void apiTest9() {
     SearchClient client = createClient();
 
     client.customPost("1/test");
@@ -251,7 +306,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("can handle unknown response fields")
-  void apiTest9() {
+  void apiTest10() {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
@@ -281,7 +336,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("can handle unknown response fields inside a nested oneOf")
-  void apiTest10() {
+  void apiTest11() {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
@@ -311,7 +366,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("does not retry on success")
-  void apiTest11() {
+  void apiTest12() {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
@@ -378,7 +433,7 @@ class SearchClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.34.4\\).*";
+      String regexp = "^Algolia for Java \\(4.39.0\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
@@ -772,9 +827,29 @@ class SearchClientClientTests {
   @Test
   @DisplayName("call partialUpdateObjectsWithTransformation with createIfNotExists=true")
   void partialUpdateObjectsWithTransformationTest0() {
-    SearchClient client = new SearchClient(
+    ClientOptions ingestionOptions = ClientOptions.builder()
+      .setHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6688
+          ),
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6689
+          )
+        )
+      )
+      .build();
+    TransformationOptions transformationOptions = new TransformationOptions("us", ingestionOptions);
+    SearchClient client = SearchClient.withTransformation(
       "test-app-id",
       "test-api-key",
+      transformationOptions,
       withCustomHosts(
         Arrays.asList(
           new Host(
@@ -793,7 +868,7 @@ class SearchClientClientTests {
         false
       )
     );
-    client.setTransformationRegion("us");
+
     assertDoesNotThrow(() -> {
       List res = client.partialUpdateObjectsWithTransformation(
         "cts_e2e_partialUpdateObjectsWithTransformation_java",
@@ -1018,9 +1093,23 @@ class SearchClientClientTests {
   @Test
   @DisplayName("call replaceAllObjectsWithTransformation without error")
   void replaceAllObjectsWithTransformationTest0() {
-    SearchClient client = new SearchClient(
+    ClientOptions ingestionOptions = ClientOptions.builder()
+      .setHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6690
+          )
+        )
+      )
+      .build();
+    TransformationOptions transformationOptions = new TransformationOptions("us", ingestionOptions);
+    SearchClient client = SearchClient.withTransformation(
       "test-app-id",
       "test-api-key",
+      transformationOptions,
       withCustomHosts(
         Arrays.asList(
           new Host(
@@ -1033,7 +1122,7 @@ class SearchClientClientTests {
         false
       )
     );
-    client.setTransformationRegion("us");
+
     assertDoesNotThrow(() -> {
       ReplaceAllObjectsWithTransformationResponse res = client.replaceAllObjectsWithTransformation(
         "cts_e2e_replace_all_objects_with_transformation_java",
@@ -1279,9 +1368,29 @@ class SearchClientClientTests {
   @Test
   @DisplayName("call saveObjectsWithTransformation without error")
   void saveObjectsWithTransformationTest0() {
-    SearchClient client = new SearchClient(
+    ClientOptions ingestionOptions = ClientOptions.builder()
+      .setHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6688
+          ),
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6689
+          )
+        )
+      )
+      .build();
+    TransformationOptions transformationOptions = new TransformationOptions("us", ingestionOptions);
+    SearchClient client = SearchClient.withTransformation(
       "test-app-id",
       "test-api-key",
+      transformationOptions,
       withCustomHosts(
         Arrays.asList(
           new Host(
@@ -1300,7 +1409,7 @@ class SearchClientClientTests {
         false
       )
     );
-    client.setTransformationRegion("us");
+
     assertDoesNotThrow(() -> {
       List res = client.saveObjectsWithTransformation(
         "cts_e2e_saveObjectsWithTransformation_java",

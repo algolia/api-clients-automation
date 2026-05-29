@@ -21,6 +21,15 @@ public interface Trigger {
     @Override
     public Trigger deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
+      // deserialize ScheduleTrigger
+      if (tree.isObject() && tree.has("cron") && tree.has("nextRun")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(ScheduleTrigger.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf ScheduleTrigger (error: " + e.getMessage() + ") (type: ScheduleTrigger)");
+        }
+      }
       // deserialize OnDemandTrigger
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -28,15 +37,6 @@ public interface Trigger {
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf OnDemandTrigger (error: " + e.getMessage() + ") (type: OnDemandTrigger)");
-        }
-      }
-      // deserialize ScheduleTrigger
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(ScheduleTrigger.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf ScheduleTrigger (error: " + e.getMessage() + ") (type: ScheduleTrigger)");
         }
       }
       // deserialize SubscriptionTrigger

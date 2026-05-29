@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Credentials for authenticating with OAuth 2.0.
@@ -14,13 +14,23 @@ public struct AuthOAuthPartial: Codable, JSONEncodable {
     public var clientId: String?
     /// Client secret. This field is `null` in the API response.
     public var clientSecret: String?
+    /// Authorization code. Used during an `authorization_code` grant type flow, to request an access_token when
+    /// creating/updating the authentication. This field is not returned in the API response.
+    public var code: String?
     /// OAuth scope.
     public var scope: String?
 
-    public init(url: String? = nil, clientId: String? = nil, clientSecret: String? = nil, scope: String? = nil) {
+    public init(
+        url: String? = nil,
+        clientId: String? = nil,
+        clientSecret: String? = nil,
+        code: String? = nil,
+        scope: String? = nil
+    ) {
         self.url = url
         self.clientId = clientId
         self.clientSecret = clientSecret
+        self.code = code
         self.scope = scope
     }
 
@@ -28,6 +38,7 @@ public struct AuthOAuthPartial: Codable, JSONEncodable {
         case url
         case clientId = "client_id"
         case clientSecret = "client_secret"
+        case code
         case scope
     }
 
@@ -38,24 +49,19 @@ public struct AuthOAuthPartial: Codable, JSONEncodable {
         try container.encodeIfPresent(self.url, forKey: .url)
         try container.encodeIfPresent(self.clientId, forKey: .clientId)
         try container.encodeIfPresent(self.clientSecret, forKey: .clientSecret)
+        try container.encodeIfPresent(self.code, forKey: .code)
         try container.encodeIfPresent(self.scope, forKey: .scope)
     }
 }
 
-extension AuthOAuthPartial: Equatable {
-    public static func ==(lhs: AuthOAuthPartial, rhs: AuthOAuthPartial) -> Bool {
-        lhs.url == rhs.url &&
-            lhs.clientId == rhs.clientId &&
-            lhs.clientSecret == rhs.clientSecret &&
-            lhs.scope == rhs.scope
-    }
-}
+extension AuthOAuthPartial: Equatable {}
 
 extension AuthOAuthPartial: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.url?.hashValue)
         hasher.combine(self.clientId?.hashValue)
         hasher.combine(self.clientSecret?.hashValue)
+        hasher.combine(self.code?.hashValue)
         hasher.combine(self.scope?.hashValue)
     }
 }

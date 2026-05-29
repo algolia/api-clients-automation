@@ -12,6 +12,7 @@ class TestClientCompositionClient < Test::Unit::TestCase
 
       {requester: Algolia::Transport::EchoRequester.new}
     )
+
     req = client.custom_get_with_http_info("test")
     assert_equal("test-app-id-dsn.algolia.net", req.host.url)
   end
@@ -25,6 +26,7 @@ class TestClientCompositionClient < Test::Unit::TestCase
 
       {requester: Algolia::Transport::EchoRequester.new}
     )
+
     req = client.custom_post_with_http_info("test")
     assert_equal("test-app-id.algolia.net", req.host.url)
   end
@@ -47,9 +49,49 @@ class TestClientCompositionClient < Test::Unit::TestCase
         compression_type: "gzip"
       )
     )
-    req = client.custom_post("1/test/gzip", {}, {message: "this is a compressed body"})
+
+    req = client.custom_post(
+      "1/test/gzip",
+      {},
+      {
+        message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."
+      }
+    )
     assert_equal(
-      {:"message" => "ok compression test server response", :"body" => {:"message" => "this is a compressed body"}},
+      {
+        :"message" => "ok compression test server response",
+        :"body" => {
+          :"message" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."
+        }
+      },
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
+  end
+
+  # test the response decompression strategy
+  def test_api3
+    client = Algolia::CompositionClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6691,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "compositionClient"
+      )
+    )
+
+    req = client.custom_get("1/test/gzip-response")
+    assert_equal(
+      {
+        :"message" => "ok decompression test server response",
+        :"data" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      },
       req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
     )
   end
@@ -79,7 +121,7 @@ class TestClientCompositionClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.34.4\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.40.0\).*/))
   end
 
   # switch API key
@@ -99,6 +141,7 @@ class TestClientCompositionClient < Test::Unit::TestCase
         "compositionClient"
       )
     )
+
     req = client.custom_get("check-api-key/1")
     assert_equal({:"headerAPIKeyValue" => "test-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
     client.set_client_api_key("updated-api-key")

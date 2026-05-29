@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Used to add metadata to the results of the injectedItem.
@@ -26,11 +26,7 @@ public struct InjectedItemMetadata: Codable, JSONEncodable {
     }
 }
 
-extension InjectedItemMetadata: Equatable {
-    public static func ==(lhs: InjectedItemMetadata, rhs: InjectedItemMetadata) -> Bool {
-        lhs.hits == rhs.hits
-    }
-}
+extension InjectedItemMetadata: Equatable {}
 
 extension InjectedItemMetadata: Hashable {
     public func hash(into hasher: inout Hasher) {

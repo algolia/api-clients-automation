@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct UserHighlightResult: Codable, JSONEncodable {
@@ -29,12 +29,7 @@ public struct UserHighlightResult: Codable, JSONEncodable {
     }
 }
 
-extension UserHighlightResult: Equatable {
-    public static func ==(lhs: UserHighlightResult, rhs: UserHighlightResult) -> Bool {
-        lhs.userID == rhs.userID &&
-            lhs.clusterName == rhs.clusterName
-    }
-}
+extension UserHighlightResult: Equatable {}
 
 extension UserHighlightResult: Hashable {
     public func hash(into hasher: inout Hasher) {

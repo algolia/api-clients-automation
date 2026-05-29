@@ -1,15 +1,11 @@
-// @ts-ignore
-import { createRule } from 'eslint-plugin-yml/lib/utils';
+import type { Rule } from 'eslint';
 
 import { isPairWithKey, isPairWithValue } from '../utils.js';
 
-export const hasType = createRule('hasType', {
+export const hasType: Rule.RuleModule = {
   meta: {
     docs: {
       description: '`type` must be specified with `properties` or `items`',
-      categories: null,
-      extensionRule: false,
-      layout: false,
     },
     messages: {
       hasType: '`type` must be specified with `properties` or `items`',
@@ -18,14 +14,17 @@ export const hasType = createRule('hasType', {
     schema: [],
   },
   create(context) {
-    if (!context.getSourceCode().parserServices?.isYAML) {
-      return {};
-    }
-
     return {
       YAMLPair(node): void {
         if (isPairWithKey(node.parent.parent, 'properties')) {
           return; // allow everything in properties
+        }
+
+        // allow everything in example
+        for (let parentNode = node.parent; parentNode; parentNode = parentNode.parent) {
+          if (isPairWithKey(parentNode, 'example')) {
+            return;
+          }
         }
 
         const type = node.parent.pairs.find((pair) => isPairWithKey(pair, 'type'));
@@ -45,4 +44,4 @@ export const hasType = createRule('hasType', {
       },
     };
   },
-});
+};

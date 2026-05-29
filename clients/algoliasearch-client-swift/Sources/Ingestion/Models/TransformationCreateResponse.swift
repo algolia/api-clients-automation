@@ -2,15 +2,15 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// API response for creating a transformation.
 public struct TransformationCreateResponse: Codable, JSONEncodable {
     /// Universally unique identifier (UUID) of a transformation.
     public var transformationID: String
-    /// Date of creation in RFC 3339 format.
+    /// Date and time when the resource was created, in RFC 3339 format.
     public var createdAt: String
 
     public init(transformationID: String, createdAt: String) {
@@ -32,12 +32,7 @@ public struct TransformationCreateResponse: Codable, JSONEncodable {
     }
 }
 
-extension TransformationCreateResponse: Equatable {
-    public static func ==(lhs: TransformationCreateResponse, rhs: TransformationCreateResponse) -> Bool {
-        lhs.transformationID == rhs.transformationID &&
-            lhs.createdAt == rhs.createdAt
-    }
-}
+extension TransformationCreateResponse: Equatable {}
 
 extension TransformationCreateResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

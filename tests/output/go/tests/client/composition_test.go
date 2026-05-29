@@ -56,6 +56,7 @@ func TestCompositionapi0(t *testing.T) {
 		},
 	}
 	client, err = composition.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"test"))
@@ -88,6 +89,7 @@ func TestCompositionapi1(t *testing.T) {
 		},
 	}
 	client, err = composition.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"test"))
@@ -121,13 +123,58 @@ func TestCompositionapi2(t *testing.T) {
 		},
 	}
 	client, err = composition.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"1/test/gzip").WithParameters(map[string]any{}).WithBody(map[string]any{"message": "this is a compressed body"}))
+		"1/test/gzip",
+	).WithParameters(map[string]any{}).WithBody(map[string]any{"message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."}))
 	require.NoError(t, err)
 	rawBody, err := json.Marshal(res)
 	require.NoError(t, err)
-	require.JSONEq(t, `{"message":"ok compression test server response","body":{"message":"this is a compressed body"}}`, string(rawBody))
+	require.JSONEq(
+		t,
+		`{"message":"ok compression test server response","body":{"message":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."}}`,
+		string(rawBody),
+	)
+}
+
+// test the response decompression strategy.
+func TestCompositionapi3(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *composition.APIClient
+		cfg    composition.CompositionConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = composition.CompositionConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6691", call.IsReadWrite)},
+		},
+	}
+	client, err = composition.NewClientWithConfig(cfg)
+
+	require.NoError(t, err)
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
+		"1/test/gzip-response"))
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(
+		t,
+		`{"message":"ok decompression test server response","data":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}`,
+		string(rawBody),
+	)
 }
 
 // calls api with correct user agent.
@@ -163,7 +210,7 @@ func TestCompositioncommonApi1(t *testing.T) {
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, `^Algolia for Go \(4.35.0\).*`, echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.40.0\).*`, echo.Header.Get("User-Agent"))
 }
 
 // switch API key.
@@ -191,6 +238,7 @@ func TestCompositionsetClientApiKey0(t *testing.T) {
 		},
 	}
 	client, err = composition.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct HitRankingInfo: Codable, JSONEncodable {
@@ -104,24 +104,7 @@ public struct HitRankingInfo: Codable, JSONEncodable {
     }
 }
 
-extension HitRankingInfo: Equatable {
-    public static func ==(lhs: HitRankingInfo, rhs: HitRankingInfo) -> Bool {
-        lhs.filters == rhs.filters &&
-            lhs.firstMatchedWord == rhs.firstMatchedWord &&
-            lhs.geoDistance == rhs.geoDistance &&
-            lhs.geoPrecision == rhs.geoPrecision &&
-            lhs.matchedGeoLocation == rhs.matchedGeoLocation &&
-            lhs.personalization == rhs.personalization &&
-            lhs.nbExactWords == rhs.nbExactWords &&
-            lhs.nbTypos == rhs.nbTypos &&
-            lhs.promoted == rhs.promoted &&
-            lhs.proximityDistance == rhs.proximityDistance &&
-            lhs.userScore == rhs.userScore &&
-            lhs.words == rhs.words &&
-            lhs.promotedByReRanking == rhs.promotedByReRanking &&
-            lhs.composed == rhs.composed
-    }
-}
+extension HitRankingInfo: Equatable {}
 
 extension HitRankingInfo: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -1,8 +1,8 @@
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 // >IMPORT
-import Search
+import AlgoliaSearch
 
 // IMPORT<
 
@@ -3571,6 +3571,30 @@ final class SearchClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the search method.
+    ///
+    /// withQueryCategorization
+    func snippetForSearch16() async throws {
+        // >SEPARATOR search withQueryCategorization
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response: SearchResponses<Hit> = try await client
+            .search(searchMethodParams: SearchMethodParams(requests: [SearchQuery.searchForHits(SearchForHits(
+                query: "sofa",
+                indexName: "<YOUR_INDEX_NAME>",
+                extensions: SearchExtensions(queryCategorization: SearchExtensionsQueryCategorization(
+                    enableCategoriesRetrieval: true,
+                    enableAutoFiltering: false
+                ))
+            ))]))
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
     /// Snippet for the searchDictionaryEntries method.
     ///
     /// get searchDictionaryEntries results with minimal parameters
@@ -3833,8 +3857,54 @@ final class SearchClientSnippet {
 
     /// Snippet for the searchSingleIndex method.
     ///
-    /// filters boolean
+    /// customRankingWithoutCategories
     func snippetForSearchSingleIndex7() async throws {
+        // >SEPARATOR searchSingleIndex customRankingWithoutCategories
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response: SearchResponse<Hit> = try await client.searchSingleIndex(
+            indexName: "<YOUR_INDEX_NAME>",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "User search query",
+                filters: "ranked_category:none",
+                facetingAfterDistinct: true
+            ))
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the searchSingleIndex method.
+    ///
+    /// customRankingWithCategories
+    func snippetForSearchSingleIndex8() async throws {
+        // >SEPARATOR searchSingleIndex customRankingWithCategories
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response: SearchResponse<Hit> = try await client.searchSingleIndex(
+            indexName: "<YOUR_INDEX_NAME>",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "User search query",
+                filters: "category:{{currentCategory}} AND (ranked_category:{{currentCategory}} OR ranked_category:none)",
+                facetingAfterDistinct: true
+            ))
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the searchSingleIndex method.
+    ///
+    /// filters boolean
+    func snippetForSearchSingleIndex9() async throws {
         // >SEPARATOR searchSingleIndex filters boolean
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -3854,7 +3924,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// distinct
-    func snippetForSearchSingleIndex8() async throws {
+    func snippetForSearchSingleIndex10() async throws {
         // >SEPARATOR searchSingleIndex distinct
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -3874,7 +3944,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// filtersNumeric
-    func snippetForSearchSingleIndex9() async throws {
+    func snippetForSearchSingleIndex11() async throws {
         // >SEPARATOR searchSingleIndex filtersNumeric
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -3893,7 +3963,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// filtersTimestamp
-    func snippetForSearchSingleIndex10() async throws {
+    func snippetForSearchSingleIndex12() async throws {
         // >SEPARATOR searchSingleIndex filtersTimestamp
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -3914,8 +3984,32 @@ final class SearchClientSnippet {
 
     /// Snippet for the searchSingleIndex method.
     ///
+    /// filtersWithScores
+    func snippetForSearchSingleIndex13() async throws {
+        // >SEPARATOR searchSingleIndex filtersWithScores
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response: SearchResponse<Hit> = try await client.searchSingleIndex(
+            indexName: "<YOUR_INDEX_NAME>",
+            searchParams: SearchSearchParams
+                .searchSearchParamsObject(
+                    SearchSearchParamsObject(
+                        filters: "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)"
+                    )
+                )
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the searchSingleIndex method.
+    ///
     /// filtersSumOrFiltersScoresFalse
-    func snippetForSearchSingleIndex11() async throws {
+    func snippetForSearchSingleIndex14() async throws {
         // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresFalse
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -3937,7 +4031,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// filtersSumOrFiltersScoresTrue
-    func snippetForSearchSingleIndex12() async throws {
+    func snippetForSearchSingleIndex15() async throws {
         // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresTrue
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -3959,7 +4053,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// filtersStephenKing
-    func snippetForSearchSingleIndex13() async throws {
+    func snippetForSearchSingleIndex16() async throws {
         // >SEPARATOR searchSingleIndex filtersStephenKing
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -3979,7 +4073,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// filtersNotTags
-    func snippetForSearchSingleIndex14() async throws {
+    func snippetForSearchSingleIndex17() async throws {
         // >SEPARATOR searchSingleIndex filtersNotTags
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4000,8 +4094,49 @@ final class SearchClientSnippet {
 
     /// Snippet for the searchSingleIndex method.
     ///
+    /// filtersTheNotTags
+    func snippetForSearchSingleIndex18() async throws {
+        // >SEPARATOR searchSingleIndex filtersTheNotTags
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response: SearchResponse<Hit> = try await client.searchSingleIndex(
+            indexName: "<YOUR_INDEX_NAME>",
+            searchParams: SearchSearchParams
+                .searchSearchParamsObject(SearchSearchParamsObject(filters: "NOT _tags:non-fiction"))
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the searchSingleIndex method.
+    ///
+    /// filtersNumericGreaterThan
+    func snippetForSearchSingleIndex19() async throws {
+        // >SEPARATOR searchSingleIndex filtersNumericGreaterThan
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response: SearchResponse<Hit> = try await client.searchSingleIndex(
+            indexName: "<YOUR_INDEX_NAME>",
+            searchParams: SearchSearchParams
+                .searchSearchParamsObject(SearchSearchParamsObject(numericFilters: SearchNumericFilters
+                        .string("price>20")))
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the searchSingleIndex method.
+    ///
     /// facetFiltersList
-    func snippetForSearchSingleIndex15() async throws {
+    func snippetForSearchSingleIndex20() async throws {
         // >SEPARATOR searchSingleIndex facetFiltersList
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4028,7 +4163,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// facetFiltersBook
-    func snippetForSearchSingleIndex16() async throws {
+    func snippetForSearchSingleIndex21() async throws {
         // >SEPARATOR searchSingleIndex facetFiltersBook
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4050,7 +4185,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// facetFiltersAND
-    func snippetForSearchSingleIndex17() async throws {
+    func snippetForSearchSingleIndex22() async throws {
         // >SEPARATOR searchSingleIndex facetFiltersAND
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4075,7 +4210,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// facetFiltersOR
-    func snippetForSearchSingleIndex18() async throws {
+    func snippetForSearchSingleIndex23() async throws {
         // >SEPARATOR searchSingleIndex facetFiltersOR
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4101,7 +4236,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// facetFiltersCombined
-    func snippetForSearchSingleIndex19() async throws {
+    func snippetForSearchSingleIndex24() async throws {
         // >SEPARATOR searchSingleIndex facetFiltersCombined
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4129,7 +4264,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// facetFiltersNeg
-    func snippetForSearchSingleIndex20() async throws {
+    func snippetForSearchSingleIndex25() async throws {
         // >SEPARATOR searchSingleIndex facetFiltersNeg
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4150,7 +4285,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// filtersAndFacetFilters
-    func snippetForSearchSingleIndex21() async throws {
+    func snippetForSearchSingleIndex26() async throws {
         // >SEPARATOR searchSingleIndex filtersAndFacetFilters
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4173,7 +4308,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// facet author genre
-    func snippetForSearchSingleIndex22() async throws {
+    func snippetForSearchSingleIndex27() async throws {
         // >SEPARATOR searchSingleIndex facet author genre
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4195,7 +4330,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// facet wildcard
-    func snippetForSearchSingleIndex23() async throws {
+    func snippetForSearchSingleIndex28() async throws {
         // >SEPARATOR searchSingleIndex facet wildcard
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4214,7 +4349,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// maxValuesPerFacet
-    func snippetForSearchSingleIndex24() async throws {
+    func snippetForSearchSingleIndex29() async throws {
         // >SEPARATOR searchSingleIndex maxValuesPerFacet
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4233,7 +4368,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// aroundLatLng
-    func snippetForSearchSingleIndex25() async throws {
+    func snippetForSearchSingleIndex30() async throws {
         // >SEPARATOR searchSingleIndex aroundLatLng
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4253,7 +4388,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// aroundLatLngViaIP
-    func snippetForSearchSingleIndex26() async throws {
+    func snippetForSearchSingleIndex31() async throws {
         // >SEPARATOR searchSingleIndex aroundLatLngViaIP
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4272,7 +4407,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// aroundRadius
-    func snippetForSearchSingleIndex27() async throws {
+    func snippetForSearchSingleIndex32() async throws {
         // >SEPARATOR searchSingleIndex aroundRadius
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4294,7 +4429,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// insideBoundingBox
-    func snippetForSearchSingleIndex28() async throws {
+    func snippetForSearchSingleIndex33() async throws {
         // >SEPARATOR searchSingleIndex insideBoundingBox
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4320,7 +4455,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// insidePolygon
-    func snippetForSearchSingleIndex29() async throws {
+    func snippetForSearchSingleIndex34() async throws {
         // >SEPARATOR searchSingleIndex insidePolygon
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4352,7 +4487,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// optionalFilters
-    func snippetForSearchSingleIndex30() async throws {
+    func snippetForSearchSingleIndex35() async throws {
         // >SEPARATOR searchSingleIndex optionalFilters
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4373,7 +4508,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// optionalFiltersMany
-    func snippetForSearchSingleIndex31() async throws {
+    func snippetForSearchSingleIndex36() async throws {
         // >SEPARATOR searchSingleIndex optionalFiltersMany
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4398,7 +4533,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// optionalFiltersSimple
-    func snippetForSearchSingleIndex32() async throws {
+    func snippetForSearchSingleIndex37() async throws {
         // >SEPARATOR searchSingleIndex optionalFiltersSimple
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4422,7 +4557,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// restrictSearchableAttributes
-    func snippetForSearchSingleIndex33() async throws {
+    func snippetForSearchSingleIndex38() async throws {
         // >SEPARATOR searchSingleIndex restrictSearchableAttributes
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4441,8 +4576,30 @@ final class SearchClientSnippet {
 
     /// Snippet for the searchSingleIndex method.
     ///
+    /// restrictSearchableAttributesWolf
+    func snippetForSearchSingleIndex39() async throws {
+        // >SEPARATOR searchSingleIndex restrictSearchableAttributesWolf
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response: SearchResponse<Hit> = try await client.searchSingleIndex(
+            indexName: "<YOUR_INDEX_NAME>",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "wolf",
+                restrictSearchableAttributes: ["title_fr"]
+            ))
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the searchSingleIndex method.
+    ///
     /// getRankingInfo
-    func snippetForSearchSingleIndex34() async throws {
+    func snippetForSearchSingleIndex40() async throws {
         // >SEPARATOR searchSingleIndex getRankingInfo
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4461,7 +4618,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// clickAnalytics
-    func snippetForSearchSingleIndex35() async throws {
+    func snippetForSearchSingleIndex41() async throws {
         // >SEPARATOR searchSingleIndex clickAnalytics
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4480,7 +4637,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// clickAnalyticsUserToken
-    func snippetForSearchSingleIndex36() async throws {
+    func snippetForSearchSingleIndex42() async throws {
         // >SEPARATOR searchSingleIndex clickAnalyticsUserToken
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4502,7 +4659,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// enablePersonalization
-    func snippetForSearchSingleIndex37() async throws {
+    func snippetForSearchSingleIndex43() async throws {
         // >SEPARATOR searchSingleIndex enablePersonalization
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4524,7 +4681,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// userToken
-    func snippetForSearchSingleIndex38() async throws {
+    func snippetForSearchSingleIndex44() async throws {
         // >SEPARATOR searchSingleIndex userToken
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4543,7 +4700,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// userToken1234
-    func snippetForSearchSingleIndex39() async throws {
+    func snippetForSearchSingleIndex45() async throws {
         // >SEPARATOR searchSingleIndex userToken1234
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4565,7 +4722,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// analyticsTag
-    func snippetForSearchSingleIndex40() async throws {
+    func snippetForSearchSingleIndex46() async throws {
         // >SEPARATOR searchSingleIndex analyticsTag
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4585,7 +4742,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// facetFiltersUsers
-    func snippetForSearchSingleIndex41() async throws {
+    func snippetForSearchSingleIndex47() async throws {
         // >SEPARATOR searchSingleIndex facetFiltersUsers
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4609,7 +4766,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// buildTheQuery
-    func snippetForSearchSingleIndex42() async throws {
+    func snippetForSearchSingleIndex48() async throws {
         // >SEPARATOR searchSingleIndex buildTheQuery
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4632,7 +4789,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// attributesToHighlightOverride
-    func snippetForSearchSingleIndex43() async throws {
+    func snippetForSearchSingleIndex49() async throws {
         // >SEPARATOR searchSingleIndex attributesToHighlightOverride
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4654,7 +4811,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// disableTypoToleranceOnAttributes
-    func snippetForSearchSingleIndex44() async throws {
+    func snippetForSearchSingleIndex50() async throws {
         // >SEPARATOR searchSingleIndex disableTypoToleranceOnAttributes
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4676,7 +4833,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// search query
-    func snippetForSearchSingleIndex45() async throws {
+    func snippetForSearchSingleIndex51() async throws {
         // >SEPARATOR searchSingleIndex search query
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4695,7 +4852,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// search_everything
-    func snippetForSearchSingleIndex46() async throws {
+    func snippetForSearchSingleIndex52() async throws {
         // >SEPARATOR searchSingleIndex search_everything
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4714,7 +4871,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// api_filtering_range_example
-    func snippetForSearchSingleIndex47() async throws {
+    func snippetForSearchSingleIndex53() async throws {
         // >SEPARATOR searchSingleIndex api_filtering_range_example
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4736,7 +4893,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// similarQuery
-    func snippetForSearchSingleIndex48() async throws {
+    func snippetForSearchSingleIndex54() async throws {
         // >SEPARATOR searchSingleIndex similarQuery
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4759,7 +4916,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_retrievable_attributes
-    func snippetForSearchSingleIndex49() async throws {
+    func snippetForSearchSingleIndex55() async throws {
         // >SEPARATOR searchSingleIndex override_retrievable_attributes
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4781,7 +4938,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// restrict_searchable_attributes
-    func snippetForSearchSingleIndex50() async throws {
+    func snippetForSearchSingleIndex56() async throws {
         // >SEPARATOR searchSingleIndex restrict_searchable_attributes
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4803,7 +4960,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_default_relevancy
-    func snippetForSearchSingleIndex51() async throws {
+    func snippetForSearchSingleIndex57() async throws {
         // >SEPARATOR searchSingleIndex override_default_relevancy
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4825,7 +4982,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// apply_filters
-    func snippetForSearchSingleIndex52() async throws {
+    func snippetForSearchSingleIndex58() async throws {
         // >SEPARATOR searchSingleIndex apply_filters
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4847,7 +5004,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// apply_all_filters
-    func snippetForSearchSingleIndex53() async throws {
+    func snippetForSearchSingleIndex59() async throws {
         // >SEPARATOR searchSingleIndex apply_all_filters
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4869,7 +5026,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// escape_spaces
-    func snippetForSearchSingleIndex54() async throws {
+    func snippetForSearchSingleIndex60() async throws {
         // >SEPARATOR searchSingleIndex escape_spaces
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4891,7 +5048,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// escape_keywords
-    func snippetForSearchSingleIndex55() async throws {
+    func snippetForSearchSingleIndex61() async throws {
         // >SEPARATOR searchSingleIndex escape_keywords
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4913,7 +5070,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// escape_single_quotes
-    func snippetForSearchSingleIndex56() async throws {
+    func snippetForSearchSingleIndex62() async throws {
         // >SEPARATOR searchSingleIndex escape_single_quotes
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4935,7 +5092,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// escape_double_quotes
-    func snippetForSearchSingleIndex57() async throws {
+    func snippetForSearchSingleIndex63() async throws {
         // >SEPARATOR searchSingleIndex escape_double_quotes
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4957,7 +5114,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// apply_optional_filters
-    func snippetForSearchSingleIndex58() async throws {
+    func snippetForSearchSingleIndex64() async throws {
         // >SEPARATOR searchSingleIndex apply_optional_filters
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -4982,7 +5139,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// apply_negative_filters
-    func snippetForSearchSingleIndex59() async throws {
+    func snippetForSearchSingleIndex65() async throws {
         // >SEPARATOR searchSingleIndex apply_negative_filters
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5007,7 +5164,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// apply_negative_filters_restaurants
-    func snippetForSearchSingleIndex60() async throws {
+    func snippetForSearchSingleIndex66() async throws {
         // >SEPARATOR searchSingleIndex apply_negative_filters_restaurants
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5030,7 +5187,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// apply_numeric_filters
-    func snippetForSearchSingleIndex61() async throws {
+    func snippetForSearchSingleIndex67() async throws {
         // >SEPARATOR searchSingleIndex apply_numeric_filters
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5058,7 +5215,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// apply_tag_filters
-    func snippetForSearchSingleIndex62() async throws {
+    func snippetForSearchSingleIndex68() async throws {
         // >SEPARATOR searchSingleIndex apply_tag_filters
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5086,7 +5243,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// set_sum_or_filters_scores
-    func snippetForSearchSingleIndex63() async throws {
+    func snippetForSearchSingleIndex69() async throws {
         // >SEPARATOR searchSingleIndex set_sum_or_filters_scores
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5108,7 +5265,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// facets_all
-    func snippetForSearchSingleIndex64() async throws {
+    func snippetForSearchSingleIndex70() async throws {
         // >SEPARATOR searchSingleIndex facets_all
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5130,7 +5287,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// retrieve_only_some_facets
-    func snippetForSearchSingleIndex65() async throws {
+    func snippetForSearchSingleIndex71() async throws {
         // >SEPARATOR searchSingleIndex retrieve_only_some_facets
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5152,7 +5309,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_default_max_values_per_facet
-    func snippetForSearchSingleIndex66() async throws {
+    func snippetForSearchSingleIndex72() async throws {
         // >SEPARATOR searchSingleIndex override_default_max_values_per_facet
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5174,7 +5331,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// enable_faceting_after_distinct
-    func snippetForSearchSingleIndex67() async throws {
+    func snippetForSearchSingleIndex73() async throws {
         // >SEPARATOR searchSingleIndex enable_faceting_after_distinct
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5196,7 +5353,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// sort_facet_values_alphabetically
-    func snippetForSearchSingleIndex68() async throws {
+    func snippetForSearchSingleIndex74() async throws {
         // >SEPARATOR searchSingleIndex sort_facet_values_alphabetically
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5218,7 +5375,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_attributes_to_snippet
-    func snippetForSearchSingleIndex69() async throws {
+    func snippetForSearchSingleIndex75() async throws {
         // >SEPARATOR searchSingleIndex override_attributes_to_snippet
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5240,7 +5397,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_default_highlight_pre_tag
-    func snippetForSearchSingleIndex70() async throws {
+    func snippetForSearchSingleIndex76() async throws {
         // >SEPARATOR searchSingleIndex override_default_highlight_pre_tag
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5262,7 +5419,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_default_highlight_post_tag
-    func snippetForSearchSingleIndex71() async throws {
+    func snippetForSearchSingleIndex77() async throws {
         // >SEPARATOR searchSingleIndex override_default_highlight_post_tag
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5284,7 +5441,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_default_snippet_ellipsis_text
-    func snippetForSearchSingleIndex72() async throws {
+    func snippetForSearchSingleIndex78() async throws {
         // >SEPARATOR searchSingleIndex override_default_snippet_ellipsis_text
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5306,7 +5463,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// enable_restrict_highlight_and_snippet_arrays
-    func snippetForSearchSingleIndex73() async throws {
+    func snippetForSearchSingleIndex79() async throws {
         // >SEPARATOR searchSingleIndex enable_restrict_highlight_and_snippet_arrays
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5328,7 +5485,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// access_page
-    func snippetForSearchSingleIndex74() async throws {
+    func snippetForSearchSingleIndex80() async throws {
         // >SEPARATOR searchSingleIndex access_page
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5347,7 +5504,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_default_hits_per_page
-    func snippetForSearchSingleIndex75() async throws {
+    func snippetForSearchSingleIndex81() async throws {
         // >SEPARATOR searchSingleIndex override_default_hits_per_page
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5368,8 +5525,31 @@ final class SearchClientSnippet {
 
     /// Snippet for the searchSingleIndex method.
     ///
+    /// overrideDefaultPageAndHitsPerPage
+    func snippetForSearchSingleIndex82() async throws {
+        // >SEPARATOR searchSingleIndex overrideDefaultPageAndHitsPerPage
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response: SearchResponse<Hit> = try await client.searchSingleIndex(
+            indexName: "<YOUR_INDEX_NAME>",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                page: 2,
+                hitsPerPage: 5
+            ))
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the searchSingleIndex method.
+    ///
     /// get_nth_hit
-    func snippetForSearchSingleIndex76() async throws {
+    func snippetForSearchSingleIndex83() async throws {
         // >SEPARATOR searchSingleIndex get_nth_hit
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5391,7 +5571,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// get_n_results
-    func snippetForSearchSingleIndex77() async throws {
+    func snippetForSearchSingleIndex84() async throws {
         // >SEPARATOR searchSingleIndex get_n_results
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5413,7 +5593,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_default_min_word_size_for_one_typo
-    func snippetForSearchSingleIndex78() async throws {
+    func snippetForSearchSingleIndex85() async throws {
         // >SEPARATOR searchSingleIndex override_default_min_word_size_for_one_typo
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5435,7 +5615,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_default_min_word_size_for_two_typos
-    func snippetForSearchSingleIndex79() async throws {
+    func snippetForSearchSingleIndex86() async throws {
         // >SEPARATOR searchSingleIndex override_default_min_word_size_for_two_typos
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5457,7 +5637,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_default_typo_tolerance_mode
-    func snippetForSearchSingleIndex80() async throws {
+    func snippetForSearchSingleIndex87() async throws {
         // >SEPARATOR searchSingleIndex override_default_typo_tolerance_mode
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5479,7 +5659,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// disable_typos_on_numeric_tokens_at_search_time
-    func snippetForSearchSingleIndex81() async throws {
+    func snippetForSearchSingleIndex88() async throws {
         // >SEPARATOR searchSingleIndex disable_typos_on_numeric_tokens_at_search_time
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5501,7 +5681,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// search_around_a_position
-    func snippetForSearchSingleIndex82() async throws {
+    func snippetForSearchSingleIndex89() async throws {
         // >SEPARATOR searchSingleIndex search_around_a_position
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5523,7 +5703,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// search_around_server_ip
-    func snippetForSearchSingleIndex83() async throws {
+    func snippetForSearchSingleIndex90() async throws {
         // >SEPARATOR searchSingleIndex search_around_server_ip
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5536,9 +5716,29 @@ final class SearchClientSnippet {
                 aroundLatLngViaIP: true
             )),
             requestOptions: RequestOptions(
-                headers: [
-                    "x-forwarded-for": "94.228.178.246 // should be replaced with the actual IP you would like to search around",
-                ]
+                headers: ["x-forwarded-for": "XX.XXX.XXX.XXX"]
+            )
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the searchSingleIndex method.
+    ///
+    /// forwardUserIpAddress
+    func snippetForSearchSingleIndex91() async throws {
+        // >SEPARATOR searchSingleIndex forwardUserIpAddress
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response: SearchResponse<Hit> = try await client.searchSingleIndex(
+            indexName: "<YOUR_INDEX_NAME>",
+            searchParams: SearchSearchParams.searchParamsString(SearchParamsString()),
+            requestOptions: RequestOptions(
+                headers: ["x-forwarded-for": "XX.XXX.XXX.XXX"]
             )
         )
         // >LOG
@@ -5550,7 +5750,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// set_around_radius
-    func snippetForSearchSingleIndex84() async throws {
+    func snippetForSearchSingleIndex92() async throws {
         // >SEPARATOR searchSingleIndex set_around_radius
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5572,7 +5772,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// disable_automatic_radius
-    func snippetForSearchSingleIndex85() async throws {
+    func snippetForSearchSingleIndex93() async throws {
         // >SEPARATOR searchSingleIndex disable_automatic_radius
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5594,7 +5794,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// set_geo_search_precision
-    func snippetForSearchSingleIndex86() async throws {
+    func snippetForSearchSingleIndex94() async throws {
         // >SEPARATOR searchSingleIndex set_geo_search_precision
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5616,7 +5816,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// set_geo_search_precision_non_linear
-    func snippetForSearchSingleIndex87() async throws {
+    func snippetForSearchSingleIndex95() async throws {
         // >SEPARATOR searchSingleIndex set_geo_search_precision_non_linear
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5641,7 +5841,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// set_minimum_geo_search_radius
-    func snippetForSearchSingleIndex88() async throws {
+    func snippetForSearchSingleIndex96() async throws {
         // >SEPARATOR searchSingleIndex set_minimum_geo_search_radius
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5663,7 +5863,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// search_inside_rectangular_area
-    func snippetForSearchSingleIndex89() async throws {
+    func snippetForSearchSingleIndex97() async throws {
         // >SEPARATOR searchSingleIndex search_inside_rectangular_area
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5690,7 +5890,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// search_inside_multiple_rectangular_areas
-    func snippetForSearchSingleIndex90() async throws {
+    func snippetForSearchSingleIndex98() async throws {
         // >SEPARATOR searchSingleIndex search_inside_multiple_rectangular_areas
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5715,7 +5915,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// search_inside_polygon_area
-    func snippetForSearchSingleIndex91() async throws {
+    func snippetForSearchSingleIndex99() async throws {
         // >SEPARATOR searchSingleIndex search_inside_polygon_area
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5744,7 +5944,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// search_inside_multiple_polygon_areas
-    func snippetForSearchSingleIndex92() async throws {
+    func snippetForSearchSingleIndex100() async throws {
         // >SEPARATOR searchSingleIndex search_inside_multiple_polygon_areas
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5778,7 +5978,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// set_querylanguages_override
-    func snippetForSearchSingleIndex93() async throws {
+    func snippetForSearchSingleIndex101() async throws {
         // >SEPARATOR searchSingleIndex set_querylanguages_override
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5803,7 +6003,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// set_querylanguages_with_japanese_query
-    func snippetForSearchSingleIndex94() async throws {
+    func snippetForSearchSingleIndex102() async throws {
         // >SEPARATOR searchSingleIndex set_querylanguages_with_japanese_query
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5825,7 +6025,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// set_natural_languages
-    func snippetForSearchSingleIndex95() async throws {
+    func snippetForSearchSingleIndex103() async throws {
         // >SEPARATOR searchSingleIndex set_natural_languages
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5847,7 +6047,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_natural_languages_with_query
-    func snippetForSearchSingleIndex96() async throws {
+    func snippetForSearchSingleIndex104() async throws {
         // >SEPARATOR searchSingleIndex override_natural_languages_with_query
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5870,7 +6070,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// enable_decompound_query_search_time
-    func snippetForSearchSingleIndex97() async throws {
+    func snippetForSearchSingleIndex105() async throws {
         // >SEPARATOR searchSingleIndex enable_decompound_query_search_time
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5892,7 +6092,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// enable_rules_search_time
-    func snippetForSearchSingleIndex98() async throws {
+    func snippetForSearchSingleIndex106() async throws {
         // >SEPARATOR searchSingleIndex enable_rules_search_time
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5914,7 +6114,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// set_rule_contexts
-    func snippetForSearchSingleIndex99() async throws {
+    func snippetForSearchSingleIndex107() async throws {
         // >SEPARATOR searchSingleIndex set_rule_contexts
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5936,7 +6136,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// enable_personalization
-    func snippetForSearchSingleIndex100() async throws {
+    func snippetForSearchSingleIndex108() async throws {
         // >SEPARATOR searchSingleIndex enable_personalization
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5958,7 +6158,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// enable_personalization_with_user_token
-    func snippetForSearchSingleIndex101() async throws {
+    func snippetForSearchSingleIndex109() async throws {
         // >SEPARATOR searchSingleIndex enable_personalization_with_user_token
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -5981,7 +6181,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// personalization_impact
-    func snippetForSearchSingleIndex102() async throws {
+    func snippetForSearchSingleIndex110() async throws {
         // >SEPARATOR searchSingleIndex personalization_impact
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6003,7 +6203,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// set_user_token
-    func snippetForSearchSingleIndex103() async throws {
+    func snippetForSearchSingleIndex111() async throws {
         // >SEPARATOR searchSingleIndex set_user_token
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6025,7 +6225,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// set_user_token_with_personalization
-    func snippetForSearchSingleIndex104() async throws {
+    func snippetForSearchSingleIndex112() async throws {
         // >SEPARATOR searchSingleIndex set_user_token_with_personalization
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6048,7 +6248,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_default_query_type
-    func snippetForSearchSingleIndex105() async throws {
+    func snippetForSearchSingleIndex113() async throws {
         // >SEPARATOR searchSingleIndex override_default_query_type
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6070,7 +6270,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_default_remove_words_if_no_results
-    func snippetForSearchSingleIndex106() async throws {
+    func snippetForSearchSingleIndex114() async throws {
         // >SEPARATOR searchSingleIndex override_default_remove_words_if_no_results
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6092,7 +6292,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// enable_advanced_syntax_search_time
-    func snippetForSearchSingleIndex107() async throws {
+    func snippetForSearchSingleIndex115() async throws {
         // >SEPARATOR searchSingleIndex enable_advanced_syntax_search_time
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6114,7 +6314,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// overide_default_optional_words
-    func snippetForSearchSingleIndex108() async throws {
+    func snippetForSearchSingleIndex116() async throws {
         // >SEPARATOR searchSingleIndex overide_default_optional_words
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6136,7 +6336,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// disabling_exact_for_some_attributes_search_time
-    func snippetForSearchSingleIndex109() async throws {
+    func snippetForSearchSingleIndex117() async throws {
         // >SEPARATOR searchSingleIndex disabling_exact_for_some_attributes_search_time
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6158,7 +6358,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_default_exact_single_word_query
-    func snippetForSearchSingleIndex110() async throws {
+    func snippetForSearchSingleIndex118() async throws {
         // >SEPARATOR searchSingleIndex override_default_exact_single_word_query
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6180,7 +6380,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_default_aternative_as_exact
-    func snippetForSearchSingleIndex111() async throws {
+    func snippetForSearchSingleIndex119() async throws {
         // >SEPARATOR searchSingleIndex override_default_aternative_as_exact
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6202,7 +6402,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// enable_advanced_syntax_exact_phrase
-    func snippetForSearchSingleIndex112() async throws {
+    func snippetForSearchSingleIndex120() async throws {
         // >SEPARATOR searchSingleIndex enable_advanced_syntax_exact_phrase
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6225,7 +6425,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// enable_advanced_syntax_exclude_words
-    func snippetForSearchSingleIndex113() async throws {
+    func snippetForSearchSingleIndex121() async throws {
         // >SEPARATOR searchSingleIndex enable_advanced_syntax_exclude_words
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6248,7 +6448,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_distinct
-    func snippetForSearchSingleIndex114() async throws {
+    func snippetForSearchSingleIndex122() async throws {
         // >SEPARATOR searchSingleIndex override_distinct
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6270,7 +6470,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// get_ranking_info
-    func snippetForSearchSingleIndex115() async throws {
+    func snippetForSearchSingleIndex123() async throws {
         // >SEPARATOR searchSingleIndex get_ranking_info
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6292,7 +6492,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// disable_click_analytics
-    func snippetForSearchSingleIndex116() async throws {
+    func snippetForSearchSingleIndex124() async throws {
         // >SEPARATOR searchSingleIndex disable_click_analytics
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6314,7 +6514,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// enable_click_analytics
-    func snippetForSearchSingleIndex117() async throws {
+    func snippetForSearchSingleIndex125() async throws {
         // >SEPARATOR searchSingleIndex enable_click_analytics
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6336,7 +6536,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// disable_analytics
-    func snippetForSearchSingleIndex118() async throws {
+    func snippetForSearchSingleIndex126() async throws {
         // >SEPARATOR searchSingleIndex disable_analytics
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6358,7 +6558,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// add_analytics_tags
-    func snippetForSearchSingleIndex119() async throws {
+    func snippetForSearchSingleIndex127() async throws {
         // >SEPARATOR searchSingleIndex add_analytics_tags
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6380,7 +6580,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// disable_synonyms
-    func snippetForSearchSingleIndex120() async throws {
+    func snippetForSearchSingleIndex128() async throws {
         // >SEPARATOR searchSingleIndex disable_synonyms
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6402,7 +6602,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_replace_synonyms_in_highlights
-    func snippetForSearchSingleIndex121() async throws {
+    func snippetForSearchSingleIndex129() async throws {
         // >SEPARATOR searchSingleIndex override_replace_synonyms_in_highlights
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6424,7 +6624,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_min_proximity
-    func snippetForSearchSingleIndex122() async throws {
+    func snippetForSearchSingleIndex130() async throws {
         // >SEPARATOR searchSingleIndex override_min_proximity
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6446,7 +6646,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_default_field
-    func snippetForSearchSingleIndex123() async throws {
+    func snippetForSearchSingleIndex131() async throws {
         // >SEPARATOR searchSingleIndex override_default_field
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6468,7 +6668,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// override_percentile_computation
-    func snippetForSearchSingleIndex124() async throws {
+    func snippetForSearchSingleIndex132() async throws {
         // >SEPARATOR searchSingleIndex override_percentile_computation
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6490,7 +6690,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// set_ab_test
-    func snippetForSearchSingleIndex125() async throws {
+    func snippetForSearchSingleIndex133() async throws {
         // >SEPARATOR searchSingleIndex set_ab_test
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6512,7 +6712,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// set_enable_re_ranking
-    func snippetForSearchSingleIndex126() async throws {
+    func snippetForSearchSingleIndex134() async throws {
         // >SEPARATOR searchSingleIndex set_enable_re_ranking
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6534,7 +6734,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// with algolia user id
-    func snippetForSearchSingleIndex127() async throws {
+    func snippetForSearchSingleIndex135() async throws {
         // >SEPARATOR searchSingleIndex with algolia user id
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -6556,7 +6756,7 @@ final class SearchClientSnippet {
     /// Snippet for the searchSingleIndex method.
     ///
     /// mcm with algolia user id
-    func snippetForSearchSingleIndex128() async throws {
+    func snippetForSearchSingleIndex136() async throws {
         // >SEPARATOR searchSingleIndex mcm with algolia user id
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -7764,8 +7964,31 @@ final class SearchClientSnippet {
 
     /// Snippet for the setSettings method.
     ///
-    /// attributesToHighlightStar
+    /// highlightWithCustomPrePostTags
     func snippetForSetSettings53() async throws {
+        // >SEPARATOR setSettings highlightWithCustomPrePostTags
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.setSettings(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(
+                attributesToHighlight: ["author", "title", "content"],
+                highlightPreTag: "<em class=\"search-highlight\">",
+                highlightPostTag: "</em>"
+            )
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setSettings method.
+    ///
+    /// attributesToHighlightStar
+    func snippetForSetSettings54() async throws {
         // >SEPARATOR setSettings attributesToHighlightStar
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -7784,7 +8007,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// everything
-    func snippetForSetSettings54() async throws {
+    func snippetForSetSettings55() async throws {
         // >SEPARATOR setSettings everything
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -7868,7 +8091,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// searchableAttributesWithCustomRankingsAndAttributesForFaceting
-    func snippetForSetSettings55() async throws {
+    func snippetForSetSettings56() async throws {
         // >SEPARATOR setSettings searchableAttributesWithCustomRankingsAndAttributesForFaceting
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -7891,7 +8114,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// searchableAttributesOrdering
-    func snippetForSetSettings56() async throws {
+    func snippetForSetSettings57() async throws {
         // >SEPARATOR setSettings searchableAttributesOrdering
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -7910,7 +8133,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// searchableAttributesProductReferenceSuffixes
-    func snippetForSetSettings57() async throws {
+    func snippetForSetSettings58() async throws {
         // >SEPARATOR setSettings searchableAttributesProductReferenceSuffixes
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -7933,7 +8156,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// queryLanguageAndIgnorePlurals
-    func snippetForSetSettings58() async throws {
+    func snippetForSetSettings59() async throws {
         // >SEPARATOR setSettings queryLanguageAndIgnorePlurals
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -7955,7 +8178,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// searchableAttributesInMovies
-    func snippetForSetSettings59() async throws {
+    func snippetForSetSettings60() async throws {
         // >SEPARATOR setSettings searchableAttributesInMovies
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -7974,7 +8197,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// disablePrefixOnAttributes
-    func snippetForSetSettings60() async throws {
+    func snippetForSetSettings61() async throws {
         // >SEPARATOR setSettings disablePrefixOnAttributes
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -7993,7 +8216,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// disableTypoToleranceOnAttributes
-    func snippetForSetSettings61() async throws {
+    func snippetForSetSettings62() async throws {
         // >SEPARATOR setSettings disableTypoToleranceOnAttributes
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8012,7 +8235,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// searchableAttributesSimpleExample
-    func snippetForSetSettings62() async throws {
+    func snippetForSetSettings63() async throws {
         // >SEPARATOR setSettings searchableAttributesSimpleExample
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8031,7 +8254,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// searchableAttributesSimpleExampleAlt
-    func snippetForSetSettings63() async throws {
+    func snippetForSetSettings64() async throws {
         // >SEPARATOR setSettings searchableAttributesSimpleExampleAlt
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8050,7 +8273,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_searchable_attributes
-    func snippetForSetSettings64() async throws {
+    func snippetForSetSettings65() async throws {
         // >SEPARATOR setSettings set_searchable_attributes
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8074,7 +8297,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_attributes_for_faceting
-    func snippetForSetSettings65() async throws {
+    func snippetForSetSettings66() async throws {
         // >SEPARATOR setSettings set_attributes_for_faceting
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8099,7 +8322,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// unretrievable_attributes
-    func snippetForSetSettings66() async throws {
+    func snippetForSetSettings67() async throws {
         // >SEPARATOR setSettings unretrievable_attributes
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8118,7 +8341,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_retrievable_attributes
-    func snippetForSetSettings67() async throws {
+    func snippetForSetSettings68() async throws {
         // >SEPARATOR setSettings set_retrievable_attributes
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8137,7 +8360,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_all_attributes_as_retrievable
-    func snippetForSetSettings68() async throws {
+    func snippetForSetSettings69() async throws {
         // >SEPARATOR setSettings set_all_attributes_as_retrievable
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8156,7 +8379,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// specify_attributes_not_to_retrieve
-    func snippetForSetSettings69() async throws {
+    func snippetForSetSettings70() async throws {
         // >SEPARATOR setSettings specify_attributes_not_to_retrieve
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8175,7 +8398,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// neural_search
-    func snippetForSetSettings70() async throws {
+    func snippetForSetSettings71() async throws {
         // >SEPARATOR setSettings neural_search
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8194,7 +8417,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// keyword_search
-    func snippetForSetSettings71() async throws {
+    func snippetForSetSettings72() async throws {
         // >SEPARATOR setSettings keyword_search
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8213,7 +8436,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_default_ranking
-    func snippetForSetSettings72() async throws {
+    func snippetForSetSettings73() async throws {
         // >SEPARATOR setSettings set_default_ranking
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8241,7 +8464,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_ranking_by_attribute_asc
-    func snippetForSetSettings73() async throws {
+    func snippetForSetSettings74() async throws {
         // >SEPARATOR setSettings set_ranking_by_attribute_asc
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8270,7 +8493,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_ranking_by_attribute_desc
-    func snippetForSetSettings74() async throws {
+    func snippetForSetSettings75() async throws {
         // >SEPARATOR setSettings set_ranking_by_attribute_desc
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8299,7 +8522,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_custom_ranking
-    func snippetForSetSettings75() async throws {
+    func snippetForSetSettings76() async throws {
         // >SEPARATOR setSettings set_custom_ranking
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8318,7 +8541,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_default_relevancy
-    func snippetForSetSettings76() async throws {
+    func snippetForSetSettings77() async throws {
         // >SEPARATOR setSettings set_default_relevancy
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8337,7 +8560,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_replicas
-    func snippetForSetSettings77() async throws {
+    func snippetForSetSettings78() async throws {
         // >SEPARATOR setSettings set_replicas
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8356,7 +8579,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_default_max_values_per_facet
-    func snippetForSetSettings78() async throws {
+    func snippetForSetSettings79() async throws {
         // >SEPARATOR setSettings set_default_max_values_per_facet
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8375,7 +8598,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_default_sort_facet_values_by
-    func snippetForSetSettings79() async throws {
+    func snippetForSetSettings80() async throws {
         // >SEPARATOR setSettings set_default_sort_facet_values_by
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8394,7 +8617,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_attributes_to_snippet
-    func snippetForSetSettings80() async throws {
+    func snippetForSetSettings81() async throws {
         // >SEPARATOR setSettings set_attributes_to_snippet
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8413,7 +8636,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_all_attributes_to_snippet
-    func snippetForSetSettings81() async throws {
+    func snippetForSetSettings82() async throws {
         // >SEPARATOR setSettings set_all_attributes_to_snippet
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8432,7 +8655,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_default_highlight_pre_tag
-    func snippetForSetSettings82() async throws {
+    func snippetForSetSettings83() async throws {
         // >SEPARATOR setSettings set_default_highlight_pre_tag
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8451,7 +8674,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_default_highlight_post_tag
-    func snippetForSetSettings83() async throws {
+    func snippetForSetSettings84() async throws {
         // >SEPARATOR setSettings set_default_highlight_post_tag
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8470,7 +8693,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_default_snippet_ellipsis_text
-    func snippetForSetSettings84() async throws {
+    func snippetForSetSettings85() async throws {
         // >SEPARATOR setSettings set_default_snippet_ellipsis_text
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8489,7 +8712,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// enable_restrict_highlight_and_snippet_arrays_by_default
-    func snippetForSetSettings85() async throws {
+    func snippetForSetSettings86() async throws {
         // >SEPARATOR setSettings enable_restrict_highlight_and_snippet_arrays_by_default
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8508,7 +8731,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_default_hits_per_page
-    func snippetForSetSettings86() async throws {
+    func snippetForSetSettings87() async throws {
         // >SEPARATOR setSettings set_default_hits_per_page
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8527,7 +8750,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_pagination_limit
-    func snippetForSetSettings87() async throws {
+    func snippetForSetSettings88() async throws {
         // >SEPARATOR setSettings set_pagination_limit
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8546,7 +8769,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_default_min_word_size_for_one_typo
-    func snippetForSetSettings88() async throws {
+    func snippetForSetSettings89() async throws {
         // >SEPARATOR setSettings set_default_min_word_size_for_one_typo
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8565,7 +8788,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_default_min_word_size_for_two_typos
-    func snippetForSetSettings89() async throws {
+    func snippetForSetSettings90() async throws {
         // >SEPARATOR setSettings set_default_min_word_size_for_two_typos
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8584,7 +8807,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_default_typo_tolerance_mode
-    func snippetForSetSettings90() async throws {
+    func snippetForSetSettings91() async throws {
         // >SEPARATOR setSettings set_default_typo_tolerance_mode
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8603,7 +8826,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// disable_typos_on_numeric_tokens_by_default
-    func snippetForSetSettings91() async throws {
+    func snippetForSetSettings92() async throws {
         // >SEPARATOR setSettings disable_typos_on_numeric_tokens_by_default
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8622,7 +8845,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// disable_typo_tolerance_for_words
-    func snippetForSetSettings92() async throws {
+    func snippetForSetSettings93() async throws {
         // >SEPARATOR setSettings disable_typo_tolerance_for_words
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8641,7 +8864,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_separators_to_index
-    func snippetForSetSettings93() async throws {
+    func snippetForSetSettings94() async throws {
         // >SEPARATOR setSettings set_separators_to_index
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8660,7 +8883,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_querylanguage_ignoreplurals
-    func snippetForSetSettings94() async throws {
+    func snippetForSetSettings95() async throws {
         // >SEPARATOR setSettings set_querylanguage_ignoreplurals
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8682,7 +8905,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_attributes_to_transliterate
-    func snippetForSetSettings95() async throws {
+    func snippetForSetSettings96() async throws {
         // >SEPARATOR setSettings set_attributes_to_transliterate
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8704,7 +8927,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_querylanguage_removestopwords
-    func snippetForSetSettings96() async throws {
+    func snippetForSetSettings97() async throws {
         // >SEPARATOR setSettings set_querylanguage_removestopwords
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8726,7 +8949,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_camel_case_attributes
-    func snippetForSetSettings97() async throws {
+    func snippetForSetSettings98() async throws {
         // >SEPARATOR setSettings set_camel_case_attributes
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8745,7 +8968,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_decompounded_attributes
-    func snippetForSetSettings98() async throws {
+    func snippetForSetSettings99() async throws {
         // >SEPARATOR setSettings set_decompounded_attributes
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8764,7 +8987,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_decompounded_multiple_attributes
-    func snippetForSetSettings99() async throws {
+    func snippetForSetSettings100() async throws {
         // >SEPARATOR setSettings set_decompounded_multiple_attributes
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8786,7 +9009,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_keep_diacritics_on_characters
-    func snippetForSetSettings100() async throws {
+    func snippetForSetSettings101() async throws {
         // >SEPARATOR setSettings set_keep_diacritics_on_characters
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8805,7 +9028,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_custom_normalization
-    func snippetForSetSettings101() async throws {
+    func snippetForSetSettings102() async throws {
         // >SEPARATOR setSettings set_custom_normalization
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8824,7 +9047,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_querylanguage_both
-    func snippetForSetSettings102() async throws {
+    func snippetForSetSettings103() async throws {
         // >SEPARATOR setSettings set_querylanguage_both
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8847,7 +9070,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_indexlanguages
-    func snippetForSetSettings103() async throws {
+    func snippetForSetSettings104() async throws {
         // >SEPARATOR setSettings set_indexlanguages
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8866,7 +9089,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// enable_decompound_query_by_default
-    func snippetForSetSettings104() async throws {
+    func snippetForSetSettings105() async throws {
         // >SEPARATOR setSettings enable_decompound_query_by_default
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8885,7 +9108,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// enable_rules_syntax_by_default
-    func snippetForSetSettings105() async throws {
+    func snippetForSetSettings106() async throws {
         // >SEPARATOR setSettings enable_rules_syntax_by_default
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8904,7 +9127,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// enable_personalization_settings
-    func snippetForSetSettings106() async throws {
+    func snippetForSetSettings107() async throws {
         // >SEPARATOR setSettings enable_personalization_settings
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8923,7 +9146,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_default_query_type
-    func snippetForSetSettings107() async throws {
+    func snippetForSetSettings108() async throws {
         // >SEPARATOR setSettings set_default_query_type
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8942,7 +9165,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_default_remove_words_if_no_result
-    func snippetForSetSettings108() async throws {
+    func snippetForSetSettings109() async throws {
         // >SEPARATOR setSettings set_default_remove_words_if_no_result
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8961,7 +9184,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// enable_advanced_syntax_by_default
-    func snippetForSetSettings109() async throws {
+    func snippetForSetSettings110() async throws {
         // >SEPARATOR setSettings enable_advanced_syntax_by_default
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8980,7 +9203,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_default_optional_words
-    func snippetForSetSettings110() async throws {
+    func snippetForSetSettings111() async throws {
         // >SEPARATOR setSettings set_default_optional_words
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -8999,7 +9222,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// disabling_prefix_search_for_some_attributes_by_default
-    func snippetForSetSettings111() async throws {
+    func snippetForSetSettings112() async throws {
         // >SEPARATOR setSettings disabling_prefix_search_for_some_attributes_by_default
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -9018,7 +9241,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// disabling_exact_for_some_attributes_by_default
-    func snippetForSetSettings112() async throws {
+    func snippetForSetSettings113() async throws {
         // >SEPARATOR setSettings disabling_exact_for_some_attributes_by_default
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -9037,7 +9260,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_default_exact_single_word_query
-    func snippetForSetSettings113() async throws {
+    func snippetForSetSettings114() async throws {
         // >SEPARATOR setSettings set_default_exact_single_word_query
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -9056,7 +9279,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_default_aternative_as_exact
-    func snippetForSetSettings114() async throws {
+    func snippetForSetSettings115() async throws {
         // >SEPARATOR setSettings set_default_aternative_as_exact
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -9078,7 +9301,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_numeric_attributes_for_filtering
-    func snippetForSetSettings115() async throws {
+    func snippetForSetSettings116() async throws {
         // >SEPARATOR setSettings set_numeric_attributes_for_filtering
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -9097,7 +9320,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// enable_compression_of_integer_array
-    func snippetForSetSettings116() async throws {
+    func snippetForSetSettings117() async throws {
         // >SEPARATOR setSettings enable_compression_of_integer_array
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -9116,7 +9339,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_attributes_for_distinct
-    func snippetForSetSettings117() async throws {
+    func snippetForSetSettings118() async throws {
         // >SEPARATOR setSettings set_attributes_for_distinct
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -9135,7 +9358,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_distinct
-    func snippetForSetSettings118() async throws {
+    func snippetForSetSettings119() async throws {
         // >SEPARATOR setSettings set_distinct
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -9154,7 +9377,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_replace_synonyms_in_highlights
-    func snippetForSetSettings119() async throws {
+    func snippetForSetSettings120() async throws {
         // >SEPARATOR setSettings set_replace_synonyms_in_highlights
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -9173,7 +9396,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_min_proximity
-    func snippetForSetSettings120() async throws {
+    func snippetForSetSettings121() async throws {
         // >SEPARATOR setSettings set_min_proximity
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -9192,7 +9415,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_default_field
-    func snippetForSetSettings121() async throws {
+    func snippetForSetSettings122() async throws {
         // >SEPARATOR setSettings set_default_field
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -9211,7 +9434,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_max_facet_hits
-    func snippetForSetSettings122() async throws {
+    func snippetForSetSettings123() async throws {
         // >SEPARATOR setSettings set_max_facet_hits
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -9230,7 +9453,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_attribute_criteria_computed_by_min_proximity
-    func snippetForSetSettings123() async throws {
+    func snippetForSetSettings124() async throws {
         // >SEPARATOR setSettings set_attribute_criteria_computed_by_min_proximity
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -9249,7 +9472,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_user_data
-    func snippetForSetSettings124() async throws {
+    func snippetForSetSettings125() async throws {
         // >SEPARATOR setSettings set_user_data
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -9270,7 +9493,7 @@ final class SearchClientSnippet {
     /// Snippet for the setSettings method.
     ///
     /// set_rendering_content
-    func snippetForSetSettings125() async throws {
+    func snippetForSetSettings126() async throws {
         // >SEPARATOR setSettings set_rendering_content
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -9289,6 +9512,83 @@ final class SearchClientSnippet {
                     "size": SearchValue(order: ["S", "M", "L"], sortRemainingBy: SearchSortRemainingBy.hidden),
                 ]
             )))
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setSettings method.
+    ///
+    /// typoToleranceMin
+    func snippetForSetSettings127() async throws {
+        // >SEPARATOR setSettings typoToleranceMin
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.setSettings(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(typoTolerance: SearchTypoTolerance
+                .searchTypoToleranceEnum(SearchTypoToleranceEnum.min))
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setSettings method.
+    ///
+    /// minWordSizefor1Typo5
+    func snippetForSetSettings128() async throws {
+        // >SEPARATOR setSettings minWordSizefor1Typo5
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.setSettings(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(minWordSizefor1Typo: 5)
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setSettings method.
+    ///
+    /// attributesToSnippetBodyTitle
+    func snippetForSetSettings129() async throws {
+        // >SEPARATOR setSettings attributesToSnippetBodyTitle
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.setSettings(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(attributesToSnippet: ["body:20", "title"])
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setSettings method.
+    ///
+    /// snippetEllipsisTextHellip
+    func snippetForSetSettings130() async throws {
+        // >SEPARATOR setSettings snippetEllipsisTextHellip
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.setSettings(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(snippetEllipsisText: "[&hellip;]")
         )
         // >LOG
         // print the response

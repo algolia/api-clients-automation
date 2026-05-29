@@ -32,6 +32,8 @@ import type { TransformationTry } from '../model/transformationTry';
 import type { TransformationType } from '../model/transformationType';
 import type { TriggerType } from '../model/triggerType';
 
+import type { ChunkedHelperOptions } from '@algolia/client-common';
+
 /**
  * Properties for the `customDelete` method.
  */
@@ -419,11 +421,11 @@ export type ListRunsProps = {
    */
   order?: OrderKeys | undefined;
   /**
-   * Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+   * Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used.
    */
   startDate?: string | undefined;
   /**
-   * Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
+   * Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used.
    */
   endDate?: string | undefined;
 };
@@ -761,7 +763,7 @@ export type ValidateSourceBeforeUpdateProps = {
   sourceUpdate: SourceUpdate;
 };
 
-export type ChunkedPushOptions = {
+export type ChunkedPushOptions = ChunkedHelperOptions & {
   /**
    * The `indexName` to replace `objects` in.
    */

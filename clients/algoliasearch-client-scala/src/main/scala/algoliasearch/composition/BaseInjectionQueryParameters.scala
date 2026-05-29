@@ -1,25 +1,25 @@
 /** Composition API ## Client libraries Use Algolia's API clients and libraries to reliably integrate Algolia's APIs
-  * with your apps. See: [Algolia's
-  * ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem) ## Base URLs The
-  * base URLs for requests to the Composition API are: - `https://{APPLICATION_ID}.algolia.net` -
+  * with your apps. For more information, see [Algolia's
+  * ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem). ## Base URLs
+  * Base URLs for the Composition API: - `https://{APPLICATION_ID}.algolia.net` -
   * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
   * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
   * URLs provide high availability by distributing requests with load balancing. **All requests must use HTTPS.** ##
   * Retry strategy To guarantee high availability, implement a retry strategy for all API requests using the URLs of
   * your servers as fallbacks: - `https://{APPLICATION_ID}-1.algolianet.com` -
   * `https://{APPLICATION_ID}-2.algolianet.com` - `https://{APPLICATION_ID}-3.algolianet.com` These URLs use a different
-  * DNS provider than the primary URLs. You should randomize this list to ensure an even load across the three servers.
-  * All Algolia API clients implement this retry strategy. ## Authentication To authenticate your API requests, add
-  * these headers: - `x-algolia-application-id`. Your Algolia application ID. - `x-algolia-api-key`. An API key with the
-  * necessary permissions to make the request. The required access control list (ACL) to make a request is listed in
-  * each endpoint's reference. You can find your application ID and API key in the [Algolia
+  * DNS provider than the primary URLs. Randomize this list to ensure an even load across the three servers. All Algolia
+  * API clients implement this retry strategy. ## Authentication Add these headers to authenticate requests: -
+  * `x-algolia-application-id`. Your Algolia application ID. - `x-algolia-api-key`. An API key with the necessary
+  * permissions to make the request. The required access control list (ACL) to make a request is listed in each
+  * endpoint's reference. You can find your application ID and API key in the [Algolia
   * dashboard](https://dashboard.algolia.com/account/api-keys). ## Request format Depending on the endpoint, request
-  * bodies are either JSON objects or arrays of JSON objects, ## Parameters Parameters are passed in the request body
+  * bodies are either JSON objects or arrays of JSON objects. ## Parameters Parameters are passed in the request body
   * for POST and PUT requests. ## Response status and errors The Composition API returns JSON responses. Since JSON
   * doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response. Successful
-  * responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.
-  * Error responses have a `message` property with more information. ## Version The current version of the Composition
-  * API is version 1, as indicated by the `/1/` in each endpoint's URL.
+  * responses return `2xx` statuses. Client errors return `4xx` statuses. Server errors return `5xx` statuses. Error
+  * responses have a `message` property with more information. ## Version The current version of the Composition API is
+  * version 1, indicated by the `/1/` in each endpoint's URL.
   *
   * The version of the OpenAPI document: 1.0.0
   *
@@ -58,8 +58,6 @@ import algoliasearch.composition.SupportedLanguage._
   *   \- `ignorePlurals`. Plurals and similar declensions added by the `ignorePlurals` setting are considered exact
   *   matches - `singleWordSynonym`. Single-word synonyms, such as \"NY\" = \"NYC\", are considered exact matches -
   *   `multiWordsSynonym`. Multi-word synonyms, such as \"NY\" = \"New York\", are considered exact matches.
-  * @param analytics
-  *   Whether this search will be included in Analytics.
   * @param attributeCriteriaComputedByMinProximity
   *   Whether the best matching attribute should be determined by minimum proximity This setting only affects ranking if
   *   the Attribute ranking criterion comes before Proximity in the `ranking` setting. If true, the best matching
@@ -87,13 +85,6 @@ import algoliasearch.composition.SupportedLanguage._
   *   Whether to include a `queryID` attribute in the response The query ID is a unique identifier for a search query
   *   and is required for tracking [click and conversion
   *   events](https://www.algolia.com/doc/guides/sending-events/getting-started).
-  * @param decompoundQuery
-  *   Whether to split compound words in the query into their building blocks For more information, see [Word
-  *   segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words).
-  *   Word segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and Norwegian. Decompounding
-  *   doesn't work for words with [non-spacing mark Unicode
-  *   characters](https://www.charactercodes.net/category/non-spacing_mark). For example, `Gartenstühle` won't be
-  *   decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).
   * @param disableExactOnAttributes
   *   Searchable attributes for which you want to [turn off the Exact ranking
   *   criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).
@@ -121,16 +112,16 @@ import algoliasearch.composition.SupportedLanguage._
   * @param filters
   *   Filter expression to only include items that match the filter criteria in the response. You can use these filter
   *   expressions: - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`,
-  *   `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of
-  *   the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute
+  *   `>=`. - **Ranges.** `<facet>:<lower> TO <upper>`, where `<lower>` and `<upper>` are the lower and upper limits of
+  *   the range (inclusive). - **Facet filters.** `<facet>:<value>`, where `<facet>` is a facet attribute
   *   (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>`
   *   (case-sensitive). - **Boolean filters.** `<facet>: true | false`. You can combine filters with `AND`, `OR`, and
   *   `NOT` operators with the following restrictions: - You can only combine filters of the same type with `OR`. **Not
   *   supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters. **Not supported:**
   *   `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`. **Not supported:**
-  *   `facet:value OR (facet:value AND facet:value)` Use quotes around your filters, if the facet attribute name or
-  *   facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter
-  *   matches if it matches at least one element of the array. For more information, see
+  *   `facet:value OR (facet:value AND facet:value)` Use quotes if the facet attribute name or facet value contains
+  *   spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it
+  *   matches at least one element of the array. For more information, see
   *   [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
   * @param getRankingInfo
   *   Whether the search response should include detailed ranking information.
@@ -138,9 +129,6 @@ import algoliasearch.composition.SupportedLanguage._
   *   HTML tag to insert after the highlighted parts in all highlighted results and snippets.
   * @param highlightPreTag
   *   HTML tag to insert before the highlighted parts in all highlighted results and snippets.
-  * @param maxFacetHits
-  *   Maximum number of facet values to return when [searching for facet
-  *   values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
   * @param minProximity
   *   Minimum proximity score for two matching words This adjusts the [Proximity ranking
   *   criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity)
@@ -165,11 +153,11 @@ import algoliasearch.composition.SupportedLanguage._
   *   impact](https://www.algolia.com/doc/guides/personalization/personalizing-results/in-depth/configuring-personalization/#understanding-personalization-impact).
   * @param queryLanguages
   *   Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection
-  *   dictionaries This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals`
+  *   dictionaries. This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals`
   *   settings. This setting also sets a dictionary for word detection in the logogram-based
   *   [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk)
-  *   languages. To support this, you must place the CJK language **first** **You should always specify a query
-  *   language.** If you don't specify an indexing language, the search engine uses all [supported
+  *   languages. To support this, place the CJK language **first**. **Always specify a query language.** If you don't
+  *   specify an indexing language, the search engine uses all [supported
   *   languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
   *   or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to
   *   unexpected search results. For more information, see [Language-specific
@@ -207,13 +195,11 @@ case class BaseInjectionQueryParameters(
     advancedSyntaxFeatures: Option[Seq[AdvancedSyntaxFeatures]] = scala.None,
     allowTyposOnNumericTokens: Option[Boolean] = scala.None,
     alternativesAsExact: Option[Seq[AlternativesAsExact]] = scala.None,
-    analytics: Option[Boolean] = scala.None,
     attributeCriteriaComputedByMinProximity: Option[Boolean] = scala.None,
     attributesToHighlight: Option[Seq[String]] = scala.None,
     attributesToRetrieve: Option[Seq[String]] = scala.None,
     attributesToSnippet: Option[Seq[String]] = scala.None,
     clickAnalytics: Option[Boolean] = scala.None,
-    decompoundQuery: Option[Boolean] = scala.None,
     disableExactOnAttributes: Option[Seq[String]] = scala.None,
     disableTypoToleranceOnAttributes: Option[Seq[String]] = scala.None,
     distinct: Option[Distinct] = scala.None,
@@ -228,7 +214,6 @@ case class BaseInjectionQueryParameters(
     highlightPostTag: Option[String] = scala.None,
     highlightPreTag: Option[String] = scala.None,
     ignorePlurals: Option[IgnorePlurals] = scala.None,
-    maxFacetHits: Option[Int] = scala.None,
     minProximity: Option[Int] = scala.None,
     minWordSizefor1Typo: Option[Int] = scala.None,
     minWordSizefor2Typos: Option[Int] = scala.None,

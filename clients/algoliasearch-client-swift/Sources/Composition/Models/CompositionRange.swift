@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Range object with lower and upper values in meters to define custom ranges.
@@ -34,12 +34,7 @@ public struct CompositionRange: Codable, JSONEncodable {
     }
 }
 
-extension CompositionRange: Equatable {
-    public static func ==(lhs: CompositionRange, rhs: CompositionRange) -> Bool {
-        lhs.from == rhs.from &&
-            lhs.value == rhs.value
-    }
-}
+extension CompositionRange: Equatable {}
 
 extension CompositionRange: Hashable {
     public func hash(into hasher: inout Hasher) {

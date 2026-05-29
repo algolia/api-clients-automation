@@ -5,8 +5,8 @@
 //  Created by Algolia on 26/02/2024.
 //
 
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 import Foundation
 
@@ -370,6 +370,8 @@ public extension SearchClient {
                 acc.append(searchResponse)
             case .searchForFacetValuesResponse:
                 break
+            case .searchResponsePartial:
+                break
             }
         }
     }
@@ -391,6 +393,8 @@ public extension SearchClient {
             case let .searchResponse(searchResponse):
                 acc.append(contentsOf: searchResponse.hits)
             case .searchForFacetValuesResponse:
+                break
+            case .searchResponsePartial:
                 break
             }
         }
@@ -414,6 +418,8 @@ public extension SearchClient {
                 break
             case let .searchForFacetValuesResponse(searchForFacet):
                 acc.append(searchForFacet)
+            case .searchResponsePartial:
+                break
             }
         }
     }

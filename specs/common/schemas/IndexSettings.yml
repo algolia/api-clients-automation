@@ -157,7 +157,7 @@ baseIndexSettings:
       description: |
         Languages for language-specific processing steps, such as word detection and dictionary settings.
 
-        **You should always specify an indexing language.**
+        **Always specify an indexing language.**
         If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
         or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters.
         This can lead to unexpected search results.
@@ -354,7 +354,7 @@ indexSettingsAsSearchParams:
           Sort the index by the values of an attribute, in descending order.
 
         Before you modify the default setting,
-        you should test your changes in the dashboard,
+        test your changes in the dashboard,
         and by [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing).
       default:
         - typo
@@ -739,11 +739,11 @@ queryLanguages:
   example:
     - es
   description: |
-    Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries 
+    Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries.
     This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings.
     This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages.
-    To support this, you must place the CJK language **first** 
-    **You should always specify a query language.**
+    To support this, place the CJK language **first**.
+    **Always specify a query language.**
     If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
     or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters.
     This can lead to unexpected search results.
@@ -884,7 +884,7 @@ typoTolerance:
 ignorePlurals:
   description: |
     Treat singular, plurals, and other forms of declensions as equivalent.
-    You should only use this feature for the languages used in your index.
+    Only use this feature for the languages used in your index.
   example: [ca, es]
   oneOf:
     - type: array
@@ -909,7 +909,7 @@ removeStopWords:
     Stop words are common words like articles, conjunctions, prepositions, or pronouns that have little or no meaning on their own.
     In English, "the", "a", or "and" are stop words.
 
-    You should only use this feature for the languages used in your index.
+    Only use this feature for the languages used in your index.
   example: [ca, es]
   oneOf:
     - type: array
@@ -1171,18 +1171,18 @@ optionalWords:
     Words that should be considered optional when found in the query.
 
     By default, records must match all words in the search query to be included in the search results.
-    Adding optional words can help to increase the number of search results by running an additional search query that doesn't include the optional words.
-    For example, if the search query is "action video" and "video" is an optional word,
-    the search engine runs two queries. One for "action video" and one for "action".
+    Adding optional words can increase the number of search results by running an additional search query that doesn't include the optional words.
+    For example, if the search query is "action video" and "video" is optional,
+    the search engine runs two queries: one for "action video" and one for "action".
     Records that match all words are ranked higher.
 
     For a search query with 4 or more words **and** all its words are optional,
     the number of matched words required for a record to be included in the search results increases for every 1,000 records:
 
-    - If `optionalWords` has less than 10 words, the required number of matched words increases by 1:
-      results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words.
-    - If `optionalWords` has 10 or more words, the number of required matched words increases by the number of optional words divided by 5 (rounded down).
-      For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.
+    - If `optionalWords` has fewer than 10 words, the required number of matched words increases by 1:
+      results 1 to 1,000 require 1 matched word; results 1,001 to 2,000 need 2 matched words.
+    - If `optionalWords` has 10 or more words, the required number of matched words increases by the number of optional words divided by 5 (rounded down).
+      Example: with 18 optional words, results 1 to 1,000 require 1 matched word; results 1,001 to 2,000 need 4 matched words.
 
     For more information, see [Optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
   oneOf:

@@ -211,13 +211,57 @@ class SearchTest extends AnyFunSuite {
       client.customPost[JObject](
         path = "1/test/gzip",
         parameters = Some(Map()),
-        body = Some(JObject(List(JField("message", JString("this is a compressed body")))))
+        body = Some(
+          JObject(
+            List(
+              JField(
+                "message",
+                JString(
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."
+                )
+              )
+            )
+          )
+        )
       ),
       Duration.Inf
     )
     assert(
       parse(write(res)) == parse(
-        "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this is a compressed body\"}}"
+        "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien.\"}}"
+      )
+    )
+  }
+
+  test("test the response decompression strategy") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6691)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.customGet[JObject](
+        path = "1/test/gzip-response"
+      ),
+      Duration.Inf
+    )
+    assert(
+      parse(write(res)) == parse(
+        "{\"message\":\"ok decompression test server response\",\"data\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"}"
       )
     )
   }
@@ -381,7 +425,7 @@ class SearchTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.36.3\).*""".r
+    val regexp = """^Algolia for Scala \(2.41.0\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }
@@ -766,6 +810,74 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
+  test("call partialUpdateObjectsWithTransformation with createIfNotExists=true") {
+
+    val ingestionClientOptions = ClientOptions
+      .builder()
+      .withHosts(
+        List(
+          Host(
+            if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+            Set(CallType.Read, CallType.Write),
+            "http",
+            Option(6688)
+          ),
+          Host(
+            if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+            Set(CallType.Read, CallType.Write),
+            "http",
+            Option(6689)
+          )
+        )
+      )
+      .build()
+    val transformationOptions = TransformationOptions(region = "us", clientOptions = Some(ingestionClientOptions))
+    val client = SearchClient.withTransformation(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      transformationOptions = transformationOptions,
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6688)
+            ),
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6689)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.partialUpdateObjectsWithTransformation(
+          indexName = "cts_e2e_partialUpdateObjectsWithTransformation_scala",
+          objects = Seq(
+            JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+            JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit"))))
+          ),
+          createIfNotExists = true,
+          waitForTasks = true
+        ),
+        Duration.Inf
+      )
+      assert(
+        parse(write(res)) == parse(
+          "[{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_scala\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82925\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}]"
+        )
+      )
+    }
+  }
+
   test("call replaceAllObjects without error") {
 
     val client = SearchClient(
@@ -887,6 +999,69 @@ class SearchTest extends AnyFunSuite {
           )
         ),
         Duration.Inf
+      )
+    }
+  }
+
+  test("call replaceAllObjectsWithTransformation without error") {
+
+    val ingestionClientOptions = ClientOptions
+      .builder()
+      .withHosts(
+        List(
+          Host(
+            if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+            Set(CallType.Read, CallType.Write),
+            "http",
+            Option(6690)
+          )
+        )
+      )
+      .build()
+    val transformationOptions = TransformationOptions(region = "us", clientOptions = Some(ingestionClientOptions))
+    val client = SearchClient.withTransformation(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      transformationOptions = transformationOptions,
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6690)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.replaceAllObjectsWithTransformation(
+          indexName = "cts_e2e_replace_all_objects_with_transformation_scala",
+          objects = Seq(
+            JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+            JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit")))),
+            JObject(List(JField("objectID", JString("3")), JField("name", JString("Cyril")))),
+            JObject(List(JField("objectID", JString("4")), JField("name", JString("David")))),
+            JObject(List(JField("objectID", JString("5")), JField("name", JString("Eva")))),
+            JObject(List(JField("objectID", JString("6")), JField("name", JString("Fiona")))),
+            JObject(List(JField("objectID", JString("7")), JField("name", JString("Gael")))),
+            JObject(List(JField("objectID", JString("8")), JField("name", JString("Hugo")))),
+            JObject(List(JField("objectID", JString("9")), JField("name", JString("Igor")))),
+            JObject(List(JField("objectID", JString("10")), JField("name", JString("Julia"))))
+          ),
+          batchSize = 3
+        ),
+        Duration.Inf
+      )
+      assert(
+        parse(write(res)) == parse(
+          "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"watchResponses\":[{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_scala\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82921\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"},{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_scala\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82922\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"},{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_scala\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82923\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"},{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_scala\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82924\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}"
+        )
       )
     }
   }
@@ -1046,6 +1221,73 @@ class SearchTest extends AnyFunSuite {
           )
         ),
         Duration.Inf
+      )
+    }
+  }
+
+  test("call saveObjectsWithTransformation without error") {
+
+    val ingestionClientOptions = ClientOptions
+      .builder()
+      .withHosts(
+        List(
+          Host(
+            if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+            Set(CallType.Read, CallType.Write),
+            "http",
+            Option(6688)
+          ),
+          Host(
+            if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+            Set(CallType.Read, CallType.Write),
+            "http",
+            Option(6689)
+          )
+        )
+      )
+      .build()
+    val transformationOptions = TransformationOptions(region = "us", clientOptions = Some(ingestionClientOptions))
+    val client = SearchClient.withTransformation(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      transformationOptions = transformationOptions,
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6688)
+            ),
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6689)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.saveObjectsWithTransformation(
+          indexName = "cts_e2e_saveObjectsWithTransformation_scala",
+          objects = Seq(
+            JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+            JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit"))))
+          ),
+          waitForTasks = true
+        ),
+        Duration.Inf
+      )
+      assert(
+        parse(write(res)) == parse(
+          "[{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_scala\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82925\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}]"
+        )
       )
     }
   }

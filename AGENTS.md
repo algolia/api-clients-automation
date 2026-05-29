@@ -142,6 +142,10 @@ yarn cli release --dry-run         # Test release without pushing
 
 ## NOTES
 
+### API Documentation Guidelines
+
+When writing or editing API specs, follow `website/docs/add-a-new-api/api-documentation-guidelines.md`.
+
 ### Docker Required
 
 Most language builds require Docker. Run `yarn docker:setup` first. Images: `apic_base` (most languages), `apic_ruby`, `apic_swift`.

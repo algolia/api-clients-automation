@@ -12,11 +12,12 @@ Injection _$InjectionFromJson(Map<String, dynamic> json) => $checkedCreate(
       ($checkedConvert) {
         final val = Injection(
           main: $checkedConvert(
-              'main', (v) => Main.fromJson(v as Map<String, dynamic>)),
+              'main', (v) => InjectionMain.fromJson(v as Map<String, dynamic>)),
           injectedItems: $checkedConvert(
               'injectedItems',
               (v) => (v as List<dynamic>?)
-                  ?.map((e) => InjectedItem.fromJson(e as Map<String, dynamic>))
+                  ?.map((e) =>
+                      InjectionInjectedItem.fromJson(e as Map<String, dynamic>))
                   .toList()),
           deduplication: $checkedConvert(
               'deduplication',

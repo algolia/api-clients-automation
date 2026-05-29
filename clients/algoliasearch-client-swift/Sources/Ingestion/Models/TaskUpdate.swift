@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// API request body for partially updating a task.
@@ -67,18 +67,7 @@ public struct TaskUpdate: Codable, JSONEncodable {
     }
 }
 
-extension TaskUpdate: Equatable {
-    public static func ==(lhs: TaskUpdate, rhs: TaskUpdate) -> Bool {
-        lhs.destinationID == rhs.destinationID &&
-            lhs.cron == rhs.cron &&
-            lhs.input == rhs.input &&
-            lhs.enabled == rhs.enabled &&
-            lhs.subscriptionAction == rhs.subscriptionAction &&
-            lhs.failureThreshold == rhs.failureThreshold &&
-            lhs.notifications == rhs.notifications &&
-            lhs.policies == rhs.policies
-    }
-}
+extension TaskUpdate: Equatable {}
 
 extension TaskUpdate: Hashable {
     public func hash(into hasher: inout Hasher) {

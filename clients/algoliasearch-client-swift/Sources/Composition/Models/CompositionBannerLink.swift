@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Link for a banner defined in the Merchandising Studio.
@@ -26,11 +26,7 @@ public struct CompositionBannerLink: Codable, JSONEncodable {
     }
 }
 
-extension CompositionBannerLink: Equatable {
-    public static func ==(lhs: CompositionBannerLink, rhs: CompositionBannerLink) -> Bool {
-        lhs.url == rhs.url
-    }
-}
+extension CompositionBannerLink: Equatable {}
 
 extension CompositionBannerLink: Hashable {
     public func hash(into hasher: inout Hasher) {

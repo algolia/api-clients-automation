@@ -12,14 +12,14 @@ info:
     with your apps.
 
 
-    See: [Algolia's
-    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem)
+    For more information, see [Algolia's
+    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem).
 
 
     ## Base URLs
 
 
-    The base URLs for requests to the Composition API are:
+    Base URLs for the Composition API:
 
 
     - `https://{APPLICATION_ID}.algolia.net`
@@ -51,8 +51,7 @@ info:
 
     These URLs use a different DNS provider than the primary URLs.
 
-    You should randomize this list to ensure an even load across the three
-    servers.
+    Randomize this list to ensure an even load across the three servers.
 
 
     All Algolia API clients implement this retry strategy.
@@ -61,7 +60,7 @@ info:
     ## Authentication
 
 
-    To authenticate your API requests, add these headers:
+    Add these headers to authenticate requests:
 
 
     - `x-algolia-application-id`. Your Algolia application ID.
@@ -78,7 +77,7 @@ info:
 
 
     Depending on the endpoint, request bodies are either JSON objects or arrays
-    of JSON objects,
+    of JSON objects.
 
 
     ## Parameters
@@ -96,8 +95,8 @@ info:
     of attributes in the API response.
 
 
-    Successful responses return a `2xx` status. Client errors return a `4xx`
-    status. Server errors are indicated by a `5xx` status.
+    Successful responses return `2xx` statuses. Client errors return `4xx`
+    statuses. Server errors return `5xx` statuses.
 
     Error responses have a `message` property with more information.
 
@@ -105,7 +104,7 @@ info:
     ## Version
 
 
-    The current version of the Composition API is version 1, as indicated by the
+    The current version of the Composition API is version 1, indicated by the
     `/1/` in each endpoint's URL.
   version: 1.0.0
 servers:
@@ -275,6 +274,8 @@ paths:
               properties:
                 params:
                   $ref: '#/components/schemas/params'
+                feedsOrder:
+                  $ref: '#/components/schemas/feedsOrder'
       responses:
         '200':
           description: OK
@@ -556,16 +557,18 @@ paths:
       description: >
         Updates the "sortingStrategy" field of an existing composition.
 
-        This endpoint allows you to create a new sorting strategy mapping or
-        replace the currently configured one.
+        This endpoint lets you create a new sorting strategy mapping or replace
+        the configured one.
 
-        The provided sorting indices MUST be associated indices or replicas of
+        The provided sorting indices must be associated indices or replicas of
         the main targeted index.
 
 
-        WARNING: This endpoint cannot validate if the sort index is related to
-        the composition's main index.
-          Validation will fail at runtime if the index you updated is not related!
+        This endpoint can't validate whether the sort index is related to the
+        composition's main index.
+
+        Validation fails at runtime if the index you updated isn't related.
+
 
         The update is applied to the specified composition within the current
         Algolia application and returns a taskID that can be used to track the
@@ -904,7 +907,7 @@ paths:
       parameters:
         - in: query
           name: apiKey
-          description: API key to be used from now on.
+          description: API key to use for subsequent requests.
           required: true
           schema:
             type: string
@@ -1244,17 +1247,10 @@ components:
         and [disjunctive faceting for Smart
         Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).
       default: []
-      examples:
-        - facetSpecificList:
-            summary: Specify which facet to retrieve with some marked as disjunctive
-            value:
-              - category
-              - disjunctive(brand)
-              - price
-        - facetAll:
-            summary: Retrieve all facets
-            value:
-              - '*'
+      example:
+        - category
+        - disjunctive(brand)
+        - price
       x-categories:
         - Faceting
     filters:
@@ -1270,10 +1266,10 @@ components:
         - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of
         `<`, `<=`, `=`, `!=`, `>`, `>=`.
 
-        - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>`
-        are the lower and upper limits of the range (inclusive).
+        - **Ranges.** `<facet>:<lower> TO <upper>`, where `<lower>` and
+        `<upper>` are the lower and upper limits of the range (inclusive).
 
-        - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet
+        - **Facet filters.** `<facet>:<value>`, where `<facet>` is a facet
         attribute (case-sensitive) and `<value>` a facet value.
 
         - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive).
@@ -1292,8 +1288,8 @@ components:
         - You can't combine conjunctions (`AND`) with `OR`.
           **Not supported:** `facet:value OR (facet:value AND facet:value)`
 
-        Use quotes around your filters, if the facet attribute name or facet
-        value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes.
+        Use quotes if the facet attribute name or facet value contains spaces,
+        keywords (`OR`, `AND`, `NOT`), or quotes.
 
         If a facet attribute is an array, the filter matches if it matches at
         least one element of the array.
@@ -1320,6 +1316,8 @@ components:
         - Pagination
     externalInjectedItem:
       type: object
+      description: |
+        Contains a list of objects to inject from an external source.
       properties:
         items:
           type: array
@@ -1330,7 +1328,9 @@ components:
             properties:
               objectID:
                 type: string
-                description: An objectID injected into an external source.
+                description: >-
+                  An objectID injected from an external source and also present
+                  in the targeted index.
               metadata:
                 type: object
                 additionalProperties: true
@@ -1348,7 +1348,7 @@ components:
               - objectID
             example:
               objectID: my-object-1
-              metadata:
+              metadata':
                 my-field: my-value
       required:
         - items
@@ -1357,17 +1357,25 @@ components:
       additionalProperties:
         $ref: '#/components/schemas/externalInjectedItem'
       description: >
-        A list of extenrally injected objectID groups into from an external
-        source.
+        An object containing keys corresponding to the `key`s from an
+        injection's `injectedItems` and values containing a list of hits to
+        inject.
       default: {}
       x-categories:
         - Retail Media Network
       example:
         my-group-key:
-          - objectID: my-object-1
-            metadata:
-              my-field: my-value
-          - objectID: my-object-2
+          items:
+            - objectID: my-object-1
+              metadata:
+                my-field: my-value
+            - objectID: my-object-2
+              metadata:
+                my-field: my-value-2
+        my-other-group-key:
+          items:
+            - objectID: my-other-object-1
+            - objectID: my-other-object-2
     insideBoundingBoxArray:
       type: array
       items:
@@ -1632,7 +1640,7 @@ components:
         - es
       description: >
         Languages for language-specific query processing steps such as plurals,
-        stop-word removal, and word-detection dictionaries 
+        stop-word removal, and word-detection dictionaries.
 
         This setting sets a default list of languages used by the
         `removeStopWords` and `ignorePlurals` settings.
@@ -1642,9 +1650,9 @@ components:
         [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk)
         languages.
 
-        To support this, you must place the CJK language **first** 
+        To support this, place the CJK language **first**.
 
-        **You should always specify a query language.**
+        **Always specify a query language.**
 
         If you don't specify an indexing language, the search engine uses all
         [supported
@@ -1790,6 +1798,26 @@ components:
           $ref: '#/components/schemas/sortBy'
         userToken:
           $ref: '#/components/schemas/userToken'
+    feedsOrder:
+      type: array
+      description: >
+        A list of Feed IDs that specifies the order in which to order the
+        results in the response. 
+
+        The IDs should be a subset of those in the `feeds` object of the
+        targeted `multifeed` Composition / Composition Rule, and only those
+        specified will be processed. 
+
+
+        The value overrides the value in the defined behavior, and when
+        unspecified, the value defined in the behavior is used. When neither
+        value is present, all feeds are processed.
+      items:
+        type: string
+      default: null
+      example:
+        - feed-1
+        - feed-3
     compositionRunAppliedRules:
       type: object
       properties:
@@ -2521,6 +2549,10 @@ components:
           $ref: '#/components/schemas/SingleResultSet_params'
         query:
           $ref: '#/components/schemas/SingleResultSet_query'
+    feedID:
+      type: string
+      description: The ID of the feed.
+      example: products-feed
     resultsInjectedItemAppliedRulesInfoResponse:
       type: object
       properties:
@@ -2558,6 +2590,8 @@ components:
     resultsCompositionsResponse:
       type: object
       properties:
+        feedID:
+          $ref: '#/components/schemas/feedID'
         compositions:
           additionalProperties:
             $ref: '#/components/schemas/resultsCompositionInfoResponse'
@@ -2830,25 +2864,6 @@ components:
       default: []
       x-categories:
         - Highlighting and Snippeting
-    decompoundQuery:
-      type: boolean
-      description: >
-        Whether to split compound words in the query into their building blocks
-
-        For more information, see [Word
-        segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words).
-
-        Word segmentation is supported for these languages: German, Dutch,
-        Finnish, Swedish, and Norwegian.
-
-        Decompounding doesn't work for words with [non-spacing mark Unicode
-        characters](https://www.charactercodes.net/category/non-spacing_mark).
-
-        For example, `Gartenstühle` won't be decompounded if the `ü` consists of
-        `u` (U+0075) and `◌̈` (U+0308).
-      default: true
-      x-categories:
-        - Languages
     disableExactOnAttributes:
       type: array
       items:
@@ -3009,7 +3024,7 @@ components:
     ignorePlurals:
       description: |
         Treat singular, plurals, and other forms of declensions as equivalent.
-        You should only use this feature for the languages used in your index.
+        Only use this feature for the languages used in your index.
       example:
         - ca
         - es
@@ -3088,14 +3103,14 @@ components:
         By default, records must match all words in the search query to be
         included in the search results.
 
-        Adding optional words can help to increase the number of search results
-        by running an additional search query that doesn't include the optional
+        Adding optional words can increase the number of search results by
+        running an additional search query that doesn't include the optional
         words.
 
-        For example, if the search query is "action video" and "video" is an
-        optional word,
+        For example, if the search query is "action video" and "video" is
+        optional,
 
-        the search engine runs two queries. One for "action video" and one for
+        the search engine runs two queries: one for "action video" and one for
         "action".
 
         Records that match all words are ranked higher.
@@ -3108,13 +3123,13 @@ components:
         search results increases for every 1,000 records:
 
 
-        - If `optionalWords` has less than 10 words, the required number of
+        - If `optionalWords` has fewer than 10 words, the required number of
         matched words increases by 1:
-          results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words.
-        - If `optionalWords` has 10 or more words, the number of required
+          results 1 to 1,000 require 1 matched word; results 1,001 to 2,000 need 2 matched words.
+        - If `optionalWords` has 10 or more words, the required number of
         matched words increases by the number of optional words divided by 5
         (rounded down).
-          For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.
+          Example: with 18 optional words, results 1 to 1,000 require 1 matched word; results 1,001 to 2,000 need 4 matched words.
 
         For more information, see [Optional
         words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
@@ -3182,7 +3197,7 @@ components:
         In English, "the", "a", or "and" are stop words.
 
 
-        You should only use this feature for the languages used in your index.
+        Only use this feature for the languages used in your index.
       example:
         - ca
         - es
@@ -3392,8 +3407,6 @@ components:
           $ref: '#/components/schemas/allowTyposOnNumericTokens'
         alternativesAsExact:
           $ref: '#/components/schemas/IndexSettings_alternativesAsExact'
-        analytics:
-          $ref: '#/components/schemas/analytics'
         attributeCriteriaComputedByMinProximity:
           $ref: '#/components/schemas/attributeCriteriaComputedByMinProximity'
         attributesToHighlight:
@@ -3404,8 +3417,6 @@ components:
           $ref: '#/components/schemas/attributesToSnippet'
         clickAnalytics:
           $ref: '#/components/schemas/clickAnalytics'
-        decompoundQuery:
-          $ref: '#/components/schemas/decompoundQuery'
         disableExactOnAttributes:
           $ref: '#/components/schemas/disableExactOnAttributes'
         disableTypoToleranceOnAttributes:
@@ -3434,8 +3445,6 @@ components:
           $ref: '#/components/schemas/highlightPreTag'
         ignorePlurals:
           $ref: '#/components/schemas/ignorePlurals'
-        maxFacetHits:
-          $ref: '#/components/schemas/maxFacetHits'
         minProximity:
           $ref: '#/components/schemas/minProximity'
         minWordSizefor1Typo:
@@ -3556,16 +3565,92 @@ components:
               $ref: '#/components/schemas/sortFacetValuesBy'
             sumOrFiltersScores:
               $ref: '#/components/schemas/sumOrFiltersScores'
-    SearchSource:
-      title: searchSource
+    injectionMainSearchSource:
       description: >-
-        Injected items will originate from a search request performed on the
+        Organic result set will originate from a search request performed on the
         specified index.
+      x-discriminator-fields:
+        - search
       type: object
       additionalProperties: false
       properties:
         search:
-          title: search
+          title: mainSearch
+          type: object
+          additionalProperties: false
+          properties:
+            index:
+              type: string
+              description: Index to retrieve search results from.
+              example: Products
+            params:
+              $ref: '#/components/schemas/mainInjectionQueryParameters'
+          required:
+            - index
+      required:
+        - search
+    model:
+      type: string
+      enum:
+        - trending-items
+      description: Recommendation model to use for retrieving recommendations.
+      example: trending-items
+    injectionMainRecommendSource:
+      description: Organic result set will originate from a recommend request.
+      x-discriminator-fields:
+        - recommend
+      type: object
+      additionalProperties: false
+      properties:
+        recommend:
+          title: mainRecommend
+          type: object
+          additionalProperties: false
+          properties:
+            indexName:
+              type: string
+              description: Index to retrieve recommendations from.
+              example: Products
+            model:
+              $ref: '#/components/schemas/model'
+            threshold:
+              type: integer
+              minimum: 0
+              maximum: 100
+              description: Minimum score a recommendation must have to be included.
+            queryParameters:
+              $ref: '#/components/schemas/mainInjectionQueryParameters'
+            fallbackParameters:
+              $ref: '#/components/schemas/mainInjectionQueryParameters'
+          required:
+            - indexName
+            - model
+            - threshold
+      required:
+        - recommend
+    injectionMainSource:
+      description: Source to be used to retrieve organic result set.
+      oneOf:
+        - $ref: '#/components/schemas/injectionMainSearchSource'
+        - $ref: '#/components/schemas/injectionMainRecommendSource'
+    injectionMain:
+      type: object
+      additionalProperties: false
+      description: Main defines the organic result set of the injection.
+      properties:
+        source:
+          $ref: '#/components/schemas/injectionMainSource'
+    injectedItemSearchSource:
+      description: >-
+        Injected items will originate from a search request performed on the
+        specified index.
+      x-discriminator-fields:
+        - search
+      type: object
+      additionalProperties: false
+      properties:
+        search:
+          title: injectedItemSearch
           type: object
           additionalProperties: false
           properties:
@@ -3580,20 +3665,27 @@ components:
       required:
         - search
     externalOrdering:
+      description: >-
+        Ordering to apply on the injected items coming from the external source.
+        'default' means the items will be ordered as they are in the index
+        (natural relevance) in the smart group. 'userDefined' means the order in
+        which the objectIDs are provided in the run request payload will be
+        preserved in the smart group.
       enum:
         - default
         - userDefined
       default: default
-    ExternalSource:
-      title: externalSource
+    injectedItemExternalSource:
       description: >-
         Injected items will originate from externally provided objectIDs (that
         must exist in the index) given at runtime in the run request payload.
+      x-discriminator-fields:
+        - external
       type: object
       additionalProperties: false
       properties:
         external:
-          title: external
+          title: injectedItemExternal
           type: object
           additionalProperties: false
           properties:
@@ -3609,11 +3701,47 @@ components:
             - index
       required:
         - external
+    injectedItemRecommendSource:
+      description: >-
+        Injected items will originate from a recommendation request performed on
+        the specified index.
+      x-discriminator-fields:
+        - recommend
+      type: object
+      additionalProperties: false
+      properties:
+        recommend:
+          title: recommend
+          type: object
+          additionalProperties: false
+          properties:
+            indexName:
+              type: string
+              description: Index to retrieve recommendations from.
+              example: Products
+            model:
+              $ref: '#/components/schemas/model'
+            threshold:
+              type: integer
+              minimum: 0
+              maximum: 100
+              description: Minimum score a recommendation must have to be included.
+            queryParameters:
+              $ref: '#/components/schemas/baseInjectionQueryParameters'
+            fallbackParameters:
+              $ref: '#/components/schemas/baseInjectionQueryParameters'
+          required:
+            - indexName
+            - model
+            - threshold
+      required:
+        - recommend
     injectedItemSource:
       oneOf:
-        - $ref: '#/components/schemas/SearchSource'
-        - $ref: '#/components/schemas/ExternalSource'
-    injectedItem:
+        - $ref: '#/components/schemas/injectedItemSearchSource'
+        - $ref: '#/components/schemas/injectedItemExternalSource'
+        - $ref: '#/components/schemas/injectedItemRecommendSource'
+    injectionInjectedItem:
       type: object
       additionalProperties: false
       properties:
@@ -3621,16 +3749,16 @@ components:
           type: string
           description: injected Item unique identifier.
         source:
-          description: Search source to be used to inject items into result set.
+          description: Source to be used to inject items into result set.
           $ref: '#/components/schemas/injectedItemSource'
         position:
           type: integer
           minimum: 0
-          maximum: 19
+          maximum: 99
         length:
           type: integer
           minimum: 0
-          maximum: 20
+          maximum: 50
         metadata:
           title: injectedItemMetadata
           type: object
@@ -3684,39 +3812,14 @@ components:
       additionalProperties: false
       properties:
         main:
-          title: main
-          type: object
-          additionalProperties: false
-          properties:
-            source:
-              title: compositionSource
-              type: object
-              additionalProperties: false
-              properties:
-                search:
-                  title: compositionSourceSearch
-                  type: object
-                  additionalProperties: false
-                  properties:
-                    index:
-                      type: string
-                      description: Composition Main Index name.
-                      example: Products
-                    params:
-                      $ref: '#/components/schemas/mainInjectionQueryParameters'
-                  required:
-                    - index
-              required:
-                - search
-          required:
-            - source
+          $ref: '#/components/schemas/injectionMain'
         injectedItems:
           type: array
           description: list of injected items of the current Composition.
           minItems: 0
-          maxItems: 2
+          maxItems: 3
           items:
-            $ref: '#/components/schemas/injectedItem'
+            $ref: '#/components/schemas/injectionInjectedItem'
         deduplication:
           title: deduplication
           type: object
@@ -3740,6 +3843,19 @@ components:
           $ref: '#/components/schemas/injection'
       required:
         - injection
+    feedInjection:
+      type: object
+      description: Feed formatted as an injection.
+      additionalProperties: false
+      properties:
+        injection:
+          $ref: '#/components/schemas/injection'
+      required:
+        - injection
+    Behaviour_feedID:
+      type: object
+      oneOf:
+        - $ref: '#/components/schemas/feedInjection'
     multifeed:
       title: multifeed
       type: object
@@ -3751,7 +3867,7 @@ components:
             A key-value store of Feed ID to Feed. Currently, the only supported
             Feed type is an Injection.
           additionalProperties:
-            $ref: '#/components/schemas/injection'
+            $ref: '#/components/schemas/Behaviour_feedID'
         feedsOrder:
           type: array
           description: >-
@@ -3767,24 +3883,26 @@ components:
       example:
         feeds:
           products-feed:
-            main:
-              source:
-                search:
-                  index: products
-            injectedItems:
-              - key: sponsored
-                position: 0
-                length: 4
+            injection:
+              main:
                 source:
                   search:
                     index: products
-                    params:
-                      filters: sponsored:true
+              injectedItems:
+                - key: sponsored
+                  position: 0
+                  length: 4
+                  source:
+                    search:
+                      index: products
+                      params:
+                        filters: sponsored:true
           articles-feed:
-            main:
-              source:
-                search:
-                  index: articles
+            injection:
+              main:
+                source:
+                  search:
+                    index: articles
         feedsOrder:
           - products-feed
           - articles-feed
@@ -4010,11 +4128,15 @@ components:
         from:
           type: integer
           format: int64
-          description: When the rule should start to be active, in Unix epoch time.
+          description: >-
+            Timestamp when the rule should start to be active, measured in
+            seconds since the Unix epoch.
         until:
           type: integer
           format: int64
-          description: When the rule should stop to be active, in Unix epoch time.
+          description: >-
+            Timestamp when the rule should stop to be active, measured in
+            seconds since the Unix epoch.
     compositionRule:
       type: object
       additionalProperties: false

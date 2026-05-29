@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// A/B test filter effects resulting from configuration settings.
@@ -30,12 +30,7 @@ public struct AbtestingV3FilterEffects: Codable, JSONEncodable {
     }
 }
 
-extension AbtestingV3FilterEffects: Equatable {
-    public static func ==(lhs: AbtestingV3FilterEffects, rhs: AbtestingV3FilterEffects) -> Bool {
-        lhs.outliers == rhs.outliers &&
-            lhs.emptySearch == rhs.emptySearch
-    }
-}
+extension AbtestingV3FilterEffects: Equatable {}
 
 extension AbtestingV3FilterEffects: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * Treat singular, plurals, and other forms of declensions as equivalent. You should only use this
- * feature for the languages used in your index.
+ * Treat singular, plurals, and other forms of declensions as equivalent. Only use this feature for
+ * the languages used in your index.
  */
 @JsonDeserialize(using = IgnorePlurals.Deserializer.class)
 public interface IgnorePlurals {

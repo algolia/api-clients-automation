@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct SourceUpdateResponse: Codable, JSONEncodable {
@@ -11,7 +11,7 @@ public struct SourceUpdateResponse: Codable, JSONEncodable {
     public var sourceID: String
     /// Descriptive name of the source.
     public var name: String
-    /// Date of last update in RFC 3339 format.
+    /// Date and time when the resource was last updated, in RFC 3339 format.
     public var updatedAt: String
 
     public init(sourceID: String, name: String, updatedAt: String) {
@@ -36,13 +36,7 @@ public struct SourceUpdateResponse: Codable, JSONEncodable {
     }
 }
 
-extension SourceUpdateResponse: Equatable {
-    public static func ==(lhs: SourceUpdateResponse, rhs: SourceUpdateResponse) -> Bool {
-        lhs.sourceID == rhs.sourceID &&
-            lhs.name == rhs.name &&
-            lhs.updatedAt == rhs.updatedAt
-    }
-}
+extension SourceUpdateResponse: Equatable {}
 
 extension SourceUpdateResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

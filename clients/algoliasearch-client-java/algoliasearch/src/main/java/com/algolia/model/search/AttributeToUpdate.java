@@ -54,6 +54,15 @@ public interface AttributeToUpdate {
     @Override
     public AttributeToUpdate deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
+      // deserialize BuiltInOperation
+      if (tree.isObject() && tree.has("_operation") && tree.has("value")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(BuiltInOperation.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf BuiltInOperation (error: " + e.getMessage() + ") (type: BuiltInOperation)");
+        }
+      }
       // deserialize String
       if (tree.isTextual()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -62,15 +71,6 @@ public interface AttributeToUpdate {
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf String (error: " + e.getMessage() + ") (type: String)");
-        }
-      }
-      // deserialize BuiltInOperation
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(BuiltInOperation.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf BuiltInOperation (error: " + e.getMessage() + ") (type: BuiltInOperation)");
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));

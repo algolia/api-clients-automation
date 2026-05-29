@@ -53,6 +53,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'hits' => '\Algolia\AlgoliaSearch\Model\Search\Hit[]',
         'query' => 'string',
         'params' => 'string',
+        'extensions' => '\Algolia\AlgoliaSearch\Model\Search\ResponseExtensions',
         'facetHits' => '\Algolia\AlgoliaSearch\Model\Search\FacetHits[]',
     ];
 
@@ -95,6 +96,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'hits' => null,
         'query' => null,
         'params' => null,
+        'extensions' => null,
         'facetHits' => null,
     ];
 
@@ -138,6 +140,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'hits' => 'hits',
         'query' => 'query',
         'params' => 'params',
+        'extensions' => 'extensions',
         'facetHits' => 'facetHits',
     ];
 
@@ -180,6 +183,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'hits' => 'setHits',
         'query' => 'setQuery',
         'params' => 'setParams',
+        'extensions' => 'setExtensions',
         'facetHits' => 'setFacetHits',
     ];
 
@@ -222,6 +226,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'hits' => 'getHits',
         'query' => 'getQuery',
         'params' => 'getParams',
+        'extensions' => 'getExtensions',
         'facetHits' => 'getFacetHits',
     ];
 
@@ -338,6 +343,9 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         if (isset($data['params'])) {
             $this->container['params'] = $data['params'];
         }
+        if (isset($data['extensions'])) {
+            $this->container['extensions'] = $data['extensions'];
+        }
         if (isset($data['facetHits'])) {
             $this->container['facetHits'] = $data['facetHits'];
         }
@@ -408,12 +416,6 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         }
         if (!isset($this->container['hits']) || null === $this->container['hits']) {
             $invalidProperties[] = "'hits' can't be null";
-        }
-        if (!isset($this->container['query']) || null === $this->container['query']) {
-            $invalidProperties[] = "'query' can't be null";
-        }
-        if (!isset($this->container['params']) || null === $this->container['params']) {
-            $invalidProperties[] = "'params' can't be null";
         }
         if (!isset($this->container['facetHits']) || null === $this->container['facetHits']) {
             $invalidProperties[] = "'facetHits' can't be null";
@@ -581,6 +583,8 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
      * Gets exhaustiveFacetsCount.
      *
      * @return bool
+     *
+     * @deprecated
      */
     public function getExhaustiveFacetsCount()
     {
@@ -590,9 +594,11 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Sets exhaustiveFacetsCount.
      *
-     * @param bool $exhaustiveFacetsCount Whether the facet count is exhaustive (true) or approximate (false). For more information, see [Why are my facet and hit counts not accurate](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate).
+     * @param bool $exhaustiveFacetsCount see the `facetsCount` field of the `exhaustive` object in the response
      *
      * @return self
+     *
+     * @deprecated
      */
     public function setExhaustiveFacetsCount($exhaustiveFacetsCount)
     {
@@ -1188,7 +1194,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Gets query.
      *
-     * @return string
+     * @return null|string
      */
     public function getQuery()
     {
@@ -1198,7 +1204,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Sets query.
      *
-     * @param string $query search query
+     * @param null|string $query search query
      *
      * @return self
      */
@@ -1212,7 +1218,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Gets params.
      *
-     * @return string
+     * @return null|string
      */
     public function getParams()
     {
@@ -1222,13 +1228,37 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Sets params.
      *
-     * @param string $params URL-encoded string of all search parameters
+     * @param null|string $params URL-encoded string of all search parameters
      *
      * @return self
      */
     public function setParams($params)
     {
         $this->container['params'] = $params;
+
+        return $this;
+    }
+
+    /**
+     * Gets extensions.
+     *
+     * @return null|ResponseExtensions
+     */
+    public function getExtensions()
+    {
+        return $this->container['extensions'] ?? null;
+    }
+
+    /**
+     * Sets extensions.
+     *
+     * @param null|ResponseExtensions $extensions extensions
+     *
+     * @return self
+     */
+    public function setExtensions($extensions)
+    {
+        $this->container['extensions'] = $extensions;
 
         return $this;
     }

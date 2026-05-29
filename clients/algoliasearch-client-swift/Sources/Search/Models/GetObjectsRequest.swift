@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Request body for retrieving records.
@@ -37,13 +37,7 @@ public struct GetObjectsRequest: Codable, JSONEncodable {
     }
 }
 
-extension GetObjectsRequest: Equatable {
-    public static func ==(lhs: GetObjectsRequest, rhs: GetObjectsRequest) -> Bool {
-        lhs.attributesToRetrieve == rhs.attributesToRetrieve &&
-            lhs.objectID == rhs.objectID &&
-            lhs.indexName == rhs.indexName
-    }
-}
+extension GetObjectsRequest: Equatable {}
 
 extension GetObjectsRequest: Hashable {
     public func hash(into hasher: inout Hasher) {

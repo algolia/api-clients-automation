@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Configured tasks and pagination information.
@@ -30,12 +30,7 @@ public struct ListTasksResponse: Codable, JSONEncodable {
     }
 }
 
-extension ListTasksResponse: Equatable {
-    public static func ==(lhs: ListTasksResponse, rhs: ListTasksResponse) -> Bool {
-        lhs.tasks == rhs.tasks &&
-            lhs.pagination == rhs.pagination
-    }
-}
+extension ListTasksResponse: Equatable {}
 
 extension ListTasksResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

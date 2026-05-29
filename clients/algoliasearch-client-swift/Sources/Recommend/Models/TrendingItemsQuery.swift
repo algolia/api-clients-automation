@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct TrendingItemsQuery: Codable, JSONEncodable {
@@ -71,18 +71,7 @@ public struct TrendingItemsQuery: Codable, JSONEncodable {
     }
 }
 
-extension TrendingItemsQuery: Equatable {
-    public static func ==(lhs: TrendingItemsQuery, rhs: TrendingItemsQuery) -> Bool {
-        lhs.indexName == rhs.indexName &&
-            lhs.threshold == rhs.threshold &&
-            lhs.maxRecommendations == rhs.maxRecommendations &&
-            lhs.queryParameters == rhs.queryParameters &&
-            lhs.facetName == rhs.facetName &&
-            lhs.facetValue == rhs.facetValue &&
-            lhs.model == rhs.model &&
-            lhs.fallbackParameters == rhs.fallbackParameters
-    }
-}
+extension TrendingItemsQuery: Equatable {}
 
 extension TrendingItemsQuery: Hashable {
     public func hash(into hasher: inout Hasher) {

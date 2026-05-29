@@ -4,8 +4,8 @@ import XCTest
 
 import Utils
 
-@testable import Core
-@testable import Monitoring
+@testable import AlgoliaCore
+@testable import AlgoliaMonitoring
 
 final class MonitoringClientRequestsTests: XCTestCase {
     static let APPLICATION_ID = "my_application_id"

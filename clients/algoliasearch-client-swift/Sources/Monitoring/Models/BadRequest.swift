@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct BadRequest: Codable, JSONEncodable {
@@ -25,11 +25,7 @@ public struct BadRequest: Codable, JSONEncodable {
     }
 }
 
-extension BadRequest: Equatable {
-    public static func ==(lhs: BadRequest, rhs: BadRequest) -> Bool {
-        lhs.reason == rhs.reason
-    }
-}
+extension BadRequest: Equatable {}
 
 extension BadRequest: Hashable {
     public func hash(into hasher: inout Hasher) {

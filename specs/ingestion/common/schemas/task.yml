@@ -50,7 +50,7 @@ TaskV1:
   type: object
   additionalProperties: false
   deprecated: true
-  description: The V1 task object, please use methods and types that don't contain the V1 suffix.
+  description: The V1 task object. Use methods and types that don't contain the V1 suffix.
   properties:
     taskID:
       $ref: './common.yml#/taskID'
@@ -134,7 +134,7 @@ TaskCreateV1:
   type: object
   additionalProperties: false
   deprecated: true
-  description: API request body for creating a task using the V1 shape, please use methods and types that don't contain the V1 suffix.
+  description: API request body for creating a task using the V1 shape. Use methods and types that don't contain the V1 suffix.
   properties:
     sourceID:
       $ref: './common.yml#/sourceID'
@@ -237,7 +237,7 @@ TaskUpdateV1:
   type: object
   additionalProperties: false
   deprecated: true
-  description: API request body for updating a task using the V1 shape, please use methods and types that don't contain the V1 suffix.
+  description: API request body for updating a task using the V1 shape. Use methods and types that don't contain the V1 suffix.
   properties:
     destinationID:
       $ref: './common.yml#/destinationID'

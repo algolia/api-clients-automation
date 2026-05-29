@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Batch parameters.
@@ -26,11 +26,7 @@ public struct SearchBatchWriteParams: Codable, JSONEncodable {
     }
 }
 
-extension SearchBatchWriteParams: Equatable {
-    public static func ==(lhs: SearchBatchWriteParams, rhs: SearchBatchWriteParams) -> Bool {
-        lhs.requests == rhs.requests
-    }
-}
+extension SearchBatchWriteParams: Equatable {}
 
 extension SearchBatchWriteParams: Hashable {
     public func hash(into hasher: inout Hasher) {

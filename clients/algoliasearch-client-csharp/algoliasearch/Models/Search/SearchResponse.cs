@@ -29,13 +29,9 @@ public partial class SearchResponse<T>
   /// Initializes a new instance of the SearchResponse class.
   /// </summary>
   /// <param name="hits">Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.  (required).</param>
-  /// <param name="query">Search query. (required) (default to "").</param>
-  /// <param name="varParams">URL-encoded string of all search parameters. (required).</param>
-  public SearchResponse(List<T> hits, string query, string varParams)
+  public SearchResponse(List<T> hits)
   {
     Hits = hits ?? throw new ArgumentNullException(nameof(hits));
-    Query = query ?? throw new ArgumentNullException(nameof(query));
-    Params = varParams ?? throw new ArgumentNullException(nameof(varParams));
     AdditionalProperties = new Dictionary<string, object>();
   }
 
@@ -271,6 +267,12 @@ public partial class SearchResponse<T>
   public string Params { get; set; }
 
   /// <summary>
+  /// Gets or Sets Extensions
+  /// </summary>
+  [JsonPropertyName("extensions")]
+  public ResponseExtensions Extensions { get; set; }
+
+  /// <summary>
   /// Gets or Sets additional properties
   /// </summary>
   [JsonExtensionData]
@@ -317,6 +319,7 @@ public partial class SearchResponse<T>
     sb.Append("  Hits: ").Append(Hits).Append("\n");
     sb.Append("  Query: ").Append(Query).Append("\n");
     sb.Append("  Params: ").Append(Params).Append("\n");
+    sb.Append("  Extensions: ").Append(Extensions).Append("\n");
     sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
     sb.Append("}\n");
     return sb.ToString();
@@ -428,6 +431,10 @@ public partial class SearchResponse<T>
       && (Query == input.Query || (Query != null && Query.Equals(input.Query)))
       && (Params == input.Params || (Params != null && Params.Equals(input.Params)))
       && (
+        Extensions == input.Extensions
+        || (Extensions != null && Extensions.Equals(input.Extensions))
+      )
+      && (
         AdditionalProperties.Count == input.AdditionalProperties.Count
         && !AdditionalProperties.Except(input.AdditionalProperties).Any()
       );
@@ -534,6 +541,10 @@ public partial class SearchResponse<T>
       if (Params != null)
       {
         hashCode = (hashCode * 59) + Params.GetHashCode();
+      }
+      if (Extensions != null)
+      {
+        hashCode = (hashCode * 59) + Extensions.GetHashCode();
       }
       if (AdditionalProperties != null)
       {

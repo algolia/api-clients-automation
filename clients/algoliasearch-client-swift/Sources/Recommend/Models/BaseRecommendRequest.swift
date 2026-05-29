@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct BaseRecommendRequest: Codable, JSONEncodable {
@@ -47,14 +47,7 @@ public struct BaseRecommendRequest: Codable, JSONEncodable {
     }
 }
 
-extension BaseRecommendRequest: Equatable {
-    public static func ==(lhs: BaseRecommendRequest, rhs: BaseRecommendRequest) -> Bool {
-        lhs.indexName == rhs.indexName &&
-            lhs.threshold == rhs.threshold &&
-            lhs.maxRecommendations == rhs.maxRecommendations &&
-            lhs.queryParameters == rhs.queryParameters
-    }
-}
+extension BaseRecommendRequest: Equatable {}
 
 extension BaseRecommendRequest: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct CompositionMultipleBatchResponse: Codable, JSONEncodable {
@@ -26,11 +26,7 @@ public struct CompositionMultipleBatchResponse: Codable, JSONEncodable {
     }
 }
 
-extension CompositionMultipleBatchResponse: Equatable {
-    public static func ==(lhs: CompositionMultipleBatchResponse, rhs: CompositionMultipleBatchResponse) -> Bool {
-        lhs.taskID == rhs.taskID
-    }
-}
+extension CompositionMultipleBatchResponse: Equatable {}
 
 extension CompositionMultipleBatchResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

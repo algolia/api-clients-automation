@@ -5,8 +5,8 @@ import XCTest
 import DotEnv
 import Utils
 
-@testable import Core
-@testable import Recommend
+@testable import AlgoliaCore
+@testable import AlgoliaRecommend
 
 final class RecommendClientRequestsTestsE2E: XCTestCase {
     static var APPLICATION_ID = "my_application_id"

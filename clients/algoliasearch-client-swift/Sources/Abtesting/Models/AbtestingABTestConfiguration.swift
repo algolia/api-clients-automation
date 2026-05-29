@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// A/B test configuration.
@@ -43,14 +43,7 @@ public struct AbtestingABTestConfiguration: Codable, JSONEncodable {
     }
 }
 
-extension AbtestingABTestConfiguration: Equatable {
-    public static func ==(lhs: AbtestingABTestConfiguration, rhs: AbtestingABTestConfiguration) -> Bool {
-        lhs.featureFilters == rhs.featureFilters &&
-            lhs.outliers == rhs.outliers &&
-            lhs.emptySearch == rhs.emptySearch &&
-            lhs.minimumDetectableEffect == rhs.minimumDetectableEffect
-    }
-}
+extension AbtestingABTestConfiguration: Equatable {}
 
 extension AbtestingABTestConfiguration: Hashable {
     public func hash(into hasher: inout Hasher) {

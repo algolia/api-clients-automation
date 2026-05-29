@@ -2,30 +2,35 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public enum SearchResult<T: Codable>: Codable, JSONEncodable, AbstractEncodable {
-    case searchForFacetValuesResponse(SearchForFacetValuesResponse)
     case searchResponse(SearchResponse<T>)
+    case searchForFacetValuesResponse(SearchForFacetValuesResponse)
+    case searchResponsePartial(SearchResponsePartial<T>)
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
+        case let .searchResponse(value):
+            try container.encode(value)
         case let .searchForFacetValuesResponse(value):
             try container.encode(value)
-        case let .searchResponse(value):
+        case let .searchResponsePartial(value):
             try container.encode(value)
         }
     }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = try? container.decode(SearchForFacetValuesResponse.self) {
-            self = .searchForFacetValuesResponse(value)
-        } else if let value = try? container.decode(SearchResponse<T>.self) {
+        if let value = try? container.decode(SearchResponse<T>.self) {
             self = .searchResponse(value)
+        } else if let value = try? container.decode(SearchForFacetValuesResponse.self) {
+            self = .searchForFacetValuesResponse(value)
+        } else if let value = try? container.decode(SearchResponsePartial<T>.self) {
+            self = .searchResponsePartial(value)
         } else {
             throw DecodingError.typeMismatch(
                 Self.Type.self,
@@ -36,10 +41,12 @@ public enum SearchResult<T: Codable>: Codable, JSONEncodable, AbstractEncodable 
 
     public func GetActualInstance() -> Encodable {
         switch self {
-        case let .searchForFacetValuesResponse(value):
-            value as SearchForFacetValuesResponse
         case let .searchResponse(value):
             value as SearchResponse
+        case let .searchForFacetValuesResponse(value):
+            value as SearchForFacetValuesResponse
+        case let .searchResponsePartial(value):
+            value as SearchResponsePartial
         }
     }
 }

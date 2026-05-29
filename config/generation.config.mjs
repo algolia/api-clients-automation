@@ -19,15 +19,17 @@ export const patterns = [
   'clients/algoliasearch-client-csharp/**',
   '!clients/algoliasearch-client-csharp/*',
   '!clients/algoliasearch-client-csharp/algoliasearch/Clients/AlgoliaConfig.cs',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Clients/TransformationOptions.cs',
   '!clients/algoliasearch-client-csharp/algoliasearch/Exceptions/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Serializer/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Utils/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Http/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Transport/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Models/Common/**',
-  '!clients/algoliasearch-client-csharp/algoliasearch/Tests/**',
 
   'tests/output/csharp/src/Algolia.Search.Tests.csproj',
+  '!tests/output/csharp/src/TimeoutIntegrationTests.cs',
+  '!tests/output/csharp/src/TransformationOptionsTests.cs',
 
   // Dart
   '!clients/algoliasearch-client-dart/**',
@@ -41,7 +43,7 @@ export const patterns = [
   'clients/algoliasearch-client-dart/packages/client_core/lib/src/version.dart',
   '!clients/algoliasearch-client-dart/packages/*/lib/src/extension.dart',
   '!clients/algoliasearch-client-dart/packages/algoliasearch/lib/algoliasearch.dart',
-
+  '!tests/output/dart/test/manual/**',
   // GO
   'clients/algoliasearch-client-go/algolia/**',
   '!clients/algoliasearch-client-go/*',
@@ -53,6 +55,7 @@ export const patterns = [
   '!clients/algoliasearch-client-go/algolia/utils/*',
 
   'tests/output/go/go.mod',
+  '!tests/output/go/tests/manual/**',
 
   // Java
   '!clients/algoliasearch-client-java/**',
@@ -62,6 +65,7 @@ export const patterns = [
   'clients/algoliasearch-client-java/algoliasearch/src/main/java/com/algolia/BuildConfig.java',
 
   'tests/output/java/build.gradle',
+  '!tests/output/java/src/test/java/com/algolia/manual/**',
 
   // JavaScript
   '!clients/algoliasearch-client-javascript/*',
@@ -92,7 +96,6 @@ export const patterns = [
 
   // PHP
   '!clients/algoliasearch-client-php/**',
-  '!clients/algoliasearch-client-php/tests/**',
   'clients/algoliasearch-client-php/lib/Api/*',
   'clients/algoliasearch-client-php/lib/Model/**',
   '!clients/algoliasearch-client-php/lib/Model/AbstractModel.php',
@@ -100,12 +103,13 @@ export const patterns = [
   'clients/algoliasearch-client-php/lib/Configuration/*',
   '!clients/algoliasearch-client-php/lib/Configuration/Configuration.php',
   '!clients/algoliasearch-client-php/lib/Configuration/ConfigWithRegion.php',
+  '!clients/algoliasearch-client-php/lib/Configuration/TransformationOptions.php',
   'clients/algoliasearch-client-php/composer.json',
+  '!tests/output/php/src/manual/**',
 
   // Python
   'clients/algoliasearch-client-python/**',
   '!clients/algoliasearch-client-python/algoliasearch/http/**',
-  '!clients/algoliasearch-client-python/algoliasearch/tests/**',
   '!clients/algoliasearch-client-python/algoliasearch/py.typed',
   'clients/algoliasearch-client-python/algoliasearch/http/__init__.py',
   '!clients/algoliasearch-client-python/*',
@@ -117,7 +121,7 @@ export const patterns = [
   'tests/output/python/poetry.lock',
   '!tests/output/python/**/__init__.py',
   'tests/output/python/requirements.txt',
-
+  '!tests/output/python/tests/manual/**',
 
   // Ruby
   '!clients/algoliasearch-client-ruby/**',
@@ -125,6 +129,7 @@ export const patterns = [
   'clients/algoliasearch-client-ruby/lib/algolia/**',
   '!clients/algoliasearch-client-ruby/lib/algolia/api_client.rb',
   '!clients/algoliasearch-client-ruby/lib/algolia/api_error.rb',
+  '!clients/algoliasearch-client-ruby/lib/algolia/chunked_helper_options.rb',
   '!clients/algoliasearch-client-ruby/lib/algolia/defaults.rb',
   '!clients/algoliasearch-client-ruby/lib/algolia/error.rb',
   '!clients/algoliasearch-client-ruby/lib/algolia/configuration.rb',
@@ -133,6 +138,7 @@ export const patterns = [
   '!clients/algoliasearch-client-ruby/lib/algolia/transport/**',
 
   'tests/output/ruby/Gemfile.lock',
+  '!tests/output/ruby/test/manual/**',
 
   // Scala
   '!clients/algoliasearch-client-scala/**',

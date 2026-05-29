@@ -118,6 +118,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customDelete`.")
 
     val request = HttpRequest
       .builder()
@@ -141,6 +142,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customGet`.")
 
     val request = HttpRequest
       .builder()
@@ -167,6 +169,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customPost`.")
 
     val request = HttpRequest
       .builder()
@@ -194,6 +197,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
     requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
+    requireNotEmpty(path, "Parameter `path` is required when calling `customPut`.")
 
     val request = HttpRequest
       .builder()
@@ -236,6 +240,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetAddToCartRateResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getAddToCartRate`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getAddToCartRate`.")
 
     val request = HttpRequest
       .builder()
@@ -278,6 +283,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetAverageClickPositionResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getAverageClickPosition`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getAverageClickPosition`.")
 
     val request = HttpRequest
       .builder()
@@ -318,6 +324,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetClickPositionsResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getClickPositions`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getClickPositions`.")
 
     val request = HttpRequest
       .builder()
@@ -359,6 +366,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetClickThroughRateResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getClickThroughRate`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getClickThroughRate`.")
 
     val request = HttpRequest
       .builder()
@@ -400,6 +408,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetConversionRateResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getConversionRate`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getConversionRate`.")
 
     val request = HttpRequest
       .builder()
@@ -439,6 +448,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetNoClickRateResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getNoClickRate`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getNoClickRate`.")
 
     val request = HttpRequest
       .builder()
@@ -478,6 +488,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetNoResultsRateResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getNoResultsRate`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getNoResultsRate`.")
 
     val request = HttpRequest
       .builder()
@@ -492,13 +503,13 @@ class AnalyticsClient(
   }
 
   /** Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.
-    * By default, the analyzed period includes the last eight days including the current day. The rate is the number of
-    * purchase conversion events divided by the number of tracked searches. A search is tracked if it returns a query ID
-    * (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall number of
-    * searches, including those where `clickAnalytics` is `false`. **There's a difference between a 0 and null purchase
-    * rate when `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't receive any
-    * events, the purchase rate is null. - **0** mean there _were_ queries but no [purchase conversion
-    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+    * By default, the analyzed period includes the last eight days, including the current day. The rate is purchase
+    * conversion events divided by tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is
+    * `true`). This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+    * **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:** - **Null** means
+    * there were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means there were
+    * queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started)
+    * were received.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -522,6 +533,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetPurchaseRateResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getPurchaseRate`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getPurchaseRate`.")
 
     val request = HttpRequest
       .builder()
@@ -563,6 +575,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetRevenue] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getRevenue`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getRevenue`.")
 
     val request = HttpRequest
       .builder()
@@ -601,6 +614,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetSearchesCountResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getSearchesCount`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getSearchesCount`.")
 
     val request = HttpRequest
       .builder()
@@ -645,6 +659,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetSearchesNoClicksResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getSearchesNoClicks`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getSearchesNoClicks`.")
 
     val request = HttpRequest
       .builder()
@@ -690,6 +705,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetSearchesNoResultsResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getSearchesNoResults`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getSearchesNoResults`.")
 
     val request = HttpRequest
       .builder()
@@ -719,6 +735,7 @@ class AnalyticsClient(
       ec: ExecutionContext
   ): Future[GetStatusResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getStatus`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getStatus`.")
 
     val request = HttpRequest
       .builder()
@@ -759,6 +776,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetTopCountriesResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getTopCountries`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getTopCountries`.")
 
     val request = HttpRequest
       .builder()
@@ -808,6 +826,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetTopFilterAttributesResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getTopFilterAttributes`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getTopFilterAttributes`.")
 
     val request = HttpRequest
       .builder()
@@ -861,7 +880,9 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetTopFilterForAttributeResponse] = Future {
     requireNotNull(attribute, "Parameter `attribute` is required when calling `getTopFilterForAttribute`.")
+    requireNotEmpty(attribute, "Parameter `attribute` is required when calling `getTopFilterForAttribute`.")
     requireNotNull(index, "Parameter `index` is required when calling `getTopFilterForAttribute`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getTopFilterForAttribute`.")
 
     val request = HttpRequest
       .builder()
@@ -913,6 +934,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetTopFiltersNoResultsResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getTopFiltersNoResults`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getTopFiltersNoResults`.")
 
     val request = HttpRequest
       .builder()
@@ -930,14 +952,13 @@ class AnalyticsClient(
   }
 
   /** Retrieves the object IDs of the 1,000 most frequent search results. If you set the `clickAnalytics` query
-    * parameter to true, the response also includes: - Tracked searches count. Tracked searches are Search API requests
-    * with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the
-    * overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate
-    * (CTR) - Conversion count - Conversion rate (CR) - Average click position If you set the `revenueAnalytics`
-    * parameter to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count -
-    * Purchase rate - Revenue details for each currency **There's a difference between 0% rates and null rates:** -
-    * **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase
-    * rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion
+    * parameter to `true`, the response also includes: - Tracked searches count. Tracked searches are Search API
+    * requests with `clickAnalytics` set to `true`. This differs from the response's `count`, which includes searches
+    * where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate
+    * (CR) - Average click position If you set the `revenueAnalytics` parameter to `true`, the response also includes: -
+    * Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
+    * **There's a difference between 0% rates and null rates:** - **Null** means there were no queries. Algolia didn't
+    * receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion
     * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     *
     * Required API Key ACLs:
@@ -977,6 +998,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetTopHitsResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getTopHits`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getTopHits`.")
 
     val request = HttpRequest
       .builder()
@@ -996,15 +1018,14 @@ class AnalyticsClient(
   }
 
   /** Returns the most popular searches. For each search, it also includes the average number of hits. If you set the
-    * `clickAnalytics` query parameter to `true`, the response also includes - Tracked searches count. Tracked searches
-    * are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's
-    * `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click
-    * count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position If you set the
-    * `revenueAnalytics` query parameter to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate
-    * (ATCR) - Purchase count - Purchase rate - Revenue details for each currency **There's a difference between 0%
-    * rates and null rates:** - **Null** means there were no queries: since Algolia didn't receive any events, the rates
-    * (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion
-    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+    * `clickAnalytics` query parameter to `true`, the response also includes: - Tracked searches count Tracked searches
+    * are Search API requests with `clickAnalytics` set to `true`. This differs from the response's `count`, which
+    * includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count -
+    * Conversion rate (CR) - Average click position If you set the `revenueAnalytics` query parameter to `true`, the
+    * response also includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue
+    * details for each currency **There's a difference between 0% rates and null rates:** - **Null** means there were no
+    * queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no
+    * [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -1047,6 +1068,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetTopSearchesResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getTopSearches`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getTopSearches`.")
 
     val request = HttpRequest
       .builder()
@@ -1094,6 +1116,7 @@ class AnalyticsClient(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetUsersCountResponse] = Future {
     requireNotNull(index, "Parameter `index` is required when calling `getUsersCount`.")
+    requireNotEmpty(index, "Parameter `index` is required when calling `getUsersCount`.")
 
     val request = HttpRequest
       .builder()

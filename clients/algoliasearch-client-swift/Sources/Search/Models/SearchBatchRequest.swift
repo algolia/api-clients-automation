@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct SearchBatchRequest: Codable, JSONEncodable {
@@ -30,12 +30,7 @@ public struct SearchBatchRequest: Codable, JSONEncodable {
     }
 }
 
-extension SearchBatchRequest: Equatable {
-    public static func ==(lhs: SearchBatchRequest, rhs: SearchBatchRequest) -> Bool {
-        lhs.action == rhs.action &&
-            lhs.body == rhs.body
-    }
-}
+extension SearchBatchRequest: Equatable {}
 
 extension SearchBatchRequest: Hashable {
     public func hash(into hasher: inout Hasher) {

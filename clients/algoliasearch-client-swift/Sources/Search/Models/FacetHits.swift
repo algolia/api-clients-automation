@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct FacetHits: Codable, JSONEncodable {
@@ -36,13 +36,7 @@ public struct FacetHits: Codable, JSONEncodable {
     }
 }
 
-extension FacetHits: Equatable {
-    public static func ==(lhs: FacetHits, rhs: FacetHits) -> Bool {
-        lhs.value == rhs.value &&
-            lhs.highlighted == rhs.highlighted &&
-            lhs.count == rhs.count
-    }
-}
+extension FacetHits: Equatable {}
 
 extension FacetHits: Hashable {
     public func hash(into hasher: inout Hasher) {

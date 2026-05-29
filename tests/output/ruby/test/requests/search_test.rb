@@ -2802,6 +2802,37 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
+  # withQueryCategorization
+  def test_search16
+    req = @client.search_with_http_info(
+      Algolia::Search::SearchMethodParams.new(
+        requests: [
+          Algolia::Search::SearchForHits.new(
+            index_name: "cts_e2e_query_categorization",
+            query: "sofa",
+            extensions: Algolia::Search::SearchExtensions.new(
+              query_categorization: Algolia::Search::SearchExtensionsQueryCategorization.new(
+                enable_categories_retrieval: true,
+                enable_auto_filtering: false
+              )
+            )
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/*/queries", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"requests\":[{\"indexName\":\"cts_e2e_query_categorization\",\"query\":\"sofa\",\"extensions\":{\"queryCategorization\":{\"enableCategoriesRetrieval\":true,\"enableAutoFiltering\":false}}}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # get searchDictionaryEntries results with minimal parameters
   def test_search_dictionary_entries
     req = @client.search_dictionary_entries_with_http_info(
@@ -2999,8 +3030,54 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # filters boolean
+  # customRankingWithoutCategories
   def test_search_single_index7
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(
+        query: "User search query",
+        faceting_after_distinct: true,
+        filters: "ranked_category:none"
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"query\":\"User search query\",\"facetingAfterDistinct\":true,\"filters\":\"ranked_category:none\"}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # customRankingWithCategories
+  def test_search_single_index8
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(
+        query: "User search query",
+        faceting_after_distinct: true,
+        filters: "category:{{currentCategory}} AND (ranked_category:{{currentCategory}} OR ranked_category:none)"
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"query\":\"User search query\",\"facetingAfterDistinct\":true,\"filters\":\"category:{{currentCategory}} AND (ranked_category:{{currentCategory}} OR ranked_category:none)\"}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # filters boolean
+  def test_search_single_index9
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(filters: "is_available:true")
@@ -3014,7 +3091,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # distinct
-  def test_search_single_index8
+  def test_search_single_index10
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(distinct: true)
@@ -3028,7 +3105,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # filtersNumeric
-  def test_search_single_index9
+  def test_search_single_index11
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(filters: "price < 10")
@@ -3042,7 +3119,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # filtersTimestamp
-  def test_search_single_index10
+  def test_search_single_index12
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(filters: "NOT date_timestamp:1514764800 TO 1546300799")
@@ -3055,8 +3132,27 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse("{\"filters\":\"NOT date_timestamp:1514764800 TO 1546300799\"}"), JSON.parse(req.body))
   end
 
+  # filtersWithScores
+  def test_search_single_index13
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(
+        filters: "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)"
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse("{\"filters\":\"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)\"}"),
+      JSON.parse(req.body)
+    )
+  end
+
   # filtersSumOrFiltersScoresFalse
-  def test_search_single_index11
+  def test_search_single_index14
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -3078,7 +3174,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # filtersSumOrFiltersScoresTrue
-  def test_search_single_index12
+  def test_search_single_index15
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -3100,7 +3196,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # filtersStephenKing
-  def test_search_single_index13
+  def test_search_single_index16
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(filters: "author:\"Stephen King\"")
@@ -3114,7 +3210,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # filtersNotTags
-  def test_search_single_index14
+  def test_search_single_index17
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "harry", filters: "_tags:non-fiction")
@@ -3127,8 +3223,36 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse("{\"query\":\"harry\",\"filters\":\"_tags:non-fiction\"}"), JSON.parse(req.body))
   end
 
+  # filtersTheNotTags
+  def test_search_single_index18
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(filters: "NOT _tags:non-fiction")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"filters\":\"NOT _tags:non-fiction\"}"), JSON.parse(req.body))
+  end
+
+  # filtersNumericGreaterThan
+  def test_search_single_index19
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(numeric_filters: "price>20")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"numericFilters\":\"price>20\"}"), JSON.parse(req.body))
+  end
+
   # facetFiltersList
-  def test_search_single_index15
+  def test_search_single_index20
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -3147,7 +3271,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # facetFiltersBook
-  def test_search_single_index16
+  def test_search_single_index21
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", facet_filters: ["category:Book"])
@@ -3161,7 +3285,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # facetFiltersAND
-  def test_search_single_index17
+  def test_search_single_index22
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", facet_filters: ["category:Book", "author:John Doe"])
@@ -3178,7 +3302,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # facetFiltersOR
-  def test_search_single_index18
+  def test_search_single_index23
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", facet_filters: [["category:Book", "author:John Doe"]])
@@ -3195,7 +3319,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # facetFiltersCombined
-  def test_search_single_index19
+  def test_search_single_index24
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -3215,7 +3339,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # facetFiltersNeg
-  def test_search_single_index20
+  def test_search_single_index25
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(facet_filters: "category:-Ebook")
@@ -3229,7 +3353,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # filtersAndFacetFilters
-  def test_search_single_index21
+  def test_search_single_index26
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -3251,7 +3375,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # facet author genre
-  def test_search_single_index22
+  def test_search_single_index27
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(facets: ["author", "genre"])
@@ -3265,7 +3389,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # facet wildcard
-  def test_search_single_index23
+  def test_search_single_index28
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(facets: ["*"])
@@ -3279,7 +3403,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # maxValuesPerFacet
-  def test_search_single_index24
+  def test_search_single_index29
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(max_values_per_facet: 1000)
@@ -3293,7 +3417,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # aroundLatLng
-  def test_search_single_index25
+  def test_search_single_index30
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(around_lat_lng: "40.71, -74.01")
@@ -3307,7 +3431,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # aroundLatLngViaIP
-  def test_search_single_index26
+  def test_search_single_index31
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(around_lat_lng_via_ip: true)
@@ -3321,7 +3445,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # aroundRadius
-  def test_search_single_index27
+  def test_search_single_index32
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(around_lat_lng: "40.71, -74.01", around_radius: 1000000)
@@ -3335,7 +3459,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # insideBoundingBox
-  def test_search_single_index28
+  def test_search_single_index33
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -3354,7 +3478,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # insidePolygon
-  def test_search_single_index29
+  def test_search_single_index34
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -3390,7 +3514,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # optionalFilters
-  def test_search_single_index30
+  def test_search_single_index35
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(optional_filters: ["can_deliver_quickly:true"])
@@ -3404,7 +3528,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # optionalFiltersMany
-  def test_search_single_index31
+  def test_search_single_index36
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -3423,7 +3547,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # optionalFiltersSimple
-  def test_search_single_index32
+  def test_search_single_index37
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(optional_filters: ["brand:Apple<score=2>", "type:tablet"])
@@ -3437,7 +3561,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # restrictSearchableAttributes
-  def test_search_single_index33
+  def test_search_single_index38
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(restrict_searchable_attributes: ["title_fr"])
@@ -3450,8 +3574,25 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse("{\"restrictSearchableAttributes\":[\"title_fr\"]}"), JSON.parse(req.body))
   end
 
+  # restrictSearchableAttributesWolf
+  def test_search_single_index39
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(query: "wolf", restrict_searchable_attributes: ["title_fr"])
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse("{\"query\":\"wolf\",\"restrictSearchableAttributes\":[\"title_fr\"]}"),
+      JSON.parse(req.body)
+    )
+  end
+
   # getRankingInfo
-  def test_search_single_index34
+  def test_search_single_index40
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(get_ranking_info: true)
@@ -3465,7 +3606,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # clickAnalytics
-  def test_search_single_index35
+  def test_search_single_index41
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(click_analytics: true)
@@ -3479,7 +3620,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # clickAnalyticsUserToken
-  def test_search_single_index36
+  def test_search_single_index42
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(click_analytics: true, user_token: "user-1")
@@ -3493,7 +3634,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # enablePersonalization
-  def test_search_single_index37
+  def test_search_single_index43
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(enable_personalization: true, user_token: "user-1")
@@ -3507,7 +3648,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # userToken
-  def test_search_single_index38
+  def test_search_single_index44
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(user_token: "user-1")
@@ -3521,7 +3662,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # userToken1234
-  def test_search_single_index39
+  def test_search_single_index45
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", user_token: "user-1234")
@@ -3535,7 +3676,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # analyticsTag
-  def test_search_single_index40
+  def test_search_single_index46
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(analytics_tags: ["YOUR_ANALYTICS_TAG"])
@@ -3549,7 +3690,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # facetFiltersUsers
-  def test_search_single_index41
+  def test_search_single_index47
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(facet_filters: ["user:user42", "user:public"])
@@ -3563,7 +3704,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # buildTheQuery
-  def test_search_single_index42
+  def test_search_single_index48
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -3586,7 +3727,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # attributesToHighlightOverride
-  def test_search_single_index43
+  def test_search_single_index49
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", attributes_to_highlight: ["title", "content"])
@@ -3603,7 +3744,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # disableTypoToleranceOnAttributes
-  def test_search_single_index44
+  def test_search_single_index50
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", disable_typo_tolerance_on_attributes: ["serial_number"])
@@ -3620,7 +3761,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search query
-  def test_search_single_index45
+  def test_search_single_index51
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "shirt")
@@ -3634,7 +3775,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search_everything
-  def test_search_single_index46
+  def test_search_single_index52
     req = @client.search_single_index_with_http_info("indexName", Algolia::Search::SearchParamsObject.new(query: ""))
 
     assert_equal(:post, req.method)
@@ -3645,7 +3786,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # api_filtering_range_example
-  def test_search_single_index47
+  def test_search_single_index53
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "books", filters: "price:10 TO 20")
@@ -3659,7 +3800,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # similarQuery
-  def test_search_single_index48
+  def test_search_single_index54
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -3682,7 +3823,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_retrievable_attributes
-  def test_search_single_index49
+  def test_search_single_index55
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", attributes_to_retrieve: ["title", "content"])
@@ -3699,7 +3840,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # restrict_searchable_attributes
-  def test_search_single_index50
+  def test_search_single_index56
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", restrict_searchable_attributes: ["title", "author"])
@@ -3716,7 +3857,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_default_relevancy
-  def test_search_single_index51
+  def test_search_single_index57
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", relevancy_strictness: 70)
@@ -3730,7 +3871,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # apply_filters
-  def test_search_single_index52
+  def test_search_single_index58
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -3750,7 +3891,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # apply_all_filters
-  def test_search_single_index53
+  def test_search_single_index59
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -3772,7 +3913,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # escape_spaces
-  def test_search_single_index54
+  def test_search_single_index60
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", filters: "category:\"Books and Comics\"")
@@ -3789,7 +3930,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # escape_keywords
-  def test_search_single_index55
+  def test_search_single_index61
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", filters: "keyword:\"OR\"")
@@ -3803,7 +3944,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # escape_single_quotes
-  def test_search_single_index56
+  def test_search_single_index62
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", filters: "content:\"It's a wonderful day\"")
@@ -3820,7 +3961,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # escape_double_quotes
-  def test_search_single_index57
+  def test_search_single_index63
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", filters: "content:\"She said \"Hello World\"")
@@ -3837,7 +3978,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # apply_optional_filters
-  def test_search_single_index58
+  def test_search_single_index64
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", optional_filters: ["category:Book", "author:John Doe"])
@@ -3854,7 +3995,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # apply_negative_filters
-  def test_search_single_index59
+  def test_search_single_index65
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", optional_filters: ["category:Book", "author:-John Doe"])
@@ -3871,7 +4012,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # apply_negative_filters_restaurants
-  def test_search_single_index60
+  def test_search_single_index66
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", optional_filters: ["restaurant:-Bert's Inn"])
@@ -3888,7 +4029,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # apply_numeric_filters
-  def test_search_single_index61
+  def test_search_single_index67
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -3910,7 +4051,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # apply_tag_filters
-  def test_search_single_index62
+  def test_search_single_index68
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", tag_filters: ["SciFi", ["Book", "Movie"]])
@@ -3927,7 +4068,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_sum_or_filters_scores
-  def test_search_single_index63
+  def test_search_single_index69
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", sum_or_filters_scores: true)
@@ -3941,7 +4082,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # facets_all
-  def test_search_single_index64
+  def test_search_single_index70
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", facets: ["*"])
@@ -3955,7 +4096,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # retrieve_only_some_facets
-  def test_search_single_index65
+  def test_search_single_index71
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", facets: ["category", "author"])
@@ -3969,7 +4110,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_default_max_values_per_facet
-  def test_search_single_index66
+  def test_search_single_index72
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", max_values_per_facet: 20)
@@ -3983,7 +4124,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # enable_faceting_after_distinct
-  def test_search_single_index67
+  def test_search_single_index73
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", faceting_after_distinct: true)
@@ -3997,7 +4138,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # sort_facet_values_alphabetically
-  def test_search_single_index68
+  def test_search_single_index74
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", sort_facet_values_by: "count")
@@ -4011,7 +4152,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_attributes_to_snippet
-  def test_search_single_index69
+  def test_search_single_index75
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", attributes_to_snippet: ["title", "content:80"])
@@ -4028,7 +4169,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_default_highlight_pre_tag
-  def test_search_single_index70
+  def test_search_single_index76
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", highlight_pre_tag: "<strong>")
@@ -4042,7 +4183,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_default_highlight_post_tag
-  def test_search_single_index71
+  def test_search_single_index77
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", highlight_post_tag: "</strong>")
@@ -4056,7 +4197,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_default_snippet_ellipsis_text
-  def test_search_single_index72
+  def test_search_single_index78
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", snippet_ellipsis_text: "")
@@ -4070,7 +4211,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # enable_restrict_highlight_and_snippet_arrays
-  def test_search_single_index73
+  def test_search_single_index79
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", restrict_highlight_and_snippet_arrays: false)
@@ -4084,7 +4225,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # access_page
-  def test_search_single_index74
+  def test_search_single_index80
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", page: 0)
@@ -4098,7 +4239,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_default_hits_per_page
-  def test_search_single_index75
+  def test_search_single_index81
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", hits_per_page: 10)
@@ -4111,8 +4252,22 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse("{\"query\":\"query\",\"hitsPerPage\":10}"), JSON.parse(req.body))
   end
 
+  # overrideDefaultPageAndHitsPerPage
+  def test_search_single_index82
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(query: "query", page: 2, hits_per_page: 5)
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"query\":\"query\",\"page\":2,\"hitsPerPage\":5}"), JSON.parse(req.body))
+  end
+
   # get_nth_hit
-  def test_search_single_index76
+  def test_search_single_index83
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", offset: 4)
@@ -4126,7 +4281,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # get_n_results
-  def test_search_single_index77
+  def test_search_single_index84
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", length: 4)
@@ -4140,7 +4295,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_default_min_word_size_for_one_typo
-  def test_search_single_index78
+  def test_search_single_index85
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", min_word_sizefor1_typo: 2)
@@ -4154,7 +4309,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_default_min_word_size_for_two_typos
-  def test_search_single_index79
+  def test_search_single_index86
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", min_word_sizefor2_typos: 2)
@@ -4168,7 +4323,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_default_typo_tolerance_mode
-  def test_search_single_index80
+  def test_search_single_index87
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", typo_tolerance: false)
@@ -4182,7 +4337,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # disable_typos_on_numeric_tokens_at_search_time
-  def test_search_single_index81
+  def test_search_single_index88
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", allow_typos_on_numeric_tokens: false)
@@ -4196,7 +4351,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search_around_a_position
-  def test_search_single_index82
+  def test_search_single_index89
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", around_lat_lng: "40.71, -74.01")
@@ -4210,33 +4365,43 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search_around_server_ip
-  def test_search_single_index83
+  def test_search_single_index90
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", around_lat_lng_via_ip: true),
-      {
-        :header_params => {
-          "x-forwarded-for" => "94.228.178.246 // should be replaced with the actual IP you would like to search around"
-        }
-      }
+      {:header_params => {"x-forwarded-for" => "XX.XXX.XXX.XXX"}}
     )
 
     assert_equal(:post, req.method)
     assert_equal("/1/indexes/indexName/query", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(
-      ({
-        :"x-forwarded-for" => "94.228.178.246 // should be replaced with the actual IP you would like to search around"
-      }.transform_keys(&:to_s).to_a -
-        req.headers.to_a)
-        .empty?,
+      ({:"x-forwarded-for" => "XX.XXX.XXX.XXX"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"query\":\"query\",\"aroundLatLngViaIP\":true}"), JSON.parse(req.body))
   end
 
+  # forwardUserIpAddress
+  def test_search_single_index91
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsString.new,
+      {:header_params => {"x-forwarded-for" => "XX.XXX.XXX.XXX"}}
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(
+      ({:"x-forwarded-for" => "XX.XXX.XXX.XXX"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      req.headers.to_s
+    )
+    assert_equal(JSON.parse("{}"), JSON.parse(req.body))
+  end
+
   # set_around_radius
-  def test_search_single_index84
+  def test_search_single_index92
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", around_radius: 1000)
@@ -4250,7 +4415,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # disable_automatic_radius
-  def test_search_single_index85
+  def test_search_single_index93
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", around_radius: "all")
@@ -4264,7 +4429,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_geo_search_precision
-  def test_search_single_index86
+  def test_search_single_index94
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", around_precision: 100)
@@ -4278,7 +4443,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_geo_search_precision_non_linear
-  def test_search_single_index87
+  def test_search_single_index95
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -4301,7 +4466,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_minimum_geo_search_radius
-  def test_search_single_index88
+  def test_search_single_index96
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", minimum_around_radius: 1000)
@@ -4315,7 +4480,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search_inside_rectangular_area
-  def test_search_single_index89
+  def test_search_single_index97
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -4337,7 +4502,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search_inside_multiple_rectangular_areas
-  def test_search_single_index90
+  def test_search_single_index98
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -4362,7 +4527,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search_inside_polygon_area
-  def test_search_single_index91
+  def test_search_single_index99
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -4386,7 +4551,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search_inside_multiple_polygon_areas
-  def test_search_single_index92
+  def test_search_single_index100
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -4420,7 +4585,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_querylanguages_override
-  def test_search_single_index93
+  def test_search_single_index101
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", ignore_plurals: ["ca", "es"])
@@ -4434,7 +4599,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_querylanguages_with_japanese_query
-  def test_search_single_index94
+  def test_search_single_index102
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", query_languages: ["ja", "en"])
@@ -4448,7 +4613,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_natural_languages
-  def test_search_single_index95
+  def test_search_single_index103
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "", natural_languages: ["fr"])
@@ -4462,7 +4627,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_natural_languages_with_query
-  def test_search_single_index96
+  def test_search_single_index104
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -4483,7 +4648,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # enable_decompound_query_search_time
-  def test_search_single_index97
+  def test_search_single_index105
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", decompound_query: true)
@@ -4497,7 +4662,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # enable_rules_search_time
-  def test_search_single_index98
+  def test_search_single_index106
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", enable_rules: true)
@@ -4511,7 +4676,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_rule_contexts
-  def test_search_single_index99
+  def test_search_single_index107
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", rule_contexts: ["front_end", "website2"])
@@ -4528,7 +4693,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # enable_personalization
-  def test_search_single_index100
+  def test_search_single_index108
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", enable_personalization: true)
@@ -4542,7 +4707,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # enable_personalization_with_user_token
-  def test_search_single_index101
+  def test_search_single_index109
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", enable_personalization: true, user_token: "123456")
@@ -4559,7 +4724,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # personalization_impact
-  def test_search_single_index102
+  def test_search_single_index110
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", personalization_impact: 20)
@@ -4573,7 +4738,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_user_token
-  def test_search_single_index103
+  def test_search_single_index111
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", user_token: "123456")
@@ -4587,7 +4752,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_user_token_with_personalization
-  def test_search_single_index104
+  def test_search_single_index112
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", enable_personalization: true, user_token: "123456")
@@ -4604,7 +4769,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_default_query_type
-  def test_search_single_index105
+  def test_search_single_index113
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", query_type: "prefixAll")
@@ -4618,7 +4783,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_default_remove_words_if_no_results
-  def test_search_single_index106
+  def test_search_single_index114
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", remove_words_if_no_results: "lastWords")
@@ -4632,7 +4797,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # enable_advanced_syntax_search_time
-  def test_search_single_index107
+  def test_search_single_index115
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", advanced_syntax: true)
@@ -4646,7 +4811,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # overide_default_optional_words
-  def test_search_single_index108
+  def test_search_single_index116
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", optional_words: ["toyota", "2020 2021"])
@@ -4660,7 +4825,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # disabling_exact_for_some_attributes_search_time
-  def test_search_single_index109
+  def test_search_single_index117
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", disable_exact_on_attributes: ["description"])
@@ -4677,7 +4842,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_default_exact_single_word_query
-  def test_search_single_index110
+  def test_search_single_index118
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", exact_on_single_word_query: "none")
@@ -4691,7 +4856,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_default_aternative_as_exact
-  def test_search_single_index111
+  def test_search_single_index119
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", alternatives_as_exact: ["multiWordsSynonym"])
@@ -4708,7 +4873,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # enable_advanced_syntax_exact_phrase
-  def test_search_single_index112
+  def test_search_single_index120
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -4729,7 +4894,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # enable_advanced_syntax_exclude_words
-  def test_search_single_index113
+  def test_search_single_index121
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(
@@ -4750,7 +4915,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_distinct
-  def test_search_single_index114
+  def test_search_single_index122
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", distinct: 0)
@@ -4764,7 +4929,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # get_ranking_info
-  def test_search_single_index115
+  def test_search_single_index123
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", get_ranking_info: true)
@@ -4778,7 +4943,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # disable_click_analytics
-  def test_search_single_index116
+  def test_search_single_index124
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", click_analytics: false)
@@ -4792,7 +4957,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # enable_click_analytics
-  def test_search_single_index117
+  def test_search_single_index125
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", click_analytics: true)
@@ -4806,7 +4971,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # disable_analytics
-  def test_search_single_index118
+  def test_search_single_index126
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", analytics: false)
@@ -4820,7 +4985,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # add_analytics_tags
-  def test_search_single_index119
+  def test_search_single_index127
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", analytics_tags: ["front_end", "website2"])
@@ -4837,7 +5002,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # disable_synonyms
-  def test_search_single_index120
+  def test_search_single_index128
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", synonyms: false)
@@ -4851,7 +5016,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_replace_synonyms_in_highlights
-  def test_search_single_index121
+  def test_search_single_index129
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", replace_synonyms_in_highlight: true)
@@ -4865,7 +5030,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_min_proximity
-  def test_search_single_index122
+  def test_search_single_index130
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", min_proximity: 2)
@@ -4879,7 +5044,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_default_field
-  def test_search_single_index123
+  def test_search_single_index131
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", response_fields: ["hits", "facets"])
@@ -4893,7 +5058,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # override_percentile_computation
-  def test_search_single_index124
+  def test_search_single_index132
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", percentile_computation: false)
@@ -4907,7 +5072,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_ab_test
-  def test_search_single_index125
+  def test_search_single_index133
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", enable_ab_test: false)
@@ -4921,7 +5086,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_enable_re_ranking
-  def test_search_single_index126
+  def test_search_single_index134
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query", enable_re_ranking: false)
@@ -4935,7 +5100,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # with algolia user id
-  def test_search_single_index127
+  def test_search_single_index135
     req = @client.search_single_index_with_http_info(
       "indexName",
       Algolia::Search::SearchParamsObject.new(query: "query"),
@@ -4950,7 +5115,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # mcm with algolia user id
-  def test_search_single_index128
+  def test_search_single_index136
     req = @client.search_single_index_with_http_info(
       "playlists",
       Algolia::Search::SearchParamsObject.new(query: "peace"),
@@ -5841,8 +6006,31 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse("{\"attributesToHighlight\":[\"author\",\"title\",\"content\"]}"), JSON.parse(req.body))
   end
 
-  # attributesToHighlightStar
+  # highlightWithCustomPrePostTags
   def test_set_settings53
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(
+        attributes_to_highlight: ["author", "title", "content"],
+        highlight_pre_tag: "<em class=\"search-highlight\">",
+        highlight_post_tag: "</em>"
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"attributesToHighlight\":[\"author\",\"title\",\"content\"],\"highlightPreTag\":\"<em class=\\\"search-highlight\\\">\",\"highlightPostTag\":\"</em>\"}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # attributesToHighlightStar
+  def test_set_settings54
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(attributes_to_highlight: ["*"])
@@ -5856,7 +6044,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # everything
-  def test_set_settings54
+  def test_set_settings55
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(
@@ -5942,7 +6130,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # searchableAttributesWithCustomRankingsAndAttributesForFaceting
-  def test_set_settings55
+  def test_set_settings56
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(
@@ -5965,7 +6153,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # searchableAttributesOrdering
-  def test_set_settings56
+  def test_set_settings57
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(searchable_attributes: ["unordered(title)", "cast"])
@@ -5979,7 +6167,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # searchableAttributesProductReferenceSuffixes
-  def test_set_settings57
+  def test_set_settings58
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(
@@ -5998,7 +6186,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # queryLanguageAndIgnorePlurals
-  def test_set_settings58
+  def test_set_settings59
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(query_languages: ["en"], ignore_plurals: true)
@@ -6012,7 +6200,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # searchableAttributesInMovies
-  def test_set_settings59
+  def test_set_settings60
     req = @client.set_settings_with_http_info(
       "movies",
       Algolia::Search::IndexSettings.new(searchable_attributes: ["title_eng", "title_fr", "title_es"])
@@ -6029,7 +6217,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # disablePrefixOnAttributes
-  def test_set_settings60
+  def test_set_settings61
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(disable_prefix_on_attributes: ["serial_number"])
@@ -6043,7 +6231,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # disableTypoToleranceOnAttributes
-  def test_set_settings61
+  def test_set_settings62
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(disable_typo_tolerance_on_attributes: ["serial_number"])
@@ -6057,7 +6245,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # searchableAttributesSimpleExample
-  def test_set_settings62
+  def test_set_settings63
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(searchable_attributes: ["serial_number"])
@@ -6071,7 +6259,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # searchableAttributesSimpleExampleAlt
-  def test_set_settings63
+  def test_set_settings64
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(searchable_attributes: ["serial_number", "serial_number_suffixes"])
@@ -6088,7 +6276,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_searchable_attributes
-  def test_set_settings64
+  def test_set_settings65
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(
@@ -6109,7 +6297,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_attributes_for_faceting
-  def test_set_settings65
+  def test_set_settings66
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(
@@ -6136,7 +6324,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # unretrievable_attributes
-  def test_set_settings66
+  def test_set_settings67
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(unretrievable_attributes: ["total_number_of_sales"])
@@ -6150,7 +6338,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_retrievable_attributes
-  def test_set_settings67
+  def test_set_settings68
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(attributes_to_retrieve: ["author", "title", "content"])
@@ -6164,7 +6352,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_all_attributes_as_retrievable
-  def test_set_settings68
+  def test_set_settings69
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(attributes_to_retrieve: ["*"])
@@ -6178,7 +6366,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # specify_attributes_not_to_retrieve
-  def test_set_settings69
+  def test_set_settings70
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(attributes_to_retrieve: ["*", "-SKU", "-internal_desc"])
@@ -6192,7 +6380,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # neural_search
-  def test_set_settings70
+  def test_set_settings71
     req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(mode: "neuralSearch"))
 
     assert_equal(:put, req.method)
@@ -6203,7 +6391,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # keyword_search
-  def test_set_settings71
+  def test_set_settings72
     req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(mode: "keywordSearch"))
 
     assert_equal(:put, req.method)
@@ -6214,7 +6402,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_default_ranking
-  def test_set_settings72
+  def test_set_settings73
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(
@@ -6235,7 +6423,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_ranking_by_attribute_asc
-  def test_set_settings73
+  def test_set_settings74
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(
@@ -6256,7 +6444,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_ranking_by_attribute_desc
-  def test_set_settings74
+  def test_set_settings75
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(
@@ -6277,7 +6465,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_custom_ranking
-  def test_set_settings75
+  def test_set_settings76
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(custom_ranking: ["desc(popularity)", "asc(price)"])
@@ -6291,7 +6479,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_default_relevancy
-  def test_set_settings76
+  def test_set_settings77
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(relevancy_strictness: 90)
@@ -6305,7 +6493,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_replicas
-  def test_set_settings77
+  def test_set_settings78
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(replicas: ["name_of_replica_index1", "name_of_replica_index2"])
@@ -6322,7 +6510,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_default_max_values_per_facet
-  def test_set_settings78
+  def test_set_settings79
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(max_values_per_facet: 100)
@@ -6336,7 +6524,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_default_sort_facet_values_by
-  def test_set_settings79
+  def test_set_settings80
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(sort_facet_values_by: "alpha")
@@ -6350,7 +6538,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_attributes_to_snippet
-  def test_set_settings80
+  def test_set_settings81
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(attributes_to_snippet: ["content:80", "description"])
@@ -6364,7 +6552,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_all_attributes_to_snippet
-  def test_set_settings81
+  def test_set_settings82
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(attributes_to_snippet: ["*:80"])
@@ -6378,7 +6566,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_default_highlight_pre_tag
-  def test_set_settings82
+  def test_set_settings83
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(highlight_pre_tag: "<em>")
@@ -6392,7 +6580,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_default_highlight_post_tag
-  def test_set_settings83
+  def test_set_settings84
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(highlight_post_tag: "</em>")
@@ -6406,7 +6594,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_default_snippet_ellipsis_text
-  def test_set_settings84
+  def test_set_settings85
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(snippet_ellipsis_text: "…")
@@ -6420,7 +6608,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # enable_restrict_highlight_and_snippet_arrays_by_default
-  def test_set_settings85
+  def test_set_settings86
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(restrict_highlight_and_snippet_arrays: true)
@@ -6434,7 +6622,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_default_hits_per_page
-  def test_set_settings86
+  def test_set_settings87
     req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(hits_per_page: 20))
 
     assert_equal(:put, req.method)
@@ -6445,7 +6633,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_pagination_limit
-  def test_set_settings87
+  def test_set_settings88
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(pagination_limited_to: 1000)
@@ -6459,7 +6647,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_default_min_word_size_for_one_typo
-  def test_set_settings88
+  def test_set_settings89
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(min_word_sizefor1_typo: 4)
@@ -6473,7 +6661,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_default_min_word_size_for_two_typos
-  def test_set_settings89
+  def test_set_settings90
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(min_word_sizefor2_typos: 4)
@@ -6487,7 +6675,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_default_typo_tolerance_mode
-  def test_set_settings90
+  def test_set_settings91
     req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(typo_tolerance: true))
 
     assert_equal(:put, req.method)
@@ -6498,7 +6686,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # disable_typos_on_numeric_tokens_by_default
-  def test_set_settings91
+  def test_set_settings92
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(allow_typos_on_numeric_tokens: false)
@@ -6512,7 +6700,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # disable_typo_tolerance_for_words
-  def test_set_settings92
+  def test_set_settings93
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(disable_typo_tolerance_on_words: ["wheel", "1X2BCD"])
@@ -6526,7 +6714,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_separators_to_index
-  def test_set_settings93
+  def test_set_settings94
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(separators_to_index: "+#")
@@ -6540,7 +6728,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_querylanguage_ignoreplurals
-  def test_set_settings94
+  def test_set_settings95
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(query_languages: ["es"], ignore_plurals: true)
@@ -6554,7 +6742,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_attributes_to_transliterate
-  def test_set_settings95
+  def test_set_settings96
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(index_languages: ["ja"], attributes_to_transliterate: ["name", "description"])
@@ -6571,7 +6759,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_querylanguage_removestopwords
-  def test_set_settings96
+  def test_set_settings97
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(query_languages: ["es"], remove_stop_words: true)
@@ -6585,7 +6773,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_camel_case_attributes
-  def test_set_settings97
+  def test_set_settings98
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(camel_case_attributes: ["description"])
@@ -6599,7 +6787,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_decompounded_attributes
-  def test_set_settings98
+  def test_set_settings99
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(decompounded_attributes: {de: ["name"]})
@@ -6613,7 +6801,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_decompounded_multiple_attributes
-  def test_set_settings99
+  def test_set_settings100
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(
@@ -6634,7 +6822,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_keep_diacritics_on_characters
-  def test_set_settings100
+  def test_set_settings101
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(keep_diacritics_on_characters: "øé")
@@ -6648,7 +6836,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_custom_normalization
-  def test_set_settings101
+  def test_set_settings102
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(custom_normalization: {default: {ä: "ae"}})
@@ -6662,7 +6850,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_querylanguage_both
-  def test_set_settings102
+  def test_set_settings103
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(query_languages: ["es"], remove_stop_words: true, ignore_plurals: true)
@@ -6679,7 +6867,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_indexlanguages
-  def test_set_settings103
+  def test_set_settings104
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(index_languages: ["ja"])
@@ -6693,7 +6881,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # enable_decompound_query_by_default
-  def test_set_settings104
+  def test_set_settings105
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(decompound_query: true)
@@ -6707,7 +6895,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # enable_rules_syntax_by_default
-  def test_set_settings105
+  def test_set_settings106
     req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(enable_rules: true))
 
     assert_equal(:put, req.method)
@@ -6718,7 +6906,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # enable_personalization_settings
-  def test_set_settings106
+  def test_set_settings107
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(enable_personalization: true)
@@ -6732,7 +6920,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_default_query_type
-  def test_set_settings107
+  def test_set_settings108
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(query_type: "prefixLast")
@@ -6746,7 +6934,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_default_remove_words_if_no_result
-  def test_set_settings108
+  def test_set_settings109
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(remove_words_if_no_results: "none")
@@ -6760,7 +6948,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # enable_advanced_syntax_by_default
-  def test_set_settings109
+  def test_set_settings110
     req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(advanced_syntax: true))
 
     assert_equal(:put, req.method)
@@ -6771,7 +6959,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_default_optional_words
-  def test_set_settings110
+  def test_set_settings111
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(optional_words: ["blue", "iphone case"])
@@ -6785,7 +6973,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # disabling_prefix_search_for_some_attributes_by_default
-  def test_set_settings111
+  def test_set_settings112
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(disable_prefix_on_attributes: ["sku"])
@@ -6799,7 +6987,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # disabling_exact_for_some_attributes_by_default
-  def test_set_settings112
+  def test_set_settings113
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(disable_exact_on_attributes: ["description"])
@@ -6813,7 +7001,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_default_exact_single_word_query
-  def test_set_settings113
+  def test_set_settings114
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(exact_on_single_word_query: "attribute")
@@ -6827,7 +7015,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_default_aternative_as_exact
-  def test_set_settings114
+  def test_set_settings115
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(alternatives_as_exact: ["ignorePlurals", "singleWordSynonym"])
@@ -6844,7 +7032,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_numeric_attributes_for_filtering
-  def test_set_settings115
+  def test_set_settings116
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(numeric_attributes_for_filtering: ["quantity", "popularity"])
@@ -6858,7 +7046,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # enable_compression_of_integer_array
-  def test_set_settings116
+  def test_set_settings117
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(allow_compression_of_integer_array: true)
@@ -6872,7 +7060,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_attributes_for_distinct
-  def test_set_settings117
+  def test_set_settings118
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(attribute_for_distinct: "url")
@@ -6886,7 +7074,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_distinct
-  def test_set_settings118
+  def test_set_settings119
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(distinct: 1, attribute_for_distinct: "url")
@@ -6900,7 +7088,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_replace_synonyms_in_highlights
-  def test_set_settings119
+  def test_set_settings120
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(replace_synonyms_in_highlight: false)
@@ -6914,7 +7102,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_min_proximity
-  def test_set_settings120
+  def test_set_settings121
     req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(min_proximity: 1))
 
     assert_equal(:put, req.method)
@@ -6925,7 +7113,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_default_field
-  def test_set_settings121
+  def test_set_settings122
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(response_fields: ["hits", "hitsPerPage", "nbPages", "page"])
@@ -6942,7 +7130,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_max_facet_hits
-  def test_set_settings122
+  def test_set_settings123
     req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(max_facet_hits: 10))
 
     assert_equal(:put, req.method)
@@ -6953,7 +7141,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_attribute_criteria_computed_by_min_proximity
-  def test_set_settings123
+  def test_set_settings124
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(attribute_criteria_computed_by_min_proximity: true)
@@ -6967,7 +7155,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_user_data
-  def test_set_settings124
+  def test_set_settings125
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(
@@ -6986,7 +7174,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # set_rendering_content
-  def test_set_settings125
+  def test_set_settings126
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(
@@ -7012,6 +7200,59 @@ class TestSearchClient < Test::Unit::TestCase
       ),
       JSON.parse(req.body)
     )
+  end
+
+  # typoToleranceMin
+  def test_set_settings127
+    req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(typo_tolerance: "min"))
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"typoTolerance\":\"min\"}"), JSON.parse(req.body))
+  end
+
+  # minWordSizefor1Typo5
+  def test_set_settings128
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(min_word_sizefor1_typo: 5)
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"minWordSizefor1Typo\":5}"), JSON.parse(req.body))
+  end
+
+  # attributesToSnippetBodyTitle
+  def test_set_settings129
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(attributes_to_snippet: ["body:20", "title"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"attributesToSnippet\":[\"body:20\",\"title\"]}"), JSON.parse(req.body))
+  end
+
+  # snippetEllipsisTextHellip
+  def test_set_settings130
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(snippet_ellipsis_text: "[&hellip;]")
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"snippetEllipsisText\":\"[&hellip;]\"}"), JSON.parse(req.body))
   end
 
   # updateApiKey

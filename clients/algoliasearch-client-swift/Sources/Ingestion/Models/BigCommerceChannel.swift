@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct BigCommerceChannel: Codable, JSONEncodable {
@@ -31,12 +31,7 @@ public struct BigCommerceChannel: Codable, JSONEncodable {
     }
 }
 
-extension BigCommerceChannel: Equatable {
-    public static func ==(lhs: BigCommerceChannel, rhs: BigCommerceChannel) -> Bool {
-        lhs.id == rhs.id &&
-            lhs.currencies == rhs.currencies
-    }
-}
+extension BigCommerceChannel: Equatable {}
 
 extension BigCommerceChannel: Hashable {
     public func hash(into hasher: inout Hasher) {

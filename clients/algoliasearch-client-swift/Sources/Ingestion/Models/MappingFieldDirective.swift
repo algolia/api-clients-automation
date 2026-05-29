@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Describes how a field should be resolved by applying a set of directives.
@@ -32,12 +32,7 @@ public struct MappingFieldDirective: Codable, JSONEncodable {
     }
 }
 
-extension MappingFieldDirective: Equatable {
-    public static func ==(lhs: MappingFieldDirective, rhs: MappingFieldDirective) -> Bool {
-        lhs.fieldKey == rhs.fieldKey &&
-            lhs.value == rhs.value
-    }
-}
+extension MappingFieldDirective: Equatable {}
 
 extension MappingFieldDirective: Hashable {
     public func hash(into hasher: inout Hasher) {

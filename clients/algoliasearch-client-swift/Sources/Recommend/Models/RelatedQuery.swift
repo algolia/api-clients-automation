@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct RelatedQuery: Codable, JSONEncodable {
@@ -63,17 +63,7 @@ public struct RelatedQuery: Codable, JSONEncodable {
     }
 }
 
-extension RelatedQuery: Equatable {
-    public static func ==(lhs: RelatedQuery, rhs: RelatedQuery) -> Bool {
-        lhs.indexName == rhs.indexName &&
-            lhs.threshold == rhs.threshold &&
-            lhs.maxRecommendations == rhs.maxRecommendations &&
-            lhs.queryParameters == rhs.queryParameters &&
-            lhs.model == rhs.model &&
-            lhs.objectID == rhs.objectID &&
-            lhs.fallbackParameters == rhs.fallbackParameters
-    }
-}
+extension RelatedQuery: Equatable {}
 
 extension RelatedQuery: Hashable {
     public func hash(into hasher: inout Hasher) {

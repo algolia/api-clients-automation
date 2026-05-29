@@ -9,6 +9,7 @@ from algoliasearch.http.hosts import Host, HostsCollection
 from algoliasearch.search.client import SearchClient
 from algoliasearch.search.client import SearchClientSync
 from algoliasearch.search.config import SearchConfig
+from algoliasearch.search.config import TransformationOptions
 
 
 class TestSearchClient:
@@ -175,7 +176,74 @@ class TestSearchClient:
             else _req.to_dict()
         ) == loads("""{"status":"ok"}""")
 
+    async def test_api_6(self):
+        """
+        test the compression strategy
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6678,
+                )
+            ]
+        )
+        _config.compression_type = "gzip"
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.custom_post(
+            path="1/test/gzip",
+            parameters={},
+            body={
+                "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien.",
+            },
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"message":"ok compression test server response","body":{"message":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."}}"""
+        )
+
     async def test_api_7(self):
+        """
+        test the response decompression strategy
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6691,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.custom_get(
+            path="1/test/gzip-response",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"message":"ok decompression test server response","data":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}"""
+        )
+
+    async def test_api_8(self):
         """
         calls api with default read timeouts
         """
@@ -187,7 +255,7 @@ class TestSearchClient:
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 5000
 
-    async def test_api_8(self):
+    async def test_api_9(self):
         """
         calls api with default write timeouts
         """
@@ -199,7 +267,7 @@ class TestSearchClient:
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 30000
 
-    async def test_api_9(self):
+    async def test_api_10(self):
         """
         can handle unknown response fields
         """
@@ -230,7 +298,7 @@ class TestSearchClient:
             """{"minWordSizefor1Typo":12,"minWordSizefor2Typos":13,"hitsPerPage":14}"""
         )
 
-    async def test_api_10(self):
+    async def test_api_11(self):
         """
         can handle unknown response fields inside a nested oneOf
         """
@@ -262,7 +330,7 @@ class TestSearchClient:
             """{"objectID":"ruleObjectID","consequence":{"promote":[{"objectID":"1","position":10}]}}"""
         )
 
-    async def test_api_11(self):
+    async def test_api_12(self):
         """
         does not retry on success
         """
@@ -331,7 +399,7 @@ class TestSearchClient:
         _req = await _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.35.4\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.41.1\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     async def test_delete_objects_0(self):
@@ -733,7 +801,32 @@ class TestSearchClient:
         call partialUpdateObjectsWithTransformation with createIfNotExists=true
         """
 
-        _config = SearchConfig("test-app-id", "test-api-key")
+        _transformation_options = TransformationOptions(
+            region="us",
+            hosts=HostsCollection(
+                [
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6688,
+                    ),
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6689,
+                    ),
+                ]
+            ),
+        )
+        _config = SearchConfig(
+            "test-app-id",
+            "test-api-key",
+            transformation_options=_transformation_options,
+        )
         _config.hosts = HostsCollection(
             [
                 Host(
@@ -752,7 +845,6 @@ class TestSearchClient:
                 ),
             ]
         )
-        _config.set_transformation_region("us")
         _client = SearchClient.create_with_config(config=_config)
         _req = await _client.partial_update_objects_with_transformation(
             index_name="cts_e2e_partialUpdateObjectsWithTransformation_python",
@@ -940,7 +1032,25 @@ class TestSearchClient:
         call replaceAllObjectsWithTransformation without error
         """
 
-        _config = SearchConfig("test-app-id", "test-api-key")
+        _transformation_options = TransformationOptions(
+            region="us",
+            hosts=HostsCollection(
+                [
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6690,
+                    )
+                ]
+            ),
+        )
+        _config = SearchConfig(
+            "test-app-id",
+            "test-api-key",
+            transformation_options=_transformation_options,
+        )
         _config.hosts = HostsCollection(
             [
                 Host(
@@ -952,7 +1062,6 @@ class TestSearchClient:
                 )
             ]
         )
-        _config.set_transformation_region("us")
         _client = SearchClient.create_with_config(config=_config)
         _req = await _client.replace_all_objects_with_transformation(
             index_name="cts_e2e_replace_all_objects_with_transformation_python",
@@ -1157,7 +1266,32 @@ class TestSearchClient:
         call saveObjectsWithTransformation without error
         """
 
-        _config = SearchConfig("test-app-id", "test-api-key")
+        _transformation_options = TransformationOptions(
+            region="us",
+            hosts=HostsCollection(
+                [
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6688,
+                    ),
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6689,
+                    ),
+                ]
+            ),
+        )
+        _config = SearchConfig(
+            "test-app-id",
+            "test-api-key",
+            transformation_options=_transformation_options,
+        )
         _config.hosts = HostsCollection(
             [
                 Host(
@@ -1176,7 +1310,6 @@ class TestSearchClient:
                 ),
             ]
         )
-        _config.set_transformation_region("us")
         _client = SearchClient.create_with_config(config=_config)
         _req = await _client.save_objects_with_transformation(
             index_name="cts_e2e_saveObjectsWithTransformation_python",
@@ -1603,7 +1736,74 @@ class TestSearchClientSync:
             else _req.to_dict()
         ) == loads("""{"status":"ok"}""")
 
+    def test_api_6(self):
+        """
+        test the compression strategy
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6678,
+                )
+            ]
+        )
+        _config.compression_type = "gzip"
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.custom_post(
+            path="1/test/gzip",
+            parameters={},
+            body={
+                "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien.",
+            },
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"message":"ok compression test server response","body":{"message":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."}}"""
+        )
+
     def test_api_7(self):
+        """
+        test the response decompression strategy
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6691,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.custom_get(
+            path="1/test/gzip-response",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"message":"ok decompression test server response","data":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}"""
+        )
+
+    def test_api_8(self):
         """
         calls api with default read timeouts
         """
@@ -1615,7 +1815,7 @@ class TestSearchClientSync:
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 5000
 
-    def test_api_8(self):
+    def test_api_9(self):
         """
         calls api with default write timeouts
         """
@@ -1627,7 +1827,7 @@ class TestSearchClientSync:
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 30000
 
-    def test_api_9(self):
+    def test_api_10(self):
         """
         can handle unknown response fields
         """
@@ -1658,7 +1858,7 @@ class TestSearchClientSync:
             """{"minWordSizefor1Typo":12,"minWordSizefor2Typos":13,"hitsPerPage":14}"""
         )
 
-    def test_api_10(self):
+    def test_api_11(self):
         """
         can handle unknown response fields inside a nested oneOf
         """
@@ -1690,7 +1890,7 @@ class TestSearchClientSync:
             """{"objectID":"ruleObjectID","consequence":{"promote":[{"objectID":"1","position":10}]}}"""
         )
 
-    def test_api_11(self):
+    def test_api_12(self):
         """
         does not retry on success
         """
@@ -1759,7 +1959,7 @@ class TestSearchClientSync:
         _req = _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.35.4\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.41.1\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     def test_delete_objects_0(self):
@@ -2161,7 +2361,32 @@ class TestSearchClientSync:
         call partialUpdateObjectsWithTransformation with createIfNotExists=true
         """
 
-        _config = SearchConfig("test-app-id", "test-api-key")
+        _transformation_options = TransformationOptions(
+            region="us",
+            hosts=HostsCollection(
+                [
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6688,
+                    ),
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6689,
+                    ),
+                ]
+            ),
+        )
+        _config = SearchConfig(
+            "test-app-id",
+            "test-api-key",
+            transformation_options=_transformation_options,
+        )
         _config.hosts = HostsCollection(
             [
                 Host(
@@ -2180,7 +2405,6 @@ class TestSearchClientSync:
                 ),
             ]
         )
-        _config.set_transformation_region("us")
         _client = SearchClientSync.create_with_config(config=_config)
         _req = _client.partial_update_objects_with_transformation(
             index_name="cts_e2e_partialUpdateObjectsWithTransformation_python",
@@ -2368,7 +2592,25 @@ class TestSearchClientSync:
         call replaceAllObjectsWithTransformation without error
         """
 
-        _config = SearchConfig("test-app-id", "test-api-key")
+        _transformation_options = TransformationOptions(
+            region="us",
+            hosts=HostsCollection(
+                [
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6690,
+                    )
+                ]
+            ),
+        )
+        _config = SearchConfig(
+            "test-app-id",
+            "test-api-key",
+            transformation_options=_transformation_options,
+        )
         _config.hosts = HostsCollection(
             [
                 Host(
@@ -2380,7 +2622,6 @@ class TestSearchClientSync:
                 )
             ]
         )
-        _config.set_transformation_region("us")
         _client = SearchClientSync.create_with_config(config=_config)
         _req = _client.replace_all_objects_with_transformation(
             index_name="cts_e2e_replace_all_objects_with_transformation_python",
@@ -2585,7 +2826,32 @@ class TestSearchClientSync:
         call saveObjectsWithTransformation without error
         """
 
-        _config = SearchConfig("test-app-id", "test-api-key")
+        _transformation_options = TransformationOptions(
+            region="us",
+            hosts=HostsCollection(
+                [
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6688,
+                    ),
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6689,
+                    ),
+                ]
+            ),
+        )
+        _config = SearchConfig(
+            "test-app-id",
+            "test-api-key",
+            transformation_options=_transformation_options,
+        )
         _config.hosts = HostsCollection(
             [
                 Host(
@@ -2604,7 +2870,6 @@ class TestSearchClientSync:
                 ),
             ]
         )
-        _config.set_transformation_region("us")
         _client = SearchClientSync.create_with_config(config=_config)
         _req = _client.save_objects_with_transformation(
             index_name="cts_e2e_saveObjectsWithTransformation_python",

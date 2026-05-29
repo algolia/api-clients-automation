@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Composition rules batch parameters.
@@ -26,11 +26,7 @@ public struct CompositionRulesBatchParams: Codable, JSONEncodable {
     }
 }
 
-extension CompositionRulesBatchParams: Equatable {
-    public static func ==(lhs: CompositionRulesBatchParams, rhs: CompositionRulesBatchParams) -> Bool {
-        lhs.requests == rhs.requests
-    }
-}
+extension CompositionRulesBatchParams: Equatable {}
 
 extension CompositionRulesBatchParams: Hashable {
     public func hash(into hasher: inout Hasher) {

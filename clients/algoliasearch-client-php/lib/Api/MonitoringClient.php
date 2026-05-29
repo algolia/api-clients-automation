@@ -26,17 +26,12 @@ use GuzzleHttp\Psr7\Query;
  */
 class MonitoringClient
 {
-    public const VERSION = '4.37.3';
+    public const VERSION = '4.44.0';
 
     /**
      * @var ApiWrapperInterface
      */
     protected $api;
-
-    /**
-     * @var IngestionClient
-     */
-    protected $ingestionTransporter;
 
     /**
      * @var MonitoringConfig
@@ -76,6 +71,10 @@ class MonitoringClient
         );
 
         $client = new static($apiWrapper, $config);
+
+        $logger = Algolia::getLogger();
+        $logger->info('Algolia API client: Algolia MonitoringClient initialized (appId: '.$config->getAppId().')');
+        Algolia::logDebugWarningOnce();
 
         return $client;
     }
@@ -228,7 +227,7 @@ class MonitoringClient
     }
 
     /**
-     * Retrieves average times for indexing operations for selected clusters.
+     * Retrieves indexing latency metrics for selected clusters.  This endpoint is intended for infrastructure-level monitoring and availability checks. The returned value reflects latency measured on Algolia's internal monitoring index and is reported in milliseconds.  This metric isn't intended to represent the indexing performance of an individual application or index. To measure when an indexing operation has completed for your application, use the `waitTask` method.
      *
      * @param string $clusters       Subset of clusters, separated by commas. (required)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
@@ -336,6 +335,12 @@ class MonitoringClient
                 'Parameter `path` is required when calling `customDelete`.'
             );
         }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customDelete`.'
+            );
+        }
 
         $resourcePath = '/{path}';
         $queryParameters = [];
@@ -374,6 +379,12 @@ class MonitoringClient
     {
         // verify the required parameter 'path' is set
         if (!isset($path)) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customGet`.'
+            );
+        }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
             throw new \InvalidArgumentException(
                 'Parameter `path` is required when calling `customGet`.'
             );
@@ -421,6 +432,12 @@ class MonitoringClient
                 'Parameter `path` is required when calling `customPost`.'
             );
         }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customPost`.'
+            );
+        }
 
         $resourcePath = '/{path}';
         $queryParameters = [];
@@ -460,6 +477,12 @@ class MonitoringClient
     {
         // verify the required parameter 'path' is set
         if (!isset($path)) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customPut`.'
+            );
+        }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
             throw new \InvalidArgumentException(
                 'Parameter `path` is required when calling `customPut`.'
             );
@@ -505,6 +528,12 @@ class MonitoringClient
                 'Parameter `clusters` is required when calling `getClusterIncidents`.'
             );
         }
+        // verify the required parameter 'clusters' is not empty
+        if (isset($clusters) && '' === $clusters) {
+            throw new \InvalidArgumentException(
+                'Parameter `clusters` is required when calling `getClusterIncidents`.'
+            );
+        }
 
         $resourcePath = '/1/incidents/{clusters}';
         $queryParameters = [];
@@ -538,6 +567,12 @@ class MonitoringClient
     {
         // verify the required parameter 'clusters' is set
         if (!isset($clusters)) {
+            throw new \InvalidArgumentException(
+                'Parameter `clusters` is required when calling `getClusterStatus`.'
+            );
+        }
+        // verify the required parameter 'clusters' is not empty
+        if (isset($clusters) && '' === $clusters) {
             throw new \InvalidArgumentException(
                 'Parameter `clusters` is required when calling `getClusterStatus`.'
             );
@@ -581,10 +616,10 @@ class MonitoringClient
     }
 
     /**
-     * Retrieve indexing times (with HTTP info).
+     * Retrieve indexing monitoring latency (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
-     * Retrieves average times for indexing operations for selected clusters.
+     * Retrieves indexing latency metrics for selected clusters.  This endpoint is intended for infrastructure-level monitoring and availability checks. The returned value reflects latency measured on Algolia's internal monitoring index and is reported in milliseconds.  This metric isn't intended to represent the indexing performance of an individual application or index. To measure when an indexing operation has completed for your application, use the `waitTask` method.
      *
      * @param string $clusters       Subset of clusters, separated by commas. (required)
      * @param array  $requestOptions Request options
@@ -595,6 +630,12 @@ class MonitoringClient
     {
         // verify the required parameter 'clusters' is set
         if (!isset($clusters)) {
+            throw new \InvalidArgumentException(
+                'Parameter `clusters` is required when calling `getIndexingTime`.'
+            );
+        }
+        // verify the required parameter 'clusters' is not empty
+        if (isset($clusters) && '' === $clusters) {
             throw new \InvalidArgumentException(
                 'Parameter `clusters` is required when calling `getIndexingTime`.'
             );
@@ -632,6 +673,12 @@ class MonitoringClient
     {
         // verify the required parameter 'clusters' is set
         if (!isset($clusters)) {
+            throw new \InvalidArgumentException(
+                'Parameter `clusters` is required when calling `getLatency`.'
+            );
+        }
+        // verify the required parameter 'clusters' is not empty
+        if (isset($clusters) && '' === $clusters) {
             throw new \InvalidArgumentException(
                 'Parameter `clusters` is required when calling `getLatency`.'
             );
@@ -722,6 +769,12 @@ class MonitoringClient
     {
         // verify the required parameter 'clusters' is set
         if (!isset($clusters)) {
+            throw new \InvalidArgumentException(
+                'Parameter `clusters` is required when calling `getReachability`.'
+            );
+        }
+        // verify the required parameter 'clusters' is not empty
+        if (isset($clusters) && '' === $clusters) {
             throw new \InvalidArgumentException(
                 'Parameter `clusters` is required when calling `getReachability`.'
             );

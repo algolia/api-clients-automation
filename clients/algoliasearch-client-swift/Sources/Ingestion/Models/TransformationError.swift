@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// The error if the transformation failed.
@@ -32,12 +32,7 @@ public struct TransformationError: Codable, JSONEncodable {
     }
 }
 
-extension TransformationError: Equatable {
-    public static func ==(lhs: TransformationError, rhs: TransformationError) -> Bool {
-        lhs.code == rhs.code &&
-            lhs.message == rhs.message
-    }
-}
+extension TransformationError: Equatable {}
 
 extension TransformationError: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -5,8 +5,8 @@ import Foundation
 
 import DotEnv
 
-import Core
-@preconcurrency import QuerySuggestions
+import AlgoliaCore
+@preconcurrency import AlgoliaQuerySuggestions
 
 do {
     guard let currentFileURL = URL(string: #file) else {

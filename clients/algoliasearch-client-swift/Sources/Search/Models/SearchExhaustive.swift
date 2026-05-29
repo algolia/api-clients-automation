@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Whether certain properties of the search response are calculated exhaustive (exact) or approximated.
@@ -63,15 +63,7 @@ public struct SearchExhaustive: Codable, JSONEncodable {
     }
 }
 
-extension SearchExhaustive: Equatable {
-    public static func ==(lhs: SearchExhaustive, rhs: SearchExhaustive) -> Bool {
-        lhs.facetsCount == rhs.facetsCount &&
-            lhs.facetValues == rhs.facetValues &&
-            lhs.nbHits == rhs.nbHits &&
-            lhs.rulesMatch == rhs.rulesMatch &&
-            lhs.typo == rhs.typo
-    }
-}
+extension SearchExhaustive: Equatable {}
 
 extension SearchExhaustive: Hashable {
     public func hash(into hasher: inout Hasher) {

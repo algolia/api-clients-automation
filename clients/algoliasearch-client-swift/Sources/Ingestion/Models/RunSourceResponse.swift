@@ -2,14 +2,14 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct RunSourceResponse: Codable, JSONEncodable {
     /// Map of taskID sent for reindex with the corresponding runID.
     public var taskWithRunID: [String: String]
-    /// Date of creation in RFC 3339 format.
+    /// Date and time when the resource was created, in RFC 3339 format.
     public var createdAt: String
 
     public init(taskWithRunID: [String: String], createdAt: String) {
@@ -31,12 +31,7 @@ public struct RunSourceResponse: Codable, JSONEncodable {
     }
 }
 
-extension RunSourceResponse: Equatable {
-    public static func ==(lhs: RunSourceResponse, rhs: RunSourceResponse) -> Bool {
-        lhs.taskWithRunID == rhs.taskWithRunID &&
-            lhs.createdAt == rhs.createdAt
-    }
-}
+extension RunSourceResponse: Equatable {}
 
 extension RunSourceResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

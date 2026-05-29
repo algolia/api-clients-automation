@@ -13,11 +13,11 @@ final class TimeRange {
     this.until,
   });
 
-  /// When the rule should start to be active, in Unix epoch time.
+  /// Timestamp when the rule should start to be active, measured in seconds since the Unix epoch.
   @JsonKey(name: r'from')
   final int? from;
 
-  /// When the rule should stop to be active, in Unix epoch time.
+  /// Timestamp when the rule should stop to be active, measured in seconds since the Unix epoch.
   @JsonKey(name: r'until')
   final int? until;
 

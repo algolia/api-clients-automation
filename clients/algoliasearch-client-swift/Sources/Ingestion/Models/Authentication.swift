@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Resource representing the information required to authenticate with a source or a destination.
@@ -17,9 +17,9 @@ public struct Authentication: Codable, JSONEncodable {
     /// Owner of the resource.
     public var owner: String?
     public var input: AuthInputPartial
-    /// Date of creation in RFC 3339 format.
+    /// Date and time when the resource was created, in RFC 3339 format.
     public var createdAt: String
-    /// Date of last update in RFC 3339 format.
+    /// Date and time when the resource was last updated, in RFC 3339 format.
     public var updatedAt: String
 
     public init(
@@ -68,18 +68,7 @@ public struct Authentication: Codable, JSONEncodable {
     }
 }
 
-extension Authentication: Equatable {
-    public static func ==(lhs: Authentication, rhs: Authentication) -> Bool {
-        lhs.authenticationID == rhs.authenticationID &&
-            lhs.type == rhs.type &&
-            lhs.name == rhs.name &&
-            lhs.platform == rhs.platform &&
-            lhs.owner == rhs.owner &&
-            lhs.input == rhs.input &&
-            lhs.createdAt == rhs.createdAt &&
-            lhs.updatedAt == rhs.updatedAt
-    }
-}
+extension Authentication: Equatable {}
 
 extension Authentication: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -24,13 +24,11 @@ class MainInjectionQueryParameters extends AbstractModel implements ModelInterfa
         'advancedSyntaxFeatures' => '\Algolia\AlgoliaSearch\Model\Composition\AdvancedSyntaxFeatures[]',
         'allowTyposOnNumericTokens' => 'bool',
         'alternativesAsExact' => '\Algolia\AlgoliaSearch\Model\Composition\AlternativesAsExact[]',
-        'analytics' => 'bool',
         'attributeCriteriaComputedByMinProximity' => 'bool',
         'attributesToHighlight' => 'string[]',
         'attributesToRetrieve' => 'string[]',
         'attributesToSnippet' => 'string[]',
         'clickAnalytics' => 'bool',
-        'decompoundQuery' => 'bool',
         'disableExactOnAttributes' => 'string[]',
         'disableTypoToleranceOnAttributes' => 'string[]',
         'distinct' => '\Algolia\AlgoliaSearch\Model\Composition\Distinct',
@@ -45,7 +43,6 @@ class MainInjectionQueryParameters extends AbstractModel implements ModelInterfa
         'highlightPostTag' => 'string',
         'highlightPreTag' => 'string',
         'ignorePlurals' => '\Algolia\AlgoliaSearch\Model\Composition\IgnorePlurals',
-        'maxFacetHits' => 'int',
         'minProximity' => 'int',
         'minWordSizefor1Typo' => 'int',
         'minWordSizefor2Typos' => 'int',
@@ -86,13 +83,11 @@ class MainInjectionQueryParameters extends AbstractModel implements ModelInterfa
         'advancedSyntaxFeatures' => null,
         'allowTyposOnNumericTokens' => null,
         'alternativesAsExact' => null,
-        'analytics' => null,
         'attributeCriteriaComputedByMinProximity' => null,
         'attributesToHighlight' => null,
         'attributesToRetrieve' => null,
         'attributesToSnippet' => null,
         'clickAnalytics' => null,
-        'decompoundQuery' => null,
         'disableExactOnAttributes' => null,
         'disableTypoToleranceOnAttributes' => null,
         'distinct' => null,
@@ -107,7 +102,6 @@ class MainInjectionQueryParameters extends AbstractModel implements ModelInterfa
         'highlightPostTag' => null,
         'highlightPreTag' => null,
         'ignorePlurals' => null,
-        'maxFacetHits' => null,
         'minProximity' => null,
         'minWordSizefor1Typo' => null,
         'minWordSizefor2Typos' => null,
@@ -149,13 +143,11 @@ class MainInjectionQueryParameters extends AbstractModel implements ModelInterfa
         'advancedSyntaxFeatures' => 'advancedSyntaxFeatures',
         'allowTyposOnNumericTokens' => 'allowTyposOnNumericTokens',
         'alternativesAsExact' => 'alternativesAsExact',
-        'analytics' => 'analytics',
         'attributeCriteriaComputedByMinProximity' => 'attributeCriteriaComputedByMinProximity',
         'attributesToHighlight' => 'attributesToHighlight',
         'attributesToRetrieve' => 'attributesToRetrieve',
         'attributesToSnippet' => 'attributesToSnippet',
         'clickAnalytics' => 'clickAnalytics',
-        'decompoundQuery' => 'decompoundQuery',
         'disableExactOnAttributes' => 'disableExactOnAttributes',
         'disableTypoToleranceOnAttributes' => 'disableTypoToleranceOnAttributes',
         'distinct' => 'distinct',
@@ -170,7 +162,6 @@ class MainInjectionQueryParameters extends AbstractModel implements ModelInterfa
         'highlightPostTag' => 'highlightPostTag',
         'highlightPreTag' => 'highlightPreTag',
         'ignorePlurals' => 'ignorePlurals',
-        'maxFacetHits' => 'maxFacetHits',
         'minProximity' => 'minProximity',
         'minWordSizefor1Typo' => 'minWordSizefor1Typo',
         'minWordSizefor2Typos' => 'minWordSizefor2Typos',
@@ -211,13 +202,11 @@ class MainInjectionQueryParameters extends AbstractModel implements ModelInterfa
         'advancedSyntaxFeatures' => 'setAdvancedSyntaxFeatures',
         'allowTyposOnNumericTokens' => 'setAllowTyposOnNumericTokens',
         'alternativesAsExact' => 'setAlternativesAsExact',
-        'analytics' => 'setAnalytics',
         'attributeCriteriaComputedByMinProximity' => 'setAttributeCriteriaComputedByMinProximity',
         'attributesToHighlight' => 'setAttributesToHighlight',
         'attributesToRetrieve' => 'setAttributesToRetrieve',
         'attributesToSnippet' => 'setAttributesToSnippet',
         'clickAnalytics' => 'setClickAnalytics',
-        'decompoundQuery' => 'setDecompoundQuery',
         'disableExactOnAttributes' => 'setDisableExactOnAttributes',
         'disableTypoToleranceOnAttributes' => 'setDisableTypoToleranceOnAttributes',
         'distinct' => 'setDistinct',
@@ -232,7 +221,6 @@ class MainInjectionQueryParameters extends AbstractModel implements ModelInterfa
         'highlightPostTag' => 'setHighlightPostTag',
         'highlightPreTag' => 'setHighlightPreTag',
         'ignorePlurals' => 'setIgnorePlurals',
-        'maxFacetHits' => 'setMaxFacetHits',
         'minProximity' => 'setMinProximity',
         'minWordSizefor1Typo' => 'setMinWordSizefor1Typo',
         'minWordSizefor2Typos' => 'setMinWordSizefor2Typos',
@@ -273,13 +261,11 @@ class MainInjectionQueryParameters extends AbstractModel implements ModelInterfa
         'advancedSyntaxFeatures' => 'getAdvancedSyntaxFeatures',
         'allowTyposOnNumericTokens' => 'getAllowTyposOnNumericTokens',
         'alternativesAsExact' => 'getAlternativesAsExact',
-        'analytics' => 'getAnalytics',
         'attributeCriteriaComputedByMinProximity' => 'getAttributeCriteriaComputedByMinProximity',
         'attributesToHighlight' => 'getAttributesToHighlight',
         'attributesToRetrieve' => 'getAttributesToRetrieve',
         'attributesToSnippet' => 'getAttributesToSnippet',
         'clickAnalytics' => 'getClickAnalytics',
-        'decompoundQuery' => 'getDecompoundQuery',
         'disableExactOnAttributes' => 'getDisableExactOnAttributes',
         'disableTypoToleranceOnAttributes' => 'getDisableTypoToleranceOnAttributes',
         'distinct' => 'getDistinct',
@@ -294,7 +280,6 @@ class MainInjectionQueryParameters extends AbstractModel implements ModelInterfa
         'highlightPostTag' => 'getHighlightPostTag',
         'highlightPreTag' => 'getHighlightPreTag',
         'ignorePlurals' => 'getIgnorePlurals',
-        'maxFacetHits' => 'getMaxFacetHits',
         'minProximity' => 'getMinProximity',
         'minWordSizefor1Typo' => 'getMinWordSizefor1Typo',
         'minWordSizefor2Typos' => 'getMinWordSizefor2Typos',
@@ -351,9 +336,6 @@ class MainInjectionQueryParameters extends AbstractModel implements ModelInterfa
         if (isset($data['alternativesAsExact'])) {
             $this->container['alternativesAsExact'] = $data['alternativesAsExact'];
         }
-        if (isset($data['analytics'])) {
-            $this->container['analytics'] = $data['analytics'];
-        }
         if (isset($data['attributeCriteriaComputedByMinProximity'])) {
             $this->container['attributeCriteriaComputedByMinProximity'] = $data['attributeCriteriaComputedByMinProximity'];
         }
@@ -368,9 +350,6 @@ class MainInjectionQueryParameters extends AbstractModel implements ModelInterfa
         }
         if (isset($data['clickAnalytics'])) {
             $this->container['clickAnalytics'] = $data['clickAnalytics'];
-        }
-        if (isset($data['decompoundQuery'])) {
-            $this->container['decompoundQuery'] = $data['decompoundQuery'];
         }
         if (isset($data['disableExactOnAttributes'])) {
             $this->container['disableExactOnAttributes'] = $data['disableExactOnAttributes'];
@@ -413,9 +392,6 @@ class MainInjectionQueryParameters extends AbstractModel implements ModelInterfa
         }
         if (isset($data['ignorePlurals'])) {
             $this->container['ignorePlurals'] = $data['ignorePlurals'];
-        }
-        if (isset($data['maxFacetHits'])) {
-            $this->container['maxFacetHits'] = $data['maxFacetHits'];
         }
         if (isset($data['minProximity'])) {
             $this->container['minProximity'] = $data['minProximity'];
@@ -672,30 +648,6 @@ class MainInjectionQueryParameters extends AbstractModel implements ModelInterfa
     }
 
     /**
-     * Gets analytics.
-     *
-     * @return null|bool
-     */
-    public function getAnalytics()
-    {
-        return $this->container['analytics'] ?? null;
-    }
-
-    /**
-     * Sets analytics.
-     *
-     * @param null|bool $analytics whether this search will be included in Analytics
-     *
-     * @return self
-     */
-    public function setAnalytics($analytics)
-    {
-        $this->container['analytics'] = $analytics;
-
-        return $this;
-    }
-
-    /**
      * Gets attributeCriteriaComputedByMinProximity.
      *
      * @return null|bool
@@ -811,30 +763,6 @@ class MainInjectionQueryParameters extends AbstractModel implements ModelInterfa
     public function setClickAnalytics($clickAnalytics)
     {
         $this->container['clickAnalytics'] = $clickAnalytics;
-
-        return $this;
-    }
-
-    /**
-     * Gets decompoundQuery.
-     *
-     * @return null|bool
-     */
-    public function getDecompoundQuery()
-    {
-        return $this->container['decompoundQuery'] ?? null;
-    }
-
-    /**
-     * Sets decompoundQuery.
-     *
-     * @param null|bool $decompoundQuery Whether to split compound words in the query into their building blocks For more information, see [Word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words). Word segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and Norwegian. Decompounding doesn't work for words with [non-spacing mark Unicode characters](https://www.charactercodes.net/category/non-spacing_mark). For example, `Gartenstühle` won't be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).
-     *
-     * @return self
-     */
-    public function setDecompoundQuery($decompoundQuery)
-    {
-        $this->container['decompoundQuery'] = $decompoundQuery;
 
         return $this;
     }
@@ -1068,7 +996,7 @@ class MainInjectionQueryParameters extends AbstractModel implements ModelInterfa
     /**
      * Sets filters.
      *
-     * @param null|string $filters Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
+     * @param null|string $filters Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>`, where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>`, where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes if the facet attribute name or facet value contains spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
      *
      * @return self
      */
@@ -1171,30 +1099,6 @@ class MainInjectionQueryParameters extends AbstractModel implements ModelInterfa
     public function setIgnorePlurals($ignorePlurals)
     {
         $this->container['ignorePlurals'] = $ignorePlurals;
-
-        return $this;
-    }
-
-    /**
-     * Gets maxFacetHits.
-     *
-     * @return null|int
-     */
-    public function getMaxFacetHits()
-    {
-        return $this->container['maxFacetHits'] ?? null;
-    }
-
-    /**
-     * Sets maxFacetHits.
-     *
-     * @param null|int $maxFacetHits Maximum number of facet values to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
-     *
-     * @return self
-     */
-    public function setMaxFacetHits($maxFacetHits)
-    {
-        $this->container['maxFacetHits'] = $maxFacetHits;
 
         return $this;
     }
@@ -1428,7 +1332,7 @@ class MainInjectionQueryParameters extends AbstractModel implements ModelInterfa
     /**
      * Sets queryLanguages.
      *
-     * @param null|SupportedLanguage[] $queryLanguages Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries  This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings. This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages. To support this, you must place the CJK language **first**  **You should always specify a query language.** If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages), or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
+     * @param null|SupportedLanguage[] $queryLanguages Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries. This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings. This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages. To support this, place the CJK language **first**. **Always specify a query language.** If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages), or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
      *
      * @return self
      */

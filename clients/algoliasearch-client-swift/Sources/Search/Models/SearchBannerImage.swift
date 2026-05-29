@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Image to show inside a banner.
@@ -30,12 +30,7 @@ public struct SearchBannerImage: Codable, JSONEncodable {
     }
 }
 
-extension SearchBannerImage: Equatable {
-    public static func ==(lhs: SearchBannerImage, rhs: SearchBannerImage) -> Bool {
-        lhs.urls == rhs.urls &&
-            lhs.title == rhs.title
-    }
-}
+extension SearchBannerImage: Equatable {}
 
 extension SearchBannerImage: Hashable {
     public func hash(into hasher: inout Hasher) {

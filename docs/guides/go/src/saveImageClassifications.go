@@ -6,9 +6,9 @@ import (
 
 func saveImageClassifications() {
 	type Image struct {
-		ImageURL string                   `json:"imageURL"`
-		ObjectID string                   `json:"objectID"`
-		Objects  []map[string]interface{} `json:"objects"`
+		ImageURL string           `json:"imageURL"`
+		ObjectID string           `json:"objectID"`
+		Objects  []map[string]any `json:"objects"`
 	}
 
 	getImageLabels := func(imageURL, objectID string, _scoreLimit float64) Image {
@@ -16,7 +16,7 @@ func saveImageClassifications() {
 		return Image{
 			ImageURL: imageURL,
 			ObjectID: objectID,
-			Objects:  []map[string]interface{}{},
+			Objects:  []map[string]any{},
 		}
 	}
 

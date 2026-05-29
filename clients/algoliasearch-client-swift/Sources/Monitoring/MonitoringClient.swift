@@ -2,12 +2,12 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 open class MonitoringClient {
-    private var configuration: MonitoringClientConfiguration
+    public private(set) var configuration: MonitoringClientConfiguration
     private var transporter: Transporter
 
     var appID: String {
@@ -479,7 +479,12 @@ open class MonitoringClient {
         return body
     }
 
-    // Retrieves average times for indexing operations for selected clusters.
+    // Retrieves indexing latency metrics for selected clusters.  This endpoint is intended for infrastructure-level
+    // monitoring and availability checks. The returned value reflects latency measured on Algolia's internal monitoring
+    // index and is reported in milliseconds.  This metric isn't intended to represent the indexing performance of an
+    // individual application or index. To measure when an indexing operation has completed for your application, use
+    // the
+    // `waitTask` method.
     //
     //
     // - parameter clusters: (path) Subset of clusters, separated by commas.

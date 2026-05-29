@@ -9,9 +9,11 @@ get:
   description: |
     Retrieves the object IDs of the 1,000 most frequent search results.
 
-    If you set the `clickAnalytics` query parameter to true, the response also includes:
+    If you set the `clickAnalytics` query parameter to `true`, the response also includes:
 
-    - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.
+    - Tracked searches count.
+      Tracked searches are Search API requests with `clickAnalytics` set to `true`.
+      This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
     - Click count
     - Click-through rate (CTR)
     - Conversion count
@@ -28,8 +30,8 @@ get:
 
     **There's a difference between 0% rates and null rates:**
 
-    - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null.
-    - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+    - **Null** means there were no queries. Algolia didn't receive any events, so rates are null.
+    - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../common/parameters.yml#/Search'

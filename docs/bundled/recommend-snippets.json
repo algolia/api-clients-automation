@@ -618,7 +618,7 @@
   },
   "swift": {
     "import": {
-      "default": "import Recommend"
+      "default": "import AlgoliaRecommend"
     },
     "batchRecommendRules": {
       "default": "let response = try await client.batchRecommendRules(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    model: RecommendModels.relatedProducts\n)"

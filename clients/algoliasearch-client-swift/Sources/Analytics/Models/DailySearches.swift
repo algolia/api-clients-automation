@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct DailySearches: Codable, JSONEncodable {
@@ -31,12 +31,7 @@ public struct DailySearches: Codable, JSONEncodable {
     }
 }
 
-extension DailySearches: Equatable {
-    public static func ==(lhs: DailySearches, rhs: DailySearches) -> Bool {
-        lhs.date == rhs.date &&
-            lhs.count == rhs.count
-    }
-}
+extension DailySearches: Equatable {}
 
 extension DailySearches: Hashable {
     public func hash(into hasher: inout Hasher) {

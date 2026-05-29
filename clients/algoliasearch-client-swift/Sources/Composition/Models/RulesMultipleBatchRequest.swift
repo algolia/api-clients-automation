@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct RulesMultipleBatchRequest: Codable, JSONEncodable {
@@ -29,12 +29,7 @@ public struct RulesMultipleBatchRequest: Codable, JSONEncodable {
     }
 }
 
-extension RulesMultipleBatchRequest: Equatable {
-    public static func ==(lhs: RulesMultipleBatchRequest, rhs: RulesMultipleBatchRequest) -> Bool {
-        lhs.action == rhs.action &&
-            lhs.body == rhs.body
-    }
-}
+extension RulesMultipleBatchRequest: Equatable {}
 
 extension RulesMultipleBatchRequest: Hashable {
     public func hash(into hasher: inout Hasher) {

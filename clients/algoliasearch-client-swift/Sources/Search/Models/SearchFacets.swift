@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Order of facet names.
@@ -28,11 +28,7 @@ public struct SearchFacets: Codable, JSONEncodable {
     }
 }
 
-extension SearchFacets: Equatable {
-    public static func ==(lhs: SearchFacets, rhs: SearchFacets) -> Bool {
-        lhs.order == rhs.order
-    }
-}
+extension SearchFacets: Equatable {}
 
 extension SearchFacets: Hashable {
     public func hash(into hasher: inout Hasher) {

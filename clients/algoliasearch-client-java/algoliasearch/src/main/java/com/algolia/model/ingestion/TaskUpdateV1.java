@@ -8,8 +8,8 @@ import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /**
- * API request body for updating a task using the V1 shape, please use methods and types that don't
- * contain the V1 suffix.
+ * API request body for updating a task using the V1 shape. Use methods and types that don't contain
+ * the V1 suffix.
  *
  * @deprecated
  */

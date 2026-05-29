@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct IngestionTask: Codable, JSONEncodable {
@@ -28,13 +28,13 @@ public struct IngestionTask: Codable, JSONEncodable {
     public var failureThreshold: Int?
     public var action: ActionType?
     public var subscriptionAction: ActionType?
-    /// Date of the last cursor in RFC 3339 format.
+    /// Date and time when the last cursor was created, in RFC 3339 format.
     public var cursor: String?
     public var notifications: Notifications?
     public var policies: Policies?
-    /// Date of creation in RFC 3339 format.
+    /// Date and time when the resource was created, in RFC 3339 format.
     public var createdAt: String
-    /// Date of last update in RFC 3339 format.
+    /// Date and time when the resource was last updated, in RFC 3339 format.
     public var updatedAt: String
 
     public init(
@@ -119,27 +119,7 @@ public struct IngestionTask: Codable, JSONEncodable {
     }
 }
 
-extension IngestionTask: Equatable {
-    public static func ==(lhs: IngestionTask, rhs: IngestionTask) -> Bool {
-        lhs.taskID == rhs.taskID &&
-            lhs.sourceID == rhs.sourceID &&
-            lhs.destinationID == rhs.destinationID &&
-            lhs.cron == rhs.cron &&
-            lhs.lastRun == rhs.lastRun &&
-            lhs.nextRun == rhs.nextRun &&
-            lhs.owner == rhs.owner &&
-            lhs.input == rhs.input &&
-            lhs.enabled == rhs.enabled &&
-            lhs.failureThreshold == rhs.failureThreshold &&
-            lhs.action == rhs.action &&
-            lhs.subscriptionAction == rhs.subscriptionAction &&
-            lhs.cursor == rhs.cursor &&
-            lhs.notifications == rhs.notifications &&
-            lhs.policies == rhs.policies &&
-            lhs.createdAt == rhs.createdAt &&
-            lhs.updatedAt == rhs.updatedAt
-    }
-}
+extension IngestionTask: Equatable {}
 
 extension IngestionTask: Hashable {
     public func hash(into hasher: inout Hasher) {

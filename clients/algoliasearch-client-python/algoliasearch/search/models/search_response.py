@@ -24,6 +24,7 @@ from algoliasearch.search.models.facet_stats import FacetStats
 from algoliasearch.search.models.hit import Hit
 from algoliasearch.search.models.redirect import Redirect
 from algoliasearch.search.models.rendering_content import RenderingContent
+from algoliasearch.search.models.response_extensions import ResponseExtensions
 
 _ALIASES = {
     "ab_test_id": "abTestID",
@@ -59,6 +60,7 @@ _ALIASES = {
     "hits": "hits",
     "query": "query",
     "params": "params",
+    "extensions": "extensions",
 }
 
 
@@ -130,10 +132,11 @@ class SearchResponse(BaseModel):
     """ Number of hits per page. """
     hits: List[Hit]
     """ Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.  """
-    query: str
+    query: Optional[str] = None
     """ Search query. """
-    params: str
+    params: Optional[str] = None
     """ URL-encoded string of all search parameters. """
+    extensions: Optional[ResponseExtensions] = None
 
     @field_validator("around_lat_lng")
     def around_lat_lng_validate_regular_expression(cls, value):
@@ -207,6 +210,11 @@ class SearchResponse(BaseModel):
         obj["hits"] = (
             [Hit.from_dict(_item) for _item in obj["hits"]]
             if obj.get("hits") is not None
+            else None
+        )
+        obj["extensions"] = (
+            ResponseExtensions.from_dict(obj["extensions"])
+            if obj.get("extensions") is not None
             else None
         )
 

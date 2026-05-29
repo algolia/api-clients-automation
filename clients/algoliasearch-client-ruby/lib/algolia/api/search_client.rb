@@ -6,6 +6,49 @@ require "openssl"
 require "base64"
 
 module Algolia
+  # Configuration options for the ingestion transporter used by *_with_transformation helpers.
+  # When passed to SearchClient.with_transformation or set via set_transformation_options,
+  # the ingestion transporter is eagerly created using Ingestion API defaults (25s timeouts,
+  # no compression). Only fields explicitly set here override those defaults.
+  # See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion
+  class TransformationOptions
+    attr_accessor(
+      :region,
+      :connect_timeout,
+      :read_timeout,
+      :write_timeout,
+      :hosts,
+      :compression_type,
+      :header_params
+    )
+
+    def initialize(region, opts = {})
+      if region.nil? || region.to_s.strip.empty?
+        raise(
+          ArgumentError,
+          "`region` is required in `TransformationOptions`. See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion"
+        )
+      end
+
+      valid_keys = %i[connect_timeout read_timeout write_timeout hosts compression_type header_params]
+      unknown = opts.keys - valid_keys
+      unless unknown.empty?
+        raise(
+          ArgumentError,
+          "Unknown TransformationOptions keys: #{unknown.join(", ")}. Valid keys are: #{valid_keys.join(", ")}"
+        )
+      end
+
+      @region = region
+      @connect_timeout = opts[:connect_timeout]
+      @read_timeout = opts[:read_timeout]
+      @write_timeout = opts[:write_timeout]
+      @hosts = opts[:hosts]
+      @compression_type = opts[:compression_type]
+      @header_params = opts[:header_params]
+    end
+  end
+
   class SearchClient
     attr_accessor :api_client
 
@@ -27,6 +70,10 @@ module Algolia
       end
 
       @api_client = Algolia::ApiClient.new(config)
+      @ingestion_transporter = nil
+      if config.transformation_options
+        @ingestion_transporter = _build_ingestion_transporter(config.transformation_options)
+      end
     end
 
     def self.create(app_id, api_key, opts = {})
@@ -47,6 +94,31 @@ module Algolia
 
     def self.create_with_config(config)
       new(config)
+    end
+
+    # Creates a SearchClient configured with a TransformationOptions for use with
+    # *_with_transformation helpers. The ingestion transporter is initialised eagerly using
+    # Ingestion API defaults (25s timeouts); set override fields on TransformationOptions to
+    # change specific defaults.
+    # See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion
+    #
+    # @param app_id [String] the Algolia application ID. (required)
+    # @param api_key [String] the Algolia API key. (required)
+    # @param transformation_options [TransformationOptions] the transformation options including region and optional ingestion transporter overrides. (required)
+    # @param opts [Hash] additional configuration options passed to the search client. (optional)
+    # @return [SearchClient]
+    def self.with_transformation(app_id, api_key, transformation_options, opts = {})
+      opts = opts.dup
+      hosts = opts.delete(:hosts)
+      if hosts
+        config = Algolia::Configuration.new(app_id, api_key, hosts, "Search", opts)
+        client = new(config)
+      else
+        client = create(app_id, api_key, opts)
+      end
+
+      client.set_transformation_options(transformation_options)
+      client
     end
 
     # Helper method to switch the API key used to authenticate the requests.
@@ -123,8 +195,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `add_or_update_object`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `add_or_update_object`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `add_or_update_object`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `add_or_update_object`."
       end
       # verify the required parameter 'body' is set
@@ -229,6 +309,10 @@ module Algolia
       if @api_client.config.client_side_validation && x_algolia_user_id.nil?
         raise ArgumentError, "Parameter `x_algolia_user_id` is required when calling `assign_user_id`."
       end
+      # verify the required parameter 'x_algolia_user_id' is not empty
+      if @api_client.config.client_side_validation && x_algolia_user_id.empty?
+        raise ArgumentError, "Parameter `x_algolia_user_id` is required when calling `assign_user_id`."
+      end
       # verify the required parameter 'assign_user_id_params' is set
       if @api_client.config.client_side_validation && assign_user_id_params.nil?
         raise ArgumentError, "Parameter `assign_user_id_params` is required when calling `assign_user_id`."
@@ -280,6 +364,10 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `batch`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `batch`."
+      end
       # verify the required parameter 'batch_write_params' is set
       if @api_client.config.client_side_validation && batch_write_params.nil?
         raise ArgumentError, "Parameter `batch_write_params` is required when calling `batch`."
@@ -329,6 +417,10 @@ module Algolia
     def batch_assign_user_ids_with_http_info(x_algolia_user_id, batch_assign_user_ids_params, request_options = {})
       # verify the required parameter 'x_algolia_user_id' is set
       if @api_client.config.client_side_validation && x_algolia_user_id.nil?
+        raise ArgumentError, "Parameter `x_algolia_user_id` is required when calling `batch_assign_user_ids`."
+      end
+      # verify the required parameter 'x_algolia_user_id' is not empty
+      if @api_client.config.client_side_validation && x_algolia_user_id.empty?
         raise ArgumentError, "Parameter `x_algolia_user_id` is required when calling `batch_assign_user_ids`."
       end
       # verify the required parameter 'batch_assign_user_ids_params' is set
@@ -432,7 +524,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::UpdatedAtResponse")
     end
 
-    # Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they'll be ignored.
+    # Retrieves records from an index, up to 1,000 per request.  Searching returns _hits_ (records augmented with highlighting and ranking details). Browsing returns matching records only. Use browse to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance, number of matched words, proximity, or geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they're ignored.
     #
     # Required API Key ACLs:
     #   - browse
@@ -443,6 +535,10 @@ module Algolia
     def browse_with_http_info(index_name, browse_params = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `browse`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `browse`."
       end
 
@@ -465,7 +561,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they'll be ignored.
+    # Retrieves records from an index, up to 1,000 per request.  Searching returns _hits_ (records augmented with highlighting and ranking details). Browsing returns matching records only. Use browse to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance, number of matched words, proximity, or geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they're ignored.
     #
     # Required API Key ACLs:
     #   - browse
@@ -488,6 +584,10 @@ module Algolia
     def clear_objects_with_http_info(index_name, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `clear_objects`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `clear_objects`."
       end
 
@@ -533,6 +633,10 @@ module Algolia
     def clear_rules_with_http_info(index_name, forward_to_replicas = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `clear_rules`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `clear_rules`."
       end
 
@@ -582,6 +686,10 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `clear_synonyms`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `clear_synonyms`."
+      end
 
       path = "/1/indexes/{indexName}/synonyms/clear".sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
       query_params = {}
@@ -627,6 +735,10 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
+      end
 
       path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
@@ -668,6 +780,10 @@ module Algolia
     def custom_get_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
+      end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
         raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
@@ -712,6 +828,10 @@ module Algolia
     def custom_post_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
+      end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
         raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
@@ -759,6 +879,10 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
+      end
 
       path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
@@ -804,6 +928,10 @@ module Algolia
       if @api_client.config.client_side_validation && key.nil?
         raise ArgumentError, "Parameter `key` is required when calling `delete_api_key`."
       end
+      # verify the required parameter 'key' is not empty
+      if @api_client.config.client_side_validation && key.empty?
+        raise ArgumentError, "Parameter `key` is required when calling `delete_api_key`."
+      end
 
       path = "/1/keys/{key}".sub("{" + "key" + "}", Transport.encode_uri(key.to_s))
       query_params = {}
@@ -836,7 +964,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::DeleteApiKeyResponse")
     end
 
-    # This operation doesn't accept empty filters.  This operation is resource-intensive. You should only use it if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+    # This operation doesn't accept empty filters.  This operation is resource-intensive. Use it only if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - deleteIndex
@@ -847,6 +975,10 @@ module Algolia
     def delete_by_with_http_info(index_name, delete_by_params, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `delete_by`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `delete_by`."
       end
       # verify the required parameter 'delete_by_params' is set
@@ -873,7 +1005,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # This operation doesn't accept empty filters.  This operation is resource-intensive. You should only use it if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+    # This operation doesn't accept empty filters.  This operation is resource-intensive. Use it only if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - deleteIndex
@@ -896,6 +1028,10 @@ module Algolia
     def delete_index_with_http_info(index_name, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `delete_index`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `delete_index`."
       end
 
@@ -943,8 +1079,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `delete_object`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `delete_object`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `delete_object`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `delete_object`."
       end
 
@@ -997,8 +1141,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `delete_rule`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `delete_rule`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `delete_rule`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `delete_rule`."
       end
 
@@ -1050,6 +1202,10 @@ module Algolia
       if @api_client.config.client_side_validation && source.nil?
         raise ArgumentError, "Parameter `source` is required when calling `delete_source`."
       end
+      # verify the required parameter 'source' is not empty
+      if @api_client.config.client_side_validation && source.empty?
+        raise ArgumentError, "Parameter `source` is required when calling `delete_source`."
+      end
 
       path = "/1/security/sources/{source}".sub("{" + "source" + "}", Transport.encode_uri(source.to_s))
       query_params = {}
@@ -1096,8 +1252,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `delete_synonym`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `delete_synonym`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `delete_synonym`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `delete_synonym`."
       end
 
@@ -1147,6 +1311,10 @@ module Algolia
     def get_api_key_with_http_info(key, request_options = {})
       # verify the required parameter 'key' is set
       if @api_client.config.client_side_validation && key.nil?
+        raise ArgumentError, "Parameter `key` is required when calling `get_api_key`."
+      end
+      # verify the required parameter 'key' is not empty
+      if @api_client.config.client_side_validation && key.empty?
         raise ArgumentError, "Parameter `key` is required when calling `get_api_key`."
       end
 
@@ -1365,8 +1533,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `get_object`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_object`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `get_object`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `get_object`."
       end
 
@@ -1467,8 +1643,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `get_rule`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_rule`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `get_rule`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `get_rule`."
       end
 
@@ -1517,6 +1701,10 @@ module Algolia
     def get_settings_with_http_info(index_name, get_version = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_settings`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `get_settings`."
       end
 
@@ -1603,8 +1791,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `get_synonym`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_synonym`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `get_synonym`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `get_synonym`."
       end
 
@@ -1653,6 +1849,10 @@ module Algolia
     def get_task_with_http_info(index_name, task_id, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_task`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `get_task`."
       end
       # verify the required parameter 'task_id' is set
@@ -1743,6 +1943,10 @@ module Algolia
     def get_user_id_with_http_info(user_id, request_options = {})
       # verify the required parameter 'user_id' is set
       if @api_client.config.client_side_validation && user_id.nil?
+        raise ArgumentError, "Parameter `user_id` is required when calling `get_user_id`."
+      end
+      # verify the required parameter 'user_id' is not empty
+      if @api_client.config.client_side_validation && user_id.empty?
         raise ArgumentError, "Parameter `user_id` is required when calling `get_user_id`."
       end
 
@@ -2027,7 +2231,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::MultipleBatchResponse")
     end
 
-    # Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+    # Copies or moves (renames) an index within the same Algolia application.  Notes: - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it's created. - This operation is resource-intensive.  **Copy**  - If the source index doesn't exist, copying creates a new index with 0 records and default settings. - API keys from the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - For more information, see [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).  **Move**  - If the source index doesn't exist, moving is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - For more information, see [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2038,6 +2242,10 @@ module Algolia
     def operation_index_with_http_info(index_name, operation_index_params, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `operation_index`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `operation_index`."
       end
       # verify the required parameter 'operation_index_params' is set
@@ -2064,7 +2272,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+    # Copies or moves (renames) an index within the same Algolia application.  Notes: - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it's created. - This operation is resource-intensive.  **Copy**  - If the source index doesn't exist, copying creates a new index with 0 records and default settings. - API keys from the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - For more information, see [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).  **Move**  - If the source index doesn't exist, moving is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - For more information, see [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2077,7 +2285,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::UpdatedAtResponse")
     end
 
-    # Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+    # Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - Use first-level attributes only. Nested attributes aren't supported.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update attributes without replacing the full record, use these built-in operations. These operations are useful when the initial data isn't available.  - `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. - `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching number or string elements from an array attribute made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a numeric integer attribute only if the provided value matches the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the API ignores the update.   If the object doesn't exist, the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the provided value is greater than the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1, the API updates the object.   If the object doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.  Specify an operation by providing an object with the attribute to update as the key and its value as an object with these properties:  - `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument to the operation, for example, increment or decrement step, or a value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2098,8 +2306,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `partial_update_object`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `partial_update_object`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `partial_update_object`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `partial_update_object`."
       end
       # verify the required parameter 'attributes_to_update' is set
@@ -2129,7 +2345,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+    # Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - Use first-level attributes only. Nested attributes aren't supported.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update attributes without replacing the full record, use these built-in operations. These operations are useful when the initial data isn't available.  - `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. - `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching number or string elements from an array attribute made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a numeric integer attribute only if the provided value matches the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the API ignores the update.   If the object doesn't exist, the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the provided value is greater than the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1, the API updates the object.   If the object doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.  Specify an operation by providing an object with the attribute to update as the key and its value as an object with these properties:  - `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument to the operation, for example, increment or decrement step, or a value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2170,6 +2386,10 @@ module Algolia
     def remove_user_id_with_http_info(user_id, request_options = {})
       # verify the required parameter 'user_id' is set
       if @api_client.config.client_side_validation && user_id.nil?
+        raise ArgumentError, "Parameter `user_id` is required when calling `remove_user_id`."
+      end
+      # verify the required parameter 'user_id' is not empty
+      if @api_client.config.client_side_validation && user_id.empty?
         raise ArgumentError, "Parameter `user_id` is required when calling `remove_user_id`."
       end
 
@@ -2260,6 +2480,10 @@ module Algolia
       if @api_client.config.client_side_validation && key.nil?
         raise ArgumentError, "Parameter `key` is required when calling `restore_api_key`."
       end
+      # verify the required parameter 'key' is not empty
+      if @api_client.config.client_side_validation && key.empty?
+        raise ArgumentError, "Parameter `key` is required when calling `restore_api_key`."
+      end
 
       path = "/1/keys/{key}/restore".sub("{" + "key" + "}", Transport.encode_uri(key.to_s))
       query_params = {}
@@ -2303,6 +2527,10 @@ module Algolia
     def save_object_with_http_info(index_name, body, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `save_object`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `save_object`."
       end
       # verify the required parameter 'body' is set
@@ -2357,8 +2585,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `save_rule`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `save_rule`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `save_rule`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `save_rule`."
       end
       # verify the required parameter 'rule' is set
@@ -2422,6 +2658,10 @@ module Algolia
     )
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `save_rules`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `save_rules`."
       end
       # verify the required parameter 'rules' is set
@@ -2492,8 +2732,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `save_synonym`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `save_synonym`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `save_synonym`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `save_synonym`."
       end
       # verify the required parameter 'synonym_hit' is set
@@ -2565,6 +2813,10 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `save_synonyms`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `save_synonyms`."
+      end
       # verify the required parameter 'synonym_hit' is set
       if @api_client.config.client_side_validation && synonym_hit.nil?
         raise ArgumentError, "Parameter `synonym_hit` is required when calling `save_synonyms`."
@@ -2618,11 +2870,11 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::UpdatedAtResponse")
     end
 
-    # Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
+    # Runs multiple search queries against one or more indices in a single API request.  Use cases include:  - Searching different indices, such as products and marketing content. - Run multiple queries on the same index with different parameters or filters.  If you know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
     #
     # Required API Key ACLs:
     #   - search
-    # @param search_method_params [SearchMethodParams] Muli-search request body. Results are returned in the same order as the requests. (required)
+    # @param search_method_params [SearchMethodParams] Multi-query search request body. Results are returned in the same order as the requests. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def search_with_http_info(search_method_params, request_options = {})
@@ -2650,11 +2902,11 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
+    # Runs multiple search queries against one or more indices in a single API request.  Use cases include:  - Searching different indices, such as products and marketing content. - Run multiple queries on the same index with different parameters or filters.  If you know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
     #
     # Required API Key ACLs:
     #   - search
-    # @param search_method_params [SearchMethodParams] Muli-search request body. Results are returned in the same order as the requests. (required)
+    # @param search_method_params [SearchMethodParams] Multi-query search request body. Results are returned in the same order as the requests. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [SearchResponses]
     def search(search_method_params, request_options = {})
@@ -2748,8 +3000,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `search_for_facet_values`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `search_for_facet_values`."
+      end
       # verify the required parameter 'facet_name' is set
       if @api_client.config.client_side_validation && facet_name.nil?
+        raise ArgumentError, "Parameter `facet_name` is required when calling `search_for_facet_values`."
+      end
+      # verify the required parameter 'facet_name' is not empty
+      if @api_client.config.client_side_validation && facet_name.empty?
         raise ArgumentError, "Parameter `facet_name` is required when calling `search_for_facet_values`."
       end
 
@@ -2809,6 +3069,10 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `search_rules`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `search_rules`."
+      end
 
       path = "/1/indexes/{indexName}/rules/search".sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
       query_params = {}
@@ -2855,6 +3119,10 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `search_single_index`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `search_single_index`."
+      end
 
       path = "/1/indexes/{indexName}/query".sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
       query_params = {}
@@ -2899,6 +3167,10 @@ module Algolia
     def search_synonyms_with_http_info(index_name, search_synonyms_params = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `search_synonyms`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `search_synonyms`."
       end
 
@@ -3043,6 +3315,10 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `set_settings`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `set_settings`."
+      end
       # verify the required parameter 'index_settings' is set
       if @api_client.config.client_side_validation && index_settings.nil?
         raise ArgumentError, "Parameter `index_settings` is required when calling `set_settings`."
@@ -3095,6 +3371,10 @@ module Algolia
       if @api_client.config.client_side_validation && key.nil?
         raise ArgumentError, "Parameter `key` is required when calling `update_api_key`."
       end
+      # verify the required parameter 'key' is not empty
+      if @api_client.config.client_side_validation && key.empty?
+        raise ArgumentError, "Parameter `key` is required when calling `update_api_key`."
+      end
       # verify the required parameter 'api_key' is set
       if @api_client.config.client_side_validation && api_key.nil?
         raise ArgumentError, "Parameter `api_key` is required when calling `update_api_key`."
@@ -3132,18 +3412,231 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::UpdateApiKeyResponse")
     end
 
+    # The parent search config MUST NOT leak into the ingestion transporter.
+    def _build_ingestion_transporter(transformation_options)
+      hosts = if transformation_options.hosts
+        transformation_options.hosts
+      else
+        [
+          Transport::StatefulHost.new(
+            "data.#{transformation_options.region}.algolia.com",
+            accept: CallType::READ | CallType::WRITE
+          )
+        ]
+      end
+
+      opts = {}
+      unless transformation_options.connect_timeout.nil?
+        opts[:connect_timeout] = transformation_options.connect_timeout
+      end
+
+      opts[:read_timeout] = transformation_options.read_timeout unless transformation_options.read_timeout.nil?
+      opts[:write_timeout] = transformation_options.write_timeout unless transformation_options.write_timeout.nil?
+      unless transformation_options.compression_type.nil?
+        opts[:compression_type] = transformation_options.compression_type
+      end
+
+      config = Algolia::Configuration.new(
+        @api_client.config.app_id,
+        @api_client.config.api_key,
+        hosts,
+        "Ingestion",
+        opts
+      )
+
+      if transformation_options.header_params
+        config.header_params = config.header_params.merge(transformation_options.header_params)
+      end
+
+      Algolia::IngestionClient.create_with_config(config)
+    end
+
+    # Helper: Sets (or replaces) the ingestion transporter used by *_with_transformation helpers.
+    #
+    # @param transformation_options [TransformationOptions] the transformation options including region and optional ingestion transporter overrides. (required)
+    def set_transformation_options(transformation_options)
+      raise ArgumentError, "`transformation_options` must not be nil" if transformation_options.nil?
+      @ingestion_transporter = _build_ingestion_transporter(transformation_options)
+    end
+
+    def assert_ingestion_transporter!
+      if @ingestion_transporter.nil?
+        raise(
+          ArgumentError,
+          "`transformation_options` must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion/"
+        )
+      end
+    end
+
+    # Helper: Similar to the `save_objects` method but requires a Push connector to be created first,
+    # in order to transform records before indexing them to Algolia.
+    # `set_transformation_options` must have been called, or the client created via `SearchClient.with_transformation`.
+    #
+    # @param index_name [String] the `index_name` where the operation will be performed. (required)
+    # @param objects [Array] the array of objects to store in the given Algolia `index_name`. (required)
+    # @param wait_for_tasks [Boolean] whether to wait until every task has been processed. (optional, default: false)
+    # @param batch_size [Integer] the size of each chunk of objects sent in a single push call. (optional, default: 1000)
+    # @param request_options [Hash] the request options to send along with the query. (optional)
+    #
+    # @return [Array<Ingestion::WatchResponse>]
+    def save_objects_with_transformation(
+      index_name,
+      objects,
+      wait_for_tasks = false,
+      batch_size = 1000,
+      request_options = {},
+      chunked_options = nil
+    )
+      assert_ingestion_transporter!
+
+      @ingestion_transporter.chunked_push(
+        index_name,
+        objects,
+        Ingestion::Action::ADD_OBJECT,
+        wait_for_tasks,
+        batch_size,
+        nil,
+        request_options,
+        chunked_options
+      )
+    end
+
+    # Helper: Similar to the `partial_update_objects` method but requires a Push connector to be created first,
+    # in order to transform records before indexing them to Algolia.
+    # `set_transformation_options` must have been called, or the client created via `SearchClient.with_transformation`.
+    #
+    # @param index_name [String] the `index_name` where the operation will be performed. (required)
+    # @param objects [Array] the array of objects to update in the given Algolia `index_name`. (required)
+    # @param create_if_not_exists [Boolean] whether to create objects that do not exist. (optional, default: false)
+    # @param wait_for_tasks [Boolean] whether to wait until every task has been processed. (optional, default: false)
+    # @param batch_size [Integer] the size of each chunk of objects sent in a single push call. (optional, default: 1000)
+    # @param request_options [Hash] the request options to send along with the query. (optional)
+    #
+    # @return [Array<Ingestion::WatchResponse>]
+    def partial_update_objects_with_transformation(
+      index_name,
+      objects,
+      create_if_not_exists = false,
+      wait_for_tasks = false,
+      batch_size = 1000,
+      request_options = {},
+      chunked_options = nil
+    )
+      assert_ingestion_transporter!
+
+      action = create_if_not_exists ? Ingestion::Action::PARTIAL_UPDATE_OBJECT : Ingestion::Action::PARTIAL_UPDATE_OBJECT_NO_CREATE
+
+      @ingestion_transporter.chunked_push(
+        index_name,
+        objects,
+        action,
+        wait_for_tasks,
+        batch_size,
+        nil,
+        request_options,
+        chunked_options
+      )
+    end
+
+    # Helper: Similar to the `replace_all_objects` method but requires a Push connector to be created first,
+    # in order to transform records before indexing them to Algolia.
+    # `set_transformation_options` must have been called, or the client created via `SearchClient.with_transformation`.
+    #
+    # @param index_name [String] the `index_name` to replace objects in. (required)
+    # @param objects [Array] the array of objects to store in the given Algolia `index_name`. (required)
+    # @param batch_size [Integer] the size of each chunk of objects sent in a single push call. (optional, default: 1000)
+    # @param scopes [Array] the scopes to keep from the index. (optional, default: settings, rules, synonyms)
+    # @param request_options [Hash] the request options to send along with the query. (optional)
+    #
+    # @return [Search::ReplaceAllObjectsWithTransformationResponse]
+    def replace_all_objects_with_transformation(
+      index_name,
+      objects,
+      batch_size = 1000,
+      scopes = [Search::ScopeType::SETTINGS, Search::ScopeType::RULES, Search::ScopeType::SYNONYMS],
+      request_options = {},
+      chunked_options = nil
+    )
+      assert_ingestion_transporter!
+
+      opts = Algolia::ChunkedHelperOptions.resolve(chunked_options)
+      tmp_index_name = index_name + "_tmp_" + rand(10_000_000).to_s
+
+      begin
+        copy_operation_response = operation_index(
+          index_name,
+          Search::OperationIndexParams.new(
+            operation: Search::OperationType::COPY,
+            destination: tmp_index_name,
+            scope: scopes
+          ),
+          request_options
+        )
+
+        watch_responses = @ingestion_transporter.chunked_push(
+          tmp_index_name,
+          objects,
+          Ingestion::Action::ADD_OBJECT,
+          true,
+          batch_size,
+          index_name,
+          request_options,
+          opts
+        )
+
+        wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries)
+
+        copy_operation_response = operation_index(
+          index_name,
+          Search::OperationIndexParams.new(
+            operation: Search::OperationType::COPY,
+            destination: tmp_index_name,
+            scope: scopes
+          ),
+          request_options
+        )
+
+        wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries)
+
+        move_operation_response = operation_index(
+          tmp_index_name,
+          Search::OperationIndexParams.new(
+            operation: Search::OperationType::MOVE,
+            destination: index_name
+          ),
+          request_options
+        )
+
+        wait_for_task(tmp_index_name, move_operation_response.task_id, opts.max_retries)
+
+        search_watch_responses = watch_responses.map do |wr|
+          Search::WatchResponse.build_from_hash(wr.to_hash)
+        end
+
+        Search::ReplaceAllObjectsWithTransformationResponse.new(
+          copy_operation_response: copy_operation_response,
+          watch_responses: search_watch_responses,
+          move_operation_response: move_operation_response
+        )
+      rescue Exception => e
+        delete_index(tmp_index_name)
+
+        raise e
+      end
+    end
+
     # Helper: Wait for a task to be published (completed) for a given `index_name` and `task_id`.
     #
     # @param index_name [String] the `index_name` where the operation was performed. (required)
     # @param task_id [Integer] the `task_id` returned in the method response. (required)
-    # @param max_retries [Integer] the maximum number of retries. (optional, default to 50)
+    # @param max_retries [Integer] the maximum number of retries. (optional, default to Algolia::ChunkedHelperOptions::DEFAULT_MAX_RETRIES)
     # @param timeout [Proc] the function to decide how long to wait between retries. (optional)
     # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `get_task` method.
     # @return [Http::Response] the last get_task response
     def wait_for_task(
       index_name,
       task_id,
-      max_retries = 50,
+      max_retries = Algolia::ChunkedHelperOptions::DEFAULT_MAX_RETRIES,
       timeout = -> (retry_count) { [retry_count * 200, 5000].min },
       request_options = {}
     )
@@ -3158,19 +3651,22 @@ module Algolia
         sleep(timeout.call(retries) / 1000.0)
       end
 
-      raise ApiError, "The maximum number of retries exceeded. (#{max_retries})"
+      raise(
+        ApiError,
+        "Stopped waiting for the task after #{max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries."
+      )
     end
 
     # Helper: Wait for an application-level task to be published (completed) for a given `task_id`.
     #
     # @param task_id [Integer] the `task_id` returned in the method response. (required)
-    # @param max_retries [Integer] the maximum number of retries. (optional, default to 50)
+    # @param max_retries [Integer] the maximum number of retries. (optional, default to Algolia::ChunkedHelperOptions::DEFAULT_MAX_RETRIES)
     # @param timeout [Proc] the function to decide how long to wait between retries. (optional)
     # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `get_task` method.
     # @return [Http::Response] the last get_task response
     def wait_for_app_task(
       task_id,
-      max_retries = 50,
+      max_retries = Algolia::ChunkedHelperOptions::DEFAULT_MAX_RETRIES,
       timeout = -> (retry_count) { [retry_count * 200, 5000].min },
       request_options = {}
     )
@@ -3185,7 +3681,10 @@ module Algolia
         sleep(timeout.call(retries) / 1000.0)
       end
 
-      raise ApiError, "The maximum number of retries exceeded. (#{max_retries})"
+      raise(
+        ApiError,
+        "Stopped waiting for the task after #{max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries."
+      )
     end
 
     # Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
@@ -3201,7 +3700,7 @@ module Algolia
       key,
       operation,
       api_key = Search::ApiKey.new,
-      max_retries = 50,
+      max_retries = Algolia::ChunkedHelperOptions::DEFAULT_MAX_RETRIES,
       timeout = -> (retry_count) { [retry_count * 200, 5000].min },
       request_options = {}
     )
@@ -3224,7 +3723,10 @@ module Algolia
           sleep(timeout.call(retries) / 1000.0)
         end
 
-        raise ApiError, "The maximum number of retries exceeded. (#{max_retries})"
+        raise(
+          ApiError,
+          "Stopped waiting for the task after #{max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries."
+        )
       end
 
       while retries < max_retries
@@ -3243,7 +3745,10 @@ module Algolia
         sleep(timeout.call(retries) / 1000.0)
       end
 
-      raise ApiError, "The maximum number of retries exceeded. (#{max_retries})"
+      raise(
+        ApiError,
+        "Stopped waiting for the task after #{max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries."
+      )
     end
 
     # Helper: Iterate on the `browse` method of the client to allow aggregating objects of an index.
@@ -3421,14 +3926,22 @@ module Algolia
     #
     # @return [BatchResponse]
     #
-    def save_objects(index_name, objects, wait_for_tasks = false, batch_size = 1000, request_options = {})
+    def save_objects(
+      index_name,
+      objects,
+      wait_for_tasks = false,
+      batch_size = 1000,
+      request_options = {},
+      chunked_options = nil
+    )
       chunked_batch(
         index_name,
         objects,
         Search::Action::ADD_OBJECT,
         wait_for_tasks,
         batch_size,
-        request_options
+        request_options,
+        chunked_options
       )
     end
 
@@ -3442,14 +3955,22 @@ module Algolia
     #
     # @return [BatchResponse]
     #
-    def delete_objects(index_name, object_ids, wait_for_tasks = false, batch_size = 1000, request_options = {})
+    def delete_objects(
+      index_name,
+      object_ids,
+      wait_for_tasks = false,
+      batch_size = 1000,
+      request_options = {},
+      chunked_options = nil
+    )
       chunked_batch(
         index_name,
         object_ids.map { |id| {"objectID" => id} },
         Search::Action::DELETE_OBJECT,
         wait_for_tasks,
         batch_size,
-        request_options
+        request_options,
+        chunked_options
       )
     end
 
@@ -3470,7 +3991,8 @@ module Algolia
       create_if_not_exists,
       wait_for_tasks = false,
       batch_size = 1000,
-      request_options = {}
+      request_options = {},
+      chunked_options = nil
     )
       chunked_batch(
         index_name,
@@ -3478,7 +4000,8 @@ module Algolia
         create_if_not_exists ? Search::Action::PARTIAL_UPDATE_OBJECT : Search::Action::PARTIAL_UPDATE_OBJECT_NO_CREATE,
         wait_for_tasks,
         batch_size,
-        request_options
+        request_options,
+        chunked_options
       )
     end
 
@@ -3499,8 +4022,10 @@ module Algolia
       action = Action::ADD_OBJECT,
       wait_for_tasks = false,
       batch_size = 1000,
-      request_options = {}
+      request_options = {},
+      chunked_options = nil
     )
+      opts = Algolia::ChunkedHelperOptions.resolve(chunked_options)
       responses = []
       objects.each_slice(batch_size) do |chunk|
         requests = chunk.map do |object|
@@ -3512,7 +4037,7 @@ module Algolia
 
       if wait_for_tasks
         responses.each do |response|
-          wait_for_task(index_name, response.task_id)
+          wait_for_task(index_name, response.task_id, opts.max_retries)
         end
       end
 
@@ -3533,8 +4058,10 @@ module Algolia
       objects,
       batch_size = 1000,
       scopes = [Search::ScopeType::SETTINGS, Search::ScopeType::RULES, Search::ScopeType::SYNONYMS],
-      request_options = {}
+      request_options = {},
+      chunked_options = nil
     )
+      opts = Algolia::ChunkedHelperOptions.resolve(chunked_options)
       tmp_index_name = index_name + "_tmp_" + rand(10_000_000).to_s
 
       begin
@@ -3554,10 +4081,11 @@ module Algolia
           Search::Action::ADD_OBJECT,
           true,
           batch_size,
-          request_options
+          request_options,
+          opts
         )
 
-        wait_for_task(tmp_index_name, copy_operation_response.task_id)
+        wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries)
 
         copy_operation_response = operation_index(
           index_name,
@@ -3569,7 +4097,7 @@ module Algolia
           request_options
         )
 
-        wait_for_task(tmp_index_name, copy_operation_response.task_id)
+        wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries)
 
         move_operation_response = operation_index(
           tmp_index_name,
@@ -3580,7 +4108,7 @@ module Algolia
           request_options
         )
 
-        wait_for_task(tmp_index_name, move_operation_response.task_id)
+        wait_for_task(tmp_index_name, move_operation_response.task_id, opts.max_retries)
 
         Search::ReplaceAllObjectsResponse.new(
           copy_operation_response: copy_operation_response,

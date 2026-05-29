@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct GetDictionarySettingsResponse: Codable, JSONEncodable {
@@ -25,11 +25,7 @@ public struct GetDictionarySettingsResponse: Codable, JSONEncodable {
     }
 }
 
-extension GetDictionarySettingsResponse: Equatable {
-    public static func ==(lhs: GetDictionarySettingsResponse, rhs: GetDictionarySettingsResponse) -> Bool {
-        lhs.disableStandardEntries == rhs.disableStandardEntries
-    }
-}
+extension GetDictionarySettingsResponse: Equatable {}
 
 extension GetDictionarySettingsResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

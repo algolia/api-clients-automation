@@ -49,6 +49,10 @@ export function getSnippetFile(gen: Generator): string {
   return `docs/snippets/${gen.language}/${gen.snippets.outputFolder}/${createClientName(gen.client, gen.language)}${gen.snippets.extension}`;
 }
 
+export function getCTSRequestDir(clientName: string): string {
+  return `tests/CTS/requests/${clientName}`;
+}
+
 export function getDockerImage(language?: Language): string | undefined {
   if (CI || !language) {
     return undefined;

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Specific configuration attributes of a `bigquery` source.
@@ -64,17 +64,7 @@ public struct SourceBigQuery: Codable, JSONEncodable {
     }
 }
 
-extension SourceBigQuery: Equatable {
-    public static func ==(lhs: SourceBigQuery, rhs: SourceBigQuery) -> Bool {
-        lhs.projectID == rhs.projectID &&
-            lhs.datasetID == rhs.datasetID &&
-            lhs.dataType == rhs.dataType &&
-            lhs.table == rhs.table &&
-            lhs.tablePrefix == rhs.tablePrefix &&
-            lhs.customSQLRequest == rhs.customSQLRequest &&
-            lhs.uniqueIDColumn == rhs.uniqueIDColumn
-    }
-}
+extension SourceBigQuery: Equatable {}
 
 extension SourceBigQuery: Hashable {
     public func hash(into hasher: inout Hasher) {

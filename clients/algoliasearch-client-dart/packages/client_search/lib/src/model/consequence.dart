@@ -2,6 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:algolia_client_search/src/model/consequence_params.dart';
 import 'package:algolia_client_search/src/model/consequence_hide.dart';
+import 'package:algolia_client_search/src/model/consequence_redirect.dart';
 
 import 'package:json_annotation/json_annotation.dart';
 
@@ -15,6 +16,7 @@ final class Consequence {
     this.promote,
     this.filterPromotes,
     this.hide,
+    this.redirect,
     this.userData,
   });
 
@@ -36,6 +38,9 @@ final class Consequence {
   @JsonKey(name: r'hide')
   final List<ConsequenceHide>? hide;
 
+  @JsonKey(name: r'redirect')
+  final ConsequenceRedirect? redirect;
+
   /// A JSON object with custom data that will be appended to the `userData` array in the response. This object isn't interpreted by the API and is limited to 1&nbsp;kB of minified JSON.
   @JsonKey(name: r'userData')
   final Object? userData;
@@ -48,6 +53,7 @@ final class Consequence {
           other.promote == promote &&
           other.filterPromotes == filterPromotes &&
           other.hide == hide &&
+          other.redirect == redirect &&
           other.userData == userData;
 
   @override
@@ -56,6 +62,7 @@ final class Consequence {
       promote.hashCode +
       filterPromotes.hashCode +
       hide.hashCode +
+      redirect.hashCode +
       userData.hashCode;
 
   factory Consequence.fromJson(Map<String, dynamic> json) =>

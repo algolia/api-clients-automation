@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Click position.
@@ -33,12 +33,7 @@ public struct ClickPosition: Codable, JSONEncodable {
     }
 }
 
-extension ClickPosition: Equatable {
-    public static func ==(lhs: ClickPosition, rhs: ClickPosition) -> Bool {
-        lhs.position == rhs.position &&
-            lhs.clickCount == rhs.clickCount
-    }
-}
+extension ClickPosition: Equatable {}
 
 extension ClickPosition: Hashable {
     public func hash(into hasher: inout Hasher) {

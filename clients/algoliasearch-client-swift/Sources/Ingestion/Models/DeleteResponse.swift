@@ -2,12 +2,12 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct DeleteResponse: Codable, JSONEncodable {
-    /// Date of deletion in RFC 3339 format.
+    /// Date and time when the resource was deleted, in RFC 3339 format.
     public var deletedAt: String
 
     public init(deletedAt: String) {
@@ -26,11 +26,7 @@ public struct DeleteResponse: Codable, JSONEncodable {
     }
 }
 
-extension DeleteResponse: Equatable {
-    public static func ==(lhs: DeleteResponse, rhs: DeleteResponse) -> Bool {
-        lhs.deletedAt == rhs.deletedAt
-    }
-}
+extension DeleteResponse: Equatable {}
 
 extension DeleteResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

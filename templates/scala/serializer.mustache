@@ -26,12 +26,12 @@ class {{classname}}Serializer extends Serializer[{{classname}}] {
 
         {{#additionalProperties.isAnyType}}
         val fields = Set({{#vars}}"{{#vendorExtensions.x-unescaped-name}}{{{.}}}{{/vendorExtensions.x-unescaped-name}}{{^vendorExtensions.x-unescaped-name}}{{{name}}}{{/vendorExtensions.x-unescaped-name}}"{{^-last}}, {{/-last}}{{/vars}})
-        val additionalProperties = jobject removeField {
+        val extraProperties = jobject removeField {
           case (name, _) if fields.contains(name) => true
           case _                                  => false
         }
-        additionalProperties match {
-          case JObject(fieldsList) => obj copy (additionalProperties = Some(fieldsList))
+        extraProperties match {
+          case JObject(fieldsList) => obj.copy(additionalProperties = Some(fieldsList))
           case _                   => obj
         }
         {{/additionalProperties.isAnyType}}

@@ -22,17 +22,12 @@ use GuzzleHttp\Psr7\Query;
  */
 class InsightsClient
 {
-    public const VERSION = '4.37.3';
+    public const VERSION = '4.44.0';
 
     /**
      * @var ApiWrapperInterface
      */
     protected $api;
-
-    /**
-     * @var IngestionClient
-     */
-    protected $ingestionTransporter;
 
     /**
      * @var InsightsConfig
@@ -75,6 +70,10 @@ class InsightsClient
         );
 
         $client = new static($apiWrapper, $config);
+
+        $logger = Algolia::getLogger();
+        $logger->info('Algolia API client: Algolia InsightsClient initialized (appId: '.$config->getAppId().')');
+        Algolia::logDebugWarningOnce();
 
         return $client;
     }
@@ -241,6 +240,12 @@ class InsightsClient
                 'Parameter `path` is required when calling `customDelete`.'
             );
         }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customDelete`.'
+            );
+        }
 
         $resourcePath = '/{path}';
         $queryParameters = [];
@@ -279,6 +284,12 @@ class InsightsClient
     {
         // verify the required parameter 'path' is set
         if (!isset($path)) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customGet`.'
+            );
+        }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
             throw new \InvalidArgumentException(
                 'Parameter `path` is required when calling `customGet`.'
             );
@@ -326,6 +337,12 @@ class InsightsClient
                 'Parameter `path` is required when calling `customPost`.'
             );
         }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customPost`.'
+            );
+        }
 
         $resourcePath = '/{path}';
         $queryParameters = [];
@@ -369,6 +386,12 @@ class InsightsClient
                 'Parameter `path` is required when calling `customPut`.'
             );
         }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customPut`.'
+            );
+        }
 
         $resourcePath = '/{path}';
         $queryParameters = [];
@@ -392,7 +415,7 @@ class InsightsClient
     }
 
     /**
-     * Delete user token (with HTTP info).
+     * Delete user token events (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
      * Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
@@ -408,6 +431,12 @@ class InsightsClient
     {
         // verify the required parameter 'userToken' is set
         if (!isset($userToken)) {
+            throw new \InvalidArgumentException(
+                'Parameter `userToken` is required when calling `deleteUserToken`.'
+            );
+        }
+        // verify the required parameter 'userToken' is not empty
+        if (isset($userToken) && '' === $userToken) {
             throw new \InvalidArgumentException(
                 'Parameter `userToken` is required when calling `deleteUserToken`.'
             );

@@ -8,7 +8,7 @@ info:
   description: |
     ## Base URLs
 
-    The base URLs for requests to the Analytics API are:
+    Base URLs for the Analytics API:
 
     - `https://analytics.us.algolia.com`
     - `https://analytics.de.algolia.com`
@@ -22,7 +22,7 @@ info:
 
     Access to the Analytics API is available as part of the [Premium or Elevate plans](https://www.algolia.com/pricing).
 
-    To authenticate your API requests, add these headers:
+    Add these headers to authenticate requests:
 
     - `x-algolia-application-id`. Your Algolia application ID.
     - `x-algolia-api-key`. An API key with the necessary permissions to make the request.
@@ -54,7 +54,7 @@ info:
 
     ## Version
 
-    The current version of the Analytics API is version 2, as indicated by the `/2/` in each endpoint's URL.
+    The current version of the Analytics API is version 2, indicated by the `/2/` in each endpoint's URL.
 
     ## Query aggregation
 

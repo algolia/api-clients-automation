@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct Transformation: Codable, JSONEncodable {
@@ -22,9 +22,9 @@ public struct Transformation: Codable, JSONEncodable {
     public var description: String?
     /// Owner of the resource.
     public var owner: String?
-    /// Date of creation in RFC 3339 format.
+    /// Date and time when the resource was created, in RFC 3339 format.
     public var createdAt: String
-    /// Date of last update in RFC 3339 format.
+    /// Date and time when the resource was last updated, in RFC 3339 format.
     public var updatedAt: String
 
     public init(
@@ -81,20 +81,7 @@ public struct Transformation: Codable, JSONEncodable {
     }
 }
 
-extension Transformation: Equatable {
-    public static func ==(lhs: Transformation, rhs: Transformation) -> Bool {
-        lhs.transformationID == rhs.transformationID &&
-            lhs.authenticationIDs == rhs.authenticationIDs &&
-            lhs.code == rhs.code &&
-            lhs.type == rhs.type &&
-            lhs.input == rhs.input &&
-            lhs.name == rhs.name &&
-            lhs.description == rhs.description &&
-            lhs.owner == rhs.owner &&
-            lhs.createdAt == rhs.createdAt &&
-            lhs.updatedAt == rhs.updatedAt
-    }
-}
+extension Transformation: Equatable {}
 
 extension Transformation: Hashable {
     public func hash(into hasher: inout Hasher) {

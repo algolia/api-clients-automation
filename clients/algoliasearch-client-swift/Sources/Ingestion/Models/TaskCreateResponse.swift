@@ -2,15 +2,15 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// API response for creating a task.
 public struct TaskCreateResponse: Codable, JSONEncodable {
     /// Universally unique identifier (UUID) of a task.
     public var taskID: String
-    /// Date of creation in RFC 3339 format.
+    /// Date and time when the resource was created, in RFC 3339 format.
     public var createdAt: String
 
     public init(taskID: String, createdAt: String) {
@@ -32,12 +32,7 @@ public struct TaskCreateResponse: Codable, JSONEncodable {
     }
 }
 
-extension TaskCreateResponse: Equatable {
-    public static func ==(lhs: TaskCreateResponse, rhs: TaskCreateResponse) -> Bool {
-        lhs.taskID == rhs.taskID &&
-            lhs.createdAt == rhs.createdAt
-    }
-}
+extension TaskCreateResponse: Equatable {}
 
 extension TaskCreateResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

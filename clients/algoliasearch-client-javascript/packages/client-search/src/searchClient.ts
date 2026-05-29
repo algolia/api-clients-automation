@@ -129,7 +129,7 @@ import type {
 
 import type { BatchRequest } from '../model/batchRequest';
 
-export const apiClientVersion = '5.47.0';
+export const apiClientVersion = '5.53.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -251,7 +251,7 @@ export function createSearchClient({
      * @param waitForTaskOptions - The `waitForTaskOptions` object.
      * @param waitForTaskOptions.indexName - The `indexName` where the operation was performed.
      * @param waitForTaskOptions.taskID - The `taskID` returned in the method response.
-     * @param waitForTaskOptions.maxRetries - The maximum number of retries. 50 by default.
+     * @param waitForTaskOptions.maxRetries - The maximum number of retries. 100 by default.
      * @param waitForTaskOptions.timeout - The function to decide how long to wait between retries.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
@@ -259,7 +259,7 @@ export function createSearchClient({
       {
         indexName,
         taskID,
-        maxRetries = 50,
+        maxRetries = 100,
         timeout = (retryCount: number): number => Math.min(retryCount * 200, 5000),
       }: WaitForTaskOptions,
       requestOptions?: RequestOptions | undefined,
@@ -272,7 +272,8 @@ export function createSearchClient({
         aggregator: () => (retryCount += 1),
         error: {
           validate: () => retryCount >= maxRetries,
-          message: () => `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+          message: () =>
+            `Stopped waiting for the task after ${maxRetries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries.`,
         },
         timeout: () => timeout(retryCount),
       });
@@ -284,14 +285,14 @@ export function createSearchClient({
      * @summary Helper method that waits for a task to be published (completed).
      * @param waitForAppTaskOptions - The `waitForTaskOptions` object.
      * @param waitForAppTaskOptions.taskID - The `taskID` returned in the method response.
-     * @param waitForAppTaskOptions.maxRetries - The maximum number of retries. 50 by default.
+     * @param waitForAppTaskOptions.maxRetries - The maximum number of retries. 100 by default.
      * @param waitForAppTaskOptions.timeout - The function to decide how long to wait between retries.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
     waitForAppTask(
       {
         taskID,
-        maxRetries = 50,
+        maxRetries = 100,
         timeout = (retryCount: number): number => Math.min(retryCount * 200, 5000),
       }: WaitForAppTaskOptions,
       requestOptions?: RequestOptions | undefined,
@@ -304,7 +305,8 @@ export function createSearchClient({
         aggregator: () => (retryCount += 1),
         error: {
           validate: () => retryCount >= maxRetries,
-          message: () => `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+          message: () =>
+            `Stopped waiting for the task after ${maxRetries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries.`,
         },
         timeout: () => timeout(retryCount),
       });
@@ -318,7 +320,7 @@ export function createSearchClient({
      * @param waitForApiKeyOptions.operation - The `operation` that was done on a `key`.
      * @param waitForApiKeyOptions.key - The `key` that has been added, deleted or updated.
      * @param waitForApiKeyOptions.apiKey - Necessary to know if an `update` operation has been processed, compare fields of the response with it.
-     * @param waitForApiKeyOptions.maxRetries - The maximum number of retries. 50 by default.
+     * @param waitForApiKeyOptions.maxRetries - The maximum number of retries. 100 by default.
      * @param waitForApiKeyOptions.timeout - The function to decide how long to wait between retries.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getApikey` method and merged with the transporter requestOptions.
      */
@@ -327,7 +329,7 @@ export function createSearchClient({
         operation,
         key,
         apiKey,
-        maxRetries = 50,
+        maxRetries = 100,
         timeout = (retryCount: number): number => Math.min(retryCount * 200, 5000),
       }: WaitForApiKeyOptions,
       requestOptions?: RequestOptions | undefined,
@@ -337,7 +339,8 @@ export function createSearchClient({
         aggregator: () => (retryCount += 1),
         error: {
           validate: () => retryCount >= maxRetries,
-          message: () => `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+          message: () =>
+            `Stopped waiting for the API key operation after ${maxRetries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries.`,
         },
         timeout: () => timeout(retryCount),
       };
@@ -508,10 +511,18 @@ export function createSearchClient({
      * @param chunkedBatch.action - The `batch` `action` to perform on the given array of `objects`, defaults to `addObject`.
      * @param chunkedBatch.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
      * @param chunkedBatch.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param chunkedBatch.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
     async chunkedBatch(
-      { indexName, objects, action = 'addObject', waitForTasks, batchSize = 1000 }: ChunkedBatchOptions,
+      {
+        indexName,
+        objects,
+        action = 'addObject',
+        waitForTasks,
+        batchSize = 1000,
+        maxRetries = 100,
+      }: ChunkedBatchOptions,
       requestOptions?: RequestOptions,
     ): Promise<Array<BatchResponse>> {
       let requests: Array<BatchRequest> = [];
@@ -528,7 +539,7 @@ export function createSearchClient({
 
       if (waitForTasks) {
         for (const resp of responses) {
-          await this.waitForTask({ indexName, taskID: resp.taskID });
+          await this.waitForTask({ indexName, taskID: resp.taskID, maxRetries });
         }
       }
 
@@ -544,14 +555,15 @@ export function createSearchClient({
      * @param saveObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
      * @param saveObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param saveObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+     * @param saveObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
      */
     async saveObjects(
-      { indexName, objects, waitForTasks, batchSize }: SaveObjectsOptions,
+      { indexName, objects, waitForTasks, batchSize, maxRetries }: SaveObjectsOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
-        { indexName, objects, action: 'addObject', waitForTasks, batchSize },
+        { indexName, objects, action: 'addObject', waitForTasks, batchSize, maxRetries },
         requestOptions,
       );
     },
@@ -565,10 +577,11 @@ export function createSearchClient({
      * @param deleteObjects.objectIDs - The objectIDs to delete.
      * @param deleteObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param deleteObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+     * @param deleteObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
      */
     async deleteObjects(
-      { indexName, objectIDs, waitForTasks, batchSize }: DeleteObjectsOptions,
+      { indexName, objectIDs, waitForTasks, batchSize, maxRetries }: DeleteObjectsOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
@@ -578,6 +591,7 @@ export function createSearchClient({
           action: 'deleteObject',
           waitForTasks,
           batchSize,
+          maxRetries,
         },
         requestOptions,
       );
@@ -593,10 +607,11 @@ export function createSearchClient({
      * @param partialUpdateObjects.createIfNotExists - To be provided if non-existing objects are passed, otherwise, the call will fail.
      * @param partialUpdateObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param partialUpdateObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+     * @param partialUpdateObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
     async partialUpdateObjects(
-      { indexName, objects, createIfNotExists, waitForTasks, batchSize }: PartialUpdateObjectsOptions,
+      { indexName, objects, createIfNotExists, waitForTasks, batchSize, maxRetries }: PartialUpdateObjectsOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
@@ -606,6 +621,7 @@ export function createSearchClient({
           action: createIfNotExists ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate',
           batchSize,
           waitForTasks,
+          maxRetries,
         },
         requestOptions,
       );
@@ -621,10 +637,11 @@ export function createSearchClient({
      * @param replaceAllObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
      * @param replaceAllObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `objects.length / batchSize`. Defaults to 1000.
      * @param replaceAllObjects.scopes - The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
+     * @param replaceAllObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch`, `operationIndex` and `getTask` method and merged with the transporter requestOptions.
      */
     async replaceAllObjects(
-      { indexName, objects, batchSize, scopes }: ReplaceAllObjectsOptions,
+      { indexName, objects, batchSize, scopes, maxRetries = 100 }: ReplaceAllObjectsOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<ReplaceAllObjectsResponse> {
       const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
@@ -648,13 +665,14 @@ export function createSearchClient({
         );
 
         const batchResponses = await this.chunkedBatch(
-          { indexName: tmpIndexName, objects, waitForTasks: true, batchSize },
+          { indexName: tmpIndexName, objects, waitForTasks: true, batchSize, maxRetries },
           requestOptions,
         );
 
         await this.waitForTask({
           indexName: tmpIndexName,
           taskID: copyOperationResponse.taskID,
+          maxRetries,
         });
 
         copyOperationResponse = await this.operationIndex(
@@ -671,6 +689,7 @@ export function createSearchClient({
         await this.waitForTask({
           indexName: tmpIndexName,
           taskID: copyOperationResponse.taskID,
+          maxRetries,
         });
 
         const moveOperationResponse = await this.operationIndex(
@@ -683,6 +702,7 @@ export function createSearchClient({
         await this.waitForTask({
           indexName: tmpIndexName,
           taskID: moveOperationResponse.taskID,
+          maxRetries,
         });
 
         return { copyOperationResponse, batchResponses, moveOperationResponse };
@@ -1027,7 +1047,7 @@ export function createSearchClient({
     },
 
     /**
-     * Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn\'t collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There\'s no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they\'ll be ignored.
+     * Retrieves records from an index, up to 1,000 per request.  Searching returns _hits_ (records augmented with highlighting and ranking details). Browsing returns matching records only. Use browse to export your indices.  - The Analytics API doesn\'t collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There\'s no ranking for typo tolerance, number of matched words, proximity, or geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they\'re ignored.
      *
      * Required API Key ACLs:
      *  - browse
@@ -1303,7 +1323,7 @@ export function createSearchClient({
     },
 
     /**
-     * This operation doesn\'t accept empty filters.  This operation is resource-intensive. You should only use it if you can\'t get the object IDs of the records you want to delete. It\'s more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+     * This operation doesn\'t accept empty filters.  This operation is resource-intensive. Use it only if you can\'t get the object IDs of the records you want to delete. It\'s more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
      *
      * Required API Key ACLs:
      *  - deleteIndex
@@ -1676,10 +1696,10 @@ export function createSearchClient({
      * @param getObject.attributesToRetrieve - Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned.  `objectID` is always retrieved.  Attributes included in `unretrievableAttributes` won\'t be retrieved unless the request is authenticated with the admin API key.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getObject(
+    getObject<T = Record<string, unknown>>(
       { indexName, objectID, attributesToRetrieve }: GetObjectProps,
       requestOptions?: RequestOptions,
-    ): Promise<Record<string, unknown>> {
+    ): Promise<T> {
       if (!indexName) {
         throw new Error('Parameter `indexName` is required when calling `getObject`.');
       }
@@ -2145,7 +2165,7 @@ export function createSearchClient({
     },
 
     /**
-     * Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn\'t exist yet, it\'ll be created. - This operation is resource-intensive.  **Copy**  - Copying a source index that doesn\'t exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can\'t copy the `enableReRanking`, `mode`, and `replicas` settings. - You can\'t copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)  **Move**  - Moving a source index that doesn\'t exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+     * Copies or moves (renames) an index within the same Algolia application.  Notes: - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn\'t exist yet, it\'s created. - This operation is resource-intensive.  **Copy**  - If the source index doesn\'t exist, copying creates a new index with 0 records and default settings. - API keys from the source index are merged with the existing keys in the destination index. - You can\'t copy the `enableReRanking`, `mode`, and `replicas` settings. - You can\'t copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - For more information, see [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).  **Move**  - If the source index doesn\'t exist, moving is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - For more information, see [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
      *
      * Required API Key ACLs:
      *  - addObject
@@ -2189,7 +2209,7 @@ export function createSearchClient({
     },
 
     /**
-     * Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn\'t exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn\'t exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don\'t have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it\'s not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn\'t exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn\'t exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+     * Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn\'t exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn\'t exist yet, this method creates a new index. - Use first-level attributes only. Nested attributes aren\'t supported.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update attributes without replacing the full record, use these built-in operations. These operations are useful when the initial data isn\'t available.  - `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. - `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching number or string elements from an array attribute made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute made of numbers or strings only if it\'s not already present. - `IncrementFrom`: increment a numeric integer attribute only if the provided value matches the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the API ignores the update.   If the object doesn\'t exist, the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the provided value is greater than the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1, the API updates the object.   If the object doesn\'t exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.  Specify an operation by providing an object with the attribute to update as the key and its value as an object with these properties:  - `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument to the operation, for example, increment or decrement step, or a value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
      *
      * Required API Key ACLs:
      *  - addObject
@@ -2568,11 +2588,11 @@ export function createSearchClient({
     },
 
     /**
-     * Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
+     * Runs multiple search queries against one or more indices in a single API request.  Use cases include:  - Searching different indices, such as products and marketing content. - Run multiple queries on the same index with different parameters or filters.  If you know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
      *
      * Required API Key ACLs:
      *  - search
-     * @param searchMethodParams - Muli-search request body. Results are returned in the same order as the requests.
+     * @param searchMethodParams - Multi-query search request body. Results are returned in the same order as the requests.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     search<T>(

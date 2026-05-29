@@ -2,12 +2,12 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
-/// Treat singular, plurals, and other forms of declensions as equivalent. You should only use this feature for the
-/// languages used in your index.
+/// Treat singular, plurals, and other forms of declensions as equivalent. Only use this feature for the languages used
+/// in your index.
 public enum RecommendIgnorePlurals: Codable, JSONEncodable, AbstractEncodable {
     case arrayOfRecommendSupportedLanguage([RecommendSupportedLanguage])
     case recommendBooleanString(RecommendBooleanString)

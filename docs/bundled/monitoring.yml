@@ -3,10 +3,17 @@ info:
   title: Algolia Monitoring API
   summary: The Monitoring API lets you check the status of your Algolia infrastructure
   description: >
+    The metrics exposed by this API are based on results from external
+    monitoring probes checking Algolia’s infrastructure.
+
+    These metrics **reflect the overall infrastructure status and don’t
+    represent the performance of the specific APPID** used for authentication.
+
+
     ## Base URLs
 
 
-    The base URL for requests to the Monitoring API is:
+    Base URL for the Monitoring API:
 
 
     - `https://status.algolia.com`
@@ -48,8 +55,8 @@ info:
     of attributes in the API response.
 
 
-    Successful responses return a `2xx` status. Client errors return a `4xx`
-    status. Server errors are indicated by a `5xx` status.
+    Successful responses return `2xx` statuses. Client errors return `4xx`
+    statuses. Server errors return `5xx` statuses.
 
     Error responses have a `message` property with more information.
 
@@ -57,7 +64,7 @@ info:
     ## Version
 
 
-    The current version of the Monitoring API is version 1, as indicated by the
+    The current version of the Monitoring API is version 1, indicated by the
     `/1/` in each endpoint's URL.
   version: 1.0.0
 servers:
@@ -2263,8 +2270,27 @@ paths:
               --header 'accept: application/json'
   /1/indexing/{clusters}:
     get:
-      summary: Retrieve indexing times
-      description: Retrieves average times for indexing operations for selected clusters.
+      summary: Retrieve indexing monitoring latency
+      description: >
+        Retrieves indexing latency metrics for selected clusters.
+
+
+        This endpoint is intended for infrastructure-level monitoring and
+        availability checks.
+
+        The returned value reflects latency measured on Algolia's internal
+        monitoring index
+
+        and is reported in milliseconds.
+
+
+        This metric isn't intended to represent the indexing performance of an
+        individual
+
+        application or index. To measure when an indexing operation has
+        completed for your
+
+        application, use the `waitTask` method.
       operationId: getIndexingTime
       security: []
       tags:
@@ -3026,11 +3052,11 @@ components:
       description: Incident details.
       type: object
       properties:
+        status:
+          $ref: '#/components/schemas/Status'
         title:
           type: string
           description: Description of the incident.
-        status:
-          $ref: '#/components/schemas/Status'
     Incidents:
       title: incidents
       description: >-
@@ -3081,12 +3107,15 @@ components:
       type: object
       additionalProperties: false
       properties:
-        name:
+        cluster:
           type: string
-          description: Server name.
-          example: c16-de-1
-        region:
-          $ref: '#/components/schemas/Region'
+          description: Name of the cluster to which this server belongs.
+          example: c16-de
+        is_replica:
+          type: boolean
+          default: false
+          description: Whether this server is a replica of another server.
+          example: false
         is_slave:
           type: boolean
           default: false
@@ -3095,15 +3124,12 @@ components:
             Included to support legacy applications.
             Use `is_replica` instead.
           example: false
-        is_replica:
-          type: boolean
-          default: false
-          description: Whether this server is a replica of another server.
-          example: false
-        cluster:
+        name:
           type: string
-          description: Name of the cluster to which this server belongs.
-          example: c16-de
+          description: Server name.
+          example: c16-de-1
+        region:
+          $ref: '#/components/schemas/Region'
         status:
           $ref: '#/components/schemas/ServerStatus'
         type:
@@ -3417,6 +3443,12 @@ components:
                 type: object
                 additionalProperties: false
                 properties:
+                  avg_build_time:
+                    type: object
+                    description: Average build time of the indices in seconds.
+                    additionalProperties:
+                      x-additionalPropertiesName: probes
+                      $ref: '#/components/schemas/InfraProbes'
                   cpu_usage:
                     type: object
                     description: CPU idleness in %.
@@ -3442,12 +3474,6 @@ components:
 
                       0% means no SSD usage. A value of 50% indicates 32&nbsp;GB
                       SSD usage for a machine with 64&nbsp;RAM.
-                    additionalProperties:
-                      x-additionalPropertiesName: probes
-                      $ref: '#/components/schemas/InfraProbes'
-                  avg_build_time:
-                    type: object
-                    description: Average build time of the indices in seconds.
                     additionalProperties:
                       x-additionalPropertiesName: probes
                       $ref: '#/components/schemas/InfraProbes'

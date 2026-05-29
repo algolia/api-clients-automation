@@ -6,6 +6,7 @@ namespace Algolia\AlgoliaSearch\Test\Client;
 
 use Algolia\AlgoliaSearch\Api\SearchClient;
 use Algolia\AlgoliaSearch\Configuration\SearchConfig;
+use Algolia\AlgoliaSearch\Configuration\TransformationOptions;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
@@ -135,8 +136,39 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    #[TestDox('calls api with default read timeouts')]
+    #[TestDox('test the compression strategy')]
+    public function test6api(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6678'])->setCompressionType('gzip'));
+
+        $res = $client->customPost(
+            '1/test/gzip',
+            [],
+            ['message' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien.',
+            ],
+        );
+        $this->assertEquals(
+            '{"message":"ok compression test server response","body":{"message":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."}}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('test the response decompression strategy')]
     public function test7api(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6691']));
+
+        $res = $client->customGet(
+            '1/test/gzip-response',
+        );
+        $this->assertEquals(
+            '{"message":"ok decompression test server response","data":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('calls api with default read timeouts')]
+    public function test8api(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customGet(
@@ -154,7 +186,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('calls api with default write timeouts')]
-    public function test8api(): void
+    public function test9api(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customPost(
@@ -172,7 +204,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('can handle unknown response fields')]
-    public function test9api(): void
+    public function test10api(): void
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
 
@@ -186,7 +218,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('can handle unknown response fields inside a nested oneOf')]
-    public function test10api(): void
+    public function test11api(): void
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
 
@@ -201,7 +233,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('does not retry on success')]
-    public function test11api(): void
+    public function test12api(): void
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6675', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6674']));
 
@@ -246,7 +278,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.37.3\).*/',
+                '/^Algolia for PHP \(4.44.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
@@ -570,7 +602,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('call partialUpdateObjectsWithTransformation with createIfNotExists=true')]
     public function test0partialUpdateObjectsWithTransformation(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6688', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6689'])->setTransformationRegion('us'));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6688', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6689'])->setTransformationOptions((new TransformationOptions('us'))->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6688', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6689'])));
 
         $res = $client->partialUpdateObjectsWithTransformation(
             'cts_e2e_partialUpdateObjectsWithTransformation_php',
@@ -704,7 +736,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('call replaceAllObjectsWithTransformation without error')]
     public function test0replaceAllObjectsWithTransformation(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6690'])->setTransformationRegion('us'));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6690'])->setTransformationOptions((new TransformationOptions('us'))->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6690'])));
 
         $res = $client->replaceAllObjectsWithTransformation(
             'cts_e2e_replace_all_objects_with_transformation_php',
@@ -850,7 +882,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('call saveObjectsWithTransformation without error')]
     public function test0saveObjectsWithTransformation(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6688', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6689'])->setTransformationRegion('us'));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6688', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6689'])->setTransformationOptions((new TransformationOptions('us'))->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6688', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6689'])));
 
         $res = $client->saveObjectsWithTransformation(
             'cts_e2e_saveObjectsWithTransformation_php',

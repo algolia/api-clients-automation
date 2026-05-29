@@ -8,6 +8,7 @@ import 'package:algolia_client_search/src/model/api_key.dart';
 import 'package:algolia_client_search/src/model/api_key_operation.dart';
 import 'package:algolia_client_search/src/model/around_radius_all.dart';
 import 'package:algolia_client_search/src/model/assign_user_id_params.dart';
+import 'package:algolia_client_search/src/model/auto_filtering_result.dart';
 import 'package:algolia_client_search/src/model/automatic_facet_filter.dart';
 import 'package:algolia_client_search/src/model/banner.dart';
 import 'package:algolia_client_search/src/model/banner_image.dart';
@@ -31,11 +32,14 @@ import 'package:algolia_client_search/src/model/browse_params_object.dart';
 import 'package:algolia_client_search/src/model/browse_response.dart';
 import 'package:algolia_client_search/src/model/built_in_operation.dart';
 import 'package:algolia_client_search/src/model/built_in_operation_type.dart';
+import 'package:algolia_client_search/src/model/category_prediction.dart';
+import 'package:algolia_client_search/src/model/category_prediction_bin.dart';
 import 'package:algolia_client_search/src/model/condition.dart';
 import 'package:algolia_client_search/src/model/consequence.dart';
 import 'package:algolia_client_search/src/model/consequence_hide.dart';
 import 'package:algolia_client_search/src/model/consequence_params.dart';
 import 'package:algolia_client_search/src/model/consequence_query_object.dart';
+import 'package:algolia_client_search/src/model/consequence_redirect.dart';
 import 'package:algolia_client_search/src/model/created_at_response.dart';
 import 'package:algolia_client_search/src/model/cursor.dart';
 import 'package:algolia_client_search/src/model/delete_api_key_response.dart';
@@ -62,6 +66,9 @@ import 'package:algolia_client_search/src/model/facet_ordering.dart';
 import 'package:algolia_client_search/src/model/facet_stats.dart';
 import 'package:algolia_client_search/src/model/facets.dart';
 import 'package:algolia_client_search/src/model/fetched_index.dart';
+import 'package:algolia_client_search/src/model/fetched_index_ab_test.dart';
+import 'package:algolia_client_search/src/model/fetched_index_ab_test_target.dart';
+import 'package:algolia_client_search/src/model/fetched_index_ab_test_variant.dart';
 import 'package:algolia_client_search/src/model/get_api_key_response.dart';
 import 'package:algolia_client_search/src/model/get_dictionary_settings_response.dart';
 import 'package:algolia_client_search/src/model/get_logs_response.dart';
@@ -71,6 +78,7 @@ import 'package:algolia_client_search/src/model/get_objects_response.dart';
 import 'package:algolia_client_search/src/model/get_task_response.dart';
 import 'package:algolia_client_search/src/model/get_top_user_ids_response.dart';
 import 'package:algolia_client_search/src/model/has_pending_mappings_response.dart';
+import 'package:algolia_client_search/src/model/hierarchy_path_entry.dart';
 import 'package:algolia_client_search/src/model/highlight_result_option.dart';
 import 'package:algolia_client_search/src/model/hit.dart';
 import 'package:algolia_client_search/src/model/index_settings.dart';
@@ -94,6 +102,8 @@ import 'package:algolia_client_search/src/model/params.dart';
 import 'package:algolia_client_search/src/model/personalization.dart';
 import 'package:algolia_client_search/src/model/promote_object_id.dart';
 import 'package:algolia_client_search/src/model/promote_object_ids.dart';
+import 'package:algolia_client_search/src/model/query_categorization.dart';
+import 'package:algolia_client_search/src/model/query_categorization_type.dart';
 import 'package:algolia_client_search/src/model/query_type.dart';
 import 'package:algolia_client_search/src/model/range.dart';
 import 'package:algolia_client_search/src/model/ranking_info.dart';
@@ -107,12 +117,15 @@ import 'package:algolia_client_search/src/model/rendering_content.dart';
 import 'package:algolia_client_search/src/model/replace_all_objects_response.dart';
 import 'package:algolia_client_search/src/model/replace_all_objects_with_transformation_response.dart';
 import 'package:algolia_client_search/src/model/replace_source_response.dart';
+import 'package:algolia_client_search/src/model/response_extensions.dart';
 import 'package:algolia_client_search/src/model/rule.dart';
 import 'package:algolia_client_search/src/model/save_object_response.dart';
 import 'package:algolia_client_search/src/model/save_synonym_response.dart';
 import 'package:algolia_client_search/src/model/scope_type.dart';
 import 'package:algolia_client_search/src/model/search_dictionary_entries_params.dart';
 import 'package:algolia_client_search/src/model/search_dictionary_entries_response.dart';
+import 'package:algolia_client_search/src/model/search_extensions.dart';
+import 'package:algolia_client_search/src/model/search_extensions_query_categorization.dart';
 import 'package:algolia_client_search/src/model/search_for_facet_values_request.dart';
 import 'package:algolia_client_search/src/model/search_for_facet_values_response.dart';
 import 'package:algolia_client_search/src/model/search_for_facets.dart';
@@ -126,6 +139,7 @@ import 'package:algolia_client_search/src/model/search_params_object.dart';
 import 'package:algolia_client_search/src/model/search_params_query.dart';
 import 'package:algolia_client_search/src/model/search_params_string.dart';
 import 'package:algolia_client_search/src/model/search_response.dart';
+import 'package:algolia_client_search/src/model/search_response_partial.dart';
 import 'package:algolia_client_search/src/model/search_responses.dart';
 import 'package:algolia_client_search/src/model/search_rules_params.dart';
 import 'package:algolia_client_search/src/model/search_rules_response.dart';
@@ -201,6 +215,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AssignUserIdParams':
       return AssignUserIdParams.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'AutoFilteringResult':
+      return AutoFilteringResult.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'AutomaticFacetFilter':
       return AutomaticFacetFilter.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -263,6 +280,11 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'BuiltInOperationType':
       return BuiltInOperationType.fromJson(value) as ReturnType;
+    case 'CategoryPrediction':
+      return CategoryPrediction.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'CategoryPredictionBin':
+      return CategoryPredictionBin.fromJson(value) as ReturnType;
     case 'Condition':
       return Condition.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'Consequence':
@@ -275,6 +297,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'ConsequenceQueryObject':
       return ConsequenceQueryObject.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ConsequenceRedirect':
+      return ConsequenceRedirect.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'CreatedAtResponse':
       return CreatedAtResponse.fromJson(value as Map<String, dynamic>)
@@ -337,6 +362,15 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return Facets.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'FetchedIndex':
       return FetchedIndex.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'FetchedIndexAbTest':
+      return FetchedIndexAbTest.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'FetchedIndexAbTestTarget':
+      return FetchedIndexAbTestTarget.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'FetchedIndexAbTestVariant':
+      return FetchedIndexAbTestVariant.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'GetApiKeyResponse':
       return GetApiKeyResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -363,6 +397,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'HasPendingMappingsResponse':
       return HasPendingMappingsResponse.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'HierarchyPathEntry':
+      return HierarchyPathEntry.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'HighlightResultOption':
       return HighlightResultOption.fromJson(value as Map<String, dynamic>)
@@ -424,6 +461,11 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'PromoteObjectIDs':
       return PromoteObjectIDs.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'QueryCategorization':
+      return QueryCategorization.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'QueryCategorizationType':
+      return QueryCategorizationType.fromJson(value) as ReturnType;
     case 'QueryType':
       return QueryType.fromJson(value) as ReturnType;
     case 'Range':
@@ -457,6 +499,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ReplaceSourceResponse':
       return ReplaceSourceResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ResponseExtensions':
+      return ResponseExtensions.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'Rule':
       return Rule.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'SaveObjectResponse':
@@ -472,6 +517,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           value as Map<String, dynamic>) as ReturnType;
     case 'SearchDictionaryEntriesResponse':
       return SearchDictionaryEntriesResponse.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'SearchExtensions':
+      return SearchExtensions.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'SearchExtensionsQueryCategorization':
+      return SearchExtensionsQueryCategorization.fromJson(
           value as Map<String, dynamic>) as ReturnType;
     case 'SearchForFacetValuesRequest':
       return SearchForFacetValuesRequest.fromJson(value as Map<String, dynamic>)
@@ -510,6 +561,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'SearchResponse':
       return SearchResponse.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'SearchResponsePartial':
+      return SearchResponsePartial.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'SearchResponses':
       return SearchResponses.fromJson(value as Map<String, dynamic>)

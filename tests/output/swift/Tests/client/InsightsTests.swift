@@ -4,8 +4,8 @@ import XCTest
 
 import Utils
 
-@testable import Core
-@testable import Insights
+@testable import AlgoliaCore
+@testable import AlgoliaInsights
 
 final class InsightsClientClientTests: XCTestCase {
     let APPLICATION_ID = "my_application_id"
@@ -38,7 +38,7 @@ final class InsightsClientClientTests: XCTestCase {
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
-        let pattern = "^Algolia for Swift \\(9.37.4\\).*"
+        let pattern = "^Algolia for Swift \\(9.43.2\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
@@ -86,7 +86,7 @@ final class InsightsClientClientTests: XCTestCase {
     }
 
     /// throws when incorrect region is given
-    func testParametersTest2() async throws {
+    func testParametersTest2() throws {
         do {
             let configuration = try InsightsClientConfiguration(
                 appID: "my-app-id",

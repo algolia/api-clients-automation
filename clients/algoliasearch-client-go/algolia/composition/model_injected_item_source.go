@@ -4,48 +4,79 @@ package composition
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 // InjectedItemSource - struct for InjectedItemSource.
 type InjectedItemSource struct {
-	ExternalSource *ExternalSource
-	SearchSource   *SearchSource
+	InjectedItemExternalSource  *InjectedItemExternalSource
+	InjectedItemRecommendSource *InjectedItemRecommendSource
+	InjectedItemSearchSource    *InjectedItemSearchSource
 }
 
-// SearchSourceAsInjectedItemSource is a convenience function that returns SearchSource wrapped in InjectedItemSource.
-func SearchSourceAsInjectedItemSource(v *SearchSource) *InjectedItemSource {
+// InjectedItemSearchSourceAsInjectedItemSource is a convenience function that returns InjectedItemSearchSource wrapped in InjectedItemSource.
+func InjectedItemSearchSourceAsInjectedItemSource(v *InjectedItemSearchSource) *InjectedItemSource {
 	return &InjectedItemSource{
-		SearchSource: v,
+		InjectedItemSearchSource: v,
 	}
 }
 
-// ExternalSourceAsInjectedItemSource is a convenience function that returns ExternalSource wrapped in InjectedItemSource.
-func ExternalSourceAsInjectedItemSource(v *ExternalSource) *InjectedItemSource {
+// InjectedItemExternalSourceAsInjectedItemSource is a convenience function that returns InjectedItemExternalSource wrapped in InjectedItemSource.
+func InjectedItemExternalSourceAsInjectedItemSource(v *InjectedItemExternalSource) *InjectedItemSource {
 	return &InjectedItemSource{
-		ExternalSource: v,
+		InjectedItemExternalSource: v,
+	}
+}
+
+// InjectedItemRecommendSourceAsInjectedItemSource is a convenience function that returns InjectedItemRecommendSource wrapped in InjectedItemSource.
+func InjectedItemRecommendSourceAsInjectedItemSource(v *InjectedItemRecommendSource) *InjectedItemSource {
+	return &InjectedItemSource{
+		InjectedItemRecommendSource: v,
 	}
 }
 
 // Unmarshal JSON data into one or more of the pointers in the struct.
 func (dst *InjectedItemSource) UnmarshalJSON(data []byte) error {
 	var err error
-	// try to unmarshal data into SearchSource
-	err = json.Unmarshal(data, &dst.SearchSource)
-	if err != nil {
-		dst.SearchSource = nil
+	// use discriminator value to speed up the lookup if possible, if not we will try every possibility
+	var jsonDict map[string]any
+
+	_ = json.Unmarshal(data, &jsonDict)
+	if utils.HasKey(jsonDict, "search") {
+		// try to unmarshal data into InjectedItemSearchSource
+		err = json.Unmarshal(data, &dst.InjectedItemSearchSource)
+		if err != nil {
+			dst.InjectedItemSearchSource = nil
+		}
 	}
-	// try to unmarshal data into ExternalSource
-	err = json.Unmarshal(data, &dst.ExternalSource)
-	if err != nil {
-		dst.ExternalSource = nil
+
+	if utils.HasKey(jsonDict, "external") {
+		// try to unmarshal data into InjectedItemExternalSource
+		err = json.Unmarshal(data, &dst.InjectedItemExternalSource)
+		if err != nil {
+			dst.InjectedItemExternalSource = nil
+		}
+	}
+
+	if utils.HasKey(jsonDict, "recommend") {
+		// try to unmarshal data into InjectedItemRecommendSource
+		err = json.Unmarshal(data, &dst.InjectedItemRecommendSource)
+		if err != nil {
+			dst.InjectedItemRecommendSource = nil
+		}
 	}
 
 	// check if at least one type was successfully unmarshaled
-	if dst.ExternalSource != nil {
+	if dst.InjectedItemExternalSource != nil {
 		return nil
 	}
 
-	if dst.SearchSource != nil {
+	if dst.InjectedItemRecommendSource != nil {
+		return nil
+	}
+
+	if dst.InjectedItemSearchSource != nil {
 		return nil
 	}
 
@@ -54,19 +85,28 @@ func (dst *InjectedItemSource) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON.
 func (src InjectedItemSource) MarshalJSON() ([]byte, error) {
-	if src.ExternalSource != nil {
-		serialized, err := json.Marshal(&src.ExternalSource)
+	if src.InjectedItemExternalSource != nil {
+		serialized, err := json.Marshal(&src.InjectedItemExternalSource)
 		if err != nil {
-			return nil, fmt.Errorf("failed to unmarshal one of ExternalSource of InjectedItemSource: %w", err)
+			return nil, fmt.Errorf("failed to unmarshal one of InjectedItemExternalSource of InjectedItemSource: %w", err)
 		}
 
 		return serialized, nil
 	}
 
-	if src.SearchSource != nil {
-		serialized, err := json.Marshal(&src.SearchSource)
+	if src.InjectedItemRecommendSource != nil {
+		serialized, err := json.Marshal(&src.InjectedItemRecommendSource)
 		if err != nil {
-			return nil, fmt.Errorf("failed to unmarshal one of SearchSource of InjectedItemSource: %w", err)
+			return nil, fmt.Errorf("failed to unmarshal one of InjectedItemRecommendSource of InjectedItemSource: %w", err)
+		}
+
+		return serialized, nil
+	}
+
+	if src.InjectedItemSearchSource != nil {
+		serialized, err := json.Marshal(&src.InjectedItemSearchSource)
+		if err != nil {
+			return nil, fmt.Errorf("failed to unmarshal one of InjectedItemSearchSource of InjectedItemSource: %w", err)
 		}
 
 		return serialized, nil
@@ -77,12 +117,16 @@ func (src InjectedItemSource) MarshalJSON() ([]byte, error) {
 
 // Get the actual instance.
 func (obj InjectedItemSource) GetActualInstance() any {
-	if obj.ExternalSource != nil {
-		return *obj.ExternalSource
+	if obj.InjectedItemExternalSource != nil {
+		return *obj.InjectedItemExternalSource
 	}
 
-	if obj.SearchSource != nil {
-		return *obj.SearchSource
+	if obj.InjectedItemRecommendSource != nil {
+		return *obj.InjectedItemRecommendSource
+	}
+
+	if obj.InjectedItemSearchSource != nil {
+		return *obj.InjectedItemSearchSource
 	}
 
 	// all schemas are nil

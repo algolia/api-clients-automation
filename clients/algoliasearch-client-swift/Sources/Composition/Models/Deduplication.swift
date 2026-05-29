@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Deduplication configures the methods used to resolve duplicate items between main search results and injected group
@@ -27,11 +27,7 @@ public struct Deduplication: Codable, JSONEncodable {
     }
 }
 
-extension Deduplication: Equatable {
-    public static func ==(lhs: Deduplication, rhs: Deduplication) -> Bool {
-        lhs.positioning == rhs.positioning
-    }
-}
+extension Deduplication: Equatable {}
 
 extension Deduplication: Hashable {
     public func hash(into hasher: inout Hasher) {

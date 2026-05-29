@@ -64,7 +64,7 @@ func TestSuggestionscommonApi1(t *testing.T) {
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, `^Algolia for Go \(4.35.0\).*`, echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.40.0\).*`, echo.Header.Get("User-Agent"))
 }
 
 // throws when region is not given.
@@ -93,6 +93,7 @@ func TestSuggestionsparameters0(t *testing.T) {
 		Region: suggestions.Region(""),
 	}
 	client, err = suggestions.NewClientWithConfig(cfg)
+
 	require.EqualError(t, err, "`region` is required and must be one of the following: eu, us")
 }
 
@@ -122,6 +123,7 @@ func TestSuggestionsparameters1(t *testing.T) {
 		Region: suggestions.Region("not_a_region"),
 	}
 	client, err = suggestions.NewClientWithConfig(cfg)
+
 	require.EqualError(t, err, "`region` is required and must be one of the following: eu, us")
 }
 
@@ -151,6 +153,7 @@ func TestSuggestionsparameters2(t *testing.T) {
 		Region: suggestions.Region("us"),
 	}
 	client, err = suggestions.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 }
 
@@ -180,6 +183,7 @@ func TestSuggestionssetClientApiKey0(t *testing.T) {
 		Region: suggestions.Region("us"),
 	}
 	client, err = suggestions.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(

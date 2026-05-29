@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Surround words that match the query with HTML tags for highlighting.
@@ -41,14 +41,7 @@ public struct SearchHighlightResultOption: Codable, JSONEncodable {
     }
 }
 
-extension SearchHighlightResultOption: Equatable {
-    public static func ==(lhs: SearchHighlightResultOption, rhs: SearchHighlightResultOption) -> Bool {
-        lhs.value == rhs.value &&
-            lhs.matchLevel == rhs.matchLevel &&
-            lhs.matchedWords == rhs.matchedWords &&
-            lhs.fullyHighlighted == rhs.fullyHighlighted
-    }
-}
+extension SearchHighlightResultOption: Equatable {}
 
 extension SearchHighlightResultOption: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Input for a transformation that contains the source code of the transformation.
@@ -27,11 +27,7 @@ public struct TransformationCode: Codable, JSONEncodable {
     }
 }
 
-extension TransformationCode: Equatable {
-    public static func ==(lhs: TransformationCode, rhs: TransformationCode) -> Bool {
-        lhs.code == rhs.code
-    }
-}
+extension TransformationCode: Equatable {}
 
 extension TransformationCode: Hashable {
     public func hash(into hasher: inout Hasher) {

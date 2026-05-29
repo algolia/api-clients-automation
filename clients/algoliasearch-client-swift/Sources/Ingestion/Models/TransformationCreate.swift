@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// API request body for creating a transformation.
@@ -58,16 +58,7 @@ public struct TransformationCreate: Codable, JSONEncodable {
     }
 }
 
-extension TransformationCreate: Equatable {
-    public static func ==(lhs: TransformationCreate, rhs: TransformationCreate) -> Bool {
-        lhs.code == rhs.code &&
-            lhs.name == rhs.name &&
-            lhs.type == rhs.type &&
-            lhs.input == rhs.input &&
-            lhs.description == rhs.description &&
-            lhs.authenticationIDs == rhs.authenticationIDs
-    }
-}
+extension TransformationCreate: Equatable {}
 
 extension TransformationCreate: Hashable {
     public func hash(into hasher: inout Hasher) {

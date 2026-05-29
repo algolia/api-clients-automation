@@ -35,17 +35,12 @@ use GuzzleHttp\Psr7\Query;
  */
 class CompositionClient
 {
-    public const VERSION = '4.37.3';
+    public const VERSION = '4.44.0';
 
     /**
      * @var ApiWrapperInterface
      */
     protected $api;
-
-    /**
-     * @var IngestionClient
-     */
-    protected $ingestionTransporter;
 
     /**
      * @var CompositionConfig
@@ -85,6 +80,10 @@ class CompositionClient
         );
 
         $client = new static($apiWrapper, $config);
+
+        $logger = Algolia::getLogger();
+        $logger->info('Algolia API client: Algolia CompositionClient initialized (appId: '.$config->getAppId().')');
+        Algolia::logDebugWarningOnce();
 
         return $client;
     }
@@ -426,6 +425,7 @@ class CompositionClient
      * @param string            $compositionID Unique Composition ObjectID. (required)
      * @param array|RequestBody $requestBody   requestBody (required)
      *                                         - $requestBody['params'] => (array)
+     *                                         - $requestBody['feedsOrder'] => (array) A list of Feed IDs that specifies the order in which to order the results in the response.  The IDs should be a subset of those in the `feeds` object of the targeted `multifeed` Composition / Composition Rule, and only those specified will be processed.   The value overrides the value in the defined behavior, and when unspecified, the value defined in the behavior is used. When neither value is present, all feeds are processed.
      *
      * @see RequestBody
      *
@@ -493,7 +493,7 @@ class CompositionClient
     }
 
     /**
-     * Updates the \"sortingStrategy\" field of an existing composition. This endpoint allows you to create a new sorting strategy mapping or replace the currently configured one. The provided sorting indices MUST be associated indices or replicas of the main targeted index.  WARNING: This endpoint cannot validate if the sort index is related to the composition's main index.   Validation will fail at runtime if the index you updated is not related!  The update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.
+     * Updates the \"sortingStrategy\" field of an existing composition. This endpoint lets you create a new sorting strategy mapping or replace the configured one. The provided sorting indices must be associated indices or replicas of the main targeted index.  This endpoint can't validate whether the sort index is related to the composition's main index. Validation fails at runtime if the index you updated isn't related.  The update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.
      *
      * Required API Key ACLs:
      *  - editSettings
@@ -527,6 +527,12 @@ class CompositionClient
     {
         // verify the required parameter 'path' is set
         if (!isset($path)) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customDelete`.'
+            );
+        }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
             throw new \InvalidArgumentException(
                 'Parameter `path` is required when calling `customDelete`.'
             );
@@ -569,6 +575,12 @@ class CompositionClient
     {
         // verify the required parameter 'path' is set
         if (!isset($path)) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customGet`.'
+            );
+        }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
             throw new \InvalidArgumentException(
                 'Parameter `path` is required when calling `customGet`.'
             );
@@ -616,6 +628,12 @@ class CompositionClient
                 'Parameter `path` is required when calling `customPost`.'
             );
         }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customPost`.'
+            );
+        }
 
         $resourcePath = '/{path}';
         $queryParameters = [];
@@ -655,6 +673,12 @@ class CompositionClient
     {
         // verify the required parameter 'path' is set
         if (!isset($path)) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customPut`.'
+            );
+        }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
             throw new \InvalidArgumentException(
                 'Parameter `path` is required when calling `customPut`.'
             );
@@ -702,6 +726,12 @@ class CompositionClient
                 'Parameter `compositionID` is required when calling `deleteComposition`.'
             );
         }
+        // verify the required parameter 'compositionID' is not empty
+        if (isset($compositionID) && '' === $compositionID) {
+            throw new \InvalidArgumentException(
+                'Parameter `compositionID` is required when calling `deleteComposition`.'
+            );
+        }
 
         $resourcePath = '/1/compositions/{compositionID}';
         $queryParameters = [];
@@ -742,8 +772,20 @@ class CompositionClient
                 'Parameter `compositionID` is required when calling `deleteCompositionRule`.'
             );
         }
+        // verify the required parameter 'compositionID' is not empty
+        if (isset($compositionID) && '' === $compositionID) {
+            throw new \InvalidArgumentException(
+                'Parameter `compositionID` is required when calling `deleteCompositionRule`.'
+            );
+        }
         // verify the required parameter 'objectID' is set
         if (!isset($objectID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `objectID` is required when calling `deleteCompositionRule`.'
+            );
+        }
+        // verify the required parameter 'objectID' is not empty
+        if (isset($objectID) && '' === $objectID) {
             throw new \InvalidArgumentException(
                 'Parameter `objectID` is required when calling `deleteCompositionRule`.'
             );
@@ -797,6 +839,12 @@ class CompositionClient
                 'Parameter `compositionID` is required when calling `getComposition`.'
             );
         }
+        // verify the required parameter 'compositionID' is not empty
+        if (isset($compositionID) && '' === $compositionID) {
+            throw new \InvalidArgumentException(
+                'Parameter `compositionID` is required when calling `getComposition`.'
+            );
+        }
 
         $resourcePath = '/1/compositions/{compositionID}';
         $queryParameters = [];
@@ -838,8 +886,20 @@ class CompositionClient
                 'Parameter `compositionID` is required when calling `getRule`.'
             );
         }
+        // verify the required parameter 'compositionID' is not empty
+        if (isset($compositionID) && '' === $compositionID) {
+            throw new \InvalidArgumentException(
+                'Parameter `compositionID` is required when calling `getRule`.'
+            );
+        }
         // verify the required parameter 'objectID' is set
         if (!isset($objectID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `objectID` is required when calling `getRule`.'
+            );
+        }
+        // verify the required parameter 'objectID' is not empty
+        if (isset($objectID) && '' === $objectID) {
             throw new \InvalidArgumentException(
                 'Parameter `objectID` is required when calling `getRule`.'
             );
@@ -893,6 +953,12 @@ class CompositionClient
     {
         // verify the required parameter 'compositionID' is set
         if (!isset($compositionID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `compositionID` is required when calling `getTask`.'
+            );
+        }
+        // verify the required parameter 'compositionID' is not empty
+        if (isset($compositionID) && '' === $compositionID) {
             throw new \InvalidArgumentException(
                 'Parameter `compositionID` is required when calling `getTask`.'
             );
@@ -1015,6 +1081,12 @@ class CompositionClient
                 'Parameter `compositionID` is required when calling `putComposition`.'
             );
         }
+        // verify the required parameter 'compositionID' is not empty
+        if (isset($compositionID) && '' === $compositionID) {
+            throw new \InvalidArgumentException(
+                'Parameter `compositionID` is required when calling `putComposition`.'
+            );
+        }
         // verify the required parameter 'composition' is set
         if (!isset($composition)) {
             throw new \InvalidArgumentException(
@@ -1062,8 +1134,20 @@ class CompositionClient
                 'Parameter `compositionID` is required when calling `putCompositionRule`.'
             );
         }
+        // verify the required parameter 'compositionID' is not empty
+        if (isset($compositionID) && '' === $compositionID) {
+            throw new \InvalidArgumentException(
+                'Parameter `compositionID` is required when calling `putCompositionRule`.'
+            );
+        }
         // verify the required parameter 'objectID' is set
         if (!isset($objectID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `objectID` is required when calling `putCompositionRule`.'
+            );
+        }
+        // verify the required parameter 'objectID' is not empty
+        if (isset($objectID) && '' === $objectID) {
             throw new \InvalidArgumentException(
                 'Parameter `objectID` is required when calling `putCompositionRule`.'
             );
@@ -1123,6 +1207,12 @@ class CompositionClient
                 'Parameter `compositionID` is required when calling `saveRules`.'
             );
         }
+        // verify the required parameter 'compositionID' is not empty
+        if (isset($compositionID) && '' === $compositionID) {
+            throw new \InvalidArgumentException(
+                'Parameter `compositionID` is required when calling `saveRules`.'
+            );
+        }
         // verify the required parameter 'rules' is set
         if (!isset($rules)) {
             throw new \InvalidArgumentException(
@@ -1165,6 +1255,12 @@ class CompositionClient
     {
         // verify the required parameter 'compositionID' is set
         if (!isset($compositionID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `compositionID` is required when calling `search`.'
+            );
+        }
+        // verify the required parameter 'compositionID' is not empty
+        if (isset($compositionID) && '' === $compositionID) {
             throw new \InvalidArgumentException(
                 'Parameter `compositionID` is required when calling `search`.'
             );
@@ -1215,6 +1311,12 @@ class CompositionClient
                 'Parameter `compositionID` is required when calling `searchCompositionRules`.'
             );
         }
+        // verify the required parameter 'compositionID' is not empty
+        if (isset($compositionID) && '' === $compositionID) {
+            throw new \InvalidArgumentException(
+                'Parameter `compositionID` is required when calling `searchCompositionRules`.'
+            );
+        }
 
         $resourcePath = '/1/compositions/{compositionID}/rules/search';
         $queryParameters = [];
@@ -1256,8 +1358,20 @@ class CompositionClient
                 'Parameter `compositionID` is required when calling `searchForFacetValues`.'
             );
         }
+        // verify the required parameter 'compositionID' is not empty
+        if (isset($compositionID) && '' === $compositionID) {
+            throw new \InvalidArgumentException(
+                'Parameter `compositionID` is required when calling `searchForFacetValues`.'
+            );
+        }
         // verify the required parameter 'facetName' is set
         if (!isset($facetName)) {
+            throw new \InvalidArgumentException(
+                'Parameter `facetName` is required when calling `searchForFacetValues`.'
+            );
+        }
+        // verify the required parameter 'facetName' is not empty
+        if (isset($facetName) && '' === $facetName) {
             throw new \InvalidArgumentException(
                 'Parameter `facetName` is required when calling `searchForFacetValues`.'
             );
@@ -1293,7 +1407,7 @@ class CompositionClient
      * Set or update the \&quot;sortingStrategy\&quot; configuration for an existing composition (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
-     * Updates the \"sortingStrategy\" field of an existing composition. This endpoint allows you to create a new sorting strategy mapping or replace the currently configured one. The provided sorting indices MUST be associated indices or replicas of the main targeted index.  WARNING: This endpoint cannot validate if the sort index is related to the composition's main index.   Validation will fail at runtime if the index you updated is not related!  The update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.
+     * Updates the \"sortingStrategy\" field of an existing composition. This endpoint lets you create a new sorting strategy mapping or replace the configured one. The provided sorting indices must be associated indices or replicas of the main targeted index.  This endpoint can't validate whether the sort index is related to the composition's main index. Validation fails at runtime if the index you updated isn't related.  The update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.
      * Required API Key ACLs:
      *  - editSettings
      *
@@ -1307,6 +1421,12 @@ class CompositionClient
     {
         // verify the required parameter 'compositionID' is set
         if (!isset($compositionID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `compositionID` is required when calling `updateSortingStrategyComposition`.'
+            );
+        }
+        // verify the required parameter 'compositionID' is not empty
+        if (isset($compositionID) && '' === $compositionID) {
             throw new \InvalidArgumentException(
                 'Parameter `compositionID` is required when calling `updateSortingStrategyComposition`.'
             );

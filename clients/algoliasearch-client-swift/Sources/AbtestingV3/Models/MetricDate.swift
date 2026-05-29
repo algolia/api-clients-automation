@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct MetricDate: Codable, JSONEncodable {
@@ -31,12 +31,7 @@ public struct MetricDate: Codable, JSONEncodable {
     }
 }
 
-extension MetricDate: Equatable {
-    public static func ==(lhs: MetricDate, rhs: MetricDate) -> Bool {
-        lhs.date == rhs.date &&
-            lhs.metrics == rhs.metrics
-    }
-}
+extension MetricDate: Equatable {}
 
 extension MetricDate: Hashable {
     public func hash(into hasher: inout Hasher) {

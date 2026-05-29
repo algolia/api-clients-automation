@@ -1,0 +1,1 @@
+export const COMPRESSION_THRESHOLD = 750;

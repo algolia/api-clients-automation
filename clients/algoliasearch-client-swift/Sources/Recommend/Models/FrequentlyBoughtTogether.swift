@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct FrequentlyBoughtTogether: Codable, JSONEncodable {
@@ -34,13 +34,7 @@ public struct FrequentlyBoughtTogether: Codable, JSONEncodable {
     }
 }
 
-extension FrequentlyBoughtTogether: Equatable {
-    public static func ==(lhs: FrequentlyBoughtTogether, rhs: FrequentlyBoughtTogether) -> Bool {
-        lhs.model == rhs.model &&
-            lhs.objectID == rhs.objectID &&
-            lhs.fallbackParameters == rhs.fallbackParameters
-    }
-}
+extension FrequentlyBoughtTogether: Equatable {}
 
 extension FrequentlyBoughtTogether: Hashable {
     public func hash(into hasher: inout Hasher) {

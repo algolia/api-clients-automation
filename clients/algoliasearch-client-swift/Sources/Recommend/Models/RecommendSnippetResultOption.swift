@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Snippets that show the context around a matching search query.
@@ -31,12 +31,7 @@ public struct RecommendSnippetResultOption: Codable, JSONEncodable {
     }
 }
 
-extension RecommendSnippetResultOption: Equatable {
-    public static func ==(lhs: RecommendSnippetResultOption, rhs: RecommendSnippetResultOption) -> Bool {
-        lhs.value == rhs.value &&
-            lhs.matchLevel == rhs.matchLevel
-    }
-}
+extension RecommendSnippetResultOption: Equatable {}
 
 extension RecommendSnippetResultOption: Hashable {
     public func hash(into hasher: inout Hasher) {

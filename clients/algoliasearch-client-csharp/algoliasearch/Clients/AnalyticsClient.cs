@@ -1025,7 +1025,7 @@ public interface IAnalyticsClient
   );
 
   /// <summary>
-  /// Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  The rate is the number of purchase conversion events divided by the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+  /// Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days, including the current day.  The rate is purchase conversion events divided by tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means there were queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1050,7 +1050,7 @@ public interface IAnalyticsClient
   );
 
   /// <summary>
-  /// Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  The rate is the number of purchase conversion events divided by the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.  (Synchronous version)
+  /// Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days, including the current day.  The rate is purchase conversion events divided by tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means there were queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.  (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1075,7 +1075,7 @@ public interface IAnalyticsClient
   );
 
   /// <summary>
-  /// Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  The rate is the number of purchase conversion events divided by the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+  /// Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days, including the current day.  The rate is purchase conversion events divided by tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means there were queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1100,7 +1100,7 @@ public interface IAnalyticsClient
   );
 
   /// <summary>
-  /// Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  The rate is the number of purchase conversion events divided by the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.  (Synchronous version)
+  /// Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days, including the current day.  The rate is purchase conversion events divided by tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means there were queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.  (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -2129,7 +2129,7 @@ public interface IAnalyticsClient
   );
 
   /// <summary>
-  /// Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to true, the response also includes:  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+  /// Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to `true`, the response also includes:  - Tracked searches count.   Tracked searches are Search API requests with `clickAnalytics` set to `true`.   This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -2164,7 +2164,7 @@ public interface IAnalyticsClient
   );
 
   /// <summary>
-  /// Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to true, the response also includes:  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.  (Synchronous version)
+  /// Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to `true`, the response also includes:  - Tracked searches count.   Tracked searches are Search API requests with `clickAnalytics` set to `true`.   This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.  (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -2199,7 +2199,7 @@ public interface IAnalyticsClient
   );
 
   /// <summary>
-  /// Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to true, the response also includes:  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+  /// Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to `true`, the response also includes:  - Tracked searches count.   Tracked searches are Search API requests with `clickAnalytics` set to `true`.   This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -2234,7 +2234,7 @@ public interface IAnalyticsClient
   );
 
   /// <summary>
-  /// Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to true, the response also includes:  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.  (Synchronous version)
+  /// Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to `true`, the response also includes:  - Tracked searches count.   Tracked searches are Search API requests with `clickAnalytics` set to `true`.   This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.  (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -2269,7 +2269,7 @@ public interface IAnalyticsClient
   );
 
   /// <summary>
-  /// Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+  /// Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes:  - Tracked searches count   Tracked searches are Search API requests with `clickAnalytics` set to `true`.   This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -2306,7 +2306,7 @@ public interface IAnalyticsClient
   );
 
   /// <summary>
-  /// Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.  (Synchronous version)
+  /// Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes:  - Tracked searches count   Tracked searches are Search API requests with `clickAnalytics` set to `true`.   This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.  (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -2343,7 +2343,7 @@ public interface IAnalyticsClient
   );
 
   /// <summary>
-  /// Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+  /// Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes:  - Tracked searches count   Tracked searches are Search API requests with `clickAnalytics` set to `true`.   This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -2380,7 +2380,7 @@ public interface IAnalyticsClient
   );
 
   /// <summary>
-  /// Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.  (Synchronous version)
+  /// Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes:  - Tracked searches count   Tracked searches are Search API requests with `clickAnalytics` set to `true`.   This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.  (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -2588,7 +2588,17 @@ public partial class AnalyticsClient : IAnalyticsClient
 
     if (_logger.IsEnabled(Microsoft.Extensions.Logging.LogLevel.Information))
     {
-      _logger.LogInformation("Algolia Analytics client is initialized.");
+      _logger.LogInformation("Algolia Analytics client initialized (appId: {AppId})", config.AppId);
+    }
+
+    if (
+      _logger.IsEnabled(Microsoft.Extensions.Logging.LogLevel.Debug)
+      && AlgoliaConfig.TryMarkDebugWarningLogged(factory)
+    )
+    {
+      _logger.LogDebug(
+        "WARNING: DEBUG level logging is enabled. This logs full request/response bodies which may contain sensitive data. Only use in local development."
+      );
     }
   }
 
@@ -2613,6 +2623,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomDelete`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomDelete`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -2646,6 +2658,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomDelete`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomDelete`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -2682,6 +2696,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomGet`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomGet`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -2715,6 +2731,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomGet`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomGet`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -2752,6 +2770,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomPost`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomPost`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -2789,6 +2809,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomPost`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomPost`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -2828,6 +2850,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomPut`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomPut`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -2865,6 +2889,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomPut`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomPut`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -2905,6 +2931,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetAddToCartRate`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetAddToCartRate`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -2947,6 +2975,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetAddToCartRate`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetAddToCartRate`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -2991,6 +3021,10 @@ public partial class AnalyticsClient : IAnalyticsClient
         "Parameter `index` is required when calling `GetAverageClickPosition`."
       );
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException(
+        "Parameter `index` is required when calling `GetAverageClickPosition`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3035,6 +3069,10 @@ public partial class AnalyticsClient : IAnalyticsClient
         "Parameter `index` is required when calling `GetAverageClickPosition`."
       );
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException(
+        "Parameter `index` is required when calling `GetAverageClickPosition`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3086,6 +3124,10 @@ public partial class AnalyticsClient : IAnalyticsClient
         "Parameter `index` is required when calling `GetClickPositions`."
       );
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException(
+        "Parameter `index` is required when calling `GetClickPositions`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3130,6 +3172,10 @@ public partial class AnalyticsClient : IAnalyticsClient
         "Parameter `index` is required when calling `GetClickPositions`."
       );
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException(
+        "Parameter `index` is required when calling `GetClickPositions`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3181,6 +3227,10 @@ public partial class AnalyticsClient : IAnalyticsClient
         "Parameter `index` is required when calling `GetClickThroughRate`."
       );
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException(
+        "Parameter `index` is required when calling `GetClickThroughRate`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3225,6 +3275,10 @@ public partial class AnalyticsClient : IAnalyticsClient
         "Parameter `index` is required when calling `GetClickThroughRate`."
       );
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException(
+        "Parameter `index` is required when calling `GetClickThroughRate`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3276,6 +3330,10 @@ public partial class AnalyticsClient : IAnalyticsClient
         "Parameter `index` is required when calling `GetConversionRate`."
       );
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException(
+        "Parameter `index` is required when calling `GetConversionRate`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3320,6 +3378,10 @@ public partial class AnalyticsClient : IAnalyticsClient
         "Parameter `index` is required when calling `GetConversionRate`."
       );
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException(
+        "Parameter `index` is required when calling `GetConversionRate`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3369,6 +3431,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetNoClickRate`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetNoClickRate`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3411,6 +3475,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetNoClickRate`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetNoClickRate`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3453,6 +3519,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetNoResultsRate`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetNoResultsRate`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3495,6 +3563,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetNoResultsRate`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetNoResultsRate`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3537,6 +3607,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetPurchaseRate`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetPurchaseRate`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3579,6 +3651,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetPurchaseRate`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetPurchaseRate`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3621,6 +3695,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetRevenue`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetRevenue`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3663,6 +3739,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetRevenue`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetRevenue`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3705,6 +3783,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetSearchesCount`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetSearchesCount`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3747,6 +3827,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetSearchesCount`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetSearchesCount`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3793,6 +3875,10 @@ public partial class AnalyticsClient : IAnalyticsClient
         "Parameter `index` is required when calling `GetSearchesNoClicks`."
       );
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException(
+        "Parameter `index` is required when calling `GetSearchesNoClicks`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3852,6 +3938,10 @@ public partial class AnalyticsClient : IAnalyticsClient
         "Parameter `index` is required when calling `GetSearchesNoClicks`."
       );
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException(
+        "Parameter `index` is required when calling `GetSearchesNoClicks`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3911,6 +4001,10 @@ public partial class AnalyticsClient : IAnalyticsClient
         "Parameter `index` is required when calling `GetSearchesNoResults`."
       );
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException(
+        "Parameter `index` is required when calling `GetSearchesNoResults`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -3970,6 +4064,10 @@ public partial class AnalyticsClient : IAnalyticsClient
         "Parameter `index` is required when calling `GetSearchesNoResults`."
       );
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException(
+        "Parameter `index` is required when calling `GetSearchesNoResults`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -4022,6 +4120,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetStatus`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetStatus`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -4052,6 +4152,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetStatus`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetStatus`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -4087,6 +4189,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetTopCountries`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetTopCountries`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -4144,6 +4248,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetTopCountries`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetTopCountries`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -4204,6 +4310,10 @@ public partial class AnalyticsClient : IAnalyticsClient
         "Parameter `index` is required when calling `GetTopFilterAttributes`."
       );
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException(
+        "Parameter `index` is required when calling `GetTopFilterAttributes`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -4267,6 +4377,10 @@ public partial class AnalyticsClient : IAnalyticsClient
         "Parameter `index` is required when calling `GetTopFilterAttributes`."
       );
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException(
+        "Parameter `index` is required when calling `GetTopFilterAttributes`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -4331,11 +4445,20 @@ public partial class AnalyticsClient : IAnalyticsClient
         "Parameter `attribute` is required when calling `GetTopFilterForAttribute`."
       );
 
+    if (string.IsNullOrWhiteSpace(attribute))
+      throw new ArgumentException(
+        "Parameter `attribute` is required when calling `GetTopFilterForAttribute`."
+      );
+
     if (index == null)
       throw new ArgumentException(
         "Parameter `index` is required when calling `GetTopFilterForAttribute`."
       );
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException(
+        "Parameter `index` is required when calling `GetTopFilterForAttribute`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("attribute", QueryStringHelper.ParameterToString(attribute));
@@ -4404,11 +4527,20 @@ public partial class AnalyticsClient : IAnalyticsClient
         "Parameter `attribute` is required when calling `GetTopFilterForAttribute`."
       );
 
+    if (string.IsNullOrWhiteSpace(attribute))
+      throw new ArgumentException(
+        "Parameter `attribute` is required when calling `GetTopFilterForAttribute`."
+      );
+
     if (index == null)
       throw new ArgumentException(
         "Parameter `index` is required when calling `GetTopFilterForAttribute`."
       );
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException(
+        "Parameter `index` is required when calling `GetTopFilterForAttribute`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("attribute", QueryStringHelper.ParameterToString(attribute));
@@ -4476,6 +4608,10 @@ public partial class AnalyticsClient : IAnalyticsClient
         "Parameter `index` is required when calling `GetTopFiltersNoResults`."
       );
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException(
+        "Parameter `index` is required when calling `GetTopFiltersNoResults`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -4539,6 +4675,10 @@ public partial class AnalyticsClient : IAnalyticsClient
         "Parameter `index` is required when calling `GetTopFiltersNoResults`."
       );
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException(
+        "Parameter `index` is required when calling `GetTopFiltersNoResults`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -4602,6 +4742,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetTopHits`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetTopHits`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -4671,6 +4813,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetTopHits`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetTopHits`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -4741,6 +4885,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetTopSearches`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetTopSearches`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -4814,6 +4960,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetTopSearches`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetTopSearches`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -4881,6 +5029,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetUsersCount`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetUsersCount`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);
@@ -4923,6 +5073,8 @@ public partial class AnalyticsClient : IAnalyticsClient
     if (index == null)
       throw new ArgumentException("Parameter `index` is required when calling `GetUsersCount`.");
 
+    if (string.IsNullOrWhiteSpace(index))
+      throw new ArgumentException("Parameter `index` is required when calling `GetUsersCount`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.AddQueryParameter("index", index);

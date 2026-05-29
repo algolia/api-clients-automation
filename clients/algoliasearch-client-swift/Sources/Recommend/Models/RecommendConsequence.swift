@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Effect of the rule.
@@ -40,13 +40,7 @@ public struct RecommendConsequence: Codable, JSONEncodable {
     }
 }
 
-extension RecommendConsequence: Equatable {
-    public static func ==(lhs: RecommendConsequence, rhs: RecommendConsequence) -> Bool {
-        lhs.hide == rhs.hide &&
-            lhs.promote == rhs.promote &&
-            lhs.params == rhs.params
-    }
-}
+extension RecommendConsequence: Equatable {}
 
 extension RecommendConsequence: Hashable {
     public func hash(into hasher: inout Hasher) {

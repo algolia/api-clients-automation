@@ -68,13 +68,6 @@ public partial class MainInjectionQueryParameters
   public List<AlternativesAsExact> AlternativesAsExact { get; set; }
 
   /// <summary>
-  /// Whether this search will be included in Analytics.
-  /// </summary>
-  /// <value>Whether this search will be included in Analytics.</value>
-  [JsonPropertyName("analytics")]
-  public bool? Analytics { get; set; }
-
-  /// <summary>
   /// Whether the best matching attribute should be determined by minimum proximity This setting only affects ranking if the Attribute ranking criterion comes before Proximity in the `ranking` setting. If true, the best matching attribute is selected based on the minimum proximity of multiple matches. Otherwise, the best matching attribute is determined by the order in the `searchableAttributes` setting.
   /// </summary>
   /// <value>Whether the best matching attribute should be determined by minimum proximity This setting only affects ranking if the Attribute ranking criterion comes before Proximity in the `ranking` setting. If true, the best matching attribute is selected based on the minimum proximity of multiple matches. Otherwise, the best matching attribute is determined by the order in the `searchableAttributes` setting. </value>
@@ -108,13 +101,6 @@ public partial class MainInjectionQueryParameters
   /// <value>Whether to include a `queryID` attribute in the response The query ID is a unique identifier for a search query and is required for tracking [click and conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started). </value>
   [JsonPropertyName("clickAnalytics")]
   public bool? ClickAnalytics { get; set; }
-
-  /// <summary>
-  /// Whether to split compound words in the query into their building blocks For more information, see [Word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words). Word segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and Norwegian. Decompounding doesn't work for words with [non-spacing mark Unicode characters](https://www.charactercodes.net/category/non-spacing_mark). For example, `Gartenstühle` won't be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).
-  /// </summary>
-  /// <value>Whether to split compound words in the query into their building blocks For more information, see [Word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words). Word segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and Norwegian. Decompounding doesn't work for words with [non-spacing mark Unicode characters](https://www.charactercodes.net/category/non-spacing_mark). For example, `Gartenstühle` won't be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308). </value>
-  [JsonPropertyName("decompoundQuery")]
-  public bool? DecompoundQuery { get; set; }
 
   /// <summary>
   /// Searchable attributes for which you want to [turn off the Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes). Attribute names are case-sensitive This can be useful for attributes with long values, where the likelihood of an exact match is high, such as product descriptions. Turning off the Exact ranking criterion for these attributes favors exact matching on other attributes. This reduces the impact of individual attributes with a lot of content on ranking.
@@ -171,9 +157,9 @@ public partial class MainInjectionQueryParameters
   public FacetFilters FacetFilters { get; set; }
 
   /// <summary>
-  /// Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
+  /// Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>`, where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>`, where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes if the facet attribute name or facet value contains spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
   /// </summary>
-  /// <value>Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering). </value>
+  /// <value>Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>`, where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>`, where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes if the facet attribute name or facet value contains spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering). </value>
   [JsonPropertyName("filters")]
   public string Filters { get; set; }
 
@@ -203,13 +189,6 @@ public partial class MainInjectionQueryParameters
   /// </summary>
   [JsonPropertyName("ignorePlurals")]
   public IgnorePlurals IgnorePlurals { get; set; }
-
-  /// <summary>
-  /// Maximum number of facet values to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
-  /// </summary>
-  /// <value>Maximum number of facet values to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).</value>
-  [JsonPropertyName("maxFacetHits")]
-  public int? MaxFacetHits { get; set; }
 
   /// <summary>
   /// Minimum proximity score for two matching words This adjusts the [Proximity ranking criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity) by equally scoring matches that are farther apart For example, if `minProximity` is 2, neighboring matches and matches with one word between them would have the same score.
@@ -272,9 +251,9 @@ public partial class MainInjectionQueryParameters
   public int? PersonalizationImpact { get; set; }
 
   /// <summary>
-  /// Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries  This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings. This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages. To support this, you must place the CJK language **first**  **You should always specify a query language.** If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages), or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
+  /// Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries. This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings. This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages. To support this, place the CJK language **first**. **Always specify a query language.** If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages), or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
   /// </summary>
-  /// <value>Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries  This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings. This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages. To support this, you must place the CJK language **first**  **You should always specify a query language.** If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages), or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations). </value>
+  /// <value>Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries. This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings. This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages. To support this, place the CJK language **first**. **Always specify a query language.** If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages), or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations). </value>
   [JsonPropertyName("queryLanguages")]
   public List<SupportedLanguage> QueryLanguages { get; set; }
 
@@ -399,7 +378,6 @@ public partial class MainInjectionQueryParameters
     sb.Append("  AdvancedSyntaxFeatures: ").Append(AdvancedSyntaxFeatures).Append("\n");
     sb.Append("  AllowTyposOnNumericTokens: ").Append(AllowTyposOnNumericTokens).Append("\n");
     sb.Append("  AlternativesAsExact: ").Append(AlternativesAsExact).Append("\n");
-    sb.Append("  Analytics: ").Append(Analytics).Append("\n");
     sb.Append("  AttributeCriteriaComputedByMinProximity: ")
       .Append(AttributeCriteriaComputedByMinProximity)
       .Append("\n");
@@ -407,7 +385,6 @@ public partial class MainInjectionQueryParameters
     sb.Append("  AttributesToRetrieve: ").Append(AttributesToRetrieve).Append("\n");
     sb.Append("  AttributesToSnippet: ").Append(AttributesToSnippet).Append("\n");
     sb.Append("  ClickAnalytics: ").Append(ClickAnalytics).Append("\n");
-    sb.Append("  DecompoundQuery: ").Append(DecompoundQuery).Append("\n");
     sb.Append("  DisableExactOnAttributes: ").Append(DisableExactOnAttributes).Append("\n");
     sb.Append("  DisableTypoToleranceOnAttributes: ")
       .Append(DisableTypoToleranceOnAttributes)
@@ -424,7 +401,6 @@ public partial class MainInjectionQueryParameters
     sb.Append("  HighlightPostTag: ").Append(HighlightPostTag).Append("\n");
     sb.Append("  HighlightPreTag: ").Append(HighlightPreTag).Append("\n");
     sb.Append("  IgnorePlurals: ").Append(IgnorePlurals).Append("\n");
-    sb.Append("  MaxFacetHits: ").Append(MaxFacetHits).Append("\n");
     sb.Append("  MinProximity: ").Append(MinProximity).Append("\n");
     sb.Append("  MinWordSizefor1Typo: ").Append(MinWordSizefor1Typo).Append("\n");
     sb.Append("  MinWordSizefor2Typos: ").Append(MinWordSizefor2Typos).Append("\n");
@@ -497,7 +473,6 @@ public partial class MainInjectionQueryParameters
           && input.AlternativesAsExact != null
           && AlternativesAsExact.SequenceEqual(input.AlternativesAsExact)
       )
-      && (Analytics == input.Analytics || Analytics.Equals(input.Analytics))
       && (
         AttributeCriteriaComputedByMinProximity == input.AttributeCriteriaComputedByMinProximity
         || AttributeCriteriaComputedByMinProximity.Equals(
@@ -523,7 +498,6 @@ public partial class MainInjectionQueryParameters
           && AttributesToSnippet.SequenceEqual(input.AttributesToSnippet)
       )
       && (ClickAnalytics == input.ClickAnalytics || ClickAnalytics.Equals(input.ClickAnalytics))
-      && (DecompoundQuery == input.DecompoundQuery || DecompoundQuery.Equals(input.DecompoundQuery))
       && (
         DisableExactOnAttributes == input.DisableExactOnAttributes
         || DisableExactOnAttributes != null
@@ -566,7 +540,6 @@ public partial class MainInjectionQueryParameters
         IgnorePlurals == input.IgnorePlurals
         || (IgnorePlurals != null && IgnorePlurals.Equals(input.IgnorePlurals))
       )
-      && (MaxFacetHits == input.MaxFacetHits || MaxFacetHits.Equals(input.MaxFacetHits))
       && (MinProximity == input.MinProximity || MinProximity.Equals(input.MinProximity))
       && (
         MinWordSizefor1Typo == input.MinWordSizefor1Typo
@@ -698,7 +671,6 @@ public partial class MainInjectionQueryParameters
       {
         hashCode = (hashCode * 59) + AlternativesAsExact.GetHashCode();
       }
-      hashCode = (hashCode * 59) + Analytics.GetHashCode();
       hashCode = (hashCode * 59) + AttributeCriteriaComputedByMinProximity.GetHashCode();
       if (AttributesToHighlight != null)
       {
@@ -713,7 +685,6 @@ public partial class MainInjectionQueryParameters
         hashCode = (hashCode * 59) + AttributesToSnippet.GetHashCode();
       }
       hashCode = (hashCode * 59) + ClickAnalytics.GetHashCode();
-      hashCode = (hashCode * 59) + DecompoundQuery.GetHashCode();
       if (DisableExactOnAttributes != null)
       {
         hashCode = (hashCode * 59) + DisableExactOnAttributes.GetHashCode();
@@ -752,7 +723,6 @@ public partial class MainInjectionQueryParameters
       {
         hashCode = (hashCode * 59) + IgnorePlurals.GetHashCode();
       }
-      hashCode = (hashCode * 59) + MaxFacetHits.GetHashCode();
       hashCode = (hashCode * 59) + MinProximity.GetHashCode();
       hashCode = (hashCode * 59) + MinWordSizefor1Typo.GetHashCode();
       hashCode = (hashCode * 59) + MinWordSizefor2Typos.GetHashCode();

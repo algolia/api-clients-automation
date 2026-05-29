@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct IngestionSource: Codable, JSONEncodable {
@@ -16,9 +16,9 @@ public struct IngestionSource: Codable, JSONEncodable {
     public var input: SourceInput?
     /// Universally unique identifier (UUID) of an authentication resource.
     public var authenticationID: String?
-    /// Date of creation in RFC 3339 format.
+    /// Date and time when the resource was created, in RFC 3339 format.
     public var createdAt: String
-    /// Date of last update in RFC 3339 format.
+    /// Date and time when the resource was last updated, in RFC 3339 format.
     public var updatedAt: String
 
     public init(
@@ -67,18 +67,7 @@ public struct IngestionSource: Codable, JSONEncodable {
     }
 }
 
-extension IngestionSource: Equatable {
-    public static func ==(lhs: IngestionSource, rhs: IngestionSource) -> Bool {
-        lhs.sourceID == rhs.sourceID &&
-            lhs.type == rhs.type &&
-            lhs.name == rhs.name &&
-            lhs.owner == rhs.owner &&
-            lhs.input == rhs.input &&
-            lhs.authenticationID == rhs.authenticationID &&
-            lhs.createdAt == rhs.createdAt &&
-            lhs.updatedAt == rhs.updatedAt
-    }
-}
+extension IngestionSource: Equatable {}
 
 extension IngestionSource: Hashable {
     public func hash(into hasher: inout Hasher) {

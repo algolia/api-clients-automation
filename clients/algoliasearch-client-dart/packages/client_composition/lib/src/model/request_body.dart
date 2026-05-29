@@ -11,17 +11,25 @@ final class RequestBody {
   /// Returns a new [RequestBody] instance.
   const RequestBody({
     this.params,
+    this.feedsOrder,
   });
 
   @JsonKey(name: r'params')
   final Params? params;
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) || other is RequestBody && other.params == params;
+  /// A list of Feed IDs that specifies the order in which to order the results in the response.  The IDs should be a subset of those in the `feeds` object of the targeted `multifeed` Composition / Composition Rule, and only those specified will be processed.   The value overrides the value in the defined behavior, and when unspecified, the value defined in the behavior is used. When neither value is present, all feeds are processed.
+  @JsonKey(name: r'feedsOrder')
+  final List<String>? feedsOrder;
 
   @override
-  int get hashCode => params.hashCode;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is RequestBody &&
+          other.params == params &&
+          other.feedsOrder == feedsOrder;
+
+  @override
+  int get hashCode => params.hashCode + feedsOrder.hashCode;
 
   factory RequestBody.fromJson(Map<String, dynamic> json) =>
       _$RequestBodyFromJson(json);

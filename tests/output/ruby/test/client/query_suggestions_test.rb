@@ -28,7 +28,7 @@ class TestClientQuerySuggestionsClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.34.4\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.40.0\).*/))
   end
 
   # throws when region is not given
@@ -41,6 +41,7 @@ class TestClientQuerySuggestionsClient < Test::Unit::TestCase
         "",
         {requester: Algolia::Transport::EchoRequester.new}
       )
+
       assert(false, "An error should have been raised")
     rescue => e
       assert_equal(
@@ -63,6 +64,7 @@ class TestClientQuerySuggestionsClient < Test::Unit::TestCase
         "not_a_region",
         {requester: Algolia::Transport::EchoRequester.new}
       )
+
       assert(false, "An error should have been raised")
     rescue => e
       assert_equal(
@@ -103,6 +105,7 @@ class TestClientQuerySuggestionsClient < Test::Unit::TestCase
         "query_suggestionsClient"
       )
     )
+
     req = client.custom_get("check-api-key/1")
     assert_equal({:"headerAPIKeyValue" => "test-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
     client.set_client_api_key("updated-api-key")

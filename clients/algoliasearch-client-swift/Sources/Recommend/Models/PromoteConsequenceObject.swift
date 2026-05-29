@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Object ID and position of the recommendation you want to pin.
@@ -32,12 +32,7 @@ public struct PromoteConsequenceObject: Codable, JSONEncodable {
     }
 }
 
-extension PromoteConsequenceObject: Equatable {
-    public static func ==(lhs: PromoteConsequenceObject, rhs: PromoteConsequenceObject) -> Bool {
-        lhs.objectID == rhs.objectID &&
-            lhs.position == rhs.position
-    }
-}
+extension PromoteConsequenceObject: Equatable {}
 
 extension PromoteConsequenceObject: Hashable {
     public func hash(into hasher: inout Hasher) {

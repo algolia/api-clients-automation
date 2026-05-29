@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Recommend hit.
@@ -130,17 +130,7 @@ public struct RecommendHit: Codable, JSONEncodable {
     }
 }
 
-extension RecommendHit: Equatable {
-    public static func ==(lhs: RecommendHit, rhs: RecommendHit) -> Bool {
-        lhs.objectID == rhs.objectID &&
-            lhs.highlightResult == rhs.highlightResult &&
-            lhs.snippetResult == rhs.snippetResult &&
-            lhs.rankingInfo == rhs.rankingInfo &&
-            lhs.distinctSeqID == rhs.distinctSeqID &&
-            lhs.score == rhs.score
-            && lhs.additionalProperties == rhs.additionalProperties
-    }
-}
+extension RecommendHit: Equatable {}
 
 extension RecommendHit: Hashable {
     public func hash(into hasher: inout Hasher) {

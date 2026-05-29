@@ -10,7 +10,7 @@ post:
     This operation doesn't accept empty filters.
 
     This operation is resource-intensive.
-    You should only use it if you can't get the object IDs of the records you want to delete.
+    Use it only if you can't get the object IDs of the records you want to delete.
     It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse),
     and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).
 

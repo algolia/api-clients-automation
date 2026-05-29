@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Custom fields from commercetools to add to the records.  For more information, see [Using Custom Types and Custom
@@ -38,13 +38,7 @@ public struct CommercetoolsCustomFields: Codable, JSONEncodable {
     }
 }
 
-extension CommercetoolsCustomFields: Equatable {
-    public static func ==(lhs: CommercetoolsCustomFields, rhs: CommercetoolsCustomFields) -> Bool {
-        lhs.inventory == rhs.inventory &&
-            lhs.price == rhs.price &&
-            lhs.category == rhs.category
-    }
-}
+extension CommercetoolsCustomFields: Equatable {}
 
 extension CommercetoolsCustomFields: Hashable {
     public func hash(into hasher: inout Hasher) {

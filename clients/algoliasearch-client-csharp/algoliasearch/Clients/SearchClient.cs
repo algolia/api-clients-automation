@@ -610,7 +610,7 @@ public partial interface ISearchClient
   );
 
   /// <summary>
-  /// Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they'll be ignored.
+  /// Retrieves records from an index, up to 1,000 per request.  Searching returns _hits_ (records augmented with highlighting and ranking details). Browsing returns matching records only. Use browse to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance, number of matched words, proximity, or geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they're ignored.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -631,7 +631,7 @@ public partial interface ISearchClient
   );
 
   /// <summary>
-  /// Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they'll be ignored.  (Synchronous version)
+  /// Retrieves records from an index, up to 1,000 per request.  Searching returns _hits_ (records augmented with highlighting and ranking details). Browsing returns matching records only. Use browse to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance, number of matched words, proximity, or geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they're ignored.  (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -652,7 +652,7 @@ public partial interface ISearchClient
   );
 
   /// <summary>
-  /// Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they'll be ignored.
+  /// Retrieves records from an index, up to 1,000 per request.  Searching returns _hits_ (records augmented with highlighting and ranking details). Browsing returns matching records only. Use browse to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance, number of matched words, proximity, or geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they're ignored.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -673,7 +673,7 @@ public partial interface ISearchClient
   );
 
   /// <summary>
-  /// Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they'll be ignored.  (Synchronous version)
+  /// Retrieves records from an index, up to 1,000 per request.  Searching returns _hits_ (records augmented with highlighting and ranking details). Browsing returns matching records only. Use browse to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance, number of matched words, proximity, or geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they're ignored.  (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1318,7 +1318,7 @@ public partial interface ISearchClient
   );
 
   /// <summary>
-  /// This operation doesn't accept empty filters.  This operation is resource-intensive. You should only use it if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+  /// This operation doesn't accept empty filters.  This operation is resource-intensive. Use it only if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1339,7 +1339,7 @@ public partial interface ISearchClient
   );
 
   /// <summary>
-  /// This operation doesn't accept empty filters.  This operation is resource-intensive. You should only use it if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).  (Synchronous version)
+  /// This operation doesn't accept empty filters.  This operation is resource-intensive. Use it only if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).  (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1360,7 +1360,7 @@ public partial interface ISearchClient
   );
 
   /// <summary>
-  /// This operation doesn't accept empty filters.  This operation is resource-intensive. You should only use it if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+  /// This operation doesn't accept empty filters.  This operation is resource-intensive. Use it only if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1381,7 +1381,7 @@ public partial interface ISearchClient
   );
 
   /// <summary>
-  /// This operation doesn't accept empty filters.  This operation is resource-intensive. You should only use it if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).  (Synchronous version)
+  /// This operation doesn't accept empty filters.  This operation is resource-intensive. Use it only if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).  (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -3402,7 +3402,7 @@ public partial interface ISearchClient
   );
 
   /// <summary>
-  /// Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+  /// Copies or moves (renames) an index within the same Algolia application.  Notes: - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it's created. - This operation is resource-intensive.  **Copy**  - If the source index doesn't exist, copying creates a new index with 0 records and default settings. - API keys from the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - For more information, see [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).  **Move**  - If the source index doesn't exist, moving is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - For more information, see [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -3423,7 +3423,7 @@ public partial interface ISearchClient
   );
 
   /// <summary>
-  /// Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).  (Synchronous version)
+  /// Copies or moves (renames) an index within the same Algolia application.  Notes: - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it's created. - This operation is resource-intensive.  **Copy**  - If the source index doesn't exist, copying creates a new index with 0 records and default settings. - API keys from the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - For more information, see [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).  **Move**  - If the source index doesn't exist, moving is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - For more information, see [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).  (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -3444,7 +3444,7 @@ public partial interface ISearchClient
   );
 
   /// <summary>
-  /// Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+  /// Copies or moves (renames) an index within the same Algolia application.  Notes: - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it's created. - This operation is resource-intensive.  **Copy**  - If the source index doesn't exist, copying creates a new index with 0 records and default settings. - API keys from the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - For more information, see [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).  **Move**  - If the source index doesn't exist, moving is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - For more information, see [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -3465,7 +3465,7 @@ public partial interface ISearchClient
   );
 
   /// <summary>
-  /// Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).  (Synchronous version)
+  /// Copies or moves (renames) an index within the same Algolia application.  Notes: - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it's created. - This operation is resource-intensive.  **Copy**  - If the source index doesn't exist, copying creates a new index with 0 records and default settings. - API keys from the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - For more information, see [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).  **Move**  - If the source index doesn't exist, moving is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - For more information, see [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).  (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -3486,7 +3486,7 @@ public partial interface ISearchClient
   );
 
   /// <summary>
-  /// Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+  /// Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - Use first-level attributes only. Nested attributes aren't supported.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update attributes without replacing the full record, use these built-in operations. These operations are useful when the initial data isn't available.  - `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. - `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching number or string elements from an array attribute made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a numeric integer attribute only if the provided value matches the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the API ignores the update.   If the object doesn't exist, the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the provided value is greater than the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1, the API updates the object.   If the object doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.  Specify an operation by providing an object with the attribute to update as the key and its value as an object with these properties:  - `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument to the operation, for example, increment or decrement step, or a value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -3511,7 +3511,7 @@ public partial interface ISearchClient
   );
 
   /// <summary>
-  /// Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).  (Synchronous version)
+  /// Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - Use first-level attributes only. Nested attributes aren't supported.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update attributes without replacing the full record, use these built-in operations. These operations are useful when the initial data isn't available.  - `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. - `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching number or string elements from an array attribute made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a numeric integer attribute only if the provided value matches the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the API ignores the update.   If the object doesn't exist, the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the provided value is greater than the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1, the API updates the object.   If the object doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.  Specify an operation by providing an object with the attribute to update as the key and its value as an object with these properties:  - `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument to the operation, for example, increment or decrement step, or a value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).  (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -3536,7 +3536,7 @@ public partial interface ISearchClient
   );
 
   /// <summary>
-  /// Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+  /// Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - Use first-level attributes only. Nested attributes aren't supported.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update attributes without replacing the full record, use these built-in operations. These operations are useful when the initial data isn't available.  - `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. - `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching number or string elements from an array attribute made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a numeric integer attribute only if the provided value matches the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the API ignores the update.   If the object doesn't exist, the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the provided value is greater than the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1, the API updates the object.   If the object doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.  Specify an operation by providing an object with the attribute to update as the key and its value as an object with these properties:  - `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument to the operation, for example, increment or decrement step, or a value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -3561,7 +3561,7 @@ public partial interface ISearchClient
   );
 
   /// <summary>
-  /// Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).  (Synchronous version)
+  /// Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - Use first-level attributes only. Nested attributes aren't supported.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update attributes without replacing the full record, use these built-in operations. These operations are useful when the initial data isn't available.  - `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. - `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching number or string elements from an array attribute made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a numeric integer attribute only if the provided value matches the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the API ignores the update.   If the object doesn't exist, the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the provided value is greater than the current value. Otherwise, the update is ignored.   Example: If you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1, the API updates the object.   If the object doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.  Specify an operation by providing an object with the attribute to update as the key and its value as an object with these properties:  - `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument to the operation, for example, increment or decrement step, or a value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).  (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -4302,12 +4302,12 @@ public partial interface ISearchClient
   );
 
   /// <summary>
-  /// Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
+  /// Runs multiple search queries against one or more indices in a single API request.  Use cases include:  - Searching different indices, such as products and marketing content. - Run multiple queries on the same index with different parameters or filters.  If you know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
   /// </summary>
   ///
   /// Required API Key ACLs:
   ///   - search
-  /// <param name="searchMethodParams">Muli-search request body. Results are returned in the same order as the requests.</param>
+  /// <param name="searchMethodParams">Multi-query search request body. Results are returned in the same order as the requests.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
@@ -4321,12 +4321,12 @@ public partial interface ISearchClient
   );
 
   /// <summary>
-  /// Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.  (Synchronous version)
+  /// Runs multiple search queries against one or more indices in a single API request.  Use cases include:  - Searching different indices, such as products and marketing content. - Run multiple queries on the same index with different parameters or filters.  If you know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.  (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
   ///   - search
-  /// <param name="searchMethodParams">Muli-search request body. Results are returned in the same order as the requests.</param>
+  /// <param name="searchMethodParams">Multi-query search request body. Results are returned in the same order as the requests.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
@@ -4340,12 +4340,12 @@ public partial interface ISearchClient
   );
 
   /// <summary>
-  /// Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
+  /// Runs multiple search queries against one or more indices in a single API request.  Use cases include:  - Searching different indices, such as products and marketing content. - Run multiple queries on the same index with different parameters or filters.  If you know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
   /// </summary>
   ///
   /// Required API Key ACLs:
   ///   - search
-  /// <param name="searchMethodParams">Muli-search request body. Results are returned in the same order as the requests.</param>
+  /// <param name="searchMethodParams">Multi-query search request body. Results are returned in the same order as the requests.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
@@ -4359,12 +4359,12 @@ public partial interface ISearchClient
   );
 
   /// <summary>
-  /// Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.  (Synchronous version)
+  /// Runs multiple search queries against one or more indices in a single API request.  Use cases include:  - Searching different indices, such as products and marketing content. - Run multiple queries on the same index with different parameters or filters.  If you know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.  (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
   ///   - search
-  /// <param name="searchMethodParams">Muli-search request body. Results are returned in the same order as the requests.</param>
+  /// <param name="searchMethodParams">Multi-query search request body. Results are returned in the same order as the requests.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
@@ -5146,6 +5146,7 @@ public partial class SearchClient : ISearchClient
   internal HttpTransport _transport;
   private readonly ILogger<SearchClient> _logger;
   private IIngestionClient _ingestionTransporter;
+  private ILoggerFactory _loggerFactory;
 
   /// <summary>
   /// Create a new Search client for the given appID and apiKey.
@@ -5204,8 +5205,20 @@ public partial class SearchClient : ISearchClient
 
     if (_logger.IsEnabled(Microsoft.Extensions.Logging.LogLevel.Information))
     {
-      _logger.LogInformation("Algolia Search client is initialized.");
+      _logger.LogInformation("Algolia Search client initialized (appId: {AppId})", config.AppId);
     }
+
+    if (
+      _logger.IsEnabled(Microsoft.Extensions.Logging.LogLevel.Debug)
+      && AlgoliaConfig.TryMarkDebugWarningLogged(factory)
+    )
+    {
+      _logger.LogDebug(
+        "WARNING: DEBUG level logging is enabled. This logs full request/response bodies which may contain sensitive data. Only use in local development."
+      );
+    }
+
+    _loggerFactory = factory;
   }
 
   /// <summary>
@@ -5219,27 +5232,64 @@ public partial class SearchClient : ISearchClient
   }
 
   /// <summary>
-  /// Sets the region of the transformation pipeline. This is required to be called
-  /// if you wish to leverage the transformation pipeline (via the *WithTransformation methods).
+  /// Sets (or replaces) the ingestion transporter used by *WithTransformation helpers.
+  /// The ingestion transporter is created using the region from <paramref name="transformationOptions"/>
+  /// and Ingestion API defaults; only fields explicitly set on <paramref name="transformationOptions"/>
+  /// replace those defaults.
+  /// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+  /// </summary>
+  /// <param name="transformationOptions">The transformation options including region and optional ingestion transporter overrides.</param>
+  public void SetTransformationOptions(TransformationOptions transformationOptions)
+  {
+    if (transformationOptions == null)
+      throw new ArgumentNullException(nameof(transformationOptions));
+
+    var ingestionConfig = new IngestionConfig(
+      _transport._algoliaConfig.AppId,
+      _transport._algoliaConfig.ApiKey,
+      transformationOptions.Region
+    );
+
+    if (transformationOptions.CustomHosts != null)
+      ingestionConfig.CustomHosts = transformationOptions.CustomHosts;
+    if (transformationOptions.ConnectTimeout.HasValue)
+      ingestionConfig.ConnectTimeout = transformationOptions.ConnectTimeout;
+    if (transformationOptions.ReadTimeout.HasValue)
+      ingestionConfig.ReadTimeout = transformationOptions.ReadTimeout;
+    if (transformationOptions.WriteTimeout.HasValue)
+      ingestionConfig.WriteTimeout = transformationOptions.WriteTimeout;
+    if (transformationOptions.Compression.HasValue)
+      ingestionConfig.Compression = transformationOptions.Compression.Value;
+    if (transformationOptions.DefaultHeaders != null)
+    {
+      foreach (var kvp in transformationOptions.DefaultHeaders)
+        ingestionConfig.DefaultHeaders[kvp.Key] = kvp.Value;
+    }
+
+    _ingestionTransporter = new IngestionClient(ingestionConfig, _loggerFactory);
+  }
+
+  /// <summary>
+  /// Sets the region of the transformation pipeline.
   /// </summary>
   /// <param name="region">The region ("us" or "eu")</param>
-  /// <param name="factory">Logger factory</param>
+  /// <param name="factory">Logger factory.</param>
+  [Obsolete(
+    "SetTransformationRegion is deprecated. Use SetTransformationOptions instead. "
+      + "See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
+  )]
   public void SetTransformationRegion(string region, ILoggerFactory factory = null)
   {
     if (string.IsNullOrWhiteSpace(region))
-    {
       throw new ArgumentException(
         "`region` must be provided when leveraging the transformation pipeline"
       );
-    }
 
     if (
       string.IsNullOrWhiteSpace(_transport._algoliaConfig.AppId)
       || string.IsNullOrWhiteSpace(_transport._algoliaConfig.ApiKey)
     )
-    {
       throw new ArgumentException("AppId and ApiKey are required for transformation pipeline");
-    }
 
     _ingestionTransporter = new IngestionClient(
       new IngestionConfig(_transport._algoliaConfig.AppId, _transport._algoliaConfig.ApiKey, region)
@@ -5251,8 +5301,55 @@ public partial class SearchClient : ISearchClient
         Compression = _transport._algoliaConfig.Compression,
         CustomHosts = _transport._algoliaConfig.CustomHosts,
       },
-      factory
+      factory ?? _loggerFactory
     );
+  }
+
+  /// <summary>
+  /// Creates a <see cref="SearchClient"/> configured with <see cref="TransformationOptions"/> for use
+  /// with <c>*WithTransformation</c> helpers. The ingestion transporter is initialised eagerly using
+  /// Ingestion API defaults; set override fields on <see cref="TransformationOptions"/> to change
+  /// specific defaults.
+  /// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+  /// </summary>
+  /// <param name="appId">Your Algolia application ID.</param>
+  /// <param name="apiKey">Your Algolia API key.</param>
+  /// <param name="transformationOptions">The transformation options including region and optional ingestion transporter overrides.</param>
+  /// <param name="loggerFactory">Logger factory.</param>
+  public static SearchClient WithTransformation(
+    string appId,
+    string apiKey,
+    TransformationOptions transformationOptions,
+    ILoggerFactory loggerFactory = null
+  )
+  {
+    if (transformationOptions == null)
+      throw new ArgumentNullException(nameof(transformationOptions));
+    var client = new SearchClient(appId, apiKey, loggerFactory);
+    client.SetTransformationOptions(transformationOptions);
+    return client;
+  }
+
+  /// <summary>
+  /// Creates a <see cref="SearchClient"/> configured with <see cref="TransformationOptions"/> for use
+  /// with <c>*WithTransformation</c> helpers, using a custom <see cref="SearchConfig"/> for the search
+  /// transporter.
+  /// See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
+  /// </summary>
+  /// <param name="searchConfig">Custom search transporter configuration.</param>
+  /// <param name="transformationOptions">The transformation options including region and optional ingestion transporter overrides.</param>
+  /// <param name="loggerFactory">Logger factory.</param>
+  public static SearchClient WithTransformation(
+    SearchConfig searchConfig,
+    TransformationOptions transformationOptions,
+    ILoggerFactory loggerFactory = null
+  )
+  {
+    if (transformationOptions == null)
+      throw new ArgumentNullException(nameof(transformationOptions));
+    var client = new SearchClient(searchConfig, loggerFactory);
+    client.SetTransformationOptions(transformationOptions);
+    return client;
   }
 
   /// <inheritdoc />
@@ -5329,7 +5426,17 @@ public partial class SearchClient : ISearchClient
         "Parameter `indexName` is required when calling `AddOrUpdateObject`."
       );
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `AddOrUpdateObject`."
+      );
+
     if (objectID == null)
+      throw new ArgumentException(
+        "Parameter `objectID` is required when calling `AddOrUpdateObject`."
+      );
+
+    if (string.IsNullOrWhiteSpace(objectID))
       throw new ArgumentException(
         "Parameter `objectID` is required when calling `AddOrUpdateObject`."
       );
@@ -5379,7 +5486,17 @@ public partial class SearchClient : ISearchClient
         "Parameter `indexName` is required when calling `AddOrUpdateObject`."
       );
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `AddOrUpdateObject`."
+      );
+
     if (objectID == null)
+      throw new ArgumentException(
+        "Parameter `objectID` is required when calling `AddOrUpdateObject`."
+      );
+
+    if (string.IsNullOrWhiteSpace(objectID))
       throw new ArgumentException(
         "Parameter `objectID` is required when calling `AddOrUpdateObject`."
       );
@@ -5489,6 +5606,11 @@ public partial class SearchClient : ISearchClient
         "Parameter `xAlgoliaUserID` is required when calling `AssignUserId`."
       );
 
+    if (string.IsNullOrWhiteSpace(xAlgoliaUserID))
+      throw new ArgumentException(
+        "Parameter `xAlgoliaUserID` is required when calling `AssignUserId`."
+      );
+
     if (assignUserIdParams == null)
       throw new ArgumentException(
         "Parameter `assignUserIdParams` is required when calling `AssignUserId`."
@@ -5533,6 +5655,11 @@ public partial class SearchClient : ISearchClient
   )
   {
     if (xAlgoliaUserID == null)
+      throw new ArgumentException(
+        "Parameter `xAlgoliaUserID` is required when calling `AssignUserId`."
+      );
+
+    if (string.IsNullOrWhiteSpace(xAlgoliaUserID))
       throw new ArgumentException(
         "Parameter `xAlgoliaUserID` is required when calling `AssignUserId`."
       );
@@ -5582,6 +5709,9 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `Batch`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `Batch`.");
+
     if (batchWriteParams == null)
       throw new ArgumentException("Parameter `batchWriteParams` is required when calling `Batch`.");
 
@@ -5618,6 +5748,9 @@ public partial class SearchClient : ISearchClient
   )
   {
     if (indexName == null)
+      throw new ArgumentException("Parameter `indexName` is required when calling `Batch`.");
+
+    if (string.IsNullOrWhiteSpace(indexName))
       throw new ArgumentException("Parameter `indexName` is required when calling `Batch`.");
 
     if (batchWriteParams == null)
@@ -5659,6 +5792,11 @@ public partial class SearchClient : ISearchClient
   )
   {
     if (xAlgoliaUserID == null)
+      throw new ArgumentException(
+        "Parameter `xAlgoliaUserID` is required when calling `BatchAssignUserIds`."
+      );
+
+    if (string.IsNullOrWhiteSpace(xAlgoliaUserID))
       throw new ArgumentException(
         "Parameter `xAlgoliaUserID` is required when calling `BatchAssignUserIds`."
       );
@@ -5707,6 +5845,11 @@ public partial class SearchClient : ISearchClient
   )
   {
     if (xAlgoliaUserID == null)
+      throw new ArgumentException(
+        "Parameter `xAlgoliaUserID` is required when calling `BatchAssignUserIds`."
+      );
+
+    if (string.IsNullOrWhiteSpace(xAlgoliaUserID))
       throw new ArgumentException(
         "Parameter `xAlgoliaUserID` is required when calling `BatchAssignUserIds`."
       );
@@ -5855,6 +5998,8 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `Browse`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `Browse`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -5891,6 +6036,8 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `Browse`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `Browse`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -5928,6 +6075,8 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `ClearObjects`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `ClearObjects`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -5959,6 +6108,8 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `ClearObjects`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `ClearObjects`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -5992,6 +6143,8 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `ClearRules`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `ClearRules`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -6029,6 +6182,8 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `ClearRules`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `ClearRules`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -6068,6 +6223,10 @@ public partial class SearchClient : ISearchClient
         "Parameter `indexName` is required when calling `ClearSynonyms`."
       );
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `ClearSynonyms`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -6107,6 +6266,10 @@ public partial class SearchClient : ISearchClient
         "Parameter `indexName` is required when calling `ClearSynonyms`."
       );
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `ClearSynonyms`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -6144,6 +6307,8 @@ public partial class SearchClient : ISearchClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomDelete`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomDelete`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -6177,6 +6342,8 @@ public partial class SearchClient : ISearchClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomDelete`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomDelete`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -6213,6 +6380,8 @@ public partial class SearchClient : ISearchClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomGet`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomGet`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -6246,6 +6415,8 @@ public partial class SearchClient : ISearchClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomGet`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomGet`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -6283,6 +6454,8 @@ public partial class SearchClient : ISearchClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomPost`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomPost`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -6320,6 +6493,8 @@ public partial class SearchClient : ISearchClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomPost`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomPost`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -6359,6 +6534,8 @@ public partial class SearchClient : ISearchClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomPut`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomPut`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -6396,6 +6573,8 @@ public partial class SearchClient : ISearchClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomPut`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomPut`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -6433,6 +6612,8 @@ public partial class SearchClient : ISearchClient
     if (key == null)
       throw new ArgumentException("Parameter `key` is required when calling `DeleteApiKey`.");
 
+    if (string.IsNullOrWhiteSpace(key))
+      throw new ArgumentException("Parameter `key` is required when calling `DeleteApiKey`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("key", QueryStringHelper.ParameterToString(key));
@@ -6464,6 +6645,8 @@ public partial class SearchClient : ISearchClient
     if (key == null)
       throw new ArgumentException("Parameter `key` is required when calling `DeleteApiKey`.");
 
+    if (string.IsNullOrWhiteSpace(key))
+      throw new ArgumentException("Parameter `key` is required when calling `DeleteApiKey`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("key", QueryStringHelper.ParameterToString(key));
@@ -6494,6 +6677,9 @@ public partial class SearchClient : ISearchClient
   )
   {
     if (indexName == null)
+      throw new ArgumentException("Parameter `indexName` is required when calling `DeleteBy`.");
+
+    if (string.IsNullOrWhiteSpace(indexName))
       throw new ArgumentException("Parameter `indexName` is required when calling `DeleteBy`.");
 
     if (deleteByParams == null)
@@ -6534,6 +6720,9 @@ public partial class SearchClient : ISearchClient
   )
   {
     if (indexName == null)
+      throw new ArgumentException("Parameter `indexName` is required when calling `DeleteBy`.");
+
+    if (string.IsNullOrWhiteSpace(indexName))
       throw new ArgumentException("Parameter `indexName` is required when calling `DeleteBy`.");
 
     if (deleteByParams == null)
@@ -6577,6 +6766,8 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `DeleteIndex`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `DeleteIndex`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -6608,6 +6799,8 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `DeleteIndex`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `DeleteIndex`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -6641,9 +6834,14 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `DeleteObject`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `DeleteObject`.");
+
     if (objectID == null)
       throw new ArgumentException("Parameter `objectID` is required when calling `DeleteObject`.");
 
+    if (string.IsNullOrWhiteSpace(objectID))
+      throw new ArgumentException("Parameter `objectID` is required when calling `DeleteObject`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -6679,9 +6877,14 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `DeleteObject`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `DeleteObject`.");
+
     if (objectID == null)
       throw new ArgumentException("Parameter `objectID` is required when calling `DeleteObject`.");
 
+    if (string.IsNullOrWhiteSpace(objectID))
+      throw new ArgumentException("Parameter `objectID` is required when calling `DeleteObject`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -6720,9 +6923,14 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `DeleteRule`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `DeleteRule`.");
+
     if (objectID == null)
       throw new ArgumentException("Parameter `objectID` is required when calling `DeleteRule`.");
 
+    if (string.IsNullOrWhiteSpace(objectID))
+      throw new ArgumentException("Parameter `objectID` is required when calling `DeleteRule`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -6763,9 +6971,14 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `DeleteRule`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `DeleteRule`.");
+
     if (objectID == null)
       throw new ArgumentException("Parameter `objectID` is required when calling `DeleteRule`.");
 
+    if (string.IsNullOrWhiteSpace(objectID))
+      throw new ArgumentException("Parameter `objectID` is required when calling `DeleteRule`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -6810,6 +7023,8 @@ public partial class SearchClient : ISearchClient
     if (source == null)
       throw new ArgumentException("Parameter `source` is required when calling `DeleteSource`.");
 
+    if (string.IsNullOrWhiteSpace(source))
+      throw new ArgumentException("Parameter `source` is required when calling `DeleteSource`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("source", QueryStringHelper.ParameterToString(source));
@@ -6841,6 +7056,8 @@ public partial class SearchClient : ISearchClient
     if (source == null)
       throw new ArgumentException("Parameter `source` is required when calling `DeleteSource`.");
 
+    if (string.IsNullOrWhiteSpace(source))
+      throw new ArgumentException("Parameter `source` is required when calling `DeleteSource`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("source", QueryStringHelper.ParameterToString(source));
@@ -6876,9 +7093,16 @@ public partial class SearchClient : ISearchClient
         "Parameter `indexName` is required when calling `DeleteSynonym`."
       );
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `DeleteSynonym`."
+      );
+
     if (objectID == null)
       throw new ArgumentException("Parameter `objectID` is required when calling `DeleteSynonym`.");
 
+    if (string.IsNullOrWhiteSpace(objectID))
+      throw new ArgumentException("Parameter `objectID` is required when calling `DeleteSynonym`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -6921,9 +7145,16 @@ public partial class SearchClient : ISearchClient
         "Parameter `indexName` is required when calling `DeleteSynonym`."
       );
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `DeleteSynonym`."
+      );
+
     if (objectID == null)
       throw new ArgumentException("Parameter `objectID` is required when calling `DeleteSynonym`.");
 
+    if (string.IsNullOrWhiteSpace(objectID))
+      throw new ArgumentException("Parameter `objectID` is required when calling `DeleteSynonym`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -6968,6 +7199,8 @@ public partial class SearchClient : ISearchClient
     if (key == null)
       throw new ArgumentException("Parameter `key` is required when calling `GetApiKey`.");
 
+    if (string.IsNullOrWhiteSpace(key))
+      throw new ArgumentException("Parameter `key` is required when calling `GetApiKey`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("key", QueryStringHelper.ParameterToString(key));
@@ -6999,6 +7232,8 @@ public partial class SearchClient : ISearchClient
     if (key == null)
       throw new ArgumentException("Parameter `key` is required when calling `GetApiKey`.");
 
+    if (string.IsNullOrWhiteSpace(key))
+      throw new ArgumentException("Parameter `key` is required when calling `GetApiKey`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("key", QueryStringHelper.ParameterToString(key));
@@ -7264,9 +7499,14 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `GetObject`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `GetObject`.");
+
     if (objectID == null)
       throw new ArgumentException("Parameter `objectID` is required when calling `GetObject`.");
 
+    if (string.IsNullOrWhiteSpace(objectID))
+      throw new ArgumentException("Parameter `objectID` is required when calling `GetObject`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -7307,9 +7547,14 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `GetObject`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `GetObject`.");
+
     if (objectID == null)
       throw new ArgumentException("Parameter `objectID` is required when calling `GetObject`.");
 
+    if (string.IsNullOrWhiteSpace(objectID))
+      throw new ArgumentException("Parameter `objectID` is required when calling `GetObject`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -7424,9 +7669,14 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `GetRule`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `GetRule`.");
+
     if (objectID == null)
       throw new ArgumentException("Parameter `objectID` is required when calling `GetRule`.");
 
+    if (string.IsNullOrWhiteSpace(objectID))
+      throw new ArgumentException("Parameter `objectID` is required when calling `GetRule`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -7461,9 +7711,14 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `GetRule`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `GetRule`.");
+
     if (objectID == null)
       throw new ArgumentException("Parameter `objectID` is required when calling `GetRule`.");
 
+    if (string.IsNullOrWhiteSpace(objectID))
+      throw new ArgumentException("Parameter `objectID` is required when calling `GetRule`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -7501,6 +7756,8 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `GetSettings`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `GetSettings`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -7536,6 +7793,8 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `GetSettings`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `GetSettings`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -7621,9 +7880,14 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `GetSynonym`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `GetSynonym`.");
+
     if (objectID == null)
       throw new ArgumentException("Parameter `objectID` is required when calling `GetSynonym`.");
 
+    if (string.IsNullOrWhiteSpace(objectID))
+      throw new ArgumentException("Parameter `objectID` is required when calling `GetSynonym`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -7658,9 +7922,14 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `GetSynonym`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `GetSynonym`.");
+
     if (objectID == null)
       throw new ArgumentException("Parameter `objectID` is required when calling `GetSynonym`.");
 
+    if (string.IsNullOrWhiteSpace(objectID))
+      throw new ArgumentException("Parameter `objectID` is required when calling `GetSynonym`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -7698,6 +7967,9 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `GetTask`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `GetTask`.");
+
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -7730,6 +8002,9 @@ public partial class SearchClient : ISearchClient
   )
   {
     if (indexName == null)
+      throw new ArgumentException("Parameter `indexName` is required when calling `GetTask`.");
+
+    if (string.IsNullOrWhiteSpace(indexName))
       throw new ArgumentException("Parameter `indexName` is required when calling `GetTask`.");
 
     var requestOptions = new InternalRequestOptions(options);
@@ -7821,6 +8096,8 @@ public partial class SearchClient : ISearchClient
     if (userID == null)
       throw new ArgumentException("Parameter `userID` is required when calling `GetUserId`.");
 
+    if (string.IsNullOrWhiteSpace(userID))
+      throw new ArgumentException("Parameter `userID` is required when calling `GetUserId`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("userID", QueryStringHelper.ParameterToString(userID));
@@ -7854,6 +8131,8 @@ public partial class SearchClient : ISearchClient
     if (userID == null)
       throw new ArgumentException("Parameter `userID` is required when calling `GetUserId`.");
 
+    if (string.IsNullOrWhiteSpace(userID))
+      throw new ArgumentException("Parameter `userID` is required when calling `GetUserId`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("userID", QueryStringHelper.ParameterToString(userID));
@@ -8247,6 +8526,11 @@ public partial class SearchClient : ISearchClient
         "Parameter `indexName` is required when calling `OperationIndex`."
       );
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `OperationIndex`."
+      );
+
     if (operationIndexParams == null)
       throw new ArgumentException(
         "Parameter `operationIndexParams` is required when calling `OperationIndex`."
@@ -8287,6 +8571,11 @@ public partial class SearchClient : ISearchClient
   )
   {
     if (indexName == null)
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `OperationIndex`."
+      );
+
+    if (string.IsNullOrWhiteSpace(indexName))
       throw new ArgumentException(
         "Parameter `indexName` is required when calling `OperationIndex`."
       );
@@ -8337,7 +8626,17 @@ public partial class SearchClient : ISearchClient
         "Parameter `indexName` is required when calling `PartialUpdateObject`."
       );
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `PartialUpdateObject`."
+      );
+
     if (objectID == null)
+      throw new ArgumentException(
+        "Parameter `objectID` is required when calling `PartialUpdateObject`."
+      );
+
+    if (string.IsNullOrWhiteSpace(objectID))
       throw new ArgumentException(
         "Parameter `objectID` is required when calling `PartialUpdateObject`."
       );
@@ -8399,7 +8698,17 @@ public partial class SearchClient : ISearchClient
         "Parameter `indexName` is required when calling `PartialUpdateObject`."
       );
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `PartialUpdateObject`."
+      );
+
     if (objectID == null)
+      throw new ArgumentException(
+        "Parameter `objectID` is required when calling `PartialUpdateObject`."
+      );
+
+    if (string.IsNullOrWhiteSpace(objectID))
       throw new ArgumentException(
         "Parameter `objectID` is required when calling `PartialUpdateObject`."
       );
@@ -8457,6 +8766,8 @@ public partial class SearchClient : ISearchClient
     if (userID == null)
       throw new ArgumentException("Parameter `userID` is required when calling `RemoveUserId`.");
 
+    if (string.IsNullOrWhiteSpace(userID))
+      throw new ArgumentException("Parameter `userID` is required when calling `RemoveUserId`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("userID", QueryStringHelper.ParameterToString(userID));
@@ -8490,6 +8801,8 @@ public partial class SearchClient : ISearchClient
     if (userID == null)
       throw new ArgumentException("Parameter `userID` is required when calling `RemoveUserId`.");
 
+    if (string.IsNullOrWhiteSpace(userID))
+      throw new ArgumentException("Parameter `userID` is required when calling `RemoveUserId`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("userID", QueryStringHelper.ParameterToString(userID));
@@ -8583,6 +8896,8 @@ public partial class SearchClient : ISearchClient
     if (key == null)
       throw new ArgumentException("Parameter `key` is required when calling `RestoreApiKey`.");
 
+    if (string.IsNullOrWhiteSpace(key))
+      throw new ArgumentException("Parameter `key` is required when calling `RestoreApiKey`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("key", QueryStringHelper.ParameterToString(key));
@@ -8614,6 +8929,8 @@ public partial class SearchClient : ISearchClient
     if (key == null)
       throw new ArgumentException("Parameter `key` is required when calling `RestoreApiKey`.");
 
+    if (string.IsNullOrWhiteSpace(key))
+      throw new ArgumentException("Parameter `key` is required when calling `RestoreApiKey`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("key", QueryStringHelper.ParameterToString(key));
@@ -8644,6 +8961,9 @@ public partial class SearchClient : ISearchClient
   )
   {
     if (indexName == null)
+      throw new ArgumentException("Parameter `indexName` is required when calling `SaveObject`.");
+
+    if (string.IsNullOrWhiteSpace(indexName))
       throw new ArgumentException("Parameter `indexName` is required when calling `SaveObject`.");
 
     if (body == null)
@@ -8681,6 +9001,9 @@ public partial class SearchClient : ISearchClient
   )
   {
     if (indexName == null)
+      throw new ArgumentException("Parameter `indexName` is required when calling `SaveObject`.");
+
+    if (string.IsNullOrWhiteSpace(indexName))
       throw new ArgumentException("Parameter `indexName` is required when calling `SaveObject`.");
 
     if (body == null)
@@ -8725,7 +9048,13 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `SaveRule`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `SaveRule`.");
+
     if (objectID == null)
+      throw new ArgumentException("Parameter `objectID` is required when calling `SaveRule`.");
+
+    if (string.IsNullOrWhiteSpace(objectID))
       throw new ArgumentException("Parameter `objectID` is required when calling `SaveRule`.");
 
     if (rule == null)
@@ -8774,7 +9103,13 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `SaveRule`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `SaveRule`.");
+
     if (objectID == null)
+      throw new ArgumentException("Parameter `objectID` is required when calling `SaveRule`.");
+
+    if (string.IsNullOrWhiteSpace(objectID))
       throw new ArgumentException("Parameter `objectID` is required when calling `SaveRule`.");
 
     if (rule == null)
@@ -8830,6 +9165,9 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `SaveRules`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `SaveRules`.");
+
     if (rules == null)
       throw new ArgumentException("Parameter `rules` is required when calling `SaveRules`.");
 
@@ -8881,6 +9219,9 @@ public partial class SearchClient : ISearchClient
   )
   {
     if (indexName == null)
+      throw new ArgumentException("Parameter `indexName` is required when calling `SaveRules`.");
+
+    if (string.IsNullOrWhiteSpace(indexName))
       throw new ArgumentException("Parameter `indexName` is required when calling `SaveRules`.");
 
     if (rules == null)
@@ -8936,7 +9277,13 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `SaveSynonym`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `SaveSynonym`.");
+
     if (objectID == null)
+      throw new ArgumentException("Parameter `objectID` is required when calling `SaveSynonym`.");
+
+    if (string.IsNullOrWhiteSpace(objectID))
       throw new ArgumentException("Parameter `objectID` is required when calling `SaveSynonym`.");
 
     if (synonymHit == null)
@@ -8992,7 +9339,13 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `SaveSynonym`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `SaveSynonym`.");
+
     if (objectID == null)
+      throw new ArgumentException("Parameter `objectID` is required when calling `SaveSynonym`.");
+
+    if (string.IsNullOrWhiteSpace(objectID))
       throw new ArgumentException("Parameter `objectID` is required when calling `SaveSynonym`.");
 
     if (synonymHit == null)
@@ -9048,6 +9401,9 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `SaveSynonyms`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `SaveSynonyms`.");
+
     if (synonymHit == null)
       throw new ArgumentException(
         "Parameter `synonymHit` is required when calling `SaveSynonyms`."
@@ -9101,6 +9457,9 @@ public partial class SearchClient : ISearchClient
   )
   {
     if (indexName == null)
+      throw new ArgumentException("Parameter `indexName` is required when calling `SaveSynonyms`.");
+
+    if (string.IsNullOrWhiteSpace(indexName))
       throw new ArgumentException("Parameter `indexName` is required when calling `SaveSynonyms`.");
 
     if (synonymHit == null)
@@ -9324,11 +9683,20 @@ public partial class SearchClient : ISearchClient
         "Parameter `indexName` is required when calling `SearchForFacetValues`."
       );
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `SearchForFacetValues`."
+      );
+
     if (facetName == null)
       throw new ArgumentException(
         "Parameter `facetName` is required when calling `SearchForFacetValues`."
       );
 
+    if (string.IsNullOrWhiteSpace(facetName))
+      throw new ArgumentException(
+        "Parameter `facetName` is required when calling `SearchForFacetValues`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -9378,11 +9746,20 @@ public partial class SearchClient : ISearchClient
         "Parameter `indexName` is required when calling `SearchForFacetValues`."
       );
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `SearchForFacetValues`."
+      );
+
     if (facetName == null)
       throw new ArgumentException(
         "Parameter `facetName` is required when calling `SearchForFacetValues`."
       );
 
+    if (string.IsNullOrWhiteSpace(facetName))
+      throw new ArgumentException(
+        "Parameter `facetName` is required when calling `SearchForFacetValues`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -9429,6 +9806,8 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `SearchRules`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `SearchRules`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -9467,6 +9846,8 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `SearchRules`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `SearchRules`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -9507,6 +9888,10 @@ public partial class SearchClient : ISearchClient
         "Parameter `indexName` is required when calling `SearchSingleIndex`."
       );
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `SearchSingleIndex`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -9547,6 +9932,10 @@ public partial class SearchClient : ISearchClient
         "Parameter `indexName` is required when calling `SearchSingleIndex`."
       );
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `SearchSingleIndex`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -9587,6 +9976,10 @@ public partial class SearchClient : ISearchClient
         "Parameter `indexName` is required when calling `SearchSynonyms`."
       );
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `SearchSynonyms`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -9627,6 +10020,10 @@ public partial class SearchClient : ISearchClient
         "Parameter `indexName` is required when calling `SearchSynonyms`."
       );
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `SearchSynonyms`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
@@ -9810,6 +10207,9 @@ public partial class SearchClient : ISearchClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `SetSettings`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `SetSettings`.");
+
     if (indexSettings == null)
       throw new ArgumentException(
         "Parameter `indexSettings` is required when calling `SetSettings`."
@@ -9853,6 +10253,9 @@ public partial class SearchClient : ISearchClient
   )
   {
     if (indexName == null)
+      throw new ArgumentException("Parameter `indexName` is required when calling `SetSettings`.");
+
+    if (string.IsNullOrWhiteSpace(indexName))
       throw new ArgumentException("Parameter `indexName` is required when calling `SetSettings`.");
 
     if (indexSettings == null)
@@ -9905,6 +10308,9 @@ public partial class SearchClient : ISearchClient
     if (key == null)
       throw new ArgumentException("Parameter `key` is required when calling `UpdateApiKey`.");
 
+    if (string.IsNullOrWhiteSpace(key))
+      throw new ArgumentException("Parameter `key` is required when calling `UpdateApiKey`.");
+
     if (apiKey == null)
       throw new ArgumentException("Parameter `apiKey` is required when calling `UpdateApiKey`.");
 
@@ -9940,6 +10346,9 @@ public partial class SearchClient : ISearchClient
   )
   {
     if (key == null)
+      throw new ArgumentException("Parameter `key` is required when calling `UpdateApiKey`.");
+
+    if (string.IsNullOrWhiteSpace(key))
       throw new ArgumentException("Parameter `key` is required when calling `UpdateApiKey`.");
 
     if (apiKey == null)

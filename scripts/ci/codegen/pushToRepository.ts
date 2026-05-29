@@ -7,7 +7,6 @@ import {
   ensureGitHubToken,
   exists,
   getOctokit,
-  gitBranchExists,
   gitCommit,
   LANGUAGES,
   OWNER,
@@ -16,7 +15,8 @@ import {
   toAbsolutePath,
 } from '../../common.ts';
 import { getNbGitDiff } from '../utils.ts';
-import type { GuidesToPush, RepositoryConfiguration, SnippetsToPush, SpecsToPush } from './types.ts';
+import { parseChangelogToMdx } from './parseChangelogToMdx.ts';
+import type { ChangelogsToPush, GuidesToPush, RepositoryConfiguration, SpecsToPush, SnippetsToPush } from './types.ts';
 import { pushToRepositoryConfiguration } from './types.ts';
 
 import { getClientsConfigField } from '../../config.ts';
@@ -115,6 +115,27 @@ async function handleGuideFiles(guide: GuidesToPush, tempGitDir: string): Promis
   await fsp.writeFile(outputPath, JSON.stringify(guides, null, 2));
 }
 
+async function handleChangelogFiles(changelog: ChangelogsToPush, tempGitDir: string): Promise<void> {
+  const output = toAbsolutePath(`${tempGitDir}/${changelog.output}`);
+
+  if (!(await exists(output))) {
+    await fsp.mkdir(output, { recursive: true });
+  }
+
+  for (const language of LANGUAGES) {
+    const changelogPath = toAbsolutePath(`clients/algoliasearch-client-${language}/CHANGELOG.md`);
+
+    if (!(await exists(changelogPath))) {
+      continue;
+    }
+
+    const raw = await fsp.readFile(changelogPath, 'utf-8');
+    const mdx = parseChangelogToMdx(raw);
+
+    await fsp.writeFile(`${output}/${language}.mdx`, mdx);
+  }
+}
+
 async function handleSnippetFiles(snippets: SnippetsToPush, tempGitDir: string): Promise<void> {
   const output = toAbsolutePath(`${tempGitDir}/${snippets.output}`);
 
@@ -157,30 +178,30 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
 
   await run(`git config --global url.https://${token}@github.com/.insteadOf https://github.com/`);
 
+  const shortSha = (await run('git rev-parse --short HEAD', { cwd: toAbsolutePath('.') })).trim();
+
   for (const task of config.tasks) {
     console.log(`Handling '${task.files.type}' file(s)`);
+    const newBranch = `${task.prBranch}-${shortSha}`;
 
     await run(`git checkout ${config.baseBranch}`, { cwd: tempGitDir });
     await run(`git pull origin ${config.baseBranch}`, { cwd: tempGitDir });
-    await run(`git checkout -B ${task.prBranch}`, { cwd: tempGitDir });
+    await run(`git checkout -B ${newBranch}`, { cwd: tempGitDir });
 
     if (task.files.type === 'specs') {
       await handleSpecFiles(task.files, tempGitDir);
-    } else if (task.files.type === 'guides') {
-      await handleGuideFiles(task.files, tempGitDir);
+    } else if (task.files.type === 'changelogs') {
+      await handleChangelogFiles(task.files, tempGitDir);
     } else if (task.files.type === 'snippets') {
       await handleSnippetFiles(task.files, tempGitDir);
+    } else if (task.files.type === 'guides') {
+      await handleGuideFiles(task.files, tempGitDir);
     }
 
     if (process.env.DRY_RUN) {
-      console.log(`asked for a dry run, stopping before push and PR for '${repository}' on task '${task.prBranch}'`);
+      console.log(`asked for a dry run, stopping before push and PR for '${repository}' on task '${newBranch}'`);
 
       continue;
-    }
-
-    if (await gitBranchExists(task.prBranch, tempGitDir)) {
-      await run(`git fetch origin ${task.prBranch}`, { cwd: tempGitDir });
-      await run(`git push -d origin ${task.prBranch}`, { cwd: tempGitDir });
     }
 
     if ((await getNbGitDiff({ head: null, cwd: tempGitDir })) === 0) {
@@ -196,7 +217,7 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
       cwd: tempGitDir,
     });
 
-    await run(`git push -f -u origin ${task.prBranch}`, { cwd: tempGitDir });
+    await run(`git push -f -u origin ${newBranch}`, { cwd: tempGitDir });
 
     console.log(`Creating pull request on ${OWNER}/${repository}...`);
     const octokit = getOctokit();
@@ -209,7 +230,7 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
         'It contains the latest generated guides.',
       ].join('\n\n'),
       base: config.baseBranch,
-      head: task.prBranch,
+      head: newBranch,
     });
 
     await run(`gh --repo ${OWNER}/${repository} pr merge ${data.number} --squash --auto`);

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Search parameters to add to the test variant. Only use this parameter if the two variants use the same index.
@@ -26,11 +26,7 @@ public struct AbtestingV3CustomSearchParams: Codable, JSONEncodable {
     }
 }
 
-extension AbtestingV3CustomSearchParams: Equatable {
-    public static func ==(lhs: AbtestingV3CustomSearchParams, rhs: AbtestingV3CustomSearchParams) -> Bool {
-        lhs.customSearchParameters == rhs.customSearchParameters
-    }
-}
+extension AbtestingV3CustomSearchParams: Equatable {}
 
 extension AbtestingV3CustomSearchParams: Hashable {
     public func hash(into hasher: inout Hasher) {

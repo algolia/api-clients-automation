@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct StatusResponse: Codable, JSONEncodable {
@@ -25,11 +25,7 @@ public struct StatusResponse: Codable, JSONEncodable {
     }
 }
 
-extension StatusResponse: Equatable {
-    public static func ==(lhs: StatusResponse, rhs: StatusResponse) -> Bool {
-        lhs.status == rhs.status
-    }
-}
+extension StatusResponse: Equatable {}
 
 extension StatusResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

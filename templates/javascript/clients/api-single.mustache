@@ -103,7 +103,7 @@ export function create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
     {{/isCompositionClient}}
     {{#operation}}
     {{> client/api/operation/jsdoc}}
-    {{nickname}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{#vendorExtensions.x-has-generic-parameter}}<T extends object>{{/vendorExtensions.x-has-generic-parameter}}( {{> client/api/operation/parameters}} ) : Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}> {
+    {{nickname}}{{#vendorExtensions.x-return-is-generic}}<T = Record<string, unknown>>{{/vendorExtensions.x-return-is-generic}}{{^vendorExtensions.x-return-is-generic}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/vendorExtensions.x-return-is-generic}}{{#vendorExtensions.x-has-generic-parameter}}<T extends object>{{/vendorExtensions.x-has-generic-parameter}}( {{> client/api/operation/parameters}} ) : Promise<{{#vendorExtensions.x-return-is-generic}}T{{/vendorExtensions.x-return-is-generic}}{{^vendorExtensions.x-return-is-generic}}{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/vendorExtensions.x-return-is-generic}}> {
       {{#vendorExtensions.x-legacy-signature}}
         {{> client/api/operation/legacySearchCompatible/implementation}}
       {{/vendorExtensions.x-legacy-signature}}

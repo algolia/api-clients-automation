@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Error.
@@ -71,12 +71,7 @@ public struct SearchErrorBase: Codable, JSONEncodable {
     }
 }
 
-extension SearchErrorBase: Equatable {
-    public static func ==(lhs: SearchErrorBase, rhs: SearchErrorBase) -> Bool {
-        lhs.message == rhs.message
-            && lhs.additionalProperties == rhs.additionalProperties
-    }
-}
+extension SearchErrorBase: Equatable {}
 
 extension SearchErrorBase: Hashable {
     public func hash(into hasher: inout Hasher) {

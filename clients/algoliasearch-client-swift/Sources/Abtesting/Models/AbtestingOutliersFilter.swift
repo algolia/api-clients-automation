@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Outliers removed from the A/B test as a result of configuration settings.
@@ -32,12 +32,7 @@ public struct AbtestingOutliersFilter: Codable, JSONEncodable {
     }
 }
 
-extension AbtestingOutliersFilter: Equatable {
-    public static func ==(lhs: AbtestingOutliersFilter, rhs: AbtestingOutliersFilter) -> Bool {
-        lhs.usersCount == rhs.usersCount &&
-            lhs.trackedSearchesCount == rhs.trackedSearchesCount
-    }
-}
+extension AbtestingOutliersFilter: Equatable {}
 
 extension AbtestingOutliersFilter: Hashable {
     public func hash(into hasher: inout Hasher) {

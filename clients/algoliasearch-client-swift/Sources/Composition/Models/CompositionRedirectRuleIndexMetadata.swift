@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct CompositionRedirectRuleIndexMetadata: Codable, JSONEncodable {
@@ -45,18 +45,7 @@ public struct CompositionRedirectRuleIndexMetadata: Codable, JSONEncodable {
     }
 }
 
-extension CompositionRedirectRuleIndexMetadata: Equatable {
-    public static func ==(
-        lhs: CompositionRedirectRuleIndexMetadata,
-        rhs: CompositionRedirectRuleIndexMetadata
-    ) -> Bool {
-        lhs.source == rhs.source &&
-            lhs.dest == rhs.dest &&
-            lhs.reason == rhs.reason &&
-            lhs.succeed == rhs.succeed &&
-            lhs.data == rhs.data
-    }
-}
+extension CompositionRedirectRuleIndexMetadata: Equatable {}
 
 extension CompositionRedirectRuleIndexMetadata: Hashable {
     public func hash(into hasher: inout Hasher) {

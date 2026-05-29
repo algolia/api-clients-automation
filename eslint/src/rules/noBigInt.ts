@@ -1,16 +1,12 @@
-// @ts-ignore
-import { createRule } from 'eslint-plugin-yml/lib/utils';
+import type { Rule } from 'eslint';
 
 import { isPairWithKey, isScalar } from '../utils.js';
 
 // type: number with format: int64 will generate a BigInteger which is not nice to use, most of the time we only need int, long, float or double.
-export const noBigInt = createRule('noBigInt', {
+export const noBigInt: Rule.RuleModule = {
   meta: {
     docs: {
       description: 'type big integer is forbidden, did you mean type: integer ?',
-      categories: null,
-      extensionRule: false,
-      layout: false,
     },
     messages: {
       noBigInt: 'type big integer is forbidden, did you mean type: integer ?',
@@ -19,10 +15,6 @@ export const noBigInt = createRule('noBigInt', {
     schema: [],
   },
   create(context) {
-    if (!context.getSourceCode().parserServices?.isYAML) {
-      return {};
-    }
-
     return {
       YAMLPair(node): void {
         if (!isPairWithKey(node, 'type')) {
@@ -49,4 +41,4 @@ export const noBigInt = createRule('noBigInt', {
       },
     };
   },
-});
+};

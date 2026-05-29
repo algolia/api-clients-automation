@@ -40,17 +40,12 @@ use GuzzleHttp\Psr7\Query;
  */
 class AnalyticsClient
 {
-    public const VERSION = '4.37.3';
+    public const VERSION = '4.44.0';
 
     /**
      * @var ApiWrapperInterface
      */
     protected $api;
-
-    /**
-     * @var IngestionClient
-     */
-    protected $ingestionTransporter;
 
     /**
      * @var AnalyticsConfig
@@ -93,6 +88,10 @@ class AnalyticsClient
         );
 
         $client = new static($apiWrapper, $config);
+
+        $logger = Algolia::getLogger();
+        $logger->info('Algolia API client: Algolia AnalyticsClient initialized (appId: '.$config->getAppId().')');
+        Algolia::logDebugWarningOnce();
 
         return $client;
     }
@@ -349,7 +348,7 @@ class AnalyticsClient
     }
 
     /**
-     * Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  The rate is the number of purchase conversion events divided by the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+     * Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days, including the current day.  The rate is purchase conversion events divided by tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means there were queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
      *
      * Required API Key ACLs:
      *  - analytics
@@ -572,7 +571,7 @@ class AnalyticsClient
     }
 
     /**
-     * Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to true, the response also includes:  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+     * Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to `true`, the response also includes:  - Tracked searches count.   Tracked searches are Search API requests with `clickAnalytics` set to `true`.   This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
      *
      * Required API Key ACLs:
      *  - analytics
@@ -598,7 +597,7 @@ class AnalyticsClient
     }
 
     /**
-     * Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+     * Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes:  - Tracked searches count   Tracked searches are Search API requests with `clickAnalytics` set to `true`.   This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
      *
      * Required API Key ACLs:
      *  - analytics
@@ -665,6 +664,12 @@ class AnalyticsClient
                 'Parameter `path` is required when calling `customDelete`.'
             );
         }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customDelete`.'
+            );
+        }
 
         $resourcePath = '/{path}';
         $queryParameters = [];
@@ -703,6 +708,12 @@ class AnalyticsClient
     {
         // verify the required parameter 'path' is set
         if (!isset($path)) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customGet`.'
+            );
+        }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
             throw new \InvalidArgumentException(
                 'Parameter `path` is required when calling `customGet`.'
             );
@@ -750,6 +761,12 @@ class AnalyticsClient
                 'Parameter `path` is required when calling `customPost`.'
             );
         }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customPost`.'
+            );
+        }
 
         $resourcePath = '/{path}';
         $queryParameters = [];
@@ -789,6 +806,12 @@ class AnalyticsClient
     {
         // verify the required parameter 'path' is set
         if (!isset($path)) {
+            throw new \InvalidArgumentException(
+                'Parameter `path` is required when calling `customPut`.'
+            );
+        }
+        // verify the required parameter 'path' is not empty
+        if (isset($path) && '' === $path) {
             throw new \InvalidArgumentException(
                 'Parameter `path` is required when calling `customPut`.'
             );
@@ -835,6 +858,12 @@ class AnalyticsClient
     {
         // verify the required parameter 'index' is set
         if (!isset($index)) {
+            throw new \InvalidArgumentException(
+                'Parameter `index` is required when calling `getAddToCartRate`.'
+            );
+        }
+        // verify the required parameter 'index' is not empty
+        if (isset($index) && '' === $index) {
             throw new \InvalidArgumentException(
                 'Parameter `index` is required when calling `getAddToCartRate`.'
             );
@@ -888,6 +917,12 @@ class AnalyticsClient
                 'Parameter `index` is required when calling `getAverageClickPosition`.'
             );
         }
+        // verify the required parameter 'index' is not empty
+        if (isset($index) && '' === $index) {
+            throw new \InvalidArgumentException(
+                'Parameter `index` is required when calling `getAverageClickPosition`.'
+            );
+        }
 
         $resourcePath = '/2/clicks/averageClickPosition';
         $queryParameters = [];
@@ -933,6 +968,12 @@ class AnalyticsClient
     {
         // verify the required parameter 'index' is set
         if (!isset($index)) {
+            throw new \InvalidArgumentException(
+                'Parameter `index` is required when calling `getClickPositions`.'
+            );
+        }
+        // verify the required parameter 'index' is not empty
+        if (isset($index) && '' === $index) {
             throw new \InvalidArgumentException(
                 'Parameter `index` is required when calling `getClickPositions`.'
             );
@@ -986,6 +1027,12 @@ class AnalyticsClient
                 'Parameter `index` is required when calling `getClickThroughRate`.'
             );
         }
+        // verify the required parameter 'index' is not empty
+        if (isset($index) && '' === $index) {
+            throw new \InvalidArgumentException(
+                'Parameter `index` is required when calling `getClickThroughRate`.'
+            );
+        }
 
         $resourcePath = '/2/clicks/clickThroughRate';
         $queryParameters = [];
@@ -1031,6 +1078,12 @@ class AnalyticsClient
     {
         // verify the required parameter 'index' is set
         if (!isset($index)) {
+            throw new \InvalidArgumentException(
+                'Parameter `index` is required when calling `getConversionRate`.'
+            );
+        }
+        // verify the required parameter 'index' is not empty
+        if (isset($index) && '' === $index) {
             throw new \InvalidArgumentException(
                 'Parameter `index` is required when calling `getConversionRate`.'
             );
@@ -1084,6 +1137,12 @@ class AnalyticsClient
                 'Parameter `index` is required when calling `getNoClickRate`.'
             );
         }
+        // verify the required parameter 'index' is not empty
+        if (isset($index) && '' === $index) {
+            throw new \InvalidArgumentException(
+                'Parameter `index` is required when calling `getNoClickRate`.'
+            );
+        }
 
         $resourcePath = '/2/searches/noClickRate';
         $queryParameters = [];
@@ -1133,6 +1192,12 @@ class AnalyticsClient
                 'Parameter `index` is required when calling `getNoResultsRate`.'
             );
         }
+        // verify the required parameter 'index' is not empty
+        if (isset($index) && '' === $index) {
+            throw new \InvalidArgumentException(
+                'Parameter `index` is required when calling `getNoResultsRate`.'
+            );
+        }
 
         $resourcePath = '/2/searches/noResultRate';
         $queryParameters = [];
@@ -1162,7 +1227,7 @@ class AnalyticsClient
      * Retrieve purchase rate (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
-     * Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  The rate is the number of purchase conversion events divided by the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+     * Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days, including the current day.  The rate is purchase conversion events divided by tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means there were queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
      * Required API Key ACLs:
      *  - analytics
      *
@@ -1178,6 +1243,12 @@ class AnalyticsClient
     {
         // verify the required parameter 'index' is set
         if (!isset($index)) {
+            throw new \InvalidArgumentException(
+                'Parameter `index` is required when calling `getPurchaseRate`.'
+            );
+        }
+        // verify the required parameter 'index' is not empty
+        if (isset($index) && '' === $index) {
             throw new \InvalidArgumentException(
                 'Parameter `index` is required when calling `getPurchaseRate`.'
             );
@@ -1231,6 +1302,12 @@ class AnalyticsClient
                 'Parameter `index` is required when calling `getRevenue`.'
             );
         }
+        // verify the required parameter 'index' is not empty
+        if (isset($index) && '' === $index) {
+            throw new \InvalidArgumentException(
+                'Parameter `index` is required when calling `getRevenue`.'
+            );
+        }
 
         $resourcePath = '/2/conversions/revenue';
         $queryParameters = [];
@@ -1276,6 +1353,12 @@ class AnalyticsClient
     {
         // verify the required parameter 'index' is set
         if (!isset($index)) {
+            throw new \InvalidArgumentException(
+                'Parameter `index` is required when calling `getSearchesCount`.'
+            );
+        }
+        // verify the required parameter 'index' is not empty
+        if (isset($index) && '' === $index) {
             throw new \InvalidArgumentException(
                 'Parameter `index` is required when calling `getSearchesCount`.'
             );
@@ -1327,6 +1410,12 @@ class AnalyticsClient
     {
         // verify the required parameter 'index' is set
         if (!isset($index)) {
+            throw new \InvalidArgumentException(
+                'Parameter `index` is required when calling `getSearchesNoClicks`.'
+            );
+        }
+        // verify the required parameter 'index' is not empty
+        if (isset($index) && '' === $index) {
             throw new \InvalidArgumentException(
                 'Parameter `index` is required when calling `getSearchesNoClicks`.'
             );
@@ -1390,6 +1479,12 @@ class AnalyticsClient
                 'Parameter `index` is required when calling `getSearchesNoResults`.'
             );
         }
+        // verify the required parameter 'index' is not empty
+        if (isset($index) && '' === $index) {
+            throw new \InvalidArgumentException(
+                'Parameter `index` is required when calling `getSearchesNoResults`.'
+            );
+        }
 
         $resourcePath = '/2/searches/noResults';
         $queryParameters = [];
@@ -1444,6 +1539,12 @@ class AnalyticsClient
                 'Parameter `index` is required when calling `getStatus`.'
             );
         }
+        // verify the required parameter 'index' is not empty
+        if (isset($index) && '' === $index) {
+            throw new \InvalidArgumentException(
+                'Parameter `index` is required when calling `getStatus`.'
+            );
+        }
 
         $resourcePath = '/2/status';
         $queryParameters = [];
@@ -1479,6 +1580,12 @@ class AnalyticsClient
     {
         // verify the required parameter 'index' is set
         if (!isset($index)) {
+            throw new \InvalidArgumentException(
+                'Parameter `index` is required when calling `getTopCountries`.'
+            );
+        }
+        // verify the required parameter 'index' is not empty
+        if (isset($index) && '' === $index) {
             throw new \InvalidArgumentException(
                 'Parameter `index` is required when calling `getTopCountries`.'
             );
@@ -1539,6 +1646,12 @@ class AnalyticsClient
     {
         // verify the required parameter 'index' is set
         if (!isset($index)) {
+            throw new \InvalidArgumentException(
+                'Parameter `index` is required when calling `getTopFilterAttributes`.'
+            );
+        }
+        // verify the required parameter 'index' is not empty
+        if (isset($index) && '' === $index) {
             throw new \InvalidArgumentException(
                 'Parameter `index` is required when calling `getTopFilterAttributes`.'
             );
@@ -1608,8 +1721,20 @@ class AnalyticsClient
                 'Parameter `attribute` is required when calling `getTopFilterForAttribute`.'
             );
         }
+        // verify the required parameter 'attribute' is not empty
+        if (isset($attribute) && '' === $attribute) {
+            throw new \InvalidArgumentException(
+                'Parameter `attribute` is required when calling `getTopFilterForAttribute`.'
+            );
+        }
         // verify the required parameter 'index' is set
         if (!isset($index)) {
+            throw new \InvalidArgumentException(
+                'Parameter `index` is required when calling `getTopFilterForAttribute`.'
+            );
+        }
+        // verify the required parameter 'index' is not empty
+        if (isset($index) && '' === $index) {
             throw new \InvalidArgumentException(
                 'Parameter `index` is required when calling `getTopFilterForAttribute`.'
             );
@@ -1687,6 +1812,12 @@ class AnalyticsClient
                 'Parameter `index` is required when calling `getTopFiltersNoResults`.'
             );
         }
+        // verify the required parameter 'index' is not empty
+        if (isset($index) && '' === $index) {
+            throw new \InvalidArgumentException(
+                'Parameter `index` is required when calling `getTopFiltersNoResults`.'
+            );
+        }
 
         $resourcePath = '/2/filters/noResults';
         $queryParameters = [];
@@ -1728,7 +1859,7 @@ class AnalyticsClient
      * Retrieve top search results (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
-     * Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to true, the response also includes:  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+     * Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to `true`, the response also includes:  - Tracked searches count.   Tracked searches are Search API requests with `clickAnalytics` set to `true`.   This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
      * Required API Key ACLs:
      *  - analytics
      *
@@ -1749,6 +1880,12 @@ class AnalyticsClient
     {
         // verify the required parameter 'index' is set
         if (!isset($index)) {
+            throw new \InvalidArgumentException(
+                'Parameter `index` is required when calling `getTopHits`.'
+            );
+        }
+        // verify the required parameter 'index' is not empty
+        if (isset($index) && '' === $index) {
             throw new \InvalidArgumentException(
                 'Parameter `index` is required when calling `getTopHits`.'
             );
@@ -1802,7 +1939,7 @@ class AnalyticsClient
      * Retrieve top searches (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
-     * Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+     * Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes:  - Tracked searches count   Tracked searches are Search API requests with `clickAnalytics` set to `true`.   This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
      * Required API Key ACLs:
      *  - analytics
      *
@@ -1824,6 +1961,12 @@ class AnalyticsClient
     {
         // verify the required parameter 'index' is set
         if (!isset($index)) {
+            throw new \InvalidArgumentException(
+                'Parameter `index` is required when calling `getTopSearches`.'
+            );
+        }
+        // verify the required parameter 'index' is not empty
+        if (isset($index) && '' === $index) {
             throw new \InvalidArgumentException(
                 'Parameter `index` is required when calling `getTopSearches`.'
             );
@@ -1897,6 +2040,12 @@ class AnalyticsClient
     {
         // verify the required parameter 'index' is set
         if (!isset($index)) {
+            throw new \InvalidArgumentException(
+                'Parameter `index` is required when calling `getUsersCount`.'
+            );
+        }
+        // verify the required parameter 'index' is not empty
+        if (isset($index) && '' === $index) {
             throw new \InvalidArgumentException(
                 'Parameter `index` is required when calling `getUsersCount`.'
             );

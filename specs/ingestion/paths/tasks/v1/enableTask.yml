@@ -2,7 +2,7 @@ put:
   tags:
     - tasks
   summary: Enable a task V1
-  description: Enables a task using the v1 endpoint, please use `enableTask` instead.
+  description: Enables a task using the v1 endpoint. Use `enableTask` instead.
   operationId: enableTaskV1
   deprecated: true
   x-acl:

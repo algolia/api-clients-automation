@@ -18,12 +18,12 @@ get:
     - $ref: '../../common/parameters.yml#/order'
     - name: startDate
       in: query
-      description: Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+      description: Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used.
       schema:
         type: string
     - name: endDate
       in: query
-      description: Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
+      description: Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used.
       schema:
         type: string
   responses:

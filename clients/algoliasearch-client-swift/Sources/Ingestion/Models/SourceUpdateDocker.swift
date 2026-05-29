@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Specific configuration attributes of a `docker` source.
@@ -27,11 +27,7 @@ public struct SourceUpdateDocker: Codable, JSONEncodable {
     }
 }
 
-extension SourceUpdateDocker: Equatable {
-    public static func ==(lhs: SourceUpdateDocker, rhs: SourceUpdateDocker) -> Bool {
-        lhs.configuration == rhs.configuration
-    }
-}
+extension SourceUpdateDocker: Equatable {}
 
 extension SourceUpdateDocker: Hashable {
     public func hash(into hasher: inout Hasher) {

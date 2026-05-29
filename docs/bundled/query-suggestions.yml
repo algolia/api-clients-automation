@@ -17,7 +17,7 @@ info:
     ## Base URLs
 
 
-    The base URLs for requests to the Query Suggestions API are:
+    Base URLs for the Query Suggestions API:
 
 
     - `https://query-suggestions.us.algolia.com`
@@ -35,7 +35,7 @@ info:
     ## Authentication
 
 
-    To authenticate your API requests, add these headers:
+    Add these headers to authenticate requests:
 
 
     - `x-algolia-application-id`. Your Algolia application ID.
@@ -63,8 +63,8 @@ info:
     information as headers.
 
 
-    Successful responses return a `2xx` status. Client errors return a `4xx`
-    status. Server errors are indicated by a `5xx` status.
+    Successful responses return `2xx` statuses. Client errors return `4xx`
+    statuses. Server errors return `5xx` statuses.
 
     Error responses have a `message` property with more information.
 
@@ -72,8 +72,8 @@ info:
     ## Version
 
 
-    The current version of the Query Suggestions API is version 1, as indicated
-    by the `/1/` in each endpoint's URL.
+    The current version of the Query Suggestions API is version 1, indicated by
+    the `/1/` in each endpoint's URL.
   version: 1.0.0
 servers:
   - url: https://query-suggestions.{region}.algolia.com
@@ -1633,7 +1633,49 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"indexName":"ALGOLIA_INDEX_NAME","sourceIndices":[{"indexName":"products","replicas":false,"analyticsTags":["lorem"],"facets":[{"attribute":"category","amount":3},{"attribute":"brand","amount":2}],"minHits":5,"minLetters":4,"generate":[["color","brand"]],"external":["lorem"]}],"languages":["lorem"],"exclude":["lorem"],"enablePersonalization":false,"allowSpecialCharacters":false}'
+              --data '
+            {
+              "indexName": "ALGOLIA_INDEX_NAME",
+              "sourceIndices": [
+                {
+                  "indexName": "products",
+                  "replicas": false,
+                  "analyticsTags": [
+                    "lorem"
+                  ],
+                  "facets": [
+                    {
+                      "attribute": "category",
+                      "amount": 3
+                    },
+                    {
+                      "attribute": "brand",
+                      "amount": 2
+                    }
+                  ],
+                  "minHits": 5,
+                  "minLetters": 4,
+                  "generate": [
+                    [
+                      "color",
+                      "brand"
+                    ]
+                  ],
+                  "external": [
+                    "lorem"
+                  ]
+                }
+              ],
+              "languages": [
+                "lorem"
+              ],
+              "exclude": [
+                "lorem"
+              ],
+              "enablePersonalization": false,
+              "allowSpecialCharacters": false
+            }
+            '
   /1/configs/{indexName}:
     get:
       tags:
@@ -2275,7 +2317,48 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"sourceIndices":[{"indexName":"products","replicas":false,"analyticsTags":["lorem"],"facets":[{"attribute":"category","amount":3},{"attribute":"brand","amount":2}],"minHits":5,"minLetters":4,"generate":[["color","brand"]],"external":["lorem"]}],"languages":["lorem"],"exclude":["lorem"],"enablePersonalization":false,"allowSpecialCharacters":false}'
+              --data '
+            {
+              "sourceIndices": [
+                {
+                  "indexName": "products",
+                  "replicas": false,
+                  "analyticsTags": [
+                    "lorem"
+                  ],
+                  "facets": [
+                    {
+                      "attribute": "category",
+                      "amount": 3
+                    },
+                    {
+                      "attribute": "brand",
+                      "amount": 2
+                    }
+                  ],
+                  "minHits": 5,
+                  "minLetters": 4,
+                  "generate": [
+                    [
+                      "color",
+                      "brand"
+                    ]
+                  ],
+                  "external": [
+                    "lorem"
+                  ]
+                }
+              ],
+              "languages": [
+                "lorem"
+              ],
+              "exclude": [
+                "lorem"
+              ],
+              "enablePersonalization": false,
+              "allowSpecialCharacters": false
+            }
+            '
     delete:
       tags:
         - configurations
@@ -2557,16 +2640,16 @@ paths:
                       Date and time when the Query Suggestions index was last
                       built, in RFC 3339 format.
                     example: '2023-07-05T08:03:53Z'
+                  lastSuccessfulBuildDuration:
+                    type: string
+                    description: Duration of the last successful build in seconds.
+                    example: 28
                   lastSuccessfulBuiltAt:
                     type: string
                     description: >-
                       Date and time when the Query Suggestions index was last
                       updated successfully.
                     example: '2023-07-05T08:03:53Z'
-                  lastSuccessfulBuildDuration:
-                    type: string
-                    description: Duration of the last successful build in seconds.
-                    example: 28
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -2814,18 +2897,6 @@ paths:
                 type: object
                 additionalProperties: false
                 properties:
-                  timestamp:
-                    type: string
-                    description: Date and time of the log entry, in RFC 3339 format.
-                    example: '2023-07-05T08:03:33.898076171Z'
-                  level:
-                    $ref: '#/components/schemas/LogLevel'
-                  message:
-                    type: string
-                    description: Details about this log entry.
-                    example: >-
-                      skipping query "Brooke Adams": not enough search results,
-                      got 1, expected 5
                   contextLevel:
                     type: integer
                     description: >
@@ -2837,6 +2908,18 @@ paths:
                       suggestion belongs to a previous suggestion with
                       `contextLevel` 0.
                     example: 1
+                  level:
+                    $ref: '#/components/schemas/LogLevel'
+                  message:
+                    type: string
+                    description: Details about this log entry.
+                    example: >-
+                      skipping query "Brooke Adams": not enough search results,
+                      got 1, expected 5
+                  timestamp:
+                    type: string
+                    description: Date and time of the log entry, in RFC 3339 format.
+                    example: '2023-07-05T08:03:33.898076171Z'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -3132,12 +3215,12 @@ components:
       type: object
       description: Facet to use as category.
       properties:
-        attribute:
-          type: string
-          description: Facet name.
         amount:
           type: integer
           description: Number of suggestions.
+        attribute:
+          type: string
+          description: Facet name.
     Facets:
       title: facets
       description: >
@@ -3220,19 +3303,14 @@ components:
             Name of the Algolia index (case-sensitive) to use as source for
             query suggestions.
           example: products
-        replicas:
-          type: boolean
-          default: false
-          description: >
-            If true, Query Suggestions uses all replica indices to find popular
-            searches.
-
-            If false, only the primary index is used.
-          example: false
         analyticsTags:
           $ref: '#/components/schemas/AnalyticsTags'
+        external:
+          $ref: '#/components/schemas/External'
         facets:
           $ref: '#/components/schemas/Facets'
+        generate:
+          $ref: '#/components/schemas/Generate'
         minHits:
           type: integer
           minimum: 0
@@ -3253,10 +3331,15 @@ components:
 
             A search query must be at least `minLetters` long to be included in
             the Query Suggestions index.
-        generate:
-          $ref: '#/components/schemas/Generate'
-        external:
-          $ref: '#/components/schemas/External'
+        replicas:
+          type: boolean
+          default: false
+          description: >
+            If true, Query Suggestions uses all replica indices to find popular
+            searches.
+
+            If false, only the primary index is used.
+          example: false
     Languages:
       title: languages
       description: |
@@ -3294,31 +3377,48 @@ components:
           minItems: 1
           items:
             $ref: '#/components/schemas/SourceIndex'
-        languages:
-          $ref: '#/components/schemas/Languages'
-        exclude:
-          $ref: '#/components/schemas/Exclude'
-        enablePersonalization:
-          type: boolean
-          default: false
-          description: Whether to turn on personalized query suggestions.
         allowSpecialCharacters:
           type: boolean
           default: false
           description: Whether to include suggestions with special characters.
+        enablePersonalization:
+          type: boolean
+          default: false
+          description: Whether to turn on personalized query suggestions.
+        exclude:
+          $ref: '#/components/schemas/Exclude'
+        languages:
+          $ref: '#/components/schemas/Languages'
     ConfigurationWithIndex:
       type: object
-      description: Query Suggestions configuration.
+      properties:
+        indexName:
+          $ref: '#/components/schemas/IndexName'
+        sourceIndices:
+          type: array
+          description: >-
+            Algolia indices from which to get the popular searches for query
+            suggestions.
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/SourceIndex'
+        allowSpecialCharacters:
+          type: boolean
+          default: false
+          description: Whether to include suggestions with special characters.
+        enablePersonalization:
+          type: boolean
+          default: false
+          description: Whether to turn on personalized query suggestions.
+        exclude:
+          $ref: '#/components/schemas/Exclude'
+        languages:
+          $ref: '#/components/schemas/Languages'
       required:
         - indexName
         - sourceIndices
-      allOf:
-        - type: object
-          additionalProperties: false
-          properties:
-            indexName:
-              $ref: '#/components/schemas/IndexName'
-        - $ref: '#/components/schemas/Configuration'
+      additionalProperties: false
+      description: Query Suggestions configuration.
     ConfigurationResponse:
       type: object
       description: API response for retrieving Query Suggestions configurations.
@@ -3335,12 +3435,12 @@ components:
     BaseResponse:
       type: object
       properties:
-        status:
-          type: integer
-          description: HTTP status code.
         message:
           type: string
           description: Details about the response, such as error messages.
+        status:
+          type: integer
+          description: HTTP status code.
     LogLevel:
       title: level
       type: string

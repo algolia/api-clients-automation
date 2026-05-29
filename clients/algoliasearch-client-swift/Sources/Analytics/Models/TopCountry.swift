@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct TopCountry: Codable, JSONEncodable {
@@ -31,12 +31,7 @@ public struct TopCountry: Codable, JSONEncodable {
     }
 }
 
-extension TopCountry: Equatable {
-    public static func ==(lhs: TopCountry, rhs: TopCountry) -> Bool {
-        lhs.country == rhs.country &&
-            lhs.count == rhs.count
-    }
-}
+extension TopCountry: Equatable {}
 
 extension TopCountry: Hashable {
     public func hash(into hasher: inout Hasher) {

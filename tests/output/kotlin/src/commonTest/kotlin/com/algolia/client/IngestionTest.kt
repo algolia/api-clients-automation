@@ -38,6 +38,7 @@ class IngestionTest {
               )
           ),
       )
+
     assertFails { client.customGet(path = "1/html-error") }
       .let { error ->
         assertError(
@@ -96,6 +97,7 @@ class IngestionTest {
               )
           ),
       )
+
     client.runTest(
       call = { customGet(path = "1/long-wait") },
       response = {
@@ -172,7 +174,7 @@ class IngestionTest {
     client.runTest(
       call = { customPost(path = "1/test") },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.37.4\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.42.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),
@@ -185,6 +187,7 @@ class IngestionTest {
   @Test
   fun `uses the correct region`() = runTest {
     val client = IngestionClient(appId = "my-app-id", apiKey = "my-api-key", "us")
+
     client.runTest(
       call = { getSource(sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f") },
       intercept = { assertEquals("data.us.algolia.com", it.url.host) },
@@ -195,6 +198,7 @@ class IngestionTest {
   fun `throws when incorrect region is given`() = runTest {
     assertFails {
         val client = IngestionClient(appId = "my-app-id", apiKey = "my-api-key", "not_a_region")
+
       }
       .let { error ->
         assertError(
@@ -227,6 +231,7 @@ class IngestionTest {
               )
           ),
       )
+
     client.runTest(
       call = { customGet(path = "check-api-key/1") },
       response = {

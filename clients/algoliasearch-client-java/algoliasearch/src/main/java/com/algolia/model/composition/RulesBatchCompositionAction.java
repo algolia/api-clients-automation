@@ -22,7 +22,7 @@ public interface RulesBatchCompositionAction {
     public RulesBatchCompositionAction deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
       // deserialize CompositionRule
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("consequence")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(CompositionRule.class);
         } catch (Exception e) {

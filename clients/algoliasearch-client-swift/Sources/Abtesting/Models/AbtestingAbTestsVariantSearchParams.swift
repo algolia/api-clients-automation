@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct AbtestingAbTestsVariantSearchParams: Codable, JSONEncodable {
@@ -40,14 +40,7 @@ public struct AbtestingAbTestsVariantSearchParams: Codable, JSONEncodable {
     }
 }
 
-extension AbtestingAbTestsVariantSearchParams: Equatable {
-    public static func ==(lhs: AbtestingAbTestsVariantSearchParams, rhs: AbtestingAbTestsVariantSearchParams) -> Bool {
-        lhs.index == rhs.index &&
-            lhs.trafficPercentage == rhs.trafficPercentage &&
-            lhs.description == rhs.description &&
-            lhs.customSearchParameters == rhs.customSearchParameters
-    }
-}
+extension AbtestingAbTestsVariantSearchParams: Equatable {}
 
 extension AbtestingAbTestsVariantSearchParams: Hashable {
     public func hash(into hasher: inout Hasher) {

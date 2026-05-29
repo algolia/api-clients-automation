@@ -19,9 +19,14 @@ import kotlinx.serialization.json.*
  * Implementations:
  * - [SearchForFacetValuesResponse]
  * - [SearchResponse]
+ * - [SearchResponsePartial]
  */
 @Serializable(SearchResultSerializer::class)
 public sealed interface SearchResult {
+  @Serializable
+  @JvmInline
+  public value class SearchResponseValue(public val value: SearchResponse) : SearchResult
+
   @Serializable
   @JvmInline
   public value class SearchForFacetValuesResponseValue(
@@ -30,14 +35,17 @@ public sealed interface SearchResult {
 
   @Serializable
   @JvmInline
-  public value class SearchResponseValue(public val value: SearchResponse) : SearchResult
+  public value class SearchResponsePartialValue(public val value: SearchResponsePartial) :
+    SearchResult
 
   public companion object {
+
+    public fun of(value: SearchResponse): SearchResult = SearchResponseValue(value)
 
     public fun of(value: SearchForFacetValuesResponse): SearchResult =
       SearchForFacetValuesResponseValue(value)
 
-    public fun of(value: SearchResponse): SearchResult = SearchResponseValue(value)
+    public fun of(value: SearchResponsePartial): SearchResult = SearchResponsePartialValue(value)
   }
 }
 
@@ -45,9 +53,10 @@ internal class SearchResultSerializer :
   JsonContentPolymorphicSerializer<SearchResult>(SearchResult::class) {
   override fun selectDeserializer(element: JsonElement): DeserializationStrategy<SearchResult> {
     return when {
+      element is JsonObject && element.containsKey("hits") -> SearchResponse.serializer()
       element is JsonObject && element.containsKey("facetHits") ->
         SearchForFacetValuesResponse.serializer()
-      element is JsonObject -> SearchResponse.serializer()
+      element is JsonObject -> SearchResponsePartial.serializer()
       else -> throw AlgoliaClientException("Failed to deserialize json element: $element")
     }
   }

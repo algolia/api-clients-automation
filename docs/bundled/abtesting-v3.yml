@@ -8,7 +8,7 @@ info:
     ## Base URLs
 
 
-    The base URLs for requests to the A/B testing API are:
+    Base URLs for the A/B testing API:
 
 
     - `https://analytics.us.algolia.com`
@@ -33,7 +33,7 @@ info:
     Elevate plans](https://www.algolia.com/pricing).
 
 
-    To authenticate your API requests, add these headers:
+    Add these headers to authenticate requests:
 
 
     - `x-algolia-application-id`. Your Algolia application ID.
@@ -75,8 +75,8 @@ info:
     of attributes in the API response.
 
 
-    Successful responses return a `2xx` status. Client errors return a `4xx`
-    status. Server errors are indicated by a `5xx` status.
+    Successful responses return `2xx` statuses. Client errors return `4xx`
+    statuses. Server errors return `5xx` statuses.
 
     Error responses have a `message` property with more information.
 
@@ -84,7 +84,7 @@ info:
     ## Version
 
 
-    The current version of the A/B Testing API is version 3, as indicated by the
+    The current version of the A/B Testing API is version 3, indicated by the
     `/3/` in each endpoint's URL.
   version: 3.0.0
 servers:
@@ -1101,6 +1101,15 @@ paths:
               type: object
               additionalProperties: false
               properties:
+                endAt:
+                  $ref: '#/components/schemas/endAt'
+                metrics:
+                  type: array
+                  description: >-
+                    A/B test metrics involved in the test. Only these metrics
+                    will be considered when calculating results.
+                  items:
+                    $ref: '#/components/schemas/createMetric'
                 name:
                   $ref: '#/components/schemas/name'
                 variants:
@@ -1109,17 +1118,8 @@ paths:
                   minItems: 2
                   items:
                     $ref: '#/components/schemas/AddABTestsVariant'
-                metrics:
-                  type: array
-                  description: >-
-                    A/B test metrics involved in the test. Only these metrics
-                    will be considered when calculating results.
-                  items:
-                    $ref: '#/components/schemas/createMetric'
                 configuration:
                   $ref: '#/components/schemas/ABTestConfiguration'
-                endAt:
-                  $ref: '#/components/schemas/endAt'
               required:
                 - name
                 - variants
@@ -1516,7 +1516,56 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"name":"Custom ranking sales rank test","variants":[{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"},{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"}],"metrics":[[{"name":"revenue","dimension":"USD"},{"name":"conversionRate"},{"name":"clickThroughRate"},{"name":"trackedSearchCount"}]],"configuration":{"minimumDetectableEffect":{"size":0,"metric":"addToCartRate"},"filters":[{"domain":"abtesting","name":"isOutlier","trackEffects":true,"includes":true}],"errorCorrection":"bonferroni"},"endAt":"2023-06-17T00:00:00Z"}'
+              --data '
+            {
+              "name": "Custom ranking sales rank test",
+              "variants": [
+                {
+                  "index": "delcourt_production",
+                  "trafficPercentage": 60,
+                  "description": "Current production index"
+                },
+                {
+                  "index": "delcourt_production",
+                  "trafficPercentage": 60,
+                  "description": "Current production index"
+                }
+              ],
+              "metrics": [
+                [
+                  {
+                    "name": "revenue",
+                    "dimension": "USD"
+                  },
+                  {
+                    "name": "conversionRate"
+                  },
+                  {
+                    "name": "clickThroughRate"
+                  },
+                  {
+                    "name": "trackedSearchCount"
+                  }
+                ]
+              ],
+              "configuration": {
+                "minimumDetectableEffect": {
+                  "size": 0,
+                  "metric": "addToCartRate"
+                },
+                "filters": [
+                  {
+                    "domain": "abtesting",
+                    "name": "isOutlier",
+                    "trackEffects": true,
+                    "includes": true
+                  }
+                ],
+                "errorCorrection": "bonferroni"
+              },
+              "endAt": "2023-06-17T00:00:00Z"
+            }
+            '
     get:
       tags:
         - abtest
@@ -1526,21 +1575,16 @@ paths:
       summary: List all A/B tests
       description: Lists all A/B tests you configured for this application.
       parameters:
-        - name: offset
+        - name: direction
           in: query
-          description: Position of the first item to return.
-          required: false
+          description: >
+            Sort order for A/B tests by start date.
+
+            Use 'asc' for ascending or 'desc' for descending. Active A/B tests
+            are always listed first.
+          example: desc
           schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - name: limit
-          in: query
-          description: Number of items to return.
-          required: false
-          schema:
-            type: integer
-            default: 10
+            $ref: '#/components/schemas/direction'
         - name: indexPrefix
           in: query
           description: >-
@@ -1557,16 +1601,21 @@ paths:
           example: _development
           schema:
             type: string
-        - name: direction
+        - name: limit
           in: query
-          description: >
-            Sort order for A/B tests by start date.
-
-            Use 'asc' for ascending or 'desc' for descending. Active A/B tests
-            are always listed first.
-          example: desc
+          description: Number of items to return.
+          required: false
           schema:
-            $ref: '#/components/schemas/direction'
+            type: integer
+            default: 10
+        - name: offset
+          in: query
+          description: Position of the first item to return.
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
       responses:
         '200':
           description: OK
@@ -2630,10 +2679,10 @@ paths:
                     A/B test configuration for estimating the sample size and
                     duration using minimum detectable effect.
                   properties:
-                    filters:
-                      $ref: '#/components/schemas/MetricsFilters'
                     minimumDetectableEffect:
                       $ref: '#/components/schemas/MinimumDetectableEffect'
+                    filters:
+                      $ref: '#/components/schemas/MetricsFilters'
                   required:
                     - minimumDetectableEffect
                 variants:
@@ -3048,7 +3097,36 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"configuration":{"filters":[{"domain":"abtesting","name":"isOutlier","trackEffects":true,"includes":true}],"minimumDetectableEffect":{"size":0,"metric":"addToCartRate"}},"variants":[{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"},{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"}]}'
+              --data '
+            {
+              "configuration": {
+                "filters": [
+                  {
+                    "domain": "abtesting",
+                    "name": "isOutlier",
+                    "trackEffects": true,
+                    "includes": true
+                  }
+                ],
+                "minimumDetectableEffect": {
+                  "size": 0,
+                  "metric": "addToCartRate"
+                }
+              },
+              "variants": [
+                {
+                  "index": "delcourt_production",
+                  "trafficPercentage": 60,
+                  "description": "Current production index"
+                },
+                {
+                  "index": "delcourt_production",
+                  "trafficPercentage": 60,
+                  "description": "Current production index"
+                }
+              ]
+            }
+            '
   /3/abtests/{id}/timeseries:
     get:
       tags:
@@ -3060,7 +3138,6 @@ paths:
       description: Retrieves timeseries for an A/B test by its ID.
       parameters:
         - $ref: '#/components/parameters/ID'
-        - $ref: '#/components/parameters/StartDate'
         - $ref: '#/components/parameters/EndDate'
         - in: query
           name: metric
@@ -3071,6 +3148,7 @@ paths:
             type: array
             items:
               $ref: '#/components/schemas/MetricName'
+        - $ref: '#/components/parameters/StartDate'
       responses:
         '200':
           description: OK
@@ -3462,6 +3540,11 @@ components:
       type: object
       description: Metric specific metadata.
       properties:
+        mean:
+          type: number
+          format: double
+          description: Mean value for this metric.
+          example: 53.7
         winsorizedValue:
           type: number
           format: double
@@ -3475,11 +3558,6 @@ components:
             It is tied to a per revenue-currency pair contrary to other
 
             global filter effects (such as outliers and empty search count).
-        mean:
-          type: number
-          format: double
-          description: Mean value for this metric.
-          example: 53.7
       example:
         winsorizedValue: 888.8
         mean: 53.7
@@ -3488,12 +3566,40 @@ components:
       properties:
         name:
           type: string
+        pValue:
+          type: number
+          format: double
+          description: >-
+            PValue for the first variant (control) will always be 0. For the
+            other variants, pValue is calculated for the current variant based
+            on the control.
         updatedAt:
           type: string
           description: Date and time when the metric was last updated, in RFC 3339 format.
         value:
           type: number
           format: double
+        criticalValue:
+          type: number
+          format: double
+          description: >
+            The value that was computed during error correction. It is used to
+            determine significance of the metric pValue.
+
+            The critical value is calculated using Bonferroni or
+            Benjamini-Hochberg corrections, based on the given
+
+            configuration during the A/B test creation.
+        dimension:
+          type: string
+          description: Dimension defined during test creation.
+        metadata:
+          $ref: '#/components/schemas/metricMetadata'
+        significant:
+          type: boolean
+          description: >
+            Whether the pValue is significant or not based on the critical value
+            and the error correction algorithm used.
         valueCIHigh:
           type: number
           format: double
@@ -3524,34 +3630,6 @@ components:
 
             while relative difference is used for continuous metrics (e.g.,
             revenue).
-        pValue:
-          type: number
-          format: double
-          description: >-
-            PValue for the first variant (control) will always be 0. For the
-            other variants, pValue is calculated for the current variant based
-            on the control.
-        dimension:
-          type: string
-          description: Dimension defined during test creation.
-        metadata:
-          $ref: '#/components/schemas/metricMetadata'
-        criticalValue:
-          type: number
-          format: double
-          description: >
-            The value that was computed during error correction. It is used to
-            determine significance of the metric pValue.
-
-            The critical value is calculated using Bonferroni or
-            Benjamini-Hochberg corrections, based on the given
-
-            configuration during the A/B test creation.
-        significant:
-          type: boolean
-          description: >
-            Whether the pValue is significant or not based on the critical value
-            and the error correction algorithm used.
       required:
         - name
         - updatedAt
@@ -3589,24 +3667,6 @@ components:
       type: object
       description: A/B test filter effects resulting from configuration settings.
       properties:
-        outliers:
-          title: outliersFilter
-          type: object
-          description: >-
-            Outliers removed from the A/B test as a result of configuration
-            settings.
-          example:
-            usersCount: 1
-            trackedSearchesCount: 237
-          properties:
-            usersCount:
-              type: integer
-              description: Number of users removed from the A/B test.
-              example: 1
-            trackedSearchesCount:
-              type: integer
-              description: Number of tracked searches removed from the A/B test.
-              example: 237
         emptySearch:
           title: emptySearchFilter
           type: object
@@ -3617,14 +3677,32 @@ components:
             usersCount: 1
             trackedSearchesCount: 237
           properties:
-            usersCount:
-              type: integer
-              description: Number of users removed from the A/B test.
-              example: 1
             trackedSearchesCount:
               type: integer
               description: Number of tracked searches removed from the A/B test.
               example: 237
+            usersCount:
+              type: integer
+              description: Number of users removed from the A/B test.
+              example: 1
+        outliers:
+          title: outliersFilter
+          type: object
+          description: >-
+            Outliers removed from the A/B test as a result of configuration
+            settings.
+          example:
+            usersCount: 1
+            trackedSearchesCount: 237
+          properties:
+            trackedSearchesCount:
+              type: integer
+              description: Number of tracked searches removed from the A/B test.
+              example: 237
+            usersCount:
+              type: integer
+              description: Number of users removed from the A/B test.
+              example: 1
     variantMetadata:
       type: object
       description: Variant specific metadata.
@@ -3637,24 +3715,12 @@ components:
       properties:
         description:
           $ref: '#/components/schemas/description'
-        estimatedSampleSize:
-          type: integer
-          description: >
-            Estimated number of searches required to achieve the desired
-            statistical significance.
-
-
-            The A/B test configuration must include a `minimumDetectableEffect`
-            setting for this number to be included in the response.
-          example: 0
         index:
           $ref: '#/components/schemas/index'
-        trafficPercentage:
-          $ref: '#/components/schemas/trafficPercentage'
         metrics:
           $ref: '#/components/schemas/metrics'
-        metadata:
-          $ref: '#/components/schemas/variantMetadata'
+        trafficPercentage:
+          $ref: '#/components/schemas/trafficPercentage'
         customSearchParameters:
           type: object
           description: >
@@ -3666,6 +3732,18 @@ components:
           example:
             enablePersonalization: true
             personalizationImpact: 50
+        estimatedSampleSize:
+          type: integer
+          description: >
+            Estimated number of searches required to achieve the desired
+            statistical significance.
+
+
+            The A/B test configuration must include a `minimumDetectableEffect`
+            setting for this number to be included in the response.
+          example: 0
+        metadata:
+          $ref: '#/components/schemas/variantMetadata'
       required:
         - index
         - description
@@ -3699,6 +3777,8 @@ components:
         Configuration for the smallest difference between test variants you want
         to detect.
       properties:
+        metric:
+          $ref: '#/components/schemas/EffectMetric'
         size:
           type: number
           format: double
@@ -3709,8 +3789,6 @@ components:
 
             For example, to detect a 10% difference between variants, set this
             value to 0.1.
-        metric:
-          $ref: '#/components/schemas/EffectMetric'
       required:
         - size
         - metric
@@ -3732,12 +3810,12 @@ components:
           type: string
           description: Public metric name.
           example: isOutlier
-        trackEffects:
-          type: boolean
-          description: Whether the experiment should record the effects of this filter.
         includes:
           type: boolean
           description: If true, keep items that match the filter; if false, exclude them.
+        trackEffects:
+          type: boolean
+          description: Whether the experiment should record the effects of this filter.
       required:
         - domain
         - name
@@ -3759,12 +3837,12 @@ components:
       type: object
       description: A/B test configuration.
       properties:
-        minimumDetectableEffect:
-          $ref: '#/components/schemas/MinimumDetectableEffect'
-        filters:
-          $ref: '#/components/schemas/MetricsFilters'
         errorCorrection:
           $ref: '#/components/schemas/ErrorCorrectionType'
+        filters:
+          $ref: '#/components/schemas/MetricsFilters'
+        minimumDetectableEffect:
+          $ref: '#/components/schemas/MinimumDetectableEffect'
     MigratedABTestId:
       type: integer
       description: Unique migrated A/B test identifier.
@@ -3775,24 +3853,24 @@ components:
       properties:
         abTestID:
           $ref: '#/components/schemas/abTestID'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
         createdAt:
           $ref: '#/components/schemas/createdAt'
         endAt:
           $ref: '#/components/schemas/endAt'
-        stoppedAt:
-          $ref: '#/components/schemas/stoppedAt'
         name:
           $ref: '#/components/schemas/name'
         status:
           $ref: '#/components/schemas/Status'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
         variants:
           $ref: '#/components/schemas/variants'
         configuration:
           $ref: '#/components/schemas/ABTestConfiguration'
         migratedAbTestID:
           $ref: '#/components/schemas/MigratedABTestId'
+        stoppedAt:
+          $ref: '#/components/schemas/stoppedAt'
       required:
         - status
         - name
@@ -3886,10 +3964,10 @@ components:
       type: object
       additionalProperties: false
       properties:
-        index:
-          $ref: '#/components/schemas/index'
         abTestID:
           $ref: '#/components/schemas/abTestID'
+        index:
+          $ref: '#/components/schemas/index'
         taskID:
           $ref: '#/components/schemas/taskID'
       required:
@@ -4026,7 +4104,7 @@ components:
         type: integer
     x-ratelimit-reset:
       description: >-
-        Timstamp when the rate limit will reset, measured in seconds since the
+        Timestamp when the rate limit will reset, measured in seconds since the
         Unix epoch.
       example: 1710682486
       schema:

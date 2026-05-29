@@ -56,6 +56,7 @@ func TestSearchapi0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"test"))
@@ -88,6 +89,7 @@ func TestSearchapi1(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 		"indexName"))
@@ -120,6 +122,7 @@ func TestSearchapi2(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"test"))
@@ -156,6 +159,7 @@ func TestSearchapi3(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test/retry/go"))
@@ -190,6 +194,7 @@ func TestSearchapi4(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test/hang/go"))
@@ -229,6 +234,7 @@ func TestSearchapi5(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test/error/go"))
@@ -264,51 +270,23 @@ func TestSearchapi6(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"1/test/gzip").WithParameters(map[string]any{}).WithBody(map[string]any{"message": "this is a compressed body"}))
+		"1/test/gzip",
+	).WithParameters(map[string]any{}).WithBody(map[string]any{"message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."}))
 	require.NoError(t, err)
 	rawBody, err := json.Marshal(res)
 	require.NoError(t, err)
-	require.JSONEq(t, `{"message":"ok compression test server response","body":{"message":"this is a compressed body"}}`, string(rawBody))
+	require.JSONEq(
+		t,
+		`{"message":"ok compression test server response","body":{"message":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."}}`,
+		string(rawBody),
+	)
 }
 
-// calls api with default read timeouts.
+// test the response decompression strategy.
 func TestSearchapi7(t *testing.T) {
-	var (
-		err error
-		res any
-	)
-
-	_ = res
-	client, echo := createSearchClient(t)
-	_ = echo
-	res, err = client.CustomGet(client.NewApiCustomGetRequest(
-		"1/test"))
-	require.NoError(t, err)
-	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
-	require.Equal(t, int64(5000), echo.Timeout.Milliseconds())
-}
-
-// calls api with default write timeouts.
-func TestSearchapi8(t *testing.T) {
-	var (
-		err error
-		res any
-	)
-
-	_ = res
-	client, echo := createSearchClient(t)
-	_ = echo
-	res, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"1/test"))
-	require.NoError(t, err)
-	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
-	require.Equal(t, int64(30000), echo.Timeout.Milliseconds())
-}
-
-// can handle unknown response fields.
-func TestSearchapi9(t *testing.T) {
 	var (
 		err error
 		res any
@@ -328,20 +306,59 @@ func TestSearchapi9(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6686", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6691", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
-	res, err = client.GetSettings(client.NewApiGetSettingsRequest(
-		"cts_e2e_unknownField_go"))
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
+		"1/test/gzip-response"))
 	require.NoError(t, err)
 	rawBody, err := json.Marshal(res)
 	require.NoError(t, err)
-	require.JSONEq(t, `{"minWordSizefor1Typo":12,"minWordSizefor2Typos":13,"hitsPerPage":14}`, string(rawBody))
+	require.JSONEq(
+		t,
+		`{"message":"ok decompression test server response","data":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}`,
+		string(rawBody),
+	)
 }
 
-// can handle unknown response fields inside a nested oneOf.
+// calls api with default read timeouts.
+func TestSearchapi8(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	client, echo := createSearchClient(t)
+	_ = echo
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
+		"1/test"))
+	require.NoError(t, err)
+	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
+	require.Equal(t, int64(5000), echo.Timeout.Milliseconds())
+}
+
+// calls api with default write timeouts.
+func TestSearchapi9(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	client, echo := createSearchClient(t)
+	_ = echo
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
+		"1/test"))
+	require.NoError(t, err)
+	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
+	require.Equal(t, int64(30000), echo.Timeout.Milliseconds())
+}
+
+// can handle unknown response fields.
 func TestSearchapi10(t *testing.T) {
 	var (
 		err error
@@ -366,6 +383,42 @@ func TestSearchapi10(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
+	require.NoError(t, err)
+	res, err = client.GetSettings(client.NewApiGetSettingsRequest(
+		"cts_e2e_unknownField_go"))
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `{"minWordSizefor1Typo":12,"minWordSizefor2Typos":13,"hitsPerPage":14}`, string(rawBody))
+}
+
+// can handle unknown response fields inside a nested oneOf.
+func TestSearchapi11(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6686", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.GetRule(client.NewApiGetRuleRequest(
 		"cts_e2e_unknownFieldNested_go", "ruleObjectID"))
@@ -376,7 +429,7 @@ func TestSearchapi10(t *testing.T) {
 }
 
 // does not retry on success.
-func TestSearchapi11(t *testing.T) {
+func TestSearchapi12(t *testing.T) {
 	var (
 		err error
 		res any
@@ -403,6 +456,7 @@ func TestSearchapi11(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(
@@ -455,7 +509,7 @@ func TestSearchcommonApi1(t *testing.T) {
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, `^Algolia for Go \(4.35.0\).*`, echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.40.0\).*`, echo.Header.Get("User-Agent"))
 }
 
 // call deleteObjects without error.
@@ -483,6 +537,7 @@ func TestSearchdeleteObjects0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.DeleteObjects(
@@ -673,6 +728,7 @@ func TestSearchindexExists0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.IndexExists(
@@ -707,6 +763,7 @@ func TestSearchindexExists1(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.IndexExists(
@@ -741,6 +798,7 @@ func TestSearchindexExists2(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.IndexExists(
 		"indexExistsERROR")
@@ -772,6 +830,7 @@ func TestSearchparameters0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.EqualError(t, err, "`appId` is missing.")
 
 	cfg = search.SearchConfiguration{
@@ -782,6 +841,7 @@ func TestSearchparameters0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.EqualError(t, err, "`appId` is missing.")
 
 	cfg = search.SearchConfiguration{
@@ -792,6 +852,7 @@ func TestSearchparameters0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.EqualError(t, err, "`apiKey` is missing.")
 }
 
@@ -856,6 +917,7 @@ func TestSearchpartialUpdateObjects0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.PartialUpdateObjects(
@@ -893,6 +955,7 @@ func TestSearchpartialUpdateObjects1(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.PartialUpdateObjects(
@@ -922,6 +985,13 @@ func TestSearchpartialUpdateObjectsWithTransformation0(t *testing.T) {
 
 	_ = client
 	_ = echo
+	transformationOptions := search.TransformationOptions{
+		Region: "us",
+		Hosts: []transport.StatefulHost{
+			transport.NewStatefulHost("http", tests.GetLocalhost()+":6688", call.IsReadWrite),
+			transport.NewStatefulHost("http", tests.GetLocalhost()+":6689", call.IsReadWrite),
+		},
+	}
 	cfg = search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
@@ -931,9 +1001,12 @@ func TestSearchpartialUpdateObjectsWithTransformation0(t *testing.T) {
 				transport.NewStatefulHost("http", tests.GetLocalhost()+":6689", call.IsReadWrite),
 			},
 		},
-		Transformation: &search.TransformationConfiguration{Region: "us"},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	err = client.SetTransformationOptions(transformationOptions)
+	require.NoError(t, err)
+
 	require.NoError(t, err)
 	{
 		res, err = client.PartialUpdateObjectsWithTransformation(
@@ -981,6 +1054,7 @@ func TestSearchreplaceAllObjects0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.ReplaceAllObjects(
@@ -1035,6 +1109,7 @@ func TestSearchreplaceAllObjects1(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.ReplaceAllObjects(
@@ -1077,6 +1152,7 @@ func TestSearchreplaceAllObjects2(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.ReplaceAllObjects(
 		"cts_e2e_replace_all_objects_too_big_go",
@@ -1101,15 +1177,22 @@ func TestSearchreplaceAllObjectsWithTransformation0(t *testing.T) {
 
 	_ = client
 	_ = echo
+	transformationOptions := search.TransformationOptions{
+		Region: "us",
+		Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6690", call.IsReadWrite)},
+	}
 	cfg = search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
 			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6690", call.IsReadWrite)},
 		},
-		Transformation: &search.TransformationConfiguration{Region: "us"},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	err = client.SetTransformationOptions(transformationOptions)
+	require.NoError(t, err)
+
 	require.NoError(t, err)
 	{
 		res, err = client.ReplaceAllObjectsWithTransformation(
@@ -1164,6 +1247,7 @@ func TestSearchsaveObjects0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.SaveObjects(
@@ -1201,6 +1285,7 @@ func TestSearchsaveObjects1(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.SaveObjects(
 		"cts_e2e_saveObjects_go",
@@ -1233,6 +1318,7 @@ func TestSearchsaveObjects2(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.SaveObjects(
@@ -1276,6 +1362,7 @@ func TestSearchsaveObjects3(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.SaveObjects(
@@ -1314,6 +1401,13 @@ func TestSearchsaveObjectsWithTransformation0(t *testing.T) {
 
 	_ = client
 	_ = echo
+	transformationOptions := search.TransformationOptions{
+		Region: "us",
+		Hosts: []transport.StatefulHost{
+			transport.NewStatefulHost("http", tests.GetLocalhost()+":6688", call.IsReadWrite),
+			transport.NewStatefulHost("http", tests.GetLocalhost()+":6689", call.IsReadWrite),
+		},
+	}
 	cfg = search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
@@ -1323,9 +1417,12 @@ func TestSearchsaveObjectsWithTransformation0(t *testing.T) {
 				transport.NewStatefulHost("http", tests.GetLocalhost()+":6689", call.IsReadWrite),
 			},
 		},
-		Transformation: &search.TransformationConfiguration{Region: "us"},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	err = client.SetTransformationOptions(transformationOptions)
+	require.NoError(t, err)
+
 	require.NoError(t, err)
 	{
 		res, err = client.SaveObjectsWithTransformation(
@@ -1367,6 +1464,7 @@ func TestSearchsearchSingleIndex0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 		"playlists").WithSearchParams(search.SearchParamsObjectAsSearchParams(
@@ -1399,6 +1497,7 @@ func TestSearchsetClientApiKey0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(
@@ -1448,6 +1547,7 @@ func TestSearchwaitForApiKey0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.WaitForApiKey(
@@ -1488,6 +1588,7 @@ func TestSearchwaitForApiKey1(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.WaitForApiKey(
@@ -1532,6 +1633,7 @@ func TestSearchwaitForApiKey2(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.WaitForApiKey(
@@ -1566,6 +1668,7 @@ func TestSearchwaitForAppTask0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.WaitForAppTask(
@@ -1602,6 +1705,7 @@ func TestSearchwaitForTask0(t *testing.T) {
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.WaitForTask(

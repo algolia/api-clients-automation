@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Represents the required elements of the task input when using a `shopify` source.
@@ -30,12 +30,7 @@ public struct ShopifyInput: Codable, JSONEncodable {
     }
 }
 
-extension ShopifyInput: Equatable {
-    public static func ==(lhs: ShopifyInput, rhs: ShopifyInput) -> Bool {
-        lhs.metafields == rhs.metafields &&
-            lhs.market == rhs.market
-    }
-}
+extension ShopifyInput: Equatable {}
 
 extension ShopifyInput: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct RunProgress: Codable, JSONEncodable {
@@ -29,12 +29,7 @@ public struct RunProgress: Codable, JSONEncodable {
     }
 }
 
-extension RunProgress: Equatable {
-    public static func ==(lhs: RunProgress, rhs: RunProgress) -> Bool {
-        lhs.expectedNbOfEvents == rhs.expectedNbOfEvents &&
-            lhs.receivedNbOfEvents == rhs.receivedNbOfEvents
-    }
-}
+extension RunProgress: Equatable {}
 
 extension RunProgress: Hashable {
     public func hash(into hasher: inout Hasher) {

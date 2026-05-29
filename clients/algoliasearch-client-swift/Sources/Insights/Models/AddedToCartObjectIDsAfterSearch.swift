@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Use this event to track when users add items to their shopping cart after a previous Algolia request. If you're
@@ -35,8 +35,8 @@ public struct AddedToCartObjectIDsAfterSearch: Codable, JSONEncodable {
     /// Extra information about the records involved in a purchase or add-to-cart events.  If provided, it must be the
     /// same length as `objectIDs`.
     public var objectData: [ObjectDataAfterSearch]?
-    /// Timestamp of the event, measured in milliseconds since the Unix epoch. By default, the Insights API uses the
-    /// time it receives an event as its timestamp.
+    /// Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30 days. If not
+    /// provided, we use the time at which the request was received.
     public var timestamp: Int64?
     public var value: InsightsValue?
 
@@ -102,22 +102,7 @@ public struct AddedToCartObjectIDsAfterSearch: Codable, JSONEncodable {
     }
 }
 
-extension AddedToCartObjectIDsAfterSearch: Equatable {
-    public static func ==(lhs: AddedToCartObjectIDsAfterSearch, rhs: AddedToCartObjectIDsAfterSearch) -> Bool {
-        lhs.eventName == rhs.eventName &&
-            lhs.eventType == rhs.eventType &&
-            lhs.eventSubtype == rhs.eventSubtype &&
-            lhs.index == rhs.index &&
-            lhs.queryID == rhs.queryID &&
-            lhs.objectIDs == rhs.objectIDs &&
-            lhs.userToken == rhs.userToken &&
-            lhs.authenticatedUserToken == rhs.authenticatedUserToken &&
-            lhs.currency == rhs.currency &&
-            lhs.objectData == rhs.objectData &&
-            lhs.timestamp == rhs.timestamp &&
-            lhs.value == rhs.value
-    }
-}
+extension AddedToCartObjectIDsAfterSearch: Equatable {}
 
 extension AddedToCartObjectIDsAfterSearch: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// API request body for creating a task.
@@ -21,7 +21,7 @@ public struct TaskCreate: Codable, JSONEncodable {
     /// Maximum accepted percentage of failures for a task run to finish successfully.
     public var failureThreshold: Int?
     public var input: TaskInput?
-    /// Date of the last cursor in RFC 3339 format.
+    /// Date and time when the last cursor was created, in RFC 3339 format.
     public var cursor: String?
     public var notifications: Notifications?
     public var policies: Policies?
@@ -84,21 +84,7 @@ public struct TaskCreate: Codable, JSONEncodable {
     }
 }
 
-extension TaskCreate: Equatable {
-    public static func ==(lhs: TaskCreate, rhs: TaskCreate) -> Bool {
-        lhs.sourceID == rhs.sourceID &&
-            lhs.destinationID == rhs.destinationID &&
-            lhs.action == rhs.action &&
-            lhs.subscriptionAction == rhs.subscriptionAction &&
-            lhs.cron == rhs.cron &&
-            lhs.enabled == rhs.enabled &&
-            lhs.failureThreshold == rhs.failureThreshold &&
-            lhs.input == rhs.input &&
-            lhs.cursor == rhs.cursor &&
-            lhs.notifications == rhs.notifications &&
-            lhs.policies == rhs.policies
-    }
-}
+extension TaskCreate: Equatable {}
 
 extension TaskCreate: Hashable {
     public func hash(into hasher: inout Hasher) {

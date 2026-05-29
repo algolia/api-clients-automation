@@ -1,0 +1,44 @@
+{{> snippets/import}}
+
+import com.algolia.client.model.search.*
+
+fun getUserToken(): String {
+  // Implement your logic here
+  return ""
+}
+
+suspend fun abTestImplementationChecklist() {
+  {{> snippets/init}}
+
+  // Set the query and get the current user token
+  val query = "User search query"
+  val userToken = getUserToken()
+
+  // Set the searchParams
+  val searchParams: SearchParamsObject
+
+  // Is the user token anonymous?
+  if (userToken.isEmpty() || userToken == "YOUR_ANONYMOUS_USER_TOKEN") {
+    // Disable A/B testing for this request
+    searchParams = SearchParamsObject(
+      query = query,
+      enableABTest = false,
+    )
+  } else {
+    // Set the user token to the current user token
+    searchParams = SearchParamsObject(
+      query = query,
+      userToken = userToken,
+    )
+  }
+
+  try {
+    // Perform the searchSingleIndex
+    val result = client.{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+    // SearchSingleIndex results
+    println(result)
+  } catch (err: Exception) {
+    // SearchSingleIndex errors
+    println(err)
+  }
+}

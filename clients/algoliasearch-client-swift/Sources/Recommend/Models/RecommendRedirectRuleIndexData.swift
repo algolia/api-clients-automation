@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Redirect rule data.
@@ -26,11 +26,7 @@ public struct RecommendRedirectRuleIndexData: Codable, JSONEncodable {
     }
 }
 
-extension RecommendRedirectRuleIndexData: Equatable {
-    public static func ==(lhs: RecommendRedirectRuleIndexData, rhs: RecommendRedirectRuleIndexData) -> Bool {
-        lhs.ruleObjectID == rhs.ruleObjectID
-    }
-}
+extension RecommendRedirectRuleIndexData: Equatable {}
 
 extension RecommendRedirectRuleIndexData: Hashable {
     public func hash(into hasher: inout Hasher) {

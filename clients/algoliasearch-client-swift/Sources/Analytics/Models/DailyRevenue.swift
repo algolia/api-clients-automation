@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct DailyRevenue: Codable, JSONEncodable {
@@ -31,12 +31,7 @@ public struct DailyRevenue: Codable, JSONEncodable {
     }
 }
 
-extension DailyRevenue: Equatable {
-    public static func ==(lhs: DailyRevenue, rhs: DailyRevenue) -> Bool {
-        lhs.currencies == rhs.currencies &&
-            lhs.date == rhs.date
-    }
-}
+extension DailyRevenue: Equatable {}
 
 extension DailyRevenue: Hashable {
     public func hash(into hasher: inout Hasher) {

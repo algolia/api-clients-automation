@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Object ID of the record to hide.
@@ -27,11 +27,7 @@ public struct SearchConsequenceHide: Codable, JSONEncodable {
     }
 }
 
-extension SearchConsequenceHide: Equatable {
-    public static func ==(lhs: SearchConsequenceHide, rhs: SearchConsequenceHide) -> Bool {
-        lhs.objectID == rhs.objectID
-    }
-}
+extension SearchConsequenceHide: Equatable {}
 
 extension SearchConsequenceHide: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -71,9 +71,10 @@ type BrowseResponse struct {
 	// Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
 	Hits []Hit `json:"hits"`
 	// Search query.
-	Query string `json:"query"`
+	Query *string `json:"query,omitempty"`
 	// URL-encoded string of all search parameters.
-	Params string `json:"params"`
+	Params     *string             `json:"params,omitempty"`
+	Extensions *ResponseExtensions `json:"extensions,omitempty"`
 	// Cursor to get the next page of the response.  The parameter must match the value returned in the response of a previous request. The last page of the response does not return a `cursor` attribute.
 	Cursor *string `json:"cursor,omitempty"`
 }
@@ -260,6 +261,24 @@ func WithBrowseResponseHitsPerPage(val int32) BrowseResponseOption {
 	}
 }
 
+func WithBrowseResponseQuery(val string) BrowseResponseOption {
+	return func(f *BrowseResponse) {
+		f.Query = &val
+	}
+}
+
+func WithBrowseResponseParams(val string) BrowseResponseOption {
+	return func(f *BrowseResponse) {
+		f.Params = &val
+	}
+}
+
+func WithBrowseResponseExtensions(val ResponseExtensions) BrowseResponseOption {
+	return func(f *BrowseResponse) {
+		f.Extensions = &val
+	}
+}
+
 func WithBrowseResponseCursor(val string) BrowseResponseOption {
 	return func(f *BrowseResponse) {
 		f.Cursor = &val
@@ -270,12 +289,10 @@ func WithBrowseResponseCursor(val string) BrowseResponseOption {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed.
-func NewBrowseResponse(hits []Hit, query string, params string, opts ...BrowseResponseOption) *BrowseResponse {
+func NewBrowseResponse(hits []Hit, opts ...BrowseResponseOption) *BrowseResponse {
 	this := &BrowseResponse{}
-	this.Hits = hits
-	this.Query = query
 
-	this.Params = params
+	this.Hits = hits
 	for _, opt := range opts {
 		opt(this)
 	}
@@ -1436,58 +1453,113 @@ func (o *BrowseResponse) SetHits(v []Hit) *BrowseResponse {
 	return o
 }
 
-// GetQuery returns the Query field value.
+// GetQuery returns the Query field value if set, zero value otherwise.
 func (o *BrowseResponse) GetQuery() string {
-	if o == nil {
+	if o == nil || o.Query == nil {
 		var ret string
 
 		return ret
 	}
 
-	return o.Query
+	return *o.Query
 }
 
-// GetQueryOk returns a tuple with the Query field value
+// GetQueryOk returns a tuple with the Query field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrowseResponse) GetQueryOk() (*string, bool) {
-	if o == nil {
+	if o == nil || o.Query == nil {
 		return nil, false
 	}
 
-	return &o.Query, true
+	return o.Query, true
 }
 
-// SetQuery sets field value.
+// HasQuery returns a boolean if a field has been set.
+func (o *BrowseResponse) HasQuery() bool {
+	if o != nil && o.Query != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetQuery gets a reference to the given string and assigns it to the Query field.
 func (o *BrowseResponse) SetQuery(v string) *BrowseResponse {
-	o.Query = v
+	o.Query = &v
 
 	return o
 }
 
-// GetParams returns the Params field value.
+// GetParams returns the Params field value if set, zero value otherwise.
 func (o *BrowseResponse) GetParams() string {
-	if o == nil {
+	if o == nil || o.Params == nil {
 		var ret string
 
 		return ret
 	}
 
-	return o.Params
+	return *o.Params
 }
 
-// GetParamsOk returns a tuple with the Params field value
+// GetParamsOk returns a tuple with the Params field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrowseResponse) GetParamsOk() (*string, bool) {
-	if o == nil {
+	if o == nil || o.Params == nil {
 		return nil, false
 	}
 
-	return &o.Params, true
+	return o.Params, true
 }
 
-// SetParams sets field value.
+// HasParams returns a boolean if a field has been set.
+func (o *BrowseResponse) HasParams() bool {
+	if o != nil && o.Params != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetParams gets a reference to the given string and assigns it to the Params field.
 func (o *BrowseResponse) SetParams(v string) *BrowseResponse {
-	o.Params = v
+	o.Params = &v
+
+	return o
+}
+
+// GetExtensions returns the Extensions field value if set, zero value otherwise.
+func (o *BrowseResponse) GetExtensions() ResponseExtensions {
+	if o == nil || o.Extensions == nil {
+		var ret ResponseExtensions
+
+		return ret
+	}
+
+	return *o.Extensions
+}
+
+// GetExtensionsOk returns a tuple with the Extensions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BrowseResponse) GetExtensionsOk() (*ResponseExtensions, bool) {
+	if o == nil || o.Extensions == nil {
+		return nil, false
+	}
+
+	return o.Extensions, true
+}
+
+// HasExtensions returns a boolean if a field has been set.
+func (o *BrowseResponse) HasExtensions() bool {
+	if o != nil && o.Extensions != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetExtensions gets a reference to the given ResponseExtensions and assigns it to the Extensions field.
+func (o *BrowseResponse) SetExtensions(v *ResponseExtensions) *BrowseResponse {
+	o.Extensions = v
 
 	return o
 }
@@ -1652,9 +1724,18 @@ func (o BrowseResponse) MarshalJSON() ([]byte, error) {
 	}
 
 	toSerialize["hits"] = o.Hits
-	toSerialize["query"] = o.Query
+	if o.Query != nil {
+		toSerialize["query"] = o.Query
+	}
 
-	toSerialize["params"] = o.Params
+	if o.Params != nil {
+		toSerialize["params"] = o.Params
+	}
+
+	if o.Extensions != nil {
+		toSerialize["extensions"] = o.Extensions
+	}
+
 	if o.Cursor != nil {
 		toSerialize["cursor"] = o.Cursor
 	}
@@ -1702,6 +1783,7 @@ func (o BrowseResponse) String() string {
 	out += fmt.Sprintf("  hits=%v\n", o.Hits)
 	out += fmt.Sprintf("  query=%v\n", o.Query)
 	out += fmt.Sprintf("  params=%v\n", o.Params)
+	out += fmt.Sprintf("  extensions=%v\n", o.Extensions)
 	out += fmt.Sprintf("  cursor=%v\n", o.Cursor)
 
 	return fmt.Sprintf("BrowseResponse {\n%s}", out)

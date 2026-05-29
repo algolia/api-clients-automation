@@ -73,6 +73,10 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
+      end
 
       path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
@@ -114,6 +118,10 @@ module Algolia
     def custom_get_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
+      end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
         raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
@@ -158,6 +166,10 @@ module Algolia
     def custom_post_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
+      end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
         raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
@@ -205,6 +217,10 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
+      end
 
       path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
@@ -248,6 +264,10 @@ module Algolia
     def delete_composition_with_http_info(composition_id, request_options = {})
       # verify the required parameter 'composition_id' is set
       if @api_client.config.client_side_validation && composition_id.nil?
+        raise ArgumentError, "Parameter `composition_id` is required when calling `delete_composition`."
+      end
+      # verify the required parameter 'composition_id' is not empty
+      if @api_client.config.client_side_validation && composition_id.empty?
         raise ArgumentError, "Parameter `composition_id` is required when calling `delete_composition`."
       end
 
@@ -298,8 +318,16 @@ module Algolia
       if @api_client.config.client_side_validation && composition_id.nil?
         raise ArgumentError, "Parameter `composition_id` is required when calling `delete_composition_rule`."
       end
+      # verify the required parameter 'composition_id' is not empty
+      if @api_client.config.client_side_validation && composition_id.empty?
+        raise ArgumentError, "Parameter `composition_id` is required when calling `delete_composition_rule`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `delete_composition_rule`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `delete_composition_rule`."
       end
 
@@ -348,6 +376,10 @@ module Algolia
     def get_composition_with_http_info(composition_id, request_options = {})
       # verify the required parameter 'composition_id' is set
       if @api_client.config.client_side_validation && composition_id.nil?
+        raise ArgumentError, "Parameter `composition_id` is required when calling `get_composition`."
+      end
+      # verify the required parameter 'composition_id' is not empty
+      if @api_client.config.client_side_validation && composition_id.empty?
         raise ArgumentError, "Parameter `composition_id` is required when calling `get_composition`."
       end
 
@@ -400,8 +432,16 @@ module Algolia
       if @api_client.config.client_side_validation && composition_id.nil?
         raise ArgumentError, "Parameter `composition_id` is required when calling `get_rule`."
       end
+      # verify the required parameter 'composition_id' is not empty
+      if @api_client.config.client_side_validation && composition_id.empty?
+        raise ArgumentError, "Parameter `composition_id` is required when calling `get_rule`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `get_rule`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `get_rule`."
       end
 
@@ -455,6 +495,10 @@ module Algolia
     def get_task_with_http_info(composition_id, task_id, request_options = {})
       # verify the required parameter 'composition_id' is set
       if @api_client.config.client_side_validation && composition_id.nil?
+        raise ArgumentError, "Parameter `composition_id` is required when calling `get_task`."
+      end
+      # verify the required parameter 'composition_id' is not empty
+      if @api_client.config.client_side_validation && composition_id.empty?
         raise ArgumentError, "Parameter `composition_id` is required when calling `get_task`."
       end
       # verify the required parameter 'task_id' is set
@@ -608,6 +652,10 @@ module Algolia
       if @api_client.config.client_side_validation && composition_id.nil?
         raise ArgumentError, "Parameter `composition_id` is required when calling `put_composition`."
       end
+      # verify the required parameter 'composition_id' is not empty
+      if @api_client.config.client_side_validation && composition_id.empty?
+        raise ArgumentError, "Parameter `composition_id` is required when calling `put_composition`."
+      end
       # verify the required parameter 'composition' is set
       if @api_client.config.client_side_validation && composition.nil?
         raise ArgumentError, "Parameter `composition` is required when calling `put_composition`."
@@ -662,8 +710,16 @@ module Algolia
       if @api_client.config.client_side_validation && composition_id.nil?
         raise ArgumentError, "Parameter `composition_id` is required when calling `put_composition_rule`."
       end
+      # verify the required parameter 'composition_id' is not empty
+      if @api_client.config.client_side_validation && composition_id.empty?
+        raise ArgumentError, "Parameter `composition_id` is required when calling `put_composition_rule`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `put_composition_rule`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `put_composition_rule`."
       end
       # verify the required parameter 'composition_rule' is set
@@ -724,6 +780,10 @@ module Algolia
       if @api_client.config.client_side_validation && composition_id.nil?
         raise ArgumentError, "Parameter `composition_id` is required when calling `save_rules`."
       end
+      # verify the required parameter 'composition_id' is not empty
+      if @api_client.config.client_side_validation && composition_id.empty?
+        raise ArgumentError, "Parameter `composition_id` is required when calling `save_rules`."
+      end
       # verify the required parameter 'rules' is set
       if @api_client.config.client_side_validation && rules.nil?
         raise ArgumentError, "Parameter `rules` is required when calling `save_rules`."
@@ -778,6 +838,10 @@ module Algolia
     def search_with_http_info(composition_id, request_body, request_options = {})
       # verify the required parameter 'composition_id' is set
       if @api_client.config.client_side_validation && composition_id.nil?
+        raise ArgumentError, "Parameter `composition_id` is required when calling `search`."
+      end
+      # verify the required parameter 'composition_id' is not empty
+      if @api_client.config.client_side_validation && composition_id.empty?
         raise ArgumentError, "Parameter `composition_id` is required when calling `search`."
       end
       # verify the required parameter 'request_body' is set
@@ -835,6 +899,10 @@ module Algolia
     )
       # verify the required parameter 'composition_id' is set
       if @api_client.config.client_side_validation && composition_id.nil?
+        raise ArgumentError, "Parameter `composition_id` is required when calling `search_composition_rules`."
+      end
+      # verify the required parameter 'composition_id' is not empty
+      if @api_client.config.client_side_validation && composition_id.empty?
         raise ArgumentError, "Parameter `composition_id` is required when calling `search_composition_rules`."
       end
 
@@ -899,8 +967,16 @@ module Algolia
       if @api_client.config.client_side_validation && composition_id.nil?
         raise ArgumentError, "Parameter `composition_id` is required when calling `search_for_facet_values`."
       end
+      # verify the required parameter 'composition_id' is not empty
+      if @api_client.config.client_side_validation && composition_id.empty?
+        raise ArgumentError, "Parameter `composition_id` is required when calling `search_for_facet_values`."
+      end
       # verify the required parameter 'facet_name' is set
       if @api_client.config.client_side_validation && facet_name.nil?
+        raise ArgumentError, "Parameter `facet_name` is required when calling `search_for_facet_values`."
+      end
+      # verify the required parameter 'facet_name' is not empty
+      if @api_client.config.client_side_validation && facet_name.empty?
         raise ArgumentError, "Parameter `facet_name` is required when calling `search_for_facet_values`."
       end
 
@@ -947,7 +1023,7 @@ module Algolia
       )
     end
 
-    # Updates the \"sortingStrategy\" field of an existing composition. This endpoint allows you to create a new sorting strategy mapping or replace the currently configured one. The provided sorting indices MUST be associated indices or replicas of the main targeted index.  WARNING: This endpoint cannot validate if the sort index is related to the composition's main index.   Validation will fail at runtime if the index you updated is not related!  The update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.
+    # Updates the \"sortingStrategy\" field of an existing composition. This endpoint lets you create a new sorting strategy mapping or replace the configured one. The provided sorting indices must be associated indices or replicas of the main targeted index.  This endpoint can't validate whether the sort index is related to the composition's main index. Validation fails at runtime if the index you updated isn't related.  The update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.
     #
     # Required API Key ACLs:
     #   - editSettings
@@ -958,6 +1034,13 @@ module Algolia
     def update_sorting_strategy_composition_with_http_info(composition_id, request_body, request_options = {})
       # verify the required parameter 'composition_id' is set
       if @api_client.config.client_side_validation && composition_id.nil?
+        raise(
+          ArgumentError,
+          "Parameter `composition_id` is required when calling `update_sorting_strategy_composition`."
+        )
+      end
+      # verify the required parameter 'composition_id' is not empty
+      if @api_client.config.client_side_validation && composition_id.empty?
         raise(
           ArgumentError,
           "Parameter `composition_id` is required when calling `update_sorting_strategy_composition`."
@@ -990,7 +1073,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Updates the \"sortingStrategy\" field of an existing composition. This endpoint allows you to create a new sorting strategy mapping or replace the currently configured one. The provided sorting indices MUST be associated indices or replicas of the main targeted index.  WARNING: This endpoint cannot validate if the sort index is related to the composition's main index.   Validation will fail at runtime if the index you updated is not related!  The update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.
+    # Updates the \"sortingStrategy\" field of an existing composition. This endpoint lets you create a new sorting strategy mapping or replace the configured one. The provided sorting indices must be associated indices or replicas of the main targeted index.  This endpoint can't validate whether the sort index is related to the composition's main index. Validation fails at runtime if the index you updated isn't related.  The update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.
     #
     # Required API Key ACLs:
     #   - editSettings

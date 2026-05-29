@@ -4,8 +4,8 @@ import XCTest
 
 import Utils
 
-@testable import Core
-@testable import Search
+@testable import AlgoliaCore
+@testable import AlgoliaSearch
 
 final class SearchClientClientTests: XCTestCase {
     let APPLICATION_ID = "my_application_id"
@@ -134,17 +134,38 @@ final class SearchClientClientTests: XCTestCase {
         let response = try await client.customPost(
             path: "1/test/gzip",
             parameters: [String: AnyCodable](),
-            body: ["message": "this is a compressed body"]
+            body: [
+                "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien.",
+            ]
         )
 
         XTCJSONEquals(
             received: response,
-            expected: "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this is a compressed body\"}}"
+            expected: "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien.\"}}"
+        )
+    }
+
+    /// test the response decompression strategy
+    func testApiTest7() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6691")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.customGet(path: "1/test/gzip-response")
+
+        XTCJSONEquals(
+            received: response,
+            expected: "{\"message\":\"ok decompression test server response\",\"data\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"}"
         )
     }
 
     /// calls api with default read timeouts
-    func testApiTest7() async throws {
+    func testApiTest8() async throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -157,7 +178,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// calls api with default write timeouts
-    func testApiTest8() async throws {
+    func testApiTest9() async throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -170,7 +191,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// can handle unknown response fields
-    func testApiTest9() async throws {
+    func testApiTest10() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
@@ -189,7 +210,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// can handle unknown response fields inside a nested oneOf
-    func testApiTest10() async throws {
+    func testApiTest11() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
@@ -208,7 +229,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// does not retry on success
-    func testApiTest11() async throws {
+    func testApiTest12() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
@@ -262,7 +283,7 @@ final class SearchClientClientTests: XCTestCase {
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
-        let pattern = "^Algolia for Swift \\(9.37.4\\).*"
+        let pattern = "^Algolia for Swift \\(9.43.2\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
@@ -291,7 +312,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// api key basic
-    func testGenerateSecuredApiKeyTest0() async throws {
+    func testGenerateSecuredApiKeyTest0() throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -310,7 +331,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// with searchParams
-    func testGenerateSecuredApiKeyTest1() async throws {
+    func testGenerateSecuredApiKeyTest1() throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -346,7 +367,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// with filters
-    func testGenerateSecuredApiKeyTest2() async throws {
+    func testGenerateSecuredApiKeyTest2() throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -362,7 +383,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// with visible_by filter
-    func testGenerateSecuredApiKeyTest3() async throws {
+    func testGenerateSecuredApiKeyTest3() throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -376,7 +397,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// with userID
-    func testGenerateSecuredApiKeyTest4() async throws {
+    func testGenerateSecuredApiKeyTest4() throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -390,7 +411,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// mcm with filters
-    func testGenerateSecuredApiKeyTest5() async throws {
+    func testGenerateSecuredApiKeyTest5() throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -404,7 +425,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// mcm with user token
-    func testGenerateSecuredApiKeyTest6() async throws {
+    func testGenerateSecuredApiKeyTest6() throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -474,7 +495,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// client throws with invalid parameters
-    func testParametersTest0() async throws {
+    func testParametersTest0() throws {
         do {
             let configuration = try SearchClientConfiguration(appID: "", apiKey: "")
             let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
@@ -505,14 +526,14 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// `addApiKey` throws with invalid parameters
-    func testParametersTest1() async throws {
+    func testParametersTest1() throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
     }
 
     /// `addOrUpdateObject` throws with invalid parameters
-    func testParametersTest2() async throws {
+    func testParametersTest2() throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)

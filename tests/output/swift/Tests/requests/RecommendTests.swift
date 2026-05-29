@@ -4,8 +4,8 @@ import XCTest
 
 import Utils
 
-@testable import Core
-@testable import Recommend
+@testable import AlgoliaCore
+@testable import AlgoliaRecommend
 
 final class RecommendClientRequestsTests: XCTestCase {
     static let APPLICATION_ID = "my_application_id"

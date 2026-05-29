@@ -4,8 +4,8 @@ import XCTest
 
 import Utils
 
-@testable import Core
-@testable import Personalization
+@testable import AlgoliaCore
+@testable import AlgoliaPersonalization
 
 final class PersonalizationClientRequestsTests: XCTestCase {
     static let APPLICATION_ID = "my_application_id"

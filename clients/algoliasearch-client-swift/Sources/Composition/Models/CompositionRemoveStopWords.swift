@@ -2,13 +2,13 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Removes stop words from the search query.  Stop words are common words like articles, conjunctions, prepositions, or
-/// pronouns that have little or no meaning on their own. In English, \"the\", \"a\", or \"and\" are stop words.  You
-/// should only use this feature for the languages used in your index.
+/// pronouns that have little or no meaning on their own. In English, \"the\", \"a\", or \"and\" are stop words.  Only
+/// use this feature for the languages used in your index.
 public enum CompositionRemoveStopWords: Codable, JSONEncodable, AbstractEncodable {
     case arrayOfCompositionSupportedLanguage([CompositionSupportedLanguage])
     case bool(Bool)

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Configuration for handling outliers.
@@ -27,11 +27,7 @@ public struct Outliers: Codable, JSONEncodable {
     }
 }
 
-extension Outliers: Equatable {
-    public static func ==(lhs: Outliers, rhs: Outliers) -> Bool {
-        lhs.exclude == rhs.exclude
-    }
-}
+extension Outliers: Equatable {}
 
 extension Outliers: Hashable {
     public func hash(into hasher: inout Hasher) {

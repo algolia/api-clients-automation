@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Response, taskID, and deletion timestamp.
@@ -34,12 +34,7 @@ public struct RecommendDeletedAtResponse: Codable, JSONEncodable {
     }
 }
 
-extension RecommendDeletedAtResponse: Equatable {
-    public static func ==(lhs: RecommendDeletedAtResponse, rhs: RecommendDeletedAtResponse) -> Bool {
-        lhs.taskID == rhs.taskID &&
-            lhs.deletedAt == rhs.deletedAt
-    }
-}
+extension RecommendDeletedAtResponse: Equatable {}
 
 extension RecommendDeletedAtResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// The response of the Insights API.
@@ -32,12 +32,7 @@ public struct EventsResponse: Codable, JSONEncodable {
     }
 }
 
-extension EventsResponse: Equatable {
-    public static func ==(lhs: EventsResponse, rhs: EventsResponse) -> Bool {
-        lhs.message == rhs.message &&
-            lhs.status == rhs.status
-    }
-}
+extension EventsResponse: Equatable {}
 
 extension EventsResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

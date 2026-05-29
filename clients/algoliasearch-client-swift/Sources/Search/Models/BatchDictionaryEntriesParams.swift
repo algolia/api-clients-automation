@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Request body for updating dictionary entries.
@@ -32,12 +32,7 @@ public struct BatchDictionaryEntriesParams: Codable, JSONEncodable {
     }
 }
 
-extension BatchDictionaryEntriesParams: Equatable {
-    public static func ==(lhs: BatchDictionaryEntriesParams, rhs: BatchDictionaryEntriesParams) -> Bool {
-        lhs.clearExistingDictionaryEntries == rhs.clearExistingDictionaryEntries &&
-            lhs.requests == rhs.requests
-    }
-}
+extension BatchDictionaryEntriesParams: Equatable {}
 
 extension BatchDictionaryEntriesParams: Hashable {
     public func hash(into hasher: inout Hasher) {

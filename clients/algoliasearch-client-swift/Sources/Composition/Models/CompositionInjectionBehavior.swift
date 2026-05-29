@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// An object containing an `injection` behavior.
@@ -26,11 +26,7 @@ public struct CompositionInjectionBehavior: Codable, JSONEncodable {
     }
 }
 
-extension CompositionInjectionBehavior: Equatable {
-    public static func ==(lhs: CompositionInjectionBehavior, rhs: CompositionInjectionBehavior) -> Bool {
-        lhs.injection == rhs.injection
-    }
-}
+extension CompositionInjectionBehavior: Equatable {}
 
 extension CompositionInjectionBehavior: Hashable {
     public func hash(into hasher: inout Hasher) {

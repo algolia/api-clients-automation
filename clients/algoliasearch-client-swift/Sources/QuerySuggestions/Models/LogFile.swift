@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct LogFile: Codable, JSONEncodable {
@@ -46,14 +46,7 @@ public struct LogFile: Codable, JSONEncodable {
     }
 }
 
-extension LogFile: Equatable {
-    public static func ==(lhs: LogFile, rhs: LogFile) -> Bool {
-        lhs.timestamp == rhs.timestamp &&
-            lhs.level == rhs.level &&
-            lhs.message == rhs.message &&
-            lhs.contextLevel == rhs.contextLevel
-    }
-}
+extension LogFile: Equatable {}
 
 extension LogFile: Hashable {
     public func hash(into hasher: inout Hasher) {

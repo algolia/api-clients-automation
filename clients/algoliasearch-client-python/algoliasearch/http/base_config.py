@@ -1,5 +1,5 @@
 from os import environ
-from typing import Dict, Optional
+from typing import Dict, Literal, Optional
 
 from algoliasearch.http.hosts import HostsCollection
 from algoliasearch.http.user_agent import UserAgent
@@ -29,6 +29,9 @@ class BaseConfig:
         self.hosts: Optional[HostsCollection] = None
 
         self._user_agent: UserAgent = UserAgent()
+
+        self.compression_type: Optional[Literal["gzip"]] = None
+        self.compression_threshold: int = 750
 
     def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""

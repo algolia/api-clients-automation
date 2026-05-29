@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Adds the provided metadata to each injected hit via an `_extra` attribute.
@@ -32,12 +32,7 @@ public struct InjectedItemHitsMetadata: Codable, JSONEncodable {
     }
 }
 
-extension InjectedItemHitsMetadata: Equatable {
-    public static func ==(lhs: InjectedItemHitsMetadata, rhs: InjectedItemHitsMetadata) -> Bool {
-        lhs.addItemKey == rhs.addItemKey &&
-            lhs.extra == rhs.extra
-    }
-}
+extension InjectedItemHitsMetadata: Equatable {}
 
 extension InjectedItemHitsMetadata: Hashable {
     public func hash(into hasher: inout Hasher) {

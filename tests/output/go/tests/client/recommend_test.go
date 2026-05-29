@@ -55,6 +55,7 @@ func TestRecommendapi0(t *testing.T) {
 		},
 	}
 	client, err = recommend.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"test"))
@@ -87,6 +88,7 @@ func TestRecommendapi1(t *testing.T) {
 		},
 	}
 	client, err = recommend.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"test"))
@@ -127,7 +129,7 @@ func TestRecommendcommonApi1(t *testing.T) {
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, `^Algolia for Go \(4.35.0\).*`, echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.40.0\).*`, echo.Header.Get("User-Agent"))
 }
 
 // switch API key.
@@ -155,6 +157,7 @@ func TestRecommendsetClientApiKey0(t *testing.T) {
 		},
 	}
 	client, err = recommend.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(

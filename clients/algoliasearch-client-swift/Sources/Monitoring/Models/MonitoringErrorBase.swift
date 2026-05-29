@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Error.
@@ -71,12 +71,7 @@ public struct MonitoringErrorBase: Codable, JSONEncodable {
     }
 }
 
-extension MonitoringErrorBase: Equatable {
-    public static func ==(lhs: MonitoringErrorBase, rhs: MonitoringErrorBase) -> Bool {
-        lhs.message == rhs.message
-            && lhs.additionalProperties == rhs.additionalProperties
-    }
-}
+extension MonitoringErrorBase: Equatable {}
 
 extension MonitoringErrorBase: Hashable {
     public func hash(into hasher: inout Hasher) {

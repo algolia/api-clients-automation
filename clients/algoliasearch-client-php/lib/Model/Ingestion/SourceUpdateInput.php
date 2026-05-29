@@ -39,6 +39,8 @@ class SourceUpdateInput extends AbstractModel implements ModelInterface, \ArrayA
         'customSQLRequest' => 'string',
         'configuration' => 'object',
         'featureFlags' => 'array<string,mixed>',
+        'indexName' => 'string',
+        'filters' => 'string',
     ];
 
     /**
@@ -66,6 +68,8 @@ class SourceUpdateInput extends AbstractModel implements ModelInterface, \ArrayA
         'customSQLRequest' => null,
         'configuration' => null,
         'featureFlags' => null,
+        'indexName' => null,
+        'filters' => null,
     ];
 
     /**
@@ -94,6 +98,8 @@ class SourceUpdateInput extends AbstractModel implements ModelInterface, \ArrayA
         'customSQLRequest' => 'customSQLRequest',
         'configuration' => 'configuration',
         'featureFlags' => 'featureFlags',
+        'indexName' => 'indexName',
+        'filters' => 'filters',
     ];
 
     /**
@@ -121,6 +127,8 @@ class SourceUpdateInput extends AbstractModel implements ModelInterface, \ArrayA
         'customSQLRequest' => 'setCustomSQLRequest',
         'configuration' => 'setConfiguration',
         'featureFlags' => 'setFeatureFlags',
+        'indexName' => 'setIndexName',
+        'filters' => 'setFilters',
     ];
 
     /**
@@ -148,6 +156,8 @@ class SourceUpdateInput extends AbstractModel implements ModelInterface, \ArrayA
         'customSQLRequest' => 'getCustomSQLRequest',
         'configuration' => 'getConfiguration',
         'featureFlags' => 'getFeatureFlags',
+        'indexName' => 'getIndexName',
+        'filters' => 'getFilters',
     ];
 
     /**
@@ -220,6 +230,12 @@ class SourceUpdateInput extends AbstractModel implements ModelInterface, \ArrayA
         }
         if (isset($data['featureFlags'])) {
             $this->container['featureFlags'] = $data['featureFlags'];
+        }
+        if (isset($data['indexName'])) {
+            $this->container['indexName'] = $data['indexName'];
+        }
+        if (isset($data['filters'])) {
+            $this->container['filters'] = $data['filters'];
         }
     }
 
@@ -765,6 +781,54 @@ class SourceUpdateInput extends AbstractModel implements ModelInterface, \ArrayA
     public function setFeatureFlags($featureFlags)
     {
         $this->container['featureFlags'] = $featureFlags;
+
+        return $this;
+    }
+
+    /**
+     * Gets indexName.
+     *
+     * @return null|string
+     */
+    public function getIndexName()
+    {
+        return $this->container['indexName'] ?? null;
+    }
+
+    /**
+     * Sets indexName.
+     *
+     * @param null|string $indexName name of the Algolia index to read records from
+     *
+     * @return self
+     */
+    public function setIndexName($indexName)
+    {
+        $this->container['indexName'] = $indexName;
+
+        return $this;
+    }
+
+    /**
+     * Gets filters.
+     *
+     * @return null|string
+     */
+    public function getFilters()
+    {
+        return $this->container['filters'] ?? null;
+    }
+
+    /**
+     * Sets filters.
+     *
+     * @param null|string $filters SQL-like filter expression applied while browsing the source index. See [filters](https://www.algolia.com/doc/api-reference/api-parameters/filters/).
+     *
+     * @return self
+     */
+    public function setFilters($filters)
+    {
+        $this->container['filters'] = $filters;
 
         return $this;
     }

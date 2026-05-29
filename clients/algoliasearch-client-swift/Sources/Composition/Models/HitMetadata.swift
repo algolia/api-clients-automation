@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// An object that contains the extra key-value pairs provided in the injectedItem definition.
@@ -72,12 +72,7 @@ public struct HitMetadata: Codable, JSONEncodable {
     }
 }
 
-extension HitMetadata: Equatable {
-    public static func ==(lhs: HitMetadata, rhs: HitMetadata) -> Bool {
-        lhs.injectedItemKey == rhs.injectedItemKey
-            && lhs.additionalProperties == rhs.additionalProperties
-    }
-}
+extension HitMetadata: Equatable {}
 
 extension HitMetadata: Hashable {
     public func hash(into hasher: inout Hasher) {

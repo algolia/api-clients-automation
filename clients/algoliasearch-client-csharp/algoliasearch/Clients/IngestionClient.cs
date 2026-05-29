@@ -357,7 +357,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Creates a new task using the v1 endpoint, please use `createTask` instead.
+  /// Creates a new task using the v1 endpoint. Use `createTask` instead.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -379,7 +379,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Creates a new task using the v1 endpoint, please use `createTask` instead. (Synchronous version)
+  /// Creates a new task using the v1 endpoint. Use `createTask` instead. (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -401,7 +401,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Creates a new task using the v1 endpoint, please use `createTask` instead.
+  /// Creates a new task using the v1 endpoint. Use `createTask` instead.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -423,7 +423,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Creates a new task using the v1 endpoint, please use `createTask` instead. (Synchronous version)
+  /// Creates a new task using the v1 endpoint. Use `createTask` instead. (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1169,7 +1169,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+  /// Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1191,7 +1191,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead. (Synchronous version)
+  /// Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead. (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1213,7 +1213,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+  /// Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1235,7 +1235,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead. (Synchronous version)
+  /// Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead. (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1425,7 +1425,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Disables a task using the v1 endpoint, please use `disableTask` instead.
+  /// Disables a task using the v1 endpoint. Use `disableTask` instead.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1447,7 +1447,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Disables a task using the v1 endpoint, please use `disableTask` instead. (Synchronous version)
+  /// Disables a task using the v1 endpoint. Use `disableTask` instead. (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1469,7 +1469,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Disables a task using the v1 endpoint, please use `disableTask` instead.
+  /// Disables a task using the v1 endpoint. Use `disableTask` instead.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1491,7 +1491,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Disables a task using the v1 endpoint, please use `disableTask` instead. (Synchronous version)
+  /// Disables a task using the v1 endpoint. Use `disableTask` instead. (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1597,7 +1597,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Enables a task using the v1 endpoint, please use `enableTask` instead.
+  /// Enables a task using the v1 endpoint. Use `enableTask` instead.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1619,7 +1619,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Enables a task using the v1 endpoint, please use `enableTask` instead. (Synchronous version)
+  /// Enables a task using the v1 endpoint. Use `enableTask` instead. (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1641,7 +1641,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Enables a task using the v1 endpoint, please use `enableTask` instead.
+  /// Enables a task using the v1 endpoint. Use `enableTask` instead.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1663,7 +1663,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Enables a task using the v1 endpoint, please use `enableTask` instead. (Synchronous version)
+  /// Enables a task using the v1 endpoint. Use `enableTask` instead. (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -2197,7 +2197,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+  /// Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -2219,7 +2219,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead. (Synchronous version)
+  /// Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead. (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -2241,7 +2241,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+  /// Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -2263,7 +2263,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead. (Synchronous version)
+  /// Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead. (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -2787,8 +2787,8 @@ public partial interface IIngestionClient
   /// <param name="taskID">Task ID for filtering the list of task runs. (optional)</param>
   /// <param name="sort">Property by which to sort the list of task runs. (optional)</param>
   /// <param name="order">Sort order of the response, ascending or descending. (optional)</param>
-  /// <param name="startDate">Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used. (optional)</param>
-  /// <param name="endDate">Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used. (optional)</param>
+  /// <param name="startDate">Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used. (optional)</param>
+  /// <param name="endDate">Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used. (optional)</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
@@ -2824,8 +2824,8 @@ public partial interface IIngestionClient
   /// <param name="taskID">Task ID for filtering the list of task runs. (optional)</param>
   /// <param name="sort">Property by which to sort the list of task runs. (optional)</param>
   /// <param name="order">Sort order of the response, ascending or descending. (optional)</param>
-  /// <param name="startDate">Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used. (optional)</param>
-  /// <param name="endDate">Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used. (optional)</param>
+  /// <param name="startDate">Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used. (optional)</param>
+  /// <param name="endDate">Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used. (optional)</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
@@ -2861,8 +2861,8 @@ public partial interface IIngestionClient
   /// <param name="taskID">Task ID for filtering the list of task runs. (optional)</param>
   /// <param name="sort">Property by which to sort the list of task runs. (optional)</param>
   /// <param name="order">Sort order of the response, ascending or descending. (optional)</param>
-  /// <param name="startDate">Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used. (optional)</param>
-  /// <param name="endDate">Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used. (optional)</param>
+  /// <param name="startDate">Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used. (optional)</param>
+  /// <param name="endDate">Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used. (optional)</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
@@ -2898,8 +2898,8 @@ public partial interface IIngestionClient
   /// <param name="taskID">Task ID for filtering the list of task runs. (optional)</param>
   /// <param name="sort">Property by which to sort the list of task runs. (optional)</param>
   /// <param name="order">Sort order of the response, ascending or descending. (optional)</param>
-  /// <param name="startDate">Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used. (optional)</param>
-  /// <param name="endDate">Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used. (optional)</param>
+  /// <param name="startDate">Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used. (optional)</param>
+  /// <param name="endDate">Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used. (optional)</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
@@ -3209,7 +3209,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+  /// Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -3247,7 +3247,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead. (Synchronous version)
+  /// Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead. (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -3285,7 +3285,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+  /// Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -3323,7 +3323,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead. (Synchronous version)
+  /// Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead. (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -3961,7 +3961,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of task runs with the observability endpoints.
+  /// Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs with the observability endpoints.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -3985,7 +3985,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of task runs with the observability endpoints. (Synchronous version)
+  /// Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs with the observability endpoints. (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -4009,7 +4009,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of task runs with the observability endpoints.
+  /// Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs with the observability endpoints.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -4033,7 +4033,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of task runs with the observability endpoints. (Synchronous version)
+  /// Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs with the observability endpoints. (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -4393,7 +4393,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+  /// Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -4415,7 +4415,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Searches for tasks using the v1 endpoint, please use `searchTasks` instead. (Synchronous version)
+  /// Searches for tasks using the v1 endpoint. Use `searchTasks` instead. (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -4437,7 +4437,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+  /// Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -4459,7 +4459,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Searches for tasks using the v1 endpoint, please use `searchTasks` instead. (Synchronous version)
+  /// Searches for tasks using the v1 endpoint. Use `searchTasks` instead. (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -5193,7 +5193,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+  /// Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -5217,7 +5217,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Updates a task by its ID using the v1 endpoint, please use `updateTask` instead. (Synchronous version)
+  /// Updates a task by its ID using the v1 endpoint. Use `updateTask` instead. (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -5241,7 +5241,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+  /// Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -5265,7 +5265,7 @@ public partial interface IIngestionClient
   );
 
   /// <summary>
-  /// Updates a task by its ID using the v1 endpoint, please use `updateTask` instead. (Synchronous version)
+  /// Updates a task by its ID using the v1 endpoint. Use `updateTask` instead. (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -5628,7 +5628,17 @@ public partial class IngestionClient : IIngestionClient
 
     if (_logger.IsEnabled(Microsoft.Extensions.Logging.LogLevel.Information))
     {
-      _logger.LogInformation("Algolia Ingestion client is initialized.");
+      _logger.LogInformation("Algolia Ingestion client initialized (appId: {AppId})", config.AppId);
+    }
+
+    if (
+      _logger.IsEnabled(Microsoft.Extensions.Logging.LogLevel.Debug)
+      && AlgoliaConfig.TryMarkDebugWarningLogged(factory)
+    )
+    {
+      _logger.LogDebug(
+        "WARNING: DEBUG level logging is enabled. This logs full request/response bodies which may contain sensitive data. Only use in local development."
+      );
     }
   }
 
@@ -6062,6 +6072,8 @@ public partial class IngestionClient : IIngestionClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomDelete`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomDelete`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -6095,6 +6107,8 @@ public partial class IngestionClient : IIngestionClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomDelete`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomDelete`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -6131,6 +6145,8 @@ public partial class IngestionClient : IIngestionClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomGet`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomGet`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -6164,6 +6180,8 @@ public partial class IngestionClient : IIngestionClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomGet`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomGet`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -6201,6 +6219,8 @@ public partial class IngestionClient : IIngestionClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomPost`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomPost`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -6238,6 +6258,8 @@ public partial class IngestionClient : IIngestionClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomPost`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomPost`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -6277,6 +6299,8 @@ public partial class IngestionClient : IIngestionClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomPut`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomPut`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -6314,6 +6338,8 @@ public partial class IngestionClient : IIngestionClient
     if (path == null)
       throw new ArgumentException("Parameter `path` is required when calling `CustomPut`.");
 
+    if (string.IsNullOrWhiteSpace(path))
+      throw new ArgumentException("Parameter `path` is required when calling `CustomPut`.");
     var requestOptions = new InternalRequestOptions(options);
     requestOptions.CustomPathParameters.Add("path", QueryStringHelper.ParameterToString(path));
 
@@ -6353,6 +6379,10 @@ public partial class IngestionClient : IIngestionClient
         "Parameter `authenticationID` is required when calling `DeleteAuthentication`."
       );
 
+    if (string.IsNullOrWhiteSpace(authenticationID))
+      throw new ArgumentException(
+        "Parameter `authenticationID` is required when calling `DeleteAuthentication`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add(
@@ -6392,6 +6422,10 @@ public partial class IngestionClient : IIngestionClient
         "Parameter `authenticationID` is required when calling `DeleteAuthentication`."
       );
 
+    if (string.IsNullOrWhiteSpace(authenticationID))
+      throw new ArgumentException(
+        "Parameter `authenticationID` is required when calling `DeleteAuthentication`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add(
@@ -6431,6 +6465,10 @@ public partial class IngestionClient : IIngestionClient
         "Parameter `destinationID` is required when calling `DeleteDestination`."
       );
 
+    if (string.IsNullOrWhiteSpace(destinationID))
+      throw new ArgumentException(
+        "Parameter `destinationID` is required when calling `DeleteDestination`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add(
@@ -6467,6 +6505,10 @@ public partial class IngestionClient : IIngestionClient
         "Parameter `destinationID` is required when calling `DeleteDestination`."
       );
 
+    if (string.IsNullOrWhiteSpace(destinationID))
+      throw new ArgumentException(
+        "Parameter `destinationID` is required when calling `DeleteDestination`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add(
@@ -6504,6 +6546,8 @@ public partial class IngestionClient : IIngestionClient
     if (sourceID == null)
       throw new ArgumentException("Parameter `sourceID` is required when calling `DeleteSource`.");
 
+    if (string.IsNullOrWhiteSpace(sourceID))
+      throw new ArgumentException("Parameter `sourceID` is required when calling `DeleteSource`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("sourceID", QueryStringHelper.ParameterToString(sourceID));
@@ -6535,6 +6579,8 @@ public partial class IngestionClient : IIngestionClient
     if (sourceID == null)
       throw new ArgumentException("Parameter `sourceID` is required when calling `DeleteSource`.");
 
+    if (string.IsNullOrWhiteSpace(sourceID))
+      throw new ArgumentException("Parameter `sourceID` is required when calling `DeleteSource`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("sourceID", QueryStringHelper.ParameterToString(sourceID));
@@ -6567,6 +6613,8 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `DeleteTask`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `DeleteTask`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("taskID", QueryStringHelper.ParameterToString(taskID));
@@ -6598,6 +6646,8 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `DeleteTask`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `DeleteTask`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("taskID", QueryStringHelper.ParameterToString(taskID));
@@ -6630,6 +6680,8 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `DeleteTaskV1`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `DeleteTaskV1`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("taskID", QueryStringHelper.ParameterToString(taskID));
@@ -6663,6 +6715,8 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `DeleteTaskV1`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `DeleteTaskV1`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("taskID", QueryStringHelper.ParameterToString(taskID));
@@ -6697,6 +6751,10 @@ public partial class IngestionClient : IIngestionClient
         "Parameter `transformationID` is required when calling `DeleteTransformation`."
       );
 
+    if (string.IsNullOrWhiteSpace(transformationID))
+      throw new ArgumentException(
+        "Parameter `transformationID` is required when calling `DeleteTransformation`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add(
@@ -6736,6 +6794,10 @@ public partial class IngestionClient : IIngestionClient
         "Parameter `transformationID` is required when calling `DeleteTransformation`."
       );
 
+    if (string.IsNullOrWhiteSpace(transformationID))
+      throw new ArgumentException(
+        "Parameter `transformationID` is required when calling `DeleteTransformation`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add(
@@ -6773,6 +6835,8 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `DisableTask`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `DisableTask`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("taskID", QueryStringHelper.ParameterToString(taskID));
@@ -6804,6 +6868,8 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `DisableTask`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `DisableTask`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("taskID", QueryStringHelper.ParameterToString(taskID));
@@ -6836,6 +6902,8 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `DisableTaskV1`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `DisableTaskV1`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("taskID", QueryStringHelper.ParameterToString(taskID));
@@ -6869,6 +6937,8 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `DisableTaskV1`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `DisableTaskV1`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("taskID", QueryStringHelper.ParameterToString(taskID));
@@ -6902,6 +6972,8 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `EnableTask`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `EnableTask`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("taskID", QueryStringHelper.ParameterToString(taskID));
@@ -6933,6 +7005,8 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `EnableTask`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `EnableTask`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("taskID", QueryStringHelper.ParameterToString(taskID));
@@ -6965,6 +7039,8 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `EnableTaskV1`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `EnableTaskV1`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("taskID", QueryStringHelper.ParameterToString(taskID));
@@ -6998,6 +7074,8 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `EnableTaskV1`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `EnableTaskV1`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("taskID", QueryStringHelper.ParameterToString(taskID));
@@ -7032,6 +7110,10 @@ public partial class IngestionClient : IIngestionClient
         "Parameter `authenticationID` is required when calling `GetAuthentication`."
       );
 
+    if (string.IsNullOrWhiteSpace(authenticationID))
+      throw new ArgumentException(
+        "Parameter `authenticationID` is required when calling `GetAuthentication`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add(
@@ -7069,6 +7151,10 @@ public partial class IngestionClient : IIngestionClient
         "Parameter `authenticationID` is required when calling `GetAuthentication`."
       );
 
+    if (string.IsNullOrWhiteSpace(authenticationID))
+      throw new ArgumentException(
+        "Parameter `authenticationID` is required when calling `GetAuthentication`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add(
@@ -7108,6 +7194,10 @@ public partial class IngestionClient : IIngestionClient
         "Parameter `destinationID` is required when calling `GetDestination`."
       );
 
+    if (string.IsNullOrWhiteSpace(destinationID))
+      throw new ArgumentException(
+        "Parameter `destinationID` is required when calling `GetDestination`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add(
@@ -7144,6 +7234,10 @@ public partial class IngestionClient : IIngestionClient
         "Parameter `destinationID` is required when calling `GetDestination`."
       );
 
+    if (string.IsNullOrWhiteSpace(destinationID))
+      throw new ArgumentException(
+        "Parameter `destinationID` is required when calling `GetDestination`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add(
@@ -7182,9 +7276,14 @@ public partial class IngestionClient : IIngestionClient
     if (runID == null)
       throw new ArgumentException("Parameter `runID` is required when calling `GetEvent`.");
 
+    if (string.IsNullOrWhiteSpace(runID))
+      throw new ArgumentException("Parameter `runID` is required when calling `GetEvent`.");
+
     if (eventID == null)
       throw new ArgumentException("Parameter `eventID` is required when calling `GetEvent`.");
 
+    if (string.IsNullOrWhiteSpace(eventID))
+      throw new ArgumentException("Parameter `eventID` is required when calling `GetEvent`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("runID", QueryStringHelper.ParameterToString(runID));
@@ -7219,9 +7318,14 @@ public partial class IngestionClient : IIngestionClient
     if (runID == null)
       throw new ArgumentException("Parameter `runID` is required when calling `GetEvent`.");
 
+    if (string.IsNullOrWhiteSpace(runID))
+      throw new ArgumentException("Parameter `runID` is required when calling `GetEvent`.");
+
     if (eventID == null)
       throw new ArgumentException("Parameter `eventID` is required when calling `GetEvent`.");
 
+    if (string.IsNullOrWhiteSpace(eventID))
+      throw new ArgumentException("Parameter `eventID` is required when calling `GetEvent`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("runID", QueryStringHelper.ParameterToString(runID));
@@ -7258,6 +7362,8 @@ public partial class IngestionClient : IIngestionClient
     if (runID == null)
       throw new ArgumentException("Parameter `runID` is required when calling `GetRun`.");
 
+    if (string.IsNullOrWhiteSpace(runID))
+      throw new ArgumentException("Parameter `runID` is required when calling `GetRun`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("runID", QueryStringHelper.ParameterToString(runID));
@@ -7289,6 +7395,8 @@ public partial class IngestionClient : IIngestionClient
     if (runID == null)
       throw new ArgumentException("Parameter `runID` is required when calling `GetRun`.");
 
+    if (string.IsNullOrWhiteSpace(runID))
+      throw new ArgumentException("Parameter `runID` is required when calling `GetRun`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("runID", QueryStringHelper.ParameterToString(runID));
@@ -7320,6 +7428,8 @@ public partial class IngestionClient : IIngestionClient
     if (sourceID == null)
       throw new ArgumentException("Parameter `sourceID` is required when calling `GetSource`.");
 
+    if (string.IsNullOrWhiteSpace(sourceID))
+      throw new ArgumentException("Parameter `sourceID` is required when calling `GetSource`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("sourceID", QueryStringHelper.ParameterToString(sourceID));
@@ -7351,6 +7461,8 @@ public partial class IngestionClient : IIngestionClient
     if (sourceID == null)
       throw new ArgumentException("Parameter `sourceID` is required when calling `GetSource`.");
 
+    if (string.IsNullOrWhiteSpace(sourceID))
+      throw new ArgumentException("Parameter `sourceID` is required when calling `GetSource`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("sourceID", QueryStringHelper.ParameterToString(sourceID));
@@ -7382,6 +7494,8 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `GetTask`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `GetTask`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("taskID", QueryStringHelper.ParameterToString(taskID));
@@ -7413,6 +7527,8 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `GetTask`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `GetTask`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("taskID", QueryStringHelper.ParameterToString(taskID));
@@ -7445,6 +7561,8 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `GetTaskV1`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `GetTaskV1`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("taskID", QueryStringHelper.ParameterToString(taskID));
@@ -7478,6 +7596,8 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `GetTaskV1`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `GetTaskV1`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("taskID", QueryStringHelper.ParameterToString(taskID));
@@ -7512,6 +7632,10 @@ public partial class IngestionClient : IIngestionClient
         "Parameter `transformationID` is required when calling `GetTransformation`."
       );
 
+    if (string.IsNullOrWhiteSpace(transformationID))
+      throw new ArgumentException(
+        "Parameter `transformationID` is required when calling `GetTransformation`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add(
@@ -7549,6 +7673,10 @@ public partial class IngestionClient : IIngestionClient
         "Parameter `transformationID` is required when calling `GetTransformation`."
       );
 
+    if (string.IsNullOrWhiteSpace(transformationID))
+      throw new ArgumentException(
+        "Parameter `transformationID` is required when calling `GetTransformation`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add(
@@ -7818,6 +7946,8 @@ public partial class IngestionClient : IIngestionClient
     if (runID == null)
       throw new ArgumentException("Parameter `runID` is required when calling `ListEvents`.");
 
+    if (string.IsNullOrWhiteSpace(runID))
+      throw new ArgumentException("Parameter `runID` is required when calling `ListEvents`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("runID", QueryStringHelper.ParameterToString(runID));
@@ -7888,6 +8018,8 @@ public partial class IngestionClient : IIngestionClient
     if (runID == null)
       throw new ArgumentException("Parameter `runID` is required when calling `ListEvents`.");
 
+    if (string.IsNullOrWhiteSpace(runID))
+      throw new ArgumentException("Parameter `runID` is required when calling `ListEvents`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("runID", QueryStringHelper.ParameterToString(runID));
@@ -8569,6 +8701,9 @@ public partial class IngestionClient : IIngestionClient
     if (indexName == null)
       throw new ArgumentException("Parameter `indexName` is required when calling `Push`.");
 
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException("Parameter `indexName` is required when calling `Push`.");
+
     if (pushTaskPayload == null)
       throw new ArgumentException("Parameter `pushTaskPayload` is required when calling `Push`.");
 
@@ -8616,6 +8751,9 @@ public partial class IngestionClient : IIngestionClient
   )
   {
     if (indexName == null)
+      throw new ArgumentException("Parameter `indexName` is required when calling `Push`.");
+
+    if (string.IsNullOrWhiteSpace(indexName))
       throw new ArgumentException("Parameter `indexName` is required when calling `Push`.");
 
     if (pushTaskPayload == null)
@@ -8673,6 +8811,9 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `PushTask`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `PushTask`.");
+
     if (pushTaskPayload == null)
       throw new ArgumentException(
         "Parameter `pushTaskPayload` is required when calling `PushTask`."
@@ -8719,6 +8860,9 @@ public partial class IngestionClient : IIngestionClient
   )
   {
     if (taskID == null)
+      throw new ArgumentException("Parameter `taskID` is required when calling `PushTask`.");
+
+    if (string.IsNullOrWhiteSpace(taskID))
       throw new ArgumentException("Parameter `taskID` is required when calling `PushTask`.");
 
     if (pushTaskPayload == null)
@@ -8768,6 +8912,9 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `ReplaceTask`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `ReplaceTask`.");
+
     if (taskReplace == null)
       throw new ArgumentException(
         "Parameter `taskReplace` is required when calling `ReplaceTask`."
@@ -8805,6 +8952,9 @@ public partial class IngestionClient : IIngestionClient
   )
   {
     if (taskID == null)
+      throw new ArgumentException("Parameter `taskID` is required when calling `ReplaceTask`.");
+
+    if (string.IsNullOrWhiteSpace(taskID))
       throw new ArgumentException("Parameter `taskID` is required when calling `ReplaceTask`.");
 
     if (taskReplace == null)
@@ -8849,6 +8999,8 @@ public partial class IngestionClient : IIngestionClient
     if (sourceID == null)
       throw new ArgumentException("Parameter `sourceID` is required when calling `RunSource`.");
 
+    if (string.IsNullOrWhiteSpace(sourceID))
+      throw new ArgumentException("Parameter `sourceID` is required when calling `RunSource`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("sourceID", QueryStringHelper.ParameterToString(sourceID));
@@ -8886,6 +9038,8 @@ public partial class IngestionClient : IIngestionClient
     if (sourceID == null)
       throw new ArgumentException("Parameter `sourceID` is required when calling `RunSource`.");
 
+    if (string.IsNullOrWhiteSpace(sourceID))
+      throw new ArgumentException("Parameter `sourceID` is required when calling `RunSource`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("sourceID", QueryStringHelper.ParameterToString(sourceID));
@@ -8923,6 +9077,8 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `RunTask`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `RunTask`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("taskID", QueryStringHelper.ParameterToString(taskID));
@@ -8957,6 +9113,8 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `RunTask`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `RunTask`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("taskID", QueryStringHelper.ParameterToString(taskID));
@@ -8995,6 +9153,8 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `RunTaskV1`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `RunTaskV1`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("taskID", QueryStringHelper.ParameterToString(taskID));
@@ -9032,6 +9192,8 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `RunTaskV1`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `RunTaskV1`.");
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("taskID", QueryStringHelper.ParameterToString(taskID));
@@ -9480,6 +9642,10 @@ public partial class IngestionClient : IIngestionClient
         "Parameter `sourceID` is required when calling `TriggerDockerSourceDiscover`."
       );
 
+    if (string.IsNullOrWhiteSpace(sourceID))
+      throw new ArgumentException(
+        "Parameter `sourceID` is required when calling `TriggerDockerSourceDiscover`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("sourceID", QueryStringHelper.ParameterToString(sourceID));
@@ -9519,6 +9685,10 @@ public partial class IngestionClient : IIngestionClient
         "Parameter `sourceID` is required when calling `TriggerDockerSourceDiscover`."
       );
 
+    if (string.IsNullOrWhiteSpace(sourceID))
+      throw new ArgumentException(
+        "Parameter `sourceID` is required when calling `TriggerDockerSourceDiscover`."
+      );
     var requestOptions = new InternalRequestOptions(options);
 
     requestOptions.PathParameters.Add("sourceID", QueryStringHelper.ParameterToString(sourceID));
@@ -9629,6 +9799,11 @@ public partial class IngestionClient : IIngestionClient
         "Parameter `transformationID` is required when calling `TryTransformationBeforeUpdate`."
       );
 
+    if (string.IsNullOrWhiteSpace(transformationID))
+      throw new ArgumentException(
+        "Parameter `transformationID` is required when calling `TryTransformationBeforeUpdate`."
+      );
+
     if (transformationTry == null)
       throw new ArgumentException(
         "Parameter `transformationTry` is required when calling `TryTransformationBeforeUpdate`."
@@ -9677,6 +9852,11 @@ public partial class IngestionClient : IIngestionClient
   )
   {
     if (transformationID == null)
+      throw new ArgumentException(
+        "Parameter `transformationID` is required when calling `TryTransformationBeforeUpdate`."
+      );
+
+    if (string.IsNullOrWhiteSpace(transformationID))
       throw new ArgumentException(
         "Parameter `transformationID` is required when calling `TryTransformationBeforeUpdate`."
       );
@@ -9733,6 +9913,11 @@ public partial class IngestionClient : IIngestionClient
         "Parameter `authenticationID` is required when calling `UpdateAuthentication`."
       );
 
+    if (string.IsNullOrWhiteSpace(authenticationID))
+      throw new ArgumentException(
+        "Parameter `authenticationID` is required when calling `UpdateAuthentication`."
+      );
+
     if (authenticationUpdate == null)
       throw new ArgumentException(
         "Parameter `authenticationUpdate` is required when calling `UpdateAuthentication`."
@@ -9776,6 +9961,11 @@ public partial class IngestionClient : IIngestionClient
   )
   {
     if (authenticationID == null)
+      throw new ArgumentException(
+        "Parameter `authenticationID` is required when calling `UpdateAuthentication`."
+      );
+
+    if (string.IsNullOrWhiteSpace(authenticationID))
       throw new ArgumentException(
         "Parameter `authenticationID` is required when calling `UpdateAuthentication`."
       );
@@ -9832,6 +10022,11 @@ public partial class IngestionClient : IIngestionClient
         "Parameter `destinationID` is required when calling `UpdateDestination`."
       );
 
+    if (string.IsNullOrWhiteSpace(destinationID))
+      throw new ArgumentException(
+        "Parameter `destinationID` is required when calling `UpdateDestination`."
+      );
+
     if (destinationUpdate == null)
       throw new ArgumentException(
         "Parameter `destinationUpdate` is required when calling `UpdateDestination`."
@@ -9875,6 +10070,11 @@ public partial class IngestionClient : IIngestionClient
   )
   {
     if (destinationID == null)
+      throw new ArgumentException(
+        "Parameter `destinationID` is required when calling `UpdateDestination`."
+      );
+
+    if (string.IsNullOrWhiteSpace(destinationID))
       throw new ArgumentException(
         "Parameter `destinationID` is required when calling `UpdateDestination`."
       );
@@ -9929,6 +10129,9 @@ public partial class IngestionClient : IIngestionClient
     if (sourceID == null)
       throw new ArgumentException("Parameter `sourceID` is required when calling `UpdateSource`.");
 
+    if (string.IsNullOrWhiteSpace(sourceID))
+      throw new ArgumentException("Parameter `sourceID` is required when calling `UpdateSource`.");
+
     if (sourceUpdate == null)
       throw new ArgumentException(
         "Parameter `sourceUpdate` is required when calling `UpdateSource`."
@@ -9969,6 +10172,9 @@ public partial class IngestionClient : IIngestionClient
   )
   {
     if (sourceID == null)
+      throw new ArgumentException("Parameter `sourceID` is required when calling `UpdateSource`.");
+
+    if (string.IsNullOrWhiteSpace(sourceID))
       throw new ArgumentException("Parameter `sourceID` is required when calling `UpdateSource`.");
 
     if (sourceUpdate == null)
@@ -10013,6 +10219,9 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `UpdateTask`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `UpdateTask`.");
+
     if (taskUpdate == null)
       throw new ArgumentException("Parameter `taskUpdate` is required when calling `UpdateTask`.");
 
@@ -10048,6 +10257,9 @@ public partial class IngestionClient : IIngestionClient
   )
   {
     if (taskID == null)
+      throw new ArgumentException("Parameter `taskID` is required when calling `UpdateTask`.");
+
+    if (string.IsNullOrWhiteSpace(taskID))
       throw new ArgumentException("Parameter `taskID` is required when calling `UpdateTask`.");
 
     if (taskUpdate == null)
@@ -10091,6 +10303,9 @@ public partial class IngestionClient : IIngestionClient
     if (taskID == null)
       throw new ArgumentException("Parameter `taskID` is required when calling `UpdateTaskV1`.");
 
+    if (string.IsNullOrWhiteSpace(taskID))
+      throw new ArgumentException("Parameter `taskID` is required when calling `UpdateTaskV1`.");
+
     if (taskUpdate == null)
       throw new ArgumentException(
         "Parameter `taskUpdate` is required when calling `UpdateTaskV1`."
@@ -10130,6 +10345,9 @@ public partial class IngestionClient : IIngestionClient
   )
   {
     if (taskID == null)
+      throw new ArgumentException("Parameter `taskID` is required when calling `UpdateTaskV1`.");
+
+    if (string.IsNullOrWhiteSpace(taskID))
       throw new ArgumentException("Parameter `taskID` is required when calling `UpdateTaskV1`.");
 
     if (taskUpdate == null)
@@ -10177,6 +10395,11 @@ public partial class IngestionClient : IIngestionClient
         "Parameter `transformationID` is required when calling `UpdateTransformation`."
       );
 
+    if (string.IsNullOrWhiteSpace(transformationID))
+      throw new ArgumentException(
+        "Parameter `transformationID` is required when calling `UpdateTransformation`."
+      );
+
     if (transformationCreate == null)
       throw new ArgumentException(
         "Parameter `transformationCreate` is required when calling `UpdateTransformation`."
@@ -10220,6 +10443,11 @@ public partial class IngestionClient : IIngestionClient
   )
   {
     if (transformationID == null)
+      throw new ArgumentException(
+        "Parameter `transformationID` is required when calling `UpdateTransformation`."
+      );
+
+    if (string.IsNullOrWhiteSpace(transformationID))
       throw new ArgumentException(
         "Parameter `transformationID` is required when calling `UpdateTransformation`."
       );
@@ -10339,6 +10567,11 @@ public partial class IngestionClient : IIngestionClient
         "Parameter `sourceID` is required when calling `ValidateSourceBeforeUpdate`."
       );
 
+    if (string.IsNullOrWhiteSpace(sourceID))
+      throw new ArgumentException(
+        "Parameter `sourceID` is required when calling `ValidateSourceBeforeUpdate`."
+      );
+
     if (sourceUpdate == null)
       throw new ArgumentException(
         "Parameter `sourceUpdate` is required when calling `ValidateSourceBeforeUpdate`."
@@ -10382,6 +10615,11 @@ public partial class IngestionClient : IIngestionClient
   )
   {
     if (sourceID == null)
+      throw new ArgumentException(
+        "Parameter `sourceID` is required when calling `ValidateSourceBeforeUpdate`."
+      );
+
+    if (string.IsNullOrWhiteSpace(sourceID))
       throw new ArgumentException(
         "Parameter `sourceID` is required when calling `ValidateSourceBeforeUpdate`."
       );

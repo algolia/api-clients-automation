@@ -104,6 +104,8 @@ module Algolia
       # URL-encoded string of all search parameters.
       attr_accessor :params
 
+      attr_accessor :extensions
+
       attr_accessor :additional_properties
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -141,7 +143,8 @@ module Algolia
           :hits_per_page => :hitsPerPage,
           :hits => :hits,
           :query => :query,
-          :params => :params
+          :params => :params,
+          :extensions => :extensions
         }
       end
 
@@ -180,7 +183,8 @@ module Algolia
           :hits_per_page => :"Integer",
           :hits => :"Array<Hit>",
           :query => :"String",
-          :params => :"String"
+          :params => :"String",
+          :extensions => :"ResponseExtensions"
         }
       end
 
@@ -348,14 +352,14 @@ module Algolia
 
         if attributes.key?(:query)
           self.query = attributes[:query]
-        else
-          self.query = nil
         end
 
         if attributes.key?(:params)
           self.params = attributes[:params]
-        else
-          self.params = nil
+        end
+
+        if attributes.key?(:extensions)
+          self.extensions = attributes[:extensions]
         end
 
         # add extra attribute to additional_properties
@@ -400,7 +404,8 @@ module Algolia
           hits_per_page == other.hits_per_page &&
           hits == other.hits &&
           query == other.query &&
-          params == other.params
+          params == other.params &&
+          extensions == other.extensions
       end
 
       # @see the `==` method
@@ -445,7 +450,8 @@ module Algolia
           hits_per_page,
           hits,
           query,
-          params
+          params,
+          extensions
         ].hash
       end
 

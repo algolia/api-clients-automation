@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Configured transformations and pagination information.
@@ -30,12 +30,7 @@ public struct ListTransformationsResponse: Codable, JSONEncodable {
     }
 }
 
-extension ListTransformationsResponse: Equatable {
-    public static func ==(lhs: ListTransformationsResponse, rhs: ListTransformationsResponse) -> Bool {
-        lhs.transformations == rhs.transformations &&
-            lhs.pagination == rhs.pagination
-    }
-}
+extension ListTransformationsResponse: Equatable {}
 
 extension ListTransformationsResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

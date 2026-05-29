@@ -1,0 +1,13 @@
+injectionMain:
+  type: object
+  additionalProperties: false
+  description: Main defines the organic result set of the injection.
+  properties:
+    source:
+      $ref: '#/injectionMainSource'
+
+injectionMainSource:
+  description: Source to be used to retrieve organic result set.
+  oneOf:
+    - $ref: './MainSource.yml#/injectionMainSearchSource'
+    - $ref: './MainSource.yml#/injectionMainRecommendSource'

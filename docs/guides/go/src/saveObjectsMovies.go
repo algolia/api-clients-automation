@@ -22,7 +22,7 @@ func saveObjectsMovies() {
 	defer response.Body.Close()
 
 	// parse json file to Movie struct
-	var movies []map[string]interface{}
+	var movies []map[string]any
 
 	err = json.NewDecoder(response.Body).Decode(&movies)
 	if err != nil {

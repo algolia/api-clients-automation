@@ -231,18 +231,56 @@ public class SearchClientTests
     var res = await client.CustomPostAsync(
       "1/test/gzip",
       new Dictionary<string, object> { },
-      new Dictionary<string, string> { { "message", "this is a compressed body" } }
+      new Dictionary<string, string>
+      {
+        {
+          "message",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."
+        },
+      }
     );
 
     JsonAssert.EqualOverrideDefault(
-      "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this is a compressed body\"}}",
+      "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien.\"}}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "test the response decompression strategy")]
+  public async Task ApiTest7()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6691,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.CustomGetAsync("1/test/gzip-response");
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"message\":\"ok decompression test server response\",\"data\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"}",
       JsonSerializer.Serialize(res, JsonConfig.Options),
       new JsonDiffConfig(false)
     );
   }
 
   [Fact(DisplayName = "calls api with default read timeouts")]
-  public async Task ApiTest7()
+  public async Task ApiTest8()
   {
     var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
     await client.CustomGetAsync("1/test");
@@ -253,7 +291,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "calls api with default write timeouts")]
-  public async Task ApiTest8()
+  public async Task ApiTest9()
   {
     var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
     await client.CustomPostAsync("1/test");
@@ -264,7 +302,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "can handle unknown response fields")]
-  public async Task ApiTest9()
+  public async Task ApiTest10()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -296,7 +334,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "can handle unknown response fields inside a nested oneOf")]
-  public async Task ApiTest10()
+  public async Task ApiTest11()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -328,7 +366,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "does not retry on success")]
-  public async Task ApiTest11()
+  public async Task ApiTest12()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -403,7 +441,7 @@ public class SearchClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.36.2\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.43.0\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }
@@ -818,7 +856,7 @@ public class SearchClientTests
   [Fact(DisplayName = "call partialUpdateObjectsWithTransformation with createIfNotExists=true")]
   public async Task PartialUpdateObjectsWithTransformationTest0()
   {
-    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    var transformationOptions = new TransformationOptions("us")
     {
       CustomHosts = new List<StatefulHost>
       {
@@ -848,8 +886,39 @@ public class SearchClientTests
         },
       },
     };
-    var client = new SearchClient(_config);
-    client.SetTransformationRegion("us");
+    var client = SearchClient.WithTransformation(
+      new SearchConfig("test-app-id", "test-api-key")
+      {
+        CustomHosts = new List<StatefulHost>
+        {
+          new()
+          {
+            Scheme = HttpScheme.Http,
+            Url =
+              Environment.GetEnvironmentVariable("CI") == "true"
+                ? "localhost"
+                : "host.docker.internal",
+            Port = 6688,
+            Up = true,
+            LastUse = DateTime.UtcNow,
+            Accept = CallType.Read | CallType.Write,
+          },
+          new()
+          {
+            Scheme = HttpScheme.Http,
+            Url =
+              Environment.GetEnvironmentVariable("CI") == "true"
+                ? "localhost"
+                : "host.docker.internal",
+            Port = 6689,
+            Up = true,
+            LastUse = DateTime.UtcNow,
+            Accept = CallType.Read | CallType.Write,
+          },
+        },
+      },
+      transformationOptions
+    );
 
     {
       var res = await client.PartialUpdateObjectsWithTransformationAsync(
@@ -1011,7 +1080,7 @@ public class SearchClientTests
   [Fact(DisplayName = "call replaceAllObjectsWithTransformation without error")]
   public async Task ReplaceAllObjectsWithTransformationTest0()
   {
-    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    var transformationOptions = new TransformationOptions("us")
     {
       CustomHosts = new List<StatefulHost>
       {
@@ -1029,8 +1098,27 @@ public class SearchClientTests
         },
       },
     };
-    var client = new SearchClient(_config);
-    client.SetTransformationRegion("us");
+    var client = SearchClient.WithTransformation(
+      new SearchConfig("test-app-id", "test-api-key")
+      {
+        CustomHosts = new List<StatefulHost>
+        {
+          new()
+          {
+            Scheme = HttpScheme.Http,
+            Url =
+              Environment.GetEnvironmentVariable("CI") == "true"
+                ? "localhost"
+                : "host.docker.internal",
+            Port = 6690,
+            Up = true,
+            LastUse = DateTime.UtcNow,
+            Accept = CallType.Read | CallType.Write,
+          },
+        },
+      },
+      transformationOptions
+    );
 
     {
       var res = await client.ReplaceAllObjectsWithTransformationAsync(
@@ -1228,7 +1316,7 @@ public class SearchClientTests
   [Fact(DisplayName = "call saveObjectsWithTransformation without error")]
   public async Task SaveObjectsWithTransformationTest0()
   {
-    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    var transformationOptions = new TransformationOptions("us")
     {
       CustomHosts = new List<StatefulHost>
       {
@@ -1258,8 +1346,39 @@ public class SearchClientTests
         },
       },
     };
-    var client = new SearchClient(_config);
-    client.SetTransformationRegion("us");
+    var client = SearchClient.WithTransformation(
+      new SearchConfig("test-app-id", "test-api-key")
+      {
+        CustomHosts = new List<StatefulHost>
+        {
+          new()
+          {
+            Scheme = HttpScheme.Http,
+            Url =
+              Environment.GetEnvironmentVariable("CI") == "true"
+                ? "localhost"
+                : "host.docker.internal",
+            Port = 6688,
+            Up = true,
+            LastUse = DateTime.UtcNow,
+            Accept = CallType.Read | CallType.Write,
+          },
+          new()
+          {
+            Scheme = HttpScheme.Http,
+            Url =
+              Environment.GetEnvironmentVariable("CI") == "true"
+                ? "localhost"
+                : "host.docker.internal",
+            Port = 6689,
+            Up = true,
+            LastUse = DateTime.UtcNow,
+            Accept = CallType.Read | CallType.Write,
+          },
+        },
+      },
+      transformationOptions
+    );
 
     {
       var res = await client.SaveObjectsWithTransformationAsync(

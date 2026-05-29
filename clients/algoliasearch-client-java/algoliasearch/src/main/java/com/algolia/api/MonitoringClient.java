@@ -154,6 +154,7 @@ public class MonitoringClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customDelete`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -174,6 +175,7 @@ public class MonitoringClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customDelete`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -357,6 +359,7 @@ public class MonitoringClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customGet`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -377,6 +380,7 @@ public class MonitoringClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customGet`.");
 
     HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -570,6 +574,7 @@ public class MonitoringClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPost`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -597,6 +602,7 @@ public class MonitoringClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPost`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -798,6 +804,7 @@ public class MonitoringClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPut`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -825,6 +832,7 @@ public class MonitoringClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+    Parameters.requireNonEmpty(path, "Parameter `path` is required when calling `customPut`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
@@ -964,6 +972,7 @@ public class MonitoringClient extends ApiClient {
   public CompletableFuture<IncidentsResponse> getClusterIncidentsAsync(@Nonnull String clusters, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(clusters, "Parameter `clusters` is required when calling `getClusterIncidents`.");
+    Parameters.requireNonEmpty(clusters, "Parameter `clusters` is required when calling `getClusterIncidents`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/incidents/{clusters}", clusters).setMethod("GET").build();
 
@@ -981,6 +990,7 @@ public class MonitoringClient extends ApiClient {
   public CompletableFuture<Response> getClusterIncidentsWithHTTPInfoAsync(@Nonnull String clusters, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(clusters, "Parameter `clusters` is required when calling `getClusterIncidents`.");
+    Parameters.requireNonEmpty(clusters, "Parameter `clusters` is required when calling `getClusterIncidents`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/incidents/{clusters}", clusters).setMethod("GET").build();
 
@@ -1063,6 +1073,7 @@ public class MonitoringClient extends ApiClient {
   public CompletableFuture<StatusResponse> getClusterStatusAsync(@Nonnull String clusters, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(clusters, "Parameter `clusters` is required when calling `getClusterStatus`.");
+    Parameters.requireNonEmpty(clusters, "Parameter `clusters` is required when calling `getClusterStatus`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/status/{clusters}", clusters).setMethod("GET").build();
 
@@ -1080,6 +1091,7 @@ public class MonitoringClient extends ApiClient {
   public CompletableFuture<Response> getClusterStatusWithHTTPInfoAsync(@Nonnull String clusters, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(clusters, "Parameter `clusters` is required when calling `getClusterStatus`.");
+    Parameters.requireNonEmpty(clusters, "Parameter `clusters` is required when calling `getClusterStatus`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/status/{clusters}", clusters).setMethod("GET").build();
 
@@ -1191,7 +1203,12 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * Retrieves average times for indexing operations for selected clusters.
+   * Retrieves indexing latency metrics for selected clusters. This endpoint is intended for
+   * infrastructure-level monitoring and availability checks. The returned value reflects latency
+   * measured on Algolia's internal monitoring index and is reported in milliseconds. This metric
+   * isn't intended to represent the indexing performance of an individual application or index. To
+   * measure when an indexing operation has completed for your application, use the `waitTask`
+   * method.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1204,7 +1221,12 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * Retrieves average times for indexing operations for selected clusters.
+   * Retrieves indexing latency metrics for selected clusters. This endpoint is intended for
+   * infrastructure-level monitoring and availability checks. The returned value reflects latency
+   * measured on Algolia's internal monitoring index and is reported in milliseconds. This metric
+   * isn't intended to represent the indexing performance of an individual application or index. To
+   * measure when an indexing operation has completed for your application, use the `waitTask`
+   * method.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1217,7 +1239,12 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * Retrieves average times for indexing operations for selected clusters.
+   * Retrieves indexing latency metrics for selected clusters. This endpoint is intended for
+   * infrastructure-level monitoring and availability checks. The returned value reflects latency
+   * measured on Algolia's internal monitoring index and is reported in milliseconds. This metric
+   * isn't intended to represent the indexing performance of an individual application or index. To
+   * measure when an indexing operation has completed for your application, use the `waitTask`
+   * method.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1227,7 +1254,12 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * Retrieves average times for indexing operations for selected clusters.
+   * Retrieves indexing latency metrics for selected clusters. This endpoint is intended for
+   * infrastructure-level monitoring and availability checks. The returned value reflects latency
+   * measured on Algolia's internal monitoring index and is reported in milliseconds. This metric
+   * isn't intended to represent the indexing performance of an individual application or index. To
+   * measure when an indexing operation has completed for your application, use the `waitTask`
+   * method.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1237,7 +1269,12 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves average times for indexing operations for selected clusters.
+   * (asynchronously) Retrieves indexing latency metrics for selected clusters. This endpoint is
+   * intended for infrastructure-level monitoring and availability checks. The returned value
+   * reflects latency measured on Algolia's internal monitoring index and is reported in
+   * milliseconds. This metric isn't intended to represent the indexing performance of an individual
+   * application or index. To measure when an indexing operation has completed for your application,
+   * use the `waitTask` method.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1247,6 +1284,7 @@ public class MonitoringClient extends ApiClient {
   public CompletableFuture<IndexingTimeResponse> getIndexingTimeAsync(@Nonnull String clusters, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(clusters, "Parameter `clusters` is required when calling `getIndexingTime`.");
+    Parameters.requireNonEmpty(clusters, "Parameter `clusters` is required when calling `getIndexingTime`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/indexing/{clusters}", clusters).setMethod("GET").build();
 
@@ -1254,7 +1292,12 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves average times for indexing operations for selected clusters.
+   * (asynchronously) Retrieves indexing latency metrics for selected clusters. This endpoint is
+   * intended for infrastructure-level monitoring and availability checks. The returned value
+   * reflects latency measured on Algolia's internal monitoring index and is reported in
+   * milliseconds. This metric isn't intended to represent the indexing performance of an individual
+   * application or index. To measure when an indexing operation has completed for your application,
+   * use the `waitTask` method.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1264,6 +1307,7 @@ public class MonitoringClient extends ApiClient {
   public CompletableFuture<Response> getIndexingTimeWithHTTPInfoAsync(@Nonnull String clusters, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(clusters, "Parameter `clusters` is required when calling `getIndexingTime`.");
+    Parameters.requireNonEmpty(clusters, "Parameter `clusters` is required when calling `getIndexingTime`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/indexing/{clusters}", clusters).setMethod("GET").build();
 
@@ -1271,7 +1315,12 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves average times for indexing operations for selected clusters.
+   * (asynchronously) Retrieves indexing latency metrics for selected clusters. This endpoint is
+   * intended for infrastructure-level monitoring and availability checks. The returned value
+   * reflects latency measured on Algolia's internal monitoring index and is reported in
+   * milliseconds. This metric isn't intended to represent the indexing performance of an individual
+   * application or index. To measure when an indexing operation has completed for your application,
+   * use the `waitTask` method.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1281,7 +1330,12 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves average times for indexing operations for selected clusters.
+   * (asynchronously) Retrieves indexing latency metrics for selected clusters. This endpoint is
+   * intended for infrastructure-level monitoring and availability checks. The returned value
+   * reflects latency measured on Algolia's internal monitoring index and is reported in
+   * milliseconds. This metric isn't intended to represent the indexing performance of an individual
+   * application or index. To measure when an indexing operation has completed for your application,
+   * use the `waitTask` method.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1345,6 +1399,7 @@ public class MonitoringClient extends ApiClient {
   public CompletableFuture<LatencyResponse> getLatencyAsync(@Nonnull String clusters, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(clusters, "Parameter `clusters` is required when calling `getLatency`.");
+    Parameters.requireNonEmpty(clusters, "Parameter `clusters` is required when calling `getLatency`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/latency/{clusters}", clusters).setMethod("GET").build();
 
@@ -1362,6 +1417,7 @@ public class MonitoringClient extends ApiClient {
   public CompletableFuture<Response> getLatencyWithHTTPInfoAsync(@Nonnull String clusters, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(clusters, "Parameter `clusters` is required when calling `getLatency`.");
+    Parameters.requireNonEmpty(clusters, "Parameter `clusters` is required when calling `getLatency`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/latency/{clusters}", clusters).setMethod("GET").build();
 
@@ -1635,6 +1691,7 @@ public class MonitoringClient extends ApiClient {
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(clusters, "Parameter `clusters` is required when calling `getReachability`.");
+    Parameters.requireNonEmpty(clusters, "Parameter `clusters` is required when calling `getReachability`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/reachability/{clusters}/probes", clusters).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Map<String, Map<String, Boolean>>>() {});
@@ -1651,6 +1708,7 @@ public class MonitoringClient extends ApiClient {
   public CompletableFuture<Response> getReachabilityWithHTTPInfoAsync(@Nonnull String clusters, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(clusters, "Parameter `clusters` is required when calling `getReachability`.");
+    Parameters.requireNonEmpty(clusters, "Parameter `clusters` is required when calling `getReachability`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/reachability/{clusters}/probes", clusters).setMethod("GET").build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});

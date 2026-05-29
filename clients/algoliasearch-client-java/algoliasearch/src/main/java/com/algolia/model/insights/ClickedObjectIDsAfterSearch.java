@@ -169,8 +169,8 @@ public class ClickedObjectIDsAfterSearch implements EventsItems {
   }
 
   /**
-   * Timestamp of the event, measured in milliseconds since the Unix epoch. By default, the Insights
-   * API uses the time it receives an event as its timestamp.
+   * Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30
+   * days. If not provided, we use the time at which the request was received.
    */
   @javax.annotation.Nullable
   public Long getTimestamp() {

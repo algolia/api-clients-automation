@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct CompositionRule: Codable, JSONEncodable {
@@ -63,17 +63,7 @@ public struct CompositionRule: Codable, JSONEncodable {
     }
 }
 
-extension CompositionRule: Equatable {
-    public static func ==(lhs: CompositionRule, rhs: CompositionRule) -> Bool {
-        lhs.objectID == rhs.objectID &&
-            lhs.conditions == rhs.conditions &&
-            lhs.consequence == rhs.consequence &&
-            lhs.description == rhs.description &&
-            lhs.enabled == rhs.enabled &&
-            lhs.validity == rhs.validity &&
-            lhs.tags == rhs.tags
-    }
-}
+extension CompositionRule: Equatable {}
 
 extension CompositionRule: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Response, taskID, unique object identifier, and an update timestamp.
@@ -39,13 +39,7 @@ public struct UpdatedAtWithObjectIdResponse: Codable, JSONEncodable {
     }
 }
 
-extension UpdatedAtWithObjectIdResponse: Equatable {
-    public static func ==(lhs: UpdatedAtWithObjectIdResponse, rhs: UpdatedAtWithObjectIdResponse) -> Bool {
-        lhs.taskID == rhs.taskID &&
-            lhs.updatedAt == rhs.updatedAt &&
-            lhs.objectID == rhs.objectID
-    }
-}
+extension UpdatedAtWithObjectIdResponse: Equatable {}
 
 extension UpdatedAtWithObjectIdResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -18,11 +18,11 @@ else:
     from typing_extensions import Self
 
 
-from algoliasearch.ingestion.models.destination_input import DestinationInput
-from algoliasearch.ingestion.models.destination_type import DestinationType
+from algoliasearch.ingestion.models.destination_update_input import (
+    DestinationUpdateInput,
+)
 
 _ALIASES = {
-    "type": "type",
     "name": "name",
     "input": "input",
     "authentication_id": "authenticationID",
@@ -39,10 +39,9 @@ class DestinationUpdate(BaseModel):
     API request body for updating a destination.
     """
 
-    type: Optional[DestinationType] = None
     name: Optional[str] = None
     """ Descriptive name for the resource. """
-    input: Optional[DestinationInput] = None
+    input: Optional[DestinationUpdateInput] = None
     authentication_id: Optional[str] = None
     """ Universally unique identifier (UUID) of an authentication resource. """
     transformation_ids: Optional[List[str]] = None
@@ -82,9 +81,8 @@ class DestinationUpdate(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        obj["type"] = obj.get("type")
         obj["input"] = (
-            DestinationInput.from_dict(obj["input"])
+            DestinationUpdateInput.from_dict(obj["input"])
             if obj.get("input") is not None
             else None
         )

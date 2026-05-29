@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct SearchSearchParamsQuery: Codable, JSONEncodable {
@@ -26,11 +26,7 @@ public struct SearchSearchParamsQuery: Codable, JSONEncodable {
     }
 }
 
-extension SearchSearchParamsQuery: Equatable {
-    public static func ==(lhs: SearchSearchParamsQuery, rhs: SearchSearchParamsQuery) -> Bool {
-        lhs.query == rhs.query
-    }
-}
+extension SearchSearchParamsQuery: Equatable {}
 
 extension SearchSearchParamsQuery: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -21,6 +21,7 @@ class CompositionTest {
   @Test
   fun `calls api with correct read host`() = runTest {
     val client = CompositionClient(appId = "test-app-id", apiKey = "test-api-key")
+
     client.runTest(
       call = { customGet(path = "test") },
       intercept = { assertEquals("test-app-id-dsn.algolia.net", it.url.host) },
@@ -30,6 +31,7 @@ class CompositionTest {
   @Test
   fun `calls api with correct write host`() = runTest {
     val client = CompositionClient(appId = "test-app-id", apiKey = "test-api-key")
+
     client.runTest(
       call = { customPost(path = "test") },
       intercept = { assertEquals("test-app-id.algolia.net", it.url.host) },
@@ -55,18 +57,59 @@ class CompositionTest {
             compressionType = CompressionType.GZIP,
           ),
       )
+
     client.runTest(
       call = {
         customPost(
           path = "1/test/gzip",
           parameters = mapOf(),
-          body = buildJsonObject { put("message", JsonPrimitive("this is a compressed body")) },
+          body =
+            buildJsonObject {
+              put(
+                "message",
+                JsonPrimitive(
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."
+                ),
+              )
+            },
         )
       },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(
-          """{"message":"ok compression test server response","body":{"message":"this is a compressed body"}}""",
+          """{"message":"ok compression test server response","body":{"message":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."}}""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `test the response decompression strategy`() = runTest {
+    val client =
+      CompositionClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6691,
+                )
+              )
+          ),
+      )
+
+    client.runTest(
+      call = { customGet(path = "1/test/gzip-response") },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """{"message":"ok decompression test server response","data":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}""",
           Json.encodeToString(Json.encodeToJsonElement(it)),
           JSONCompareMode.STRICT,
         )
@@ -100,7 +143,7 @@ class CompositionTest {
     client.runTest(
       call = { customPost(path = "1/test") },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.37.4\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.42.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),
@@ -128,6 +171,7 @@ class CompositionTest {
               )
           ),
       )
+
     client.runTest(
       call = { customGet(path = "check-api-key/1") },
       response = {

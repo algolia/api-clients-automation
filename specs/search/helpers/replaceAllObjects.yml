@@ -20,21 +20,19 @@ method:
     summary: Replace all records in an index
     description: |
       This method replaces all records in an index without interrupting ongoing searches.
-      
+
       It combines [batch](https://www.algolia.com/doc/rest-api/search/batch) and [copy/move](https://www.algolia.com/doc/rest-api/search/operation-index) index operations:
       1. Copy settings, synonyms, and rules to a temporary index.
       2. Add the records from the `objects` parameter to the temporary index.
       3. Replace the original index with the temporary one.
-      
-      If there's an error during one of these steps, the temporary index is deleted if your API key has the `deleteIndex` ACL.
-      
-      If your API key restricts access to specific indices, make sure it also grants access to the temporary index INDEX_NAME_tmp_* (replace INDEX_NAME with the name of your original index).
-      
-      This method is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
-      
-      The response includes the results of the individual API requests.
-      
-      This method creates a temporary index: your record count is temporarily doubled. Algolia doesn't count the three days with the highest number of records towards your monthly usage.
+
+      Notes:
+      - If there's an error during one of these steps, the temporary index is deleted if your API key has the `deleteIndex` ACL.
+      - If your API key restricts access to specific indices, make sure it also grants access to the temporary index `INDEX_NAME_tmp_*` (replace `INDEX_NAME` with the name of your original index).
+      - This method is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+      - The response includes the results of the individual API requests.
+      - This method creates a temporary index, which temporarily doubles your record count.
+      - Algolia doesn't count the three days with the highest number of records toward your monthly usage.
     parameters:
       - in: query
         name: indexName
@@ -52,7 +50,7 @@ method:
             type: object
       - in: query
         name: batchSize
-        description: The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+        description: The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1,000.
         required: false
         schema:
           type: integer

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct TopHitsResponseWithRevenueAnalytics: Codable, JSONEncodable {
@@ -26,11 +26,7 @@ public struct TopHitsResponseWithRevenueAnalytics: Codable, JSONEncodable {
     }
 }
 
-extension TopHitsResponseWithRevenueAnalytics: Equatable {
-    public static func ==(lhs: TopHitsResponseWithRevenueAnalytics, rhs: TopHitsResponseWithRevenueAnalytics) -> Bool {
-        lhs.hits == rhs.hits
-    }
-}
+extension TopHitsResponseWithRevenueAnalytics: Equatable {}
 
 extension TopHitsResponseWithRevenueAnalytics: Hashable {
     public func hash(into hasher: inout Hasher) {

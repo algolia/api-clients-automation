@@ -1,3 +1,96 @@
+## [2.41.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.40.1...2.41.0)
+
+BREAKING CHANGES: this minor version includes breaking changes. See below for more details.
+
+- [a1a51b3591](https://github.com/algolia/api-clients-automation/commit/a1a51b3591) feat(scala): add withTransformation helpers and TransformationOptions… ([#6312](https://github.com/algolia/api-clients-automation/pull/6312)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [84ebc480a8](https://github.com/algolia/api-clients-automation/commit/84ebc480a8) chore(deps): dependencies 2026-05-15 ([#6400](https://github.com/algolia/api-clients-automation/pull/6400)) by [@Fluf22](https://github.com/Fluf22/)
+- [90da6bf0ae](https://github.com/algolia/api-clients-automation/commit/90da6bf0ae) chore(deps): dependencies 2026-05-18 ([#6429](https://github.com/algolia/api-clients-automation/pull/6429)) by [@Fluf22](https://github.com/Fluf22/)
+- [eddd51e349](https://github.com/algolia/api-clients-automation/commit/eddd51e349) fix(specs): document abTest field on listIndices response ([#6443](https://github.com/algolia/api-clients-automation/pull/6443)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [1d3f2c149b](https://github.com/algolia/api-clients-automation/commit/1d3f2c149b) fix(specs): clean up abTest schema on listIndices response ([#6448](https://github.com/algolia/api-clients-automation/pull/6448)) by [@Fluf22](https://github.com/Fluf22/)
+- [35bf16c848](https://github.com/algolia/api-clients-automation/commit/35bf16c848) fix(specs): BREAKING CHANGE – add searchResponsePartial fallback to searchResult oneOf ([#6350](https://github.com/algolia/api-clients-automation/pull/6350)) by [@Fluf22](https://github.com/Fluf22/)
+  - For those of you who want really clean responses without hits nor facets, we added a third fallback type to the search response. It should not impact the rest of the users.
+- [537fb801bf](https://github.com/algolia/api-clients-automation/commit/537fb801bf) feat(scala): BREAKING CHANGE – expose maximum number of retries ([#6459](https://github.com/algolia/api-clients-automation/pull/6459)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+  - We updated the default number of retries to account for customers with huge indices, and made it configurable if you prefer to fail early. The impact is that the retry time will be longer in case of issue, but it shouldn't impact most customers: those who don't have issues.
+
+## [2.40.1](https://github.com/algolia/algoliasearch-client-scala/compare/2.40.0...2.40.1)
+
+- [363cc2d91b](https://github.com/algolia/api-clients-automation/commit/363cc2d91b) fix(specs): Ingestion API - update destination payload ([#6320](https://github.com/algolia/api-clients-automation/pull/6320)) by [@sbellone](https://github.com/sbellone/)
+- [4d2ae79e73](https://github.com/algolia/api-clients-automation/commit/4d2ae79e73) chore(deps): dependencies 2026-04-20 ([#6259](https://github.com/algolia/api-clients-automation/pull/6259)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [cd419fd6e8](https://github.com/algolia/api-clients-automation/commit/cd419fd6e8) fix(clients): validate empty string for required string parameters ([#6338](https://github.com/algolia/api-clients-automation/pull/6338)) by [@Fluf22](https://github.com/Fluf22/)
+- [7178fa2e3b](https://github.com/algolia/api-clients-automation/commit/7178fa2e3b) chore(deps): dependencies 2026-05-04 ([#6322](https://github.com/algolia/api-clients-automation/pull/6322)) by [@algolia-bot](https://github.com/algolia-bot/)
+
+## [2.40.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.39.0...2.40.0)
+
+- [d275af4e18](https://github.com/algolia/api-clients-automation/commit/d275af4e18) feat(specs): add Algolia Index as a native connector in ingestion client ([#6290](https://github.com/algolia/api-clients-automation/pull/6290)) by [@morganleroi](https://github.com/morganleroi/)
+- [74e91c1cd3](https://github.com/algolia/api-clients-automation/commit/74e91c1cd3) fix(specs): compostion run payload example for external injected items ([#6291](https://github.com/algolia/api-clients-automation/pull/6291)) by [@gavinwade12](https://github.com/gavinwade12/)
+- [a98b7f7cd8](https://github.com/algolia/api-clients-automation/commit/a98b7f7cd8) feat(specs): add feedsOrder to composition run params ([#6314](https://github.com/algolia/api-clients-automation/pull/6314)) by [@gavinwade12](https://github.com/gavinwade12/)
+- [626ec7e741](https://github.com/algolia/api-clients-automation/commit/626ec7e741) chore(deps): update dependency json4s to 4.1.0 ([#6310](https://github.com/algolia/api-clients-automation/pull/6310)) by [@jopecko](https://github.com/jopecko/)
+
+## [2.39.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.38.5...2.39.0)
+
+BREAKING CHANGES: this minor version includes breaking changes in the Composition API. See below for more details.
+
+- [39ea2c5cb3](https://github.com/algolia/api-clients-automation/commit/39ea2c5cb3) refactor(specs): split injection schema ([#6224](https://github.com/algolia/api-clients-automation/pull/6224)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [544091a5f2](https://github.com/algolia/api-clients-automation/commit/544091a5f2) feat(specs): introduce recommend source in Comp API client ([#6227](https://github.com/algolia/api-clients-automation/pull/6227)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [f73d69aae4](https://github.com/algolia/api-clients-automation/commit/f73d69aae4) fix(specs): clarify getIndexingTime ([#6276](https://github.com/algolia/api-clients-automation/pull/6276)) by [@kai687](https://github.com/kai687/)
+- [e48d5c4bbf](https://github.com/algolia/api-clients-automation/commit/e48d5c4bbf) feat(specs): query categorization ([#6258](https://github.com/algolia/api-clients-automation/pull/6258)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+
+## [2.38.5](https://github.com/algolia/algoliasearch-client-scala/compare/2.38.4...2.38.5)
+
+- [16b17eea7b](https://github.com/algolia/api-clients-automation/commit/16b17eea7b) fix(clients): add discriminator fields for InjectedItemSource oneOf ([#6170](https://github.com/algolia/api-clients-automation/pull/6170)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [e8df706a83](https://github.com/algolia/api-clients-automation/commit/e8df706a83) fix(generators): auto-infer discriminator fields from unique required properties ([#6199](https://github.com/algolia/api-clients-automation/pull/6199)) by [@Fluf22](https://github.com/Fluf22/)
+- [d86a5438e2](https://github.com/algolia/api-clients-automation/commit/d86a5438e2) chore(deps): dependencies 2026-04-06 ([#6200](https://github.com/algolia/api-clients-automation/pull/6200)) by [@algolia-bot](https://github.com/algolia-bot/)
+
+## [2.38.4](https://github.com/algolia/algoliasearch-client-scala/compare/2.38.3...2.38.4)
+
+- [dc02ad1023](https://github.com/algolia/api-clients-automation/commit/dc02ad1023) chore(deps): dependencies 2026-03-30 ([#6169](https://github.com/algolia/api-clients-automation/pull/6169)) by [@algolia-bot](https://github.com/algolia-bot/)
+
+## [2.38.3](https://github.com/algolia/algoliasearch-client-scala/compare/2.38.2...2.38.3)
+
+- [600f157a13](https://github.com/algolia/api-clients-automation/commit/600f157a13) fix(specs): remove query parameter that are not accepted by the Composition API ([#6128](https://github.com/algolia/api-clients-automation/pull/6128)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [90d96d575a](https://github.com/algolia/api-clients-automation/commit/90d96d575a) chore(deps): dependencies 2026-03-16 ([#6102](https://github.com/algolia/api-clients-automation/pull/6102)) by [@algolia-bot](https://github.com/algolia-bot/)
+
+## [2.38.2](https://github.com/algolia/algoliasearch-client-scala/compare/2.38.1...2.38.2)
+
+- [505136c9d](https://github.com/algolia/api-clients-automation/commit/505136c9d) fix(specs): add deprecated field `condition` in rule schemas ([#5983](https://github.com/algolia/api-clients-automation/pull/5983)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [8020a4216](https://github.com/algolia/api-clients-automation/commit/8020a4216) chore(spec/monitoring): update monitoring API description to avoid confusion ([#6053](https://github.com/algolia/api-clients-automation/pull/6053)) by [@antgilles](https://github.com/antgilles/)
+- [756d79f6c](https://github.com/algolia/api-clients-automation/commit/756d79f6c) chore(deps): dependencies 2026-03-02 ([#6028](https://github.com/algolia/api-clients-automation/pull/6028)) by [@algolia-bot](https://github.com/algolia-bot/)
+
+## [2.38.1](https://github.com/algolia/algoliasearch-client-scala/compare/2.38.0...2.38.1)
+
+- [175139422](https://github.com/algolia/api-clients-automation/commit/175139422) fix(scala): fix HeaderInterceptor not applying default headers ([#6000](https://github.com/algolia/api-clients-automation/pull/6000)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [2.38.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.37.1...2.38.0)
+
+- [6d03afc03](https://github.com/algolia/api-clients-automation/commit/6d03afc03) chore(deps): dependencies 2026-02-16 ([#5965](https://github.com/algolia/api-clients-automation/pull/5965)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [93c834fee](https://github.com/algolia/api-clients-automation/commit/93c834fee) feat(specs): add optional feedID to composition result set ([#5991](https://github.com/algolia/api-clients-automation/pull/5991)) by [@gavinwade12](https://github.com/gavinwade12/)
+- [9aafd690b](https://github.com/algolia/api-clients-automation/commit/9aafd690b) fix(specs): invalid API format for multi feed in Comp API ([#5993](https://github.com/algolia/api-clients-automation/pull/5993)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+
+## [2.37.1](https://github.com/algolia/algoliasearch-client-scala/compare/2.37.0...2.37.1)
+
+- [46be49a3f](https://github.com/algolia/api-clients-automation/commit/46be49a3f) docs(specs): align with style guides ([#5930](https://github.com/algolia/api-clients-automation/pull/5930)) by [@kai687](https://github.com/kai687/)
+- [799a10c44](https://github.com/algolia/api-clients-automation/commit/799a10c44) fix(specs): insights-api timestamp documentation ([#5925](https://github.com/algolia/api-clients-automation/pull/5925)) by [@sirockin](https://github.com/sirockin/)
+- [4b3dc5c26](https://github.com/algolia/api-clients-automation/commit/4b3dc5c26) fix(specs): BREAKING CHANGE – remove unnecessary required fields ([#5959](https://github.com/algolia/api-clients-automation/pull/5959)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+  - The `SearchResponse` model now accepts `query` and `params` as optional parameters, as they are not always returned by the API.
+- [dfd992583](https://github.com/algolia/api-clients-automation/commit/dfd992583) fix(specs): add missing `redirect` property to rule consequence schema ([#5934](https://github.com/algolia/api-clients-automation/pull/5934)) by [@Fluf22](https://github.com/Fluf22/)
+- [b39c0798e](https://github.com/algolia/api-clients-automation/commit/b39c0798e) chore(deps): dependencies 2026-02-09 ([#5935](https://github.com/algolia/api-clients-automation/pull/5935)) by [@algolia-bot](https://github.com/algolia-bot/)
+
+## [2.37.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.36.3...2.37.0)
+
+BREAKING CHANGES: this minor version includes multiple breaking changes related to fixes on different APIs. See below for more details.
+
+- [b39e3e013](https://github.com/algolia/api-clients-automation/commit/b39e3e013) feat(specs): `conditions` is not required anymore in composition rules ([#5853](https://github.com/algolia/api-clients-automation/pull/5853)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [9ef126ccd](https://github.com/algolia/api-clients-automation/commit/9ef126ccd) docs(SearchParams): Document that filter scores are supported in virtual replicas ([#5716](https://github.com/algolia/api-clients-automation/pull/5716)) by [@NixFrog](https://github.com/NixFrog/)
+- [6a3e60802](https://github.com/algolia/api-clients-automation/commit/6a3e60802) fix(specs): BREAKING CHANGE – remove baseRecommendRequest from trendingFacets [CR-10264] ([#5858](https://github.com/algolia/api-clients-automation/pull/5858)) by [@raed667](https://github.com/raed667/)
+  - The `TrendingFacets` model has been updated to reflect the API response.
+- [f9453e693](https://github.com/algolia/api-clients-automation/commit/f9453e693) docs: BREAKING CHANGE – authentication type can't be updated ([#5824](https://github.com/algolia/api-clients-automation/pull/5824)) by [@sbellone](https://github.com/sbellone/)
+  - The `AuthenticationUpdate` model has been updated to reflect that the `type` field can't be updated.
+- [2925f56d1](https://github.com/algolia/api-clients-automation/commit/2925f56d1) fix(specs): BREAKING CHANGE – more accurate composition behavior typing ([#5892](https://github.com/algolia/api-clients-automation/pull/5892)) by [@gavinwade12](https://github.com/gavinwade12/)
+  - The `CompositionBehavior` model is now a union type for better accuracy.
+- [63b0c5464](https://github.com/algolia/api-clients-automation/commit/63b0c5464) feat(specs): BREAKING CHANGE – Ingestion API: new `code` property in oauth authentication ([#5897](https://github.com/algolia/api-clients-automation/pull/5897)) by [@sbellone](https://github.com/sbellone/)
+  - The `AuthOAuth` and `AuthOAuthPartial` models have been updated to reflect that the `clientId` field is now optional, and the `code` field can be set.
+- [d4d385654](https://github.com/algolia/api-clients-automation/commit/d4d385654) chore(deps): dependencies 2026-02-02 ([#5898](https://github.com/algolia/api-clients-automation/pull/5898)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [2.36.3](https://github.com/algolia/algoliasearch-client-scala/compare/2.36.2...2.36.3)
 
 - [f02ab6fa0](https://github.com/algolia/api-clients-automation/commit/f02ab6fa0) chore: agentic config prep ([#5825](https://github.com/algolia/api-clients-automation/pull/5825)) by [@Fluf22](https://github.com/Fluf22/)

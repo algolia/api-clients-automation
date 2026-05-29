@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Specific configuration attributes of a `json` source.
@@ -36,13 +36,7 @@ public struct SourceJSON: Codable, JSONEncodable {
     }
 }
 
-extension SourceJSON: Equatable {
-    public static func ==(lhs: SourceJSON, rhs: SourceJSON) -> Bool {
-        lhs.url == rhs.url &&
-            lhs.uniqueIDColumn == rhs.uniqueIDColumn &&
-            lhs.method == rhs.method
-    }
-}
+extension SourceJSON: Equatable {}
 
 extension SourceJSON: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct OperationIndexParams: Codable, JSONEncodable {
@@ -37,13 +37,7 @@ public struct OperationIndexParams: Codable, JSONEncodable {
     }
 }
 
-extension OperationIndexParams: Equatable {
-    public static func ==(lhs: OperationIndexParams, rhs: OperationIndexParams) -> Bool {
-        lhs.operation == rhs.operation &&
-            lhs.destination == rhs.destination &&
-            lhs.scope == rhs.scope
-    }
-}
+extension OperationIndexParams: Equatable {}
 
 extension OperationIndexParams: Hashable {
     public func hash(into hasher: inout Hasher) {

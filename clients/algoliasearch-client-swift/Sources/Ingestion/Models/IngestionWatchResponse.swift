@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct IngestionWatchResponse: Codable, JSONEncodable {
@@ -18,7 +18,7 @@ public struct IngestionWatchResponse: Codable, JSONEncodable {
     public var events: [IngestionEvent]?
     /// a message describing the outcome of the operation that has been ran (push, discover or validate) run.
     public var message: String?
-    /// Date of creation in RFC 3339 format.
+    /// Date and time when the resource was created, in RFC 3339 format.
     public var createdAt: String?
 
     public init(
@@ -59,16 +59,7 @@ public struct IngestionWatchResponse: Codable, JSONEncodable {
     }
 }
 
-extension IngestionWatchResponse: Equatable {
-    public static func ==(lhs: IngestionWatchResponse, rhs: IngestionWatchResponse) -> Bool {
-        lhs.runID == rhs.runID &&
-            lhs.eventID == rhs.eventID &&
-            lhs.data == rhs.data &&
-            lhs.events == rhs.events &&
-            lhs.message == rhs.message &&
-            lhs.createdAt == rhs.createdAt
-    }
-}
+extension IngestionWatchResponse: Equatable {}
 
 extension IngestionWatchResponse: Hashable {
     public func hash(into hasher: inout Hasher) {

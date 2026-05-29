@@ -21,6 +21,15 @@ public interface TaskInput {
     @Override
     public TaskInput deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
+      // deserialize ShopifyInput
+      if (tree.isObject() && tree.has("market") && tree.has("metafields")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(ShopifyInput.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf ShopifyInput (error: " + e.getMessage() + ") (type: ShopifyInput)");
+        }
+      }
       // deserialize StreamingInput
       if (tree.isObject() && tree.has("mapping")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -37,15 +46,6 @@ public interface TaskInput {
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf DockerStreamsInput (error: " + e.getMessage() + ") (type: DockerStreamsInput)");
-        }
-      }
-      // deserialize ShopifyInput
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(ShopifyInput.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf ShopifyInput (error: " + e.getMessage() + ") (type: ShopifyInput)");
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Paginated API response.
@@ -42,14 +42,7 @@ public struct Pagination: Codable, JSONEncodable {
     }
 }
 
-extension Pagination: Equatable {
-    public static func ==(lhs: Pagination, rhs: Pagination) -> Bool {
-        lhs.nbPages == rhs.nbPages &&
-            lhs.page == rhs.page &&
-            lhs.nbItems == rhs.nbItems &&
-            lhs.itemsPerPage == rhs.itemsPerPage
-    }
-}
+extension Pagination: Equatable {}
 
 extension Pagination: Hashable {
     public func hash(into hasher: inout Hasher) {

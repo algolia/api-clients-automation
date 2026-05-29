@@ -1,3 +1,43 @@
+{{#hasTransformationRegion}}
+{{#hasTransformationCustomHosts}}
+var transformationOptions = new TransformationOptions("{{{transformationRegion}}}")
+{
+  CustomHosts = new List<StatefulHost>
+  {
+    {{#transformationCustomHosts}}new () {
+      Scheme = HttpScheme.Http,
+      Url = Environment.GetEnvironmentVariable("CI") == "true" ? "localhost" : "host.docker.internal",
+      Port = {{port}},
+      Up = true,
+      LastUse = DateTime.UtcNow,
+      Accept = CallType.Read | CallType.Write,
+    }{{^-last}},{{/-last}}{{/transformationCustomHosts}}
+  }
+};
+{{/hasTransformationCustomHosts}}
+{{^hasTransformationCustomHosts}}
+var transformationOptions = new TransformationOptions("{{{transformationRegion}}}");
+{{/hasTransformationCustomHosts}}
+{{#hasCustomHosts}}
+{{^autoCreateClient}}var client = {{/autoCreateClient}}{{client}}.WithTransformation(new {{clientPrefix}}Config("{{parametersWithDataTypeMap.appId.value}}","{{parametersWithDataTypeMap.apiKey.value}}"{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}},"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}}) {
+  CustomHosts = new List<StatefulHost>
+    {
+      {{#customHosts}}new () {
+        Scheme = HttpScheme.Http,
+        Url = Environment.GetEnvironmentVariable("CI") == "true" ? "localhost" : "host.docker.internal",
+        Port = {{port}},
+        Up = true,
+        LastUse = DateTime.UtcNow,
+        Accept = CallType.Read | CallType.Write,
+      }{{^-last}},{{/-last}}{{/customHosts}}
+  }{{#gzipEncoding}},Compression = CompressionType.Gzip{{/gzipEncoding}}
+}, transformationOptions);
+{{/hasCustomHosts}}
+{{^hasCustomHosts}}
+{{^autoCreateClient}}var client = {{/autoCreateClient}}{{client}}.WithTransformation("{{parametersWithDataTypeMap.appId.value}}","{{parametersWithDataTypeMap.apiKey.value}}", transformationOptions);
+{{/hasCustomHosts}}
+{{/hasTransformationRegion}}
+{{^hasTransformationRegion}}
 {{#hasCustomHosts}}
 {{clientPrefix}}Config _config = new {{clientPrefix}}Config("{{parametersWithDataTypeMap.appId.value}}","{{parametersWithDataTypeMap.apiKey.value}}"{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}},"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}}) {
   CustomHosts = new List<StatefulHost>
@@ -14,6 +54,6 @@
 };
 {{^autoCreateClient}}var client = {{/autoCreateClient}}new {{client}}(_config);
 {{/hasCustomHosts}}
-{{#hasTransformationRegion}}client.SetTransformationRegion("{{{transformationRegion}}}");{{/hasTransformationRegion}}
+{{/hasTransformationRegion}}
 {{#useEchoRequester}}
 {{^autoCreateClient}}var client = {{/autoCreateClient}}new {{client}}(new {{clientPrefix}}Config("{{parametersWithDataTypeMap.appId.value}}","{{parametersWithDataTypeMap.apiKey.value}}"{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}},"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}}), _echo);{{/useEchoRequester}}

@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct SearchForFacetValuesRequest: Codable, JSONEncodable {
@@ -37,13 +37,7 @@ public struct SearchForFacetValuesRequest: Codable, JSONEncodable {
     }
 }
 
-extension SearchForFacetValuesRequest: Equatable {
-    public static func ==(lhs: SearchForFacetValuesRequest, rhs: SearchForFacetValuesRequest) -> Bool {
-        lhs.params == rhs.params &&
-            lhs.facetQuery == rhs.facetQuery &&
-            lhs.maxFacetHits == rhs.maxFacetHits
-    }
-}
+extension SearchForFacetValuesRequest: Equatable {}
 
 extension SearchForFacetValuesRequest: Hashable {
     public func hash(into hasher: inout Hasher) {

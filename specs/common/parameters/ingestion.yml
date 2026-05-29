@@ -12,11 +12,11 @@ EventID:
 
 CreatedAt:
   type: string
-  description: Date of creation in RFC 3339 format.
+  description: Date and time when the resource was created, in RFC 3339 format.
 
 PublishedAt:
   type: string
-  description: Date of publish RFC 3339 format.
+  description: Date and time when the resource was published, in RFC 3339 format.
 
 EventStatus:
   oneOf:

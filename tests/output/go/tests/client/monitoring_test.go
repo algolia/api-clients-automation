@@ -63,7 +63,7 @@ func TestMonitoringcommonApi1(t *testing.T) {
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, `^Algolia for Go \(4.35.0\).*`, echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.40.0\).*`, echo.Header.Get("User-Agent"))
 }
 
 // use the correct host.
@@ -91,6 +91,7 @@ func TestMonitoringparameters0(t *testing.T) {
 		},
 	}
 	client, err = monitoring.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	res, err = client.CustomDelete(client.NewApiCustomDeleteRequest(
 		"test"))
@@ -123,6 +124,7 @@ func TestMonitoringsetClientApiKey0(t *testing.T) {
 		},
 	}
 	client, err = monitoring.NewClientWithConfig(cfg)
+
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(

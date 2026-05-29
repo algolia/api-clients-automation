@@ -81,6 +81,7 @@ SearchResultsItem _$SearchResultsItemFromJson(Map<String, dynamic> json) =>
           page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
           params: $checkedConvert('params', (v) => v as String?),
           query: $checkedConvert('query', (v) => v as String?),
+          feedID: $checkedConvert('feedID', (v) => v as String?),
           compositions: $checkedConvert(
               'compositions',
               (v) => (v as Map<String, dynamic>).map(
@@ -141,6 +142,7 @@ Map<String, dynamic> _$SearchResultsItemToJson(SearchResultsItem instance) {
   writeNotNull('page', instance.page);
   writeNotNull('params', instance.params);
   writeNotNull('query', instance.query);
+  writeNotNull('feedID', instance.feedID);
   val['compositions'] =
       instance.compositions.map((k, e) => MapEntry(k, e.toJson()));
   return val;

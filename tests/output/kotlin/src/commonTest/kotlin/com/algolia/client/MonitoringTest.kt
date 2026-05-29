@@ -44,7 +44,7 @@ class MonitoringTest {
     client.runTest(
       call = { customPost(path = "1/test") },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.37.4\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.42.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),
@@ -57,6 +57,7 @@ class MonitoringTest {
   @Test
   fun `use the correct host`() = runTest {
     val client = MonitoringClient(appId = "my-app-id", apiKey = "my-api-key")
+
     client.runTest(
       call = { customDelete(path = "test") },
       intercept = { assertEquals("status.algolia.com", it.url.host) },
@@ -81,6 +82,7 @@ class MonitoringTest {
               )
           ),
       )
+
     client.runTest(
       call = { customGet(path = "check-api-key/1") },
       response = {

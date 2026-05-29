@@ -143,6 +143,7 @@ type partialUpdateObjectsOption func(*config)
 var (
 	_ PartialUpdateObjectsOption = (*partialUpdateObjectsOption)(nil)
 	_ PartialUpdateObjectsOption = (*chunkedBatchOption)(nil)
+	_ PartialUpdateObjectsOption = (*chunkedHelperOption)(nil)
 	_ PartialUpdateObjectsOption = (*requestOption)(nil)
 )
 
@@ -155,6 +156,8 @@ func (p partialUpdateObjectsOption) partialUpdateObjects() {}
 func (p partialUpdateObjectsOption) chunkedBatch() {}
 
 func (c chunkedBatchOption) partialUpdateObjects() {}
+
+func (c chunkedHelperOption) partialUpdateObjects() {}
 
 func (r requestOption) partialUpdateObjects() {}
 
@@ -177,6 +180,7 @@ type replaceAllObjectsOption func(*config)
 var (
 	_ ReplaceAllObjectsOption = (*replaceAllObjectsOption)(nil)
 	_ ReplaceAllObjectsOption = (*chunkedBatchOption)(nil)
+	_ ReplaceAllObjectsOption = (*chunkedHelperOption)(nil)
 	_ ReplaceAllObjectsOption = (*requestOption)(nil)
 )
 
@@ -189,6 +193,8 @@ func (p replaceAllObjectsOption) replaceAllObjects() {}
 func (p replaceAllObjectsOption) chunkedBatch() {}
 
 func (c chunkedBatchOption) replaceAllObjects() {}
+
+func (c chunkedHelperOption) replaceAllObjects() {}
 
 func (r requestOption) replaceAllObjects() {}
 
@@ -211,6 +217,7 @@ type waitForApiKeyOption func(*config)
 var (
 	_ WaitForApiKeyOption = (*waitForApiKeyOption)(nil)
 	_ WaitForApiKeyOption = (*iterableOption)(nil)
+	_ WaitForApiKeyOption = (*chunkedHelperOption)(nil)
 	_ WaitForApiKeyOption = (*requestOption)(nil)
 )
 
@@ -225,6 +232,8 @@ func (w waitForApiKeyOption) iterable() {}
 func (r requestOption) waitForApiKey() {}
 
 func (i iterableOption) waitForApiKey() {}
+
+func (c chunkedHelperOption) waitForApiKey() {}
 
 // WithApiKey necessary to know if an `update` operation has been processed, compare fields of the response with it. (optional - mandatory if operation is UPDATE).
 func WithApiKey(apiKey *ApiKey) waitForApiKeyOption {
@@ -257,6 +266,10 @@ func toIngestionChunkedBatchOptions(opts []ChunkedBatchOption) []ingestion.Chunk
 
 	if conf.batchSize > 0 {
 		ingestionOpts = append(ingestionOpts, ingestion.WithBatchSize(conf.batchSize))
+	}
+
+	if conf.maxRetries > 0 {
+		ingestionOpts = append(ingestionOpts, ingestion.WithMaxRetries(conf.maxRetries))
 	}
 
 	ingestionOpts = append(ingestionOpts, ingestion.WithWaitForTasks(conf.waitForTasks))
@@ -1395,13 +1408,13 @@ Browse calls the API and returns the raw response from it.
 
 	Retrieves records from an index, up to 1,000 per request.
 
-While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details),
-browsing _just_ returns matching records.
-This can be useful if you want to export your indices.
+Searching returns _hits_ (records augmented with highlighting and ranking details).
+Browsing returns matching records only.
+Use browse to export your indices.
 
 - The Analytics API doesn't collect data when using `browse`.
 - Records are ranked by attributes and custom ranking.
-- There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.
+- There's no ranking for typo tolerance, number of matched words, proximity, or geo distance.
 
 Browse requests automatically apply these settings:
 
@@ -1417,7 +1430,7 @@ Browse requests automatically apply these settings:
 - `optionalFilters`: `[]`
 - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)
 
-If you send these parameters with your browse requests, they'll be ignored.
+If you send these parameters with your browse requests, they're ignored.
 
 	    Required API Key ACLs:
 	    - browse
@@ -1471,13 +1484,13 @@ Browse casts the HTTP response body to a defined struct.
 
 Retrieves records from an index, up to 1,000 per request.
 
-While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details),
-browsing _just_ returns matching records.
-This can be useful if you want to export your indices.
+Searching returns _hits_ (records augmented with highlighting and ranking details).
+Browsing returns matching records only.
+Use browse to export your indices.
 
 - The Analytics API doesn't collect data when using `browse`.
 - Records are ranked by attributes and custom ranking.
-- There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.
+- There's no ranking for typo tolerance, number of matched words, proximity, or geo distance.
 
 Browse requests automatically apply these settings:
 
@@ -1493,7 +1506,7 @@ Browse requests automatically apply these settings:
 - `optionalFilters`: `[]`
 - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)
 
-If you send these parameters with your browse requests, they'll be ignored.
+If you send these parameters with your browse requests, they're ignored.
 
 Required API Key ACLs:
   - browse
@@ -2694,7 +2707,7 @@ DeleteBy calls the API and returns the raw response from it.
 	This operation doesn't accept empty filters.
 
 This operation is resource-intensive.
-You should only use it if you can't get the object IDs of the records you want to delete.
+Use it only if you can't get the object IDs of the records you want to delete.
 It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse),
 and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).
 
@@ -2753,7 +2766,7 @@ DeleteBy casts the HTTP response body to a defined struct.
 This operation doesn't accept empty filters.
 
 This operation is resource-intensive.
-You should only use it if you can't get the object IDs of the records you want to delete.
+Use it only if you can't get the object IDs of the records you want to delete.
 It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse),
 and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).
 
@@ -6000,29 +6013,30 @@ OperationIndex calls the API and returns the raw response from it.
 
 	Copies or moves (renames) an index within the same Algolia application.
 
+Notes:
 - Existing destination indices are overwritten, except for their analytics data.
-- If the destination index doesn't exist yet, it'll be created.
+- If the destination index doesn't exist yet, it's created.
 - This operation is resource-intensive.
 
 **Copy**
 
-- Copying a source index that doesn't exist creates a new index with 0 records and default settings.
-- The API keys of the source index are merged with the existing keys in the destination index.
+- If the source index doesn't exist, copying creates a new index with 0 records and default settings.
+- API keys from the source index are merged with the existing keys in the destination index.
 - You can't copy the `enableReRanking`, `mode`, and `replicas` settings.
 - You can't copy to a destination index that already has replicas.
 - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
-- Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)
+- For more information, see [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).
 
 **Move**
 
-  - Moving a source index that doesn't exist is ignored without returning an error.
+  - If the source index doesn't exist, moving is ignored without returning an error.
 
   - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.
     To access the original analytics in the dashboard, create an index with the original name.
 
   - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices.
 
-  - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
+  - For more information, see [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
 
 This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
@@ -6078,29 +6092,30 @@ OperationIndex casts the HTTP response body to a defined struct.
 
 Copies or moves (renames) an index within the same Algolia application.
 
+Notes:
 - Existing destination indices are overwritten, except for their analytics data.
-- If the destination index doesn't exist yet, it'll be created.
+- If the destination index doesn't exist yet, it's created.
 - This operation is resource-intensive.
 
 **Copy**
 
-- Copying a source index that doesn't exist creates a new index with 0 records and default settings.
-- The API keys of the source index are merged with the existing keys in the destination index.
+- If the source index doesn't exist, copying creates a new index with 0 records and default settings.
+- API keys from the source index are merged with the existing keys in the destination index.
 - You can't copy the `enableReRanking`, `mode`, and `replicas` settings.
 - You can't copy to a destination index that already has replicas.
 - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
-- Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)
+- For more information, see [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).
 
 **Move**
 
-  - Moving a source index that doesn't exist is ignored without returning an error.
+  - If the source index doesn't exist, moving is ignored without returning an error.
 
   - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.
     To access the original analytics in the dashboard, create an index with the original name.
 
   - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices.
 
-  - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
+  - For more information, see [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
 
 This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
@@ -6230,26 +6245,36 @@ PartialUpdateObject calls the API and returns the raw response from it.
 	  - If a record with the specified object ID doesn't exist,
 	    a new record is added to the index **if** `createIfNotExists` is true.
 	  - If the index doesn't exist yet, this method creates a new index.
-	  - You can use any first-level attribute but not nested attributes.
+	  - Use first-level attributes only. Nested attributes aren't supported.
 	    If you specify a nested attribute, this operation replaces its first-level ancestor.
 
-To update an attribute without pushing the entire record, you can use these built-in operations.
-These operations can be helpful if you don't have access to your initial data.
+To update attributes without replacing the full record, use these built-in operations.
+These operations are useful when the initial data isn't available.
 
-- Increment: increment a numeric attribute
-- Decrement: decrement a numeric attribute
-- Add: append a number or string element to an array attribute
-- Remove: remove all matching number or string elements from an array attribute made of numbers or strings
-- AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present
-- IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0.
-- IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.
+  - `Increment`: increment a numeric attribute.
 
-You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:
+  - `Decrement`: decrement a numeric attribute.
 
-- _operation: the operation to apply on the attribute
-- value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
+  - `Add`: append a number or string element to an array attribute.
 
-When updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.
+  - `Remove`: remove all matching number or string elements from an array attribute made of numbers or strings.
+
+  - `AddUnique`: add a number or string element to an array attribute made of numbers or strings only if it's not already present.
+
+  - `IncrementFrom`: increment a numeric integer attribute only if the provided value matches the current value. Otherwise, the update is ignored.
+    Example: If you pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the API ignores the update.
+    If the object doesn't exist, the API only creates it if you pass an `IncrementFrom` value of 0.
+
+  - `IncrementSet`: increment a numeric integer attribute only if the provided value is greater than the current value. Otherwise, the update is ignored.
+    Example: If you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1, the API updates the object.
+    If the object doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.
+
+Specify an operation by providing an object with the attribute to update as the key and its value as an object with these properties:
+
+- `_operation`: the operation to apply on the attribute.
+- `value`: the right-hand side argument to the operation, for example, increment or decrement step, or a value to add or remove.
+
+When updating multiple attributes or using multiple operations targeting the same record, use a single partial update for faster processing.
 
 This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
@@ -6319,26 +6344,36 @@ Adds new attributes to a record, or updates existing ones.
   - If a record with the specified object ID doesn't exist,
     a new record is added to the index **if** `createIfNotExists` is true.
   - If the index doesn't exist yet, this method creates a new index.
-  - You can use any first-level attribute but not nested attributes.
+  - Use first-level attributes only. Nested attributes aren't supported.
     If you specify a nested attribute, this operation replaces its first-level ancestor.
 
-To update an attribute without pushing the entire record, you can use these built-in operations.
-These operations can be helpful if you don't have access to your initial data.
+To update attributes without replacing the full record, use these built-in operations.
+These operations are useful when the initial data isn't available.
 
-- Increment: increment a numeric attribute
-- Decrement: decrement a numeric attribute
-- Add: append a number or string element to an array attribute
-- Remove: remove all matching number or string elements from an array attribute made of numbers or strings
-- AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present
-- IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0.
-- IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.
+  - `Increment`: increment a numeric attribute.
 
-You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:
+  - `Decrement`: decrement a numeric attribute.
 
-- _operation: the operation to apply on the attribute
-- value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
+  - `Add`: append a number or string element to an array attribute.
 
-When updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.
+  - `Remove`: remove all matching number or string elements from an array attribute made of numbers or strings.
+
+  - `AddUnique`: add a number or string element to an array attribute made of numbers or strings only if it's not already present.
+
+  - `IncrementFrom`: increment a numeric integer attribute only if the provided value matches the current value. Otherwise, the update is ignored.
+    Example: If you pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the API ignores the update.
+    If the object doesn't exist, the API only creates it if you pass an `IncrementFrom` value of 0.
+
+  - `IncrementSet`: increment a numeric integer attribute only if the provided value is greater than the current value. Otherwise, the update is ignored.
+    Example: If you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1, the API updates the object.
+    If the object doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.
+
+Specify an operation by providing an object with the attribute to update as the key and its value as an object with these properties:
+
+- `_operation`: the operation to apply on the attribute.
+- `value`: the right-hand side argument to the operation, for example, increment or decrement step, or a value to add or remove.
+
+When updating multiple attributes or using multiple operations targeting the same record, use a single partial update for faster processing.
 
 This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
@@ -7722,20 +7757,20 @@ func (c *APIClient) NewApiSearchRequest(searchMethodParams *SearchMethodParams) 
 /*
 Search calls the API and returns the raw response from it.
 
-	Sends multiple search requests to one or more indices.
+	Runs multiple search queries against one or more indices in a single API request.
 
-This can be useful in these cases:
+Use cases include:
 
-- Different indices for different purposes, such as, one index for products, another one for marketing content.
-- Multiple searches to the same index—for example, with different filters.
+- Searching different indices, such as products and marketing content.
+- Run multiple queries on the same index with different parameters or filters.
 
-Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
+If you know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
 
 	    Required API Key ACLs:
 	    - search
 
 	Request can be constructed by NewApiSearchRequest with parameters below.
-	  @param searchMethodParams SearchMethodParams - Muli-search request body. Results are returned in the same order as the requests.
+	  @param searchMethodParams SearchMethodParams - Multi-query search request body. Results are returned in the same order as the requests.
 	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
@@ -7775,21 +7810,21 @@ func (c *APIClient) SearchWithHTTPInfo(r ApiSearchRequest, opts ...RequestOption
 /*
 Search casts the HTTP response body to a defined struct.
 
-Sends multiple search requests to one or more indices.
+Runs multiple search queries against one or more indices in a single API request.
 
-This can be useful in these cases:
+Use cases include:
 
-- Different indices for different purposes, such as, one index for products, another one for marketing content.
-- Multiple searches to the same index—for example, with different filters.
+- Searching different indices, such as products and marketing content.
+- Run multiple queries on the same index with different parameters or filters.
 
-Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
+If you know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
 
 Required API Key ACLs:
   - search
 
 Request can be constructed by NewApiSearchRequest with parameters below.
 
-	@param searchMethodParams SearchMethodParams - Muli-search request body. Results are returned in the same order as the requests.
+	@param searchMethodParams SearchMethodParams - Multi-query search request body. Results are returned in the same order as the requests.
 	@return SearchResponses
 */
 func (c *APIClient) Search(r ApiSearchRequest, opts ...RequestOption) (*SearchResponses, error) {
@@ -9200,9 +9235,29 @@ func (r requestOption) iterable() {}
 
 func (i iterableOption) iterable() {}
 
-// WithMaxRetries the maximum number of retry. Default to 50.
-func WithMaxRetries(maxRetries int) iterableOption {
-	return iterableOption(func(c *config) {
+// --------- Chunked helper options ---------
+//
+// chunkedHelperOption is the shared option type for chunked helpers
+// (ChunkedBatch, SaveObjects, ...) and the polling layer (WaitForTask, CreateIterable).
+
+type chunkedHelperOption func(*config)
+
+var (
+	_ ChunkedBatchOption = (*chunkedHelperOption)(nil)
+	_ IterableOption     = (*chunkedHelperOption)(nil)
+)
+
+func (c chunkedHelperOption) apply(conf *config) {
+	c(conf)
+}
+
+func (c chunkedHelperOption) chunkedBatch() {}
+
+func (c chunkedHelperOption) iterable() {}
+
+// WithMaxRetries the maximum number of retries when polling for task completion. Defaults to 100 in chunked helpers.
+func WithMaxRetries(maxRetries int) chunkedHelperOption {
+	return chunkedHelperOption(func(c *config) {
 		c.maxRetries = maxRetries
 	})
 }
@@ -9253,7 +9308,12 @@ func CreateIterable[T any](execute func(*T, error) (*T, error), validate func(*T
 		}
 
 		if conf.maxRetries >= 0 && retryCount >= conf.maxRetries {
-			return nil, errs.NewWaitError(fmt.Sprintf("The maximum number of retries exceeded. (%d/%d)", retryCount, conf.maxRetries))
+			return nil, errs.NewWaitError(
+				fmt.Sprintf(
+					"Stopped waiting for the task after %d retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries.",
+					conf.maxRetries,
+				),
+			)
 		}
 
 		time.Sleep(conf.timeout(retryCount))
@@ -9335,7 +9395,7 @@ func (c *APIClient) WaitForTask(
 	// provide a default timeout function
 	opts = append([]IterableOption{WithTimeout(func(count int) time.Duration {
 		return time.Duration(min(200*count, 5000)) * time.Millisecond
-	}), WithMaxRetries(50)}, opts...)
+	}), WithMaxRetries(100)}, opts...)
 
 	return CreateIterable(
 		func(*GetTaskResponse, error) (*GetTaskResponse, error) {
@@ -9369,7 +9429,7 @@ func (c *APIClient) WaitForAppTask(
 	// provide a default timeout function
 	opts = append([]IterableOption{WithTimeout(func(count int) time.Duration {
 		return time.Duration(min(200*count, 5000)) * time.Millisecond
-	}), WithMaxRetries(50)}, opts...)
+	}), WithMaxRetries(100)}, opts...)
 
 	return CreateIterable(
 		func(*GetTaskResponse, error) (*GetTaskResponse, error) {
@@ -9502,7 +9562,7 @@ func (c *APIClient) WaitForApiKey(
 	// provide a default timeout function
 	opts = append([]WaitForApiKeyOption{WithTimeout(func(count int) time.Duration {
 		return time.Duration(min(200*count, 5000)) * time.Millisecond
-	}), WithMaxRetries(50)}, opts...)
+	}), WithMaxRetries(100)}, opts...)
 
 	return CreateIterable(
 		func(*GetApiKeyResponse, error) (*GetApiKeyResponse, error) {
@@ -9871,7 +9931,7 @@ func (c *APIClient) ChunkedBatch(indexName string, objects []map[string]any, act
 }
 
 /*
-ReplaceAllObjectsWithTransformation is similar to the `replaceAllObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must have been passed to the client instantiation method.
+ReplaceAllObjectsWithTransformation is similar to the `replaceAllObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. TransformationOptions must have been passed to the client constructor or set via SetTransformationOptions.
 See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
 
 	@param indexName string - the index name to replace objects into.
@@ -9886,7 +9946,9 @@ func (c *APIClient) ReplaceAllObjectsWithTransformation(
 	opts ...ReplaceAllObjectsOption,
 ) (*ReplaceAllObjectsWithTransformationResponse, error) {
 	if c.ingestionTransporter == nil {
-		return nil, reportError("`region` must be provided at client instantiation before calling this method.")
+		return nil, reportError(
+			"TransformationOptions must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion",
+		)
 	}
 
 	tmpIndexName := fmt.Sprintf("%s_tmp_%d", indexName, time.Now().UnixNano())
@@ -10097,7 +10159,7 @@ func (c *APIClient) IndexExists(indexName string) (bool, error) {
 }
 
 /*
-Helper: Similar to the `SaveObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client's config at instantiation.
+Helper: Similar to the `SaveObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. TransformationOptions must have been passed to the client constructor or set via SetTransformationOptions.
 
 	@param indexName string - the index name to save objects into.
 	@param objects []map[string]any - List of objects to save.
@@ -10111,7 +10173,9 @@ func (c *APIClient) SaveObjectsWithTransformation(
 	opts ...ChunkedBatchOption,
 ) ([]ingestion.WatchResponse, error) {
 	if c.ingestionTransporter == nil {
-		return nil, reportError("`region` must be provided at client instantiation before calling this method.")
+		return nil, reportError(
+			"TransformationOptions must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion",
+		)
 	}
 
 	return c.ingestionTransporter.ChunkedPush(
@@ -10123,7 +10187,7 @@ func (c *APIClient) SaveObjectsWithTransformation(
 }
 
 /*
-Helper: Similar to the `PartialUpdateObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client instantiation method.
+Helper: Similar to the `PartialUpdateObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. TransformationOptions must have been passed to the client constructor or set via SetTransformationOptions.
 
 	@param indexName string - the index name to save objects into.
 	@param objects []map[string]any - List of objects to save.
@@ -10137,7 +10201,9 @@ func (c *APIClient) PartialUpdateObjectsWithTransformation(
 	opts ...PartialUpdateObjectsOption,
 ) ([]ingestion.WatchResponse, error) {
 	if c.ingestionTransporter == nil {
-		return nil, reportError("`region` must be provided at client instantiation before calling this method.")
+		return nil, reportError(
+			"TransformationOptions must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion",
+		)
 	}
 
 	conf := config{

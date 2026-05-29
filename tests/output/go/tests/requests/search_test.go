@@ -2535,6 +2535,22 @@ func TestSearch_Search(t *testing.T) {
 		jsonassert.New(t).
 			Assertf(*echo.Body, "%s", `{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":["fr"],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":["fr"],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}`)
 	})
+	t.Run("withQueryCategorization", func(t *testing.T) {
+		_, err := client.Search(client.NewApiSearchRequest(
+
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("cts_e2e_query_categorization").SetQuery("sofa").SetExtensions(
+						search.NewEmptySearchExtensions().SetQueryCategorization(
+							search.NewEmptySearchExtensionsQueryCategorization().SetEnableCategoriesRetrieval(true).SetEnableAutoFiltering(false))))})))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/*/queries", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"requests":[{"indexName":"cts_e2e_query_categorization","query":"sofa","extensions":{"queryCategorization":{"enableCategoriesRetrieval":true,"enableAutoFiltering":false}}}]}`)
+	})
 }
 
 func TestSearch_SearchDictionaryEntries(t *testing.T) {
@@ -2711,6 +2727,33 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"query":"ben","filters":"categories:politics AND store:Gibert Joseph Saint-Michel"}`)
 	})
+	t.Run("customRankingWithoutCategories", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("User search query").SetFacetingAfterDistinct(true).SetFilters("ranked_category:none"))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"query":"User search query","facetingAfterDistinct":true,"filters":"ranked_category:none"}`)
+	})
+	t.Run("customRankingWithCategories", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().
+				SetQuery("User search query").
+				SetFacetingAfterDistinct(true).
+				SetFilters("category:{{currentCategory}} AND (ranked_category:{{currentCategory}} OR ranked_category:none)"),
+		)))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"query":"User search query","facetingAfterDistinct":true,"filters":"category:{{currentCategory}} AND (ranked_category:{{currentCategory}} OR ranked_category:none)"}`)
+	})
 	t.Run("filters boolean", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
@@ -2754,6 +2797,17 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"filters":"NOT date_timestamp:1514764800 TO 1546300799"}`)
+	})
+	t.Run("filtersWithScores", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetFilters("(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)"))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"filters":"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)"}`)
 	})
 	t.Run("filtersSumOrFiltersScoresFalse", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
@@ -2806,6 +2860,28 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"query":"harry","filters":"_tags:non-fiction"}`)
+	})
+	t.Run("filtersTheNotTags", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetFilters("NOT _tags:non-fiction"))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"filters":"NOT _tags:non-fiction"}`)
+	})
+	t.Run("filtersNumericGreaterThan", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetNumericFilters(search.StringAsNumericFilters("price>20")))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"numericFilters":"price>20"}`)
 	})
 	t.Run("facetFiltersList", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
@@ -3059,6 +3135,18 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"restrictSearchableAttributes":["title_fr"]}`)
+	})
+	t.Run("restrictSearchableAttributesWolf", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("wolf").SetRestrictSearchableAttributes(
+				[]string{"title_fr"}))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"query":"wolf","restrictSearchableAttributes":["title_fr"]}`)
 	})
 	t.Run("getRankingInfo", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
@@ -3548,6 +3636,17 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"query":"query","hitsPerPage":10}`)
 	})
+	t.Run("overrideDefaultPageAndHitsPerPage", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetPage(2).SetHitsPerPage(5))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"query":"query","page":2,"hitsPerPage":5}`)
+	})
 	t.Run("get_nth_hit", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
@@ -3631,7 +3730,7 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 			search.NewEmptySearchParamsObject().
 				SetQuery("query").
 				SetAroundLatLngViaIP(true),
-		)), search.WithHeaderParam("x-forwarded-for", "94.228.178.246 // should be replaced with the actual IP you would like to search around"))
+		)), search.WithHeaderParam("x-forwarded-for", "XX.XXX.XXX.XXX"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3640,13 +3739,25 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"query":"query","aroundLatLngViaIP":true}`)
 
 		headers := map[string]string{}
-		require.NoError(
-			t,
-			json.Unmarshal(
-				[]byte(`{"x-forwarded-for":"94.228.178.246 // should be replaced with the actual IP you would like to search around"}`),
-				&headers,
-			),
-		)
+		require.NoError(t, json.Unmarshal([]byte(`{"x-forwarded-for":"XX.XXX.XXX.XXX"}`), &headers))
+
+		for k, v := range headers {
+			require.Equal(t, v, echo.Header.Get(k))
+		}
+	})
+	t.Run("forwardUserIpAddress", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName").WithSearchParams(search.SearchParamsStringAsSearchParams(
+			search.NewEmptySearchParamsString())), search.WithHeaderParam("x-forwarded-for", "XX.XXX.XXX.XXX"))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{}`)
+
+		headers := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"x-forwarded-for":"XX.XXX.XXX.XXX"}`), &headers))
 
 		for k, v := range headers {
 			require.Equal(t, v, echo.Header.Get(k))
@@ -4993,6 +5104,19 @@ func TestSearch_SetSettings(t *testing.T) {
 
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"attributesToHighlight":["author","title","content"]}`)
 	})
+	t.Run("highlightWithCustomPrePostTags", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetAttributesToHighlight(
+				[]string{"author", "title", "content"}).SetHighlightPreTag("<em class=\"search-highlight\">").SetHighlightPostTag("</em>")))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"attributesToHighlight":["author","title","content"],"highlightPreTag":"<em class=\"search-highlight\">","highlightPostTag":"</em>"}`)
+	})
 	t.Run("attributesToHighlightStar", func(t *testing.T) {
 		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
 			"theIndexName",
@@ -5917,6 +6041,51 @@ func TestSearch_SetSettings(t *testing.T) {
 
 		jsonassert.New(t).
 			Assertf(*echo.Body, "%s", `{"renderingContent":{"facetOrdering":{"facets":{"order":["size","brand"]},"values":{"brand":{"order":["uniqlo"],"hide":["muji"],"sortRemainingBy":"count"},"size":{"order":["S","M","L"],"sortRemainingBy":"hidden"}}}}}`)
+	})
+	t.Run("typoToleranceMin", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("min")))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"typoTolerance":"min"}`)
+	})
+	t.Run("minWordSizefor1Typo5", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetMinWordSizefor1Typo(5)))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"minWordSizefor1Typo":5}`)
+	})
+	t.Run("attributesToSnippetBodyTitle", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetAttributesToSnippet(
+				[]string{"body:20", "title"})))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"attributesToSnippet":["body:20","title"]}`)
+	})
+	t.Run("snippetEllipsisTextHellip", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetSnippetEllipsisText("[&hellip;]")))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"snippetEllipsisText":"[&hellip;]"}`)
 	})
 }
 

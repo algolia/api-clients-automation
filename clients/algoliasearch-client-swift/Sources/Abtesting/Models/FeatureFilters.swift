@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Configuration of feature-based filters applied to the A/B test population.
@@ -37,13 +37,7 @@ public struct FeatureFilters: Codable, JSONEncodable {
     }
 }
 
-extension FeatureFilters: Equatable {
-    public static func ==(lhs: FeatureFilters, rhs: FeatureFilters) -> Bool {
-        lhs.dynamicReRanking == rhs.dynamicReRanking &&
-            lhs.aiPerso == rhs.aiPerso &&
-            lhs.multiSignalRanking == rhs.multiSignalRanking
-    }
-}
+extension FeatureFilters: Equatable {}
 
 extension FeatureFilters: Hashable {
     public func hash(into hasher: inout Hasher) {

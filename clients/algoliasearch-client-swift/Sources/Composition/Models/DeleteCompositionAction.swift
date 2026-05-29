@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Operation arguments when deleting.
@@ -27,11 +27,7 @@ public struct DeleteCompositionAction: Codable, JSONEncodable {
     }
 }
 
-extension DeleteCompositionAction: Equatable {
-    public static func ==(lhs: DeleteCompositionAction, rhs: DeleteCompositionAction) -> Bool {
-        lhs.objectID == rhs.objectID
-    }
-}
+extension DeleteCompositionAction: Equatable {}
 
 extension DeleteCompositionAction: Hashable {
     public func hash(into hasher: inout Hasher) {

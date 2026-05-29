@@ -7,7 +7,7 @@ task test: %w[test:client test:requests test:e2e]
 namespace :test do
   Rake::TestTask.new(:client) do |t|
     t.libs << 'test'
-    t.test_files = FileList['test/client/*_test.rb']
+    t.test_files = FileList['test/client/*_test.rb', 'test/manual/*_test.rb']
     t.verbose    = true
     t.warning    = false
   end

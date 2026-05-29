@@ -8,7 +8,7 @@ info:
     ## Base URLs
 
 
-    The base URLs for requests to the Personalization API are:
+    Base URLs for the Personalization API:
 
 
     - `https://personalization.us.algolia.com`
@@ -26,7 +26,7 @@ info:
     ## Authentication
 
 
-    To authenticate your API requests, add these headers:
+    Add these headers to authenticate requests:
 
 
     - `x-algolia-application-id`. Your Algolia application ID.
@@ -54,8 +54,8 @@ info:
     of attributes in the API response.
 
 
-    Successful responses return a `2xx` status. Client errors return a `4xx`
-    status. Server errors are indicated by a `5xx` status.
+    Successful responses return `2xx` statuses. Client errors return `4xx`
+    statuses. Server errors return `5xx` statuses.
 
     Error responses have a `message` property with more information.
 
@@ -76,15 +76,14 @@ info:
 
     second period.
 
-    - `x-ratelimit-reset`: [Unix timestamp](https://www.unixtimestamp.com) of
-
-    the next time period.
+    - `x-ratelimit-reset`: Timestamp when the next time period starts, measured
+    in seconds since the Unix epoch.
 
 
     ## Version
 
 
-    The current version of the Personalization API is version 1, as indicated by
+    The current version of the Personalization API is version 1, indicated by
     the `/1/` in each endpoint's URL.
   version: 1.0.0
 servers:
@@ -1051,8 +1050,6 @@ paths:
                   - scores
                   - lastEventAt
                 properties:
-                  userToken:
-                    $ref: '#/components/schemas/userToken'
                   lastEventAt:
                     type: string
                     description: >-
@@ -1068,6 +1065,8 @@ paths:
                       towards specific facet values,
 
                       given the personalization strategy and past events.
+                  userToken:
+                    $ref: '#/components/schemas/userToken'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1323,8 +1322,6 @@ paths:
                   - userToken
                   - deletedUntil
                 properties:
-                  userToken:
-                    $ref: '#/components/schemas/userToken'
                   deletedUntil:
                     type: string
                     description: >
@@ -1333,6 +1330,8 @@ paths:
 
                       Any events received after the `deletedUntil` date start a
                       new user profile.
+                  userToken:
+                    $ref: '#/components/schemas/userToken'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -2141,7 +2140,24 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"eventsScoring":[{"score":42,"eventName":"lorem","eventType":"click"}],"facetsScoring":[{"score":42,"facetName":"lorem"}],"personalizationImpact":0}'
+              --data '
+            {
+              "eventsScoring": [
+                {
+                  "score": 42,
+                  "eventName": "lorem",
+                  "eventType": "click"
+                }
+              ],
+              "facetsScoring": [
+                {
+                  "score": 42,
+                  "facetName": "lorem"
+                }
+              ],
+              "personalizationImpact": 0
+            }
+            '
 components:
   securitySchemes:
     appId:
@@ -2228,13 +2244,13 @@ components:
         - eventName
         - eventType
       properties:
-        score:
-          $ref: '#/components/schemas/score'
         eventName:
           type: string
           description: Event name.
         eventType:
           $ref: '#/components/schemas/EventType'
+        score:
+          $ref: '#/components/schemas/score'
     facetsScoring:
       type: object
       additionalProperties: false
@@ -2242,11 +2258,11 @@ components:
         - score
         - facetName
       properties:
-        score:
-          $ref: '#/components/schemas/score'
         facetName:
           type: string
           description: Facet attribute name.
+        score:
+          $ref: '#/components/schemas/score'
     personalizationStrategyParams:
       type: object
       additionalProperties: false
@@ -2321,7 +2337,7 @@ components:
         type: integer
     x-ratelimit-reset:
       description: >-
-        Timstamp when the rate limit will reset, measured in seconds since the
+        Timestamp when the rate limit will reset, measured in seconds since the
         Unix epoch.
       example: 1710682486
       schema:

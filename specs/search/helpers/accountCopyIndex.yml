@@ -42,7 +42,7 @@ method:
           type: string
       - in: query
         name: batchSize
-        description: The size of the chunk of `objects`. Defaults to 1000.
+        description: The size of the chunk of `objects`. Defaults to 1,000.
         required: false
         schema:
           type: integer

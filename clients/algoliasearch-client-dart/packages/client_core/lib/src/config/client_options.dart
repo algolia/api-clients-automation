@@ -38,6 +38,10 @@ final class ClientOptions {
   /// Used only in case of using the default (dio) requester.
   final HttpClientAdapter? httpClientAdapter;
 
+  /// Compression type to use for request bodies.
+  /// Set to 'gzip' to enable gzip compression for POST/PUT requests.
+  final String? compression;
+
   /// Constructs a [ClientOptions] instance with the provided parameters.
   const ClientOptions({
     this.connectTimeout = const Duration(seconds: 2),
@@ -50,6 +54,7 @@ final class ClientOptions {
     this.logger,
     this.interceptors,
     this.httpClientAdapter,
+    this.compression,
   });
 
   @override
@@ -66,7 +71,8 @@ final class ClientOptions {
           logger == other.logger &&
           requester == other.requester &&
           interceptors == other.interceptors &&
-          httpClientAdapter == other.httpClientAdapter;
+          httpClientAdapter == other.httpClientAdapter &&
+          compression == other.compression;
 
   @override
   int get hashCode =>
@@ -79,10 +85,11 @@ final class ClientOptions {
       logger.hashCode ^
       requester.hashCode ^
       interceptors.hashCode ^
-      httpClientAdapter.hashCode;
+      httpClientAdapter.hashCode ^
+      compression.hashCode;
 
   @override
   String toString() {
-    return 'ClientOptions{hosts: $hosts, connectTimeout: $connectTimeout, writeTimeout: $writeTimeout, readTimeout: $readTimeout, headers: $headers, agentSegments: $agentSegments, logger: $logger, requester: $requester, interceptors: $interceptors, httpClientAdapter: $httpClientAdapter}';
+    return 'ClientOptions{hosts: $hosts, connectTimeout: $connectTimeout, writeTimeout: $writeTimeout, readTimeout: $readTimeout, headers: $headers, agentSegments: $agentSegments, logger: $logger, requester: $requester, interceptors: $interceptors, httpClientAdapter: $httpClientAdapter, compression: $compression}';
   }
 }

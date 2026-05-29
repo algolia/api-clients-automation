@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct SearchEdit: Codable, JSONEncodable {
@@ -35,13 +35,7 @@ public struct SearchEdit: Codable, JSONEncodable {
     }
 }
 
-extension SearchEdit: Equatable {
-    public static func ==(lhs: SearchEdit, rhs: SearchEdit) -> Bool {
-        lhs.type == rhs.type &&
-            lhs.delete == rhs.delete &&
-            lhs.insert == rhs.insert
-    }
-}
+extension SearchEdit: Equatable {}
 
 extension SearchEdit: Hashable {
     public func hash(into hasher: inout Hasher) {

@@ -150,6 +150,57 @@ describe('api', () => {
     expect(result).toEqual({ status: 'ok' });
   }, 25000);
 
+  test('test the compression strategy', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6678,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+      compression: 'gzip',
+    });
+
+    const result = await client.customPost({
+      path: '1/test/gzip',
+      parameters: {},
+      body: {
+        message:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien.',
+      },
+    });
+
+    expect(result).toEqual({
+      message: 'ok compression test server response',
+      body: {
+        message:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien.',
+      },
+    });
+  }, 25000);
+
+  test('test the response decompression strategy', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6691,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.customGet({ path: '1/test/gzip-response' });
+
+    expect(result).toEqual({
+      message: 'ok decompression test server response',
+      data: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    });
+  }, 25000);
+
   test('calls api with default read timeouts', async () => {
     const client = createClient();
 
@@ -250,7 +301,7 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.47.0\).*/);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.53.0\).*/);
   }, 25000);
 });
 
@@ -590,7 +641,23 @@ describe('partialUpdateObjectsWithTransformation', () => {
           protocol: 'http',
         },
       ],
-      transformation: { region: 'us' },
+      transformationOptions: {
+        region: 'us',
+        hosts: [
+          {
+            url: 'localhost',
+            port: 6688,
+            accept: 'readWrite',
+            protocol: 'http',
+          },
+          {
+            url: 'localhost',
+            port: 6689,
+            accept: 'readWrite',
+            protocol: 'http',
+          },
+        ],
+      },
     });
 
     {
@@ -730,7 +797,17 @@ describe('replaceAllObjectsWithTransformation', () => {
           protocol: 'http',
         },
       ],
-      transformation: { region: 'us' },
+      transformationOptions: {
+        region: 'us',
+        hosts: [
+          {
+            url: 'localhost',
+            port: 6690,
+            accept: 'readWrite',
+            protocol: 'http',
+          },
+        ],
+      },
     });
 
     {
@@ -919,7 +996,23 @@ describe('saveObjectsWithTransformation', () => {
           protocol: 'http',
         },
       ],
-      transformation: { region: 'us' },
+      transformationOptions: {
+        region: 'us',
+        hosts: [
+          {
+            url: 'localhost',
+            port: 6688,
+            accept: 'readWrite',
+            protocol: 'http',
+          },
+          {
+            url: 'localhost',
+            port: 6689,
+            accept: 'readWrite',
+            protocol: 'http',
+          },
+        ],
+      },
     });
 
     {

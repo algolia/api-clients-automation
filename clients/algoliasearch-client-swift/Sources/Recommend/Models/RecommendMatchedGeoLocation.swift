@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct RecommendMatchedGeoLocation: Codable, JSONEncodable {
@@ -36,13 +36,7 @@ public struct RecommendMatchedGeoLocation: Codable, JSONEncodable {
     }
 }
 
-extension RecommendMatchedGeoLocation: Equatable {
-    public static func ==(lhs: RecommendMatchedGeoLocation, rhs: RecommendMatchedGeoLocation) -> Bool {
-        lhs.lat == rhs.lat &&
-            lhs.lng == rhs.lng &&
-            lhs.distance == rhs.distance
-    }
-}
+extension RecommendMatchedGeoLocation: Equatable {}
 
 extension RecommendMatchedGeoLocation: Hashable {
     public func hash(into hasher: inout Hasher) {

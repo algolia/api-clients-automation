@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Assign userID parameters.
@@ -27,11 +27,7 @@ public struct AssignUserIdParams: Codable, JSONEncodable {
     }
 }
 
-extension AssignUserIdParams: Equatable {
-    public static func ==(lhs: AssignUserIdParams, rhs: AssignUserIdParams) -> Bool {
-        lhs.cluster == rhs.cluster
-    }
-}
+extension AssignUserIdParams: Equatable {}
 
 extension AssignUserIdParams: Hashable {
     public func hash(into hasher: inout Hasher) {

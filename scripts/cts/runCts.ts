@@ -56,34 +56,35 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
         `dotnet test src/Algolia.Search.Tests.csproj /clp:ErrorsOnly --filter 'Algolia.Search.Tests${folders.map((f) => `|Algolia.Search.${f}`).join('')}'`,
         { cwd, language },
       );
-      // run manual timeout tests
-      if (suites.client) {
-        await run(
-          'dotnet test /clp:ErrorsOnly ../../../clients/algoliasearch-client-csharp/algoliasearch/Algolia.Search.csproj --filter "FullyQualifiedName~TimeoutIntegration"',
-          { cwd, language },
-        );
-      }
       break;
     case 'dart':
-      await run(`dart test ${filter((f) => `test/${f}`)}`, {
+      const dartTestPaths = [...folders.map((f) => `test/${f}`), ...(suites.client ? ['test/manual/'] : [])].join(' ');
+      await run(`dart test ${dartTestPaths}`, {
         cwd,
         language,
       });
       break;
-    case 'go':
-      await run(
-        `go test ${suites.benchmark ? '' : '-race'} -count 1 ${isVerbose() ? '-v' : ''} ${filter((f) => `gotests/tests/${f}/...`)}`,
-        {
-          cwd,
-          language,
-        },
-      );
-      break;
-    case 'java':
-      await run(`./gradle/gradlew -p tests/output/java test --rerun ${filter((f) => `--tests 'com.algolia.${f}*'`)}`, {
+    case 'go': {
+      const goPaths = [
+        ...folders.map((f) => `gotests/tests/${f}/...`),
+        ...(suites.client ? ['gotests/tests/manual/...'] : []),
+      ].join(' ');
+      await run(`go test ${suites.benchmark ? '' : '-race'} -count 1 ${isVerbose() ? '-v' : ''} ${goPaths}`, {
+        cwd,
         language,
       });
       break;
+    }
+    case 'java': {
+      const javaTests = [
+        ...folders.map((f) => `--tests 'com.algolia.${f}*'`),
+        ...(suites.client ? ["--tests 'com.algolia.manual*'"] : []),
+      ].join(' ');
+      await run(`./gradle/gradlew -p tests/output/java test --rerun ${javaTests}`, {
+        language,
+      });
+      break;
+    }
     case 'javascript':
       await run(`YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test ${filter((f) => `src/${f}`)}`, {
         cwd,
@@ -97,37 +98,30 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       break;
     case 'php':
       await runComposerInstall();
+      const phpTestPaths = [
+        ...folders.map((f) => `${cwd}/src/${f}`),
+        ...(suites.client ? [`${cwd}/src/manual/`] : []),
+      ].join(' ');
       await run(
-        `php ./clients/algoliasearch-client-php/vendor/bin/phpunit --testdox --fail-on-warning ${filter((f) => `${cwd}/src/${f}`)}`,
+        `php ./clients/algoliasearch-client-php/vendor/bin/phpunit --testdox --fail-on-warning ${phpTestPaths}`,
         {
           language,
         },
       );
-      // run manual timeout tests
-      if (suites.client) {
-        await run(
-          'php ./clients/algoliasearch-client-php/vendor/bin/phpunit --testdox --fail-on-warning ./clients/algoliasearch-client-php/tests/TimeoutIntegrationTest.php',
-          {
-            language,
-          },
-        );
-      }
       break;
     case 'python':
-      await run(`poetry lock && poetry sync && poetry run pytest -vv ${filter((f) => `tests/${f}`)}`, {
+      await run(`poetry lock && poetry sync`, {
         cwd,
         language,
       });
-      // run manual timeout tests
-      if (suites.client) {
-        await run(
-          'poetry run pytest -vv ../../../clients/algoliasearch-client-python/algoliasearch/tests/test_timeout_integration.py',
-          {
-            cwd,
-            language,
-          },
-        );
-      }
+      const pythonTestPaths = [...folders.map((f) => `tests/${f}`), ...(suites.client ? ['tests/manual/'] : [])].join(
+        ' ',
+      );
+
+      await run(`poetry run pytest -vv ${pythonTestPaths}`, {
+        cwd,
+        language,
+      });
       break;
     case 'ruby':
       await run(`bundle install && bundle exec rake ${filter((f) => `test:${f}`)} --trace`, {
@@ -190,13 +184,31 @@ export async function runCts(
     assertChunkWrapperValid(languages.length - skip('dart'));
     assertValidReplaceAllObjects(languages.length - skip('dart'));
     assertValidReplaceAllObjectsWithTransformation(
-      only('javascript') + only('go') + only('python') + only('java') + only('php') + only('csharp'),
+      only('javascript') +
+        only('go') +
+        only('python') +
+        only('java') +
+        only('php') +
+        only('csharp') +
+        only('scala') +
+        only('ruby') +
+        only('kotlin'),
     );
     assertValidAccountCopyIndex(only('javascript'));
     assertValidReplaceAllObjectsFailed(languages.length - skip('dart'));
     assertValidReplaceAllObjectsScopes(languages.length - skip('dart'));
     assertValidWaitForApiKey(languages.length - skip('dart'));
-    assertPushMockValid(only('javascript') + only('go') + only('python') + only('java') + only('php') + only('csharp'));
+    assertPushMockValid(
+      only('javascript') +
+        only('go') +
+        only('python') +
+        only('java') +
+        only('php') +
+        only('csharp') +
+        only('scala') +
+        only('ruby') +
+        only('kotlin'),
+    );
   }
   if (withBenchmarkServer) {
     printBenchmarkReport();

@@ -521,11 +521,9 @@ class SnippetCompositionClient {
                           injection =
                             Injection(
                               main =
-                                Main(
+                                InjectionMain(
                                   source =
-                                    CompositionSource(
-                                      search = CompositionSourceSearch(index = "bar")
-                                    )
+                                    InjectionMainSearchSource(search = MainSearch(index = "bar"))
                                 )
                             )
                         ),
@@ -565,14 +563,15 @@ class SnippetCompositionClient {
                 injection =
                   Injection(
                     main =
-                      Main(
-                        source = CompositionSource(search = CompositionSourceSearch(index = "foo"))
+                      InjectionMain(
+                        source = InjectionMainSearchSource(search = MainSearch(index = "foo"))
                       ),
                     injectedItems =
                       listOf(
-                        InjectedItem(
+                        InjectionInjectedItem(
                           key = "my-unique-group-key",
-                          source = SearchSource(search = Search(index = "foo")),
+                          source =
+                            InjectedItemSearchSource(search = InjectedItemSearch(index = "foo")),
                           position = 2,
                           length = 1,
                         )
@@ -608,17 +607,17 @@ class SnippetCompositionClient {
                 injection =
                   Injection(
                     main =
-                      Main(
-                        source = CompositionSource(search = CompositionSourceSearch(index = "foo"))
+                      InjectionMain(
+                        source = InjectionMainSearchSource(search = MainSearch(index = "foo"))
                       ),
                     injectedItems =
                       listOf(
-                        InjectedItem(
+                        InjectionInjectedItem(
                           key = "my-unique-external-group-key",
                           source =
-                            ExternalSource(
+                            InjectedItemExternalSource(
                               external =
-                                External(
+                                InjectedItemExternal(
                                   index = "foo",
                                   ordering =
                                     ExternalOrdering.entries.first { it.value == "userDefined" },
@@ -660,11 +659,11 @@ class SnippetCompositionClient {
                 injection =
                   Injection(
                     main =
-                      Main(
+                      InjectionMain(
                         source =
-                          CompositionSource(
+                          InjectionMainSearchSource(
                             search =
-                              CompositionSourceSearch(
+                              MainSearch(
                                 index = "foo",
                                 params = MainInjectionQueryParameters(filters = "brand:adidas"),
                               )
@@ -672,9 +671,10 @@ class SnippetCompositionClient {
                       ),
                     injectedItems =
                       listOf(
-                        InjectedItem(
+                        InjectionInjectedItem(
                           key = "my-unique-injected-item-key",
-                          source = SearchSource(search = Search(index = "foo")),
+                          source =
+                            InjectedItemSearchSource(search = InjectedItemSearch(index = "foo")),
                           position = 2,
                           length = 1,
                         )
@@ -716,10 +716,314 @@ class SnippetCompositionClient {
                 injection =
                   Injection(
                     main =
-                      Main(
-                        source =
-                          CompositionSource(search = CompositionSourceSearch(index = "products"))
+                      InjectionMain(
+                        source = InjectionMainSearchSource(search = MainSearch(index = "products"))
                       )
+                  )
+              ),
+          ),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForPutComposition5() {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.putComposition(
+        compositionID = "my-recommend-compo",
+        composition =
+          Composition(
+            objectID = "my-recommend-compo",
+            name = "my recommend composition",
+            behavior =
+              CompositionInjectionBehavior(
+                injection =
+                  Injection(
+                    main =
+                      InjectionMain(
+                        source =
+                          InjectionMainRecommendSource(
+                            recommend =
+                              MainRecommend(
+                                indexName = "<YOUR_INDEX_NAME>",
+                                model = Model.entries.first { it.value == "trending-items" },
+                                threshold = 50,
+                              )
+                          )
+                      ),
+                    injectedItems =
+                      listOf(
+                        InjectionInjectedItem(
+                          key = "injected-recommend-key",
+                          source =
+                            InjectedItemRecommendSource(
+                              recommend =
+                                Recommend(
+                                  indexName = "<YOUR_INDEX_NAME>",
+                                  model = Model.entries.first { it.value == "trending-items" },
+                                  threshold = 30,
+                                  fallbackParameters =
+                                    BaseInjectionQueryParameters(filters = "category:electronics"),
+                                )
+                            ),
+                          position = 3,
+                          length = 2,
+                        )
+                      ),
+                  )
+              ),
+          ),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForPutComposition6() {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.putComposition(
+        compositionID = "my-search-and-recommend-compo",
+        composition =
+          Composition(
+            objectID = "my-search-and-recommend-compo",
+            name = "my search main with recommend injection",
+            behavior =
+              CompositionInjectionBehavior(
+                injection =
+                  Injection(
+                    main =
+                      InjectionMain(
+                        source =
+                          InjectionMainSearchSource(
+                            search =
+                              MainSearch(
+                                index = "products",
+                                params = MainInjectionQueryParameters(filters = "brand:nike"),
+                              )
+                          )
+                      ),
+                    injectedItems =
+                      listOf(
+                        InjectionInjectedItem(
+                          key = "injected-recommend-key",
+                          source =
+                            InjectedItemRecommendSource(
+                              recommend =
+                                Recommend(
+                                  indexName = "<YOUR_INDEX_NAME>",
+                                  model = Model.entries.first { it.value == "trending-items" },
+                                  threshold = 40,
+                                )
+                            ),
+                          position = 1,
+                          length = 3,
+                        )
+                      ),
+                  )
+              ),
+          ),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForPutComposition7() {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.putComposition(
+        compositionID = "my-multifeed-recommend-compo",
+        composition =
+          Composition(
+            objectID = "my-multifeed-recommend-compo",
+            name = "multifeed with recommend main",
+            behavior =
+              CompositionMultifeedBehavior(
+                multifeed =
+                  Multifeed(
+                    feeds =
+                      mapOf(
+                        "trending" to
+                          FeedInjection(
+                            injection =
+                              Injection(
+                                main =
+                                  InjectionMain(
+                                    source =
+                                      InjectionMainRecommendSource(
+                                        recommend =
+                                          MainRecommend(
+                                            indexName = "<YOUR_INDEX_NAME>",
+                                            model =
+                                              Model.entries.first { it.value == "trending-items" },
+                                            threshold = 50,
+                                          )
+                                      )
+                                  )
+                              )
+                          )
+                      ),
+                    feedsOrder = listOf("trending"),
+                  )
+              ),
+          ),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForPutComposition8() {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.putComposition(
+        compositionID = "my-compo",
+        composition =
+          Composition(
+            objectID = "my-compo",
+            name = "my composition",
+            behavior =
+              CompositionMultifeedBehavior(
+                multifeed =
+                  Multifeed(
+                    feeds =
+                      mapOf(
+                        "products" to
+                          FeedInjection(
+                            injection =
+                              Injection(
+                                main =
+                                  InjectionMain(
+                                    source =
+                                      InjectionMainSearchSource(
+                                        search =
+                                          MainSearch(
+                                            index = "products",
+                                            params = MainInjectionQueryParameters(hitsPerPage = 12),
+                                          )
+                                      )
+                                  ),
+                                injectedItems =
+                                  listOf(
+                                    InjectionInjectedItem(
+                                      key = "featured-products",
+                                      source =
+                                        InjectedItemSearchSource(
+                                          search =
+                                            InjectedItemSearch(
+                                              index = "products",
+                                              params =
+                                                BaseInjectionQueryParameters(
+                                                  filters = "featured:true"
+                                                ),
+                                            )
+                                        ),
+                                      position = 0,
+                                      length = 2,
+                                    )
+                                  ),
+                              )
+                          ),
+                        "articles" to
+                          FeedInjection(
+                            injection =
+                              Injection(
+                                main =
+                                  InjectionMain(
+                                    source =
+                                      InjectionMainSearchSource(
+                                        search =
+                                          MainSearch(
+                                            index = "articles",
+                                            params =
+                                              MainInjectionQueryParameters(
+                                                hitsPerPage = 5,
+                                                attributesToRetrieve =
+                                                  listOf("title", "excerpt", "publishedAt"),
+                                              ),
+                                          )
+                                      )
+                                  ),
+                                injectedItems =
+                                  listOf(
+                                    InjectionInjectedItem(
+                                      key = "editorial-picks",
+                                      source =
+                                        InjectedItemSearchSource(
+                                          search =
+                                            InjectedItemSearch(
+                                              index = "articles",
+                                              params =
+                                                BaseInjectionQueryParameters(
+                                                  filters = "editorial_pick:true"
+                                                ),
+                                            )
+                                        ),
+                                      position = 0,
+                                      length = 1,
+                                    )
+                                  ),
+                              )
+                          ),
+                        "videos" to
+                          FeedInjection(
+                            injection =
+                              Injection(
+                                main =
+                                  InjectionMain(
+                                    source =
+                                      InjectionMainSearchSource(
+                                        search =
+                                          MainSearch(
+                                            index = "videos",
+                                            params =
+                                              MainInjectionQueryParameters(
+                                                hitsPerPage = 3,
+                                                attributesToRetrieve =
+                                                  listOf("title", "thumbnail", "duration"),
+                                              ),
+                                          )
+                                      )
+                                  )
+                              )
+                          ),
+                      ),
+                    feedsOrder = listOf("products", "articles", "videos"),
                   )
               ),
           ),
@@ -760,15 +1064,17 @@ class SnippetCompositionClient {
                     injection =
                       Injection(
                         main =
-                          Main(
-                            source =
-                              CompositionSource(search = CompositionSourceSearch(index = "foo"))
+                          InjectionMain(
+                            source = InjectionMainSearchSource(search = MainSearch(index = "foo"))
                           ),
                         injectedItems =
                           listOf(
-                            InjectedItem(
+                            InjectionInjectedItem(
                               key = "my-unique-group-from-rule-key",
-                              source = SearchSource(search = Search(index = "foo")),
+                              source =
+                                InjectedItemSearchSource(
+                                  search = InjectedItemSearch(index = "foo")
+                                ),
                               position = 2,
                               length = 1,
                             )
@@ -822,11 +1128,11 @@ class SnippetCompositionClient {
                     injection =
                       Injection(
                         main =
-                          Main(
+                          InjectionMain(
                             source =
-                              CompositionSource(
+                              InjectionMainSearchSource(
                                 search =
-                                  CompositionSourceSearch(
+                                  MainSearch(
                                     index = "my-index",
                                     params = MainInjectionQueryParameters(filters = "brand:adidas"),
                                   )
@@ -834,12 +1140,12 @@ class SnippetCompositionClient {
                           ),
                         injectedItems =
                           listOf(
-                            InjectedItem(
+                            InjectionInjectedItem(
                               key = "my-unique-external-group-from-rule-key",
                               source =
-                                ExternalSource(
+                                InjectedItemExternalSource(
                                   external =
-                                    External(
+                                    InjectedItemExternal(
                                       index = "my-index",
                                       params =
                                         BaseInjectionQueryParameters(filters = "brand:adidas"),
@@ -894,17 +1200,18 @@ class SnippetCompositionClient {
                     injection =
                       Injection(
                         main =
-                          Main(
+                          InjectionMain(
                             source =
-                              CompositionSource(
-                                search = CompositionSourceSearch(index = "my-index")
-                              )
+                              InjectionMainSearchSource(search = MainSearch(index = "my-index"))
                           ),
                         injectedItems =
                           listOf(
-                            InjectedItem(
+                            InjectionInjectedItem(
                               key = "my-unique-injected-item-key",
-                              source = SearchSource(search = Search(index = "my-index")),
+                              source =
+                                InjectedItemSearchSource(
+                                  search = InjectedItemSearch(index = "my-index")
+                                ),
                               position = 0,
                               length = 3,
                             )
@@ -954,11 +1261,10 @@ class SnippetCompositionClient {
                               injection =
                                 Injection(
                                   main =
-                                    Main(
+                                    InjectionMain(
                                       source =
-                                        CompositionSource(
-                                          search =
-                                            CompositionSourceSearch(index = "<YOUR_INDEX_NAME>")
+                                        InjectionMainSearchSource(
+                                          search = MainSearch(index = "<YOUR_INDEX_NAME>")
                                         )
                                     )
                                 )
@@ -1018,11 +1324,11 @@ class SnippetCompositionClient {
                               injection =
                                 Injection(
                                   main =
-                                    Main(
+                                    InjectionMain(
                                       source =
-                                        CompositionSource(
+                                        InjectionMainSearchSource(
                                           search =
-                                            CompositionSourceSearch(
+                                            MainSearch(
                                               index = "my-index",
                                               params =
                                                 MainInjectionQueryParameters(
@@ -1033,12 +1339,12 @@ class SnippetCompositionClient {
                                     ),
                                   injectedItems =
                                     listOf(
-                                      InjectedItem(
+                                      InjectionInjectedItem(
                                         key = "my-unique-external-group-from-rule-key",
                                         source =
-                                          ExternalSource(
+                                          InjectedItemExternalSource(
                                             external =
-                                              External(
+                                              InjectedItemExternal(
                                                 index = "my-index",
                                                 params =
                                                   BaseInjectionQueryParameters(
@@ -1079,6 +1385,248 @@ class SnippetCompositionClient {
     // Call the API
     var response =
       client.saveRules(
+        compositionID = "rule-with-recommend",
+        rules =
+          CompositionRulesBatchParams(
+            requests =
+              listOf(
+                RulesMultipleBatchRequest(
+                  action = Action.entries.first { it.value == "upsert" },
+                  body =
+                    CompositionRule(
+                      objectID = "rule-with-recommend",
+                      conditions =
+                        listOf(
+                          Condition(
+                            anchoring = Anchoring.entries.first { it.value == "is" },
+                            pattern = "trending",
+                          )
+                        ),
+                      consequence =
+                        CompositionRuleConsequence(
+                          behavior =
+                            CompositionInjectionBehavior(
+                              injection =
+                                Injection(
+                                  main =
+                                    InjectionMain(
+                                      source =
+                                        InjectionMainRecommendSource(
+                                          recommend =
+                                            MainRecommend(
+                                              indexName = "<YOUR_INDEX_NAME>",
+                                              model =
+                                                Model.entries.first {
+                                                  it.value == "trending-items"
+                                                },
+                                              threshold = 50,
+                                            )
+                                        )
+                                    ),
+                                  injectedItems =
+                                    listOf(
+                                      InjectionInjectedItem(
+                                        key = "injected-recommend-from-rule-key",
+                                        source =
+                                          InjectedItemRecommendSource(
+                                            recommend =
+                                              Recommend(
+                                                indexName = "<YOUR_INDEX_NAME>",
+                                                model =
+                                                  Model.entries.first {
+                                                    it.value == "trending-items"
+                                                  },
+                                                threshold = 30,
+                                                fallbackParameters =
+                                                  BaseInjectionQueryParameters(
+                                                    filters = "category:electronics"
+                                                  ),
+                                              )
+                                          ),
+                                        position = 2,
+                                        length = 3,
+                                      )
+                                    ),
+                                )
+                            )
+                        ),
+                    ),
+                )
+              )
+          ),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRules4() {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.saveRules(
+        compositionID = "rule-with-search-and-recommend",
+        rules =
+          CompositionRulesBatchParams(
+            requests =
+              listOf(
+                RulesMultipleBatchRequest(
+                  action = Action.entries.first { it.value == "upsert" },
+                  body =
+                    CompositionRule(
+                      objectID = "rule-with-search-and-recommend",
+                      conditions =
+                        listOf(
+                          Condition(
+                            anchoring = Anchoring.entries.first { it.value == "contains" },
+                            pattern = "shoes",
+                          )
+                        ),
+                      consequence =
+                        CompositionRuleConsequence(
+                          behavior =
+                            CompositionInjectionBehavior(
+                              injection =
+                                Injection(
+                                  main =
+                                    InjectionMain(
+                                      source =
+                                        InjectionMainSearchSource(
+                                          search =
+                                            MainSearch(
+                                              index = "products",
+                                              params =
+                                                MainInjectionQueryParameters(
+                                                  filters = "category:shoes"
+                                                ),
+                                            )
+                                        )
+                                    ),
+                                  injectedItems =
+                                    listOf(
+                                      InjectionInjectedItem(
+                                        key = "injected-recommend-from-rule-key",
+                                        source =
+                                          InjectedItemRecommendSource(
+                                            recommend =
+                                              Recommend(
+                                                indexName = "<YOUR_INDEX_NAME>",
+                                                model =
+                                                  Model.entries.first {
+                                                    it.value == "trending-items"
+                                                  },
+                                                threshold = 40,
+                                              )
+                                          ),
+                                        position = 1,
+                                        length = 2,
+                                      )
+                                    ),
+                                )
+                            )
+                        ),
+                    ),
+                )
+              )
+          ),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRules5() {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.saveRules(
+        compositionID = "rule-with-multifeed-recommend",
+        rules =
+          CompositionRulesBatchParams(
+            requests =
+              listOf(
+                RulesMultipleBatchRequest(
+                  action = Action.entries.first { it.value == "upsert" },
+                  body =
+                    CompositionRule(
+                      objectID = "rule-with-multifeed-recommend",
+                      conditions =
+                        listOf(
+                          Condition(
+                            anchoring = Anchoring.entries.first { it.value == "is" },
+                            pattern = "trending",
+                          )
+                        ),
+                      consequence =
+                        CompositionRuleConsequence(
+                          behavior =
+                            CompositionMultifeedBehavior(
+                              multifeed =
+                                Multifeed(
+                                  feeds =
+                                    mapOf(
+                                      "trending" to
+                                        FeedInjection(
+                                          injection =
+                                            Injection(
+                                              main =
+                                                InjectionMain(
+                                                  source =
+                                                    InjectionMainRecommendSource(
+                                                      recommend =
+                                                        MainRecommend(
+                                                          indexName = "<YOUR_INDEX_NAME>",
+                                                          model =
+                                                            Model.entries.first {
+                                                              it.value == "trending-items"
+                                                            },
+                                                          threshold = 50,
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    ),
+                                  feedsOrder = listOf("trending"),
+                                )
+                            )
+                        ),
+                    ),
+                )
+              )
+          ),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRules6() {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.saveRules(
         compositionID = "my-compo",
         rules =
           CompositionRulesBatchParams(
@@ -1106,17 +1654,20 @@ class SnippetCompositionClient {
                               injection =
                                 Injection(
                                   main =
-                                    Main(
+                                    InjectionMain(
                                       source =
-                                        CompositionSource(
-                                          search = CompositionSourceSearch(index = "my-index")
+                                        InjectionMainSearchSource(
+                                          search = MainSearch(index = "my-index")
                                         )
                                     ),
                                   injectedItems =
                                     listOf(
-                                      InjectedItem(
+                                      InjectionInjectedItem(
                                         key = "my-unique-injected-item-key",
-                                        source = SearchSource(search = Search(index = "my-index")),
+                                        source =
+                                          InjectedItemSearchSource(
+                                            search = InjectedItemSearch(index = "my-index")
+                                          ),
                                         position = 0,
                                         length = 3,
                                       )
@@ -1175,6 +1726,30 @@ class SnippetCompositionClient {
       client.search(
         compositionID = "foo",
         requestBody = RequestBody(params = Params(query = "batman", sortBy = "Price (asc)")),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearch3() {
+    // >SEPARATOR search search
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.search(
+        compositionID = "foo",
+        requestBody =
+          RequestBody(
+            params = Params(query = "batman"),
+            feedsOrder = listOf("feed-movies", "feed-comics"),
+          ),
       )
 
     // >LOG

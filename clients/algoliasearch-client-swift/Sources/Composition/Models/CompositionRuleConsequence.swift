@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Effect of the rule.
@@ -26,11 +26,7 @@ public struct CompositionRuleConsequence: Codable, JSONEncodable {
     }
 }
 
-extension CompositionRuleConsequence: Equatable {
-    public static func ==(lhs: CompositionRuleConsequence, rhs: CompositionRuleConsequence) -> Bool {
-        lhs.behavior == rhs.behavior
-    }
-}
+extension CompositionRuleConsequence: Equatable {}
 
 extension CompositionRuleConsequence: Hashable {
     public func hash(into hasher: inout Hasher) {

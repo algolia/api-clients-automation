@@ -2,12 +2,12 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 open class InsightsClient {
-    private var configuration: InsightsClientConfiguration
+    public private(set) var configuration: InsightsClientConfiguration
     private var transporter: Transporter
 
     var appID: String {

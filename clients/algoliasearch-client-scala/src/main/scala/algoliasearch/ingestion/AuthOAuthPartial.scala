@@ -1,15 +1,15 @@
 /** Ingestion API The Ingestion API powers the no-code [data connectors](https://dashboard.algolia.com/connectors). ##
-  * Base URLs The base URLs for requests to the Ingestion API are: - `https://data.us.algolia.com` -
-  * `https://data.eu.algolia.com` Use the URL that matches your [analytics
-  * region](https://dashboard.algolia.com/account/infrastructure/analytics). **All requests must use HTTPS.** ##
-  * Authentication To authenticate your API requests, add these headers: - `x-algolia-application-id`. Your Algolia
-  * application ID. - `x-algolia-api-key`. An API key with the necessary permissions to make the request. The required
-  * access control list (ACL) to make a request is listed in each endpoint's reference. You can find your application ID
-  * and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys). ## Request format Request
-  * bodies must be JSON objects. ## Response status and errors Response bodies are JSON objects. Successful responses
-  * return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status. Error
-  * responses have a `message` property with more information. ## Version The current version of the Ingestion API is
-  * version 1, as indicated by the `/1/` in each endpoint's URL.
+  * Base URLs Base URLs for the Ingestion API: - `https://data.us.algolia.com` - `https://data.eu.algolia.com` Use the
+  * URL that matches your [analytics region](https://dashboard.algolia.com/account/infrastructure/analytics). **All
+  * requests must use HTTPS.** ## Authentication Add these headers to authenticate requests: -
+  * `x-algolia-application-id`. Your Algolia application ID. - `x-algolia-api-key`. An API key with the necessary
+  * permissions to make the request. The required access control list (ACL) to make a request is listed in each
+  * endpoint's reference. You can find your application ID and API key in the [Algolia
+  * dashboard](https://dashboard.algolia.com/account/api-keys). ## Request format Request bodies must be JSON objects.
+  * ## Response status and errors Response bodies are JSON objects. Successful responses return `2xx` statuses. Client
+  * errors return `4xx` statuses. Server errors return `5xx` statuses. Error responses have a `message` property with
+  * more information. ## Version The current version of the Ingestion API is version 1, indicated by the `/1/` in each
+  * endpoint's URL.
   *
   * The version of the OpenAPI document: 1.0.0
   *
@@ -28,6 +28,9 @@ import org.json4s._
   *   Client ID.
   * @param clientSecret
   *   Client secret. This field is `null` in the API response.
+  * @param code
+  *   Authorization code. Used during an `authorization_code` grant type flow, to request an access_token when
+  *   creating/updating the authentication. This field is not returned in the API response.
   * @param scope
   *   OAuth scope.
   */
@@ -35,6 +38,7 @@ case class AuthOAuthPartial(
     url: Option[String] = scala.None,
     clientId /* client_id */: Option[String] = scala.None,
     clientSecret /* client_secret */: Option[String] = scala.None,
+    code: Option[String] = scala.None,
     scope: Option[String] = scala.None
 ) extends AuthInputPartialTrait
 

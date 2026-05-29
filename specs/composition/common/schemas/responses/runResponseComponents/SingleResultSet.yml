@@ -2,6 +2,7 @@
 # {
 #   "results": [
 #     {
+#       "feedID": "products-feed",
 #       "hits": [
 #         { ... },
 #         { ... }
@@ -87,7 +88,7 @@ hits:
     Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
   items:
     $ref: 'Hit.yml#/hit'
-  
+
 query:
   type: string
   description: The search query string.
@@ -105,11 +106,18 @@ params:
 resultsCompositionsResponse:
   type: object
   properties:
+    feedID:
+      $ref: '#/feedID'
     compositions:
       additionalProperties:
-        $ref: '#/resultsCompositionInfoResponse'        
+        $ref: '#/resultsCompositionInfoResponse'
   required:
     - compositions
+
+feedID:
+  type: string
+  description: The ID of the feed.
+  example: products-feed
 
 resultsCompositionInfoResponse:
   type: object

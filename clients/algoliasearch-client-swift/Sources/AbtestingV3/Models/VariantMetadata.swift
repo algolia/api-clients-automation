@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Variant specific metadata.
@@ -26,11 +26,7 @@ public struct VariantMetadata: Codable, JSONEncodable {
     }
 }
 
-extension VariantMetadata: Equatable {
-    public static func ==(lhs: VariantMetadata, rhs: VariantMetadata) -> Bool {
-        lhs.filterEffects == rhs.filterEffects
-    }
-}
+extension VariantMetadata: Equatable {}
 
 extension VariantMetadata: Hashable {
     public func hash(into hasher: inout Hasher) {

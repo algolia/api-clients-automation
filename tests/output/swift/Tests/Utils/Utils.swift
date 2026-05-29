@@ -5,7 +5,7 @@
 //  Created by Algolia on 26/01/2024.
 //
 
-import Core
+import AlgoliaCore
 import Foundation
 import XCTest
 

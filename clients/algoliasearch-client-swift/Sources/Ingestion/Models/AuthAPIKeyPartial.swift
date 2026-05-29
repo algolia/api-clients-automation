@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Credentials for authenticating with an API key.
@@ -27,11 +27,7 @@ public struct AuthAPIKeyPartial: Codable, JSONEncodable {
     }
 }
 
-extension AuthAPIKeyPartial: Equatable {
-    public static func ==(lhs: AuthAPIKeyPartial, rhs: AuthAPIKeyPartial) -> Bool {
-        lhs.key == rhs.key
-    }
-}
+extension AuthAPIKeyPartial: Equatable {}
 
 extension AuthAPIKeyPartial: Hashable {
     public func hash(into hasher: inout Hasher) {

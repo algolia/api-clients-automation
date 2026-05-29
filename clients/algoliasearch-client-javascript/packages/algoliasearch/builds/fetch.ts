@@ -67,6 +67,7 @@ export type Algoliasearch = SearchClient & {
    * @param saveObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
    * @param saveObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
    * @param saveObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+   * @param saveObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
    * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `push` method and merged with the transporter requestOptions.
    */
   saveObjectsWithTransformation: (
@@ -84,6 +85,7 @@ export type Algoliasearch = SearchClient & {
    * @param partialUpdateObjects.createIfNotExists - To be provided if non-existing objects are passed, otherwise, the call will fail.
    * @param partialUpdateObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
    * @param partialUpdateObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+   * @param partialUpdateObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
    * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `push` method and merged with the transporter requestOptions.
    */
   partialUpdateObjectsWithTransformation: (
@@ -100,6 +102,7 @@ export type Algoliasearch = SearchClient & {
    * @param replaceAllObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
    * @param replaceAllObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `objects.length / batchSize`. Defaults to 1000.
    * @param replaceAllObjects.scopes - The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
+   * @param replaceAllObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
    * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `push`, `operationIndex` and `getEvent` method and merged with the transporter requestOptions.
    */
   replaceAllObjectsWithTransformation: (
@@ -110,6 +113,11 @@ export type Algoliasearch = SearchClient & {
 
 export type TransformationOptions = {
   // When provided, a second transporter will be created in order to leverage the `*WithTransformation` methods exposed by the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
+  transformationOptions?: {
+    region: IngestionRegion;
+  } & ClientOptions;
+
+  /** @deprecated Use `transformationOptions` instead. */
   transformation?:
     | {
         // The region of your Algolia application ID, used to target the correct hosts of the transformation service.
@@ -133,47 +141,53 @@ export function algoliasearch(
 
   const client = searchClient(appId, apiKey, options);
 
-  let ingestionTransporter: IngestionClient | undefined;
+  let transformationConfig: ({ region: IngestionRegion } & ClientOptions) | undefined;
 
-  if (options?.transformation) {
-    if (!options.transformation.region) {
-      throw new Error('`region` must be provided when leveraging the transformation pipeline');
+  if (options?.transformationOptions) {
+    transformationConfig = options.transformationOptions;
+  } else if (options?.transformation) {
+    transformationConfig = { region: options.transformation.region };
+  }
+
+  let ingestionTransporter: IngestionClient | undefined;
+  if (transformationConfig) {
+    if (!transformationConfig.region) {
+      throw new Error(
+        '`region` is required in `transformationOptions`. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/',
+      );
     }
 
-    ingestionTransporter = ingestionClient(appId, apiKey, options.transformation.region, options);
+    const { region, ...ingestionOptions } = transformationConfig;
+    ingestionTransporter = ingestionClient(appId, apiKey, region, ingestionOptions);
   }
 
   return {
     ...client,
 
     async saveObjectsWithTransformation(
-      { indexName, objects, waitForTasks },
+      { indexName, objects, waitForTasks, maxRetries },
       requestOptions,
     ): Promise<Array<WatchResponse>> {
       if (!ingestionTransporter) {
-        throw new Error('`transformation.region` must be provided at client instantiation before calling this method.');
-      }
-
-      if (!options?.transformation?.region) {
-        throw new Error('`region` must be provided when leveraging the transformation pipeline');
+        throw new Error(
+          '`transformationOptions` must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/',
+        );
       }
 
       return ingestionTransporter.chunkedPush(
-        { indexName, objects, action: 'addObject', waitForTasks },
+        { indexName, objects, action: 'addObject', waitForTasks, maxRetries },
         requestOptions,
       );
     },
 
     async partialUpdateObjectsWithTransformation(
-      { indexName, objects, createIfNotExists, waitForTasks },
+      { indexName, objects, createIfNotExists, waitForTasks, maxRetries },
       requestOptions,
     ): Promise<Array<WatchResponse>> {
       if (!ingestionTransporter) {
-        throw new Error('`transformation.region` must be provided at client instantiation before calling this method.');
-      }
-
-      if (!options?.transformation?.region) {
-        throw new Error('`region` must be provided when leveraging the transformation pipeline');
+        throw new Error(
+          '`transformationOptions` must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/',
+        );
       }
 
       return ingestionTransporter.chunkedPush(
@@ -182,21 +196,20 @@ export function algoliasearch(
           objects,
           action: createIfNotExists ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate',
           waitForTasks,
+          maxRetries,
         },
         requestOptions,
       );
     },
 
     async replaceAllObjectsWithTransformation(
-      { indexName, objects, batchSize, scopes }: ReplaceAllObjectsOptions,
+      { indexName, objects, batchSize, scopes, maxRetries = 100 }: ReplaceAllObjectsOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<ReplaceAllObjectsWithTransformationResponse> {
       if (!ingestionTransporter) {
-        throw new Error('`transformation.region` must be provided at client instantiation before calling this method.');
-      }
-
-      if (!options?.transformation?.region) {
-        throw new Error('`region` must be provided when leveraging the transformation pipeline');
+        throw new Error(
+          '`transformationOptions` must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/',
+        );
       }
 
       const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
@@ -220,13 +233,21 @@ export function algoliasearch(
         );
 
         const watchResponses = await ingestionTransporter.chunkedPush(
-          { indexName: tmpIndexName, objects, waitForTasks: true, batchSize, referenceIndexName: indexName },
+          {
+            indexName: tmpIndexName,
+            objects,
+            waitForTasks: true,
+            batchSize,
+            referenceIndexName: indexName,
+            maxRetries,
+          },
           requestOptions,
         );
 
         await this.waitForTask({
           indexName: tmpIndexName,
           taskID: copyOperationResponse.taskID,
+          maxRetries,
         });
 
         copyOperationResponse = await this.operationIndex(
@@ -243,6 +264,7 @@ export function algoliasearch(
         await this.waitForTask({
           indexName: tmpIndexName,
           taskID: copyOperationResponse.taskID,
+          maxRetries,
         });
 
         const moveOperationResponse = await this.operationIndex(
@@ -255,6 +277,7 @@ export function algoliasearch(
         await this.waitForTask({
           indexName: tmpIndexName,
           taskID: moveOperationResponse.taskID,
+          maxRetries,
         });
 
         return { copyOperationResponse, watchResponses, moveOperationResponse };

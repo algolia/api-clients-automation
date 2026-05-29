@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 public struct MonitoringForbidden: Codable, JSONEncodable {
@@ -25,11 +25,7 @@ public struct MonitoringForbidden: Codable, JSONEncodable {
     }
 }
 
-extension MonitoringForbidden: Equatable {
-    public static func ==(lhs: MonitoringForbidden, rhs: MonitoringForbidden) -> Bool {
-        lhs.reason == rhs.reason
-    }
-}
+extension MonitoringForbidden: Equatable {}
 
 extension MonitoringForbidden: Hashable {
     public func hash(into hasher: inout Hasher) {

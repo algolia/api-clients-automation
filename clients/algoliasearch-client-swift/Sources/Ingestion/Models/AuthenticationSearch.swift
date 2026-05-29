@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Request body for searching for authentication resources.
@@ -26,11 +26,7 @@ public struct AuthenticationSearch: Codable, JSONEncodable {
     }
 }
 
-extension AuthenticationSearch: Equatable {
-    public static func ==(lhs: AuthenticationSearch, rhs: AuthenticationSearch) -> Bool {
-        lhs.authenticationIDs == rhs.authenticationIDs
-    }
-}
+extension AuthenticationSearch: Equatable {}
 
 extension AuthenticationSearch: Hashable {
     public func hash(into hasher: inout Hasher) {

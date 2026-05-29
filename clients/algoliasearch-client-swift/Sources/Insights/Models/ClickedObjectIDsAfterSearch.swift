@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Click event after an Algolia request. Use this event to track when users click items in the search results. If
@@ -31,8 +31,8 @@ public struct ClickedObjectIDsAfterSearch: Codable, JSONEncodable {
     /// user tokens. For more information, see [User
     /// token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
     public var authenticatedUserToken: String?
-    /// Timestamp of the event, measured in milliseconds since the Unix epoch. By default, the Insights API uses the
-    /// time it receives an event as its timestamp.
+    /// Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30 days. If not
+    /// provided, we use the time at which the request was received.
     public var timestamp: Int64?
 
     public init(
@@ -85,19 +85,7 @@ public struct ClickedObjectIDsAfterSearch: Codable, JSONEncodable {
     }
 }
 
-extension ClickedObjectIDsAfterSearch: Equatable {
-    public static func ==(lhs: ClickedObjectIDsAfterSearch, rhs: ClickedObjectIDsAfterSearch) -> Bool {
-        lhs.eventName == rhs.eventName &&
-            lhs.eventType == rhs.eventType &&
-            lhs.index == rhs.index &&
-            lhs.objectIDs == rhs.objectIDs &&
-            lhs.positions == rhs.positions &&
-            lhs.queryID == rhs.queryID &&
-            lhs.userToken == rhs.userToken &&
-            lhs.authenticatedUserToken == rhs.authenticatedUserToken &&
-            lhs.timestamp == rhs.timestamp
-    }
-}
+extension ClickedObjectIDsAfterSearch: Equatable {}
 
 extension ClickedObjectIDsAfterSearch: Hashable {
     public func hash(into hasher: inout Hasher) {

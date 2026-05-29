@@ -2,8 +2,8 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 
 import Foundation
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 
 /// Input for a no-code transformation that contains a series of steps.
@@ -26,11 +26,7 @@ public struct TransformationNoCode: Codable, JSONEncodable {
     }
 }
 
-extension TransformationNoCode: Equatable {
-    public static func ==(lhs: TransformationNoCode, rhs: TransformationNoCode) -> Bool {
-        lhs.steps == rhs.steps
-    }
-}
+extension TransformationNoCode: Equatable {}
 
 extension TransformationNoCode: Hashable {
     public func hash(into hasher: inout Hasher) {

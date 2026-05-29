@@ -16,6 +16,9 @@ final class RetryableHost {
   int get retryCount => _retryCount;
   int _retryCount;
 
+  /// Allows setting retry count for testing purposes.
+  set retryCount(int value) => _retryCount = value;
+
   RetryableHost(this.host)
       : _isUp = true,
         _lastUpdated = DateTime.now(),

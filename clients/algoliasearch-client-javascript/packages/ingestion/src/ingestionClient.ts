@@ -111,7 +111,7 @@ import type { SubscriptionTrigger } from '../model/subscriptionTrigger';
 import type { TaskCreateTrigger } from '../model/taskCreateTrigger';
 import type { Trigger } from '../model/trigger';
 
-export const apiClientVersion = '1.47.0';
+export const apiClientVersion = '1.53.0';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -243,6 +243,7 @@ export function createIngestionClient({
      * @param chunkedPush.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
      * @param chunkedPush.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param chunkedPush.referenceIndexName - This is required when targeting an index that does not have a push connector setup (e.g. a tmp index), but you wish to attach another index's transformation to it (e.g. the source index name).
+     * @param chunkedPush.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getEvent` method and merged with the transporter requestOptions.
      */
     async chunkedPush(
@@ -253,6 +254,7 @@ export function createIngestionClient({
         waitForTasks,
         batchSize = 1000,
         referenceIndexName,
+        maxRetries = 100,
       }: ChunkedPushOptions,
       requestOptions?: RequestOptions,
     ): Promise<Array<WatchResponse>> {
@@ -300,10 +302,11 @@ export function createIngestionClient({
               validate: (response) => response !== undefined,
               aggregator: () => (retryCount += 1),
               error: {
-                validate: () => retryCount >= 50,
-                message: () => `The maximum number of retries exceeded. (${retryCount}/${50})`,
+                validate: () => retryCount >= maxRetries,
+                message: () =>
+                  `Stopped waiting for the task after ${maxRetries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries.`,
               },
-              timeout: (): number => Math.min(retryCount * 500, 5000),
+              timeout: (): number => Math.min(retryCount * 1500, 5000),
             });
           }
           offset += waitBatchSize;
@@ -476,7 +479,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Creates a new task using the v1 endpoint, please use `createTask` instead.
+     * Creates a new task using the v1 endpoint. Use `createTask` instead.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -807,7 +810,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+     * Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -905,7 +908,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Disables a task using the v1 endpoint, please use `disableTask` instead.
+     * Disables a task using the v1 endpoint. Use `disableTask` instead.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -967,7 +970,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Enables a task using the v1 endpoint, please use `enableTask` instead.
+     * Enables a task using the v1 endpoint. Use `enableTask` instead.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -1195,7 +1198,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+     * Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -1471,8 +1474,8 @@ export function createIngestionClient({
      * @param listRuns.taskID - Task ID for filtering the list of task runs.
      * @param listRuns.sort - Property by which to sort the list of task runs.
      * @param listRuns.order - Sort order of the response, ascending or descending.
-     * @param listRuns.startDate - Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
-     * @param listRuns.endDate - Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
+     * @param listRuns.startDate - Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used.
+     * @param listRuns.endDate - Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listRuns(
@@ -1683,7 +1686,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+     * Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -2049,7 +2052,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of task runs with the observability endpoints.
+     * Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs with the observability endpoints.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -2227,7 +2230,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+     * Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -2588,7 +2591,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+     * Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
      *
      * Required API Key ACLs:
      *  - addObject
