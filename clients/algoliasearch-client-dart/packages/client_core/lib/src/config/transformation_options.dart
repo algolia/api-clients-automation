@@ -6,8 +6,8 @@ final class TransformationOptions {
   final String region;
 
   /// Optional overrides for the ingestion transporter's [ClientOptions].
-  /// Only the fields you set here replace the Ingestion API defaults (25 s timeouts).
-  /// Do not set [ClientOptions.transformationOptions] here — it is ignored.
+  /// Only the fields you set here replace the Ingestion API defaults (25 s timeouts);
+  /// unset fields keep those defaults.
   final ClientOptions? ingestionClientOptions;
 
   /// Constructs a [TransformationOptions] instance.

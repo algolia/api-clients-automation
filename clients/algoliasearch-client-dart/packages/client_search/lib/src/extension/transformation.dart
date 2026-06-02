@@ -1,7 +1,8 @@
 import 'dart:math';
 
 import 'package:algolia_client_core/algolia_client_core.dart';
-import 'package:algolia_client_ingestion/algolia_client_ingestion.dart' as ingestion;
+import 'package:algolia_client_ingestion/algolia_client_ingestion.dart'
+    as ingestion;
 import 'package:algolia_client_search/src/api/search_client.dart';
 import 'package:algolia_client_search/src/extension/wait_task.dart';
 import 'package:algolia_client_search/src/model/event.dart';
@@ -30,7 +31,9 @@ extension Transformation on SearchClient {
     ChunkedHelperOptions? chunkedOptions,
     RequestOptions? requestOptions,
   }) async {
-    if (batchSize < 1) throw ArgumentError('`batchSize` must be greater than 0');
+    if (batchSize < 1) {
+      throw ArgumentError('`batchSize` must be greater than 0');
+    }
     final transporter = ingestionTransporter;
     if (transporter == null) throw StateError(_notSetError);
 
@@ -50,7 +53,8 @@ extension Transformation on SearchClient {
       if (batch.length == batchSize || isLast) {
         final raw = await transporter.push(
           indexName: indexName,
-          pushTaskPayload: ingestion.PushTaskPayload(action: action, records: List.of(batch)),
+          pushTaskPayload: ingestion.PushTaskPayload(
+              action: action, records: List.of(batch)),
           referenceIndexName: referenceIndexName,
           requestOptions: requestOptions,
         );
@@ -121,7 +125,8 @@ extension Transformation on SearchClient {
 
   /// Replaces all objects in [indexName] via the Ingestion pipeline without downtime.
   /// Requires [TransformationOptions] to be set.
-  Future<ReplaceAllObjectsWithTransformationResponse> replaceAllObjectsWithTransformation({
+  Future<ReplaceAllObjectsWithTransformationResponse>
+      replaceAllObjectsWithTransformation({
     required String indexName,
     required Iterable<Map<String, dynamic>> objects,
     int batchSize = 1000,
@@ -132,7 +137,8 @@ extension Transformation on SearchClient {
     if (ingestionTransporter == null) throw StateError(_notSetError);
 
     final effectiveMaxRetries = chunkedOptions?.maxRetries ?? defaultMaxRetries;
-    final effectiveScopes = scopes ?? [ScopeType.settings, ScopeType.rules, ScopeType.synonyms];
+    final effectiveScopes =
+        scopes ?? [ScopeType.settings, ScopeType.rules, ScopeType.synonyms];
     final tmpIndex = '${indexName}_tmp_${Random().nextInt(900000) + 100000}';
 
     try {
@@ -230,6 +236,12 @@ Future<void> _pollBatch({
   }
 }
 
+/// Polls the Ingestion API for a single event until it becomes available.
+///
+/// Unlike [waitTask]'s generic `_waitUntil` (which retries until a *result*
+/// predicate holds), this is exception-driven: `getEvent` returns 404 until the
+/// event exists, so we retry on 404 and stop on the first successful response.
+/// It therefore can't reuse `_waitUntil` directly.
 Future<void> _waitForEvent({
   required ingestion.IngestionClient transporter,
   required String runID,
@@ -252,7 +264,7 @@ Future<void> _waitForEvent({
       Duration(milliseconds: min((retries + 1) * 1500, 5000)),
     );
   }
-  throw StateError(
+  throw AlgoliaWaitException(
     'The maximum number of retries exceeded. ($maxRetries/$maxRetries)',
   );
 }
@@ -260,10 +272,12 @@ Future<void> _waitForEvent({
 ingestion.PushTaskRecords _toRecord(Map<String, dynamic> obj) {
   final objectID = obj['objectID'];
   if (objectID == null || objectID is! String) {
-    throw ArgumentError('each object must have an `objectID` key in order to be indexed');
+    throw ArgumentError(
+        'each object must have an `objectID` key in order to be indexed');
   }
   final rest = Map<String, dynamic>.from(obj)..remove('objectID');
-  return ingestion.PushTaskRecords(objectID: objectID, additionalProperties: rest);
+  return ingestion.PushTaskRecords(
+      objectID: objectID, additionalProperties: rest);
 }
 
 WatchResponse _convertWatchResponse(ingestion.WatchResponse r) {
@@ -275,7 +289,9 @@ WatchResponse _convertWatchResponse(ingestion.WatchResponse r) {
         ?.map((e) => Event(
               eventID: e.eventID,
               runID: e.runID,
-              status: e.status != null ? EventStatus.fromJson(e.status!.toJson()) : null,
+              status: e.status != null
+                  ? EventStatus.fromJson(e.status!.toJson())
+                  : null,
               type: EventType.fromJson(e.type.toJson()),
               batchSize: e.batchSize,
               data: e.data,

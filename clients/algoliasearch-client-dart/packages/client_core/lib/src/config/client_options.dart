@@ -9,22 +9,34 @@ final class ClientOptions {
   /// Sentinel used as the default for the timeout options below.
   ///
   /// It signals that the caller did not provide an explicit timeout, so the
-  /// transport falls back to the per-client default coming from the spec (see
-  /// [RetryStrategy.create]). Kept as a non-nullable [Duration] so the public
-  /// `connectTimeout`/`readTimeout`/`writeTimeout` fields stay non-nullable and
-  /// backward compatible.
+  /// transport falls back to the per-client default coming from the spec (the
+  /// retry strategy resolves it). Kept as a non-nullable [Duration] so the
+  /// public `connectTimeout`/`readTimeout`/`writeTimeout` fields stay
+  /// non-nullable and backward compatible.
+  ///
+  /// Note: only this exact value means "unset". Passing `Duration.zero` is
+  /// treated as an explicit 0 ms timeout, not as "use the default".
   static const Duration unsetTimeout = Duration(microseconds: -1);
 
   /// The list of hosts that the client can connect to.
   final Iterable<Host>? hosts;
 
   /// The maximum duration to wait for a connection to establish before timing out.
+  ///
+  /// Defaults to [unsetTimeout], meaning the per-client default from the spec is
+  /// applied by the transport; set it explicitly to override.
   final Duration connectTimeout;
 
   /// The maximum duration to wait for a write operation to complete before timing out.
+  ///
+  /// Defaults to [unsetTimeout], meaning the per-client default from the spec is
+  /// applied by the transport; set it explicitly to override.
   final Duration writeTimeout;
 
   /// The maximum duration to wait for a read operation to complete before timing out.
+  ///
+  /// Defaults to [unsetTimeout], meaning the per-client default from the spec is
+  /// applied by the transport; set it explicitly to override.
   final Duration readTimeout;
 
   /// Default headers to include in each HTTP request.
