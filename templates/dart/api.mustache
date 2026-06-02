@@ -47,9 +47,9 @@ final class {{classname}} implements ApiClient {
             appId: appId,
             apiKey: apiKey,
             options: options,
-            defaultConnectTimeout: const Duration(milliseconds: {{{serverConnectTimeout}}}),
-            defaultReadTimeout: const Duration(milliseconds: {{{serverReadTimeout}}}),
-            defaultWriteTimeout: const Duration(milliseconds: {{{serverWriteTimeout}}}),
+            defaultConnectTimeout: const Duration(milliseconds: {{{x-timeouts.server.connect}}}),
+            defaultReadTimeout: const Duration(milliseconds: {{{x-timeouts.server.read}}}),
+            defaultWriteTimeout: const Duration(milliseconds: {{{x-timeouts.server.write}}}),
             {{#hostWithAppID}}
             defaultHosts: () => [
               Host(url: '$appId-dsn.algolia.net', callType: CallType.read),
