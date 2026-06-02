@@ -42,11 +42,11 @@ public suspend fun IngestionClient.chunkedPush(
   batchSize: Int = 1000,
   referenceIndexName: String? = null,
   requestOptions: RequestOptions? = null,
-  chunkedOptions: ChunkedHelperOptions? = null,
+  chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions(),
 ): List<WatchResponse> {
   require(batchSize > 0) { "`batchSize` must be greater than 0" }
 
-  val maxRetries = chunkedOptions?.maxRetries ?: DEFAULT_MAX_RETRIES
+  val maxRetries = chunkedOptions.maxRetries
   val responses = mutableListOf<WatchResponse>()
   val pollInterval = maxOf(1, batchSize / 10)
 

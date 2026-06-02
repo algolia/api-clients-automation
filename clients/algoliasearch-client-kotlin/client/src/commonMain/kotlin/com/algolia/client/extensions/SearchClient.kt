@@ -24,6 +24,9 @@ import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.*
 import kotlinx.serialization.json.JsonObject
 
+/** The default maximum number of retries when polling for task completion. */
+public const val DEFAULT_MAX_RETRIES: Int = 100
+
 private const val TRANSFORMATION_OPTIONS_REQUIRED =
   "`transformationOptions` must be installed on the client before calling this method. " +
     "Use `SearchClient.withTransformation(...)` or `searchClient.setTransformationOptions(...)`. " +
@@ -368,9 +371,9 @@ public suspend fun SearchClient.chunkedBatch(
   waitForTasks: Boolean,
   batchSize: Int = 1000,
   requestOptions: RequestOptions? = null,
-  chunkedOptions: ChunkedHelperOptions? = null,
+  chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions(),
 ): List<BatchResponse> {
-  val maxRetries = chunkedOptions?.maxRetries ?: DEFAULT_MAX_RETRIES
+  val maxRetries = chunkedOptions.maxRetries
   val tasks = mutableListOf<BatchResponse>()
   objects.chunked(batchSize).forEach { chunk ->
     val requests = chunk.map { BatchRequest(action = action, body = it) }
@@ -407,7 +410,7 @@ public suspend fun SearchClient.saveObjects(
   waitForTasks: Boolean = false,
   batchSize: Int = 1000,
   requestOptions: RequestOptions? = null,
-  chunkedOptions: ChunkedHelperOptions? = null,
+  chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions(),
 ): List<BatchResponse> =
   this.chunkedBatch(
     indexName = indexName,
@@ -438,7 +441,7 @@ public suspend fun SearchClient.deleteObjects(
   waitForTasks: Boolean = false,
   batchSize: Int = 1000,
   requestOptions: RequestOptions? = null,
-  chunkedOptions: ChunkedHelperOptions? = null,
+  chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions(),
 ): List<BatchResponse> =
   this.chunkedBatch(
     indexName = indexName,
@@ -473,7 +476,7 @@ public suspend fun SearchClient.partialUpdateObjects(
   waitForTasks: Boolean = false,
   batchSize: Int = 1000,
   requestOptions: RequestOptions? = null,
-  chunkedOptions: ChunkedHelperOptions? = null,
+  chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions(),
 ): List<BatchResponse> =
   this.chunkedBatch(
     indexName = indexName,
@@ -508,9 +511,9 @@ public suspend fun SearchClient.replaceAllObjects(
   batchSize: Int = 1000,
   scopes: List<ScopeType> = listOf(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms),
   requestOptions: RequestOptions? = null,
-  chunkedOptions: ChunkedHelperOptions? = null,
+  chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions(),
 ): ReplaceAllObjectsResponse {
-  val maxRetries = chunkedOptions?.maxRetries ?: DEFAULT_MAX_RETRIES
+  val maxRetries = chunkedOptions.maxRetries
   val tmpIndexName = "${indexName}_tmp_${Random.nextInt(from = 0, until = 100)}"
 
   try {
@@ -787,7 +790,7 @@ public suspend fun SearchClient.saveObjectsWithTransformation(
   waitForTasks: Boolean = false,
   batchSize: Int = 1000,
   requestOptions: RequestOptions? = null,
-  chunkedOptions: ChunkedHelperOptions? = null,
+  chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions(),
 ): List<IngestionWatchResponse> =
   requireIngestionTransporter()
     .chunkedPush(
@@ -825,7 +828,7 @@ public suspend fun SearchClient.partialUpdateObjectsWithTransformation(
   waitForTasks: Boolean = false,
   batchSize: Int = 1000,
   requestOptions: RequestOptions? = null,
-  chunkedOptions: ChunkedHelperOptions? = null,
+  chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions(),
 ): List<IngestionWatchResponse> =
   requireIngestionTransporter()
     .chunkedPush(
@@ -865,10 +868,10 @@ public suspend fun SearchClient.replaceAllObjectsWithTransformation(
   batchSize: Int = 1000,
   scopes: List<ScopeType> = listOf(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms),
   requestOptions: RequestOptions? = null,
-  chunkedOptions: ChunkedHelperOptions? = null,
+  chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions(),
 ): ReplaceAllObjectsWithTransformationResponse {
   val transporter = requireIngestionTransporter()
-  val maxRetries = chunkedOptions?.maxRetries ?: DEFAULT_MAX_RETRIES
+  val maxRetries = chunkedOptions.maxRetries
   val tmpIndexName = "${indexName}_tmp_${Random.nextInt(from = 0, until = 100)}"
 
   try {
