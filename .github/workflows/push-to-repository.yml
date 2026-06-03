@@ -12,6 +12,7 @@ on:
           - mcp-node
           - docs-new
           - n8n-nodes-algolia
+          - api-clients-mcp
 
 jobs:
   push:
