@@ -21,6 +21,27 @@ public extension SearchClient {
         " It defaults to the Ingestion API defaults." +
         " See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
 
+    /// Lazily builds (and caches) the ingestion transporter from the client's
+    /// `transformationOptions`. Building here, rather than in the client initializer, lets
+    /// invalid options surface as a thrown error at the call site instead of crashing.
+    private func resolvedIngestionClient() throws -> IngestionClient {
+        if let ingestionClient = self._ingestionClient {
+            return ingestionClient
+        }
+        guard let options = self.configuration.transformationOptions else {
+            throw AlgoliaError.runtimeError(SearchClient.notSetError)
+        }
+        let ingestionConfig = try IngestionClientConfiguration(
+            appID: self.configuration.appID,
+            apiKey: self.configuration.apiKey,
+            region: options.region,
+            options: options.clientOptions ?? IngestionClientOptions()
+        )
+        let ingestionClient = IngestionClient(configuration: ingestionConfig)
+        self._ingestionClient = ingestionClient
+        return ingestionClient
+    }
+
     // MARK: - chunkedPush
 
     /// Chunks `objects` and pushes them through the Ingestion pipeline with the given `action`.
@@ -33,7 +54,7 @@ public extension SearchClient {
     /// - parameter requestOptions: Optional per-request options.
     /// - returns: `[IngestionWatchResponse]`
     @discardableResult
-    func chunkedPush(
+    internal func chunkedPush(
         indexName: String,
         objects: [[String: AnyCodable]],
         action: IngestionAction,
@@ -45,9 +66,7 @@ public extension SearchClient {
         guard batchSize > 0 else {
             throw AlgoliaError.runtimeError("`batchSize` must be greater than 0")
         }
-        guard let ingestionClient = self._ingestionClient else {
-            throw AlgoliaError.runtimeError(SearchClient.notSetError)
-        }
+        let ingestionClient = try self.resolvedIngestionClient()
 
         var responses: [IngestionWatchResponse] = []
         let batches = stride(from: 0, to: objects.count, by: batchSize).map {
@@ -164,9 +183,7 @@ public extension SearchClient {
         scopes: [ScopeType] = [.settings, .rules, .synonyms],
         requestOptions: RequestOptions? = nil
     ) async throws -> ReplaceAllObjectsWithTransformationResponse {
-        guard self._ingestionClient != nil else {
-            throw AlgoliaError.runtimeError(SearchClient.notSetError)
-        }
+        _ = try self.resolvedIngestionClient()
 
         let tmpIndexName = "\(indexName)_tmp_\(Int.random(in: 1_000_000 ..< 10_000_000))"
 
@@ -264,7 +281,7 @@ private func waitForIngestionEvent(
         } catch let AlgoliaError.httpError(error) where error.statusCode == 404 {
             retryCount += 1
             let delayMs = min((retryCount + 1) * 1500, 5000)
-            try await Task.sleep(nanoseconds: UInt64(delayMs) * 1_000_000)
+            try await BridgedTask.sleep(nanoseconds: UInt64(delayMs) * 1_000_000)
         }
     }
     throw AlgoliaError.runtimeError(

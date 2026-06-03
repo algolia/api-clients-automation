@@ -33,46 +33,10 @@ import Foundation
 
     public convenience init(configuration: {{classname}}Configuration) {
         self.init(configuration: configuration, transporter: Transporter(configuration: configuration))
-        {{#isSearchClient}}
-        if let opts = configuration.transformationOptions {
-            do {
-                self._ingestionClient = try {{classname}}.makeIngestionClient(
-                    appID: configuration.appID,
-                    apiKey: configuration.apiKey,
-                    options: opts
-                )
-            } catch {
-                fatalError("Invalid TransformationOptions: \(error.localizedDescription)")
-            }
-        }
-        {{/isSearchClient}}
+        {{! The ingestion transporter is built lazily on first `*WithTransformation` call }}
+        {{! (see SearchClientTransformationExtension) so invalid options surface as a thrown }}
+        {{! error at the call site instead of crashing the client initializer. }}
     }
-
-    {{#isSearchClient}}
-    private static func makeIngestionClient(
-        appID: String,
-        apiKey: String,
-        options: TransformationOptions
-    ) throws -> IngestionClient {
-        let authorizedRegions: [Region] = [.eu, .us]
-        guard authorizedRegions.contains(options.region) else {
-            throw AlgoliaError.runtimeError(
-                "region is required in TransformationOptions and must be one of the following: \(authorizedRegions.map { $0.rawValue }.joined(separator: ", ")). See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
-            )
-        }
-        let ingestionConfig = try IngestionClientConfiguration(
-            appID: appID,
-            apiKey: apiKey,
-            region: options.region,
-            writeTimeout: options.writeTimeout ?? 25,
-            readTimeout: options.readTimeout ?? 25,
-            defaultHeaders: options.defaultHeaders,
-            hosts: options.hosts,
-            compression: options.compression ?? .none
-        )
-        return IngestionClient(configuration: ingestionConfig)
-    }
-    {{/isSearchClient}}
 
     public convenience init(appID: String, apiKey: String{{#hasRegionalHost}}, region: Region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}{{/hasRegionalHost}}) throws {
         self.init(configuration: try {{classname}}Configuration(appID: appID, apiKey: apiKey{{#hasRegionalHost}}, region: region{{/hasRegionalHost}}))
