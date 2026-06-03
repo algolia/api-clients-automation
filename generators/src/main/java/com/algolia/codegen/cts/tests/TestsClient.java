@@ -4,6 +4,8 @@ import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,11 +21,36 @@ public class TestsClient extends TestsGenerator {
   private final boolean withSyncTests;
   private final String testType;
 
+  private static final int PORTS_PER_SLOT = 21;
+
   public TestsClient(CTSManager ctsManager, boolean withBenchmark) {
     super(ctsManager);
     this.withBenchmark = withBenchmark;
     this.withSyncTests = language.equals("python") && !withBenchmark;
     this.testType = withBenchmark ? "benchmark" : "client";
+  }
+
+  private static int getPortOffset() {
+    try {
+      String slot = new String(Files.readAllBytes(Paths.get(".apic-worktree-slot"))).trim();
+      return Integer.parseInt(slot) * PORTS_PER_SLOT;
+    } catch (Exception e) {
+      return 0;
+    }
+  }
+
+  @SuppressWarnings("unchecked")
+  private static Object offsetPorts(Object hosts) {
+    int offset = getPortOffset();
+    if (offset == 0) return hosts;
+
+    List<Map<String, Object>> hostList = (List<Map<String, Object>>) hosts;
+    for (Map<String, Object> host : hostList) {
+      if (host.containsKey("port")) {
+        host.put("port", ((Number) host.get("port")).intValue() + offset);
+      }
+    }
+    return hostList;
   }
 
   @Override
@@ -96,7 +123,7 @@ public class TestsClient extends TestsGenerator {
               if (hasCustomHosts) testOut.put("useEchoRequester", false);
               stepOut.put("hasCustomHosts", hasCustomHosts);
               if (hasCustomHosts) {
-                stepOut.put("customHosts", step.parameters.get("customHosts"));
+                stepOut.put("customHosts", offsetPorts(step.parameters.get("customHosts")));
               }
 
               boolean hasTransformationRegion = step.parameters != null && step.parameters.containsKey("transformationRegion");
@@ -116,7 +143,7 @@ public class TestsClient extends TestsGenerator {
                 boolean hasTransformationCustomHosts = transformationOptions.containsKey("customHosts");
                 stepOut.put("hasTransformationCustomHosts", hasTransformationCustomHosts);
                 if (hasTransformationCustomHosts) {
-                  stepOut.put("transformationCustomHosts", transformationOptions.get("customHosts"));
+                  stepOut.put("transformationCustomHosts", offsetPorts(transformationOptions.get("customHosts")));
                 }
               }
               stepOut.put("hasTransformationOptions", hasTransformationOptions);

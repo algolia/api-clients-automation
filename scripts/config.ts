@@ -53,7 +53,7 @@ export function getCTSRequestDir(clientName: string): string {
   return `tests/CTS/requests/${clientName}`;
 }
 
-export function getDockerImage(language?: Language): string | undefined {
+export function getDockerService(language?: Language): string | undefined {
   if (CI || !language) {
     return undefined;
   }

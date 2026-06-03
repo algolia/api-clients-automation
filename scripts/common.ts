@@ -11,7 +11,7 @@ import clientsConfig from '../config/clients.config.json' with { type: 'json' };
 import releaseConfig from '../config/release.config.json' with { type: 'json' };
 
 import { Cache } from './cache.ts';
-import { getDockerImage } from './config.ts';
+import { getDockerService } from './config.ts';
 import { generateOpenapitools } from './pre-gen/index.ts';
 import { getGitAuthor } from './release/common.ts';
 import { buildSpecs } from './specs/index.ts';
@@ -28,6 +28,14 @@ export const CI = Boolean(process.env.CI);
 
 // This script is run by `yarn workspace ...`, which means the current working directory is `./script`
 export const ROOT_DIR = path.resolve(process.cwd(), '..');
+
+if (!CI && !process.env.COMPOSE_PROJECT_NAME) {
+  const dirName = path
+    .basename(ROOT_DIR)
+    .toLowerCase()
+    .replace(/[^a-z0-9_-]/g, '-');
+  process.env.COMPOSE_PROJECT_NAME = `apic-${dirName}`;
+}
 
 // Build `GENERATORS` from the `clients.config.json` file
 export const GENERATORS = Object.entries(clientsConfig).reduce(
@@ -78,10 +86,10 @@ export const CLIENTS = [...new Set(Object.values(GENERATORS).map((gen) => gen.cl
 
 export async function run(command: string, { errorMessage, cwd, language }: RunOptions = {}): Promise<string> {
   const realCwd = path.resolve(ROOT_DIR, cwd ?? '.');
-  const dockerImage = getDockerImage(language);
+  const dockerService = getDockerService(language);
   let wrappedCmd = command;
-  if (dockerImage) {
-    wrappedCmd = `docker exec ${dockerImage} bash -lc "cd ${cwd ?? '.'} && ${command}"`;
+  if (dockerService) {
+    wrappedCmd = `docker compose --env-file .env.docker exec ${dockerService} bash -lc "cd ${cwd ?? '.'} && ${command}"`;
   }
   try {
     if (isVerbose()) {
@@ -93,7 +101,7 @@ export async function run(command: string, { errorMessage, cwd, language }: RunO
             stdin: 'inherit',
             all: true,
             shell: 'bash',
-            cwd: dockerImage ? ROOT_DIR : realCwd,
+            cwd: dockerService ? ROOT_DIR : realCwd,
           })
         ).all ?? ''
       );
@@ -103,7 +111,7 @@ export async function run(command: string, { errorMessage, cwd, language }: RunO
         await execaCommand(wrappedCmd, {
           shell: 'bash',
           all: true,
-          cwd: dockerImage ? ROOT_DIR : realCwd,
+          cwd: dockerService ? ROOT_DIR : realCwd,
         })
       ).all ?? ''
     );

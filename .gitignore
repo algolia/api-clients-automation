@@ -17,6 +17,9 @@ debug.log
 .vscode/
 .idea/
 .fleet/
+.air/
+.apic-worktree-slot
+.env.docker
 
 target
 **/.DS_Store

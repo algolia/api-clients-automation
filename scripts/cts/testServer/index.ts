@@ -1,4 +1,5 @@
 import type { Server } from 'http';
+import { readFileSync } from 'node:fs';
 
 import type { Express } from 'express';
 import express from 'express';
@@ -26,6 +27,17 @@ import { successServer } from './success.ts';
 import { timeoutServer } from './timeout.ts';
 import { timeoutServerBis } from './timeoutBis.ts';
 import { waitForApiKeyServer } from './waitFor.ts';
+
+function getPortOffset(): number {
+  try {
+    const slot = parseInt(readFileSync('.apic-worktree-slot', 'utf8').trim(), 10);
+    return isNaN(slot) ? 0 : slot * 21;
+  } catch {
+    return 0;
+  }
+}
+
+const PORT_OFFSET = getPortOffset();
 
 export async function startTestServer(suites: Record<CTSType, boolean>): Promise<() => Promise<void>> {
   const toStart: Array<Promise<Server>> = [];
@@ -79,6 +91,7 @@ export async function startTestServer(suites: Record<CTSType, boolean>): Promise
 const SERVER_PATH_PREFIXES = ['/agent-studio'];
 
 export async function setupServer(name: string, port: number, addRoutes: (app: Express) => void): Promise<Server> {
+  const actualPort = port + PORT_OFFSET;
   const spinner = createSpinner(`starting ${name} test server`);
   const app = express();
 
@@ -96,7 +109,7 @@ export async function setupServer(name: string, port: number, addRoutes: (app: E
 
   // 404 handler
   app.use((req, _) => {
-    console.error(`[PORT ${port}] endpoint not implemented for`, req.method, req.url);
+    console.error(`[PORT ${actualPort}] endpoint not implemented for`, req.method, req.url);
     expect.fail('endpoint not implemented');
   });
 
@@ -107,8 +120,8 @@ export async function setupServer(name: string, port: number, addRoutes: (app: E
   });
 
   const server = await new Promise<Server>((resolve) => {
-    const s = app.listen(port, () => {
-      spinner.text = `${name} test server listening at http://localhost:${port}`;
+    const s = app.listen(actualPort, () => {
+      spinner.text = `${name} test server listening at http://localhost:${actualPort}`;
       resolve(s);
     });
   });
