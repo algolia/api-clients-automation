@@ -34,7 +34,7 @@ internal suspend fun <T> retryUntil(
       currentDelay = minOf(currentDelay * 2, maxDelay)
     }
     throw AlgoliaWaitException(
-      "Stopped waiting for the task after $maxRetries retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries.",
+      "Stopped waiting for the task after $maxRetries retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries."
     )
   }
 

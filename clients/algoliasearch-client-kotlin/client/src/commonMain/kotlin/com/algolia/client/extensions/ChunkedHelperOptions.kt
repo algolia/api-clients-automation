@@ -7,6 +7,4 @@ package com.algolia.client.extensions
  * @param maxRetries The maximum number of retries when polling for task completion. Defaults to
  *   [DEFAULT_MAX_RETRIES].
  */
-public data class ChunkedHelperOptions(
-  public val maxRetries: Int = DEFAULT_MAX_RETRIES,
-)
+public data class ChunkedHelperOptions(public val maxRetries: Int = DEFAULT_MAX_RETRIES)
