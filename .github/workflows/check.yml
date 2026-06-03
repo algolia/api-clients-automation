@@ -27,9 +27,16 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.ALGOLIA_BOT_APP_ID }}
+          private-key: ${{ secrets.ALGOLIA_BOT_PRIVATE_KEY }}
+
       - uses: marocchino/sticky-pull-request-comment@v3
         with:
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           message: |
             ### 🪓 The generated code will be pushed at the end of the CI.
 
@@ -523,15 +530,25 @@ jobs:
       !contains(needs.*.result, 'failure')
     permissions:
       pull-requests: write
+    env:
+      ALGOLIA_BOT_APP_ID: ${{ secrets.ALGOLIA_BOT_APP_ID }}
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
       generatedCommit: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT || github.event.pull_request.head.ref }}
     steps:
+      - name: Generate GitHub App Token
+        id: app-token
+        if: ${{ env.ALGOLIA_BOT_APP_ID != '' }}
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.ALGOLIA_BOT_APP_ID }}
+          private-key: ${{ secrets.ALGOLIA_BOT_PRIVATE_KEY }}
+
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
+          token: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
 
       - name: Download all artifacts
@@ -575,7 +592,7 @@ jobs:
         id: pushGeneratedCode
         run: yarn workspace scripts pushGeneratedCode
         env:
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.number }}
 
       - name: Check for breaking changes
@@ -594,7 +611,7 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v3
         if: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT == '' }}
         with:
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
           message: |
             ${{ steps.breakingChanges.outputs.BREAKING_CHANGES_SECTION }}
             ### No code generated
@@ -607,7 +624,7 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v3
         if: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT != '' }}
         with:
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
           message: |
             ${{ steps.breakingChanges.outputs.BREAKING_CHANGES_SECTION }}
             ### ✔️ Code generated!
@@ -674,11 +691,20 @@ jobs:
     permissions:
       pull-requests: write
     steps:
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.ALGOLIA_BOT_APP_ID }}
+          private-key: ${{ secrets.ALGOLIA_BOT_PRIVATE_KEY }}
+          # Here, we push to most of the allowed repo, so no need to scope
+          owner: algolia
+
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: ${{ needs.codegen.outputs.generatedCommit }}
-          token: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
 
       - name: Setup
@@ -690,25 +716,25 @@ jobs:
         id: spreadGeneration
         run: yarn workspace scripts spreadGeneration
         env:
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
       - name: Wait for all release CI
         id: waitForAllReleases
         run: yarn workspace scripts waitForAllReleases ${{ steps.spreadGeneration.outputs.PUSHED_LANGUAGES }}
         env:
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
       - name: Create GitHub release
         run: yarn workspace scripts createGitHubReleases ${{ steps.waitForAllReleases.outputs.RELEASED_LANGUAGES }}
         env:
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
       - name: Push generated files to doc/dashboard repositories
         run: yarn workspace scripts pushToRepository
         if: ${{ steps.waitForAllReleases.outputs.CAN_PUSH_TO_REPO == 'true' }}
         env:
-          GH_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
       - name: notify failures
         uses: slackapi/slack-github-action@v3.0.3
