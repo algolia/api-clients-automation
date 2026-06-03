@@ -20,7 +20,11 @@ private[algoliasearch] object RetryUntil {
 
     def attempt(retryCount: Int, currentDelay: Long): Future[T] = {
       if (retryCount >= maxRetries) {
-        Future.failed(AlgoliaWaitException("The maximum number of retries exceeded."))
+        Future.failed(
+          AlgoliaWaitException(
+            s"Stopped waiting for the task after $maxRetries retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries."
+          )
+        )
       } else {
         retry().flatMap { result =>
           if (until(result)) {

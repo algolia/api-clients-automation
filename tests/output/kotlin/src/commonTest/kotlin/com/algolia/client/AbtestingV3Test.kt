@@ -57,6 +57,7 @@ class AbtestingV3Test {
   @Test
   fun `uses the correct region`() = runTest {
     val client = AbtestingV3Client(appId = "my-app-id", apiKey = "my-api-key", "us")
+
     client.runTest(
       call = { getABTest(id = 123) },
       intercept = { assertEquals("analytics.us.algolia.com", it.url.host) },
@@ -67,6 +68,7 @@ class AbtestingV3Test {
   fun `throws when incorrect region is given`() = runTest {
     assertFails {
         val client = AbtestingV3Client(appId = "my-app-id", apiKey = "my-api-key", "not_a_region")
+
       }
       .let { error ->
         assertError(
@@ -99,6 +101,7 @@ class AbtestingV3Test {
               )
           ),
       )
+
     client.runTest(
       call = { customGet(path = "check-api-key/1") },
       response = {

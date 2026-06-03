@@ -21,6 +21,7 @@ class RecommendTest {
   @Test
   fun `calls api with correct read host`() = runTest {
     val client = RecommendClient(appId = "test-app-id", apiKey = "test-api-key")
+
     client.runTest(
       call = { customGet(path = "test") },
       intercept = { assertEquals("test-app-id-dsn.algolia.net", it.url.host) },
@@ -30,6 +31,7 @@ class RecommendTest {
   @Test
   fun `calls api with correct write host`() = runTest {
     val client = RecommendClient(appId = "test-app-id", apiKey = "test-api-key")
+
     client.runTest(
       call = { customPost(path = "test") },
       intercept = { assertEquals("test-app-id.algolia.net", it.url.host) },
@@ -90,6 +92,7 @@ class RecommendTest {
               )
           ),
       )
+
     client.runTest(
       call = { customGet(path = "check-api-key/1") },
       response = {

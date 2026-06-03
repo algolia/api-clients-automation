@@ -2205,6 +2205,38 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForPartialUpdateObjectsWithTransformation() {
+    // >SEPARATOR partialUpdateObjectsWithTransformation default
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.partialUpdateObjectsWithTransformation(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects =
+          listOf(
+            buildJsonObject {
+              put("objectID", JsonPrimitive("1"))
+              put("name", JsonPrimitive("Adam"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("2"))
+              put("name", JsonPrimitive("Benoit"))
+            },
+          ),
+        createIfNotExists = true,
+        waitForTasks = true,
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForRemoveUserId() {
     // >SEPARATOR removeUserId default
     // Initialize the client
@@ -2340,6 +2372,69 @@ class SnippetSearchClient {
               put("body", JsonPrimitive("something bigger than 10KB"))
             },
           ),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForReplaceAllObjectsWithTransformation() {
+    // >SEPARATOR replaceAllObjectsWithTransformation default
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.replaceAllObjectsWithTransformation(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects =
+          listOf(
+            buildJsonObject {
+              put("objectID", JsonPrimitive("1"))
+              put("name", JsonPrimitive("Adam"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("2"))
+              put("name", JsonPrimitive("Benoit"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("3"))
+              put("name", JsonPrimitive("Cyril"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("4"))
+              put("name", JsonPrimitive("David"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("5"))
+              put("name", JsonPrimitive("Eva"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("6"))
+              put("name", JsonPrimitive("Fiona"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("7"))
+              put("name", JsonPrimitive("Gael"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("8"))
+              put("name", JsonPrimitive("Hugo"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("9"))
+              put("name", JsonPrimitive("Igor"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("10"))
+              put("name", JsonPrimitive("Julia"))
+            },
+          ),
+        batchSize = 3,
       )
 
     // >LOG
@@ -2522,6 +2617,37 @@ class SnippetSearchClient {
         waitForTasks = false,
         batchSize = 1000,
         requestOptions = RequestOptions(headers = buildMap { put("X-Algolia-User-ID", "*") }),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveObjectsWithTransformation() {
+    // >SEPARATOR saveObjectsWithTransformation default
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.saveObjectsWithTransformation(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects =
+          listOf(
+            buildJsonObject {
+              put("objectID", JsonPrimitive("1"))
+              put("name", JsonPrimitive("Adam"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("2"))
+              put("name", JsonPrimitive("Benoit"))
+            },
+          ),
+        waitForTasks = true,
       )
 
     // >LOG

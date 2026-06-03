@@ -58,6 +58,7 @@ class QuerySuggestionsTest {
   fun `throws when region is not given`() = runTest {
     assertFails {
         val client = QuerySuggestionsClient(appId = "my-app-id", apiKey = "my-api-key", "")
+
       }
       .let { error ->
         assertError(
@@ -76,6 +77,7 @@ class QuerySuggestionsTest {
     assertFails {
         val client =
           QuerySuggestionsClient(appId = "my-app-id", apiKey = "my-api-key", "not_a_region")
+
       }
       .let { error ->
         assertError(
@@ -113,6 +115,7 @@ class QuerySuggestionsTest {
               )
           ),
       )
+
     client.runTest(
       call = { customGet(path = "check-api-key/1") },
       response = {
