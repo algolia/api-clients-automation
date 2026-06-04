@@ -15,6 +15,11 @@ import {{modelPackage}}.RequestBody
 {{/isCompositionClient}}
 
 {{#operations}}
+{{#isAgentStudioClient}}
+/**
+ * Beta: The Agent Studio API is not yet stable and may change without notice.
+ */
+{{/isAgentStudioClient}}
 public class {{classname}}(
   override val appId: String,
   override var apiKey: String,

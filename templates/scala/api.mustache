@@ -135,6 +135,9 @@ object {{classname}} {
   {{/hostsWithoutVariables.size}}
 }
 
+{{#isAgentStudioClient}}
+/** @note Beta: The Agent Studio API is not yet stable and may introduce breaking changes. */
+{{/isAgentStudioClient}}
 class {{classname}}(
     appId: String,
     apiKey: String,

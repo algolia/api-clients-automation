@@ -40,7 +40,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     setPubAuthor("Algolia");
     setPubAuthorEmail("hey@algolia.com");
     setPubHomepage("https://www.algolia.com/doc/");
-    setPubVersion(version);
+    setPubVersion(client.equals("agent-studio") ? "0.1.0-beta.0" : version);
     String packageFolder;
     if (isAlgoliasearchClient) {
       libName = "algoliasearch";
@@ -107,7 +107,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
 
     // Search config
     additionalProperties.put("isSearchClient", client.equals("search"));
-    additionalProperties.put("packageVersion", version);
+    additionalProperties.put("packageVersion", client.equals("agent-studio") ? "0.1.0-beta.0" : version);
   }
 
   @Override

@@ -128,6 +128,9 @@ namespace Algolia.Search.Clients;
   /// <summary>
   /// Represents a collection of functions to interact with the API endpoints
   /// </summary>
+  {{#isAgentStudioClient}}
+  [System.Obsolete("Agent Studio API is in beta and subject to breaking changes.", false)]
+  {{/isAgentStudioClient}}
   {{> visibility}} partial class {{classname}} : {{interfacePrefix}}{{classname}}
   {
       internal HttpTransport _transport;

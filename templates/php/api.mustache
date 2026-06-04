@@ -32,6 +32,9 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
  *
  * @category Class
  * @package  {{invokerPackage}}
+{{#isAgentStudioClient}}
+ * @experimental This API is in beta and subject to breaking changes.
+{{/isAgentStudioClient}}
  */
 {{#operations}}class {{classname}}
 {
