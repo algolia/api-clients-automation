@@ -4,6 +4,13 @@ from os import environ
 from pathlib import Path
 from typing import Tuple
 
+from algoliasearch.http.base_config import BaseConfig
+from algoliasearch.http.hosts import CallType, Host, HostsCollection
+from algoliasearch.http.request_options import RequestOptions
+from algoliasearch.http.transporter import Transporter
+from algoliasearch.http.transporter_sync import TransporterSync
+from algoliasearch.http.verb import Verb
+
 
 def _port_offset() -> int:
     try:
@@ -11,12 +18,6 @@ def _port_offset() -> int:
     except Exception:
         return 0
 
-from algoliasearch.http.base_config import BaseConfig
-from algoliasearch.http.hosts import CallType, Host, HostsCollection
-from algoliasearch.http.request_options import RequestOptions
-from algoliasearch.http.transporter import Transporter
-from algoliasearch.http.transporter_sync import TransporterSync
-from algoliasearch.http.verb import Verb
 
 TEST_SERVER = (
     "localhost" if environ.get("CI") == "true" else "host.docker.internal"

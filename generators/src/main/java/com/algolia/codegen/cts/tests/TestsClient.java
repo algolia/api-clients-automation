@@ -24,7 +24,8 @@ public class TestsClient extends TestsGenerator {
   private final boolean withSyncTests;
   private final String testType;
 
-  // SYNC: must match scripts/docker/slot.sh PORTS_PER_SLOT and scripts/cts/testServer/index.ts PORTS_PER_SLOT
+  // SYNC: must match scripts/docker/slot.sh PORTS_PER_SLOT and scripts/cts/testServer/index.ts
+  // PORTS_PER_SLOT
   private static final int PORTS_PER_SLOT = 21;
 
   public TestsClient(CTSManager ctsManager, boolean withBenchmark) {
@@ -53,13 +54,16 @@ public class TestsClient extends TestsGenerator {
     int offset = getPortOffset();
     if (offset == 0) return hosts;
 
-    return hosts.stream().map(host -> {
-      Map<String, Object> copy = new HashMap<>(host);
-      if (copy.containsKey("port")) {
-        copy.put("port", ((Number) copy.get("port")).intValue() + offset);
-      }
-      return copy;
-    }).collect(Collectors.toList());
+    return hosts
+      .stream()
+      .map(host -> {
+        Map<String, Object> copy = new HashMap<>(host);
+        if (copy.containsKey("port")) {
+          copy.put("port", ((Number) copy.get("port")).intValue() + offset);
+        }
+        return copy;
+      })
+      .collect(Collectors.toList());
   }
 
   @Override
@@ -265,6 +269,15 @@ public class TestsClient extends TestsGenerator {
                   stepOut.put("expectedError", errorMap.getOrDefault(language, "<missing error for " + language + ">"));
                 } else {
                   stepOut.put("expectedError", step.expected.error);
+                }
+                // Offset port numbers in error strings for worktree isolation
+                int offset = getPortOffset();
+                if (offset != 0) {
+                  String err = (String) stepOut.get("expectedError");
+                  for (int basePort = 6671; basePort <= 6671 + PORTS_PER_SLOT - 1; basePort++) {
+                    err = err.replace(":" + basePort, ":" + (basePort + offset));
+                  }
+                  stepOut.put("expectedError", err);
                 }
                 if (language.equals("go") && step.method != null) {
                   // hack for go that use PascalCase, but just in the operationID

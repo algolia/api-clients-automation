@@ -277,7 +277,11 @@ function getDebugPort(): number {
     const envDocker = readFileSync(path.resolve(ROOT_DIR, '.env.docker'), 'utf8');
     const match = envDocker.match(/^APIC_DEBUG_PORT=(\d+)$/m);
     if (match) return parseInt(match[1], 10);
-  } catch {}
+  } catch (e: unknown) {
+    if (!(e instanceof Error && 'code' in e && (e as NodeJS.ErrnoException).code === 'ENOENT')) {
+      console.warn(`[worktree] Could not read .env.docker: ${e instanceof Error ? e.message : e}, defaulting to port 5009`);
+    }
+  }
   return 5009;
 }
 
