@@ -11,6 +11,7 @@ REGISTRY_DIR="$HOME/.config/apic"
 REGISTRY_FILE="$REGISTRY_DIR/worktree-slots.json"
 SLOT_FILE=".apic-worktree-slot"
 LOCK_DIR="$REGISTRY_DIR/.slot-lock"
+# SYNC: must match scripts/cts/testServer/index.ts PORTS_PER_SLOT and generators TestsClient.java PORTS_PER_SLOT
 PORTS_PER_SLOT=21
 
 acquire_lock() {

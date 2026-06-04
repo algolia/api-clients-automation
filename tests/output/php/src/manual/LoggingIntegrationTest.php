@@ -20,9 +20,20 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Log\AbstractLogger;
 
+function getPortOffsetLogging(): int
+{
+    try {
+        return (int) trim(file_get_contents('.apic-worktree-slot')) * 21;
+    } catch (\Throwable $e) {
+        return 0;
+    }
+}
+
 function getLoggingTestServerHost(): string
 {
-    return ('true' === getenv('CI') ? 'localhost' : 'host.docker.internal').':6676';
+    $port = 6676 + getPortOffsetLogging();
+
+    return ('true' === getenv('CI') ? 'localhost' : 'host.docker.internal').':'.$port;
 }
 
 /**

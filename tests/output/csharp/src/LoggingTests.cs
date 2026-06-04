@@ -26,6 +26,12 @@ public class LoggingTests
   private const string NonRoutableIp2 = "10.255.255.2";
   private const int ConnectTimeoutSeconds = 2;
 
+  private static int GetPortOffset()
+  {
+    try { return int.Parse(File.ReadAllText(".apic-worktree-slot").Trim()) * 21; }
+    catch { return 0; }
+  }
+
   private readonly List<TestLogEntry> _logs = new();
   private readonly TestLoggerFactory _loggerFactory;
 
@@ -43,7 +49,7 @@ public class LoggingTests
     return new StatefulHost
     {
       Url = host,
-      Port = 6676,
+      Port = 6676 + GetPortOffset(),
       Scheme = HttpScheme.Http,
       Accept = CallType.Read | CallType.Write,
     };

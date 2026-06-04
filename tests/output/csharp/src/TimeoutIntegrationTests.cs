@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -16,6 +17,12 @@ namespace Algolia.Search.client;
 
 public class TimeoutIntegrationTests
 {
+  private static int GetPortOffset()
+  {
+    try { return int.Parse(File.ReadAllText(".apic-worktree-slot").Trim()) * 21; }
+    catch { return 0; }
+  }
+
   private static (AlgoliaConfig, StatefulHost) CreateConfigWithHost(string hostUrl)
   {
     var config = new SearchConfig("test-app", "test-key");
@@ -32,7 +39,7 @@ public class TimeoutIntegrationTests
     return new StatefulHost
     {
       Url = serverHost,
-      Port = 6676,
+      Port = 6676 + GetPortOffset(),
       Scheme = HttpScheme.Http,
       Accept = CallType.Read | CallType.Write,
     };

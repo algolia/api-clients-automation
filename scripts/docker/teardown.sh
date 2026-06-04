@@ -4,8 +4,13 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 source "$SCRIPT_DIR/slot.sh"
 
-DIR_NAME=$(basename "$(pwd)" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9_-]/-/g')
-export COMPOSE_PROJECT_NAME="apic-${DIR_NAME}"
+if [ ! -f .env.docker ]; then
+  echo "Error: .env.docker not found. Run 'yarn docker:setup' first." >&2
+  exit 1
+fi
+
+# shellcheck disable=SC2046
+export $(grep '^COMPOSE_PROJECT_NAME=' .env.docker)
 
 echo "Stopping containers for project: $COMPOSE_PROJECT_NAME"
 docker compose --env-file .env.docker down --remove-orphans

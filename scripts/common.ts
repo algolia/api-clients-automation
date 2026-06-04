@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import fsp from 'fs/promises';
 import path from 'path';
 
@@ -28,14 +29,6 @@ export const CI = Boolean(process.env.CI);
 
 // This script is run by `yarn workspace ...`, which means the current working directory is `./script`
 export const ROOT_DIR = path.resolve(process.cwd(), '..');
-
-if (!CI && !process.env.COMPOSE_PROJECT_NAME) {
-  const dirName = path
-    .basename(ROOT_DIR)
-    .toLowerCase()
-    .replace(/[^a-z0-9_-]/g, '-');
-  process.env.COMPOSE_PROJECT_NAME = `apic-${dirName}`;
-}
 
 // Build `GENERATORS` from the `clients.config.json` file
 export const GENERATORS = Object.entries(clientsConfig).reduce(
@@ -279,6 +272,15 @@ export function isVerbose(): boolean {
   return verbose;
 }
 
+function getDebugPort(): number {
+  try {
+    const envDocker = readFileSync(path.resolve(ROOT_DIR, '.env.docker'), 'utf8');
+    const match = envDocker.match(/^APIC_DEBUG_PORT=(\d+)$/m);
+    if (match) return parseInt(match[1], 10);
+  } catch {}
+  return 5009;
+}
+
 export async function callGenerator(gen: Generator, withDebugger: boolean): Promise<void> {
   const cmd = `yarn openapi-generator-cli --custom-generator=generators/build/libs/algolia-java-openapi-generator-1.0.0.jar generate --generator-key ${gen.key}`;
   if (!withDebugger) {
@@ -286,9 +288,10 @@ export async function callGenerator(gen: Generator, withDebugger: boolean): Prom
     return;
   }
 
+  const debugPort = getDebugPort();
   console.log(
     chalk.yellow(
-      'Running the generator in debug mode, waiting for debugger to be attached on port 5009\nsee the doc for reference: https://api-clients-automation.netlify.app/docs/CLI/cts-commands#attach-a-debugger-to-the-generator',
+      `Running the generator in debug mode, waiting for debugger to be attached on port ${debugPort}\nsee the doc for reference: https://api-clients-automation.netlify.app/docs/CLI/cts-commands#attach-a-debugger-to-the-generator`,
     ),
   );
 

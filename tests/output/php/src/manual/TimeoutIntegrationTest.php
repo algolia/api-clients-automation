@@ -11,9 +11,20 @@ use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
 use PHPUnit\Framework\TestCase;
 
+function getPortOffset(): int
+{
+    try {
+        return (int) trim(file_get_contents('.apic-worktree-slot')) * 21;
+    } catch (\Throwable $e) {
+        return 0;
+    }
+}
+
 function getTestServerHost(): string
 {
-    return ('true' === getenv('CI') ? 'localhost' : 'host.docker.internal').':6676';
+    $port = 6676 + getPortOffset();
+
+    return ('true' === getenv('CI') ? 'localhost' : 'host.docker.internal').':'.$port;
 }
 
 /**

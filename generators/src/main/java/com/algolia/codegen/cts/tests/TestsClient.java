@@ -4,12 +4,15 @@ import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.CodegenResponse;
@@ -21,6 +24,7 @@ public class TestsClient extends TestsGenerator {
   private final boolean withSyncTests;
   private final String testType;
 
+  // SYNC: must match scripts/docker/slot.sh PORTS_PER_SLOT and scripts/cts/testServer/index.ts PORTS_PER_SLOT
   private static final int PORTS_PER_SLOT = 21;
 
   public TestsClient(CTSManager ctsManager, boolean withBenchmark) {
@@ -34,23 +38,28 @@ public class TestsClient extends TestsGenerator {
     try {
       String slot = new String(Files.readAllBytes(Paths.get(".apic-worktree-slot"))).trim();
       return Integer.parseInt(slot) * PORTS_PER_SLOT;
+    } catch (NoSuchFileException | FileNotFoundException e) {
+      return 0;
+    } catch (NumberFormatException e) {
+      System.err.println("Warning: .apic-worktree-slot contains invalid number: " + e.getMessage());
+      return 0;
     } catch (Exception e) {
+      System.err.println("Warning: failed to read .apic-worktree-slot: " + e.getMessage());
       return 0;
     }
   }
 
-  @SuppressWarnings("unchecked")
-  private static Object offsetPorts(Object hosts) {
+  private static List<Map<String, Object>> offsetPorts(List<Map<String, Object>> hosts) {
     int offset = getPortOffset();
     if (offset == 0) return hosts;
 
-    List<Map<String, Object>> hostList = (List<Map<String, Object>>) hosts;
-    for (Map<String, Object> host : hostList) {
-      if (host.containsKey("port")) {
-        host.put("port", ((Number) host.get("port")).intValue() + offset);
+    return hosts.stream().map(host -> {
+      Map<String, Object> copy = new HashMap<>(host);
+      if (copy.containsKey("port")) {
+        copy.put("port", ((Number) copy.get("port")).intValue() + offset);
       }
-    }
-    return hostList;
+      return copy;
+    }).collect(Collectors.toList());
   }
 
   @Override
@@ -123,7 +132,9 @@ public class TestsClient extends TestsGenerator {
               if (hasCustomHosts) testOut.put("useEchoRequester", false);
               stepOut.put("hasCustomHosts", hasCustomHosts);
               if (hasCustomHosts) {
-                stepOut.put("customHosts", offsetPorts(step.parameters.get("customHosts")));
+                @SuppressWarnings("unchecked")
+                var customHosts = (List<Map<String, Object>>) step.parameters.get("customHosts");
+                stepOut.put("customHosts", offsetPorts(customHosts));
               }
 
               boolean hasTransformationRegion = step.parameters != null && step.parameters.containsKey("transformationRegion");
@@ -143,7 +154,9 @@ public class TestsClient extends TestsGenerator {
                 boolean hasTransformationCustomHosts = transformationOptions.containsKey("customHosts");
                 stepOut.put("hasTransformationCustomHosts", hasTransformationCustomHosts);
                 if (hasTransformationCustomHosts) {
-                  stepOut.put("transformationCustomHosts", offsetPorts(transformationOptions.get("customHosts")));
+                  @SuppressWarnings("unchecked")
+                  var transformationCustomHosts = (List<Map<String, Object>>) transformationOptions.get("customHosts");
+                  stepOut.put("transformationCustomHosts", offsetPorts(transformationCustomHosts));
                 }
               }
               stepOut.put("hasTransformationOptions", hasTransformationOptions);

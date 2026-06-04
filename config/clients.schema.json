@@ -68,11 +68,11 @@
       "apiFolder": { "type": "string", "description": "the api folder, e.g. lib/src"},
       "dockerImage": { 
         "type": "string",
-        "description": "whether your client requires a custom docker image with specific needs, most clients require 'apic_base'",
+        "description": "Docker Compose service name for the container this language builds in. Most clients use 'base'.",
         "enum": [
-          "apic_base",
-          "apic_ruby",
-          "apic_swift"
+          "base",
+          "ruby",
+          "swift"
         ]
       },
       "tests": {

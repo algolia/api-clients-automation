@@ -20,20 +20,34 @@ export APIC_BASE_TAG="apic-base:${VERSIONS_HASH}"
 export APIC_RUBY_TAG="apic-ruby:${RUBY_HASH}"
 export APIC_SWIFT_TAG="apic-swift:${SWIFT_HASH}"
 
+PREVIOUS_SLOT=""
+if [ -f "$SLOT_FILE" ]; then
+  PREVIOUS_SLOT=$(cat "$SLOT_FILE")
+fi
+
 WORKTREE_COUNT=$(git worktree list 2>/dev/null | wc -l | tr -d ' ')
 if [ "$WORKTREE_COUNT" -gt 1 ]; then
   claim_slot
 fi
 SLOT=$(read_slot)
 
+if [ -n "$PREVIOUS_SLOT" ] && [ "$PREVIOUS_SLOT" != "$SLOT" ]; then
+  echo ""
+  echo "WARNING: Slot changed from $PREVIOUS_SLOT to $SLOT."
+  echo "         Re-run 'yarn cli cts generate' to update generated test ports."
+  echo ""
+fi
+
 DIR_NAME=$(basename "$(pwd)" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9_-]/-/g')
 export COMPOSE_PROJECT_NAME="apic-${DIR_NAME}"
+APIC_DEBUG_PORT=$((5009 + SLOT * PORTS_PER_SLOT))
 
 cat > .env.docker <<EOF
 COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME}
 APIC_BASE_TAG=${APIC_BASE_TAG}
 APIC_RUBY_TAG=${APIC_RUBY_TAG}
 APIC_SWIFT_TAG=${APIC_SWIFT_TAG}
+APIC_DEBUG_PORT=${APIC_DEBUG_PORT}
 JAVA_VERSION=${JAVA_VERSION}
 NODE_VERSION=${NODE_VERSION}
 PYTHON_VERSION=${PYTHON_VERSION}
@@ -62,5 +76,6 @@ docker compose up -d
 
 echo ""
 echo "Worktree slot: $SLOT (port offset: $((SLOT * PORTS_PER_SLOT)))"
+echo "Debug port: $APIC_DEBUG_PORT"
 echo "Project: $COMPOSE_PROJECT_NAME"
 echo "Images: $APIC_BASE_TAG | $APIC_RUBY_TAG | $APIC_SWIFT_TAG"

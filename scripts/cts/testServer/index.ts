@@ -28,11 +28,22 @@ import { timeoutServer } from './timeout.ts';
 import { timeoutServerBis } from './timeoutBis.ts';
 import { waitForApiKeyServer } from './waitFor.ts';
 
+// SYNC: must match scripts/docker/slot.sh PORTS_PER_SLOT and generators TestsClient.java PORTS_PER_SLOT
+const PORTS_PER_SLOT = 21;
+
 function getPortOffset(): number {
   try {
     const slot = parseInt(readFileSync('.apic-worktree-slot', 'utf8').trim(), 10);
-    return isNaN(slot) ? 0 : slot * 21;
-  } catch {
+    if (isNaN(slot)) {
+      console.warn('[worktree] .apic-worktree-slot exists but contains invalid value, defaulting to slot 0');
+      return 0;
+    }
+    return slot * PORTS_PER_SLOT;
+  } catch (e: unknown) {
+    if (e instanceof Error && 'code' in e && (e as NodeJS.ErrnoException).code === 'ENOENT') {
+      return 0;
+    }
+    console.warn(`[worktree] Could not read .apic-worktree-slot: ${e instanceof Error ? e.message : e}, defaulting to slot 0`);
     return 0;
   }
 }

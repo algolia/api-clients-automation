@@ -1,7 +1,15 @@
 import asyncio
 import time
 from os import environ
+from pathlib import Path
 from typing import Tuple
+
+
+def _port_offset() -> int:
+    try:
+        return int(Path(".apic-worktree-slot").read_text().strip()) * 21
+    except Exception:
+        return 0
 
 from algoliasearch.http.base_config import BaseConfig
 from algoliasearch.http.hosts import CallType, Host, HostsCollection
@@ -12,7 +20,7 @@ from algoliasearch.http.verb import Verb
 
 TEST_SERVER = (
     "localhost" if environ.get("CI") == "true" else "host.docker.internal"
-) + ":6676"
+) + f":{6676 + _port_offset()}"
 
 
 def create_config_with_host(host_url: str) -> Tuple[BaseConfig, Host]:

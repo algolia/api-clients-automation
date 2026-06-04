@@ -53,6 +53,8 @@ export function getCTSRequestDir(clientName: string): string {
   return `tests/CTS/requests/${clientName}`;
 }
 
+// Note: the config field is still named 'dockerImage' for backward compatibility,
+// but the values are Docker Compose service names (e.g. 'base', 'ruby', 'swift').
 export function getDockerService(language?: Language): string | undefined {
   if (CI || !language) {
     return undefined;
