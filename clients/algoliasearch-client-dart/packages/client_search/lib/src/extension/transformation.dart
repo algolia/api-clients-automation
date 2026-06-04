@@ -236,12 +236,8 @@ Future<void> _pollBatch({
   }
 }
 
-/// Polls the Ingestion API for a single event until it becomes available.
-///
-/// Unlike [waitTask]'s generic `_waitUntil` (which retries until a *result*
-/// predicate holds), this is exception-driven: `getEvent` returns 404 until the
-/// event exists, so we retry on 404 and stop on the first successful response.
-/// It therefore can't reuse `_waitUntil` directly.
+/// Polls the Ingestion API for a single event until it becomes available,
+/// retrying while `getEvent` returns a 404.
 Future<void> _waitForEvent({
   required ingestion.IngestionClient transporter,
   required String runID,
@@ -249,23 +245,21 @@ Future<void> _waitForEvent({
   required int maxRetries,
   RequestOptions? requestOptions,
 }) async {
-  for (var retries = 0; retries < maxRetries; retries++) {
-    try {
-      await transporter.getEvent(
-        runID: runID,
-        eventID: eventID,
-        requestOptions: requestOptions,
-      );
-      return;
-    } on AlgoliaApiException catch (e) {
-      if (e.statusCode != 404) rethrow;
-    }
-    await Future<void>.delayed(
-      Duration(milliseconds: min((retries + 1) * 1500, 5000)),
-    );
-  }
-  throw AlgoliaWaitException(
-    'The maximum number of retries exceeded. ($maxRetries/$maxRetries)',
+  await waitUntil(
+    retry: () async {
+      try {
+        return await transporter.getEvent(
+          runID: runID,
+          eventID: eventID,
+          requestOptions: requestOptions,
+        );
+      } on AlgoliaApiException catch (e) {
+        if (e.statusCode == 404) return null;
+        rethrow;
+      }
+    },
+    until: (event) => event != null,
+    params: WaitParams(maxRetries: maxRetries),
   );
 }
 

@@ -50,9 +50,6 @@ final class RetryStrategy {
         ? defaultWriteTimeout
         : options.writeTimeout;
 
-    // A caller-provided requester (e.g. the CTS echo requester) carries its own
-    // connect timeout, so push the resolved value onto it; the default
-    // [DioRequester] receives it through its constructor.
     final requester = options.requester != null
         ? (options.requester!..setConnectTimeout(connectTimeout))
         : DioRequester(
