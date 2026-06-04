@@ -22,11 +22,11 @@ public struct TransformationOptions {
 
     /// Optional overrides forwarded to the ingestion transporter. Fields left unset keep the
     /// Ingestion API defaults (25 s timeouts, region-derived hosts, no compression).
-    public var clientOptions: IngestionClientOptions?
+    public var clientOptions: ClientOptions?
 
     /// - parameter region: The Algolia region for the Ingestion API (`Region.us` or `Region.eu`). Required.
     /// - parameter clientOptions: Optional overrides forwarded to the ingestion transporter.
-    public init(region: Region, clientOptions: IngestionClientOptions? = nil) {
+    public init(region: Region, clientOptions: ClientOptions? = nil) {
         self.region = region
         self.clientOptions = clientOptions
     }

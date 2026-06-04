@@ -132,21 +132,4 @@ public struct {{#lambda.client-to-name}}{{{client}}}{{/lambda.client-to-name}}Cl
 
     self.hosts = hosts
   }
-  {{#isIngestionClient}}
-
-  /// Builds the configuration from a shared set of ``IngestionClientOptions``, applying the
-  /// Ingestion API defaults for any option left unset.
-  public init(appID: String, apiKey: String, region: Region, options: IngestionClientOptions) throws {
-    try self.init(
-      appID: appID,
-      apiKey: apiKey,
-      region: region,
-      writeTimeout: options.writeTimeout ?? {{#lambda.toSeconds}}{{x-timeouts.server.write}}{{/lambda.toSeconds}},
-      readTimeout: options.readTimeout ?? {{#lambda.toSeconds}}{{x-timeouts.server.read}}{{/lambda.toSeconds}},
-      defaultHeaders: options.defaultHeaders,
-      hosts: options.hosts,
-      compression: options.compression ?? .none
-    )
-  }
-  {{/isIngestionClient}}
 }

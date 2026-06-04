@@ -31,11 +31,16 @@ public extension SearchClient {
         guard let options = self.configuration.transformationOptions else {
             throw AlgoliaError.runtimeError(SearchClient.notSetError)
         }
+        let opts = options.clientOptions
         let ingestionConfig = try IngestionClientConfiguration(
             appID: self.configuration.appID,
             apiKey: self.configuration.apiKey,
             region: options.region,
-            options: options.clientOptions ?? IngestionClientOptions()
+            writeTimeout: opts?.writeTimeout ?? 25,
+            readTimeout: opts?.readTimeout ?? 25,
+            defaultHeaders: opts?.defaultHeaders,
+            hosts: opts?.hosts,
+            compression: opts?.compression ?? .none
         )
         let ingestionClient = IngestionClient(configuration: ingestionConfig)
         self._ingestionClient = ingestionClient
