@@ -28,8 +28,7 @@ import { timeoutServer } from './timeout.ts';
 import { timeoutServerBis } from './timeoutBis.ts';
 import { waitForApiKeyServer } from './waitFor.ts';
 
-// SYNC: must match scripts/docker/slot.sh PORTS_PER_SLOT and generators TestsClient.java PORTS_PER_SLOT
-const PORTS_PER_SLOT = 21;
+import { PORTS_PER_SLOT } from './ports.ts';
 
 function getPortOffset(): number {
   try {

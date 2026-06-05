@@ -66,7 +66,7 @@
       "packageVersion": { "type": "string", "description": "the version to publish the packages with, it must be semver compatible, e.g. 1.2.3" },
       "modelFolder": { "type": "string", "description": "the models folder, e.g. algoliasearch/models"},
       "apiFolder": { "type": "string", "description": "the api folder, e.g. lib/src"},
-      "dockerImage": { 
+      "dockerService": { 
         "type": "string",
         "description": "Docker Compose service name for the container this language builds in. Most clients use 'base'.",
         "enum": [

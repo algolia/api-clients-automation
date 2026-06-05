@@ -6,11 +6,7 @@ class TestTimeoutIntegration < Test::Unit::TestCase
   include CallType
 
   TEST_SERVER = ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
-  PORT_OFFSET = begin
-    Integer(File.read(".apic-worktree-slot").strip) * 21
-  rescue StandardError
-    0
-  end
+  PORT_OFFSET = Integer(ENV.fetch("CTS_PORT_OFFSET", "0"))
 
   def create_config_with_host(host_url)
     host = Algolia::Transport::StatefulHost.new(

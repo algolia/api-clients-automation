@@ -13,12 +13,7 @@ use PHPUnit\Framework\TestCase;
 
 function getPortOffset(): int
 {
-    $path = '.apic-worktree-slot';
-    if (!file_exists($path)) {
-        return 0;
-    }
-
-    return (int) trim(file_get_contents($path)) * 21;
+    return (int) (getenv('CTS_PORT_OFFSET') ?: '0');
 }
 
 function getTestServerHost(): string

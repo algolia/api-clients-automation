@@ -1,7 +1,6 @@
 import asyncio
 import time
 from os import environ
-from pathlib import Path
 from typing import Tuple
 
 from algoliasearch.http.base_config import BaseConfig
@@ -13,10 +12,7 @@ from algoliasearch.http.verb import Verb
 
 
 def _port_offset() -> int:
-    try:
-        return int(Path(".apic-worktree-slot").read_text().strip()) * 21
-    except Exception:
-        return 0
+    return int(environ.get("CTS_PORT_OFFSET", "0") or "0")
 
 
 TEST_SERVER = (

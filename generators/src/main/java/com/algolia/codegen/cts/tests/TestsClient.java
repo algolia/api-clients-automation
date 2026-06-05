@@ -4,10 +4,6 @@ import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,9 +20,10 @@ public class TestsClient extends TestsGenerator {
   private final boolean withSyncTests;
   private final String testType;
 
-  // SYNC: must match scripts/docker/slot.sh PORTS_PER_SLOT and scripts/cts/testServer/index.ts
-  // PORTS_PER_SLOT
+  // Must match the port count in scripts/cts/testServer/ports.ts (source of truth).
+  // A vitest check (scripts/__tests__/portsSync.test.ts) validates they stay in sync.
   private static final int PORTS_PER_SLOT = 21;
+  private static final int BASE_PORT = 6671;
 
   public TestsClient(CTSManager ctsManager, boolean withBenchmark) {
     super(ctsManager);
@@ -36,16 +33,12 @@ public class TestsClient extends TestsGenerator {
   }
 
   private static int getPortOffset() {
+    String offset = System.getenv("CTS_PORT_OFFSET");
+    if (offset == null || offset.isEmpty()) return 0;
     try {
-      String slot = new String(Files.readAllBytes(Paths.get(".apic-worktree-slot"))).trim();
-      return Integer.parseInt(slot) * PORTS_PER_SLOT;
-    } catch (NoSuchFileException | FileNotFoundException e) {
-      return 0;
+      return Integer.parseInt(offset);
     } catch (NumberFormatException e) {
-      System.err.println("Warning: .apic-worktree-slot contains invalid number: " + e.getMessage());
-      return 0;
-    } catch (Exception e) {
-      System.err.println("Warning: failed to read .apic-worktree-slot: " + e.getMessage());
+      System.err.println("Warning: CTS_PORT_OFFSET is not a valid number: " + offset);
       return 0;
     }
   }
@@ -270,11 +263,15 @@ public class TestsClient extends TestsGenerator {
                 } else {
                   stepOut.put("expectedError", step.expected.error);
                 }
-                // Offset port numbers in error strings for worktree isolation
+                // Offset port numbers in CTS error assertions for worktree isolation.
+                // When running in a non-zero worktree slot, expected error strings contain
+                // base port numbers (e.g. ":6676") that must be shifted by the slot offset.
+                // This brute-force replacement works because CTS error strings are controlled
+                // test fixtures whose only port-like substrings are real test-server ports.
                 int offset = getPortOffset();
                 if (offset != 0) {
                   String err = (String) stepOut.get("expectedError");
-                  for (int basePort = 6671; basePort <= 6671 + PORTS_PER_SLOT - 1; basePort++) {
+                  for (int basePort = BASE_PORT; basePort <= BASE_PORT + PORTS_PER_SLOT - 1; basePort++) {
                     err = err.replace(":" + basePort, ":" + (basePort + offset));
                   }
                   stepOut.put("expectedError", err);

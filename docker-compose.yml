@@ -16,6 +16,8 @@ services:
     volumes: [./:/app]
     ports:
       - "${APIC_DEBUG_PORT:-5009}:5009"
+    environment:
+      - CTS_PORT_OFFSET=${CTS_PORT_OFFSET:-0}
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
@@ -30,6 +32,8 @@ services:
         - RUBY_VERSION=${RUBY_VERSION}
     command: tail -f /dev/null
     volumes: [./:/app]
+    environment:
+      - CTS_PORT_OFFSET=${CTS_PORT_OFFSET:-0}
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
@@ -44,5 +48,7 @@ services:
         - SWIFT_VERSION=${SWIFT_VERSION}
     command: tail -f /dev/null
     volumes: [./:/app]
+    environment:
+      - CTS_PORT_OFFSET=${CTS_PORT_OFFSET:-0}
     extra_hosts:
       - "host.docker.internal:host-gateway"

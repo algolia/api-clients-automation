@@ -20,7 +20,7 @@
     "packageVersion": "7.46.0",
     "modelFolder": "algoliasearch/Models",
     "apiFolder": "algoliasearch/Clients",
-    "dockerImage": "base",
+    "dockerService": "base",
     "tests": {
       "extension": ".test.cs",
       "outputFolder": "src/generated"
@@ -75,7 +75,7 @@
     "packageVersion": "1.51.0",
     "modelFolder": "lib/src/model",
     "apiFolder": "lib/src/api",
-    "dockerImage": "base",
+    "dockerService": "base",
     "tests": {
       "extension": "_test.dart",
       "outputFolder": "test"
@@ -105,7 +105,7 @@
     "packageVersion": "4.43.0",
     "modelFolder": "algolia",
     "apiFolder": "algolia",
-    "dockerImage": "base",
+    "dockerService": "base",
     "tests": {
       "extension": "_test.go",
       "outputFolder": "tests"
@@ -140,7 +140,7 @@
     "packageVersion": "4.41.0",
     "modelFolder": "algoliasearch/src/main/java/com/algolia/model",
     "apiFolder": "algoliasearch/src/main/java/com/algolia/api",
-    "dockerImage": "base",
+    "dockerService": "base",
     "tests": {
       "extension": ".test.java",
       "outputFolder": "src/test/java/com/algolia"
@@ -253,7 +253,7 @@
     "packageVersion": "3.45.0",
     "modelFolder": "client/src/commonMain/kotlin/com/algolia/client/model",
     "apiFolder": "client/src/commonMain/kotlin/com/algolia/client/api",
-    "dockerImage": "base",
+    "dockerService": "base",
     "tests": {
       "extension": "Test.kt",
       "outputFolder": "src/commonTest/kotlin/com/algolia"
@@ -283,7 +283,7 @@
     "packageVersion": "4.46.0",
     "modelFolder": "lib/Model",
     "apiFolder": "lib/Api",
-    "dockerImage": "base",
+    "dockerService": "base",
     "tests": {
       "extension": "Test.php",
       "outputFolder": "src"
@@ -318,7 +318,7 @@
     "packageVersion": "4.44.0",
     "modelFolder": "algoliasearch",
     "apiFolder": "algoliasearch",
-    "dockerImage": "base",
+    "dockerService": "base",
     "tests": {
       "extension": "_test.py",
       "outputFolder": "tests"
@@ -355,7 +355,7 @@
     "packageVersion": "3.42.0",
     "modelFolder": "lib/algolia/models",
     "apiFolder": "lib/algolia/api",
-    "dockerImage": "ruby",
+    "dockerService": "ruby",
     "tests": {
       "extension": "_test.rb",
       "outputFolder": "test"
@@ -389,7 +389,7 @@
     "packageVersion": "2.43.0",
     "modelFolder": "src/main/scala/algoliasearch",
     "apiFolder": "src/main/scala/algoliasearch/api",
-    "dockerImage": "base",
+    "dockerService": "base",
     "tests": {
       "extension": "Test.scala",
       "outputFolder": "src/test/scala/algoliasearch"
@@ -419,7 +419,7 @@
     "packageVersion": "9.46.0",
     "modelFolder": "Sources",
     "apiFolder": "Sources",
-    "dockerImage": "swift",
+    "dockerService": "swift",
     "tests": {
       "extension": "Tests.swift",
       "outputFolder": "Tests"

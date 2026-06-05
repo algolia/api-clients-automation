@@ -5,11 +5,7 @@ import 'package:algolia_client_core/src/transport/dio/dio_requester.dart';
 import 'package:test/test.dart';
 
 int get _portOffset {
-  try {
-    return int.parse(File('.apic-worktree-slot').readAsStringSync().trim()) * 21;
-  } catch (_) {
-    return 0;
-  }
+  return int.tryParse(Platform.environment['CTS_PORT_OFFSET'] ?? '') ?? 0;
 }
 
 /// Test server address

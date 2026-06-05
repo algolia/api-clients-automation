@@ -11,8 +11,11 @@ REGISTRY_DIR="$HOME/.config/apic"
 REGISTRY_FILE="$REGISTRY_DIR/worktree-slots.json"
 SLOT_FILE=".apic-worktree-slot"
 LOCK_DIR="$REGISTRY_DIR/.slot-lock"
-# SYNC: must match scripts/cts/testServer/index.ts PORTS_PER_SLOT and generators TestsClient.java PORTS_PER_SLOT
-PORTS_PER_SLOT=21
+# Derived from scripts/cts/testServer/ports.ts (source of truth).
+# Counts the port entries in the SERVER_PORTS map; falls back to 21 if the file is missing.
+# SYNC: generators TestsClient.java carries its own PORTS_PER_SLOT constant.
+#       A vitest check (scripts/__tests__/portsSync.test.ts) validates they stay in sync.
+PORTS_PER_SLOT=$(grep -cE '^\s+\w+:\s+[0-9]+' scripts/cts/testServer/ports.ts 2>/dev/null || echo 21)
 
 acquire_lock() {
   local max_attempts=30
@@ -60,7 +63,7 @@ cleanup_stale_entries() {
 
   while IFS= read -r p; do
     [ -z "$p" ] && continue
-    if [ ! -d "$p" ] || [ ! -d "$p/.git" ] && [ ! -f "$p/.git" ]; then
+    if [ ! -d "$p" ] || { [ ! -d "$p/.git" ] && [ ! -f "$p/.git" ]; }; then
       jq --arg path "$p" 'del(.[$path])' "$tmp_file" > "${tmp_file}.new" && mv "${tmp_file}.new" "$tmp_file"
       echo "Cleaned stale slot entry: $p"
     fi
