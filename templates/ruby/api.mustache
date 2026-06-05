@@ -61,7 +61,7 @@ module {{moduleName}}
 
       @api_client = Algolia::ApiClient.new(config)
       {{#isAgentStudioClient}}
-      warn "[algolia] Agent Studio API is in beta and subject to breaking changes."
+      warn "[algolia] Agent Studio API is in beta and subject to breaking changes. See https://www.algolia.com/doc/rest-api/agent-studio"
       {{/isAgentStudioClient}}
       {{#isSearchClient}}
       @ingestion_transporter = nil

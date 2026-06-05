@@ -76,7 +76,7 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
 
         {{#isAgentStudioClient}}
         warnings.warn(
-            "The Agent Studio API is in beta and subject to breaking changes.",
+            "The Agent Studio API is in beta and subject to breaking changes. See https://www.algolia.com/doc/rest-api/agent-studio",
             FutureWarning,
             stacklevel=2,
         )

@@ -129,7 +129,7 @@ namespace Algolia.Search.Clients;
   /// Represents a collection of functions to interact with the API endpoints
   /// </summary>
   {{#isAgentStudioClient}}
-  [System.Obsolete("Agent Studio API is in beta and subject to breaking changes.", false)]
+  [System.Obsolete("Agent Studio API is in beta and subject to breaking changes. See https://www.algolia.com/doc/rest-api/agent-studio", false)]
   {{/isAgentStudioClient}}
   {{> visibility}} partial class {{classname}} : {{interfacePrefix}}{{classname}}
   {
