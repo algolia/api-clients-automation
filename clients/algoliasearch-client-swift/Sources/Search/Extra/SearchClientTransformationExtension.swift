@@ -275,21 +275,35 @@ private func waitForIngestionEvent(
     requestOptions: RequestOptions? = nil
 ) async throws {
     var retryCount = 0
-    while retryCount < maxRetries {
-        do {
-            _ = try await ingestionClient.getEvent(
-                runID: runID,
-                eventID: eventID,
-                requestOptions: requestOptions
-            )
-            return
-        } catch let AlgoliaError.httpError(error) where error.statusCode == 404 {
+
+    _ = try await createIterable(
+        execute: { _ in
+            do {
+                return try await ingestionClient.getEvent(
+                    runID: runID,
+                    eventID: eventID,
+                    requestOptions: requestOptions
+                )
+            } catch let AlgoliaError.httpError(error) where error.statusCode == 404 {
+                return nil
+            }
+        },
+        validate: { response in
+            response != nil
+        },
+        aggregator: { _ in
             retryCount += 1
-            let delayMs = min((retryCount + 1) * 1500, 5000)
-            try await BridgedTask.sleep(nanoseconds: UInt64(delayMs) * 1_000_000)
-        }
-    }
-    throw AlgoliaError.runtimeError(
-        "The maximum number of retries exceeded. (\(maxRetries)/\(maxRetries))"
+        },
+        timeout: {
+            min(TimeInterval(retryCount + 1) * 1.5, 5)
+        },
+        error: IterableError(
+            validate: { _ in
+                retryCount >= maxRetries
+            },
+            message: { _ in
+                "The maximum number of retries exceeded. (\(retryCount)/\(maxRetries))"
+            }
+        )
     )
 }
