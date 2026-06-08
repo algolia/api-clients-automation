@@ -1,0 +1,26 @@
+package org.example
+{{> snippets/import}}
+{{#isSearchClient}}
+import com.algolia.client.extensions.*
+{{/isSearchClient}}
+import kotlin.time.Duration.Companion.seconds
+
+suspend fun main() {
+    // Override the Ingestion API defaults. Any option you don't set keeps its default.
+    // Replace "us" with "eu" if your Algolia application uses the Europe analytics region.
+    val client = SearchClient.withTransformation(
+        appId = "ALGOLIA_APPLICATION_ID",
+        apiKey = "ALGOLIA_API_KEY",
+        transformationOptions = TransformationOptions(
+            region = "us",
+            clientOptions = ClientOptions(connectTimeout = 5.seconds, readTimeout = 30.seconds),
+        ),
+    )
+
+    try {
+        // Save records, transforming them through the Push connector
+        client.{{#dynamicSnippet}}setUpTransformationOptions{{/dynamicSnippet}}
+    } catch (e: Exception) {
+        println(e.message)
+    }
+}

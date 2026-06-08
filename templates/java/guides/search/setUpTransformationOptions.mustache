@@ -1,0 +1,15 @@
+package com.algolia;
+
+{{> snippets/import}}
+
+public class setUpTransformationOptions {
+  public static void main(String[] args) throws Exception {
+    // Set `transformationOptions` with your transformation region to use the `WithTransformation` helper methods.
+    // Replace "us" with "eu" if your Algolia application uses the Europe analytics region.
+    SearchClient client = SearchClient.withTransformation("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", new TransformationOptions("us"));
+
+    // Save records, transforming them through the Push connector
+    {{#dynamicSnippet}}setUpTransformationOptions{{/dynamicSnippet}};
+    client.close();
+  }
+}

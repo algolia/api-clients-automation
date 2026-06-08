@@ -1,0 +1,15 @@
+{{> snippets/import}}
+
+// Set `transformationOptions` with your transformation region to use the `*WithTransformation` helper methods.
+// Replace 'us' with 'eu' if your Algolia application uses the Europe analytics region.
+const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', {
+  transformationOptions: { region: 'us' },
+});
+
+async function run() {
+  // Save records, transforming them through the Push connector
+  const response = {{#dynamicSnippet}}setUpTransformationOptions{{/dynamicSnippet}};
+  console.log(response);
+}
+
+run().catch((err) => console.error(err));

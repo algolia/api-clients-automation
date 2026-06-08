@@ -1,0 +1,22 @@
+package org.example
+{{> snippets/import}}
+{{#isSearchClient}}
+import com.algolia.client.extensions.*
+{{/isSearchClient}}
+
+suspend fun main() {
+    // Set `transformationOptions` with your transformation region to use the `WithTransformation` helper methods.
+    // Replace "us" with "eu" if your Algolia application uses the Europe analytics region.
+    val client = SearchClient.withTransformation(
+        appId = "ALGOLIA_APPLICATION_ID",
+        apiKey = "ALGOLIA_API_KEY",
+        transformationOptions = TransformationOptions(region = "us"),
+    )
+
+    try {
+        // Save records, transforming them through the Push connector
+        client.{{#dynamicSnippet}}setUpTransformationOptions{{/dynamicSnippet}}
+    } catch (e: Exception) {
+        println(e.message)
+    }
+}

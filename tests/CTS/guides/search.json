@@ -158,5 +158,16 @@
       "objectID": "$var: objectID",
       "rule": "$var: rule"
     }
+  },
+  "setUpTransformationOptions": {
+    "method": "saveObjectsWithTransformation",
+    "parameters": {
+      "indexName": "<YOUR_INDEX_NAME>",
+      "objects": [
+        { "objectID": "1", "name": "Adam" },
+        { "objectID": "2", "name": "Benoit" }
+      ],
+      "waitForTasks": true
+    }
   }
 }

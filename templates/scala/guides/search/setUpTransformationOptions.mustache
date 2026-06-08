@@ -1,0 +1,29 @@
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContextExecutor}
+
+{{> snippets/import}}
+import org.json4s.*
+
+object Main {
+  def main(args: Array[String]): Unit = {
+    implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
+
+    // Set transformationOptions with your transformation region to use the `WithTransformation` helper methods.
+    // Replace "us" with "eu" if your Algolia application uses the Europe analytics region.
+    val client = SearchClient.withTransformation(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      transformationOptions = TransformationOptions("us")
+    )
+
+    // Save records, transforming them through the Push connector
+    try {
+      Await.result(
+        {{#dynamicSnippet}}setUpTransformationOptions{{/dynamicSnippet}},
+        Duration(100, "sec")
+      )
+    } catch {
+      case e: Exception => println(e)
+    }
+  }
+}
