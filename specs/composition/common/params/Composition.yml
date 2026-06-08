@@ -14,15 +14,9 @@ facets:
   default: []
   example: ['category', 'disjunctive(brand)', 'price']
   examples:
-    facetSpecificList:
-      summary: Specify which facets to retrieve, with some marked as disjunctive
-      value: ['category', 'disjunctive(brand)', 'price']
-    facetAll:
-      summary: Retrieve all facets
-      value: ['*']
-    mix:
-      summary: Retrieve all facets and specify which one are disjunctive
-      value: ['*', 'disjunctive(brand)']
+    - ['category', 'disjunctive(brand)', 'price']
+    - ['*']
+    - ['*', 'disjunctive(brand)']
   x-categories:
     - Faceting
 
