@@ -26,6 +26,7 @@ public class LoggingTests
   private const string NonRoutableIp2 = "10.255.255.2";
   private const int ConnectTimeoutSeconds = 2;
 
+  // SYNC: CTS_PORT_OFFSET is set by scripts/docker/setup.sh → docker-compose.yml.
   private static int GetPortOffset()
   {
     var offset = Environment.GetEnvironmentVariable("CTS_PORT_OFFSET");

@@ -20,6 +20,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Log\AbstractLogger;
 
+// SYNC: CTS_PORT_OFFSET is set by scripts/docker/setup.sh → docker-compose.yml.
 function getPortOffsetLogging(): int
 {
     return (int) (getenv('CTS_PORT_OFFSET') ?: '0');

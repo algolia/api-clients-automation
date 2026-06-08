@@ -11,6 +11,7 @@ from algoliasearch.http.transporter_sync import TransporterSync
 from algoliasearch.http.verb import Verb
 
 
+# SYNC: CTS_PORT_OFFSET is set by scripts/docker/setup.sh → docker-compose.yml.
 def _port_offset() -> int:
     return int(environ.get("CTS_PORT_OFFSET", "0") or "0")
 

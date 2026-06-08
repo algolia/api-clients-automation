@@ -59,6 +59,15 @@ public class TestsClient extends TestsGenerator {
       .collect(Collectors.toList());
   }
 
+  private static String offsetPortsInString(String text, int offset) {
+    if (offset == 0 || text == null) return text;
+    String result = text;
+    for (int port = BASE_PORT; port <= BASE_PORT + PORTS_PER_SLOT - 1; port++) {
+      result = result.replace(":" + port, ":" + (port + offset));
+    }
+    return result;
+  }
+
   @Override
   public boolean available() {
     // no `lite` client test for now
@@ -263,19 +272,7 @@ public class TestsClient extends TestsGenerator {
                 } else {
                   stepOut.put("expectedError", step.expected.error);
                 }
-                // Offset port numbers in CTS error assertions for worktree isolation.
-                // When running in a non-zero worktree slot, expected error strings contain
-                // base port numbers (e.g. ":6676") that must be shifted by the slot offset.
-                // This brute-force replacement works because CTS error strings are controlled
-                // test fixtures whose only port-like substrings are real test-server ports.
-                int offset = getPortOffset();
-                if (offset != 0) {
-                  String err = (String) stepOut.get("expectedError");
-                  for (int basePort = BASE_PORT; basePort <= BASE_PORT + PORTS_PER_SLOT - 1; basePort++) {
-                    err = err.replace(":" + basePort, ":" + (basePort + offset));
-                  }
-                  stepOut.put("expectedError", err);
-                }
+                stepOut.put("expectedError", offsetPortsInString((String) stepOut.get("expectedError"), getPortOffset()));
                 if (language.equals("go") && step.method != null) {
                   // hack for go that use PascalCase, but just in the operationID
                   stepOut.put(

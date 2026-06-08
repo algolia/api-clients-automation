@@ -28,23 +28,20 @@ import { timeoutServer } from './timeout.ts';
 import { timeoutServerBis } from './timeoutBis.ts';
 import { waitForApiKeyServer } from './waitFor.ts';
 
-import { PORTS_PER_SLOT } from './ports.ts';
-
+// SYNC: CTS_PORT_OFFSET is computed by scripts/docker/setup.sh (slot × PORTS_PER_SLOT).
+//       The env var is the single runtime input for port offset — inside Docker it's injected
+//       by docker-compose.yml; on the host we fall back to reading .env.docker.
 function getPortOffset(): number {
+  const envOffset = process.env.CTS_PORT_OFFSET;
+  if (envOffset) return parseInt(envOffset, 10) || 0;
+
+  // Host-side fallback: read the pre-computed offset from .env.docker.
   try {
-    const slot = parseInt(readFileSync('.apic-worktree-slot', 'utf8').trim(), 10);
-    if (isNaN(slot)) {
-      console.warn('[worktree] .apic-worktree-slot exists but contains invalid value, defaulting to slot 0');
-      return 0;
-    }
-    return slot * PORTS_PER_SLOT;
-  } catch (e: unknown) {
-    if (e instanceof Error && 'code' in e && (e as NodeJS.ErrnoException).code === 'ENOENT') {
-      return 0;
-    }
-    console.warn(`[worktree] Could not read .apic-worktree-slot: ${e instanceof Error ? e.message : e}, defaulting to slot 0`);
-    return 0;
-  }
+    const envDocker = readFileSync('.env.docker', 'utf8');
+    const match = envDocker.match(/^CTS_PORT_OFFSET=(\d+)$/m);
+    if (match) return parseInt(match[1], 10);
+  } catch {}
+  return 0;
 }
 
 const PORT_OFFSET = getPortOffset();

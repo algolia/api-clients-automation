@@ -16,6 +16,7 @@ namespace Algolia.Search.client;
 
 public class TimeoutIntegrationTests
 {
+  // SYNC: CTS_PORT_OFFSET is set by scripts/docker/setup.sh → docker-compose.yml.
   private static int GetPortOffset()
   {
     var offset = Environment.GetEnvironmentVariable("CTS_PORT_OFFSET");

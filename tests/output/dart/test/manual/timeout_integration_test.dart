@@ -4,6 +4,7 @@ import 'package:algolia_client_core/algolia_client_core.dart';
 import 'package:algolia_client_core/src/transport/dio/dio_requester.dart';
 import 'package:test/test.dart';
 
+// SYNC: CTS_PORT_OFFSET is set by scripts/docker/setup.sh → docker-compose.yml.
 int get _portOffset {
   return int.tryParse(Platform.environment['CTS_PORT_OFFSET'] ?? '') ?? 0;
 }

@@ -12,10 +12,9 @@ REGISTRY_FILE="$REGISTRY_DIR/worktree-slots.json"
 SLOT_FILE=".apic-worktree-slot"
 LOCK_DIR="$REGISTRY_DIR/.slot-lock"
 # Derived from scripts/cts/testServer/ports.ts (source of truth).
-# Counts the port entries in the SERVER_PORTS map; falls back to 21 if the file is missing.
-# SYNC: generators TestsClient.java carries its own PORTS_PER_SLOT constant.
-#       A vitest check (scripts/__tests__/portsSync.test.ts) validates they stay in sync.
-PORTS_PER_SLOT=$(grep -cE '^\s+\w+:\s+[0-9]+' scripts/cts/testServer/ports.ts 2>/dev/null || echo 21)
+# Counts entries in SERVER_PORTS by matching `  key: <digits>,` lines.
+# SYNC: TestsClient.java hardcodes PORTS_PER_SLOT; portsSync.test.ts validates they match.
+PORTS_PER_SLOT=$(grep -cE '^\s+\w+:\s+[0-9]+,' scripts/cts/testServer/ports.ts 2>/dev/null || echo 21)
 
 acquire_lock() {
   local max_attempts=30

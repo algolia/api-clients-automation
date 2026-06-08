@@ -11,6 +11,7 @@ use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
 use PHPUnit\Framework\TestCase;
 
+// SYNC: CTS_PORT_OFFSET is set by scripts/docker/setup.sh → docker-compose.yml.
 function getPortOffset(): int
 {
     return (int) (getenv('CTS_PORT_OFFSET') ?: '0');

@@ -1,5 +1,5 @@
-import { readFileSync } from 'node:fs';
 import fsp from 'fs/promises';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'path';
 
 import { Octokit } from '@octokit/rest';
@@ -26,6 +26,10 @@ export const REPO_URL = `https://github.com/${OWNER}/${REPO}`;
 export const TODAY = new Date().toISOString().split('T')[0];
 
 export const CI = Boolean(process.env.CI);
+
+// The Java debugger always listens on this port INSIDE the container.
+// docker-compose.yml maps APIC_DEBUG_PORT (host) → this port (container).
+const CONTAINER_DEBUG_PORT = 5009;
 
 // This script is run by `yarn workspace ...`, which means the current working directory is `./script`
 export const ROOT_DIR = path.resolve(process.cwd(), '..');
@@ -82,6 +86,10 @@ export async function run(command: string, { errorMessage, cwd, language }: RunO
   const dockerService = getDockerService(language);
   let wrappedCmd = command;
   if (dockerService) {
+    const envFile = path.resolve(ROOT_DIR, '.env.docker');
+    if (!existsSync(envFile)) {
+      throw new Error('.env.docker not found — run `yarn docker:setup` first.');
+    }
     wrappedCmd = `docker compose --env-file .env.docker exec ${dockerService} bash -lc "cd ${cwd ?? '.'} && ${command}"`;
   }
   try {
@@ -279,7 +287,9 @@ function getDebugPort(): number {
     if (match) return parseInt(match[1], 10);
   } catch (e: unknown) {
     if (!(e instanceof Error && 'code' in e && (e as NodeJS.ErrnoException).code === 'ENOENT')) {
-      console.warn(`[worktree] Could not read .env.docker: ${e instanceof Error ? e.message : e}, defaulting to port 5009`);
+      console.warn(
+        `[worktree] Could not read .env.docker: ${e instanceof Error ? e.message : e}, defaulting to port 5009`,
+      );
     }
   }
   return 5009;
@@ -303,16 +313,17 @@ export async function callGenerator(gen: Generator, withDebugger: boolean): Prom
   const verbose = isVerbose();
   setVerbose(false);
 
-  const previous = await run('lsof -ti:5009 || true', { language: 'java' });
+  const previous = await run(`lsof -ti:${CONTAINER_DEBUG_PORT} || true`, { language: 'java' });
   if (previous) {
-    console.log(chalk.italic(`killing previous generator on port 5009: ${previous}`));
+    console.log(chalk.italic(`killing previous generator on container port ${CONTAINER_DEBUG_PORT}: ${previous}`));
     await run(`kill -9 ${previous} && sleep 2`, { language: 'java' });
   }
   setVerbose(verbose);
 
-  await run(`JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5009" ${cmd}`, {
-    language: 'java',
-  });
+  await run(
+    `JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:${CONTAINER_DEBUG_PORT}" ${cmd}`,
+    { language: 'java' },
+  );
 }
 
 export function isWSL(): boolean {
