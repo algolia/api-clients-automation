@@ -115,18 +115,11 @@ final class {{classname}} implements ApiClient {
 
   ingestion.IngestionClient _buildIngestionTransporter(TransformationOptions opts) {
     final ingestionOpts = opts.ingestionClientOptions;
-    if (ingestionOpts != null) {
-      return ingestion.IngestionClient(
-        appId: _appId,
-        apiKey: _apiKey,
-        region: opts.region,
-        options: ingestionOpts,
-      );
-    }
     return ingestion.IngestionClient(
       appId: _appId,
       apiKey: _apiKey,
       region: opts.region,
+      options: ingestionOpts,
     );
   }
   {{/isSearchClient}}
