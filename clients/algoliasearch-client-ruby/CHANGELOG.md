@@ -1,3 +1,7 @@
+## [3.40.1](https://github.com/algolia/algoliasearch-client-ruby/compare/3.40.0...3.40.1)
+
+- [e6753bc802](https://github.com/algolia/api-clients-automation/commit/e6753bc802) chore(deps): dependencies 2026-06-01 ([#6476](https://github.com/algolia/api-clients-automation/pull/6476)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [3.40.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.39.1...3.40.0)
 
 BREAKING CHANGES: this minor version includes breaking changes. See below for more details.
