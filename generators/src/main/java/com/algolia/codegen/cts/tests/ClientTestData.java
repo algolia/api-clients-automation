@@ -7,6 +7,7 @@ public class ClientTestData {
   public String testName;
   public boolean autoCreateClient = true;
   public List<Step> steps;
+  public List<String> skipLanguages;
 
   public String toString() {
     StringBuilder sb = new StringBuilder();

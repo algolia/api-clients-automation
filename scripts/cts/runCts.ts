@@ -7,6 +7,7 @@ import type { Language } from '../types.ts';
 
 import { assertValidAccountCopyIndex } from './testServer/accountCopyIndex.ts';
 import { printBenchmarkReport } from './testServer/benchmark.ts';
+import { assertValidChunkedPushWait } from './testServer/chunkedPushWait.ts';
 import { assertChunkWrapperValid } from './testServer/chunkWrapper.ts';
 import { assertNeverCalledServerWasNotCalled, assertValidErrors } from './testServer/error.ts';
 import { startTestServer } from './testServer/index.ts';
@@ -199,6 +200,21 @@ export async function runCts(
     assertValidReplaceAllObjectsScopes(languages.length - skip('dart'));
     assertValidWaitForApiKey(languages.length - skip('dart'));
     assertPushMockValid(
+      only('javascript') +
+        only('go') +
+        only('python') +
+        only('java') +
+        only('php') +
+        only('csharp') +
+        only('scala') +
+        only('ruby') +
+        only('kotlin'),
+    );
+    // chunkedPush waitForTasks: every transformation-capable language is expected to poll each
+    // pushed task exactly once. Languages with the offset over-advance bug will fail this. Once the
+    // failing languages are identified in CI, exclude them via `skipLanguages` in the CTS spec and
+    // drop them from this sum, tracking each with a ticket.
+    assertValidChunkedPushWait(
       only('javascript') +
         only('go') +
         only('python') +
