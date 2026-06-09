@@ -1,22 +1,14 @@
 package algoliasearch.extension
 
-import algoliasearch.api.{IngestionClient, SearchClient}
+import algoliasearch.api.SearchClient
 import algoliasearch.config.{RequestOptions, TransformationOptions}
 import algoliasearch.exception.{AlgoliaApiException, AlgoliaClientException}
 import algoliasearch.extension.ChunkedHelperOptions.DefaultMaxRetries
 import algoliasearch.extension.internal.Iterable.createIterable
 import algoliasearch.extension.internal.RetryUntil.{DEFAULT_DELAY, retryUntil}
-import algoliasearch.ingestion.{
-  Action => IngestionAction,
-  Event => IngestionEvent,
-  PushTaskPayload,
-  PushTaskRecords,
-  WatchResponse => IngestionWatchResponse
-}
-import algoliasearch.internal.util.{escape, paramToString}
+import algoliasearch.ingestion.{Action => IngestionAction, WatchResponse => IngestionWatchResponse}
 import algoliasearch.search._
-import org.json4s.native.Serialization.read
-import org.json4s.{DefaultFormats, Extraction, Formats, jvalue2extractable}
+import org.json4s.{Extraction, Formats, jvalue2extractable}
 
 import java.nio.charset.StandardCharsets
 import java.util.Base64
@@ -27,7 +19,7 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.util.matching.Regex
 import scala.util.{Failure, Success, Try}
 
-trait SearchClientImplicits extends IngestionClientImplicits with SecuredApiKeyImplicits {
+trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions {
 
   private val transformationOptionsRequired: String =
     "transformationOptions must be set in the client config before calling this method." +
