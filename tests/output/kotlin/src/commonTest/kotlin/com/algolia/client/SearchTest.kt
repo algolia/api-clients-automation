@@ -21,6 +21,7 @@ class SearchTest {
   @Test
   fun `calls api with correct read host`() = runTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key")
+
     client.runTest(
       call = { customGet(path = "test") },
       intercept = { assertEquals("test-app-id-dsn.algolia.net", it.url.host) },
@@ -30,6 +31,7 @@ class SearchTest {
   @Test
   fun `read transporter with POST method`() = runTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key")
+
     client.runTest(
       call = { searchSingleIndex(indexName = "indexName") },
       intercept = { assertEquals("test-app-id-dsn.algolia.net", it.url.host) },
@@ -39,6 +41,7 @@ class SearchTest {
   @Test
   fun `calls api with correct write host`() = runTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key")
+
     client.runTest(
       call = { customPost(path = "test") },
       intercept = { assertEquals("test-app-id.algolia.net", it.url.host) },
@@ -73,6 +76,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = { customGet(path = "1/test/retry/kotlin") },
       response = {
@@ -104,6 +108,7 @@ class SearchTest {
               )
           ),
       )
+
     assertFails { client.customGet(path = "1/test/hang/kotlin") }
       .let { error ->
         assertError(
@@ -145,6 +150,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = { customPost(path = "1/test/error/kotlin") },
       response = {
@@ -177,6 +183,7 @@ class SearchTest {
             compressionType = CompressionType.GZIP,
           ),
       )
+
     client.runTest(
       call = {
         customPost(
@@ -222,6 +229,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = { customGet(path = "1/test/gzip-response") },
       response = {
@@ -279,6 +287,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = { getSettings(indexName = "cts_e2e_unknownField_kotlin") },
       response = {
@@ -310,6 +319,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = {
         getRule(indexName = "cts_e2e_unknownFieldNested_kotlin", objectID = "ruleObjectID")
@@ -348,6 +358,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = { customGet(path = "1/test/calling/kotlin") },
       response = {
@@ -399,7 +410,7 @@ class SearchTest {
     client.runTest(
       call = { customPost(path = "1/test") },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.41.1\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.42.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),
@@ -427,6 +438,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = {
         deleteObjects(indexName = "cts_e2e_deleteObjects_kotlin", objectIDs = listOf("1", "2"))
@@ -596,6 +608,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = { indexExists(indexName = "indexExistsYES") },
       response = { assertEquals(true, it) },
@@ -620,6 +633,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = { indexExists(indexName = "indexExistsNO") },
       response = { assertEquals(false, it) },
@@ -644,6 +658,7 @@ class SearchTest {
               )
           ),
       )
+
     assertFails { client.indexExists(indexName = "indexExistsERROR") }
       .let { error ->
         assertError(
@@ -661,6 +676,7 @@ class SearchTest {
   fun `client throws with invalid parameters`() = runTest {
     assertFails {
         val client = SearchClient(appId = "", apiKey = "")
+
       }
       .let { error ->
         assertError(
@@ -675,6 +691,7 @@ class SearchTest {
 
     assertFails {
         val client = SearchClient(appId = "", apiKey = "my-api-key")
+
       }
       .let { error ->
         assertError(
@@ -689,6 +706,7 @@ class SearchTest {
 
     assertFails {
         val client = SearchClient(appId = "my-app-id", apiKey = "")
+
       }
       .let { error ->
         assertError(
@@ -796,6 +814,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = {
         partialUpdateObjects(
@@ -843,6 +862,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = {
         partialUpdateObjects(
@@ -873,6 +893,82 @@ class SearchTest {
   }
 
   @Test
+  fun `call partialUpdateObjectsWithTransformation with createIfNotExists=true`() = runTest {
+    val client =
+      SearchClient.withTransformation(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        transformationOptions =
+          TransformationOptions(
+            region = "us",
+            clientOptions =
+              ClientOptions(
+                hosts =
+                  listOf(
+                    Host(
+                      url =
+                        if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                      protocol = "http",
+                      port = 6688,
+                    ),
+                    Host(
+                      url =
+                        if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                      protocol = "http",
+                      port = 6689,
+                    ),
+                  )
+              ),
+          ),
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6688,
+                ),
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6689,
+                ),
+              )
+          ),
+      )
+
+    client.runTest(
+      call = {
+        partialUpdateObjectsWithTransformation(
+          indexName = "cts_e2e_partialUpdateObjectsWithTransformation_kotlin",
+          objects =
+            listOf(
+              buildJsonObject {
+                put("objectID", JsonPrimitive("1"))
+                put("name", JsonPrimitive("Adam"))
+              },
+              buildJsonObject {
+                put("objectID", JsonPrimitive("2"))
+                put("name", JsonPrimitive("Benoit"))
+              },
+            ),
+          createIfNotExists = true,
+          waitForTasks = true,
+        )
+      },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_kotlin","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
+      },
+    )
+  }
+
+  @Test
   fun `call replaceAllObjects without error`() = runTest {
     val client =
       SearchClient(
@@ -890,6 +986,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = {
         replaceAllObjects(
@@ -969,6 +1066,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = {
         replaceAllObjects(
@@ -1021,6 +1119,7 @@ class SearchTest {
               )
           ),
       )
+
     assertFails {
         client.replaceAllObjects(
           indexName = "cts_e2e_replace_all_objects_too_big_kotlin",
@@ -1050,6 +1149,102 @@ class SearchTest {
   }
 
   @Test
+  fun `call replaceAllObjectsWithTransformation without error`() = runTest {
+    val client =
+      SearchClient.withTransformation(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        transformationOptions =
+          TransformationOptions(
+            region = "us",
+            clientOptions =
+              ClientOptions(
+                hosts =
+                  listOf(
+                    Host(
+                      url =
+                        if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                      protocol = "http",
+                      port = 6690,
+                    )
+                  )
+              ),
+          ),
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6690,
+                )
+              )
+          ),
+      )
+
+    client.runTest(
+      call = {
+        replaceAllObjectsWithTransformation(
+          indexName = "cts_e2e_replace_all_objects_with_transformation_kotlin",
+          objects =
+            listOf(
+              buildJsonObject {
+                put("objectID", JsonPrimitive("1"))
+                put("name", JsonPrimitive("Adam"))
+              },
+              buildJsonObject {
+                put("objectID", JsonPrimitive("2"))
+                put("name", JsonPrimitive("Benoit"))
+              },
+              buildJsonObject {
+                put("objectID", JsonPrimitive("3"))
+                put("name", JsonPrimitive("Cyril"))
+              },
+              buildJsonObject {
+                put("objectID", JsonPrimitive("4"))
+                put("name", JsonPrimitive("David"))
+              },
+              buildJsonObject {
+                put("objectID", JsonPrimitive("5"))
+                put("name", JsonPrimitive("Eva"))
+              },
+              buildJsonObject {
+                put("objectID", JsonPrimitive("6"))
+                put("name", JsonPrimitive("Fiona"))
+              },
+              buildJsonObject {
+                put("objectID", JsonPrimitive("7"))
+                put("name", JsonPrimitive("Gael"))
+              },
+              buildJsonObject {
+                put("objectID", JsonPrimitive("8"))
+                put("name", JsonPrimitive("Hugo"))
+              },
+              buildJsonObject {
+                put("objectID", JsonPrimitive("9"))
+                put("name", JsonPrimitive("Igor"))
+              },
+              buildJsonObject {
+                put("objectID", JsonPrimitive("10"))
+                put("name", JsonPrimitive("Julia"))
+              },
+            ),
+          batchSize = 3,
+        )
+      },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"watchResponses":[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_kotlin","eventID":"113b2068-6337-4c85-b5c2-e7b213d82921","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_kotlin","eventID":"113b2068-6337-4c85-b5c2-e7b213d82922","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_kotlin","eventID":"113b2068-6337-4c85-b5c2-e7b213d82923","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_kotlin","eventID":"113b2068-6337-4c85-b5c2-e7b213d82924","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
+      },
+    )
+  }
+
+  @Test
   fun `call saveObjects without error`() = runTest {
     val client =
       SearchClient(
@@ -1067,6 +1262,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = {
         saveObjects(
@@ -1113,6 +1309,7 @@ class SearchTest {
               )
           ),
       )
+
     assertFails {
         client.saveObjects(
           indexName = "cts_e2e_saveObjects_kotlin",
@@ -1159,6 +1356,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = {
         saveObjects(
@@ -1197,6 +1395,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = {
         saveObjects(
@@ -1221,6 +1420,81 @@ class SearchTest {
   }
 
   @Test
+  fun `call saveObjectsWithTransformation without error`() = runTest {
+    val client =
+      SearchClient.withTransformation(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        transformationOptions =
+          TransformationOptions(
+            region = "us",
+            clientOptions =
+              ClientOptions(
+                hosts =
+                  listOf(
+                    Host(
+                      url =
+                        if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                      protocol = "http",
+                      port = 6688,
+                    ),
+                    Host(
+                      url =
+                        if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                      protocol = "http",
+                      port = 6689,
+                    ),
+                  )
+              ),
+          ),
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6688,
+                ),
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6689,
+                ),
+              )
+          ),
+      )
+
+    client.runTest(
+      call = {
+        saveObjectsWithTransformation(
+          indexName = "cts_e2e_saveObjectsWithTransformation_kotlin",
+          objects =
+            listOf(
+              buildJsonObject {
+                put("objectID", JsonPrimitive("1"))
+                put("name", JsonPrimitive("Adam"))
+              },
+              buildJsonObject {
+                put("objectID", JsonPrimitive("2"))
+                put("name", JsonPrimitive("Benoit"))
+              },
+            ),
+          waitForTasks = true,
+        )
+      },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_kotlin","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
+      },
+    )
+  }
+
+  @Test
   fun `with algolia user id`() = runTest {
     val client =
       SearchClient(
@@ -1238,6 +1512,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = {
         searchSingleIndex(
@@ -1269,6 +1544,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = { customGet(path = "check-api-key/1") },
       response = {
@@ -1314,6 +1590,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = {
         waitForApiKey(
@@ -1350,6 +1627,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = {
         waitForApiKey(
@@ -1401,6 +1679,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = {
         waitForApiKey(
@@ -1430,6 +1709,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = { waitForAppTask(taskID = 123L) },
       response = {
@@ -1461,6 +1741,7 @@ class SearchTest {
               )
           ),
       )
+
     client.runTest(
       call = { waitForTask(indexName = "wait-task-kotlin", taskID = 123L) },
       response = {

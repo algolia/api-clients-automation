@@ -1,3 +1,16 @@
+## [4.39.0](https://github.com/algolia/algoliasearch-client-java/compare/4.38.1...4.39.0)
+
+BREAKING CHANGES: this minor version includes breaking changes. See below for more details.
+
+- [84ebc480a8](https://github.com/algolia/api-clients-automation/commit/84ebc480a8) chore(deps): dependencies 2026-05-15 ([#6400](https://github.com/algolia/api-clients-automation/pull/6400)) by [@Fluf22](https://github.com/Fluf22/)
+- [90da6bf0ae](https://github.com/algolia/api-clients-automation/commit/90da6bf0ae) chore(deps): dependencies 2026-05-18 ([#6429](https://github.com/algolia/api-clients-automation/pull/6429)) by [@Fluf22](https://github.com/Fluf22/)
+- [2d18c138a8](https://github.com/algolia/api-clients-automation/commit/2d18c138a8) feat(java): BREAKING CHANGE – configurable retries on chunked helpers via ChunkedHelperOptions ([#6405](https://github.com/algolia/api-clients-automation/pull/6405)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+  - We updated the default number of retries to account for customers with huge indices, and made it configurable if you prefer to fail early. The impact is that the retry time will be longer in case of issue, but it shouldn't impact most customers: those who don't have issues.
+- [eddd51e349](https://github.com/algolia/api-clients-automation/commit/eddd51e349) fix(specs): document abTest field on listIndices response ([#6443](https://github.com/algolia/api-clients-automation/pull/6443)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [1d3f2c149b](https://github.com/algolia/api-clients-automation/commit/1d3f2c149b) fix(specs): clean up abTest schema on listIndices response ([#6448](https://github.com/algolia/api-clients-automation/pull/6448)) by [@Fluf22](https://github.com/Fluf22/)
+- [35bf16c848](https://github.com/algolia/api-clients-automation/commit/35bf16c848) fix(specs): BREAKING CHANGE – add searchResponsePartial fallback to searchResult oneOf ([#6350](https://github.com/algolia/api-clients-automation/pull/6350)) by [@Fluf22](https://github.com/Fluf22/)
+  - For those of you who want really clean responses without hits nor facets, we added a third fallback type to the search response. It should not impact the rest of the users.
+
 ## [4.38.1](https://github.com/algolia/algoliasearch-client-java/compare/4.38.0...4.38.1)
 
 - [363cc2d91b](https://github.com/algolia/api-clients-automation/commit/363cc2d91b) fix(specs): Ingestion API - update destination payload ([#6320](https://github.com/algolia/api-clients-automation/pull/6320)) by [@sbellone](https://github.com/sbellone/)

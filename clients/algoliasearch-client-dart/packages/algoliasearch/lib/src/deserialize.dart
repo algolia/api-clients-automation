@@ -89,6 +89,7 @@ import 'package:algoliasearch/src/model/search_params_object.dart';
 import 'package:algoliasearch/src/model/search_params_query.dart';
 import 'package:algoliasearch/src/model/search_params_string.dart';
 import 'package:algoliasearch/src/model/search_response.dart';
+import 'package:algoliasearch/src/model/search_response_partial.dart';
 import 'package:algoliasearch/src/model/search_responses.dart';
 import 'package:algoliasearch/src/model/search_strategy.dart';
 import 'package:algoliasearch/src/model/search_type_default.dart';
@@ -366,6 +367,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'SearchResponse':
       return SearchResponse.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'SearchResponsePartial':
+      return SearchResponsePartial.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'SearchResponses':
       return SearchResponses.fromJson(value as Map<String, dynamic>)
