@@ -15,7 +15,7 @@ func enableCompression() {
 	cfg := {{clientPrefix}}.{{clientName}}Configuration{
 		Configuration: transport.Configuration{
 			AppID:       "ALGOLIA_APPLICATION_ID",
-			ApiKey:      "ALGOLIA_API_KEY", //nolint:gosec
+			ApiKey:      "ALGOLIA_API_KEY", // #nosec G101 -- credentials are placeholders
 			Compression: compression.GZIP,
 		},
 	}
