@@ -104,6 +104,11 @@
           ],
           "waitForTasks": true,
           "batchSize": 10
+        },
+        "requestOptions": {
+          "headers": {
+            "x-algolia-user-id": "test-user"
+          }
         }
       }
     ]
