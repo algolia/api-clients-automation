@@ -312,7 +312,7 @@
     {{^isSyncClient}}async {{/isSyncClient}}def save_objects(
         self,
         index_name: str,
-        objects: List[Dict[str, Any]],
+        objects: Iterable[Dict[str, Any]],
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -356,7 +356,7 @@
     {{^isSyncClient}}async {{/isSyncClient}}def partial_update_objects(
         self,
         index_name: str,
-        objects: List[Dict[str, Any]],
+        objects: Iterable[Dict[str, Any]],
         create_if_not_exists: bool = False,
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
@@ -388,7 +388,7 @@
     {{^isSyncClient}}async {{/isSyncClient}}def chunked_batch(
         self,
         index_name: str,
-        objects: List[Dict[str, Any]],
+        objects: Iterable[Dict[str, Any]],
         action: Action = Action.ADDOBJECT,
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
@@ -401,9 +401,9 @@
         chunked_options = chunked_options or ChunkedHelperOptions()
         requests: List[BatchRequest] = []
         responses: List[BatchResponse] = []
-        for i, obj in enumerate(objects):
+        for obj in objects:
             requests.append(BatchRequest(action=action, body=obj))
-            if len(requests) == batch_size or i == len(objects) - 1:
+            if len(requests) == batch_size:
                 responses.append(
                     {{^isSyncClient}}await {{/isSyncClient}}self.batch(
                         index_name=index_name,
@@ -412,6 +412,14 @@
                     )
                 )
                 requests = []
+        if requests:
+            responses.append(
+                {{^isSyncClient}}await {{/isSyncClient}}self.batch(
+                    index_name=index_name,
+                    batch_write_params=BatchWriteParams(requests=requests),
+                    request_options=request_options,
+                )
+            )
         if wait_for_tasks:
             for response in responses:
                 {{^isSyncClient}}await {{/isSyncClient}}self.wait_for_task(
@@ -498,7 +506,7 @@
     {{^isSyncClient}}async {{/isSyncClient}}def replace_all_objects(
         self,
         index_name: str,
-        objects: List[Dict[str, Any]],
+        objects: Iterable[Dict[str, Any]],
         batch_size: int = 1000,
         scopes = ["settings", "rules", "synonyms"],
         request_options: Optional[Union[dict, RequestOptions]] = None,
