@@ -1,6 +1,6 @@
 {{> snippets/import}}
 
-object Main {
+object Compression {
   def main(args: Array[String]): Unit = {
     implicit val ec: scala.concurrent.ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
 
@@ -9,7 +9,10 @@ object Main {
     val client = {{client}}(
       appId = "ALGOLIA_APPLICATION_ID",
       apiKey = "ALGOLIA_API_KEY",
-      clientOptions = ClientOptions().withCompressionType(CompressionType.Gzip)
+      clientOptions = ClientOptions
+        .builder()
+        .withCompressionType(CompressionType.Gzip)
+        .build()
     )
 
     // Search with compressed request body

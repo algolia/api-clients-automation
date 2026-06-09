@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/compression"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
 {{> snippets/import}}
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/compression"
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 
-func compression() {
+func enableCompression() {
 	// Initialize the client with gzip compression enabled
 	// Compression reduces the size of request bodies sent to Algolia
 	cfg := {{clientPrefix}}.{{clientName}}Configuration{
@@ -29,5 +30,6 @@ func compression() {
 		panic(err)
 	}
 
-	fmt.Printf("Found %d hits\n", len(result.Hits))
+	_ = result
+	fmt.Println("Search with compression completed successfully")
 }
