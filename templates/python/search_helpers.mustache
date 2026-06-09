@@ -326,7 +326,7 @@
     {{^isSyncClient}}async {{/isSyncClient}}def save_objects_with_transformation(
         self,
         index_name: str,
-        objects: List[Dict[str, Any]],
+        objects: Iterable[Dict[str, Any]],
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -371,7 +371,7 @@
     {{^isSyncClient}}async {{/isSyncClient}}def partial_update_objects_with_transformation(
         self,
         index_name: str,
-        objects: List[Dict[str, Any]],
+        objects: Iterable[Dict[str, Any]],
         create_if_not_exists: bool = False,
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
@@ -430,7 +430,7 @@
     {{^isSyncClient}}async {{/isSyncClient}}def replace_all_objects_with_transformation(
         self,
         index_name: str,
-        objects: List[Dict[str, Any]],
+        objects: Iterable[Dict[str, Any]],
         batch_size: int = 1000,
         scopes = ["settings", "rules", "synonyms"],
         request_options: Optional[Union[dict, RequestOptions]] = None,

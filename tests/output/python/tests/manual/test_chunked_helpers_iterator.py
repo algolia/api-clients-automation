@@ -86,3 +86,37 @@ async def test_save_objects_accepts_generator() -> None:
     assert [req.body for batch in captured for req in batch] == records
 
     await client.close()
+
+
+async def test_save_objects_with_transformation_accepts_generator() -> None:
+    """The transformation path (chunked_push) must also accept a generator."""
+    config = SearchConfig(
+        "test-app-id",
+        "test-api-key",
+        transformation_options=TransformationOptions(region="us"),
+    )
+    client = SearchClient.create_with_config(config)
+    ingestion = client._ingestion_transporter
+    assert ingestion is not None
+
+    captured: List[List[Dict[str, Any]]] = []
+
+    async def spy_push(
+        index_name, push_task_payload, reference_index_name=None, request_options=None
+    ):
+        captured.append(list(push_task_payload["records"]))
+        return WatchResponse(run_id=str(len(captured)))
+
+    ingestion.push = spy_push  # type: ignore[method-assign]
+
+    records = _records(5)
+    await client.save_objects_with_transformation(
+        index_name="cts_manual_iter",
+        objects=_as_generator(records),
+        batch_size=2,
+    )
+
+    assert [len(recs) for recs in captured] == [2, 2, 1]
+    assert [rec for batch in captured for rec in batch] == records
+
+    await client.close()

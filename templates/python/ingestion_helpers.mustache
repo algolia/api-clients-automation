@@ -1,7 +1,7 @@
     {{^isSyncClient}}async {{/isSyncClient}}def chunked_push(
         self,
         index_name: str,
-        objects: List[Dict[str, Any]],
+        objects: Iterable[Dict[str, Any]],
         action: Action = Action.ADDOBJECT,
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
@@ -19,9 +19,47 @@
         wait_batch_size = batch_size // 10
         if wait_batch_size < 1:
             wait_batch_size = batch_size
-        for i, obj in enumerate(objects):
+
+        {{^isSyncClient}}async {{/isSyncClient}}def _wait(start: int, end: int) -> None:
+            for response in responses[start:end]:
+
+                {{^isSyncClient}}async {{/isSyncClient}}def _func(_: Optional[Event]) -> Event:
+                    if response.event_id is None:
+                        raise ValueError(
+                            "received unexpected response from the push endpoint, eventID must not be undefined"
+                        )
+                    try:
+                        return {{^isSyncClient}}await {{/isSyncClient}}self.get_event(
+                            run_id=response.run_id,
+                            event_id=response.event_id,
+                            request_options=request_options,
+                        )
+                    except RequestException as e:
+                        if e.status_code == 404:
+                            return None  # pyright: ignore
+                        raise e
+
+                _retry_count = 0
+
+                def _aggregator(_: Event | None) -> None:
+                    nonlocal _retry_count
+                    _retry_count += 1
+
+                def _validate(_resp: Event | None) -> bool:
+                    return _resp is not None
+
+                {{^isSyncClient}}await {{/isSyncClient}}create_iterable{{#isSyncClient}}_sync{{/isSyncClient}}(
+                    func=_func,
+                    validate=_validate,
+                    aggregator=_aggregator,
+                    timeout=lambda: float(min(_retry_count * 1.5, 5)),
+                    error_validate=lambda _: _retry_count >= chunked_options.max_retries,
+                    error_message=lambda _: f"Stopped waiting for the task after {chunked_options.max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries.",
+                )
+
+        for obj in objects:
             records.append(obj)  # pyright: ignore
-            if len(records) == batch_size or i == len(objects) - 1:
+            if len(records) == batch_size:
                 responses.append(
                     {{^isSyncClient}}await {{/isSyncClient}}self.push(
                         index_name=index_name,
@@ -34,45 +72,27 @@
                     )
                 )
                 records = []
-            if (
-                wait_for_tasks
-                and len(responses) > 0
-                and (len(responses) % wait_batch_size == 0 or i == len(objects) - 1)
-            ):
-                for response in responses[offset:offset+wait_batch_size]:
+                if wait_for_tasks and len(responses) - offset >= wait_batch_size:
+                    {{^isSyncClient}}await {{/isSyncClient}}_wait(offset, offset + wait_batch_size)
+                    offset += wait_batch_size
 
-                    {{^isSyncClient}}async {{/isSyncClient}}def _func(_: Optional[Event]) -> Event:
-                        if response.event_id is None:
-                            raise ValueError(
-                                "received unexpected response from the push endpoint, eventID must not be undefined"
-                            )
-                        try:
-                            return {{^isSyncClient}}await {{/isSyncClient}}self.get_event(
-                                run_id=response.run_id,
-                                event_id=response.event_id,
-                                request_options=request_options,
-                            )
-                        except RequestException as e:
-                            if e.status_code == 404:
-                                return None  # pyright: ignore
-                            raise e
+        if records:
+            responses.append(
+                {{^isSyncClient}}await {{/isSyncClient}}self.push(
+                    index_name=index_name,
+                    push_task_payload={
+                        "action": action,
+                        "records": records,
+                    },
+                    reference_index_name=reference_index_name,
+                    request_options=request_options,
+                )
+            )
 
-                    _retry_count = 0
+        if wait_for_tasks:
+            while offset < len(responses):
+                end = min(offset + wait_batch_size, len(responses))
+                {{^isSyncClient}}await {{/isSyncClient}}_wait(offset, end)
+                offset = end
 
-                    def _aggregator(_: Event | None) -> None:
-                        nonlocal _retry_count
-                        _retry_count += 1
-
-                    def _validate(_resp: Event | None) -> bool:
-                        return _resp is not None
-
-                    {{^isSyncClient}}await {{/isSyncClient}}create_iterable{{#isSyncClient}}_sync{{/isSyncClient}}(
-                        func=_func,
-                        validate=_validate,
-                        aggregator=_aggregator,
-                        timeout=lambda: float(min(_retry_count * 1.5, 5)),
-                        error_validate=lambda _: _retry_count >= chunked_options.max_retries,
-                        error_message=lambda _: f"Stopped waiting for the task after {chunked_options.max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries.",
-                    )
-                offset += wait_batch_size
         return responses
