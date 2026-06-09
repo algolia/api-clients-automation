@@ -60,6 +60,10 @@ ABTestConfiguration:
   type: object
   description: A/B test configuration.
   properties:
+    metadata:
+      type: object
+      description: Product-owned metadata for the A/B test.
+      additionalProperties: true
     minimumDetectableEffect:
       $ref: '#/MinimumDetectableEffect'
     filters:
