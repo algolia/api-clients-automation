@@ -4289,7 +4289,8 @@
           "php",
           "python",
           "ruby",
-          "scala"
+          "scala",
+          "swift"
         ],
         "x-acl": [
           "addObject",
@@ -4555,7 +4556,8 @@
           "php",
           "python",
           "ruby",
-          "scala"
+          "scala",
+          "swift"
         ],
         "x-acl": [
           "addObject",
@@ -4850,7 +4852,8 @@
           "php",
           "python",
           "ruby",
-          "scala"
+          "scala",
+          "swift"
         ],
         "tags": [
           "Records"

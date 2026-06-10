@@ -110,6 +110,7 @@ final class QuerySuggestionsClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.customGet(path: "check-api-key/1")
 

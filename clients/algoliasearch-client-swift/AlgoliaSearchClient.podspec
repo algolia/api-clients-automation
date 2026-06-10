@@ -21,45 +21,67 @@ Pod::Spec.new do |s|
   s.subspec 'Abtesting' do |subs|
     subs.source_files = 'Sources/Abtesting/**/*.swift'
     subs.dependency 'AlgoliaSearchClient/Core'
+    # Search ships the `*WithTransformation` helpers, which use the Ingestion client.
+    subs.dependency 'AlgoliaSearchClient/Ingestion' if subs.name.end_with?('/Search')
   end
   s.subspec 'AbtestingV3' do |subs|
     subs.source_files = 'Sources/AbtestingV3/**/*.swift'
     subs.dependency 'AlgoliaSearchClient/Core'
+    # Search ships the `*WithTransformation` helpers, which use the Ingestion client.
+    subs.dependency 'AlgoliaSearchClient/Ingestion' if subs.name.end_with?('/Search')
   end
   s.subspec 'Analytics' do |subs|
     subs.source_files = 'Sources/Analytics/**/*.swift'
     subs.dependency 'AlgoliaSearchClient/Core'
+    # Search ships the `*WithTransformation` helpers, which use the Ingestion client.
+    subs.dependency 'AlgoliaSearchClient/Ingestion' if subs.name.end_with?('/Search')
   end
   s.subspec 'Composition' do |subs|
     subs.source_files = 'Sources/Composition/**/*.swift'
     subs.dependency 'AlgoliaSearchClient/Core'
+    # Search ships the `*WithTransformation` helpers, which use the Ingestion client.
+    subs.dependency 'AlgoliaSearchClient/Ingestion' if subs.name.end_with?('/Search')
   end
   s.subspec 'Ingestion' do |subs|
     subs.source_files = 'Sources/Ingestion/**/*.swift'
     subs.dependency 'AlgoliaSearchClient/Core'
+    # Search ships the `*WithTransformation` helpers, which use the Ingestion client.
+    subs.dependency 'AlgoliaSearchClient/Ingestion' if subs.name.end_with?('/Search')
   end
   s.subspec 'Insights' do |subs|
     subs.source_files = 'Sources/Insights/**/*.swift'
     subs.dependency 'AlgoliaSearchClient/Core'
+    # Search ships the `*WithTransformation` helpers, which use the Ingestion client.
+    subs.dependency 'AlgoliaSearchClient/Ingestion' if subs.name.end_with?('/Search')
   end
   s.subspec 'Monitoring' do |subs|
     subs.source_files = 'Sources/Monitoring/**/*.swift'
     subs.dependency 'AlgoliaSearchClient/Core'
+    # Search ships the `*WithTransformation` helpers, which use the Ingestion client.
+    subs.dependency 'AlgoliaSearchClient/Ingestion' if subs.name.end_with?('/Search')
   end
   s.subspec 'Personalization' do |subs|
     subs.source_files = 'Sources/Personalization/**/*.swift'
     subs.dependency 'AlgoliaSearchClient/Core'
+    # Search ships the `*WithTransformation` helpers, which use the Ingestion client.
+    subs.dependency 'AlgoliaSearchClient/Ingestion' if subs.name.end_with?('/Search')
   end
   s.subspec 'QuerySuggestions' do |subs|
     subs.source_files = 'Sources/QuerySuggestions/**/*.swift'
     subs.dependency 'AlgoliaSearchClient/Core'
+    # Search ships the `*WithTransformation` helpers, which use the Ingestion client.
+    subs.dependency 'AlgoliaSearchClient/Ingestion' if subs.name.end_with?('/Search')
   end
   s.subspec 'Recommend' do |subs|
     subs.source_files = 'Sources/Recommend/**/*.swift'
     subs.dependency 'AlgoliaSearchClient/Core'
+    # Search ships the `*WithTransformation` helpers, which use the Ingestion client.
+    subs.dependency 'AlgoliaSearchClient/Ingestion' if subs.name.end_with?('/Search')
   end
   s.subspec 'Search' do |subs|
     subs.source_files = 'Sources/Search/**/*.swift'
     subs.dependency 'AlgoliaSearchClient/Core'
+    # Search ships the `*WithTransformation` helpers, which use the Ingestion client.
+    subs.dependency 'AlgoliaSearchClient/Ingestion' if subs.name.end_with?('/Search')
   end
 end
