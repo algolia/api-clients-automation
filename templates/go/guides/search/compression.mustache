@@ -1,0 +1,35 @@
+package main
+
+import (
+	"fmt"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/compression"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
+)
+
+{{> snippets/import}}
+
+func enableCompression() {
+	// Initialize the client with gzip compression enabled
+	// Compression reduces the size of request bodies sent to Algolia
+	cfg := {{clientPrefix}}.{{clientName}}Configuration{
+		Configuration: transport.Configuration{
+			AppID:       "ALGOLIA_APPLICATION_ID",
+			ApiKey:      "ALGOLIA_API_KEY", // #nosec G101 -- credentials are placeholders
+			Compression: compression.GZIP,
+		},
+	}
+	client, err := {{clientPrefix}}.NewClientWithConfig(cfg)
+	if err != nil {
+		panic(err)
+	}
+
+	// Search with compressed request body
+	result, err := {{#dynamicSnippet}}searchWithCompression{{/dynamicSnippet}}
+	if err != nil {
+		panic(err)
+	}
+
+	_ = result
+	fmt.Println("Search with compression completed successfully")
+}
