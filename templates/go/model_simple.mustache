@@ -309,10 +309,6 @@ func (o {{classname}}) MarshalJSON() ([]byte, error) {
 
 {{#isAdditionalPropertiesTrue}}
 func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) error {
-	// Use case-sensitive raw map parsing to avoid Go's encoding/json
-	// case-insensitive field matching, which can overwrite reserved fields
-	// (e.g. objectID) with user-defined properties of a different casing
-	// (e.g. ObjectID), leading to data loss or type-mismatch panics.
 	raw := make(map[string]json.RawMessage)
 	if err := json.Unmarshal(bytes, &raw); err != nil {
 		return fmt.Errorf("failed to unmarshal {{{classname}}}: %w", err)
@@ -320,7 +316,6 @@ func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) error {
 
 {{#parent}}
 {{^isMap}}
-	// Extract own fields by exact JSON key.
 	{{#vars}}
 	if v, ok := raw["{{{baseName}}}"]; ok {
 		if err := json.Unmarshal(v, &o.{{{name}}}); err != nil {
@@ -330,7 +325,6 @@ func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) error {
 	}
 	{{/vars}}
 
-	// Extract parent fields by reflecting over its JSON tags.
 	parentBytes, err := json.Marshal(raw)
 	if err != nil {
 		return fmt.Errorf("failed to remarshal parent fields of {{{classname}}}: %w", err)
@@ -339,7 +333,6 @@ func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) error {
 		return fmt.Errorf("failed to unmarshal parent {{{parent}}} of {{{classname}}}: %w", err)
 	}
 
-	// Remove parent fields from raw to isolate additional properties.
 	reflect{{{parent}}} := reflect.ValueOf(o.{{{parent}}})
 	for i := 0; i < reflect{{{parent}}}.Type().NumField(); i++ {
 		t := reflect{{{parent}}}.Type().Field(i)
@@ -357,7 +350,6 @@ func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) error {
 	}
 {{/isMap}}
 {{#isMap}}
-	// Extract own fields by exact JSON key.
 	{{#vars}}
 	if v, ok := raw["{{{baseName}}}"]; ok {
 		if err := json.Unmarshal(v, &o.{{{name}}}); err != nil {
@@ -369,7 +361,6 @@ func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) error {
 {{/isMap}}
 {{/parent}}
 {{^parent}}
-	// Extract known fields by exact JSON key.
 	{{#vars}}
 	if v, ok := raw["{{{baseName}}}"]; ok {
 		if err := json.Unmarshal(v, &o.{{{name}}}); err != nil {
@@ -380,7 +371,6 @@ func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) error {
 	{{/vars}}
 {{/parent}}
 
-	// Remaining keys are additional properties (preserved with original casing and types).
 	o.AdditionalProperties = make(map[string]any)
 	for key, val := range raw {
 		var parsed any
