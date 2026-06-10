@@ -2,4 +2,7 @@
 {{#value}}
 {{> tests/request_param}}
 {{/value}}
+{{#hasAdditionalProperties}}
+additionalProperties: { {{#value}}{{#isAdditionalProperty}}'{{{key}}}': {{> tests/param_value}}, {{/isAdditionalProperty}}{{/value}} },
+{{/hasAdditionalProperties}}
 )
