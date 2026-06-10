@@ -23,6 +23,7 @@ final class IngestionClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = IngestionClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.customGet(path: "1/html-error")
 
@@ -70,6 +71,7 @@ final class IngestionClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = IngestionClient(configuration: configuration, transporter: transporter)
+
         let response = try await client.customGet(path: "1/long-wait")
 
         XTCJSONEquals(received: response, expected: "{\"message\":\"OK\"}")
@@ -153,6 +155,7 @@ final class IngestionClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
+
         let response = try await client.getSourceWithHTTPInfo(sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
@@ -189,6 +192,7 @@ final class IngestionClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = IngestionClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.customGet(path: "check-api-key/1")
 

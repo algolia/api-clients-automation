@@ -1,0 +1,15 @@
+<?php
+
+require __DIR__ . '/../vendor/autoload.php';
+{{> snippets/import}}
+use Algolia\AlgoliaSearch\Configuration\{{clientPrefix}}Config;
+
+// Initialize the client with gzip compression enabled
+// Compression reduces the size of request bodies sent to Algolia
+$config = {{clientPrefix}}Config::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY')
+  ->setCompressionType('gzip');
+$client = {{client}}::createWithConfig($config);
+
+// Search with compressed request body
+$result = {{#dynamicSnippet}}searchWithCompression{{/dynamicSnippet}};
+var_dump($result);

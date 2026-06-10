@@ -3,6 +3,7 @@ method:
     x-helper: true
     x-available-languages:
       - csharp
+      - dart
       - go
       - java
       - javascript
@@ -11,6 +12,7 @@ method:
       - python
       - ruby
       - scala
+      - swift
     tags:
       - Records
     x-acl:
