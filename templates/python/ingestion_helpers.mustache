@@ -10,7 +10,7 @@
         chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[WatchResponse]:
         """
-        Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `push` requests by leveraging the Transformation pipeline setup in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
+        Helper: Chunks the given `objects` iterable in subset of 1000 elements max in order to make it fit in `push` requests by leveraging the Transformation pipeline setup in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/). Accepts any iterable, including generators.
         """
         chunked_options = chunked_options or ChunkedHelperOptions()
         offset = 0
@@ -90,9 +90,6 @@
             )
 
         if wait_for_tasks:
-            while offset < len(responses):
-                end = min(offset + wait_batch_size, len(responses))
-                {{^isSyncClient}}await {{/isSyncClient}}_wait(offset, end)
-                offset = end
+            {{^isSyncClient}}await {{/isSyncClient}}_wait(offset, len(responses))
 
         return responses

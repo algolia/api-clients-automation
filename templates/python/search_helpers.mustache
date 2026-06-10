@@ -319,7 +319,7 @@
         chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[BatchResponse]:
         """
-        Helper: Saves the given array of objects in the given index. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+        Helper: Saves the given objects (any iterable, including generators) in the given index. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
         """
         return {{^isSyncClient}}await {{/isSyncClient}}self.chunked_batch(index_name=index_name, objects=objects, action=Action.ADDOBJECT, wait_for_tasks=wait_for_tasks, batch_size=batch_size, request_options=request_options, chunked_options=chunked_options)
 
@@ -396,7 +396,7 @@
         chunked_options: Optional[ChunkedHelperOptions] = None,
     ) -> List[BatchResponse]:
         """
-        Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
+        Helper: Chunks the given `objects` iterable in subset of 1000 elements max in order to make it fit in `batch` requests. Accepts any iterable, including generators.
         """
         chunked_options = chunked_options or ChunkedHelperOptions()
         requests: List[BatchRequest] = []
