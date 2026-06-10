@@ -4281,6 +4281,7 @@
         ],
         "x-available-languages": [
           "csharp",
+          "dart",
           "go",
           "java",
           "javascript",
@@ -4288,7 +4289,8 @@
           "php",
           "python",
           "ruby",
-          "scala"
+          "scala",
+          "swift"
         ],
         "x-acl": [
           "addObject",
@@ -4546,6 +4548,7 @@
         ],
         "x-available-languages": [
           "csharp",
+          "dart",
           "go",
           "java",
           "javascript",
@@ -4553,7 +4556,8 @@
           "php",
           "python",
           "ruby",
-          "scala"
+          "scala",
+          "swift"
         ],
         "x-acl": [
           "addObject",
@@ -4840,6 +4844,7 @@
         "x-helper": true,
         "x-available-languages": [
           "csharp",
+          "dart",
           "go",
           "java",
           "javascript",
@@ -4847,7 +4852,8 @@
           "php",
           "python",
           "ruby",
-          "scala"
+          "scala",
+          "swift"
         ],
         "tags": [
           "Records"

@@ -1,0 +1,17 @@
+{{> snippets/import}}
+
+// Initialize the client with gzip compression enabled
+// Compression reduces the size of request bodies sent to Algolia
+const client = {{{clientName}}}('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', {
+  compression: 'gzip',
+});
+
+// Search with compressed request body
+const searchCompression = async () => {
+  const result = await {{#dynamicSnippet}}searchWithCompression{{/dynamicSnippet}};
+  console.log(result.hits);
+};
+
+searchCompression()
+  .then(() => console.log('Done!'))
+  .catch((err) => console.error(err));

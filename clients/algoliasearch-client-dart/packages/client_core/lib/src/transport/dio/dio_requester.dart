@@ -117,7 +117,7 @@ class DioRequester implements Requester {
       path: request.path,
     );
     if (request.queryParameters.isNotEmpty) {
-      return Uri.dataFromString(
+      return Uri.parse(
           "${uri.toString()}?${request.queryParameters.entries.map((e) => "${e.key}=${e.value}").join("&")}");
     }
 

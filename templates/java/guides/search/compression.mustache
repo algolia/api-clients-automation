@@ -1,0 +1,20 @@
+package com.algolia;
+
+{{> snippets/import}}
+
+public class compression {
+  public static void main(String[] args) throws Exception {
+    // Initialize the client with gzip compression enabled
+    // Compression reduces the size of request bodies sent to Algolia
+    {{client}} client = new {{client}}(
+      "ALGOLIA_APPLICATION_ID",
+      "ALGOLIA_API_KEY",
+      ClientOptions.builder().setCompressionType(CompressionType.GZIP).build()
+    );
+
+    // Search with compressed request body
+    var result = {{#dynamicSnippet}}searchWithCompression{{/dynamicSnippet}};
+    System.out.println(result.getHits());
+    client.close();
+  }
+}

@@ -59,8 +59,25 @@ public class DartCTSManager implements CTSManager {
       if (text.equals("external")) {
         writer.write("external_");
       } else {
-        writer.write(text);
+        writer.write(snakeToCamel(text));
       }
     });
+  }
+
+  private static String snakeToCamel(String s) {
+    if (!s.contains("_")) return s;
+    StringBuilder sb = new StringBuilder();
+    boolean nextUpper = false;
+    for (char c : s.toCharArray()) {
+      if (c == '_') {
+        nextUpper = true;
+      } else if (nextUpper) {
+        sb.append(Character.toUpperCase(c));
+        nextUpper = false;
+      } else {
+        sb.append(c);
+      }
+    }
+    return sb.toString();
   }
 }

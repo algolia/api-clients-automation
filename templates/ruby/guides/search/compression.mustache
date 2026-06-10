@@ -1,0 +1,13 @@
+{{> snippets/import}}
+
+# Initialize the client with gzip compression enabled
+# Compression reduces the size of request bodies sent to Algolia
+client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create(
+  'ALGOLIA_APPLICATION_ID',
+  'ALGOLIA_API_KEY',
+  compression_type: 'gzip'
+)
+
+# Search with compressed request body
+result = {{#dynamicSnippet}}searchWithCompression{{/dynamicSnippet}}
+puts(result)

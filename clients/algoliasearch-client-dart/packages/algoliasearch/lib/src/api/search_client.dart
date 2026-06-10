@@ -25,6 +25,9 @@ final class SearchClient implements ApiClient {
           appId: appId,
           apiKey: apiKey,
           options: options,
+          defaultConnectTimeout: const Duration(milliseconds: 2000),
+          defaultReadTimeout: const Duration(milliseconds: 5000),
+          defaultWriteTimeout: const Duration(milliseconds: 30000),
           defaultHosts: () =>
               [
                 Host(url: '$appId-dsn.algolia.net', callType: CallType.read),
@@ -152,5 +155,7 @@ final class SearchClient implements ApiClient {
   }
 
   @override
-  void dispose() => _retryStrategy.dispose();
+  void dispose() {
+    _retryStrategy.dispose();
+  }
 }
