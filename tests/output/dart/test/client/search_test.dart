@@ -3,7 +3,7 @@ import 'package:algolia_client_search/algolia_client_search.dart';
 import 'package:algolia_test/algolia_test.dart';
 import 'package:test/test.dart';
 import 'package:test_api/hooks.dart';
-import 'dart:io' show Platform;
+import 'dart:io' as io;
 
 void main() {
   test('calls api with correct read host', () async {
@@ -68,15 +68,15 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6676',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6676',
               scheme: 'http'),
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6677',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6677',
               scheme: 'http'),
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6678',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6678',
               scheme: 'http'),
         ]));
     requester.setOnRequest((request) {});
@@ -98,7 +98,7 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6676',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6676',
               scheme: 'http'),
         ]));
     await expectError(
@@ -123,15 +123,15 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6671',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6671',
               scheme: 'http'),
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6672',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6672',
               scheme: 'http'),
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6673',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6673',
               scheme: 'http'),
         ]));
     requester.setOnRequest((request) {});
@@ -153,7 +153,7 @@ void main() {
         options: ClientOptions(compression: 'gzip', hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6678',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6678',
               scheme: 'http'),
         ]));
     requester.setOnRequest((request) {});
@@ -181,7 +181,7 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6691',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6691',
               scheme: 'http'),
         ]));
     requester.setOnRequest((request) {});
@@ -242,7 +242,7 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6686',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6686',
               scheme: 'http'),
         ]));
     requester.setOnRequest((request) {});
@@ -265,7 +265,7 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6686',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6686',
               scheme: 'http'),
         ]));
     requester.setOnRequest((request) {});
@@ -289,11 +289,11 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6675',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6675',
               scheme: 'http'),
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6674',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6674',
               scheme: 'http'),
         ]));
     {
@@ -469,7 +469,7 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6686',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6686',
               scheme: 'http'),
         ]));
     try {
@@ -492,7 +492,7 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6683',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6683',
               scheme: 'http'),
         ]));
     {

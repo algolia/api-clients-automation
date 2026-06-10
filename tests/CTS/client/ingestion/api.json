@@ -33,7 +33,8 @@
             "python": "Too Many Requests",
             "ruby": "429: Too Many Requests",
             "scala": "<html><body>429 Too Many Requests</body></html>",
-            "swift": "HTTP error: Status code: 429 Message: No message"
+            "swift": "HTTP error: Status code: 429 Message: No message",
+            "dart": "429"
           }
         }
       }
