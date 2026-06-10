@@ -192,7 +192,8 @@ export async function runCts(
         only('csharp') +
         only('scala') +
         only('ruby') +
-        only('kotlin'),
+        only('kotlin') +
+        only('dart'),
     );
     assertValidAccountCopyIndex(only('javascript'));
     assertValidReplaceAllObjectsFailed(languages.length - skip('dart'));
@@ -207,7 +208,8 @@ export async function runCts(
         only('csharp') +
         only('scala') +
         only('ruby') +
-        only('kotlin'),
+        only('kotlin') + 
+        only('dart'),
     );
   }
   if (withBenchmarkServer) {

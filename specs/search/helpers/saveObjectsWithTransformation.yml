@@ -5,6 +5,7 @@ method:
       - Records
     x-available-languages:
       - csharp
+      - dart
       - go
       - java
       - javascript

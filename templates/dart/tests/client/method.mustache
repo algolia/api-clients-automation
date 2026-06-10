@@ -3,6 +3,7 @@ try {
       {{#parametersWithDataType}}
       {{> tests/request_param}}
       {{/parametersWithDataType}}
+      {{#hasRequestOptions}}requestOptions: RequestOptions({{#requestOptions.timeouts}}{{#write}}writeTimeout: Duration(milliseconds: {{{.}}}),{{/write}}{{#read}}readTimeout: Duration(milliseconds: {{{.}}}),{{/read}}{{#connect}}connectTimeout: Duration(milliseconds: {{{.}}}),{{/connect}}{{/requestOptions.timeouts}}),{{/hasRequestOptions}}
   );
   {{#testResponse}}
   {{^match.isPrimitive}}

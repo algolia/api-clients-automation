@@ -12,6 +12,7 @@ environment:
 
 dependencies:
   algolia_client_core: ^1.49.2
+  algolia_client_ingestion: ^1.49.1
   json_annotation: ^4.8.1
   collection: ^1.17.1
 
