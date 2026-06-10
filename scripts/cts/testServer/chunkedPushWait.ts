@@ -6,7 +6,8 @@ import express from 'express';
 
 import { setupServer } from './index.ts';
 
-const chunkedPushWaitState: Record<string, { pushCount: number; getEventCount: number }> = {};
+const chunkedPushWaitState: Record<string, { pushCount: number; getEventCount: number; polledEventIDs: Set<string> }> =
+  {};
 
 // every pushed task must be polled exactly once; a poll cursor that over-advances polls fewer.
 export function assertValidChunkedPushWait(expectedCount: number): void {
@@ -15,6 +16,10 @@ export function assertValidChunkedPushWait(expectedCount: number): void {
     // at least 3 (25 objects / batchSize 10), not exactly: python runs the scenario twice (sync + async)
     expect(chunkedPushWaitState[lang].pushCount, `pushCount for ${lang}`).to.be.at.least(3);
     expect(chunkedPushWaitState[lang].getEventCount, `getEventCount for ${lang}`).to.equal(
+      chunkedPushWaitState[lang].pushCount,
+    );
+    // distinct events polled == events pushed: rules out polling one task twice while skipping another
+    expect(chunkedPushWaitState[lang].polledEventIDs.size, `distinct polled eventIDs for ${lang}`).to.equal(
       chunkedPushWaitState[lang].pushCount,
     );
   }
@@ -34,7 +39,7 @@ function addRoutes(app: Express): void {
     expect(req.body.action).to.equal('addObject');
 
     if (!chunkedPushWaitState[lang]) {
-      chunkedPushWaitState[lang] = { pushCount: 0, getEventCount: 0 };
+      chunkedPushWaitState[lang] = { pushCount: 0, getEventCount: 0, polledEventIDs: new Set() };
     }
     chunkedPushWaitState[lang].pushCount++;
 
@@ -52,6 +57,7 @@ function addRoutes(app: Express): void {
     expect(chunkedPushWaitState, `getEvent before any push for ${lang}`).to.include.keys(lang);
 
     chunkedPushWaitState[lang].getEventCount++;
+    chunkedPushWaitState[lang].polledEventIDs.add(req.params.eventID);
 
     res.json({
       status: 'succeeded',
