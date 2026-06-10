@@ -1,6 +1,3 @@
 package algoliasearch
 
-package object extension
-    extends SearchExtensions
-    with IngestionExtensions
-    with SecuredApiKeyExtensions
+package object extension extends SearchExtensions with IngestionExtensions with SecuredApiKeyExtensions

@@ -4,7 +4,13 @@ import algoliasearch.api.IngestionClient
 import algoliasearch.config.RequestOptions
 import algoliasearch.exception.{AlgoliaApiException, AlgoliaClientException}
 import algoliasearch.extension.internal.RetryUntil.retryUntil
-import algoliasearch.ingestion.{PushTaskPayload, PushTaskRecords, Action => IngestionAction, Event => IngestionEvent, WatchResponse => IngestionWatchResponse}
+import algoliasearch.ingestion.{
+  PushTaskPayload,
+  PushTaskRecords,
+  Action => IngestionAction,
+  Event => IngestionEvent,
+  WatchResponse => IngestionWatchResponse
+}
 import org.json4s.{Extraction, Formats, jvalue2extractable}
 
 import scala.concurrent.{ExecutionContext, Future}
