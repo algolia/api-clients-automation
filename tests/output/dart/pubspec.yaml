@@ -18,6 +18,7 @@ dependencies:
   test_api: ^0.7.3
 
   algolia_client_core: any
+  algolia_client_ingestion: any
 
 dev_dependencies:
   lints: ^6.0.0

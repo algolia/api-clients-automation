@@ -110,6 +110,7 @@ final class PersonalizationClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = PersonalizationClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.customGet(path: "check-api-key/1")
 
