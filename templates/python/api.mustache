@@ -1,6 +1,9 @@
 {{> partial_header}}
 {{> imports}}
 
+{{#isAgentStudioClient}}
+import warnings
+{{/isAgentStudioClient}}
 {{#isSearchClient}}
 from algoliasearch.search.models import (
   Action,
@@ -71,6 +74,13 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
             transporter = Transporter{{#isSyncClient}}Sync{{/isSyncClient}}(config)
         self._transporter = transporter
 
+        {{#isAgentStudioClient}}
+        warnings.warn(
+            "The Agent Studio API is in beta and subject to breaking changes. See https://www.algolia.com/doc/rest-api/agent-studio",
+            FutureWarning,
+            stacklevel=2,
+        )
+        {{/isAgentStudioClient}}
         {{#isSearchClient}}
         self._ingestion_transporter = None
         if config.transformation_options is not None:

@@ -11,6 +11,10 @@ import 'package:{{pubName}}/src/version.dart';
 {{#description}}
 /// {{{description}}}
 {{/description}}
+{{#isAgentStudioClient}}
+/// **Beta:** The Agent Studio API is not yet stable and may change without notice.
+/// See https://www.algolia.com/doc/rest-api/agent-studio
+{{/isAgentStudioClient}}
 final class {{classname}} implements ApiClient {
 
   @override

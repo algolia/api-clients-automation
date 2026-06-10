@@ -61,6 +61,12 @@ import javax.crypto.spec.SecretKeySpec;
 {{/isAgentStudioClient}}
 
 {{#operations}}
+{{#isAgentStudioClient}}
+/**
+ * Beta: The Agent Studio API is not yet stable and may introduce breaking changes.
+ * @see <a href="https://www.algolia.com/doc/rest-api/agent-studio">Agent Studio API docs</a>
+ */
+{{/isAgentStudioClient}}
 public class {{classname}} extends ApiClient {
     {{#isSearchClient}}
     private IngestionClient ingestionTransporter;

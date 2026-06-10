@@ -11,6 +11,13 @@ export const apiClientVersion = '{{packageVersion}}';
   {{> client/api/guards}}
 {{/isIngestionClient}}
 
+{{#isAgentStudioClient}}
+/**
+ * @beta
+ * The Agent Studio API is not yet stable and may change without notice.
+ * See {@link https://www.algolia.com/doc/rest-api/agent-studio | Agent Studio API docs}.
+ */
+{{/isAgentStudioClient}}
 export function create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
     appId: appIdOption,
     apiKey: apiKeyOption,

@@ -135,6 +135,9 @@ object {{classname}} {
   {{/hostsWithoutVariables.size}}
 }
 
+{{#isAgentStudioClient}}
+/** @note Beta: The Agent Studio API is not yet stable and may introduce breaking changes. See [[https://www.algolia.com/doc/rest-api/agent-studio Agent Studio API docs]]. */
+{{/isAgentStudioClient}}
 class {{classname}}(
     appId: String,
     apiKey: String,
