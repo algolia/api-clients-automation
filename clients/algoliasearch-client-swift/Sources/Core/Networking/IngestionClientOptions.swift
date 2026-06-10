@@ -1,15 +1,19 @@
 //
-//  ClientOptions.swift
+//  IngestionClientOptions.swift
 //
-//  Overridable client options shared across the SDK. Every field is optional; an unset field
-//  keeps the calling client's default. Used as-is by `TransformationOptions` to override the
-//  ingestion transporter defaults (25 s timeouts, region-derived hosts, no compression).
+//  Optional overrides for the ingestion transporter used by the `*WithTransformation` helpers.
+//  Every field is optional; an unset field keeps the ingestion transporter default
+//  (25 s timeouts, region-derived hosts, no compression). Consumed only by `TransformationOptions`.
+//
+//  KEEP IN SYNC: the overridable fields below mirror the resolved fields on
+//  `<Client>ClientConfiguration` (readTimeout, writeTimeout, hosts, compression, defaultHeaders).
+//  If you add, remove, or rename one here, mirror the change on the configuration, and vice versa.
 //
 //  See https://www.algolia.com/doc/libraries/sdk/methods/ingestion
 
 import Foundation
 
-public struct ClientOptions {
+public struct IngestionClientOptions {
     /// Override the read timeout.
     public var readTimeout: TimeInterval?
 

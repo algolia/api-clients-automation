@@ -31,7 +31,7 @@ public extension SearchClient {
         guard let options = self.configuration.transformationOptions else {
             throw AlgoliaError.runtimeError(SearchClient.notSetError)
         }
-        let opts = options.clientOptions
+        let opts = options.ingestionClientOptions
         let ingestionConfig = try IngestionClientConfiguration(
             appID: self.configuration.appID,
             apiKey: self.configuration.apiKey,

@@ -15,6 +15,9 @@ public struct {{#lambda.client-to-name}}{{{client}}}{{/lambda.client-to-name}}Cl
 
   public let appID: String
   public var apiKey: String
+  // KEEP IN SYNC: the overridable fields below (writeTimeout, readTimeout, hosts, compression,
+  // defaultHeaders) mirror `IngestionClientOptions`. If you add, remove, or rename one here,
+  // mirror the change on `IngestionClientOptions`, and vice versa.
   public var writeTimeout: TimeInterval
   public var readTimeout: TimeInterval
   public var logLevel: LogLevel
