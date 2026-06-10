@@ -31,16 +31,15 @@ public extension SearchClient {
         guard let options = self.configuration.transformationOptions else {
             throw AlgoliaError.runtimeError(SearchClient.notSetError)
         }
-        let opts = options.ingestionClientOptions
         let ingestionConfig = try IngestionClientConfiguration(
             appID: self.configuration.appID,
             apiKey: self.configuration.apiKey,
             region: options.region,
-            writeTimeout: opts?.writeTimeout ?? 25,
-            readTimeout: opts?.readTimeout ?? 25,
-            defaultHeaders: opts?.defaultHeaders,
-            hosts: opts?.hosts,
-            compression: opts?.compression ?? .none
+            writeTimeout: options.writeTimeout ?? 25,
+            readTimeout: options.readTimeout ?? 25,
+            defaultHeaders: options.defaultHeaders,
+            hosts: options.hosts,
+            compression: options.compression ?? .none
         )
         let ingestionClient = IngestionClient(configuration: ingestionConfig)
         self._ingestionClient = ingestionClient
@@ -119,7 +118,8 @@ public extension SearchClient {
     // MARK: - Public helpers
 
     /// Helper: Similar to `saveObjects` but routes records through the Ingestion transformation pipeline.
-    /// `transformationOptions` must be set via `SearchClientConfiguration(transformationOptions:)` before creating the client.
+    /// `transformationOptions` must be set via `SearchClientConfiguration(transformationOptions:)` before creating the
+    /// client.
     /// - parameter indexName: The index to save objects into.
     /// - parameter objects: The objects to save. Each must include an `objectID` key.
     /// - parameter waitForTasks: Whether to wait for ingestion tasks to complete. Defaults to `false`.
@@ -134,7 +134,7 @@ public extension SearchClient {
         batchSize: Int = 1000,
         requestOptions: RequestOptions? = nil
     ) async throws -> [IngestionWatchResponse] {
-        try await chunkedPush(
+        try await self.chunkedPush(
             indexName: indexName,
             objects: objects,
             action: .addObject,
@@ -145,7 +145,8 @@ public extension SearchClient {
     }
 
     /// Helper: Similar to `partialUpdateObjects` but routes records through the Ingestion transformation pipeline.
-    /// `transformationOptions` must be set via `SearchClientConfiguration(transformationOptions:)` before creating the client.
+    /// `transformationOptions` must be set via `SearchClientConfiguration(transformationOptions:)` before creating the
+    /// client.
     /// - parameter indexName: The index to update objects in.
     /// - parameter objects: The objects to update. Each must include an `objectID` key.
     /// - parameter createIfNotExists: Whether to create the object if it does not exist. Defaults to `true`.
@@ -162,7 +163,7 @@ public extension SearchClient {
         batchSize: Int = 1000,
         requestOptions: RequestOptions? = nil
     ) async throws -> [IngestionWatchResponse] {
-        try await chunkedPush(
+        try await self.chunkedPush(
             indexName: indexName,
             objects: objects,
             action: createIfNotExists ? .partialUpdateObject : .partialUpdateObjectNoCreate,
@@ -173,7 +174,8 @@ public extension SearchClient {
     }
 
     /// Helper: Similar to `replaceAllObjects` but routes records through the Ingestion transformation pipeline.
-    /// `transformationOptions` must be set via `SearchClientConfiguration(transformationOptions:)` before creating the client.
+    /// `transformationOptions` must be set via `SearchClientConfiguration(transformationOptions:)` before creating the
+    /// client.
     /// - parameter indexName: The index to replace objects in.
     /// - parameter objects: The new objects. Each must include an `objectID` key.
     /// - parameter batchSize: Number of records per push call. Defaults to 1000.

@@ -1,7 +1,7 @@
 {{#hasTransformationRegion}}
 let transformationOptions = TransformationOptions(
     region: Region(rawValue: "{{{transformationRegion}}}"){{#hasTransformationCustomHosts}},
-    ingestionClientOptions: IngestionClientOptions(hosts: [{{#transformationCustomHosts}}RetryableHost(url: URL(string: "http://" + (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") + ":{{port}}")!){{^-last}}, {{/-last}}{{/transformationCustomHosts}}]){{/hasTransformationCustomHosts}}
+    hosts: [{{#transformationCustomHosts}}RetryableHost(url: URL(string: "http://" + (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") + ":{{port}}")!){{^-last}}, {{/-last}}{{/transformationCustomHosts}}]{{/hasTransformationCustomHosts}}
 )
 {{/hasTransformationRegion}}
 let configuration = try {{client}}Configuration(appID: "{{parametersWithDataTypeMap.appId.value}}", apiKey: "{{parametersWithDataTypeMap.apiKey.value}}"{{#hasRegionalHost}}, region: {{#parametersWithDataTypeMap.region}}Region(rawValue: "{{parametersWithDataTypeMap.region.value}}"){{/parametersWithDataTypeMap.region}}{{^parametersWithDataTypeMap.region}}nil{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}}{{#hasCustomHosts}}, hosts: [{{#customHosts}}RetryableHost(url: URL(string: "http://" + (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") + ":{{port}}")!){{^-last}}, {{/-last}}{{/customHosts}}]{{/hasCustomHosts}}{{#gzipEncoding}}, compression: .gzip{{/gzipEncoding}}{{#hasTransformationRegion}}, transformationOptions: transformationOptions{{/hasTransformationRegion}})
