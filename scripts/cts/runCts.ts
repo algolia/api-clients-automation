@@ -190,9 +190,7 @@ export async function runCts(
     assertValidReplaceAllObjectsScopes(languages.length - skip('dart'));
     assertValidWaitForApiKey(languages.length - skip('dart'));
     assertPushMockValid(languages.length);
-    assertValidChunkedPushWait(
-      languages.length - skip('dart') - skip('swift') - skip('go') - skip('php') - skip('javascript'),
-    );
+    assertValidChunkedPushWait(languages.length - skip('go') - skip('php') - skip('javascript'));
   }
   if (withBenchmarkServer) {
     printBenchmarkReport();
