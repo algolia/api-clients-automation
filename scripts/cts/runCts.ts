@@ -7,6 +7,7 @@ import type { Language } from '../types.ts';
 
 import { assertValidAccountCopyIndex } from './testServer/accountCopyIndex.ts';
 import { printBenchmarkReport } from './testServer/benchmark.ts';
+import { assertValidChunkedPushWait } from './testServer/chunkedPushWait.ts';
 import { assertChunkWrapperValid } from './testServer/chunkWrapper.ts';
 import { assertNeverCalledServerWasNotCalled, assertValidErrors } from './testServer/error.ts';
 import { startTestServer } from './testServer/index.ts';
@@ -208,6 +209,10 @@ export async function runCts(
         only('scala') +
         only('ruby') +
         only('kotlin'),
+    );
+    // dart/swift don't expose the helper; go/php/javascript are excluded via `skipLanguages` in the CTS spec
+    assertValidChunkedPushWait(
+      languages.length - skip('dart') - skip('swift') - skip('go') - skip('php') - skip('javascript'),
     );
   }
   if (withBenchmarkServer) {

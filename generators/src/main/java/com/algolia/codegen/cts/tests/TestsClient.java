@@ -70,6 +70,10 @@ public class TestsClient extends TestsGenerator {
       List<Object> tests = new ArrayList<>();
       int testIndex = 0;
       skipTest: for (ClientTestData test : blockEntry.getValue()) {
+        if (test.skipLanguages != null && test.skipLanguages.contains(language)) {
+          System.out.println("Skipping client test " + (test.testName == null ? client : test.testName) + " for language " + language);
+          continue skipTest;
+        }
         try {
           Map<String, Object> testOut = new HashMap<>();
           List<Map<String, Object>> steps = new ArrayList<>();
