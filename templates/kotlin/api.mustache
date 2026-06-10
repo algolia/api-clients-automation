@@ -22,7 +22,7 @@ public class {{classname}}(
   public val region: String{{#fallbackToAliasHost}}? = null{{/fallbackToAliasHost}},
   {{/hasRegionalHost}}
   override val options: ClientOptions = ClientOptions(),
-) : ApiClient {
+) : ApiClient, kotlin.AutoCloseable {
 
   init {
       require(appId.isNotBlank()) { "`appId` is missing." }
@@ -60,6 +60,17 @@ public class {{classname}}(
   {{/hostsWithoutVariables.size}}
   }
 
+  /**
+   * Closes the client and releases its underlying resources (the HTTP transport{{#isSearchClient}} and, if set,
+   * the ingestion transporter{{/isSearchClient}}).
+   */
+  override fun close() {
+    {{#isSearchClient}}
+    ingestionTransporter?.close()
+    {{/isSearchClient}}
+    (requester as? kotlin.AutoCloseable)?.close()
+  }
+
   {{#isSearchClient}}
   /**
    * Ingestion transporter used by the `*WithTransformation` helpers on this client. Set via
@@ -82,12 +93,14 @@ public class {{classname}}(
    * cause that operation to fail — callers SHOULD avoid in-flight reconfiguration.
    */
   public fun setTransformationOptions(transformationOptions: TransformationOptions) {
+    val previous = ingestionTransporter
     ingestionTransporter = IngestionClient(
       appId = appId,
       apiKey = apiKey,
       region = transformationOptions.region,
       options = transformationOptions.clientOptions ?: ClientOptions(),
     )
+    previous?.close()
   }
 
   public companion object {
