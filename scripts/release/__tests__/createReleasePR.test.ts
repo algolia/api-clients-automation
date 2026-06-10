@@ -94,7 +94,7 @@ describe('createReleasePR', () => {
         message: 'fix(javascript): fix the thing',
         prNumber: 123,
         type: 'fix',
-                  author: '[@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)',
+        author: '[@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)',
       });
     });
 
