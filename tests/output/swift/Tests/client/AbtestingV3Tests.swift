@@ -62,6 +62,7 @@ final class AbtestingV3ClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingV3Client(configuration: configuration, transporter: transporter)
+
         let response = try await client.getABTestWithHTTPInfo(id: 123)
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
@@ -98,6 +99,7 @@ final class AbtestingV3ClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = AbtestingV3Client(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.customGet(path: "check-api-key/1")
 

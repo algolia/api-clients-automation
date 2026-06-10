@@ -6218,6 +6218,9 @@
       "call partialUpdateObjects with createIfNotExists=true": "let response = try await client.partialUpdateObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"1\", \"name\": \"Adam\"], [\"objectID\": \"2\", \"name\": \"Benoit\"]],\n    createIfNotExists: true\n)",
       "call partialUpdateObjects with createIfNotExists=false": "let response = try await client.partialUpdateObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"3\", \"name\": \"Cyril\"], [\"objectID\": \"4\", \"name\": \"David\"]],\n    createIfNotExists: false\n)"
     },
+    "partialUpdateObjectsWithTransformation": {
+      "default": "let response = try await client.partialUpdateObjectsWithTransformation(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"1\", \"name\": \"Adam\"], [\"objectID\": \"2\", \"name\": \"Benoit\"]],\n    createIfNotExists: true,\n    waitForTasks: true\n)"
+    },
     "removeUserId": {
       "default": "let response = try await client.removeUserId(userID: \"uniqueID\")"
     },
@@ -6225,6 +6228,9 @@
       "call replaceAllObjects without error": "let response = try await client.replaceAllObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [\n        [\"objectID\": \"1\", \"name\": \"Adam\"],\n        [\"objectID\": \"2\", \"name\": \"Benoit\"],\n        [\"objectID\": \"3\", \"name\": \"Cyril\"],\n        [\"objectID\": \"4\", \"name\": \"David\"],\n        [\"objectID\": \"5\", \"name\": \"Eva\"],\n        [\"objectID\": \"6\", \"name\": \"Fiona\"],\n        [\"objectID\": \"7\", \"name\": \"Gael\"],\n        [\"objectID\": \"8\", \"name\": \"Hugo\"],\n        [\"objectID\": \"9\", \"name\": \"Igor\"],\n        [\"objectID\": \"10\", \"name\": \"Julia\"],\n    ],\n    batchSize: 3\n)",
       "call replaceAllObjects with partial scopes": "let response = try await client.replaceAllObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"1\", \"name\": \"Adam\"], [\"objectID\": \"2\", \"name\": \"Benoit\"]],\n    batchSize: 77,\n    scopes: [ScopeType.settings, ScopeType.synonyms]\n)",
       "replaceAllObjects should cleanup on failure": "let response = try await client.replaceAllObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [\n        [\"objectID\": \"fine\", \"body\": \"small obj\"],\n        [\"objectID\": \"toolarge\", \"body\": \"something bigger than 10KB\"],\n    ]\n)"
+    },
+    "replaceAllObjectsWithTransformation": {
+      "default": "let response = try await client.replaceAllObjectsWithTransformation(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [\n        [\"objectID\": \"1\", \"name\": \"Adam\"],\n        [\"objectID\": \"2\", \"name\": \"Benoit\"],\n        [\"objectID\": \"3\", \"name\": \"Cyril\"],\n        [\"objectID\": \"4\", \"name\": \"David\"],\n        [\"objectID\": \"5\", \"name\": \"Eva\"],\n        [\"objectID\": \"6\", \"name\": \"Fiona\"],\n        [\"objectID\": \"7\", \"name\": \"Gael\"],\n        [\"objectID\": \"8\", \"name\": \"Hugo\"],\n        [\"objectID\": \"9\", \"name\": \"Igor\"],\n        [\"objectID\": \"10\", \"name\": \"Julia\"],\n    ],\n    batchSize: 3\n)"
     },
     "replaceSources": {
       "default": "let response = try await client.replaceSources(source: [SearchSource(\n    source: \"theSource\",\n    description: \"theDescription\"\n)])"
@@ -6240,6 +6246,9 @@
       "saveObjects should report errors": "let response = try await client.saveObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"1\", \"name\": \"Adam\"], [\"objectID\": \"2\", \"name\": \"Benoit\"]]\n)",
       "saveObjectsPlaylist": "let response = try await client.saveObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\n        \"objectID\": \"1\",\n        \"visibility\": \"public\",\n        \"name\": \"Hot 100 Billboard Charts\",\n        \"playlistId\": \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n        \"createdAt\": \"1500240452\",\n    ]]\n)",
       "saveObjectsPublicUser": "let response = try await client.saveObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\n        \"objectID\": \"1\",\n        \"visibility\": \"public\",\n        \"name\": \"Hot 100 Billboard Charts\",\n        \"playlistId\": \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n        \"createdAt\": \"1500240452\",\n    ]],\n    waitForTasks: false,\n    batchSize: 1000,\n    requestOptions: RequestOptions(\n        headers: [\"X-Algolia-User-ID\": \"*\"]\n    )\n)"
+    },
+    "saveObjectsWithTransformation": {
+      "default": "let response = try await client.saveObjectsWithTransformation(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"1\", \"name\": \"Adam\"], [\"objectID\": \"2\", \"name\": \"Benoit\"]],\n    waitForTasks: true\n)"
     },
     "saveRule": {
       "saveRule with minimal parameters": "let response = try await client.saveRule(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objectID: \"id1\",\n    rule: Rule(\n        objectID: \"id1\",\n        conditions: [SearchCondition(pattern: \"apple\", anchoring: SearchAnchoring.contains)],\n        consequence: SearchConsequence(params: SearchConsequenceParams(filters: \"brand:xiaomi\"))\n    )\n)",

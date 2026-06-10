@@ -3655,6 +3655,7 @@ paths:
         - python
         - ruby
         - scala
+        - swift
       x-acl:
         - addObject
         - deleteIndex
@@ -3891,6 +3892,7 @@ paths:
         - python
         - ruby
         - scala
+        - swift
       x-acl:
         - addObject
         - deleteIndex
@@ -4128,6 +4130,7 @@ paths:
         - python
         - ruby
         - scala
+        - swift
       tags:
         - search
       x-acl:
