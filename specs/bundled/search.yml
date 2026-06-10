@@ -3646,6 +3646,7 @@ paths:
         - search
       x-available-languages:
         - csharp
+        - dart
         - go
         - java
         - javascript
@@ -3881,6 +3882,7 @@ paths:
         - search
       x-available-languages:
         - csharp
+        - dart
         - go
         - java
         - javascript
@@ -4117,6 +4119,7 @@ paths:
       x-helper: true
       x-available-languages:
         - csharp
+        - dart
         - go
         - java
         - javascript

@@ -33,6 +33,9 @@ final class AbtestingV3Client implements ApiClient {
             appId: appId,
             apiKey: apiKey,
             options: options,
+            defaultConnectTimeout: const Duration(milliseconds: 2000),
+            defaultReadTimeout: const Duration(milliseconds: 5000),
+            defaultWriteTimeout: const Duration(milliseconds: 30000),
             defaultHosts: () {
               final allowedRegions = ['de', 'us'];
               assert(
@@ -459,5 +462,7 @@ final class AbtestingV3Client implements ApiClient {
   }
 
   @override
-  void dispose() => _retryStrategy.dispose();
+  void dispose() {
+    _retryStrategy.dispose();
+  }
 }
