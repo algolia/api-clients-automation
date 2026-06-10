@@ -4,7 +4,6 @@ package recommend
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // AlternativesAsExact the model 'AlternativesAsExact'.
@@ -46,10 +45,12 @@ func (v *AlternativesAsExact) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := AlternativesAsExact(value)
-	if slices.Contains(AllowedAlternativesAsExactEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedAlternativesAsExactEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid AlternativesAsExact", value)
@@ -57,7 +58,13 @@ func (v *AlternativesAsExact) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v AlternativesAsExact) IsValid() bool {
-	return slices.Contains(AllowedAlternativesAsExactEnumValues, v)
+	for _, existing := range AllowedAlternativesAsExactEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to alternativesAsExact value.

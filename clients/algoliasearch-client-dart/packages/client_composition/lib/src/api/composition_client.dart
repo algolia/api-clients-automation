@@ -34,10 +34,19 @@ final class CompositionClient implements ApiClient {
           segment: AgentSegment(value: "Composition", version: packageVersion),
           appId: appId,
           apiKey: apiKey,
-          options: options,
-          defaultConnectTimeout: const Duration(milliseconds: 2000),
-          defaultReadTimeout: const Duration(milliseconds: 5000),
-          defaultWriteTimeout: const Duration(milliseconds: 30000),
+          options: ClientOptions(
+            connectTimeout: Duration(milliseconds: 2000),
+            readTimeout: Duration(milliseconds: 5000),
+            writeTimeout: Duration(milliseconds: 30000),
+            hosts: options.hosts,
+            headers: options.headers,
+            agentSegments: options.agentSegments,
+            logger: options.logger,
+            requester: options.requester,
+            interceptors: options.interceptors,
+            httpClientAdapter: options.httpClientAdapter,
+            compression: options.compression,
+          ),
           defaultHosts: () =>
               [
                 Host(url: '$appId-dsn.algolia.net', callType: CallType.read),
@@ -85,6 +94,7 @@ final class CompositionClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
+    if (response == null) return AlgoliaNoResponse();
     return deserialize<Object, Object>(
       response,
       'Object',
@@ -118,6 +128,7 @@ final class CompositionClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
+    if (response == null) return AlgoliaNoResponse();
     return deserialize<Object, Object>(
       response,
       'Object',
@@ -154,6 +165,7 @@ final class CompositionClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
+    if (response == null) return AlgoliaNoResponse();
     return deserialize<Object, Object>(
       response,
       'Object',
@@ -190,6 +202,7 @@ final class CompositionClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
+    if (response == null) return AlgoliaNoResponse();
     return deserialize<Object, Object>(
       response,
       'Object',

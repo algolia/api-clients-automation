@@ -4,7 +4,6 @@ package analytics
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // OrderBy Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available.
@@ -46,10 +45,12 @@ func (v *OrderBy) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := OrderBy(value)
-	if slices.Contains(AllowedOrderByEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedOrderByEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid OrderBy", value)
@@ -57,7 +58,13 @@ func (v *OrderBy) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v OrderBy) IsValid() bool {
-	return slices.Contains(AllowedOrderByEnumValues, v)
+	for _, existing := range AllowedOrderByEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to orderBy value.

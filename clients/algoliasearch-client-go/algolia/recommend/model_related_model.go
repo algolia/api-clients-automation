@@ -4,7 +4,6 @@ package recommend
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // RelatedModel Related products or similar content model.  This model recommends items that are similar to the item with the ID `objectID`. Similarity is determined from the user interactions and attributes.
@@ -40,10 +39,12 @@ func (v *RelatedModel) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := RelatedModel(value)
-	if slices.Contains(AllowedRelatedModelEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedRelatedModelEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid RelatedModel", value)
@@ -51,7 +52,13 @@ func (v *RelatedModel) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v RelatedModel) IsValid() bool {
-	return slices.Contains(AllowedRelatedModelEnumValues, v)
+	for _, existing := range AllowedRelatedModelEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to relatedModel value.

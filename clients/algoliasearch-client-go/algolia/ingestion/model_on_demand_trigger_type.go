@@ -4,7 +4,6 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // OnDemandTriggerType Task is run manually, with the `/run` endpoint.
@@ -40,10 +39,12 @@ func (v *OnDemandTriggerType) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := OnDemandTriggerType(value)
-	if slices.Contains(AllowedOnDemandTriggerTypeEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedOnDemandTriggerTypeEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid OnDemandTriggerType", value)
@@ -51,7 +52,13 @@ func (v *OnDemandTriggerType) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v OnDemandTriggerType) IsValid() bool {
-	return slices.Contains(AllowedOnDemandTriggerTypeEnumValues, v)
+	for _, existing := range AllowedOnDemandTriggerTypeEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to OnDemandTriggerType value.

@@ -4,7 +4,6 @@ package search
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // SearchStrategy Strategy for multiple search queries:  - `none`. Run all queries. - `stopIfEnoughMatches`. Run the queries one by one, stopping as soon as a query matches at least the `hitsPerPage` number of results.
@@ -42,10 +41,12 @@ func (v *SearchStrategy) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := SearchStrategy(value)
-	if slices.Contains(AllowedSearchStrategyEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedSearchStrategyEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid SearchStrategy", value)
@@ -53,7 +54,13 @@ func (v *SearchStrategy) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v SearchStrategy) IsValid() bool {
-	return slices.Contains(AllowedSearchStrategyEnumValues, v)
+	for _, existing := range AllowedSearchStrategyEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to searchStrategy value.

@@ -4,7 +4,6 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // ScheduleTriggerType Task runs on a schedule.
@@ -40,10 +39,12 @@ func (v *ScheduleTriggerType) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := ScheduleTriggerType(value)
-	if slices.Contains(AllowedScheduleTriggerTypeEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedScheduleTriggerTypeEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid ScheduleTriggerType", value)
@@ -51,7 +52,13 @@ func (v *ScheduleTriggerType) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v ScheduleTriggerType) IsValid() bool {
-	return slices.Contains(AllowedScheduleTriggerTypeEnumValues, v)
+	for _, existing := range AllowedScheduleTriggerTypeEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to ScheduleTriggerType value.

@@ -4,7 +4,6 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // EventSortKeys Property by which to sort the list of task run events.
@@ -44,10 +43,12 @@ func (v *EventSortKeys) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := EventSortKeys(value)
-	if slices.Contains(AllowedEventSortKeysEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedEventSortKeysEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid EventSortKeys", value)
@@ -55,7 +56,13 @@ func (v *EventSortKeys) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v EventSortKeys) IsValid() bool {
-	return slices.Contains(AllowedEventSortKeysEnumValues, v)
+	for _, existing := range AllowedEventSortKeysEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to eventSortKeys value.

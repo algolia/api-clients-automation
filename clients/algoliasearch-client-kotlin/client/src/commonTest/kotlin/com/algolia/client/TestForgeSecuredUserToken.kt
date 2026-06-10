@@ -41,10 +41,11 @@ class TestForgeSecuredUserToken {
     val expectedHmacHex =
       encodeKeySHA256(key = "my-secret-key", message = "${parts[0]}.${parts[1]}")
     val actualSigBytes = Base64.UrlSafe.decode(parts[2])
-    val actualSigHex = actualSigBytes.joinToString("") {
-      val i = it.toInt() and 0xFF
-      "${"0123456789abcdef"[i shr 4]}${"0123456789abcdef"[i and 0xF]}"
-    }
+    val actualSigHex =
+      actualSigBytes.joinToString("") {
+        val i = it.toInt() and 0xFF
+        "${"0123456789abcdef"[i shr 4]}${"0123456789abcdef"[i and 0xF]}"
+      }
     assertEquals(expectedHmacHex, actualSigHex)
   }
 

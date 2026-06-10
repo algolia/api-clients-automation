@@ -4,7 +4,6 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // TriggerType Task trigger, describing when a task should run.  - `onDemand`.   Manually trigger the task with the `/run` endpoint.  - `schedule`.   Regularly trigger the task on a `cron` schedule.  - `subscription`.   Trigger the task after an event is received, such as, a webhook.  - `streaming`.   Run the task continuously.
@@ -46,10 +45,12 @@ func (v *TriggerType) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := TriggerType(value)
-	if slices.Contains(AllowedTriggerTypeEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedTriggerTypeEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid TriggerType", value)
@@ -57,7 +58,13 @@ func (v *TriggerType) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v TriggerType) IsValid() bool {
-	return slices.Contains(AllowedTriggerTypeEnumValues, v)
+	for _, existing := range AllowedTriggerTypeEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to TriggerType value.

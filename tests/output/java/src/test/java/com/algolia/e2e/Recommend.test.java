@@ -5,14 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import com.algolia.api.RecommendClient;
 import com.algolia.config.*;
 import com.algolia.model.recommend.*;
+import com.algolia.utils.TestHelpers;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.util.*;
 import org.junit.jupiter.api.*;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class RecommendClientRequestsTestsE2E {
@@ -53,7 +52,7 @@ class RecommendClientRequestsTestsE2E {
       )
     );
     assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
+      TestHelpers.lenientJsonAssert(
         "{\"results\":[{\"exhaustive\":{\"nbHits\":true,\"typo\":true},\"exhaustiveNbHits\":true,\"exhaustiveTypo\":true,\"index\":\"cts_e2e_browse\",\"page\":0,\"nbHits\":2,\"nbPages\":1,\"hitsPerPage\":2,\"hits\":[{\"objectID\":\"The" +
           " Transformers: The" +
           " Movie\",\"_highlightResult\":{\"genres\":[{\"matchLevel\":\"none\",\"matchedWords\":[],\"value\":\"Animated\"},{\"matchLevel\":\"none\",\"matchedWords\":[],\"value\":\"Action\"},{\"matchLevel\":\"none\",\"matchedWords\":[],\"value\":\"Science" +
@@ -69,8 +68,7 @@ class RecommendClientRequestsTestsE2E {
           " later.\",\"title\":\"The Transformers: The" +
           " Movie\",\"year\":1986},{\"objectID\":\"Treasure" +
           " Planet\",\"_score\":90.56,\"title\":\"Treasure Planet\",\"year\":2002}]}]}",
-        json.writeValueAsString(res),
-        JSONCompareMode.LENIENT
+        json.writeValueAsString(res)
       )
     );
   }

@@ -4,7 +4,6 @@ package composition
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // Action Type of Composition Batch operation.
@@ -42,10 +41,12 @@ func (v *Action) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := Action(value)
-	if slices.Contains(AllowedActionEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedActionEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid Action", value)
@@ -53,7 +54,13 @@ func (v *Action) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v Action) IsValid() bool {
-	return slices.Contains(AllowedActionEnumValues, v)
+	for _, existing := range AllowedActionEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to action value.

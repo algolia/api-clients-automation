@@ -4,7 +4,6 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // RunSortKeys Property by which to sort the list of task runs.
@@ -44,10 +43,12 @@ func (v *RunSortKeys) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := RunSortKeys(value)
-	if slices.Contains(AllowedRunSortKeysEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedRunSortKeysEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid RunSortKeys", value)
@@ -55,7 +56,13 @@ func (v *RunSortKeys) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v RunSortKeys) IsValid() bool {
-	return slices.Contains(AllowedRunSortKeysEnumValues, v)
+	for _, existing := range AllowedRunSortKeysEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to runSortKeys value.

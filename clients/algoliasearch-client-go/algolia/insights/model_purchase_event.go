@@ -4,7 +4,6 @@ package insights
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // PurchaseEvent the model 'PurchaseEvent'.
@@ -40,10 +39,12 @@ func (v *PurchaseEvent) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := PurchaseEvent(value)
-	if slices.Contains(AllowedPurchaseEventEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedPurchaseEventEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid PurchaseEvent", value)
@@ -51,7 +52,13 @@ func (v *PurchaseEvent) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v PurchaseEvent) IsValid() bool {
-	return slices.Contains(AllowedPurchaseEventEnumValues, v)
+	for _, existing := range AllowedPurchaseEventEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to PurchaseEvent value.

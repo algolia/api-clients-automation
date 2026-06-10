@@ -4,7 +4,6 @@ package search
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // SearchTypeFacet - `default`: perform a search query - `facet` [searches for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
@@ -40,10 +39,12 @@ func (v *SearchTypeFacet) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := SearchTypeFacet(value)
-	if slices.Contains(AllowedSearchTypeFacetEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedSearchTypeFacetEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid SearchTypeFacet", value)
@@ -51,7 +52,13 @@ func (v *SearchTypeFacet) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v SearchTypeFacet) IsValid() bool {
-	return slices.Contains(AllowedSearchTypeFacetEnumValues, v)
+	for _, existing := range AllowedSearchTypeFacetEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to searchTypeFacet value.

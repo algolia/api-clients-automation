@@ -42,9 +42,7 @@ export function createHttpRequester({
 
       if (request.data !== undefined && request.method === 'DELETE') {
         privateHeaders['content-length'] = String(
-          typeof request.data === 'string'
-            ? Buffer.byteLength(request.data)
-            : (request.data as Uint8Array).byteLength,
+          typeof request.data === 'string' ? Buffer.byteLength(request.data) : (request.data as Uint8Array).byteLength,
         );
       }
 

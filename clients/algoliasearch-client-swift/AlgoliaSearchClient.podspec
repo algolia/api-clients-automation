@@ -33,6 +33,8 @@ Pod::Spec.new do |s|
   s.subspec 'AgentStudio' do |subs|
     subs.source_files = 'Sources/AgentStudio/**/*.swift'
     subs.dependency 'AlgoliaSearchClient/Core'
+    # Search ships the `*WithTransformation` helpers, which use the Ingestion client.
+    subs.dependency 'AlgoliaSearchClient/Ingestion' if subs.name.end_with?('/Search')
   end
   s.subspec 'Analytics' do |subs|
     subs.source_files = 'Sources/Analytics/**/*.swift'

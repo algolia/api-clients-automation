@@ -4,7 +4,6 @@ package search
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // EventStatus the model 'EventStatus'.
@@ -50,10 +49,12 @@ func (v *EventStatus) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := EventStatus(value)
-	if slices.Contains(AllowedEventStatusEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedEventStatusEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid EventStatus", value)
@@ -61,7 +62,13 @@ func (v *EventStatus) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v EventStatus) IsValid() bool {
-	return slices.Contains(AllowedEventStatusEnumValues, v)
+	for _, existing := range AllowedEventStatusEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to EventStatus value.

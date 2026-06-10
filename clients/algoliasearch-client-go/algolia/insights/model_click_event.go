@@ -4,7 +4,6 @@ package insights
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // ClickEvent the model 'ClickEvent'.
@@ -40,10 +39,12 @@ func (v *ClickEvent) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := ClickEvent(value)
-	if slices.Contains(AllowedClickEventEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedClickEventEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid ClickEvent", value)
@@ -51,7 +52,13 @@ func (v *ClickEvent) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v ClickEvent) IsValid() bool {
-	return slices.Contains(AllowedClickEventEnumValues, v)
+	for _, existing := range AllowedClickEventEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to ClickEvent value.

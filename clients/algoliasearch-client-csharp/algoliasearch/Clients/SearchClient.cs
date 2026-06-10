@@ -5159,7 +5159,8 @@ public partial class SearchClient : ISearchClient
       new SearchConfig(applicationId, apiKey),
       new AlgoliaHttpRequester(loggerFactory),
       loggerFactory
-    ) { }
+    )
+  { }
 
   /// <summary>
   /// Initialize a client with custom config

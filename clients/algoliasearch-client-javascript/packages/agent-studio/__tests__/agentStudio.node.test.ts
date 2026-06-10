@@ -26,9 +26,7 @@ test('forgeSecuredUserToken with default expiry', () => {
   const expectedExp = Math.floor(Date.now() / 1000) + 24 * 3600;
   expect(Math.abs(payload.exp - expectedExp)).toBeLessThan(5);
 
-  const expectedSig = createHmac('sha256', 'my-secret-key')
-    .update(`${parts[0]}.${parts[1]}`)
-    .digest('base64url');
+  const expectedSig = createHmac('sha256', 'my-secret-key').update(`${parts[0]}.${parts[1]}`).digest('base64url');
   expect(parts[2]).toBe(expectedSig);
 });
 

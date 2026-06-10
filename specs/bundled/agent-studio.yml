@@ -23,16 +23,24 @@ security:
 tags:
   - name: Agents
     description: Manage your agents.
+  - name: Allowed Domains
+    description: Restrict where an agent's API key may be used.
   - name: Completions
     description: Generate completions.
   - name: Configurations
     description: Manage Agent Studio related application configurations.
+  - name: Conversations
+    description: View, export, and delete conversation history.
+  - name: Feedback
+    description: Capture user feedback on agent responses.
   - name: Internal
     description: Endpoints that are needed for internal or integration logic.
   - name: Providers
     description: Manage your LLM providers.
   - name: Secret Keys
     description: Manage secret keys used to authenticate requests.
+  - name: User Data
+    description: Manage end-user data associated with conversations.
 paths:
   /1/agents:
     get:
@@ -208,7 +216,7 @@ paths:
     get:
       tags:
         - agent-studio
-      operationId: listAgentAllowed-Domains
+      operationId: listAgentAllowedDomains
       x-acl:
         - settings
       summary: List Allowed Domains
@@ -237,7 +245,7 @@ paths:
     post:
       tags:
         - agent-studio
-      operationId: createAgentAllowed-Domain
+      operationId: createAgentAllowedDomain
       x-acl:
         - editSettings
       summary: Create Allowed Domain
@@ -275,7 +283,7 @@ paths:
     post:
       tags:
         - agent-studio
-      operationId: createBulk
+      operationId: bulkCreateAllowedDomains
       x-acl:
         - editSettings
       summary: Bulk Insert Allowed Domains
@@ -310,7 +318,7 @@ paths:
     delete:
       tags:
         - agent-studio
-      operationId: deleteBulk
+      operationId: bulkDeleteAllowedDomains
       x-acl:
         - editSettings
       summary: Bulk Delete Allowed Domains
@@ -452,6 +460,7 @@ paths:
       operationId: createAgentCompletion
       x-acl:
         - search
+      x-streaming: true
       summary: Create Completion
       description: >-
         Create a completion for the specified agent.
@@ -520,13 +529,17 @@ paths:
           schema:
             type: boolean
             description: >-
-              Set to false to skip Agent Studio analytics for this completion
-              (default: true).
+              Set to false to skip analytics for this completion (default:
+              true). Disables Agent Studio BigQuery analytics, Algolia search
+              analytics, click analytics, and query-suggestions training. Useful
+              for offline-eval workflows.
             default: true
             title: analytics
           description: >-
-            Set to false to skip Agent Studio analytics for this completion
-            (default: true).
+            Set to false to skip analytics for this completion (default: true).
+            Disables Agent Studio BigQuery analytics, Algolia search analytics,
+            click analytics, and query-suggestions training. Useful for
+            offline-eval workflows.
         - name: X-Algolia-Secure-User-Token
           in: header
           required: false
@@ -547,7 +560,9 @@ paths:
           description: Successful Response.
           content:
             application/json:
-              schema: {}
+              schema:
+                type: object
+                additionalProperties: true
         '422':
           description: Validation Error.
           content:
@@ -749,7 +764,10 @@ paths:
           description: Successful Response.
           content:
             application/json:
-              schema: {}
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConversationFullResponse'
         '422':
           description: Validation Error.
           content:
@@ -906,7 +924,7 @@ paths:
     get:
       tags:
         - agent-studio
-      operationId: getApplicationConfiguration
+      operationId: getConfiguration
       x-acl:
         - logs
       summary: Get Configuration
@@ -927,7 +945,7 @@ paths:
     patch:
       tags:
         - agent-studio
-      operationId: updateApplicationConfiguration
+      operationId: updateConfiguration
       x-acl:
         - logs
       summary: Patch Configuration
@@ -1247,7 +1265,7 @@ paths:
         - agent-studio
       operationId: createSecretKey
       x-acl:
-        - settings
+        - admin
       summary: Create Secret Key
       description: Create Secret Key.
       requestBody:
@@ -1304,7 +1322,7 @@ paths:
         - agent-studio
       operationId: updateSecretKey
       x-acl:
-        - settings
+        - admin
       summary: Patch Secret Key
       description: Patch Secret Key.
       parameters:
@@ -1339,7 +1357,7 @@ paths:
         - agent-studio
       operationId: deleteSecretKey
       x-acl:
-        - settings
+        - admin
       summary: Delete Secret Key
       description: Delete Secret Key.
       parameters:
@@ -1573,25 +1591,65 @@ components:
       enum:
         - draft
         - published
-    ClientToolsArgsSchema:
+    AlgoliaDisplayResultsToolConfig:
       properties:
+        name:
+          type: string
+          const: algolia_display_results
+          title: name
+          default: algolia_display_results
         type:
           type: string
-          const: object
+          const: algolia_display_results
           title: type
-          default: object
-        properties:
-          additionalProperties: true
-          type: object
-          title: properties
-        required:
-          items:
-            type: string
-          type: array
-          title: required
+          default: algolia_display_results
+        minGroups:
+          type: integer
+          minimum: 1
+          title: mingroups
+          default: 1
+        maxGroups:
+          type: integer
+          minimum: 1
+          title: maxgroups
+          default: 3
+        minResultsPerGroup:
+          type: integer
+          minimum: 1
+          title: minresultspergroup
+          default: 3
+        maxResultsPerGroup:
+          type: integer
+          minimum: 1
+          title: maxresultspergroup
+          default: 6
       type: object
-      title: clientToolsArgsSchema
-    ClientSideToolConfig:
+      title: algoliaDisplayResultsToolConfig
+      description: Configuration for the algolia_display_results tool.
+      required:
+        - type
+    AlgoliaRecommendToolIndexConfig:
+      properties:
+        index:
+          type: string
+          maxLength: 100
+          minLength: 1
+          title: index
+        modelName:
+          type: string
+          maxLength: 100
+          minLength: 1
+          title: modelname
+        description:
+          type: string
+          title: description
+          default: ''
+      type: object
+      required:
+        - index
+        - modelName
+      title: algoliaRecommendToolIndexConfig
+    AlgoliaRecommendToolConfig-Input:
       properties:
         name:
           type: string
@@ -1600,22 +1658,27 @@ components:
           title: name
         type:
           type: string
-          const: client_side
+          const: algolia_recommend
           title: type
-          default: client_side
-        description:
-          type: string
-          maxLength: 200
-          minLength: 1
-          title: description
-        inputSchema:
-          $ref: '#/components/schemas/ClientToolsArgsSchema'
+          default: algolia_recommend
+        allowedConfigs:
+          items:
+            $ref: '#/components/schemas/AlgoliaRecommendToolIndexConfig'
+          type: array
+          title: allowedconfigs
+          default: []
+        predefinedRecommendParameters:
+          additionalProperties: true
+          type: object
+          title: predefinedrecommendparameters
       type: object
       required:
+        - type
         - name
-        - description
-        - inputSchema
-      title: clientSideToolConfig
+      title: algoliaRecommendToolConfig
+      description: |-
+        Configuration for the Algolia Recommend tool.
+        Allows specifying recommend models and related parameters.
     QueryType:
       type: string
       enum:
@@ -1630,10 +1693,6 @@ components:
         treats all query words as prefixes. This might lead to counterintuitive
         results and makes your search slower.  For more information, see [Prefix
         searching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching).
-    QueryTypeNullable:
-      oneOf:
-        - $ref: '#/components/schemas/QueryType'
-        - type: 'null'
     SupportedLanguage:
       type: string
       enum:
@@ -1741,22 +1800,32 @@ components:
             $ref: '#/components/schemas/AlternativesAsExact'
           type: array
         - type: 'null'
-    TypoToleranceUnionSearchParametersOutput:
+    TypoToleranceEnum:
+      type: string
+      enum:
+        - min
+        - strict
+        - 'true'
+        - 'false'
+      title: typoToleranceEnum
+      description: >-
+        - `min`. Return matches with the lowest number of typos.   For example,
+        if you have matches without typos, only include those.   But if there
+        are no matches without typos (with 1 typo), include matches with 1 typo
+        (2 typos). - `strict`. Return matches with the two lowest numbers of
+        typos.   With `strict`, the Typo ranking criterion is applied first in
+        the `ranking` setting.
+    TypoToleranceUnion:
       oneOf:
         - type: boolean
-        - type: string
+        - $ref: '#/components/schemas/TypoToleranceEnum'
         - type: 'null'
-    FacetFilters-OutputUnion:
+    FacetFiltersUnion:
       oneOf:
         - items:
-            $ref: '#/components/schemas/FacetFilters-OutputUnion'
+            $ref: '#/components/schemas/FacetFiltersUnion'
           type: array
         - type: string
-        - type: 'null'
-    FacetFiltersOutputNullable:
-      oneOf:
-        - $ref: '#/components/schemas/FacetFilters-OutputUnion'
-        - type: 'null'
     Facets:
       properties:
         order:
@@ -1780,16 +1849,16 @@ components:
     NumericFiltersUnion:
       oneOf:
         - type: string
-        - items:
+        - type: array
+          items:
             $ref: '#/components/schemas/NumericFiltersUnion'
-          type: array
         - type: 'null'
     TagFiltersUnion:
       oneOf:
         - type: string
-        - items:
+        - type: array
+          items:
             $ref: '#/components/schemas/TagFiltersUnion'
-          type: array
         - type: 'null'
     AroundRadiusUnion:
       oneOf:
@@ -1832,21 +1901,22 @@ components:
       oneOf:
         - type: string
         - items:
-            $ref: '#/components/schemas/ReRankingApplyFilterUnion'
+            type: object
+            additionalProperties: true
           type: array
         - type: 'null'
-    RemoveStopWordsUnionSearchParametersOutput:
+    RemoveStopWordsUnion:
       oneOf:
         - type: boolean
         - items:
-            type: string
+            $ref: '#/components/schemas/SupportedLanguage'
           type: array
         - type: 'null'
-    IgnorePluralsUnionSearchParametersOutput:
+    IgnorePluralsUnion:
       oneOf:
         - type: boolean
         - items:
-            type: string
+            $ref: '#/components/schemas/SupportedLanguage'
           type: array
         - type: 'null'
     RemoveWordsIfNoResults:
@@ -1868,10 +1938,6 @@ components:
         removed.  - `allOptional`.   Treat all words as optional.  For more
         information, see [Remove words to improve
         results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results).
-    RemoveWordsIfNoResultsNullable:
-      oneOf:
-        - $ref: '#/components/schemas/RemoveWordsIfNoResults'
-        - type: 'null'
     OptionalWordsUnion:
       oneOf:
         - type: string
@@ -1882,9 +1948,9 @@ components:
     OptionalFiltersUnion:
       oneOf:
         - type: string
-        - items:
+        - type: array
+          items:
             $ref: '#/components/schemas/OptionalFiltersUnion'
-          type: array
         - type: 'null'
     ExactOnSingleWordQuery:
       type: string
@@ -1905,942 +1971,18 @@ components:
         query word must have at least 3 characters and must not be a stop
         word.   Only exact matches will be highlighted,   partial and prefix
         matches won't.
-    ExactOnSingleWordQueryNullable:
-      oneOf:
-        - $ref: '#/components/schemas/ExactOnSingleWordQuery'
-        - type: 'null'
     NaturalLanguagesUnion:
       oneOf:
         - items:
             $ref: '#/components/schemas/SupportedLanguage'
           type: array
         - type: 'null'
-    SearchParameters-Output:
+    SearchParameters:
       properties:
         queryType:
-          $ref: '#/components/schemas/QueryTypeNullable'
-        similarQuery:
           oneOf:
-            - type: string
+            - $ref: '#/components/schemas/QueryType'
             - type: 'null'
-          title: similarquery
-        queryLanguages:
-          $ref: '#/components/schemas/QueryLanguagesUnion'
-        advancedSyntax:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: advancedsyntax
-        advancedSyntaxFeatures:
-          $ref: '#/components/schemas/AdvancedSyntaxFeaturesUnion'
-        alternativesAsExact:
-          $ref: '#/components/schemas/AlternativesAsExactUnion'
-        decompoundQuery:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: decompoundquery
-        typoTolerance:
-          $ref: '#/components/schemas/TypoToleranceUnionSearchParametersOutput'
-        allowTyposOnNumericTokens:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: allowtyposonnumerictokens
-        minWordSizeFor1Typo:
-          oneOf:
-            - type: integer
-            - type: 'null'
-          title: minwordsizefor1Typo
-        minWordSizeFor2Typos:
-          oneOf:
-            - type: integer
-            - type: 'null'
-          title: minwordsizefor2Typos
-        disableTypoToleranceOnAttributes:
-          oneOf:
-            - items:
-                type: string
-              type: array
-            - type: 'null'
-          title: disabletypotoleranceonattributes
-        filters:
-          oneOf:
-            - type: string
-            - type: 'null'
-          title: filters
-        facetFilters:
-          $ref: '#/components/schemas/FacetFiltersOutputNullable'
-        facets:
-          $ref: '#/components/schemas/FacetsUnion'
-        maxValuesPerFacet:
-          oneOf:
-            - type: integer
-            - type: 'null'
-          title: maxvaluesperfacet
-        maxFacetHits:
-          oneOf:
-            - type: integer
-            - type: 'null'
-          title: maxfacethits
-        facetingAfterDistinct:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: facetingafterdistinct
-        sortFacetValuesBy:
-          oneOf:
-            - type: string
-            - type: 'null'
-          title: sortfacetvaluesby
-        numericFilters:
-          $ref: '#/components/schemas/NumericFiltersUnion'
-        tagFilters:
-          $ref: '#/components/schemas/TagFiltersUnion'
-        sumOrFiltersScores:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: sumorfiltersscores
-        aroundLatLng:
-          oneOf:
-            - type: string
-            - type: 'null'
-          title: aroundlatlng
-        aroundLatLngViaIp:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: aroundlatlngviaip
-        aroundRadius:
-          $ref: '#/components/schemas/AroundRadiusUnion'
-        aroundPrecision:
-          $ref: '#/components/schemas/AroundPrecisionUnion'
-        minimumAroundRadius:
-          oneOf:
-            - type: integer
-            - type: 'null'
-          title: minimumaroundradius
-        insideBoundingBox:
-          $ref: '#/components/schemas/InsideBoundingBoxUnion'
-        insidePolygon:
-          $ref: '#/components/schemas/InsidePolygonUnion'
-        attributesToRetrieve:
-          oneOf:
-            - items:
-                type: string
-              type: array
-            - type: 'null'
-          title: attributestoretrieve
-        attributesToSnippet:
-          oneOf:
-            - items:
-                type: string
-              type: array
-            - type: 'null'
-          title: attributestosnippet
-        snippetEllipsisText:
-          oneOf:
-            - type: string
-            - type: 'null'
-          title: snippetellipsistext
-        restrictHighlightAndSnippetArrays:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: restricthighlightandsnippetarrays
-        page:
-          oneOf:
-            - type: integer
-            - type: 'null'
-          title: page
-        offset:
-          oneOf:
-            - type: integer
-            - type: 'null'
-          title: offset
-        hitsPerPage:
-          oneOf:
-            - type: integer
-            - type: 'null'
-          title: hitsperpage
-        length:
-          oneOf:
-            - type: integer
-            - type: 'null'
-          title: length
-        getRankingInfo:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: getrankinginfo
-        relevancyStrictness:
-          oneOf:
-            - type: integer
-            - type: 'null'
-          title: relevancystrictness
-        minProximity:
-          oneOf:
-            - type: integer
-            - type: 'null'
-          title: minproximity
-        attributeCriteriaComputedByMinProximity:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: attributecriteriacomputedbyminproximity
-        distinct:
-          $ref: '#/components/schemas/DistinctUnion'
-        enableRules:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: enablerules
-        enablePersonalization:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: enablepersonalization
-        personalizationImpact:
-          oneOf:
-            - type: integer
-            - type: 'null'
-          title: personalizationimpact
-        enableAbTest:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: enableabtest
-        enableReRanking:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: enablereranking
-        reRankingApplyFilter:
-          $ref: '#/components/schemas/ReRankingApplyFilterUnion'
-        ruleContexts:
-          oneOf:
-            - items:
-                type: string
-              type: array
-            - type: 'null'
-          title: rulecontexts
-        removeStopWords:
-          $ref: '#/components/schemas/RemoveStopWordsUnionSearchParametersOutput'
-        ignorePlurals:
-          $ref: '#/components/schemas/IgnorePluralsUnionSearchParametersOutput'
-        removeWordsIfNoResults:
-          $ref: '#/components/schemas/RemoveWordsIfNoResultsNullable'
-        optionalWords:
-          $ref: '#/components/schemas/OptionalWordsUnion'
-        optionalFilters:
-          $ref: '#/components/schemas/OptionalFiltersUnion'
-        synonyms:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: synonyms
-        replaceSynonymsInHighlight:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: replacesynonymsinhighlight
-        analytics:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: analytics
-        analyticsTags:
-          oneOf:
-            - items:
-                type: string
-              type: array
-            - type: 'null'
-          title: analyticstags
-        clickAnalytics:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: clickanalytics
-        userToken:
-          oneOf:
-            - type: string
-            - type: 'null'
-          title: usertoken
-        restrictSearchableAttributes:
-          oneOf:
-            - items:
-                type: string
-              type: array
-            - type: 'null'
-          title: restrictsearchableattributes
-        disableExactOnAttributes:
-          oneOf:
-            - items:
-                type: string
-              type: array
-            - type: 'null'
-          title: disableexactonattributes
-        exactOnSingleWordQuery:
-          $ref: '#/components/schemas/ExactOnSingleWordQueryNullable'
-        naturalLanguages:
-          $ref: '#/components/schemas/NaturalLanguagesUnion'
-        percentileComputation:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: percentilecomputation
-        explain:
-          oneOf:
-            - items:
-                type: string
-              type: array
-            - type: 'null'
-          title: explain
-      type: object
-      title: searchParameters
-      description: >-
-        Algolia Search API parameters that can be predefined for the search
-        tool.
-
-        Reference:
-        https://www.algolia.com/doc/api-reference/search-api-parameters/
-
-
-        The parameters that seemed irrelevant for the search tool have been
-        commented out.
-
-        Uses types from algoliasearch.search.models for better type safety.
-    SearchParametersOutputNullable:
-      oneOf:
-        - $ref: '#/components/schemas/SearchParameters-Output'
-        - type: 'null'
-    TextParam:
-      properties:
-        exposed:
-          type: boolean
-          title: exposed
-        default:
-          oneOf:
-            - type: string
-            - type: 'null'
-          title: default
-      type: object
-      required:
-        - exposed
-      title: textParam
-      description: A text search parameter with exposure control.
-    TextParamNullable:
-      oneOf:
-        - $ref: '#/components/schemas/TextParam'
-        - type: 'null'
-    NumberParamConstraint:
-      properties:
-        min:
-          oneOf:
-            - type: integer
-            - type: 'null'
-          title: min
-        max:
-          oneOf:
-            - type: integer
-            - type: 'null'
-          title: max
-      type: object
-      title: numberParamConstraint
-      description: Constraints for a number parameter.
-    NumberParamConstraintNullable:
-      oneOf:
-        - $ref: '#/components/schemas/NumberParamConstraint'
-        - type: 'null'
-    NumberParam:
-      properties:
-        exposed:
-          type: boolean
-          title: exposed
-        default:
-          oneOf:
-            - type: integer
-            - type: 'null'
-          title: default
-        constraint:
-          $ref: '#/components/schemas/NumberParamConstraintNullable'
-      type: object
-      required:
-        - exposed
-      title: numberParam
-      description: >-
-        A number search parameter with exposure control and optional
-        constraints.
-    NumberParamNullable:
-      oneOf:
-        - $ref: '#/components/schemas/NumberParam'
-        - type: 'null'
-    StringArrayParamConstraint:
-      properties:
-        values:
-          oneOf:
-            - items:
-                type: string
-              type: array
-            - type: 'null'
-          title: values
-      type: object
-      title: stringArrayParamConstraint
-      description: Constraints for a string array parameter.
-    StringArrayParamConstraintNullable:
-      oneOf:
-        - $ref: '#/components/schemas/StringArrayParamConstraint'
-        - type: 'null'
-    StringArrayParam:
-      properties:
-        exposed:
-          type: boolean
-          title: exposed
-        default:
-          oneOf:
-            - items:
-                type: string
-              type: array
-            - type: 'null'
-          title: default
-        constraint:
-          $ref: '#/components/schemas/StringArrayParamConstraintNullable'
-        merge:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: merge
-      type: object
-      required:
-        - exposed
-      title: stringArrayParam
-      description: >-
-        A string array search parameter with exposure control, constraints, and
-        merge behavior.
-    StringArrayParamNullable:
-      oneOf:
-        - $ref: '#/components/schemas/StringArrayParam'
-        - type: 'null'
-    FacetsParam:
-      properties:
-        exposed:
-          type: boolean
-          const: false
-          title: exposed
-          default: false
-        default:
-          oneOf:
-            - items:
-                type: string
-              type: array
-            - type: 'null'
-          title: default
-      type: object
-      title: facetsParam
-      description: A facets parameter that is always hidden from the LLM.
-    FacetsParamNullable:
-      oneOf:
-        - $ref: '#/components/schemas/FacetsParam'
-        - type: 'null'
-    IndexSearchParameters-Output:
-      properties:
-        query:
-          $ref: '#/components/schemas/TextParamNullable'
-        hitsPerPage:
-          $ref: '#/components/schemas/NumberParamNullable'
-        page:
-          $ref: '#/components/schemas/NumberParamNullable'
-        attributesToRetrieve:
-          $ref: '#/components/schemas/StringArrayParamNullable'
-        responseFields:
-          $ref: '#/components/schemas/StringArrayParamNullable'
-        facets:
-          $ref: '#/components/schemas/FacetsParamNullable'
-        custom:
-          oneOf:
-            - additionalProperties: true
-              type: object
-            - type: 'null'
-          title: custom
-      type: object
-      title: indexSearchParameters
-      description: >-
-        Structured search parameters configuration for an Algolia index.
-
-
-        Each parameter controls whether it is exposed to the LLM, its default
-        value,
-
-        optional constraints, and merge behavior.
-    IndexSearchParametersOutputNullable:
-      oneOf:
-        - $ref: '#/components/schemas/IndexSearchParameters-Output'
-        - type: 'null'
-    AlgoliaSearchToolIndexConfig-Output:
-      properties:
-        index:
-          type: string
-          maxLength: 100
-          minLength: 1
-          title: index
-        description:
-          type: string
-          maxLength: 3000
-          minLength: 1
-          title: description
-        enhancedDescription:
-          type: string
-          title: enhanceddescription
-          default: ''
-        searchParameters:
-          $ref: '#/components/schemas/SearchParametersOutputNullable'
-        searchControls:
-          $ref: '#/components/schemas/IndexSearchParametersOutputNullable'
-      type: object
-      required:
-        - index
-        - description
-      title: algoliaSearchToolIndexConfig
-    AlgoliaSearchToolConfig-Output:
-      properties:
-        name:
-          type: string
-          maxLength: 32
-          minLength: 3
-          title: name
-        type:
-          type: string
-          const: algolia_search_index
-          title: type
-          default: algolia_search_index
-        indices:
-          items:
-            $ref: '#/components/schemas/AlgoliaSearchToolIndexConfig-Output'
-          type: array
-          title: indices
-        description:
-          type: string
-          title: description
-          readOnly: true
-      type: object
-      required:
-        - name
-        - indices
-        - description
-      title: algoliaSearchToolConfig
-    AlgoliaRecommendToolIndexConfig:
-      properties:
-        index:
-          type: string
-          maxLength: 100
-          minLength: 1
-          title: index
-        modelName:
-          type: string
-          maxLength: 100
-          minLength: 1
-          title: modelname
-        description:
-          type: string
-          title: description
-          default: ''
-      type: object
-      required:
-        - index
-        - modelName
-      title: algoliaRecommendToolIndexConfig
-    AlgoliaRecommendToolConfig-Output:
-      properties:
-        name:
-          type: string
-          maxLength: 32
-          minLength: 3
-          title: name
-        type:
-          type: string
-          const: algolia_recommend
-          title: type
-          default: algolia_recommend
-        allowedConfigs:
-          items:
-            $ref: '#/components/schemas/AlgoliaRecommendToolIndexConfig'
-          type: array
-          title: allowedconfigs
-          default: []
-        predefinedRecommendParameters:
-          additionalProperties: true
-          type: object
-          title: predefinedrecommendparameters
-        description:
-          type: string
-          title: description
-          readOnly: true
-      type: object
-      required:
-        - name
-        - description
-      title: algoliaRecommendToolConfig
-      description: |-
-        Configuration for the Algolia Recommend tool.
-        Allows specifying recommend models and related parameters.
-    AlgoliaDisplayResultsToolConfig:
-      properties:
-        name:
-          type: string
-          const: algolia_display_results
-          title: name
-          default: algolia_display_results
-        type:
-          type: string
-          const: algolia_display_results
-          title: type
-          default: algolia_display_results
-        minGroups:
-          type: integer
-          minimum: 1
-          title: mingroups
-          default: 1
-        maxGroups:
-          type: integer
-          minimum: 1
-          title: maxgroups
-          default: 3
-        minResultsPerGroup:
-          type: integer
-          minimum: 1
-          title: minresultspergroup
-          default: 3
-        maxResultsPerGroup:
-          type: integer
-          minimum: 1
-          title: maxresultspergroup
-          default: 6
-      type: object
-      title: algoliaDisplayResultsToolConfig
-      description: Configuration for the algolia_display_results tool.
-    McpToolConfig:
-      properties:
-        requiresApproval:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: requiresapproval
-          default: false
-        alias:
-          oneOf:
-            - type: string
-              maxLength: 32
-              minLength: 3
-            - type: 'null'
-          title: alias
-      type: object
-      title: mcpToolConfig
-    ToolConfig:
-      oneOf:
-        - $ref: '#/components/schemas/McpToolConfig'
-        - type: boolean
-    AllowedToolsUnion:
-      oneOf:
-        - additionalProperties:
-            $ref: '#/components/schemas/ToolConfig'
-          type: object
-        - type: 'null'
-    McpServerToolConfig-Output:
-      properties:
-        url:
-          type: string
-          maxLength: 512
-          minLength: 1
-          title: url
-        transport:
-          type: string
-          const: streamable_http
-          title: transport
-          default: streamable_http
-        headers:
-          additionalProperties:
-            type: string
-          type: object
-          title: headers
-        name:
-          type: string
-          maxLength: 32
-          minLength: 3
-          title: name
-        type:
-          type: string
-          const: mcp_tools
-          title: type
-          default: mcp_tools
-        id:
-          oneOf:
-            - type: string
-            - type: 'null'
-          title: id
-          description: Stable unique identifier for this MCP tool.
-        allowedTools:
-          $ref: '#/components/schemas/AllowedToolsUnion'
-      type: object
-      required:
-        - url
-        - headers
-        - name
-      title: mcpServerToolConfig
-    UnknownToolConfig:
-      properties:
-        name:
-          type: string
-          maxLength: 32
-          minLength: 3
-          title: name
-        type:
-          type: string
-          const: unknown
-          title: type
-          default: unknown
-      additionalProperties: true
-      type: object
-      required:
-        - name
-      title: unknownToolConfig
-      description: >-
-        Exists only to ensure that when you change branch from toolX to
-        feat/toolY, your config stays valid.
-    ToolConfigOutput:
-      oneOf:
-        - $ref: '#/components/schemas/ClientSideToolConfig'
-        - $ref: '#/components/schemas/AlgoliaSearchToolConfig-Output'
-        - $ref: '#/components/schemas/AlgoliaRecommendToolConfig-Output'
-        - $ref: '#/components/schemas/AlgoliaDisplayResultsToolConfig'
-        - $ref: '#/components/schemas/McpServerToolConfig-Output'
-        - $ref: '#/components/schemas/UnknownToolConfig'
-    AgentWithVersionResponse:
-      properties:
-        id:
-          type: string
-          title: id
-        name:
-          type: string
-          title: name
-        description:
-          oneOf:
-            - type: string
-            - type: 'null'
-          title: description
-        status:
-          $ref: '#/components/schemas/AgentStatus'
-        providerId:
-          oneOf:
-            - type: string
-            - type: 'null'
-          title: providerid
-        model:
-          oneOf:
-            - type: string
-            - type: 'null'
-          title: model
-        instructions:
-          type: string
-          title: instructions
-        systemPrompt:
-          oneOf:
-            - type: string
-            - type: 'null'
-          title: systemprompt
-        config:
-          additionalProperties: true
-          type: object
-          title: config
-        tools:
-          items:
-            $ref: '#/components/schemas/ToolConfigOutput'
-          type: array
-          title: tools
-        templateType:
-          oneOf:
-            - type: string
-            - type: 'null'
-          title: templatetype
-        createdAt:
-          type: string
-          title: createdat
-        updatedAt:
-          oneOf:
-            - type: string
-            - type: 'null'
-          title: updatedat
-        lastUsedAt:
-          oneOf:
-            - type: string
-            - type: 'null'
-          title: lastusedat
-      type: object
-      required:
-        - id
-        - name
-        - description
-        - status
-        - providerId
-        - instructions
-        - config
-        - createdAt
-        - updatedAt
-        - lastUsedAt
-      title: agentWithVersionResponse
-    PaginationMetadata:
-      properties:
-        page:
-          type: integer
-          title: page
-        limit:
-          type: integer
-          title: limit
-        totalCount:
-          type: integer
-          title: totalcount
-        totalPages:
-          type: integer
-          title: totalpages
-      type: object
-      required:
-        - page
-        - limit
-        - totalCount
-        - totalPages
-      title: paginationMetadata
-    PaginatedAgentsResponse:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/AgentWithVersionResponse'
-          type: array
-          title: data
-        pagination:
-          $ref: '#/components/schemas/PaginationMetadata'
-      type: object
-      required:
-        - data
-        - pagination
-      title: paginatedAgentsResponse
-    LocationItemUnion:
-      oneOf:
-        - type: string
-        - type: integer
-    ValidationError:
-      properties:
-        loc:
-          items:
-            $ref: '#/components/schemas/LocationItemUnion'
-          type: array
-          title: location
-        msg:
-          type: string
-          title: message
-        type:
-          type: string
-          title: errorType
-      type: object
-      required:
-        - loc
-        - msg
-        - type
-      title: validationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: detail
-      type: object
-      title: hTTPValidationError
-    TypoToleranceEnum:
-      type: string
-      enum:
-        - min
-        - strict
-        - 'true'
-        - 'false'
-      title: typoToleranceEnum
-      description: >-
-        - `min`. Return matches with the lowest number of typos.   For example,
-        if you have matches without typos, only include those.   But if there
-        are no matches without typos (with 1 typo), include matches with 1 typo
-        (2 typos). - `strict`. Return matches with the two lowest numbers of
-        typos.   With `strict`, the Typo ranking criterion is applied first in
-        the `ranking` setting.
-    TypoToleranceUnion:
-      oneOf:
-        - type: boolean
-        - $ref: '#/components/schemas/TypoToleranceEnum'
-        - type: 'null'
-    FacetFilters-Input:
-      properties:
-        oneof_schema_1_validator:
-          $ref: '#/components/schemas/Oneof_schema_1_validatorUnion'
-        oneof_schema_2_validator:
-          oneOf:
-            - type: string
-            - type: 'null'
-          title: oneofSchema2Validator
-        actual_instance:
-          $ref: '#/components/schemas/Actual_instanceUnion'
-        one_of_schemas:
-          items:
-            type: string
-          type: array
-          title: oneOfSchemas
-          default:
-            - str
-            - List[FacetFilters]
-      type: object
-      title: facetFilters
-      description: >-
-        Filter the search by facet values, so that only records with the same
-        facet values are retrieved.  **Prefer using the `filters` parameter,
-        which supports all filter types and combinations with boolean
-        operators.**  - `[filter1, filter2]` is interpreted as `filter1 AND
-        filter2`. - `[[filter1, filter2], filter3]` is interpreted as `filter1
-        OR filter2 AND filter3`. - `facet:-value` is interpreted as `NOT
-        facet:value`.  While it's best to avoid attributes that start with a
-        `-`, you can still filter them by escaping with a backslash:
-        `facet:\-value`.
-    Oneof_schema_1_validatorUnion:
-      oneOf:
-        - items:
-            $ref: '#/components/schemas/FacetFilters-Input'
-          type: array
-        - type: 'null'
-    Actual_instanceUnion:
-      oneOf:
-        - items:
-            $ref: '#/components/schemas/FacetFilters-Input'
-          type: array
-        - type: string
-        - type: 'null'
-    FacetFiltersInputNullable:
-      oneOf:
-        - $ref: '#/components/schemas/FacetFilters-Input'
-        - type: 'null'
-    RemoveStopWordsUnion:
-      oneOf:
-        - type: boolean
-        - items:
-            $ref: '#/components/schemas/SupportedLanguage'
-          type: array
-        - type: 'null'
-    IgnorePluralsUnion:
-      oneOf:
-        - type: boolean
-        - items:
-            $ref: '#/components/schemas/SupportedLanguage'
-          type: array
-        - type: 'null'
-    SearchParameters-Input:
-      properties:
-        queryType:
-          $ref: '#/components/schemas/QueryTypeNullable'
         similarQuery:
           oneOf:
             - type: string
@@ -2892,7 +2034,9 @@ components:
             - type: 'null'
           title: filters
         facetFilters:
-          $ref: '#/components/schemas/FacetFiltersInputNullable'
+          oneOf:
+            - $ref: '#/components/schemas/FacetFiltersUnion'
+            - type: 'null'
         facets:
           $ref: '#/components/schemas/FacetsUnion'
         maxValuesPerFacet:
@@ -3052,7 +2196,9 @@ components:
         ignorePlurals:
           $ref: '#/components/schemas/IgnorePluralsUnion'
         removeWordsIfNoResults:
-          $ref: '#/components/schemas/RemoveWordsIfNoResultsNullable'
+          oneOf:
+            - $ref: '#/components/schemas/RemoveWordsIfNoResults'
+            - type: 'null'
         optionalWords:
           $ref: '#/components/schemas/OptionalWordsUnion'
         optionalFilters:
@@ -3104,7 +2250,9 @@ components:
             - type: 'null'
           title: disableexactonattributes
         exactOnSingleWordQuery:
-          $ref: '#/components/schemas/ExactOnSingleWordQueryNullable'
+          oneOf:
+            - $ref: '#/components/schemas/ExactOnSingleWordQuery'
+            - type: 'null'
         naturalLanguages:
           $ref: '#/components/schemas/NaturalLanguagesUnion'
         percentileComputation:
@@ -3133,24 +2281,132 @@ components:
         commented out.
 
         Uses types from algoliasearch.search.models for better type safety.
-    SearchParametersInputNullable:
-      oneOf:
-        - $ref: '#/components/schemas/SearchParameters-Input'
-        - type: 'null'
-    IndexSearchParameters-Input:
+    TextParam:
+      properties:
+        exposed:
+          type: boolean
+          title: exposed
+        default:
+          oneOf:
+            - type: string
+            - type: 'null'
+          title: default
+      type: object
+      required:
+        - exposed
+      title: textParam
+      description: A text search parameter with exposure control.
+    NumberParamConstraint:
+      properties:
+        min:
+          oneOf:
+            - type: integer
+            - type: 'null'
+          title: min
+        max:
+          oneOf:
+            - type: integer
+            - type: 'null'
+          title: max
+      type: object
+      title: numberParamConstraint
+      description: Constraints for a number parameter.
+    NumberParam:
+      properties:
+        exposed:
+          type: boolean
+          title: exposed
+        default:
+          oneOf:
+            - type: integer
+            - type: 'null'
+          title: default
+        constraint:
+          oneOf:
+            - $ref: '#/components/schemas/NumberParamConstraint'
+            - type: 'null'
+      type: object
+      required:
+        - exposed
+      title: numberParam
+      description: >-
+        A number search parameter with exposure control and optional
+        constraints.
+    StringArrayParamConstraint:
+      properties:
+        values:
+          oneOf:
+            - items:
+                type: string
+              type: array
+            - type: 'null'
+          title: values
+      type: object
+      title: stringArrayParamConstraint
+      description: Constraints for a string array parameter.
+    StringArrayParam:
+      properties:
+        exposed:
+          type: boolean
+          title: exposed
+        default:
+          oneOf:
+            - items:
+                type: string
+              type: array
+            - type: 'null'
+          title: default
+        constraint:
+          oneOf:
+            - $ref: '#/components/schemas/StringArrayParamConstraint'
+            - type: 'null'
+        merge:
+          oneOf:
+            - type: boolean
+            - type: 'null'
+          title: merge
+      type: object
+      required:
+        - exposed
+      title: stringArrayParam
+      description: >-
+        A string array search parameter with exposure control, constraints, and
+        merge behavior.
+    FacetsParam:
+      properties:
+        exposed:
+          type: boolean
+          const: false
+          title: exposed
+          default: false
+        default:
+          oneOf:
+            - items:
+                type: string
+              type: array
+            - type: 'null'
+          title: default
+      type: object
+      title: facetsParam
+      description: A facets parameter that is always hidden from the LLM.
+    IndexSearchParameters:
       properties:
         query:
-          $ref: '#/components/schemas/TextParamNullable'
+          oneOf:
+            - $ref: '#/components/schemas/TextParam'
+            - type: 'null'
         hitsPerPage:
-          $ref: '#/components/schemas/NumberParamNullable'
+          $ref: '#/components/schemas/NumberParam'
         page:
-          $ref: '#/components/schemas/NumberParamNullable'
+          $ref: '#/components/schemas/NumberParam'
         attributesToRetrieve:
-          $ref: '#/components/schemas/StringArrayParamNullable'
+          $ref: '#/components/schemas/StringArrayParam'
         responseFields:
-          $ref: '#/components/schemas/StringArrayParamNullable'
+          $ref: '#/components/schemas/StringArrayParam'
         facets:
-          $ref: '#/components/schemas/FacetsParamNullable'
+          oneOf:
+            - $ref: '#/components/schemas/FacetsParam'
+            - type: 'null'
         custom:
           oneOf:
             - additionalProperties: true
@@ -3167,11 +2423,7 @@ components:
         value,
 
         optional constraints, and merge behavior.
-    IndexSearchParametersInputNullable:
-      oneOf:
-        - $ref: '#/components/schemas/IndexSearchParameters-Input'
-        - type: 'null'
-    AlgoliaSearchToolIndexConfig-Input:
+    AlgoliaSearchToolIndexConfig:
       properties:
         index:
           type: string
@@ -3188,15 +2440,19 @@ components:
           title: enhanceddescription
           default: ''
         searchParameters:
-          $ref: '#/components/schemas/SearchParametersInputNullable'
+          oneOf:
+            - $ref: '#/components/schemas/SearchParameters'
+            - type: 'null'
         searchControls:
-          $ref: '#/components/schemas/IndexSearchParametersInputNullable'
+          oneOf:
+            - $ref: '#/components/schemas/IndexSearchParameters'
+            - type: 'null'
       type: object
       required:
         - index
         - description
       title: algoliaSearchToolIndexConfig
-    AlgoliaSearchToolConfig-Input:
+    AlgoliaSearchToolConfig:
       properties:
         name:
           type: string
@@ -3210,15 +2466,34 @@ components:
           default: algolia_search_index
         indices:
           items:
-            $ref: '#/components/schemas/AlgoliaSearchToolIndexConfig-Input'
+            $ref: '#/components/schemas/AlgoliaSearchToolIndexConfig'
           type: array
           title: indices
       type: object
       required:
+        - type
         - name
         - indices
       title: algoliaSearchToolConfig
-    AlgoliaRecommendToolConfig-Input:
+    ClientToolsArgsSchema:
+      properties:
+        type:
+          type: string
+          const: object
+          title: type
+          default: object
+        properties:
+          additionalProperties: true
+          type: object
+          title: properties
+        required:
+          items:
+            type: string
+          type: array
+          title: required
+      type: object
+      title: clientToolsArgsSchema
+    ClientSideToolConfig:
       properties:
         name:
           type: string
@@ -3227,27 +2502,51 @@ components:
           title: name
         type:
           type: string
-          const: algolia_recommend
+          const: client_side
           title: type
-          default: algolia_recommend
-        allowedConfigs:
-          items:
-            $ref: '#/components/schemas/AlgoliaRecommendToolIndexConfig'
-          type: array
-          title: allowedconfigs
-          default: []
-        predefinedRecommendParameters:
-          additionalProperties: true
-          type: object
-          title: predefinedrecommendparameters
+          default: client_side
+        description:
+          type: string
+          maxLength: 200
+          minLength: 1
+          title: description
+        inputSchema:
+          $ref: '#/components/schemas/ClientToolsArgsSchema'
       type: object
       required:
+        - type
         - name
-      title: algoliaRecommendToolConfig
-      description: |-
-        Configuration for the Algolia Recommend tool.
-        Allows specifying recommend models and related parameters.
-    McpServerToolConfig-Input:
+        - description
+        - inputSchema
+      title: clientSideToolConfig
+    McpToolConfig:
+      properties:
+        requiresApproval:
+          oneOf:
+            - type: boolean
+            - type: 'null'
+          title: requiresapproval
+          default: false
+        alias:
+          oneOf:
+            - type: string
+              maxLength: 32
+              minLength: 3
+            - type: 'null'
+          title: alias
+      type: object
+      title: mcpToolConfig
+    ToolConfig:
+      oneOf:
+        - $ref: '#/components/schemas/McpToolConfig'
+        - type: boolean
+    AllowedToolsUnion:
+      oneOf:
+        - additionalProperties:
+            $ref: '#/components/schemas/ToolConfig'
+          type: object
+        - type: 'null'
+    McpServerToolConfig:
       properties:
         url:
           type: string
@@ -3284,20 +2583,54 @@ components:
           $ref: '#/components/schemas/AllowedToolsUnion'
       type: object
       required:
+        - type
         - url
         - headers
         - name
       title: mcpServerToolConfig
+    UnknownToolConfig:
+      properties:
+        name:
+          type: string
+          maxLength: 32
+          minLength: 3
+          title: name
+        type:
+          type: string
+          const: unknown
+          title: type
+          default: unknown
+      additionalProperties: true
+      type: object
+      required:
+        - type
+        - name
+      title: unknownToolConfig
+      description: >-
+        Exists only to ensure that when you change branch from toolX to
+        feat/toolY, your config stays valid.
     ToolConfigInput:
       oneOf:
         - $ref: '#/components/schemas/ClientSideToolConfig'
-        - $ref: '#/components/schemas/AlgoliaSearchToolConfig-Input'
+        - $ref: '#/components/schemas/AlgoliaSearchToolConfig'
         - $ref: '#/components/schemas/AlgoliaRecommendToolConfig-Input'
         - $ref: '#/components/schemas/AlgoliaDisplayResultsToolConfig'
-        - $ref: '#/components/schemas/McpServerToolConfig-Input'
+        - $ref: '#/components/schemas/McpServerToolConfig'
         - $ref: '#/components/schemas/UnknownToolConfig'
-    AgentConfigCreate:
+      discriminator:
+        propertyName: type
+        mapping:
+          algolia_display_results: '#/components/schemas/AlgoliaDisplayResultsToolConfig'
+          algolia_recommend: '#/components/schemas/AlgoliaRecommendToolConfig-Input'
+          algolia_search_index: '#/components/schemas/AlgoliaSearchToolConfig'
+          client_side: '#/components/schemas/ClientSideToolConfig'
+          mcp_tools: '#/components/schemas/McpServerToolConfig'
+          unknown: '#/components/schemas/UnknownToolConfig'
+    AgentWithVersionResponse:
       properties:
+        id:
+          type: string
+          title: id
         name:
           type: string
           title: name
@@ -3306,6 +2639,8 @@ components:
             - type: string
             - type: 'null'
           title: description
+        status:
+          $ref: '#/components/schemas/AgentStatus'
         providerId:
           oneOf:
             - type: string
@@ -3319,14 +2654,146 @@ components:
         instructions:
           type: string
           title: instructions
+        systemPrompt:
+          oneOf:
+            - type: string
+            - type: 'null'
+          title: systemprompt
+        config:
+          additionalProperties: true
+          type: object
+          title: config
+        tools:
+          items:
+            $ref: '#/components/schemas/ToolConfigInput'
+          type: array
+          title: tools
+        templateType:
+          oneOf:
+            - type: string
+            - type: 'null'
+          title: templatetype
+        createdAt:
+          type: string
+          title: createdat
+        updatedAt:
+          oneOf:
+            - type: string
+            - type: 'null'
+          title: updatedat
+        lastUsedAt:
+          oneOf:
+            - type: string
+            - type: 'null'
+          title: lastusedat
+      type: object
+      required:
+        - id
+        - name
+        - description
+        - status
+        - providerId
+        - instructions
+        - config
+        - createdAt
+        - updatedAt
+        - lastUsedAt
+      title: agentWithVersionResponse
+    PaginationMetadata:
+      properties:
+        page:
+          type: integer
+          title: page
+        limit:
+          type: integer
+          title: limit
+        totalCount:
+          type: integer
+          title: totalcount
+        totalPages:
+          type: integer
+          title: totalpages
+      type: object
+      required:
+        - page
+        - limit
+        - totalCount
+        - totalPages
+      title: paginationMetadata
+    PaginatedAgentsResponse:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/AgentWithVersionResponse'
+          type: array
+          title: data
+        pagination:
+          $ref: '#/components/schemas/PaginationMetadata'
+      type: object
+      required:
+        - data
+        - pagination
+      title: paginatedAgentsResponse
+    LocationItemUnion:
+      oneOf:
+        - type: string
+        - type: integer
+    ValidationError:
+      properties:
+        loc:
+          items:
+            $ref: '#/components/schemas/LocationItemUnion'
+          type: array
+          title: location
+        msg:
+          type: string
+          title: message
+        type:
+          type: string
+          title: errorType
+        input:
+          title: input
+        ctx:
+          type: object
+          title: context
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      title: validationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: detail
+      type: object
+      title: hTTPValidationError
+    AgentConfigCreate:
+      properties:
+        name:
+          type: string
+          title: name
+        description:
+          type: string
+          title: description
+        providerId:
+          type: string
+          title: providerid
+        model:
+          type: string
+          title: model
+        instructions:
+          type: string
+          title: instructions
           description: >-
             The agent prompt: defines the agent's role, tone, and goals. Guides
             how it answers using the provided context. Corresponds to the 'Agent
             prompt' field in the dashboard.
         systemPrompt:
-          oneOf:
-            - type: string
-            - type: 'null'
+          type: string
           title: systemprompt
           description: >-
             The system prompt: defines system-level rules and constraints.
@@ -3336,9 +2803,7 @@ components:
             changes may affect behavior, tool usage, or response accuracy.
             Corresponds to the 'System prompt' field in the dashboard.
         templateType:
-          oneOf:
-            - type: string
-            - type: 'null'
+          type: string
           title: templatetype
         config:
           additionalProperties: true
@@ -3519,27 +2984,19 @@ components:
     AgentTestConfiguration:
       properties:
         id:
-          oneOf:
-            - type: string
-            - type: 'null'
+          type: string
           title: id
         providerId:
-          oneOf:
-            - type: string
-            - type: 'null'
+          type: string
           title: providerid
         model:
-          oneOf:
-            - type: string
-            - type: 'null'
+          type: string
           title: model
         instructions:
           type: string
           title: instructions
         systemPrompt:
-          oneOf:
-            - type: string
-            - type: 'null'
+          type: string
           title: systemprompt
         config:
           additionalProperties: true
@@ -3557,48 +3014,6 @@ components:
         - tools
       title: agentTestConfiguration
       description: Dynamic configuration for testing agents.
-    AgentTestConfigurationNullable:
-      oneOf:
-        - $ref: '#/components/schemas/AgentTestConfiguration'
-        - type: 'null'
-    TextPartV4:
-      properties:
-        type:
-          type: string
-          const: text
-          title: type
-          default: text
-        text:
-          type: string
-          title: text
-      type: object
-      required:
-        - text
-      title: textPartV4
-    UserMessageV4:
-      properties:
-        id:
-          oneOf:
-            - type: string
-            - type: 'null'
-          title: id
-        role:
-          type: string
-          const: user
-          title: role
-          default: user
-        content:
-          type: string
-          title: content
-        parts:
-          items:
-            $ref: '#/components/schemas/TextPartV4'
-          type: array
-          title: parts
-      type: object
-      required:
-        - content
-      title: userMessageV4
     StepStartPartV4:
       properties:
         type:
@@ -3622,6 +3037,20 @@ components:
       required:
         - reasoning
       title: reasoningPartV4
+    TextPartV4:
+      properties:
+        type:
+          type: string
+          const: text
+          title: type
+          default: text
+        text:
+          type: string
+          title: text
+      type: object
+      required:
+        - text
+      title: textPartV4
     ToolInvocationV4:
       properties:
         toolCallId:
@@ -3635,41 +3064,27 @@ components:
           type: object
           title: args
         result:
-          oneOf:
-            - type: object
-              additionalProperties: true
-            - type: 'null'
+          type: object
+          additionalProperties: true
           title: result
         step:
-          oneOf:
-            - type: integer
-            - type: 'null'
+          type: integer
           title: step
         state:
-          oneOf:
-            - type: string
-            - type: 'null'
+          type: string
           title: state
         providerOptions:
-          oneOf:
-            - additionalProperties: true
-              type: object
-            - type: 'null'
+          additionalProperties: true
+          type: object
           title: provideroptions
         requiresApproval:
-          oneOf:
-            - type: boolean
-            - type: 'null'
+          type: boolean
           title: requiresapproval
         description:
-          oneOf:
-            - type: string
-            - type: 'null'
+          type: string
           title: description
         argsHash:
-          oneOf:
-            - type: string
-            - type: 'null'
+          type: string
           title: argshash
       type: object
       required:
@@ -3705,9 +3120,7 @@ components:
     AssistantMessageV4:
       properties:
         id:
-          oneOf:
-            - type: string
-            - type: 'null'
+          type: string
           title: id
         role:
           type: string
@@ -3726,12 +3139,56 @@ components:
           $ref: '#/components/schemas/ToolInvocationsUnion'
       type: object
       required:
+        - role
         - content
       title: assistantMessageV4
+    UserMessageV4:
+      properties:
+        id:
+          type: string
+          title: id
+        role:
+          type: string
+          const: user
+          title: role
+          default: user
+        content:
+          type: string
+          title: content
+        parts:
+          items:
+            $ref: '#/components/schemas/TextPartV4'
+          type: array
+          title: parts
+        annotations:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: annotations
+      type: object
+      required:
+        - role
+        - content
+      title: userMessageV4
     MessageV4:
       oneOf:
         - $ref: '#/components/schemas/UserMessageV4'
         - $ref: '#/components/schemas/AssistantMessageV4'
+      discriminator:
+        propertyName: role
+        mapping:
+          assistant: '#/components/schemas/AssistantMessageV4'
+          user: '#/components/schemas/UserMessageV4'
+    StepStartPartV5:
+      properties:
+        type:
+          type: string
+          const: step-start
+          title: type
+          default: step-start
+      type: object
+      title: stepStartPartV5
     TextPartV5:
       properties:
         type:
@@ -3746,34 +3203,6 @@ components:
       required:
         - text
       title: textPartV5
-    UserMessageV5:
-      properties:
-        id:
-          oneOf:
-            - type: string
-            - type: 'null'
-          title: id
-        role:
-          type: string
-          const: user
-          title: role
-          default: user
-        parts:
-          items:
-            $ref: '#/components/schemas/TextPartV5'
-          type: array
-          title: parts
-      type: object
-      title: userMessageV5
-    StepStartPartV5:
-      properties:
-        type:
-          type: string
-          const: step-start
-          title: type
-          default: step-start
-      type: object
-      title: stepStartPartV5
     ReasoningPartV5:
       properties:
         type:
@@ -3810,36 +3239,24 @@ components:
           type: object
           title: input
         output:
-          oneOf:
-            - type: object
-              additionalProperties: true
-            - type: 'null'
+          type: object
+          additionalProperties: true
           title: output
         errorText:
-          oneOf:
-            - type: string
-            - type: 'null'
+          type: string
           title: errortext
         providerOptions:
-          oneOf:
-            - additionalProperties: true
-              type: object
-            - type: 'null'
+          additionalProperties: true
+          type: object
           title: provideroptions
         requiresApproval:
-          oneOf:
-            - type: boolean
-            - type: 'null'
+          type: boolean
           title: requiresapproval
         description:
-          oneOf:
-            - type: string
-            - type: 'null'
+          type: string
           title: description
         argsHash:
-          oneOf:
-            - type: string
-            - type: 'null'
+          type: string
           title: argshash
       type: object
       required:
@@ -3856,9 +3273,7 @@ components:
     AssistantMessageV5:
       properties:
         id:
-          oneOf:
-            - type: string
-            - type: 'null'
+          type: string
           title: id
         role:
           type: string
@@ -3872,11 +3287,71 @@ components:
           title: parts
       type: object
       title: assistantMessageV5
+      required:
+        - role
+    UserMessageMetadataV5:
+      properties:
+        turnContext:
+          additionalProperties: true
+          type: object
+          title: turncontext
+      additionalProperties: true
+      type: object
+      title: userMessageMetadataV5
+      description: >-
+        Client-supplied metadata on a v5 user message.
+
+
+        `turn_context` is namespaced so other callers can use `metadata` for
+        unrelated
+
+        purposes without collision. Unknown keys are preserved and ignored by
+        this pipeline.
+
+
+        Note: `turn_context` is deliberately typed `dict[str, Any]` (not
+        `TurnContext`).
+
+        The metadata is parsed eagerly with the request body, but cap/charset
+        validation
+
+        must be deferred to `extract_turn_context_v5` so the kill-switch
+
+        (`TURN_CONTEXT_ENABLED=false`) can silently drop payloads instead of
+        422-ing.
+
+        See `test_invalid_metadata_does_not_raise_at_model_construction`.
+    UserMessageV5:
+      properties:
+        id:
+          type: string
+          title: id
+        role:
+          type: string
+          const: user
+          title: role
+          default: user
+        parts:
+          items:
+            $ref: '#/components/schemas/TextPartV5'
+          type: array
+          title: parts
+        metadata:
+          $ref: '#/components/schemas/UserMessageMetadataV5'
+      type: object
+      title: userMessageV5
+      required:
+        - role
     MessageV5:
       oneOf:
         - $ref: '#/components/schemas/UserMessageV5'
         - $ref: '#/components/schemas/AssistantMessageV5'
-    MessagesNullableUnionUnion:
+      discriminator:
+        propertyName: role
+        mapping:
+          assistant: '#/components/schemas/AssistantMessageV5'
+          user: '#/components/schemas/UserMessageV5'
+    MessagesUnion:
       oneOf:
         - items:
             $ref: '#/components/schemas/MessageV4'
@@ -3884,48 +3359,35 @@ components:
         - items:
             $ref: '#/components/schemas/MessageV5'
           type: array
-    MessagesNullableUnion:
-      oneOf:
-        - $ref: '#/components/schemas/MessagesNullableUnionUnion'
         - type: 'null'
     SearchParametersOverrides:
       properties:
         filters:
-          oneOf:
-            - type: string
-            - type: 'null'
+          type: string
           title: filters
         attributesToRetrieve:
-          oneOf:
-            - items:
-                type: string
-              type: array
-            - type: 'null'
+          items:
+            type: string
+          type: array
           title: attributestoretrieve
         restrictSearchableAttributes:
-          oneOf:
-            - items:
-                type: string
-              type: array
-            - type: 'null'
+          items:
+            type: string
+          type: array
           title: restrictsearchableattributes
         distinct:
           $ref: '#/components/schemas/DistinctUnion'
         userToken:
-          oneOf:
-            - type: string
-            - type: 'null'
+          type: string
           title: usertoken
         enablePersonalization:
-          oneOf:
-            - type: boolean
-            - type: 'null'
+          type: boolean
           title: enablepersonalization
         personalizationImpact:
-          oneOf:
-            - type: integer
-            - type: 'null'
+          type: integer
           title: personalizationimpact
+        optionalFilters:
+          $ref: '#/components/schemas/OptionalFiltersUnion'
       additionalProperties: false
       type: object
       title: searchParametersOverrides
@@ -3948,44 +3410,35 @@ components:
     AgentCompletionAlgoliaParams:
       properties:
         mcpServers:
-          oneOf:
-            - additionalProperties:
-                additionalProperties:
-                  additionalProperties:
-                    type: string
-                  type: object
-                type: object
+          additionalProperties:
+            additionalProperties:
+              additionalProperties:
+                type: string
               type: object
-            - type: 'null'
+            type: object
+          type: object
           title: mcpservers
         searchParameters:
           $ref: '#/components/schemas/SearchParametersOverridesMapNullable'
       type: object
       title: agentCompletionAlgoliaParams
-    AgentCompletionAlgoliaParamsNullable:
-      oneOf:
-        - $ref: '#/components/schemas/AgentCompletionAlgoliaParams'
-        - type: 'null'
     AgentCompletionRequest:
       properties:
         configuration:
-          $ref: '#/components/schemas/AgentTestConfigurationNullable'
+          $ref: '#/components/schemas/AgentTestConfiguration'
         messages:
-          $ref: '#/components/schemas/MessagesNullableUnion'
+          $ref: '#/components/schemas/MessagesUnion'
         id:
-          oneOf:
-            - type: string
-              maxLength: 128
-            - type: 'null'
+          type: string
+          maxLength: 128
           title: id
           description: Optional conversation id.
         algolia:
-          $ref: '#/components/schemas/AgentCompletionAlgoliaParamsNullable'
+          $ref: '#/components/schemas/AgentCompletionAlgoliaParams'
         toolApprovals:
-          oneOf:
-            - type: object
-            - type: 'null'
-          title: toolapprovals
+          type: object
+          title: toolApprovals
+          description: Approval decisions for pending tool calls keyed by toolCallId.
       type: object
       title: agentCompletionRequest
       description: Request model for creating a completion for an assistant.
@@ -3999,10 +3452,6 @@ components:
       type: object
       title: conversationMetadata
       description: Public metadata exposed on conversation responses.
-    ConversationMetadataNullable:
-      oneOf:
-        - $ref: '#/components/schemas/ConversationMetadata'
-        - type: 'null'
     FeedbackResponse:
       properties:
         id:
@@ -4104,7 +3553,9 @@ components:
           title: totaltokens
           default: 0
         conversationMetadata:
-          $ref: '#/components/schemas/ConversationMetadataNullable'
+          oneOf:
+            - $ref: '#/components/schemas/ConversationMetadata'
+            - type: 'null'
         feedback:
           $ref: '#/components/schemas/FeedbackUnion'
       type: object
@@ -4136,118 +3587,6 @@ components:
         - assistant
       title: messageRole
       description: Role of a message in the conversation.
-    TextPart:
-      properties:
-        type:
-          type: string
-          const: text
-          title: type
-          default: text
-        text:
-          type: string
-          title: text
-      type: object
-      required:
-        - text
-      title: textPart
-    ToolCallPart:
-      properties:
-        type:
-          type: string
-          const: tool-call
-          title: type
-          default: tool-call
-        toolCallId:
-          type: string
-          title: toolcallid
-        toolName:
-          type: string
-          title: toolname
-        args:
-          title: args
-        requiresApproval:
-          oneOf:
-            - type: boolean
-            - type: 'null'
-          title: requiresapproval
-        providerOptions:
-          oneOf:
-            - type: object
-              additionalProperties: true
-            - type: 'null'
-          title: provideroptions
-      type: object
-      required:
-        - toolCallId
-        - toolName
-        - args
-      title: toolCallPart
-    ToolResultOutputType:
-      type: string
-      enum:
-        - text
-        - json
-        - error-text
-        - error-json
-        - content
-      title: toolResultOutputType
-      description: The valid 'type' of tool results.
-    ToolResultOutput:
-      properties:
-        type:
-          $ref: '#/components/schemas/ToolResultOutputType'
-        value:
-          title: value
-      type: object
-      required:
-        - type
-        - value
-      title: toolResultOutput
-    ToolResultPart-Output:
-      properties:
-        type:
-          type: string
-          const: tool-result
-          title: type
-          default: tool-result
-        toolCallId:
-          type: string
-          title: toolcallid
-        toolName:
-          type: string
-          title: toolname
-        output:
-          $ref: '#/components/schemas/ToolResultOutput'
-        providerOptions:
-          oneOf:
-            - type: object
-              additionalProperties: true
-            - type: 'null'
-          title: provideroptions
-      type: object
-      required:
-        - toolCallId
-        - toolName
-        - output
-      title: toolResultPart
-    StartPart:
-      properties:
-        type:
-          type: string
-          const: start
-          title: type
-          default: start
-      type: object
-      title: startPart
-    StartStepPart:
-      properties:
-        type:
-          type: string
-          const: start-step
-          title: type
-          default: start-step
-      type: object
-      title: startStepPart
     ReasoningPart:
       properties:
         type:
@@ -4260,9 +3599,47 @@ components:
           title: text
       type: object
       required:
+        - type
         - text
       title: reasoningPart
-    ToolApprovalRequestPart-Output:
+    StartPart:
+      properties:
+        type:
+          type: string
+          const: start
+          title: type
+          default: start
+      type: object
+      title: startPart
+      required:
+        - type
+    StartStepPart:
+      properties:
+        type:
+          type: string
+          const: start-step
+          title: type
+          default: start-step
+      type: object
+      title: startStepPart
+      required:
+        - type
+    TextPart:
+      properties:
+        type:
+          type: string
+          const: text
+          title: type
+          default: text
+        text:
+          type: string
+          title: text
+      type: object
+      required:
+        - type
+        - text
+      title: textPart
+    ToolApprovalRequestPart:
       properties:
         type:
           type: string
@@ -4293,22 +3670,120 @@ components:
             - type: string
             - type: 'null'
           title: argshash
+        appId:
+          oneOf:
+            - type: string
+            - type: 'null'
+          title: appid
       type: object
       required:
+        - type
         - toolCallId
         - toolName
         - args
       title: toolApprovalRequestPart
-    MessagePartOutput:
+    ToolCallPart:
+      properties:
+        type:
+          type: string
+          const: tool-call
+          title: type
+          default: tool-call
+        toolCallId:
+          type: string
+          title: toolcallid
+        toolName:
+          type: string
+          title: toolname
+        args:
+          title: args
+        requiresApproval:
+          oneOf:
+            - type: boolean
+            - type: 'null'
+          title: requiresapproval
+        providerOptions:
+          oneOf:
+            - type: object
+              additionalProperties: true
+            - type: 'null'
+          title: provideroptions
+      type: object
+      required:
+        - type
+        - toolCallId
+        - toolName
+        - args
+      title: toolCallPart
+    ToolResultOutputType:
+      type: string
+      enum:
+        - text
+        - json
+        - error-text
+        - error-json
+        - content
+      title: toolResultOutputType
+      description: The valid 'type' of tool results.
+    ToolResultOutput:
+      properties:
+        type:
+          $ref: '#/components/schemas/ToolResultOutputType'
+        value:
+          title: value
+      type: object
+      required:
+        - type
+        - value
+      title: toolResultOutput
+    ToolResultPart:
+      properties:
+        type:
+          type: string
+          const: tool-result
+          title: type
+          default: tool-result
+        toolCallId:
+          type: string
+          title: toolcallid
+        toolName:
+          type: string
+          title: toolname
+        output:
+          $ref: '#/components/schemas/ToolResultOutput'
+        providerOptions:
+          oneOf:
+            - type: object
+              additionalProperties: true
+            - type: 'null'
+          title: provideroptions
+      type: object
+      required:
+        - type
+        - toolCallId
+        - toolName
+        - output
+      title: toolResultPart
+    MessagePart:
       oneOf:
         - $ref: '#/components/schemas/TextPart'
         - $ref: '#/components/schemas/ToolCallPart'
-        - $ref: '#/components/schemas/ToolResultPart-Output'
+        - $ref: '#/components/schemas/ToolResultPart'
         - $ref: '#/components/schemas/StartPart'
         - $ref: '#/components/schemas/StartStepPart'
         - $ref: '#/components/schemas/ReasoningPart'
-        - $ref: '#/components/schemas/ToolApprovalRequestPart-Output'
-    MessageResponse-Output:
+        - $ref: '#/components/schemas/ToolApprovalRequestPart'
+      discriminator:
+        propertyName: type
+        mapping:
+          reasoning: '#/components/schemas/ReasoningPart'
+          start: '#/components/schemas/StartPart'
+          start-step: '#/components/schemas/StartStepPart'
+          text: '#/components/schemas/TextPart'
+          tool-approval-request: '#/components/schemas/ToolApprovalRequestPart'
+          tool-call: '#/components/schemas/ToolCallPart'
+          tool-result: '#/components/schemas/ToolResultPart'
+    MessageResponse:
       properties:
         id:
           type: string
@@ -4320,7 +3795,7 @@ components:
           $ref: '#/components/schemas/MessageRole'
         parts:
           items:
-            $ref: '#/components/schemas/MessagePartOutput'
+            $ref: '#/components/schemas/MessagePart'
           type: array
           title: parts
         createdAt:
@@ -4344,6 +3819,13 @@ components:
             - type: integer
             - type: 'null'
           title: outputtokens
+        turnContext:
+          oneOf:
+            - additionalProperties:
+                type: string
+              type: object
+            - type: 'null'
+          title: turncontext
       type: object
       required:
         - id
@@ -4404,12 +3886,14 @@ components:
           title: totaltokens
           default: 0
         conversationMetadata:
-          $ref: '#/components/schemas/ConversationMetadataNullable'
+          oneOf:
+            - $ref: '#/components/schemas/ConversationMetadata'
+            - type: 'null'
         feedback:
           $ref: '#/components/schemas/FeedbackUnion'
         messages:
           items:
-            $ref: '#/components/schemas/MessageResponse-Output'
+            $ref: '#/components/schemas/MessageResponse'
           type: array
           title: messages
       type: object
@@ -4462,19 +3946,15 @@ components:
         vote:
           $ref: '#/components/schemas/VoteEnum'
         tags:
-          oneOf:
-            - items:
-                type: string
-                maxLength: 50
-              type: array
-              maxItems: 10
-            - type: 'null'
+          items:
+            type: string
+            maxLength: 50
+          type: array
+          maxItems: 10
           title: tags
         notes:
-          oneOf:
-            - type: string
-              maxLength: 1000
-            - type: 'null'
+          type: string
+          maxLength: 1000
           title: notes
       type: object
       required:
@@ -4483,7 +3963,7 @@ components:
         - vote
       title: feedbackCreationRequest
       description: Request model for creating a feedback entry.
-    OpenAIProviderInput-Output:
+    OpenAIProviderInput:
       properties:
         apiKey:
           type: string
@@ -4491,6 +3971,8 @@ components:
         baseUrl:
           oneOf:
             - type: string
+              maxLength: 2083
+              minLength: 1
             - type: 'null'
           title: baseurl
       type: object
@@ -4498,13 +3980,15 @@ components:
         - apiKey
       title: openAIProviderInput
       description: OpenAI-specific provider input.
-    AzureOpenAIProviderInput-Output:
+    AzureOpenAIProviderInput:
       properties:
         apiKey:
           type: string
           title: apikey
         azureEndpoint:
           type: string
+          maxLength: 2083
+          minLength: 1
           title: azureendpoint
         azureDeployment:
           type: string
@@ -4524,13 +4008,15 @@ components:
         - azureDeployment
       title: azureOpenAIProviderInput
       description: Azure OpenAI-specific provider input.
-    OpenAICompatibleProviderInput-Output:
+    OpenAICompatibleProviderInput:
       properties:
         apiKey:
           type: string
           title: apikey
         baseUrl:
           type: string
+          maxLength: 2083
+          minLength: 1
           title: baseurl
         defaultModel:
           type: string
@@ -4564,7 +4050,7 @@ components:
         - apiKey
       title: baseProviderInput
       description: Base input that all providers must have.
-    AnthropicProviderInput-Output:
+    AnthropicProviderInput:
       properties:
         apiKey:
           type: string
@@ -4572,6 +4058,8 @@ components:
         baseUrl:
           oneOf:
             - type: string
+              maxLength: 2083
+              minLength: 1
             - type: 'null'
           title: baseurl
       type: object
@@ -4579,13 +4067,13 @@ components:
         - apiKey
       title: anthropicProviderInput
       description: Anthropic-specific provider input.
-    ProviderInputProviderAuthenticationResponse:
+    ProviderInput:
       oneOf:
-        - $ref: '#/components/schemas/OpenAIProviderInput-Output'
-        - $ref: '#/components/schemas/AzureOpenAIProviderInput-Output'
-        - $ref: '#/components/schemas/OpenAICompatibleProviderInput-Output'
+        - $ref: '#/components/schemas/OpenAIProviderInput'
+        - $ref: '#/components/schemas/AzureOpenAIProviderInput'
+        - $ref: '#/components/schemas/OpenAICompatibleProviderInput'
         - $ref: '#/components/schemas/BaseProviderInput'
-        - $ref: '#/components/schemas/AnthropicProviderInput-Output'
+        - $ref: '#/components/schemas/AnthropicProviderInput'
     ProviderAuthenticationResponse:
       properties:
         id:
@@ -4598,7 +4086,7 @@ components:
           type: string
           title: providername
         input:
-          $ref: '#/components/schemas/ProviderInputProviderAuthenticationResponse'
+          $ref: '#/components/schemas/ProviderInput'
         createdAt:
           type: string
           title: createdat
@@ -4643,107 +4131,6 @@ components:
         - openai_compatible
         - anthropic
       title: providerName
-    OpenAIProviderInput-Input:
-      properties:
-        apiKey:
-          type: string
-          title: apikey
-        baseUrl:
-          oneOf:
-            - type: string
-              maxLength: 2083
-              minLength: 1
-            - type: 'null'
-          title: baseurl
-      type: object
-      required:
-        - apiKey
-      title: openAIProviderInput
-      description: OpenAI-specific provider input.
-    AzureOpenAIProviderInput-Input:
-      properties:
-        apiKey:
-          type: string
-          title: apikey
-        azureEndpoint:
-          type: string
-          maxLength: 2083
-          minLength: 1
-          title: azureendpoint
-        azureDeployment:
-          type: string
-          minLength: 1
-          title: azuredeployment
-          description: Azure model deployment name is required.
-        apiVersion:
-          oneOf:
-            - type: string
-            - type: 'null'
-          title: apiversion
-          default: 2024-12-01-preview
-      type: object
-      required:
-        - apiKey
-        - azureEndpoint
-        - azureDeployment
-      title: azureOpenAIProviderInput
-      description: Azure OpenAI-specific provider input.
-    OpenAICompatibleProviderInput-Input:
-      properties:
-        apiKey:
-          type: string
-          title: apikey
-        baseUrl:
-          type: string
-          maxLength: 2083
-          minLength: 1
-          title: baseurl
-        defaultModel:
-          type: string
-          minLength: 1
-          title: defaultmodel
-          description: >-
-            Default model for this provider. Used for validation and as fallback
-            when no model is specified at agent level.
-      type: object
-      required:
-        - apiKey
-        - baseUrl
-        - defaultModel
-      title: openAICompatibleProviderInput
-      description: >-
-        OpenAI-compatible provider input.
-
-        Contrary to the OpenAIProviderInput, the base_url is required.
-
-        A model is required to verify connectivity and get saved as the default
-        model.
-
-        This can later be changed at the Agent level.
-    AnthropicProviderInput-Input:
-      properties:
-        apiKey:
-          type: string
-          title: apikey
-        baseUrl:
-          oneOf:
-            - type: string
-              maxLength: 2083
-              minLength: 1
-            - type: 'null'
-          title: baseurl
-      type: object
-      required:
-        - apiKey
-      title: anthropicProviderInput
-      description: Anthropic-specific provider input.
-    ProviderInput:
-      oneOf:
-        - $ref: '#/components/schemas/OpenAIProviderInput-Input'
-        - $ref: '#/components/schemas/AzureOpenAIProviderInput-Input'
-        - $ref: '#/components/schemas/OpenAICompatibleProviderInput-Input'
-        - $ref: '#/components/schemas/BaseProviderInput'
-        - $ref: '#/components/schemas/AnthropicProviderInput-Input'
     ProviderAuthenticationCreate:
       properties:
         name:
@@ -4764,11 +4151,11 @@ components:
       title: providerAuthenticationCreate
     ProviderInputNullable:
       oneOf:
-        - $ref: '#/components/schemas/OpenAIProviderInput-Input'
-        - $ref: '#/components/schemas/AzureOpenAIProviderInput-Input'
-        - $ref: '#/components/schemas/OpenAICompatibleProviderInput-Input'
+        - $ref: '#/components/schemas/OpenAIProviderInput'
+        - $ref: '#/components/schemas/AzureOpenAIProviderInput'
+        - $ref: '#/components/schemas/OpenAICompatibleProviderInput'
         - $ref: '#/components/schemas/BaseProviderInput'
-        - $ref: '#/components/schemas/AnthropicProviderInput-Input'
+        - $ref: '#/components/schemas/AnthropicProviderInput'
         - type: 'null'
     ProviderAuthenticationPatch:
       properties:
@@ -4947,16 +4334,14 @@ components:
 
         See
         https://langchain-ai.github.io/langmem/concepts/conceptual_guide/#episodic-memory-past-experiences.
-    EpisodeNullable:
-      oneOf:
-        - $ref: '#/components/schemas/Episode'
-        - type: 'null'
     MemoryRecord:
       properties:
         memoryType:
           $ref: '#/components/schemas/MemoryType'
         episode:
-          $ref: '#/components/schemas/EpisodeNullable'
+          oneOf:
+            - $ref: '#/components/schemas/Episode'
+            - type: 'null'
         text:
           type: string
           maxLength: 2000

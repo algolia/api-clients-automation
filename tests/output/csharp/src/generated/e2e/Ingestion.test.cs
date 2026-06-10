@@ -6,7 +6,6 @@ using Algolia.Search.Models.Ingestion;
 using Algolia.Search.Serializer;
 using Algolia.Search.Tests.Utils;
 using dotenv.net;
-using Quibble.Xunit;
 using Xunit;
 using Action = Algolia.Search.Models.Ingestion.Action;
 
@@ -54,10 +53,9 @@ public class IngestionClientRequestTestsE2E
       // Check status code 200
       Assert.NotNull(resp);
 
-      JsonAssert.EqualOverrideDefault(
+      TestHelpers.LenientJsonAssert(
         "{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}",
-        JsonSerializer.Serialize(resp, JsonConfig.Options),
-        new JsonDiffConfig(true)
+        JsonSerializer.Serialize(resp, JsonConfig.Options)
       );
     }
     catch (Exception e)
@@ -75,10 +73,9 @@ public class IngestionClientRequestTestsE2E
       // Check status code 200
       Assert.NotNull(resp);
 
-      JsonAssert.EqualOverrideDefault(
+      TestHelpers.LenientJsonAssert(
         "{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}",
-        JsonSerializer.Serialize(resp, JsonConfig.Options),
-        new JsonDiffConfig(true)
+        JsonSerializer.Serialize(resp, JsonConfig.Options)
       );
     }
     catch (Exception e)
@@ -96,10 +93,9 @@ public class IngestionClientRequestTestsE2E
       // Check status code 200
       Assert.NotNull(resp);
 
-      JsonAssert.EqualOverrideDefault(
+      TestHelpers.LenientJsonAssert(
         "{\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"name\":\"cts_e2e_browse\",\"type\":\"json\",\"input\":{\"url\":\"https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json\"}}",
-        JsonSerializer.Serialize(resp, JsonConfig.Options),
-        new JsonDiffConfig(true)
+        JsonSerializer.Serialize(resp, JsonConfig.Options)
       );
     }
     catch (Exception e)
@@ -128,10 +124,9 @@ public class IngestionClientRequestTestsE2E
       // Check status code 200
       Assert.NotNull(resp);
 
-      JsonAssert.EqualOverrideDefault(
+      TestHelpers.LenientJsonAssert(
         "{\"pagination\":{\"page\":1,\"itemsPerPage\":2},\"authentications\":[{\"authenticationID\":\"474f050f-a771-464c-a016-323538029f5f\",\"type\":\"algolia\",\"name\":\"algolia-auth-1677060483885\",\"input\":{},\"createdAt\":\"2023-02-22T10:08:04Z\",\"updatedAt\":\"2023-10-25T08:41:56Z\"},{}]}",
-        JsonSerializer.Serialize(resp, JsonConfig.Options),
-        new JsonDiffConfig(true)
+        JsonSerializer.Serialize(resp, JsonConfig.Options)
       );
     }
     catch (Exception e)
@@ -159,10 +154,9 @@ public class IngestionClientRequestTestsE2E
       // Check status code 200
       Assert.NotNull(resp);
 
-      JsonAssert.EqualOverrideDefault(
+      TestHelpers.LenientJsonAssert(
         "[{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"destinationID\":\"506d79fa-e29d-4bcf-907c-6b6a41172153\",\"enabled\":true,\"failureThreshold\":0,\"action\":\"replace\",\"createdAt\":\"2024-01-08T16:47:41Z\"}]",
-        JsonSerializer.Serialize(resp, JsonConfig.Options),
-        new JsonDiffConfig(true)
+        JsonSerializer.Serialize(resp, JsonConfig.Options)
       );
     }
     catch (Exception e)
@@ -190,10 +184,9 @@ public class IngestionClientRequestTestsE2E
       // Check status code 200
       Assert.NotNull(resp);
 
-      JsonAssert.EqualOverrideDefault(
+      TestHelpers.LenientJsonAssert(
         "[{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"destinationID\":\"506d79fa-e29d-4bcf-907c-6b6a41172153\",\"trigger\":{\"type\":\"onDemand\"},\"enabled\":true,\"failureThreshold\":0,\"action\":\"replace\",\"createdAt\":\"2024-01-08T16:47:41Z\"}]",
-        JsonSerializer.Serialize(resp, JsonConfig.Options),
-        new JsonDiffConfig(true)
+        JsonSerializer.Serialize(resp, JsonConfig.Options)
       );
     }
     catch (Exception e)

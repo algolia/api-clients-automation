@@ -4,7 +4,6 @@ package recommend
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // SupportedLanguage ISO code for a supported language.
@@ -174,10 +173,12 @@ func (v *SupportedLanguage) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := SupportedLanguage(value)
-	if slices.Contains(AllowedSupportedLanguageEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedSupportedLanguageEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid SupportedLanguage", value)
@@ -185,7 +186,13 @@ func (v *SupportedLanguage) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v SupportedLanguage) IsValid() bool {
-	return slices.Contains(AllowedSupportedLanguageEnumValues, v)
+	for _, existing := range AllowedSupportedLanguageEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to supportedLanguage value.

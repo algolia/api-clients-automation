@@ -4,7 +4,6 @@ package abtestingV3
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // MetricName the model 'MetricName'.
@@ -68,10 +67,12 @@ func (v *MetricName) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := MetricName(value)
-	if slices.Contains(AllowedMetricNameEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedMetricNameEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid MetricName", value)
@@ -79,7 +80,13 @@ func (v *MetricName) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v MetricName) IsValid() bool {
-	return slices.Contains(AllowedMetricNameEnumValues, v)
+	for _, existing := range AllowedMetricNameEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to MetricName value.

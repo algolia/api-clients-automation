@@ -4,7 +4,6 @@ package composition
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // ExactOnSingleWordQuery Determines how the [Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes) is computed when the search query has only one word.  - `attribute`.   The Exact ranking criterion is 1 if the query word and attribute value are the same.   For example, a search for \"road\" will match the value \"road\", but not \"road trip\".  - `none`.   The Exact ranking criterion is ignored on single-word searches.  - `word`.   The Exact ranking criterion is 1 if the query word is found in the attribute value.   The query word must have at least 3 characters and must not be a stop word.   Only exact matches will be highlighted,   partial and prefix matches won't.
@@ -44,10 +43,12 @@ func (v *ExactOnSingleWordQuery) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := ExactOnSingleWordQuery(value)
-	if slices.Contains(AllowedExactOnSingleWordQueryEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedExactOnSingleWordQueryEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid ExactOnSingleWordQuery", value)
@@ -55,7 +56,13 @@ func (v *ExactOnSingleWordQuery) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v ExactOnSingleWordQuery) IsValid() bool {
-	return slices.Contains(AllowedExactOnSingleWordQueryEnumValues, v)
+	for _, existing := range AllowedExactOnSingleWordQueryEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to exactOnSingleWordQuery value.

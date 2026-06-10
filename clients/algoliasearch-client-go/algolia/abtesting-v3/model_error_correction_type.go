@@ -4,7 +4,6 @@ package abtestingV3
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // ErrorCorrectionType Multiple-testing correction method applied when evaluating metric significance.
@@ -42,10 +41,12 @@ func (v *ErrorCorrectionType) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := ErrorCorrectionType(value)
-	if slices.Contains(AllowedErrorCorrectionTypeEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedErrorCorrectionTypeEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid ErrorCorrectionType", value)
@@ -53,7 +54,13 @@ func (v *ErrorCorrectionType) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v ErrorCorrectionType) IsValid() bool {
-	return slices.Contains(AllowedErrorCorrectionTypeEnumValues, v)
+	for _, existing := range AllowedErrorCorrectionTypeEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to ErrorCorrectionType value.

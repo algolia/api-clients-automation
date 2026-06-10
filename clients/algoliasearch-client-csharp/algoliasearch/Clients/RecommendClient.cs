@@ -880,7 +880,8 @@ public partial class RecommendClient : IRecommendClient
       new RecommendConfig(applicationId, apiKey),
       new AlgoliaHttpRequester(loggerFactory),
       loggerFactory
-    ) { }
+    )
+  { }
 
   /// <summary>
   /// Initialize a client with custom config

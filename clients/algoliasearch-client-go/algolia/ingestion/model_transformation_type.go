@@ -4,7 +4,6 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // TransformationType The type of transformation, which can be either 'code' or 'noCode'.
@@ -42,10 +41,12 @@ func (v *TransformationType) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := TransformationType(value)
-	if slices.Contains(AllowedTransformationTypeEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedTransformationTypeEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid TransformationType", value)
@@ -53,7 +54,13 @@ func (v *TransformationType) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v TransformationType) IsValid() bool {
-	return slices.Contains(AllowedTransformationTypeEnumValues, v)
+	for _, existing := range AllowedTransformationTypeEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to TransformationType value.

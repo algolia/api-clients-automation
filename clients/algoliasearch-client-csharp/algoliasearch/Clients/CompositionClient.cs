@@ -1540,7 +1540,8 @@ public partial class CompositionClient : ICompositionClient
       new CompositionConfig(applicationId, apiKey),
       new AlgoliaHttpRequester(loggerFactory),
       loggerFactory
-    ) { }
+    )
+  { }
 
   /// <summary>
   /// Initialize a client with custom config

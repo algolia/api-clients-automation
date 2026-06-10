@@ -4,7 +4,6 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // AuthenticationSortKeys Property by which to sort the list of authentications.
@@ -48,10 +47,12 @@ func (v *AuthenticationSortKeys) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := AuthenticationSortKeys(value)
-	if slices.Contains(AllowedAuthenticationSortKeysEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedAuthenticationSortKeysEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid AuthenticationSortKeys", value)
@@ -59,7 +60,13 @@ func (v *AuthenticationSortKeys) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v AuthenticationSortKeys) IsValid() bool {
-	return slices.Contains(AllowedAuthenticationSortKeysEnumValues, v)
+	for _, existing := range AllowedAuthenticationSortKeysEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to authenticationSortKeys value.

@@ -4,7 +4,6 @@ package composition
 import (
 	"encoding/json"
 	"fmt"
-	"slices"
 )
 
 // Model Recommendation model to use for retrieving recommendations.
@@ -40,10 +39,12 @@ func (v *Model) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := Model(value)
-	if slices.Contains(AllowedModelEnumValues, enumTypeValue) {
-		*v = enumTypeValue
+	for _, existing := range AllowedModelEnumValues {
+		if existing == enumTypeValue {
+			*v = enumTypeValue
 
-		return nil
+			return nil
+		}
 	}
 
 	return fmt.Errorf("%+v is not a valid Model", value)
@@ -51,7 +52,13 @@ func (v *Model) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v Model) IsValid() bool {
-	return slices.Contains(AllowedModelEnumValues, v)
+	for _, existing := range AllowedModelEnumValues {
+		if existing == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Ptr returns reference to model value.
