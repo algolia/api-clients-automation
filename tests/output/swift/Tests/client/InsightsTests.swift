@@ -38,7 +38,7 @@ final class InsightsClientClientTests: XCTestCase {
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
-        let pattern = "^Algolia for Swift \\(9.43.1\\).*"
+        let pattern = "^Algolia for Swift \\(9.43.2\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
@@ -50,6 +50,7 @@ final class InsightsClientClientTests: XCTestCase {
         let configuration = try InsightsClientConfiguration(appID: "my-app-id", apiKey: "my-api-key", region: nil)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
+
         let response = try await client
             .pushEventsWithHTTPInfo(insightsEvents: InsightsEvents(events: [EventsItems
                     .clickedObjectIDsAfterSearch(ClickedObjectIDsAfterSearch(
@@ -78,6 +79,7 @@ final class InsightsClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
+
         let response = try await client.customDeleteWithHTTPInfo(path: "test")
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
@@ -114,6 +116,7 @@ final class InsightsClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = InsightsClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.customGet(path: "check-api-key/1")
 

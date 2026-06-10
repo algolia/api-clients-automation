@@ -19,6 +19,7 @@ final class SearchClientClientBenchmark: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         for _ in 1 ... 2000 {
             let response: SearchResponses<Hit> = try await client
                 .search(searchMethodParams: SearchMethodParams(requests: [SearchQuery.searchForHits(SearchForHits(

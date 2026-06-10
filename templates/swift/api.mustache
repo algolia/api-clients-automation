@@ -4,6 +4,11 @@ import Foundation
 #if canImport(AlgoliaCore)
     import AlgoliaCore
 #endif
+{{#isSearchClient}}
+#if canImport(AlgoliaIngestion)
+    import AlgoliaIngestion
+#endif
+{{/isSearchClient}}
 
 {{#description}}
 /**
@@ -16,6 +21,9 @@ import Foundation
 
     public private(set) var configuration: {{classname}}Configuration
     private var transporter: Transporter
+    {{#isSearchClient}}
+    var _ingestionClient: IngestionClient?
+    {{/isSearchClient}}
 
     var appID: String {
         self.configuration.appID

@@ -54,29 +54,31 @@ products.append(
 )
 
 [
-  "Abtesting",
-  "AbtestingV3",
-  "AgentStudio",
-  "Analytics",
-  "Composition",
-  "Ingestion",
-  "Insights",
-  "Monitoring",
-  "Personalization",
-  "QuerySuggestions",
-  "Recommend",
-  "Search"
-].enumerated().forEach { (_, library) in
-  targets.append(
-    .target(
-      name: "Algolia\(library)",
-      dependencies: [
-        .target(name: "AlgoliaCore"),
-      ] + extraTargetDependencies,
-      path: "Sources/\(library)",
-      resources: [
-        .copy("../../PrivacyInfo.xcprivacy")
-      ]
+    "Abtesting",
+    "AbtestingV3",
+    "AgentStudio",
+    "Analytics",
+    "Composition",
+    "Ingestion",
+    "Insights",
+    "Monitoring",
+    "Personalization",
+    "QuerySuggestions",
+    "Recommend",
+    "Search",
+].enumerated().forEach { _, library in
+    let libraryExtraDeps: [Target.Dependency] = library == "Search" ? [.target(name: "AlgoliaIngestion")] : []
+    targets.append(
+        .target(
+            name: "Algolia\(library)",
+            dependencies: [
+                .target(name: "AlgoliaCore"),
+            ] + libraryExtraDeps + extraTargetDependencies,
+            path: "Sources/\(library)",
+            resources: [
+                .copy("../../PrivacyInfo.xcprivacy"),
+            ]
+        )
     )
   )
 

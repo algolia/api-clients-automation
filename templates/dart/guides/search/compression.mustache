@@ -1,0 +1,19 @@
+{{> snippets/import}}
+
+void compression() async {
+    // Initialize the client with gzip compression enabled
+    // Compression reduces the size of request bodies sent to Algolia
+    final client = {{client}}(
+        appId: 'ALGOLIA_APPLICATION_ID',
+        apiKey: 'ALGOLIA_API_KEY',
+        options: ClientOptions(compression: 'gzip'),
+    );
+
+    try {
+        // Search with compressed request body
+        final result = await {{#dynamicSnippet}}searchWithCompression{{/dynamicSnippet}};
+        print(result);
+    } catch (e) {
+        print("Error: ${e.toString()}");
+    }
+}

@@ -3646,6 +3646,7 @@ paths:
         - search
       x-available-languages:
         - csharp
+        - dart
         - go
         - java
         - javascript
@@ -3654,6 +3655,7 @@ paths:
         - python
         - ruby
         - scala
+        - swift
       x-acl:
         - addObject
         - deleteIndex
@@ -3881,6 +3883,7 @@ paths:
         - search
       x-available-languages:
         - csharp
+        - dart
         - go
         - java
         - javascript
@@ -3889,6 +3892,7 @@ paths:
         - python
         - ruby
         - scala
+        - swift
       x-acl:
         - addObject
         - deleteIndex
@@ -4117,6 +4121,7 @@ paths:
       x-helper: true
       x-available-languages:
         - csharp
+        - dart
         - go
         - java
         - javascript
@@ -4125,6 +4130,7 @@ paths:
         - python
         - ruby
         - scala
+        - swift
       tags:
         - search
       x-acl:

@@ -16,6 +16,7 @@ final class RecommendClientClientTests: XCTestCase {
         let configuration = try RecommendClientConfiguration(appID: "test-app-id", apiKey: "test-api-key")
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
+
         let response = try await client.customGetWithHTTPInfo(path: "test")
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
@@ -28,6 +29,7 @@ final class RecommendClientClientTests: XCTestCase {
         let configuration = try RecommendClientConfiguration(appID: "test-app-id", apiKey: "test-api-key")
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
+
         let response = try await client.customPostWithHTTPInfo(path: "test")
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
@@ -62,7 +64,7 @@ final class RecommendClientClientTests: XCTestCase {
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
-        let pattern = "^Algolia for Swift \\(9.43.1\\).*"
+        let pattern = "^Algolia for Swift \\(9.43.2\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
@@ -80,6 +82,7 @@ final class RecommendClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = RecommendClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.customGet(path: "check-api-key/1")
 

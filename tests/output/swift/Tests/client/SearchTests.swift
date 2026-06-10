@@ -16,6 +16,7 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(appID: "test-app-id", apiKey: "test-api-key")
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         let response = try await client.customGetWithHTTPInfo(path: "test")
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
@@ -28,6 +29,7 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(appID: "test-app-id", apiKey: "test-api-key")
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         let response: Response<SearchResponse<Hit>> = try await client
             .searchSingleIndexWithHTTPInfo(indexName: "indexName")
 
@@ -41,6 +43,7 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(appID: "test-app-id", apiKey: "test-api-key")
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         let response = try await client.customPostWithHTTPInfo(path: "test")
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
@@ -67,6 +70,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         let response = try await client.customGet(path: "1/test/retry/swift")
 
         XTCJSONEquals(received: response, expected: "{\"message\":\"ok test server response\"}")
@@ -83,6 +87,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.customGet(path: "1/test/hang/swift")
 
@@ -114,6 +119,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         let response = try await client.customPost(path: "1/test/error/swift")
 
         XTCJSONEquals(received: response, expected: "{\"status\":\"ok\"}")
@@ -131,6 +137,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         let response = try await client.customPost(
             path: "1/test/gzip",
             parameters: [String: AnyCodable](),
@@ -156,6 +163,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         let response = try await client.customGet(path: "1/test/gzip-response")
 
         XTCJSONEquals(
@@ -201,6 +209,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         let response = try await client.getSettings(indexName: "cts_e2e_unknownField_swift")
 
         XTCJSONEquals(
@@ -220,6 +229,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         let response = try await client.getRule(indexName: "cts_e2e_unknownFieldNested_swift", objectID: "ruleObjectID")
 
         XTCJSONEquals(
@@ -244,6 +254,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.customGet(path: "1/test/calling/swift")
 
@@ -283,7 +294,7 @@ final class SearchClientClientTests: XCTestCase {
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
-        let pattern = "^Algolia for Swift \\(9.43.1\\).*"
+        let pattern = "^Algolia for Swift \\(9.43.2\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
@@ -301,6 +312,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.deleteObjects(
                 indexName: "cts_e2e_deleteObjects_swift",
@@ -449,6 +461,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.indexExists(indexName: "indexExistsYES")
 
@@ -467,6 +480,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.indexExists(indexName: "indexExistsNO")
 
@@ -485,6 +499,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.indexExists(indexName: "indexExistsERROR")
 
@@ -550,6 +565,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.partialUpdateObjects(
                 indexName: "cts_e2e_partialUpdateObjects_swift",
@@ -572,6 +588,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.partialUpdateObjects(
                 indexName: "cts_e2e_partialUpdateObjects_swift",
@@ -580,6 +597,50 @@ final class SearchClientClientTests: XCTestCase {
             )
 
             try XCTLenientAssertEqual(received: response, expected: "[{\"taskID\":555,\"objectIDs\":[\"3\",\"4\"]}]")
+        }
+    }
+
+    /// call partialUpdateObjectsWithTransformation with createIfNotExists=true
+    func testPartialUpdateObjectsWithTransformationTest0() async throws {
+        let transformationOptions = TransformationOptions(
+            region: Region(rawValue: "us"),
+            hosts: [
+                RetryableHost(url: URL(string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6688")!),
+                RetryableHost(url: URL(string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6689")!),
+            ]
+        )
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [
+                RetryableHost(url: URL(string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6688")!),
+                RetryableHost(url: URL(string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6689")!),
+            ],
+            transformationOptions: transformationOptions
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        do {
+            let response = try await client.partialUpdateObjectsWithTransformation(
+                indexName: "cts_e2e_partialUpdateObjectsWithTransformation_swift",
+                objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]],
+                createIfNotExists: true,
+                waitForTasks: true
+            )
+
+            try XCTLenientAssertEqual(
+                received: response,
+                expected: "[{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_swift\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82925\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}]"
+            )
         }
     }
 
@@ -594,6 +655,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.replaceAllObjects(
                 indexName: "cts_e2e_replace_all_objects_swift",
@@ -630,6 +692,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.replaceAllObjects(
                 indexName: "cts_e2e_replace_all_objects_scopes_swift",
@@ -656,6 +719,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.replaceAllObjects(
                 indexName: "cts_e2e_replace_all_objects_too_big_swift",
@@ -671,6 +735,50 @@ final class SearchClientClientTests: XCTestCase {
         }
     }
 
+    /// call replaceAllObjectsWithTransformation without error
+    func testReplaceAllObjectsWithTransformationTest0() async throws {
+        let transformationOptions = TransformationOptions(
+            region: Region(rawValue: "us"),
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6690")!)]
+        )
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6690")!)],
+            transformationOptions: transformationOptions
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        do {
+            let response = try await client.replaceAllObjectsWithTransformation(
+                indexName: "cts_e2e_replace_all_objects_with_transformation_swift",
+                objects: [
+                    ["objectID": "1", "name": "Adam"],
+                    ["objectID": "2", "name": "Benoit"],
+                    ["objectID": "3", "name": "Cyril"],
+                    ["objectID": "4", "name": "David"],
+                    ["objectID": "5", "name": "Eva"],
+                    ["objectID": "6", "name": "Fiona"],
+                    ["objectID": "7", "name": "Gael"],
+                    ["objectID": "8", "name": "Hugo"],
+                    ["objectID": "9", "name": "Igor"],
+                    ["objectID": "10", "name": "Julia"],
+                ],
+                batchSize: 3
+            )
+
+            try XCTLenientAssertEqual(
+                received: response,
+                expected: "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"watchResponses\":[{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_swift\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82921\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"},{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_swift\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82922\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"},{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_swift\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82923\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"},{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_swift\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82924\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}"
+            )
+        }
+    }
+
     /// call saveObjects without error
     func testSaveObjectsTest0() async throws {
         let configuration = try SearchClientConfiguration(
@@ -682,6 +790,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.saveObjects(
                 indexName: "cts_e2e_saveObjects_swift",
@@ -703,6 +812,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.saveObjects(
                 indexName: "cts_e2e_saveObjects_swift",
@@ -729,6 +839,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.saveObjects(
                 indexName: "playlists",
@@ -754,6 +865,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.saveObjects(
                 indexName: "playlists",
@@ -773,6 +885,49 @@ final class SearchClientClientTests: XCTestCase {
         }
     }
 
+    /// call saveObjectsWithTransformation without error
+    func testSaveObjectsWithTransformationTest0() async throws {
+        let transformationOptions = TransformationOptions(
+            region: Region(rawValue: "us"),
+            hosts: [
+                RetryableHost(url: URL(string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6688")!),
+                RetryableHost(url: URL(string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6689")!),
+            ]
+        )
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [
+                RetryableHost(url: URL(string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6688")!),
+                RetryableHost(url: URL(string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6689")!),
+            ],
+            transformationOptions: transformationOptions
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        do {
+            let response = try await client.saveObjectsWithTransformation(
+                indexName: "cts_e2e_saveObjectsWithTransformation_swift",
+                objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]],
+                waitForTasks: true
+            )
+
+            try XCTLenientAssertEqual(
+                received: response,
+                expected: "[{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_swift\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82925\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}]"
+            )
+        }
+    }
+
     /// with algolia user id
     func testSearchSingleIndexTest0() async throws {
         let configuration = try SearchClientConfiguration(
@@ -784,6 +939,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         let response: SearchResponse<Hit> = try await client.searchSingleIndex(
             indexName: "playlists",
             searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(query: "foo")),
@@ -804,6 +960,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.customGet(path: "check-api-key/1")
 
@@ -830,6 +987,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.waitForApiKey(
                 key: "api-key-add-operation-test-swift",
@@ -854,6 +1012,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.waitForApiKey(
                 key: "api-key-update-operation-test-swift",
@@ -887,6 +1046,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.waitForApiKey(
                 key: "api-key-delete-operation-test-swift",
@@ -908,6 +1068,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.waitForAppTask(taskID: Int64(123))
 
@@ -926,6 +1087,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.waitForTask(indexName: "wait-task-swift", taskID: Int64(123))
 

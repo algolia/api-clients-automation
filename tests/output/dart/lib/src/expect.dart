@@ -75,6 +75,9 @@ Future<void> expectError(String message, Function block) async {
   } on UnreachableHostsException catch (e) {
     expect(e.toString(), message);
     return;
+  } on AlgoliaApiException catch (e) {
+    expect(e.toString(), contains(message));
+    return;
   }
 
   assert(false);
