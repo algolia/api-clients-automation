@@ -33,9 +33,6 @@ import Foundation
 
     public convenience init(configuration: {{classname}}Configuration) {
         self.init(configuration: configuration, transporter: Transporter(configuration: configuration))
-        {{! The ingestion transporter is built lazily on first `*WithTransformation` call }}
-        {{! (see SearchClientTransformationExtension) so invalid options surface as a thrown }}
-        {{! error at the call site instead of crashing the client initializer. }}
     }
 
     public convenience init(appID: String, apiKey: String{{#hasRegionalHost}}, region: Region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}{{/hasRegionalHost}}) throws {
