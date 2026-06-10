@@ -3,7 +3,7 @@ import 'package:algolia_client_insights/algolia_client_insights.dart';
 import 'package:algolia_test/algolia_test.dart';
 import 'package:test/test.dart';
 import 'package:test_api/hooks.dart';
-import 'dart:io' show Platform;
+import 'dart:io' as io;
 
 void main() {
   test('calls api with correct user agent', () async {
@@ -52,6 +52,7 @@ void main() {
         appId: "my-app-id",
         apiKey: "my-api-key",
         options: ClientOptions(requester: requester));
+
     requester.setOnRequest((request) {
       expect(request.host.url, "insights.algolia.io");
     });
@@ -91,6 +92,7 @@ void main() {
         apiKey: "my-api-key",
         region: 'us',
         options: ClientOptions(requester: requester));
+
     requester.setOnRequest((request) {
       expect(request.host.url, "insights.us.algolia.io");
     });
@@ -126,9 +128,10 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6683',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6683',
               scheme: 'http'),
         ]));
+
     {
       requester.setOnRequest((request) {});
       try {

@@ -3,7 +3,7 @@ import 'package:algolia_client_composition/algolia_client_composition.dart';
 import 'package:algolia_test/algolia_test.dart';
 import 'package:test/test.dart';
 import 'package:test_api/hooks.dart';
-import 'dart:io' show Platform;
+import 'dart:io' as io;
 
 void main() {
   test('calls api with correct read host', () async {
@@ -12,6 +12,7 @@ void main() {
         appId: "test-app-id",
         apiKey: "test-api-key",
         options: ClientOptions(requester: requester));
+
     requester.setOnRequest((request) {
       expect(request.host.url, "test-app-id-dsn.algolia.net");
     });
@@ -30,6 +31,7 @@ void main() {
         appId: "test-app-id",
         apiKey: "test-api-key",
         options: ClientOptions(requester: requester));
+
     requester.setOnRequest((request) {
       expect(request.host.url, "test-app-id.algolia.net");
     });
@@ -50,9 +52,10 @@ void main() {
         options: ClientOptions(compression: 'gzip', hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6678',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6678',
               scheme: 'http'),
         ]));
+
     requester.setOnRequest((request) {});
     try {
       final res = await client.customPost(
@@ -78,9 +81,10 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6691',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6691',
               scheme: 'http'),
         ]));
+
     requester.setOnRequest((request) {});
     try {
       final res = await client.customGet(
@@ -139,9 +143,10 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6683',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6683',
               scheme: 'http'),
         ]));
+
     {
       requester.setOnRequest((request) {});
       try {
