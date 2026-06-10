@@ -128,7 +128,7 @@ namespace Algolia.Search.Clients;
   /// <summary>
   /// Represents a collection of functions to interact with the API endpoints
   /// </summary>
-  {{> visibility}} partial class {{classname}} : {{interfacePrefix}}{{classname}}
+  {{> visibility}} partial class {{classname}} : {{interfacePrefix}}{{classname}}, IDisposable
   {
       internal HttpTransport _transport;
       private readonly ILogger<{{apiPackageName}}Client> _logger;
@@ -211,6 +211,18 @@ namespace Algolia.Search.Clients;
         _transport._algoliaConfig.SetClientApiKey(apiKey);
       }
 
+      /// <summary>
+      /// Disposes the client and its underlying resources (the HTTP transport{{#isSearchClient}} and, if set, the ingestion transporter{{/isSearchClient}}).
+      /// </summary>
+      public void Dispose()
+      {
+        _transport?.Dispose();
+        {{#isSearchClient}}
+        (_ingestionTransporter as IDisposable)?.Dispose();
+        {{/isSearchClient}}
+        GC.SuppressFinalize(this);
+      }
+
       {{#isSearchClient}}
       /// <summary>
       /// Sets (or replaces) the ingestion transporter used by *WithTransformation helpers.
@@ -242,7 +254,9 @@ namespace Algolia.Search.Clients;
             ingestionConfig.DefaultHeaders[kvp.Key] = kvp.Value;
         }
 
+        var previous = _ingestionTransporter;
         _ingestionTransporter = new IngestionClient(ingestionConfig, _loggerFactory);
+        (previous as IDisposable)?.Dispose();
       }
 
       /// <summary>
@@ -263,6 +277,7 @@ namespace Algolia.Search.Clients;
             string.IsNullOrWhiteSpace(_transport._algoliaConfig.ApiKey))
           throw new ArgumentException("AppId and ApiKey are required for transformation pipeline");
 
+        var previous = _ingestionTransporter;
         _ingestionTransporter = new IngestionClient(
           new IngestionConfig(_transport._algoliaConfig.AppId, _transport._algoliaConfig.ApiKey, region)
           {
@@ -275,6 +290,7 @@ namespace Algolia.Search.Clients;
           },
           factory ?? _loggerFactory
         );
+        (previous as IDisposable)?.Dispose();
       }
 
       /// <summary>

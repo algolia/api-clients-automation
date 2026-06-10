@@ -20,7 +20,7 @@ namespace Algolia.Search.Transport;
 /// Transport logic of the library
 /// Holding an instance of the requester and the retry strategy
 /// </summary>
-internal class HttpTransport
+internal class HttpTransport : IDisposable
 {
   private readonly IHttpRequester _httpClient;
   private readonly ISerializer _serializer;
@@ -446,5 +446,14 @@ internal class HttpTransport
         ?? Defaults.WriteTimeout,
       _ => Defaults.WriteTimeout,
     };
+  }
+
+  /// <summary>
+  /// Disposes the underlying HTTP requester, if it is disposable.
+  /// </summary>
+  public void Dispose()
+  {
+    (_httpClient as IDisposable)?.Dispose();
+    GC.SuppressFinalize(this);
   }
 }
