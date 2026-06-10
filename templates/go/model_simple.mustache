@@ -322,7 +322,9 @@ func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) error {
 			return fmt.Errorf("failed to unmarshal field {{{baseName}}} of {{{classname}}}: %w", err)
 		}
 		delete(raw, "{{{baseName}}}")
-	}
+	}{{#required}} else {
+		return fmt.Errorf("required field {{{baseName}}} not found in {{{classname}}}")
+	}{{/required}}
 	{{/vars}}
 
 	parentBytes, err := json.Marshal(raw)
@@ -356,7 +358,9 @@ func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) error {
 			return fmt.Errorf("failed to unmarshal field {{{baseName}}} of {{{classname}}}: %w", err)
 		}
 		delete(raw, "{{{baseName}}}")
-	}
+	}{{#required}} else {
+		return fmt.Errorf("required field {{{baseName}}} not found in {{{classname}}}")
+	}{{/required}}
 	{{/vars}}
 {{/isMap}}
 {{/parent}}
@@ -367,7 +371,9 @@ func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) error {
 			return fmt.Errorf("failed to unmarshal field {{{baseName}}} of {{{classname}}}: %w", err)
 		}
 		delete(raw, "{{{baseName}}}")
-	}
+	}{{#required}} else {
+		return fmt.Errorf("required field {{{baseName}}} not found in {{{classname}}}")
+	}{{/required}}
 	{{/vars}}
 {{/parent}}
 
