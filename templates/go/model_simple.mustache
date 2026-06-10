@@ -24,10 +24,6 @@ type {{classname}} struct {
 {{/isAdditionalPropertiesTrue}}
 }
 
-{{#isAdditionalPropertiesTrue}}
-type _{{{classname}}} {{{classname}}}
-
-{{/isAdditionalPropertiesTrue}}
 {{#hasOptional}}
 type {{{classname}}}Option func(f *{{{classname}}})
 
