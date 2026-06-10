@@ -210,8 +210,10 @@ export async function runCts(
         only('ruby') +
         only('kotlin'),
     );
-    // dart/swift don't expose the helper
-    assertValidChunkedPushWait(languages.length - skip('dart') - skip('swift'));
+    // dart/swift don't expose the helper; go/php/javascript are excluded via `skipLanguages` in the CTS spec
+    assertValidChunkedPushWait(
+      languages.length - skip('dart') - skip('swift') - skip('go') - skip('php') - skip('javascript'),
+    );
   }
   if (withBenchmarkServer) {
     printBenchmarkReport();
