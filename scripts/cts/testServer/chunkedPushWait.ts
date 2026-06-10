@@ -6,24 +6,13 @@ import express from 'express';
 
 import { setupServer } from './index.ts';
 
-// Per-language counters for the chunkedPush "waitForTasks" flow.
-// `pushCount`     = number of `push` requests the client made (one per batch).
-// `getEventCount` = number of `getEvent` polls the client made (must be one per pushed task).
 const chunkedPushWaitState: Record<string, { pushCount: number; getEventCount: number }> = {};
 
-// This test drives `saveObjectsWithTransformation` with batchSize=10 over 25 objects and
-// `waitForTasks: true`, which produces 3 batches (10/10/5) and a poll window of 1
-// (`waitBatchSize = batchSize / 10`). A correct helper polls `getEvent` exactly once per pushed
-// task (getEventCount === pushCount === 3). A helper whose poll cursor over-advances on non-push
-// iterations polls fewer tasks (getEventCount < pushCount), and a strongly-typed one that slices
-// past the end of its response list crashes instead — so this assertion fails for buggy clients.
+// every pushed task must be polled exactly once; a poll cursor that over-advances polls fewer.
 export function assertValidChunkedPushWait(expectedCount: number): void {
   expect(Object.keys(chunkedPushWaitState)).to.have.length(expectedCount);
   for (const lang in chunkedPushWaitState) {
-    // 25 objects at batchSize 10 => 3 batches per client variant. A language may run this twice
-    // (sync + async), so pushCount is a positive multiple of 3; we only require the triggering
-    // scenario ran at least once. The discriminator is the invariant below: every pushed task
-    // must be polled exactly once. A client whose poll cursor over-advances polls fewer.
+    // at least 3 (25 objects / batchSize 10), not exactly: python runs the scenario twice (sync + async)
     expect(chunkedPushWaitState[lang].pushCount, `pushCount for ${lang}`).to.be.at.least(3);
     expect(chunkedPushWaitState[lang].getEventCount, `getEventCount for ${lang}`).to.equal(
       chunkedPushWaitState[lang].pushCount,
@@ -76,7 +65,5 @@ function addRoutes(app: Express): void {
 }
 
 export function chunkedPushWaitServer(): Promise<Server> {
-  // simulates the ingestion `push` + `getEvent` endpoints to verify that the chunkedPush helper
-  // polls every pushed task when waitForTasks is true. See assertValidChunkedPushWait for details.
   return setupServer('chunkedPushWaitServer', 6692, addRoutes);
 }

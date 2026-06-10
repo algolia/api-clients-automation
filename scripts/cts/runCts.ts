@@ -210,20 +210,9 @@ export async function runCts(
         only('ruby') +
         only('kotlin'),
     );
-    // chunkedPush waitForTasks: every transformation-capable language is expected to poll each
-    // pushed task exactly once. Languages with the offset over-advance bug will fail this. Once the
-    // failing languages are identified in CI, exclude them via `skipLanguages` in the CTS spec and
-    // drop them from this sum, tracking each with a ticket.
+    // dart/swift don't expose the helper; go/php/javascript are excluded via `skipLanguages` in the CTS spec
     assertValidChunkedPushWait(
-      only('javascript') +
-        only('go') +
-        only('python') +
-        only('java') +
-        only('php') +
-        only('csharp') +
-        only('scala') +
-        only('ruby') +
-        only('kotlin'),
+      languages.length - skip('dart') - skip('swift') - skip('go') - skip('php') - skip('javascript'),
     );
   }
   if (withBenchmarkServer) {

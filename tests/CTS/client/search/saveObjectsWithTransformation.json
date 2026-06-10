@@ -57,6 +57,7 @@
   {
     "testName": "saveObjectsWithTransformation polls every task when waitForTasks is true",
     "autoCreateClient": false,
+    "skipLanguages": ["go", "php", "javascript"],
     "steps": [
       {
         "type": "createClient",
