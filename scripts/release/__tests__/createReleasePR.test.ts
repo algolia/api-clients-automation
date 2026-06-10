@@ -101,7 +101,7 @@ describe('createReleasePR', () => {
       getFileChangesMock.mockResolvedValueOnce('');
       expect(await parseCommit(buildTestCommit())).toEqual(
         expect.objectContaining({
-          author: '[@algolia-bot](https://github.com/algolia-bot/)',
+          author: `[@${gitAuthor.name}](https://github.com/${gitAuthor.name}/)`,
           hash: 'b2501882',
           languages: [],
           message: 'fix: fix the thing',
@@ -116,7 +116,7 @@ describe('createReleasePR', () => {
       getFileChangesMock.mockResolvedValueOnce('specs/search/something.json');
       expect(await parseCommit(buildTestCommit())).toEqual(
         expect.objectContaining({
-          author: '[@algolia-bot](https://github.com/algolia-bot/)',
+          author: `[@${gitAuthor.name}](https://github.com/${gitAuthor.name}/)`,
           hash: 'b2501882',
           languages: [],
           message: 'fix: fix the thing',
@@ -130,7 +130,7 @@ describe('createReleasePR', () => {
     it('default to fix on unknown type', async () => {
       getFileChangesMock.mockResolvedValueOnce('clients/algoliasearch-client-javascript/package.json');
       expect(await parseCommit(buildTestCommit({ type: 'what', scope: 'unkown' }))).toEqual({
-        author: '[@algolia-bot](https://github.com/algolia-bot/)',
+        author: `[@${gitAuthor.name}](https://github.com/${gitAuthor.name}/)`,
         hash: 'b2501882',
         languages: ['javascript'],
         message: 'what(unkown): fix the thing',
@@ -141,7 +141,7 @@ describe('createReleasePR', () => {
 
       getFileChangesMock.mockResolvedValueOnce('clients/algoliasearch-client-javascript/package.json');
       expect(await parseCommit(buildTestCommit({ type: '', scope: '' }))).toEqual({
-        author: '[@algolia-bot](https://github.com/algolia-bot/)',
+        author: `[@${gitAuthor.name}](https://github.com/${gitAuthor.name}/)`,
         hash: 'b2501882',
         languages: ['javascript'],
         message: ': fix the thing',
