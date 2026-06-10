@@ -131,7 +131,7 @@ describe('createReleasePR', () => {
     it('default to fix on unknown type', async () => {
       getFileChangesMock.mockResolvedValueOnce('clients/algoliasearch-client-javascript/package.json');
       expect(await parseCommit(buildTestCommit({ type: 'what', scope: 'unkown' }))).toEqual({
-                  author: '[@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)',
+        author: '[@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)',
         hash: 'b2501882',
         languages: ['javascript'],
         message: 'what(unkown): fix the thing',
@@ -142,7 +142,7 @@ describe('createReleasePR', () => {
 
       getFileChangesMock.mockResolvedValueOnce('clients/algoliasearch-client-javascript/package.json');
       expect(await parseCommit(buildTestCommit({ type: '', scope: '' }))).toEqual({
-                  author: '[@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)',
+        author: '[@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)',
         hash: 'b2501882',
         languages: ['javascript'],
         message: ': fix the thing',
