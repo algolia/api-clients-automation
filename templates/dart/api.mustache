@@ -114,12 +114,11 @@ final class {{classname}} implements ApiClient {
   ingestion.IngestionClient? get ingestionTransporter => _ingestionTransporter;
 
   ingestion.IngestionClient _buildIngestionTransporter(TransformationOptions opts) {
-    final ingestionOpts = opts.ingestionClientOptions;
     return ingestion.IngestionClient(
       appId: _appId,
       apiKey: _apiKey,
       region: opts.region,
-      options: ingestionOpts,
+      options: opts.ingestionClientOptions ?? const ClientOptions(),
     );
   }
   {{/isSearchClient}}
