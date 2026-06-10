@@ -4,6 +4,7 @@ package analytics
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // Operator Character that characterizes how the filter is applied.  For example, for a facet filter `facet:value`, `:` is the operator. For a numeric filter `count>50`, `>` is the operator.
@@ -51,12 +52,10 @@ func (v *Operator) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := Operator(value)
-	for _, existing := range AllowedOperatorEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedOperatorEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid Operator", value)
@@ -64,13 +63,7 @@ func (v *Operator) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v Operator) IsValid() bool {
-	for _, existing := range AllowedOperatorEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedOperatorEnumValues, v)
 }
 
 // Ptr returns reference to operator value.

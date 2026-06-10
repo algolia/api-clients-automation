@@ -4,6 +4,7 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // RunType Task run type.
@@ -47,12 +48,10 @@ func (v *RunType) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := RunType(value)
-	for _, existing := range AllowedRunTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedRunTypeEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid RunType", value)
@@ -60,13 +59,7 @@ func (v *RunType) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v RunType) IsValid() bool {
-	for _, existing := range AllowedRunTypeEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedRunTypeEnumValues, v)
 }
 
 // Ptr returns reference to RunType value.

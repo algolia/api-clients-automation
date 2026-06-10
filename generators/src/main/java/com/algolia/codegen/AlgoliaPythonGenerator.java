@@ -32,6 +32,9 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
 
     setApiNameSuffix(Helpers.API_SUFFIX);
 
+    // Rename models that conflict with pydantic's built-in names
+    modelNameMapping.put("ValidationError", "AgentStudioValidationError");
+
     String packageName = Helpers.toSnakeCase(CLIENT);
     setPackageName(packageName);
     setApiPackage("");

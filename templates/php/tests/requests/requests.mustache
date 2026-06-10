@@ -87,7 +87,7 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
-                "path" => "{{{request.path}}}",
+                "path" => "{{{serverPathSuffix}}}{{{request.path}}}",
                 "method" => "{{{request.method}}}",
                 {{#request.body}}
                 "body" => json_decode("{{#lambda.escapeQuotes}}{{{request.body}}}{{/lambda.escapeQuotes}}"),

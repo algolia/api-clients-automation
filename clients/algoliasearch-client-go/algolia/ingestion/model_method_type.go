@@ -4,6 +4,7 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // MethodType HTTP method to be used for retrieving your data.
@@ -41,12 +42,10 @@ func (v *MethodType) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := MethodType(value)
-	for _, existing := range AllowedMethodTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedMethodTypeEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid MethodType", value)
@@ -54,13 +53,7 @@ func (v *MethodType) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v MethodType) IsValid() bool {
-	for _, existing := range AllowedMethodTypeEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedMethodTypeEnumValues, v)
 }
 
 // Ptr returns reference to MethodType value.

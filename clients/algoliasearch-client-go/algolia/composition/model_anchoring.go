@@ -4,6 +4,7 @@ package composition
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // Anchoring Which part of the search query the pattern should match:  - `startsWith`. The pattern must match the beginning of the query. - `endsWith`. The pattern must match the end of the query. - `is`. The pattern must match the query exactly. - `contains`. The pattern must match anywhere in the query.  Empty queries are only allowed as patterns with `anchoring: is`.
@@ -45,12 +46,10 @@ func (v *Anchoring) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := Anchoring(value)
-	for _, existing := range AllowedAnchoringEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedAnchoringEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid Anchoring", value)
@@ -58,13 +57,7 @@ func (v *Anchoring) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v Anchoring) IsValid() bool {
-	for _, existing := range AllowedAnchoringEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedAnchoringEnumValues, v)
 }
 
 // Ptr returns reference to anchoring value.

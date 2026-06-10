@@ -1,0 +1,28 @@
+FeedbackCreationRequest:
+  properties:
+    messageId:
+      type: string
+      title: messageid
+    agentId:
+      type: string
+      title: agentid
+    vote:
+      $ref: 'VoteEnum.yml#/VoteEnum'
+    tags:
+      items:
+        type: string
+        maxLength: 50
+      type: array
+      maxItems: 10
+      title: tags
+    notes:
+      type: string
+      maxLength: 1000
+      title: notes
+  type: object
+  required:
+    - messageId
+    - agentId
+    - vote
+  title: feedbackCreationRequest
+  description: Request model for creating a feedback entry.

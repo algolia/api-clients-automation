@@ -4,6 +4,7 @@ package insights
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // ViewEvent the model 'ViewEvent'.
@@ -39,12 +40,10 @@ func (v *ViewEvent) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := ViewEvent(value)
-	for _, existing := range AllowedViewEventEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedViewEventEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid ViewEvent", value)
@@ -52,13 +51,7 @@ func (v *ViewEvent) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v ViewEvent) IsValid() bool {
-	for _, existing := range AllowedViewEventEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedViewEventEnumValues, v)
 }
 
 // Ptr returns reference to ViewEvent value.

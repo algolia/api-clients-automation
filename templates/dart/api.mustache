@@ -14,6 +14,10 @@ import 'package:algolia_client_ingestion/algolia_client_ingestion.dart' as inges
 {{#description}}
 /// {{{description}}}
 {{/description}}
+{{#isAgentStudioClient}}
+/// **Beta:** The Agent Studio API is not yet stable and may change without notice.
+/// See https://www.algolia.com/doc/rest-api/agent-studio
+{{/isAgentStudioClient}}
 final class {{classname}} implements ApiClient {
 
   @override
@@ -46,10 +50,19 @@ final class {{classname}} implements ApiClient {
             segment: AgentSegment(value: "{{{baseName}}}", version: packageVersion),
             appId: appId,
             apiKey: apiKey,
-            options: options,
-            defaultConnectTimeout: const Duration(milliseconds: {{{x-timeouts.server.connect}}}),
-            defaultReadTimeout: const Duration(milliseconds: {{{x-timeouts.server.read}}}),
-            defaultWriteTimeout: const Duration(milliseconds: {{{x-timeouts.server.write}}}),
+            options: ClientOptions(
+              connectTimeout: Duration(milliseconds: {{{x-timeouts.server.connect}}}),
+              readTimeout: Duration(milliseconds: {{{x-timeouts.server.read}}}),
+              writeTimeout: Duration(milliseconds: {{{x-timeouts.server.write}}}),
+              hosts: options.hosts,
+              headers: options.headers,
+              agentSegments: options.agentSegments,
+              logger: options.logger,
+              requester: options.requester,
+              interceptors: options.interceptors,
+              httpClientAdapter: options.httpClientAdapter,
+              compression: options.compression,
+            ),
             {{#hostWithAppID}}
             defaultHosts: () => [
               Host(url: '$appId-dsn.algolia.net', callType: CallType.read),
@@ -166,10 +179,10 @@ final class {{classname}} implements ApiClient {
     final request = ApiRequest(
         method: RequestMethod.{{#lambda.snakecase}}{{httpMethod}}{{/lambda.snakecase}},
         {{^vendorExtensions.x-is-custom-request}}
-        path: r'{{{path}}}'{{#pathParams}}.replaceAll('{' r'{{{baseName}}}' '}', Uri.encodeComponent({{{paramName}}}.toString())){{/pathParams}},
+        path: r'{{{serverPathSuffix}}}{{{path}}}'{{#pathParams}}.replaceAll('{' r'{{{baseName}}}' '}', Uri.encodeComponent({{{paramName}}}.toString())){{/pathParams}},
         {{/vendorExtensions.x-is-custom-request}}
         {{#vendorExtensions.x-is-custom-request}}
-        path: r'{{{path}}}'{{#pathParams}}.replaceAll('{' r'{{{baseName}}}' '}', {{{paramName}}}){{/pathParams}},
+        path: r'{{{serverPathSuffix}}}{{{path}}}'{{#pathParams}}.replaceAll('{' r'{{{baseName}}}' '}', {{{paramName}}}){{/pathParams}},
         {{/vendorExtensions.x-is-custom-request}}
         {{#vendorExtensions.x-use-read-transporter}}
         isRead : {{{vendorExtensions.x-use-read-transporter}}},
@@ -218,6 +231,9 @@ final class {{classname}} implements ApiClient {
       ) + {{/vendorExtensions.x-timeouts}}requestOptions,
     );
     {{#returnType}}
+    {{#vendorExtensions.x-is-custom-request}}
+    if (response == null) return AlgoliaNoResponse();
+    {{/vendorExtensions.x-is-custom-request}}
     return deserialize<{{{.}}}, {{{returnBaseType}}}>(response, '{{{.}}}', growable: true,);
     {{/returnType}}
   }  

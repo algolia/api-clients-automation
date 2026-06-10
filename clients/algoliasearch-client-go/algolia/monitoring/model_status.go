@@ -4,6 +4,7 @@ package monitoring
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // Status Status of the cluster.
@@ -45,12 +46,10 @@ func (v *Status) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := Status(value)
-	for _, existing := range AllowedStatusEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedStatusEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid Status", value)
@@ -58,13 +57,7 @@ func (v *Status) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v Status) IsValid() bool {
-	for _, existing := range AllowedStatusEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedStatusEnumValues, v)
 }
 
 // Ptr returns reference to Status value.

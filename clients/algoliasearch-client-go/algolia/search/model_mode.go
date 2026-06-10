@@ -4,6 +4,7 @@ package search
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // Mode Search mode the index will use to query for results.  This setting only applies to indices, for which Algolia enabled NeuralSearch for you.
@@ -41,12 +42,10 @@ func (v *Mode) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := Mode(value)
-	for _, existing := range AllowedModeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedModeEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid Mode", value)
@@ -54,13 +53,7 @@ func (v *Mode) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v Mode) IsValid() bool {
-	for _, existing := range AllowedModeEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedModeEnumValues, v)
 }
 
 // Ptr returns reference to mode value.

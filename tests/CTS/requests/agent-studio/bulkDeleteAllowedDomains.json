@@ -1,0 +1,18 @@
+[
+  {
+    "testName": "bulkDeleteAllowedDomains",
+    "parameters": {
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      "allowedDomainBulkDelete": {
+        "domainIds": ["a1b2c3d4-5678-90ab-cdef-123456789abc", "b2c3d4e5-6789-01ab-cdef-234567890abc"]
+      }
+    },
+    "request": {
+      "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/allowed-domains/bulk",
+      "method": "DELETE",
+      "body": {
+        "domainIds": ["a1b2c3d4-5678-90ab-cdef-123456789abc", "b2c3d4e5-6789-01ab-cdef-234567890abc"]
+      }
+    }
+  }
+]

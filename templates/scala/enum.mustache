@@ -24,11 +24,11 @@ class {{classname}}Serializer
     extends CustomSerializer[{{classname}}](_ =>
       (
         {
-          case JString(value) => {{classname}}.withName(value)
+          {{#allowableValues}}{{#enumVars}}{{#-first}}{{#isString}}case JString(value) => {{classname}}.withName(value){{/isString}}{{^isString}}case JInt(value) => {{classname}}.withName(value.toString){{/isString}}{{/-first}}{{/enumVars}}{{/allowableValues}}
           case JNull => null
         },
         { case value: {{classname}} =>
-          JString(value.toString)
+          {{#allowableValues}}{{#enumVars}}{{#-first}}{{#isString}}JString(value.toString){{/isString}}{{^isString}}JInt(BigInt(value.toString)){{/isString}}{{/-first}}{{/enumVars}}{{/allowableValues}}
         }
       )
     )

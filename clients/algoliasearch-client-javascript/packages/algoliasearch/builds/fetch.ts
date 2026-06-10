@@ -4,6 +4,8 @@ import type { ClientOptions, RequestOptions } from '@algolia/client-common';
 
 import type { AbtestingV3Client } from '@algolia/abtesting';
 import { abtestingV3Client } from '@algolia/abtesting';
+import type { AgentStudioClient } from '@algolia/agent-studio';
+import { agentStudioClient } from '@algolia/agent-studio';
 import type { AbtestingClient } from '@algolia/client-abtesting';
 import { abtestingClient } from '@algolia/client-abtesting';
 import type { AnalyticsClient } from '@algolia/client-analytics';
@@ -55,6 +57,7 @@ export type Algoliasearch = SearchClient & {
   initPersonalization: (initOptions: InitClientOptions & PersonalizationRegionOptions) => PersonalizationClient;
   initQuerySuggestions: (initOptions: InitClientOptions & QuerySuggestionsRegionOptions) => QuerySuggestionsClient;
   initRecommend: (initOptions?: InitClientOptions) => RecommendClient;
+  initAgentStudio: (initOptions?: InitClientOptions) => AgentStudioClient;
 
   // Bridge helpers to expose along with the search endpoints at the root of the API client
 
@@ -364,6 +367,10 @@ export function algoliasearch(
 
     initRecommend: (initOptions: InitClientOptions = {}): RecommendClient => {
       return recommendClient(initOptions.appId || appId, initOptions.apiKey || apiKey, initOptions.options);
+    },
+
+    initAgentStudio: (initOptions: InitClientOptions = {}): AgentStudioClient => {
+      return agentStudioClient(initOptions.appId || appId, initOptions.apiKey || apiKey, initOptions.options);
     },
   };
 }

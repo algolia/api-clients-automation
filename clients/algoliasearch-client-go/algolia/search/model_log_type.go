@@ -4,6 +4,7 @@ package search
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // LogType the model 'LogType'.
@@ -45,12 +46,10 @@ func (v *LogType) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := LogType(value)
-	for _, existing := range AllowedLogTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedLogTypeEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid LogType", value)
@@ -58,13 +57,7 @@ func (v *LogType) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v LogType) IsValid() bool {
-	for _, existing := range AllowedLogTypeEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedLogTypeEnumValues, v)
 }
 
 // Ptr returns reference to logType value.

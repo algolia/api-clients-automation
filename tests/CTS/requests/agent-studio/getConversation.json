@@ -1,0 +1,32 @@
+[
+  {
+    "testName": "getConversation",
+    "parameters": {
+      "conversationId": "test-conversation-id",
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15"
+    },
+    "request": {
+      "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/test-conversation-id",
+      "method": "GET"
+    }
+  },
+  {
+    "testName": "e2e get conversation",
+    "parameters": {
+      "conversationId": "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15"
+    },
+    "request": {
+      "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/alg_cnv_miss_yqcZtaOSPTF8bJsJ",
+      "method": "GET"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "id": "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
+        "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        "title": "General Greeting"
+      }
+    }
+  }
+]

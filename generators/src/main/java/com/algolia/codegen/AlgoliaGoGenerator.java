@@ -147,6 +147,17 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     ModelPruner.removeOrphanModelFiles(this, operations, models);
     Helpers.removeHelpers(operations);
     GenericPropagator.propagateGenericsToOperations(operations, models);
+
+    // GetConfiguration clashes with the hardcoded client method that returns the config object.
+    String client = (String) additionalProperties.get("client");
+    for (CodegenOperation op : operations.getOperations().getOperation()) {
+      if (op.operationId.equals("GetConfiguration")) {
+        String renamed = "agent-studio".equals(client) ? "GetAgentStudioConfiguration" : "GetApplicationConfiguration";
+        op.operationId = renamed;
+        op.nickname = renamed;
+      }
+    }
+
     return operations;
   }
 }

@@ -4,6 +4,7 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // DestinationType Destination type.  - `search`.   Data is stored in an Algolia index.  - `insights`.   Data is recorded as user events in the Insights API.
@@ -41,12 +42,10 @@ func (v *DestinationType) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := DestinationType(value)
-	for _, existing := range AllowedDestinationTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedDestinationTypeEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid DestinationType", value)
@@ -54,13 +53,7 @@ func (v *DestinationType) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v DestinationType) IsValid() bool {
-	for _, existing := range AllowedDestinationTypeEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedDestinationTypeEnumValues, v)
 }
 
 // Ptr returns reference to DestinationType value.

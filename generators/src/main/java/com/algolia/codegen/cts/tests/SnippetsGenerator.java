@@ -48,7 +48,7 @@ public class SnippetsGenerator extends TestsGenerator {
     Map<String, Snippet[]> snippets = loadFullCTS(Snippet[].class);
     for (Map.Entry<String, Snippet[]> blockEntry : snippets.entrySet()) {
       for (Snippet test : blockEntry.getValue()) {
-        test.method = blockEntry.getKey();
+        test.method = ctsManager.resolveMethodName(blockEntry.getKey());
       }
     }
 

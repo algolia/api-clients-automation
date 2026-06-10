@@ -1,0 +1,18 @@
+[
+  {
+    "testName": "createAgentAllowedDomain",
+    "parameters": {
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      "allowedDomainCreate": {
+        "domain": "https://app.example.com"
+      }
+    },
+    "request": {
+      "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/allowed-domains",
+      "method": "POST",
+      "body": {
+        "domain": "https://app.example.com"
+      }
+    }
+  }
+]

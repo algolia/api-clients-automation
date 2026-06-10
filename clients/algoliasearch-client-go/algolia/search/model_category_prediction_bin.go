@@ -4,6 +4,7 @@ package search
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // CategoryPredictionBin Confidence level of the category prediction.
@@ -47,12 +48,10 @@ func (v *CategoryPredictionBin) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := CategoryPredictionBin(value)
-	for _, existing := range AllowedCategoryPredictionBinEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedCategoryPredictionBinEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid CategoryPredictionBin", value)
@@ -60,13 +59,7 @@ func (v *CategoryPredictionBin) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v CategoryPredictionBin) IsValid() bool {
-	for _, existing := range AllowedCategoryPredictionBinEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedCategoryPredictionBinEnumValues, v)
 }
 
 // Ptr returns reference to categoryPrediction_bin value.

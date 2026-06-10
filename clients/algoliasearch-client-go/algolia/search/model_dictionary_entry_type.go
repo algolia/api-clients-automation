@@ -4,6 +4,7 @@ package search
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // DictionaryEntryType Whether a dictionary entry is provided by Algolia (standard), or has been added by you (custom).
@@ -41,12 +42,10 @@ func (v *DictionaryEntryType) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := DictionaryEntryType(value)
-	for _, existing := range AllowedDictionaryEntryTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedDictionaryEntryTypeEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid DictionaryEntryType", value)
@@ -54,13 +53,7 @@ func (v *DictionaryEntryType) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v DictionaryEntryType) IsValid() bool {
-	for _, existing := range AllowedDictionaryEntryTypeEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedDictionaryEntryTypeEnumValues, v)
 }
 
 // Ptr returns reference to dictionaryEntryType value.

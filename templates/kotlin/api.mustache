@@ -15,6 +15,12 @@ import {{modelPackage}}.RequestBody
 {{/isCompositionClient}}
 
 {{#operations}}
+{{#isAgentStudioClient}}
+/**
+ * Beta: The Agent Studio API is not yet stable and may change without notice.
+ * @see [Agent Studio API docs](https://www.algolia.com/doc/rest-api/agent-studio)
+ */
+{{/isAgentStudioClient}}
 public class {{classname}}(
   override val appId: String,
   override var apiKey: String,
@@ -137,7 +143,7 @@ public class {{classname}}(
       {{/requiredParams}}
       val requestConfig = RequestConfig(
           method = RequestMethod.{{httpMethod}},
-          path = {{#vendorExtensions}}{{#x-is-custom-request}}"{{{path}}}".replace("{path}", path){{/x-is-custom-request}}{{^x-is-custom-request}}listOf({{#pathSegments}}{{{.}}}, {{/pathSegments}}){{/x-is-custom-request}}{{/vendorExtensions}},
+          path = {{#vendorExtensions}}{{#x-is-custom-request}}"{{{serverPathSuffix}}}{{{path}}}".replace("{path}", path){{/x-is-custom-request}}{{^x-is-custom-request}}"{{{serverPathSuffix}}}".split("/").filter { it.isNotBlank() } + listOf({{#pathSegments}}{{{.}}}, {{/pathSegments}}){{/x-is-custom-request}}{{/vendorExtensions}},
           {{#vendorExtensions.x-use-read-transporter}}
           isRead = {{{vendorExtensions.x-use-read-transporter}}},
           {{/vendorExtensions.x-use-read-transporter}}
@@ -172,5 +178,9 @@ public class {{classname}}(
       )
   }
   {{/operation}}
+
+{{#isAgentStudioClient}}
+{{> agent_studio_helpers}}
+{{/isAgentStudioClient}}
 }
 {{/operations}}

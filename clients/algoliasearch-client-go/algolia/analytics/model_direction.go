@@ -4,6 +4,7 @@ package analytics
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // Direction the model 'Direction'.
@@ -41,12 +42,10 @@ func (v *Direction) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := Direction(value)
-	for _, existing := range AllowedDirectionEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedDirectionEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid Direction", value)
@@ -54,13 +53,7 @@ func (v *Direction) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v Direction) IsValid() bool {
-	for _, existing := range AllowedDirectionEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedDirectionEnumValues, v)
 }
 
 // Ptr returns reference to direction value.

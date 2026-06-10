@@ -67,6 +67,13 @@ public sealed interface {{classname}} {
 
 internal class {{classname}}Serializer : JsonContentPolymorphicSerializer<{{classname}}>({{classname}}::class) {
     override fun selectDeserializer(element: JsonElement): DeserializationStrategy<{{classname}}> {
+        {{#discriminator}}
+        when (element.jsonObject["{{{propertyBaseName}}}"]?.jsonPrimitive?.contentOrNull) {
+            {{#mappedModels}}
+            "{{{mappingName}}}" -> return {{{modelName}}}.serializer()
+            {{/mappedModels}}
+        }
+        {{/discriminator}}
         return when {
             {{#composedSchemas.oneOf}}
             {{^isModel}}

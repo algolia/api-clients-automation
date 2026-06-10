@@ -1,0 +1,30 @@
+AllowedDomainResponse:
+  properties:
+    id:
+      type: string
+      title: id
+    appId:
+      type: string
+      title: appid
+    agentId:
+      type: string
+      title: agentid
+    domain:
+      type: string
+      title: domain
+    createdAt:
+      type: string
+      title: createdat
+    updatedAt:
+      type: string
+      title: updatedat
+  type: object
+  required:
+    - id
+    - appId
+    - agentId
+    - domain
+    - createdAt
+    - updatedAt
+  title: allowedDomainResponse
+  description: Single allowed domain in API responses.

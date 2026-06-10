@@ -4,6 +4,7 @@ package search
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // AdvancedSyntaxFeatures the model 'AdvancedSyntaxFeatures'.
@@ -41,12 +42,10 @@ func (v *AdvancedSyntaxFeatures) UnmarshalJSON(src []byte) error {
 	}
 
 	enumTypeValue := AdvancedSyntaxFeatures(value)
-	for _, existing := range AllowedAdvancedSyntaxFeaturesEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
+	if slices.Contains(AllowedAdvancedSyntaxFeaturesEnumValues, enumTypeValue) {
+		*v = enumTypeValue
 
-			return nil
-		}
+		return nil
 	}
 
 	return fmt.Errorf("%+v is not a valid AdvancedSyntaxFeatures", value)
@@ -54,13 +53,7 @@ func (v *AdvancedSyntaxFeatures) UnmarshalJSON(src []byte) error {
 
 // IsValid return true if the value is valid for the enum, false otherwise.
 func (v AdvancedSyntaxFeatures) IsValid() bool {
-	for _, existing := range AllowedAdvancedSyntaxFeaturesEnumValues {
-		if existing == v {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(AllowedAdvancedSyntaxFeaturesEnumValues, v)
 }
 
 // Ptr returns reference to advancedSyntaxFeatures value.
