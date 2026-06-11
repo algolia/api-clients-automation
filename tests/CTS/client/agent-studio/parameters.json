@@ -1,0 +1,26 @@
+[
+  {
+    "testName": "uses the correct host",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "my-app-id",
+          "apiKey": "my-api-key"
+        }
+      },
+      {
+        "type": "method",
+        "method": "customGet",
+        "parameters": {
+          "path": "test"
+        },
+        "expected": {
+          "type": "host",
+          "match": "my-app-id-dsn.algolia.net"
+        }
+      }
+    ]
+  }
+]

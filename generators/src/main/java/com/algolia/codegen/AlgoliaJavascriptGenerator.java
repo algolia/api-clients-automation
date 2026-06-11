@@ -158,9 +158,14 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     additionalProperties.put("isSearchClient", CLIENT.equals("search") || isAlgoliasearchClient);
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
     additionalProperties.put("packageVersion", Helpers.getPackageJsonVersion(packageName));
+    // Use a beta version for the agent-studio standalone package
+    if (CLIENT.equals("agentStudio")) {
+      additionalProperties.put("packageVersion", "0.1.0-beta.0");
+    }
     additionalProperties.put("packageName", packageName);
     additionalProperties.put("npmPackageName", isAlgoliasearchClient ? packageName : "@algolia/" + packageName);
     additionalProperties.put("searchHelpers", CLIENT.equals("search"));
+    additionalProperties.put("agentStudioHelpers", CLIENT.equals("agentStudio"));
 
     if (isAlgoliasearchClient) {
       var dependencies = new ArrayList<Map<String, Object>>();
@@ -182,10 +187,8 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
         dependency.put("dependencyPackage", "@algolia/" + name);
         dependency.put("dependencyVersion", version);
         dependency.put("withInitMethod", !name.contains("search"));
-        dependency.put(
-          "dependencyHasRegionalHosts",
-          !name.contains("search") && !name.contains("recommend") && !name.contains("monitoring") && !name.startsWith("composition")
-        );
+        var clientsWithoutRegion = List.of("search", "recommend", "monitoring", "composition", "agent-studio");
+        dependency.put("dependencyHasRegionalHosts", clientsWithoutRegion.stream().noneMatch(name::contains));
 
         dependencies.add(dependency);
       }

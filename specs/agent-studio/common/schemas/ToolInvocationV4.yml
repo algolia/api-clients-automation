@@ -1,0 +1,41 @@
+ToolInvocationV4:
+  properties:
+    toolCallId:
+      type: string
+      title: toolcallid
+    toolName:
+      type: string
+      title: toolname
+    args:
+      additionalProperties: true
+      type: object
+      title: args
+    result:
+      type: object
+      additionalProperties: true
+      title: result
+    step:
+      type: integer
+      title: step
+    state:
+      type: string
+      title: state
+    providerOptions:
+      additionalProperties: true
+      type: object
+      title: provideroptions
+    requiresApproval:
+      type: boolean
+      title: requiresapproval
+    description:
+      type: string
+      title: description
+    argsHash:
+      type: string
+      title: argshash
+  type: object
+  required:
+    - toolCallId
+    - toolName
+  title: toolInvocationV4
+  description: Model for tool invocation in a Message.

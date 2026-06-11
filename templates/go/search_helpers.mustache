@@ -802,7 +802,12 @@ func (c *APIClient) SaveObjectsWithTransformation(indexName string, objects []ma
 		return nil, reportError("TransformationOptions must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion")
 	}
 
-	return c.ingestionTransporter.ChunkedPush(indexName, objects, ingestion.Action(ACTION_ADD_OBJECT), nil, toIngestionChunkedBatchOptions(opts)...) //nolint:wrapcheck
+	return c.ingestionTransporter.ChunkedPush(
+		indexName,
+		objects,
+		ingestion.Action(ACTION_ADD_OBJECT),
+		nil,
+		toIngestionChunkedBatchOptions(opts)...)
 }
 
 /*
@@ -836,5 +841,10 @@ func (c *APIClient) PartialUpdateObjectsWithTransformation(indexName string, obj
 		action = ACTION_PARTIAL_UPDATE_OBJECT_NO_CREATE
 	}
 
-	return c.ingestionTransporter.ChunkedPush(indexName, objects, ingestion.Action(action), nil, toIngestionChunkedBatchOptions(partialUpdateObjectsToChunkedBatchOptions(opts))...) //nolint:wrapcheck
+	return c.ingestionTransporter.ChunkedPush(
+		indexName,
+		objects,
+		ingestion.Action(action),
+		nil,
+		toIngestionChunkedBatchOptions(partialUpdateObjectsToChunkedBatchOptions(opts))...)
 }

@@ -1,0 +1,16 @@
+{{#isAgentStudioClient}}
+    # Helper: Forges a secured user token (JWT) for Agent Studio authenticated requests.
+    #
+    # @param secret_key [String] The secret key to sign the token with.
+    # @param secret_key_id [String] The key ID to include in the JWT header (kid).
+    # @param user_id [String] The user identifier to include as the subject (sub) claim.
+    # @param expires_in [Integer] The token expiration in seconds from now. Defaults to 86400 (24 hours).
+    # @return [String] The signed JWT token.
+    def forge_secured_user_token(secret_key, secret_key_id, user_id, expires_in = 86400)
+      header = Base64.urlsafe_encode64('{"alg":"HS256","typ":"JWT","kid":"' + secret_key_id + '"}', padding: false)
+      payload = Base64.urlsafe_encode64('{"sub":"' + user_id + '","exp":' + (Time.now.to_i + expires_in).to_s + '}', padding: false)
+      signature = Base64.urlsafe_encode64(OpenSSL::HMAC.digest('SHA256', secret_key, header + '.' + payload), padding: false)
+
+      header + '.' + payload + '.' + signature
+    end
+{{/isAgentStudioClient}}

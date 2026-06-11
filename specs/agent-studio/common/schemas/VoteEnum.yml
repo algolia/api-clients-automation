@@ -1,0 +1,8 @@
+VoteEnum:
+  type: integer
+  enum:
+    - 0
+    - 1
+  x-enum-varnames:
+    - downvote
+    - upvote

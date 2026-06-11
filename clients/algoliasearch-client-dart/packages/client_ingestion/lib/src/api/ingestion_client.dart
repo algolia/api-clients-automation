@@ -92,10 +92,19 @@ final class IngestionClient implements ApiClient {
             segment: AgentSegment(value: "Ingestion", version: packageVersion),
             appId: appId,
             apiKey: apiKey,
-            options: options,
-            defaultConnectTimeout: const Duration(milliseconds: 25000),
-            defaultReadTimeout: const Duration(milliseconds: 25000),
-            defaultWriteTimeout: const Duration(milliseconds: 25000),
+            options: ClientOptions(
+              connectTimeout: Duration(milliseconds: 25000),
+              readTimeout: Duration(milliseconds: 25000),
+              writeTimeout: Duration(milliseconds: 25000),
+              hosts: options.hosts,
+              headers: options.headers,
+              agentSegments: options.agentSegments,
+              logger: options.logger,
+              requester: options.requester,
+              interceptors: options.interceptors,
+              httpClientAdapter: options.httpClientAdapter,
+              compression: options.compression,
+            ),
             defaultHosts: () {
               final allowedRegions = ['eu', 'us'];
               assert(
@@ -325,6 +334,7 @@ final class IngestionClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
+    if (response == null) return AlgoliaNoResponse();
     return deserialize<Object, Object>(
       response,
       'Object',
@@ -358,6 +368,7 @@ final class IngestionClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
+    if (response == null) return AlgoliaNoResponse();
     return deserialize<Object, Object>(
       response,
       'Object',
@@ -394,6 +405,7 @@ final class IngestionClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
+    if (response == null) return AlgoliaNoResponse();
     return deserialize<Object, Object>(
       response,
       'Object',
@@ -430,6 +442,7 @@ final class IngestionClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
+    if (response == null) return AlgoliaNoResponse();
     return deserialize<Object, Object>(
       response,
       'Object',

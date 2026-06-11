@@ -1,0 +1,7 @@
+MessageRole:
+  type: string
+  enum:
+    - user
+    - assistant
+  title: messageRole
+  description: Role of a message in the conversation.

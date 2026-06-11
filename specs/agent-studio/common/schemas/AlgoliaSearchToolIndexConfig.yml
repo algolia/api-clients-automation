@@ -1,0 +1,29 @@
+AlgoliaSearchToolIndexConfig:
+  properties:
+    index:
+      type: string
+      maxLength: 100
+      minLength: 1
+      title: index
+    description:
+      type: string
+      maxLength: 3000
+      minLength: 1
+      title: description
+    enhancedDescription:
+      type: string
+      title: enhanceddescription
+      default: ''
+    searchParameters:
+      oneOf:
+        - $ref: 'SearchParameters.yml#/SearchParameters'
+        - type: 'null'
+    searchControls:
+      oneOf:
+        - $ref: 'IndexSearchParameters.yml#/IndexSearchParameters'
+        - type: 'null'
+  type: object
+  required:
+    - index
+    - description
+  title: algoliaSearchToolIndexConfig

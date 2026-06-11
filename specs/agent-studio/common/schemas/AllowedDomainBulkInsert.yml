@@ -1,0 +1,13 @@
+AllowedDomainBulkInsert:
+  properties:
+    domains:
+      items:
+        type: string
+      type: array
+      title: domains
+      description: List of domain patterns to add.
+  type: object
+  required:
+    - domains
+  title: allowedDomainBulkInsert
+  description: Request body for bulk insert.

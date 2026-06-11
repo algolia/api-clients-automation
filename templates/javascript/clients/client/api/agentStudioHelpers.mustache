@@ -1,0 +1,16 @@
+forgeSecuredUserToken({
+  secretKey,
+  secretKeyId,
+  userId,
+  expiresIn = 24 * 3600, // 24 hours
+}: {
+  secretKey: string;
+  secretKeyId: string;
+  userId: string;
+  expiresIn?: number;
+}): string {
+  const header = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT', kid: secretKeyId })).toString('base64url');
+  const payload = Buffer.from(JSON.stringify({ sub: userId, exp: Math.floor(Date.now() / 1000) + expiresIn })).toString('base64url');
+  const signature = createHmac('sha256', secretKey).update(`${header}.${payload}`).digest('base64url');
+  return `${header}.${payload}.${signature}`;
+},

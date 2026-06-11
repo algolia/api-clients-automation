@@ -163,11 +163,24 @@ public class Helpers {
         }
       }
 
+      String serverPathSuffix = "";
+      for (CodegenServer server : servers) {
+        if (!server.url.isEmpty()) {
+          URL parsed = new URL(server.url.replaceAll("\\{[^}]+}", "placeholder"));
+          String path = parsed.getPath();
+          if (path != null && !path.isEmpty() && !path.equals("/")) {
+            serverPathSuffix = path;
+            break;
+          }
+        }
+      }
+
       bundle.put("hostWithFallback", hostWithFallback);
       bundle.put("hasRegionalHost", hasRegionalHost);
       bundle.put("fallbackToAliasHost", fallbackToAliasHost);
       bundle.put("regionalHost", regionalHost);
       bundle.put("allowedRegions", allowedRegions.toArray(new String[0]));
+      bundle.put("serverPathSuffix", serverPathSuffix);
     } catch (MalformedURLException e) {
       throw new ConfigException("Invalid server URL", e);
     }

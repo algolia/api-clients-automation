@@ -1,0 +1,13 @@
+[
+  {
+    "testName": "deleteConversation",
+    "parameters": {
+      "conversationId": "test-conversation-id",
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15"
+    },
+    "request": {
+      "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/test-conversation-id",
+      "method": "DELETE"
+    }
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "testName": "saveSemanticMemory",
+    "parameters": {
+      "text": "User prefers dark mode and minimal UI design",
+      "rawExtract": "User: I prefer dark mode and minimal UI"
+    },
+    "request": {
+      "path": "/1/memory/semantic",
+      "method": "POST",
+      "body": {
+        "text": "User prefers dark mode and minimal UI design",
+        "rawExtract": "User: I prefer dark mode and minimal UI"
+      }
+    }
+  }
+]

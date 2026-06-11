@@ -96,6 +96,15 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     ModelPruner.removeOrphanModelFiles(this, operations, models);
     Helpers.removeHelpers(operations);
     GenericPropagator.propagateGenericsToOperations(operations, models);
+
+    // Sort pathParams by their position in the path template so that the
+    // positional varargs in setPath(...) match the placeholder order.
+    for (CodegenOperation op : operations.getOperations().getOperation()) {
+      if (op.pathParams != null && op.pathParams.size() > 1) {
+        op.pathParams.sort(Comparator.comparingInt(p -> op.path.indexOf("{" + p.baseName + "}")));
+      }
+    }
+
     return operations;
   }
 

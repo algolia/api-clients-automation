@@ -52,7 +52,7 @@ class {{client}}RequestsTests {
         });
         {{#request}}
         EchoResponse req = echo.getLastResponse();
-        assertEquals("{{{path}}}", req.path);
+        assertEquals("{{{serverPathSuffix}}}{{{path}}}", req.path);
         assertEquals("{{{method}}}", req.method);
         {{#body}}
         assertDoesNotThrow(() -> JSONAssert.assertEquals("{{#lambda.escapeJSON}}{{{body}}}{{/lambda.escapeJSON}}", req.body, JSONCompareMode.STRICT));

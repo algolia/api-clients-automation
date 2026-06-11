@@ -15,6 +15,7 @@ import { chunkWrapperServer } from './chunkWrapper.ts';
 import { errorServer, errorServerRetriedOnce, errorServerRetriedTwice, neverCalledServer } from './error.ts';
 import { gzipServer } from './gzip.ts';
 import { gzipResponseServer } from './gzipResponse.ts';
+import { noContentServer } from './noContent.ts';
 import { pushMockServer, pushMockServerRetriedOnce } from './pushMock.ts';
 import { replaceAllObjectsServer } from './replaceAllObjects.ts';
 import { replaceAllObjectsServerFailed } from './replaceAllObjectsFailed.ts';
@@ -49,6 +50,7 @@ export async function startTestServer(suites: Record<CTSType, boolean>): Promise
       pushMockServer(),
       pushMockServerRetriedOnce(),
       replaceAllObjectsWithTransformationServer(),
+      noContentServer(),
     );
   }
   if (suites.benchmark) {
@@ -72,9 +74,21 @@ export async function startTestServer(suites: Record<CTSType, boolean>): Promise
   };
 }
 
+const SERVER_PATH_PREFIXES = ['/agent-studio'];
+
 export async function setupServer(name: string, port: number, addRoutes: (app: Express) => void): Promise<Server> {
   const spinner = createSpinner(`starting ${name} test server`);
   const app = express();
+
+  app.use((req, _res, next) => {
+    for (const prefix of SERVER_PATH_PREFIXES) {
+      if (req.url.startsWith(prefix)) {
+        req.url = req.url.slice(prefix.length) || '/';
+        break;
+      }
+    }
+    next();
+  });
 
   addRoutes(app);
 
