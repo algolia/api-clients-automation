@@ -72,7 +72,9 @@ public class {{classname}}(
       ingestionTransporter?.close()
     } finally {
     {{/isSearchClient}}
-      requester.close()
+      // Requester does not require AutoCloseable (a custom requester may not own
+      // closeable resources); close only if the concrete implementation is closeable.
+      (requester as? kotlin.AutoCloseable)?.close()
     {{#isSearchClient}}
     }
     {{/isSearchClient}}

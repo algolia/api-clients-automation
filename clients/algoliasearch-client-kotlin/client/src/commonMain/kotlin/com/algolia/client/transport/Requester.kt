@@ -7,12 +7,8 @@ import io.ktor.util.reflect.*
  *
  * Implementations should handle the actual process of making network calls and returning the
  * results based on the provided configuration and options.
- *
- * Requesters own network resources (connection pools, the underlying HTTP engine), so the
- * interface extends [AutoCloseable]: implementations must release those resources in [close], and
- * the owning client closes its requester when the client itself is closed.
  */
-public interface Requester : AutoCloseable {
+public interface Requester {
 
   /**
    * Executes a network request with the specified configuration and options, then returns the
