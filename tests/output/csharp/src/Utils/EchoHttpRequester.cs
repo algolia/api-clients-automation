@@ -78,9 +78,4 @@ public class EchoHttpRequester : IHttpRequester
       new AlgoliaHttpResponse { Body = new MemoryStream(), HttpStatusCode = 200 }
     );
   }
-
-  /// <summary>
-  /// No-op: the echo requester holds no resources to release.
-  /// </summary>
-  public void Dispose() { }
 }

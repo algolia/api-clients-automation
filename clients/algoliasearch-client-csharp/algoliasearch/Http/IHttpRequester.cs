@@ -8,7 +8,7 @@ namespace Algolia.Search.Http;
 /// Interface that allow users to inject their custom http requester
 /// Don't use directly, use AlgoliaClient to make request with the retry strategy
 /// </summary>
-public interface IHttpRequester : IDisposable
+public interface IHttpRequester
 {
   /// <summary>
   /// Sends the HTTP request

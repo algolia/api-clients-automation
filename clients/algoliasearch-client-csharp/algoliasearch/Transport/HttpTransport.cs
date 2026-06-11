@@ -453,7 +453,9 @@ internal class HttpTransport : IDisposable
   /// </summary>
   public void Dispose()
   {
-    _httpClient.Dispose();
+    // IHttpRequester does not require IDisposable (a custom requester may not own
+    // disposable resources); dispose only if the concrete implementation is disposable.
+    (_httpClient as IDisposable)?.Dispose();
     GC.SuppressFinalize(this);
   }
 }
