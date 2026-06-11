@@ -137,9 +137,7 @@ export async function parseCommit(commit: string): Promise<Commit> {
     if (data.user) {
       const login = data.user.login;
       const profileUrl =
-        data.user.type === 'Bot'
-          ? `https://github.com/apps/${login.replace('[bot]', '')}`
-          : `https://github.com/${login}/`;
+        data.user.type === 'Bot' ? `https://github.com/apps/${login.replace('[bot]', '')}` : `https://github.com/${login}/`;
       fetchedUsers[authorEmail] = `[@${login}](${profileUrl})`;
     }
   }
