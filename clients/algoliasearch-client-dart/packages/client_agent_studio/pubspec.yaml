@@ -11,7 +11,7 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-  algolia_client_core: ^1.49.2
+  algolia_client_core: ^1.50.0
   json_annotation: ^4.8.1
   collection: ^1.17.1
 
