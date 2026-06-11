@@ -66,9 +66,16 @@ public class {{classname}}(
    */
   override fun close() {
     {{#isSearchClient}}
-    ingestionTransporter?.close()
+    // Release the ingestion transporter first, but always close the main requester
+    // (the critical resource) even if closing the ingestion transporter throws.
+    try {
+      ingestionTransporter?.close()
+    } finally {
     {{/isSearchClient}}
-    requester.close()
+      requester.close()
+    {{#isSearchClient}}
+    }
+    {{/isSearchClient}}
   }
 
   {{#isSearchClient}}
