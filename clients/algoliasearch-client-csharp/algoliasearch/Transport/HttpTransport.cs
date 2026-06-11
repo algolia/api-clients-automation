@@ -449,11 +449,11 @@ internal class HttpTransport : IDisposable
   }
 
   /// <summary>
-  /// Disposes the underlying HTTP requester, if it is disposable.
+  /// Disposes the underlying HTTP requester.
   /// </summary>
   public void Dispose()
   {
-    (_httpClient as IDisposable)?.Dispose();
+    _httpClient.Dispose();
     GC.SuppressFinalize(this);
   }
 }

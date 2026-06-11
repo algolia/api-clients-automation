@@ -25,7 +25,7 @@ namespace Algolia.Search.Clients;
   /// <summary>
   /// Represents a collection of functions to interact with the API endpoints
   /// </summary>
-  {{> visibility}} {{#isSearchClient}}partial {{/isSearchClient}}{{#isIngestionClient}}partial {{/isIngestionClient}}interface {{interfacePrefix}}{{classname}}
+  {{> visibility}} {{#isSearchClient}}partial {{/isSearchClient}}{{#isIngestionClient}}partial {{/isIngestionClient}}interface {{interfacePrefix}}{{classname}} : IDisposable
   {
       {{#operation}}
       /// <summary>
@@ -128,7 +128,7 @@ namespace Algolia.Search.Clients;
   /// <summary>
   /// Represents a collection of functions to interact with the API endpoints
   /// </summary>
-  {{> visibility}} partial class {{classname}} : {{interfacePrefix}}{{classname}}, IDisposable
+  {{> visibility}} partial class {{classname}} : {{interfacePrefix}}{{classname}}
   {
       internal HttpTransport _transport;
       private readonly ILogger<{{apiPackageName}}Client> _logger;
@@ -216,9 +216,17 @@ namespace Algolia.Search.Clients;
       /// </summary>
       public void Dispose()
       {
+        {{#isSearchClient}}
+        try
+        {
+          _ingestionTransporter?.Dispose();
+        }
+        finally
+        {
+        {{/isSearchClient}}
         _transport?.Dispose();
         {{#isSearchClient}}
-        (_ingestionTransporter as IDisposable)?.Dispose();
+        }
         {{/isSearchClient}}
         GC.SuppressFinalize(this);
       }
@@ -256,7 +264,7 @@ namespace Algolia.Search.Clients;
 
         var previous = _ingestionTransporter;
         _ingestionTransporter = new IngestionClient(ingestionConfig, _loggerFactory);
-        (previous as IDisposable)?.Dispose();
+        previous?.Dispose();
       }
 
       /// <summary>
@@ -290,7 +298,7 @@ namespace Algolia.Search.Clients;
           },
           factory ?? _loggerFactory
         );
-        (previous as IDisposable)?.Dispose();
+        previous?.Dispose();
       }
 
       /// <summary>
