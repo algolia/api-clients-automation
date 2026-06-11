@@ -1,4 +1,4 @@
-## [1.50.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.49.2...1.50.0)
+## 1.50.0
 
 BREAKING CHANGES: this minor version includes breaking changes. See below for more details.
 
