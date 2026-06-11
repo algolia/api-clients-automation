@@ -1,5 +1,5 @@
                 {{#request}}
-                assertEquals("{{{path}}}".toPathSegments(), it.url.pathSegments)
+                assertEquals("{{{serverPathSuffix}}}{{{path}}}".toPathSegments(), it.url.pathSegments)
                 assertEquals(HttpMethod.parse("{{method}}"), it.method)
                 {{#headers}}
                 assertContainsAll("""{{{.}}}""", it.headers)

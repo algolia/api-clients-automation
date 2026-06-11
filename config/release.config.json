@@ -18,7 +18,7 @@
   },
   "defaultTargetBranch": "next",
   "gitAuthor": {
-    "name": "algolia-bot",
-    "email": "accounts+algolia-api-client-bot@algolia.com"
+    "name": "algolia-api-clients-automation-bot[bot]",
+    "email": "288895823+algolia-api-clients-automation-bot[bot]@users.noreply.github.com"
   }
 }

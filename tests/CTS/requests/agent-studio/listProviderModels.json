@@ -1,0 +1,25 @@
+[
+  {
+    "testName": "listProviderModels",
+    "parameters": {
+      "providerId": "c2905529-b933-4b69-87ec-75f9829d5f59"
+    },
+    "request": {
+      "path": "/1/providers/c2905529-b933-4b69-87ec-75f9829d5f59/models",
+      "method": "GET"
+    }
+  },
+  {
+    "testName": "e2e list provider models",
+    "parameters": {
+      "providerId": "c2905529-b933-4b69-87ec-75f9829d5f59"
+    },
+    "request": {
+      "path": "/1/providers/c2905529-b933-4b69-87ec-75f9829d5f59/models",
+      "method": "GET"
+    },
+    "response": {
+      "statusCode": 200
+    }
+  }
+]

@@ -1,0 +1,2 @@
+FacetFilters:
+  $ref: 'FacetFiltersUnion.yml#/FacetFiltersUnion'

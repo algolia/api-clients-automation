@@ -13,8 +13,6 @@ import kotlin.test.*
 import kotlinx.coroutines.test.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
-import org.skyscreamer.jsonassert.JSONAssert
-import org.skyscreamer.jsonassert.JSONCompareMode
 
 class CompositionTest {
 
@@ -39,10 +37,9 @@ class CompositionTest {
     client.runTest(
       call = { listCompositions() },
       response = {
-        JSONAssert.assertEquals(
+        lenientJsonAssert(
           "{\"items\":[{\"objectID\":\"id1\",\"name\":\"my first composition\",\"description\":\"the first ever composition from the client\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"cts_e2e_small\"}}}}}}],\"nbPages\":1}",
           Json.encodeToString(it),
-          JSONCompareMode.LENIENT,
         )
       },
     )

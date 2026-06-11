@@ -93,8 +93,8 @@ public final class HttpRequester implements Requester {
       }
 
       // Return null if there's no content or the return type isn't provided.
-      if (returnType == null || response.body() == null || response.body().contentLength() == 0) {
-        return null; // No need to deserialize, either no content or no type provided
+      if (returnType == null || response.body() == null || response.body().contentLength() == 0 || response.code() == 204) {
+        return null;
       }
 
       // Returns the raw response when using `*WithHTTPInfo` methods.

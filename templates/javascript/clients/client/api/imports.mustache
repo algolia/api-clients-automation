@@ -4,6 +4,7 @@ import {
   createNullLogger,
   getAlgoliaAgent,
   shuffle,
+  validateRequired,
   {{#isSearchClient}}
   ApiError,
   serializeQueryParameters,
@@ -24,6 +25,8 @@ import type {
   QueryParameters,
   Request,
   RequestOptions,
+  ServerSentEvent,
+  StreamEvent,
   {{#isSearchClient}}
   IterableOptions,
   {{/isSearchClient}}

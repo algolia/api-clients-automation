@@ -1,0 +1,17 @@
+AnthropicProviderInput:
+  properties:
+    apiKey:
+      type: string
+      title: apikey
+    baseUrl:
+      oneOf:
+        - type: string
+          maxLength: 2083
+          minLength: 1
+        - type: 'null'
+      title: baseurl
+  type: object
+  required:
+    - apiKey
+  title: anthropicProviderInput
+  description: Anthropic-specific provider input.

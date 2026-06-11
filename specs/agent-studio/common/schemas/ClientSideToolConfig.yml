@@ -1,0 +1,26 @@
+ClientSideToolConfig:
+  properties:
+    name:
+      type: string
+      maxLength: 32
+      minLength: 3
+      title: name
+    type:
+      type: string
+      const: client_side
+      title: type
+      default: client_side
+    description:
+      type: string
+      maxLength: 200
+      minLength: 1
+      title: description
+    inputSchema:
+      $ref: 'ClientToolsArgsSchema.yml#/ClientToolsArgsSchema'
+  type: object
+  required:
+    - type
+    - name
+    - description
+    - inputSchema
+  title: clientSideToolConfig

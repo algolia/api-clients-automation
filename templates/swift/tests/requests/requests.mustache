@@ -48,7 +48,7 @@ final class {{client}}RequestsTests: XCTestCase {
           {{/assertNullBody}}
         {{/body}}
 
-        XCTAssertEqual(echoResponse.path, "{{path}}")
+        XCTAssertEqual(echoResponse.path, "{{{serverPathSuffix}}}{{path}}")
         XCTAssertEqual(echoResponse.method, HTTPMethod.{{#lambda.lowercase}}{{&method}}{{/lambda.lowercase}})
 
           {{#queryParameters}}

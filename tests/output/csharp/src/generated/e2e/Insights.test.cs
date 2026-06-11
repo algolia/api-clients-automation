@@ -6,7 +6,6 @@ using Algolia.Search.Models.Insights;
 using Algolia.Search.Serializer;
 using Algolia.Search.Tests.Utils;
 using dotenv.net;
-using Quibble.Xunit;
 using Xunit;
 
 namespace Algolia.Search.e2e;
@@ -85,10 +84,9 @@ public class InsightsClientRequestTestsE2E
       // Check status code 200
       Assert.NotNull(resp);
 
-      JsonAssert.EqualOverrideDefault(
+      TestHelpers.LenientJsonAssert(
         "{\"message\":\"OK\",\"status\":200}",
-        JsonSerializer.Serialize(resp, JsonConfig.Options),
-        new JsonDiffConfig(true)
+        JsonSerializer.Serialize(resp, JsonConfig.Options)
       );
     }
     catch (Exception e)
