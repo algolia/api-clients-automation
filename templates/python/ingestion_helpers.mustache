@@ -12,9 +12,10 @@
         """
         Helper: Chunks the given `objects` iterable in subset of 1000 elements max in order to make it fit in `push` requests by leveraging the Transformation pipeline setup in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/). Accepts any iterable, including generators.
         """
+        if batch_size < 1:
+            raise ValueError("`batch_size` must be at least 1.")
         chunked_options = chunked_options or ChunkedHelperOptions()
         offset = 0
-        records: List[PushTaskRecords] = []
         responses: List[WatchResponse] = []
         wait_batch_size = batch_size // 10
         if wait_batch_size < 1:
@@ -57,26 +58,8 @@
                     error_message=lambda _: f"Stopped waiting for the task after {chunked_options.max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries.",
                 )
 
-        for obj in objects:
-            records.append(obj)  # pyright: ignore
-            if len(records) == batch_size:
-                responses.append(
-                    {{^isSyncClient}}await {{/isSyncClient}}self.push(
-                        index_name=index_name,
-                        push_task_payload={
-                            "action": action,
-                            "records": records,
-                        },
-                        reference_index_name=reference_index_name,
-                        request_options=request_options,
-                    )
-                )
-                records = []
-                if wait_for_tasks and len(responses) - offset >= wait_batch_size:
-                    {{^isSyncClient}}await {{/isSyncClient}}_wait(offset, offset + wait_batch_size)
-                    offset += wait_batch_size
-
-        if records:
+        it = iter(objects)
+        while records := list(islice(it, batch_size)):
             responses.append(
                 {{^isSyncClient}}await {{/isSyncClient}}self.push(
                     index_name=index_name,
@@ -88,6 +71,9 @@
                     request_options=request_options,
                 )
             )
+            if wait_for_tasks and len(responses) - offset >= wait_batch_size:
+                {{^isSyncClient}}await {{/isSyncClient}}_wait(offset, offset + wait_batch_size)
+                offset += wait_batch_size
 
         if wait_for_tasks:
             {{^isSyncClient}}await {{/isSyncClient}}_wait(offset, len(responses))

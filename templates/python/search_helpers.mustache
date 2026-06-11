@@ -398,21 +398,13 @@
         """
         Helper: Chunks the given `objects` iterable in subset of 1000 elements max in order to make it fit in `batch` requests. Accepts any iterable, including generators.
         """
+        if batch_size < 1:
+            raise ValueError("`batch_size` must be at least 1.")
         chunked_options = chunked_options or ChunkedHelperOptions()
-        requests: List[BatchRequest] = []
         responses: List[BatchResponse] = []
-        for obj in objects:
-            requests.append(BatchRequest(action=action, body=obj))
-            if len(requests) == batch_size:
-                responses.append(
-                    {{^isSyncClient}}await {{/isSyncClient}}self.batch(
-                        index_name=index_name,
-                        batch_write_params=BatchWriteParams(requests=requests),
-                        request_options=request_options,
-                    )
-                )
-                requests = []
-        if requests:
+        it = iter(objects)
+        while batch := list(islice(it, batch_size)):
+            requests = [BatchRequest(action=action, body=obj) for obj in batch]
             responses.append(
                 {{^isSyncClient}}await {{/isSyncClient}}self.batch(
                     index_name=index_name,
