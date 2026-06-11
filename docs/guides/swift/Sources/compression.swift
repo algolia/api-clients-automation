@@ -14,7 +14,7 @@ func compression() async throws {
 
     do {
         // Search with compressed request body
-        let response: SearchResponse<Hit> = try await try await client.searchSingleIndex(
+        let response: SearchResponse<Hit> = try await client.searchSingleIndex(
             indexName: "<YOUR_INDEX_NAME>",
             searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(query: "comedy"))
         )
