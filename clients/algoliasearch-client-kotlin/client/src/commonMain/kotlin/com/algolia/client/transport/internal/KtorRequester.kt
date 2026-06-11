@@ -33,7 +33,7 @@ public class KtorRequester(
   private val readTimeout: Duration,
   private val writeTimeout: Duration,
   hosts: List<Host>,
-) : Requester, kotlin.AutoCloseable {
+) : Requester {
 
   private val hostStatusExpirationDelayMS: Long = 1000L * 60L * 5L
   private val mutex: Mutex = Mutex()

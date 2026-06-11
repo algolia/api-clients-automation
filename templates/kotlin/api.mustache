@@ -68,7 +68,7 @@ public class {{classname}}(
     {{#isSearchClient}}
     ingestionTransporter?.close()
     {{/isSearchClient}}
-    (requester as? kotlin.AutoCloseable)?.close()
+    requester.close()
   }
 
   {{#isSearchClient}}
