@@ -5638,13 +5638,14 @@ void main() {
       call: (client) => client.searchSingleIndex(
         indexName: "indexName",
         searchParams: SearchParamsObject(
+          query: "test",
           getRankingInfo: true,
         ),
       ),
       intercept: (request) {
         expectPath(request.path, '/1/indexes/indexName/query');
         expect(request.method, 'post');
-        expectBody(request.body, """{"getRankingInfo":true}""");
+        expectBody(request.body, """{"query":"test","getRankingInfo":true}""");
       },
     ),
   );

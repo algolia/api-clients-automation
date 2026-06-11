@@ -4580,6 +4580,7 @@ class TestSearchClient:
         _req = await self._client.search_single_index_with_http_info(
             index_name="indexName",
             search_params={
+                "query": "test",
                 "getRankingInfo": True,
             },
         )
@@ -4588,7 +4589,7 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"getRankingInfo":true}""")
+        assert loads(_req.data) == loads("""{"query":"test","getRankingInfo":true}""")
 
     async def test_search_single_index_41(self):
         """
@@ -14155,6 +14156,7 @@ class TestSearchClientSync:
         _req = self._client.search_single_index_with_http_info(
             index_name="indexName",
             search_params={
+                "query": "test",
                 "getRankingInfo": True,
             },
         )
@@ -14163,7 +14165,7 @@ class TestSearchClientSync:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"getRankingInfo":true}""")
+        assert loads(_req.data) == loads("""{"query":"test","getRankingInfo":true}""")
 
     def test_search_single_index_41(self):
         """

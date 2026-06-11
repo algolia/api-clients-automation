@@ -6462,6 +6462,7 @@ class SnippetSearchClient {
         indexName = "<YOUR_INDEX_NAME>",
         searchParams = Some(
           SearchParamsObject(
+            query = Some("test"),
             getRankingInfo = Some(true)
           )
         )

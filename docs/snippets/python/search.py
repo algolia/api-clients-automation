@@ -6560,6 +6560,7 @@ def snippet_for_search_single_index40():
     response = client.search_single_index(
         index_name="<YOUR_INDEX_NAME>",
         search_params={
+            "query": "test",
             "getRankingInfo": True,
         },
     )

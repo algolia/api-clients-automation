@@ -5616,7 +5616,7 @@ class SnippetSearchClient {
     var response =
       client.searchSingleIndex(
         indexName = "<YOUR_INDEX_NAME>",
-        searchParams = SearchParamsObject(getRankingInfo = true),
+        searchParams = SearchParamsObject(query = "test", getRankingInfo = true),
       )
 
     // >LOG

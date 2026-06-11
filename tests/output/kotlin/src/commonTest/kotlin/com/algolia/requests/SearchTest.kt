@@ -4885,13 +4885,13 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(getRankingInfo = true),
+          searchParams = SearchParamsObject(query = "test", getRankingInfo = true),
         )
       },
       intercept = {
         assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"getRankingInfo":true}""", it.body)
+        assertJsonBody("""{"query":"test","getRankingInfo":true}""", it.body)
       },
     )
   }

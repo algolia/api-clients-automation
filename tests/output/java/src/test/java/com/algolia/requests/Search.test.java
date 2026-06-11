@@ -4599,12 +4599,12 @@ class SearchClientRequestsTests {
   @DisplayName("getRankingInfo")
   void searchSingleIndexTest40() {
     assertDoesNotThrow(() -> {
-      client.searchSingleIndex("indexName", new SearchParamsObject().setGetRankingInfo(true), Hit.class);
+      client.searchSingleIndex("indexName", new SearchParamsObject().setQuery("test").setGetRankingInfo(true), Hit.class);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/query", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"getRankingInfo\":true}", req.body, JSONCompareMode.STRICT));
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"query\":\"test\",\"getRankingInfo\":true}", req.body, JSONCompareMode.STRICT));
   }
 
   @Test

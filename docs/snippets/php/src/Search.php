@@ -6323,7 +6323,8 @@ class SnippetSearchClient
         // Call the API
         $response = $client->searchSingleIndex(
             '<YOUR_INDEX_NAME>',
-            ['getRankingInfo' => true,
+            ['query' => 'test',
+                'getRankingInfo' => true,
             ],
         );
 

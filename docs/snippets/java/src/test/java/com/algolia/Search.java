@@ -5079,7 +5079,11 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    SearchResponse response = client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setGetRankingInfo(true), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("test").setGetRankingInfo(true),
+      Hit.class
+    );
     // >LOG
     // print the response
     System.out.println(response);

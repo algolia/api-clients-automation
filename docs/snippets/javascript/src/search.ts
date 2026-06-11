@@ -4556,7 +4556,10 @@ export async function snippetForSearchSingleIndex40(): Promise<void> {
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
-  const response = await client.searchSingleIndex({ indexName: 'indexName', searchParams: { getRankingInfo: true } });
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { query: 'test', getRankingInfo: true },
+  });
 
   // >LOG
   // print the response

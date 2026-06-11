@@ -6203,7 +6203,7 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.SearchSingleIndexAsync<Hit>(
       "<YOUR_INDEX_NAME>",
-      new SearchParams(new SearchParamsObject { GetRankingInfo = true })
+      new SearchParams(new SearchParamsObject { Query = "test", GetRankingInfo = true })
     );
     // >LOG
     // print the response

@@ -6654,7 +6654,7 @@ func SnippetForSearchSingleIndexOfSearch40() {
 	// Call the API
 	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-		search.NewEmptySearchParamsObject().SetGetRankingInfo(true))))
+		search.NewEmptySearchParamsObject().SetQuery("test").SetGetRankingInfo(true))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

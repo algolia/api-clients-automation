@@ -4997,6 +4997,7 @@ class SearchTest extends AnyFunSuite {
       indexName = "indexName",
       searchParams = Some(
         SearchParamsObject(
+          query = Some("test"),
           getRankingInfo = Some(true)
         )
       )
@@ -5007,7 +5008,7 @@ class SearchTest extends AnyFunSuite {
 
     assert(res.path == "/1/indexes/indexName/query")
     assert(res.method == "POST")
-    val expectedBody = parse("""{"getRankingInfo":true}""")
+    val expectedBody = parse("""{"query":"test","getRankingInfo":true}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }

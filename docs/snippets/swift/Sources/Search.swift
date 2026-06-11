@@ -4679,7 +4679,10 @@ final class SearchClientSnippet {
         // Call the API
         let response: SearchResponse<Hit> = try await client.searchSingleIndex(
             indexName: "<YOUR_INDEX_NAME>",
-            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(getRankingInfo: true))
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "test",
+                getRankingInfo: true
+            ))
         )
         // >LOG
         // print the response

@@ -4704,7 +4704,8 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $client->searchSingleIndex(
             'indexName',
-            ['getRankingInfo' => true,
+            ['query' => 'test',
+                'getRankingInfo' => true,
             ],
         );
 
@@ -4712,7 +4713,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/indexName/query',
                 'method' => 'POST',
-                'body' => json_decode('{"getRankingInfo":true}'),
+                'body' => json_decode('{"query":"test","getRankingInfo":true}'),
             ],
         ]);
     }

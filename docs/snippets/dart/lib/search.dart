@@ -5415,6 +5415,7 @@ void snippetForsearchSingleIndex40() async {
   final response = await client.searchSingleIndex(
     indexName: "<YOUR_INDEX_NAME>",
     searchParams: SearchParamsObject(
+      query: "test",
       getRankingInfo: true,
     ),
   );

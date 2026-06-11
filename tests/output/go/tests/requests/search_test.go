@@ -3151,13 +3151,13 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 	t.Run("getRankingInfo", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetGetRankingInfo(true))))
+			search.NewEmptySearchParamsObject().SetQuery("test").SetGetRankingInfo(true))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"getRankingInfo":true}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"query":"test","getRankingInfo":true}`)
 	})
 	t.Run("clickAnalytics", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(

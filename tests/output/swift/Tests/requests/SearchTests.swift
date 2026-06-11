@@ -6315,7 +6315,10 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
             indexName: "indexName",
-            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(getRankingInfo: true))
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "test",
+                getRankingInfo: true
+            ))
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -6323,7 +6326,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"getRankingInfo\":true}".data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"test\",\"getRankingInfo\":true}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)

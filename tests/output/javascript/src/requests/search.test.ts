@@ -3184,12 +3184,12 @@ describe('searchSingleIndex', () => {
   test('getRankingInfo', async () => {
     const req = (await client.searchSingleIndex({
       indexName: 'indexName',
-      searchParams: { getRankingInfo: true },
+      searchParams: { query: 'test', getRankingInfo: true },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/indexName/query');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({ getRankingInfo: true });
+    expect(req.data).toEqual({ query: 'test', getRankingInfo: true });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 

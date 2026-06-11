@@ -4973,14 +4973,14 @@ public class SearchClientRequestTests
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
-      new SearchParams(new SearchParamsObject { GetRankingInfo = true })
+      new SearchParams(new SearchParamsObject { Query = "test", GetRankingInfo = true })
     );
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/query", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"getRankingInfo\":true}",
+      "{\"query\":\"test\",\"getRankingInfo\":true}",
       req.Body,
       new JsonDiffConfig(false)
     );

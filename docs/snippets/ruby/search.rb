@@ -4745,7 +4745,7 @@ def snippet_for_search_single_index40
   # Call the API
   response = client.search_single_index(
     "<YOUR_INDEX_NAME>",
-    Algolia::Search::SearchParamsObject.new(get_ranking_info: true)
+    Algolia::Search::SearchParamsObject.new(query: "test", get_ranking_info: true)
   )
 
   # >LOG
