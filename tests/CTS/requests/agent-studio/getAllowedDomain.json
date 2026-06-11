@@ -1,0 +1,32 @@
+[
+  {
+    "testName": "getAllowedDomain",
+    "parameters": {
+      "domainId": "a1b2c3d4-5678-90ab-cdef-123456789abc",
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15"
+    },
+    "request": {
+      "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/allowed-domains/a1b2c3d4-5678-90ab-cdef-123456789abc",
+      "method": "GET"
+    }
+  },
+  {
+    "testName": "e2e get allowed domain",
+    "parameters": {
+      "domainId": "6e8a0441-9a41-477c-a1d6-679a461e0990",
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15"
+    },
+    "request": {
+      "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/allowed-domains/6e8a0441-9a41-477c-a1d6-679a461e0990",
+      "method": "GET"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "id": "6e8a0441-9a41-477c-a1d6-679a461e0990",
+        "domain": "cts-e2e.algolia.com",
+        "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15"
+      }
+    }
+  }
+]

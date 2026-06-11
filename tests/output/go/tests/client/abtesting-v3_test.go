@@ -64,7 +64,41 @@ func TestAbtestingV3commonApi1(t *testing.T) {
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, `^Algolia for Go \(4.39.1\).*`, echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.41.0\).*`, echo.Header.Get("User-Agent"))
+}
+
+// handles 204 No Content responses correctly.
+func TestAbtestingV3noContent0(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *abtestingV3.APIClient
+		cfg    abtestingV3.AbtestingV3Configuration
+	)
+
+	_ = client
+	_ = echo
+	cfg = abtestingV3.AbtestingV3Configuration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6692", call.IsReadWrite)},
+		},
+		Region: abtestingV3.Region("us"),
+	}
+	client, err = abtestingV3.NewClientWithConfig(cfg)
+
+	require.NoError(t, err)
+	res, err = client.CustomDelete(client.NewApiCustomDeleteRequest(
+		"1/test/no-content"))
+	require.NoError(t, err)
+	require.Nil(t, res)
 }
 
 // uses the correct region.

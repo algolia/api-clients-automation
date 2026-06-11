@@ -23,6 +23,7 @@ final class IngestionClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = IngestionClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.customGet(path: "1/html-error")
 
@@ -70,6 +71,7 @@ final class IngestionClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = IngestionClient(configuration: configuration, transporter: transporter)
+
         let response = try await client.customGet(path: "1/long-wait")
 
         XTCJSONEquals(received: response, expected: "{\"message\":\"OK\"}")
@@ -137,11 +139,29 @@ final class IngestionClientClientTests: XCTestCase {
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
-        let pattern = "^Algolia for Swift \\(9.43.1\\).*"
+        let pattern = "^Algolia for Swift \\(9.44.0\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
         )
+    }
+
+    /// handles 204 No Content responses correctly
+    func testNoContentTest0() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            region: Region(rawValue: "us"),
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6692")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.customDelete(path: "1/test/no-content")
+
+        XCTAssertTrue(response.value is Void)
     }
 
     /// uses the correct region
@@ -153,6 +173,7 @@ final class IngestionClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
+
         let response = try await client.getSourceWithHTTPInfo(sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
@@ -189,6 +210,7 @@ final class IngestionClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = IngestionClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.customGet(path: "check-api-key/1")
 

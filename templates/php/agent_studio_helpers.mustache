@@ -1,0 +1,20 @@
+{{#isAgentStudioClient}}
+    /**
+     * Helper: Forges a secured user token (JWT) for Agent Studio authenticated requests.
+     *
+     * @param string $secretKey The secret key to sign the token with.
+     * @param string $secretKeyId The key ID to include in the JWT header (kid).
+     * @param string $userId The user identifier to include as the subject (sub) claim.
+     * @param int $expiresIn The token expiration in seconds from now. Defaults to 86400 (24 hours).
+     *
+     * @return string The signed JWT token.
+     */
+    public function forgeSecuredUserToken($secretKey, $secretKeyId, $userId, $expiresIn = 86400)
+    {
+        $header = rtrim(strtr(base64_encode(json_encode(['alg' => 'HS256', 'typ' => 'JWT', 'kid' => $secretKeyId], JSON_UNESCAPED_SLASHES)), '+/', '-_'), '=');
+        $payload = rtrim(strtr(base64_encode(json_encode(['sub' => $userId, 'exp' => time() + $expiresIn], JSON_UNESCAPED_SLASHES)), '+/', '-_'), '=');
+        $signature = rtrim(strtr(base64_encode(hash_hmac('sha256', $header.'.'.$payload, $secretKey, true)), '+/', '-_'), '=');
+
+        return $header.'.'.$payload.'.'.$signature;
+    }
+{{/isAgentStudioClient}}

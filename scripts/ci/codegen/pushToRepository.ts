@@ -16,7 +16,7 @@ import {
 } from '../../common.ts';
 import { getNbGitDiff } from '../utils.ts';
 import { parseChangelogToMdx } from './parseChangelogToMdx.ts';
-import type { ChangelogsToPush, GuidesToPush, RepositoryConfiguration, SpecsToPush } from './types.ts';
+import type { ChangelogsToPush, GuidesToPush, RepositoryConfiguration, SnippetsToPush, SpecsToPush } from './types.ts';
 import { pushToRepositoryConfiguration } from './types.ts';
 
 import { getClientsConfigField } from '../../config.ts';
@@ -136,6 +136,16 @@ async function handleChangelogFiles(changelog: ChangelogsToPush, tempGitDir: str
   }
 }
 
+async function handleSnippetFiles(snippets: SnippetsToPush, tempGitDir: string): Promise<void> {
+  const output = toAbsolutePath(`${tempGitDir}/${snippets.output}`);
+
+  if (!(await exists(output))) {
+    await fsp.mkdir(output, { recursive: true });
+  }
+
+  await run(`cp ${toAbsolutePath('docs/bundled/*-snippets.json')} ${output}`);
+}
+
 async function pushToRepository(repository: string, config: RepositoryConfiguration): Promise<void> {
   const token = ensureGitHubToken();
 
@@ -182,7 +192,9 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
       await handleSpecFiles(task.files, tempGitDir);
     } else if (task.files.type === 'changelogs') {
       await handleChangelogFiles(task.files, tempGitDir);
-    } else {
+    } else if (task.files.type === 'snippets') {
+      await handleSnippetFiles(task.files, tempGitDir);
+    } else if (task.files.type === 'guides') {
       await handleGuideFiles(task.files, tempGitDir);
     }
 
@@ -215,7 +227,7 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
       title: task.commitMessage,
       body: [
         'This PR is automatically created by https://github.com/algolia/api-clients-automation',
-        'It contains the latest generated guides.',
+        'It contains the latest generated files.',
       ].join('\n\n'),
       base: config.baseBranch,
       head: newBranch,

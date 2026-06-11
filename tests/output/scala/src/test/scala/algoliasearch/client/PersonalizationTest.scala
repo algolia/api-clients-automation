@@ -64,9 +64,40 @@ class PersonalizationTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.40.1\).*""".r
+    val regexp = """^Algolia for Scala \(2.42.0\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
+  }
+
+  test("handles 204 No Content responses correctly") {
+
+    val client = PersonalizationClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      region = "us",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6692)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.customDelete[JObject](
+        path = "1/test/no-content"
+      ),
+      Duration.Inf
+    )
+
+    assert(res == null)
   }
 
   test("throws when region is not given") {

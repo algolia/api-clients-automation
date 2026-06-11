@@ -339,7 +339,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.39.1\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.41.0\).*/))
   end
 
   # call deleteObjects without error
@@ -557,6 +557,28 @@ class TestClientSearchClient < Test::Unit::TestCase
         e.message
       )
     end
+  end
+
+  # handles 204 No Content responses correctly
+  def test_no_content0
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6692,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    req = client.custom_delete("1/test/no-content")
+    assert_equal(nil, req)
   end
 
   # client throws with invalid parameters

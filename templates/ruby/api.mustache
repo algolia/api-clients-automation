@@ -6,6 +6,10 @@
 require 'openssl'
 require 'base64'
 {{/isSearchClient}}
+{{#isAgentStudioClient}}
+require 'openssl'
+require 'base64'
+{{/isAgentStudioClient}}
 
 module {{moduleName}}
 {{#isSearchClient}}
@@ -56,6 +60,9 @@ module {{moduleName}}
       end
 
       @api_client = Algolia::ApiClient.new(config)
+      {{#isAgentStudioClient}}
+      warn "[algolia] Agent Studio API is in beta and subject to breaking changes. See https://www.algolia.com/doc/rest-api/agent-studio"
+      {{/isAgentStudioClient}}
       {{#isSearchClient}}
       @ingestion_transporter = nil
       if config.transformation_options
@@ -190,7 +197,7 @@ module {{moduleName}}
       {{/isNullable}}
       {{/allParams}}
       {{#vendorExtensions}}
-      path = '{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', {{#x-is-custom-request}}{{paramName}}.to_s{{/x-is-custom-request}}{{^x-is-custom-request}}Transport.encode_uri({{paramName}}.to_s){{/x-is-custom-request}}){{/pathParams}}
+      path = '{{{serverPathSuffix}}}{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', {{#x-is-custom-request}}{{paramName}}.to_s{{/x-is-custom-request}}{{^x-is-custom-request}}Transport.encode_uri({{paramName}}.to_s){{/x-is-custom-request}}){{/pathParams}}
       query_params = {}
       {{#queryParams}}
       {{#x-is-custom-request}}
@@ -261,6 +268,9 @@ module {{moduleName}}
 {{#isSearchClient}}
 {{> search_helpers}}
 {{/isSearchClient}}
+{{#isAgentStudioClient}}
+{{> agent_studio_helpers}}
+{{/isAgentStudioClient}}
   end
 {{/operations}}
 end

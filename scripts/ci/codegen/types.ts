@@ -35,6 +35,14 @@ export type SpecsToPush = {
   clients?: string[];
 };
 
+export type SnippetsToPush = {
+  // the type of changes to push to the repository
+  type: 'snippets';
+
+  // the name of the directory to push the files to
+  output: string;
+};
+
 export type ChangelogsToPush = {
   // the type of changes to push to the repository
   type: 'changelogs';
@@ -50,7 +58,7 @@ type RepositoryTask = {
   // the commit message of the pull request (will also be used as the title)
   commitMessage: string;
 
-  files: GuidesToPush | SpecsToPush | ChangelogsToPush;
+  files: GuidesToPush | SpecsToPush | SnippetsToPush | ChangelogsToPush;
 };
 
 export type RepositoryConfiguration = {
@@ -62,7 +70,13 @@ export type RepositoryConfiguration = {
 };
 
 export const pushToRepositoryConfiguration: {
-  [k in 'AlgoliaWeb' | 'go' | 'mcp-node' | 'docs-new' | 'n8n-nodes-algolia']: RepositoryConfiguration;
+  [k in
+    | 'AlgoliaWeb'
+    | 'go'
+    | 'mcp-node'
+    | 'docs-new'
+    | 'n8n-nodes-algolia'
+    | 'api-clients-mcp']: RepositoryConfiguration;
 } = {
   AlgoliaWeb: {
     baseBranch: 'develop',
@@ -152,6 +166,19 @@ export const pushToRepositoryConfiguration: {
           output: 'nodes/Algolia/specs',
           clients: ['search'],
           placeholderVariables: { appId: 'applicationId' },
+        },
+      },
+    ],
+  },
+  'api-clients-mcp': {
+    baseBranch: 'main',
+    tasks: [
+      {
+        prBranch: 'feat/automated-update-for-snippets',
+        commitMessage: 'feat: update snippets',
+        files: {
+          type: 'snippets',
+          output: 'snippets',
         },
       },
     ],

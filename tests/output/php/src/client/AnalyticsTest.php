@@ -62,9 +62,23 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.43.1\).*/',
+                '/^Algolia for PHP \(4.45.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
+        );
+    }
+
+    #[TestDox('handles 204 No Content responses correctly')]
+    public function test0noContent(): void
+    {
+        $client = AnalyticsClient::createWithConfig(AnalyticsConfig::create('test-app-id', 'test-api-key', 'us')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6692']));
+
+        $res = $client->customDelete(
+            '1/test/no-content',
+        );
+        $this->assertEquals(
+            null,
+            $res
         );
     }
 

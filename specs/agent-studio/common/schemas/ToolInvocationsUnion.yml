@@ -1,0 +1,6 @@
+ToolInvocationsUnion:
+  oneOf:
+    - items:
+        $ref: 'ToolInvocationV4.yml#/ToolInvocationV4'
+      type: array
+    - type: 'null'

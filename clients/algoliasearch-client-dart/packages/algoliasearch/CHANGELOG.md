@@ -1,3 +1,19 @@
+## [1.50.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.49.2...1.50.0)
+
+BREAKING CHANGES: this minor version includes breaking changes. See below for more details.
+
+- [32ccb3b1e9](https://github.com/algolia/api-clients-automation/commit/32ccb3b1e9) feat(dart): add TransformationOptions for ingestion transporter configuration ([#6321](https://github.com/algolia/api-clients-automation/pull/6321)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [7f2ce8cd3a](https://github.com/algolia/api-clients-automation/commit/7f2ce8cd3a) feat(clients): Agent Studio v1 ([#6097](https://github.com/algolia/api-clients-automation/pull/6097)) by [@Fluf22](https://github.com/Fluf22/)
+  - The `customRequest` method now returns `null` for API calls that respond with 204 No Content, where it previously returned an empty map `{}`. If you use `customRequest` with endpoints that return 204, update your code to handle nullable responses.
+
+## [1.49.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.49.1...1.49.2)
+
+- [90da6bf0ae](https://github.com/algolia/api-clients-automation/commit/90da6bf0ae) chore(deps): dependencies 2026-05-18 ([#6429](https://github.com/algolia/api-clients-automation/pull/6429)) by [@Fluf22](https://github.com/Fluf22/)
+- [eddd51e349](https://github.com/algolia/api-clients-automation/commit/eddd51e349) fix(specs): document abTest field on listIndices response ([#6443](https://github.com/algolia/api-clients-automation/pull/6443)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [1d3f2c149b](https://github.com/algolia/api-clients-automation/commit/1d3f2c149b) fix(specs): clean up abTest schema on listIndices response ([#6448](https://github.com/algolia/api-clients-automation/pull/6448)) by [@Fluf22](https://github.com/Fluf22/)
+- [35bf16c848](https://github.com/algolia/api-clients-automation/commit/35bf16c848) fix(specs): BREAKING CHANGE – add searchResponsePartial fallback to searchResult oneOf ([#6350](https://github.com/algolia/api-clients-automation/pull/6350)) by [@Fluf22](https://github.com/Fluf22/)
+  - For those of you who want really clean responses without hits nor facets, we added a third fallback type to the search response. It should not impact the rest of the users.
+
 ## [1.49.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.49.0...1.49.1)
 
 - [4d2ae79e73](https://github.com/algolia/api-clients-automation/commit/4d2ae79e73) chore(deps): dependencies 2026-04-20 ([#6259](https://github.com/algolia/api-clients-automation/pull/6259)) by [@algolia-bot](https://github.com/algolia-bot/)

@@ -5,14 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import com.algolia.api.QuerySuggestionsClient;
 import com.algolia.config.*;
 import com.algolia.model.querysuggestions.*;
+import com.algolia.utils.TestHelpers;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.util.*;
 import org.junit.jupiter.api.*;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class QuerySuggestionsClientRequestsTestsE2E {
@@ -42,10 +41,9 @@ class QuerySuggestionsClientRequestsTestsE2E {
   void getConfigTest() {
     ConfigurationResponse res = client.getConfig("cts_e2e_browse_query_suggestions");
     assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
+      TestHelpers.lenientJsonAssert(
         "{\"appID\":\"T8JK9S7I7X\",\"allowSpecialCharacters\":true,\"enablePersonalization\":false,\"exclude\":[\"^cocaines$\"],\"indexName\":\"cts_e2e_browse_query_suggestions\",\"languages\":[],\"sourceIndices\":[{\"facets\":[{\"amount\":1,\"attribute\":\"title\"}],\"generate\":[[\"year\"]],\"indexName\":\"cts_e2e_browse\",\"minHits\":5,\"minLetters\":4,\"replicas\":false}]}",
-        json.writeValueAsString(res),
-        JSONCompareMode.LENIENT
+        json.writeValueAsString(res)
       )
     );
   }

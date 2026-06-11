@@ -180,12 +180,37 @@ class IngestionClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.38.1\\).*";
+      String regexp = "^Algolia for Java \\(4.40.0\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
       );
     }
+  }
+
+  @Test
+  @DisplayName("handles 204 No Content responses correctly")
+  void noContentTest0() {
+    IngestionClient client = new IngestionClient(
+      "test-app-id",
+      "test-api-key",
+      "us",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6692
+          )
+        ),
+        false
+      )
+    );
+
+    Object res = client.customDelete("1/test/no-content");
+
+    assertEquals(null, res);
   }
 
   @Test

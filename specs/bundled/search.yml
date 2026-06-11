@@ -3646,13 +3646,16 @@ paths:
         - search
       x-available-languages:
         - csharp
+        - dart
         - go
         - java
         - javascript
+        - kotlin
         - php
         - python
         - ruby
         - scala
+        - swift
       x-acl:
         - addObject
         - deleteIndex
@@ -3880,13 +3883,16 @@ paths:
         - search
       x-available-languages:
         - csharp
+        - dart
         - go
         - java
         - javascript
+        - kotlin
         - php
         - python
         - ruby
         - scala
+        - swift
       x-acl:
         - addObject
         - deleteIndex
@@ -4115,13 +4121,16 @@ paths:
       x-helper: true
       x-available-languages:
         - csharp
+        - dart
         - go
         - java
         - javascript
+        - kotlin
         - php
         - python
         - ruby
         - scala
+        - swift
       tags:
         - search
       x-acl:
@@ -6902,10 +6911,46 @@ components:
             accurate](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate).
         processingTimeMS:
           $ref: '#/components/schemas/processingTimeMS'
+    searchResponsePartial:
+      description: >
+        Partial search response returned when the `responseFields` parameter
+        excludes
+
+        fields like `hits`. Contains all possible search response properties but
+
+        none are required, so it acts as an unconditional fallback during oneOf
+
+        deserialization.
+      additionalProperties: true
+      allOf:
+        - $ref: '#/components/schemas/baseSearchResponse'
+        - $ref: '#/components/schemas/SearchPagination'
+        - type: object
+          additionalProperties: true
+          properties:
+            hits:
+              type: array
+              description: >
+                Search results (hits).
+
+
+                Hits are records from your index that match the search criteria,
+                augmented with additional attributes, such as, for highlighting.
+              items:
+                $ref: '#/components/schemas/hit'
+            query:
+              $ref: '#/components/schemas/query'
+            params:
+              type: string
+              description: URL-encoded string of all search parameters.
+              example: query=a&hitsPerPage=20
+            extensions:
+              $ref: '#/components/schemas/responseExtensions'
     searchResult:
       oneOf:
         - $ref: '#/components/schemas/searchResponse'
         - $ref: '#/components/schemas/searchForFacetValuesResponse'
+        - $ref: '#/components/schemas/searchResponsePartial'
     cursor:
       type: object
       additionalProperties: false

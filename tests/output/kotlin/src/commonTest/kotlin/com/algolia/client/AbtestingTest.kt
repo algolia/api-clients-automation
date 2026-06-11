@@ -44,7 +44,7 @@ class AbtestingTest {
     client.runTest(
       call = { customPost(path = "1/test") },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.41.1\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.43.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),
@@ -55,8 +55,35 @@ class AbtestingTest {
   }
 
   @Test
+  fun `handles 204 No Content responses correctly`() = runTest {
+    val client =
+      AbtestingClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        "us",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6692,
+                )
+              )
+          ),
+      )
+
+    client.runTest(
+      call = { customDelete(path = "1/test/no-content") },
+      response = { assertNull(it) },
+    )
+  }
+
+  @Test
   fun `fallbacks to the alias when region is not given`() = runTest {
     val client = AbtestingClient(appId = "my-app-id", apiKey = "my-api-key")
+
     client.runTest(
       call = { getABTest(id = 123) },
       intercept = { assertEquals("analytics.algolia.com", it.url.host) },
@@ -66,6 +93,7 @@ class AbtestingTest {
   @Test
   fun `uses the correct region`() = runTest {
     val client = AbtestingClient(appId = "my-app-id", apiKey = "my-api-key", "us")
+
     client.runTest(
       call = { getABTest(id = 123) },
       intercept = { assertEquals("analytics.us.algolia.com", it.url.host) },
@@ -76,6 +104,7 @@ class AbtestingTest {
   fun `throws when incorrect region is given`() = runTest {
     assertFails {
         val client = AbtestingClient(appId = "my-app-id", apiKey = "my-api-key", "not_a_region")
+
       }
       .let { error ->
         assertError(
@@ -108,6 +137,7 @@ class AbtestingTest {
               )
           ),
       )
+
     client.runTest(
       call = { customGet(path = "check-api-key/1") },
       response = {

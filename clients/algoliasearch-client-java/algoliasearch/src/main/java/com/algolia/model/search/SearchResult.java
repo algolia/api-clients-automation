@@ -62,6 +62,20 @@ public interface SearchResult<T> {
           );
         }
       }
+      // deserialize SearchResponsePartial
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          // For generic types, the innerType is erased by Java, we need to use the contextual type.
+          JavaType innerType = ctxt.getTypeFactory().constructParametricType(SearchResponsePartial.class, returnType);
+          if (parser.getCurrentToken() == null) {
+            parser.nextToken();
+          }
+          return ctxt.readValue(parser, innerType);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf SearchResponsePartial (error: " + e.getMessage() + ") (type: SearchResponsePartial)");
+        }
+      }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
     }
 

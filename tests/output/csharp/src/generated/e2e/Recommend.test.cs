@@ -6,7 +6,6 @@ using Algolia.Search.Models.Recommend;
 using Algolia.Search.Serializer;
 using Algolia.Search.Tests.Utils;
 using dotenv.net;
-using Quibble.Xunit;
 using Xunit;
 
 namespace Algolia.Search.e2e;
@@ -70,10 +69,9 @@ public class RecommendClientRequestTestsE2E
       // Check status code 200
       Assert.NotNull(resp);
 
-      JsonAssert.EqualOverrideDefault(
+      TestHelpers.LenientJsonAssert(
         "{\"results\":[{\"exhaustive\":{\"nbHits\":true,\"typo\":true},\"exhaustiveNbHits\":true,\"exhaustiveTypo\":true,\"index\":\"cts_e2e_browse\",\"page\":0,\"nbHits\":2,\"nbPages\":1,\"hitsPerPage\":2,\"hits\":[{\"objectID\":\"The Transformers: The Movie\",\"_highlightResult\":{\"genres\":[{\"matchLevel\":\"none\",\"matchedWords\":[],\"value\":\"Animated\"},{\"matchLevel\":\"none\",\"matchedWords\":[],\"value\":\"Action\"},{\"matchLevel\":\"none\",\"matchedWords\":[],\"value\":\"Science Fiction\"}],\"href\":{\"matchLevel\":\"none\",\"matchedWords\":[],\"value\":\"The_Transformers:_The_Movie\"}},\"_score\":100.0,\"cast\":[\"Judd Nelson\",\"Leonard Nimoy\",\"Robert Stack\",\"Orson Welles\",\"Michael Bell\",\"Eric Idle\",\"Chris Latta\",\"Peter Cullen\",\"Frank Welker\",\"Neil Ross\",\"Paul Eiding\"],\"extract\":\"The Transformers: The Movie is a 1986 animated science fiction action film based on the Transformers television series. It was released in North America on August 8, 1986, and in the United Kingdom on December 12, 1986. It was co-produced and directed by Nelson Shin, who also produced the television series. The screenplay was written by Ron Friedman, who created Bionic Six a year later.\",\"title\":\"The Transformers: The Movie\",\"year\":1986},{\"objectID\":\"Treasure Planet\",\"_score\":90.56,\"title\":\"Treasure Planet\",\"year\":2002}]}]}",
-        JsonSerializer.Serialize(resp, JsonConfig.Options),
-        new JsonDiffConfig(true)
+        JsonSerializer.Serialize(resp, JsonConfig.Options)
       );
     }
     catch (Exception e)

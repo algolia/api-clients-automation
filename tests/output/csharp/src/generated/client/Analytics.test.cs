@@ -47,9 +47,37 @@ public class AnalyticsClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.42.0\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.44.0\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
+  }
+
+  [Fact(DisplayName = "handles 204 No Content responses correctly")]
+  public async Task NoContentTest0()
+  {
+    AnalyticsConfig _config = new AnalyticsConfig("test-app-id", "test-api-key", "us")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6692,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new AnalyticsClient(_config);
+
+    var res = await client.CustomDeleteAsync("1/test/no-content");
+
+    Assert.Equal(null, res);
   }
 
   [Fact(DisplayName = "fallbacks to the alias when region is not given")]

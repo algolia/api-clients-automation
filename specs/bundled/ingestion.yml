@@ -1897,6 +1897,7 @@ paths:
         - go
         - java
         - javascript
+        - kotlin
         - php
         - python
         - ruby

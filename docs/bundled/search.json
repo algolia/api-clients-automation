@@ -4281,13 +4281,16 @@
         ],
         "x-available-languages": [
           "csharp",
+          "dart",
           "go",
           "java",
           "javascript",
+          "kotlin",
           "php",
           "python",
           "ruby",
-          "scala"
+          "scala",
+          "swift"
         ],
         "x-acl": [
           "addObject",
@@ -4545,13 +4548,16 @@
         ],
         "x-available-languages": [
           "csharp",
+          "dart",
           "go",
           "java",
           "javascript",
+          "kotlin",
           "php",
           "python",
           "ruby",
-          "scala"
+          "scala",
+          "swift"
         ],
         "x-acl": [
           "addObject",
@@ -4838,13 +4844,16 @@
         "x-helper": true,
         "x-available-languages": [
           "csharp",
+          "dart",
           "go",
           "java",
           "javascript",
+          "kotlin",
           "php",
           "python",
           "ruby",
-          "scala"
+          "scala",
+          "swift"
         ],
         "tags": [
           "Records"
@@ -7521,6 +7530,42 @@
           }
         }
       },
+      "searchResponsePartial": {
+        "description": "Partial search response returned when the `responseFields` parameter excludes\nfields like `hits`. Contains all possible search response properties but\nnone are required, so it acts as an unconditional fallback during oneOf\ndeserialization.\n",
+        "additionalProperties": true,
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/baseSearchResponse"
+          },
+          {
+            "$ref": "#/components/schemas/SearchPagination"
+          },
+          {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "hits": {
+                "type": "array",
+                "description": "Search results (hits).\n\nHits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.\n",
+                "items": {
+                  "$ref": "#/components/schemas/hit"
+                }
+              },
+              "query": {
+                "$ref": "#/components/schemas/query"
+              },
+              "params": {
+                "type": "string",
+                "description": "URL-encoded string of all search parameters.",
+                "example": "query=a&hitsPerPage=20"
+              },
+              "extensions": {
+                "$ref": "#/components/schemas/responseExtensions"
+              }
+            }
+          }
+        ]
+      },
       "searchResult": {
         "oneOf": [
           {
@@ -7528,6 +7573,9 @@
           },
           {
             "$ref": "#/components/schemas/searchForFacetValuesResponse"
+          },
+          {
+            "$ref": "#/components/schemas/searchResponsePartial"
           }
         ]
       },

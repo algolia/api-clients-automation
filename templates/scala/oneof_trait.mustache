@@ -104,7 +104,19 @@ object {{classname}} {
 object {{classname}}Serializer extends Serializer[{{classname}}] {
   override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), {{classname}}] = {
 
-    case (TypeInfo(clazz, _), json) if clazz == classOf[{{classname}}] => 
+    case (TypeInfo(clazz, _), json) if clazz == classOf[{{classname}}] =>
+      {{#discriminator}}
+      (json match {
+        case jobject: JObject =>
+          (jobject \ "{{{propertyBaseName}}}") match {
+            {{#mappedModels}}
+            case JString("{{{mappingName}}}") => Some(Extraction.extract[{{{modelName}}}](jobject)(format - this, manifest[{{{modelName}}}]))
+            {{/mappedModels}}
+            case _ => None
+          }
+        case _ => None
+      }).getOrElse {
+      {{/discriminator}}
       json match {
         {{#composedSchemas.oneOf}}
         {{#isModel}}
@@ -114,6 +126,13 @@ object {{classname}}Serializer extends Serializer[{{classname}}] {
         {{^isEnumRef}}
         {{#vendorExtensions.x-discriminator-fields.size}}
         case value: JObject {{#vendorExtensions.x-discriminator-fields}}{{#-first}}if{{/-first}}{{^-first}}&&{{/-first}} value.obj.exists(_._1 == "{{{.}}}"){{/vendorExtensions.x-discriminator-fields}} => Extraction.extract[{{{datatypeWithEnum}}}](value)
+        {{/vendorExtensions.x-discriminator-fields.size}}
+        {{^vendorExtensions.x-discriminator-fields.size}}
+        {{#isMap}}
+        {{^isContainer}}
+        case value: JObject {{#vendorExtensions.x-discriminator-fields}}{{#-first}}if{{/-first}}{{^-first}}&&{{/-first}} value.obj.exists(_._1 == "{{{.}}}"){{/vendorExtensions.x-discriminator-fields}} => Extraction.extract[{{{datatypeWithEnum}}}](value)
+        {{/isContainer}}
+        {{/isMap}}
         {{/vendorExtensions.x-discriminator-fields.size}}
         {{/isEnumRef}}
         {{/isModel}}
@@ -148,6 +167,9 @@ object {{classname}}Serializer extends Serializer[{{classname}}] {
         {{/composedSchemas.oneOf}}
         case _ => throw new MappingException("Can't convert " + json + " to {{classname}}")
       }
+      {{#discriminator}}
+      }
+      {{/discriminator}}
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: {{classname}} => 

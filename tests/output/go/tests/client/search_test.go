@@ -509,7 +509,7 @@ func TestSearchcommonApi1(t *testing.T) {
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, `^Algolia for Go \(4.39.1\).*`, echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.41.0\).*`, echo.Header.Get("User-Agent"))
 }
 
 // call deleteObjects without error.
@@ -803,6 +803,39 @@ func TestSearchindexExists2(t *testing.T) {
 	res, err = client.IndexExists(
 		"indexExistsERROR")
 	require.EqualError(t, err, "API error [403] Invalid API key")
+}
+
+// handles 204 No Content responses correctly.
+func TestSearchnoContent0(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6692", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+
+	require.NoError(t, err)
+	res, err = client.CustomDelete(client.NewApiCustomDeleteRequest(
+		"1/test/no-content"))
+	require.NoError(t, err)
+	require.Nil(t, res)
 }
 
 // client throws with invalid parameters.

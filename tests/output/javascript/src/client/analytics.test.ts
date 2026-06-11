@@ -29,7 +29,29 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.52.1\).*/);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.54.0\).*/);
+  }, 25000);
+});
+
+describe('noContent', () => {
+  test('handles 204 No Content responses correctly', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key').initAnalytics({
+      options: {
+        hosts: [
+          {
+            url: 'localhost',
+            port: 6692,
+            accept: 'readWrite',
+            protocol: 'http',
+          },
+        ],
+      },
+      // @ts-ignore
+      region: 'us',
+    });
+    const result = await client.customDelete({ path: '1/test/no-content' });
+
+    expect(result).toEqual(undefined);
   }, 25000);
 });
 

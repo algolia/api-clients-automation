@@ -12,6 +12,7 @@ import (
 type SearchResult struct {
 	SearchForFacetValuesResponse *SearchForFacetValuesResponse
 	SearchResponse               *SearchResponse
+	SearchResponsePartial        *SearchResponsePartial
 }
 
 // SearchResponseAsSearchResult is a convenience function that returns SearchResponse wrapped in SearchResult.
@@ -28,11 +29,19 @@ func SearchForFacetValuesResponseAsSearchResult(v *SearchForFacetValuesResponse)
 	}
 }
 
+// SearchResponsePartialAsSearchResult is a convenience function that returns SearchResponsePartial wrapped in SearchResult.
+func SearchResponsePartialAsSearchResult(v *SearchResponsePartial) *SearchResult {
+	return &SearchResult{
+		SearchResponsePartial: v,
+	}
+}
+
 // Unmarshal JSON data into one or more of the pointers in the struct.
 func (dst *SearchResult) UnmarshalJSON(data []byte) error {
-	var err error
-	// use discriminator value to speed up the lookup if possible, if not we will try every possibility
-	var jsonDict map[string]any
+	var (
+		err      error
+		jsonDict map[string]any
+	)
 
 	_ = json.Unmarshal(data, &jsonDict)
 	if utils.HasKey(jsonDict, "hits") {
@@ -50,6 +59,11 @@ func (dst *SearchResult) UnmarshalJSON(data []byte) error {
 			dst.SearchForFacetValuesResponse = nil
 		}
 	}
+	// try to unmarshal data into SearchResponsePartial
+	err = json.Unmarshal(data, &dst.SearchResponsePartial)
+	if err != nil {
+		dst.SearchResponsePartial = nil
+	}
 
 	// check if at least one type was successfully unmarshaled
 	if dst.SearchForFacetValuesResponse != nil {
@@ -57,6 +71,10 @@ func (dst *SearchResult) UnmarshalJSON(data []byte) error {
 	}
 
 	if dst.SearchResponse != nil {
+		return nil
+	}
+
+	if dst.SearchResponsePartial != nil {
 		return nil
 	}
 
@@ -83,6 +101,15 @@ func (src SearchResult) MarshalJSON() ([]byte, error) {
 		return serialized, nil
 	}
 
+	if src.SearchResponsePartial != nil {
+		serialized, err := json.Marshal(&src.SearchResponsePartial)
+		if err != nil {
+			return nil, fmt.Errorf("failed to unmarshal one of SearchResponsePartial of SearchResult: %w", err)
+		}
+
+		return serialized, nil
+	}
+
 	return nil, nil // no data in oneOf schemas
 }
 
@@ -94,6 +121,10 @@ func (obj SearchResult) GetActualInstance() any {
 
 	if obj.SearchResponse != nil {
 		return *obj.SearchResponse
+	}
+
+	if obj.SearchResponsePartial != nil {
+		return *obj.SearchResponsePartial
 	}
 
 	// all schemas are nil

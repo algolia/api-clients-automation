@@ -38,11 +38,29 @@ final class AbtestingClientClientTests: XCTestCase {
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
-        let pattern = "^Algolia for Swift \\(9.43.1\\).*"
+        let pattern = "^Algolia for Swift \\(9.44.0\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
         )
+    }
+
+    /// handles 204 No Content responses correctly
+    func testNoContentTest0() async throws {
+        let configuration = try AbtestingClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            region: Region(rawValue: "us"),
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6692")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = AbtestingClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.customDelete(path: "1/test/no-content")
+
+        XCTAssertTrue(response.value is Void)
     }
 
     /// fallbacks to the alias when region is not given
@@ -50,6 +68,7 @@ final class AbtestingClientClientTests: XCTestCase {
         let configuration = try AbtestingClientConfiguration(appID: "my-app-id", apiKey: "my-api-key", region: nil)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
+
         let response = try await client.getABTestWithHTTPInfo(id: 123)
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
@@ -66,6 +85,7 @@ final class AbtestingClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
+
         let response = try await client.getABTestWithHTTPInfo(id: 123)
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
@@ -102,6 +122,7 @@ final class AbtestingClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
+
         do {
             let response = try await client.customGet(path: "check-api-key/1")
 

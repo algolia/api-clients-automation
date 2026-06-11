@@ -1,0 +1,36 @@
+SearchParametersOverrides:
+  properties:
+    filters:
+      type: string
+      title: filters
+    attributesToRetrieve:
+      items:
+        type: string
+      type: array
+      title: attributestoretrieve
+    restrictSearchableAttributes:
+      items:
+        type: string
+      type: array
+      title: restrictsearchableattributes
+    distinct:
+      $ref: 'DistinctUnion.yml#/DistinctUnion'
+    userToken:
+      type: string
+      title: usertoken
+    enablePersonalization:
+      type: boolean
+      title: enablepersonalization
+    personalizationImpact:
+      type: integer
+      title: personalizationimpact
+    optionalFilters:
+      $ref: 'OptionalFiltersUnion.yml#/OptionalFiltersUnion'
+  additionalProperties: false
+  type: object
+  title: searchParametersOverrides
+  description: |-
+    Algolia Search API parameters that can be predefined for the search tool.
+    Reference: https://www.algolia.com/doc/api-reference/search-api-parameters/
+
+    A subset of SearchParameters of specific params we allow for runtime override.

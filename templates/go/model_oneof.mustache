@@ -25,11 +25,26 @@ func (dst *{{classname}}) UnmarshalJSON(data []byte) error {
 	}
 
 	{{/isNullable}}
+  {{#discriminator}}
+  var jsonDict map[string]any
+  _ = json.Unmarshal(data, &jsonDict)
+  if typeValue, ok := jsonDict["{{{propertyBaseName}}}"]; ok {
+    switch typeValue {
+    {{#mappedModels}}
+    case "{{{mappingName}}}":
+      err = json.Unmarshal(data, &dst.{{#lambda.type-to-name}}{{{modelName}}}{{/lambda.type-to-name}})
+      if err == nil { return nil }
+      dst.{{#lambda.type-to-name}}{{{modelName}}}{{/lambda.type-to-name}} = nil
+    {{/mappedModels}}
+    }
+  }
+  {{/discriminator}}
+  {{^discriminator}}
   {{#vendorExtensions.x-has-discriminator}}
-  // use discriminator value to speed up the lookup if possible, if not we will try every possibility
   var jsonDict map[string]any
   _ = json.Unmarshal(data, &jsonDict)
   {{/vendorExtensions.x-has-discriminator}}
+  {{/discriminator}}
   {{#composedSchemas.oneOf}}
   {{#vendorExtensions.x-discriminator-fields.size}}
   if {{#vendorExtensions.x-discriminator-fields}}utils.HasKey(jsonDict, "{{.}}"){{^-last}} && {{/-last}}{{/vendorExtensions.x-discriminator-fields}} {

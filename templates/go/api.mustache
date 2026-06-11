@@ -20,6 +20,11 @@ import (
   "slices"
   "sort"
   {{/isSearchClient}}
+  {{#isAgentStudioClient}}
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/base64"
+  {{/isAgentStudioClient}}
   "time"
 
   "github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
@@ -64,6 +69,11 @@ type config struct {
   // -- WaitForApiKey options
   apiKey *ApiKey
   {{/isSearchClient}}
+
+  {{#isAgentStudioClient}}
+  // -- ForgeSecuredUserToken options
+  expiresIn int
+  {{/isAgentStudioClient}}
 }
 
 type RequestOption interface {
@@ -350,6 +360,15 @@ func replaceAllObjectsToChunkBatchOptions(opts []ReplaceAllObjectsOption) []Chun
 }
 {{/isSearchClient}}
 
+{{#isAgentStudioClient}}
+// -- ForgeSecuredUserToken options
+func WithExpiresIn(expiresIn int) requestOption {
+	return requestOption(func(c *config) {
+		c.expiresIn = expiresIn
+	})
+}
+{{/isAgentStudioClient}}
+
 {{#operation}}
   {{#hasParams}}
 func (r *{{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request) UnmarshalJSON(b []byte) error {
@@ -399,11 +418,11 @@ func (c *APIClient) NewApi{{{nickname}}}Request({{#requiredParams}} {{paramName}
 
 {{#allParams}}
 {{^required}}
-// With{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}} adds the {{paramName}} to the {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request and returns the request for chaining.
+// With{{#nameInPascalCase}}{{nameInPascalCase}}{{/nameInPascalCase}}{{^nameInPascalCase}}{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}}{{/nameInPascalCase}} adds the {{paramName}} to the {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request and returns the request for chaining.
 {{#isDeprecated}}
 // Deprecated
 {{/isDeprecated}}
-func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request) With{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}}({{paramName}} {{^isFreeFormObject}}{{^isArray}}{{^isMap}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isMap}}{{/isArray}}{{/isFreeFormObject}}{{{dataType}}}) {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request {
+func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request) With{{#nameInPascalCase}}{{nameInPascalCase}}{{/nameInPascalCase}}{{^nameInPascalCase}}{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}}{{/nameInPascalCase}}({{paramName}} {{^isFreeFormObject}}{{^isArray}}{{^isMap}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isMap}}{{/isArray}}{{/isFreeFormObject}}{{{dataType}}}) {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request {
 	r.{{paramName}} = {{#isPrimitiveType}}{{^isMap}}&{{/isMap}}{{/isPrimitiveType}}{{paramName}}
 	return r
 }
@@ -441,7 +460,7 @@ func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/s
   */
 func (c *APIClient) {{nickname}}WithHTTPInfo({{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...RequestOption) (*http.Response, []byte, error) {
   {{#vendorExtensions}}
-  requestPath := "{{{path}}}"{{#pathParams}}
+  requestPath := "{{{serverPathSuffix}}}{{{path}}}"{{#pathParams}}
   requestPath = strings.ReplaceAll(requestPath, {{=<% %>=}}"{<%baseName%>}"<%={{ }}=%>, {{#x-is-custom-request}}utils.ParameterToString(r.{{paramName}}){{/x-is-custom-request}}{{^x-is-custom-request}}url.PathEscape(utils.ParameterToString(r.{{paramName}})){{/x-is-custom-request}}){{/pathParams}}
   {{/vendorExtensions}}
 
@@ -576,3 +595,7 @@ func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}
 
 {{> ingestion_helpers}}
 {{/isIngestionClient}}
+
+{{#isAgentStudioClient}}
+{{> agent_studio_helpers}}
+{{/isAgentStudioClient}}

@@ -47,7 +47,7 @@ private readonly {{client}} client;
 
      var req = _echo.LastResponse;
     {{#request}}
-     Assert.Equal("{{{path}}}",req.Path);
+     Assert.Equal("{{{serverPathSuffix}}}{{{path}}}",req.Path);
      Assert.Equal("{{{method}}}",req.Method.ToString());
     {{#body}}
         JsonAssert.EqualOverrideDefault("{{#lambda.escapeJSON}}{{{body}}}{{/lambda.escapeJSON}}", req.Body, new JsonDiffConfig(false));

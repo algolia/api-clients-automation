@@ -583,6 +583,8 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
      * Gets exhaustiveFacetsCount.
      *
      * @return bool
+     *
+     * @deprecated
      */
     public function getExhaustiveFacetsCount()
     {
@@ -592,9 +594,11 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Sets exhaustiveFacetsCount.
      *
-     * @param bool $exhaustiveFacetsCount Whether the facet count is exhaustive (true) or approximate (false). For more information, see [Why are my facet and hit counts not accurate](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate).
+     * @param bool $exhaustiveFacetsCount see the `facetsCount` field of the `exhaustive` object in the response
      *
      * @return self
+     *
+     * @deprecated
      */
     public function setExhaustiveFacetsCount($exhaustiveFacetsCount)
     {
