@@ -60,6 +60,7 @@ async function spreadGeneration(): Promise<void> {
   }
 
   const pushed: Language[] = [];
+  const failed: Language[] = [];
 
   for (const lang of LANGUAGES) {
     try {
@@ -118,13 +119,19 @@ async function spreadGeneration(): Promise<void> {
       console.log(`✅ Code generation successfully pushed to ${lang} repository.`);
     } catch (e) {
       console.error(`Release failed for language ${lang}: ${e}`);
+      failed.push(lang);
     }
   }
 
   core.setOutput('PUSHED_LANGUAGES', pushed.join(' '));
+  core.setOutput('FAILED_LANGUAGES', failed.join(' '));
+
+  if (failed.length > 0) {
+    core.setFailed(`Spread failed for: ${failed.join(', ')}`);
+  }
 }
 
 if (import.meta.url.endsWith(process.argv[1])) {
   setVerbose(false);
-  spreadGeneration();
+  await spreadGeneration();
 }

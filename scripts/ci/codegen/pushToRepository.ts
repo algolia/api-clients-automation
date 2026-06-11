@@ -1,3 +1,4 @@
+import * as core from '@actions/core';
 import fsp from 'fs/promises';
 import path, { resolve } from 'path';
 
@@ -176,7 +177,7 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
 
   await configureGitHubAuthor(tempGitDir);
 
-  await run(`git config --global url.https://${token}@github.com/.insteadOf https://github.com/`);
+  await run(`git config --global url.https://x-access-token:${token}@github.com/.insteadOf https://github.com/`);
 
   const shortSha = (await run('git rev-parse --short HEAD', { cwd: toAbsolutePath('.') })).trim();
 
@@ -244,11 +245,19 @@ if (import.meta.url.endsWith(process.argv[1])) {
   setVerbose(false);
   const repositories = process.argv.slice(2) as Array<string>;
 
-  await Promise.allSettled(
+  const results = await Promise.allSettled(
     Object.entries(pushToRepositoryConfiguration).map(([name, config]) => {
       if (repositories.length === 0 || repositories.includes(name)) {
         return pushToRepository(name, config);
       }
     }),
   );
+
+  const failedRepos = Object.keys(pushToRepositoryConfiguration).filter(
+    (_, i) => results[i].status === 'rejected',
+  );
+
+  if (failedRepos.length > 0) {
+    core.setFailed(`Push to repositories failed for: ${failedRepos.join(', ')}`);
+  }
 }
