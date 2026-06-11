@@ -8,7 +8,8 @@
 import Foundation
 
 /// Options shared by the chunked helpers (`chunkedBatch`, `saveObjects`,
-/// `deleteObjects`, `partialUpdateObjects`, `replaceAllObjects`).
+/// `deleteObjects`, `partialUpdateObjects`, `replaceAllObjects`, and their
+/// `WithTransformation` variants).
 ///
 /// Designed to grow: additional shared configuration (e.g. custom timeouts)
 /// can be added here without ballooning each helper's signature.
