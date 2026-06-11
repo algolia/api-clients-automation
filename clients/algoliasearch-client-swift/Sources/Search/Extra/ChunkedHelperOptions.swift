@@ -8,11 +8,8 @@
 import Foundation
 
 /// Options shared by the chunked helpers (`chunkedBatch`, `saveObjects`,
-/// `deleteObjects`, `partialUpdateObjects`, `replaceAllObjects`, and their
-/// `WithTransformation` variants).
-///
-/// Designed to grow: additional shared configuration (e.g. custom timeouts)
-/// can be added here without ballooning each helper's signature.
+/// `deleteObjects`, `partialUpdateObjects`, `replaceAllObjects`, and the
+/// `WithTransformation` helpers).
 public struct ChunkedHelperOptions {
     /// Default maximum number of retries used by every chunked helper and the
     /// `waitFor*` family when the caller does not provide a value.
