@@ -64,10 +64,10 @@
         "parameters": {
           "appId": "test-app-id",
           "apiKey": "test-api-key",
-          "customHosts": [{ "port": 6692 }],
+          "customHosts": [{ "port": 6693 }],
           "transformationOptions": {
             "region": "us",
-            "customHosts": [{ "port": 6692 }]
+            "customHosts": [{ "port": 6693 }]
           }
         }
       },

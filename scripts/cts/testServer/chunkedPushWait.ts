@@ -71,5 +71,5 @@ function addRoutes(app: Express): void {
 }
 
 export function chunkedPushWaitServer(): Promise<Server> {
-  return setupServer('chunkedPushWaitServer', 6692, addRoutes);
+  return setupServer('chunkedPushWaitServer', 6693, addRoutes);
 }
