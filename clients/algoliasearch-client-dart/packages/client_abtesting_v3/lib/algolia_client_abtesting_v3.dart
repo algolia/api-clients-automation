@@ -35,5 +35,3 @@ export 'src/model/timeseries.dart';
 export 'src/model/timeseries_variant.dart';
 export 'src/model/variant.dart';
 export 'src/model/variant_metadata.dart';
-
-export 'src/extension.dart';

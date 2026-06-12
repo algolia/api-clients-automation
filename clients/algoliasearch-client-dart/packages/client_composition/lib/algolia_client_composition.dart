@@ -111,5 +111,3 @@ export 'src/model/time_range.dart';
 export 'src/model/typo_tolerance_enum.dart';
 export 'src/model/value.dart';
 export 'src/model/widgets.dart';
-
-export 'src/extension.dart';

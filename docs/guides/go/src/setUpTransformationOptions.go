@@ -1,0 +1,31 @@
+package main
+
+import (
+	"fmt"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+)
+
+func setUpTransformationOptions() {
+	// Set transformationOptions with your transformation region to use the `WithTransformation` helper methods.
+	// Replace "us" with "eu" if your Algolia application uses the Europe analytics region.
+	client, err := search.NewClient(
+		"ALGOLIA_APPLICATION_ID",
+		"ALGOLIA_API_KEY",
+		search.WithTransformationOptions(search.TransformationOptions{Region: "us"}),
+	)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Save records, transforming them through the Push connector
+	result, err := client.SaveObjectsWithTransformation(
+		"<YOUR_INDEX_NAME>",
+		[]map[string]any{{"objectID": "1", "name": "Adam"}, {"objectID": "2", "name": "Benoit"}}, search.WithWaitForTasks(true))
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("Done! Uploaded records in %d batches.", len(result))
+}

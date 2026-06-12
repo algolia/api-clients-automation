@@ -85,5 +85,3 @@ export 'src/model/trending_items_query.dart';
 export 'src/model/typo_tolerance_enum.dart';
 export 'src/model/value.dart';
 export 'src/model/widgets.dart';
-
-export 'src/extension.dart';

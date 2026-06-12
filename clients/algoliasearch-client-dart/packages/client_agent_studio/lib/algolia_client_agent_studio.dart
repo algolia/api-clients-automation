@@ -103,5 +103,3 @@ export 'src/model/user_message_v4.dart';
 export 'src/model/user_message_v5.dart';
 export 'src/model/validation_error.dart';
 export 'src/model/vote_enum.dart';
-
-export 'src/extension.dart';

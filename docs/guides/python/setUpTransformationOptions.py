@@ -1,0 +1,29 @@
+from algoliasearch.search.client import SearchClientSync
+
+from algoliasearch.search.config import SearchConfig, TransformationOptions
+
+
+# Set `transformation_options` with your transformation region to use the `*_with_transformation` helper methods.
+# Replace "us" with "eu" if your Algolia application uses the Europe analytics region.
+_config = SearchConfig(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    transformation_options=TransformationOptions(region="us"),
+)
+_client = SearchClientSync.create_with_config(_config)
+
+# Save records, transforming them through the Push connector
+_client.save_objects_with_transformation(
+    index_name="<YOUR_INDEX_NAME>",
+    objects=[
+        {
+            "objectID": "1",
+            "name": "Adam",
+        },
+        {
+            "objectID": "2",
+            "name": "Benoit",
+        },
+    ],
+    wait_for_tasks=True,
+)

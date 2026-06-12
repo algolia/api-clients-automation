@@ -149,5 +149,3 @@ export 'src/model/trigger_type.dart';
 export 'src/model/trigger_update_input.dart';
 export 'src/model/watch_response.dart';
 export 'src/model/window.dart';
-
-export 'src/extension.dart';

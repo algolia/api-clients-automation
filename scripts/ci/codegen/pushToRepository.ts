@@ -1,3 +1,4 @@
+import * as core from '@actions/core';
 import fsp from 'fs/promises';
 import path, { resolve } from 'path';
 
@@ -176,7 +177,7 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
 
   await configureGitHubAuthor(tempGitDir);
 
-  await run(`git config --global url.https://${token}@github.com/.insteadOf https://github.com/`);
+  await run(`git config --global url.https://x-access-token:${token}@github.com/.insteadOf https://github.com/`);
 
   const shortSha = (await run('git rev-parse --short HEAD', { cwd: toAbsolutePath('.') })).trim();
 
@@ -240,15 +241,30 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
   }
 }
 
+type PushRepository = (repository: string, config: RepositoryConfiguration) => Promise<void>;
+
+export async function pushConfiguredRepositories(
+  repositories: readonly string[],
+  pushRepository: PushRepository = pushToRepository,
+): Promise<string[]> {
+  const selectedRepositories = Object.entries(pushToRepositoryConfiguration).filter(
+    ([name]) => repositories.length === 0 || repositories.includes(name),
+  );
+
+  const results = await Promise.allSettled(
+    selectedRepositories.map(([name, config]) => pushRepository(name, config)),
+  );
+
+  return selectedRepositories.flatMap(([name], index) => (results[index].status === 'rejected' ? [name] : []));
+}
+
 if (import.meta.url.endsWith(process.argv[1])) {
   setVerbose(false);
   const repositories = process.argv.slice(2) as Array<string>;
 
-  await Promise.allSettled(
-    Object.entries(pushToRepositoryConfiguration).map(([name, config]) => {
-      if (repositories.length === 0 || repositories.includes(name)) {
-        return pushToRepository(name, config);
-      }
-    }),
-  );
+  const failedRepos = await pushConfiguredRepositories(repositories);
+
+  if (failedRepos.length > 0) {
+    core.setFailed(`Push to repositories failed for: ${failedRepos.join(', ')}`);
+  }
 }

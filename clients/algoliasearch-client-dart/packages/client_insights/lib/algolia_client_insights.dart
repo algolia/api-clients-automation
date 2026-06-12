@@ -27,5 +27,3 @@ export 'src/model/purchased_object_ids_after_search.dart';
 export 'src/model/view_event.dart';
 export 'src/model/viewed_filters.dart';
 export 'src/model/viewed_object_ids.dart';
-
-export 'src/extension.dart';

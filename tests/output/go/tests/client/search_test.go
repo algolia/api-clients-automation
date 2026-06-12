@@ -1472,6 +1472,78 @@ func TestSearchsaveObjectsWithTransformation0(t *testing.T) {
 	}
 }
 
+// saveObjectsWithTransformation polls every task when waitForTasks is true.
+func TestSearchsaveObjectsWithTransformation1(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
+	_ = client
+	_ = echo
+	transformationOptions := search.TransformationOptions{
+		Region: "us",
+		Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6693", call.IsReadWrite)},
+	}
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6693", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	err = client.SetTransformationOptions(transformationOptions)
+	require.NoError(t, err)
+
+	require.NoError(t, err)
+	{
+		res, err = client.SaveObjectsWithTransformation(
+			"cts_e2e_chunked_push_wait_go",
+			[]map[string]any{
+				{"objectID": "1", "name": "r1"},
+				{"objectID": "2", "name": "r2"},
+				{"objectID": "3", "name": "r3"},
+				{"objectID": "4", "name": "r4"},
+				{"objectID": "5", "name": "r5"},
+				{"objectID": "6", "name": "r6"},
+				{"objectID": "7", "name": "r7"},
+				{"objectID": "8", "name": "r8"},
+				{"objectID": "9", "name": "r9"},
+				{"objectID": "10", "name": "r10"},
+				{"objectID": "11", "name": "r11"},
+				{"objectID": "12", "name": "r12"},
+				{"objectID": "13", "name": "r13"},
+				{"objectID": "14", "name": "r14"},
+				{"objectID": "15", "name": "r15"},
+				{"objectID": "16", "name": "r16"},
+				{"objectID": "17", "name": "r17"},
+				{"objectID": "18", "name": "r18"},
+				{"objectID": "19", "name": "r19"},
+				{"objectID": "20", "name": "r20"},
+				{"objectID": "21", "name": "r21"},
+				{"objectID": "22", "name": "r22"},
+				{"objectID": "23", "name": "r23"},
+				{"objectID": "24", "name": "r24"},
+				{"objectID": "25", "name": "r25"},
+			},
+			search.WithWaitForTasks(true),
+			search.WithBatchSize(10),
+			search.WithHeaderParam("x-algolia-user-id", "test-user"),
+		)
+		require.NoError(t, err)
+	}
+}
+
 // with algolia user id.
 func TestSearchsearchSingleIndex0(t *testing.T) {
 	var (

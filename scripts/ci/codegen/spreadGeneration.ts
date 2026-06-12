@@ -33,6 +33,51 @@ export function cleanUpCommitMessage(commitMessage: string, version: string): st
   return [`${prCommit[1]} ${text.commitEndMessage}`, `${REPO_URL}/pull/${prCommit[2]}`].join('\n\n');
 }
 
+// Failed languages count as non-skipped even if the script failed before checking the diff.
+// The before/after-diff split is only for reporting where the spread failed.
+export type SpreadGenerationResult =
+  | { type: 'skipped'; language: Language }
+  | { type: 'pushed'; language: Language }
+  | { type: 'failed-before-diff'; language: Language }
+  | { type: 'failed-after-diff'; language: Language };
+
+export type SpreadGenerationSummary = {
+  pushed: Language[];
+  failed: Language[];
+  ciStepShouldFail: boolean;
+};
+
+export function summarizeSpreadGenerationResults(results: readonly SpreadGenerationResult[]): SpreadGenerationSummary {
+  const pushed: Language[] = [];
+  const failed: Language[] = [];
+  const nonSkipped: Array<Exclude<SpreadGenerationResult, { type: 'skipped' }>> = [];
+
+  for (const result of results) {
+    switch (result.type) {
+      case 'pushed':
+        pushed.push(result.language);
+        nonSkipped.push(result);
+        break;
+      case 'failed-before-diff':
+        failed.push(result.language);
+        nonSkipped.push(result);
+        break;
+      case 'failed-after-diff':
+        failed.push(result.language);
+        nonSkipped.push(result);
+        break;
+      case 'skipped':
+        break;
+    }
+  }
+
+  return {
+    pushed,
+    failed,
+    ciStepShouldFail: nonSkipped.length > 0 && nonSkipped.every((result) => result.type !== 'pushed'),
+  };
+}
+
 async function spreadGeneration(): Promise<void> {
   const githubToken = ensureGitHubToken();
 
@@ -59,9 +104,11 @@ async function spreadGeneration(): Promise<void> {
     }
   }
 
-  const pushed: Language[] = [];
+  const results: SpreadGenerationResult[] = [];
 
   for (const lang of LANGUAGES) {
+    let failureType: 'failed-before-diff' | 'failed-after-diff' = 'failed-before-diff';
+
     try {
       const { tempGitDir } = await cloneRepository({
         lang,
@@ -81,8 +128,10 @@ async function spreadGeneration(): Promise<void> {
         })) === 0
       ) {
         console.log(`❎ Skipping ${lang} repository, because there is no change.`);
+        results.push({ type: 'skipped', language: lang });
         continue;
       } else {
+        failureType = 'failed-after-diff';
         console.log(`✅ Spreading code to the ${lang} repository.`);
       }
 
@@ -113,18 +162,26 @@ async function spreadGeneration(): Promise<void> {
         await run('git push --tags', { cwd: tempGitDir });
       }
 
-      pushed.push(lang);
+      results.push({ type: 'pushed', language: lang });
 
       console.log(`✅ Code generation successfully pushed to ${lang} repository.`);
     } catch (e) {
       console.error(`Release failed for language ${lang}: ${e}`);
+      results.push({ type: failureType, language: lang });
     }
   }
 
-  core.setOutput('PUSHED_LANGUAGES', pushed.join(' '));
+  const summary = summarizeSpreadGenerationResults(results);
+
+  core.setOutput('PUSHED_LANGUAGES', summary.pushed.join(' '));
+  core.setOutput('FAILED_LANGUAGES', summary.failed.join(' '));
+
+  if (summary.ciStepShouldFail) {
+    core.setFailed(`Spread failed for every non-skipped language: ${summary.failed.join(', ')}`);
+  }
 }
 
 if (import.meta.url.endsWith(process.argv[1])) {
   setVerbose(false);
-  spreadGeneration();
+  await spreadGeneration();
 }
