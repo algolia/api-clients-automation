@@ -1,0 +1,23 @@
+[
+  {
+    "testName": "extractQueries",
+    "parameters": {
+      "messages": [
+        {"role": "user", "content": "What running shoes do you recommend for marathons?"},
+        {"role": "assistant", "content": "I'd suggest looking at stability shoes with good cushioning."},
+        {"role": "user", "content": "I overpronate, so I need extra support."}
+      ]
+    },
+    "request": {
+      "path": "/1/memory/extract/queries",
+      "method": "POST",
+      "body": {
+        "messages": [
+          {"role": "user", "content": "What running shoes do you recommend for marathons?"},
+          {"role": "assistant", "content": "I'd suggest looking at stability shoes with good cushioning."},
+          {"role": "user", "content": "I overpronate, so I need extra support."}
+        ]
+      }
+    }
+  }
+]

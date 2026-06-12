@@ -1,0 +1,7 @@
+IgnorePluralsUnion:
+  oneOf:
+    - type: boolean
+    - items:
+        $ref: 'SupportedLanguage.yml#/SupportedLanguage'
+      type: array
+    - type: 'null'

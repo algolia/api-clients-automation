@@ -1,0 +1,18 @@
+[
+  {
+    "testName": "bulkCreateAllowedDomains",
+    "parameters": {
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      "allowedDomainBulkInsert": {
+        "domains": ["https://app.example.com", "*.example.org"]
+      }
+    },
+    "request": {
+      "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/allowed-domains/bulk",
+      "method": "POST",
+      "body": {
+        "domains": ["https://app.example.com", "*.example.org"]
+      }
+    }
+  }
+]

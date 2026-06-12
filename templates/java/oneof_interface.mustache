@@ -112,6 +112,19 @@ public interface {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/ven
         @Override
         public {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
             JsonNode tree = jp.readValueAsTree();
+            {{#discriminator}}
+            JsonNode discriminatorNode = tree.get("{{{propertyBaseName}}}");
+            if (discriminatorNode != null && discriminatorNode.isTextual()) {
+              String discriminatorValue = discriminatorNode.asText();
+              {{#mappedModels}}
+              if ("{{{mappingName}}}".equals(discriminatorValue)) {
+                try(JsonParser parser = tree.traverse(jp.getCodec())) {
+                  return parser.readValueAs({{{modelName}}}.class);
+                }
+              }
+              {{/mappedModels}}
+            }
+            {{/discriminator}}
             {{#composedSchemas.oneOf}}
             // deserialize {{{datatypeWithEnum}}}
             if (tree.{{#isModel}}isObject(){{#vendorExtensions.x-discriminator-fields}} && tree.has("{{{.}}}"){{/vendorExtensions.x-discriminator-fields}}{{/isModel}}{{#isEnumRef}}isTextual(){{/isEnumRef}}{{#isArray}}isArray(){{/isArray}}{{#isInteger}}isInt(){{/isInteger}}{{#isLong}}isLong(){{/isLong}}{{#isDouble}}isDouble(){{/isDouble}}{{#isBoolean}}isBoolean(){{/isBoolean}}{{#isString}}isTextual(){{/isString}}{{^isEnumRef}}{{^isModel}}{{^isArray}}{{^isInteger}}{{^isLong}}{{^isDouble}}{{^isBoolean}}{{^isString}}isObject(){{/isString}}{{/isBoolean}}{{/isDouble}}{{/isLong}}{{/isInteger}}{{/isArray}}{{/isModel}}{{/isEnumRef}}){

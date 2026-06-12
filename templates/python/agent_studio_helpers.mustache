@@ -1,0 +1,16 @@
+    def forge_secured_user_token(
+        self,
+        secret_key: str,
+        secret_key_id: str,
+        user_id: str,
+        expires_in: int = 24 * 3600, # 24 hours
+    ) -> str:
+        """
+        Helper: Forges a secured user token (JWT) for Agent Studio authenticated requests.
+        """
+        header = base64.urlsafe_b64encode(dumps({"alg": "HS256", "typ": "JWT", "kid": secret_key_id}, separators=(",", ":")).encode()).rstrip(b"=").decode()
+        payload = base64.urlsafe_b64encode(dumps({"sub": user_id, "exp": int(time()) + expires_in}, separators=(",", ":")).encode()).rstrip(b"=").decode()
+        signature = base64.urlsafe_b64encode(
+            hmac.new(secret_key.encode(), f"{header}.{payload}".encode(), hashlib.sha256).digest()
+        ).rstrip(b"=").decode()
+        return f"{header}.{payload}.{signature}"

@@ -499,7 +499,9 @@ void snippetForbatchDictionaryEntries2() async {
           body: DictionaryEntry(
             objectID: "1",
             language: SupportedLanguage.fromJson("en"),
-            additionalProperties: {'additional': 'try me'},
+            additionalProperties: {
+              'additional': "try me",
+            },
           ),
         ),
       ],
@@ -1621,7 +1623,7 @@ void snippetForgetSynonym() async {
 //
 // getTask
 void snippetForgetTask() async {
-  // >SEPARATOR getTask default
+  // >SEPARATOR getTask getTask
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1630,6 +1632,26 @@ void snippetForgetTask() async {
   final response = await client.getTask(
     indexName: "<YOUR_INDEX_NAME>",
     taskID: 123,
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getTask method.
+//
+// getTask with taskID 0
+void snippetForgetTask1() async {
+  // >SEPARATOR getTask getTask with taskID 0
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getTask(
+    indexName: "<YOUR_INDEX_NAME>",
+    taskID: 0,
   );
   // >LOG
   // print the response
@@ -2119,6 +2141,37 @@ void snippetForpartialUpdateObject7() async {
   // SEPARATOR<
 }
 
+// Snippet for the partialUpdateObjectsWithTransformation method.
+//
+// call partialUpdateObjectsWithTransformation with createIfNotExists=true
+void snippetForpartialUpdateObjectsWithTransformation() async {
+  // >SEPARATOR partialUpdateObjectsWithTransformation default
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.partialUpdateObjectsWithTransformation(
+    indexName: "<YOUR_INDEX_NAME>",
+    objects: [
+      {
+        'objectID': "1",
+        'name': "Adam",
+      },
+      {
+        'objectID': "2",
+        'name': "Benoit",
+      },
+    ],
+    createIfNotExists: true,
+    waitForTasks: true,
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
 // Snippet for the removeUserId method.
 //
 // removeUserId
@@ -2131,6 +2184,68 @@ void snippetForremoveUserId() async {
   // Call the API
   final response = await client.removeUserId(
     userID: "uniqueID",
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the replaceAllObjectsWithTransformation method.
+//
+// call replaceAllObjectsWithTransformation without error
+void snippetForreplaceAllObjectsWithTransformation() async {
+  // >SEPARATOR replaceAllObjectsWithTransformation default
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.replaceAllObjectsWithTransformation(
+    indexName: "<YOUR_INDEX_NAME>",
+    objects: [
+      {
+        'objectID': "1",
+        'name': "Adam",
+      },
+      {
+        'objectID': "2",
+        'name': "Benoit",
+      },
+      {
+        'objectID': "3",
+        'name': "Cyril",
+      },
+      {
+        'objectID': "4",
+        'name': "David",
+      },
+      {
+        'objectID': "5",
+        'name': "Eva",
+      },
+      {
+        'objectID': "6",
+        'name': "Fiona",
+      },
+      {
+        'objectID': "7",
+        'name': "Gael",
+      },
+      {
+        'objectID': "8",
+        'name': "Hugo",
+      },
+      {
+        'objectID': "9",
+        'name': "Igor",
+      },
+      {
+        'objectID': "10",
+        'name': "Julia",
+      },
+    ],
+    batchSize: 3,
   );
   // >LOG
   // print the response
@@ -2199,6 +2314,36 @@ void snippetForsaveObject() async {
       'availableIn': "https://source.unsplash.com/100x100/?paris||Paris",
       'objectID': "myID",
     },
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveObjectsWithTransformation method.
+//
+// call saveObjectsWithTransformation without error
+void snippetForsaveObjectsWithTransformation() async {
+  // >SEPARATOR saveObjectsWithTransformation default
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveObjectsWithTransformation(
+    indexName: "<YOUR_INDEX_NAME>",
+    objects: [
+      {
+        'objectID': "1",
+        'name': "Adam",
+      },
+      {
+        'objectID': "2",
+        'name': "Benoit",
+      },
+    ],
+    waitForTasks: true,
   );
   // >LOG
   // print the response
@@ -5290,6 +5435,7 @@ void snippetForsearchSingleIndex40() async {
   final response = await client.searchSingleIndex(
     indexName: "<YOUR_INDEX_NAME>",
     searchParams: SearchParamsObject(
+      query: "test",
       getRankingInfo: true,
     ),
   );

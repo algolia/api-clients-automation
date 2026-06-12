@@ -1477,12 +1477,29 @@ end
 #
 # getTask
 def snippet_for_get_task
-  # >SEPARATOR getTask default
+  # >SEPARATOR getTask getTask
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_task("<YOUR_INDEX_NAME>", 123)
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the getTask method.
+#
+# getTask with taskID 0
+def snippet_for_get_task1
+  # >SEPARATOR getTask getTask with taskID 0
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.get_task("<YOUR_INDEX_NAME>", 0)
 
   # >LOG
   # print the response
@@ -4745,7 +4762,7 @@ def snippet_for_search_single_index40
   # Call the API
   response = client.search_single_index(
     "<YOUR_INDEX_NAME>",
-    Algolia::Search::SearchParamsObject.new(get_ranking_info: true)
+    Algolia::Search::SearchParamsObject.new(query: "test", get_ranking_info: true)
   )
 
   # >LOG

@@ -1,0 +1,13 @@
+ToolInvocationPartV4:
+  properties:
+    type:
+      type: string
+      const: tool-invocation
+      title: type
+      default: tool-invocation
+    toolInvocation:
+      $ref: 'ToolInvocationV4.yml#/ToolInvocationV4'
+  type: object
+  required:
+    - toolInvocation
+  title: toolInvocationPartV4

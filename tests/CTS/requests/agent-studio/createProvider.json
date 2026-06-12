@@ -1,0 +1,48 @@
+[
+  {
+    "testName": "createProvider with OpenAI",
+    "parameters": {
+      "name": "My OpenAI Provider",
+      "providerName": "openai",
+      "input": {
+        "apiKey": "sk-test-key-1234"
+      }
+    },
+    "request": {
+      "path": "/1/providers",
+      "method": "POST",
+      "body": {
+        "name": "My OpenAI Provider",
+        "providerName": "openai",
+        "input": {
+          "apiKey": "sk-test-key-1234"
+        }
+      }
+    }
+  },
+  {
+    "testName": "createProvider with Azure OpenAI",
+    "parameters": {
+      "name": "My Azure Provider",
+      "providerName": "azure_openai",
+      "input": {
+        "apiKey": "az-test-key-5678",
+        "azureEndpoint": "https://my-resource.openai.azure.com",
+        "azureDeployment": "gpt-4o"
+      }
+    },
+    "request": {
+      "path": "/1/providers",
+      "method": "POST",
+      "body": {
+        "name": "My Azure Provider",
+        "providerName": "azure_openai",
+        "input": {
+          "apiKey": "az-test-key-5678",
+          "azureEndpoint": "https://my-resource.openai.azure.com",
+          "azureDeployment": "gpt-4o"
+        }
+      }
+    }
+  }
+]

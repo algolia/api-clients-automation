@@ -399,7 +399,7 @@ class TestSearchClient:
         _req = await _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.41.1\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.42.0\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     async def test_delete_objects_0(self):
@@ -626,6 +626,29 @@ class TestSearchClient:
             assert False
         except (ValueError, Exception) as e:
             assert str(e) == "Invalid API key"
+
+    async def test_no_content_0(self):
+        """
+        handles 204 No Content responses correctly
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6692,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.custom_delete(
+            path="1/test/no-content",
+        )
+        assert _req is None
 
     async def test_parameters_0(self):
         """
@@ -1959,7 +1982,7 @@ class TestSearchClientSync:
         _req = _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.41.1\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.42.0\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     def test_delete_objects_0(self):
@@ -2186,6 +2209,29 @@ class TestSearchClientSync:
             assert False
         except (ValueError, Exception) as e:
             assert str(e) == "Invalid API key"
+
+    def test_no_content_0(self):
+        """
+        handles 204 No Content responses correctly
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6692,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.custom_delete(
+            path="1/test/no-content",
+        )
+        assert _req is None
 
     def test_parameters_0(self):
         """

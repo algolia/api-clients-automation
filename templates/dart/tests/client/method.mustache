@@ -3,13 +3,19 @@ try {
       {{#parametersWithDataType}}
       {{> tests/request_param}}
       {{/parametersWithDataType}}
+      {{#hasRequestOptions}}requestOptions: RequestOptions({{#requestOptions.timeouts}}{{#write}}writeTimeout: Duration(milliseconds: {{{.}}}),{{/write}}{{#read}}readTimeout: Duration(milliseconds: {{{.}}}),{{/read}}{{#connect}}connectTimeout: Duration(milliseconds: {{{.}}}),{{/connect}}{{/requestOptions.timeouts}}),{{/hasRequestOptions}}
   );
   {{#testResponse}}
   {{^match.isPrimitive}}
   expectBody(res, """{{{match.value}}}""");
   {{/match.isPrimitive}}
   {{#match.isPrimitive}}
+  {{#match.isNull}}
+  expect(res, isA<AlgoliaNoResponse>());
+  {{/match.isNull}}
+  {{^match.isNull}}
   expect(res, {{#match}}{{> tests/param_value}}{{/match}});
+  {{/match.isNull}}
   {{/match.isPrimitive}}
   {{/testResponse}}
 } on InterceptionException catch (_) {

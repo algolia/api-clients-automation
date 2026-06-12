@@ -1,0 +1,33 @@
+AgentTestConfiguration:
+  properties:
+    id:
+      type: string
+      title: id
+    providerId:
+      type: string
+      title: providerid
+    model:
+      type: string
+      title: model
+    instructions:
+      type: string
+      title: instructions
+    systemPrompt:
+      type: string
+      title: systemprompt
+    config:
+      additionalProperties: true
+      type: object
+      title: config
+    tools:
+      items:
+        $ref: 'ToolConfigInput.yml#/ToolConfigInput'
+      type: array
+      title: tools
+  type: object
+  required:
+    - instructions
+    - config
+    - tools
+  title: agentTestConfiguration
+  description: Dynamic configuration for testing agents.

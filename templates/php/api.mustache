@@ -32,6 +32,9 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
  *
  * @category Class
  * @package  {{invokerPackage}}
+{{#isAgentStudioClient}}
+ * @experimental This API is in beta and subject to breaking changes. See https://www.algolia.com/doc/rest-api/agent-studio
+{{/isAgentStudioClient}}
  */
 {{#operations}}class {{classname}}
 {
@@ -341,7 +344,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             {{/required}}
         {{/allParams}}
 
-        $resourcePath = '{{{path}}}';
+        $resourcePath = '{{{serverPathSuffix}}}{{{path}}}';
         $queryParameters = [];
         $headers = [];
         $httpBody = {{#bodyParam}}{{#required}}${{paramName}}{{/required}}{{^required}} isset(${{paramName}}) ? ${{paramName}} : []{{/required}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
@@ -1007,6 +1010,10 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         return true;
     }
     {{/isSearchClient}}
+
+    {{#isAgentStudioClient}}
+{{> agent_studio_helpers}}
+    {{/isAgentStudioClient}}
 
     private function sendRequestWithHttpInfo($method, $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions, $useReadTransporter = false)
     {

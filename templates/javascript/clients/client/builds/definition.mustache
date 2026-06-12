@@ -51,6 +51,12 @@ import type {
 {{/isAlgoliasearchClient}}
 {{/isSearchClient}}
 
+{{#agentStudioHelpers}}
+import type {
+  AgentStudioNodeHelpers,
+} from '../model';
+{{/agentStudioHelpers}}
+
 export function {{clientName}}(
   appId: string,
   apiKey: string,{{#hasRegionalHost}}region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region{{#fallbackToAliasHost}} | undefined {{/fallbackToAliasHost}},{{/hasRegionalHost}}

@@ -18,7 +18,7 @@ public class InsightsClient(
   override var apiKey: String,
   public val region: String? = null,
   override val options: ClientOptions = ClientOptions(),
-) : ApiClient {
+) : ApiClient, kotlin.AutoCloseable {
 
   init {
     require(appId.isNotBlank()) { "`appId` is missing." }
@@ -42,6 +42,13 @@ public class InsightsClient(
       val url = if (region == null) "insights.algolia.io" else "insights.$region.algolia.io"
       listOf(Host(url))
     }
+
+  /** Closes the client and releases its underlying resources (the HTTP transport). */
+  override fun close() {
+    // Requester does not require AutoCloseable (a custom requester may not own
+    // closeable resources); close only if the concrete implementation is closeable.
+    (requester as? kotlin.AutoCloseable)?.close()
+  }
 
   /**
    * This method lets you send requests to the Algolia REST API.
@@ -153,7 +160,10 @@ public class InsightsClient(
       "Parameter `userToken` is required when calling `deleteUserToken`."
     }
     val requestConfig =
-      RequestConfig(method = RequestMethod.DELETE, path = listOf("1", "usertokens", "$userToken"))
+      RequestConfig(
+        method = RequestMethod.DELETE,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "usertokens", "$userToken"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -174,7 +184,7 @@ public class InsightsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "events"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "events"),
         body = insightsEvents,
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)

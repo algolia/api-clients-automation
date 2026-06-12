@@ -17,7 +17,7 @@ public class MonitoringClient(
   override val appId: String,
   override var apiKey: String,
   override val options: ClientOptions = ClientOptions(),
-) : ApiClient {
+) : ApiClient, kotlin.AutoCloseable {
 
   init {
     require(appId.isNotBlank()) { "`appId` is missing." }
@@ -36,6 +36,13 @@ public class MonitoringClient(
     ) {
       listOf(Host("status.algolia.com"))
     }
+
+  /** Closes the client and releases its underlying resources (the HTTP transport). */
+  override fun close() {
+    // Requester does not require AutoCloseable (a custom requester may not own
+    // closeable resources); close only if the concrete implementation is closeable.
+    (requester as? kotlin.AutoCloseable)?.close()
+  }
 
   /**
    * This method lets you send requests to the Algolia REST API.
@@ -145,7 +152,10 @@ public class MonitoringClient(
       "Parameter `clusters` is required when calling `getClusterIncidents`."
     }
     val requestConfig =
-      RequestConfig(method = RequestMethod.GET, path = listOf("1", "incidents", "$clusters"))
+      RequestConfig(
+        method = RequestMethod.GET,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "incidents", "$clusters"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -163,7 +173,10 @@ public class MonitoringClient(
       "Parameter `clusters` is required when calling `getClusterStatus`."
     }
     val requestConfig =
-      RequestConfig(method = RequestMethod.GET, path = listOf("1", "status", "$clusters"))
+      RequestConfig(
+        method = RequestMethod.GET,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "status", "$clusters"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -173,7 +186,11 @@ public class MonitoringClient(
    * @param requestOptions additional request configuration.
    */
   public suspend fun getIncidents(requestOptions: RequestOptions? = null): IncidentsResponse {
-    val requestConfig = RequestConfig(method = RequestMethod.GET, path = listOf("1", "incidents"))
+    val requestConfig =
+      RequestConfig(
+        method = RequestMethod.GET,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "incidents"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -196,7 +213,10 @@ public class MonitoringClient(
       "Parameter `clusters` is required when calling `getIndexingTime`."
     }
     val requestConfig =
-      RequestConfig(method = RequestMethod.GET, path = listOf("1", "indexing", "$clusters"))
+      RequestConfig(
+        method = RequestMethod.GET,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexing", "$clusters"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -212,7 +232,10 @@ public class MonitoringClient(
   ): LatencyResponse {
     require(clusters.isNotBlank()) { "Parameter `clusters` is required when calling `getLatency`." }
     val requestConfig =
-      RequestConfig(method = RequestMethod.GET, path = listOf("1", "latency", "$clusters"))
+      RequestConfig(
+        method = RequestMethod.GET,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "latency", "$clusters"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -239,7 +262,9 @@ public class MonitoringClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("1", "infrastructure", "$metric", "period", "$period"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "infrastructure", "$metric", "period", "$period"),
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
@@ -260,7 +285,9 @@ public class MonitoringClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("1", "reachability", "$clusters", "probes"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "reachability", "$clusters", "probes"),
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
@@ -275,7 +302,10 @@ public class MonitoringClient(
    */
   public suspend fun getServers(requestOptions: RequestOptions? = null): InventoryResponse {
     val requestConfig =
-      RequestConfig(method = RequestMethod.GET, path = listOf("1", "inventory", "servers"))
+      RequestConfig(
+        method = RequestMethod.GET,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "inventory", "servers"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -285,7 +315,11 @@ public class MonitoringClient(
    * @param requestOptions additional request configuration.
    */
   public suspend fun getStatus(requestOptions: RequestOptions? = null): StatusResponse {
-    val requestConfig = RequestConfig(method = RequestMethod.GET, path = listOf("1", "status"))
+    val requestConfig =
+      RequestConfig(
+        method = RequestMethod.GET,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "status"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 }
