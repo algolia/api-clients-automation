@@ -8924,6 +8924,16 @@ components:
         - category
         - disjunctive(brand)
         - price
+      examples:
+        -
+          - category
+          - disjunctive(brand)
+          - price
+        -
+          - '*'
+        -
+          - '*'
+          - disjunctive(brand)
       x-categories:
         - Faceting
     filters:

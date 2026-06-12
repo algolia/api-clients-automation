@@ -11,6 +11,7 @@ import { accountCopyIndexServer } from './accountCopyIndex.ts';
 import { algoliaMockServer } from './algoliaMock.ts';
 import { apiKeyServer } from './apiKey.ts';
 import { benchmarkServer } from './benchmark.ts';
+import { chunkedPushWaitServer } from './chunkedPushWait.ts';
 import { chunkWrapperServer } from './chunkWrapper.ts';
 import { errorServer, errorServerRetriedOnce, errorServerRetriedTwice, neverCalledServer } from './error.ts';
 import { gzipServer } from './gzip.ts';
@@ -50,6 +51,7 @@ export async function startTestServer(suites: Record<CTSType, boolean>): Promise
       pushMockServer(),
       pushMockServerRetriedOnce(),
       replaceAllObjectsWithTransformationServer(),
+      chunkedPushWaitServer(),
       noContentServer(),
     );
   }
