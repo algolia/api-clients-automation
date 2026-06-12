@@ -17,14 +17,7 @@ void main() async {
 
   try {
     // Save records, transforming them through the Push connector
-    await client.saveObjectsWithTransformation(
-      indexName: '<YOUR_INDEX_NAME>',
-      objects: [
-        {'objectID': '1', 'name': 'Adam'},
-        {'objectID': '2', 'name': 'Benoit'},
-      ],
-      waitForTasks: true,
-    );
+    await {{#dynamicSnippet}}setUpTransformationOptions{{/dynamicSnippet}};
     print('Done!');
   } catch (e) {
     print('Error: ${e.toString()}');
