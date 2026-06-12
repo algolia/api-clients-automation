@@ -1459,12 +1459,28 @@ final class SearchClientSnippet {
     ///
     /// getTask
     func snippetForGetTask() async throws {
-        // >SEPARATOR getTask default
+        // >SEPARATOR getTask getTask
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getTask(indexName: "<YOUR_INDEX_NAME>", taskID: Int64(123))
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the getTask method.
+    ///
+    /// getTask with taskID 0
+    func snippetForGetTask1() async throws {
+        // >SEPARATOR getTask getTask with taskID 0
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.getTask(indexName: "<YOUR_INDEX_NAME>", taskID: Int64(0))
         // >LOG
         // print the response
         print(response)
@@ -4679,7 +4695,10 @@ final class SearchClientSnippet {
         // Call the API
         let response: SearchResponse<Hit> = try await client.searchSingleIndex(
             indexName: "<YOUR_INDEX_NAME>",
-            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(getRankingInfo: true))
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "test",
+                getRankingInfo: true
+            ))
         )
         // >LOG
         // print the response
