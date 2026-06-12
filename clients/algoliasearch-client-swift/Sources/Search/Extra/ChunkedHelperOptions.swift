@@ -11,7 +11,7 @@
 public struct ChunkedHelperOptions {
     /// Default maximum number of retries used by every chunked helper and the
     /// `waitFor*` family when the caller does not provide a value.
-    public static let defaultMaxRetries: Int = 100
+    public static let defaultMaxRetries = 100
 
     /// Maximum number of retries forwarded to every nested `waitForTask`
     /// call performed by the chunked helpers. Defaults to ``defaultMaxRetries``.
