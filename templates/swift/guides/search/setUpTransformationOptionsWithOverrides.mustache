@@ -14,7 +14,8 @@ func setUpTransformationOptionsWithOverrides() async throws {
         apiKey: "ALGOLIA_API_KEY",
         transformationOptions: TransformationOptions(
             region: .us,
-            clientOptions: ClientOptions(hosts: [RetryableHost(url: URL(string: "https://customhost.example.com")!)])
+            readTimeout: 30,
+            writeTimeout: 30
         )
     )
     let client = SearchClient(configuration: configuration)

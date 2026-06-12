@@ -5,7 +5,7 @@
 const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', {
   transformationOptions: {
     region: 'us',
-    timeouts: { connect: 5000, read: 30000 },
+    timeouts: { connect: 5000, read: 30000, write: 30000 },
   },
 });
 
