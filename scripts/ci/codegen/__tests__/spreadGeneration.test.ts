@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
-import { cleanUpCommitMessage } from '../spreadGeneration.ts';
+import {
+  cleanUpCommitMessage,
+  summarizeSpreadGenerationResults,
+  type SpreadGenerationResult,
+} from '../spreadGeneration.ts';
 import text from '../text.ts';
 
 describe('spread generation', () => {
@@ -34,6 +38,63 @@ describe('spread generation', () => {
       expect(cleanUpCommitMessage('feat(ci): make ci push generated code (#244) (generated)', '')).toEqual(
         'feat(ci): make ci push generated code (generated)\n\nhttps://github.com/algolia/api-clients-automation/pull/244',
       );
+    });
+  });
+
+  describe('summarizeSpreadGenerationResults', () => {
+    it('returns pushed and failed language outputs without failing on partial spread failures', () => {
+      const results: SpreadGenerationResult[] = [
+        { type: 'pushed', language: 'javascript' },
+        { type: 'failed-after-diff', language: 'python' },
+        { type: 'failed-before-diff', language: 'java' },
+        { type: 'skipped', language: 'go' },
+      ];
+
+      expect(summarizeSpreadGenerationResults(results)).toEqual({
+        pushed: ['javascript'],
+        failed: ['python', 'java'],
+        ciStepShouldFail: false,
+      });
+    });
+
+    it('fails when every language with detected changes failed', () => {
+      const results: SpreadGenerationResult[] = [
+        { type: 'failed-before-diff', language: 'javascript' },
+        { type: 'failed-after-diff', language: 'python' },
+        { type: 'skipped', language: 'java' },
+      ];
+
+      expect(summarizeSpreadGenerationResults(results)).toEqual({
+        pushed: [],
+        failed: ['javascript', 'python'],
+        ciStepShouldFail: true,
+      });
+    });
+
+    it('fails when failures happened before any diff was detected', () => {
+      const results: SpreadGenerationResult[] = [
+        { type: 'failed-before-diff', language: 'javascript' },
+        { type: 'skipped', language: 'python' },
+      ];
+
+      expect(summarizeSpreadGenerationResults(results)).toEqual({
+        pushed: [],
+        failed: ['javascript'],
+        ciStepShouldFail: true,
+      });
+    });
+
+    it('does not fail when every language was skipped', () => {
+      const results: SpreadGenerationResult[] = [
+        { type: 'skipped', language: 'javascript' },
+        { type: 'skipped', language: 'python' },
+      ];
+
+      expect(summarizeSpreadGenerationResults(results)).toEqual({
+        pushed: [],
+        failed: [],
+        ciStepShouldFail: false,
+      });
     });
   });
 });

@@ -100,18 +100,22 @@ async function waitForAllReleases(languagesReleased: Language[]): Promise<void> 
         if (!success && !ciRun.retried) {
           // retry once
           console.log(`❌ ${ciRun.language} CI failed, retrying once`);
-          await getOctokit().actions.reRunWorkflowFailedJobs({
-            owner: 'algolia',
-            repo: getClientsConfigField(ciRun.language, 'gitRepoId'),
-            run_id: ciRun.run.id,
-          });
+          try {
+            await getOctokit().actions.reRunWorkflowFailedJobs({
+              owner: 'algolia',
+              repo: getClientsConfigField(ciRun.language, 'gitRepoId'),
+              run_id: ciRun.run.id,
+            });
 
-          // sleep for a bit to let the CI start
-          await sleep(15000);
+            // sleep for a bit to let the CI start
+            await sleep(15000);
 
-          ciRun.retried = true;
+            ciRun.retried = true;
 
-          continue;
+            continue;
+          } catch (e) {
+            console.error(`Failed to retry ${ciRun.language} CI: ${e}`);
+          }
         }
         console.log(`${success ? '✅' : '❌'} ${ciRun.language} CI finished with conclusion: ${ciRun.run.conclusion}`);
         if (!success) {
@@ -140,5 +144,5 @@ async function waitForAllReleases(languagesReleased: Language[]): Promise<void> 
 
 if (import.meta.url.endsWith(process.argv[1])) {
   setVerbose(false);
-  waitForAllReleases(process.argv.slice(2) as Language[]);
+  await waitForAllReleases(process.argv.slice(2) as Language[]);
 }

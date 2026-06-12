@@ -738,10 +738,10 @@ jobs:
 
       - name: notify failures
         uses: slackapi/slack-github-action@v3.0.3
-        if: ${{ steps.waitForAllReleases.outputs.FAILED_RELEASES != '' }}
+        if: ${{ !cancelled() && (steps.spreadGeneration.outputs.FAILED_LANGUAGES != '' || steps.waitForAllReleases.outputs.FAILED_RELEASES != '') }}
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             channel: ${{ secrets.SLACK_CHANNEL_ID }}
-            text: ":alert: Some clients failed to release :alert: \n**${{ steps.waitForAllReleases.outputs.FAILED_RELEASES }}**\n\nYou can retry the CI jobs to release them again, it will not affect already released clients."
+            text: ":alert: Some clients failed during release :alert: \nSpread generation failures: **${{ steps.spreadGeneration.outputs.FAILED_LANGUAGES || 'none' }}**\nRelease CI failures: **${{ steps.waitForAllReleases.outputs.FAILED_RELEASES || 'none' }}**\n\nYou can retry the CI jobs to release them again, it will not affect already released clients."
