@@ -3,6 +3,8 @@ package org.example
 {{#isSearchClient}}
 import com.algolia.client.extensions.*
 {{/isSearchClient}}
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.buildJsonObject
 
 suspend fun main() {
     // Set `transformationOptions` with your transformation region to use the `WithTransformation` helper methods.
