@@ -31,7 +31,7 @@ jobs:
         id: app-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
-          app-id: ${{ secrets.ALGOLIA_BOT_APP_ID }}
+          client-id: ${{ vars.ALGOLIA_BOT_CLIENT_ID }}
           private-key: ${{ secrets.ALGOLIA_BOT_PRIVATE_KEY }}
 
       - uses: marocchino/sticky-pull-request-comment@v3
@@ -531,17 +531,17 @@ jobs:
     permissions:
       pull-requests: write
     env:
-      ALGOLIA_BOT_APP_ID: ${{ secrets.ALGOLIA_BOT_APP_ID }}
+      ALGOLIA_BOT_CLIENT_ID: ${{ vars.ALGOLIA_BOT_CLIENT_ID }}
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
       generatedCommit: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT || github.event.pull_request.head.ref }}
     steps:
       - name: Generate GitHub App Token
         id: app-token
-        if: ${{ env.ALGOLIA_BOT_APP_ID != '' }}
+        if: ${{ env.ALGOLIA_BOT_CLIENT_ID != '' }}
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
-          app-id: ${{ secrets.ALGOLIA_BOT_APP_ID }}
+          client-id: ${{ vars.ALGOLIA_BOT_CLIENT_ID }}
           private-key: ${{ secrets.ALGOLIA_BOT_PRIVATE_KEY }}
 
       - uses: actions/checkout@v6
@@ -695,7 +695,7 @@ jobs:
         id: app-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
-          app-id: ${{ secrets.ALGOLIA_BOT_APP_ID }}
+          client-id: ${{ vars.ALGOLIA_BOT_CLIENT_ID }}
           private-key: ${{ secrets.ALGOLIA_BOT_PRIVATE_KEY }}
           # Here, we push to most of the allowed repo, so no need to scope
           owner: algolia
