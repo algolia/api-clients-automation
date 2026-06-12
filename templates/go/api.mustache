@@ -278,7 +278,9 @@ func toRequestOptions[T RequestOption](opts []T) []RequestOption {
 
 // toIngestionChunkedBatchOptions converts the current chunked batch opts to ingestion ones.
 func toIngestionChunkedBatchOptions(opts []ChunkedBatchOption) []ingestion.ChunkedBatchOption {
-	conf := config{}
+	conf := config{
+		headerParams: map[string]string{},
+	}
 
 	for _, opt := range opts {
 		opt.apply(&conf)
