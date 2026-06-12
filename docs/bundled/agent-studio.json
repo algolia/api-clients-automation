@@ -2,7 +2,7 @@
   "openapi": "3.0.2",
   "info": {
     "title": "Agent Studio API",
-    "description": "Algolia's GenAI Toolkit API, building blocks for your dynamic LLM-enabled experiences.\n\nBuild generative AI experiences with your Algolia data. Combine large language models with Algolia’s Search API using Retrieval Augmented Generation (RAG) techniques.",
+    "description": "The Agent Studio API lets you build and operate generative AI agents that use Algolia data, tools, and your chosen LLM provider.\n\nUse it to create, configure, publish, and update agents, then generate chat completions grounded in live data from your Algolia indices. You can manage LLM providers, Agent Studio tools, conversations, feedback, secret keys, user data, caching, and application settings for your AI experiences.\n\n## Beta\n\nThe Agent Studio API is a **beta feature** according to [Algolia's Terms of Service (\"Beta Services\")](https://www.algolia.com/policies/terms/).\n\n## Client libraries\n\nUse Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps.\n\nFor more information, see [Algolia's ecosystem](https://www.algolia.com/doc/libraries).\n\n## Base URL\n\nBase URL for the Agent Studio API:\n\n- `https://{APPLICATION_ID}.algolia.net/agent-studio`\n\n**All requests must use HTTPS.**\n\n## Authentication\n\nAdd these headers to authenticate requests:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Request format\n\nRequest bodies must be JSON objects.\n\n## Response status and errors\n\nThe Agent Studio API returns JSON responses. Since JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return `2xx` statuses. Client errors return `4xx` statuses. Server errors return `5xx` statuses.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Agent Studio API is version 1, indicated by the `/1/` in each endpoint's URL.\n",
     "version": "0.1.0"
   },
   "servers": [
@@ -6781,6 +6781,7 @@
       }
     }
   },
+  "x-beta": true,
   "x-timeouts": {
     "browser": {
       "connect": 25000,
