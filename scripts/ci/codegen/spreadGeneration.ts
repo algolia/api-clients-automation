@@ -33,6 +33,8 @@ export function cleanUpCommitMessage(commitMessage: string, version: string): st
   return [`${prCommit[1]} ${text.commitEndMessage}`, `${REPO_URL}/pull/${prCommit[2]}`].join('\n\n');
 }
 
+// Failed languages count as non-skipped even if the script failed before checking the diff.
+// The before/after-diff split is only for reporting where the spread failed.
 export type SpreadGenerationResult =
   | { type: 'skipped'; language: Language }
   | { type: 'pushed'; language: Language }
@@ -42,26 +44,27 @@ export type SpreadGenerationResult =
 export type SpreadGenerationSummary = {
   pushed: Language[];
   failed: Language[];
-  shouldFail: boolean;
+  ciStepShouldFail: boolean;
 };
 
 export function summarizeSpreadGenerationResults(results: readonly SpreadGenerationResult[]): SpreadGenerationSummary {
   const pushed: Language[] = [];
   const failed: Language[] = [];
-  const spreadable: Array<Extract<SpreadGenerationResult, { type: 'pushed' | 'failed-after-diff' }>> = [];
+  const nonSkipped: Array<Exclude<SpreadGenerationResult, { type: 'skipped' }>> = [];
 
   for (const result of results) {
     switch (result.type) {
       case 'pushed':
         pushed.push(result.language);
-        spreadable.push(result);
+        nonSkipped.push(result);
         break;
       case 'failed-before-diff':
         failed.push(result.language);
+        nonSkipped.push(result);
         break;
       case 'failed-after-diff':
         failed.push(result.language);
-        spreadable.push(result);
+        nonSkipped.push(result);
         break;
       case 'skipped':
         break;
@@ -71,7 +74,7 @@ export function summarizeSpreadGenerationResults(results: readonly SpreadGenerat
   return {
     pushed,
     failed,
-    shouldFail: spreadable.length > 0 && spreadable.every((result) => result.type === 'failed-after-diff'),
+    ciStepShouldFail: nonSkipped.length > 0 && nonSkipped.every((result) => result.type !== 'pushed'),
   };
 }
 
@@ -173,7 +176,7 @@ async function spreadGeneration(): Promise<void> {
   core.setOutput('PUSHED_LANGUAGES', summary.pushed.join(' '));
   core.setOutput('FAILED_LANGUAGES', summary.failed.join(' '));
 
-  if (summary.shouldFail) {
+  if (summary.ciStepShouldFail) {
     core.setFailed(`Spread failed for every non-skipped language: ${summary.failed.join(', ')}`);
   }
 }

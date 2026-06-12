@@ -53,7 +53,7 @@ describe('spread generation', () => {
       expect(summarizeSpreadGenerationResults(results)).toEqual({
         pushed: ['javascript'],
         failed: ['python', 'java'],
-        shouldFail: false,
+        ciStepShouldFail: false,
       });
     });
 
@@ -67,11 +67,11 @@ describe('spread generation', () => {
       expect(summarizeSpreadGenerationResults(results)).toEqual({
         pushed: [],
         failed: ['javascript', 'python'],
-        shouldFail: true,
+        ciStepShouldFail: true,
       });
     });
 
-    it('does not fail when failures happened before any diff was detected', () => {
+    it('fails when failures happened before any diff was detected', () => {
       const results: SpreadGenerationResult[] = [
         { type: 'failed-before-diff', language: 'javascript' },
         { type: 'skipped', language: 'python' },
@@ -80,7 +80,7 @@ describe('spread generation', () => {
       expect(summarizeSpreadGenerationResults(results)).toEqual({
         pushed: [],
         failed: ['javascript'],
-        shouldFail: false,
+        ciStepShouldFail: true,
       });
     });
 
@@ -93,7 +93,7 @@ describe('spread generation', () => {
       expect(summarizeSpreadGenerationResults(results)).toEqual({
         pushed: [],
         failed: [],
-        shouldFail: false,
+        ciStepShouldFail: false,
       });
     });
   });
