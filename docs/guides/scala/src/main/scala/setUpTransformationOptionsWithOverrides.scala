@@ -1,0 +1,43 @@
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContextExecutor}
+
+import algoliasearch.api.SearchClient
+import algoliasearch.config.*
+import algoliasearch.extension.SearchClientExtensions
+import org.json4s.*
+
+object SetUpTransformationOptionsWithOverrides {
+  def main(args: Array[String]): Unit = {
+    implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
+
+    // Override the Ingestion API defaults. Any option you don't set keeps its default.
+    // Replace "us" with "eu" if your Algolia application uses the Europe analytics region.
+    val ingestionOptions = ClientOptions
+      .builder()
+      .withConnectTimeout(Duration(5, "sec"))
+      .withReadTimeout(Duration(30, "sec"))
+      .build()
+    val client = SearchClient.withTransformation(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      transformationOptions = TransformationOptions(region = "us", clientOptions = Some(ingestionOptions))
+    )
+
+    // Save records, transforming them through the Push connector
+    try {
+      Await.result(
+        client.saveObjectsWithTransformation(
+          indexName = "<YOUR_INDEX_NAME>",
+          objects = Seq(
+            JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+            JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit"))))
+          ),
+          waitForTasks = true
+        ),
+        Duration(100, "sec")
+      )
+    } catch {
+      case e: Exception => println(e)
+    }
+  }
+}
