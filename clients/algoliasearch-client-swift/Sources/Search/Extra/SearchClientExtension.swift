@@ -442,9 +442,8 @@ public extension SearchClient {
         waitForTasks: Bool = false,
         batchSize: Int = 1000,
         requestOptions: RequestOptions? = nil,
-        chunkedOptions: ChunkedHelperOptions? = nil
+        chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
     ) async throws -> [BatchResponse] {
-        let maxRetries = chunkedOptions?.maxRetries ?? ChunkedHelperOptions.defaultMaxRetries
         let batches = stride(from: 0, to: objects.count, by: batchSize).map {
             Array(objects[$0 ..< min($0 + batchSize, objects.count)])
         }
@@ -469,7 +468,7 @@ public extension SearchClient {
                 try await self.waitForTask(
                     indexName: indexName,
                     taskID: batchResponse.taskID,
-                    maxRetries: maxRetries,
+                    maxRetries: chunkedOptions.maxRetries,
                     requestOptions: requestOptions
                 )
             }
@@ -493,7 +492,7 @@ public extension SearchClient {
         waitForTasks: Bool = false,
         batchSize: Int = 1000,
         requestOptions: RequestOptions? = nil,
-        chunkedOptions: ChunkedHelperOptions? = nil
+        chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
     ) async throws -> [BatchResponse] {
         try await self.chunkedBatch(
             indexName: indexName,
@@ -521,7 +520,7 @@ public extension SearchClient {
         waitForTasks: Bool = false,
         batchSize: Int = 1000,
         requestOptions: RequestOptions? = nil,
-        chunkedOptions: ChunkedHelperOptions? = nil
+        chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
     ) async throws -> [BatchResponse] {
         try await self.chunkedBatch(
             indexName: indexName,
@@ -552,7 +551,7 @@ public extension SearchClient {
         waitForTasks: Bool = false,
         batchSize: Int = 1000,
         requestOptions: RequestOptions? = nil,
-        chunkedOptions: ChunkedHelperOptions? = nil
+        chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
     ) async throws -> [BatchResponse] {
         try await self.chunkedBatch(
             indexName: indexName,
@@ -584,9 +583,8 @@ public extension SearchClient {
         batchSize: Int = 1000,
         scopes: [ScopeType] = [.settings, .rules, .synonyms],
         requestOptions: RequestOptions? = nil,
-        chunkedOptions: ChunkedHelperOptions? = nil
+        chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
     ) async throws -> ReplaceAllObjectsResponse {
-        let maxRetries = chunkedOptions?.maxRetries ?? ChunkedHelperOptions.defaultMaxRetries
         let tmpIndexName = "\(indexName)_tmp_\(Int.random(in: 1_000_000 ..< 10_000_000))"
 
         do {
@@ -611,7 +609,7 @@ public extension SearchClient {
             try await self.waitForTask(
                 indexName: tmpIndexName,
                 taskID: copyOperationResponse.taskID,
-                maxRetries: maxRetries
+                maxRetries: chunkedOptions.maxRetries
             )
 
             copyOperationResponse = try await operationIndex(
@@ -626,7 +624,7 @@ public extension SearchClient {
             try await self.waitForTask(
                 indexName: tmpIndexName,
                 taskID: copyOperationResponse.taskID,
-                maxRetries: maxRetries
+                maxRetries: chunkedOptions.maxRetries
             )
 
             let moveOperationResponse = try await self.operationIndex(
@@ -640,7 +638,7 @@ public extension SearchClient {
             try await self.waitForTask(
                 indexName: tmpIndexName,
                 taskID: moveOperationResponse.taskID,
-                maxRetries: maxRetries
+                maxRetries: chunkedOptions.maxRetries
             )
 
             return ReplaceAllObjectsResponse(

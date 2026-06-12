@@ -16,11 +16,10 @@ public struct ChunkedHelperOptions {
     public static let defaultMaxRetries: Int = 100
 
     /// Maximum number of retries forwarded to every nested `waitForTask`
-    /// call performed by the chunked helpers. When `nil`, the helpers fall
-    /// back to ``defaultMaxRetries``.
-    public let maxRetries: Int?
+    /// call performed by the chunked helpers. Defaults to ``defaultMaxRetries``.
+    public let maxRetries: Int
 
-    public init(maxRetries: Int? = nil) {
+    public init(maxRetries: Int = ChunkedHelperOptions.defaultMaxRetries) {
         self.maxRetries = maxRetries
     }
 }

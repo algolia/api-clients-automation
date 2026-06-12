@@ -68,9 +68,8 @@ public extension SearchClient {
         batchSize: Int = 1000,
         referenceIndexName: String? = nil,
         requestOptions: RequestOptions? = nil,
-        chunkedOptions: ChunkedHelperOptions? = nil
+        chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
     ) async throws -> [IngestionWatchResponse] {
-        let maxRetries = chunkedOptions?.maxRetries ?? ChunkedHelperOptions.defaultMaxRetries
         guard batchSize > 0 else {
             throw AlgoliaError.runtimeError("`batchSize` must be greater than 0")
         }
@@ -111,7 +110,7 @@ public extension SearchClient {
                     ingestionClient: ingestionClient,
                     runID: response.runID,
                     eventID: eventID,
-                    maxRetries: maxRetries,
+                    maxRetries: chunkedOptions.maxRetries,
                     requestOptions: requestOptions
                 )
             }
@@ -139,7 +138,7 @@ public extension SearchClient {
         waitForTasks: Bool = false,
         batchSize: Int = 1000,
         requestOptions: RequestOptions? = nil,
-        chunkedOptions: ChunkedHelperOptions? = nil
+        chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
     ) async throws -> [IngestionWatchResponse] {
         try await self.chunkedPush(
             indexName: indexName,
@@ -171,7 +170,7 @@ public extension SearchClient {
         waitForTasks: Bool = false,
         batchSize: Int = 1000,
         requestOptions: RequestOptions? = nil,
-        chunkedOptions: ChunkedHelperOptions? = nil
+        chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
     ) async throws -> [IngestionWatchResponse] {
         try await self.chunkedPush(
             indexName: indexName,
@@ -202,11 +201,10 @@ public extension SearchClient {
         batchSize: Int = 1000,
         scopes: [ScopeType] = [.settings, .rules, .synonyms],
         requestOptions: RequestOptions? = nil,
-        chunkedOptions: ChunkedHelperOptions? = nil
+        chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
     ) async throws -> ReplaceAllObjectsWithTransformationResponse {
         _ = try self.resolvedIngestionClient()
 
-        let maxRetries = chunkedOptions?.maxRetries ?? ChunkedHelperOptions.defaultMaxRetries
         let tmpIndexName = "\(indexName)_tmp_\(Int.random(in: 1_000_000 ..< 10_000_000))"
 
         do {
@@ -234,7 +232,7 @@ public extension SearchClient {
             try await waitForTask(
                 indexName: tmpIndexName,
                 taskID: copyOperationResponse.taskID,
-                maxRetries: maxRetries,
+                maxRetries: chunkedOptions.maxRetries,
                 requestOptions: requestOptions
             )
 
@@ -250,7 +248,7 @@ public extension SearchClient {
             try await waitForTask(
                 indexName: tmpIndexName,
                 taskID: copyOperationResponse.taskID,
-                maxRetries: maxRetries,
+                maxRetries: chunkedOptions.maxRetries,
                 requestOptions: requestOptions
             )
 
@@ -265,7 +263,7 @@ public extension SearchClient {
             try await waitForTask(
                 indexName: tmpIndexName,
                 taskID: moveOperationResponse.taskID,
-                maxRetries: maxRetries,
+                maxRetries: chunkedOptions.maxRetries,
                 requestOptions: requestOptions
             )
 
