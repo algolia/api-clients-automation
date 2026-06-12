@@ -2837,7 +2837,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientSaveObjectsWithTransformation()
   {
-    // >SEPARATOR saveObjectsWithTransformation default
+    // >SEPARATOR saveObjectsWithTransformation call saveObjectsWithTransformation without error
     // Initialize the client
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
@@ -2850,6 +2850,58 @@ public class SnippetSearchClient
         new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
       },
       true
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SaveObjectsWithTransformation method.
+  ///
+  /// saveObjectsWithTransformation polls every task when waitForTasks is true
+  /// </summary>
+  public async Task SnippetForSearchClientSaveObjectsWithTransformation1()
+  {
+    // >SEPARATOR saveObjectsWithTransformation saveObjectsWithTransformation polls every task when waitForTasks is true
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SaveObjectsWithTransformationAsync(
+      "<YOUR_INDEX_NAME>",
+      new List<Object>
+      {
+        new Dictionary<string, string> { { "objectID", "1" }, { "name", "r1" } },
+        new Dictionary<string, string> { { "objectID", "2" }, { "name", "r2" } },
+        new Dictionary<string, string> { { "objectID", "3" }, { "name", "r3" } },
+        new Dictionary<string, string> { { "objectID", "4" }, { "name", "r4" } },
+        new Dictionary<string, string> { { "objectID", "5" }, { "name", "r5" } },
+        new Dictionary<string, string> { { "objectID", "6" }, { "name", "r6" } },
+        new Dictionary<string, string> { { "objectID", "7" }, { "name", "r7" } },
+        new Dictionary<string, string> { { "objectID", "8" }, { "name", "r8" } },
+        new Dictionary<string, string> { { "objectID", "9" }, { "name", "r9" } },
+        new Dictionary<string, string> { { "objectID", "10" }, { "name", "r10" } },
+        new Dictionary<string, string> { { "objectID", "11" }, { "name", "r11" } },
+        new Dictionary<string, string> { { "objectID", "12" }, { "name", "r12" } },
+        new Dictionary<string, string> { { "objectID", "13" }, { "name", "r13" } },
+        new Dictionary<string, string> { { "objectID", "14" }, { "name", "r14" } },
+        new Dictionary<string, string> { { "objectID", "15" }, { "name", "r15" } },
+        new Dictionary<string, string> { { "objectID", "16" }, { "name", "r16" } },
+        new Dictionary<string, string> { { "objectID", "17" }, { "name", "r17" } },
+        new Dictionary<string, string> { { "objectID", "18" }, { "name", "r18" } },
+        new Dictionary<string, string> { { "objectID", "19" }, { "name", "r19" } },
+        new Dictionary<string, string> { { "objectID", "20" }, { "name", "r20" } },
+        new Dictionary<string, string> { { "objectID", "21" }, { "name", "r21" } },
+        new Dictionary<string, string> { { "objectID", "22" }, { "name", "r22" } },
+        new Dictionary<string, string> { { "objectID", "23" }, { "name", "r23" } },
+        new Dictionary<string, string> { { "objectID", "24" }, { "name", "r24" } },
+        new Dictionary<string, string> { { "objectID", "25" }, { "name", "r25" } },
+      },
+      true,
+      10,
+      new RequestOptionBuilder().AddExtraHeader("x-algolia-user-id", "test-user").Build()
     );
     // >LOG
     // print the response
