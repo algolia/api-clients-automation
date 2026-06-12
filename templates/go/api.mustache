@@ -94,12 +94,18 @@ func WithContext(ctx context.Context) requestOption {
 
 func WithHeaderParam(key string, value any) requestOption {
 	return requestOption(func(c *config) {
+		if c.headerParams == nil {
+			c.headerParams = make(map[string]string)
+		}
 		c.headerParams[key] = utils.ParameterToString(value)
 	})
 }
 
 func WithQueryParam(key string, value any) requestOption {
 	return requestOption(func(c *config) {
+		if c.queryParams == nil {
+			c.queryParams = make(url.Values)
+		}
 		c.queryParams.Set(utils.QueryParameterToString(key), utils.QueryParameterToString(value))
 	})
 }
@@ -278,10 +284,7 @@ func toRequestOptions[T RequestOption](opts []T) []RequestOption {
 
 // toIngestionChunkedBatchOptions converts the current chunked batch opts to ingestion ones.
 func toIngestionChunkedBatchOptions(opts []ChunkedBatchOption) []ingestion.ChunkedBatchOption {
-	conf := config{
-		queryParams:  url.Values{},
-		headerParams: map[string]string{},
-	}
+	conf := config{}
 
 	for _, opt := range opts {
 		opt.apply(&conf)
