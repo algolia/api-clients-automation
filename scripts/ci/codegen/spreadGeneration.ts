@@ -33,6 +33,13 @@ export function cleanUpCommitMessage(commitMessage: string, version: string): st
   return [`${prCommit[1]} ${text.commitEndMessage}`, `${REPO_URL}/pull/${prCommit[2]}`].join('\n\n');
 }
 
+export function shouldFailSpreadGeneration(
+  failedLanguages: readonly Language[],
+  languages: readonly Language[] = LANGUAGES,
+): boolean {
+  return languages.length > 0 && failedLanguages.length === languages.length;
+}
+
 async function spreadGeneration(): Promise<void> {
   const githubToken = ensureGitHubToken();
 
@@ -126,8 +133,8 @@ async function spreadGeneration(): Promise<void> {
   core.setOutput('PUSHED_LANGUAGES', pushed.join(' '));
   core.setOutput('FAILED_LANGUAGES', failed.join(' '));
 
-  if (failed.length > 0) {
-    core.setFailed(`Spread failed for: ${failed.join(', ')}`);
+  if (shouldFailSpreadGeneration(failed)) {
+    core.setFailed(`Spread failed for every language: ${failed.join(', ')}`);
   }
 }
 

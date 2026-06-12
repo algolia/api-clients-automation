@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { cleanUpCommitMessage } from '../spreadGeneration.ts';
+import { cleanUpCommitMessage, shouldFailSpreadGeneration } from '../spreadGeneration.ts';
 import text from '../text.ts';
 
 describe('spread generation', () => {
@@ -34,6 +34,24 @@ describe('spread generation', () => {
       expect(cleanUpCommitMessage('feat(ci): make ci push generated code (#244) (generated)', '')).toEqual(
         'feat(ci): make ci push generated code (generated)\n\nhttps://github.com/algolia/api-clients-automation/pull/244',
       );
+    });
+  });
+
+  describe('shouldFailSpreadGeneration', () => {
+    it('does not fail when no language failed', () => {
+      expect(shouldFailSpreadGeneration([], ['javascript', 'python'])).toBe(false);
+    });
+
+    it('does not fail when only some languages failed', () => {
+      expect(shouldFailSpreadGeneration(['javascript'], ['javascript', 'python'])).toBe(false);
+    });
+
+    it('fails when every language failed', () => {
+      expect(shouldFailSpreadGeneration(['javascript', 'python'], ['javascript', 'python'])).toBe(true);
+    });
+
+    it('does not fail for an empty language list', () => {
+      expect(shouldFailSpreadGeneration([], [])).toBe(false);
     });
   });
 });
