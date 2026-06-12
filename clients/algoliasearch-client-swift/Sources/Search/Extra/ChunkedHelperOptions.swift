@@ -5,8 +5,6 @@
 //  Created by Algolia on 25/05/2026.
 //
 
-import Foundation
-
 /// Options shared by the chunked helpers (`chunkedBatch`, `saveObjects`,
 /// `deleteObjects`, `partialUpdateObjects`, `replaceAllObjects`, and the
 /// `WithTransformation` helpers).

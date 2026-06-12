@@ -609,7 +609,8 @@ public extension SearchClient {
             try await self.waitForTask(
                 indexName: tmpIndexName,
                 taskID: copyOperationResponse.taskID,
-                maxRetries: chunkedOptions.maxRetries
+                maxRetries: chunkedOptions.maxRetries,
+                requestOptions: requestOptions
             )
 
             copyOperationResponse = try await operationIndex(
@@ -624,7 +625,8 @@ public extension SearchClient {
             try await self.waitForTask(
                 indexName: tmpIndexName,
                 taskID: copyOperationResponse.taskID,
-                maxRetries: chunkedOptions.maxRetries
+                maxRetries: chunkedOptions.maxRetries,
+                requestOptions: requestOptions
             )
 
             let moveOperationResponse = try await self.operationIndex(
@@ -638,7 +640,8 @@ public extension SearchClient {
             try await self.waitForTask(
                 indexName: tmpIndexName,
                 taskID: moveOperationResponse.taskID,
-                maxRetries: chunkedOptions.maxRetries
+                maxRetries: chunkedOptions.maxRetries,
+                requestOptions: requestOptions
             )
 
             return ReplaceAllObjectsResponse(
