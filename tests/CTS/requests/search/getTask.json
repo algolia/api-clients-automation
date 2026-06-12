@@ -8,5 +8,16 @@
       "path": "/1/indexes/theIndexName/task/123",
       "method": "GET"
     }
+  },
+  {
+    "testName": "getTask with taskID 0",
+    "parameters": {
+      "indexName": "theIndexName",
+      "taskID": 0
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/task/0",
+      "method": "GET"
+    }
   }
 ]
