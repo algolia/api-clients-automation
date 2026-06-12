@@ -114,6 +114,9 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     // Search config
     additionalProperties.put("isSearchClient", client.equals("search"));
     additionalProperties.put("packageVersion", effectiveVersion);
+
+    // Only clients shipping hand-authored helpers export `src/extension.dart`.
+    additionalProperties.put("hasExtensions", client.equals("search") || isAlgoliasearchClient);
   }
 
   @Override
