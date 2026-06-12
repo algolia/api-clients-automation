@@ -8,7 +8,7 @@ info:
 
     ## Beta
 
-    The Agent Studio API is in beta and may change before general availability.
+    The Agent Studio API is a **beta feature** according to [Algolia's Terms of Service ("Beta Services")](https://www.algolia.com/policies/terms/).
 
     ## Client libraries
 
