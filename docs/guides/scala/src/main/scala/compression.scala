@@ -3,10 +3,12 @@ import algoliasearch.config.*
 import algoliasearch.extension.SearchClientExtensions
 
 import algoliasearch.search.SearchParamsObject
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContextExecutor}
 
 object Compression {
   def main(args: Array[String]): Unit = {
-    implicit val ec: scala.concurrent.ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
+    implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
 
     // Initialize the client with gzip compression enabled
     // Compression reduces the size of request bodies sent to Algolia
@@ -21,7 +23,7 @@ object Compression {
 
     // Search with compressed request body
     try {
-      val result = scala.concurrent.Await.result(
+      val result = Await.result(
         client.searchSingleIndex(
           indexName = "<YOUR_INDEX_NAME>",
           searchParams = Some(
@@ -30,7 +32,7 @@ object Compression {
             )
           )
         ),
-        scala.concurrent.duration.Duration(100, "sec")
+        Duration(100, "sec")
       )
       println(result)
     } catch {
