@@ -2010,7 +2010,7 @@ def snippet_for_get_task():
 
     getTask
     """
-    # >SEPARATOR getTask default
+    # >SEPARATOR getTask getTask
     # Initialize the client
     # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
     client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -2019,6 +2019,29 @@ def snippet_for_get_task():
     response = client.get_task(
         index_name="<YOUR_INDEX_NAME>",
         task_id=123,
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_get_task1():
+    """
+    Snippet for the getTask method.
+
+    getTask with taskID 0
+    """
+    # >SEPARATOR getTask getTask with taskID 0
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.get_task(
+        index_name="<YOUR_INDEX_NAME>",
+        task_id=0,
     )
 
     # >LOG

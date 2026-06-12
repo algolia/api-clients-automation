@@ -1756,6 +1756,27 @@ void main() {
     ),
   );
 
+  // getTask
+  test(
+    'getTask with taskID 0',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getTask(
+        indexName: "theIndexName",
+        taskID: 0,
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/task/0');
+        expect(request.method, 'get');
+        expect(request.body, null);
+      },
+    ),
+  );
+
   // getTopUserIds
   test(
     'getTopUserIds',

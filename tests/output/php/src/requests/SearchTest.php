@@ -1472,6 +1472,24 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('getTask with taskID 0')]
+    public function testGetTask1(): void
+    {
+        $client = $this->getClient();
+        $client->getTask(
+            'theIndexName',
+            0,
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/task/0',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
     #[TestDox('getTopUserIds')]
     public function testGetTopUserIds(): void
     {

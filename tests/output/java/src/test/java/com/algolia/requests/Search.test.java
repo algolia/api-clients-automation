@@ -1625,6 +1625,18 @@ class SearchClientRequestsTests {
   }
 
   @Test
+  @DisplayName("getTask with taskID 0")
+  void getTaskTest1() {
+    assertDoesNotThrow(() -> {
+      client.getTask("theIndexName", 0L);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/task/0", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
   @DisplayName("getTopUserIds")
   void getTopUserIdsTest() {
     assertDoesNotThrow(() -> {

@@ -1595,12 +1595,28 @@ class SnippetSearchClient {
   //
   // getTask
   void snippetForGetTask() throws Exception {
-    // >SEPARATOR getTask default
+    // >SEPARATOR getTask getTask
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     GetTaskResponse response = client.getTask("<YOUR_INDEX_NAME>", 123L);
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the getTask method.
+  //
+  // getTask with taskID 0
+  void snippetForGetTask1() throws Exception {
+    // >SEPARATOR getTask getTask with taskID 0
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    GetTaskResponse response = client.getTask("<YOUR_INDEX_NAME>", 0L);
     // >LOG
     // print the response
     System.out.println(response);

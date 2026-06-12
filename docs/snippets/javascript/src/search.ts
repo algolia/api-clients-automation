@@ -1471,12 +1471,29 @@ export async function snippetForGetSynonym(): Promise<void> {
 //
 // getTask
 export async function snippetForGetTask(): Promise<void> {
-  // >SEPARATOR getTask default
+  // >SEPARATOR getTask getTask
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getTask({ indexName: 'theIndexName', taskID: 123 });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getTask method.
+//
+// getTask with taskID 0
+export async function snippetForGetTask1(): Promise<void> {
+  // >SEPARATOR getTask getTask with taskID 0
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.getTask({ indexName: 'theIndexName', taskID: 0 });
 
   // >LOG
   // print the response

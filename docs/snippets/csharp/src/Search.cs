@@ -1796,12 +1796,31 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientGetTask()
   {
-    // >SEPARATOR getTask default
+    // >SEPARATOR getTask getTask
     // Initialize the client
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // Call the API
     var response = await client.GetTaskAsync("<YOUR_INDEX_NAME>", 123L);
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GetTask method.
+  ///
+  /// getTask with taskID 0
+  /// </summary>
+  public async Task SnippetForSearchClientGetTask1()
+  {
+    // >SEPARATOR getTask getTask with taskID 0
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.GetTaskAsync("<YOUR_INDEX_NAME>", 0L);
     // >LOG
     // print the response
     Console.WriteLine(response);

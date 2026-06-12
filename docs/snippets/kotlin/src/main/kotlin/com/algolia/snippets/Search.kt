@@ -1607,12 +1607,28 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForGetTask() {
-    // >SEPARATOR getTask default
+    // >SEPARATOR getTask getTask
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     var response = client.getTask(indexName = "<YOUR_INDEX_NAME>", taskID = 123L)
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForGetTask1() {
+    // >SEPARATOR getTask getTask with taskID 0
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.getTask(indexName = "<YOUR_INDEX_NAME>", taskID = 0L)
 
     // >LOG
     // print the response

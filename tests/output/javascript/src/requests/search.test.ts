@@ -917,6 +917,15 @@ describe('getTask', () => {
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('getTask with taskID 0', async () => {
+    const req = (await client.getTask({ indexName: 'theIndexName', taskID: 0 })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/task/0');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('getTopUserIds', () => {

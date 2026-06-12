@@ -1375,6 +1375,18 @@ class SearchTest {
     )
   }
 
+  @Test
+  fun `getTask with taskID 01`() = runTest {
+    client.runTest(
+      call = { getTask(indexName = "theIndexName", taskID = 0L) },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/task/0".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // getTopUserIds
 
   @Test

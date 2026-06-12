@@ -1249,6 +1249,16 @@ func TestSearch_GetTask(t *testing.T) {
 
 		require.Nil(t, echo.Body)
 	})
+	t.Run("getTask with taskID 0", func(t *testing.T) {
+		_, err := client.GetTask(client.NewApiGetTaskRequest(
+			"theIndexName", 0))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/task/0", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+	})
 }
 
 func TestSearch_GetTopUserIds(t *testing.T) {

@@ -2271,7 +2271,7 @@ func SnippetForGetTaskOfSearch() {
 	   getTask
 	*/
 
-	// >SEPARATOR getTask default
+	// >SEPARATOR getTask getTask
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -2282,6 +2282,35 @@ func SnippetForGetTaskOfSearch() {
 	// Call the API
 	response, err := client.GetTask(client.NewApiGetTaskRequest(
 		"<YOUR_INDEX_NAME>", 123))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForGetTaskOfSearch1() {
+	/*
+	   Snippet for the getTask method.
+
+	   getTask with taskID 0
+	*/
+
+	// >SEPARATOR getTask getTask with taskID 0
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetTask(client.NewApiGetTaskRequest(
+		"<YOUR_INDEX_NAME>", 0))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

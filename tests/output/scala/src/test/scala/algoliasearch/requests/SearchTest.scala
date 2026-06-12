@@ -1488,6 +1488,21 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
+  test("getTask with taskID 01") {
+    val (client, echo) = testClient()
+    val future = client.getTask(
+      indexName = "theIndexName",
+      taskID = 0L
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/task/0")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
   test("getTopUserIds") {
     val (client, echo) = testClient()
     val future = client.getTopUserIds(

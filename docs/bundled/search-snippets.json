@@ -148,7 +148,8 @@
       "default": "var response = await client.GetSynonymAsync(\"<YOUR_INDEX_NAME>\", \"id1\");"
     },
     "getTask": {
-      "default": "var response = await client.GetTaskAsync(\"<YOUR_INDEX_NAME>\", 123L);"
+      "getTask": "var response = await client.GetTaskAsync(\"<YOUR_INDEX_NAME>\", 123L);",
+      "getTask with taskID 0": "var response = await client.GetTaskAsync(\"<YOUR_INDEX_NAME>\", 0L);"
     },
     "getTopUserIds": {
       "default": "var response = await client.GetTopUserIdsAsync();"
@@ -742,7 +743,8 @@
       "default": "final response = await client.getSynonym(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objectID: \"id1\",\n);"
     },
     "getTask": {
-      "default": "final response = await client.getTask(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  taskID: 123,\n);"
+      "getTask": "final response = await client.getTask(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  taskID: 123,\n);",
+      "getTask with taskID 0": "final response = await client.getTask(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  taskID: 0,\n);"
     },
     "getTopUserIds": {
       "default": "final response = await client.getTopUserIds();"
@@ -1317,7 +1319,8 @@
       "default": "response, err := client.GetSynonym(client.NewApiGetSynonymRequest(\n  \"<YOUR_INDEX_NAME>\", \"id1\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getTask": {
-      "default": "response, err := client.GetTask(client.NewApiGetTaskRequest(\n  \"<YOUR_INDEX_NAME>\", 123))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "getTask": "response, err := client.GetTask(client.NewApiGetTaskRequest(\n  \"<YOUR_INDEX_NAME>\", 123))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "getTask with taskID 0": "response, err := client.GetTask(client.NewApiGetTaskRequest(\n  \"<YOUR_INDEX_NAME>\", 0))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getTopUserIds": {
       "default": "response, err := client.GetTopUserIds()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -1923,7 +1926,8 @@
       "default": "SynonymHit response = client.getSynonym(\"<YOUR_INDEX_NAME>\", \"id1\");"
     },
     "getTask": {
-      "default": "GetTaskResponse response = client.getTask(\"<YOUR_INDEX_NAME>\", 123L);"
+      "getTask": "GetTaskResponse response = client.getTask(\"<YOUR_INDEX_NAME>\", 123L);",
+      "getTask with taskID 0": "GetTaskResponse response = client.getTask(\"<YOUR_INDEX_NAME>\", 0L);"
     },
     "getTopUserIds": {
       "default": "GetTopUserIdsResponse response = client.getTopUserIds();"
@@ -2532,7 +2536,8 @@
       "default": "const response = await client.getSynonym({ indexName: 'indexName', objectID: 'id1' });"
     },
     "getTask": {
-      "default": "const response = await client.getTask({ indexName: 'theIndexName', taskID: 123 });"
+      "getTask": "const response = await client.getTask({ indexName: 'theIndexName', taskID: 123 });",
+      "getTask with taskID 0": "const response = await client.getTask({ indexName: 'theIndexName', taskID: 0 });"
     },
     "getTopUserIds": {
       "default": "const response = await client.getTopUserIds();"
@@ -3135,7 +3140,8 @@
       "default": "var response = client.getSynonym(indexName = \"<YOUR_INDEX_NAME>\", objectID = \"id1\")"
     },
     "getTask": {
-      "default": "var response = client.getTask(indexName = \"<YOUR_INDEX_NAME>\", taskID = 123L)"
+      "getTask": "var response = client.getTask(indexName = \"<YOUR_INDEX_NAME>\", taskID = 123L)",
+      "getTask with taskID 0": "var response = client.getTask(indexName = \"<YOUR_INDEX_NAME>\", taskID = 0L)"
     },
     "getTopUserIds": {
       "default": "var response = client.getTopUserIds()"
@@ -3741,7 +3747,8 @@
       "default": "$response = $client->getSynonym(\n    '<YOUR_INDEX_NAME>',\n    'id1',\n);"
     },
     "getTask": {
-      "default": "$response = $client->getTask(\n    '<YOUR_INDEX_NAME>',\n    123,\n);"
+      "getTask": "$response = $client->getTask(\n    '<YOUR_INDEX_NAME>',\n    123,\n);",
+      "getTask with taskID 0": "$response = $client->getTask(\n    '<YOUR_INDEX_NAME>',\n    0,\n);"
     },
     "getTopUserIds": {
       "default": "$response = $client->getTopUserIds();"
@@ -4347,7 +4354,8 @@
       "default": "response = client.get_synonym(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"id1\",\n)"
     },
     "getTask": {
-      "default": "response = client.get_task(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    task_id=123,\n)"
+      "getTask": "response = client.get_task(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    task_id=123,\n)",
+      "getTask with taskID 0": "response = client.get_task(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    task_id=0,\n)"
     },
     "getTopUserIds": {
       "default": "response = client.get_top_user_ids()"
@@ -4953,7 +4961,8 @@
       "default": "response = client.get_synonym(\"<YOUR_INDEX_NAME>\", \"id1\")"
     },
     "getTask": {
-      "default": "response = client.get_task(\"<YOUR_INDEX_NAME>\", 123)"
+      "getTask": "response = client.get_task(\"<YOUR_INDEX_NAME>\", 123)",
+      "getTask with taskID 0": "response = client.get_task(\"<YOUR_INDEX_NAME>\", 0)"
     },
     "getTopUserIds": {
       "default": "response = client.get_top_user_ids"
@@ -5559,7 +5568,8 @@
       "default": "val response = Await.result(\n  client.getSynonym(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objectID = \"id1\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getTask": {
-      "default": "val response = Await.result(\n  client.getTask(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    taskID = 123L\n  ),\n  Duration(100, \"sec\")\n)"
+      "getTask": "val response = Await.result(\n  client.getTask(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    taskID = 123L\n  ),\n  Duration(100, \"sec\")\n)",
+      "getTask with taskID 0": "val response = Await.result(\n  client.getTask(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    taskID = 0L\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getTopUserIds": {
       "default": "val response = Await.result(\n  client.getTopUserIds(\n  ),\n  Duration(100, \"sec\")\n)"
@@ -6165,7 +6175,8 @@
       "default": "let response = try await client.getSynonym(indexName: \"<YOUR_INDEX_NAME>\", objectID: \"id1\")"
     },
     "getTask": {
-      "default": "let response = try await client.getTask(indexName: \"<YOUR_INDEX_NAME>\", taskID: Int64(123))"
+      "getTask": "let response = try await client.getTask(indexName: \"<YOUR_INDEX_NAME>\", taskID: Int64(123))",
+      "getTask with taskID 0": "let response = try await client.getTask(indexName: \"<YOUR_INDEX_NAME>\", taskID: Int64(0))"
     },
     "getTopUserIds": {
       "default": "let response = try await client.getTopUserIds()"

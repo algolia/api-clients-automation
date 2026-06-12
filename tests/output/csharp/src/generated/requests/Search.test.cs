@@ -1457,6 +1457,17 @@ public class SearchClientRequestTests
     Assert.Null(req.Body);
   }
 
+  [Fact(DisplayName = "getTask with taskID 0")]
+  public async Task GetTaskTest1()
+  {
+    await client.GetTaskAsync("theIndexName", 0L);
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/task/0", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
   [Fact(DisplayName = "getTopUserIds")]
   public async Task GetTopUserIdsTest()
   {
