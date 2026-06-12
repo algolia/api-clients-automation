@@ -24,10 +24,6 @@ type {{classname}} struct {
 {{/isAdditionalPropertiesTrue}}
 }
 
-{{#isAdditionalPropertiesTrue}}
-type _{{{classname}}} {{{classname}}}
-
-{{/isAdditionalPropertiesTrue}}
 {{#hasOptional}}
 type {{{classname}}}Option func(f *{{{classname}}})
 
@@ -313,126 +309,78 @@ func (o {{classname}}) MarshalJSON() ([]byte, error) {
 
 {{#isAdditionalPropertiesTrue}}
 func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) error {
-{{#parent}}
-{{^isMap}}
-	type {{classname}}WithoutEmbeddedStruct struct {
-	{{#vars}}
-	{{^-first}}
-	{{/-first}}
-	{{#description}}
-		// {{{.}}}
-	{{/description}}
-	{{#deprecated}}
-		// Deprecated
-	{{/deprecated}}
-		{{name}} {{^required}}{{^isNullable}}{{^isArray}}{{^isFreeFormObject}}*{{/isFreeFormObject}}{{/isArray}}{{/isNullable}}{{/required}}{{{dataType}}} `json:"{{baseName}}{{^required}},omitempty{{/required}}"`
-	{{/vars}}
-	}
-
-	var{{{classname}}}WithoutEmbeddedStruct := {{{classname}}}WithoutEmbeddedStruct{}
-
-	err = json.Unmarshal(bytes, &var{{{classname}}}WithoutEmbeddedStruct)
-	if err == nil {
-		var{{{classname}}} := _{{{classname}}}{}
-		{{#vars}}
-		var{{{classname}}}.{{{name}}} = var{{{classname}}}WithoutEmbeddedStruct.{{{name}}}
-		{{/vars}}
-		*o = {{{classname}}}(var{{{classname}}})
-	} else {
-		return fmt.Errorf("failed to unmarshal {{{classname}}}WithoutEmbeddedStruct: %w", err)
-	}
-
-	var{{{classname}}} := _{{{classname}}}{}
-
-	err = json.Unmarshal(bytes, &var{{{classname}}})
-	if err == nil {
-		o.{{{parent}}} = var{{{classname}}}.{{{parent}}}
-	} else {
+	raw := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(bytes, &raw); err != nil {
 		return fmt.Errorf("failed to unmarshal {{{classname}}}: %w", err)
 	}
 
-	additionalProperties := make(map[string]any)
+{{#parent}}
+{{^isMap}}
+	{{#vars}}
+	if v, ok := raw["{{{baseName}}}"]; ok {
+		if err := json.Unmarshal(v, &o.{{{name}}}); err != nil {
+			return fmt.Errorf("failed to unmarshal field {{{baseName}}} of {{{classname}}}: %w", err)
+		}
+		delete(raw, "{{{baseName}}}")
+	}
+	{{/vars}}
 
-	err = json.Unmarshal(bytes, &additionalProperties)
-  if err != nil {
-    return fmt.Errorf("failed to unmarshal {{{classname}}}: %w", err)
-  }
+	parentBytes, err := json.Marshal(raw)
+	if err != nil {
+		return fmt.Errorf("failed to remarshal parent fields of {{{classname}}}: %w", err)
+	}
+	if err := json.Unmarshal(parentBytes, &o.{{{parent}}}); err != nil {
+		return fmt.Errorf("failed to unmarshal parent {{{parent}}} of {{{classname}}}: %w", err)
+	}
 
-  {{#vars}}
-  delete(additionalProperties, "{{{baseName}}}")
-  {{/vars}}
-
-  // remove fields from embedded structs
-  reflect{{{parent}}} := reflect.ValueOf(o.{{{parent}}})
-  for i := 0; i < reflect{{{parent}}}.Type().NumField(); i++ {
-    t := reflect{{{parent}}}.Type().Field(i)
-
-    if jsonTag := t.Tag.Get("json"); jsonTag != "" {
-      fieldName := ""
-      if commaIdx := strings.Index(jsonTag, ","); commaIdx > 0 {
-        fieldName = jsonTag[:commaIdx]
-      } else {
-        fieldName = jsonTag
-      }
-      if fieldName != "AdditionalProperties" {
-        delete(additionalProperties, fieldName)
-      }
-    }
-  }
-
-  o.AdditionalProperties = additionalProperties
-
-  return nil
+	reflect{{{parent}}} := reflect.ValueOf(o.{{{parent}}})
+	for i := 0; i < reflect{{{parent}}}.Type().NumField(); i++ {
+		t := reflect{{{parent}}}.Type().Field(i)
+		if jsonTag := t.Tag.Get("json"); jsonTag != "" {
+			fieldName := ""
+			if commaIdx := strings.Index(jsonTag, ","); commaIdx > 0 {
+				fieldName = jsonTag[:commaIdx]
+			} else {
+				fieldName = jsonTag
+			}
+			if fieldName != "AdditionalProperties" {
+				delete(raw, fieldName)
+			}
+		}
+	}
 {{/isMap}}
 {{#isMap}}
-	var{{{classname}}} := _{{{classname}}}{}
-
-  err := json.Unmarshal(bytes, &var{{{classname}}})
-  if err != nil {
-    return fmt.Errorf("failed to unmarshal {{{classname}}}: %w", err)
-  }
-
-	*o = {{{classname}}}(var{{{classname}}})
-
-	additionalProperties := make(map[string]any)
-
-	err = json.Unmarshal(bytes, &additionalProperties)
-  if err != nil {
-    return fmt.Errorf("failed to unmarshal additionalProperties in {{{classname}}}: %w", err)
-  }
-
-  {{#vars}}
-  delete(additionalProperties, "{{{baseName}}}")
-  {{/vars}}
-  o.AdditionalProperties = additionalProperties
-
-	return nil
+	{{#vars}}
+	if v, ok := raw["{{{baseName}}}"]; ok {
+		if err := json.Unmarshal(v, &o.{{{name}}}); err != nil {
+			return fmt.Errorf("failed to unmarshal field {{{baseName}}} of {{{classname}}}: %w", err)
+		}
+		delete(raw, "{{{baseName}}}")
+	}
+	{{/vars}}
 {{/isMap}}
 {{/parent}}
 {{^parent}}
-	var{{{classname}}} := _{{{classname}}}{}
+	{{#vars}}
+	if v, ok := raw["{{{baseName}}}"]; ok {
+		if err := json.Unmarshal(v, &o.{{{name}}}); err != nil {
+			return fmt.Errorf("failed to unmarshal field {{{baseName}}} of {{{classname}}}: %w", err)
+		}
+		delete(raw, "{{{baseName}}}")
+	}
+	{{/vars}}
+{{/parent}}
 
-  err := json.Unmarshal(bytes, &var{{{classname}}})
-  if err != nil {
-    return fmt.Errorf("failed to unmarshal {{{classname}}}: %w", err)
-  }
+	o.AdditionalProperties = make(map[string]any)
+	for key, val := range raw {
+		var parsed any
+		if err := json.Unmarshal(val, &parsed); err != nil {
+			return fmt.Errorf("failed to unmarshal additionalProperties of {{{classname}}}: %w", err)
+		}
+		o.AdditionalProperties[key] = parsed
+	}
 
-	*o = {{{classname}}}(var{{{classname}}})
-
-	additionalProperties := make(map[string]any)
-
-	err = json.Unmarshal(bytes, &additionalProperties)
-  if err != nil {
-    return fmt.Errorf("failed to unmarshal additionalProperties in {{{classname}}}: %w", err)
-  }
-
-  {{#vars}}
-  delete(additionalProperties, "{{{baseName}}}")
-  {{/vars}}
-  o.AdditionalProperties = additionalProperties
-	
-  return nil
-  {{/parent}}
+	return nil
 }
 
 {{/isAdditionalPropertiesTrue}}
