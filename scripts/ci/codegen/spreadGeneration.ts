@@ -33,11 +33,46 @@ export function cleanUpCommitMessage(commitMessage: string, version: string): st
   return [`${prCommit[1]} ${text.commitEndMessage}`, `${REPO_URL}/pull/${prCommit[2]}`].join('\n\n');
 }
 
-export function shouldFailSpreadGeneration(
-  failedLanguages: readonly Language[],
-  nonSkippedLanguages: readonly Language[],
-): boolean {
-  return nonSkippedLanguages.length > 0 && nonSkippedLanguages.every((lang) => failedLanguages.includes(lang));
+export type SpreadGenerationResult =
+  | { type: 'skipped'; language: Language }
+  | { type: 'pushed'; language: Language }
+  | { type: 'failed-before-diff'; language: Language }
+  | { type: 'failed-after-diff'; language: Language };
+
+export type SpreadGenerationSummary = {
+  pushed: Language[];
+  failed: Language[];
+  shouldFail: boolean;
+};
+
+export function summarizeSpreadGenerationResults(results: readonly SpreadGenerationResult[]): SpreadGenerationSummary {
+  const pushed: Language[] = [];
+  const failed: Language[] = [];
+  const spreadable: Array<Extract<SpreadGenerationResult, { type: 'pushed' | 'failed-after-diff' }>> = [];
+
+  for (const result of results) {
+    switch (result.type) {
+      case 'pushed':
+        pushed.push(result.language);
+        spreadable.push(result);
+        break;
+      case 'failed-before-diff':
+        failed.push(result.language);
+        break;
+      case 'failed-after-diff':
+        failed.push(result.language);
+        spreadable.push(result);
+        break;
+      case 'skipped':
+        break;
+    }
+  }
+
+  return {
+    pushed,
+    failed,
+    shouldFail: spreadable.length > 0 && spreadable.every((result) => result.type === 'failed-after-diff'),
+  };
 }
 
 async function spreadGeneration(): Promise<void> {
@@ -66,11 +101,11 @@ async function spreadGeneration(): Promise<void> {
     }
   }
 
-  const pushed: Language[] = [];
-  const failed: Language[] = [];
-  const languagesToSpread: Language[] = [];
+  const results: SpreadGenerationResult[] = [];
 
   for (const lang of LANGUAGES) {
+    let failureType: 'failed-before-diff' | 'failed-after-diff' = 'failed-before-diff';
+
     try {
       const { tempGitDir } = await cloneRepository({
         lang,
@@ -90,9 +125,10 @@ async function spreadGeneration(): Promise<void> {
         })) === 0
       ) {
         console.log(`❎ Skipping ${lang} repository, because there is no change.`);
+        results.push({ type: 'skipped', language: lang });
         continue;
       } else {
-        languagesToSpread.push(lang);
+        failureType = 'failed-after-diff';
         console.log(`✅ Spreading code to the ${lang} repository.`);
       }
 
@@ -123,20 +159,22 @@ async function spreadGeneration(): Promise<void> {
         await run('git push --tags', { cwd: tempGitDir });
       }
 
-      pushed.push(lang);
+      results.push({ type: 'pushed', language: lang });
 
       console.log(`✅ Code generation successfully pushed to ${lang} repository.`);
     } catch (e) {
       console.error(`Release failed for language ${lang}: ${e}`);
-      failed.push(lang);
+      results.push({ type: failureType, language: lang });
     }
   }
 
-  core.setOutput('PUSHED_LANGUAGES', pushed.join(' '));
-  core.setOutput('FAILED_LANGUAGES', failed.join(' '));
+  const summary = summarizeSpreadGenerationResults(results);
 
-  if (shouldFailSpreadGeneration(failed, languagesToSpread)) {
-    core.setFailed(`Spread failed for every non-skipped language: ${failed.join(', ')}`);
+  core.setOutput('PUSHED_LANGUAGES', summary.pushed.join(' '));
+  core.setOutput('FAILED_LANGUAGES', summary.failed.join(' '));
+
+  if (summary.shouldFail) {
+    core.setFailed(`Spread failed for every non-skipped language: ${summary.failed.join(', ')}`);
   }
 }
 

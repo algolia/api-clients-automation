@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
-import { cleanUpCommitMessage, shouldFailSpreadGeneration } from '../spreadGeneration.ts';
+import {
+  cleanUpCommitMessage,
+  summarizeSpreadGenerationResults,
+  type SpreadGenerationResult,
+} from '../spreadGeneration.ts';
 import text from '../text.ts';
 
 describe('spread generation', () => {
@@ -37,25 +41,60 @@ describe('spread generation', () => {
     });
   });
 
-  describe('shouldFailSpreadGeneration', () => {
-    it('does not fail when no language failed', () => {
-      expect(shouldFailSpreadGeneration([], ['javascript', 'python'])).toBe(false);
+  describe('summarizeSpreadGenerationResults', () => {
+    it('returns pushed and failed language outputs without failing on partial spread failures', () => {
+      const results: SpreadGenerationResult[] = [
+        { type: 'pushed', language: 'javascript' },
+        { type: 'failed-after-diff', language: 'python' },
+        { type: 'failed-before-diff', language: 'java' },
+        { type: 'skipped', language: 'go' },
+      ];
+
+      expect(summarizeSpreadGenerationResults(results)).toEqual({
+        pushed: ['javascript'],
+        failed: ['python', 'java'],
+        shouldFail: false,
+      });
     });
 
-    it('does not fail when only some languages failed', () => {
-      expect(shouldFailSpreadGeneration(['javascript'], ['javascript', 'python'])).toBe(false);
+    it('fails when every language with detected changes failed', () => {
+      const results: SpreadGenerationResult[] = [
+        { type: 'failed-before-diff', language: 'javascript' },
+        { type: 'failed-after-diff', language: 'python' },
+        { type: 'skipped', language: 'java' },
+      ];
+
+      expect(summarizeSpreadGenerationResults(results)).toEqual({
+        pushed: [],
+        failed: ['javascript', 'python'],
+        shouldFail: true,
+      });
     });
 
-    it('fails when every non-skipped language failed', () => {
-      expect(shouldFailSpreadGeneration(['javascript'], ['javascript'])).toBe(true);
+    it('does not fail when failures happened before any diff was detected', () => {
+      const results: SpreadGenerationResult[] = [
+        { type: 'failed-before-diff', language: 'javascript' },
+        { type: 'skipped', language: 'python' },
+      ];
+
+      expect(summarizeSpreadGenerationResults(results)).toEqual({
+        pushed: [],
+        failed: ['javascript'],
+        shouldFail: false,
+      });
     });
 
-    it('does not count failures outside the non-skipped language list', () => {
-      expect(shouldFailSpreadGeneration(['python'], ['javascript'])).toBe(false);
-    });
+    it('does not fail when every language was skipped', () => {
+      const results: SpreadGenerationResult[] = [
+        { type: 'skipped', language: 'javascript' },
+        { type: 'skipped', language: 'python' },
+      ];
 
-    it('does not fail for an empty language list', () => {
-      expect(shouldFailSpreadGeneration([], [])).toBe(false);
+      expect(summarizeSpreadGenerationResults(results)).toEqual({
+        pushed: [],
+        failed: [],
+        shouldFail: false,
+      });
     });
   });
 });
