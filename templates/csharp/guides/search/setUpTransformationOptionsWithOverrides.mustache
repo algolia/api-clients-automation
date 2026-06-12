@@ -1,0 +1,30 @@
+namespace Algolia;
+
+using System;
+
+{{> snippets/import}}
+
+class SetUpTransformationOptionsWithOverrides
+{
+    async Task Main(string[] args)
+    {
+        // Override the Ingestion API defaults. Any option you don't set keeps its default.
+        // Replace "us" with "eu" if your Algolia application uses the Europe analytics region.
+        var transformationOptions = new TransformationOptions("us")
+        {
+            ConnectTimeout = TimeSpan.FromMilliseconds(5000),
+            ReadTimeout = TimeSpan.FromMilliseconds(30000),
+        };
+        var client = SearchClient.WithTransformation("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", transformationOptions);
+
+        // Save records, transforming them through the Push connector
+        try
+        {
+            var result = {{#dynamicSnippet}}setUpTransformationOptions{{/dynamicSnippet}};
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
+}

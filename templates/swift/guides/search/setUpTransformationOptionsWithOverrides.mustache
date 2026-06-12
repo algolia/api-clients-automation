@@ -1,0 +1,29 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import AlgoliaCore
+{{> snippets/import}}
+
+func setUpTransformationOptionsWithOverrides() async throws {
+    // Override the Ingestion API defaults. Any option you don't set keeps its default.
+    // Replace `.us` with `.eu` if your Algolia application uses the Europe analytics region.
+    let configuration = try SearchClientConfiguration(
+        appID: "ALGOLIA_APPLICATION_ID",
+        apiKey: "ALGOLIA_API_KEY",
+        transformationOptions: TransformationOptions(
+            region: .us,
+            readTimeout: 30,
+            writeTimeout: 30
+        )
+    )
+    let client = SearchClient(configuration: configuration)
+
+    do {
+        // Save records, transforming them through the Push connector
+        {{#dynamicSnippet}}setUpTransformationOptions{{/dynamicSnippet}}
+    } catch {
+        print(error.localizedDescription)
+    }
+}
