@@ -2,10 +2,11 @@ openapi: 3.0.2
 info:
   title: Agent Studio API
   description: |-
-    Algolia's GenAI Toolkit API, building blocks for your dynamic LLM-enabled experiences.
+    The Agent Studio API lets you build and operate generative AI agents that use Algolia data, tools, and your chosen LLM provider.
 
-    Build generative AI experiences with your Algolia data. Combine large language models with Algolia’s Search API using Retrieval Augmented Generation (RAG) techniques.
+    Create, configure, publish, and update agents, then generate chat completions grounded in live data from your Algolia indices. Use the API to manage providers, tools, conversations, feedback, secret keys, user data, caching, and application settings for Agent Studio experiences.
   version: 0.1.0
+x-beta: true
 components:
   securitySchemes:
     appId:
