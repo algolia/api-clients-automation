@@ -35,9 +35,9 @@ export function cleanUpCommitMessage(commitMessage: string, version: string): st
 
 export function shouldFailSpreadGeneration(
   failedLanguages: readonly Language[],
-  languages: readonly Language[] = LANGUAGES,
+  nonSkippedLanguages: readonly Language[],
 ): boolean {
-  return languages.length > 0 && failedLanguages.length === languages.length;
+  return nonSkippedLanguages.length > 0 && nonSkippedLanguages.every((lang) => failedLanguages.includes(lang));
 }
 
 async function spreadGeneration(): Promise<void> {
@@ -68,6 +68,7 @@ async function spreadGeneration(): Promise<void> {
 
   const pushed: Language[] = [];
   const failed: Language[] = [];
+  const languagesToSpread: Language[] = [];
 
   for (const lang of LANGUAGES) {
     try {
@@ -91,6 +92,7 @@ async function spreadGeneration(): Promise<void> {
         console.log(`❎ Skipping ${lang} repository, because there is no change.`);
         continue;
       } else {
+        languagesToSpread.push(lang);
         console.log(`✅ Spreading code to the ${lang} repository.`);
       }
 
@@ -133,8 +135,8 @@ async function spreadGeneration(): Promise<void> {
   core.setOutput('PUSHED_LANGUAGES', pushed.join(' '));
   core.setOutput('FAILED_LANGUAGES', failed.join(' '));
 
-  if (shouldFailSpreadGeneration(failed)) {
-    core.setFailed(`Spread failed for every language: ${failed.join(', ')}`);
+  if (shouldFailSpreadGeneration(failed, languagesToSpread)) {
+    core.setFailed(`Spread failed for every non-skipped language: ${failed.join(', ')}`);
   }
 }
 

@@ -46,8 +46,12 @@ describe('spread generation', () => {
       expect(shouldFailSpreadGeneration(['javascript'], ['javascript', 'python'])).toBe(false);
     });
 
-    it('fails when every language failed', () => {
-      expect(shouldFailSpreadGeneration(['javascript', 'python'], ['javascript', 'python'])).toBe(true);
+    it('fails when every non-skipped language failed', () => {
+      expect(shouldFailSpreadGeneration(['javascript'], ['javascript'])).toBe(true);
+    });
+
+    it('does not count failures outside the non-skipped language list', () => {
+      expect(shouldFailSpreadGeneration(['python'], ['javascript'])).toBe(false);
     });
 
     it('does not fail for an empty language list', () => {
