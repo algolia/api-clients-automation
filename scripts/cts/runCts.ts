@@ -7,6 +7,7 @@ import type { Language } from '../types.ts';
 
 import { assertValidAccountCopyIndex } from './testServer/accountCopyIndex.ts';
 import { printBenchmarkReport } from './testServer/benchmark.ts';
+import { assertValidChunkedPushWait } from './testServer/chunkedPushWait.ts';
 import { assertChunkWrapperValid } from './testServer/chunkWrapper.ts';
 import { assertNeverCalledServerWasNotCalled, assertValidErrors } from './testServer/error.ts';
 import { startTestServer } from './testServer/index.ts';
@@ -183,32 +184,13 @@ export async function runCts(
     assertSuccessServerCalled(languages.length);
     assertChunkWrapperValid(languages.length - skip('dart'));
     assertValidReplaceAllObjects(languages.length - skip('dart'));
-    assertValidReplaceAllObjectsWithTransformation(
-      only('javascript') +
-        only('go') +
-        only('python') +
-        only('java') +
-        only('php') +
-        only('csharp') +
-        only('scala') +
-        only('ruby') +
-        only('kotlin'),
-    );
+    assertValidReplaceAllObjectsWithTransformation(languages.length);
     assertValidAccountCopyIndex(only('javascript'));
     assertValidReplaceAllObjectsFailed(languages.length - skip('dart'));
     assertValidReplaceAllObjectsScopes(languages.length - skip('dart'));
     assertValidWaitForApiKey(languages.length - skip('dart'));
-    assertPushMockValid(
-      only('javascript') +
-        only('go') +
-        only('python') +
-        only('java') +
-        only('php') +
-        only('csharp') +
-        only('scala') +
-        only('ruby') +
-        only('kotlin'),
-    );
+    assertPushMockValid(languages.length);
+    assertValidChunkedPushWait(languages.length - skip('go') - skip('php') - skip('javascript'));
   }
   if (withBenchmarkServer) {
     printBenchmarkReport();

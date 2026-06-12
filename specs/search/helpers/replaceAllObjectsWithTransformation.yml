@@ -5,6 +5,7 @@ method:
       - Records
     x-available-languages:
       - csharp
+      - dart
       - go
       - java
       - javascript
@@ -13,6 +14,7 @@ method:
       - python
       - ruby
       - scala
+      - swift
     x-acl:
       - addObject
       - deleteIndex

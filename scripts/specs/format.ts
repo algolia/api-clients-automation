@@ -32,6 +32,7 @@ const MERGEABLE_OBJECT_SCHEMA_KEYS = new Set([
   'deprecated',
   'description',
   'example',
+  'examples',
   'nullable',
   'properties',
   'readOnly',
@@ -227,6 +228,17 @@ function mergeFlattenedObjectSchemas(
     mergedSchema.example = cloneSchema(leftExample ?? rightExample);
   }
 
+  const leftExamples = leftSchema.examples;
+  const rightExamples = rightSchema.examples;
+
+  if (leftExamples !== undefined && rightExamples !== undefined && !isDeepStrictEqual(leftExamples, rightExamples)) {
+    return undefined;
+  }
+
+  if (leftExamples !== undefined || rightExamples !== undefined) {
+    mergedSchema.examples = cloneSchema(leftExamples ?? rightExamples);
+  }
+
   const leftNullable = leftSchema.nullable;
   const rightNullable = rightSchema.nullable;
 
@@ -360,6 +372,10 @@ function buildFlattenedObjectSchema(
 
   if (resolvedSchema.example !== undefined) {
     mergedSchema.example = cloneSchema(resolvedSchema.example);
+  }
+
+  if (resolvedSchema.examples !== undefined) {
+    mergedSchema.examples = cloneSchema(resolvedSchema.examples);
   }
 
   if (resolvedSchema.nullable !== undefined) {

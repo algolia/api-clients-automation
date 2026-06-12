@@ -169,5 +169,14 @@
       ],
       "waitForTasks": true
     }
+  },
+  "searchWithCompression": {
+    "method": "searchSingleIndex",
+    "parameters": {
+      "indexName": "movies_index",
+      "searchParams": {
+        "query": "comedy"
+      }
+    }
   }
 }

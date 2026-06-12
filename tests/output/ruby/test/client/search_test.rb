@@ -339,7 +339,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.40.0\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.41.0\).*/))
   end
 
   # call deleteObjects without error
@@ -557,6 +557,28 @@ class TestClientSearchClient < Test::Unit::TestCase
         e.message
       )
     end
+  end
+
+  # handles 204 No Content responses correctly
+  def test_no_content0
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6692,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    req = client.custom_delete("1/test/no-content")
+    assert_equal(nil, req)
   end
 
   # client throws with invalid parameters
@@ -1179,6 +1201,70 @@ class TestClientSearchClient < Test::Unit::TestCase
         }
       ],
       req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
+  end
+
+  # saveObjectsWithTransformation polls every task when waitForTasks is true
+  def test_save_objects_with_transformation1
+    _transformation_options = Algolia::TransformationOptions.new(
+      "us",
+      hosts: [
+        Algolia::Transport::StatefulHost.new(
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+          protocol: "http://",
+          port: 6693,
+          accept: CallType::READ | CallType::WRITE
+        )
+      ]
+    )
+    client = Algolia::SearchClient.with_transformation(
+      "test-app-id",
+      "test-api-key",
+      _transformation_options,
+      {
+        hosts: [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6693,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ]
+      }
+    )
+
+    req = client.save_objects_with_transformation(
+      "cts_e2e_chunked_push_wait_ruby",
+      [
+        {objectID: "1", name: "r1"},
+        {objectID: "2", name: "r2"},
+        {objectID: "3", name: "r3"},
+        {objectID: "4", name: "r4"},
+        {objectID: "5", name: "r5"},
+        {objectID: "6", name: "r6"},
+        {objectID: "7", name: "r7"},
+        {objectID: "8", name: "r8"},
+        {objectID: "9", name: "r9"},
+        {objectID: "10", name: "r10"},
+        {objectID: "11", name: "r11"},
+        {objectID: "12", name: "r12"},
+        {objectID: "13", name: "r13"},
+        {objectID: "14", name: "r14"},
+        {objectID: "15", name: "r15"},
+        {objectID: "16", name: "r16"},
+        {objectID: "17", name: "r17"},
+        {objectID: "18", name: "r18"},
+        {objectID: "19", name: "r19"},
+        {objectID: "20", name: "r20"},
+        {objectID: "21", name: "r21"},
+        {objectID: "22", name: "r22"},
+        {objectID: "23", name: "r23"},
+        {objectID: "24", name: "r24"},
+        {objectID: "25", name: "r25"}
+      ],
+      true,
+      10,
+      {:header_params => {"x-algolia-user-id" => "test-user"}}
     )
   end
 

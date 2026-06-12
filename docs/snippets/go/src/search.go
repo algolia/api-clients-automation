@@ -2271,7 +2271,7 @@ func SnippetForGetTaskOfSearch() {
 	   getTask
 	*/
 
-	// >SEPARATOR getTask default
+	// >SEPARATOR getTask getTask
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -2282,6 +2282,35 @@ func SnippetForGetTaskOfSearch() {
 	// Call the API
 	response, err := client.GetTask(client.NewApiGetTaskRequest(
 		"<YOUR_INDEX_NAME>", 123))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForGetTaskOfSearch1() {
+	/*
+	   Snippet for the getTask method.
+
+	   getTask with taskID 0
+	*/
+
+	// >SEPARATOR getTask getTask with taskID 0
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetTask(client.NewApiGetTaskRequest(
+		"<YOUR_INDEX_NAME>", 0))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -3533,7 +3562,7 @@ func SnippetForSaveObjectsWithTransformationOfSearch() {
 	   call saveObjectsWithTransformation without error
 	*/
 
-	// >SEPARATOR saveObjectsWithTransformation default
+	// >SEPARATOR saveObjectsWithTransformation call saveObjectsWithTransformation without error
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -3545,6 +3574,66 @@ func SnippetForSaveObjectsWithTransformationOfSearch() {
 	response, err := client.SaveObjectsWithTransformation(
 		"<YOUR_INDEX_NAME>",
 		[]map[string]any{{"objectID": "1", "name": "Adam"}, {"objectID": "2", "name": "Benoit"}}, search.WithWaitForTasks(true))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForSaveObjectsWithTransformationOfSearch1() {
+	/*
+	   Snippet for the saveObjectsWithTransformation method.
+
+	   saveObjectsWithTransformation polls every task when waitForTasks is true
+	*/
+
+	// >SEPARATOR saveObjectsWithTransformation saveObjectsWithTransformation polls every task when waitForTasks is true
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveObjectsWithTransformation(
+		"<YOUR_INDEX_NAME>",
+		[]map[string]any{
+			{"objectID": "1", "name": "r1"},
+			{"objectID": "2", "name": "r2"},
+			{"objectID": "3", "name": "r3"},
+			{"objectID": "4", "name": "r4"},
+			{"objectID": "5", "name": "r5"},
+			{"objectID": "6", "name": "r6"},
+			{"objectID": "7", "name": "r7"},
+			{"objectID": "8", "name": "r8"},
+			{"objectID": "9", "name": "r9"},
+			{"objectID": "10", "name": "r10"},
+			{"objectID": "11", "name": "r11"},
+			{"objectID": "12", "name": "r12"},
+			{"objectID": "13", "name": "r13"},
+			{"objectID": "14", "name": "r14"},
+			{"objectID": "15", "name": "r15"},
+			{"objectID": "16", "name": "r16"},
+			{"objectID": "17", "name": "r17"},
+			{"objectID": "18", "name": "r18"},
+			{"objectID": "19", "name": "r19"},
+			{"objectID": "20", "name": "r20"},
+			{"objectID": "21", "name": "r21"},
+			{"objectID": "22", "name": "r22"},
+			{"objectID": "23", "name": "r23"},
+			{"objectID": "24", "name": "r24"},
+			{"objectID": "25", "name": "r25"},
+		},
+		search.WithWaitForTasks(true),
+		search.WithBatchSize(10),
+		search.WithHeaderParam("x-algolia-user-id", "test-user"),
+	)
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -6654,7 +6743,7 @@ func SnippetForSearchSingleIndexOfSearch40() {
 	// Call the API
 	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-		search.NewEmptySearchParamsObject().SetGetRankingInfo(true))))
+		search.NewEmptySearchParamsObject().SetQuery("test").SetGetRankingInfo(true))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

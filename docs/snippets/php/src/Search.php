@@ -1965,7 +1965,7 @@ class SnippetSearchClient
      */
     public function snippetForGetTask(): void
     {
-        // >SEPARATOR getTask default
+        // >SEPARATOR getTask getTask
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -1973,6 +1973,29 @@ class SnippetSearchClient
         $response = $client->getTask(
             '<YOUR_INDEX_NAME>',
             123,
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetTask method.
+     *
+     * getTask with taskID 0
+     */
+    public function snippetForGetTask1(): void
+    {
+        // >SEPARATOR getTask getTask with taskID 0
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->getTask(
+            '<YOUR_INDEX_NAME>',
+            0,
         );
 
         // >LOG
@@ -3109,7 +3132,7 @@ class SnippetSearchClient
      */
     public function snippetForSaveObjectsWithTransformation(): void
     {
-        // >SEPARATOR saveObjectsWithTransformation default
+        // >SEPARATOR saveObjectsWithTransformation call saveObjectsWithTransformation without error
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -3126,6 +3149,136 @@ class SnippetSearchClient
                 ],
             ],
             true,
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveObjectsWithTransformation method.
+     *
+     * saveObjectsWithTransformation polls every task when waitForTasks is true
+     */
+    public function snippetForSaveObjectsWithTransformation1(): void
+    {
+        // >SEPARATOR saveObjectsWithTransformation saveObjectsWithTransformation polls every task when waitForTasks is true
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveObjectsWithTransformation(
+            '<YOUR_INDEX_NAME>',
+            [
+                ['objectID' => '1',
+                    'name' => 'r1',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'r2',
+                ],
+
+                ['objectID' => '3',
+                    'name' => 'r3',
+                ],
+
+                ['objectID' => '4',
+                    'name' => 'r4',
+                ],
+
+                ['objectID' => '5',
+                    'name' => 'r5',
+                ],
+
+                ['objectID' => '6',
+                    'name' => 'r6',
+                ],
+
+                ['objectID' => '7',
+                    'name' => 'r7',
+                ],
+
+                ['objectID' => '8',
+                    'name' => 'r8',
+                ],
+
+                ['objectID' => '9',
+                    'name' => 'r9',
+                ],
+
+                ['objectID' => '10',
+                    'name' => 'r10',
+                ],
+
+                ['objectID' => '11',
+                    'name' => 'r11',
+                ],
+
+                ['objectID' => '12',
+                    'name' => 'r12',
+                ],
+
+                ['objectID' => '13',
+                    'name' => 'r13',
+                ],
+
+                ['objectID' => '14',
+                    'name' => 'r14',
+                ],
+
+                ['objectID' => '15',
+                    'name' => 'r15',
+                ],
+
+                ['objectID' => '16',
+                    'name' => 'r16',
+                ],
+
+                ['objectID' => '17',
+                    'name' => 'r17',
+                ],
+
+                ['objectID' => '18',
+                    'name' => 'r18',
+                ],
+
+                ['objectID' => '19',
+                    'name' => 'r19',
+                ],
+
+                ['objectID' => '20',
+                    'name' => 'r20',
+                ],
+
+                ['objectID' => '21',
+                    'name' => 'r21',
+                ],
+
+                ['objectID' => '22',
+                    'name' => 'r22',
+                ],
+
+                ['objectID' => '23',
+                    'name' => 'r23',
+                ],
+
+                ['objectID' => '24',
+                    'name' => 'r24',
+                ],
+
+                ['objectID' => '25',
+                    'name' => 'r25',
+                ],
+            ],
+            true,
+            10,
+            [
+                'headers' => [
+                    'x-algolia-user-id' => 'test-user',
+                ],
+            ]
         );
 
         // >LOG
@@ -6323,7 +6476,8 @@ class SnippetSearchClient
         // Call the API
         $response = $client->searchSingleIndex(
             '<YOUR_INDEX_NAME>',
-            ['getRankingInfo' => true,
+            ['query' => 'test',
+                'getRankingInfo' => true,
             ],
         );
 

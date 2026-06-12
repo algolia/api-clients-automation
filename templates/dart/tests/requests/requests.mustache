@@ -22,7 +22,7 @@ void main() {
       call: (client) => {{> tests/method}},
       intercept: (request) {
         {{#request}}
-        expectPath(request.path, '{{{path}}}');
+        expectPath(request.path, '{{{serverPathSuffix}}}{{{path}}}');
         expect(request.method, '{{#lambda.lowercase}}{{&method}}{{/lambda.lowercase}}');
         {{#headers}}
         expectHeaders(request.headers, """{{{.}}}""");

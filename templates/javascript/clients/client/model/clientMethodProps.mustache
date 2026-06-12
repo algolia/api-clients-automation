@@ -221,6 +221,11 @@ export type AccountCopyIndexOptions = ChunkedHelperOptions & {
 };
 {{/isAlgoliasearchClient}}
 {{/isSearchClient}}
+{{#agentStudioHelpers}}
+export type AgentStudioNodeHelpers = {
+  forgeSecuredUserToken: (opts: { secretKey: string; secretKeyId: string; userId: string; expiresIn?: number }) => string;
+};
+{{/agentStudioHelpers}}
 {{#isCompositionClient}}
 export type WaitForCompositionTaskOptions = {
   /**

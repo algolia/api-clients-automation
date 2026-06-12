@@ -36,11 +36,17 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
     additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
 
+    // Use a beta version for the agent-studio standalone package
+    String effectiveVersion = version;
+    if (client.equals("agent-studio")) {
+      effectiveVersion = "0.1.0-beta.0";
+    }
+
     // pubspec.yaml
     setPubAuthor("Algolia");
     setPubAuthorEmail("hey@algolia.com");
     setPubHomepage("https://www.algolia.com/doc/");
-    setPubVersion(version);
+    setPubVersion(effectiveVersion);
     String packageFolder;
     if (isAlgoliasearchClient) {
       libName = "algoliasearch";
@@ -107,13 +113,14 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
 
     // Search config
     additionalProperties.put("isSearchClient", client.equals("search"));
-    additionalProperties.put("packageVersion", version);
+    additionalProperties.put("packageVersion", effectiveVersion);
   }
 
   @Override
   public void processOpenAPI(OpenAPI openAPI) {
     super.processOpenAPI(openAPI);
     Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
+    Timeouts.enrichBundle(openAPI, additionalProperties);
   }
 
   @Override

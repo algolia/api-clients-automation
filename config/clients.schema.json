@@ -13,6 +13,7 @@
               "enum": [
                 "abtesting",
                 "abtesting-v3",
+                "agent-studio",
                 "analytics",
                 "composition",
                 "ingestion",
@@ -37,6 +38,7 @@
                     "algoliasearch",
                     "abtesting",
                     "abtesting-v3",
+                    "agent-studio",
                     "analytics",
                     "composition",
                     "ingestion",

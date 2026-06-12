@@ -7,10 +7,17 @@ import 'package:{{pubName}}/src/version.dart';
 {{#operations}}
 {{#imports}}import '{{{.}}}';
 {{/imports}}
+{{#isSearchClient}}
+import 'package:algolia_client_ingestion/algolia_client_ingestion.dart' as ingestion;
+{{/isSearchClient}}
 
 {{#description}}
 /// {{{description}}}
 {{/description}}
+{{#isAgentStudioClient}}
+/// **Beta:** The Agent Studio API is not yet stable and may change without notice.
+/// See https://www.algolia.com/doc/rest-api/agent-studio
+{{/isAgentStudioClient}}
 final class {{classname}} implements ApiClient {
 
   @override
@@ -22,6 +29,12 @@ final class {{classname}} implements ApiClient {
 
   final RetryStrategy _retryStrategy;
 
+  {{#isSearchClient}}
+  final String _appId;
+  final String _apiKey;
+  ingestion.IngestionClient? _ingestionTransporter;
+  {{/isSearchClient}}
+
   {{classname}}({
     required String appId,
     required String apiKey,
@@ -29,11 +42,27 @@ final class {{classname}} implements ApiClient {
     {{#hasRegionalHost}}
     {{^fallbackToAliasHost}}required{{/fallbackToAliasHost}} this.region,
     {{/hasRegionalHost}}
-  }) : _retryStrategy = RetryStrategy.create(
+    {{#isSearchClient}}
+    TransformationOptions? transformationOptions,
+    {{/isSearchClient}}
+  }) : {{#isSearchClient}}_appId = appId, _apiKey = apiKey, {{/isSearchClient}}
+    _retryStrategy = RetryStrategy.create(
             segment: AgentSegment(value: "{{{baseName}}}", version: packageVersion),
             appId: appId,
             apiKey: apiKey,
-            options: options,
+            options: ClientOptions(
+              connectTimeout: Duration(milliseconds: {{{x-timeouts.server.connect}}}),
+              readTimeout: Duration(milliseconds: {{{x-timeouts.server.read}}}),
+              writeTimeout: Duration(milliseconds: {{{x-timeouts.server.write}}}),
+              hosts: options.hosts,
+              headers: options.headers,
+              agentSegments: options.agentSegments,
+              logger: options.logger,
+              requester: options.requester,
+              interceptors: options.interceptors,
+              httpClientAdapter: options.httpClientAdapter,
+              compression: options.compression,
+            ),
             {{#hostWithAppID}}
             defaultHosts: () => [
               Host(url: '$appId-dsn.algolia.net', callType: CallType.read),
@@ -72,6 +101,11 @@ final class {{classname}} implements ApiClient {
             ) {
     assert(appId.isNotEmpty, '`appId` is missing.');
     assert(apiKey.isNotEmpty, '`apiKey` is missing.');
+    {{#isSearchClient}}
+    if (transformationOptions != null) {
+      _ingestionTransporter = _buildIngestionTransporter(transformationOptions);
+    }
+    {{/isSearchClient}}
   }
 
   /// Allows to switch the API key used to authenticate requests.
@@ -79,6 +113,28 @@ final class {{classname}} implements ApiClient {
   void setClientApiKey({required String apiKey}) {
     this._retryStrategy.requester.setClientApiKey(apiKey);
   }
+
+  {{#isSearchClient}}
+  /// Sets (or replaces) the ingestion transporter used by `*WithTransformation` helpers.
+  /// The new transporter is built from [transformationOptions]; any previously created transporter is disposed.
+  void setTransformationOptions(TransformationOptions transformationOptions) {
+    final previous = _ingestionTransporter;
+    _ingestionTransporter = _buildIngestionTransporter(transformationOptions);
+    previous?.dispose();
+  }
+
+  /// The ingestion transporter used by `*WithTransformation` helpers, or `null` if not configured.
+  ingestion.IngestionClient? get ingestionTransporter => _ingestionTransporter;
+
+  ingestion.IngestionClient _buildIngestionTransporter(TransformationOptions opts) {
+    return ingestion.IngestionClient(
+      appId: _appId,
+      apiKey: _apiKey,
+      region: opts.region,
+      options: opts.ingestionClientOptions ?? const ClientOptions(),
+    );
+  }
+  {{/isSearchClient}}
   {{#operation}}
 
   /// {{{notes}}}{{#vendorExtensions}}{{#x-acl.0}}
@@ -123,10 +179,10 @@ final class {{classname}} implements ApiClient {
     final request = ApiRequest(
         method: RequestMethod.{{#lambda.snakecase}}{{httpMethod}}{{/lambda.snakecase}},
         {{^vendorExtensions.x-is-custom-request}}
-        path: r'{{{path}}}'{{#pathParams}}.replaceAll('{' r'{{{baseName}}}' '}', Uri.encodeComponent({{{paramName}}}.toString())){{/pathParams}},
+        path: r'{{{serverPathSuffix}}}{{{path}}}'{{#pathParams}}.replaceAll('{' r'{{{baseName}}}' '}', Uri.encodeComponent({{{paramName}}}.toString())){{/pathParams}},
         {{/vendorExtensions.x-is-custom-request}}
         {{#vendorExtensions.x-is-custom-request}}
-        path: r'{{{path}}}'{{#pathParams}}.replaceAll('{' r'{{{baseName}}}' '}', {{{paramName}}}){{/pathParams}},
+        path: r'{{{serverPathSuffix}}}{{{path}}}'{{#pathParams}}.replaceAll('{' r'{{{baseName}}}' '}', {{{paramName}}}){{/pathParams}},
         {{/vendorExtensions.x-is-custom-request}}
         {{#vendorExtensions.x-use-read-transporter}}
         isRead : {{{vendorExtensions.x-use-read-transporter}}},
@@ -168,13 +224,16 @@ final class {{classname}} implements ApiClient {
     );  
     {{#returnType}}final response = {{/returnType}}await _retryStrategy.execute(
       request: request,
-      options: {{#vendorExtensions.x-timeouts}}new RequestOptions(
+      options: {{#vendorExtensions.x-timeouts}}RequestOptions(
           writeTimeout: Duration(milliseconds: {{write}}),
           readTimeout: Duration(milliseconds: {{read}}),
           connectTimeout: Duration(milliseconds: {{connect}}),
       ) + {{/vendorExtensions.x-timeouts}}requestOptions,
     );
     {{#returnType}}
+    {{#vendorExtensions.x-is-custom-request}}
+    if (response == null) return AlgoliaNoResponse();
+    {{/vendorExtensions.x-is-custom-request}}
     return deserialize<{{{.}}}, {{{returnBaseType}}}>(response, '{{{.}}}', growable: true,);
     {{/returnType}}
   }  
@@ -221,6 +280,9 @@ final class {{classname}} implements ApiClient {
 {{/isCompositionClient}}
 
   @override
-  void dispose() => _retryStrategy.dispose(); 
+  void dispose() {
+    _retryStrategy.dispose();
+    {{#isSearchClient}}_ingestionTransporter?.dispose();{{/isSearchClient}}
+  }
 }
 {{/operations}}

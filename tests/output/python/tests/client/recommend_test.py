@@ -69,8 +69,31 @@ class TestRecommendClient:
         _req = await _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.41.1\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.42.0\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
+
+    async def test_no_content_0(self):
+        """
+        handles 204 No Content responses correctly
+        """
+
+        _config = RecommendConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6692,
+                )
+            ]
+        )
+        _client = RecommendClient.create_with_config(config=_config)
+        _req = await _client.custom_delete(
+            path="1/test/no-content",
+        )
+        assert _req is None
 
     async def test_set_client_api_key_0(self):
         """
@@ -173,8 +196,31 @@ class TestRecommendClientSync:
         _req = _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.41.1\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.42.0\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
+
+    def test_no_content_0(self):
+        """
+        handles 204 No Content responses correctly
+        """
+
+        _config = RecommendConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6692,
+                )
+            ]
+        )
+        _client = RecommendClientSync.create_with_config(config=_config)
+        _req = _client.custom_delete(
+            path="1/test/no-content",
+        )
+        assert _req is None
 
     def test_set_client_api_key_0(self):
         """

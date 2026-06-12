@@ -399,7 +399,7 @@ class TestSearchClient:
         _req = await _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.41.1\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.42.0\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     async def test_delete_objects_0(self):
@@ -626,6 +626,29 @@ class TestSearchClient:
             assert False
         except (ValueError, Exception) as e:
             assert str(e) == "Invalid API key"
+
+    async def test_no_content_0(self):
+        """
+        handles 204 No Content responses correctly
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6692,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.custom_delete(
+            path="1/test/no-content",
+        )
+        assert _req is None
 
     async def test_parameters_0(self):
         """
@@ -1335,6 +1358,153 @@ class TestSearchClient:
             """[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_python","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]"""
         )
 
+    async def test_save_objects_with_transformation_1(self):
+        """
+        saveObjectsWithTransformation polls every task when waitForTasks is true
+        """
+
+        _transformation_options = TransformationOptions(
+            region="us",
+            hosts=HostsCollection(
+                [
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6693,
+                    )
+                ]
+            ),
+        )
+        _config = SearchConfig(
+            "test-app-id",
+            "test-api-key",
+            transformation_options=_transformation_options,
+        )
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6693,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.save_objects_with_transformation(
+            index_name="cts_e2e_chunked_push_wait_python",
+            objects=[
+                {
+                    "objectID": "1",
+                    "name": "r1",
+                },
+                {
+                    "objectID": "2",
+                    "name": "r2",
+                },
+                {
+                    "objectID": "3",
+                    "name": "r3",
+                },
+                {
+                    "objectID": "4",
+                    "name": "r4",
+                },
+                {
+                    "objectID": "5",
+                    "name": "r5",
+                },
+                {
+                    "objectID": "6",
+                    "name": "r6",
+                },
+                {
+                    "objectID": "7",
+                    "name": "r7",
+                },
+                {
+                    "objectID": "8",
+                    "name": "r8",
+                },
+                {
+                    "objectID": "9",
+                    "name": "r9",
+                },
+                {
+                    "objectID": "10",
+                    "name": "r10",
+                },
+                {
+                    "objectID": "11",
+                    "name": "r11",
+                },
+                {
+                    "objectID": "12",
+                    "name": "r12",
+                },
+                {
+                    "objectID": "13",
+                    "name": "r13",
+                },
+                {
+                    "objectID": "14",
+                    "name": "r14",
+                },
+                {
+                    "objectID": "15",
+                    "name": "r15",
+                },
+                {
+                    "objectID": "16",
+                    "name": "r16",
+                },
+                {
+                    "objectID": "17",
+                    "name": "r17",
+                },
+                {
+                    "objectID": "18",
+                    "name": "r18",
+                },
+                {
+                    "objectID": "19",
+                    "name": "r19",
+                },
+                {
+                    "objectID": "20",
+                    "name": "r20",
+                },
+                {
+                    "objectID": "21",
+                    "name": "r21",
+                },
+                {
+                    "objectID": "22",
+                    "name": "r22",
+                },
+                {
+                    "objectID": "23",
+                    "name": "r23",
+                },
+                {
+                    "objectID": "24",
+                    "name": "r24",
+                },
+                {
+                    "objectID": "25",
+                    "name": "r25",
+                },
+            ],
+            wait_for_tasks=True,
+            batch_size=10,
+            request_options={
+                "headers": loads("""{"x-algolia-user-id":"test-user"}"""),
+            },
+        )
+
     async def test_search_single_index_0(self):
         """
         with algolia user id
@@ -1959,7 +2129,7 @@ class TestSearchClientSync:
         _req = _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.41.1\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.42.0\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     def test_delete_objects_0(self):
@@ -2186,6 +2356,29 @@ class TestSearchClientSync:
             assert False
         except (ValueError, Exception) as e:
             assert str(e) == "Invalid API key"
+
+    def test_no_content_0(self):
+        """
+        handles 204 No Content responses correctly
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6692,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.custom_delete(
+            path="1/test/no-content",
+        )
+        assert _req is None
 
     def test_parameters_0(self):
         """
@@ -2893,6 +3086,153 @@ class TestSearchClientSync:
             else _req.to_dict()
         ) == loads(
             """[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_python","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]"""
+        )
+
+    def test_save_objects_with_transformation_1(self):
+        """
+        saveObjectsWithTransformation polls every task when waitForTasks is true
+        """
+
+        _transformation_options = TransformationOptions(
+            region="us",
+            hosts=HostsCollection(
+                [
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6693,
+                    )
+                ]
+            ),
+        )
+        _config = SearchConfig(
+            "test-app-id",
+            "test-api-key",
+            transformation_options=_transformation_options,
+        )
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6693,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.save_objects_with_transformation(
+            index_name="cts_e2e_chunked_push_wait_python",
+            objects=[
+                {
+                    "objectID": "1",
+                    "name": "r1",
+                },
+                {
+                    "objectID": "2",
+                    "name": "r2",
+                },
+                {
+                    "objectID": "3",
+                    "name": "r3",
+                },
+                {
+                    "objectID": "4",
+                    "name": "r4",
+                },
+                {
+                    "objectID": "5",
+                    "name": "r5",
+                },
+                {
+                    "objectID": "6",
+                    "name": "r6",
+                },
+                {
+                    "objectID": "7",
+                    "name": "r7",
+                },
+                {
+                    "objectID": "8",
+                    "name": "r8",
+                },
+                {
+                    "objectID": "9",
+                    "name": "r9",
+                },
+                {
+                    "objectID": "10",
+                    "name": "r10",
+                },
+                {
+                    "objectID": "11",
+                    "name": "r11",
+                },
+                {
+                    "objectID": "12",
+                    "name": "r12",
+                },
+                {
+                    "objectID": "13",
+                    "name": "r13",
+                },
+                {
+                    "objectID": "14",
+                    "name": "r14",
+                },
+                {
+                    "objectID": "15",
+                    "name": "r15",
+                },
+                {
+                    "objectID": "16",
+                    "name": "r16",
+                },
+                {
+                    "objectID": "17",
+                    "name": "r17",
+                },
+                {
+                    "objectID": "18",
+                    "name": "r18",
+                },
+                {
+                    "objectID": "19",
+                    "name": "r19",
+                },
+                {
+                    "objectID": "20",
+                    "name": "r20",
+                },
+                {
+                    "objectID": "21",
+                    "name": "r21",
+                },
+                {
+                    "objectID": "22",
+                    "name": "r22",
+                },
+                {
+                    "objectID": "23",
+                    "name": "r23",
+                },
+                {
+                    "objectID": "24",
+                    "name": "r24",
+                },
+                {
+                    "objectID": "25",
+                    "name": "r25",
+                },
+            ],
+            wait_for_tasks=True,
+            batch_size=10,
+            request_options={
+                "headers": loads("""{"x-algolia-user-id":"test-user"}"""),
+            },
         )
 
     def test_search_single_index_0(self):

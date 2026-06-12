@@ -157,6 +157,22 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.customGet(
+              path: "test/minimal",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -382,6 +398,22 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.customPost(
+              path: "test/minimal",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -607,6 +639,22 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.customPut(
+              path: "test/minimal",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -826,6 +874,22 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.customDelete(
+              path: "test/minimal",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -1106,6 +1170,41 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.push(
+              indexName: "<YOUR_INDEX_NAME>",
+              pushTaskPayload: PushTaskPayload(
+                action: Action.fromJson("addObject"),
+                records: [
+                  PushTaskRecords(
+                    objectID: "o",
+                    additionalProperties: {
+                      'key': "bar",
+                      'foo': "1",
+                    },
+                  ),
+                  PushTaskRecords(
+                    objectID: "k",
+                    additionalProperties: {
+                      'key': "baz",
+                      'foo': "2",
+                    },
+                  ),
+                ],
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -1474,6 +1573,20 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.listAuthentications();
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -1715,6 +1828,30 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.createAuthentication(
+              authenticationCreate: AuthenticationCreate(
+                type: AuthenticationType.fromJson("oauth"),
+                name: "authName",
+                input: AuthOAuth(
+                  url: "http://test.oauth",
+                  clientId: "myID",
+                  clientSecret: "mySecret",
+                ),
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -2029,6 +2166,27 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.searchAuthentications(
+              authenticationSearch: AuthenticationSearch(
+                authenticationIDs: [
+                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                ],
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -2305,6 +2463,22 @@ paths:
             // print the response
 
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.getAuthentication(
+              authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -2546,6 +2720,25 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.updateAuthentication(
+              authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              authenticationUpdate: AuthenticationUpdate(
+                name: "newName",
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -2816,6 +3009,22 @@ paths:
             // print the response
 
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.deleteAuthentication(
+              authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -3069,6 +3278,20 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.listDestinations();
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -3304,6 +3527,29 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.createDestination(
+              destinationCreate: DestinationCreate(
+                type: DestinationType.fromJson("search"),
+                name: "destinationName",
+                input: DestinationInput(
+                  indexName: "<YOUR_INDEX_NAME>",
+                ),
+                authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -3620,6 +3866,27 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.searchDestinations(
+              destinationSearch: DestinationSearch(
+                destinationIDs: [
+                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                ],
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -3898,6 +4165,22 @@ paths:
             // print the response
 
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.getDestination(
+              destinationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -4143,6 +4426,25 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.updateDestination(
+              destinationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              destinationUpdate: DestinationUpdate(
+                name: "newName",
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -4420,6 +4722,22 @@ paths:
             // print the response
 
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.deleteDestination(
+              destinationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -4675,6 +4993,20 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.listSources();
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -4920,6 +5252,38 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.createSource(
+              sourceCreate: SourceCreate(
+                type: SourceType.fromJson("commercetools"),
+                name: "sourceName",
+                input: SourceCommercetools(
+                  storeKeys: [
+                    "myStore",
+                  ],
+                  locales: [
+                    "de",
+                  ],
+                  url: "http://commercetools.com",
+                  projectKey: "keyID",
+                  productQueryPredicate:
+                      "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))",
+                ),
+                authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -5326,6 +5690,36 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.validateSource(
+              sourceCreate: SourceCreate(
+                type: SourceType.fromJson("commercetools"),
+                name: "sourceName",
+                input: SourceCommercetools(
+                  storeKeys: [
+                    "myStore",
+                  ],
+                  locales: [
+                    "de",
+                  ],
+                  url: "http://commercetools.com",
+                  projectKey: "keyID",
+                ),
+                authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -5711,6 +6105,27 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.searchSources(
+              sourceSearch: SourceSearch(
+                sourceIDs: [
+                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                ],
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -5986,6 +6401,22 @@ paths:
             // print the response
 
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.getSource(
+              sourceID: "75eeb306-51d3-4e5e-a279-3c92bd8893ac",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -6229,6 +6660,25 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.updateSource(
+              sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              sourceUpdate: SourceUpdate(
+                name: "newName",
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -6518,6 +6968,22 @@ paths:
             // print the response
 
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.deleteSource(
+              sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -6770,6 +7236,25 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.validateSourceBeforeUpdate(
+              sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              sourceUpdate: SourceUpdate(
+                name: "newName",
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -7063,6 +7548,22 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.triggerDockerSourceDiscover(
+              sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -7327,6 +7828,33 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.runSource(
+              sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              runSourcePayload: RunSourcePayload(
+                indexToInclude: [
+                  "products_us",
+                  "products eu",
+                ],
+                entityIDs: [
+                  "1234",
+                  "5678",
+                ],
+                entityType: EntityType.fromJson("product"),
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -7663,6 +8191,20 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.listTasks();
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -7896,6 +8438,26 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.createTask(
+              taskCreate: TaskCreate(
+                sourceID: "search",
+                destinationID: "destinationID",
+                action: ActionType.fromJson("replace"),
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -8208,6 +8770,28 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.searchTasks(
+              taskSearch: TaskSearch(
+                taskIDs: [
+                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                  "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+                ],
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -8508,6 +9092,22 @@ paths:
             // print the response
 
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.getTask(
+              taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -8757,6 +9357,26 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.replaceTask(
+              taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              taskReplace: TaskReplace(
+                destinationID: "destinationID",
+                action: ActionType.fromJson("replace"),
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -9062,6 +9682,26 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.updateTask(
+              taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              taskUpdate: TaskUpdate(
+                enabled: false,
+                cron: "* * * * *",
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -9358,6 +9998,22 @@ paths:
             // print the response
 
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.deleteTask(
+              taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -9608,6 +10264,22 @@ paths:
             // print the response
 
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.runTask(
+              taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -9898,6 +10570,41 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.pushTask(
+              taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              pushTaskPayload: PushTaskPayload(
+                action: Action.fromJson("addObject"),
+                records: [
+                  PushTaskRecords(
+                    objectID: "o",
+                    additionalProperties: {
+                      'key': "bar",
+                      'foo': "1",
+                    },
+                  ),
+                  PushTaskRecords(
+                    objectID: "k",
+                    additionalProperties: {
+                      'key': "baz",
+                      'foo': "2",
+                    },
+                  ),
+                ],
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -10255,6 +10962,22 @@ paths:
             // print the response
 
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.enableTask(
+              taskID: "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -10497,6 +11220,22 @@ paths:
             // print the response
 
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.disableTask(
+              taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -10755,6 +11494,20 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.listTasksV1();
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -10994,6 +11747,29 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.createTaskV1(
+              taskCreate: TaskCreateV1(
+                sourceID: "search",
+                destinationID: "destinationName",
+                trigger: OnDemandTriggerInput(
+                  type: OnDemandTriggerType.fromJson("onDemand"),
+                ),
+                action: ActionType.fromJson("replace"),
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -11334,6 +12110,28 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.searchTasksV1(
+              taskSearch: TaskSearch(
+                taskIDs: [
+                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                  "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+                ],
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -11636,6 +12434,22 @@ paths:
             // print the response
 
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.getTaskV1(
+              taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -11884,6 +12698,25 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.updateTaskV1(
+              taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              taskUpdate: TaskUpdateV1(
+                enabled: false,
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -12173,6 +13006,22 @@ paths:
             // print the response
 
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.deleteTaskV1(
+              taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -12425,6 +13274,22 @@ paths:
             // print the response
 
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.runTaskV1(
+              taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -12670,6 +13535,22 @@ paths:
             // print the response
 
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.enableTaskV1(
+              taskID: "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -12914,6 +13795,22 @@ paths:
             // print the response
 
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.disableTaskV1(
+              taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -13169,6 +14066,20 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.listTransformations();
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -13404,6 +14315,29 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.createTransformation(
+              transformationCreate: TransformationCreate(
+                input: TransformationCode(
+                  code: "foo",
+                ),
+                type: TransformationType.fromJson("code"),
+                name: "bar",
+                description: "baz",
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -13717,6 +14651,30 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.tryTransformation(
+              transformationTry: TransformationTry(
+                type: TransformationType.fromJson("code"),
+                input: TransformationCode(
+                  code: "foo",
+                ),
+                sampleRecord: {
+                  'bar': "baz",
+                },
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -14045,6 +15003,28 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.searchTransformations(
+              transformationSearch: TransformationSearch(
+                transformationIDs: [
+                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                  "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+                ],
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -14345,6 +15325,22 @@ paths:
             // print the response
 
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.getTransformation(
+              transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -14592,6 +15588,30 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.updateTransformation(
+              transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              transformationCreate: TransformationCreate(
+                input: TransformationCode(
+                  code: "foo",
+                ),
+                type: TransformationType.fromJson("code"),
+                name: "bar",
+                description: "baz",
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -14904,6 +15924,22 @@ paths:
             // print the response
 
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.deleteTransformation(
+              transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -15152,6 +16188,31 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.tryTransformationBeforeUpdate(
+              transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              transformationTry: TransformationTry(
+                type: TransformationType.fromJson("code"),
+                input: TransformationCode(
+                  code: "foo",
+                ),
+                sampleRecord: {
+                  'bar': "baz",
+                },
+              ),
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -15492,6 +16553,20 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.listRuns();
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -15720,6 +16795,22 @@ paths:
             // print the response
 
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.getRun(
+              runID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -15996,6 +17087,22 @@ paths:
             // print the response
 
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.listEvents(
+              runID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-
@@ -16236,6 +17343,23 @@ paths:
 
             // print the response
             Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = IngestionClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.getEvent(
+              runID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              eventID: "6c02aeb1-775e-418e-870b-1faccd4b2c0c",
+            );
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
           source: >-

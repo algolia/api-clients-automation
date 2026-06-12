@@ -1477,12 +1477,29 @@ end
 #
 # getTask
 def snippet_for_get_task
-  # >SEPARATOR getTask default
+  # >SEPARATOR getTask getTask
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_task("<YOUR_INDEX_NAME>", 123)
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the getTask method.
+#
+# getTask with taskID 0
+def snippet_for_get_task1
+  # >SEPARATOR getTask getTask with taskID 0
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.get_task("<YOUR_INDEX_NAME>", 0)
 
   # >LOG
   # print the response
@@ -2299,7 +2316,7 @@ end
 #
 # call saveObjectsWithTransformation without error
 def snippet_for_save_objects_with_transformation
-  # >SEPARATOR saveObjectsWithTransformation default
+  # >SEPARATOR saveObjectsWithTransformation call saveObjectsWithTransformation without error
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
@@ -2308,6 +2325,55 @@ def snippet_for_save_objects_with_transformation
     "<YOUR_INDEX_NAME>",
     [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}],
     true
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the saveObjectsWithTransformation method.
+#
+# saveObjectsWithTransformation polls every task when waitForTasks is true
+def snippet_for_save_objects_with_transformation1
+  # >SEPARATOR saveObjectsWithTransformation saveObjectsWithTransformation polls every task when waitForTasks is true
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_objects_with_transformation(
+    "<YOUR_INDEX_NAME>",
+    [
+      {objectID: "1", name: "r1"},
+      {objectID: "2", name: "r2"},
+      {objectID: "3", name: "r3"},
+      {objectID: "4", name: "r4"},
+      {objectID: "5", name: "r5"},
+      {objectID: "6", name: "r6"},
+      {objectID: "7", name: "r7"},
+      {objectID: "8", name: "r8"},
+      {objectID: "9", name: "r9"},
+      {objectID: "10", name: "r10"},
+      {objectID: "11", name: "r11"},
+      {objectID: "12", name: "r12"},
+      {objectID: "13", name: "r13"},
+      {objectID: "14", name: "r14"},
+      {objectID: "15", name: "r15"},
+      {objectID: "16", name: "r16"},
+      {objectID: "17", name: "r17"},
+      {objectID: "18", name: "r18"},
+      {objectID: "19", name: "r19"},
+      {objectID: "20", name: "r20"},
+      {objectID: "21", name: "r21"},
+      {objectID: "22", name: "r22"},
+      {objectID: "23", name: "r23"},
+      {objectID: "24", name: "r24"},
+      {objectID: "25", name: "r25"}
+    ],
+    true,
+    10,
+    {:header_params => {"x-algolia-user-id" => "test-user"}}
   )
 
   # >LOG
@@ -4745,7 +4811,7 @@ def snippet_for_search_single_index40
   # Call the API
   response = client.search_single_index(
     "<YOUR_INDEX_NAME>",
-    Algolia::Search::SearchParamsObject.new(get_ranking_info: true)
+    Algolia::Search::SearchParamsObject.new(query: "test", get_ranking_info: true)
   )
 
   # >LOG

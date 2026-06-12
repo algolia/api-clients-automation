@@ -1,0 +1,18 @@
+[
+  {
+    "testName": "updateMemory",
+    "parameters": {
+      "memoryId": "a1b2c3d4-5678-90ab-cdef-123456789abc",
+      "memoryUpdateRequest": {
+        "text": "Updated memory content"
+      }
+    },
+    "request": {
+      "path": "/1/memory/a1b2c3d4-5678-90ab-cdef-123456789abc",
+      "method": "PATCH",
+      "body": {
+        "text": "Updated memory content"
+      }
+    }
+  }
+]

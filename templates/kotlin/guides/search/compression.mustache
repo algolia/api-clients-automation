@@ -1,0 +1,21 @@
+package org.example
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+
+suspend fun main() {
+    // Initialize the client with gzip compression enabled
+    // Compression reduces the size of request bodies sent to Algolia
+    val client = {{client}}(
+        appId = "ALGOLIA_APPLICATION_ID",
+        apiKey = "ALGOLIA_API_KEY",
+        options = ClientOptions(compressionType = CompressionType.GZIP),
+    )
+
+    // Search with compressed request body
+    try {
+        val result = client.{{#dynamicSnippet}}searchWithCompression{{/dynamicSnippet}}
+        println(result.hits)
+    } catch (e: Exception) {
+        println(e.message)
+    }
+}

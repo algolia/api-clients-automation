@@ -1459,12 +1459,28 @@ final class SearchClientSnippet {
     ///
     /// getTask
     func snippetForGetTask() async throws {
-        // >SEPARATOR getTask default
+        // >SEPARATOR getTask getTask
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getTask(indexName: "<YOUR_INDEX_NAME>", taskID: Int64(123))
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the getTask method.
+    ///
+    /// getTask with taskID 0
+    func snippetForGetTask1() async throws {
+        // >SEPARATOR getTask getTask with taskID 0
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.getTask(indexName: "<YOUR_INDEX_NAME>", taskID: Int64(0))
         // >LOG
         // print the response
         print(response)
@@ -1966,6 +1982,27 @@ final class SearchClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the partialUpdateObjectsWithTransformation method.
+    ///
+    /// call partialUpdateObjectsWithTransformation with createIfNotExists=true
+    func snippetForPartialUpdateObjectsWithTransformation() async throws {
+        // >SEPARATOR partialUpdateObjectsWithTransformation default
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.partialUpdateObjectsWithTransformation(
+            indexName: "<YOUR_INDEX_NAME>",
+            objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]],
+            createIfNotExists: true,
+            waitForTasks: true
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
     /// Snippet for the removeUserId method.
     ///
     /// removeUserId
@@ -2049,6 +2086,37 @@ final class SearchClientSnippet {
                 ["objectID": "fine", "body": "small obj"],
                 ["objectID": "toolarge", "body": "something bigger than 10KB"],
             ]
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the replaceAllObjectsWithTransformation method.
+    ///
+    /// call replaceAllObjectsWithTransformation without error
+    func snippetForReplaceAllObjectsWithTransformation() async throws {
+        // >SEPARATOR replaceAllObjectsWithTransformation default
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.replaceAllObjectsWithTransformation(
+            indexName: "<YOUR_INDEX_NAME>",
+            objects: [
+                ["objectID": "1", "name": "Adam"],
+                ["objectID": "2", "name": "Benoit"],
+                ["objectID": "3", "name": "Cyril"],
+                ["objectID": "4", "name": "David"],
+                ["objectID": "5", "name": "Eva"],
+                ["objectID": "6", "name": "Fiona"],
+                ["objectID": "7", "name": "Gael"],
+                ["objectID": "8", "name": "Hugo"],
+                ["objectID": "9", "name": "Igor"],
+                ["objectID": "10", "name": "Julia"],
+            ],
+            batchSize: 3
         )
         // >LOG
         // print the response
@@ -2200,6 +2268,77 @@ final class SearchClientSnippet {
             batchSize: 1000,
             requestOptions: RequestOptions(
                 headers: ["X-Algolia-User-ID": "*"]
+            )
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the saveObjectsWithTransformation method.
+    ///
+    /// call saveObjectsWithTransformation without error
+    func snippetForSaveObjectsWithTransformation() async throws {
+        // >SEPARATOR saveObjectsWithTransformation call saveObjectsWithTransformation without error
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.saveObjectsWithTransformation(
+            indexName: "<YOUR_INDEX_NAME>",
+            objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]],
+            waitForTasks: true
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the saveObjectsWithTransformation method.
+    ///
+    /// saveObjectsWithTransformation polls every task when waitForTasks is true
+    func snippetForSaveObjectsWithTransformation1() async throws {
+        // >SEPARATOR saveObjectsWithTransformation saveObjectsWithTransformation polls every task when waitForTasks is
+        // true
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.saveObjectsWithTransformation(
+            indexName: "<YOUR_INDEX_NAME>",
+            objects: [
+                ["objectID": "1", "name": "r1"],
+                ["objectID": "2", "name": "r2"],
+                ["objectID": "3", "name": "r3"],
+                ["objectID": "4", "name": "r4"],
+                ["objectID": "5", "name": "r5"],
+                ["objectID": "6", "name": "r6"],
+                ["objectID": "7", "name": "r7"],
+                ["objectID": "8", "name": "r8"],
+                ["objectID": "9", "name": "r9"],
+                ["objectID": "10", "name": "r10"],
+                ["objectID": "11", "name": "r11"],
+                ["objectID": "12", "name": "r12"],
+                ["objectID": "13", "name": "r13"],
+                ["objectID": "14", "name": "r14"],
+                ["objectID": "15", "name": "r15"],
+                ["objectID": "16", "name": "r16"],
+                ["objectID": "17", "name": "r17"],
+                ["objectID": "18", "name": "r18"],
+                ["objectID": "19", "name": "r19"],
+                ["objectID": "20", "name": "r20"],
+                ["objectID": "21", "name": "r21"],
+                ["objectID": "22", "name": "r22"],
+                ["objectID": "23", "name": "r23"],
+                ["objectID": "24", "name": "r24"],
+                ["objectID": "25", "name": "r25"],
+            ],
+            waitForTasks: true,
+            batchSize: 10,
+            requestOptions: RequestOptions(
+                headers: ["x-algolia-user-id": "test-user"]
             )
         )
         // >LOG
@@ -4607,7 +4746,10 @@ final class SearchClientSnippet {
         // Call the API
         let response: SearchResponse<Hit> = try await client.searchSingleIndex(
             indexName: "<YOUR_INDEX_NAME>",
-            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(getRankingInfo: true))
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "test",
+                getRankingInfo: true
+            ))
         )
         // >LOG
         // print the response

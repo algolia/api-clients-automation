@@ -425,7 +425,7 @@ class SearchTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.41.0\).*""".r
+    val regexp = """^Algolia for Scala \(2.42.0\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }
@@ -675,6 +675,36 @@ class SearchTest extends AnyFunSuite {
         Duration.Inf
       )
     }
+  }
+
+  test("handles 204 No Content responses correctly") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6692)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.customDelete[JObject](
+        path = "1/test/no-content"
+      ),
+      Duration.Inf
+    )
+
+    assert(res == null)
   }
 
   test("client throws with invalid parameters") {
@@ -1288,6 +1318,86 @@ class SearchTest extends AnyFunSuite {
         parse(write(res)) == parse(
           "[{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_scala\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82925\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}]"
         )
+      )
+    }
+  }
+
+  test("saveObjectsWithTransformation polls every task when waitForTasks is true") {
+
+    val ingestionClientOptions = ClientOptions
+      .builder()
+      .withHosts(
+        List(
+          Host(
+            if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+            Set(CallType.Read, CallType.Write),
+            "http",
+            Option(6693)
+          )
+        )
+      )
+      .build()
+    val transformationOptions = TransformationOptions(region = "us", clientOptions = Some(ingestionClientOptions))
+    val client = SearchClient.withTransformation(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      transformationOptions = transformationOptions,
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6693)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.saveObjectsWithTransformation(
+          indexName = "cts_e2e_chunked_push_wait_scala",
+          objects = Seq(
+            JObject(List(JField("objectID", JString("1")), JField("name", JString("r1")))),
+            JObject(List(JField("objectID", JString("2")), JField("name", JString("r2")))),
+            JObject(List(JField("objectID", JString("3")), JField("name", JString("r3")))),
+            JObject(List(JField("objectID", JString("4")), JField("name", JString("r4")))),
+            JObject(List(JField("objectID", JString("5")), JField("name", JString("r5")))),
+            JObject(List(JField("objectID", JString("6")), JField("name", JString("r6")))),
+            JObject(List(JField("objectID", JString("7")), JField("name", JString("r7")))),
+            JObject(List(JField("objectID", JString("8")), JField("name", JString("r8")))),
+            JObject(List(JField("objectID", JString("9")), JField("name", JString("r9")))),
+            JObject(List(JField("objectID", JString("10")), JField("name", JString("r10")))),
+            JObject(List(JField("objectID", JString("11")), JField("name", JString("r11")))),
+            JObject(List(JField("objectID", JString("12")), JField("name", JString("r12")))),
+            JObject(List(JField("objectID", JString("13")), JField("name", JString("r13")))),
+            JObject(List(JField("objectID", JString("14")), JField("name", JString("r14")))),
+            JObject(List(JField("objectID", JString("15")), JField("name", JString("r15")))),
+            JObject(List(JField("objectID", JString("16")), JField("name", JString("r16")))),
+            JObject(List(JField("objectID", JString("17")), JField("name", JString("r17")))),
+            JObject(List(JField("objectID", JString("18")), JField("name", JString("r18")))),
+            JObject(List(JField("objectID", JString("19")), JField("name", JString("r19")))),
+            JObject(List(JField("objectID", JString("20")), JField("name", JString("r20")))),
+            JObject(List(JField("objectID", JString("21")), JField("name", JString("r21")))),
+            JObject(List(JField("objectID", JString("22")), JField("name", JString("r22")))),
+            JObject(List(JField("objectID", JString("23")), JField("name", JString("r23")))),
+            JObject(List(JField("objectID", JString("24")), JField("name", JString("r24")))),
+            JObject(List(JField("objectID", JString("25")), JField("name", JString("r25"))))
+          ),
+          waitForTasks = true,
+          batchSize = 10,
+          requestOptions = Some(
+            RequestOptions
+              .builder()
+              .withHeader("x-algolia-user-id", "test-user")
+              .build()
+          )
+        ),
+        Duration.Inf
       )
     }
   }

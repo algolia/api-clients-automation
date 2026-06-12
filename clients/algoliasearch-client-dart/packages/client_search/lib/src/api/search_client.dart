@@ -63,6 +63,8 @@ import 'package:algolia_client_search/src/model/update_api_key_response.dart';
 import 'package:algolia_client_search/src/model/updated_at_response.dart';
 import 'package:algolia_client_search/src/model/updated_at_with_object_id_response.dart';
 import 'package:algolia_client_search/src/model/user_id.dart';
+import 'package:algolia_client_ingestion/algolia_client_ingestion.dart'
+    as ingestion;
 
 final class SearchClient implements ApiClient {
   @override
@@ -70,15 +72,34 @@ final class SearchClient implements ApiClient {
 
   final RetryStrategy _retryStrategy;
 
+  final String _appId;
+  final String _apiKey;
+  ingestion.IngestionClient? _ingestionTransporter;
+
   SearchClient({
     required String appId,
     required String apiKey,
     this.options = const ClientOptions(),
-  }) : _retryStrategy = RetryStrategy.create(
+    TransformationOptions? transformationOptions,
+  })  : _appId = appId,
+        _apiKey = apiKey,
+        _retryStrategy = RetryStrategy.create(
           segment: AgentSegment(value: "Search", version: packageVersion),
           appId: appId,
           apiKey: apiKey,
-          options: options,
+          options: ClientOptions(
+            connectTimeout: Duration(milliseconds: 2000),
+            readTimeout: Duration(milliseconds: 5000),
+            writeTimeout: Duration(milliseconds: 30000),
+            hosts: options.hosts,
+            headers: options.headers,
+            agentSegments: options.agentSegments,
+            logger: options.logger,
+            requester: options.requester,
+            interceptors: options.interceptors,
+            httpClientAdapter: options.httpClientAdapter,
+            compression: options.compression,
+          ),
           defaultHosts: () =>
               [
                 Host(url: '$appId-dsn.algolia.net', callType: CallType.read),
@@ -92,12 +113,36 @@ final class SearchClient implements ApiClient {
         ) {
     assert(appId.isNotEmpty, '`appId` is missing.');
     assert(apiKey.isNotEmpty, '`apiKey` is missing.');
+    if (transformationOptions != null) {
+      _ingestionTransporter = _buildIngestionTransporter(transformationOptions);
+    }
   }
 
   /// Allows to switch the API key used to authenticate requests.
   @override
   void setClientApiKey({required String apiKey}) {
     _retryStrategy.requester.setClientApiKey(apiKey);
+  }
+
+  /// Sets (or replaces) the ingestion transporter used by `*WithTransformation` helpers.
+  /// The new transporter is built from [transformationOptions]; any previously created transporter is disposed.
+  void setTransformationOptions(TransformationOptions transformationOptions) {
+    final previous = _ingestionTransporter;
+    _ingestionTransporter = _buildIngestionTransporter(transformationOptions);
+    previous?.dispose();
+  }
+
+  /// The ingestion transporter used by `*WithTransformation` helpers, or `null` if not configured.
+  ingestion.IngestionClient? get ingestionTransporter => _ingestionTransporter;
+
+  ingestion.IngestionClient _buildIngestionTransporter(
+      TransformationOptions opts) {
+    return ingestion.IngestionClient(
+      appId: _appId,
+      apiKey: _apiKey,
+      region: opts.region,
+      options: opts.ingestionClientOptions ?? const ClientOptions(),
+    );
   }
 
   /// Creates a new API key with specific permissions and restrictions.
@@ -516,6 +561,7 @@ final class SearchClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
+    if (response == null) return AlgoliaNoResponse();
     return deserialize<Object, Object>(
       response,
       'Object',
@@ -549,6 +595,7 @@ final class SearchClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
+    if (response == null) return AlgoliaNoResponse();
     return deserialize<Object, Object>(
       response,
       'Object',
@@ -585,6 +632,7 @@ final class SearchClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
+    if (response == null) return AlgoliaNoResponse();
     return deserialize<Object, Object>(
       response,
       'Object',
@@ -621,6 +669,7 @@ final class SearchClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
+    if (response == null) return AlgoliaNoResponse();
     return deserialize<Object, Object>(
       response,
       'Object',
@@ -2337,5 +2386,8 @@ final class SearchClient implements ApiClient {
   }
 
   @override
-  void dispose() => _retryStrategy.dispose();
+  void dispose() {
+    _retryStrategy.dispose();
+    _ingestionTransporter?.dispose();
+  }
 }

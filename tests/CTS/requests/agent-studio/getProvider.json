@@ -1,0 +1,30 @@
+[
+  {
+    "testName": "getProvider",
+    "parameters": {
+      "providerId": "c2905529-b933-4b69-87ec-75f9829d5f59"
+    },
+    "request": {
+      "path": "/1/providers/c2905529-b933-4b69-87ec-75f9829d5f59",
+      "method": "GET"
+    }
+  },
+  {
+    "testName": "e2e get provider",
+    "parameters": {
+      "providerId": "c2905529-b933-4b69-87ec-75f9829d5f59"
+    },
+    "request": {
+      "path": "/1/providers/c2905529-b933-4b69-87ec-75f9829d5f59",
+      "method": "GET"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "id": "c2905529-b933-4b69-87ec-75f9829d5f59",
+        "name": "cts_e2e_provider",
+        "providerName": "openai"
+      }
+    }
+  }
+]

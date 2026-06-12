@@ -533,7 +533,9 @@ void main() {
               body: DictionaryEntry(
                 objectID: "1",
                 language: SupportedLanguage.fromJson("en"),
-                additionalProperties: {'additional': 'try me'},
+                additionalProperties: {
+                  'additional': "try me",
+                },
               ),
             ),
           ],
@@ -1748,6 +1750,27 @@ void main() {
       ),
       intercept: (request) {
         expectPath(request.path, '/1/indexes/theIndexName/task/123');
+        expect(request.method, 'get');
+        expect(request.body, null);
+      },
+    ),
+  );
+
+  // getTask
+  test(
+    'getTask with taskID 0',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getTask(
+        indexName: "theIndexName",
+        taskID: 0,
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/task/0');
         expect(request.method, 'get');
         expect(request.body, null);
       },
@@ -5636,13 +5659,14 @@ void main() {
       call: (client) => client.searchSingleIndex(
         indexName: "indexName",
         searchParams: SearchParamsObject(
+          query: "test",
           getRankingInfo: true,
         ),
       ),
       intercept: (request) {
         expectPath(request.path, '/1/indexes/indexName/query');
         expect(request.method, 'post');
-        expectBody(request.body, """{"getRankingInfo":true}""");
+        expectBody(request.body, """{"query":"test","getRankingInfo":true}""");
       },
     ),
   );

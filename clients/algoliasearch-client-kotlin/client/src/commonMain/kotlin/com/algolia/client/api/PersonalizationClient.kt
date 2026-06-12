@@ -18,7 +18,7 @@ public class PersonalizationClient(
   override var apiKey: String,
   public val region: String,
   override val options: ClientOptions = ClientOptions(),
-) : ApiClient {
+) : ApiClient, kotlin.AutoCloseable {
 
   init {
     require(appId.isNotBlank()) { "`appId` is missing." }
@@ -42,6 +42,13 @@ public class PersonalizationClient(
       val url = "personalization.$region.algolia.com"
       listOf(Host(url))
     }
+
+  /** Closes the client and releases its underlying resources (the HTTP transport). */
+  override fun close() {
+    // Requester does not require AutoCloseable (a custom requester may not own
+    // closeable resources); close only if the concrete implementation is closeable.
+    (requester as? kotlin.AutoCloseable)?.close()
+  }
 
   /**
    * This method lets you send requests to the Algolia REST API.
@@ -156,7 +163,10 @@ public class PersonalizationClient(
       "Parameter `userToken` is required when calling `deleteUserProfile`."
     }
     val requestConfig =
-      RequestConfig(method = RequestMethod.DELETE, path = listOf("1", "profiles", "$userToken"))
+      RequestConfig(
+        method = RequestMethod.DELETE,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "profiles", "$userToken"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -172,7 +182,11 @@ public class PersonalizationClient(
     requestOptions: RequestOptions? = null
   ): PersonalizationStrategyParams {
     val requestConfig =
-      RequestConfig(method = RequestMethod.GET, path = listOf("1", "strategies", "personalization"))
+      RequestConfig(
+        method = RequestMethod.GET,
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("1", "strategies", "personalization"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -196,7 +210,9 @@ public class PersonalizationClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("1", "profiles", "personalization", "$userToken"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "profiles", "personalization", "$userToken"),
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
@@ -217,7 +233,8 @@ public class PersonalizationClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "strategies", "personalization"),
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("1", "strategies", "personalization"),
         body = personalizationStrategyParams,
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)

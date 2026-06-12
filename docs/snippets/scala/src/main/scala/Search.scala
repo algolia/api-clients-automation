@@ -1927,7 +1927,7 @@ class SnippetSearchClient {
     * getTask
     */
   def snippetForSearchClientGetTask(): Unit = {
-    // >SEPARATOR getTask default
+    // >SEPARATOR getTask getTask
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -1936,6 +1936,29 @@ class SnippetSearchClient {
       client.getTask(
         indexName = "<YOUR_INDEX_NAME>",
         taskID = 123L
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the getTask method.
+    *
+    * getTask with taskID 0
+    */
+  def snippetForSearchClientGetTask1(): Unit = {
+    // >SEPARATOR getTask getTask with taskID 0
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.getTask(
+        indexName = "<YOUR_INDEX_NAME>",
+        taskID = 0L
       ),
       Duration(100, "sec")
     )
@@ -2988,7 +3011,7 @@ class SnippetSearchClient {
     * call saveObjectsWithTransformation without error
     */
   def snippetForSearchClientSaveObjectsWithTransformation(): Unit = {
-    // >SEPARATOR saveObjectsWithTransformation default
+    // >SEPARATOR saveObjectsWithTransformation call saveObjectsWithTransformation without error
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -3001,6 +3024,63 @@ class SnippetSearchClient {
           JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit"))))
         ),
         waitForTasks = true
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveObjectsWithTransformation method.
+    *
+    * saveObjectsWithTransformation polls every task when waitForTasks is true
+    */
+  def snippetForSearchClientSaveObjectsWithTransformation1(): Unit = {
+    // >SEPARATOR saveObjectsWithTransformation saveObjectsWithTransformation polls every task when waitForTasks is true
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveObjectsWithTransformation(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects = Seq(
+          JObject(List(JField("objectID", JString("1")), JField("name", JString("r1")))),
+          JObject(List(JField("objectID", JString("2")), JField("name", JString("r2")))),
+          JObject(List(JField("objectID", JString("3")), JField("name", JString("r3")))),
+          JObject(List(JField("objectID", JString("4")), JField("name", JString("r4")))),
+          JObject(List(JField("objectID", JString("5")), JField("name", JString("r5")))),
+          JObject(List(JField("objectID", JString("6")), JField("name", JString("r6")))),
+          JObject(List(JField("objectID", JString("7")), JField("name", JString("r7")))),
+          JObject(List(JField("objectID", JString("8")), JField("name", JString("r8")))),
+          JObject(List(JField("objectID", JString("9")), JField("name", JString("r9")))),
+          JObject(List(JField("objectID", JString("10")), JField("name", JString("r10")))),
+          JObject(List(JField("objectID", JString("11")), JField("name", JString("r11")))),
+          JObject(List(JField("objectID", JString("12")), JField("name", JString("r12")))),
+          JObject(List(JField("objectID", JString("13")), JField("name", JString("r13")))),
+          JObject(List(JField("objectID", JString("14")), JField("name", JString("r14")))),
+          JObject(List(JField("objectID", JString("15")), JField("name", JString("r15")))),
+          JObject(List(JField("objectID", JString("16")), JField("name", JString("r16")))),
+          JObject(List(JField("objectID", JString("17")), JField("name", JString("r17")))),
+          JObject(List(JField("objectID", JString("18")), JField("name", JString("r18")))),
+          JObject(List(JField("objectID", JString("19")), JField("name", JString("r19")))),
+          JObject(List(JField("objectID", JString("20")), JField("name", JString("r20")))),
+          JObject(List(JField("objectID", JString("21")), JField("name", JString("r21")))),
+          JObject(List(JField("objectID", JString("22")), JField("name", JString("r22")))),
+          JObject(List(JField("objectID", JString("23")), JField("name", JString("r23")))),
+          JObject(List(JField("objectID", JString("24")), JField("name", JString("r24")))),
+          JObject(List(JField("objectID", JString("25")), JField("name", JString("r25"))))
+        ),
+        waitForTasks = true,
+        batchSize = 10,
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("x-algolia-user-id", "test-user")
+            .build()
+        )
       ),
       Duration(100, "sec")
     )
@@ -6462,6 +6542,7 @@ class SnippetSearchClient {
         indexName = "<YOUR_INDEX_NAME>",
         searchParams = Some(
           SearchParamsObject(
+            query = Some("test"),
             getRankingInfo = Some(true)
           )
         )

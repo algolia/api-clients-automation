@@ -20,7 +20,11 @@ dependencies:
   {{#isAlgoliasearchClient}}
   algolia_client_search: ^{{{searchVersion}}}
   algolia_client_insights: ^{{{insightsVersion}}}
+  algolia_client_ingestion: ^{{{coreVersion}}}
   {{/isAlgoliasearchClient}}
+  {{#isSearchClient}}
+  algolia_client_ingestion: ^{{{coreVersion}}}
+  {{/isSearchClient}}
   json_annotation: ^4.8.1
   collection: ^1.17.1
 

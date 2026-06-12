@@ -1625,6 +1625,18 @@ class SearchClientRequestsTests {
   }
 
   @Test
+  @DisplayName("getTask with taskID 0")
+  void getTaskTest1() {
+    assertDoesNotThrow(() -> {
+      client.getTask("theIndexName", 0L);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/task/0", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
   @DisplayName("getTopUserIds")
   void getTopUserIdsTest() {
     assertDoesNotThrow(() -> {
@@ -4599,12 +4611,12 @@ class SearchClientRequestsTests {
   @DisplayName("getRankingInfo")
   void searchSingleIndexTest40() {
     assertDoesNotThrow(() -> {
-      client.searchSingleIndex("indexName", new SearchParamsObject().setGetRankingInfo(true), Hit.class);
+      client.searchSingleIndex("indexName", new SearchParamsObject().setQuery("test").setGetRankingInfo(true), Hit.class);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/query", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"getRankingInfo\":true}", req.body, JSONCompareMode.STRICT));
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"query\":\"test\",\"getRankingInfo\":true}", req.body, JSONCompareMode.STRICT));
   }
 
   @Test

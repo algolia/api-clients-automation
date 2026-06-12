@@ -17,7 +17,7 @@ public class RecommendClient(
   override val appId: String,
   override var apiKey: String,
   override val options: ClientOptions = ClientOptions(),
-) : ApiClient {
+) : ApiClient, kotlin.AutoCloseable {
 
   init {
     require(appId.isNotBlank()) { "`appId` is missing." }
@@ -45,6 +45,13 @@ public class RecommendClient(
           )
           .apply { shuffle() }
     }
+
+  /** Closes the client and releases its underlying resources (the HTTP transport). */
+  override fun close() {
+    // Requester does not require AutoCloseable (a custom requester may not own
+    // closeable resources); close only if the concrete implementation is closeable.
+    (requester as? kotlin.AutoCloseable)?.close()
+  }
 
   /**
    * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
@@ -80,7 +87,9 @@ public class RecommendClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "$indexName", "$model", "recommend", "rules", "batch"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "$model", "recommend", "rules", "batch"),
         body = recommendRule,
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -207,7 +216,9 @@ public class RecommendClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.DELETE,
-        path = listOf("1", "indexes", "$indexName", "$model", "recommend", "rules", "$objectID"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "$model", "recommend", "rules", "$objectID"),
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
@@ -239,7 +250,9 @@ public class RecommendClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("1", "indexes", "$indexName", "$model", "recommend", "rules", "$objectID"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "$model", "recommend", "rules", "$objectID"),
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
@@ -270,7 +283,9 @@ public class RecommendClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("1", "indexes", "$indexName", "$model", "task", "$taskID"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "$model", "task", "$taskID"),
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
@@ -291,7 +306,8 @@ public class RecommendClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "*", "recommendations"),
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "*", "recommendations"),
         isRead = true,
         body = getRecommendationsParams,
       )
@@ -323,7 +339,9 @@ public class RecommendClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "indexes", "$indexName", "$model", "recommend", "rules", "search"),
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "$model", "recommend", "rules", "search"),
         isRead = true,
         body = searchRecommendRulesParams,
       )

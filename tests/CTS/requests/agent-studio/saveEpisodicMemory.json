@@ -1,0 +1,25 @@
+[
+  {
+    "testName": "saveEpisodicMemory",
+    "parameters": {
+      "observation": "User asked about marathon shoes",
+      "thoughts": "User seems to be a runner with overpronation issues",
+      "action": "Recommended stability shoes with cushioning",
+      "result": "User found the suggestion helpful",
+      "text": "Recommended stability running shoes for marathon runner with overpronation",
+      "rawExtract": "User: What running shoes for marathons? Assistant: Stability shoes with cushioning."
+    },
+    "request": {
+      "path": "/1/memory/episodic",
+      "method": "POST",
+      "body": {
+        "observation": "User asked about marathon shoes",
+        "thoughts": "User seems to be a runner with overpronation issues",
+        "action": "Recommended stability shoes with cushioning",
+        "result": "User found the suggestion helpful",
+        "text": "Recommended stability running shoes for marathon runner with overpronation",
+        "rawExtract": "User: What running shoes for marathons? Assistant: Stability shoes with cushioning."
+      }
+    }
+  }
+]

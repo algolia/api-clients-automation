@@ -1,0 +1,27 @@
+post:
+  tags:
+    - Feedback
+  operationId: createFeedback
+  x-acl:
+    - search
+  summary: Create Feedback
+  description: Create new feedback entry.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/FeedbackCreationRequest.yml#/FeedbackCreationRequest'
+  responses:
+    '201':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/FeedbackResponse.yml#/FeedbackResponse'
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

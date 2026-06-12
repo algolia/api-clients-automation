@@ -18,7 +18,7 @@ public class AnalyticsClient(
   override var apiKey: String,
   public val region: String? = null,
   override val options: ClientOptions = ClientOptions(),
-) : ApiClient {
+) : ApiClient, kotlin.AutoCloseable {
 
   init {
     require(appId.isNotBlank()) { "`appId` is missing." }
@@ -42,6 +42,13 @@ public class AnalyticsClient(
       val url = if (region == null) "analytics.algolia.com" else "analytics.$region.algolia.com"
       listOf(Host(url))
     }
+
+  /** Closes the client and releases its underlying resources (the HTTP transport). */
+  override fun close() {
+    // Requester does not require AutoCloseable (a custom requester may not own
+    // closeable resources); close only if the concrete implementation is closeable.
+    (requester as? kotlin.AutoCloseable)?.close()
+  }
 
   /**
    * This method lets you send requests to the Algolia REST API.
@@ -172,7 +179,8 @@ public class AnalyticsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "conversions", "addToCartRate"),
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("2", "conversions", "addToCartRate"),
         query =
           buildMap {
             put("index", index)
@@ -217,7 +225,8 @@ public class AnalyticsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "clicks", "averageClickPosition"),
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("2", "clicks", "averageClickPosition"),
         query =
           buildMap {
             put("index", index)
@@ -260,7 +269,7 @@ public class AnalyticsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "clicks", "positions"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "clicks", "positions"),
         query =
           buildMap {
             put("index", index)
@@ -305,7 +314,7 @@ public class AnalyticsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "clicks", "clickThroughRate"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "clicks", "clickThroughRate"),
         query =
           buildMap {
             put("index", index)
@@ -350,7 +359,8 @@ public class AnalyticsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "conversions", "conversionRate"),
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("2", "conversions", "conversionRate"),
         query =
           buildMap {
             put("index", index)
@@ -389,7 +399,7 @@ public class AnalyticsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "searches", "noClickRate"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "searches", "noClickRate"),
         query =
           buildMap {
             put("index", index)
@@ -429,7 +439,7 @@ public class AnalyticsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "searches", "noResultRate"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "searches", "noResultRate"),
         query =
           buildMap {
             put("index", index)
@@ -475,7 +485,8 @@ public class AnalyticsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "conversions", "purchaseRate"),
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("2", "conversions", "purchaseRate"),
         query =
           buildMap {
             put("index", index)
@@ -517,7 +528,7 @@ public class AnalyticsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "conversions", "revenue"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "conversions", "revenue"),
         query =
           buildMap {
             put("index", index)
@@ -555,7 +566,7 @@ public class AnalyticsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "searches", "count"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "searches", "count"),
         query =
           buildMap {
             put("index", index)
@@ -600,7 +611,7 @@ public class AnalyticsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "searches", "noClicks"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "searches", "noClicks"),
         query =
           buildMap {
             put("index", index)
@@ -645,7 +656,7 @@ public class AnalyticsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "searches", "noResults"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "searches", "noResults"),
         query =
           buildMap {
             put("index", index)
@@ -678,7 +689,7 @@ public class AnalyticsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "status"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "status"),
         query = buildMap { put("index", index) },
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -713,7 +724,7 @@ public class AnalyticsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "countries"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "countries"),
         query =
           buildMap {
             put("index", index)
@@ -761,7 +772,7 @@ public class AnalyticsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "filters"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "filters"),
         query =
           buildMap {
             put("index", index)
@@ -815,7 +826,7 @@ public class AnalyticsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "filters", "$attribute"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "filters", "$attribute"),
         query =
           buildMap {
             put("index", index)
@@ -866,7 +877,7 @@ public class AnalyticsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "filters", "noResults"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "filters", "noResults"),
         query =
           buildMap {
             put("index", index)
@@ -929,7 +940,7 @@ public class AnalyticsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "hits"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "hits"),
         query =
           buildMap {
             put("index", index)
@@ -998,7 +1009,7 @@ public class AnalyticsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "searches"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "searches"),
         query =
           buildMap {
             put("index", index)
@@ -1046,7 +1057,7 @@ public class AnalyticsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "users", "count"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "users", "count"),
         query =
           buildMap {
             put("index", index)

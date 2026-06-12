@@ -1,0 +1,32 @@
+{{> snippets/import}}
+import algoliasearch.search.SearchParamsObject
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContextExecutor}
+
+object Compression {
+  def main(args: Array[String]): Unit = {
+    implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
+
+    // Initialize the client with gzip compression enabled
+    // Compression reduces the size of request bodies sent to Algolia
+    val client = {{client}}(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      clientOptions = ClientOptions
+        .builder()
+        .withCompressionType(CompressionType.Gzip)
+        .build()
+    )
+
+    // Search with compressed request body
+    try {
+      val result = Await.result(
+        {{#dynamicSnippet}}searchWithCompression{{/dynamicSnippet}},
+        Duration(100, "sec")
+      )
+      println(result)
+    } catch {
+      case e: Exception => println(e)
+    }
+  }
+}

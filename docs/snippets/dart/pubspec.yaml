@@ -6,6 +6,7 @@ environment:
 
 dependencies:
   algolia_client_abtesting_v3: ^1.0.0
+  algolia_client_agent_studio: ^1.0.0
   algolia_client_composition: ^1.0.0
   algolia_client_insights: ^1.0.0
   algolia_client_recommend: ^1.0.0
@@ -18,6 +19,7 @@ dependencies:
   test_api: ^0.7.3
 
   algolia_client_core: any
+  algolia_client_ingestion: any
 
 dev_dependencies:
   lints: ^6.0.0

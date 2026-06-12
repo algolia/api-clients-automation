@@ -1,0 +1,33 @@
+{{#isAgentStudioClient}}
+/**
+ * Helper: Forges a secured user token (JWT) for Agent Studio authenticated requests.
+ *
+ * @param secretKey The secret key to sign the token with.
+ * @param secretKeyId The key ID to include in the JWT header (kid).
+ * @param userId The user identifier to include as the subject (sub) claim.
+ * @param expiresIn The token expiration in seconds from now. Defaults to 86400 (24 hours).
+ * @return The signed JWT token.
+ */
+public String forgeSecuredUserToken(String secretKey, String secretKeyId, String userId, int expiresIn) {
+  try {
+    String header = base64UrlEncode(String.format("{\"alg\":\"HS256\",\"typ\":\"JWT\",\"kid\":\"%s\"}", secretKeyId).getBytes(java.nio.charset.StandardCharsets.UTF_8));
+    String payload = base64UrlEncode(String.format("{\"sub\":\"%s\",\"exp\":%d}", userId, Instant.now().getEpochSecond() + expiresIn).getBytes(java.nio.charset.StandardCharsets.UTF_8));
+
+    Mac mac = Mac.getInstance("HmacSHA256");
+    mac.init(new SecretKeySpec(secretKey.getBytes(java.nio.charset.StandardCharsets.UTF_8), "HmacSHA256"));
+    String signature = base64UrlEncode(mac.doFinal((header + "." + payload).getBytes(java.nio.charset.StandardCharsets.UTF_8)));
+
+    return header + "." + payload + "." + signature;
+  } catch (NoSuchAlgorithmException | InvalidKeyException e) {
+    throw new AlgoliaRuntimeException("Failed to forge secured user token", e);
+  }
+}
+
+public String forgeSecuredUserToken(String secretKey, String secretKeyId, String userId) {
+  return forgeSecuredUserToken(secretKey, secretKeyId, userId, 24 * 3600);
+}
+
+private static String base64UrlEncode(byte[] data) {
+  return Base64.getUrlEncoder().withoutPadding().encodeToString(data);
+}
+{{/isAgentStudioClient}}

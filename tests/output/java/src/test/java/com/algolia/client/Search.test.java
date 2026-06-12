@@ -433,7 +433,7 @@ class SearchClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.39.0\\).*";
+      String regexp = "^Algolia for Java \\(4.40.0\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
@@ -655,6 +655,30 @@ class SearchClientClientTests {
       });
       assertEquals("Status Code: 403 - {\"message\":\"Invalid API key\"}", exception.getMessage());
     }
+  }
+
+  @Test
+  @DisplayName("handles 204 No Content responses correctly")
+  void noContentTest0() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6692
+          )
+        ),
+        false
+      )
+    );
+
+    Object res = client.customDelete("1/test/no-content");
+
+    assertEquals(null, res);
   }
 
   @Test
@@ -1436,6 +1460,201 @@ class SearchClientClientTests {
           json.writeValueAsString(res),
           JSONCompareMode.STRICT
         )
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("saveObjectsWithTransformation polls every task when waitForTasks is true")
+  void saveObjectsWithTransformationTest1() {
+    ClientOptions ingestionOptions = ClientOptions.builder()
+      .setHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6693
+          )
+        )
+      )
+      .build();
+    TransformationOptions transformationOptions = new TransformationOptions("us", ingestionOptions);
+    SearchClient client = SearchClient.withTransformation(
+      "test-app-id",
+      "test-api-key",
+      transformationOptions,
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6693
+          )
+        ),
+        false
+      )
+    );
+
+    assertDoesNotThrow(() -> {
+      List res = client.saveObjectsWithTransformation(
+        "cts_e2e_chunked_push_wait_java",
+        Arrays.asList(
+          new HashMap() {
+            {
+              put("objectID", "1");
+              put("name", "r1");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "2");
+              put("name", "r2");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "3");
+              put("name", "r3");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "4");
+              put("name", "r4");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "5");
+              put("name", "r5");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "6");
+              put("name", "r6");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "7");
+              put("name", "r7");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "8");
+              put("name", "r8");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "9");
+              put("name", "r9");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "10");
+              put("name", "r10");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "11");
+              put("name", "r11");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "12");
+              put("name", "r12");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "13");
+              put("name", "r13");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "14");
+              put("name", "r14");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "15");
+              put("name", "r15");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "16");
+              put("name", "r16");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "17");
+              put("name", "r17");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "18");
+              put("name", "r18");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "19");
+              put("name", "r19");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "20");
+              put("name", "r20");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "21");
+              put("name", "r21");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "22");
+              put("name", "r22");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "23");
+              put("name", "r23");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "24");
+              put("name", "r24");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "25");
+              put("name", "r25");
+            }
+          }
+        ),
+        true,
+        10,
+        new RequestOptions().addExtraHeader("x-algolia-user-id", "test-user")
       );
     });
   }

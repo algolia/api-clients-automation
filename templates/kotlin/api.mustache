@@ -15,6 +15,12 @@ import {{modelPackage}}.RequestBody
 {{/isCompositionClient}}
 
 {{#operations}}
+{{#isAgentStudioClient}}
+/**
+ * Beta: The Agent Studio API is not yet stable and may change without notice.
+ * @see [Agent Studio API docs](https://www.algolia.com/doc/rest-api/agent-studio)
+ */
+{{/isAgentStudioClient}}
 public class {{classname}}(
   override val appId: String,
   override var apiKey: String,
@@ -22,7 +28,7 @@ public class {{classname}}(
   public val region: String{{#fallbackToAliasHost}}? = null{{/fallbackToAliasHost}},
   {{/hasRegionalHost}}
   override val options: ClientOptions = ClientOptions(),
-) : ApiClient {
+) : ApiClient, kotlin.AutoCloseable {
 
   init {
       require(appId.isNotBlank()) { "`appId` is missing." }
@@ -60,6 +66,26 @@ public class {{classname}}(
   {{/hostsWithoutVariables.size}}
   }
 
+  /**
+   * Closes the client and releases its underlying resources (the HTTP transport{{#isSearchClient}} and, if set,
+   * the ingestion transporter{{/isSearchClient}}).
+   */
+  override fun close() {
+    {{#isSearchClient}}
+    // Release the ingestion transporter first, but always close the main requester
+    // (the critical resource) even if closing the ingestion transporter throws.
+    try {
+      ingestionTransporter?.close()
+    } finally {
+    {{/isSearchClient}}
+      // Requester does not require AutoCloseable (a custom requester may not own
+      // closeable resources); close only if the concrete implementation is closeable.
+      (requester as? kotlin.AutoCloseable)?.close()
+    {{#isSearchClient}}
+    }
+    {{/isSearchClient}}
+  }
+
   {{#isSearchClient}}
   /**
    * Ingestion transporter used by the `*WithTransformation` helpers on this client. Set via
@@ -82,12 +108,14 @@ public class {{classname}}(
    * cause that operation to fail — callers SHOULD avoid in-flight reconfiguration.
    */
   public fun setTransformationOptions(transformationOptions: TransformationOptions) {
+    val previous = ingestionTransporter
     ingestionTransporter = IngestionClient(
       appId = appId,
       apiKey = apiKey,
       region = transformationOptions.region,
       options = transformationOptions.clientOptions ?: ClientOptions(),
     )
+    previous?.close()
   }
 
   public companion object {
@@ -137,7 +165,7 @@ public class {{classname}}(
       {{/requiredParams}}
       val requestConfig = RequestConfig(
           method = RequestMethod.{{httpMethod}},
-          path = {{#vendorExtensions}}{{#x-is-custom-request}}"{{{path}}}".replace("{path}", path){{/x-is-custom-request}}{{^x-is-custom-request}}listOf({{#pathSegments}}{{{.}}}, {{/pathSegments}}){{/x-is-custom-request}}{{/vendorExtensions}},
+          path = {{#vendorExtensions}}{{#x-is-custom-request}}"{{{serverPathSuffix}}}{{{path}}}".replace("{path}", path){{/x-is-custom-request}}{{^x-is-custom-request}}"{{{serverPathSuffix}}}".split("/").filter { it.isNotBlank() } + listOf({{#pathSegments}}{{{.}}}, {{/pathSegments}}){{/x-is-custom-request}}{{/vendorExtensions}},
           {{#vendorExtensions.x-use-read-transporter}}
           isRead = {{{vendorExtensions.x-use-read-transporter}}},
           {{/vendorExtensions.x-use-read-transporter}}
@@ -172,5 +200,9 @@ public class {{classname}}(
       )
   }
   {{/operation}}
+
+{{#isAgentStudioClient}}
+{{> agent_studio_helpers}}
+{{/isAgentStudioClient}}
 }
 {{/operations}}

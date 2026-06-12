@@ -18,7 +18,7 @@ public class AbtestingClient(
   override var apiKey: String,
   public val region: String? = null,
   override val options: ClientOptions = ClientOptions(),
-) : ApiClient {
+) : ApiClient, kotlin.AutoCloseable {
 
   init {
     require(appId.isNotBlank()) { "`appId` is missing." }
@@ -43,6 +43,13 @@ public class AbtestingClient(
       listOf(Host(url))
     }
 
+  /** Closes the client and releases its underlying resources (the HTTP transport). */
+  override fun close() {
+    // Requester does not require AutoCloseable (a custom requester may not own
+    // closeable resources); close only if the concrete implementation is closeable.
+    (requester as? kotlin.AutoCloseable)?.close()
+  }
+
   /**
    * Creates a new A/B test.
    *
@@ -59,7 +66,7 @@ public class AbtestingClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("2", "abtests"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "abtests"),
         body = addABTestsRequest,
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -170,7 +177,10 @@ public class AbtestingClient(
    */
   public suspend fun deleteABTest(id: Int, requestOptions: RequestOptions? = null): ABTestResponse {
     val requestConfig =
-      RequestConfig(method = RequestMethod.DELETE, path = listOf("2", "abtests", "$id"))
+      RequestConfig(
+        method = RequestMethod.DELETE,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "abtests", "$id"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -191,7 +201,7 @@ public class AbtestingClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("2", "abtests", "estimate"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "abtests", "estimate"),
         body = estimateABTestRequest,
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -208,7 +218,10 @@ public class AbtestingClient(
    */
   public suspend fun getABTest(id: Int, requestOptions: RequestOptions? = null): ABTest {
     val requestConfig =
-      RequestConfig(method = RequestMethod.GET, path = listOf("2", "abtests", "$id"))
+      RequestConfig(
+        method = RequestMethod.GET,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "abtests", "$id"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -236,7 +249,7 @@ public class AbtestingClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("2", "abtests"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "abtests"),
         query =
           buildMap {
             offset?.let { put("offset", it) }
@@ -259,7 +272,10 @@ public class AbtestingClient(
    */
   public suspend fun stopABTest(id: Int, requestOptions: RequestOptions? = null): ABTestResponse {
     val requestConfig =
-      RequestConfig(method = RequestMethod.POST, path = listOf("2", "abtests", "$id", "stop"))
+      RequestConfig(
+        method = RequestMethod.POST,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "abtests", "$id", "stop"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 }

@@ -47,7 +47,7 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
       require.NoError(t, err)
 
       {{#request}}
-      require.Equal(t, "{{path}}", echo.Path)
+      require.Equal(t, "{{{serverPathSuffix}}}{{path}}", echo.Path)
       require.Equal(t, "{{{method}}}", echo.Method)
 
       {{#body}}

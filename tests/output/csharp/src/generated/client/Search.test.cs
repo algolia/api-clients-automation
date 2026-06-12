@@ -441,7 +441,7 @@ public class SearchClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.43.0\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.44.0\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }
@@ -691,6 +691,34 @@ public class SearchClientTests
       "{\"message\":\"Invalid API key\"}".ToLowerInvariant(),
       _ex.Message.ToLowerInvariant()
     );
+  }
+
+  [Fact(DisplayName = "handles 204 No Content responses correctly")]
+  public async Task NoContentTest0()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6692,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.CustomDeleteAsync("1/test/no-content");
+
+    Assert.Equal(null, res);
   }
 
   [Fact(DisplayName = "client throws with invalid parameters")]
@@ -1395,6 +1423,87 @@ public class SearchClientTests
         "[{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_csharp\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82925\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}]",
         JsonSerializer.Serialize(res, JsonConfig.Options),
         new JsonDiffConfig(false)
+      );
+    }
+  }
+
+  [Fact(DisplayName = "saveObjectsWithTransformation polls every task when waitForTasks is true")]
+  public async Task SaveObjectsWithTransformationTest1()
+  {
+    var transformationOptions = new TransformationOptions("us")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6693,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = SearchClient.WithTransformation(
+      new SearchConfig("test-app-id", "test-api-key")
+      {
+        CustomHosts = new List<StatefulHost>
+        {
+          new()
+          {
+            Scheme = HttpScheme.Http,
+            Url =
+              Environment.GetEnvironmentVariable("CI") == "true"
+                ? "localhost"
+                : "host.docker.internal",
+            Port = 6693,
+            Up = true,
+            LastUse = DateTime.UtcNow,
+            Accept = CallType.Read | CallType.Write,
+          },
+        },
+      },
+      transformationOptions
+    );
+
+    {
+      var res = await client.SaveObjectsWithTransformationAsync(
+        "cts_e2e_chunked_push_wait_csharp",
+        new List<Object>
+        {
+          new Dictionary<string, string> { { "objectID", "1" }, { "name", "r1" } },
+          new Dictionary<string, string> { { "objectID", "2" }, { "name", "r2" } },
+          new Dictionary<string, string> { { "objectID", "3" }, { "name", "r3" } },
+          new Dictionary<string, string> { { "objectID", "4" }, { "name", "r4" } },
+          new Dictionary<string, string> { { "objectID", "5" }, { "name", "r5" } },
+          new Dictionary<string, string> { { "objectID", "6" }, { "name", "r6" } },
+          new Dictionary<string, string> { { "objectID", "7" }, { "name", "r7" } },
+          new Dictionary<string, string> { { "objectID", "8" }, { "name", "r8" } },
+          new Dictionary<string, string> { { "objectID", "9" }, { "name", "r9" } },
+          new Dictionary<string, string> { { "objectID", "10" }, { "name", "r10" } },
+          new Dictionary<string, string> { { "objectID", "11" }, { "name", "r11" } },
+          new Dictionary<string, string> { { "objectID", "12" }, { "name", "r12" } },
+          new Dictionary<string, string> { { "objectID", "13" }, { "name", "r13" } },
+          new Dictionary<string, string> { { "objectID", "14" }, { "name", "r14" } },
+          new Dictionary<string, string> { { "objectID", "15" }, { "name", "r15" } },
+          new Dictionary<string, string> { { "objectID", "16" }, { "name", "r16" } },
+          new Dictionary<string, string> { { "objectID", "17" }, { "name", "r17" } },
+          new Dictionary<string, string> { { "objectID", "18" }, { "name", "r18" } },
+          new Dictionary<string, string> { { "objectID", "19" }, { "name", "r19" } },
+          new Dictionary<string, string> { { "objectID", "20" }, { "name", "r20" } },
+          new Dictionary<string, string> { { "objectID", "21" }, { "name", "r21" } },
+          new Dictionary<string, string> { { "objectID", "22" }, { "name", "r22" } },
+          new Dictionary<string, string> { { "objectID", "23" }, { "name", "r23" } },
+          new Dictionary<string, string> { { "objectID", "24" }, { "name", "r24" } },
+          new Dictionary<string, string> { { "objectID", "25" }, { "name", "r25" } },
+        },
+        true,
+        10,
+        new RequestOptionBuilder().AddExtraHeader("x-algolia-user-id", "test-user").Build()
       );
     }
   }

@@ -1,12 +1,15 @@
 // {{{generationBanner}}}
 
-export type {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}>{{#searchHelpers}} & SearchClientNodeHelpers{{/searchHelpers}};
+export type {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}>{{#searchHelpers}} & SearchClientNodeHelpers{{/searchHelpers}}{{#agentStudioHelpers}} & AgentStudioNodeHelpers{{/agentStudioHelpers}};
 
 import { gzipSync } from 'node:zlib';
 
 {{#searchHelpers}}
 import { createHmac } from 'node:crypto';
 {{/searchHelpers}}
+{{#agentStudioHelpers}}
+import { createHmac } from 'node:crypto';
+{{/agentStudioHelpers}}
 
 {{> client/builds/definition}}
   return {
@@ -31,5 +34,8 @@ import { createHmac } from 'node:crypto';
     {{> client/api/nodeHelpers}}
     {{> client/api/searchHelpers}}
     {{/searchHelpers}}
+    {{#agentStudioHelpers}}
+    {{> client/api/agentStudioHelpers}}
+    {{/agentStudioHelpers}}
   }
 }

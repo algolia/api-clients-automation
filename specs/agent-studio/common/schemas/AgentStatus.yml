@@ -1,0 +1,5 @@
+AgentStatus:
+  type: string
+  enum:
+    - draft
+    - published

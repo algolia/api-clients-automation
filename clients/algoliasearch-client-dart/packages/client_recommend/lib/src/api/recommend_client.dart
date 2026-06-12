@@ -28,7 +28,19 @@ final class RecommendClient implements ApiClient {
           segment: AgentSegment(value: "Recommend", version: packageVersion),
           appId: appId,
           apiKey: apiKey,
-          options: options,
+          options: ClientOptions(
+            connectTimeout: Duration(milliseconds: 2000),
+            readTimeout: Duration(milliseconds: 5000),
+            writeTimeout: Duration(milliseconds: 30000),
+            hosts: options.hosts,
+            headers: options.headers,
+            agentSegments: options.agentSegments,
+            logger: options.logger,
+            requester: options.requester,
+            interceptors: options.interceptors,
+            httpClientAdapter: options.httpClientAdapter,
+            compression: options.compression,
+          ),
           defaultHosts: () =>
               [
                 Host(url: '$appId-dsn.algolia.net', callType: CallType.read),
@@ -115,6 +127,7 @@ final class RecommendClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
+    if (response == null) return AlgoliaNoResponse();
     return deserialize<Object, Object>(
       response,
       'Object',
@@ -148,6 +161,7 @@ final class RecommendClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
+    if (response == null) return AlgoliaNoResponse();
     return deserialize<Object, Object>(
       response,
       'Object',
@@ -184,6 +198,7 @@ final class RecommendClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
+    if (response == null) return AlgoliaNoResponse();
     return deserialize<Object, Object>(
       response,
       'Object',
@@ -220,6 +235,7 @@ final class RecommendClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
+    if (response == null) return AlgoliaNoResponse();
     return deserialize<Object, Object>(
       response,
       'Object',
@@ -470,5 +486,7 @@ final class RecommendClient implements ApiClient {
   }
 
   @override
-  void dispose() => _retryStrategy.dispose();
+  void dispose() {
+    _retryStrategy.dispose();
+  }
 }

@@ -3,7 +3,7 @@ import 'package:algolia_client_search/algolia_client_search.dart';
 import 'package:algolia_test/algolia_test.dart';
 import 'package:test/test.dart';
 import 'package:test_api/hooks.dart';
-import 'dart:io' show Platform;
+import 'dart:io' as io;
 
 void main() {
   test('calls api with correct read host', () async {
@@ -12,6 +12,7 @@ void main() {
         appId: "test-app-id",
         apiKey: "test-api-key",
         options: ClientOptions(requester: requester));
+
     requester.setOnRequest((request) {
       expect(request.host.url, "test-app-id-dsn.algolia.net");
     });
@@ -30,6 +31,7 @@ void main() {
         appId: "test-app-id",
         apiKey: "test-api-key",
         options: ClientOptions(requester: requester));
+
     requester.setOnRequest((request) {
       expect(request.host.url, "test-app-id-dsn.algolia.net");
     });
@@ -48,6 +50,7 @@ void main() {
         appId: "test-app-id",
         apiKey: "test-api-key",
         options: ClientOptions(requester: requester));
+
     requester.setOnRequest((request) {
       expect(request.host.url, "test-app-id.algolia.net");
     });
@@ -68,17 +71,18 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6676',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6676',
               scheme: 'http'),
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6677',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6677',
               scheme: 'http'),
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6678',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6678',
               scheme: 'http'),
         ]));
+
     requester.setOnRequest((request) {});
     try {
       final res = await client.customGet(
@@ -98,9 +102,10 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6676',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6676',
               scheme: 'http'),
         ]));
+
     await expectError(
       'UnreachableHostsException{errors: [AlgoliaTimeoutException{error: DioException [receive timeout]: The request took longer than 0:00:05.000000 to receive data. It was aborted. To get rid of this exception, try raising the RequestOptions.receiveTimeout above the duration of 0:00:05.000000 or improve the response time of the server.}], message: If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support}',
       () async {
@@ -123,17 +128,18 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6671',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6671',
               scheme: 'http'),
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6672',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6672',
               scheme: 'http'),
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6673',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6673',
               scheme: 'http'),
         ]));
+
     requester.setOnRequest((request) {});
     try {
       final res = await client.customPost(
@@ -153,9 +159,10 @@ void main() {
         options: ClientOptions(compression: 'gzip', hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6678',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6678',
               scheme: 'http'),
         ]));
+
     requester.setOnRequest((request) {});
     try {
       final res = await client.customPost(
@@ -181,9 +188,10 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6691',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6691',
               scheme: 'http'),
         ]));
+
     requester.setOnRequest((request) {});
     try {
       final res = await client.customGet(
@@ -242,9 +250,10 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6686',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6686',
               scheme: 'http'),
         ]));
+
     requester.setOnRequest((request) {});
     try {
       final res = await client.getSettings(
@@ -265,9 +274,10 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6686',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6686',
               scheme: 'http'),
         ]));
+
     requester.setOnRequest((request) {});
     try {
       final res = await client.getRule(
@@ -289,13 +299,14 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6675',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6675',
               scheme: 'http'),
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6674',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6674',
               scheme: 'http'),
         ]));
+
     {
       requester.setOnRequest((request) {});
       try {
@@ -353,6 +364,29 @@ void main() {
       final res = await client.customPost(
         path: "1/test",
       );
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
+  test('handles 204 No Content responses correctly', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6692',
+              scheme: 'http'),
+        ]));
+
+    requester.setOnRequest((request) {});
+    try {
+      final res = await client.customDelete(
+        path: "1/test/no-content",
+      );
+      expect(res, isA<AlgoliaNoResponse>());
     } on InterceptionException catch (_) {
       // Ignore InterceptionException
     }
@@ -461,6 +495,330 @@ void main() {
     );
   });
 
+  test(
+      'call partialUpdateObjectsWithTransformation with createIfNotExists=true',
+      () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6688',
+              scheme: 'http'),
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6689',
+              scheme: 'http'),
+        ]),
+        transformationOptions: TransformationOptions(
+            region: "us",
+            ingestionClientOptions: ClientOptions(hosts: [
+              Host.create(
+                  url:
+                      '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6688',
+                  scheme: 'http'),
+              Host.create(
+                  url:
+                      '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6689',
+                  scheme: 'http'),
+            ])));
+
+    {
+      requester.setOnRequest((request) {});
+      try {
+        final res = await client.partialUpdateObjectsWithTransformation(
+          indexName: "cts_e2e_partialUpdateObjectsWithTransformation_dart",
+          objects: [
+            {
+              'objectID': "1",
+              'name': "Adam",
+            },
+            {
+              'objectID': "2",
+              'name': "Benoit",
+            },
+          ],
+          createIfNotExists: true,
+          waitForTasks: true,
+        );
+        expectBody(res,
+            """[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_dart","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]""");
+      } on InterceptionException catch (_) {
+        // Ignore InterceptionException
+      }
+    }
+  });
+
+  test('call replaceAllObjectsWithTransformation without error', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6690',
+              scheme: 'http'),
+        ]),
+        transformationOptions: TransformationOptions(
+            region: "us",
+            ingestionClientOptions: ClientOptions(hosts: [
+              Host.create(
+                  url:
+                      '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6690',
+                  scheme: 'http'),
+            ])));
+
+    {
+      requester.setOnRequest((request) {});
+      try {
+        final res = await client.replaceAllObjectsWithTransformation(
+          indexName: "cts_e2e_replace_all_objects_with_transformation_dart",
+          objects: [
+            {
+              'objectID': "1",
+              'name': "Adam",
+            },
+            {
+              'objectID': "2",
+              'name': "Benoit",
+            },
+            {
+              'objectID': "3",
+              'name': "Cyril",
+            },
+            {
+              'objectID': "4",
+              'name': "David",
+            },
+            {
+              'objectID': "5",
+              'name': "Eva",
+            },
+            {
+              'objectID': "6",
+              'name': "Fiona",
+            },
+            {
+              'objectID': "7",
+              'name': "Gael",
+            },
+            {
+              'objectID': "8",
+              'name': "Hugo",
+            },
+            {
+              'objectID': "9",
+              'name': "Igor",
+            },
+            {
+              'objectID': "10",
+              'name': "Julia",
+            },
+          ],
+          batchSize: 3,
+        );
+        expectBody(res,
+            """{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"watchResponses":[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_dart","eventID":"113b2068-6337-4c85-b5c2-e7b213d82921","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_dart","eventID":"113b2068-6337-4c85-b5c2-e7b213d82922","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_dart","eventID":"113b2068-6337-4c85-b5c2-e7b213d82923","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_dart","eventID":"113b2068-6337-4c85-b5c2-e7b213d82924","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}""");
+      } on InterceptionException catch (_) {
+        // Ignore InterceptionException
+      }
+    }
+  });
+
+  test('call saveObjectsWithTransformation without error', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6688',
+              scheme: 'http'),
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6689',
+              scheme: 'http'),
+        ]),
+        transformationOptions: TransformationOptions(
+            region: "us",
+            ingestionClientOptions: ClientOptions(hosts: [
+              Host.create(
+                  url:
+                      '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6688',
+                  scheme: 'http'),
+              Host.create(
+                  url:
+                      '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6689',
+                  scheme: 'http'),
+            ])));
+
+    {
+      requester.setOnRequest((request) {});
+      try {
+        final res = await client.saveObjectsWithTransformation(
+          indexName: "cts_e2e_saveObjectsWithTransformation_dart",
+          objects: [
+            {
+              'objectID': "1",
+              'name': "Adam",
+            },
+            {
+              'objectID': "2",
+              'name': "Benoit",
+            },
+          ],
+          waitForTasks: true,
+        );
+        expectBody(res,
+            """[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_dart","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]""");
+      } on InterceptionException catch (_) {
+        // Ignore InterceptionException
+      }
+    }
+  });
+
+  test(
+      'saveObjectsWithTransformation polls every task when waitForTasks is true',
+      () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6693',
+              scheme: 'http'),
+        ]),
+        transformationOptions: TransformationOptions(
+            region: "us",
+            ingestionClientOptions: ClientOptions(hosts: [
+              Host.create(
+                  url:
+                      '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6693',
+                  scheme: 'http'),
+            ])));
+
+    {
+      try {
+        final res = await client.saveObjectsWithTransformation(
+          indexName: "cts_e2e_chunked_push_wait_dart",
+          objects: [
+            {
+              'objectID': "1",
+              'name': "r1",
+            },
+            {
+              'objectID': "2",
+              'name': "r2",
+            },
+            {
+              'objectID': "3",
+              'name': "r3",
+            },
+            {
+              'objectID': "4",
+              'name': "r4",
+            },
+            {
+              'objectID': "5",
+              'name': "r5",
+            },
+            {
+              'objectID': "6",
+              'name': "r6",
+            },
+            {
+              'objectID': "7",
+              'name': "r7",
+            },
+            {
+              'objectID': "8",
+              'name': "r8",
+            },
+            {
+              'objectID': "9",
+              'name': "r9",
+            },
+            {
+              'objectID': "10",
+              'name': "r10",
+            },
+            {
+              'objectID': "11",
+              'name': "r11",
+            },
+            {
+              'objectID': "12",
+              'name': "r12",
+            },
+            {
+              'objectID': "13",
+              'name': "r13",
+            },
+            {
+              'objectID': "14",
+              'name': "r14",
+            },
+            {
+              'objectID': "15",
+              'name': "r15",
+            },
+            {
+              'objectID': "16",
+              'name': "r16",
+            },
+            {
+              'objectID': "17",
+              'name': "r17",
+            },
+            {
+              'objectID': "18",
+              'name': "r18",
+            },
+            {
+              'objectID': "19",
+              'name': "r19",
+            },
+            {
+              'objectID': "20",
+              'name': "r20",
+            },
+            {
+              'objectID': "21",
+              'name': "r21",
+            },
+            {
+              'objectID': "22",
+              'name': "r22",
+            },
+            {
+              'objectID': "23",
+              'name': "r23",
+            },
+            {
+              'objectID': "24",
+              'name': "r24",
+            },
+            {
+              'objectID': "25",
+              'name': "r25",
+            },
+          ],
+          waitForTasks: true,
+          batchSize: 10,
+          requestOptions: RequestOptions(),
+        );
+      } on InterceptionException catch (_) {
+        // Ignore InterceptionException
+      }
+    }
+  });
+
   test('with algolia user id', () async {
     final requester = RequestInterceptor();
     final client = SearchClient(
@@ -469,15 +827,17 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6686',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6686',
               scheme: 'http'),
         ]));
+
     try {
       final res = await client.searchSingleIndex(
         indexName: "playlists",
         searchParams: SearchParamsObject(
           query: "foo",
         ),
+        requestOptions: RequestOptions(),
       );
     } on InterceptionException catch (_) {
       // Ignore InterceptionException
@@ -492,9 +852,10 @@ void main() {
         options: ClientOptions(hosts: [
           Host.create(
               url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6683',
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6683',
               scheme: 'http'),
         ]));
+
     {
       requester.setOnRequest((request) {});
       try {

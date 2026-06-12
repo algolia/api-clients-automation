@@ -100,6 +100,13 @@ object HttpRequest {
       this
     }
 
+    def withHeader(key: String, value: Option[Any]): HttpRequest.Builder = {
+      value match {
+        case Some(param) => withHeader(key, param)
+        case None        => this
+      }
+    }
+
     def withHeaders(headers: Map[String, Any]): HttpRequest.Builder = {
       for ((key, value) <- headers)
         withHeader(key, value)

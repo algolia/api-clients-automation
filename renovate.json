@@ -275,6 +275,7 @@
   "ignorePaths": [
     "**/algoliasearch/**",
     "**/client-abtesting/**",
+    "**/client-agent-studio/**",
     "**/client-analytics/**",
     "**/client-insights/**",
     "**/client_insights/**",
@@ -292,5 +293,6 @@
     "docs/**"
   ],
   "prHourlyLimit": 20,
-  "prConcurrentLimit": 50
+  "prConcurrentLimit": 50,
+  "prCreation": "immediate"
 }

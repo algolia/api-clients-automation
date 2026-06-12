@@ -18,7 +18,7 @@ public class QuerySuggestionsClient(
   override var apiKey: String,
   public val region: String,
   override val options: ClientOptions = ClientOptions(),
-) : ApiClient {
+) : ApiClient, kotlin.AutoCloseable {
 
   init {
     require(appId.isNotBlank()) { "`appId` is missing." }
@@ -43,6 +43,13 @@ public class QuerySuggestionsClient(
       listOf(Host(url))
     }
 
+  /** Closes the client and releases its underlying resources (the HTTP transport). */
+  override fun close() {
+    // Requester does not require AutoCloseable (a custom requester may not own
+    // closeable resources); close only if the concrete implementation is closeable.
+    (requester as? kotlin.AutoCloseable)?.close()
+  }
+
   /**
    * Creates a new Query Suggestions configuration. You can have up to 100 configurations per
    * Algolia application.
@@ -60,7 +67,7 @@ public class QuerySuggestionsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.POST,
-        path = listOf("1", "configs"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "configs"),
         body = configurationWithIndex,
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
@@ -179,7 +186,10 @@ public class QuerySuggestionsClient(
       "Parameter `indexName` is required when calling `deleteConfig`."
     }
     val requestConfig =
-      RequestConfig(method = RequestMethod.DELETE, path = listOf("1", "configs", "$indexName"))
+      RequestConfig(
+        method = RequestMethod.DELETE,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "configs", "$indexName"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -194,7 +204,11 @@ public class QuerySuggestionsClient(
   public suspend fun getAllConfigs(
     requestOptions: RequestOptions? = null
   ): List<ConfigurationResponse> {
-    val requestConfig = RequestConfig(method = RequestMethod.GET, path = listOf("1", "configs"))
+    val requestConfig =
+      RequestConfig(
+        method = RequestMethod.GET,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "configs"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -215,7 +229,10 @@ public class QuerySuggestionsClient(
       "Parameter `indexName` is required when calling `getConfig`."
     }
     val requestConfig =
-      RequestConfig(method = RequestMethod.GET, path = listOf("1", "configs", "$indexName"))
+      RequestConfig(
+        method = RequestMethod.GET,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "configs", "$indexName"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -238,7 +255,8 @@ public class QuerySuggestionsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.GET,
-        path = listOf("1", "configs", "$indexName", "status"),
+        path =
+          "".split("/").filter { it.isNotBlank() } + listOf("1", "configs", "$indexName", "status"),
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
@@ -260,7 +278,10 @@ public class QuerySuggestionsClient(
       "Parameter `indexName` is required when calling `getLogFile`."
     }
     val requestConfig =
-      RequestConfig(method = RequestMethod.GET, path = listOf("1", "logs", "$indexName"))
+      RequestConfig(
+        method = RequestMethod.GET,
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "logs", "$indexName"),
+      )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }
 
@@ -285,7 +306,7 @@ public class QuerySuggestionsClient(
     val requestConfig =
       RequestConfig(
         method = RequestMethod.PUT,
-        path = listOf("1", "configs", "$indexName"),
+        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "configs", "$indexName"),
         body = configuration,
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)

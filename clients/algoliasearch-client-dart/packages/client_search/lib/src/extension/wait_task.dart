@@ -17,7 +17,7 @@ extension WaitTask on SearchClient {
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
-    await _waitUntil(
+    await waitUntil(
       params: params,
       retry: () => getTask(
         indexName: indexName,
@@ -34,7 +34,7 @@ extension WaitTask on SearchClient {
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
-    await _waitUntil(
+    await waitUntil(
       params: params,
       retry: () => getAppTask(
         taskID: taskID,
@@ -47,11 +47,12 @@ extension WaitTask on SearchClient {
   ///  Wait on an API key creation operation.
   Future<void> waitKeyCreation({
     required String key,
-    int maxRetries = 50,
+    @Deprecated('Use params: WaitParams(maxRetries: N) instead')
+    int maxRetries = defaultMaxRetries,
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
-    await _waitUntil(
+    await waitUntil(
       retry: () async {
         try {
           return await getApiKey(key: key, requestOptions: requestOptions);
@@ -70,7 +71,7 @@ extension WaitTask on SearchClient {
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
-    await _waitUntil(
+    await waitUntil(
       params: params,
       retry: () async {
         try {
@@ -91,7 +92,7 @@ extension WaitTask on SearchClient {
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
-    await _waitUntil(
+    await waitUntil(
       params: params,
       retry: () async =>
           await getApiKey(key: key, requestOptions: requestOptions),
@@ -108,7 +109,7 @@ class WaitParams {
   final Duration maxDelay;
 
   const WaitParams({
-    this.maxRetries = 50,
+    this.maxRetries = defaultMaxRetries,
     this.timeout,
     this.initialDelay = const Duration(milliseconds: 200),
     this.maxDelay = const Duration(seconds: 5),
@@ -146,7 +147,7 @@ bool _isExpectedApiKey(ApiKey apiKey, GetApiKeyResponse response) {
 
 /// Retries the given [retry] function until the [until] condition is satisfied or the maximum number
 /// of [maxRetries] or [timeout] is reached.
-Future<T> _waitUntil<T>({
+Future<T> waitUntil<T>({
   required Future<T> Function() retry,
   required bool Function(T) until,
   required WaitParams params,

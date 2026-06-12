@@ -23,32 +23,57 @@ final class RetryStrategy {
   }) : _hosts = hosts.map((host) => RetryableHost(host)).toList();
 
   /// Creates [RetryStrategy], defaults to [DioRequester].
-  RetryStrategy.create({
+  ///
+  /// [defaultConnectTimeout]/[defaultReadTimeout]/[defaultWriteTimeout] are the
+  /// per-client timeouts coming from the spec. They are applied whenever the
+  /// caller left the corresponding [ClientOptions] timeout unset
+  /// ([ClientOptions.unsetTimeout]), so a partially-specified [ClientOptions]
+  /// (e.g. only `hosts` or a custom `requester`) still honours the per-client
+  /// defaults instead of silently falling back to the generic values.
+  factory RetryStrategy.create({
     required AgentSegment segment,
     required String appId,
     required String apiKey,
     required Iterable<Host> Function() defaultHosts,
     ClientOptions options = const ClientOptions(),
-  }) : this(
-          readTimeout: options.readTimeout,
-          writeTimeout: options.writeTimeout,
-          hosts: options.hosts ?? defaultHosts.call(),
-          requester: options.requester ??
-              DioRequester(
-                appId: appId,
-                apiKey: apiKey,
-                headers: options.headers,
-                connectTimeout: options.connectTimeout,
-                clientSegments: [segment, ...?options.agentSegments],
-                logger: options.logger,
-                interceptors: options.interceptors,
-                httpClientAdapter: options.httpClientAdapter,
-                compression: options.compression,
-              ),
-        );
+    Duration defaultConnectTimeout = const Duration(seconds: 2),
+    Duration defaultReadTimeout = const Duration(seconds: 5),
+    Duration defaultWriteTimeout = const Duration(seconds: 30),
+  }) {
+    final connectTimeout = options.connectTimeout == ClientOptions.unsetTimeout
+        ? defaultConnectTimeout
+        : options.connectTimeout;
+    final readTimeout = options.readTimeout == ClientOptions.unsetTimeout
+        ? defaultReadTimeout
+        : options.readTimeout;
+    final writeTimeout = options.writeTimeout == ClientOptions.unsetTimeout
+        ? defaultWriteTimeout
+        : options.writeTimeout;
+
+    final requester = options.requester != null
+        ? (options.requester!..setConnectTimeout(connectTimeout))
+        : DioRequester(
+            appId: appId,
+            apiKey: apiKey,
+            headers: options.headers,
+            connectTimeout: connectTimeout,
+            clientSegments: [segment, ...?options.agentSegments],
+            logger: options.logger,
+            interceptors: options.interceptors,
+            httpClientAdapter: options.httpClientAdapter,
+            compression: options.compression,
+          );
+
+    return RetryStrategy(
+      readTimeout: readTimeout,
+      writeTimeout: writeTimeout,
+      hosts: options.hosts ?? defaultHosts.call(),
+      requester: requester,
+    );
+  }
 
   /// Run an request and get a response.
-  Future<Map<String, dynamic>> execute({
+  Future<Map<String, dynamic>?> execute({
     required ApiRequest request,
     RequestOptions? options,
   }) async {
@@ -66,7 +91,7 @@ final class RetryStrategy {
         final response = await requester.perform(httpRequest);
         host.reset();
         requester.setConnectTimeout(requesterConnectTimeout);
-        return response.body ?? const {};
+        return response.statusCode == 204 ? null : response.body;
       } on AlgoliaTimeoutException catch (e) {
         host.timedOut();
         errors.add(e);

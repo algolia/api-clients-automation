@@ -1,0 +1,37 @@
+AlgoliaDisplayResultsToolConfig:
+  properties:
+    name:
+      type: string
+      const: algolia_display_results
+      title: name
+      default: algolia_display_results
+    type:
+      type: string
+      const: algolia_display_results
+      title: type
+      default: algolia_display_results
+    minGroups:
+      type: integer
+      minimum: 1.0
+      title: mingroups
+      default: 1
+    maxGroups:
+      type: integer
+      minimum: 1.0
+      title: maxgroups
+      default: 3
+    minResultsPerGroup:
+      type: integer
+      minimum: 1.0
+      title: minresultspergroup
+      default: 3
+    maxResultsPerGroup:
+      type: integer
+      minimum: 1.0
+      title: maxresultspergroup
+      default: 6
+  type: object
+  title: algoliaDisplayResultsToolConfig
+  description: Configuration for the algolia_display_results tool.
+  required:
+    - type

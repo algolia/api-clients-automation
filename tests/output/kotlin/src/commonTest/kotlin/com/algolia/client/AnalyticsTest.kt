@@ -44,13 +44,39 @@ class AnalyticsTest {
     client.runTest(
       call = { customPost(path = "1/test") },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.42.0\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.43.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),
           message = "Expected $header to match the following regex: $regexp",
         )
       },
+    )
+  }
+
+  @Test
+  fun `handles 204 No Content responses correctly`() = runTest {
+    val client =
+      AnalyticsClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        "us",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6692,
+                )
+              )
+          ),
+      )
+
+    client.runTest(
+      call = { customDelete(path = "1/test/no-content") },
+      response = { assertNull(it) },
     )
   }
 

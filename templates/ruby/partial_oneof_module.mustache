@@ -27,6 +27,16 @@
         #   due to the way the deserialization is made in the base_object template (it just casts without verifying).
         # - TODO: scalar values are de facto behaving as if they were nullable.
         # - TODO: logging when debugging is set.
+        {{#discriminator}}
+        if data.is_a?(Hash) && data.key?("{{{propertyBaseName}}}")
+          case data["{{{propertyBaseName}}}"]
+          {{#mappedModels}}
+          when "{{{mappingName}}}"
+            return find_and_cast_into_type(:'{{{modelName}}}', data)
+          {{/mappedModels}}
+          end
+        end
+        {{/discriminator}}
         openapi_one_of.each do |klass|
           begin
             next if klass == :AnyType # "nullable: true"

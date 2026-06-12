@@ -12,8 +12,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.util.*;
 import java.time.Duration;
 import org.junit.jupiter.api.*;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
+import com.algolia.utils.TestHelpers;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class {{client}}RequestsTestsE2E {
@@ -45,7 +44,7 @@ class {{client}}RequestsTestsE2E {
         {{returnType}} res = {{> tests/method}};
         {{#response}}
         {{#body}}
-        assertDoesNotThrow(() -> JSONAssert.assertEquals("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}", json.writeValueAsString(res), JSONCompareMode.LENIENT));
+        assertDoesNotThrow(() -> TestHelpers.lenientJsonAssert("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}", json.writeValueAsString(res)));
         {{/body}}
         {{/response}}
     }

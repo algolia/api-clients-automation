@@ -1,0 +1,34 @@
+/*
+ForgeSecuredUserToken forges a secured user token (JWT) for Agent Studio authenticated requests.
+
+  - secretKey: The secret key to sign the token with.
+  - secretKeyId: The key ID to include in the JWT header (kid).
+  - userId: The user identifier to include as the subject (sub) claim.
+  - opts: Optional request options. Use WithExpiresIn to set a custom expiration (defaults to 24 hours).
+
+@return string - The signed JWT token.
+*/
+func (c *APIClient) ForgeSecuredUserToken(secretKey string, secretKeyId string, userId string, opts ...RequestOption) (string, error) {
+	conf := config{}
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	expiresIn := 24 * 3600 // 24 hours
+	if conf.expiresIn > 0 {
+		expiresIn = conf.expiresIn
+	}
+
+	header := base64URLEncode([]byte(fmt.Sprintf(`{"alg":"HS256","typ":"JWT","kid":"%s"}`, secretKeyId)))
+	payload := base64URLEncode([]byte(fmt.Sprintf(`{"sub":"%s","exp":%d}`, userId, time.Now().Unix()+int64(expiresIn))))
+
+	mac := hmac.New(sha256.New, []byte(secretKey))
+	mac.Write([]byte(header + "." + payload))
+	signature := base64URLEncode(mac.Sum(nil))
+
+	return header + "." + payload + "." + signature, nil
+}
+
+func base64URLEncode(data []byte) string {
+	return strings.TrimRight(base64.URLEncoding.EncodeToString(data), "=")
+}
