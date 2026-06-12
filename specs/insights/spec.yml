@@ -10,7 +10,7 @@ info:
     ## Client libraries
 
     Use Algolia's API clients, libraries, and integrations to collect events from your UI and send them to the Insights API.
-    For more information, see [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem).
+    For more information, see [Algolia's ecosystem](https://www.algolia.com/doc/libraries).
 
     ## Base URLs
 
