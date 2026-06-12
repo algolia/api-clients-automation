@@ -3199,7 +3199,7 @@ def snippet_for_save_objects_with_transformation():
 
     call saveObjectsWithTransformation without error
     """
-    # >SEPARATOR saveObjectsWithTransformation default
+    # >SEPARATOR saveObjectsWithTransformation call saveObjectsWithTransformation without error
     # Initialize the client
     # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
     client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -3218,6 +3218,135 @@ def snippet_for_save_objects_with_transformation():
             },
         ],
         wait_for_tasks=True,
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_save_objects_with_transformation1():
+    """
+    Snippet for the saveObjectsWithTransformation method.
+
+    saveObjectsWithTransformation polls every task when waitForTasks is true
+    """
+    # >SEPARATOR saveObjectsWithTransformation saveObjectsWithTransformation polls every task when waitForTasks is true
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.save_objects_with_transformation(
+        index_name="<YOUR_INDEX_NAME>",
+        objects=[
+            {
+                "objectID": "1",
+                "name": "r1",
+            },
+            {
+                "objectID": "2",
+                "name": "r2",
+            },
+            {
+                "objectID": "3",
+                "name": "r3",
+            },
+            {
+                "objectID": "4",
+                "name": "r4",
+            },
+            {
+                "objectID": "5",
+                "name": "r5",
+            },
+            {
+                "objectID": "6",
+                "name": "r6",
+            },
+            {
+                "objectID": "7",
+                "name": "r7",
+            },
+            {
+                "objectID": "8",
+                "name": "r8",
+            },
+            {
+                "objectID": "9",
+                "name": "r9",
+            },
+            {
+                "objectID": "10",
+                "name": "r10",
+            },
+            {
+                "objectID": "11",
+                "name": "r11",
+            },
+            {
+                "objectID": "12",
+                "name": "r12",
+            },
+            {
+                "objectID": "13",
+                "name": "r13",
+            },
+            {
+                "objectID": "14",
+                "name": "r14",
+            },
+            {
+                "objectID": "15",
+                "name": "r15",
+            },
+            {
+                "objectID": "16",
+                "name": "r16",
+            },
+            {
+                "objectID": "17",
+                "name": "r17",
+            },
+            {
+                "objectID": "18",
+                "name": "r18",
+            },
+            {
+                "objectID": "19",
+                "name": "r19",
+            },
+            {
+                "objectID": "20",
+                "name": "r20",
+            },
+            {
+                "objectID": "21",
+                "name": "r21",
+            },
+            {
+                "objectID": "22",
+                "name": "r22",
+            },
+            {
+                "objectID": "23",
+                "name": "r23",
+            },
+            {
+                "objectID": "24",
+                "name": "r24",
+            },
+            {
+                "objectID": "25",
+                "name": "r25",
+            },
+        ],
+        wait_for_tasks=True,
+        batch_size=10,
+        request_options={
+            "headers": loads("""{"x-algolia-user-id":"test-user"}"""),
+        },
     )
 
     # >LOG

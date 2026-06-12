@@ -1427,6 +1427,87 @@ public class SearchClientTests
     }
   }
 
+  [Fact(DisplayName = "saveObjectsWithTransformation polls every task when waitForTasks is true")]
+  public async Task SaveObjectsWithTransformationTest1()
+  {
+    var transformationOptions = new TransformationOptions("us")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6693,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = SearchClient.WithTransformation(
+      new SearchConfig("test-app-id", "test-api-key")
+      {
+        CustomHosts = new List<StatefulHost>
+        {
+          new()
+          {
+            Scheme = HttpScheme.Http,
+            Url =
+              Environment.GetEnvironmentVariable("CI") == "true"
+                ? "localhost"
+                : "host.docker.internal",
+            Port = 6693,
+            Up = true,
+            LastUse = DateTime.UtcNow,
+            Accept = CallType.Read | CallType.Write,
+          },
+        },
+      },
+      transformationOptions
+    );
+
+    {
+      var res = await client.SaveObjectsWithTransformationAsync(
+        "cts_e2e_chunked_push_wait_csharp",
+        new List<Object>
+        {
+          new Dictionary<string, string> { { "objectID", "1" }, { "name", "r1" } },
+          new Dictionary<string, string> { { "objectID", "2" }, { "name", "r2" } },
+          new Dictionary<string, string> { { "objectID", "3" }, { "name", "r3" } },
+          new Dictionary<string, string> { { "objectID", "4" }, { "name", "r4" } },
+          new Dictionary<string, string> { { "objectID", "5" }, { "name", "r5" } },
+          new Dictionary<string, string> { { "objectID", "6" }, { "name", "r6" } },
+          new Dictionary<string, string> { { "objectID", "7" }, { "name", "r7" } },
+          new Dictionary<string, string> { { "objectID", "8" }, { "name", "r8" } },
+          new Dictionary<string, string> { { "objectID", "9" }, { "name", "r9" } },
+          new Dictionary<string, string> { { "objectID", "10" }, { "name", "r10" } },
+          new Dictionary<string, string> { { "objectID", "11" }, { "name", "r11" } },
+          new Dictionary<string, string> { { "objectID", "12" }, { "name", "r12" } },
+          new Dictionary<string, string> { { "objectID", "13" }, { "name", "r13" } },
+          new Dictionary<string, string> { { "objectID", "14" }, { "name", "r14" } },
+          new Dictionary<string, string> { { "objectID", "15" }, { "name", "r15" } },
+          new Dictionary<string, string> { { "objectID", "16" }, { "name", "r16" } },
+          new Dictionary<string, string> { { "objectID", "17" }, { "name", "r17" } },
+          new Dictionary<string, string> { { "objectID", "18" }, { "name", "r18" } },
+          new Dictionary<string, string> { { "objectID", "19" }, { "name", "r19" } },
+          new Dictionary<string, string> { { "objectID", "20" }, { "name", "r20" } },
+          new Dictionary<string, string> { { "objectID", "21" }, { "name", "r21" } },
+          new Dictionary<string, string> { { "objectID", "22" }, { "name", "r22" } },
+          new Dictionary<string, string> { { "objectID", "23" }, { "name", "r23" } },
+          new Dictionary<string, string> { { "objectID", "24" }, { "name", "r24" } },
+          new Dictionary<string, string> { { "objectID", "25" }, { "name", "r25" } },
+        },
+        true,
+        10,
+        new RequestOptionBuilder().AddExtraHeader("x-algolia-user-id", "test-user").Build()
+      );
+    }
+  }
+
   [Fact(DisplayName = "with algolia user id")]
   public async Task SearchSingleIndexTest0()
   {

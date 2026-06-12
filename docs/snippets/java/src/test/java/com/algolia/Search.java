@@ -2670,7 +2670,7 @@ class SnippetSearchClient {
   //
   // call saveObjectsWithTransformation without error
   void snippetForSaveObjectsWithTransformation() throws Exception {
-    // >SEPARATOR saveObjectsWithTransformation default
+    // >SEPARATOR saveObjectsWithTransformation call saveObjectsWithTransformation without error
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
@@ -2692,6 +2692,180 @@ class SnippetSearchClient {
         }
       ),
       true
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the saveObjectsWithTransformation method.
+  //
+  // saveObjectsWithTransformation polls every task when waitForTasks is true
+  void snippetForSaveObjectsWithTransformation1() throws Exception {
+    // >SEPARATOR saveObjectsWithTransformation saveObjectsWithTransformation polls every task when
+    // waitForTasks is true
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    List response = client.saveObjectsWithTransformation(
+      "<YOUR_INDEX_NAME>",
+      Arrays.asList(
+        new HashMap() {
+          {
+            put("objectID", "1");
+            put("name", "r1");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "2");
+            put("name", "r2");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "3");
+            put("name", "r3");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "4");
+            put("name", "r4");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "5");
+            put("name", "r5");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "6");
+            put("name", "r6");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "7");
+            put("name", "r7");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "8");
+            put("name", "r8");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "9");
+            put("name", "r9");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "10");
+            put("name", "r10");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "11");
+            put("name", "r11");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "12");
+            put("name", "r12");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "13");
+            put("name", "r13");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "14");
+            put("name", "r14");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "15");
+            put("name", "r15");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "16");
+            put("name", "r16");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "17");
+            put("name", "r17");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "18");
+            put("name", "r18");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "19");
+            put("name", "r19");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "20");
+            put("name", "r20");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "21");
+            put("name", "r21");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "22");
+            put("name", "r22");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "23");
+            put("name", "r23");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "24");
+            put("name", "r24");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "25");
+            put("name", "r25");
+          }
+        }
+      ),
+      true,
+      10,
+      new RequestOptions().addExtraHeader("x-algolia-user-id", "test-user")
     );
     // >LOG
     // print the response

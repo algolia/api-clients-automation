@@ -2644,7 +2644,7 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForSaveObjectsWithTransformation() {
-    // >SEPARATOR saveObjectsWithTransformation default
+    // >SEPARATOR saveObjectsWithTransformation call saveObjectsWithTransformation without error
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -2664,6 +2664,133 @@ class SnippetSearchClient {
             },
           ),
         waitForTasks = true,
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveObjectsWithTransformation1() {
+    // >SEPARATOR saveObjectsWithTransformation saveObjectsWithTransformation polls every task when
+    // waitForTasks is true
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.saveObjectsWithTransformation(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects =
+          listOf(
+            buildJsonObject {
+              put("objectID", JsonPrimitive("1"))
+              put("name", JsonPrimitive("r1"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("2"))
+              put("name", JsonPrimitive("r2"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("3"))
+              put("name", JsonPrimitive("r3"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("4"))
+              put("name", JsonPrimitive("r4"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("5"))
+              put("name", JsonPrimitive("r5"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("6"))
+              put("name", JsonPrimitive("r6"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("7"))
+              put("name", JsonPrimitive("r7"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("8"))
+              put("name", JsonPrimitive("r8"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("9"))
+              put("name", JsonPrimitive("r9"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("10"))
+              put("name", JsonPrimitive("r10"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("11"))
+              put("name", JsonPrimitive("r11"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("12"))
+              put("name", JsonPrimitive("r12"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("13"))
+              put("name", JsonPrimitive("r13"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("14"))
+              put("name", JsonPrimitive("r14"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("15"))
+              put("name", JsonPrimitive("r15"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("16"))
+              put("name", JsonPrimitive("r16"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("17"))
+              put("name", JsonPrimitive("r17"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("18"))
+              put("name", JsonPrimitive("r18"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("19"))
+              put("name", JsonPrimitive("r19"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("20"))
+              put("name", JsonPrimitive("r20"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("21"))
+              put("name", JsonPrimitive("r21"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("22"))
+              put("name", JsonPrimitive("r22"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("23"))
+              put("name", JsonPrimitive("r23"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("24"))
+              put("name", JsonPrimitive("r24"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("25"))
+              put("name", JsonPrimitive("r25"))
+            },
+          ),
+        waitForTasks = true,
+        batchSize = 10,
+        requestOptions =
+          RequestOptions(headers = buildMap { put("x-algolia-user-id", "test-user") }),
       )
 
     // >LOG
