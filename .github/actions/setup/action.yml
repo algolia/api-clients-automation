@@ -26,9 +26,10 @@ runs:
 
     - name: Setup gradle
       if: inputs.type != 'minimal'
-      uses: gradle/actions/setup-gradle@v5.0.2
+      uses: gradle/actions/setup-gradle@v6.1.1
       with:
         validate-wrappers: true
+        cache-provider: basic
         add-job-summary: 'on-failure'
 
     - name: Download Java formatter
