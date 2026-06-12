@@ -132,7 +132,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/api-client-automation@workspace:."
   dependencies:
-    "@eslint/json": "npm:1.2.0"
+    "@eslint/json": "npm:2.0.0"
     "@openapitools/openapi-generator-cli": "npm:2.32.0"
     "@redocly/cli": "npm:2.27.0"
     eslint: "npm:10.4.0"
@@ -1143,15 +1143,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/core@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "@eslint/core@npm:1.1.1"
-  dependencies:
-    "@types/json-schema": "npm:^7.0.15"
-  checksum: 10/e847dd70b4398ba9e732ff50cc14a47114531d6e746c345278998881e6714ca665a1af0056694a18e48d87adec77c5b595b5badde1e55f6671ed5afe731701f7
-  languageName: node
-  linkType: hard
-
 "@eslint/core@npm:^1.2.1":
   version: 1.2.1
   resolution: "@eslint/core@npm:1.2.1"
@@ -1173,15 +1164,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/json@npm:1.2.0":
-  version: 1.2.0
-  resolution: "@eslint/json@npm:1.2.0"
+"@eslint/json@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@eslint/json@npm:2.0.0"
   dependencies:
-    "@eslint/core": "npm:^1.1.1"
-    "@eslint/plugin-kit": "npm:^0.6.1"
+    "@eslint/core": "npm:^1.2.1"
+    "@eslint/plugin-kit": "npm:^0.7.1"
     "@humanwhocodes/momoa": "npm:^3.3.10"
     natural-compare: "npm:^1.4.0"
-  checksum: 10/9528d75729f958739a2c994dd637e4aa8558840b4d0aecffd3054e8edd9246ecc165e8e84cd154c79cefe1ff063f585581f2e6d20ac66acfe488b0ae8a3fc0a1
+  checksum: 10/660af326dc53196004d97261686d3da1c690d2a1a6bd42de8ec50f6e72cc1ed0427ccabb0704274f755b389db5f12437f6c35048c559bd296cdc309e7ef52632
   languageName: node
   linkType: hard
 
@@ -1189,16 +1180,6 @@ __metadata:
   version: 3.0.5
   resolution: "@eslint/object-schema@npm:3.0.5"
   checksum: 10/42e9ec2551d7cafe1825f20494576c9a867dfd26e728b66620f55d954cd5c4c9c4987755d147893985b8d39b49dace31117e59e7bc9564eb411b397e579a50e7
-  languageName: node
-  linkType: hard
-
-"@eslint/plugin-kit@npm:^0.6.1":
-  version: 0.6.1
-  resolution: "@eslint/plugin-kit@npm:0.6.1"
-  dependencies:
-    "@eslint/core": "npm:^1.1.1"
-    levn: "npm:^0.4.1"
-  checksum: 10/8af22d94720b2474a992a80c5be7584baf75821386d25c34966b359fbc1e3a319989df721404c48c08b20e115683d6d0b344793dc354f5916c2d867c6c0aa04e
   languageName: node
   linkType: hard
 
