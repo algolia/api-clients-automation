@@ -1,9 +1,8 @@
 /** Insights API Events represent user interactions with your app or website. They unlock powerful features, such as
   * recommendations, personalization, smarter search results, and analytics that help you optimize your user experience.
   * ## Client libraries Use Algolia's API clients, libraries, and integrations to collect events from your UI and send
-  * them to the Insights API. For more information, see [Algolia's
-  * ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem). ## Base URLs
-  * The base URLs for making requests to the Insights API are: - `https://insights.us.algolia.io` -
+  * them to the Insights API. For more information, see [Algolia's ecosystem](https://www.algolia.com/doc/libraries). ##
+  * Base URLs The base URLs for making requests to the Insights API are: - `https://insights.us.algolia.io` -
   * `https://insights.de.algolia.io` - `https//insights.algolia.io` (routes requests to the closest of the above
   * servers, based on your geographical location) **All requests must use HTTPS.** ## Authentication Add these headers
   * to authenticate requests: - `x-algolia-application-id`. Your Algolia application ID. - `x-algolia-api-key`. An API
