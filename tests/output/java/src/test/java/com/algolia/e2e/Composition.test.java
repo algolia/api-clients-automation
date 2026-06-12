@@ -5,14 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import com.algolia.api.CompositionClient;
 import com.algolia.config.*;
 import com.algolia.model.composition.*;
+import com.algolia.utils.TestHelpers;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.util.*;
 import org.junit.jupiter.api.*;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CompositionClientRequestsTestsE2E {
@@ -42,12 +41,11 @@ class CompositionClientRequestsTestsE2E {
   void listCompositionsTest1() {
     ListCompositionsResponse res = client.listCompositions();
     assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
+      TestHelpers.lenientJsonAssert(
         "{\"items\":[{\"objectID\":\"id1\",\"name\":\"my first" +
           " composition\",\"description\":\"the first ever composition from the" +
           " client\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"cts_e2e_small\"}}}}}}],\"nbPages\":1}",
-        json.writeValueAsString(res),
-        JSONCompareMode.LENIENT
+        json.writeValueAsString(res)
       )
     );
   }

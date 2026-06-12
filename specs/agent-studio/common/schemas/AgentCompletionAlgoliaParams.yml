@@ -1,0 +1,15 @@
+AgentCompletionAlgoliaParams:
+  properties:
+    mcpServers:
+      additionalProperties:
+        additionalProperties:
+          additionalProperties:
+            type: string
+          type: object
+        type: object
+      type: object
+      title: mcpservers
+    searchParameters:
+      $ref: 'SearchParametersOverridesMapNullable.yml#/SearchParametersOverridesMapNullable'
+  type: object
+  title: agentCompletionAlgoliaParams

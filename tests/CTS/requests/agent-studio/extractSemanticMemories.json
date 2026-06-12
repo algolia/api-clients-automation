@@ -1,0 +1,23 @@
+[
+  {
+    "testName": "extractSemanticMemories",
+    "parameters": {
+      "providerID": "c2905529-b933-4b69-87ec-75f9829d5f59",
+      "model": "gpt-4o-mini",
+      "messages": [
+        {"role": "user", "content": "I prefer dark mode and minimal UI"}
+      ]
+    },
+    "request": {
+      "path": "/1/memory/extract/semantic",
+      "method": "POST",
+      "body": {
+        "providerID": "c2905529-b933-4b69-87ec-75f9829d5f59",
+        "model": "gpt-4o-mini",
+        "messages": [
+          {"role": "user", "content": "I prefer dark mode and minimal UI"}
+        ]
+      }
+    }
+  }
+]

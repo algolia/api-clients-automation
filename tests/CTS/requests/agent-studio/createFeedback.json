@@ -1,0 +1,40 @@
+[
+  {
+    "testName": "createFeedback with required parameters",
+    "parameters": {
+      "messageId": "msg-abc123",
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      "vote": 1
+    },
+    "request": {
+      "path": "/1/feedback",
+      "method": "POST",
+      "body": {
+        "messageId": "msg-abc123",
+        "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        "vote": 1
+      }
+    }
+  },
+  {
+    "testName": "createFeedback with all parameters",
+    "parameters": {
+      "messageId": "msg-abc123",
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      "vote": 0,
+      "tags": ["unhelpful", "off-topic"],
+      "notes": "The response did not address my question."
+    },
+    "request": {
+      "path": "/1/feedback",
+      "method": "POST",
+      "body": {
+        "messageId": "msg-abc123",
+        "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        "vote": 0,
+        "tags": ["unhelpful", "off-topic"],
+        "notes": "The response did not address my question."
+      }
+    }
+  }
+]

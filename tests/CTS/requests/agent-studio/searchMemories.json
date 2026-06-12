@@ -1,0 +1,15 @@
+[
+  {
+    "testName": "searchMemories",
+    "parameters": {
+      "queries": ["What does the user prefer?"]
+    },
+    "request": {
+      "path": "/1/memory/search",
+      "method": "POST",
+      "body": {
+        "queries": ["What does the user prefer?"]
+      }
+    }
+  }
+]

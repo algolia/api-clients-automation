@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
   s.name = 'AlgoliaSearchClient'
   s.module_name  = 'AlgoliaSearchClient'
-  s.version = '9.43.2'
-  s.source = { :git => 'https://github.com/algolia/algoliasearch-client-swift.git', :tag => '9.43.2' }
+  s.version = '9.44.0'
+  s.source = { :git => 'https://github.com/algolia/algoliasearch-client-swift.git', :tag => '9.44.0' }
   s.authors = { 'Algolia' => 'contact@algolia.com' }
   s.license = { :type => 'MIT', :file => 'LICENSE' }
   s.homepage = 'https://github.com/algolia/algoliasearch-client-swift/tree/main'
@@ -26,6 +26,12 @@ Pod::Spec.new do |s|
   end
   s.subspec 'AbtestingV3' do |subs|
     subs.source_files = 'Sources/AbtestingV3/**/*.swift'
+    subs.dependency 'AlgoliaSearchClient/Core'
+    # Search ships the `*WithTransformation` helpers, which use the Ingestion client.
+    subs.dependency 'AlgoliaSearchClient/Ingestion' if subs.name.end_with?('/Search')
+  end
+  s.subspec 'AgentStudio' do |subs|
+    subs.source_files = 'Sources/AgentStudio/**/*.swift'
     subs.dependency 'AlgoliaSearchClient/Core'
     # Search ships the `*WithTransformation` helpers, which use the Ingestion client.
     subs.dependency 'AlgoliaSearchClient/Ingestion' if subs.name.end_with?('/Search')

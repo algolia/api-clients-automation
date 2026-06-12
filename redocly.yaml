@@ -5,6 +5,8 @@ apis:
     root: specs/abtesting-v3/spec.yml
   advanced-personalization:
     root: specs/advanced-personalization/spec.yml
+  agent-studio:
+    root: specs/agent-studio/spec.yml
   analytics:
     root: specs/analytics/spec.yml
   composition:

@@ -1,0 +1,23 @@
+{{#isAgentStudioClient}}
+      /// <summary>
+      /// Helper: Forges a secured user token (JWT) for Agent Studio authenticated requests.
+      /// </summary>
+      /// <param name="secretKey">The secret key to sign the token with.</param>
+      /// <param name="secretKeyId">The key ID to include in the JWT header (kid).</param>
+      /// <param name="userId">The user identifier to include as the subject (sub) claim.</param>
+      /// <param name="expiresIn">The token expiration in seconds from now. Defaults to 86400 (24 hours).</param>
+      /// <returns>The signed JWT token.</returns>
+      public string ForgeSecuredUserToken(string secretKey, string secretKeyId, string userId, int expiresIn = 86400)
+      {
+          static string Base64UrlEncode(byte[] data) =>
+              Convert.ToBase64String(data).TrimEnd('=').Replace('+', '-').Replace('/', '_');
+
+          var header = Base64UrlEncode(System.Text.Encoding.UTF8.GetBytes("{\"alg\":\"HS256\",\"typ\":\"JWT\",\"kid\":\"" + secretKeyId + "\"}"));
+          var payload = Base64UrlEncode(System.Text.Encoding.UTF8.GetBytes("{\"sub\":\"" + userId + "\",\"exp\":" + (DateTimeOffset.UtcNow.ToUnixTimeSeconds() + expiresIn) + "}"));
+
+          using var hmac = new System.Security.Cryptography.HMACSHA256(System.Text.Encoding.UTF8.GetBytes(secretKey));
+          var signature = Base64UrlEncode(hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(header + "." + payload)));
+
+          return header + "." + payload + "." + signature;
+      }
+{{/isAgentStudioClient}}

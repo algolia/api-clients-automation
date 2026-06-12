@@ -1352,6 +1352,21 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+    async def test_get_task_1(self):
+        """
+        getTask with taskID 0
+        """
+        _req = await self._client.get_task_with_http_info(
+            index_name="theIndexName",
+            task_id=0,
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/task/0"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
     async def test_get_top_user_ids_(self):
         """
         getTopUserIds
@@ -4580,6 +4595,7 @@ class TestSearchClient:
         _req = await self._client.search_single_index_with_http_info(
             index_name="indexName",
             search_params={
+                "query": "test",
                 "getRankingInfo": True,
             },
         )
@@ -4588,7 +4604,7 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"getRankingInfo":true}""")
+        assert loads(_req.data) == loads("""{"query":"test","getRankingInfo":true}""")
 
     async def test_search_single_index_41(self):
         """
@@ -10927,6 +10943,21 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+    def test_get_task_1(self):
+        """
+        getTask with taskID 0
+        """
+        _req = self._client.get_task_with_http_info(
+            index_name="theIndexName",
+            task_id=0,
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/task/0"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
     def test_get_top_user_ids_(self):
         """
         getTopUserIds
@@ -14155,6 +14186,7 @@ class TestSearchClientSync:
         _req = self._client.search_single_index_with_http_info(
             index_name="indexName",
             search_params={
+                "query": "test",
                 "getRankingInfo": True,
             },
         )
@@ -14163,7 +14195,7 @@ class TestSearchClientSync:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"getRankingInfo":true}""")
+        assert loads(_req.data) == loads("""{"query":"test","getRankingInfo":true}""")
 
     def test_search_single_index_41(self):
         """

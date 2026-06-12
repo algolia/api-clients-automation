@@ -14,7 +14,7 @@ func compression() async throws {
 
     do {
         // Search with compressed request body
-        let response: SearchResponse<Hit> = try await {{#dynamicSnippet}}searchWithCompression{{/dynamicSnippet}}
+        let response: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithCompression{{/dynamicSnippet}}
         print(response)
     } catch {
         print(error.localizedDescription)

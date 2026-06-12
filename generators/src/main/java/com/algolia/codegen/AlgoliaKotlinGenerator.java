@@ -168,14 +168,94 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     return segments;
   }
 
+  private record SavedVarLists(
+    List<CodegenProperty> vars,
+    List<CodegenProperty> allVars,
+    List<CodegenProperty> optionalVars,
+    List<CodegenProperty> requiredVars,
+    List<CodegenProperty> readOnlyVars,
+    List<CodegenProperty> readWriteVars
+  ) {
+    SavedVarLists(CodegenModel model) {
+      this(
+        new ArrayList<>(model.vars),
+        new ArrayList<>(model.allVars),
+        new ArrayList<>(model.optionalVars),
+        new ArrayList<>(model.requiredVars),
+        new ArrayList<>(model.readOnlyVars),
+        new ArrayList<>(model.readWriteVars)
+      );
+    }
+  }
+
   @Override
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
+    // Save all var lists before super strips discriminator properties from child models
+    var savedModels = new HashMap<String, SavedVarLists>();
+    for (var entry : objs.entrySet()) {
+      var model = entry.getValue().getModels().get(0).getModel();
+      savedModels.put(entry.getKey(), new SavedVarLists(model));
+    }
+
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
+
+    // Restore discriminator properties stripped by KotlinClientCodegen
+    for (var entry : models.entrySet()) {
+      var model = entry.getValue().getModels().get(0).getModel();
+      var saved = savedModels.get(entry.getKey());
+      if (saved != null && model.vars.size() < saved.vars().size()) {
+        model.vars = saved.vars();
+        model.allVars = saved.allVars();
+        model.optionalVars = saved.optionalVars();
+        model.requiredVars = saved.requiredVars();
+        model.readOnlyVars = saved.readOnlyVars();
+        model.readWriteVars = saved.readWriteVars();
+      }
+    }
+
+    replaceFreeFormMaps(models);
     OneOf.updateModelsOneOf(models, modelPackage);
     GenericPropagator.propagateGenericsToModels(models, true);
     OneOf.addOneOfMetadata(models);
     jsonParent(models);
     return models;
+  }
+
+  private static final String FREE_FORM_MAP = "Map<kotlin.String, Any>";
+  private static final String JSON_OBJECT = "JsonObject";
+
+  private static void replaceFreeFormMaps(Map<String, ModelsMap> models) {
+    for (ModelsMap modelContainer : models.values()) {
+      CodegenModel model = modelContainer.getModels().get(0).getModel();
+
+      if (model.vars != null) {
+        for (CodegenProperty prop : model.vars) {
+          replaceFreeFormType(prop);
+        }
+      }
+
+      if (model.oneOf != null && model.oneOf.stream().anyMatch(t -> t.contains(FREE_FORM_MAP))) {
+        Set<String> replaced = new LinkedHashSet<>();
+        for (String t : model.oneOf) {
+          replaced.add(t.contains(FREE_FORM_MAP) ? t.replace(FREE_FORM_MAP, JSON_OBJECT) : t);
+        }
+        model.oneOf.clear();
+        model.oneOf.addAll(replaced);
+      }
+
+      if (model.getComposedSchemas() != null && model.getComposedSchemas().getOneOf() != null) {
+        for (CodegenProperty prop : model.getComposedSchemas().getOneOf()) {
+          replaceFreeFormType(prop);
+        }
+      }
+    }
+  }
+
+  private static void replaceFreeFormType(CodegenProperty prop) {
+    if (prop.datatypeWithEnum != null && prop.datatypeWithEnum.contains(FREE_FORM_MAP)) {
+      prop.datatypeWithEnum = prop.datatypeWithEnum.replace(FREE_FORM_MAP, JSON_OBJECT);
+      prop.dataType = prop.dataType.replace(FREE_FORM_MAP, JSON_OBJECT);
+    }
   }
 
   private static void jsonParent(Map<String, ModelsMap> models) {

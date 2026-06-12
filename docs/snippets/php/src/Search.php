@@ -1965,7 +1965,7 @@ class SnippetSearchClient
      */
     public function snippetForGetTask(): void
     {
-        // >SEPARATOR getTask default
+        // >SEPARATOR getTask getTask
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -1973,6 +1973,29 @@ class SnippetSearchClient
         $response = $client->getTask(
             '<YOUR_INDEX_NAME>',
             123,
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetTask method.
+     *
+     * getTask with taskID 0
+     */
+    public function snippetForGetTask1(): void
+    {
+        // >SEPARATOR getTask getTask with taskID 0
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->getTask(
+            '<YOUR_INDEX_NAME>',
+            0,
         );
 
         // >LOG
@@ -6323,7 +6346,8 @@ class SnippetSearchClient
         // Call the API
         $response = $client->searchSingleIndex(
             '<YOUR_INDEX_NAME>',
-            ['getRankingInfo' => true,
+            ['query' => 'test',
+                'getRankingInfo' => true,
             ],
         );
 

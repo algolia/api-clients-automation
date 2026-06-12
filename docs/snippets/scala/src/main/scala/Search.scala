@@ -1927,7 +1927,7 @@ class SnippetSearchClient {
     * getTask
     */
   def snippetForSearchClientGetTask(): Unit = {
-    // >SEPARATOR getTask default
+    // >SEPARATOR getTask getTask
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -1936,6 +1936,29 @@ class SnippetSearchClient {
       client.getTask(
         indexName = "<YOUR_INDEX_NAME>",
         taskID = 123L
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the getTask method.
+    *
+    * getTask with taskID 0
+    */
+  def snippetForSearchClientGetTask1(): Unit = {
+    // >SEPARATOR getTask getTask with taskID 0
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.getTask(
+        indexName = "<YOUR_INDEX_NAME>",
+        taskID = 0L
       ),
       Duration(100, "sec")
     )
@@ -6462,6 +6485,7 @@ class SnippetSearchClient {
         indexName = "<YOUR_INDEX_NAME>",
         searchParams = Some(
           SearchParamsObject(
+            query = Some("test"),
             getRankingInfo = Some(true)
           )
         )

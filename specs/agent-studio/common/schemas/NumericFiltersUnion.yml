@@ -1,0 +1,7 @@
+NumericFiltersUnion:
+  oneOf:
+    - type: string
+    - type: array
+      items:
+        $ref: 'NumericFiltersUnion.yml#/NumericFiltersUnion'
+    - type: 'null'

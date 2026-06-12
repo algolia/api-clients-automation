@@ -1,0 +1,15 @@
+NumberParamConstraint:
+  properties:
+    min:
+      oneOf:
+        - type: integer
+        - type: 'null'
+      title: min
+    max:
+      oneOf:
+        - type: integer
+        - type: 'null'
+      title: max
+  type: object
+  title: numberParamConstraint
+  description: Constraints for a number parameter.

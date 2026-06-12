@@ -128,6 +128,9 @@ namespace Algolia.Search.Clients;
   /// <summary>
   /// Represents a collection of functions to interact with the API endpoints
   /// </summary>
+  {{#isAgentStudioClient}}
+  [System.Obsolete("Agent Studio API is in beta and subject to breaking changes. See https://www.algolia.com/doc/rest-api/agent-studio", false)]
+  {{/isAgentStudioClient}}
   {{> visibility}} partial class {{classname}} : {{interfacePrefix}}{{classname}}
   {
       internal HttpTransport _transport;
@@ -411,7 +414,7 @@ namespace Algolia.Search.Clients;
           requestOptions.ConnectTimeout ??= TimeSpan.FromMilliseconds({{connect}});
           {{/vendorExtensions.x-timeouts}}
           {{/vendorExtensions}}
-          {{#returnType}}return {{/returnType}}await _transport.ExecuteRequestAsync{{#returnType}}<{{> return_type}}>{{/returnType}}(new HttpMethod("{{httpMethod}}"),"{{{path}}}", requestOptions, cancellationToken).ConfigureAwait(false);
+          {{#returnType}}return {{/returnType}}await _transport.ExecuteRequestAsync{{#returnType}}<{{> return_type}}>{{/returnType}}(new HttpMethod("{{httpMethod}}"),"{{{serverPathSuffix}}}{{{path}}}", requestOptions, cancellationToken).ConfigureAwait(false);
       }
 
 
@@ -504,7 +507,7 @@ namespace Algolia.Search.Clients;
           requestOptions.ConnectTimeout ??= TimeSpan.FromMilliseconds({{connect}});
           {{/vendorExtensions.x-timeouts}}
           {{/vendorExtensions}}
-          return await _transport.ExecuteRequestAsync<AlgoliaHttpResponse>(new HttpMethod("{{httpMethod}}"),"{{{path}}}", requestOptions, cancellationToken).ConfigureAwait(false);
+          return await _transport.ExecuteRequestAsync<AlgoliaHttpResponse>(new HttpMethod("{{httpMethod}}"),"{{{serverPathSuffix}}}{{{path}}}", requestOptions, cancellationToken).ConfigureAwait(false);
       }
 
       /// <inheritdoc />
@@ -516,5 +519,9 @@ namespace Algolia.Search.Clients;
 
       {{/supportsAsync}}
       {{/operation}}
+
+      {{#isAgentStudioClient}}
+{{> agent_studio_helpers}}
+      {{/isAgentStudioClient}}
   }
   {{/operations}}

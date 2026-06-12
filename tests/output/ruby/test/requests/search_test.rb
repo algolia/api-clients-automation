@@ -1039,6 +1039,18 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
+  # getTask with taskID 0
+  def test_get_task1
+    req = @client.get_task_with_http_info("theIndexName", 0)
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/indexes/theIndexName/task/0", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
   # getTopUserIds
   def test_get_top_user_ids
     req = @client.get_top_user_ids_with_http_info
@@ -3595,14 +3607,14 @@ class TestSearchClient < Test::Unit::TestCase
   def test_search_single_index40
     req = @client.search_single_index_with_http_info(
       "indexName",
-      Algolia::Search::SearchParamsObject.new(get_ranking_info: true)
+      Algolia::Search::SearchParamsObject.new(query: "test", get_ranking_info: true)
     )
 
     assert_equal(:post, req.method)
     assert_equal("/1/indexes/indexName/query", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"getRankingInfo\":true}"), JSON.parse(req.body))
+    assert_equal(JSON.parse("{\"query\":\"test\",\"getRankingInfo\":true}"), JSON.parse(req.body))
   end
 
   # clickAnalytics

@@ -1,3 +1,8 @@
+## [2.42.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.41.0...2.42.0)
+
+- [febd34b6b9](https://github.com/algolia/api-clients-automation/commit/febd34b6b9) refactor(scala): split package.scala into separate traits ([#6482](https://github.com/algolia/api-clients-automation/pull/6482)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [7f2ce8cd3a](https://github.com/algolia/api-clients-automation/commit/7f2ce8cd3a) feat(clients): Agent Studio v1 ([#6097](https://github.com/algolia/api-clients-automation/pull/6097)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [2.41.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.40.1...2.41.0)
 
 BREAKING CHANGES: this minor version includes breaking changes. See below for more details.

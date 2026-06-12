@@ -67,6 +67,17 @@ final class AlgoliaWaitException implements AlgoliaException {
   }
 }
 
+/// Represents a successful API response with no content (HTTP 204).
+///
+/// Returned by custom request methods when the server responds with
+/// 204 No Content, as Dart's type system requires a non-null return value.
+final class AlgoliaNoResponse {
+  const AlgoliaNoResponse();
+
+  @override
+  String toString() => 'AlgoliaNoResponse{}';
+}
+
 /// Exception thrown when all hosts for the Algolia API are unreachable.
 ///
 /// Contains a list of the errors associated with each unreachable host.

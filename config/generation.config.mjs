@@ -29,7 +29,9 @@ export const patterns = [
 
   'tests/output/csharp/src/Algolia.Search.Tests.csproj',
   '!tests/output/csharp/src/TimeoutIntegrationTests.cs',
+  '!tests/output/csharp/src/Utils/**',
   '!tests/output/csharp/src/TransformationOptionsTests.cs',
+  '!tests/output/csharp/src/ForgeSecuredUserTokenTests.cs',
 
   // Dart
   '!clients/algoliasearch-client-dart/**',
@@ -66,6 +68,7 @@ export const patterns = [
 
   'tests/output/java/build.gradle',
   '!tests/output/java/src/test/java/com/algolia/manual/**',
+  '!tests/output/java/src/test/java/com/algolia/utils/**',
 
   // JavaScript
   '!clients/algoliasearch-client-javascript/*',
@@ -80,6 +83,7 @@ export const patterns = [
   '!clients/algoliasearch-client-javascript/packages/client-common/**',
   '!clients/algoliasearch-client-javascript/packages/logger-console/**',
   '!clients/algoliasearch-client-javascript/packages/algoliasearch/__tests__/**',
+  '!clients/algoliasearch-client-javascript/packages/agent-studio/__tests__/**',
   '!clients/algoliasearch-client-javascript/packages/algoliasearch/vitest.config.ts',
 
   'tests/output/javascript/package.json',
@@ -93,6 +97,8 @@ export const patterns = [
   'clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/BuildConfig.kt',
   'clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/api/**',
   'clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/**',
+
+  '!tests/output/kotlin/src/commonTest/kotlin/com/algolia/utils/TestHelpers.kt',
 
   // PHP
   '!clients/algoliasearch-client-php/**',
@@ -149,6 +155,8 @@ export const patterns = [
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/internal/**',
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/config/**',
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/extension/**',
+
+  '!tests/output/scala/src/test/scala/algoliasearch/manual/**',
 
   // Swift
   'clients/algoliasearch-client-swift/**',
