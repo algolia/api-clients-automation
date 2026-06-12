@@ -1472,6 +1472,24 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('getTask with taskID 0')]
+    public function testGetTask1(): void
+    {
+        $client = $this->getClient();
+        $client->getTask(
+            'theIndexName',
+            0,
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/task/0',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
     #[TestDox('getTopUserIds')]
     public function testGetTopUserIds(): void
     {
@@ -4704,7 +4722,8 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $client->searchSingleIndex(
             'indexName',
-            ['getRankingInfo' => true,
+            ['query' => 'test',
+                'getRankingInfo' => true,
             ],
         );
 
@@ -4712,7 +4731,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/indexName/query',
                 'method' => 'POST',
-                'body' => json_decode('{"getRankingInfo":true}'),
+                'body' => json_decode('{"query":"test","getRankingInfo":true}'),
             ],
         ]);
     }

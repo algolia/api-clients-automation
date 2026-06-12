@@ -865,6 +865,7 @@
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
+        "query": "test",
         "getRankingInfo": true
       }
     },
@@ -872,6 +873,7 @@
       "path": "/1/indexes/indexName/query",
       "method": "POST",
       "body": {
+        "query": "test",
         "getRankingInfo": true
       }
     }

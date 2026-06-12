@@ -7,6 +7,7 @@ import type { Language } from '../types.ts';
 
 import { assertValidAccountCopyIndex } from './testServer/accountCopyIndex.ts';
 import { printBenchmarkReport } from './testServer/benchmark.ts';
+import { assertValidChunkedPushWait } from './testServer/chunkedPushWait.ts';
 import { assertChunkWrapperValid } from './testServer/chunkWrapper.ts';
 import { assertNeverCalledServerWasNotCalled, assertValidErrors } from './testServer/error.ts';
 import { startTestServer } from './testServer/index.ts';
@@ -189,6 +190,7 @@ export async function runCts(
     assertValidReplaceAllObjectsScopes(languages.length - skip('dart'));
     assertValidWaitForApiKey(languages.length - skip('dart'));
     assertPushMockValid(languages.length);
+    assertValidChunkedPushWait(languages.length - skip('go') - skip('php') - skip('javascript'));
   }
   if (withBenchmarkServer) {
     printBenchmarkReport();

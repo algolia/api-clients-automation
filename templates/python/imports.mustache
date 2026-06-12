@@ -3,6 +3,7 @@ from __future__ import annotations
 import base64
 import hashlib
 import hmac
+from itertools import islice
 from sys import version_info
 from warnings import warn
 from random import randint
@@ -33,6 +34,7 @@ from typing import (
   Callable,
   ClassVar,
   Dict,
+  Iterable,
   Iterator,
   List,
   Set,

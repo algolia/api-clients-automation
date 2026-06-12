@@ -1623,7 +1623,7 @@ void snippetForgetSynonym() async {
 //
 // getTask
 void snippetForgetTask() async {
-  // >SEPARATOR getTask default
+  // >SEPARATOR getTask getTask
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1632,6 +1632,26 @@ void snippetForgetTask() async {
   final response = await client.getTask(
     indexName: "<YOUR_INDEX_NAME>",
     taskID: 123,
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getTask method.
+//
+// getTask with taskID 0
+void snippetForgetTask1() async {
+  // >SEPARATOR getTask getTask with taskID 0
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getTask(
+    indexName: "<YOUR_INDEX_NAME>",
+    taskID: 0,
   );
   // >LOG
   // print the response
@@ -5415,6 +5435,7 @@ void snippetForsearchSingleIndex40() async {
   final response = await client.searchSingleIndex(
     indexName: "<YOUR_INDEX_NAME>",
     searchParams: SearchParamsObject(
+      query: "test",
       getRankingInfo: true,
     ),
   );

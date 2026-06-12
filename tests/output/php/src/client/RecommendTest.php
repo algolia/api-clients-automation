@@ -98,7 +98,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.44.0\).*/',
+                '/^Algolia for PHP \(4.45.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
