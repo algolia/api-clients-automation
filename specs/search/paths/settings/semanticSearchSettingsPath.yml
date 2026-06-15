@@ -21,8 +21,6 @@ get:
       $ref: '../../../common/responses/Unauthorized.yml'
     '404':
       $ref: '../../../common/responses/IndexNotFound.yml'
-    '408':
-      $ref: '../../../common/responses/Timeout.yml'
     '500':
       $ref: '../../../common/responses/InternalError.yml'
 
@@ -58,19 +56,11 @@ put:
   responses:
     '200':
       $ref: '../../../common/responses/UpdatedAt.yml'
-    '201':
-      description: Settings created.
-      content:
-        application/json:
-          schema:
-            $ref: '../../../common/responses/UpdatedAt.yml'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '401':
       $ref: '../../../common/responses/Unauthorized.yml'
     '404':
       $ref: '../../../common/responses/IndexNotFound.yml'
-    '408':
-      $ref: '../../../common/responses/Timeout.yml'
     '500':
       $ref: '../../../common/responses/InternalError.yml'
