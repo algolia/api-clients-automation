@@ -13,9 +13,6 @@
       "body": {
         "neuralSearchPreset": "default"
       }
-    },
-    "response": {
-      "statusCode": 200
     }
   }
 ]
