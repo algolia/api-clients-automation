@@ -7,9 +7,6 @@
     "request": {
       "path": "/1/indexes/cts_e2e_settings/semanticSearch/settings",
       "method": "GET"
-    },
-    "response": {
-      "statusCode": 200
     }
   }
 ]
