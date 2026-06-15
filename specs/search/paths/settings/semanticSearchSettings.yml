@@ -3,16 +3,7 @@ SemanticSearchSettings:
   description: Configuration for the NeuralSearch Semantic Settings API.
   properties:
     neuralSearchMode:
-      type: string
-      description: |
-        Whether NeuralSearch is active for the index.
-        - `inactive`: keyword-only search is returned for live traffic.
-        - `active`: NeuralSearch (keyword + semantic) is returned for live traffic.
-        - `preview`: NeuralSearch runs alongside keyword search for comparison without affecting live results.
-      enum:
-        - inactive
-        - active
-        - preview
+      $ref: '../../common/enums.yml#/neuralSearchMode'
     eventSources:
       type: array
       items:
@@ -38,20 +29,7 @@ SemanticSearchSettings:
       description: The language model used to generate embeddings. Set automatically during training.
       example: "external://algolia-large-multilang-generic-v2410"
     neuralSearchPreset:
-      type: string
-      description: |
-        Controls how keyword and semantic results are blended.
-        - `conservative`: semantic search activates only for zero-result keyword queries.
-        - `expanded_reach`: semantic search activates when keyword result counts are low.
-        - `append_only`: semantic results appear after all keyword results.
-        - `default`: semantic search runs on every query and blends with keyword results, giving keyword results higher priority.
-        - `custom`: unlocks `semanticBlendWeight`, `minHitsForSemantic`, and `enableNeuralSearchSortBy` for manual control.
-      enum:
-        - conservative
-        - expanded_reach
-        - append_only
-        - default
-        - custom
+      $ref: '../../common/enums.yml#/neuralSearchPreset'
     semanticBlendWeight:
       type: number
       format: float
