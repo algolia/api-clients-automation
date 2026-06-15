@@ -1,3 +1,7 @@
+## [4.40.1](https://github.com/algolia/algoliasearch-client-java/compare/4.40.0...4.40.1)
+
+- [ebe3dac95f](https://github.com/algolia/api-clients-automation/commit/ebe3dac95f) chore(ci): upgrade Gradle action ([#6503](https://github.com/algolia/api-clients-automation/pull/6503)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [4.40.0](https://github.com/algolia/algoliasearch-client-java/compare/4.39.0...4.40.0)
 
 - [7f2ce8cd3a](https://github.com/algolia/api-clients-automation/commit/7f2ce8cd3a) feat(clients): Agent Studio v1 ([#6097](https://github.com/algolia/api-clients-automation/pull/6097)) by [@Fluf22](https://github.com/Fluf22/)
