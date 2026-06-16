@@ -30,11 +30,6 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import okhttp3.Response;
 
-/**
- * Beta: The Agent Studio API is not yet stable and may introduce breaking changes.
- *
- * @see <a href="https://www.algolia.com/doc/rest-api/agent-studio">Agent Studio API docs</a>
- */
 public class AgentStudioClient extends ApiClient {
 
   public AgentStudioClient(String appId, String apiKey) {

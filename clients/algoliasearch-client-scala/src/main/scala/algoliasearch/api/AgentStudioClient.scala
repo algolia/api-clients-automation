@@ -94,10 +94,6 @@ object AgentStudioClient {
   }
 }
 
-/** @note
-  *   Beta: The Agent Studio API is not yet stable and may introduce breaking changes. See
-  *   [[https://www.algolia.com/doc/rest-api/agent-studio Agent Studio API docs]].
-  */
 class AgentStudioClient(
     appId: String,
     apiKey: String,
