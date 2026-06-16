@@ -36,16 +36,11 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
     additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
 
-    String effectiveVersion = version;
-    if (client.equals("agent-studio")) {
-      effectiveVersion = "1.0.0";
-    }
-
     // pubspec.yaml
     setPubAuthor("Algolia");
     setPubAuthorEmail("hey@algolia.com");
     setPubHomepage("https://www.algolia.com/doc/");
-    setPubVersion(effectiveVersion);
+    setPubVersion(version);
     String packageFolder;
     if (isAlgoliasearchClient) {
       libName = "algoliasearch";
@@ -112,7 +107,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
 
     // Search config
     additionalProperties.put("isSearchClient", client.equals("search"));
-    additionalProperties.put("packageVersion", effectiveVersion);
+    additionalProperties.put("packageVersion", version);
 
     // Only clients shipping hand-authored helpers export `src/extension.dart`.
     additionalProperties.put("hasExtensions", client.equals("search") || isAlgoliasearchClient);
