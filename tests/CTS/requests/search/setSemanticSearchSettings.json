@@ -1,6 +1,6 @@
 [
   {
-    "testName": "minimal parameters",
+    "testName": "set minimal parameters",
     "parameters": {
       "indexName": "cts_e2e_settings",
       "semanticSearchSettings": {
