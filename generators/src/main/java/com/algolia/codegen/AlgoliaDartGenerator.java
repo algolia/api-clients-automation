@@ -36,10 +36,9 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
     additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
 
-    // Use a beta version for the agent-studio standalone package
     String effectiveVersion = version;
     if (client.equals("agent-studio")) {
-      effectiveVersion = "0.1.0-beta.0";
+      effectiveVersion = "1.0.0";
     }
 
     // pubspec.yaml
