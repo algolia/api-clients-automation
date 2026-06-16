@@ -1,6 +1,6 @@
 [
   {
-    "testName": "minimal parameters",
+    "testName": "get minimal parameters",
     "parameters": {
       "indexName": "cts_e2e_settings"
     },
