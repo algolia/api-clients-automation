@@ -1,3 +1,7 @@
+## [2.43.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.42.1...2.43.0)
+
+- [52ebd28f58](https://github.com/algolia/api-clients-automation/commit/52ebd28f58) feat(clients): release Agent Studio package updates ([#6573](https://github.com/algolia/api-clients-automation/pull/6573)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [2.42.1](https://github.com/algolia/algoliasearch-client-scala/compare/2.42.0...2.42.1)
 
 - [fcd0a861a7](https://github.com/algolia/api-clients-automation/commit/fcd0a861a7) fix(specs): improve Agent Studio API docs metadata ([#6505](https://github.com/algolia/api-clients-automation/pull/6505)) by [@Fluf22](https://github.com/Fluf22/)

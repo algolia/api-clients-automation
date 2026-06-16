@@ -1,3 +1,7 @@
+## [1.51.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.50.1...1.51.0)
+
+- [52ebd28f58](https://github.com/algolia/api-clients-automation/commit/52ebd28f58) feat(clients): release Agent Studio package updates ([#6573](https://github.com/algolia/api-clients-automation/pull/6573)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [1.50.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.50.0...1.50.1)
 
 - [45b42dd36f](https://github.com/algolia/api-clients-automation/commit/45b42dd36f) fix(dart): add missing version tests and publish agent-studio ([#6500](https://github.com/algolia/api-clients-automation/pull/6500)) by [@Fluf22](https://github.com/Fluf22/)
