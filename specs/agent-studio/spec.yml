@@ -82,6 +82,7 @@ tags:
     description: Manage secret keys used to authenticate requests.
   - name: User Data
     description: Manage end-user data associated with conversations.
+x-beta: true
 x-timeouts:
   browser:
     connect: 25000
