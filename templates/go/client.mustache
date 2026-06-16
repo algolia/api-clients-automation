@@ -25,11 +25,6 @@ import (
 
 // APIClient manages communication with the {{appName}} API v{{version}}
 // In most cases there should be only one, shared, APIClient.
-{{#isAgentStudioClient}}
-//
-// Beta: The Agent Studio API is not yet stable and may change without notice.
-// See: https://www.algolia.com/doc/rest-api/agent-studio
-{{/isAgentStudioClient}}
 type APIClient struct {
 	appID     string
 	cfg       *{{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{/lambda.titlecase}}Configuration
@@ -295,7 +290,7 @@ func (c *APIClient) prepareRequest(
 	}
 
   contentType := "application/json"
-  
+
 	// Add the user agent to the request.
 	req.Header.Add("User-Agent", c.cfg.UserAgent)
   req.Header.Add("X-Algolia-Application-Id", c.cfg.AppID)

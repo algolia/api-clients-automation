@@ -1,9 +1,6 @@
 {{> partial_header}}
 {{> imports}}
 
-{{#isAgentStudioClient}}
-import warnings
-{{/isAgentStudioClient}}
 {{#isSearchClient}}
 from algoliasearch.search.models import (
   Action,
@@ -73,14 +70,6 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         if transporter is None:
             transporter = Transporter{{#isSyncClient}}Sync{{/isSyncClient}}(config)
         self._transporter = transporter
-
-        {{#isAgentStudioClient}}
-        warnings.warn(
-            "The Agent Studio API is in beta and subject to breaking changes. See https://www.algolia.com/doc/rest-api/agent-studio",
-            FutureWarning,
-            stacklevel=2,
-        )
-        {{/isAgentStudioClient}}
         {{#isSearchClient}}
         self._ingestion_transporter = None
         if config.transformation_options is not None:
@@ -156,7 +145,7 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         self._transporter.close()
         {{/isSearchClient}}
     {{/isSyncClient}}
-    
+
     {{^isSyncClient}}async {{/isSyncClient}}def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
         self._transporter.config.set_client_api_key(api_key)
@@ -218,7 +207,7 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         {{#headerParams.0}}
         _headers: Dict[str, str] = {}
         {{/headerParams.0}}
-        
+
         {{#vendorExtensions}}
         {{#queryParams}}
         if {{paramName}} is not None:
@@ -320,7 +309,7 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         {{#headerParams.0}}
         _headers: Dict[str, str] = {}
         {{/headerParams.0}}
-        
+
         {{#vendorExtensions}}
         {{#queryParams}}
         if {{paramName}} is not None:
