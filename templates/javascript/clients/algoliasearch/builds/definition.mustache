@@ -1,6 +1,6 @@
 // {{{generationBanner}}}
 
-import { createIterablePromise } from '@algolia/client-common';
+import { createIterablePromise, DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES } from '@algolia/client-common';
 import type { ApiError, ClientOptions, RequestOptions } from '@algolia/client-common';
 
 {{#dependencies}}
@@ -149,7 +149,7 @@ export function algoliasearch(
     },
 
     async replaceAllObjectsWithTransformation(
-      { indexName, objects, batchSize, scopes, maxRetries = 100 }: ReplaceAllObjectsOptions,
+      { indexName, objects, batchSize, scopes, maxRetries = DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES }: ReplaceAllObjectsOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<ReplaceAllObjectsWithTransformationResponse> {
       if (!ingestionTransporter) {

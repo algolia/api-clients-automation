@@ -409,7 +409,7 @@ async partialUpdateObjects(
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch`, `operationIndex` and `getTask` method and merged with the transporter requestOptions.
  */
 async replaceAllObjects(
-  { indexName, objects, batchSize, scopes, maxRetries = 100 }: ReplaceAllObjectsOptions,
+  { indexName, objects, batchSize, scopes, maxRetries = DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES }: ReplaceAllObjectsOptions,
   requestOptions?: RequestOptions | undefined
 ): Promise<ReplaceAllObjectsResponse> {
   const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
