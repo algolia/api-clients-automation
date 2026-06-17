@@ -160,6 +160,92 @@ import Foundation
           useReadTransporter: true{{/vendorExtensions.x-use-read-transporter}}
         )
     }{{/vendorExtensions}}
+{{#vendorExtensions.x-return-is-generic}}
+
+    /**
+     {{#allParams}}
+     - parameter {{paramName}}: ({{#isFormParam}}form{{/isFormParam}}{{#isQueryParam}}query{{/isQueryParam}}{{#isPathParam}}path{{/isPathParam}}{{#isHeaderParam}}header{{/isHeaderParam}}{{#isBodyParam}}body{{/isBodyParam}}) {{{description}}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+     {{/allParams}}
+     - returns: {{{returnType}}}{{#returnType}}{{#isResponseOptional}}?{{/isResponseOptional}}{{/returnType}}{{^returnType}}Void{{/returnType}}
+     */
+    @available(*, deprecated, message: "This untyped `AnyCodable` overload is deprecated. Annotate the result with a `Codable` type to use the generic `{{operationId}}` instead, e.g. `let object: MyType = try await client.{{operationId}}(...)`. It will be removed in a future version.")
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    {{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}open{{/nonPublicApi}} func {{operationId}}({{#allParams}}{{paramName}}: {{#isEnum}}{{#isContainer}}[{{enumName}}_{{operationId}}]{{/isContainer}}{{^isContainer}}{{enumName}}_{{operationId}}{{/isContainer}}{{/isEnum}}{{^isEnum}}{{#lambda.to-codable}}{{{dataType}}}{{/lambda.to-codable}}{{/isEnum}}{{^required}}? = nil{{/required}}, {{/allParams}}requestOptions: RequestOptions? = nil) async throws{{#returnType}} -> {{{returnType}}}{{#returnType}}{{#isResponseOptional}}?{{/isResponseOptional}}{{/returnType}}{{/returnType}} {
+    {{#returnType}}let response: Response<{{{returnType}}}> = {{/returnType}}try await {{operationId}}WithHTTPInfo({{#allParams}}{{paramName}}: {{paramName}}, {{/allParams}}requestOptions: requestOptions)
+    {{#returnType}}
+
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+      return body{{/returnType}}
+    }
+
+    /**
+     {{#notes}}{{{.}}}{{/notes}}
+     {{#vendorExtensions}}
+     {{#x-acl.0}}
+     Required API Key ACLs:{{/x-acl.0}}
+     {{#x-acl}}
+       - {{.}}
+     {{/x-acl}}
+     {{/vendorExtensions}}{{#allParams}}
+     - parameter {{paramName}}: ({{#isFormParam}}form{{/isFormParam}}{{#isQueryParam}}query{{/isQueryParam}}{{#isPathParam}}path{{/isPathParam}}{{#isHeaderParam}}header{{/isHeaderParam}}{{#isBodyParam}}body{{/isBodyParam}}) {{{description}}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+     {{/allParams}}
+     - returns: RequestBuilder<{{{returnType}}}{{#returnType}}{{#isResponseOptional}}?{{/isResponseOptional}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{{description}}}
+     */
+    @available(*, deprecated, message: "This untyped `AnyCodable` overload is deprecated. Annotate the result with a `Codable` type to use the generic `{{operationId}}WithHTTPInfo` instead, e.g. `let response: Response<MyType> = try await client.{{operationId}}WithHTTPInfo(...)`. It will be removed in a future version.")
+    {{#vendorExtensions}}{{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}open{{/nonPublicApi}} func {{operationId}}WithHTTPInfo({{#allParams}}{{paramName}}: {{#isEnum}}{{#isContainer}}[{{enumName}}_{{operationId}}]{{/isContainer}}{{^isContainer}}{{enumName}}_{{operationId}}{{/isContainer}}{{/isEnum}}{{^isEnum}}{{#lambda.to-codable}}{{{dataType}}}{{/lambda.to-codable}}{{/isEnum}}{{^required}}? = nil{{/required}}, {{/allParams}}requestOptions userRequestOptions: RequestOptions? = nil) async throws -> Response<{{{returnType}}}{{#returnType}}{{#isResponseOptional}}?{{/isResponseOptional}}{{/returnType}}{{^returnType}}AnyCodable{{/returnType}}> {
+        {{#pathParams}}{{#isString}}{{#required}}guard !{{{paramName}}}.isEmpty else {
+          throw AlgoliaError.invalidArgument("{{{paramName}}}", "{{{operationId}}}")
+        }
+
+        {{/required}}{{/isString}}{{/pathParams}}{{#queryParams}}{{#isString}}{{#required}}guard !{{{paramName}}}.isEmpty else {
+          throw AlgoliaError.invalidArgument("{{{paramName}}}", "{{{operationId}}}")
+        }
+
+        {{/required}}{{/isString}}{{/queryParams}}
+        {{^pathParams}}let{{/pathParams}}{{#pathParams}}{{#-first}}var{{/-first}}{{/pathParams}} resourcePath = "{{{serverPathSuffix}}}{{{path}}}"{{#pathParams}}
+        let {{paramName}}PreEscape = "\({{#isEnum}}{{paramName}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}.rawValue{{/isContainer}}{{/isEnum}}{{^isEnum}}APIHelper.mapValueToPathItem({{paramName}}){{/isEnum}})"{{^x-is-custom-request}}
+        let {{paramName}}PostEscape = {{paramName}}PreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""{{/x-is-custom-request}}
+        resourcePath = resourcePath.replacingOccurrences(of: "{{=<% %>=}}{<%baseName%>}<%={{ }}=%>", with: {{^x-is-custom-request}}{{paramName}}PostEscape{{/x-is-custom-request}}{{#x-is-custom-request}}{{paramName}}PreEscape{{/x-is-custom-request}}, options: .literal, range: nil){{/pathParams}}
+        {{#bodyParam}}
+        let body = {{paramName}}
+        {{/bodyParam}}
+        {{^bodyParam}}
+          let body: AnyCodable? = nil
+        {{/bodyParam}}
+        {{#hasQueryParams}}
+        let queryParameters{{#x-is-custom-request}}: [String: AnyCodable]? = parameters{{/x-is-custom-request}}{{^x-is-custom-request}}: [String: Any?] = [{{^queryParams}}:{{/queryParams}}
+            {{#queryParams}}
+            {{> _param}},
+            {{/queryParams}}
+        ]{{/x-is-custom-request}}
+        {{/hasQueryParams}}
+        {{^hasQueryParams}}
+          let queryParameters: [String: Any?]? = nil
+        {{/hasQueryParams}}
+
+        let nillableHeaders: [String: Any?]? = {{^headerParams}}nil{{/headerParams}}{{#headerParams}}{{#-first}}[{{/-first}}
+            {{> _param}},
+        {{#-last}}]{{/-last}}{{/headerParams}}
+
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+
+        return try await self.transporter.send(
+          method: "{{httpMethod}}",
+          path: resourcePath,
+          data: body{{#bodyParam}}{{^required}} ?? AnyCodable(){{/required}}{{/bodyParam}},
+          requestOptions: RequestOptions(
+            headers: headers,
+            queryParameters: queryParameters{{#vendorExtensions.x-timeouts}},
+            readTimeout: {{#lambda.toSeconds}}{{{read}}}{{/lambda.toSeconds}},
+            writeTimeout: {{#lambda.toSeconds}}{{{write}}}{{/lambda.toSeconds}}{{/vendorExtensions.x-timeouts}}
+          ) + userRequestOptions{{#vendorExtensions.x-use-read-transporter}},
+          useReadTransporter: true{{/vendorExtensions.x-use-read-transporter}}
+        )
+    }{{/vendorExtensions}}
+{{/vendorExtensions.x-return-is-generic}}
 {{/operation}}
 
 {{#isAgentStudioClient}}

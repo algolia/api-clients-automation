@@ -738,36 +738,4 @@ public extension SearchClient {
         )
         return try helper.mergeResponses(responses)
     }
-
-    /// Retrieves one record by its object ID as an untyped `AnyCodable`.
-    ///
-    /// Backward-compatible overload of the generic `getObject`: a bare
-    /// `let record = try await client.getObject(...)` resolves here and returns `AnyCodable`.
-    /// Annotate the result to decode into your own type instead, e.g.
-    /// `let record: MyRecord = try await client.getObject(indexName: ..., objectID: ...)`.
-    ///
-    /// - parameter indexName: (path) Name of the index on which to perform the operation.
-    /// - parameter objectID: (path) Unique record identifier.
-    /// - parameter attributesToRetrieve: (query) Attributes to include with the records in the response. (optional)
-    /// - parameter requestOptions: Request options to merge with the transporter requestOptions.
-    /// - returns: AnyCodable
-    func getObject(
-        indexName: String,
-        objectID: String,
-        attributesToRetrieve: [String]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AnyCodable {
-        let response: Response<AnyCodable> = try await self.getObjectWithHTTPInfo(
-            indexName: indexName,
-            objectID: objectID,
-            attributesToRetrieve: attributesToRetrieve,
-            requestOptions: requestOptions
-        )
-
-        guard let body = response.body else {
-            throw AlgoliaError.missingData
-        }
-
-        return body
-    }
 }
