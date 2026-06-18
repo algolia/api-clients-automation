@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
- * Ruby inlines the expected response payload (a JSON string) as a Ruby literal, which relies on JSON
- * being valid Ruby. The only mismatch is the JSON `null` token, which must become Ruby `nil`. This
- * lambda rewrites bare `null` tokens (outside of string values) to `nil`.
+ * Ruby inlines the expected response payload (a JSON string) as a Ruby literal, which relies on
+ * JSON being valid Ruby. The only mismatch is the JSON `null` token, which must become Ruby `nil`.
+ * This lambda rewrites bare `null` tokens (outside of string values) to `nil`.
  */
 public class RubyNilLambda implements Mustache.Lambda {
 
