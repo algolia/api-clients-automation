@@ -38,6 +38,14 @@ function addRoutes(app: Express): void {
     });
   });
 
+  // `getObjects` returns `null` entries for requested objectIDs that don't exist in the index, so
+  // the response deserialization must accept a mix of records and `null`.
+  app.post('/1/indexes/:indexName/objects', (req, res) => {
+    res.json({
+      results: [{ objectID: 'foo' }, null],
+    });
+  });
+
   // languages that just put the response in a map, there is no strict parsing or types to match.
   const isLaxLanguage = (lang: string) => {
     return lang === 'dart' || lang === 'javascript' || lang === 'python' || lang === 'php';

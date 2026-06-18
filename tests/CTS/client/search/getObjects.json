@@ -1,0 +1,47 @@
+[
+  {
+    "testName": "deserializes null records for missing objectIDs",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "port": 6686
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "getObjects",
+        "parameters": {
+          "requests": [
+            {
+              "objectID": "foo",
+              "indexName": "theIndexName"
+            },
+            {
+              "objectID": "missing",
+              "indexName": "theIndexName"
+            }
+          ]
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "results": [
+              {
+                "objectID": "foo"
+              },
+              null
+            ]
+          }
+        }
+      }
+    ]
+  }
+]
