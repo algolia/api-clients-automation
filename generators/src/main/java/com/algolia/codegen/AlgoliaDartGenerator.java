@@ -129,7 +129,33 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
     Map<String, ModelsMap> modelsMap = super.postProcessAllModels(objs);
     FieldUtils.normalizeVarNames(modelsMap);
+    markNullableArrayItems(modelsMap);
     return support.clearOneOfFromModels(libName, modelsMap);
+  }
+
+  /**
+   * Renders nullable array items as `List<X?>` so responses with `null` entries (e.g. `getObjects`
+   * results) can be deserialized.
+   */
+  private static void markNullableArrayItems(Map<String, ModelsMap> modelsMap) {
+    for (ModelsMap modelContainer : modelsMap.values()) {
+      List<ModelMap> models = modelContainer.getModels();
+      if (models == null || models.isEmpty()) {
+        continue;
+      }
+      CodegenModel model = models.get(0).getModel();
+      if (model.vars == null) {
+        continue;
+      }
+      for (CodegenProperty prop : model.vars) {
+        if (prop.isArray && prop.items != null && prop.items.isNullable && prop.datatypeWithEnum != null) {
+          int idx = prop.datatypeWithEnum.lastIndexOf('>');
+          if (idx >= 0) {
+            prop.datatypeWithEnum = prop.datatypeWithEnum.substring(0, idx) + "?" + prop.datatypeWithEnum.substring(idx);
+          }
+        }
+      }
+    }
   }
 
   @Override
