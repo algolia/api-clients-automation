@@ -9,8 +9,8 @@ module Algolia
       @max_retries = max_retries
     end
 
-    def self.resolve(options)
-      options || new
+    def self.resolve(options, default_max_retries: DEFAULT_MAX_RETRIES)
+      options || new(max_retries: default_max_retries)
     end
   end
 end
