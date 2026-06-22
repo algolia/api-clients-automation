@@ -1,4 +1,4 @@
-{{#hasResponse}}let response{{#isGeneric}}: {{#useEchoRequester}}Response<{{/useEchoRequester}}{{#lambda.prefix}}{{{returnType}}}{{/lambda.prefix}}<{{#lambda.prefix}}Hit{{/lambda.prefix}}>{{#useEchoRequester}}>{{/useEchoRequester}}{{/isGeneric}} = {{> tests/method}}{{/hasResponse}}
+{{#hasResponse}}let response{{#isGeneric}}: {{#useEchoRequester}}Response<{{/useEchoRequester}}{{#lambda.prefix}}{{{returnType}}}{{/lambda.prefix}}<{{#lambda.prefix}}Hit{{/lambda.prefix}}>{{#useEchoRequester}}>{{/useEchoRequester}}{{/isGeneric}}{{#isReturnGeneric}}: {{#useEchoRequester}}Response<{{/useEchoRequester}}[String: AnyCodable]{{#useEchoRequester}}>{{/useEchoRequester}}{{/isReturnGeneric}} = {{> tests/method}}{{/hasResponse}}
 {{^hasResponse}}let _ = {{> tests/method}}{{/hasResponse}}
 {{^isHelper}}
 {{^isBenchmark}}
