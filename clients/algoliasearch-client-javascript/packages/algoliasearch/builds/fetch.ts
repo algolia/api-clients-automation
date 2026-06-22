@@ -29,6 +29,7 @@ import type {
   ReplaceAllObjectsOptions,
   ReplaceAllObjectsWithTransformationResponse,
   SaveObjectsOptions,
+  SearchClientNodeHelpers,
 } from '@algolia/client-search';
 import type { WatchResponse } from '@algolia/ingestion';
 
@@ -46,7 +47,10 @@ import type {
 
 export * from './models';
 
-export type Algoliasearch = SearchClient & {
+// `SearchClientNodeHelpers` is intersected explicitly: depending on the consumer's `moduleResolution`
+// (e.g. `bundler`), `@algolia/client-search` can resolve to its browser build where `SearchClient`
+// omits the Node-only helpers, which would otherwise drop `generateSecuredApiKey` & co. from this type.
+export type Algoliasearch = SearchClient & SearchClientNodeHelpers & {
   initAbtesting: (initOptions: InitClientOptions & AbtestingRegionOptions) => AbtestingClient;
   initAbtestingV3: (initOptions: InitClientOptions & AbtestingV3RegionOptions) => AbtestingV3Client;
   initAnalytics: (initOptions: InitClientOptions & AnalyticsRegionOptions) => AnalyticsClient;
