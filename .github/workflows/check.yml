@@ -643,7 +643,7 @@ jobs:
 
       - name: Deploy documentation
         if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' && needs.setup.outputs.RUN_WEBSITE == 'true' }}
-        uses: nwtgck/actions-netlify@v3.0
+        uses: nwtgck/actions-netlify@v4.0
         with:
           publish-dir: 'website/build'
           production-branch: main
