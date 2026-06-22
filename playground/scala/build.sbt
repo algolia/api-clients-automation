@@ -11,4 +11,4 @@ val algoliasearch = ProjectRef(file("../../clients/algoliasearch-client-scala"),
 dependsOn(algoliasearch)
 
 libraryDependencies += "io.github.cdimascio" % "dotenv-java" % "3.2.0"
-libraryDependencies += "io.github.json4s" %% "json4s-native" % "4.1.0"
+libraryDependencies += "io.github.json4s" %% "json4s-native" % "4.1.1"
