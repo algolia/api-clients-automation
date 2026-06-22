@@ -14,10 +14,6 @@ import 'package:algolia_client_ingestion/algolia_client_ingestion.dart' as inges
 {{#description}}
 /// {{{description}}}
 {{/description}}
-{{#isAgentStudioClient}}
-/// **Beta:** The Agent Studio API is not yet stable and may change without notice.
-/// See https://www.algolia.com/doc/rest-api/agent-studio
-{{/isAgentStudioClient}}
 final class {{classname}} implements ApiClient {
 
   @override
@@ -87,7 +83,7 @@ final class {{classname}} implements ApiClient {
               {{/fallbackToAliasHost}}
               final url = {{#fallbackToAliasHost}}region == null ? '{{{hostWithFallback}}}' : {{/fallbackToAliasHost}} '{{{regionalHost}}}'.replaceAll('{region}', region);
               return [Host(url: url)];
-            }  
+            }
             {{/hasRegionalHost}}
             {{#uniqueHost}}
             {{/uniqueHost}}
@@ -221,7 +217,7 @@ final class {{classname}} implements ApiClient {
         {{#hasBodyParam}}
         body: {{#bodyParam}}{{{paramName}}}{{#isModel}}{{^isRequired}}?{{/isRequired}}.toJson(){{/isModel}},{{/bodyParam}}
         {{/hasBodyParam}}
-    );  
+    );
     {{#returnType}}final response = {{/returnType}}await _retryStrategy.execute(
       request: request,
       options: {{#vendorExtensions.x-timeouts}}RequestOptions(
@@ -236,7 +232,7 @@ final class {{classname}} implements ApiClient {
     {{/vendorExtensions.x-is-custom-request}}
     return deserialize<{{{.}}}, {{{returnBaseType}}}>(response, '{{{.}}}', growable: true,);
     {{/returnType}}
-  }  
+  }
   {{/operation}}
 
 {{^isCompositionClient}}

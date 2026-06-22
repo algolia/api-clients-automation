@@ -509,7 +509,7 @@ func TestSearchcommonApi1(t *testing.T) {
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, `^Algolia for Go \(4.41.0\).*`, echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.43.0\).*`, echo.Header.Get("User-Agent"))
 }
 
 // call deleteObjects without error.
@@ -701,6 +701,47 @@ func TestSearchgenerateSecuredApiKey6(t *testing.T) {
 			search.NewEmptySecuredApiKeyRestrictions().SetUserToken("user42"))
 		require.NoError(t, err)
 	}
+}
+
+// deserializes null records for missing objectIDs.
+func TestSearchgetObjects0(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6686", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+
+	require.NoError(t, err)
+	res, err = client.GetObjects(client.NewApiGetObjectsRequest(
+
+		search.NewEmptyGetObjectsParams().SetRequests(
+			[]search.GetObjectsRequest{
+				*search.NewEmptyGetObjectsRequest().SetObjectID("foo").SetIndexName("theIndexName"),
+				*search.NewEmptyGetObjectsRequest().SetObjectID("missing").SetIndexName("theIndexName"),
+			}),
+	))
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `{"results":[{"objectID":"foo"},null]}`, string(rawBody))
 }
 
 // indexExists.

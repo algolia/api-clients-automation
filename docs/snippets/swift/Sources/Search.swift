@@ -1303,7 +1303,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
-        let response = try await client.getObject(
+        let response: [String: AnyCodable] = try await client.getObject(
             indexName: "<YOUR_INDEX_NAME>",
             objectID: "uniqueID",
             attributesToRetrieve: ["attr1", "attr2"]
@@ -1323,7 +1323,10 @@ final class SearchClientSnippet {
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
-        let response = try await client.getObject(indexName: "<YOUR_INDEX_NAME>", objectID: "Batman and Robin")
+        let response: [String: AnyCodable] = try await client.getObject(
+            indexName: "<YOUR_INDEX_NAME>",
+            objectID: "Batman and Robin"
+        )
         // >LOG
         // print the response
         print(response)

@@ -30,7 +30,7 @@
     "website:build": "bash scripts/website/build.sh"
   },
   "devDependencies": {
-    "@eslint/json": "1.2.0",
+    "@eslint/json": "2.0.0",
     "@openapitools/openapi-generator-cli": "2.38.0",
     "@redocly/cli": "2.27.0",
     "eslint": "10.4.0",
@@ -38,7 +38,7 @@
     "eslint-plugin-yml": "3.3.2",
     "husky": "9.1.7",
     "lint-staged": "17.0.5",
-    "oxlint": "1.64.0",
+    "oxlint": "1.70.0",
     "prettier": "3.8.3",
     "prettier-plugin-java": "2.8.1",
     "prettier-plugin-organize-imports": "4.3.0",

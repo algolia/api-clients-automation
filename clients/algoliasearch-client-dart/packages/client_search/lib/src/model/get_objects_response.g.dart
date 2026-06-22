@@ -13,8 +13,7 @@ GetObjectsResponse _$GetObjectsResponseFromJson(Map<String, dynamic> json) =>
       ($checkedConvert) {
         final val = GetObjectsResponse(
           message: $checkedConvert('message', (v) => v as String?),
-          results: $checkedConvert('results',
-              (v) => (v as List<dynamic>).map((e) => e as Object).toList()),
+          results: $checkedConvert('results', (v) => v as List<dynamic>),
         );
         return val;
       },
