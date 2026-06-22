@@ -910,7 +910,8 @@ public partial class SearchClient : ISearchClient
   )
     where T : class
   {
-    var maxRetries = chunkedOptions?.MaxRetries ?? RetryHelper.DefaultMaxRetries;
+    chunkedOptions ??= new ChunkedHelperOptions { MaxRetries = ChunkedHelperOptions.DefaultReplaceAllObjectsMaxRetries };
+    var maxRetries = chunkedOptions.MaxRetries;
     if (objects == null)
     {
       throw new ArgumentNullException(nameof(objects));
@@ -1506,7 +1507,8 @@ public partial class SearchClient : ISearchClient
     ChunkedHelperOptions chunkedOptions = null
   )
   {
-    var maxRetries = chunkedOptions?.MaxRetries ?? RetryHelper.DefaultMaxRetries;
+    chunkedOptions ??= new ChunkedHelperOptions { MaxRetries = ChunkedHelperOptions.DefaultReplaceAllObjectsMaxRetries };
+    var maxRetries = chunkedOptions.MaxRetries;
     if (_ingestionTransporter == null)
     {
       throw new AlgoliaException(
