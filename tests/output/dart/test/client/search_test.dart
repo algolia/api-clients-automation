@@ -369,6 +369,40 @@ void main() {
     }
   });
 
+  test('deserializes null records for missing objectIDs', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6686',
+              scheme: 'http'),
+        ]));
+
+    requester.setOnRequest((request) {});
+    try {
+      final res = await client.getObjects(
+        getObjectsParams: GetObjectsParams(
+          requests: [
+            GetObjectsRequest(
+              objectID: "foo",
+              indexName: "theIndexName",
+            ),
+            GetObjectsRequest(
+              objectID: "missing",
+              indexName: "theIndexName",
+            ),
+          ],
+        ),
+      );
+      expectBody(res, """{"results":[{"objectID":"foo"},null]}""");
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
   test('handles 204 No Content responses correctly', () async {
     final requester = RequestInterceptor();
     final client = SearchClient(

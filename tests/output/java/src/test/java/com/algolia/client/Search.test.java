@@ -579,6 +579,40 @@ class SearchClientClientTests {
   }
 
   @Test
+  @DisplayName("deserializes null records for missing objectIDs")
+  void getObjectsTest0() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6686
+          )
+        ),
+        false
+      )
+    );
+
+    GetObjectsResponse res = client.getObjects(
+      new GetObjectsParams().setRequests(
+        Arrays.asList(
+          new GetObjectsRequest().setObjectID("foo").setIndexName("theIndexName"),
+          new GetObjectsRequest().setObjectID("missing").setIndexName("theIndexName")
+        )
+      ),
+      Hit.class
+    );
+
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"results\":[{\"objectID\":\"foo\"},null]}", json.writeValueAsString(res), JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
   @DisplayName("indexExists")
   void indexExistsTest0() {
     SearchClient client = new SearchClient(

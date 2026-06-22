@@ -13855,7 +13855,10 @@ public class SearchClient extends ApiClient {
     RequestOptions requestOptions,
     ChunkedHelperOptions chunkedOptions
   ) {
-    int maxRetries = chunkedOptions != null ? chunkedOptions.getMaxRetries() : TaskUtils.DEFAULT_MAX_RETRIES;
+    if (chunkedOptions == null) {
+      chunkedOptions = new ChunkedHelperOptions().setMaxRetries(ChunkedHelperOptions.DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES);
+    }
+    int maxRetries = chunkedOptions.getMaxRetries();
     Random rnd = new Random();
     String tmpIndexName = indexName + "_tmp_" + rnd.nextInt(100);
 
@@ -14053,7 +14056,10 @@ public class SearchClient extends ApiClient {
       );
     }
 
-    int maxRetries = chunkedOptions != null ? chunkedOptions.getMaxRetries() : TaskUtils.DEFAULT_MAX_RETRIES;
+    if (chunkedOptions == null) {
+      chunkedOptions = new ChunkedHelperOptions().setMaxRetries(ChunkedHelperOptions.DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES);
+    }
+    int maxRetries = chunkedOptions.getMaxRetries();
     Random rnd = new Random();
     String tmpIndexName = indexName + "_tmp_" + rnd.nextInt(100);
 

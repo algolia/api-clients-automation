@@ -450,6 +450,27 @@ final class SearchClientClientTests: XCTestCase {
         }
     }
 
+    /// deserializes null records for missing objectIDs
+    func testGetObjectsTest0() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6686")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: GetObjectsResponse<Hit> = try await client
+            .getObjects(getObjectsParams: GetObjectsParams(requests: [
+                GetObjectsRequest(objectID: "foo", indexName: "theIndexName"),
+                GetObjectsRequest(objectID: "missing", indexName: "theIndexName"),
+            ]))
+
+        XTCJSONEquals(received: response, expected: "{\"results\":[{\"objectID\":\"foo\"},null]}")
+    }
+
     /// indexExists
     func testIndexExistsTest0() async throws {
         let configuration = try SearchClientConfiguration(

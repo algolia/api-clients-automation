@@ -555,6 +555,46 @@ class TestSearchClient:
             },
         )
 
+    async def test_get_objects_0(self):
+        """
+        deserializes null records for missing objectIDs
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.get_objects(
+            get_objects_params={
+                "requests": [
+                    {
+                        "objectID": "foo",
+                        "indexName": "theIndexName",
+                    },
+                    {
+                        "objectID": "missing",
+                        "indexName": "theIndexName",
+                    },
+                ],
+            },
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"results":[{"objectID":"foo"},null]}""")
+
     async def test_index_exists_0(self):
         """
         indexExists
@@ -2284,6 +2324,46 @@ class TestSearchClientSync:
                 "userToken": "user42",
             },
         )
+
+    def test_get_objects_0(self):
+        """
+        deserializes null records for missing objectIDs
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.get_objects(
+            get_objects_params={
+                "requests": [
+                    {
+                        "objectID": "foo",
+                        "indexName": "theIndexName",
+                    },
+                    {
+                        "objectID": "missing",
+                        "indexName": "theIndexName",
+                    },
+                ],
+            },
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"results":[{"objectID":"foo"},null]}""")
 
     def test_index_exists_0(self):
         """

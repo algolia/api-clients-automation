@@ -583,6 +583,46 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
+  test("deserializes null records for missing objectIDs") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6686)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.getObjects(
+        getObjectsParams = GetObjectsParams(
+          requests = Seq(
+            GetObjectsRequest(
+              objectID = "foo",
+              indexName = "theIndexName"
+            ),
+            GetObjectsRequest(
+              objectID = "missing",
+              indexName = "theIndexName"
+            )
+          )
+        )
+      ),
+      Duration.Inf
+    )
+    assert(parse(write(res)) == parse("{\"results\":[{\"objectID\":\"foo\"},null]}"))
+  }
+
   test("indexExists") {
 
     val client = SearchClient(

@@ -591,6 +591,49 @@ class SearchTest {
   }
 
   @Test
+  fun `deserializes null records for missing objectIDs`() = runTest {
+    val client =
+      SearchClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6686,
+                )
+              )
+          ),
+      )
+
+    client.runTest(
+      call = {
+        getObjects(
+          getObjectsParams =
+            GetObjectsParams(
+              requests =
+                listOf(
+                  GetObjectsRequest(objectID = "foo", indexName = "theIndexName"),
+                  GetObjectsRequest(objectID = "missing", indexName = "theIndexName"),
+                )
+            )
+        )
+      },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """{"results":[{"objectID":"foo"},null]}""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
+      },
+    )
+  }
+
+  @Test
   fun `indexExists`() = runTest {
     val client =
       SearchClient(

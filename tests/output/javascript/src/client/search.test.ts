@@ -430,6 +430,30 @@ describe('generateSecuredApiKey', () => {
   }, 25000);
 });
 
+describe('getObjects', () => {
+  test('deserializes null records for missing objectIDs', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6686,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.getObjects({
+      requests: [
+        { objectID: 'foo', indexName: 'theIndexName' },
+        { objectID: 'missing', indexName: 'theIndexName' },
+      ],
+    });
+
+    expect(result).toEqual({ results: [{ objectID: 'foo' }, null] });
+  }, 25000);
+});
+
 describe('indexExists', () => {
   test('indexExists', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {

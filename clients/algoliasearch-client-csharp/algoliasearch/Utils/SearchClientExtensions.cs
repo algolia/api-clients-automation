@@ -910,7 +910,10 @@ public partial class SearchClient : ISearchClient
   )
     where T : class
   {
-    chunkedOptions ??= new ChunkedHelperOptions { MaxRetries = ChunkedHelperOptions.DefaultReplaceAllObjectsMaxRetries };
+    chunkedOptions ??= new ChunkedHelperOptions
+    {
+      MaxRetries = ChunkedHelperOptions.DefaultReplaceAllObjectsMaxRetries,
+    };
     var maxRetries = chunkedOptions.MaxRetries;
     if (objects == null)
     {
@@ -1507,7 +1510,10 @@ public partial class SearchClient : ISearchClient
     ChunkedHelperOptions chunkedOptions = null
   )
   {
-    chunkedOptions ??= new ChunkedHelperOptions { MaxRetries = ChunkedHelperOptions.DefaultReplaceAllObjectsMaxRetries };
+    chunkedOptions ??= new ChunkedHelperOptions
+    {
+      MaxRetries = ChunkedHelperOptions.DefaultReplaceAllObjectsMaxRetries,
+    };
     var maxRetries = chunkedOptions.MaxRetries;
     if (_ingestionTransporter == null)
     {

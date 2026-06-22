@@ -486,6 +486,35 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
   end
 
+  # deserializes null records for missing objectIDs
+  def test_get_objects0
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6686,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    req = client.get_objects(
+      Algolia::Search::GetObjectsParams.new(
+        requests: [
+          Algolia::Search::GetObjectsRequest.new(algolia_object_id: "foo", index_name: "theIndexName"),
+          Algolia::Search::GetObjectsRequest.new(algolia_object_id: "missing", index_name: "theIndexName")
+        ]
+      )
+    )
+    assert_equal({:"results" => [{:"objectID" => "foo"}, nil]}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+  end
+
   # indexExists
   def test_index_exists0
     client = Algolia::SearchClient.create_with_config(

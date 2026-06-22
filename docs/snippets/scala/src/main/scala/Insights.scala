@@ -660,7 +660,7 @@ class SnippetInsightsClient {
               index = "products",
               userToken = "user-123456",
               authenticatedUserToken = Some("user-123456"),
-              timestamp = Some(1781481600000L),
+              timestamp = Some(1782000000000L),
               objectIDs = Seq("9780545139700", "9780439784542"),
               queryID = "43b15df305339e827f0ac0bdc5ebcaa7"
             ),
@@ -670,7 +670,7 @@ class SnippetInsightsClient {
               index = "products",
               userToken = "user-123456",
               authenticatedUserToken = Some("user-123456"),
-              timestamp = Some(1781481600000L),
+              timestamp = Some(1782000000000L),
               objectIDs = Seq("9780545139700", "9780439784542")
             )
           )

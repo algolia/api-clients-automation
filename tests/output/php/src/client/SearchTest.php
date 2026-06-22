@@ -417,6 +417,29 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('deserializes null records for missing objectIDs')]
+    public function test0getObjects(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
+
+        $res = $client->getObjects(
+            ['requests' => [
+                ['objectID' => 'foo',
+                    'indexName' => 'theIndexName',
+                ],
+
+                ['objectID' => 'missing',
+                    'indexName' => 'theIndexName',
+                ],
+            ],
+            ],
+        );
+        $this->assertEquals(
+            '{"results":[{"objectID":"foo"},null]}',
+            json_encode($res)
+        );
+    }
+
     #[TestDox('indexExists')]
     public function test0indexExists(): void
     {

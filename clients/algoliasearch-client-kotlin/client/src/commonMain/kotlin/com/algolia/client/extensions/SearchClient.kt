@@ -514,7 +514,8 @@ public suspend fun SearchClient.replaceAllObjects(
   batchSize: Int = 1000,
   scopes: List<ScopeType> = listOf(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms),
   requestOptions: RequestOptions? = null,
-  chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions(maxRetries = DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES),
+  chunkedOptions: ChunkedHelperOptions =
+    ChunkedHelperOptions(maxRetries = DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES),
 ): ReplaceAllObjectsResponse {
   val maxRetries = chunkedOptions.maxRetries
   val tmpIndexName = "${indexName}_tmp_${Random.nextInt(from = 0, until = 100)}"
@@ -871,7 +872,8 @@ public suspend fun SearchClient.replaceAllObjectsWithTransformation(
   batchSize: Int = 1000,
   scopes: List<ScopeType> = listOf(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms),
   requestOptions: RequestOptions? = null,
-  chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions(maxRetries = DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES),
+  chunkedOptions: ChunkedHelperOptions =
+    ChunkedHelperOptions(maxRetries = DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES),
 ): ReplaceAllObjectsWithTransformationResponse {
   val transporter = requireIngestionTransporter()
   val maxRetries = chunkedOptions.maxRetries
