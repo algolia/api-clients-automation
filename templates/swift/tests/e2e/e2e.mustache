@@ -61,7 +61,7 @@ final class {{client}}RequestsTestsE2E: XCTestCase {
         }
 
         {{#response}}
-          let response{{#isGeneric}}: Response<{{#lambda.prefix}}{{{returnType}}}{{/lambda.prefix}}<{{#lambda.prefix}}Hit{{/lambda.prefix}}>>{{/isGeneric}} = {{> tests/method}}
+          let response{{#isGeneric}}: Response<{{#lambda.prefix}}{{{returnType}}}{{/lambda.prefix}}<{{#lambda.prefix}}Hit{{/lambda.prefix}}>>{{/isGeneric}}{{#isReturnGeneric}}: Response<[String: AnyCodable]>{{/isReturnGeneric}} = {{> tests/method}}
           {{#body}}
             try XCTLenientAssertEqual(received: XCTUnwrap(response.body), expected: "{{#lambda.escapeJSON}}{{{body}}}{{/lambda.escapeJSON}}")
           {{/body}}

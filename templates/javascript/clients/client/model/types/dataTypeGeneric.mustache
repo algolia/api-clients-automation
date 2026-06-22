@@ -1,1 +1,1 @@
-{{#complexType}}{{{.}}}<T>{{/complexType}}{{^complexType}}T{{/complexType}}{{#isArray}}[]{{/isArray}}
+{{#isArray}}{{#items.isNullable}}({{/items.isNullable}}{{#complexType}}{{{.}}}<T>{{/complexType}}{{^complexType}}T{{/complexType}}{{#items.isNullable}} | null){{/items.isNullable}}[]{{/isArray}}{{^isArray}}{{#complexType}}{{{.}}}<T>{{/complexType}}{{^complexType}}T{{/complexType}}{{/isArray}}

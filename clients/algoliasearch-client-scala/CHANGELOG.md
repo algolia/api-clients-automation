@@ -1,3 +1,12 @@
+## [2.43.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.42.1...2.43.0)
+
+- [52ebd28f58](https://github.com/algolia/api-clients-automation/commit/52ebd28f58) feat(clients): release Agent Studio package updates ([#6573](https://github.com/algolia/api-clients-automation/pull/6573)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [2.42.1](https://github.com/algolia/algoliasearch-client-scala/compare/2.42.0...2.42.1)
+
+- [fcd0a861a7](https://github.com/algolia/api-clients-automation/commit/fcd0a861a7) fix(specs): improve Agent Studio API docs metadata ([#6505](https://github.com/algolia/api-clients-automation/pull/6505)) by [@Fluf22](https://github.com/Fluf22/)
+- [b46947d657](https://github.com/algolia/api-clients-automation/commit/b46947d657) fix(specs): link to ecosystem page ([#6506](https://github.com/algolia/api-clients-automation/pull/6506)) by [@kai687](https://github.com/kai687/)
+
 ## [2.42.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.41.0...2.42.0)
 
 - [febd34b6b9](https://github.com/algolia/api-clients-automation/commit/febd34b6b9) refactor(scala): split package.scala into separate traits ([#6482](https://github.com/algolia/api-clients-automation/pull/6482)) by [@eric-zaharia](https://github.com/eric-zaharia/)

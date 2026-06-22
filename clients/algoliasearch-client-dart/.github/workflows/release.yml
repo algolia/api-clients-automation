@@ -47,6 +47,7 @@ jobs:
           - packages/client_search
           - packages/client_insights
           - packages/client_recommend
+          - packages/client_ingestion
           - packages/client_composition
           - packages/client_agent_studio
     permissions:
@@ -56,7 +57,7 @@ jobs:
       working-directory: ${{ matrix.package }}
 
   wait_for_dependencies:
-    needs: 
+    needs:
       - check
       - publish_core
       - publish_clients
@@ -67,7 +68,7 @@ jobs:
         run: sleep 300
 
   publish_algoliasearch:
-    needs: 
+    needs:
       - check
       - publish_core
       - publish_clients

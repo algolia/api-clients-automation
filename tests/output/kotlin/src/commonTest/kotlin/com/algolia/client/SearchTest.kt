@@ -410,7 +410,7 @@ class SearchTest {
     client.runTest(
       call = { customPost(path = "1/test") },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.43.0\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.45.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),
@@ -587,6 +587,49 @@ class SearchTest {
         )
       },
       intercept = {},
+    )
+  }
+
+  @Test
+  fun `deserializes null records for missing objectIDs`() = runTest {
+    val client =
+      SearchClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6686,
+                )
+              )
+          ),
+      )
+
+    client.runTest(
+      call = {
+        getObjects(
+          getObjectsParams =
+            GetObjectsParams(
+              requests =
+                listOf(
+                  GetObjectsRequest(objectID = "foo", indexName = "theIndexName"),
+                  GetObjectsRequest(objectID = "missing", indexName = "theIndexName"),
+                )
+            )
+        )
+      },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """{"results":[{"objectID":"foo"},null]}""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
+      },
     )
   }
 

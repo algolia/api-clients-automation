@@ -426,7 +426,8 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
         batchSize: Int = 1000,
         scopes: Option[Seq[ScopeType]] = Some(Seq(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms)),
         requestOptions: Option[RequestOptions] = None,
-        chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
+        chunkedOptions: ChunkedHelperOptions =
+          ChunkedHelperOptions(maxRetries = ChunkedHelperOptions.DefaultReplaceAllObjectsMaxRetries)
     )(implicit ec: ExecutionContext): Future[ReplaceAllObjectsResponse] = {
       val tmpIndexName = s"${indexName}_tmp_${scala.util.Random.nextInt(100)}"
 
@@ -797,7 +798,8 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
         batchSize: Int = 1000,
         scopes: Option[Seq[ScopeType]] = Some(Seq(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms)),
         requestOptions: Option[RequestOptions] = None,
-        chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
+        chunkedOptions: ChunkedHelperOptions =
+          ChunkedHelperOptions(maxRetries = ChunkedHelperOptions.DefaultReplaceAllObjectsMaxRetries)
     )(implicit ec: ExecutionContext): Future[ReplaceAllObjectsWithTransformationResponse] = {
       client.ingestionTransporter match {
         case None => Future.failed(new AlgoliaClientException(transformationOptionsRequired))

@@ -19,7 +19,7 @@ final class GetObjectsResponse {
 
   /// Retrieved records.
   @JsonKey(name: r'results')
-  final List<Object> results;
+  final List<Object?> results;
 
   @override
   bool operator ==(Object other) =>

@@ -28,7 +28,7 @@ class TestClientQuerySuggestionsClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.41.0\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.42.0\).*/))
   end
 
   # handles 204 No Content responses correctly
