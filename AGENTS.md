@@ -153,3 +153,27 @@ Most language builds require Docker. Run `yarn docker:setup` first. Images: `api
 ### CI Matrix
 
 CI runs parallel builds per language. Dynamic matrix generated from git diff - only changed clients rebuild. See `.github/workflows/check.yml`.
+
+## Cursor Cloud specific instructions
+
+These notes cover non-obvious caveats for working in the Cursor Cloud VM. The startup update script already runs `yarn install` (with Node selected via nvm), so dependencies for the root JS/TS workspaces are ready when a session starts.
+
+### Node / Yarn
+
+- Node is managed by `nvm` and pinned by `.nvmrc` (`24.15.0`); Yarn 4 is provided by the repo via `corepack` + `.yarn/releases/`. The default `nvm` alias is set to the `.nvmrc` version. If `node`/`yarn` ever resolve to the wrong version in a shell, run `nvm use && corepack enable` (the VM has a separate system `node` that can shadow nvm in some non-login shells).
+
+### What runs without Docker (primary inner loop)
+
+The TypeScript CLI orchestrator and the rest of the JS/TS tooling run on the host with no Docker:
+
+- Build the bundled OpenAPI specs: `yarn cli build specs [client]` (core generation-pipeline stage; lints/validates/bundles a spec).
+- Unit tests + type-check: `yarn scripts:test` (= `tsc --noEmit && vitest`) and `yarn workspace eslint-plugin-automation-custom test`.
+- Lint: `yarn github-actions:lint`; format/lint a folder via `yarn cli format javascript <folder>`. Note `yarn cli format ...` rewrites files in place (it is not a check-only command) and may reformat files that were committed with slightly different formatting — review/revert unintended diffs.
+
+### Docusaurus website (separate sub-project)
+
+- `website/` has its own `yarn.lock` and is NOT part of the root Yarn workspaces. The startup update script does not install it. Run `cd website && yarn install` once, then `yarn website` (serves on `http://localhost:3000/`, host `0.0.0.0`). The navbar "Algolia API clients documentation" link points to the external `algolia.com` site, not the local app.
+
+### Docker-dependent work (not preinstalled)
+
+- Actually running the code generator (`yarn cli generate ...`, for ANY language including JavaScript) and building/testing every non-JS client requires Docker images built via `yarn docker:setup`. Docker is NOT installed in the base VM and the images are large/multi-language, so this is an opt-in heavy step rather than part of startup. Language toolchain versions come from `config/.*-version`.
