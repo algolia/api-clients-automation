@@ -138,6 +138,9 @@
     "getRule": {
       "default": "var response = await client.GetRuleAsync(\"<YOUR_INDEX_NAME>\", \"qr-1725004648916\");"
     },
+    "getSemanticSearchSettings": {
+      "default": "var response = await client.GetSemanticSearchSettingsAsync(\"<YOUR_INDEX_NAME>\");"
+    },
     "getSettings": {
       "default": "var response = await client.GetSettingsAsync(\"<YOUR_INDEX_NAME>\", 2);"
     },
@@ -456,6 +459,9 @@
       "get setDictionarySettings results with minimal parameters": "var response = await client.SetDictionarySettingsAsync(\n  new DictionarySettingsParams\n  {\n    DisableStandardEntries = new StandardEntries\n    {\n      Plurals = new Dictionary<string, Boolean>\n      {\n        { \"fr\", false },\n        { \"en\", false },\n        { \"ru\", true },\n      },\n    },\n  }\n);",
       "get setDictionarySettings results with all parameters": "var response = await client.SetDictionarySettingsAsync(\n  new DictionarySettingsParams\n  {\n    DisableStandardEntries = new StandardEntries\n    {\n      Plurals = new Dictionary<string, Boolean>\n      {\n        { \"fr\", false },\n        { \"en\", false },\n        { \"ru\", true },\n      },\n      Stopwords = new Dictionary<string, Boolean> { { \"fr\", false } },\n      Compounds = new Dictionary<string, Boolean> { { \"ru\", true } },\n    },\n  }\n);"
     },
+    "setSemanticSearchSettings": {
+      "default": "var response = await client.SetSemanticSearchSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new SemanticSearchSettings { NeuralSearchPreset = Enum.Parse<NeuralSearchPreset>(\"Default\") }\n);"
+    },
     "setSettings": {
       "minimal parameters": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings\n  {\n    PaginationLimitedTo = 10,\n    TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>(\"False\")),\n  },\n  true\n);",
       "boolean typoTolerance": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings { TypoTolerance = new TypoTolerance(true) },\n  true\n);",
@@ -733,6 +739,9 @@
     },
     "getRule": {
       "default": "final response = await client.getRule(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objectID: \"qr-1725004648916\",\n);"
+    },
+    "getSemanticSearchSettings": {
+      "default": "final response = await client.getSemanticSearchSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n);"
     },
     "getSettings": {
       "default": "final response = await client.getSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  getVersion: 2,\n);"
@@ -1032,6 +1041,9 @@
       "get setDictionarySettings results with minimal parameters": "final response = await client.setDictionarySettings(\n  dictionarySettingsParams: DictionarySettingsParams(\n    disableStandardEntries: StandardEntries(\n      plurals: {\n        'fr': false,\n        'en': false,\n        'ru': true,\n      },\n    ),\n  ),\n);",
       "get setDictionarySettings results with all parameters": "final response = await client.setDictionarySettings(\n  dictionarySettingsParams: DictionarySettingsParams(\n    disableStandardEntries: StandardEntries(\n      plurals: {\n        'fr': false,\n        'en': false,\n        'ru': true,\n      },\n      stopwords: {\n        'fr': false,\n      },\n      compounds: {\n        'ru': true,\n      },\n    ),\n  ),\n);"
     },
+    "setSemanticSearchSettings": {
+      "default": "final response = await client.setSemanticSearchSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  semanticSearchSettings: SemanticSearchSettings(\n    neuralSearchPreset: NeuralSearchPreset.fromJson(\"default\"),\n  ),\n);"
+    },
     "setSettings": {
       "minimal parameters": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    paginationLimitedTo: 10,\n    typoTolerance: TypoToleranceEnum.fromJson(\"false\"),\n  ),\n  forwardToReplicas: true,\n);",
       "boolean typoTolerance": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    typoTolerance: true,\n  ),\n  forwardToReplicas: true,\n);",
@@ -1310,6 +1322,9 @@
     },
     "getRule": {
       "default": "response, err := client.GetRule(client.NewApiGetRuleRequest(\n  \"<YOUR_INDEX_NAME>\", \"qr-1725004648916\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "getSemanticSearchSettings": {
+      "default": "response, err := client.GetSemanticSearchSettings(client.NewApiGetSemanticSearchSettingsRequest(\n  \"<YOUR_INDEX_NAME>\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getSettings": {
       "default": "response, err := client.GetSettings(client.NewApiGetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\").WithGetVersion(2))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -1629,6 +1644,9 @@
       "get setDictionarySettings results with minimal parameters": "response, err := client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(\n\n  search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(\n    search.NewEmptyStandardEntries().SetPlurals(map[string]bool{\"fr\": false, \"en\": false, \"ru\": true}))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "get setDictionarySettings results with all parameters": "response, err := client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(\n\n  search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(\n    search.NewEmptyStandardEntries().\n      SetPlurals(map[string]bool{\"fr\": false, \"en\": false, \"ru\": true}).\n      SetStopwords(map[string]bool{\"fr\": false}).\n      SetCompounds(map[string]bool{\"ru\": true}),\n  ),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
+    "setSemanticSearchSettings": {
+      "default": "response, err := client.SetSemanticSearchSettings(client.NewApiSetSemanticSearchSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptySemanticSearchSettings().SetNeuralSearchPreset(search.NeuralSearchPreset(\"default\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
     "setSettings": {
       "minimal parameters": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().\n    SetPaginationLimitedTo(10).\n    SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum(\"false\"))),\n).WithForwardToReplicas(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "boolean typoTolerance": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetTypoTolerance(search.BoolAsTypoTolerance(true))).WithForwardToReplicas(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -1918,6 +1936,9 @@
     },
     "getRule": {
       "default": "Rule response = client.getRule(\"<YOUR_INDEX_NAME>\", \"qr-1725004648916\");"
+    },
+    "getSemanticSearchSettings": {
+      "default": "SemanticSearchSettings response = client.getSemanticSearchSettings(\"<YOUR_INDEX_NAME>\");"
     },
     "getSettings": {
       "default": "SettingsResponse response = client.getSettings(\"<YOUR_INDEX_NAME>\", 2);"
@@ -2237,6 +2258,9 @@
       "get setDictionarySettings results with minimal parameters": "UpdatedAtResponse response = client.setDictionarySettings(\n  new DictionarySettingsParams().setDisableStandardEntries(\n    new StandardEntries().setPlurals(\n      new HashMap() {\n        {\n          put(\"fr\", false);\n          put(\"en\", false);\n          put(\"ru\", true);\n        }\n      }\n    )\n  )\n);",
       "get setDictionarySettings results with all parameters": "UpdatedAtResponse response = client.setDictionarySettings(\n  new DictionarySettingsParams().setDisableStandardEntries(\n    new StandardEntries()\n      .setPlurals(\n        new HashMap() {\n          {\n            put(\"fr\", false);\n            put(\"en\", false);\n            put(\"ru\", true);\n          }\n        }\n      )\n      .setStopwords(\n        new HashMap() {\n          {\n            put(\"fr\", false);\n          }\n        }\n      )\n      .setCompounds(\n        new HashMap() {\n          {\n            put(\"ru\", true);\n          }\n        }\n      )\n  )\n);"
     },
+    "setSemanticSearchSettings": {
+      "default": "UpdatedAtResponse response = client.setSemanticSearchSettings(\n  \"<YOUR_INDEX_NAME>\",\n  new SemanticSearchSettings().setNeuralSearchPreset(NeuralSearchPreset.DEFAULT)\n);"
+    },
     "setSettings": {
       "minimal parameters": "UpdatedAtResponse response = client.setSettings(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings().setPaginationLimitedTo(10).setTypoTolerance(TypoToleranceEnum.FALSE),\n  true\n);",
       "boolean typoTolerance": "UpdatedAtResponse response = client.setSettings(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings().setTypoTolerance(TypoTolerance.of(true)),\n  true\n);",
@@ -2529,6 +2553,9 @@
     },
     "getRule": {
       "default": "const response = await client.getRule({ indexName: 'cts_e2e_browse', objectID: 'qr-1725004648916' });"
+    },
+    "getSemanticSearchSettings": {
+      "default": "const response = await client.getSemanticSearchSettings({ indexName: 'cts_e2e_settings' });"
     },
     "getSettings": {
       "default": "const response = await client.getSettings({ indexName: 'cts_e2e_settings', getVersion: 2 });"
@@ -2848,6 +2875,9 @@
       "get setDictionarySettings results with minimal parameters": "const response = await client.setDictionarySettings({\n  disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },\n});",
       "get setDictionarySettings results with all parameters": "const response = await client.setDictionarySettings({\n  disableStandardEntries: {\n    plurals: { fr: false, en: false, ru: true },\n    stopwords: { fr: false },\n    compounds: { ru: true },\n  },\n});"
     },
+    "setSemanticSearchSettings": {
+      "default": "const response = await client.setSemanticSearchSettings({\n  indexName: 'cts_e2e_settings',\n  semanticSearchSettings: { neuralSearchPreset: 'default' },\n});"
+    },
     "setSettings": {
       "minimal parameters": "const response = await client.setSettings({\n  indexName: 'cts_e2e_settings',\n  indexSettings: { paginationLimitedTo: 10, typoTolerance: 'false' },\n  forwardToReplicas: true,\n});",
       "boolean typoTolerance": "const response = await client.setSettings({\n  indexName: 'theIndexName',\n  indexSettings: { typoTolerance: true },\n  forwardToReplicas: true,\n});",
@@ -3134,6 +3164,9 @@
     },
     "getRule": {
       "default": "var response = client.getRule(indexName = \"<YOUR_INDEX_NAME>\", objectID = \"qr-1725004648916\")"
+    },
+    "getSemanticSearchSettings": {
+      "default": "var response = client.getSemanticSearchSettings(indexName = \"<YOUR_INDEX_NAME>\")"
     },
     "getSettings": {
       "default": "var response = client.getSettings(indexName = \"<YOUR_INDEX_NAME>\", getVersion = 2)"
@@ -3453,6 +3486,9 @@
       "get setDictionarySettings results with minimal parameters": "var response =\n  client.setDictionarySettings(\n    dictionarySettingsParams =\n      DictionarySettingsParams(\n        disableStandardEntries =\n          StandardEntries(plurals = mapOf(\"fr\" to false, \"en\" to false, \"ru\" to true))\n      )\n  )",
       "get setDictionarySettings results with all parameters": "var response =\n  client.setDictionarySettings(\n    dictionarySettingsParams =\n      DictionarySettingsParams(\n        disableStandardEntries =\n          StandardEntries(\n            plurals = mapOf(\"fr\" to false, \"en\" to false, \"ru\" to true),\n            stopwords = mapOf(\"fr\" to false),\n            compounds = mapOf(\"ru\" to true),\n          )\n      )\n  )"
     },
+    "setSemanticSearchSettings": {
+      "default": "var response =\n  client.setSemanticSearchSettings(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    semanticSearchSettings =\n      SemanticSearchSettings(\n        neuralSearchPreset = NeuralSearchPreset.entries.first { it.value == \"default\" }\n      ),\n  )"
+    },
     "setSettings": {
       "minimal parameters": "var response =\n  client.setSettings(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    indexSettings =\n      IndexSettings(\n        paginationLimitedTo = 10,\n        typoTolerance = TypoToleranceEnum.entries.first { it.value == \"false\" },\n      ),\n    forwardToReplicas = true,\n  )",
       "boolean typoTolerance": "var response =\n  client.setSettings(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    indexSettings = IndexSettings(typoTolerance = TypoTolerance.of(true)),\n    forwardToReplicas = true,\n  )",
@@ -3742,6 +3778,9 @@
     },
     "getRule": {
       "default": "$response = $client->getRule(\n    '<YOUR_INDEX_NAME>',\n    'qr-1725004648916',\n);"
+    },
+    "getSemanticSearchSettings": {
+      "default": "$response = $client->getSemanticSearchSettings(\n    '<YOUR_INDEX_NAME>',\n);"
     },
     "getSettings": {
       "default": "$response = $client->getSettings(\n    '<YOUR_INDEX_NAME>',\n    2,\n);"
@@ -4061,6 +4100,9 @@
       "get setDictionarySettings results with minimal parameters": "$response = $client->setDictionarySettings(\n    ['disableStandardEntries' => ['plurals' => ['fr' => false,\n        'en' => false,\n        'ru' => true,\n    ],\n    ],\n    ],\n);",
       "get setDictionarySettings results with all parameters": "$response = $client->setDictionarySettings(\n    ['disableStandardEntries' => ['plurals' => ['fr' => false,\n        'en' => false,\n        'ru' => true,\n    ],\n        'stopwords' => ['fr' => false,\n        ],\n        'compounds' => ['ru' => true,\n        ],\n    ],\n    ],\n);"
     },
+    "setSemanticSearchSettings": {
+      "default": "$response = $client->setSemanticSearchSettings(\n    '<YOUR_INDEX_NAME>',\n    ['neuralSearchPreset' => 'default',\n    ],\n);"
+    },
     "setSettings": {
       "minimal parameters": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['paginationLimitedTo' => 10,\n        'typoTolerance' => 'false',\n    ],\n    true,\n);",
       "boolean typoTolerance": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['typoTolerance' => true,\n    ],\n    true,\n);",
@@ -4350,6 +4392,9 @@
     },
     "getRule": {
       "default": "response = client.get_rule(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"qr-1725004648916\",\n)"
+    },
+    "getSemanticSearchSettings": {
+      "default": "response = client.get_semantic_search_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
     },
     "getSettings": {
       "default": "response = client.get_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    get_version=2,\n)"
@@ -4669,6 +4714,9 @@
       "get setDictionarySettings results with minimal parameters": "response = client.set_dictionary_settings(\n    dictionary_settings_params={\n        \"disableStandardEntries\": {\n            \"plurals\": {\n                \"fr\": False,\n                \"en\": False,\n                \"ru\": True,\n            },\n        },\n    },\n)",
       "get setDictionarySettings results with all parameters": "response = client.set_dictionary_settings(\n    dictionary_settings_params={\n        \"disableStandardEntries\": {\n            \"plurals\": {\n                \"fr\": False,\n                \"en\": False,\n                \"ru\": True,\n            },\n            \"stopwords\": {\n                \"fr\": False,\n            },\n            \"compounds\": {\n                \"ru\": True,\n            },\n        },\n    },\n)"
     },
+    "setSemanticSearchSettings": {
+      "default": "response = client.set_semantic_search_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    semantic_search_settings={\n        \"neuralSearchPreset\": \"default\",\n    },\n)"
+    },
     "setSettings": {
       "minimal parameters": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"paginationLimitedTo\": 10,\n        \"typoTolerance\": \"false\",\n    },\n    forward_to_replicas=True,\n)",
       "boolean typoTolerance": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"typoTolerance\": True,\n    },\n    forward_to_replicas=True,\n)",
@@ -4958,6 +5006,9 @@
     },
     "getRule": {
       "default": "response = client.get_rule(\"<YOUR_INDEX_NAME>\", \"qr-1725004648916\")"
+    },
+    "getSemanticSearchSettings": {
+      "default": "response = client.get_semantic_search_settings(\"<YOUR_INDEX_NAME>\")"
     },
     "getSettings": {
       "default": "response = client.get_settings(\"<YOUR_INDEX_NAME>\", 2)"
@@ -5277,6 +5328,9 @@
       "get setDictionarySettings results with minimal parameters": "response = client.set_dictionary_settings(\n  Algolia::Search::DictionarySettingsParams.new(\n    disable_standard_entries: Algolia::Search::StandardEntries.new(plurals: {fr: false, en: false, ru: true})\n  )\n)",
       "get setDictionarySettings results with all parameters": "response = client.set_dictionary_settings(\n  Algolia::Search::DictionarySettingsParams.new(\n    disable_standard_entries: Algolia::Search::StandardEntries.new(\n      plurals: {fr: false, en: false, ru: true},\n      stopwords: {fr: false},\n      compounds: {ru: true}\n    )\n  )\n)"
     },
+    "setSemanticSearchSettings": {
+      "default": "response = client.set_semantic_search_settings(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::SemanticSearchSettings.new(neural_search_preset: \"default\")\n)"
+    },
     "setSettings": {
       "minimal parameters": "response = client.set_settings(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::IndexSettings.new(pagination_limited_to: 10, typo_tolerance: \"false\"),\n  true\n)",
       "boolean typoTolerance": "response = client.set_settings(\"<YOUR_INDEX_NAME>\", Algolia::Search::IndexSettings.new(typo_tolerance: true), true)",
@@ -5566,6 +5620,9 @@
     },
     "getRule": {
       "default": "val response = Await.result(\n  client.getRule(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objectID = \"qr-1725004648916\"\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "getSemanticSearchSettings": {
+      "default": "val response = Await.result(\n  client.getSemanticSearchSettings(\n    indexName = \"<YOUR_INDEX_NAME>\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getSettings": {
       "default": "val response = Await.result(\n  client.getSettings(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    getVersion = Some(2)\n  ),\n  Duration(100, \"sec\")\n)"
@@ -5885,6 +5942,9 @@
       "get setDictionarySettings results with minimal parameters": "val response = Await.result(\n  client.setDictionarySettings(\n    dictionarySettingsParams = DictionarySettingsParams(\n      disableStandardEntries = StandardEntries(\n        plurals = Some(Map(\"fr\" -> false, \"en\" -> false, \"ru\" -> true))\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)",
       "get setDictionarySettings results with all parameters": "val response = Await.result(\n  client.setDictionarySettings(\n    dictionarySettingsParams = DictionarySettingsParams(\n      disableStandardEntries = StandardEntries(\n        plurals = Some(Map(\"fr\" -> false, \"en\" -> false, \"ru\" -> true)),\n        stopwords = Some(Map(\"fr\" -> false)),\n        compounds = Some(Map(\"ru\" -> true))\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
+    "setSemanticSearchSettings": {
+      "default": "val response = Await.result(\n  client.setSemanticSearchSettings(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    semanticSearchSettings = SemanticSearchSettings(\n      neuralSearchPreset = Some(NeuralSearchPreset.withName(\"default\"))\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+    },
     "setSettings": {
       "minimal parameters": "val response = Await.result(\n  client.setSettings(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    indexSettings = IndexSettings(\n      paginationLimitedTo = Some(10),\n      typoTolerance = Some(TypoToleranceEnum.withName(\"false\"))\n    ),\n    forwardToReplicas = Some(true)\n  ),\n  Duration(100, \"sec\")\n)",
       "boolean typoTolerance": "val response = Await.result(\n  client.setSettings(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    indexSettings = IndexSettings(\n      typoTolerance = Some(TypoTolerance(true))\n    ),\n    forwardToReplicas = Some(true)\n  ),\n  Duration(100, \"sec\")\n)",
@@ -6164,8 +6224,8 @@
       "getLogs with parameters": "let response = try await client.getLogs(\n    offset: 5,\n    length: 10,\n    indexName: \"<YOUR_INDEX_NAME>\",\n    type: LogType.all\n)"
     },
     "getObject": {
-      "getObject": "let response = try await client.getObject(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objectID: \"uniqueID\",\n    attributesToRetrieve: [\"attr1\", \"attr2\"]\n)",
-      "search with a real object": "let response = try await client.getObject(indexName: \"<YOUR_INDEX_NAME>\", objectID: \"Batman and Robin\")"
+      "getObject": "let response: [String: AnyCodable] = try await client.getObject(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objectID: \"uniqueID\",\n    attributesToRetrieve: [\"attr1\", \"attr2\"]\n)",
+      "search with a real object": "let response: [String: AnyCodable] = try await client.getObject(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objectID: \"Batman and Robin\"\n)"
     },
     "getObjects": {
       "by ID": "let response: GetObjectsResponse<Hit> = try await client\n    .getObjects(getObjectsParams: GetObjectsParams(requests: [GetObjectsRequest(\n        objectID: \"uniqueID\",\n        indexName: \"<YOUR_INDEX_NAME>\"\n    )]))",
@@ -6174,6 +6234,9 @@
     },
     "getRule": {
       "default": "let response = try await client.getRule(indexName: \"<YOUR_INDEX_NAME>\", objectID: \"qr-1725004648916\")"
+    },
+    "getSemanticSearchSettings": {
+      "default": "let response = try await client.getSemanticSearchSettings(indexName: \"<YOUR_INDEX_NAME>\")"
     },
     "getSettings": {
       "default": "let response = try await client.getSettings(indexName: \"<YOUR_INDEX_NAME>\", getVersion: 2)"
@@ -6492,6 +6555,9 @@
     "setDictionarySettings": {
       "get setDictionarySettings results with minimal parameters": "let response = try await client\n    .setDictionarySettings(\n        dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(plurals: [\n            \"fr\": false,\n            \"en\": false,\n            \"ru\": true,\n        ]))\n    )",
       "get setDictionarySettings results with all parameters": "let response = try await client\n    .setDictionarySettings(\n        dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(\n            plurals: [\"fr\": false, \"en\": false, \"ru\": true],\n            stopwords: [\"fr\": false],\n            compounds: [\"ru\": true]\n        ))\n    )"
+    },
+    "setSemanticSearchSettings": {
+      "default": "let response = try await client.setSemanticSearchSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    semanticSearchSettings: SemanticSearchSettings(neuralSearchPreset: NeuralSearchPreset.`default`)\n)"
     },
     "setSettings": {
       "minimal parameters": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(\n        paginationLimitedTo: 10,\n        typoTolerance: SearchTypoTolerance.searchTypoToleranceEnum(SearchTypoToleranceEnum.`false`)\n    ),\n    forwardToReplicas: true\n)",

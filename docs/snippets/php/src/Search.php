@@ -1893,6 +1893,28 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the GetSemanticSearchSettings method.
+     *
+     * get minimal parameters
+     */
+    public function snippetForGetSemanticSearchSettings(): void
+    {
+        // >SEPARATOR getSemanticSearchSettings default
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->getSemanticSearchSettings(
+            '<YOUR_INDEX_NAME>',
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetSettings method.
      *
      * getSettings
@@ -9227,6 +9249,30 @@ class SnippetSearchClient
                 'compounds' => ['ru' => true,
                 ],
             ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSemanticSearchSettings method.
+     *
+     * set minimal parameters
+     */
+    public function snippetForSetSemanticSearchSettings(): void
+    {
+        // >SEPARATOR setSemanticSearchSettings default
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSemanticSearchSettings(
+            '<YOUR_INDEX_NAME>',
+            ['neuralSearchPreset' => 'default',
             ],
         );
 

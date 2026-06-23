@@ -1938,6 +1938,28 @@ def snippet_for_get_rule():
     # SEPARATOR<
 
 
+def snippet_for_get_semantic_search_settings():
+    """
+    Snippet for the getSemanticSearchSettings method.
+
+    get minimal parameters
+    """
+    # >SEPARATOR getSemanticSearchSettings default
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.get_semantic_search_settings(
+        index_name="<YOUR_INDEX_NAME>",
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_get_settings():
     """
     Snippet for the getSettings method.
@@ -9515,6 +9537,31 @@ def snippet_for_set_dictionary_settings1():
                     "ru": True,
                 },
             },
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_semantic_search_settings():
+    """
+    Snippet for the setSemanticSearchSettings method.
+
+    set minimal parameters
+    """
+    # >SEPARATOR setSemanticSearchSettings default
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_semantic_search_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        semantic_search_settings={
+            "neuralSearchPreset": "default",
         },
     )
 

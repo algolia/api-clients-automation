@@ -2178,6 +2178,35 @@ func SnippetForGetRuleOfSearch() {
 	// SEPARATOR<
 }
 
+func SnippetForGetSemanticSearchSettingsOfSearch() {
+	/*
+	   Snippet for the getSemanticSearchSettings method.
+
+	   get minimal parameters
+	*/
+
+	// >SEPARATOR getSemanticSearchSettings default
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetSemanticSearchSettings(client.NewApiGetSemanticSearchSettingsRequest(
+		"<YOUR_INDEX_NAME>"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
 func SnippetForGetSettingsOfSearch() {
 	/*
 	   Snippet for the getSettings method.
@@ -9861,6 +9890,36 @@ func SnippetForSetDictionarySettingsOfSearch1() {
 				SetCompounds(map[string]bool{"ru": true}),
 		),
 	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForSetSemanticSearchSettingsOfSearch() {
+	/*
+	   Snippet for the setSemanticSearchSettings method.
+
+	   set minimal parameters
+	*/
+
+	// >SEPARATOR setSemanticSearchSettings default
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSemanticSearchSettings(client.NewApiSetSemanticSearchSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptySemanticSearchSettings().SetNeuralSearchPreset(search.NeuralSearchPreset("default"))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

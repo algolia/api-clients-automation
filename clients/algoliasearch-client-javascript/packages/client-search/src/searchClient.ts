@@ -11,6 +11,7 @@ import type {
 } from '@algolia/client-common';
 import {
   ApiError,
+  DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES,
   createAuth,
   createIterablePromise,
   createTransporter,
@@ -58,6 +59,7 @@ import type { SearchRulesResponse } from '../model/searchRulesResponse';
 import type { SearchSynonymsResponse } from '../model/searchSynonymsResponse';
 import type { SearchUserIdsParams } from '../model/searchUserIdsParams';
 import type { SearchUserIdsResponse } from '../model/searchUserIdsResponse';
+import type { SemanticSearchSettings } from '../model/semanticSearchSettings';
 import type { SettingsResponse } from '../model/settingsResponse';
 import type { Source } from '../model/source';
 import type { SynonymHit } from '../model/synonymHit';
@@ -95,6 +97,7 @@ import type {
   GetLogsProps,
   GetObjectProps,
   GetRuleProps,
+  GetSemanticSearchSettingsProps,
   GetSettingsProps,
   GetSynonymProps,
   GetTaskProps,
@@ -121,6 +124,7 @@ import type {
   SearchRulesProps,
   SearchSingleIndexProps,
   SearchSynonymsProps,
+  SetSemanticSearchSettingsProps,
   SetSettingsProps,
   UpdateApiKeyProps,
   WaitForApiKeyOptions,
@@ -130,7 +134,7 @@ import type {
 
 import type { BatchRequest } from '../model/batchRequest';
 
-export const apiClientVersion = '5.54.0';
+export const apiClientVersion = '5.55.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -638,11 +642,17 @@ export function createSearchClient({
      * @param replaceAllObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
      * @param replaceAllObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `objects.length / batchSize`. Defaults to 1000.
      * @param replaceAllObjects.scopes - The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
-     * @param replaceAllObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
+     * @param replaceAllObjects.maxRetries - The maximum number of retries when polling for task completion. 800 by default.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch`, `operationIndex` and `getTask` method and merged with the transporter requestOptions.
      */
     async replaceAllObjects(
-      { indexName, objects, batchSize, scopes, maxRetries = 100 }: ReplaceAllObjectsOptions,
+      {
+        indexName,
+        objects,
+        batchSize,
+        scopes,
+        maxRetries = DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES,
+      }: ReplaceAllObjectsOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<ReplaceAllObjectsResponse> {
       const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
@@ -1707,6 +1717,38 @@ export function createSearchClient({
     },
 
     /**
+     * Retrieves the NeuralSearch semantic settings for an index.
+     *
+     * Required API Key ACLs:
+     *  - settings
+     * @param getSemanticSearchSettings - The getSemanticSearchSettings object.
+     * @param getSemanticSearchSettings.indexName - Name of the index on which to perform the operation.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getSemanticSearchSettings(
+      { indexName }: GetSemanticSearchSettingsProps,
+      requestOptions?: RequestOptions,
+    ): Promise<SemanticSearchSettings> {
+      validateRequired('indexName', 'getSemanticSearchSettings', indexName);
+
+      const requestPath = '/1/indexes/{indexName}/semanticSearch/settings'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName),
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
      * Retrieves an object with non-null index settings.
      *
      * Required API Key ACLs:
@@ -2734,6 +2776,42 @@ export function createSearchClient({
         queryParameters,
         headers,
         data: dictionarySettingsParams,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Updates the NeuralSearch semantic settings for an index. Changes take effect immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+     *
+     * Required API Key ACLs:
+     *  - editSettings
+     * @param setSemanticSearchSettings - The setSemanticSearchSettings object.
+     * @param setSemanticSearchSettings.indexName - Name of the index on which to perform the operation.
+     * @param setSemanticSearchSettings.semanticSearchSettings - The semanticSearchSettings object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    setSemanticSearchSettings(
+      { indexName, semanticSearchSettings }: SetSemanticSearchSettingsProps,
+      requestOptions?: RequestOptions,
+    ): Promise<UpdatedAtResponse> {
+      validateRequired('indexName', 'setSemanticSearchSettings', indexName);
+
+      validateRequired('semanticSearchSettings', 'setSemanticSearchSettings', semanticSearchSettings);
+
+      const requestPath = '/1/indexes/{indexName}/semanticSearch/settings'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName),
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'PUT',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: semanticSearchSettings,
       };
 
       return transporter.request(request, requestOptions);

@@ -959,6 +959,32 @@ public class SearchClient(
   }
 
   /**
+   * Retrieves the NeuralSearch semantic settings for an index.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getSemanticSearchSettings(
+    indexName: String,
+    requestOptions: RequestOptions? = null,
+  ): SemanticSearchSettings {
+    require(indexName.isNotBlank()) {
+      "Parameter `indexName` is required when calling `getSemanticSearchSettings`."
+    }
+    val requestConfig =
+      RequestConfig(
+        method = RequestMethod.GET,
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "semanticSearch", "settings"),
+      )
+    return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
+  }
+
+  /**
    * Retrieves an object with non-null index settings.
    *
    * Required API Key ACLs:
@@ -1857,6 +1883,36 @@ public class SearchClient(
         path =
           "".split("/").filter { it.isNotBlank() } + listOf("1", "dictionaries", "*", "settings"),
         body = dictionarySettingsParams,
+      )
+    return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
+  }
+
+  /**
+   * Updates the NeuralSearch semantic settings for an index. Changes take effect immediately. No
+   * reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param semanticSearchSettings
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun setSemanticSearchSettings(
+    indexName: String,
+    semanticSearchSettings: SemanticSearchSettings,
+    requestOptions: RequestOptions? = null,
+  ): UpdatedAtResponse {
+    require(indexName.isNotBlank()) {
+      "Parameter `indexName` is required when calling `setSemanticSearchSettings`."
+    }
+    val requestConfig =
+      RequestConfig(
+        method = RequestMethod.PUT,
+        path =
+          "".split("/").filter { it.isNotBlank() } +
+            listOf("1", "indexes", "$indexName", "semanticSearch", "settings"),
+        body = semanticSearchSettings,
       )
     return requester.execute(requestConfig = requestConfig, requestOptions = requestOptions)
   }

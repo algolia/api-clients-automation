@@ -53,6 +53,7 @@ import 'package:algolia_client_search/src/model/dictionary_entry_type.dart';
 import 'package:algolia_client_search/src/model/dictionary_language.dart';
 import 'package:algolia_client_search/src/model/dictionary_settings_params.dart';
 import 'package:algolia_client_search/src/model/dictionary_type.dart';
+import 'package:algolia_client_search/src/model/dynamic_threshold.dart';
 import 'package:algolia_client_search/src/model/edit.dart';
 import 'package:algolia_client_search/src/model/edit_type.dart';
 import 'package:algolia_client_search/src/model/error_base.dart';
@@ -96,6 +97,8 @@ import 'package:algolia_client_search/src/model/matched_geo_location.dart';
 import 'package:algolia_client_search/src/model/mode.dart';
 import 'package:algolia_client_search/src/model/multiple_batch_request.dart';
 import 'package:algolia_client_search/src/model/multiple_batch_response.dart';
+import 'package:algolia_client_search/src/model/neural_search_mode.dart';
+import 'package:algolia_client_search/src/model/neural_search_preset.dart';
 import 'package:algolia_client_search/src/model/operation_index_params.dart';
 import 'package:algolia_client_search/src/model/operation_type.dart';
 import 'package:algolia_client_search/src/model/params.dart';
@@ -152,6 +155,7 @@ import 'package:algolia_client_search/src/model/search_user_ids_params.dart';
 import 'package:algolia_client_search/src/model/search_user_ids_response.dart';
 import 'package:algolia_client_search/src/model/secured_api_key_restrictions.dart';
 import 'package:algolia_client_search/src/model/semantic_search.dart';
+import 'package:algolia_client_search/src/model/semantic_search_settings.dart';
 import 'package:algolia_client_search/src/model/settings_response.dart';
 import 'package:algolia_client_search/src/model/snippet_result_option.dart';
 import 'package:algolia_client_search/src/model/sort_remaining_by.dart';
@@ -335,6 +339,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'DictionaryType':
       return DictionaryType.fromJson(value) as ReturnType;
+    case 'DynamicThreshold':
+      return DynamicThreshold.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'Edit':
       return Edit.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'EditType':
@@ -445,6 +452,10 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'MultipleBatchResponse':
       return MultipleBatchResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'NeuralSearchMode':
+      return NeuralSearchMode.fromJson(value) as ReturnType;
+    case 'NeuralSearchPreset':
+      return NeuralSearchPreset.fromJson(value) as ReturnType;
     case 'OperationIndexParams':
       return OperationIndexParams.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -597,6 +608,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'SemanticSearch':
       return SemanticSearch.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'SemanticSearchSettings':
+      return SemanticSearchSettings.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'SettingsResponse':
       return SettingsResponse.fromJson(value as Map<String, dynamic>)

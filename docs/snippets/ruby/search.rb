@@ -1422,6 +1422,23 @@ def snippet_for_get_rule
   # SEPARATOR<
 end
 
+# Snippet for the getSemanticSearchSettings method.
+#
+# get minimal parameters
+def snippet_for_get_semantic_search_settings
+  # >SEPARATOR getSemanticSearchSettings default
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.get_semantic_search_settings("<YOUR_INDEX_NAME>")
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
 # Snippet for the getSettings method.
 #
 # getSettings
@@ -6910,6 +6927,26 @@ def snippet_for_set_dictionary_settings1
         compounds: {ru: true}
       )
     )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the setSemanticSearchSettings method.
+#
+# set minimal parameters
+def snippet_for_set_semantic_search_settings
+  # >SEPARATOR setSemanticSearchSettings default
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_semantic_search_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SemanticSearchSettings.new(neural_search_preset: "default")
   )
 
   # >LOG

@@ -1733,6 +1733,25 @@ public class SnippetSearchClient
   }
 
   /// <summary>
+  /// Snippet for the GetSemanticSearchSettings method.
+  ///
+  /// get minimal parameters
+  /// </summary>
+  public async Task SnippetForSearchClientGetSemanticSearchSettings()
+  {
+    // >SEPARATOR getSemanticSearchSettings default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.GetSemanticSearchSettingsAsync("<YOUR_INDEX_NAME>");
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the GetSettings method.
   ///
   /// getSettings
@@ -8929,6 +8948,28 @@ public class SnippetSearchClient
           Compounds = new Dictionary<string, Boolean> { { "ru", true } },
         },
       }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSemanticSearchSettings method.
+  ///
+  /// set minimal parameters
+  /// </summary>
+  public async Task SnippetForSearchClientSetSemanticSearchSettings()
+  {
+    // >SEPARATOR setSemanticSearchSettings default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSemanticSearchSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new SemanticSearchSettings { NeuralSearchPreset = Enum.Parse<NeuralSearchPreset>("Default") }
     );
     // >LOG
     // print the response

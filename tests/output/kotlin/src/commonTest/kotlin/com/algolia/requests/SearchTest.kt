@@ -1318,6 +1318,23 @@ class SearchTest {
     )
   }
 
+  // getSemanticSearchSettings
+
+  @Test
+  fun `get minimal parameters`() = runTest {
+    client.runTest(
+      call = { getSemanticSearchSettings(indexName = "cts_e2e_settings") },
+      intercept = {
+        assertEquals(
+          "/1/indexes/cts_e2e_settings/semanticSearch/settings".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // getSettings
 
   @Test
@@ -6953,6 +6970,31 @@ class SearchTest {
           """{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}""",
           it.body,
         )
+      },
+    )
+  }
+
+  // setSemanticSearchSettings
+
+  @Test
+  fun `set minimal parameters`() = runTest {
+    client.runTest(
+      call = {
+        setSemanticSearchSettings(
+          indexName = "cts_e2e_settings",
+          semanticSearchSettings =
+            SemanticSearchSettings(
+              neuralSearchPreset = NeuralSearchPreset.entries.first { it.value == "default" }
+            ),
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/indexes/cts_e2e_settings/semanticSearch/settings".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"neuralSearchPreset":"default"}""", it.body)
       },
     )
   }

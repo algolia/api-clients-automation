@@ -2462,6 +2462,82 @@ public partial interface ISearchClient
   );
 
   /// <summary>
+  /// Retrieves the NeuralSearch semantic settings for an index.
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - settings
+  /// <param name="indexName">Name of the index on which to perform the operation.</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>Task of SemanticSearchSettings</returns>
+  Task<SemanticSearchSettings> GetSemanticSearchSettingsAsync(
+    string indexName,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  );
+
+  /// <summary>
+  /// Retrieves the NeuralSearch semantic settings for an index. (Synchronous version)
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - settings
+  /// <param name="indexName">Name of the index on which to perform the operation.</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>SemanticSearchSettings</returns>
+  SemanticSearchSettings GetSemanticSearchSettings(
+    string indexName,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  );
+
+  /// <summary>
+  /// Retrieves the NeuralSearch semantic settings for an index.
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - settings
+  /// <param name="indexName">Name of the index on which to perform the operation.</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>Task of SemanticSearchSettings</returns>
+  Task<AlgoliaHttpResponse> GetSemanticSearchSettingsWithHTTPInfoAsync(
+    string indexName,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  );
+
+  /// <summary>
+  /// Retrieves the NeuralSearch semantic settings for an index. (Synchronous version)
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - settings
+  /// <param name="indexName">Name of the index on which to perform the operation.</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>SemanticSearchSettings</returns>
+  AlgoliaHttpResponse GetSemanticSearchSettingsWithHTTPInfo(
+    string indexName,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  );
+
+  /// <summary>
   /// Retrieves an object with non-null index settings.
   /// </summary>
   ///
@@ -4957,6 +5033,90 @@ public partial interface ISearchClient
   /// <returns>UpdatedAtResponse</returns>
   AlgoliaHttpResponse SetDictionarySettingsWithHTTPInfo(
     DictionarySettingsParams dictionarySettingsParams,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  );
+
+  /// <summary>
+  /// Updates the NeuralSearch semantic settings for an index. Changes take effect immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  /// <param name="indexName">Name of the index on which to perform the operation.</param>
+  /// <param name="semanticSearchSettings"></param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>Task of UpdatedAtResponse</returns>
+  Task<UpdatedAtResponse> SetSemanticSearchSettingsAsync(
+    string indexName,
+    SemanticSearchSettings semanticSearchSettings,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  );
+
+  /// <summary>
+  /// Updates the NeuralSearch semantic settings for an index. Changes take effect immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.  (Synchronous version)
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  /// <param name="indexName">Name of the index on which to perform the operation.</param>
+  /// <param name="semanticSearchSettings"></param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>UpdatedAtResponse</returns>
+  UpdatedAtResponse SetSemanticSearchSettings(
+    string indexName,
+    SemanticSearchSettings semanticSearchSettings,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  );
+
+  /// <summary>
+  /// Updates the NeuralSearch semantic settings for an index. Changes take effect immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  /// <param name="indexName">Name of the index on which to perform the operation.</param>
+  /// <param name="semanticSearchSettings"></param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>Task of UpdatedAtResponse</returns>
+  Task<AlgoliaHttpResponse> SetSemanticSearchSettingsWithHTTPInfoAsync(
+    string indexName,
+    SemanticSearchSettings semanticSearchSettings,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  );
+
+  /// <summary>
+  /// Updates the NeuralSearch semantic settings for an index. Changes take effect immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.  (Synchronous version)
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  /// <param name="indexName">Name of the index on which to perform the operation.</param>
+  /// <param name="semanticSearchSettings"></param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>UpdatedAtResponse</returns>
+  AlgoliaHttpResponse SetSemanticSearchSettingsWithHTTPInfo(
+    string indexName,
+    SemanticSearchSettings semanticSearchSettings,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   );
@@ -7766,6 +7926,86 @@ public partial class SearchClient : ISearchClient, IDisposable
     );
 
   /// <inheritdoc />
+  public async Task<SemanticSearchSettings> GetSemanticSearchSettingsAsync(
+    string indexName,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  )
+  {
+    if (indexName == null)
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `GetSemanticSearchSettings`."
+      );
+
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `GetSemanticSearchSettings`."
+      );
+    var requestOptions = new InternalRequestOptions(options);
+
+    requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
+
+    return await _transport
+      .ExecuteRequestAsync<SemanticSearchSettings>(
+        new HttpMethod("GET"),
+        "/1/indexes/{indexName}/semanticSearch/settings",
+        requestOptions,
+        cancellationToken
+      )
+      .ConfigureAwait(false);
+  }
+
+  /// <inheritdoc />
+  public SemanticSearchSettings GetSemanticSearchSettings(
+    string indexName,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  ) =>
+    AsyncHelper.RunSync(() =>
+      GetSemanticSearchSettingsAsync(indexName, options, cancellationToken)
+    );
+
+  /// <inheritdoc />
+  public async Task<AlgoliaHttpResponse> GetSemanticSearchSettingsWithHTTPInfoAsync(
+    string indexName,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  )
+  {
+    if (indexName == null)
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `GetSemanticSearchSettings`."
+      );
+
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `GetSemanticSearchSettings`."
+      );
+    var requestOptions = new InternalRequestOptions(options);
+
+    requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
+
+    return await _transport
+      .ExecuteRequestAsync<AlgoliaHttpResponse>(
+        new HttpMethod("GET"),
+        "/1/indexes/{indexName}/semanticSearch/settings",
+        requestOptions,
+        cancellationToken
+      )
+      .ConfigureAwait(false);
+  }
+
+  /// <inheritdoc />
+  public AlgoliaHttpResponse GetSemanticSearchSettingsWithHTTPInfo(
+    string indexName,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  ) =>
+    AsyncHelper.RunSync(() =>
+      GetSemanticSearchSettingsWithHTTPInfoAsync(indexName, options, cancellationToken)
+    );
+
+  /// <inheritdoc />
   public async Task<SettingsResponse> GetSettingsAsync(
     string indexName,
     int? getVersion = default,
@@ -10213,6 +10453,109 @@ public partial class SearchClient : ISearchClient, IDisposable
   ) =>
     AsyncHelper.RunSync(() =>
       SetDictionarySettingsWithHTTPInfoAsync(dictionarySettingsParams, options, cancellationToken)
+    );
+
+  /// <inheritdoc />
+  public async Task<UpdatedAtResponse> SetSemanticSearchSettingsAsync(
+    string indexName,
+    SemanticSearchSettings semanticSearchSettings,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  )
+  {
+    if (indexName == null)
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `SetSemanticSearchSettings`."
+      );
+
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `SetSemanticSearchSettings`."
+      );
+
+    if (semanticSearchSettings == null)
+      throw new ArgumentException(
+        "Parameter `semanticSearchSettings` is required when calling `SetSemanticSearchSettings`."
+      );
+
+    var requestOptions = new InternalRequestOptions(options);
+
+    requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
+
+    requestOptions.Data = semanticSearchSettings;
+    return await _transport
+      .ExecuteRequestAsync<UpdatedAtResponse>(
+        new HttpMethod("PUT"),
+        "/1/indexes/{indexName}/semanticSearch/settings",
+        requestOptions,
+        cancellationToken
+      )
+      .ConfigureAwait(false);
+  }
+
+  /// <inheritdoc />
+  public UpdatedAtResponse SetSemanticSearchSettings(
+    string indexName,
+    SemanticSearchSettings semanticSearchSettings,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  ) =>
+    AsyncHelper.RunSync(() =>
+      SetSemanticSearchSettingsAsync(indexName, semanticSearchSettings, options, cancellationToken)
+    );
+
+  /// <inheritdoc />
+  public async Task<AlgoliaHttpResponse> SetSemanticSearchSettingsWithHTTPInfoAsync(
+    string indexName,
+    SemanticSearchSettings semanticSearchSettings,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  )
+  {
+    if (indexName == null)
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `SetSemanticSearchSettings`."
+      );
+
+    if (string.IsNullOrWhiteSpace(indexName))
+      throw new ArgumentException(
+        "Parameter `indexName` is required when calling `SetSemanticSearchSettings`."
+      );
+
+    if (semanticSearchSettings == null)
+      throw new ArgumentException(
+        "Parameter `semanticSearchSettings` is required when calling `SetSemanticSearchSettings`."
+      );
+
+    var requestOptions = new InternalRequestOptions(options);
+
+    requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
+
+    requestOptions.Data = semanticSearchSettings;
+    return await _transport
+      .ExecuteRequestAsync<AlgoliaHttpResponse>(
+        new HttpMethod("PUT"),
+        "/1/indexes/{indexName}/semanticSearch/settings",
+        requestOptions,
+        cancellationToken
+      )
+      .ConfigureAwait(false);
+  }
+
+  /// <inheritdoc />
+  public AlgoliaHttpResponse SetSemanticSearchSettingsWithHTTPInfo(
+    string indexName,
+    SemanticSearchSettings semanticSearchSettings,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  ) =>
+    AsyncHelper.RunSync(() =>
+      SetSemanticSearchSettingsWithHTTPInfoAsync(
+        indexName,
+        semanticSearchSettings,
+        options,
+        cancellationToken
+      )
     );
 
   /// <inheritdoc />

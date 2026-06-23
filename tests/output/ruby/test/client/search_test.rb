@@ -339,7 +339,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.41.0\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.42.0\).*/))
   end
 
   # call deleteObjects without error
@@ -484,6 +484,35 @@ class TestClientSearchClient < Test::Unit::TestCase
       "YourSearchOnlyApiKey",
       Algolia::Search::SecuredApiKeyRestrictions.new(user_token: "user42")
     )
+  end
+
+  # deserializes null records for missing objectIDs
+  def test_get_objects0
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6686,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    req = client.get_objects(
+      Algolia::Search::GetObjectsParams.new(
+        requests: [
+          Algolia::Search::GetObjectsRequest.new(algolia_object_id: "foo", index_name: "theIndexName"),
+          Algolia::Search::GetObjectsRequest.new(algolia_object_id: "missing", index_name: "theIndexName")
+        ]
+      )
+    )
+    assert_equal({:"results" => [{:"objectID" => "foo"}, nil]}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # indexExists

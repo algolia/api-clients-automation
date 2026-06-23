@@ -3710,7 +3710,7 @@ paths:
 
             // Call the API
 
-            let response = try await client.getObject(
+            let response: [String: AnyCodable] = try await client.getObject(
                 indexName: "<YOUR_INDEX_NAME>",
                 objectID: "uniqueID",
                 attributesToRetrieve: ["attr1", "attr2"]
@@ -7313,6 +7313,573 @@ paths:
               "reRankingApplyFilter": [
                 []
               ]
+            }
+            '
+  /1/indexes/{indexName}/semanticSearch/settings:
+    get:
+      tags:
+        - Indices
+      operationId: getSemanticSearchSettings
+      x-acl:
+        - settings
+      summary: Retrieve NeuralSearch semantic settings
+      description: Retrieves the NeuralSearch semantic settings for an index.
+      parameters:
+        - $ref: '#/components/parameters/IndexName'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SemanticSearchSettings'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >-
+            // Initialize the client
+
+            var client = new SearchClient(new
+            SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+
+            // Call the API
+
+            var response = await
+            client.GetSemanticSearchSettingsAsync("<YOUR_INDEX_NAME>");
+
+
+            // print the response
+
+            Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client =
+                SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+            // Call the API
+            final response = await client.getSemanticSearchSettings(
+              indexName: "<YOUR_INDEX_NAME>",
+            );
+
+            // print the response
+            print(response);
+        - lang: go
+          label: Go
+          source: >-
+            // Initialize the client
+
+            client, err := search.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.GetSemanticSearchSettings(client.NewApiGetSemanticSearchSettingsRequest(
+              "<YOUR_INDEX_NAME>"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+
+            // print the response
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >-
+            // Initialize the client
+
+            SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY");
+
+
+            // Call the API
+
+            SemanticSearchSettings response =
+            client.getSemanticSearchSettings("<YOUR_INDEX_NAME>");
+
+
+            // print the response
+
+            System.out.println(response);
+        - lang: javascript
+          label: JavaScript
+          source: >-
+            // Initialize the client
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.getSemanticSearchSettings({ indexName:
+            'cts_e2e_settings' });
+
+
+
+            // print the response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >-
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            var response = client.getSemanticSearchSettings(indexName =
+            "<YOUR_INDEX_NAME>")
+
+
+
+            // print the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >-
+            // Initialize the client
+
+            $client = SearchClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            $response = $client->getSemanticSearchSettings(
+                '<YOUR_INDEX_NAME>',
+            );
+
+
+
+            // print the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >-
+            # Initialize the client
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.get_semantic_search_settings(
+                index_name="<YOUR_INDEX_NAME>",
+            )
+
+
+
+            # print the response
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >-
+            # Initialize the client
+
+            client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.get_semantic_search_settings("<YOUR_INDEX_NAME>")
+
+
+
+            # print the response
+
+            puts(response)
+        - lang: scala
+          label: Scala
+          source: >-
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            val response = Await.result(
+              client.getSemanticSearchSettings(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
+            )
+
+
+            // print the response
+
+            println(response)
+        - lang: swift
+          label: Swift
+          source: >-
+            // Initialize the client
+
+            let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            let response = try await client.getSemanticSearchSettings(indexName:
+            "<YOUR_INDEX_NAME>")
+
+
+            // print the response
+
+            print(response)
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/semanticSearch/settings \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+    put:
+      tags:
+        - Indices
+      operationId: setSemanticSearchSettings
+      x-acl:
+        - editSettings
+      summary: Update NeuralSearch semantic settings
+      description: >
+        Updates the NeuralSearch semantic settings for an index.
+
+        Changes take effect immediately. No reindexing is required unless you
+        change `neuralExpression` or `vectorModelId`.
+      parameters:
+        - $ref: '#/components/parameters/IndexName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SemanticSearchSettings'
+            example:
+              neuralSearchMode: active
+              eventSources:
+                - mx-products
+              neuralSearchPreset: custom
+              semanticBlendWeight: 0.5
+              dynamicThreshold:
+                enabled: true
+                aggression: 0.3
+                lowerLimit: 0.64
+                upperLimit: 0.85
+      responses:
+        '200':
+          $ref: '#/components/responses/UpdatedAt'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >-
+            // Initialize the client
+
+            var client = new SearchClient(new
+            SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.SetSemanticSearchSettingsAsync(
+              "<YOUR_INDEX_NAME>",
+              new SemanticSearchSettings { NeuralSearchPreset = Enum.Parse<NeuralSearchPreset>("Default") }
+            );
+
+
+            // print the response
+
+            Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client =
+                SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+            // Call the API
+            final response = await client.setSemanticSearchSettings(
+              indexName: "<YOUR_INDEX_NAME>",
+              semanticSearchSettings: SemanticSearchSettings(
+                neuralSearchPreset: NeuralSearchPreset.fromJson("default"),
+              ),
+            );
+
+            // print the response
+            print(response);
+        - lang: go
+          label: Go
+          source: >-
+            // Initialize the client
+
+            client, err := search.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.SetSemanticSearchSettings(client.NewApiSetSemanticSearchSettingsRequest(
+              "<YOUR_INDEX_NAME>",
+              search.NewEmptySemanticSearchSettings().SetNeuralSearchPreset(search.NeuralSearchPreset("default"))))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+
+            // print the response
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >-
+            // Initialize the client
+
+            SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY");
+
+
+            // Call the API
+
+            UpdatedAtResponse response = client.setSemanticSearchSettings(
+              "<YOUR_INDEX_NAME>",
+              new SemanticSearchSettings().setNeuralSearchPreset(NeuralSearchPreset.DEFAULT)
+            );
+
+
+            // print the response
+
+            System.out.println(response);
+        - lang: javascript
+          label: JavaScript
+          source: >-
+            // Initialize the client
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.setSemanticSearchSettings({
+              indexName: 'cts_e2e_settings',
+              semanticSearchSettings: { neuralSearchPreset: 'default' },
+            });
+
+
+
+            // print the response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >-
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            var response =
+              client.setSemanticSearchSettings(
+                indexName = "<YOUR_INDEX_NAME>",
+                semanticSearchSettings =
+                  SemanticSearchSettings(
+                    neuralSearchPreset = NeuralSearchPreset.entries.first { it.value == "default" }
+                  ),
+              )
+
+
+            // print the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >-
+            // Initialize the client
+
+            $client = SearchClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            $response = $client->setSemanticSearchSettings(
+                '<YOUR_INDEX_NAME>',
+                ['neuralSearchPreset' => 'default',
+                ],
+            );
+
+
+
+            // print the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >-
+            # Initialize the client
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.set_semantic_search_settings(
+                index_name="<YOUR_INDEX_NAME>",
+                semantic_search_settings={
+                    "neuralSearchPreset": "default",
+                },
+            )
+
+
+
+            # print the response
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >-
+            # Initialize the client
+
+            client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.set_semantic_search_settings(
+              "<YOUR_INDEX_NAME>",
+              Algolia::Search::SemanticSearchSettings.new(neural_search_preset: "default")
+            )
+
+
+
+            # print the response
+
+            puts(response)
+        - lang: scala
+          label: Scala
+          source: >-
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            val response = Await.result(
+              client.setSemanticSearchSettings(
+                indexName = "<YOUR_INDEX_NAME>",
+                semanticSearchSettings = SemanticSearchSettings(
+                  neuralSearchPreset = Some(NeuralSearchPreset.withName("default"))
+                )
+              ),
+              Duration(100, "sec")
+            )
+
+
+            // print the response
+
+            println(response)
+        - lang: swift
+          label: Swift
+          source: >-
+            // Initialize the client
+
+            let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            let response = try await client.setSemanticSearchSettings(
+                indexName: "<YOUR_INDEX_NAME>",
+                semanticSearchSettings: SemanticSearchSettings(neuralSearchPreset: NeuralSearchPreset.`default`)
+            )
+
+
+            // print the response
+
+            print(response)
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PUT \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/semanticSearch/settings \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '
+            {
+              "neuralSearchMode": "active",
+              "eventSources": [
+                "mx-products"
+              ],
+              "neuralSearchPreset": "custom",
+              "semanticBlendWeight": 0.5,
+              "dynamicThreshold": {
+                "enabled": true,
+                "aggression": 0.3,
+                "lowerLimit": 0.64,
+                "upperLimit": 0.85
+              }
             }
             '
   /1/indexes/{indexName}/synonyms/{objectID}:
@@ -25483,6 +26050,163 @@ components:
           $ref: '#/components/schemas/userData'
       additionalProperties: false
       description: Index settings.
+    neuralSearchMode:
+      type: string
+      enum:
+        - inactive
+        - active
+        - preview
+      description: >
+        Whether NeuralSearch is active for the index.
+
+        - `inactive`: keyword-only search is returned for live traffic.
+
+        - `active`: NeuralSearch (keyword + semantic) is returned for live
+        traffic.
+
+        - `preview`: NeuralSearch runs alongside keyword search for comparison
+        without affecting live results.
+    neuralSearchPreset:
+      type: string
+      enum:
+        - conservative
+        - expanded_reach
+        - append_only
+        - default
+        - custom
+      description: >
+        Controls how keyword and semantic results are blended.
+
+        - `conservative`: semantic search activates only for zero-result keyword
+        queries.
+
+        - `expanded_reach`: semantic search activates when keyword result counts
+        are low.
+
+        - `append_only`: semantic results appear after all keyword results.
+
+        - `default`: semantic search runs on every query and blends with keyword
+        results, giving keyword results higher priority.
+
+        - `custom`: unlocks `semanticBlendWeight`, `minHitsForSemantic`, and
+        `enableNeuralSearchSortBy` for manual control.
+    DynamicThreshold:
+      type: object
+      description: >
+        Configures Semantic Precision filtering. Filters low-quality vector
+        results using a dynamically
+
+        calculated relevance threshold at query time.
+      properties:
+        aggression:
+          type: number
+          format: float
+          default: 0.3
+          description: >
+            Controls filtering strictness. Lower values keep more results;
+            higher values filter more aggressively.
+
+            Formula: `threshold = mean - (aggression * stddev)`.
+        enabled:
+          type: boolean
+          description: Enables or disables Semantic Precision filtering.
+        lowerLimit:
+          type: number
+          format: float
+          default: 0.64
+          description: >-
+            Minimum cosine similarity threshold. Prevents the threshold from
+            dropping too low.
+        upperLimit:
+          type: number
+          format: float
+          default: 0.85
+          description: >-
+            Maximum cosine similarity threshold. Prevents over-filtering on
+            high-confidence queries.
+      example:
+        enabled: true
+        aggression: 0.3
+        upperLimit: 0.85
+        lowerLimit: 0.64
+    SemanticSearchSettings:
+      type: object
+      description: Configuration for the NeuralSearch Semantic Settings API.
+      properties:
+        dynamicThreshold:
+          $ref: '#/components/schemas/DynamicThreshold'
+        enableNeuralSearchSortBy:
+          type: boolean
+          default: true
+          description: >
+            When `true`, your index's ranking and sorting settings apply to the
+            full NeuralSearch result set.
+
+            When `false`, semantic results are ranked by similarity score only.
+
+            Only use with the `custom` preset.
+        eventSources:
+          type: array
+          items:
+            type: string
+          description: |
+            Indices to use as event sources for training.
+            Defaults to the current index if not provided.
+        minHitsForSemantic:
+          type: integer
+          minimum: 0
+          maximum: 20
+          default: 0
+          description: >
+            Minimum number of keyword results required before semantic results
+            are included.
+
+            Only use with the `custom` preset.
+        neuralExpression:
+          type: object
+          description: >
+            Key-value pairs of record attributes and their weights used in the
+            vectorization process.
+
+            Generated automatically during training.
+          additionalProperties:
+            type: number
+            format: float
+          example:
+            brand: 0.587878
+            category: 0.683043
+            description: 0.39828
+            name: 1
+        neuralSearchMode:
+          $ref: '#/components/schemas/neuralSearchMode'
+        neuralSearchPreset:
+          $ref: '#/components/schemas/neuralSearchPreset'
+        semanticBlendWeight:
+          type: number
+          format: float
+          minimum: 0.0001
+          maximum: 0.999
+          default: 0.2
+          description: >
+            Relative weight given to semantic results when blending with keyword
+            results.
+
+            Only use with the `custom` preset.
+        usePositionalSemanticRanking:
+          type: boolean
+          default: false
+          description: >
+            When `true`, vector results are ranked using Algolia's standard
+            tie-breaking algorithm rather than cosine similarity alone.
+
+            Enables custom ranking attributes, optional filters, and geo
+            distance for semantic results.
+        vectorModelId:
+          type: string
+          description: >-
+            The language model used to generate embeddings. Set automatically
+            during training.
+          example: external://algolia-large-multilang-generic-v2410
     SynonymType:
       type: string
       description: Synonym type.
@@ -27407,6 +28131,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/updatedAtResponse'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    InternalError:
+      description: Internal error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
     CreatedAt:
       description: OK
       content:

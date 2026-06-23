@@ -1400,6 +1400,17 @@ public class SearchClientRequestTests
     Assert.Null(req.Body);
   }
 
+  [Fact(DisplayName = "get minimal parameters")]
+  public async Task GetSemanticSearchSettingsTest()
+  {
+    await client.GetSemanticSearchSettingsAsync("cts_e2e_settings");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/cts_e2e_settings/semanticSearch/settings", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
   [Fact(DisplayName = "getSettings")]
   public async Task GetSettingsTest()
   {
@@ -7221,6 +7232,24 @@ public class SearchClientRequestTests
     Assert.Equal("PUT", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"disableStandardEntries\":{\"plurals\":{\"fr\":false,\"en\":false,\"ru\":true},\"stopwords\":{\"fr\":false},\"compounds\":{\"ru\":true}}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set minimal parameters")]
+  public async Task SetSemanticSearchSettingsTest()
+  {
+    await client.SetSemanticSearchSettingsAsync(
+      "cts_e2e_settings",
+      new SemanticSearchSettings { NeuralSearchPreset = Enum.Parse<NeuralSearchPreset>("Default") }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/cts_e2e_settings/semanticSearch/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"neuralSearchPreset\":\"default\"}",
       req.Body,
       new JsonDiffConfig(false)
     );

@@ -27,7 +27,7 @@ SemanticSearchSettings:
     vectorModelId:
       type: string
       description: The language model used to generate embeddings. Set automatically during training.
-      example: "external://algolia-large-multilang-generic-v2410"
+      example: 'external://algolia-large-multilang-generic-v2410'
     neuralSearchPreset:
       $ref: '../../common/enums.yml#/neuralSearchPreset'
     semanticBlendWeight:

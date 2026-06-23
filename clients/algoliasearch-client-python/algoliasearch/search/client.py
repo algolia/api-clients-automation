@@ -107,6 +107,7 @@ from algoliasearch.search.models import (
     SearchUserIdsParams,
     SearchUserIdsResponse,
     SecuredApiKeyRestrictions,
+    SemanticSearchSettings,
     SettingsResponse,
     Source,
     SynonymHit,
@@ -161,7 +162,6 @@ class SearchClient:
         if transporter is None:
             transporter = Transporter(config)
         self._transporter = transporter
-
         self._ingestion_transporter = None
         if config.transformation_options is not None:
             self._ingestion_transporter = self._build_ingestion_transporter(
@@ -736,7 +736,9 @@ class SearchClient:
             raise ValueError(
                 "`transformation_options` must be set on `SearchConfig` before creating the client, or via `client.set_transformation_options(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"
             )
-        chunked_options = chunked_options or ChunkedHelperOptions()
+        chunked_options = chunked_options or ChunkedHelperOptions(
+            max_retries=ChunkedHelperOptions.DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES
+        )
         tmp_index_name = self.create_temporary_name(index_name)
 
         try:
@@ -819,7 +821,9 @@ class SearchClient:
 
         See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
         """
-        chunked_options = chunked_options or ChunkedHelperOptions()
+        chunked_options = chunked_options or ChunkedHelperOptions(
+            max_retries=ChunkedHelperOptions.DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES
+        )
         tmp_index_name = self.create_temporary_name(index_name)
 
         try:
@@ -3197,6 +3201,71 @@ class SearchClient:
         )
         return resp.deserialize(Rule, resp.raw_data)
 
+    async def get_semantic_search_settings_with_http_info(
+        self,
+        index_name: Annotated[
+            StrictStr,
+            Field(description="Name of the index on which to perform the operation."),
+        ],
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> ApiResponse[str]:
+        """
+        Retrieves the NeuralSearch semantic settings for an index.
+
+        Required API Key ACLs:
+          - settings
+
+        :param index_name: Name of the index on which to perform the operation. (required)
+        :type index_name: str
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the raw algoliasearch 'APIResponse' object.
+        """
+
+        if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `get_semantic_search_settings`."
+            )
+
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `get_semantic_search_settings`."
+            )
+
+        return await self._transporter.request(
+            verb=Verb.GET,
+            path="/1/indexes/{indexName}/semanticSearch/settings".replace(
+                "{indexName}", quote(str(index_name), safe="")
+            ),
+            request_options=self._request_options.merge(
+                user_request_options=request_options,
+            ),
+            use_read_transporter=False,
+        )
+
+    async def get_semantic_search_settings(
+        self,
+        index_name: Annotated[
+            StrictStr,
+            Field(description="Name of the index on which to perform the operation."),
+        ],
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> SemanticSearchSettings:
+        """
+        Retrieves the NeuralSearch semantic settings for an index.
+
+        Required API Key ACLs:
+          - settings
+
+        :param index_name: Name of the index on which to perform the operation. (required)
+        :type index_name: str
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the deserialized response in a 'SemanticSearchSettings' result object.
+        """
+        resp = await self.get_semantic_search_settings_with_http_info(
+            index_name, request_options
+        )
+        return resp.deserialize(SemanticSearchSettings, resp.raw_data)
+
     async def get_settings_with_http_info(
         self,
         index_name: Annotated[
@@ -5521,6 +5590,87 @@ class SearchClient:
         )
         return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
+    async def set_semantic_search_settings_with_http_info(
+        self,
+        index_name: Annotated[
+            StrictStr,
+            Field(description="Name of the index on which to perform the operation."),
+        ],
+        semantic_search_settings: Union[SemanticSearchSettings, dict[str, Any]],
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> ApiResponse[str]:
+        """
+        Updates the NeuralSearch semantic settings for an index. Changes take effect immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+
+        Required API Key ACLs:
+          - editSettings
+
+        :param index_name: Name of the index on which to perform the operation. (required)
+        :type index_name: str
+        :param semantic_search_settings: (required)
+        :type semantic_search_settings: SemanticSearchSettings
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the raw algoliasearch 'APIResponse' object.
+        """
+
+        if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `set_semantic_search_settings`."
+            )
+
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `set_semantic_search_settings`."
+            )
+
+        if semantic_search_settings is None:
+            raise ValueError(
+                "Parameter `semantic_search_settings` is required when calling `set_semantic_search_settings`."
+            )
+
+        _data = {}
+        if semantic_search_settings is not None:
+            _data = semantic_search_settings
+
+        return await self._transporter.request(
+            verb=Verb.PUT,
+            path="/1/indexes/{indexName}/semanticSearch/settings".replace(
+                "{indexName}", quote(str(index_name), safe="")
+            ),
+            request_options=self._request_options.merge(
+                data=dumps(body_serializer(_data)),
+                user_request_options=request_options,
+            ),
+            use_read_transporter=False,
+        )
+
+    async def set_semantic_search_settings(
+        self,
+        index_name: Annotated[
+            StrictStr,
+            Field(description="Name of the index on which to perform the operation."),
+        ],
+        semantic_search_settings: Union[SemanticSearchSettings, dict[str, Any]],
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> UpdatedAtResponse:
+        """
+        Updates the NeuralSearch semantic settings for an index. Changes take effect immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+
+        Required API Key ACLs:
+          - editSettings
+
+        :param index_name: Name of the index on which to perform the operation. (required)
+        :type index_name: str
+        :param semantic_search_settings: (required)
+        :type semantic_search_settings: SemanticSearchSettings
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
+        """
+        resp = await self.set_semantic_search_settings_with_http_info(
+            index_name, semantic_search_settings, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
+
     async def set_settings_with_http_info(
         self,
         index_name: Annotated[
@@ -5735,7 +5885,6 @@ class SearchClientSync:
         if transporter is None:
             transporter = TransporterSync(config)
         self._transporter = transporter
-
         self._ingestion_transporter = None
         if config.transformation_options is not None:
             self._ingestion_transporter = self._build_ingestion_transporter(
@@ -6309,7 +6458,9 @@ class SearchClientSync:
             raise ValueError(
                 "`transformation_options` must be set on `SearchConfig` before creating the client, or via `client.set_transformation_options(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/"
             )
-        chunked_options = chunked_options or ChunkedHelperOptions()
+        chunked_options = chunked_options or ChunkedHelperOptions(
+            max_retries=ChunkedHelperOptions.DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES
+        )
         tmp_index_name = self.create_temporary_name(index_name)
 
         try:
@@ -6392,7 +6543,9 @@ class SearchClientSync:
 
         See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
         """
-        chunked_options = chunked_options or ChunkedHelperOptions()
+        chunked_options = chunked_options or ChunkedHelperOptions(
+            max_retries=ChunkedHelperOptions.DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES
+        )
         tmp_index_name = self.create_temporary_name(index_name)
 
         try:
@@ -8756,6 +8909,71 @@ class SearchClientSync:
         resp = self.get_rule_with_http_info(index_name, object_id, request_options)
         return resp.deserialize(Rule, resp.raw_data)
 
+    def get_semantic_search_settings_with_http_info(
+        self,
+        index_name: Annotated[
+            StrictStr,
+            Field(description="Name of the index on which to perform the operation."),
+        ],
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> ApiResponse[str]:
+        """
+        Retrieves the NeuralSearch semantic settings for an index.
+
+        Required API Key ACLs:
+          - settings
+
+        :param index_name: Name of the index on which to perform the operation. (required)
+        :type index_name: str
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the raw algoliasearch 'APIResponse' object.
+        """
+
+        if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `get_semantic_search_settings`."
+            )
+
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `get_semantic_search_settings`."
+            )
+
+        return self._transporter.request(
+            verb=Verb.GET,
+            path="/1/indexes/{indexName}/semanticSearch/settings".replace(
+                "{indexName}", quote(str(index_name), safe="")
+            ),
+            request_options=self._request_options.merge(
+                user_request_options=request_options,
+            ),
+            use_read_transporter=False,
+        )
+
+    def get_semantic_search_settings(
+        self,
+        index_name: Annotated[
+            StrictStr,
+            Field(description="Name of the index on which to perform the operation."),
+        ],
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> SemanticSearchSettings:
+        """
+        Retrieves the NeuralSearch semantic settings for an index.
+
+        Required API Key ACLs:
+          - settings
+
+        :param index_name: Name of the index on which to perform the operation. (required)
+        :type index_name: str
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the deserialized response in a 'SemanticSearchSettings' result object.
+        """
+        resp = self.get_semantic_search_settings_with_http_info(
+            index_name, request_options
+        )
+        return resp.deserialize(SemanticSearchSettings, resp.raw_data)
+
     def get_settings_with_http_info(
         self,
         index_name: Annotated[
@@ -11069,6 +11287,87 @@ class SearchClientSync:
         """
         resp = self.set_dictionary_settings_with_http_info(
             dictionary_settings_params, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
+
+    def set_semantic_search_settings_with_http_info(
+        self,
+        index_name: Annotated[
+            StrictStr,
+            Field(description="Name of the index on which to perform the operation."),
+        ],
+        semantic_search_settings: Union[SemanticSearchSettings, dict[str, Any]],
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> ApiResponse[str]:
+        """
+        Updates the NeuralSearch semantic settings for an index. Changes take effect immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+
+        Required API Key ACLs:
+          - editSettings
+
+        :param index_name: Name of the index on which to perform the operation. (required)
+        :type index_name: str
+        :param semantic_search_settings: (required)
+        :type semantic_search_settings: SemanticSearchSettings
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the raw algoliasearch 'APIResponse' object.
+        """
+
+        if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `set_semantic_search_settings`."
+            )
+
+        if not index_name:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `set_semantic_search_settings`."
+            )
+
+        if semantic_search_settings is None:
+            raise ValueError(
+                "Parameter `semantic_search_settings` is required when calling `set_semantic_search_settings`."
+            )
+
+        _data = {}
+        if semantic_search_settings is not None:
+            _data = semantic_search_settings
+
+        return self._transporter.request(
+            verb=Verb.PUT,
+            path="/1/indexes/{indexName}/semanticSearch/settings".replace(
+                "{indexName}", quote(str(index_name), safe="")
+            ),
+            request_options=self._request_options.merge(
+                data=dumps(body_serializer(_data)),
+                user_request_options=request_options,
+            ),
+            use_read_transporter=False,
+        )
+
+    def set_semantic_search_settings(
+        self,
+        index_name: Annotated[
+            StrictStr,
+            Field(description="Name of the index on which to perform the operation."),
+        ],
+        semantic_search_settings: Union[SemanticSearchSettings, dict[str, Any]],
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> UpdatedAtResponse:
+        """
+        Updates the NeuralSearch semantic settings for an index. Changes take effect immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+
+        Required API Key ACLs:
+          - editSettings
+
+        :param index_name: Name of the index on which to perform the operation. (required)
+        :type index_name: str
+        :param semantic_search_settings: (required)
+        :type semantic_search_settings: SemanticSearchSettings
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
+        """
+        resp = self.set_semantic_search_settings_with_http_info(
+            index_name, semantic_search_settings, request_options
         )
         return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 

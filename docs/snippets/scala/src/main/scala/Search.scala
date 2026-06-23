@@ -1855,6 +1855,28 @@ class SnippetSearchClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the getSemanticSearchSettings method.
+    *
+    * get minimal parameters
+    */
+  def snippetForSearchClientGetSemanticSearchSettings(): Unit = {
+    // >SEPARATOR getSemanticSearchSettings default
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.getSemanticSearchSettings(
+        indexName = "<YOUR_INDEX_NAME>"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
   /** Snippet for the getSettings method.
     *
     * getSettings
@@ -9445,6 +9467,31 @@ class SnippetSearchClient {
             stopwords = Some(Map("fr" -> false)),
             compounds = Some(Map("ru" -> true))
           )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the setSemanticSearchSettings method.
+    *
+    * set minimal parameters
+    */
+  def snippetForSearchClientSetSemanticSearchSettings(): Unit = {
+    // >SEPARATOR setSemanticSearchSettings default
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.setSemanticSearchSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        semanticSearchSettings = SemanticSearchSettings(
+          neuralSearchPreset = Some(NeuralSearchPreset.withName("default"))
         )
       ),
       Duration(100, "sec")

@@ -64,6 +64,7 @@ import algoliasearch.search.SearchSynonymsResponse
 import algoliasearch.search.SearchUserIdsParams
 import algoliasearch.search.SearchUserIdsResponse
 import algoliasearch.search.SecuredApiKeyRestrictions
+import algoliasearch.search.SemanticSearchSettings
 import algoliasearch.search.SettingsResponse
 import algoliasearch.search.Source
 import algoliasearch.search.SynonymHit
@@ -1013,6 +1014,28 @@ class SearchClient(
     execute[Rule](request, requestOptions)
   }
 
+  /** Retrieves the NeuralSearch semantic settings for an index.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    */
+  def getSemanticSearchSettings(indexName: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[SemanticSearchSettings] = Future {
+    requireNotNull(indexName, "Parameter `indexName` is required when calling `getSemanticSearchSettings`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getSemanticSearchSettings`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/1/indexes/${escape(indexName)}/semanticSearch/settings")
+      .build()
+    execute[SemanticSearchSettings](request, requestOptions)
+  }
+
   /** Retrieves an object with non-null index settings.
     *
     * Required API Key ACLs:
@@ -1855,6 +1878,36 @@ class SearchClient(
       .withMethod("PUT")
       .withPath(s"/1/dictionaries/*/settings")
       .withBody(dictionarySettingsParams)
+      .build()
+    execute[UpdatedAtResponse](request, requestOptions)
+  }
+
+  /** Updates the NeuralSearch semantic settings for an index. Changes take effect immediately. No reindexing is
+    * required unless you change `neuralExpression` or `vectorModelId`.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    */
+  def setSemanticSearchSettings(
+      indexName: String,
+      semanticSearchSettings: SemanticSearchSettings,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
+    requireNotNull(indexName, "Parameter `indexName` is required when calling `setSemanticSearchSettings`.")
+    requireNotEmpty(indexName, "Parameter `indexName` is required when calling `setSemanticSearchSettings`.")
+    requireNotNull(
+      semanticSearchSettings,
+      "Parameter `semanticSearchSettings` is required when calling `setSemanticSearchSettings`."
+    )
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("PUT")
+      .withPath(s"/1/indexes/${escape(indexName)}/semanticSearch/settings")
+      .withBody(semanticSearchSettings)
       .build()
     execute[UpdatedAtResponse](request, requestOptions)
   }

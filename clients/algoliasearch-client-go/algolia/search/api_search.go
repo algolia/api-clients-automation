@@ -309,8 +309,10 @@ func waitForApiKeyToIterableOptions(opts []WaitForApiKeyOption) []IterableOption
 	return iterableOpts
 }
 
+const defaultReplaceAllObjectsMaxRetries = 800
+
 func replaceAllObjectsToIterableOptions(opts []ReplaceAllObjectsOption) []IterableOption {
-	iterableOpts := make([]IterableOption, 0, len(opts))
+	iterableOpts := []IterableOption{WithMaxRetries(defaultReplaceAllObjectsMaxRetries)}
 
 	for _, opt := range opts {
 		if opt, ok := opt.(IterableOption); ok {
@@ -334,7 +336,7 @@ func partialUpdateObjectsToChunkedBatchOptions(opts []PartialUpdateObjectsOption
 }
 
 func replaceAllObjectsToChunkBatchOptions(opts []ReplaceAllObjectsOption) []ChunkedBatchOption {
-	chunkedBatchOpts := make([]ChunkedBatchOption, 0, len(opts))
+	chunkedBatchOpts := []ChunkedBatchOption{WithMaxRetries(defaultReplaceAllObjectsMaxRetries)}
 
 	for _, opt := range opts {
 		if opt, ok := opt.(ChunkedBatchOption); ok {
@@ -4523,6 +4525,124 @@ func (c *APIClient) GetRule(r ApiGetRuleRequest, opts ...RequestOption) (*Rule, 
 	var returnValue *Rule
 
 	res, resBody, err := c.GetRuleWithHTTPInfo(r, opts...)
+	if err != nil {
+		return returnValue, err
+	}
+
+	if res == nil {
+		return returnValue, reportError("res is nil")
+	}
+	defer res.Body.Close()
+
+	if res.StatusCode >= 300 {
+		return returnValue, c.decodeError(res, resBody)
+	}
+
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return returnValue, reportError("cannot decode result: %w", err)
+	}
+
+	return returnValue, nil
+}
+
+func (r *ApiGetSemanticSearchSettingsRequest) UnmarshalJSON(b []byte) error {
+	req := map[string]json.RawMessage{}
+
+	err := json.Unmarshal(b, &req)
+	if err != nil {
+		return fmt.Errorf("cannot unmarshal request: %w", err)
+	}
+
+	if v, ok := req["indexName"]; ok {
+		err = json.Unmarshal(v, &r.indexName)
+		if err != nil {
+			err = json.Unmarshal(b, &r.indexName)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal indexName: %w", err)
+			}
+		}
+	}
+
+	return nil
+}
+
+// ApiGetSemanticSearchSettingsRequest represents the request with all the parameters for the API call.
+type ApiGetSemanticSearchSettingsRequest struct {
+	indexName string
+}
+
+// NewApiGetSemanticSearchSettingsRequest creates an instance of the ApiGetSemanticSearchSettingsRequest to be used for the API call.
+func (c *APIClient) NewApiGetSemanticSearchSettingsRequest(indexName string) ApiGetSemanticSearchSettingsRequest {
+	return ApiGetSemanticSearchSettingsRequest{
+		indexName: indexName,
+	}
+}
+
+/*
+GetSemanticSearchSettings calls the API and returns the raw response from it.
+
+	  Retrieves the NeuralSearch semantic settings for an index.
+
+	    Required API Key ACLs:
+	    - settings
+
+	Request can be constructed by NewApiGetSemanticSearchSettingsRequest with parameters below.
+	  @param indexName string - Name of the index on which to perform the operation.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
+*/
+func (c *APIClient) GetSemanticSearchSettingsWithHTTPInfo(
+	r ApiGetSemanticSearchSettingsRequest,
+	opts ...RequestOption,
+) (*http.Response, []byte, error) {
+	requestPath := "/1/indexes/{indexName}/semanticSearch/settings"
+	requestPath = strings.ReplaceAll(requestPath, "{indexName}", url.PathEscape(utils.ParameterToString(r.indexName)))
+
+	if r.indexName == "" {
+		return nil, nil, reportError("Parameter `indexName` is required when calling `GetSemanticSearchSettings`.")
+	}
+
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.bodyParams, conf.headerParams, conf.queryParams)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return c.callAPI(req, false, conf.timeouts)
+}
+
+/*
+GetSemanticSearchSettings casts the HTTP response body to a defined struct.
+
+Retrieves the NeuralSearch semantic settings for an index.
+
+Required API Key ACLs:
+  - settings
+
+Request can be constructed by NewApiGetSemanticSearchSettingsRequest with parameters below.
+
+	@param indexName string - Name of the index on which to perform the operation.
+	@return SemanticSearchSettings
+*/
+func (c *APIClient) GetSemanticSearchSettings(r ApiGetSemanticSearchSettingsRequest, opts ...RequestOption) (*SemanticSearchSettings, error) {
+	var returnValue *SemanticSearchSettings
+
+	res, resBody, err := c.GetSemanticSearchSettingsWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -8844,6 +8964,156 @@ func (c *APIClient) SetDictionarySettings(r ApiSetDictionarySettingsRequest, opt
 	var returnValue *UpdatedAtResponse
 
 	res, resBody, err := c.SetDictionarySettingsWithHTTPInfo(r, opts...)
+	if err != nil {
+		return returnValue, err
+	}
+
+	if res == nil {
+		return returnValue, reportError("res is nil")
+	}
+	defer res.Body.Close()
+
+	if res.StatusCode >= 300 {
+		return returnValue, c.decodeError(res, resBody)
+	}
+
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return returnValue, reportError("cannot decode result: %w", err)
+	}
+
+	return returnValue, nil
+}
+
+func (r *ApiSetSemanticSearchSettingsRequest) UnmarshalJSON(b []byte) error {
+	req := map[string]json.RawMessage{}
+
+	err := json.Unmarshal(b, &req)
+	if err != nil {
+		return fmt.Errorf("cannot unmarshal request: %w", err)
+	}
+
+	if v, ok := req["indexName"]; ok {
+		err = json.Unmarshal(v, &r.indexName)
+		if err != nil {
+			err = json.Unmarshal(b, &r.indexName)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal indexName: %w", err)
+			}
+		}
+	}
+
+	if v, ok := req["semanticSearchSettings"]; ok {
+		err = json.Unmarshal(v, &r.semanticSearchSettings)
+		if err != nil {
+			err = json.Unmarshal(b, &r.semanticSearchSettings)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal semanticSearchSettings: %w", err)
+			}
+		}
+	} else {
+		err = json.Unmarshal(b, &r.semanticSearchSettings)
+		if err != nil {
+			return fmt.Errorf("cannot unmarshal body parameter semanticSearchSettings: %w", err)
+		}
+	}
+
+	return nil
+}
+
+// ApiSetSemanticSearchSettingsRequest represents the request with all the parameters for the API call.
+type ApiSetSemanticSearchSettingsRequest struct {
+	indexName              string
+	semanticSearchSettings *SemanticSearchSettings
+}
+
+// NewApiSetSemanticSearchSettingsRequest creates an instance of the ApiSetSemanticSearchSettingsRequest to be used for the API call.
+func (c *APIClient) NewApiSetSemanticSearchSettingsRequest(
+	indexName string,
+	semanticSearchSettings *SemanticSearchSettings,
+) ApiSetSemanticSearchSettingsRequest {
+	return ApiSetSemanticSearchSettingsRequest{
+		indexName:              indexName,
+		semanticSearchSettings: semanticSearchSettings,
+	}
+}
+
+/*
+SetSemanticSearchSettings calls the API and returns the raw response from it.
+
+	Updates the NeuralSearch semantic settings for an index.
+
+Changes take effect immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+
+	    Required API Key ACLs:
+	    - editSettings
+
+	Request can be constructed by NewApiSetSemanticSearchSettingsRequest with parameters below.
+	  @param indexName string - Name of the index on which to perform the operation.
+	  @param semanticSearchSettings SemanticSearchSettings
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
+*/
+func (c *APIClient) SetSemanticSearchSettingsWithHTTPInfo(
+	r ApiSetSemanticSearchSettingsRequest,
+	opts ...RequestOption,
+) (*http.Response, []byte, error) {
+	requestPath := "/1/indexes/{indexName}/semanticSearch/settings"
+	requestPath = strings.ReplaceAll(requestPath, "{indexName}", url.PathEscape(utils.ParameterToString(r.indexName)))
+
+	if r.indexName == "" {
+		return nil, nil, reportError("Parameter `indexName` is required when calling `SetSemanticSearchSettings`.")
+	}
+
+	if r.semanticSearchSettings == nil {
+		return nil, nil, reportError("Parameter `semanticSearchSettings` is required when calling `SetSemanticSearchSettings`.")
+	}
+
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	// body params
+	postBody = r.semanticSearchSettings
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPut, postBody, conf.bodyParams, conf.headerParams, conf.queryParams)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return c.callAPI(req, false, conf.timeouts)
+}
+
+/*
+SetSemanticSearchSettings casts the HTTP response body to a defined struct.
+
+Updates the NeuralSearch semantic settings for an index.
+Changes take effect immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+
+Required API Key ACLs:
+  - editSettings
+
+Request can be constructed by NewApiSetSemanticSearchSettingsRequest with parameters below.
+
+	@param indexName string - Name of the index on which to perform the operation.
+	@param semanticSearchSettings SemanticSearchSettings
+	@return UpdatedAtResponse
+*/
+func (c *APIClient) SetSemanticSearchSettings(r ApiSetSemanticSearchSettingsRequest, opts ...RequestOption) (*UpdatedAtResponse, error) {
+	var returnValue *UpdatedAtResponse
+
+	res, resBody, err := c.SetSemanticSearchSettingsWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}

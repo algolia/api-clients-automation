@@ -1690,6 +1690,57 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::Rule")
     end
 
+    # Retrieves the NeuralSearch semantic settings for an index.
+    #
+    # Required API Key ACLs:
+    #   - settings
+    # @param index_name [String] Name of the index on which to perform the operation. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_semantic_search_settings_with_http_info(index_name, request_options = {})
+      # verify the required parameter 'index_name' is set
+      if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_semantic_search_settings`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_semantic_search_settings`."
+      end
+
+      path = "/1/indexes/{indexName}/semanticSearch/settings".sub(
+        "{" + "indexName" + "}",
+        Transport.encode_uri(index_name.to_s)
+      )
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"SearchClient.get_semantic_search_settings",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Retrieves the NeuralSearch semantic settings for an index.
+    #
+    # Required API Key ACLs:
+    #   - settings
+    # @param index_name [String] Name of the index on which to perform the operation. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [SemanticSearchSettings]
+    def get_semantic_search_settings(index_name, request_options = {})
+      response = get_semantic_search_settings_with_http_info(index_name, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::SemanticSearchSettings")
+    end
+
     # Retrieves an object with non-null index settings.
     #
     # Required API Key ACLs:
@@ -3301,6 +3352,66 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::UpdatedAtResponse")
     end
 
+    # Updates the NeuralSearch semantic settings for an index. Changes take effect immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param index_name [String] Name of the index on which to perform the operation. (required)
+    # @param semantic_search_settings [SemanticSearchSettings]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def set_semantic_search_settings_with_http_info(index_name, semantic_search_settings, request_options = {})
+      # verify the required parameter 'index_name' is set
+      if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `set_semantic_search_settings`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `set_semantic_search_settings`."
+      end
+      # verify the required parameter 'semantic_search_settings' is set
+      if @api_client.config.client_side_validation && semantic_search_settings.nil?
+        raise(
+          ArgumentError,
+          "Parameter `semantic_search_settings` is required when calling `set_semantic_search_settings`."
+        )
+      end
+
+      path = "/1/indexes/{indexName}/semanticSearch/settings".sub(
+        "{" + "indexName" + "}",
+        Transport.encode_uri(index_name.to_s)
+      )
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(semantic_search_settings)
+
+      new_options = request_options.merge(
+        :operation => :"SearchClient.set_semantic_search_settings",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:PUT, path, new_options)
+    end
+
+    # Updates the NeuralSearch semantic settings for an index. Changes take effect immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param index_name [String] Name of the index on which to perform the operation. (required)
+    # @param semantic_search_settings [SemanticSearchSettings]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [UpdatedAtResponse]
+    def set_semantic_search_settings(index_name, semantic_search_settings, request_options = {})
+      response = set_semantic_search_settings_with_http_info(index_name, semantic_search_settings, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::UpdatedAtResponse")
+    end
+
     # Update the specified index settings.  Index settings that you don't specify are left unchanged. Specify `null` to reset a setting to its default value.  For best performance, update the index settings before you add new records to your index.
     #
     # Required API Key ACLs:
@@ -3559,7 +3670,10 @@ module Algolia
     )
       assert_ingestion_transporter!
 
-      opts = Algolia::ChunkedHelperOptions.resolve(chunked_options)
+      opts = Algolia::ChunkedHelperOptions.resolve(
+        chunked_options,
+        default_max_retries: Algolia::ChunkedHelperOptions::DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES
+      )
       tmp_index_name = index_name + "_tmp_" + rand(10_000_000).to_s
 
       begin
@@ -4061,7 +4175,10 @@ module Algolia
       request_options = {},
       chunked_options = nil
     )
-      opts = Algolia::ChunkedHelperOptions.resolve(chunked_options)
+      opts = Algolia::ChunkedHelperOptions.resolve(
+        chunked_options,
+        default_max_retries: Algolia::ChunkedHelperOptions::DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES
+      )
       tmp_index_name = index_name + "_tmp_" + rand(10_000_000).to_s
 
       begin

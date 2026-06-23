@@ -991,6 +991,18 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
+  # get minimal parameters
+  def test_get_semantic_search_settings
+    req = @client.get_semantic_search_settings_with_http_info("cts_e2e_settings")
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/indexes/cts_e2e_settings/semanticSearch/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
   # getSettings
   def test_get_settings
     req = @client.get_settings_with_http_info("cts_e2e_settings", 2)
@@ -5230,6 +5242,20 @@ class TestSearchClient < Test::Unit::TestCase
       ),
       JSON.parse(req.body)
     )
+  end
+
+  # set minimal parameters
+  def test_set_semantic_search_settings
+    req = @client.set_semantic_search_settings_with_http_info(
+      "cts_e2e_settings",
+      Algolia::Search::SemanticSearchSettings.new(neural_search_preset: "default")
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/cts_e2e_settings/semanticSearch/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"neuralSearchPreset\":\"default\"}"), JSON.parse(req.body))
   end
 
   # minimal parameters

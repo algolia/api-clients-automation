@@ -21,6 +21,7 @@ import type { SearchParams } from '../model/searchParams';
 import type { SearchRulesParams } from '../model/searchRulesParams';
 import type { SearchSynonymsParams } from '../model/searchSynonymsParams';
 import type { SecuredApiKeyRestrictions } from '../model/securedApiKeyRestrictions';
+import type { SemanticSearchSettings } from '../model/semanticSearchSettings';
 import type { Source } from '../model/source';
 import type { SynonymHit } from '../model/synonymHit';
 
@@ -371,6 +372,16 @@ export type GetRuleProps = {
 };
 
 /**
+ * Properties for the `getSemanticSearchSettings` method.
+ */
+export type GetSemanticSearchSettingsProps = {
+  /**
+   * Name of the index on which to perform the operation.
+   */
+  indexName: string;
+};
+
+/**
  * Properties for the `getSettings` method.
  */
 export type GetSettingsProps = {
@@ -705,6 +716,17 @@ export type SearchSynonymsProps = {
    * Body of the `searchSynonyms` operation.
    */
   searchSynonymsParams?: SearchSynonymsParams | undefined;
+};
+
+/**
+ * Properties for the `setSemanticSearchSettings` method.
+ */
+export type SetSemanticSearchSettingsProps = {
+  /**
+   * Name of the index on which to perform the operation.
+   */
+  indexName: string;
+  semanticSearchSettings: SemanticSearchSettings;
 };
 
 /**

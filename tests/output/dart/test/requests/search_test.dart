@@ -1674,6 +1674,27 @@ void main() {
     ),
   );
 
+  // getSemanticSearchSettings
+  test(
+    'get minimal parameters',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getSemanticSearchSettings(
+        indexName: "cts_e2e_settings",
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/indexes/cts_e2e_settings/semanticSearch/settings');
+        expect(request.method, 'get');
+        expect(request.body, null);
+      },
+    ),
+  );
+
   // getSettings
   test(
     'getSettings',
@@ -8329,6 +8350,30 @@ void main() {
         expect(request.method, 'put');
         expectBody(request.body,
             """{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}""");
+      },
+    ),
+  );
+
+  // setSemanticSearchSettings
+  test(
+    'set minimal parameters',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSemanticSearchSettings(
+        indexName: "cts_e2e_settings",
+        semanticSearchSettings: SemanticSearchSettings(
+          neuralSearchPreset: NeuralSearchPreset.fromJson("default"),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/indexes/cts_e2e_settings/semanticSearch/settings');
+        expect(request.method, 'put');
+        expectBody(request.body, """{"neuralSearchPreset":"default"}""");
       },
     ),
   );

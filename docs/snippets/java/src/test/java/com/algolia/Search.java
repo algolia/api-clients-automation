@@ -1543,6 +1543,22 @@ class SnippetSearchClient {
     // SEPARATOR<
   }
 
+  // Snippet for the getSemanticSearchSettings method.
+  //
+  // get minimal parameters
+  void snippetForGetSemanticSearchSettings() throws Exception {
+    // >SEPARATOR getSemanticSearchSettings default
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    SemanticSearchSettings response = client.getSemanticSearchSettings("<YOUR_INDEX_NAME>");
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
   // Snippet for the getSettings method.
   //
   // getSettings
@@ -7400,6 +7416,25 @@ class SnippetSearchClient {
             }
           )
       )
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the setSemanticSearchSettings method.
+  //
+  // set minimal parameters
+  void snippetForSetSemanticSearchSettings() throws Exception {
+    // >SEPARATOR setSemanticSearchSettings default
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    UpdatedAtResponse response = client.setSemanticSearchSettings(
+      "<YOUR_INDEX_NAME>",
+      new SemanticSearchSettings().setNeuralSearchPreset(NeuralSearchPreset.DEFAULT)
     );
     // >LOG
     // print the response

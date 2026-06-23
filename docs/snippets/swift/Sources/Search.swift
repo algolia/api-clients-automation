@@ -1303,7 +1303,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
-        let response = try await client.getObject(
+        let response: [String: AnyCodable] = try await client.getObject(
             indexName: "<YOUR_INDEX_NAME>",
             objectID: "uniqueID",
             attributesToRetrieve: ["attr1", "attr2"]
@@ -1323,7 +1323,10 @@ final class SearchClientSnippet {
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
-        let response = try await client.getObject(indexName: "<YOUR_INDEX_NAME>", objectID: "Batman and Robin")
+        let response: [String: AnyCodable] = try await client.getObject(
+            indexName: "<YOUR_INDEX_NAME>",
+            objectID: "Batman and Robin"
+        )
         // >LOG
         // print the response
         print(response)
@@ -1401,6 +1404,22 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.getRule(indexName: "<YOUR_INDEX_NAME>", objectID: "qr-1725004648916")
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the getSemanticSearchSettings method.
+    ///
+    /// get minimal parameters
+    func snippetForGetSemanticSearchSettings() async throws {
+        // >SEPARATOR getSemanticSearchSettings default
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.getSemanticSearchSettings(indexName: "<YOUR_INDEX_NAME>")
         // >LOG
         // print the response
         print(response)
@@ -7032,6 +7051,25 @@ final class SearchClientSnippet {
                     compounds: ["ru": true]
                 ))
             )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setSemanticSearchSettings method.
+    ///
+    /// set minimal parameters
+    func snippetForSetSemanticSearchSettings() async throws {
+        // >SEPARATOR setSemanticSearchSettings default
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.setSemanticSearchSettings(
+            indexName: "<YOUR_INDEX_NAME>",
+            semanticSearchSettings: SemanticSearchSettings(neuralSearchPreset: NeuralSearchPreset.`default`)
+        )
         // >LOG
         // print the response
         print(response)

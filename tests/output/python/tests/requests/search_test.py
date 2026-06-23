@@ -1295,6 +1295,20 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+    async def test_get_semantic_search_settings_(self):
+        """
+        get minimal parameters
+        """
+        _req = await self._client.get_semantic_search_settings_with_http_info(
+            index_name="cts_e2e_settings",
+        )
+
+        assert _req.path == "/1/indexes/cts_e2e_settings/semanticSearch/settings"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
     async def test_get_settings_(self):
         """
         getSettings
@@ -6717,6 +6731,23 @@ class TestSearchClient:
             """{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}"""
         )
 
+    async def test_set_semantic_search_settings_(self):
+        """
+        set minimal parameters
+        """
+        _req = await self._client.set_semantic_search_settings_with_http_info(
+            index_name="cts_e2e_settings",
+            semantic_search_settings={
+                "neuralSearchPreset": "default",
+            },
+        )
+
+        assert _req.path == "/1/indexes/cts_e2e_settings/semanticSearch/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"neuralSearchPreset":"default"}""")
+
     async def test_set_settings_(self):
         """
         minimal parameters
@@ -10881,6 +10912,20 @@ class TestSearchClientSync:
         )
 
         assert _req.path == "/1/indexes/cts_e2e_browse/rules/qr-1725004648916"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_get_semantic_search_settings_(self):
+        """
+        get minimal parameters
+        """
+        _req = self._client.get_semantic_search_settings_with_http_info(
+            index_name="cts_e2e_settings",
+        )
+
+        assert _req.path == "/1/indexes/cts_e2e_settings/semanticSearch/settings"
         assert _req.verb == "GET"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
@@ -16307,6 +16352,23 @@ class TestSearchClientSync:
         assert loads(_req.data) == loads(
             """{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}"""
         )
+
+    def test_set_semantic_search_settings_(self):
+        """
+        set minimal parameters
+        """
+        _req = self._client.set_semantic_search_settings_with_http_info(
+            index_name="cts_e2e_settings",
+            semantic_search_settings={
+                "neuralSearchPreset": "default",
+            },
+        )
+
+        assert _req.path == "/1/indexes/cts_e2e_settings/semanticSearch/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"neuralSearchPreset":"default"}""")
 
     def test_set_settings_(self):
         """

@@ -65,6 +65,7 @@ use Algolia\AlgoliaSearch\Model\Search\SearchSynonymsParams;
 use Algolia\AlgoliaSearch\Model\Search\SearchSynonymsResponse;
 use Algolia\AlgoliaSearch\Model\Search\SearchUserIdsParams;
 use Algolia\AlgoliaSearch\Model\Search\SearchUserIdsResponse;
+use Algolia\AlgoliaSearch\Model\Search\SemanticSearchSettings;
 use Algolia\AlgoliaSearch\Model\Search\SettingsResponse;
 use Algolia\AlgoliaSearch\Model\Search\Source;
 use Algolia\AlgoliaSearch\Model\Search\SynonymHit;
@@ -88,7 +89,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class SearchClient
 {
-    public const VERSION = '4.45.0';
+    public const VERSION = '4.46.0';
 
     /**
      * @var ApiWrapperInterface
@@ -815,6 +816,24 @@ class SearchClient
     }
 
     /**
+     * Retrieves the NeuralSearch semantic settings for an index.
+     *
+     * Required API Key ACLs:
+     *  - settings
+     *
+     * @param string $indexName      Name of the index on which to perform the operation. (required)
+     * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     *
+     * @return array<string, mixed>|SemanticSearchSettings
+     */
+    public function getSemanticSearchSettings($indexName, $requestOptions = [])
+    {
+        $response = $this->getSemanticSearchSettingsWithHttpInfo($indexName, $requestOptions);
+
+        return $response->getData();
+    }
+
+    /**
      * Retrieves an object with non-null index settings.
      *
      * Required API Key ACLs:
@@ -1469,6 +1488,38 @@ class SearchClient
     public function setDictionarySettings($dictionarySettingsParams, $requestOptions = [])
     {
         $response = $this->setDictionarySettingsWithHttpInfo($dictionarySettingsParams, $requestOptions);
+
+        return $response->getData();
+    }
+
+    /**
+     * Updates the NeuralSearch semantic settings for an index. Changes take effect immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+     *
+     * Required API Key ACLs:
+     *  - editSettings
+     *
+     * @param string                       $indexName              Name of the index on which to perform the operation. (required)
+     * @param array|SemanticSearchSettings $semanticSearchSettings semanticSearchSettings (required)
+     *                                                             - $semanticSearchSettings['neuralSearchMode'] => (array)
+     *                                                             - $semanticSearchSettings['eventSources'] => (array) Indices to use as event sources for training. Defaults to the current index if not provided.
+     *                                                             - $semanticSearchSettings['neuralExpression'] => (array) Key-value pairs of record attributes and their weights used in the vectorization process. Generated automatically during training.
+     *                                                             - $semanticSearchSettings['vectorModelId'] => (string) The language model used to generate embeddings. Set automatically during training.
+     *                                                             - $semanticSearchSettings['neuralSearchPreset'] => (array)
+     *                                                             - $semanticSearchSettings['semanticBlendWeight'] => (array) Relative weight given to semantic results when blending with keyword results. Only use with the `custom` preset.
+     *                                                             - $semanticSearchSettings['minHitsForSemantic'] => (int) Minimum number of keyword results required before semantic results are included. Only use with the `custom` preset.
+     *                                                             - $semanticSearchSettings['enableNeuralSearchSortBy'] => (bool) When `true`, your index's ranking and sorting settings apply to the full NeuralSearch result set. When `false`, semantic results are ranked by similarity score only. Only use with the `custom` preset.
+     *                                                             - $semanticSearchSettings['dynamicThreshold'] => (array)
+     *                                                             - $semanticSearchSettings['usePositionalSemanticRanking'] => (bool) When `true`, vector results are ranked using Algolia's standard tie-breaking algorithm rather than cosine similarity alone. Enables custom ranking attributes, optional filters, and geo distance for semantic results.
+     *
+     * @see SemanticSearchSettings
+     *
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     *
+     * @return array<string, mixed>|UpdatedAtResponse
+     */
+    public function setSemanticSearchSettings($indexName, $semanticSearchSettings, $requestOptions = [])
+    {
+        $response = $this->setSemanticSearchSettingsWithHttpInfo($indexName, $semanticSearchSettings, $requestOptions);
 
         return $response->getData();
     }
@@ -2971,6 +3022,51 @@ class SearchClient
     }
 
     /**
+     * Retrieve NeuralSearch semantic settings (with HTTP info).
+     *
+     * Returns the response with HTTP metadata (status code, headers, body)
+     * Retrieves the NeuralSearch semantic settings for an index.
+     * Required API Key ACLs:
+     *  - settings
+     *
+     * @param string $indexName      Name of the index on which to perform the operation. (required)
+     * @param array  $requestOptions Request options
+     *
+     * @return AlgoliaResponse
+     */
+    public function getSemanticSearchSettingsWithHttpInfo($indexName, $requestOptions = [])
+    {
+        // verify the required parameter 'indexName' is set
+        if (!isset($indexName)) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `getSemanticSearchSettings`.'
+            );
+        }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `getSemanticSearchSettings`.'
+            );
+        }
+
+        $resourcePath = '/1/indexes/{indexName}/semanticSearch/settings';
+        $queryParameters = [];
+        $headers = [];
+        $httpBody = null;
+
+        // path params
+        if (null !== $indexName) {
+            $resourcePath = str_replace(
+                '{indexName}',
+                ObjectSerializer::toPathValue($indexName),
+                $resourcePath
+            );
+        }
+
+        return $this->sendRequestWithHttpInfo('GET', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
+    }
+
+    /**
      * Retrieve index settings (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
@@ -4330,6 +4426,58 @@ class SearchClient
     }
 
     /**
+     * Update NeuralSearch semantic settings (with HTTP info).
+     *
+     * Returns the response with HTTP metadata (status code, headers, body)
+     * Updates the NeuralSearch semantic settings for an index. Changes take effect immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+     * Required API Key ACLs:
+     *  - editSettings
+     *
+     * @param string                       $indexName              Name of the index on which to perform the operation. (required)
+     * @param array|SemanticSearchSettings $semanticSearchSettings (required)
+     * @param array                        $requestOptions         Request options
+     *
+     * @return AlgoliaResponse
+     */
+    public function setSemanticSearchSettingsWithHttpInfo($indexName, $semanticSearchSettings, $requestOptions = [])
+    {
+        // verify the required parameter 'indexName' is set
+        if (!isset($indexName)) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `setSemanticSearchSettings`.'
+            );
+        }
+        // verify the required parameter 'indexName' is not empty
+        if (isset($indexName) && '' === $indexName) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `setSemanticSearchSettings`.'
+            );
+        }
+        // verify the required parameter 'semanticSearchSettings' is set
+        if (!isset($semanticSearchSettings)) {
+            throw new \InvalidArgumentException(
+                'Parameter `semanticSearchSettings` is required when calling `setSemanticSearchSettings`.'
+            );
+        }
+
+        $resourcePath = '/1/indexes/{indexName}/semanticSearch/settings';
+        $queryParameters = [];
+        $headers = [];
+        $httpBody = $semanticSearchSettings;
+
+        // path params
+        if (null !== $indexName) {
+            $resourcePath = str_replace(
+                '{indexName}',
+                ObjectSerializer::toPathValue($indexName),
+                $resourcePath
+            );
+        }
+
+        return $this->sendRequestWithHttpInfo('PUT', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
+    }
+
+    /**
      * Update index settings (with HTTP info).
      *
      * Returns the response with HTTP metadata (status code, headers, body)
@@ -4604,6 +4752,7 @@ class SearchClient
             throw new \InvalidArgumentException('`transformationOptions` must be set on `SearchConfig` before creating the client, or via `SearchClient::setTransformationOptions(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/');
         }
 
+        $chunkedOptions ??= new ChunkedHelperOptions(ChunkedHelperOptions::DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES);
         $tmpIndexName = $indexName.'_tmp_'.rand(10000000, 99999999);
 
         try {
@@ -4669,6 +4818,7 @@ class SearchClient
      */
     public function replaceAllObjects($indexName, $objects, $batchSize = 1000, $scopes = ['settings', 'rules', 'synonyms'], $requestOptions = [], ?ChunkedHelperOptions $chunkedOptions = null)
     {
+        $chunkedOptions ??= new ChunkedHelperOptions(ChunkedHelperOptions::DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES);
         $tmpIndexName = $indexName.'_tmp_'.rand(10000000, 99999999);
 
         try {

@@ -875,6 +875,17 @@ describe('getRule', () => {
   });
 });
 
+describe('getSemanticSearchSettings', () => {
+  test('get minimal parameters', async () => {
+    const req = (await client.getSemanticSearchSettings({ indexName: 'cts_e2e_settings' })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/cts_e2e_settings/semanticSearch/settings');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('getSettings', () => {
   test('getSettings', async () => {
     const req = (await client.getSettings({ indexName: 'cts_e2e_settings', getVersion: 2 })) as unknown as EchoResponse;
@@ -4515,6 +4526,20 @@ describe('setDictionarySettings', () => {
         compounds: { ru: true },
       },
     });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('setSemanticSearchSettings', () => {
+  test('set minimal parameters', async () => {
+    const req = (await client.setSemanticSearchSettings({
+      indexName: 'cts_e2e_settings',
+      semanticSearchSettings: { neuralSearchPreset: 'default' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/cts_e2e_settings/semanticSearch/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ neuralSearchPreset: 'default' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });

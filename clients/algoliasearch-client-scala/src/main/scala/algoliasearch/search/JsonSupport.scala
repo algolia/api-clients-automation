@@ -57,6 +57,8 @@ object JsonSupport {
     new LogTypeSerializer() :+
     new MatchLevelSerializer() :+
     new ModeSerializer() :+
+    new NeuralSearchModeSerializer() :+
+    new NeuralSearchPresetSerializer() :+
     new OperationTypeSerializer() :+
     new QueryCategorizationTypeSerializer() :+
     new QueryTypeSerializer() :+

@@ -1416,6 +1416,23 @@ export async function snippetForGetRule(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the getSemanticSearchSettings method.
+//
+// get minimal parameters
+export async function snippetForGetSemanticSearchSettings(): Promise<void> {
+  // >SEPARATOR getSemanticSearchSettings default
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.getSemanticSearchSettings({ indexName: 'cts_e2e_settings' });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the getSettings method.
 //
 // getSettings
@@ -6698,6 +6715,26 @@ export async function snippetForSetDictionarySettings1(): Promise<void> {
       stopwords: { fr: false },
       compounds: { ru: true },
     },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSemanticSearchSettings method.
+//
+// set minimal parameters
+export async function snippetForSetSemanticSearchSettings(): Promise<void> {
+  // >SEPARATOR setSemanticSearchSettings default
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSemanticSearchSettings({
+    indexName: 'cts_e2e_settings',
+    semanticSearchSettings: { neuralSearchPreset: 'default' },
   });
 
   // >LOG

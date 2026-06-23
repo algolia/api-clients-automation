@@ -5562,6 +5562,117 @@ public class SearchClient extends ApiClient {
   }
 
   /**
+   * Retrieves the NeuralSearch semantic settings for an index.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public SemanticSearchSettings getSemanticSearchSettings(@Nonnull String indexName, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getSemanticSearchSettingsAsync(indexName, requestOptions));
+  }
+
+  /**
+   * Retrieves the NeuralSearch semantic settings for an index.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getSemanticSearchSettingsWithHTTPInfo(@Nonnull String indexName, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getSemanticSearchSettingsWithHTTPInfoAsync(indexName, requestOptions));
+  }
+
+  /**
+   * Retrieves the NeuralSearch semantic settings for an index.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public SemanticSearchSettings getSemanticSearchSettings(@Nonnull String indexName) throws AlgoliaRuntimeException {
+    return this.getSemanticSearchSettings(indexName, null);
+  }
+
+  /**
+   * Retrieves the NeuralSearch semantic settings for an index.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getSemanticSearchSettingsWithHTTPInfo(@Nonnull String indexName) throws AlgoliaRuntimeException {
+    return this.getSemanticSearchSettingsWithHTTPInfo(indexName, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the NeuralSearch semantic settings for an index.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<SemanticSearchSettings> getSemanticSearchSettingsAsync(
+    @Nonnull String indexName,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getSemanticSearchSettings`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getSemanticSearchSettings`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/indexes/{indexName}/semanticSearch/settings", indexName)
+      .setMethod("GET")
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<SemanticSearchSettings>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the NeuralSearch semantic settings for an index.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getSemanticSearchSettingsWithHTTPInfoAsync(
+    @Nonnull String indexName,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getSemanticSearchSettings`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `getSemanticSearchSettings`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/indexes/{indexName}/semanticSearch/settings", indexName)
+      .setMethod("GET")
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the NeuralSearch semantic settings for an index.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<SemanticSearchSettings> getSemanticSearchSettingsAsync(@Nonnull String indexName)
+    throws AlgoliaRuntimeException {
+    return this.getSemanticSearchSettingsAsync(indexName, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the NeuralSearch semantic settings for an index.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getSemanticSearchSettingsWithHTTPInfoAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
+    return this.getSemanticSearchSettingsWithHTTPInfoAsync(indexName, null);
+  }
+
+  /**
    * Retrieves an object with non-null index settings.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
@@ -12007,6 +12118,160 @@ public class SearchClient extends ApiClient {
   }
 
   /**
+   * Updates the NeuralSearch semantic settings for an index. Changes take effect immediately. No
+   * reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param semanticSearchSettings (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public UpdatedAtResponse setSemanticSearchSettings(
+    @Nonnull String indexName,
+    @Nonnull SemanticSearchSettings semanticSearchSettings,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(setSemanticSearchSettingsAsync(indexName, semanticSearchSettings, requestOptions));
+  }
+
+  /**
+   * Updates the NeuralSearch semantic settings for an index. Changes take effect immediately. No
+   * reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param semanticSearchSettings (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response setSemanticSearchSettingsWithHTTPInfo(
+    @Nonnull String indexName,
+    @Nonnull SemanticSearchSettings semanticSearchSettings,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(setSemanticSearchSettingsWithHTTPInfoAsync(indexName, semanticSearchSettings, requestOptions));
+  }
+
+  /**
+   * Updates the NeuralSearch semantic settings for an index. Changes take effect immediately. No
+   * reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param semanticSearchSettings (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public UpdatedAtResponse setSemanticSearchSettings(@Nonnull String indexName, @Nonnull SemanticSearchSettings semanticSearchSettings)
+    throws AlgoliaRuntimeException {
+    return this.setSemanticSearchSettings(indexName, semanticSearchSettings, null);
+  }
+
+  /**
+   * Updates the NeuralSearch semantic settings for an index. Changes take effect immediately. No
+   * reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param semanticSearchSettings (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response setSemanticSearchSettingsWithHTTPInfo(@Nonnull String indexName, @Nonnull SemanticSearchSettings semanticSearchSettings)
+    throws AlgoliaRuntimeException {
+    return this.setSemanticSearchSettingsWithHTTPInfo(indexName, semanticSearchSettings, null);
+  }
+
+  /**
+   * (asynchronously) Updates the NeuralSearch semantic settings for an index. Changes take effect
+   * immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param semanticSearchSettings (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<UpdatedAtResponse> setSemanticSearchSettingsAsync(
+    @Nonnull String indexName,
+    @Nonnull SemanticSearchSettings semanticSearchSettings,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `setSemanticSearchSettings`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `setSemanticSearchSettings`.");
+
+    Parameters.requireNonNull(
+      semanticSearchSettings,
+      "Parameter `semanticSearchSettings` is required when calling `setSemanticSearchSettings`."
+    );
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/indexes/{indexName}/semanticSearch/settings", indexName)
+      .setMethod("PUT")
+      .setBody(semanticSearchSettings)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<UpdatedAtResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Updates the NeuralSearch semantic settings for an index. Changes take effect
+   * immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param semanticSearchSettings (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> setSemanticSearchSettingsWithHTTPInfoAsync(
+    @Nonnull String indexName,
+    @Nonnull SemanticSearchSettings semanticSearchSettings,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `setSemanticSearchSettings`.");
+    Parameters.requireNonEmpty(indexName, "Parameter `indexName` is required when calling `setSemanticSearchSettings`.");
+
+    Parameters.requireNonNull(
+      semanticSearchSettings,
+      "Parameter `semanticSearchSettings` is required when calling `setSemanticSearchSettings`."
+    );
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/indexes/{indexName}/semanticSearch/settings", indexName)
+      .setMethod("PUT")
+      .setBody(semanticSearchSettings)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Updates the NeuralSearch semantic settings for an index. Changes take effect
+   * immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param semanticSearchSettings (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<UpdatedAtResponse> setSemanticSearchSettingsAsync(
+    @Nonnull String indexName,
+    @Nonnull SemanticSearchSettings semanticSearchSettings
+  ) throws AlgoliaRuntimeException {
+    return this.setSemanticSearchSettingsAsync(indexName, semanticSearchSettings, null);
+  }
+
+  /**
+   * (asynchronously) Updates the NeuralSearch semantic settings for an index. Changes take effect
+   * immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param semanticSearchSettings (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> setSemanticSearchSettingsWithHTTPInfoAsync(
+    @Nonnull String indexName,
+    @Nonnull SemanticSearchSettings semanticSearchSettings
+  ) throws AlgoliaRuntimeException {
+    return this.setSemanticSearchSettingsWithHTTPInfoAsync(indexName, semanticSearchSettings, null);
+  }
+
+  /**
    * Update the specified index settings. Index settings that you don't specify are left unchanged.
    * Specify `null` to reset a setting to its default value. For best performance, update the index
    * settings before you add new records to your index.
@@ -13855,7 +14120,10 @@ public class SearchClient extends ApiClient {
     RequestOptions requestOptions,
     ChunkedHelperOptions chunkedOptions
   ) {
-    int maxRetries = chunkedOptions != null ? chunkedOptions.getMaxRetries() : TaskUtils.DEFAULT_MAX_RETRIES;
+    if (chunkedOptions == null) {
+      chunkedOptions = new ChunkedHelperOptions().setMaxRetries(ChunkedHelperOptions.DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES);
+    }
+    int maxRetries = chunkedOptions.getMaxRetries();
     Random rnd = new Random();
     String tmpIndexName = indexName + "_tmp_" + rnd.nextInt(100);
 
@@ -14053,7 +14321,10 @@ public class SearchClient extends ApiClient {
       );
     }
 
-    int maxRetries = chunkedOptions != null ? chunkedOptions.getMaxRetries() : TaskUtils.DEFAULT_MAX_RETRIES;
+    if (chunkedOptions == null) {
+      chunkedOptions = new ChunkedHelperOptions().setMaxRetries(ChunkedHelperOptions.DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES);
+    }
+    int maxRetries = chunkedOptions.getMaxRetries();
     Random rnd = new Random();
     String tmpIndexName = indexName + "_tmp_" + rnd.nextInt(100);
 

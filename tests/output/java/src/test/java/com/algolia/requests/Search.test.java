@@ -1565,6 +1565,18 @@ class SearchClientRequestsTests {
   }
 
   @Test
+  @DisplayName("get minimal parameters")
+  void getSemanticSearchSettingsTest() {
+    assertDoesNotThrow(() -> {
+      client.getSemanticSearchSettings("cts_e2e_settings");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/cts_e2e_settings/semanticSearch/settings", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
   @DisplayName("getSettings")
   void getSettingsTest() {
     assertDoesNotThrow(() -> {
@@ -6409,6 +6421,18 @@ class SearchClientRequestsTests {
         JSONCompareMode.STRICT
       )
     );
+  }
+
+  @Test
+  @DisplayName("set minimal parameters")
+  void setSemanticSearchSettingsTest() {
+    assertDoesNotThrow(() -> {
+      client.setSemanticSearchSettings("cts_e2e_settings", new SemanticSearchSettings().setNeuralSearchPreset(NeuralSearchPreset.DEFAULT));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/cts_e2e_settings/semanticSearch/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"neuralSearchPreset\":\"default\"}", req.body, JSONCompareMode.STRICT));
   }
 
   @Test

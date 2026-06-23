@@ -1402,6 +1402,23 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('get minimal parameters')]
+    public function testGetSemanticSearchSettings(): void
+    {
+        $client = $this->getClient();
+        $client->getSemanticSearchSettings(
+            'cts_e2e_settings',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/cts_e2e_settings/semanticSearch/settings',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
     #[TestDox('getSettings')]
     public function testGetSettings(): void
     {
@@ -6958,6 +6975,25 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'path' => '/1/dictionaries/*/settings',
                 'method' => 'PUT',
                 'body' => json_decode('{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set minimal parameters')]
+    public function testSetSemanticSearchSettings(): void
+    {
+        $client = $this->getClient();
+        $client->setSemanticSearchSettings(
+            'cts_e2e_settings',
+            ['neuralSearchPreset' => 'default',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/cts_e2e_settings/semanticSearch/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"neuralSearchPreset":"default"}'),
             ],
         ]);
     }

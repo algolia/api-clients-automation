@@ -433,7 +433,7 @@ class SearchClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.40.0\\).*";
+      String regexp = "^Algolia for Java \\(4.41.0\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
@@ -576,6 +576,40 @@ class SearchClientClientTests {
     assertDoesNotThrow(() -> {
       String res = client.generateSecuredApiKey("YourSearchOnlyApiKey", new SecuredApiKeyRestrictions().setUserToken("user42"));
     });
+  }
+
+  @Test
+  @DisplayName("deserializes null records for missing objectIDs")
+  void getObjectsTest0() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6686
+          )
+        ),
+        false
+      )
+    );
+
+    GetObjectsResponse res = client.getObjects(
+      new GetObjectsParams().setRequests(
+        Arrays.asList(
+          new GetObjectsRequest().setObjectID("foo").setIndexName("theIndexName"),
+          new GetObjectsRequest().setObjectID("missing").setIndexName("theIndexName")
+        )
+      ),
+      Hit.class
+    );
+
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"results\":[{\"objectID\":\"foo\"},null]}", json.writeValueAsString(res), JSONCompareMode.STRICT)
+    );
   }
 
   @Test

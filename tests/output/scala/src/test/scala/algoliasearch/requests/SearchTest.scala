@@ -1423,6 +1423,20 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
+  test("get minimal parameters") {
+    val (client, echo) = testClient()
+    val future = client.getSemanticSearchSettings(
+      indexName = "cts_e2e_settings"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/cts_e2e_settings/semanticSearch/settings")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
   test("getSettings") {
     val (client, echo) = testClient()
     val future = client.getSettings(
@@ -7331,6 +7345,25 @@ class SearchTest extends AnyFunSuite {
     val expectedBody = parse(
       """{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}"""
     )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("set minimal parameters") {
+    val (client, echo) = testClient()
+    val future = client.setSemanticSearchSettings(
+      indexName = "cts_e2e_settings",
+      semanticSearchSettings = SemanticSearchSettings(
+        neuralSearchPreset = Some(NeuralSearchPreset.withName("default"))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/cts_e2e_settings/semanticSearch/settings")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"neuralSearchPreset":"default"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }

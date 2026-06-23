@@ -56,6 +56,7 @@ import 'package:algolia_client_search/src/model/search_synonyms_params.dart';
 import 'package:algolia_client_search/src/model/search_synonyms_response.dart';
 import 'package:algolia_client_search/src/model/search_user_ids_params.dart';
 import 'package:algolia_client_search/src/model/search_user_ids_response.dart';
+import 'package:algolia_client_search/src/model/semantic_search_settings.dart';
 import 'package:algolia_client_search/src/model/settings_response.dart';
 import 'package:algolia_client_search/src/model/source.dart';
 import 'package:algolia_client_search/src/model/synonym_hit.dart';
@@ -1208,6 +1209,38 @@ final class SearchClient implements ApiClient {
     );
   }
 
+  /// Retrieves the NeuralSearch semantic settings for an index.
+  ///
+  /// Required API Key ACLs:
+  ///   - settings
+  ///
+  /// Parameters:
+  /// * [indexName] Name of the index on which to perform the operation.
+  /// * [requestOptions] additional request configuration.
+  Future<SemanticSearchSettings> getSemanticSearchSettings({
+    required String indexName,
+    RequestOptions? requestOptions,
+  }) async {
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `getSemanticSearchSettings`.');
+    }
+    final request = ApiRequest(
+      method: RequestMethod.get,
+      path: r'/1/indexes/{indexName}/semanticSearch/settings'.replaceAll(
+          '{' r'indexName' '}', Uri.encodeComponent(indexName.toString())),
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<SemanticSearchSettings, SemanticSearchSettings>(
+      response,
+      'SemanticSearchSettings',
+      growable: true,
+    );
+  }
+
   /// Retrieves an object with non-null index settings.
   ///
   /// Required API Key ACLs:
@@ -2254,6 +2287,41 @@ final class SearchClient implements ApiClient {
       method: RequestMethod.put,
       path: r'/1/dictionaries/*/settings',
       body: dictionarySettingsParams.toJson(),
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<UpdatedAtResponse, UpdatedAtResponse>(
+      response,
+      'UpdatedAtResponse',
+      growable: true,
+    );
+  }
+
+  /// Updates the NeuralSearch semantic settings for an index. Changes take effect immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  ///
+  /// Parameters:
+  /// * [indexName] Name of the index on which to perform the operation.
+  /// * [semanticSearchSettings]
+  /// * [requestOptions] additional request configuration.
+  Future<UpdatedAtResponse> setSemanticSearchSettings({
+    required String indexName,
+    required SemanticSearchSettings semanticSearchSettings,
+    RequestOptions? requestOptions,
+  }) async {
+    if (indexName.isEmpty) {
+      throw ArgumentError(
+          'Parameter `indexName` is required when calling `setSemanticSearchSettings`.');
+    }
+    final request = ApiRequest(
+      method: RequestMethod.put,
+      path: r'/1/indexes/{indexName}/semanticSearch/settings'.replaceAll(
+          '{' r'indexName' '}', Uri.encodeComponent(indexName.toString())),
+      body: semanticSearchSettings.toJson(),
     );
     final response = await _retryStrategy.execute(
       request: request,

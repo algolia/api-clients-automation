@@ -1172,6 +1172,24 @@ func TestSearch_GetRule(t *testing.T) {
 	})
 }
 
+func TestSearch_GetSemanticSearchSettings(t *testing.T) {
+	t.Parallel()
+
+	client, echo := createSearchClient(t)
+	_ = echo
+
+	t.Run("get minimal parameters", func(t *testing.T) {
+		_, err := client.GetSemanticSearchSettings(client.NewApiGetSemanticSearchSettingsRequest(
+			"cts_e2e_settings"))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/cts_e2e_settings/semanticSearch/settings", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+	})
+}
+
 func TestSearch_GetSettings(t *testing.T) {
 	t.Parallel()
 
@@ -4391,6 +4409,25 @@ func TestSearch_SetDictionarySettings(t *testing.T) {
 
 		jsonassert.New(t).
 			Assertf(*echo.Body, "%s", `{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}`)
+	})
+}
+
+func TestSearch_SetSemanticSearchSettings(t *testing.T) {
+	t.Parallel()
+
+	client, echo := createSearchClient(t)
+	_ = echo
+
+	t.Run("set minimal parameters", func(t *testing.T) {
+		_, err := client.SetSemanticSearchSettings(client.NewApiSetSemanticSearchSettingsRequest(
+			"cts_e2e_settings",
+			search.NewEmptySemanticSearchSettings().SetNeuralSearchPreset(search.NeuralSearchPreset("default"))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/cts_e2e_settings/semanticSearch/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"neuralSearchPreset":"default"}`)
 	})
 }
 

@@ -1562,6 +1562,25 @@ void snippetForgetRule() async {
   // SEPARATOR<
 }
 
+// Snippet for the getSemanticSearchSettings method.
+//
+// get minimal parameters
+void snippetForgetSemanticSearchSettings() async {
+  // >SEPARATOR getSemanticSearchSettings default
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getSemanticSearchSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
 // Snippet for the getSettings method.
 //
 // getSettings
@@ -8070,6 +8089,28 @@ void snippetForsetDictionarySettings1() async {
           'ru': true,
         },
       ),
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSemanticSearchSettings method.
+//
+// set minimal parameters
+void snippetForsetSemanticSearchSettings() async {
+  // >SEPARATOR setSemanticSearchSettings default
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSemanticSearchSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    semanticSearchSettings: SemanticSearchSettings(
+      neuralSearchPreset: NeuralSearchPreset.fromJson("default"),
     ),
   );
   // >LOG
