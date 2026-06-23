@@ -1,3 +1,8 @@
+## [3.45.1](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.45.0...3.45.1)
+
+- [a676cd9cef](https://github.com/algolia/api-clients-automation/commit/a676cd9cef) fix(clients): bump replaceAllObjects default maxRetries from 100 to 800 ([#6580](https://github.com/algolia/api-clients-automation/pull/6580)) by [@Fluf22](https://github.com/Fluf22/)
+- [a632f9fb75](https://github.com/algolia/api-clients-automation/commit/a632f9fb75) fix(specs): allow null records in getObjects response ([#6582](https://github.com/algolia/api-clients-automation/pull/6582)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [3.45.0](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.44.0...3.45.0)
 
 - [52ebd28f58](https://github.com/algolia/api-clients-automation/commit/52ebd28f58) feat(clients): release Agent Studio package updates ([#6573](https://github.com/algolia/api-clients-automation/pull/6573)) by [@Fluf22](https://github.com/Fluf22/)

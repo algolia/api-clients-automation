@@ -1,3 +1,7 @@
+## [4.43.1](https://github.com/algolia/algoliasearch-client-go/compare/4.43.0...4.43.1)
+
+- [a632f9fb75](https://github.com/algolia/api-clients-automation/commit/a632f9fb75) fix(specs): allow null records in getObjects response ([#6582](https://github.com/algolia/api-clients-automation/pull/6582)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [4.43.0](https://github.com/algolia/algoliasearch-client-go/compare/4.42.0...4.43.0)
 
 - [52ebd28f58](https://github.com/algolia/api-clients-automation/commit/52ebd28f58) feat(clients): release Agent Studio package updates ([#6573](https://github.com/algolia/api-clients-automation/pull/6573)) by [@Fluf22](https://github.com/Fluf22/)
