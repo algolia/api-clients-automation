@@ -23,9 +23,6 @@ import (
 
 // APIClient manages communication with the Agent Studio API API v0.1.0
 // In most cases there should be only one, shared, APIClient.
-//
-// Beta: The Agent Studio API is not yet stable and may change without notice.
-// See: https://www.algolia.com/doc/rest-api/agent-studio
 type APIClient struct {
 	appID     string
 	cfg       *AgentStudioConfiguration
@@ -106,7 +103,7 @@ func getDefaultHosts(appID string) []transport.StatefulHost {
 }
 
 func getUserAgent() string {
-	return fmt.Sprintf("Algolia for Go (4.41.0); Go (%s); AgentStudio (4.41.0)", runtime.Version())
+	return fmt.Sprintf("Algolia for Go (4.43.0); Go (%s); AgentStudio (4.43.0)", runtime.Version())
 }
 
 // AddDefaultHeader adds a new HTTP header to the default header in the request.

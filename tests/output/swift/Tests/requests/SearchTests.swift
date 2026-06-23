@@ -1809,7 +1809,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getObjectWithHTTPInfo(
+        let response: Response<[String: AnyCodable]> = try await client.getObjectWithHTTPInfo(
             indexName: "theIndexName",
             objectID: "uniqueID",
             attributesToRetrieve: ["attr1", "attr2"]
@@ -1840,7 +1840,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getObjectWithHTTPInfo(indexName: "cts_e2e_browse", objectID: "Batman and Robin")
+        let response: Response<[String: AnyCodable]> = try await client.getObjectWithHTTPInfo(
+            indexName: "cts_e2e_browse",
+            objectID: "Batman and Robin"
+        )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 

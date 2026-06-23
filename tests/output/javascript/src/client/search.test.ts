@@ -301,7 +301,7 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.54.0\).*/);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.55.0\).*/);
   }, 25000);
 });
 
@@ -427,6 +427,30 @@ describe('generateSecuredApiKey', () => {
         restrictions: { userToken: 'user42' },
       });
     }
+  }, 25000);
+});
+
+describe('getObjects', () => {
+  test('deserializes null records for missing objectIDs', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6686,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.getObjects({
+      requests: [
+        { objectID: 'foo', indexName: 'theIndexName' },
+        { objectID: 'missing', indexName: 'theIndexName' },
+      ],
+    });
+
+    expect(result).toEqual({ results: [{ objectID: 'foo' }, null] });
   }, 25000);
 });
 

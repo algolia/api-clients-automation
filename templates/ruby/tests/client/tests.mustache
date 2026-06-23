@@ -35,7 +35,7 @@
     {{/testHost}}
     {{#testResponse}}
     {{^match.isPrimitive}}
-    assert_equal({{{match.value}}}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({{#lambda.rubyNil}}{{{match.value}}}{{/lambda.rubyNil}}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
     {{/match.isPrimitive}}
     {{#match.isPrimitive}}
     assert_equal({{#match}}{{> tests/generateInnerParams}}{{/match}}, req)

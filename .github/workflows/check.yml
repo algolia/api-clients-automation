@@ -25,13 +25,13 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Generate GitHub App Token
         id: app-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
-          app-id: ${{ secrets.ALGOLIA_BOT_APP_ID }}
+          client-id: ${{ vars.ALGOLIA_BOT_CLIENT_ID }}
           private-key: ${{ secrets.ALGOLIA_BOT_PRIVATE_KEY }}
 
       - uses: marocchino/sticky-pull-request-comment@v3
@@ -55,7 +55,7 @@ jobs:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -136,7 +136,7 @@ jobs:
     needs: setup
     if: ${{ needs.setup.outputs.RUN_SCRIPTS == 'true' }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -160,7 +160,7 @@ jobs:
     timeout-minutes: 10
     needs: setup
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -197,7 +197,7 @@ jobs:
       METIS_API_KEY: ${{ secrets.METIS_API_KEY }}
     name: client javascript${{ needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' && format('@{0}', fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).version) || '' }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Download specs artifacts
         uses: ./scripts/ci/actions/restore-artifacts
@@ -327,7 +327,7 @@ jobs:
       hasBreakingChanges: ${{ steps.breakingChanges.outputs.hasBreakingChanges }}
     name: client ${{ matrix.client.language }}@${{ matrix.client.version }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Download specs artifacts
         uses: ./scripts/ci/actions/restore-artifacts
@@ -442,7 +442,7 @@ jobs:
       success: ${{ steps.setoutput.outputs.success }}
     name: client kotlin${{ format('@{0}', fromJSON(needs.setup.outputs.KOTLIN_DATA).version) }} macos
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Download specs artifacts
         uses: ./scripts/ci/actions/restore-artifacts
@@ -492,7 +492,7 @@ jobs:
       success: ${{ steps.setoutput.outputs.success }}
     name: client swift${{ format('@{0}', fromJSON(needs.setup.outputs.SWIFT_DATA).version) }} linux
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
 
       - name: Download specs artifacts
@@ -531,20 +531,20 @@ jobs:
     permissions:
       pull-requests: write
     env:
-      ALGOLIA_BOT_APP_ID: ${{ secrets.ALGOLIA_BOT_APP_ID }}
+      ALGOLIA_BOT_CLIENT_ID: ${{ vars.ALGOLIA_BOT_CLIENT_ID }}
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
       generatedCommit: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT || github.event.pull_request.head.ref }}
     steps:
       - name: Generate GitHub App Token
         id: app-token
-        if: ${{ env.ALGOLIA_BOT_APP_ID != '' }}
+        if: ${{ env.ALGOLIA_BOT_CLIENT_ID != '' }}
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
-          app-id: ${{ secrets.ALGOLIA_BOT_APP_ID }}
+          client-id: ${{ vars.ALGOLIA_BOT_CLIENT_ID }}
           private-key: ${{ secrets.ALGOLIA_BOT_PRIVATE_KEY }}
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
@@ -643,7 +643,7 @@ jobs:
 
       - name: Deploy documentation
         if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' && needs.setup.outputs.RUN_WEBSITE == 'true' }}
-        uses: nwtgck/actions-netlify@v3.0
+        uses: nwtgck/actions-netlify@v4.0
         with:
           publish-dir: 'website/build'
           production-branch: main
@@ -695,12 +695,12 @@ jobs:
         id: app-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
-          app-id: ${{ secrets.ALGOLIA_BOT_APP_ID }}
+          client-id: ${{ vars.ALGOLIA_BOT_CLIENT_ID }}
           private-key: ${{ secrets.ALGOLIA_BOT_PRIVATE_KEY }}
           # Here, we push to most of the allowed repo, so no need to scope
           owner: algolia
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ref: ${{ needs.codegen.outputs.generatedCommit }}

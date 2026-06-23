@@ -72,7 +72,10 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
             return
         }
 
-        let response = try await client.getObjectWithHTTPInfo(indexName: "cts_e2e_browse", objectID: "Batman and Robin")
+        let response: Response<[String: AnyCodable]> = try await client.getObjectWithHTTPInfo(
+            indexName: "cts_e2e_browse",
+            objectID: "Batman and Robin"
+        )
         try XCTLenientAssertEqual(
             received: XCTUnwrap(response.body),
             expected: "{\"objectID\":\"Batman and Robin\",\"title\":\"Batman and Robin\",\"year\":1949,\"cast\":[\"Robert Lowery\",\"Johnny Duncan\",\"Jane Adams\"]}"

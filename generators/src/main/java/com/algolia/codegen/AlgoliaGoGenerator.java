@@ -130,10 +130,20 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
           // consider it the same as model for our purpose
           prop.isModel = true;
         }
+      }
 
-        // simplify some dataTypes
+      // simplify some dataTypes. The field, constructor params, getters and setters come from
+      // distinct CodegenProperty instances, so we need to update every var list.
+      for (CodegenProperty prop : Iterables.concat(model.vars, model.allVars, model.requiredVars, model.optionalVars)) {
         if (prop.dataType.contains("[]*[]")) {
           prop.dataType = prop.dataType.replace("[]*[]", "[][]");
+          prop.vendorExtensions.put("x-go-base-type", prop.dataType);
+        }
+
+        // a map is already a nilable reference type, so a pointer to a map in a slice is
+        // redundant: a `null` JSON element unmarshals to a nil map either way.
+        if (prop.dataType.contains("[]*map[")) {
+          prop.dataType = prop.dataType.replace("[]*map[", "[]map[");
           prop.vendorExtensions.put("x-go-base-type", prop.dataType);
         }
       }
