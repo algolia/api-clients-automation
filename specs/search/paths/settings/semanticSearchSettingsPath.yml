@@ -1,6 +1,6 @@
 get:
   tags:
-    - NeuralSearch
+    - Indices
   operationId: getSemanticSearchSettings
   x-acl:
     - settings
@@ -26,7 +26,7 @@ get:
 
 put:
   tags:
-    - NeuralSearch
+    - Indices
   operationId: setSemanticSearchSettings
   x-acl:
     - editSettings
