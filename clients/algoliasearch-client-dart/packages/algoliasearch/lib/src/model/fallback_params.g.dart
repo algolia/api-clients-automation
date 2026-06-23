@@ -14,7 +14,6 @@ FallbackParams _$FallbackParamsFromJson(Map<String, dynamic> json) =>
         final val = FallbackParams(
           similarQuery: $checkedConvert('similarQuery', (v) => v as String?),
           filters: $checkedConvert('filters', (v) => v as String?),
-          facetFilters: $checkedConvert('facetFilters', (v) => v),
           optionalFilters: $checkedConvert('optionalFilters', (v) => v),
           numericFilters: $checkedConvert('numericFilters', (v) => v),
           tagFilters: $checkedConvert('tagFilters', (v) => v),
@@ -60,7 +59,6 @@ FallbackParams _$FallbackParamsFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           percentileComputation:
               $checkedConvert('percentileComputation', (v) => v as bool?),
-          enableABTest: $checkedConvert('enableABTest', (v) => v as bool?),
           query: $checkedConvert('query', (v) => v as String?),
           attributesForFaceting: $checkedConvert('attributesForFaceting',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
@@ -113,8 +111,6 @@ FallbackParams _$FallbackParamsFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           attributesToRetrieve: $checkedConvert('attributesToRetrieve',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          ranking: $checkedConvert('ranking',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           relevancyStrictness: $checkedConvert(
               'relevancyStrictness', (v) => (v as num?)?.toInt()),
           attributesToHighlight: $checkedConvert('attributesToHighlight',
@@ -148,7 +144,6 @@ FallbackParams _$FallbackParamsFromJson(Map<String, dynamic> json) =>
                   .toList()),
           decompoundQuery:
               $checkedConvert('decompoundQuery', (v) => v as bool?),
-          enableRules: $checkedConvert('enableRules', (v) => v as bool?),
           enablePersonalization:
               $checkedConvert('enablePersonalization', (v) => v as bool?),
           queryType: $checkedConvert(
@@ -209,7 +204,6 @@ Map<String, dynamic> _$FallbackParamsToJson(FallbackParams instance) {
 
   writeNotNull('similarQuery', instance.similarQuery);
   writeNotNull('filters', instance.filters);
-  writeNotNull('facetFilters', instance.facetFilters);
   writeNotNull('optionalFilters', instance.optionalFilters);
   writeNotNull('numericFilters', instance.numericFilters);
   writeNotNull('tagFilters', instance.tagFilters);
@@ -236,7 +230,6 @@ Map<String, dynamic> _$FallbackParamsToJson(FallbackParams instance) {
   writeNotNull('analytics', instance.analytics);
   writeNotNull('analyticsTags', instance.analyticsTags);
   writeNotNull('percentileComputation', instance.percentileComputation);
-  writeNotNull('enableABTest', instance.enableABTest);
   writeNotNull('query', instance.query);
   writeNotNull('attributesForFaceting', instance.attributesForFaceting);
   writeNotNull('replicas', instance.replicas);
@@ -264,7 +257,6 @@ Map<String, dynamic> _$FallbackParamsToJson(FallbackParams instance) {
       'keepDiacriticsOnCharacters', instance.keepDiacriticsOnCharacters);
   writeNotNull('customRanking', instance.customRanking);
   writeNotNull('attributesToRetrieve', instance.attributesToRetrieve);
-  writeNotNull('ranking', instance.ranking);
   writeNotNull('relevancyStrictness', instance.relevancyStrictness);
   writeNotNull('attributesToHighlight', instance.attributesToHighlight);
   writeNotNull('attributesToSnippet', instance.attributesToSnippet);
@@ -284,7 +276,6 @@ Map<String, dynamic> _$FallbackParamsToJson(FallbackParams instance) {
   writeNotNull('queryLanguages',
       instance.queryLanguages?.map((e) => e.toJson()).toList());
   writeNotNull('decompoundQuery', instance.decompoundQuery);
-  writeNotNull('enableRules', instance.enableRules);
   writeNotNull('enablePersonalization', instance.enablePersonalization);
   writeNotNull('queryType', instance.queryType?.toJson());
   writeNotNull(

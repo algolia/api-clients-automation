@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-/** FallbackParams */
+/** Search parameters to use for a fallback request if there aren't enough recommendations. */
 public class FallbackParams {
 
   @JsonProperty("similarQuery")
@@ -19,9 +19,6 @@ public class FallbackParams {
 
   @JsonProperty("filters")
   private String filters;
-
-  @JsonProperty("facetFilters")
-  private FacetFilters facetFilters;
 
   @JsonProperty("optionalFilters")
   private OptionalFilters optionalFilters;
@@ -95,9 +92,6 @@ public class FallbackParams {
   @JsonProperty("percentileComputation")
   private Boolean percentileComputation;
 
-  @JsonProperty("enableABTest")
-  private Boolean enableABTest;
-
   @JsonProperty("query")
   private String query;
 
@@ -164,9 +158,6 @@ public class FallbackParams {
   @JsonProperty("attributesToRetrieve")
   private List<String> attributesToRetrieve;
 
-  @JsonProperty("ranking")
-  private List<String> ranking;
-
   @JsonProperty("relevancyStrictness")
   private Integer relevancyStrictness;
 
@@ -214,9 +205,6 @@ public class FallbackParams {
 
   @JsonProperty("decompoundQuery")
   private Boolean decompoundQuery;
-
-  @JsonProperty("enableRules")
-  private Boolean enableRules;
 
   @JsonProperty("enablePersonalization")
   private Boolean enablePersonalization;
@@ -318,17 +306,6 @@ public class FallbackParams {
   @javax.annotation.Nullable
   public String getFilters() {
     return filters;
-  }
-
-  public FallbackParams setFacetFilters(FacetFilters facetFilters) {
-    this.facetFilters = facetFilters;
-    return this;
-  }
-
-  /** Get facetFilters */
-  @javax.annotation.Nullable
-  public FacetFilters getFacetFilters() {
-    return facetFilters;
   }
 
   public FallbackParams setOptionalFilters(OptionalFilters optionalFilters) {
@@ -700,17 +677,6 @@ public class FallbackParams {
   @javax.annotation.Nullable
   public Boolean getPercentileComputation() {
     return percentileComputation;
-  }
-
-  public FallbackParams setEnableABTest(Boolean enableABTest) {
-    this.enableABTest = enableABTest;
-    return this;
-  }
-
-  /** Whether to enable A/B testing for this search. */
-  @javax.annotation.Nullable
-  public Boolean getEnableABTest() {
-    return enableABTest;
   }
 
   public FallbackParams setQuery(String query) {
@@ -1197,37 +1163,6 @@ public class FallbackParams {
     return attributesToRetrieve;
   }
 
-  public FallbackParams setRanking(List<String> ranking) {
-    this.ranking = ranking;
-    return this;
-  }
-
-  public FallbackParams addRanking(String rankingItem) {
-    if (this.ranking == null) {
-      this.ranking = new ArrayList<>();
-    }
-    this.ranking.add(rankingItem);
-    return this;
-  }
-
-  /**
-   * Determines the order in which Algolia returns your results. By default, each entry corresponds
-   * to a [ranking
-   * criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria).
-   * The tie-breaking algorithm sequentially applies each criterion in the order they're specified.
-   * If you configure a replica index for [sorting by an
-   * attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute),
-   * you put the sorting attribute at the top of the list. **Modifiers** - `asc(\"ATTRIBUTE\")`.
-   * Sort the index by the values of an attribute, in ascending order. - `desc(\"ATTRIBUTE\")`. Sort
-   * the index by the values of an attribute, in descending order. Before you modify the default
-   * setting, test your changes in the dashboard, and by [A/B
-   * testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing).
-   */
-  @javax.annotation.Nullable
-  public List<String> getRanking() {
-    return ranking;
-  }
-
   public FallbackParams setRelevancyStrictness(Integer relevancyStrictness) {
     this.relevancyStrictness = relevancyStrictness;
     return this;
@@ -1497,17 +1432,6 @@ public class FallbackParams {
   @javax.annotation.Nullable
   public Boolean getDecompoundQuery() {
     return decompoundQuery;
-  }
-
-  public FallbackParams setEnableRules(Boolean enableRules) {
-    this.enableRules = enableRules;
-    return this;
-  }
-
-  /** Whether to enable rules. */
-  @javax.annotation.Nullable
-  public Boolean getEnableRules() {
-    return enableRules;
   }
 
   public FallbackParams setEnablePersonalization(Boolean enablePersonalization) {
@@ -1828,7 +1752,6 @@ public class FallbackParams {
     return (
       Objects.equals(this.similarQuery, fallbackParams.similarQuery) &&
       Objects.equals(this.filters, fallbackParams.filters) &&
-      Objects.equals(this.facetFilters, fallbackParams.facetFilters) &&
       Objects.equals(this.optionalFilters, fallbackParams.optionalFilters) &&
       Objects.equals(this.numericFilters, fallbackParams.numericFilters) &&
       Objects.equals(this.tagFilters, fallbackParams.tagFilters) &&
@@ -1853,7 +1776,6 @@ public class FallbackParams {
       Objects.equals(this.analytics, fallbackParams.analytics) &&
       Objects.equals(this.analyticsTags, fallbackParams.analyticsTags) &&
       Objects.equals(this.percentileComputation, fallbackParams.percentileComputation) &&
-      Objects.equals(this.enableABTest, fallbackParams.enableABTest) &&
       Objects.equals(this.query, fallbackParams.query) &&
       Objects.equals(this.attributesForFaceting, fallbackParams.attributesForFaceting) &&
       Objects.equals(this.replicas, fallbackParams.replicas) &&
@@ -1876,7 +1798,6 @@ public class FallbackParams {
       Objects.equals(this.keepDiacriticsOnCharacters, fallbackParams.keepDiacriticsOnCharacters) &&
       Objects.equals(this.customRanking, fallbackParams.customRanking) &&
       Objects.equals(this.attributesToRetrieve, fallbackParams.attributesToRetrieve) &&
-      Objects.equals(this.ranking, fallbackParams.ranking) &&
       Objects.equals(this.relevancyStrictness, fallbackParams.relevancyStrictness) &&
       Objects.equals(this.attributesToHighlight, fallbackParams.attributesToHighlight) &&
       Objects.equals(this.attributesToSnippet, fallbackParams.attributesToSnippet) &&
@@ -1893,7 +1814,6 @@ public class FallbackParams {
       Objects.equals(this.removeStopWords, fallbackParams.removeStopWords) &&
       Objects.equals(this.queryLanguages, fallbackParams.queryLanguages) &&
       Objects.equals(this.decompoundQuery, fallbackParams.decompoundQuery) &&
-      Objects.equals(this.enableRules, fallbackParams.enableRules) &&
       Objects.equals(this.enablePersonalization, fallbackParams.enablePersonalization) &&
       Objects.equals(this.queryType, fallbackParams.queryType) &&
       Objects.equals(this.removeWordsIfNoResults, fallbackParams.removeWordsIfNoResults) &&
@@ -1921,7 +1841,6 @@ public class FallbackParams {
     return Objects.hash(
       similarQuery,
       filters,
-      facetFilters,
       optionalFilters,
       numericFilters,
       tagFilters,
@@ -1946,7 +1865,6 @@ public class FallbackParams {
       analytics,
       analyticsTags,
       percentileComputation,
-      enableABTest,
       query,
       attributesForFaceting,
       replicas,
@@ -1969,7 +1887,6 @@ public class FallbackParams {
       keepDiacriticsOnCharacters,
       customRanking,
       attributesToRetrieve,
-      ranking,
       relevancyStrictness,
       attributesToHighlight,
       attributesToSnippet,
@@ -1986,7 +1903,6 @@ public class FallbackParams {
       removeStopWords,
       queryLanguages,
       decompoundQuery,
-      enableRules,
       enablePersonalization,
       queryType,
       removeWordsIfNoResults,
@@ -2015,7 +1931,6 @@ public class FallbackParams {
     sb.append("class FallbackParams {\n");
     sb.append("    similarQuery: ").append(toIndentedString(similarQuery)).append("\n");
     sb.append("    filters: ").append(toIndentedString(filters)).append("\n");
-    sb.append("    facetFilters: ").append(toIndentedString(facetFilters)).append("\n");
     sb.append("    optionalFilters: ").append(toIndentedString(optionalFilters)).append("\n");
     sb.append("    numericFilters: ").append(toIndentedString(numericFilters)).append("\n");
     sb.append("    tagFilters: ").append(toIndentedString(tagFilters)).append("\n");
@@ -2040,7 +1955,6 @@ public class FallbackParams {
     sb.append("    analytics: ").append(toIndentedString(analytics)).append("\n");
     sb.append("    analyticsTags: ").append(toIndentedString(analyticsTags)).append("\n");
     sb.append("    percentileComputation: ").append(toIndentedString(percentileComputation)).append("\n");
-    sb.append("    enableABTest: ").append(toIndentedString(enableABTest)).append("\n");
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb.append("    attributesForFaceting: ").append(toIndentedString(attributesForFaceting)).append("\n");
     sb.append("    replicas: ").append(toIndentedString(replicas)).append("\n");
@@ -2063,7 +1977,6 @@ public class FallbackParams {
     sb.append("    keepDiacriticsOnCharacters: ").append(toIndentedString(keepDiacriticsOnCharacters)).append("\n");
     sb.append("    customRanking: ").append(toIndentedString(customRanking)).append("\n");
     sb.append("    attributesToRetrieve: ").append(toIndentedString(attributesToRetrieve)).append("\n");
-    sb.append("    ranking: ").append(toIndentedString(ranking)).append("\n");
     sb.append("    relevancyStrictness: ").append(toIndentedString(relevancyStrictness)).append("\n");
     sb.append("    attributesToHighlight: ").append(toIndentedString(attributesToHighlight)).append("\n");
     sb.append("    attributesToSnippet: ").append(toIndentedString(attributesToSnippet)).append("\n");
@@ -2080,7 +1993,6 @@ public class FallbackParams {
     sb.append("    removeStopWords: ").append(toIndentedString(removeStopWords)).append("\n");
     sb.append("    queryLanguages: ").append(toIndentedString(queryLanguages)).append("\n");
     sb.append("    decompoundQuery: ").append(toIndentedString(decompoundQuery)).append("\n");
-    sb.append("    enableRules: ").append(toIndentedString(enableRules)).append("\n");
     sb.append("    enablePersonalization: ").append(toIndentedString(enablePersonalization)).append("\n");
     sb.append("    queryType: ").append(toIndentedString(queryType)).append("\n");
     sb.append("    removeWordsIfNoResults: ").append(toIndentedString(removeWordsIfNoResults)).append("\n");

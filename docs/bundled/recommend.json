@@ -774,30 +774,6 @@
           "Filtering"
         ]
       },
-      "facetFilters": {
-        "description": "Filter the search by facet values, so that only records with the same facet values are retrieved.\n\n**Prefer using the `filters` parameter, which supports all filter types and combinations with boolean operators.**\n\n- `[filter1, filter2]` is interpreted as `filter1 AND filter2`.\n- `[[filter1, filter2], filter3]` is interpreted as `filter1 OR filter2 AND filter3`.\n- `facet:-value` is interpreted as `NOT facet:value`.\n\nWhile it's best to avoid attributes that start with a `-`, you can still filter them by escaping with a backslash:\n`facet:\\-value`.\n",
-        "example": [
-          [
-            "category:Book",
-            "category:-Movie"
-          ],
-          "author:John Doe"
-        ],
-        "oneOf": [
-          {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/facetFilters"
-            }
-          },
-          {
-            "type": "string"
-          }
-        ],
-        "x-categories": [
-          "Filtering"
-        ]
-      },
       "optionalFilters": {
         "description": "Filters to promote or demote records in the search results.\n\nOptional filters work like facet filters, but they don't exclude records from the search results.\nRecords that match the optional filter rank before records that don't match.\nIf you're using a negative filter `facet:-value`, matching records rank after records that don't match.\n\n- Optional filters are applied _after_ sort-by attributes.\n- Optional filters are applied _before_ custom ranking attributes (in the default [ranking](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria)).\n- Optional filters don't work with numeric attributes.\n- On virtual replicas, optional filters are applied _after_ the replica's [relevant sort](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort).\n",
         "example": [
@@ -1239,14 +1215,6 @@
           "Advanced"
         ]
       },
-      "enableABTest": {
-        "type": "boolean",
-        "description": "Whether to enable A/B testing for this search.",
-        "default": true,
-        "x-categories": [
-          "Advanced"
-        ]
-      },
       "baseRecommendSearchParams": {
         "type": "object",
         "additionalProperties": false,
@@ -1256,9 +1224,6 @@
           },
           "filters": {
             "$ref": "#/components/schemas/filters"
-          },
-          "facetFilters": {
-            "$ref": "#/components/schemas/facetFilters"
           },
           "optionalFilters": {
             "$ref": "#/components/schemas/optionalFilters"
@@ -1331,9 +1296,6 @@
           },
           "percentileComputation": {
             "$ref": "#/components/schemas/percentileComputation"
-          },
-          "enableABTest": {
-            "$ref": "#/components/schemas/enableABTest"
           }
         }
       },
@@ -1639,26 +1601,6 @@
           "Attributes"
         ]
       },
-      "ranking": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        },
-        "description": "Determines the order in which Algolia returns your results.\n\nBy default, each entry corresponds to a [ranking criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria).\nThe tie-breaking algorithm sequentially applies each criterion in the order they're specified.\nIf you configure a replica index for [sorting by an attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute),\nyou put the sorting attribute at the top of the list.\n\n**Modifiers**\n\n- `asc(\"ATTRIBUTE\")`.\n  Sort the index by the values of an attribute, in ascending order.\n- `desc(\"ATTRIBUTE\")`.\n  Sort the index by the values of an attribute, in descending order.\n\nBefore you modify the default setting,\ntest your changes in the dashboard,\nand by [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing).\n",
-        "default": [
-          "typo",
-          "geo",
-          "words",
-          "filters",
-          "proximity",
-          "attribute",
-          "exact",
-          "custom"
-        ],
-        "x-categories": [
-          "Ranking"
-        ]
-      },
       "relevancyStrictness": {
         "type": "integer",
         "example": 90,
@@ -1874,14 +1816,6 @@
         "default": true,
         "x-categories": [
           "Languages"
-        ]
-      },
-      "enableRules": {
-        "type": "boolean",
-        "description": "Whether to enable rules.",
-        "default": true,
-        "x-categories": [
-          "Rules"
         ]
       },
       "enablePersonalization": {
@@ -2306,9 +2240,6 @@
           "attributesToRetrieve": {
             "$ref": "#/components/schemas/attributesToRetrieve"
           },
-          "ranking": {
-            "$ref": "#/components/schemas/ranking"
-          },
           "relevancyStrictness": {
             "$ref": "#/components/schemas/relevancyStrictness"
           },
@@ -2356,9 +2287,6 @@
           },
           "decompoundQuery": {
             "$ref": "#/components/schemas/decompoundQuery"
-          },
-          "enableRules": {
-            "$ref": "#/components/schemas/enableRules"
           },
           "enablePersonalization": {
             "$ref": "#/components/schemas/enablePersonalization"
@@ -2437,6 +2365,14 @@
           }
         ]
       },
+      "enableRules": {
+        "type": "boolean",
+        "description": "Whether to enable rules.",
+        "default": true,
+        "x-categories": [
+          "Rules"
+        ]
+      },
       "recommendSearchParams": {
         "title": "Search parameters as object",
         "description": "Search parameters for filtering the recommendations.",
@@ -2449,6 +2385,14 @@
           },
           {
             "$ref": "#/components/schemas/recommendIndexSettings"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "enableRules": {
+                "$ref": "#/components/schemas/enableRules"
+              }
+            }
           }
         ]
       },
@@ -2496,13 +2440,16 @@
       },
       "fallbackParams": {
         "title": "fallbackParameters",
+        "description": "Search parameters to use for a fallback request if there aren't enough recommendations.",
         "allOf": [
           {
-            "$ref": "#/components/schemas/recommendSearchParams"
+            "$ref": "#/components/schemas/baseRecommendSearchParams"
           },
           {
-            "type": "object",
-            "description": "Search parameters to use for a fallback request if there aren't enough recommendations."
+            "$ref": "#/components/schemas/searchParamsQuery"
+          },
+          {
+            "$ref": "#/components/schemas/recommendIndexSettings"
           }
         ]
       },

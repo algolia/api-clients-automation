@@ -3921,8 +3921,6 @@ components:
           $ref: '#/components/schemas/similarQuery'
         filters:
           $ref: '#/components/schemas/filters'
-        facetFilters:
-          $ref: '#/components/schemas/facetFilters'
         optionalFilters:
           $ref: '#/components/schemas/optionalFilters'
         numericFilters:
@@ -3971,53 +3969,6 @@ components:
           $ref: '#/components/schemas/analyticsTags'
         percentileComputation:
           $ref: '#/components/schemas/percentileComputation'
-        enableABTest:
-          $ref: '#/components/schemas/enableABTest'
-    ranking:
-      type: array
-      items:
-        type: string
-      description: >
-        Determines the order in which Algolia returns your results.
-
-
-        By default, each entry corresponds to a [ranking
-        criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria).
-
-        The tie-breaking algorithm sequentially applies each criterion in the
-        order they're specified.
-
-        If you configure a replica index for [sorting by an
-        attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute),
-
-        you put the sorting attribute at the top of the list.
-
-
-        **Modifiers**
-
-
-        - `asc("ATTRIBUTE")`.
-          Sort the index by the values of an attribute, in ascending order.
-        - `desc("ATTRIBUTE")`.
-          Sort the index by the values of an attribute, in descending order.
-
-        Before you modify the default setting,
-
-        test your changes in the dashboard,
-
-        and by [A/B
-        testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing).
-      default:
-        - typo
-        - geo
-        - words
-        - filters
-        - proximity
-        - attribute
-        - exact
-        - custom
-      x-categories:
-        - Ranking
     IndexSettings_facets:
       description: Order of facet names.
       type: object
@@ -4031,8 +3982,6 @@ components:
       properties:
         attributesToRetrieve:
           $ref: '#/components/schemas/attributesToRetrieve'
-        ranking:
-          $ref: '#/components/schemas/ranking'
         relevancyStrictness:
           $ref: '#/components/schemas/relevancyStrictness'
         attributesToHighlight:
@@ -4065,8 +4014,6 @@ components:
           $ref: '#/components/schemas/queryLanguages'
         decompoundQuery:
           $ref: '#/components/schemas/decompoundQuery'
-        enableRules:
-          $ref: '#/components/schemas/enableRules'
         enablePersonalization:
           $ref: '#/components/schemas/enablePersonalization'
         queryType:
@@ -4119,6 +4066,10 @@ components:
         - $ref: '#/components/schemas/baseRecommendSearchParams'
         - $ref: '#/components/schemas/searchParamsQuery'
         - $ref: '#/components/schemas/recommendIndexSettings'
+        - type: object
+          properties:
+            enableRules:
+              $ref: '#/components/schemas/enableRules'
     baseRecommendRequest:
       type: object
       additionalProperties: false
@@ -4165,12 +4116,13 @@ components:
         - bought-together
     fallbackParams:
       title: fallbackParameters
+      description: >-
+        Search parameters to use for a fallback request if there aren't enough
+        recommendations.
       allOf:
-        - $ref: '#/components/schemas/recommendSearchParams'
-        - type: object
-          description: >-
-            Search parameters to use for a fallback request if there aren't
-            enough recommendations.
+        - $ref: '#/components/schemas/baseRecommendSearchParams'
+        - $ref: '#/components/schemas/searchParamsQuery'
+        - $ref: '#/components/schemas/recommendIndexSettings'
     frequentlyBoughtTogether:
       type: object
       properties:

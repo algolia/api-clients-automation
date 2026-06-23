@@ -651,13 +651,13 @@ class RecommendTest extends AnyFunSuite {
             queryParameters = Some(
               RecommendSearchParams(
                 query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(FacetFilters("query"))))
+                optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("brand:apple"))))
               )
             ),
             fallbackParameters = Some(
               FallbackParams(
                 query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback"))))
+                optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("brand:samsung"))))
               )
             )
           )
@@ -671,7 +671,7 @@ class RecommendTest extends AnyFunSuite {
     assert(res.path == "/1/indexes/*/recommendations")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}"""
+      """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -720,13 +720,13 @@ class RecommendTest extends AnyFunSuite {
             queryParameters = Some(
               RecommendSearchParams(
                 query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(FacetFilters("query"))))
+                optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("brand:apple"))))
               )
             ),
             fallbackParameters = Some(
               FallbackParams(
                 query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback"))))
+                optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("brand:samsung"))))
               )
             )
           )
@@ -740,7 +740,7 @@ class RecommendTest extends AnyFunSuite {
     assert(res.path == "/1/indexes/*/recommendations")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}"""
+      """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -793,13 +793,13 @@ class RecommendTest extends AnyFunSuite {
             queryParameters = Some(
               RecommendSearchParams(
                 query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(FacetFilters("query1"))))
+                optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("brand:apple"))))
               )
             ),
             fallbackParameters = Some(
               FallbackParams(
                 query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback1"))))
+                optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("brand:samsung"))))
               )
             )
           ),
@@ -812,13 +812,13 @@ class RecommendTest extends AnyFunSuite {
             queryParameters = Some(
               RecommendSearchParams(
                 query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(FacetFilters("query2"))))
+                optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("brand:google"))))
               )
             ),
             fallbackParameters = Some(
               FallbackParams(
                 query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback2"))))
+                optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("brand:microsoft"))))
               )
             )
           )
@@ -832,7 +832,7 @@ class RecommendTest extends AnyFunSuite {
     assert(res.path == "/1/indexes/*/recommendations")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}"""
+      """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:google"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:microsoft"]}}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)

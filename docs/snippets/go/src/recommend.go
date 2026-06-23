@@ -743,10 +743,10 @@ func SnippetForGetRecommendationsOfRecommend2() {
 		recommend.NewEmptyGetRecommendationsParams().SetRequests(
 			[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
 				recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1).SetMaxRecommendations(10).SetQueryParameters(
-					recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query")}))).SetFallbackParameters(
-					recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback")}))))})))
+					recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetOptionalFilters(recommend.ArrayOfOptionalFiltersAsOptionalFilters(
+						[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:apple")}))).SetFallbackParameters(
+					recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetOptionalFilters(recommend.ArrayOfOptionalFiltersAsOptionalFilters(
+						[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:samsung")}))))})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -811,10 +811,10 @@ func SnippetForGetRecommendationsOfRecommend4() {
 		recommend.NewEmptyGetRecommendationsParams().SetRequests(
 			[]recommend.RecommendationsRequest{*recommend.TrendingItemsQueryAsRecommendationsRequest(
 				recommend.NewEmptyTrendingItemsQuery().SetIndexName("<YOUR_INDEX_NAME>").SetModel(recommend.TrendingItemsModel("trending-items")).SetThreshold(42.1).SetMaxRecommendations(10).SetFacetName("myFacetName").SetFacetValue("myFacetValue").SetQueryParameters(
-					recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query")}))).SetFallbackParameters(
-					recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback")}))))})))
+					recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetOptionalFilters(recommend.ArrayOfOptionalFiltersAsOptionalFilters(
+						[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:apple")}))).SetFallbackParameters(
+					recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetOptionalFilters(recommend.ArrayOfOptionalFiltersAsOptionalFilters(
+						[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:samsung")}))))})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -880,15 +880,15 @@ func SnippetForGetRecommendationsOfRecommend6() {
 		recommend.NewEmptyGetRecommendationsParams().SetRequests(
 			[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
 				recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID1").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7).SetMaxRecommendations(10).SetQueryParameters(
-					recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query1")}))).SetFallbackParameters(
-					recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback1")})))), *recommend.RelatedQueryAsRecommendationsRequest(
+					recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetOptionalFilters(recommend.ArrayOfOptionalFiltersAsOptionalFilters(
+						[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:apple")}))).SetFallbackParameters(
+					recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetOptionalFilters(recommend.ArrayOfOptionalFiltersAsOptionalFilters(
+						[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:samsung")})))), *recommend.RelatedQueryAsRecommendationsRequest(
 				recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID2").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7).SetMaxRecommendations(10).SetQueryParameters(
-					recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query2")}))).SetFallbackParameters(
-					recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback2")}))))})))
+					recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetOptionalFilters(recommend.ArrayOfOptionalFiltersAsOptionalFilters(
+						[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:google")}))).SetFallbackParameters(
+					recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetOptionalFilters(recommend.ArrayOfOptionalFiltersAsOptionalFilters(
+						[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:microsoft")}))))})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

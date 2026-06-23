@@ -649,14 +649,14 @@ void snippetForgetRecommendations2() async {
           maxRecommendations: 10,
           queryParameters: RecommendSearchParams(
             query: "myQuery",
-            facetFilters: [
-              "query",
+            optionalFilters: [
+              "brand:apple",
             ],
           ),
           fallbackParameters: FallbackParams(
             query: "myQuery",
-            facetFilters: [
-              "fallback",
+            optionalFilters: [
+              "brand:samsung",
             ],
           ),
         ),
@@ -720,14 +720,14 @@ void snippetForgetRecommendations4() async {
           facetValue: "myFacetValue",
           queryParameters: RecommendSearchParams(
             query: "myQuery",
-            facetFilters: [
-              "query",
+            optionalFilters: [
+              "brand:apple",
             ],
           ),
           fallbackParameters: FallbackParams(
             query: "myQuery",
-            facetFilters: [
-              "fallback",
+            optionalFilters: [
+              "brand:samsung",
             ],
           ),
         ),
@@ -795,14 +795,14 @@ void snippetForgetRecommendations6() async {
           maxRecommendations: 10,
           queryParameters: RecommendSearchParams(
             query: "myQuery",
-            facetFilters: [
-              "query1",
+            optionalFilters: [
+              "brand:apple",
             ],
           ),
           fallbackParameters: FallbackParams(
             query: "myQuery",
-            facetFilters: [
-              "fallback1",
+            optionalFilters: [
+              "brand:samsung",
             ],
           ),
         ),
@@ -814,14 +814,14 @@ void snippetForgetRecommendations6() async {
           maxRecommendations: 10,
           queryParameters: RecommendSearchParams(
             query: "myQuery",
-            facetFilters: [
-              "query2",
+            optionalFilters: [
+              "brand:google",
             ],
           ),
           fallbackParameters: FallbackParams(
             query: "myQuery",
-            facetFilters: [
-              "fallback2",
+            optionalFilters: [
+              "brand:microsoft",
             ],
           ),
         ),

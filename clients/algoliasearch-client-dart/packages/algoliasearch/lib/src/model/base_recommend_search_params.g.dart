@@ -15,7 +15,6 @@ BaseRecommendSearchParams _$BaseRecommendSearchParamsFromJson(
         final val = BaseRecommendSearchParams(
           similarQuery: $checkedConvert('similarQuery', (v) => v as String?),
           filters: $checkedConvert('filters', (v) => v as String?),
-          facetFilters: $checkedConvert('facetFilters', (v) => v),
           optionalFilters: $checkedConvert('optionalFilters', (v) => v),
           numericFilters: $checkedConvert('numericFilters', (v) => v),
           tagFilters: $checkedConvert('tagFilters', (v) => v),
@@ -61,7 +60,6 @@ BaseRecommendSearchParams _$BaseRecommendSearchParamsFromJson(
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           percentileComputation:
               $checkedConvert('percentileComputation', (v) => v as bool?),
-          enableABTest: $checkedConvert('enableABTest', (v) => v as bool?),
         );
         return val;
       },
@@ -79,7 +77,6 @@ Map<String, dynamic> _$BaseRecommendSearchParamsToJson(
 
   writeNotNull('similarQuery', instance.similarQuery);
   writeNotNull('filters', instance.filters);
-  writeNotNull('facetFilters', instance.facetFilters);
   writeNotNull('optionalFilters', instance.optionalFilters);
   writeNotNull('numericFilters', instance.numericFilters);
   writeNotNull('tagFilters', instance.tagFilters);
@@ -106,7 +103,6 @@ Map<String, dynamic> _$BaseRecommendSearchParamsToJson(
   writeNotNull('analytics', instance.analytics);
   writeNotNull('analyticsTags', instance.analyticsTags);
   writeNotNull('percentileComputation', instance.percentileComputation);
-  writeNotNull('enableABTest', instance.enableABTest);
   return val;
 }
 
