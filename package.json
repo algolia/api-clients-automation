@@ -33,7 +33,7 @@
     "@eslint/json": "2.0.0",
     "@openapitools/openapi-generator-cli": "2.32.0",
     "@redocly/cli": "2.27.0",
-    "eslint": "10.4.0",
+    "eslint": "10.5.0",
     "eslint-plugin-automation-custom": "1.0.0",
     "eslint-plugin-yml": "3.3.2",
     "husky": "9.1.7",
