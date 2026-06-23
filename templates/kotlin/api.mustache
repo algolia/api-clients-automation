@@ -15,12 +15,6 @@ import {{modelPackage}}.RequestBody
 {{/isCompositionClient}}
 
 {{#operations}}
-{{#isAgentStudioClient}}
-/**
- * Beta: The Agent Studio API is not yet stable and may change without notice.
- * @see [Agent Studio API docs](https://www.algolia.com/doc/rest-api/agent-studio)
- */
-{{/isAgentStudioClient}}
 public class {{classname}}(
   override val appId: String,
   override var apiKey: String,

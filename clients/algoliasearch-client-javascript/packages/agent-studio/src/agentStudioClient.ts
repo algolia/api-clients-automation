@@ -68,7 +68,7 @@ import type {
   UpdateSecretKeyProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '0.1.0-beta.0';
+export const apiClientVersion = '1.0.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -105,11 +105,6 @@ function getDefaultHosts(appId: string): Host[] {
   );
 }
 
-/**
- * @beta
- * The Agent Studio API is not yet stable and may change without notice.
- * See {@link https://www.algolia.com/doc/rest-api/agent-studio | Agent Studio API docs}.
- */
 export function createAgentStudioClient({
   appId: appIdOption,
   apiKey: apiKeyOption,

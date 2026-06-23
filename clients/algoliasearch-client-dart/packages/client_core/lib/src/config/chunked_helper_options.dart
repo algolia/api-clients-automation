@@ -1,6 +1,9 @@
 /// Default maximum number of retries for chunked helpers and wait operations.
 const int defaultMaxRetries = 100;
 
+/// Default maximum number of retries used by `replaceAllObjects`.
+const int defaultReplaceAllObjectsMaxRetries = 800;
+
 /// Optional configuration for chunked helpers that batch records and poll for task completion.
 ///
 /// Designed to grow over time; future shared helper config (e.g. timeout) can be

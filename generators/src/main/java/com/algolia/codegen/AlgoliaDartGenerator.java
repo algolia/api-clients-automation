@@ -36,17 +36,11 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
     additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
 
-    // Use a beta version for the agent-studio standalone package
-    String effectiveVersion = version;
-    if (client.equals("agent-studio")) {
-      effectiveVersion = "0.1.0-beta.0";
-    }
-
     // pubspec.yaml
     setPubAuthor("Algolia");
     setPubAuthorEmail("hey@algolia.com");
     setPubHomepage("https://www.algolia.com/doc/");
-    setPubVersion(effectiveVersion);
+    setPubVersion(version);
     String packageFolder;
     if (isAlgoliasearchClient) {
       libName = "algoliasearch";
@@ -113,7 +107,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
 
     // Search config
     additionalProperties.put("isSearchClient", client.equals("search"));
-    additionalProperties.put("packageVersion", effectiveVersion);
+    additionalProperties.put("packageVersion", version);
 
     // Only clients shipping hand-authored helpers export `src/extension.dart`.
     additionalProperties.put("hasExtensions", client.equals("search") || isAlgoliasearchClient);
@@ -135,7 +129,33 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
     Map<String, ModelsMap> modelsMap = super.postProcessAllModels(objs);
     FieldUtils.normalizeVarNames(modelsMap);
+    markNullableArrayItems(modelsMap);
     return support.clearOneOfFromModels(libName, modelsMap);
+  }
+
+  /**
+   * Renders nullable array items as `List<X?>` so responses with `null` entries (e.g. `getObjects`
+   * results) can be deserialized.
+   */
+  private static void markNullableArrayItems(Map<String, ModelsMap> modelsMap) {
+    for (ModelsMap modelContainer : modelsMap.values()) {
+      List<ModelMap> models = modelContainer.getModels();
+      if (models == null || models.isEmpty()) {
+        continue;
+      }
+      CodegenModel model = models.get(0).getModel();
+      if (model.vars == null) {
+        continue;
+      }
+      for (CodegenProperty prop : model.vars) {
+        if (prop.isArray && prop.items != null && prop.items.isNullable && prop.datatypeWithEnum != null) {
+          int idx = prop.datatypeWithEnum.lastIndexOf('>');
+          if (idx >= 0) {
+            prop.datatypeWithEnum = prop.datatypeWithEnum.substring(0, idx) + "?" + prop.datatypeWithEnum.substring(idx);
+          }
+        }
+      }
+    }
   }
 
   @Override

@@ -2,6 +2,7 @@
   "env": {
     "es6": true
   },
+  "ignorePatterns": ["**/builddir/**"],
   "rules": {
     "@typescript-eslint/consistent-type-imports": "error"
   }
