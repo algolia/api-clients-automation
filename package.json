@@ -35,7 +35,7 @@
     "@redocly/cli": "2.27.0",
     "eslint": "10.5.0",
     "eslint-plugin-automation-custom": "1.0.0",
-    "eslint-plugin-yml": "3.3.2",
+    "eslint-plugin-yml": "3.4.0",
     "husky": "9.1.7",
     "lint-staged": "17.0.7",
     "oxlint": "1.70.0",
