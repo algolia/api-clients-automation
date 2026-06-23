@@ -137,7 +137,7 @@ __metadata:
     "@redocly/cli": "npm:2.27.0"
     eslint: "npm:10.5.0"
     eslint-plugin-automation-custom: "npm:1.0.0"
-    eslint-plugin-yml: "npm:3.3.2"
+    eslint-plugin-yml: "npm:3.4.0"
     husky: "npm:9.1.7"
     lint-staged: "npm:17.0.7"
     oxlint: "npm:1.70.0"
@@ -4865,7 +4865,7 @@ __metadata:
     "@types/eslint": "npm:9.6.1"
     esbuild: "npm:0.28.1"
     eslint: "npm:10.5.0"
-    eslint-plugin-yml: "npm:3.3.2"
+    eslint-plugin-yml: "npm:3.4.0"
     eslint-vitest-rule-tester: "npm:3.1.0"
     typescript: "npm:5.9.3"
     vitest: "npm:4.1.9"
@@ -4897,9 +4897,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-yml@npm:3.3.2":
-  version: 3.3.2
-  resolution: "eslint-plugin-yml@npm:3.3.2"
+"eslint-plugin-yml@npm:3.4.0":
+  version: 3.4.0
+  resolution: "eslint-plugin-yml@npm:3.4.0"
   dependencies:
     "@eslint/core": "npm:^1.0.1"
     "@eslint/plugin-kit": "npm:^0.7.0"
@@ -4910,7 +4910,7 @@ __metadata:
     yaml-eslint-parser: "npm:^2.0.0"
   peerDependencies:
     eslint: ">=9.38.0"
-  checksum: 10/1c298adbb872fcd02ed4e55a6423a2ed6f2d40e89ff995b22be90e3dc9a73c47fc14848e6c56775d71e8d40e26ae6ad1e1c6e9a21f974f1a2ed07d0a5ddbef9a
+  checksum: 10/8c1347025c5c9bc83c2acf263208603641fa10c27eaeb81787ee441005f8d6c38a05715267d0397eb431108849c638faf64794930ba45cbcf2df00e51ff81d80
   languageName: node
   linkType: hard
 
