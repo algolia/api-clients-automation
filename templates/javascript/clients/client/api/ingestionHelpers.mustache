@@ -24,6 +24,10 @@ async chunkedPush(
   }: ChunkedPushOptions,
   requestOptions?: RequestOptions,
 ): Promise<Array<WatchResponse>> {
+  if (batchSize < 1) {
+    throw new Error('`batchSize` must be at least 1.');
+  }
+
   let records: Array<PushTaskRecords> = [];
   let offset = 0;
   const responses: Array<WatchResponse> = [];
