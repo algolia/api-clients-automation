@@ -697,14 +697,14 @@ void main() {
               maxRecommendations: 10,
               queryParameters: RecommendSearchParams(
                 query: "myQuery",
-                facetFilters: [
-                  "query",
+                optionalFilters: [
+                  "brand:apple",
                 ],
               ),
               fallbackParameters: FallbackParams(
                 query: "myQuery",
-                facetFilters: [
-                  "fallback",
+                optionalFilters: [
+                  "brand:samsung",
                 ],
               ),
             ),
@@ -715,7 +715,7 @@ void main() {
         expectPath(request.path, '/1/indexes/*/recommendations');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}""");
+            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}""");
       },
     ),
   );
@@ -772,14 +772,14 @@ void main() {
               facetValue: "myFacetValue",
               queryParameters: RecommendSearchParams(
                 query: "myQuery",
-                facetFilters: [
-                  "query",
+                optionalFilters: [
+                  "brand:apple",
                 ],
               ),
               fallbackParameters: FallbackParams(
                 query: "myQuery",
-                facetFilters: [
-                  "fallback",
+                optionalFilters: [
+                  "brand:samsung",
                 ],
               ),
             ),
@@ -790,7 +790,7 @@ void main() {
         expectPath(request.path, '/1/indexes/*/recommendations');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}""");
+            """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}""");
       },
     ),
   );
@@ -851,14 +851,14 @@ void main() {
               maxRecommendations: 10,
               queryParameters: RecommendSearchParams(
                 query: "myQuery",
-                facetFilters: [
-                  "query1",
+                optionalFilters: [
+                  "brand:apple",
                 ],
               ),
               fallbackParameters: FallbackParams(
                 query: "myQuery",
-                facetFilters: [
-                  "fallback1",
+                optionalFilters: [
+                  "brand:samsung",
                 ],
               ),
             ),
@@ -870,14 +870,14 @@ void main() {
               maxRecommendations: 10,
               queryParameters: RecommendSearchParams(
                 query: "myQuery",
-                facetFilters: [
-                  "query2",
+                optionalFilters: [
+                  "brand:google",
                 ],
               ),
               fallbackParameters: FallbackParams(
                 query: "myQuery",
-                facetFilters: [
-                  "fallback2",
+                optionalFilters: [
+                  "brand:microsoft",
                 ],
               ),
             ),
@@ -888,7 +888,7 @@ void main() {
         expectPath(request.path, '/1/indexes/*/recommendations');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}""");
+            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:google"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:microsoft"]}}]}""");
       },
     ),
   );

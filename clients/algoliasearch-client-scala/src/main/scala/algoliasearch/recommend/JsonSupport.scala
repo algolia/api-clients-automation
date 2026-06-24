@@ -54,7 +54,6 @@ object JsonSupport {
     AroundPrecisionSerializer :+
     AroundRadiusSerializer :+
     DistinctSerializer :+
-    FacetFiltersSerializer :+
     HighlightResultSerializer :+
     IgnorePluralsSerializer :+
     InsideBoundingBoxSerializer :+

@@ -591,13 +591,13 @@ class RecommendTest extends TestCase implements HttpClientInterface
                     'threshold' => 42.1,
                     'maxRecommendations' => 10,
                     'queryParameters' => ['query' => 'myQuery',
-                        'facetFilters' => [
-                            'query',
+                        'optionalFilters' => [
+                            'brand:apple',
                         ],
                     ],
                     'fallbackParameters' => ['query' => 'myQuery',
-                        'facetFilters' => [
-                            'fallback',
+                        'optionalFilters' => [
+                            'brand:samsung',
                         ],
                     ],
                 ],
@@ -609,7 +609,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/*/recommendations',
                 'method' => 'POST',
-                'body' => json_decode('{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}'),
+                'body' => json_decode('{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}'),
             ],
         ]);
     }
@@ -652,13 +652,13 @@ class RecommendTest extends TestCase implements HttpClientInterface
                     'facetName' => 'myFacetName',
                     'facetValue' => 'myFacetValue',
                     'queryParameters' => ['query' => 'myQuery',
-                        'facetFilters' => [
-                            'query',
+                        'optionalFilters' => [
+                            'brand:apple',
                         ],
                     ],
                     'fallbackParameters' => ['query' => 'myQuery',
-                        'facetFilters' => [
-                            'fallback',
+                        'optionalFilters' => [
+                            'brand:samsung',
                         ],
                     ],
                 ],
@@ -670,7 +670,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/*/recommendations',
                 'method' => 'POST',
-                'body' => json_decode('{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}'),
+                'body' => json_decode('{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}'),
             ],
         ]);
     }
@@ -717,13 +717,13 @@ class RecommendTest extends TestCase implements HttpClientInterface
                     'threshold' => 21.7,
                     'maxRecommendations' => 10,
                     'queryParameters' => ['query' => 'myQuery',
-                        'facetFilters' => [
-                            'query1',
+                        'optionalFilters' => [
+                            'brand:apple',
                         ],
                     ],
                     'fallbackParameters' => ['query' => 'myQuery',
-                        'facetFilters' => [
-                            'fallback1',
+                        'optionalFilters' => [
+                            'brand:samsung',
                         ],
                     ],
                 ],
@@ -734,13 +734,13 @@ class RecommendTest extends TestCase implements HttpClientInterface
                     'threshold' => 21.7,
                     'maxRecommendations' => 10,
                     'queryParameters' => ['query' => 'myQuery',
-                        'facetFilters' => [
-                            'query2',
+                        'optionalFilters' => [
+                            'brand:google',
                         ],
                     ],
                     'fallbackParameters' => ['query' => 'myQuery',
-                        'facetFilters' => [
-                            'fallback2',
+                        'optionalFilters' => [
+                            'brand:microsoft',
                         ],
                     ],
                 ],
@@ -752,7 +752,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/*/recommendations',
                 'method' => 'POST',
-                'body' => json_decode('{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}'),
+                'body' => json_decode('{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:google"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:microsoft"]}}]}'),
             ],
         ]);
     }

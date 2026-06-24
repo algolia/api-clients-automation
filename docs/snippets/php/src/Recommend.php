@@ -682,13 +682,13 @@ class SnippetRecommendClient
                     'threshold' => 42.1,
                     'maxRecommendations' => 10,
                     'queryParameters' => ['query' => 'myQuery',
-                        'facetFilters' => [
-                            'query',
+                        'optionalFilters' => [
+                            'brand:apple',
                         ],
                     ],
                     'fallbackParameters' => ['query' => 'myQuery',
-                        'facetFilters' => [
-                            'fallback',
+                        'optionalFilters' => [
+                            'brand:samsung',
                         ],
                     ],
                 ],
@@ -753,13 +753,13 @@ class SnippetRecommendClient
                     'facetName' => 'myFacetName',
                     'facetValue' => 'myFacetValue',
                     'queryParameters' => ['query' => 'myQuery',
-                        'facetFilters' => [
-                            'query',
+                        'optionalFilters' => [
+                            'brand:apple',
                         ],
                     ],
                     'fallbackParameters' => ['query' => 'myQuery',
-                        'facetFilters' => [
-                            'fallback',
+                        'optionalFilters' => [
+                            'brand:samsung',
                         ],
                     ],
                 ],
@@ -828,13 +828,13 @@ class SnippetRecommendClient
                     'threshold' => 21.7,
                     'maxRecommendations' => 10,
                     'queryParameters' => ['query' => 'myQuery',
-                        'facetFilters' => [
-                            'query1',
+                        'optionalFilters' => [
+                            'brand:apple',
                         ],
                     ],
                     'fallbackParameters' => ['query' => 'myQuery',
-                        'facetFilters' => [
-                            'fallback1',
+                        'optionalFilters' => [
+                            'brand:samsung',
                         ],
                     ],
                 ],
@@ -845,13 +845,13 @@ class SnippetRecommendClient
                     'threshold' => 21.7,
                     'maxRecommendations' => 10,
                     'queryParameters' => ['query' => 'myQuery',
-                        'facetFilters' => [
-                            'query2',
+                        'optionalFilters' => [
+                            'brand:google',
                         ],
                     ],
                     'fallbackParameters' => ['query' => 'myQuery',
-                        'facetFilters' => [
-                            'fallback2',
+                        'optionalFilters' => [
+                            'brand:microsoft',
                         ],
                     ],
                 ],

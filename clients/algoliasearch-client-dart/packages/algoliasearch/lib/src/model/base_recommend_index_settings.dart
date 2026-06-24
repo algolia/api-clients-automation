@@ -17,7 +17,6 @@ final class BaseRecommendIndexSettings {
   /// Returns a new [BaseRecommendIndexSettings] instance.
   const BaseRecommendIndexSettings({
     this.attributesToRetrieve,
-    this.ranking,
     this.relevancyStrictness,
     this.attributesToHighlight,
     this.attributesToSnippet,
@@ -34,7 +33,6 @@ final class BaseRecommendIndexSettings {
     this.removeStopWords,
     this.queryLanguages,
     this.decompoundQuery,
-    this.enableRules,
     this.enablePersonalization,
     this.queryType,
     this.removeWordsIfNoResults,
@@ -59,10 +57,6 @@ final class BaseRecommendIndexSettings {
   /// Attributes to include in the API response To reduce the size of your response, you can retrieve only some of the attributes. Attribute names are case-sensitive - `*` retrieves all attributes, except attributes included in the `customRanking` and `unretrievableAttributes` settings. - To retrieve all attributes except a specific one, prefix the attribute with a dash and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`. - The `objectID` attribute is always included.
   @JsonKey(name: r'attributesToRetrieve')
   final List<String>? attributesToRetrieve;
-
-  /// Determines the order in which Algolia returns your results.  By default, each entry corresponds to a [ranking criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria). The tie-breaking algorithm sequentially applies each criterion in the order they're specified. If you configure a replica index for [sorting by an attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute), you put the sorting attribute at the top of the list.  **Modifiers**  - `asc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in ascending order. - `desc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in descending order.  Before you modify the default setting, test your changes in the dashboard, and by [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing).
-  @JsonKey(name: r'ranking')
-  final List<String>? ranking;
 
   /// Relevancy threshold below which less relevant results aren't included in the results You can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas). Use this setting to strike a balance between the relevance and number of returned results.
   @JsonKey(name: r'relevancyStrictness')
@@ -134,10 +128,6 @@ final class BaseRecommendIndexSettings {
   /// Whether to split compound words in the query into their building blocks For more information, see [Word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words). Word segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and Norwegian. Decompounding doesn't work for words with [non-spacing mark Unicode characters](https://www.charactercodes.net/category/non-spacing_mark). For example, `Gartenstühle` won't be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).
   @JsonKey(name: r'decompoundQuery')
   final bool? decompoundQuery;
-
-  /// Whether to enable rules.
-  @JsonKey(name: r'enableRules')
-  final bool? enableRules;
 
   /// Whether to enable Personalization.
   @JsonKey(name: r'enablePersonalization')
@@ -226,7 +216,6 @@ final class BaseRecommendIndexSettings {
       identical(this, other) ||
       other is BaseRecommendIndexSettings &&
           other.attributesToRetrieve == attributesToRetrieve &&
-          other.ranking == ranking &&
           other.relevancyStrictness == relevancyStrictness &&
           other.attributesToHighlight == attributesToHighlight &&
           other.attributesToSnippet == attributesToSnippet &&
@@ -245,7 +234,6 @@ final class BaseRecommendIndexSettings {
           other.removeStopWords == removeStopWords &&
           other.queryLanguages == queryLanguages &&
           other.decompoundQuery == decompoundQuery &&
-          other.enableRules == enableRules &&
           other.enablePersonalization == enablePersonalization &&
           other.queryType == queryType &&
           other.removeWordsIfNoResults == removeWordsIfNoResults &&
@@ -270,7 +258,6 @@ final class BaseRecommendIndexSettings {
   @override
   int get hashCode =>
       attributesToRetrieve.hashCode +
-      ranking.hashCode +
       relevancyStrictness.hashCode +
       attributesToHighlight.hashCode +
       attributesToSnippet.hashCode +
@@ -287,7 +274,6 @@ final class BaseRecommendIndexSettings {
       removeStopWords.hashCode +
       queryLanguages.hashCode +
       decompoundQuery.hashCode +
-      enableRules.hashCode +
       enablePersonalization.hashCode +
       queryType.hashCode +
       removeWordsIfNoResults.hashCode +

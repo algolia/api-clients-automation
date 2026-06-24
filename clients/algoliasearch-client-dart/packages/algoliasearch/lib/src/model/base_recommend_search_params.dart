@@ -12,7 +12,6 @@ final class BaseRecommendSearchParams {
   const BaseRecommendSearchParams({
     this.similarQuery,
     this.filters,
-    this.facetFilters,
     this.optionalFilters,
     this.numericFilters,
     this.tagFilters,
@@ -37,7 +36,6 @@ final class BaseRecommendSearchParams {
     this.analytics,
     this.analyticsTags,
     this.percentileComputation,
-    this.enableABTest,
   });
 
   /// Keywords to be used instead of the search query to conduct a more broader search Using the `similarQuery` parameter changes other settings - `queryType` is set to `prefixNone`. - `removeStopWords` is set to true. - `words` is set as the first ranking criterion. - All remaining words are treated as `optionalWords` Since the `similarQuery` is supposed to do a broad search, they usually return many results. Combine it with `filters` to narrow down the list of results.
@@ -47,13 +45,6 @@ final class BaseRecommendSearchParams {
   /// Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>`, where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>`, where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes if the facet attribute name or facet value contains spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
   @JsonKey(name: r'filters')
   final String? filters;
-
-  /// One of types:
-  /// - [List<List<FacetFilters>>]
-  /// - [String]
-  /// - [List<String>]
-  @JsonKey(name: r'facetFilters')
-  final dynamic facetFilters;
 
   /// One of types:
   /// - [String]
@@ -169,17 +160,12 @@ final class BaseRecommendSearchParams {
   @JsonKey(name: r'percentileComputation')
   final bool? percentileComputation;
 
-  /// Whether to enable A/B testing for this search.
-  @JsonKey(name: r'enableABTest')
-  final bool? enableABTest;
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is BaseRecommendSearchParams &&
           other.similarQuery == similarQuery &&
           other.filters == filters &&
-          other.facetFilters == facetFilters &&
           other.optionalFilters == optionalFilters &&
           other.numericFilters == numericFilters &&
           other.tagFilters == tagFilters &&
@@ -203,14 +189,12 @@ final class BaseRecommendSearchParams {
           other.clickAnalytics == clickAnalytics &&
           other.analytics == analytics &&
           other.analyticsTags == analyticsTags &&
-          other.percentileComputation == percentileComputation &&
-          other.enableABTest == enableABTest;
+          other.percentileComputation == percentileComputation;
 
   @override
   int get hashCode =>
       similarQuery.hashCode +
       filters.hashCode +
-      facetFilters.hashCode +
       optionalFilters.hashCode +
       numericFilters.hashCode +
       tagFilters.hashCode +
@@ -234,8 +218,7 @@ final class BaseRecommendSearchParams {
       clickAnalytics.hashCode +
       analytics.hashCode +
       analyticsTags.hashCode +
-      percentileComputation.hashCode +
-      enableABTest.hashCode;
+      percentileComputation.hashCode;
 
   factory BaseRecommendSearchParams.fromJson(Map<String, dynamic> json) =>
       _$BaseRecommendSearchParamsFromJson(json);

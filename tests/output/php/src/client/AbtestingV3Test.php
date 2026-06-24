@@ -62,7 +62,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.46.0\).*/',
+                '/^Algolia for PHP \(4.46.1\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );

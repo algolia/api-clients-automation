@@ -550,12 +550,14 @@ class SnippetRecommendClient {
                   queryParameters =
                     RecommendSearchParams(
                       query = "myQuery",
-                      facetFilters = FacetFilters.of(listOf(FacetFilters.of("query"))),
+                      optionalFilters =
+                        OptionalFilters.of(listOf(OptionalFilters.of("brand:apple"))),
                     ),
                   fallbackParameters =
                     FallbackParams(
                       query = "myQuery",
-                      facetFilters = FacetFilters.of(listOf(FacetFilters.of("fallback"))),
+                      optionalFilters =
+                        OptionalFilters.of(listOf(OptionalFilters.of("brand:samsung"))),
                     ),
                 )
               )
@@ -623,12 +625,14 @@ class SnippetRecommendClient {
                   queryParameters =
                     RecommendSearchParams(
                       query = "myQuery",
-                      facetFilters = FacetFilters.of(listOf(FacetFilters.of("query"))),
+                      optionalFilters =
+                        OptionalFilters.of(listOf(OptionalFilters.of("brand:apple"))),
                     ),
                   fallbackParameters =
                     FallbackParams(
                       query = "myQuery",
-                      facetFilters = FacetFilters.of(listOf(FacetFilters.of("fallback"))),
+                      optionalFilters =
+                        OptionalFilters.of(listOf(OptionalFilters.of("brand:samsung"))),
                     ),
                 )
               )
@@ -700,12 +704,14 @@ class SnippetRecommendClient {
                   queryParameters =
                     RecommendSearchParams(
                       query = "myQuery",
-                      facetFilters = FacetFilters.of(listOf(FacetFilters.of("query1"))),
+                      optionalFilters =
+                        OptionalFilters.of(listOf(OptionalFilters.of("brand:apple"))),
                     ),
                   fallbackParameters =
                     FallbackParams(
                       query = "myQuery",
-                      facetFilters = FacetFilters.of(listOf(FacetFilters.of("fallback1"))),
+                      optionalFilters =
+                        OptionalFilters.of(listOf(OptionalFilters.of("brand:samsung"))),
                     ),
                 ),
                 RelatedQuery(
@@ -717,12 +723,14 @@ class SnippetRecommendClient {
                   queryParameters =
                     RecommendSearchParams(
                       query = "myQuery",
-                      facetFilters = FacetFilters.of(listOf(FacetFilters.of("query2"))),
+                      optionalFilters =
+                        OptionalFilters.of(listOf(OptionalFilters.of("brand:google"))),
                     ),
                   fallbackParameters =
                     FallbackParams(
                       query = "myQuery",
-                      facetFilters = FacetFilters.of(listOf(FacetFilters.of("fallback2"))),
+                      optionalFilters =
+                        OptionalFilters.of(listOf(OptionalFilters.of("brand:microsoft"))),
                     ),
                 ),
               )

@@ -99,7 +99,7 @@ class AgentStudioClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.41.0\\).*";
+      String regexp = "^Algolia for Java \\(4.41.1\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
