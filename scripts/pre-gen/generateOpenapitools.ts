@@ -51,7 +51,7 @@ export async function generateOpenapitools(
     JSON.stringify(
       {
         'generator-cli': {
-          version: '7.22.0',
+          version: '7.23.0',
           generators,
         },
       },
