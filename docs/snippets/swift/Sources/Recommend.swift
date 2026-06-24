@@ -519,15 +519,15 @@ final class RecommendClientSnippet {
                         threshold: 42.1,
                         maxRecommendations: 10,
                         queryParameters: RecommendSearchParams(
-                            facetFilters: RecommendFacetFilters
-                                .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query")]),
+                            optionalFilters: RecommendOptionalFilters
+                                .arrayOfRecommendOptionalFilters([RecommendOptionalFilters.string("brand:apple")]),
                             query: "myQuery"
                         ),
                         model: RelatedModel.relatedProducts,
                         objectID: "objectID",
                         fallbackParameters: FallbackParams(
-                            facetFilters: RecommendFacetFilters
-                                .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback")]),
+                            optionalFilters: RecommendOptionalFilters
+                                .arrayOfRecommendOptionalFilters([RecommendOptionalFilters.string("brand:samsung")]),
                             query: "myQuery"
                         )
                     ))]))
@@ -577,16 +577,16 @@ final class RecommendClientSnippet {
                         threshold: 42.1,
                         maxRecommendations: 10,
                         queryParameters: RecommendSearchParams(
-                            facetFilters: RecommendFacetFilters
-                                .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query")]),
+                            optionalFilters: RecommendOptionalFilters
+                                .arrayOfRecommendOptionalFilters([RecommendOptionalFilters.string("brand:apple")]),
                             query: "myQuery"
                         ),
                         facetName: "myFacetName",
                         facetValue: "myFacetValue",
                         model: TrendingItemsModel.trendingItems,
                         fallbackParameters: FallbackParams(
-                            facetFilters: RecommendFacetFilters
-                                .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback")]),
+                            optionalFilters: RecommendOptionalFilters
+                                .arrayOfRecommendOptionalFilters([RecommendOptionalFilters.string("brand:samsung")]),
                             query: "myQuery"
                         )
                     ))]))
@@ -642,15 +642,15 @@ final class RecommendClientSnippet {
                     threshold: 21.7,
                     maxRecommendations: 10,
                     queryParameters: RecommendSearchParams(
-                        facetFilters: RecommendFacetFilters
-                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query1")]),
+                        optionalFilters: RecommendOptionalFilters
+                            .arrayOfRecommendOptionalFilters([RecommendOptionalFilters.string("brand:apple")]),
                         query: "myQuery"
                     ),
                     model: RelatedModel.relatedProducts,
                     objectID: "objectID1",
                     fallbackParameters: FallbackParams(
-                        facetFilters: RecommendFacetFilters
-                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback1")]),
+                        optionalFilters: RecommendOptionalFilters
+                            .arrayOfRecommendOptionalFilters([RecommendOptionalFilters.string("brand:samsung")]),
                         query: "myQuery"
                     )
                 )),
@@ -659,15 +659,15 @@ final class RecommendClientSnippet {
                     threshold: 21.7,
                     maxRecommendations: 10,
                     queryParameters: RecommendSearchParams(
-                        facetFilters: RecommendFacetFilters
-                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query2")]),
+                        optionalFilters: RecommendOptionalFilters
+                            .arrayOfRecommendOptionalFilters([RecommendOptionalFilters.string("brand:google")]),
                         query: "myQuery"
                     ),
                     model: RelatedModel.relatedProducts,
                     objectID: "objectID2",
                     fallbackParameters: FallbackParams(
-                        facetFilters: RecommendFacetFilters
-                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback2")]),
+                        optionalFilters: RecommendOptionalFilters
+                            .arrayOfRecommendOptionalFilters([RecommendOptionalFilters.string("brand:microsoft")]),
                         query: "myQuery"
                     )
                 )),

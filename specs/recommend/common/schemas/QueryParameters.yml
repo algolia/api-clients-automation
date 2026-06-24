@@ -5,13 +5,18 @@ recommendSearchParams:
     - $ref: '#/baseRecommendSearchParams'
     - $ref: '../../../common/schemas/SearchParams.yml#/searchParamsQuery'
     - $ref: './IndexSettings.yml#/recommendIndexSettings'
+    - type: object
+      properties:
+        enableRules:
+          $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/enableRules'
 
 fallbackParams:
   title: fallbackParameters
+  description: Search parameters to use for a fallback request if there aren't enough recommendations.
   allOf:
-    - $ref: './QueryParameters.yml#/recommendSearchParams'
-    - type: object
-      description: Search parameters to use for a fallback request if there aren't enough recommendations.
+    - $ref: '#/baseRecommendSearchParams'
+    - $ref: '../../../common/schemas/SearchParams.yml#/searchParamsQuery'
+    - $ref: './IndexSettings.yml#/recommendIndexSettings'
 
 baseRecommendSearchParams:
   type: object
@@ -21,8 +26,6 @@ baseRecommendSearchParams:
       $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/similarQuery'
     filters:
       $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/filters'
-    facetFilters:
-      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/facetFilters'
     optionalFilters:
       $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/optionalFilters'
     numericFilters:
@@ -71,5 +74,3 @@ baseRecommendSearchParams:
       $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/analyticsTags'
     percentileComputation:
       $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/percentileComputation'
-    enableABTest:
-      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/enableABTest'

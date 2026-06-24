@@ -34,7 +34,7 @@ import algoliasearch.recommend.QueryType._
 import algoliasearch.recommend.RemoveWordsIfNoResults._
 import algoliasearch.recommend.SupportedLanguage._
 
-/** FallbackParams
+/** Search parameters to use for a fallback request if there aren't enough recommendations.
   *
   * @param similarQuery
   *   Keywords to be used instead of the search query to conduct a more broader search Using the `similarQuery`
@@ -117,8 +117,6 @@ import algoliasearch.recommend.SupportedLanguage._
   *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
   * @param percentileComputation
   *   Whether to include this search when calculating processing-time percentiles.
-  * @param enableABTest
-  *   Whether to enable A/B testing for this search.
   * @param query
   *   Search query.
   * @param attributesForFaceting
@@ -245,16 +243,6 @@ import algoliasearch.recommend.SupportedLanguage._
   *   `customRanking` and `unretrievableAttributes` settings. - To retrieve all attributes except a specific one, prefix
   *   the attribute with a dash and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`. - The `objectID` attribute is
   *   always included.
-  * @param ranking
-  *   Determines the order in which Algolia returns your results. By default, each entry corresponds to a [ranking
-  *   criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria). The
-  *   tie-breaking algorithm sequentially applies each criterion in the order they're specified. If you configure a
-  *   replica index for [sorting by an
-  *   attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute),
-  *   you put the sorting attribute at the top of the list. **Modifiers** - `asc(\"ATTRIBUTE\")`. Sort the index by the
-  *   values of an attribute, in ascending order. - `desc(\"ATTRIBUTE\")`. Sort the index by the values of an attribute,
-  *   in descending order. Before you modify the default setting, test your changes in the dashboard, and by [A/B
-  *   testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing).
   * @param relevancyStrictness
   *   Relevancy threshold below which less relevant results aren't included in the results You can only set
   *   `relevancyStrictness` on [virtual replica
@@ -316,8 +304,6 @@ import algoliasearch.recommend.SupportedLanguage._
   *   doesn't work for words with [non-spacing mark Unicode
   *   characters](https://www.charactercodes.net/category/non-spacing_mark). For example, `Gartenstühle` won't be
   *   decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).
-  * @param enableRules
-  *   Whether to enable rules.
   * @param enablePersonalization
   *   Whether to enable Personalization.
   * @param advancedSyntax
@@ -384,7 +370,6 @@ import algoliasearch.recommend.SupportedLanguage._
 case class FallbackParams(
     similarQuery: Option[String] = scala.None,
     filters: Option[String] = scala.None,
-    facetFilters: Option[FacetFilters] = scala.None,
     optionalFilters: Option[OptionalFilters] = scala.None,
     numericFilters: Option[NumericFilters] = scala.None,
     tagFilters: Option[TagFilters] = scala.None,
@@ -409,7 +394,6 @@ case class FallbackParams(
     analytics: Option[Boolean] = scala.None,
     analyticsTags: Option[Seq[String]] = scala.None,
     percentileComputation: Option[Boolean] = scala.None,
-    enableABTest: Option[Boolean] = scala.None,
     query: Option[String] = scala.None,
     attributesForFaceting: Option[Seq[String]] = scala.None,
     replicas: Option[Seq[String]] = scala.None,
@@ -432,7 +416,6 @@ case class FallbackParams(
     keepDiacriticsOnCharacters: Option[String] = scala.None,
     customRanking: Option[Seq[String]] = scala.None,
     attributesToRetrieve: Option[Seq[String]] = scala.None,
-    ranking: Option[Seq[String]] = scala.None,
     relevancyStrictness: Option[Int] = scala.None,
     attributesToHighlight: Option[Seq[String]] = scala.None,
     attributesToSnippet: Option[Seq[String]] = scala.None,
@@ -449,7 +432,6 @@ case class FallbackParams(
     removeStopWords: Option[RemoveStopWords] = scala.None,
     queryLanguages: Option[Seq[SupportedLanguage]] = scala.None,
     decompoundQuery: Option[Boolean] = scala.None,
-    enableRules: Option[Boolean] = scala.None,
     enablePersonalization: Option[Boolean] = scala.None,
     queryType: Option[QueryType] = scala.None,
     removeWordsIfNoResults: Option[RemoveWordsIfNoResults] = scala.None,

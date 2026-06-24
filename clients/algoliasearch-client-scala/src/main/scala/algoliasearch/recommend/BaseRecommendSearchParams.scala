@@ -112,13 +112,10 @@ import algoliasearch.recommend.SupportedLanguage._
   *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
   * @param percentileComputation
   *   Whether to include this search when calculating processing-time percentiles.
-  * @param enableABTest
-  *   Whether to enable A/B testing for this search.
   */
 case class BaseRecommendSearchParams(
     similarQuery: Option[String] = scala.None,
     filters: Option[String] = scala.None,
-    facetFilters: Option[FacetFilters] = scala.None,
     optionalFilters: Option[OptionalFilters] = scala.None,
     numericFilters: Option[NumericFilters] = scala.None,
     tagFilters: Option[TagFilters] = scala.None,
@@ -142,6 +139,5 @@ case class BaseRecommendSearchParams(
     clickAnalytics: Option[Boolean] = scala.None,
     analytics: Option[Boolean] = scala.None,
     analyticsTags: Option[Seq[String]] = scala.None,
-    percentileComputation: Option[Boolean] = scala.None,
-    enableABTest: Option[Boolean] = scala.None
+    percentileComputation: Option[Boolean] = scala.None
 )

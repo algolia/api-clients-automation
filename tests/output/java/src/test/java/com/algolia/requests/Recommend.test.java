@@ -777,10 +777,14 @@ class RecommendClientRequestsTests {
               .setThreshold(42.1)
               .setMaxRecommendations(10)
               .setQueryParameters(
-                new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query"))))
+                new RecommendSearchParams()
+                  .setQuery("myQuery")
+                  .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:apple"))))
               )
               .setFallbackParameters(
-                new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback"))))
+                new FallbackParams()
+                  .setQuery("myQuery")
+                  .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:samsung"))))
               )
           )
         )
@@ -791,7 +795,7 @@ class RecommendClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42.1,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}",
+        "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42.1,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:apple\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:samsung\"]}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -842,10 +846,14 @@ class RecommendClientRequestsTests {
               .setFacetName("myFacetName")
               .setFacetValue("myFacetValue")
               .setQueryParameters(
-                new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query"))))
+                new RecommendSearchParams()
+                  .setQuery("myQuery")
+                  .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:apple"))))
               )
               .setFallbackParameters(
-                new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback"))))
+                new FallbackParams()
+                  .setQuery("myQuery")
+                  .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:samsung"))))
               )
           )
         )
@@ -856,7 +864,7 @@ class RecommendClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42.1,\"maxRecommendations\":10,\"facetName\":\"myFacetName\",\"facetValue\":\"myFacetValue\",\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}",
+        "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42.1,\"maxRecommendations\":10,\"facetName\":\"myFacetName\",\"facetValue\":\"myFacetValue\",\"queryParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:apple\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:samsung\"]}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -910,10 +918,14 @@ class RecommendClientRequestsTests {
               .setThreshold(21.7)
               .setMaxRecommendations(10)
               .setQueryParameters(
-                new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query1"))))
+                new RecommendSearchParams()
+                  .setQuery("myQuery")
+                  .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:apple"))))
               )
               .setFallbackParameters(
-                new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback1"))))
+                new FallbackParams()
+                  .setQuery("myQuery")
+                  .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:samsung"))))
               ),
             new RelatedQuery()
               .setIndexName("indexName2")
@@ -922,10 +934,14 @@ class RecommendClientRequestsTests {
               .setThreshold(21.7)
               .setMaxRecommendations(10)
               .setQueryParameters(
-                new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query2"))))
+                new RecommendSearchParams()
+                  .setQuery("myQuery")
+                  .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:google"))))
               )
               .setFallbackParameters(
-                new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback2"))))
+                new FallbackParams()
+                  .setQuery("myQuery")
+                  .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:microsoft"))))
               )
           )
         )
@@ -936,7 +952,7 @@ class RecommendClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21.7,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query1\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback1\"]}},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21.7,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query2\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback2\"]}}]}",
+        "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21.7,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:apple\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:samsung\"]}},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21.7,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:google\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:microsoft\"]}}]}",
         req.body,
         JSONCompareMode.STRICT
       )

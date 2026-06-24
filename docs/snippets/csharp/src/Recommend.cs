@@ -663,15 +663,15 @@ public class SnippetRecommendClient
               QueryParameters = new RecommendSearchParams
               {
                 Query = "myQuery",
-                FacetFilters = new FacetFilters(
-                  new List<FacetFilters> { new FacetFilters("query") }
+                OptionalFilters = new OptionalFilters(
+                  new List<OptionalFilters> { new OptionalFilters("brand:apple") }
                 ),
               },
               FallbackParameters = new FallbackParams
               {
                 Query = "myQuery",
-                FacetFilters = new FacetFilters(
-                  new List<FacetFilters> { new FacetFilters("fallback") }
+                OptionalFilters = new OptionalFilters(
+                  new List<OptionalFilters> { new OptionalFilters("brand:samsung") }
                 ),
               },
             }
@@ -754,15 +754,15 @@ public class SnippetRecommendClient
               QueryParameters = new RecommendSearchParams
               {
                 Query = "myQuery",
-                FacetFilters = new FacetFilters(
-                  new List<FacetFilters> { new FacetFilters("query") }
+                OptionalFilters = new OptionalFilters(
+                  new List<OptionalFilters> { new OptionalFilters("brand:apple") }
                 ),
               },
               FallbackParameters = new FallbackParams
               {
                 Query = "myQuery",
-                FacetFilters = new FacetFilters(
-                  new List<FacetFilters> { new FacetFilters("fallback") }
+                OptionalFilters = new OptionalFilters(
+                  new List<OptionalFilters> { new OptionalFilters("brand:samsung") }
                 ),
               },
             }
@@ -852,15 +852,15 @@ public class SnippetRecommendClient
               QueryParameters = new RecommendSearchParams
               {
                 Query = "myQuery",
-                FacetFilters = new FacetFilters(
-                  new List<FacetFilters> { new FacetFilters("query1") }
+                OptionalFilters = new OptionalFilters(
+                  new List<OptionalFilters> { new OptionalFilters("brand:apple") }
                 ),
               },
               FallbackParameters = new FallbackParams
               {
                 Query = "myQuery",
-                FacetFilters = new FacetFilters(
-                  new List<FacetFilters> { new FacetFilters("fallback1") }
+                OptionalFilters = new OptionalFilters(
+                  new List<OptionalFilters> { new OptionalFilters("brand:samsung") }
                 ),
               },
             }
@@ -876,15 +876,15 @@ public class SnippetRecommendClient
               QueryParameters = new RecommendSearchParams
               {
                 Query = "myQuery",
-                FacetFilters = new FacetFilters(
-                  new List<FacetFilters> { new FacetFilters("query2") }
+                OptionalFilters = new OptionalFilters(
+                  new List<OptionalFilters> { new OptionalFilters("brand:google") }
                 ),
               },
               FallbackParameters = new FallbackParams
               {
                 Query = "myQuery",
-                FacetFilters = new FacetFilters(
-                  new List<FacetFilters> { new FacetFilters("fallback2") }
+                OptionalFilters = new OptionalFilters(
+                  new List<OptionalFilters> { new OptionalFilters("brand:microsoft") }
                 ),
               },
             }

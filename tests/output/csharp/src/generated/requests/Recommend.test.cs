@@ -657,15 +657,15 @@ public class RecommendClientRequestTests
               QueryParameters = new RecommendSearchParams
               {
                 Query = "myQuery",
-                FacetFilters = new FacetFilters(
-                  new List<FacetFilters> { new FacetFilters("query") }
+                OptionalFilters = new OptionalFilters(
+                  new List<OptionalFilters> { new OptionalFilters("brand:apple") }
                 ),
               },
               FallbackParameters = new FallbackParams
               {
                 Query = "myQuery",
-                FacetFilters = new FacetFilters(
-                  new List<FacetFilters> { new FacetFilters("fallback") }
+                OptionalFilters = new OptionalFilters(
+                  new List<OptionalFilters> { new OptionalFilters("brand:samsung") }
                 ),
               },
             }
@@ -678,7 +678,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/indexes/*/recommendations", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42.1,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}",
+      "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42.1,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:apple\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:samsung\"]}}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -736,15 +736,15 @@ public class RecommendClientRequestTests
               QueryParameters = new RecommendSearchParams
               {
                 Query = "myQuery",
-                FacetFilters = new FacetFilters(
-                  new List<FacetFilters> { new FacetFilters("query") }
+                OptionalFilters = new OptionalFilters(
+                  new List<OptionalFilters> { new OptionalFilters("brand:apple") }
                 ),
               },
               FallbackParameters = new FallbackParams
               {
                 Query = "myQuery",
-                FacetFilters = new FacetFilters(
-                  new List<FacetFilters> { new FacetFilters("fallback") }
+                OptionalFilters = new OptionalFilters(
+                  new List<OptionalFilters> { new OptionalFilters("brand:samsung") }
                 ),
               },
             }
@@ -757,7 +757,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/indexes/*/recommendations", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42.1,\"maxRecommendations\":10,\"facetName\":\"myFacetName\",\"facetValue\":\"myFacetValue\",\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}",
+      "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42.1,\"maxRecommendations\":10,\"facetName\":\"myFacetName\",\"facetValue\":\"myFacetValue\",\"queryParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:apple\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:samsung\"]}}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -822,15 +822,15 @@ public class RecommendClientRequestTests
               QueryParameters = new RecommendSearchParams
               {
                 Query = "myQuery",
-                FacetFilters = new FacetFilters(
-                  new List<FacetFilters> { new FacetFilters("query1") }
+                OptionalFilters = new OptionalFilters(
+                  new List<OptionalFilters> { new OptionalFilters("brand:apple") }
                 ),
               },
               FallbackParameters = new FallbackParams
               {
                 Query = "myQuery",
-                FacetFilters = new FacetFilters(
-                  new List<FacetFilters> { new FacetFilters("fallback1") }
+                OptionalFilters = new OptionalFilters(
+                  new List<OptionalFilters> { new OptionalFilters("brand:samsung") }
                 ),
               },
             }
@@ -846,15 +846,15 @@ public class RecommendClientRequestTests
               QueryParameters = new RecommendSearchParams
               {
                 Query = "myQuery",
-                FacetFilters = new FacetFilters(
-                  new List<FacetFilters> { new FacetFilters("query2") }
+                OptionalFilters = new OptionalFilters(
+                  new List<OptionalFilters> { new OptionalFilters("brand:google") }
                 ),
               },
               FallbackParameters = new FallbackParams
               {
                 Query = "myQuery",
-                FacetFilters = new FacetFilters(
-                  new List<FacetFilters> { new FacetFilters("fallback2") }
+                OptionalFilters = new OptionalFilters(
+                  new List<OptionalFilters> { new OptionalFilters("brand:microsoft") }
                 ),
               },
             }
@@ -867,7 +867,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/indexes/*/recommendations", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21.7,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query1\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback1\"]}},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21.7,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query2\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback2\"]}}]}",
+      "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21.7,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:apple\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:samsung\"]}},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21.7,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:google\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:microsoft\"]}}]}",
       req.Body,
       new JsonDiffConfig(false)
     );

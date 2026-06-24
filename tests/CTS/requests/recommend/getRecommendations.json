@@ -139,14 +139,14 @@
           "maxRecommendations": 10,
           "queryParameters": {
             "query": "myQuery",
-            "facetFilters": [
-              "query"
+            "optionalFilters": [
+              "brand:apple"
             ]
           },
           "fallbackParameters": {
             "query": "myQuery",
-            "facetFilters": [
-              "fallback"
+            "optionalFilters": [
+              "brand:samsung"
             ]
           }
         }
@@ -165,14 +165,14 @@
             "maxRecommendations": 10,
             "queryParameters": {
               "query": "myQuery",
-              "facetFilters": [
-                "query"
+              "optionalFilters": [
+                "brand:apple"
               ]
             },
             "fallbackParameters": {
               "query": "myQuery",
-              "facetFilters": [
-                "fallback"
+              "optionalFilters": [
+                "brand:samsung"
               ]
             }
           }
@@ -222,14 +222,14 @@
           "facetValue": "myFacetValue",
           "queryParameters": {
             "query": "myQuery",
-            "facetFilters": [
-              "query"
+            "optionalFilters": [
+              "brand:apple"
             ]
           },
           "fallbackParameters": {
             "query": "myQuery",
-            "facetFilters": [
-              "fallback"
+            "optionalFilters": [
+              "brand:samsung"
             ]
           }
         }
@@ -249,14 +249,14 @@
             "facetValue": "myFacetValue",
             "queryParameters": {
               "query": "myQuery",
-              "facetFilters": [
-                "query"
+              "optionalFilters": [
+                "brand:apple"
               ]
             },
             "fallbackParameters": {
               "query": "myQuery",
-              "facetFilters": [
-                "fallback"
+              "optionalFilters": [
+                "brand:samsung"
               ]
             }
           }
@@ -315,14 +315,14 @@
           "maxRecommendations": 10,
           "queryParameters": {
             "query": "myQuery",
-            "facetFilters": [
-              "query1"
+            "optionalFilters": [
+              "brand:apple"
             ]
           },
           "fallbackParameters": {
             "query": "myQuery",
-            "facetFilters": [
-              "fallback1"
+            "optionalFilters": [
+              "brand:samsung"
             ]
           }
         },
@@ -334,14 +334,14 @@
           "maxRecommendations": 10,
           "queryParameters": {
             "query": "myQuery",
-            "facetFilters": [
-              "query2"
+            "optionalFilters": [
+              "brand:google"
             ]
           },
           "fallbackParameters": {
             "query": "myQuery",
-            "facetFilters": [
-              "fallback2"
+            "optionalFilters": [
+              "brand:microsoft"
             ]
           }
         }
@@ -360,14 +360,14 @@
             "maxRecommendations": 10,
             "queryParameters": {
               "query": "myQuery",
-              "facetFilters": [
-                "query1"
+              "optionalFilters": [
+                "brand:apple"
               ]
             },
             "fallbackParameters": {
               "query": "myQuery",
-              "facetFilters": [
-                "fallback1"
+              "optionalFilters": [
+                "brand:samsung"
               ]
             }
           },
@@ -379,14 +379,14 @@
             "maxRecommendations": 10,
             "queryParameters": {
               "query": "myQuery",
-              "facetFilters": [
-                "query2"
+              "optionalFilters": [
+                "brand:google"
               ]
             },
             "fallbackParameters": {
               "query": "myQuery",
-              "facetFilters": [
-                "fallback2"
+              "optionalFilters": [
+                "brand:microsoft"
               ]
             }
           }

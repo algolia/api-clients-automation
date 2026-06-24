@@ -15,8 +15,6 @@ BaseRecommendIndexSettings _$BaseRecommendIndexSettingsFromJson(
         final val = BaseRecommendIndexSettings(
           attributesToRetrieve: $checkedConvert('attributesToRetrieve',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          ranking: $checkedConvert('ranking',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           relevancyStrictness: $checkedConvert(
               'relevancyStrictness', (v) => (v as num?)?.toInt()),
           attributesToHighlight: $checkedConvert('attributesToHighlight',
@@ -50,7 +48,6 @@ BaseRecommendIndexSettings _$BaseRecommendIndexSettingsFromJson(
                   .toList()),
           decompoundQuery:
               $checkedConvert('decompoundQuery', (v) => v as bool?),
-          enableRules: $checkedConvert('enableRules', (v) => v as bool?),
           enablePersonalization:
               $checkedConvert('enablePersonalization', (v) => v as bool?),
           queryType: $checkedConvert(
@@ -111,7 +108,6 @@ Map<String, dynamic> _$BaseRecommendIndexSettingsToJson(
   }
 
   writeNotNull('attributesToRetrieve', instance.attributesToRetrieve);
-  writeNotNull('ranking', instance.ranking);
   writeNotNull('relevancyStrictness', instance.relevancyStrictness);
   writeNotNull('attributesToHighlight', instance.attributesToHighlight);
   writeNotNull('attributesToSnippet', instance.attributesToSnippet);
@@ -131,7 +127,6 @@ Map<String, dynamic> _$BaseRecommendIndexSettingsToJson(
   writeNotNull('queryLanguages',
       instance.queryLanguages?.map((e) => e.toJson()).toList());
   writeNotNull('decompoundQuery', instance.decompoundQuery);
-  writeNotNull('enableRules', instance.enableRules);
   writeNotNull('enablePersonalization', instance.enablePersonalization);
   writeNotNull('queryType', instance.queryType?.toJson());
   writeNotNull(

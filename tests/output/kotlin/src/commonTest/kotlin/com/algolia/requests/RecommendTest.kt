@@ -541,12 +541,14 @@ class RecommendTest {
                     queryParameters =
                       RecommendSearchParams(
                         query = "myQuery",
-                        facetFilters = FacetFilters.of(listOf(FacetFilters.of("query"))),
+                        optionalFilters =
+                          OptionalFilters.of(listOf(OptionalFilters.of("brand:apple"))),
                       ),
                     fallbackParameters =
                       FallbackParams(
                         query = "myQuery",
-                        facetFilters = FacetFilters.of(listOf(FacetFilters.of("fallback"))),
+                        optionalFilters =
+                          OptionalFilters.of(listOf(OptionalFilters.of("brand:samsung"))),
                       ),
                   )
                 )
@@ -557,7 +559,7 @@ class RecommendTest {
         assertEquals("/1/indexes/*/recommendations".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody(
-          """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}""",
+          """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}""",
           it.body,
         )
       },
@@ -614,12 +616,14 @@ class RecommendTest {
                     queryParameters =
                       RecommendSearchParams(
                         query = "myQuery",
-                        facetFilters = FacetFilters.of(listOf(FacetFilters.of("query"))),
+                        optionalFilters =
+                          OptionalFilters.of(listOf(OptionalFilters.of("brand:apple"))),
                       ),
                     fallbackParameters =
                       FallbackParams(
                         query = "myQuery",
-                        facetFilters = FacetFilters.of(listOf(FacetFilters.of("fallback"))),
+                        optionalFilters =
+                          OptionalFilters.of(listOf(OptionalFilters.of("brand:samsung"))),
                       ),
                   )
                 )
@@ -630,7 +634,7 @@ class RecommendTest {
         assertEquals("/1/indexes/*/recommendations".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody(
-          """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}""",
+          """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}""",
           it.body,
         )
       },
@@ -691,12 +695,14 @@ class RecommendTest {
                     queryParameters =
                       RecommendSearchParams(
                         query = "myQuery",
-                        facetFilters = FacetFilters.of(listOf(FacetFilters.of("query1"))),
+                        optionalFilters =
+                          OptionalFilters.of(listOf(OptionalFilters.of("brand:apple"))),
                       ),
                     fallbackParameters =
                       FallbackParams(
                         query = "myQuery",
-                        facetFilters = FacetFilters.of(listOf(FacetFilters.of("fallback1"))),
+                        optionalFilters =
+                          OptionalFilters.of(listOf(OptionalFilters.of("brand:samsung"))),
                       ),
                   ),
                   RelatedQuery(
@@ -708,12 +714,14 @@ class RecommendTest {
                     queryParameters =
                       RecommendSearchParams(
                         query = "myQuery",
-                        facetFilters = FacetFilters.of(listOf(FacetFilters.of("query2"))),
+                        optionalFilters =
+                          OptionalFilters.of(listOf(OptionalFilters.of("brand:google"))),
                       ),
                     fallbackParameters =
                       FallbackParams(
                         query = "myQuery",
-                        facetFilters = FacetFilters.of(listOf(FacetFilters.of("fallback2"))),
+                        optionalFilters =
+                          OptionalFilters.of(listOf(OptionalFilters.of("brand:microsoft"))),
                       ),
                   ),
                 )
@@ -724,7 +732,7 @@ class RecommendTest {
         assertEquals("/1/indexes/*/recommendations".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody(
-          """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}""",
+          """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:google"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:microsoft"]}}]}""",
           it.body,
         )
       },

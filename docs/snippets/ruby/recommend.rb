@@ -508,8 +508,14 @@ def snippet_for_get_recommendations2
           model: "related-products",
           threshold: 42.1,
           max_recommendations: 10,
-          query_parameters: Algolia::Recommend::RecommendSearchParams.new(query: "myQuery", facet_filters: ["query"]),
-          fallback_parameters: Algolia::Recommend::FallbackParams.new(query: "myQuery", facet_filters: ["fallback"])
+          query_parameters: Algolia::Recommend::RecommendSearchParams.new(
+            query: "myQuery",
+            optional_filters: ["brand:apple"]
+          ),
+          fallback_parameters: Algolia::Recommend::FallbackParams.new(
+            query: "myQuery",
+            optional_filters: ["brand:samsung"]
+          )
         )
       ]
     )
@@ -569,8 +575,14 @@ def snippet_for_get_recommendations4
           max_recommendations: 10,
           facet_name: "myFacetName",
           facet_value: "myFacetValue",
-          query_parameters: Algolia::Recommend::RecommendSearchParams.new(query: "myQuery", facet_filters: ["query"]),
-          fallback_parameters: Algolia::Recommend::FallbackParams.new(query: "myQuery", facet_filters: ["fallback"])
+          query_parameters: Algolia::Recommend::RecommendSearchParams.new(
+            query: "myQuery",
+            optional_filters: ["brand:apple"]
+          ),
+          fallback_parameters: Algolia::Recommend::FallbackParams.new(
+            query: "myQuery",
+            optional_filters: ["brand:samsung"]
+          )
         )
       ]
     )
@@ -634,8 +646,14 @@ def snippet_for_get_recommendations6
           model: "related-products",
           threshold: 21.7,
           max_recommendations: 10,
-          query_parameters: Algolia::Recommend::RecommendSearchParams.new(query: "myQuery", facet_filters: ["query1"]),
-          fallback_parameters: Algolia::Recommend::FallbackParams.new(query: "myQuery", facet_filters: ["fallback1"])
+          query_parameters: Algolia::Recommend::RecommendSearchParams.new(
+            query: "myQuery",
+            optional_filters: ["brand:apple"]
+          ),
+          fallback_parameters: Algolia::Recommend::FallbackParams.new(
+            query: "myQuery",
+            optional_filters: ["brand:samsung"]
+          )
         ),
         Algolia::Recommend::RelatedQuery.new(
           index_name: "<YOUR_INDEX_NAME>",
@@ -643,8 +661,14 @@ def snippet_for_get_recommendations6
           model: "related-products",
           threshold: 21.7,
           max_recommendations: 10,
-          query_parameters: Algolia::Recommend::RecommendSearchParams.new(query: "myQuery", facet_filters: ["query2"]),
-          fallback_parameters: Algolia::Recommend::FallbackParams.new(query: "myQuery", facet_filters: ["fallback2"])
+          query_parameters: Algolia::Recommend::RecommendSearchParams.new(
+            query: "myQuery",
+            optional_filters: ["brand:google"]
+          ),
+          fallback_parameters: Algolia::Recommend::FallbackParams.new(
+            query: "myQuery",
+            optional_filters: ["brand:microsoft"]
+          )
         )
       ]
     )

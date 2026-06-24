@@ -690,14 +690,14 @@ def snippet_for_get_recommendations2():
                     "maxRecommendations": 10,
                     "queryParameters": {
                         "query": "myQuery",
-                        "facetFilters": [
-                            "query",
+                        "optionalFilters": [
+                            "brand:apple",
                         ],
                     },
                     "fallbackParameters": {
                         "query": "myQuery",
-                        "facetFilters": [
-                            "fallback",
+                        "optionalFilters": [
+                            "brand:samsung",
                         ],
                     },
                 },
@@ -767,14 +767,14 @@ def snippet_for_get_recommendations4():
                     "facetValue": "myFacetValue",
                     "queryParameters": {
                         "query": "myQuery",
-                        "facetFilters": [
-                            "query",
+                        "optionalFilters": [
+                            "brand:apple",
                         ],
                     },
                     "fallbackParameters": {
                         "query": "myQuery",
-                        "facetFilters": [
-                            "fallback",
+                        "optionalFilters": [
+                            "brand:samsung",
                         ],
                     },
                 },
@@ -848,14 +848,14 @@ def snippet_for_get_recommendations6():
                     "maxRecommendations": 10,
                     "queryParameters": {
                         "query": "myQuery",
-                        "facetFilters": [
-                            "query1",
+                        "optionalFilters": [
+                            "brand:apple",
                         ],
                     },
                     "fallbackParameters": {
                         "query": "myQuery",
-                        "facetFilters": [
-                            "fallback1",
+                        "optionalFilters": [
+                            "brand:samsung",
                         ],
                     },
                 },
@@ -867,14 +867,14 @@ def snippet_for_get_recommendations6():
                     "maxRecommendations": 10,
                     "queryParameters": {
                         "query": "myQuery",
-                        "facetFilters": [
-                            "query2",
+                        "optionalFilters": [
+                            "brand:google",
                         ],
                     },
                     "fallbackParameters": {
                         "query": "myQuery",
-                        "facetFilters": [
-                            "fallback2",
+                        "optionalFilters": [
+                            "brand:microsoft",
                         ],
                     },
                 },

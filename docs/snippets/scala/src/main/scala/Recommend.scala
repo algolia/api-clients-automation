@@ -681,13 +681,13 @@ class SnippetRecommendClient {
               queryParameters = Some(
                 RecommendSearchParams(
                   query = Some("myQuery"),
-                  facetFilters = Some(FacetFilters(Seq(FacetFilters("query"))))
+                  optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("brand:apple"))))
                 )
               ),
               fallbackParameters = Some(
                 FallbackParams(
                   query = Some("myQuery"),
-                  facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback"))))
+                  optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("brand:samsung"))))
                 )
               )
             )
@@ -758,13 +758,13 @@ class SnippetRecommendClient {
               queryParameters = Some(
                 RecommendSearchParams(
                   query = Some("myQuery"),
-                  facetFilters = Some(FacetFilters(Seq(FacetFilters("query"))))
+                  optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("brand:apple"))))
                 )
               ),
               fallbackParameters = Some(
                 FallbackParams(
                   query = Some("myQuery"),
-                  facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback"))))
+                  optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("brand:samsung"))))
                 )
               )
             )
@@ -839,13 +839,13 @@ class SnippetRecommendClient {
               queryParameters = Some(
                 RecommendSearchParams(
                   query = Some("myQuery"),
-                  facetFilters = Some(FacetFilters(Seq(FacetFilters("query1"))))
+                  optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("brand:apple"))))
                 )
               ),
               fallbackParameters = Some(
                 FallbackParams(
                   query = Some("myQuery"),
-                  facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback1"))))
+                  optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("brand:samsung"))))
                 )
               )
             ),
@@ -858,13 +858,13 @@ class SnippetRecommendClient {
               queryParameters = Some(
                 RecommendSearchParams(
                   query = Some("myQuery"),
-                  facetFilters = Some(FacetFilters(Seq(FacetFilters("query2"))))
+                  optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("brand:google"))))
                 )
               ),
               fallbackParameters = Some(
                 FallbackParams(
                   query = Some("myQuery"),
-                  facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback2"))))
+                  optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("brand:microsoft"))))
                 )
               )
             )

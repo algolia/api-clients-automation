@@ -395,8 +395,14 @@ class TestRecommendClient < Test::Unit::TestCase
             model: "related-products",
             threshold: 42.1,
             max_recommendations: 10,
-            query_parameters: Algolia::Recommend::RecommendSearchParams.new(query: "myQuery", facet_filters: ["query"]),
-            fallback_parameters: Algolia::Recommend::FallbackParams.new(query: "myQuery", facet_filters: ["fallback"])
+            query_parameters: Algolia::Recommend::RecommendSearchParams.new(
+              query: "myQuery",
+              optional_filters: ["brand:apple"]
+            ),
+            fallback_parameters: Algolia::Recommend::FallbackParams.new(
+              query: "myQuery",
+              optional_filters: ["brand:samsung"]
+            )
           )
         ]
       )
@@ -408,7 +414,7 @@ class TestRecommendClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42.1,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}"
+        "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42.1,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:apple\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:samsung\"]}}]}"
       ),
       JSON.parse(req.body)
     )
@@ -454,8 +460,14 @@ class TestRecommendClient < Test::Unit::TestCase
             max_recommendations: 10,
             facet_name: "myFacetName",
             facet_value: "myFacetValue",
-            query_parameters: Algolia::Recommend::RecommendSearchParams.new(query: "myQuery", facet_filters: ["query"]),
-            fallback_parameters: Algolia::Recommend::FallbackParams.new(query: "myQuery", facet_filters: ["fallback"])
+            query_parameters: Algolia::Recommend::RecommendSearchParams.new(
+              query: "myQuery",
+              optional_filters: ["brand:apple"]
+            ),
+            fallback_parameters: Algolia::Recommend::FallbackParams.new(
+              query: "myQuery",
+              optional_filters: ["brand:samsung"]
+            )
           )
         ]
       )
@@ -467,7 +479,7 @@ class TestRecommendClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42.1,\"maxRecommendations\":10,\"facetName\":\"myFacetName\",\"facetValue\":\"myFacetValue\",\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}"
+        "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42.1,\"maxRecommendations\":10,\"facetName\":\"myFacetName\",\"facetValue\":\"myFacetValue\",\"queryParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:apple\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:samsung\"]}}]}"
       ),
       JSON.parse(req.body)
     )
@@ -517,8 +529,14 @@ class TestRecommendClient < Test::Unit::TestCase
             model: "related-products",
             threshold: 21.7,
             max_recommendations: 10,
-            query_parameters: Algolia::Recommend::RecommendSearchParams.new(query: "myQuery", facet_filters: ["query1"]),
-            fallback_parameters: Algolia::Recommend::FallbackParams.new(query: "myQuery", facet_filters: ["fallback1"])
+            query_parameters: Algolia::Recommend::RecommendSearchParams.new(
+              query: "myQuery",
+              optional_filters: ["brand:apple"]
+            ),
+            fallback_parameters: Algolia::Recommend::FallbackParams.new(
+              query: "myQuery",
+              optional_filters: ["brand:samsung"]
+            )
           ),
           Algolia::Recommend::RelatedQuery.new(
             index_name: "indexName2",
@@ -526,8 +544,14 @@ class TestRecommendClient < Test::Unit::TestCase
             model: "related-products",
             threshold: 21.7,
             max_recommendations: 10,
-            query_parameters: Algolia::Recommend::RecommendSearchParams.new(query: "myQuery", facet_filters: ["query2"]),
-            fallback_parameters: Algolia::Recommend::FallbackParams.new(query: "myQuery", facet_filters: ["fallback2"])
+            query_parameters: Algolia::Recommend::RecommendSearchParams.new(
+              query: "myQuery",
+              optional_filters: ["brand:google"]
+            ),
+            fallback_parameters: Algolia::Recommend::FallbackParams.new(
+              query: "myQuery",
+              optional_filters: ["brand:microsoft"]
+            )
           )
         ]
       )
@@ -539,7 +563,7 @@ class TestRecommendClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21.7,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query1\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback1\"]}},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21.7,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query2\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback2\"]}}]}"
+        "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21.7,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:apple\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:samsung\"]}},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21.7,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:google\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:microsoft\"]}}]}"
       ),
       JSON.parse(req.body)
     )
