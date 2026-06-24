@@ -501,17 +501,17 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 			recommend.NewEmptyGetRecommendationsParams().SetRequests(
 				[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
 					recommend.NewEmptyRelatedQuery().SetIndexName("indexName").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1).SetMaxRecommendations(10).SetQueryParameters(
-						recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query")}))).SetFallbackParameters(
-						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback")}))))})))
+						recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetOptionalFilters(recommend.ArrayOfOptionalFiltersAsOptionalFilters(
+							[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:apple")}))).SetFallbackParameters(
+						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetOptionalFilters(recommend.ArrayOfOptionalFiltersAsOptionalFilters(
+							[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:samsung")}))))})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		jsonassert.New(t).
-			Assertf(*echo.Body, "%s", `{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}`)
+			Assertf(*echo.Body, "%s", `{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}`)
 	})
 	t.Run("get recommendations for trending model with minimal parameters", func(t *testing.T) {
 		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
@@ -533,17 +533,17 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 			recommend.NewEmptyGetRecommendationsParams().SetRequests(
 				[]recommend.RecommendationsRequest{*recommend.TrendingItemsQueryAsRecommendationsRequest(
 					recommend.NewEmptyTrendingItemsQuery().SetIndexName("indexName").SetModel(recommend.TrendingItemsModel("trending-items")).SetThreshold(42.1).SetMaxRecommendations(10).SetFacetName("myFacetName").SetFacetValue("myFacetValue").SetQueryParameters(
-						recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query")}))).SetFallbackParameters(
-						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback")}))))})))
+						recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetOptionalFilters(recommend.ArrayOfOptionalFiltersAsOptionalFilters(
+							[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:apple")}))).SetFallbackParameters(
+						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetOptionalFilters(recommend.ArrayOfOptionalFiltersAsOptionalFilters(
+							[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:samsung")}))))})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		jsonassert.New(t).
-			Assertf(*echo.Body, "%s", `{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}`)
+			Assertf(*echo.Body, "%s", `{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}`)
 	})
 	t.Run("get multiple recommendations with minimal parameters", func(t *testing.T) {
 		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
@@ -566,22 +566,22 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 			recommend.NewEmptyGetRecommendationsParams().SetRequests(
 				[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
 					recommend.NewEmptyRelatedQuery().SetIndexName("indexName1").SetObjectID("objectID1").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7).SetMaxRecommendations(10).SetQueryParameters(
-						recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query1")}))).SetFallbackParameters(
-						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback1")})))), *recommend.RelatedQueryAsRecommendationsRequest(
+						recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetOptionalFilters(recommend.ArrayOfOptionalFiltersAsOptionalFilters(
+							[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:apple")}))).SetFallbackParameters(
+						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetOptionalFilters(recommend.ArrayOfOptionalFiltersAsOptionalFilters(
+							[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:samsung")})))), *recommend.RelatedQueryAsRecommendationsRequest(
 					recommend.NewEmptyRelatedQuery().SetIndexName("indexName2").SetObjectID("objectID2").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7).SetMaxRecommendations(10).SetQueryParameters(
-						recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query2")}))).SetFallbackParameters(
-						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback2")}))))})))
+						recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetOptionalFilters(recommend.ArrayOfOptionalFiltersAsOptionalFilters(
+							[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:google")}))).SetFallbackParameters(
+						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetOptionalFilters(recommend.ArrayOfOptionalFiltersAsOptionalFilters(
+							[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:microsoft")}))))})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		jsonassert.New(t).
-			Assertf(*echo.Body, "%s", `{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}`)
+			Assertf(*echo.Body, "%s", `{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:google"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:microsoft"]}}]}`)
 	})
 	t.Run("get frequently bought together recommendations", func(t *testing.T) {
 		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(

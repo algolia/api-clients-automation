@@ -20,9 +20,6 @@ public class RecommendSearchParams {
   @JsonProperty("filters")
   private String filters;
 
-  @JsonProperty("facetFilters")
-  private FacetFilters facetFilters;
-
   @JsonProperty("optionalFilters")
   private OptionalFilters optionalFilters;
 
@@ -95,9 +92,6 @@ public class RecommendSearchParams {
   @JsonProperty("percentileComputation")
   private Boolean percentileComputation;
 
-  @JsonProperty("enableABTest")
-  private Boolean enableABTest;
-
   @JsonProperty("query")
   private String query;
 
@@ -164,9 +158,6 @@ public class RecommendSearchParams {
   @JsonProperty("attributesToRetrieve")
   private List<String> attributesToRetrieve;
 
-  @JsonProperty("ranking")
-  private List<String> ranking;
-
   @JsonProperty("relevancyStrictness")
   private Integer relevancyStrictness;
 
@@ -214,9 +205,6 @@ public class RecommendSearchParams {
 
   @JsonProperty("decompoundQuery")
   private Boolean decompoundQuery;
-
-  @JsonProperty("enableRules")
-  private Boolean enableRules;
 
   @JsonProperty("enablePersonalization")
   private Boolean enablePersonalization;
@@ -275,6 +263,9 @@ public class RecommendSearchParams {
   @JsonProperty("reRankingApplyFilter")
   private ReRankingApplyFilter reRankingApplyFilter;
 
+  @JsonProperty("enableRules")
+  private Boolean enableRules;
+
   public RecommendSearchParams setSimilarQuery(String similarQuery) {
     this.similarQuery = similarQuery;
     return this;
@@ -318,17 +309,6 @@ public class RecommendSearchParams {
   @javax.annotation.Nullable
   public String getFilters() {
     return filters;
-  }
-
-  public RecommendSearchParams setFacetFilters(FacetFilters facetFilters) {
-    this.facetFilters = facetFilters;
-    return this;
-  }
-
-  /** Get facetFilters */
-  @javax.annotation.Nullable
-  public FacetFilters getFacetFilters() {
-    return facetFilters;
   }
 
   public RecommendSearchParams setOptionalFilters(OptionalFilters optionalFilters) {
@@ -700,17 +680,6 @@ public class RecommendSearchParams {
   @javax.annotation.Nullable
   public Boolean getPercentileComputation() {
     return percentileComputation;
-  }
-
-  public RecommendSearchParams setEnableABTest(Boolean enableABTest) {
-    this.enableABTest = enableABTest;
-    return this;
-  }
-
-  /** Whether to enable A/B testing for this search. */
-  @javax.annotation.Nullable
-  public Boolean getEnableABTest() {
-    return enableABTest;
   }
 
   public RecommendSearchParams setQuery(String query) {
@@ -1197,37 +1166,6 @@ public class RecommendSearchParams {
     return attributesToRetrieve;
   }
 
-  public RecommendSearchParams setRanking(List<String> ranking) {
-    this.ranking = ranking;
-    return this;
-  }
-
-  public RecommendSearchParams addRanking(String rankingItem) {
-    if (this.ranking == null) {
-      this.ranking = new ArrayList<>();
-    }
-    this.ranking.add(rankingItem);
-    return this;
-  }
-
-  /**
-   * Determines the order in which Algolia returns your results. By default, each entry corresponds
-   * to a [ranking
-   * criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria).
-   * The tie-breaking algorithm sequentially applies each criterion in the order they're specified.
-   * If you configure a replica index for [sorting by an
-   * attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute),
-   * you put the sorting attribute at the top of the list. **Modifiers** - `asc(\"ATTRIBUTE\")`.
-   * Sort the index by the values of an attribute, in ascending order. - `desc(\"ATTRIBUTE\")`. Sort
-   * the index by the values of an attribute, in descending order. Before you modify the default
-   * setting, test your changes in the dashboard, and by [A/B
-   * testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing).
-   */
-  @javax.annotation.Nullable
-  public List<String> getRanking() {
-    return ranking;
-  }
-
   public RecommendSearchParams setRelevancyStrictness(Integer relevancyStrictness) {
     this.relevancyStrictness = relevancyStrictness;
     return this;
@@ -1497,17 +1435,6 @@ public class RecommendSearchParams {
   @javax.annotation.Nullable
   public Boolean getDecompoundQuery() {
     return decompoundQuery;
-  }
-
-  public RecommendSearchParams setEnableRules(Boolean enableRules) {
-    this.enableRules = enableRules;
-    return this;
-  }
-
-  /** Whether to enable rules. */
-  @javax.annotation.Nullable
-  public Boolean getEnableRules() {
-    return enableRules;
   }
 
   public RecommendSearchParams setEnablePersonalization(Boolean enablePersonalization) {
@@ -1816,6 +1743,17 @@ public class RecommendSearchParams {
     return reRankingApplyFilter;
   }
 
+  public RecommendSearchParams setEnableRules(Boolean enableRules) {
+    this.enableRules = enableRules;
+    return this;
+  }
+
+  /** Whether to enable rules. */
+  @javax.annotation.Nullable
+  public Boolean getEnableRules() {
+    return enableRules;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -1828,7 +1766,6 @@ public class RecommendSearchParams {
     return (
       Objects.equals(this.similarQuery, recommendSearchParams.similarQuery) &&
       Objects.equals(this.filters, recommendSearchParams.filters) &&
-      Objects.equals(this.facetFilters, recommendSearchParams.facetFilters) &&
       Objects.equals(this.optionalFilters, recommendSearchParams.optionalFilters) &&
       Objects.equals(this.numericFilters, recommendSearchParams.numericFilters) &&
       Objects.equals(this.tagFilters, recommendSearchParams.tagFilters) &&
@@ -1853,7 +1790,6 @@ public class RecommendSearchParams {
       Objects.equals(this.analytics, recommendSearchParams.analytics) &&
       Objects.equals(this.analyticsTags, recommendSearchParams.analyticsTags) &&
       Objects.equals(this.percentileComputation, recommendSearchParams.percentileComputation) &&
-      Objects.equals(this.enableABTest, recommendSearchParams.enableABTest) &&
       Objects.equals(this.query, recommendSearchParams.query) &&
       Objects.equals(this.attributesForFaceting, recommendSearchParams.attributesForFaceting) &&
       Objects.equals(this.replicas, recommendSearchParams.replicas) &&
@@ -1876,7 +1812,6 @@ public class RecommendSearchParams {
       Objects.equals(this.keepDiacriticsOnCharacters, recommendSearchParams.keepDiacriticsOnCharacters) &&
       Objects.equals(this.customRanking, recommendSearchParams.customRanking) &&
       Objects.equals(this.attributesToRetrieve, recommendSearchParams.attributesToRetrieve) &&
-      Objects.equals(this.ranking, recommendSearchParams.ranking) &&
       Objects.equals(this.relevancyStrictness, recommendSearchParams.relevancyStrictness) &&
       Objects.equals(this.attributesToHighlight, recommendSearchParams.attributesToHighlight) &&
       Objects.equals(this.attributesToSnippet, recommendSearchParams.attributesToSnippet) &&
@@ -1893,7 +1828,6 @@ public class RecommendSearchParams {
       Objects.equals(this.removeStopWords, recommendSearchParams.removeStopWords) &&
       Objects.equals(this.queryLanguages, recommendSearchParams.queryLanguages) &&
       Objects.equals(this.decompoundQuery, recommendSearchParams.decompoundQuery) &&
-      Objects.equals(this.enableRules, recommendSearchParams.enableRules) &&
       Objects.equals(this.enablePersonalization, recommendSearchParams.enablePersonalization) &&
       Objects.equals(this.queryType, recommendSearchParams.queryType) &&
       Objects.equals(this.removeWordsIfNoResults, recommendSearchParams.removeWordsIfNoResults) &&
@@ -1912,7 +1846,8 @@ public class RecommendSearchParams {
       Objects.equals(this.attributeCriteriaComputedByMinProximity, recommendSearchParams.attributeCriteriaComputedByMinProximity) &&
       Objects.equals(this.renderingContent, recommendSearchParams.renderingContent) &&
       Objects.equals(this.enableReRanking, recommendSearchParams.enableReRanking) &&
-      Objects.equals(this.reRankingApplyFilter, recommendSearchParams.reRankingApplyFilter)
+      Objects.equals(this.reRankingApplyFilter, recommendSearchParams.reRankingApplyFilter) &&
+      Objects.equals(this.enableRules, recommendSearchParams.enableRules)
     );
   }
 
@@ -1921,7 +1856,6 @@ public class RecommendSearchParams {
     return Objects.hash(
       similarQuery,
       filters,
-      facetFilters,
       optionalFilters,
       numericFilters,
       tagFilters,
@@ -1946,7 +1880,6 @@ public class RecommendSearchParams {
       analytics,
       analyticsTags,
       percentileComputation,
-      enableABTest,
       query,
       attributesForFaceting,
       replicas,
@@ -1969,7 +1902,6 @@ public class RecommendSearchParams {
       keepDiacriticsOnCharacters,
       customRanking,
       attributesToRetrieve,
-      ranking,
       relevancyStrictness,
       attributesToHighlight,
       attributesToSnippet,
@@ -1986,7 +1918,6 @@ public class RecommendSearchParams {
       removeStopWords,
       queryLanguages,
       decompoundQuery,
-      enableRules,
       enablePersonalization,
       queryType,
       removeWordsIfNoResults,
@@ -2005,7 +1936,8 @@ public class RecommendSearchParams {
       attributeCriteriaComputedByMinProximity,
       renderingContent,
       enableReRanking,
-      reRankingApplyFilter
+      reRankingApplyFilter,
+      enableRules
     );
   }
 
@@ -2015,7 +1947,6 @@ public class RecommendSearchParams {
     sb.append("class RecommendSearchParams {\n");
     sb.append("    similarQuery: ").append(toIndentedString(similarQuery)).append("\n");
     sb.append("    filters: ").append(toIndentedString(filters)).append("\n");
-    sb.append("    facetFilters: ").append(toIndentedString(facetFilters)).append("\n");
     sb.append("    optionalFilters: ").append(toIndentedString(optionalFilters)).append("\n");
     sb.append("    numericFilters: ").append(toIndentedString(numericFilters)).append("\n");
     sb.append("    tagFilters: ").append(toIndentedString(tagFilters)).append("\n");
@@ -2040,7 +1971,6 @@ public class RecommendSearchParams {
     sb.append("    analytics: ").append(toIndentedString(analytics)).append("\n");
     sb.append("    analyticsTags: ").append(toIndentedString(analyticsTags)).append("\n");
     sb.append("    percentileComputation: ").append(toIndentedString(percentileComputation)).append("\n");
-    sb.append("    enableABTest: ").append(toIndentedString(enableABTest)).append("\n");
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb.append("    attributesForFaceting: ").append(toIndentedString(attributesForFaceting)).append("\n");
     sb.append("    replicas: ").append(toIndentedString(replicas)).append("\n");
@@ -2063,7 +1993,6 @@ public class RecommendSearchParams {
     sb.append("    keepDiacriticsOnCharacters: ").append(toIndentedString(keepDiacriticsOnCharacters)).append("\n");
     sb.append("    customRanking: ").append(toIndentedString(customRanking)).append("\n");
     sb.append("    attributesToRetrieve: ").append(toIndentedString(attributesToRetrieve)).append("\n");
-    sb.append("    ranking: ").append(toIndentedString(ranking)).append("\n");
     sb.append("    relevancyStrictness: ").append(toIndentedString(relevancyStrictness)).append("\n");
     sb.append("    attributesToHighlight: ").append(toIndentedString(attributesToHighlight)).append("\n");
     sb.append("    attributesToSnippet: ").append(toIndentedString(attributesToSnippet)).append("\n");
@@ -2080,7 +2009,6 @@ public class RecommendSearchParams {
     sb.append("    removeStopWords: ").append(toIndentedString(removeStopWords)).append("\n");
     sb.append("    queryLanguages: ").append(toIndentedString(queryLanguages)).append("\n");
     sb.append("    decompoundQuery: ").append(toIndentedString(decompoundQuery)).append("\n");
-    sb.append("    enableRules: ").append(toIndentedString(enableRules)).append("\n");
     sb.append("    enablePersonalization: ").append(toIndentedString(enablePersonalization)).append("\n");
     sb.append("    queryType: ").append(toIndentedString(queryType)).append("\n");
     sb.append("    removeWordsIfNoResults: ").append(toIndentedString(removeWordsIfNoResults)).append("\n");
@@ -2103,6 +2031,7 @@ public class RecommendSearchParams {
     sb.append("    renderingContent: ").append(toIndentedString(renderingContent)).append("\n");
     sb.append("    enableReRanking: ").append(toIndentedString(enableReRanking)).append("\n");
     sb.append("    reRankingApplyFilter: ").append(toIndentedString(reRankingApplyFilter)).append("\n");
+    sb.append("    enableRules: ").append(toIndentedString(enableRules)).append("\n");
     sb.append("}");
     return sb.toString();
   }

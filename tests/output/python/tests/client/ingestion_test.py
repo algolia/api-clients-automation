@@ -153,7 +153,7 @@ class TestIngestionClient:
         _req = await _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.44.0\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.44.1\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     async def test_no_content_0(self):
@@ -395,7 +395,7 @@ class TestIngestionClientSync:
         _req = _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.44.0\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.44.1\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     def test_no_content_0(self):

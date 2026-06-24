@@ -512,8 +512,8 @@ export async function snippetForGetRecommendations2(): Promise<void> {
         model: 'related-products',
         threshold: 42.1,
         maxRecommendations: 10,
-        queryParameters: { query: 'myQuery', facetFilters: ['query'] },
-        fallbackParameters: { query: 'myQuery', facetFilters: ['fallback'] },
+        queryParameters: { query: 'myQuery', optionalFilters: ['brand:apple'] },
+        fallbackParameters: { query: 'myQuery', optionalFilters: ['brand:samsung'] },
       },
     ],
   });
@@ -563,8 +563,8 @@ export async function snippetForGetRecommendations4(): Promise<void> {
         maxRecommendations: 10,
         facetName: 'myFacetName',
         facetValue: 'myFacetValue',
-        queryParameters: { query: 'myQuery', facetFilters: ['query'] },
-        fallbackParameters: { query: 'myQuery', facetFilters: ['fallback'] },
+        queryParameters: { query: 'myQuery', optionalFilters: ['brand:apple'] },
+        fallbackParameters: { query: 'myQuery', optionalFilters: ['brand:samsung'] },
       },
     ],
   });
@@ -614,8 +614,8 @@ export async function snippetForGetRecommendations6(): Promise<void> {
         model: 'related-products',
         threshold: 21.7,
         maxRecommendations: 10,
-        queryParameters: { query: 'myQuery', facetFilters: ['query1'] },
-        fallbackParameters: { query: 'myQuery', facetFilters: ['fallback1'] },
+        queryParameters: { query: 'myQuery', optionalFilters: ['brand:apple'] },
+        fallbackParameters: { query: 'myQuery', optionalFilters: ['brand:samsung'] },
       },
       {
         indexName: 'indexName2',
@@ -623,8 +623,8 @@ export async function snippetForGetRecommendations6(): Promise<void> {
         model: 'related-products',
         threshold: 21.7,
         maxRecommendations: 10,
-        queryParameters: { query: 'myQuery', facetFilters: ['query2'] },
-        fallbackParameters: { query: 'myQuery', facetFilters: ['fallback2'] },
+        queryParameters: { query: 'myQuery', optionalFilters: ['brand:google'] },
+        fallbackParameters: { query: 'myQuery', optionalFilters: ['brand:microsoft'] },
       },
     ],
   });

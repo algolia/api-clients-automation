@@ -537,14 +537,14 @@ class TestRecommendClient:
                         "maxRecommendations": 10,
                         "queryParameters": {
                             "query": "myQuery",
-                            "facetFilters": [
-                                "query",
+                            "optionalFilters": [
+                                "brand:apple",
                             ],
                         },
                         "fallbackParameters": {
                             "query": "myQuery",
-                            "facetFilters": [
-                                "fallback",
+                            "optionalFilters": [
+                                "brand:samsung",
                             ],
                         },
                     },
@@ -557,7 +557,7 @@ class TestRecommendClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}"""
+            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}"""
         )
 
     async def test_get_recommendations_3(self):
@@ -602,14 +602,14 @@ class TestRecommendClient:
                         "facetValue": "myFacetValue",
                         "queryParameters": {
                             "query": "myQuery",
-                            "facetFilters": [
-                                "query",
+                            "optionalFilters": [
+                                "brand:apple",
                             ],
                         },
                         "fallbackParameters": {
                             "query": "myQuery",
-                            "facetFilters": [
-                                "fallback",
+                            "optionalFilters": [
+                                "brand:samsung",
                             ],
                         },
                     },
@@ -622,7 +622,7 @@ class TestRecommendClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}"""
+            """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}"""
         )
 
     async def test_get_recommendations_5(self):
@@ -671,14 +671,14 @@ class TestRecommendClient:
                         "maxRecommendations": 10,
                         "queryParameters": {
                             "query": "myQuery",
-                            "facetFilters": [
-                                "query1",
+                            "optionalFilters": [
+                                "brand:apple",
                             ],
                         },
                         "fallbackParameters": {
                             "query": "myQuery",
-                            "facetFilters": [
-                                "fallback1",
+                            "optionalFilters": [
+                                "brand:samsung",
                             ],
                         },
                     },
@@ -690,14 +690,14 @@ class TestRecommendClient:
                         "maxRecommendations": 10,
                         "queryParameters": {
                             "query": "myQuery",
-                            "facetFilters": [
-                                "query2",
+                            "optionalFilters": [
+                                "brand:google",
                             ],
                         },
                         "fallbackParameters": {
                             "query": "myQuery",
-                            "facetFilters": [
-                                "fallback2",
+                            "optionalFilters": [
+                                "brand:microsoft",
                             ],
                         },
                     },
@@ -710,7 +710,7 @@ class TestRecommendClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}"""
+            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:google"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:microsoft"]}}]}"""
         )
 
     async def test_get_recommendations_7(self):
@@ -1286,14 +1286,14 @@ class TestRecommendClientSync:
                         "maxRecommendations": 10,
                         "queryParameters": {
                             "query": "myQuery",
-                            "facetFilters": [
-                                "query",
+                            "optionalFilters": [
+                                "brand:apple",
                             ],
                         },
                         "fallbackParameters": {
                             "query": "myQuery",
-                            "facetFilters": [
-                                "fallback",
+                            "optionalFilters": [
+                                "brand:samsung",
                             ],
                         },
                     },
@@ -1306,7 +1306,7 @@ class TestRecommendClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}"""
+            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}"""
         )
 
     def test_get_recommendations_3(self):
@@ -1351,14 +1351,14 @@ class TestRecommendClientSync:
                         "facetValue": "myFacetValue",
                         "queryParameters": {
                             "query": "myQuery",
-                            "facetFilters": [
-                                "query",
+                            "optionalFilters": [
+                                "brand:apple",
                             ],
                         },
                         "fallbackParameters": {
                             "query": "myQuery",
-                            "facetFilters": [
-                                "fallback",
+                            "optionalFilters": [
+                                "brand:samsung",
                             ],
                         },
                     },
@@ -1371,7 +1371,7 @@ class TestRecommendClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}"""
+            """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}"""
         )
 
     def test_get_recommendations_5(self):
@@ -1420,14 +1420,14 @@ class TestRecommendClientSync:
                         "maxRecommendations": 10,
                         "queryParameters": {
                             "query": "myQuery",
-                            "facetFilters": [
-                                "query1",
+                            "optionalFilters": [
+                                "brand:apple",
                             ],
                         },
                         "fallbackParameters": {
                             "query": "myQuery",
-                            "facetFilters": [
-                                "fallback1",
+                            "optionalFilters": [
+                                "brand:samsung",
                             ],
                         },
                     },
@@ -1439,14 +1439,14 @@ class TestRecommendClientSync:
                         "maxRecommendations": 10,
                         "queryParameters": {
                             "query": "myQuery",
-                            "facetFilters": [
-                                "query2",
+                            "optionalFilters": [
+                                "brand:google",
                             ],
                         },
                         "fallbackParameters": {
                             "query": "myQuery",
-                            "facetFilters": [
-                                "fallback2",
+                            "optionalFilters": [
+                                "brand:microsoft",
                             ],
                         },
                     },
@@ -1459,7 +1459,7 @@ class TestRecommendClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}"""
+            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:google"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:microsoft"]}}]}"""
         )
 
     def test_get_recommendations_7(self):

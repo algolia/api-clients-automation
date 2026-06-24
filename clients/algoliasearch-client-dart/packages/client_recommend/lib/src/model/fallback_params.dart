@@ -18,7 +18,6 @@ final class FallbackParams {
   const FallbackParams({
     this.similarQuery,
     this.filters,
-    this.facetFilters,
     this.optionalFilters,
     this.numericFilters,
     this.tagFilters,
@@ -43,7 +42,6 @@ final class FallbackParams {
     this.analytics,
     this.analyticsTags,
     this.percentileComputation,
-    this.enableABTest,
     this.query,
     this.attributesForFaceting,
     this.replicas,
@@ -66,7 +64,6 @@ final class FallbackParams {
     this.keepDiacriticsOnCharacters,
     this.customRanking,
     this.attributesToRetrieve,
-    this.ranking,
     this.relevancyStrictness,
     this.attributesToHighlight,
     this.attributesToSnippet,
@@ -83,7 +80,6 @@ final class FallbackParams {
     this.removeStopWords,
     this.queryLanguages,
     this.decompoundQuery,
-    this.enableRules,
     this.enablePersonalization,
     this.queryType,
     this.removeWordsIfNoResults,
@@ -112,13 +108,6 @@ final class FallbackParams {
   /// Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>`, where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>`, where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes if the facet attribute name or facet value contains spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
   @JsonKey(name: r'filters')
   final String? filters;
-
-  /// One of types:
-  /// - [List<List<FacetFilters>>]
-  /// - [String]
-  /// - [List<String>]
-  @JsonKey(name: r'facetFilters')
-  final dynamic facetFilters;
 
   /// One of types:
   /// - [String]
@@ -234,10 +223,6 @@ final class FallbackParams {
   @JsonKey(name: r'percentileComputation')
   final bool? percentileComputation;
 
-  /// Whether to enable A/B testing for this search.
-  @JsonKey(name: r'enableABTest')
-  final bool? enableABTest;
-
   /// Search query.
   @JsonKey(name: r'query')
   final String? query;
@@ -328,10 +313,6 @@ final class FallbackParams {
   @JsonKey(name: r'attributesToRetrieve')
   final List<String>? attributesToRetrieve;
 
-  /// Determines the order in which Algolia returns your results.  By default, each entry corresponds to a [ranking criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria). The tie-breaking algorithm sequentially applies each criterion in the order they're specified. If you configure a replica index for [sorting by an attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute), you put the sorting attribute at the top of the list.  **Modifiers**  - `asc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in ascending order. - `desc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in descending order.  Before you modify the default setting, test your changes in the dashboard, and by [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing).
-  @JsonKey(name: r'ranking')
-  final List<String>? ranking;
-
   /// Relevancy threshold below which less relevant results aren't included in the results You can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas). Use this setting to strike a balance between the relevance and number of returned results.
   @JsonKey(name: r'relevancyStrictness')
   final int? relevancyStrictness;
@@ -402,10 +383,6 @@ final class FallbackParams {
   /// Whether to split compound words in the query into their building blocks For more information, see [Word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words). Word segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and Norwegian. Decompounding doesn't work for words with [non-spacing mark Unicode characters](https://www.charactercodes.net/category/non-spacing_mark). For example, `Gartenstühle` won't be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).
   @JsonKey(name: r'decompoundQuery')
   final bool? decompoundQuery;
-
-  /// Whether to enable rules.
-  @JsonKey(name: r'enableRules')
-  final bool? enableRules;
 
   /// Whether to enable Personalization.
   @JsonKey(name: r'enablePersonalization')
@@ -495,7 +472,6 @@ final class FallbackParams {
       other is FallbackParams &&
           other.similarQuery == similarQuery &&
           other.filters == filters &&
-          other.facetFilters == facetFilters &&
           other.optionalFilters == optionalFilters &&
           other.numericFilters == numericFilters &&
           other.tagFilters == tagFilters &&
@@ -520,7 +496,6 @@ final class FallbackParams {
           other.analytics == analytics &&
           other.analyticsTags == analyticsTags &&
           other.percentileComputation == percentileComputation &&
-          other.enableABTest == enableABTest &&
           other.query == query &&
           other.attributesForFaceting == attributesForFaceting &&
           other.replicas == replicas &&
@@ -545,7 +520,6 @@ final class FallbackParams {
           other.keepDiacriticsOnCharacters == keepDiacriticsOnCharacters &&
           other.customRanking == customRanking &&
           other.attributesToRetrieve == attributesToRetrieve &&
-          other.ranking == ranking &&
           other.relevancyStrictness == relevancyStrictness &&
           other.attributesToHighlight == attributesToHighlight &&
           other.attributesToSnippet == attributesToSnippet &&
@@ -564,7 +538,6 @@ final class FallbackParams {
           other.removeStopWords == removeStopWords &&
           other.queryLanguages == queryLanguages &&
           other.decompoundQuery == decompoundQuery &&
-          other.enableRules == enableRules &&
           other.enablePersonalization == enablePersonalization &&
           other.queryType == queryType &&
           other.removeWordsIfNoResults == removeWordsIfNoResults &&
@@ -590,7 +563,6 @@ final class FallbackParams {
   int get hashCode =>
       similarQuery.hashCode +
       filters.hashCode +
-      facetFilters.hashCode +
       optionalFilters.hashCode +
       numericFilters.hashCode +
       tagFilters.hashCode +
@@ -615,7 +587,6 @@ final class FallbackParams {
       analytics.hashCode +
       analyticsTags.hashCode +
       percentileComputation.hashCode +
-      enableABTest.hashCode +
       query.hashCode +
       attributesForFaceting.hashCode +
       replicas.hashCode +
@@ -638,7 +609,6 @@ final class FallbackParams {
       keepDiacriticsOnCharacters.hashCode +
       customRanking.hashCode +
       attributesToRetrieve.hashCode +
-      ranking.hashCode +
       relevancyStrictness.hashCode +
       attributesToHighlight.hashCode +
       attributesToSnippet.hashCode +
@@ -655,7 +625,6 @@ final class FallbackParams {
       removeStopWords.hashCode +
       queryLanguages.hashCode +
       decompoundQuery.hashCode +
-      enableRules.hashCode +
       enablePersonalization.hashCode +
       queryType.hashCode +
       removeWordsIfNoResults.hashCode +

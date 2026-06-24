@@ -599,10 +599,14 @@ class SnippetRecommendClient {
             .setThreshold(42.1)
             .setMaxRecommendations(10)
             .setQueryParameters(
-              new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query"))))
+              new RecommendSearchParams()
+                .setQuery("myQuery")
+                .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:apple"))))
             )
             .setFallbackParameters(
-              new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback"))))
+              new FallbackParams()
+                .setQuery("myQuery")
+                .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:samsung"))))
             )
         )
       )
@@ -660,10 +664,14 @@ class SnippetRecommendClient {
             .setFacetName("myFacetName")
             .setFacetValue("myFacetValue")
             .setQueryParameters(
-              new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query"))))
+              new RecommendSearchParams()
+                .setQuery("myQuery")
+                .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:apple"))))
             )
             .setFallbackParameters(
-              new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback"))))
+              new FallbackParams()
+                .setQuery("myQuery")
+                .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:samsung"))))
             )
         )
       )
@@ -724,10 +732,14 @@ class SnippetRecommendClient {
             .setThreshold(21.7)
             .setMaxRecommendations(10)
             .setQueryParameters(
-              new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query1"))))
+              new RecommendSearchParams()
+                .setQuery("myQuery")
+                .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:apple"))))
             )
             .setFallbackParameters(
-              new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback1"))))
+              new FallbackParams()
+                .setQuery("myQuery")
+                .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:samsung"))))
             ),
           new RelatedQuery()
             .setIndexName("<YOUR_INDEX_NAME>")
@@ -736,10 +748,14 @@ class SnippetRecommendClient {
             .setThreshold(21.7)
             .setMaxRecommendations(10)
             .setQueryParameters(
-              new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query2"))))
+              new RecommendSearchParams()
+                .setQuery("myQuery")
+                .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:google"))))
             )
             .setFallbackParameters(
-              new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback2"))))
+              new FallbackParams()
+                .setQuery("myQuery")
+                .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:microsoft"))))
             )
         )
       )
