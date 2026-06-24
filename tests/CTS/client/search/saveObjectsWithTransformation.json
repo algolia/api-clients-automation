@@ -57,7 +57,7 @@
   {
     "testName": "saveObjectsWithTransformation polls every task when waitForTasks is true",
     "autoCreateClient": false,
-    "skipLanguages": ["php", "javascript"],
+    "skipLanguages": ["php"],
     "steps": [
       {
         "type": "createClient",
