@@ -10199,28 +10199,26 @@ public class IngestionClient extends ApiClient {
       if (waitForTasks && pushed && responses.size() > 0 && (responses.size() % pollInterval == 0 || !it.hasNext())) {
         int nextOffset = Math.min(offset + pollInterval, responses.size());
 
-        responses
-          .subList(offset, nextOffset)
-          .forEach(response -> {
-            TaskUtils.retryUntil(
-              () -> {
-                try {
-                  return this.getEvent(response.getRunID(), response.getEventID());
-                } catch (AlgoliaApiException e) {
-                  if (e.getStatusCode() == 404) {
-                    return null;
-                  }
-
-                  throw e;
+        responses.subList(offset, nextOffset).forEach(response -> {
+          TaskUtils.retryUntil(
+            () -> {
+              try {
+                return this.getEvent(response.getRunID(), response.getEventID());
+              } catch (AlgoliaApiException e) {
+                if (e.getStatusCode() == 404) {
+                  return null;
                 }
-              },
-              (Event resp) -> {
-                return resp != null;
-              },
-              maxRetries,
-              retries -> Math.min(retries * 1500, 5000)
-            );
-          });
+
+                throw e;
+              }
+            },
+            (Event resp) -> {
+              return resp != null;
+            },
+            maxRetries,
+            retries -> Math.min(retries * 1500, 5000)
+          );
+        });
 
         offset = nextOffset;
       }

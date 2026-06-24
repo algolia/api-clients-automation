@@ -142,7 +142,9 @@ public class Hit {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Hit {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    ")
+      .append(toIndentedString(super.toString()))
+      .append("\n");
     sb.append("    objectID: ").append(toIndentedString(objectID)).append("\n");
     sb.append("    highlightResult: ").append(toIndentedString(highlightResult)).append("\n");
     sb.append("    snippetResult: ").append(toIndentedString(snippetResult)).append("\n");

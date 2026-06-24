@@ -85,7 +85,9 @@ public class SearchResponse<T> {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class SearchResponse {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    ")
+      .append(toIndentedString(super.toString()))
+      .append("\n");
     sb.append("    compositions: ").append(toIndentedString(compositions)).append("\n");
     sb.append("    results: ").append(toIndentedString(results)).append("\n");
     sb.append("}");

@@ -67,7 +67,9 @@ public class CompositionsSearchResponse {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CompositionsSearchResponse {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    ")
+      .append(toIndentedString(super.toString()))
+      .append("\n");
     sb.append("    run: ").append(toIndentedString(run)).append("\n");
     sb.append("}");
     return sb.toString();

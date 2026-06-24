@@ -992,8 +992,7 @@ public class BaseInjectionQueryParameters {
     sb.append("    advancedSyntaxFeatures: ").append(toIndentedString(advancedSyntaxFeatures)).append("\n");
     sb.append("    allowTyposOnNumericTokens: ").append(toIndentedString(allowTyposOnNumericTokens)).append("\n");
     sb.append("    alternativesAsExact: ").append(toIndentedString(alternativesAsExact)).append("\n");
-    sb
-      .append("    attributeCriteriaComputedByMinProximity: ")
+    sb.append("    attributeCriteriaComputedByMinProximity: ")
       .append(toIndentedString(attributeCriteriaComputedByMinProximity))
       .append("\n");
     sb.append("    attributesToHighlight: ").append(toIndentedString(attributesToHighlight)).append("\n");

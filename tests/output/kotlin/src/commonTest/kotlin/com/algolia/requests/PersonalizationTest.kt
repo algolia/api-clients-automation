@@ -14,14 +14,21 @@ import kotlinx.serialization.json.*
 
 class PersonalizationTest {
 
-  val client = PersonalizationClient(appId = "appId", apiKey = "apiKey", region = "us")
+  val client =
+    PersonalizationClient(
+      appId = "appId",
+      apiKey = "apiKey",
+      region = "us",
+    )
 
   // customDelete
 
   @Test
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
-      call = { customDelete(path = "test/minimal") },
+      call = {
+        customDelete(path = "test/minimal")
+      },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("DELETE"), it.method)
@@ -33,7 +40,12 @@ class PersonalizationTest {
   @Test
   fun `allow del method for a custom path with all parameters1`() = runTest {
     client.runTest(
-      call = { customDelete(path = "test/all", parameters = mapOf("query" to "parameters")) },
+      call = {
+        customDelete(
+          path = "test/all",
+          parameters = mapOf("query" to "parameters"),
+        )
+      },
       intercept = {
         assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("DELETE"), it.method)
@@ -48,7 +60,9 @@ class PersonalizationTest {
   @Test
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
-      call = { customGet(path = "test/minimal") },
+      call = {
+        customGet(path = "test/minimal")
+      },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -61,7 +75,10 @@ class PersonalizationTest {
   fun `allow get method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
-        customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
+        customGet(
+          path = "test/all",
+          parameters = mapOf("query" to "parameters with space"),
+        )
       },
       intercept = {
         assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
@@ -86,7 +103,10 @@ class PersonalizationTest {
                   put("query", "parameters with space")
                   put("and an array", listOf("array", "with spaces"))
                 },
-              headers = buildMap { put("x-header-1", "spaces are left alone") },
+              headers =
+                buildMap {
+                  put("x-header-1", "spaces are left alone")
+                },
             ),
         )
       },
@@ -108,7 +128,9 @@ class PersonalizationTest {
   @Test
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
-      call = { customPost(path = "test/minimal") },
+      call = {
+        customPost(path = "test/minimal")
+      },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
@@ -124,7 +146,13 @@ class PersonalizationTest {
         customPost(
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("body", JsonPrimitive("parameters")) },
+          body =
+            buildJsonObject {
+              put(
+                "body",
+                JsonPrimitive("parameters"),
+              )
+            },
         )
       },
       intercept = {
@@ -143,9 +171,20 @@ class PersonalizationTest {
         customPost(
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("facet", JsonPrimitive("filters")) },
+          body =
+            buildJsonObject {
+              put(
+                "facet",
+                JsonPrimitive("filters"),
+              )
+            },
           requestOptions =
-            RequestOptions(urlParameters = buildMap { put("query", "myQueryParameter") }),
+            RequestOptions(
+              urlParameters =
+                buildMap {
+                  put("query", "myQueryParameter")
+                }
+            ),
         )
       },
       intercept = {
@@ -164,9 +203,20 @@ class PersonalizationTest {
         customPost(
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("facet", JsonPrimitive("filters")) },
+          body =
+            buildJsonObject {
+              put(
+                "facet",
+                JsonPrimitive("filters"),
+              )
+            },
           requestOptions =
-            RequestOptions(urlParameters = buildMap { put("query2", "myQueryParameter") }),
+            RequestOptions(
+              urlParameters =
+                buildMap {
+                  put("query2", "myQueryParameter")
+                }
+            ),
         )
       },
       intercept = {
@@ -188,9 +238,20 @@ class PersonalizationTest {
         customPost(
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("facet", JsonPrimitive("filters")) },
+          body =
+            buildJsonObject {
+              put(
+                "facet",
+                JsonPrimitive("filters"),
+              )
+            },
           requestOptions =
-            RequestOptions(headers = buildMap { put("x-algolia-api-key", "ALGOLIA_API_KEY") }),
+            RequestOptions(
+              headers =
+                buildMap {
+                  put("x-algolia-api-key", "ALGOLIA_API_KEY")
+                }
+            ),
         )
       },
       intercept = {
@@ -210,9 +271,20 @@ class PersonalizationTest {
         customPost(
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("facet", JsonPrimitive("filters")) },
+          body =
+            buildJsonObject {
+              put(
+                "facet",
+                JsonPrimitive("filters"),
+              )
+            },
           requestOptions =
-            RequestOptions(headers = buildMap { put("x-algolia-api-key", "ALGOLIA_API_KEY") }),
+            RequestOptions(
+              headers =
+                buildMap {
+                  put("x-algolia-api-key", "ALGOLIA_API_KEY")
+                }
+            ),
         )
       },
       intercept = {
@@ -232,8 +304,20 @@ class PersonalizationTest {
         customPost(
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("facet", JsonPrimitive("filters")) },
-          requestOptions = RequestOptions(urlParameters = buildMap { put("isItWorking", true) }),
+          body =
+            buildJsonObject {
+              put(
+                "facet",
+                JsonPrimitive("filters"),
+              )
+            },
+          requestOptions =
+            RequestOptions(
+              urlParameters =
+                buildMap {
+                  put("isItWorking", true)
+                }
+            ),
         )
       },
       intercept = {
@@ -255,8 +339,20 @@ class PersonalizationTest {
         customPost(
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("facet", JsonPrimitive("filters")) },
-          requestOptions = RequestOptions(urlParameters = buildMap { put("myParam", 2) }),
+          body =
+            buildJsonObject {
+              put(
+                "facet",
+                JsonPrimitive("filters"),
+              )
+            },
+          requestOptions =
+            RequestOptions(
+              urlParameters =
+                buildMap {
+                  put("myParam", 2)
+                }
+            ),
         )
       },
       intercept = {
@@ -275,9 +371,20 @@ class PersonalizationTest {
         customPost(
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("facet", JsonPrimitive("filters")) },
+          body =
+            buildJsonObject {
+              put(
+                "facet",
+                JsonPrimitive("filters"),
+              )
+            },
           requestOptions =
-            RequestOptions(urlParameters = buildMap { put("myParam", listOf("b and c", "d")) }),
+            RequestOptions(
+              urlParameters =
+                buildMap {
+                  put("myParam", listOf("b and c", "d"))
+                }
+            ),
         )
       },
       intercept = {
@@ -299,9 +406,20 @@ class PersonalizationTest {
         customPost(
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("facet", JsonPrimitive("filters")) },
+          body =
+            buildJsonObject {
+              put(
+                "facet",
+                JsonPrimitive("filters"),
+              )
+            },
           requestOptions =
-            RequestOptions(urlParameters = buildMap { put("myParam", listOf(true, true, false)) }),
+            RequestOptions(
+              urlParameters =
+                buildMap {
+                  put("myParam", listOf(true, true, false))
+                }
+            ),
         )
       },
       intercept = {
@@ -323,8 +441,20 @@ class PersonalizationTest {
         customPost(
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("facet", JsonPrimitive("filters")) },
-          requestOptions = RequestOptions(urlParameters = buildMap { put("myParam", listOf(1, 2)) }),
+          body =
+            buildJsonObject {
+              put(
+                "facet",
+                JsonPrimitive("filters"),
+              )
+            },
+          requestOptions =
+            RequestOptions(
+              urlParameters =
+                buildMap {
+                  put("myParam", listOf(1, 2))
+                }
+            ),
         )
       },
       intercept = {
@@ -341,7 +471,9 @@ class PersonalizationTest {
   @Test
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
-      call = { customPut(path = "test/minimal") },
+      call = {
+        customPut(path = "test/minimal")
+      },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
@@ -357,7 +489,13 @@ class PersonalizationTest {
         customPut(
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("body", JsonPrimitive("parameters")) },
+          body =
+            buildJsonObject {
+              put(
+                "body",
+                JsonPrimitive("parameters"),
+              )
+            },
         )
       },
       intercept = {
@@ -374,7 +512,9 @@ class PersonalizationTest {
   @Test
   fun `delete deleteUserProfile`() = runTest {
     client.runTest(
-      call = { deleteUserProfile(userToken = "UserToken") },
+      call = {
+        deleteUserProfile(userToken = "UserToken")
+      },
       intercept = {
         assertEquals("/1/profiles/UserToken".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("DELETE"), it.method)
@@ -388,7 +528,9 @@ class PersonalizationTest {
   @Test
   fun `get getPersonalizationStrategy`() = runTest {
     client.runTest(
-      call = { getPersonalizationStrategy() },
+      call = {
+        getPersonalizationStrategy()
+      },
       intercept = {
         assertEquals("/1/strategies/personalization".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -402,7 +544,9 @@ class PersonalizationTest {
   @Test
   fun `get getUserTokenProfile`() = runTest {
     client.runTest(
-      call = { getUserTokenProfile(userToken = "UserToken") },
+      call = {
+        getUserTokenProfile(userToken = "UserToken")
+      },
       intercept = {
         assertEquals("/1/profiles/personalization/UserToken".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -428,7 +572,13 @@ class PersonalizationTest {
                     eventType = EventType.entries.first { it.value == "click" },
                   )
                 ),
-              facetsScoring = listOf(FacetsScoring(score = 42, facetName = "Event")),
+              facetsScoring =
+                listOf(
+                  FacetsScoring(
+                    score = 42,
+                    facetName = "Event",
+                  )
+                ),
               personalizationImpact = 42,
             )
         )

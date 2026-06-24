@@ -76,7 +76,9 @@ public class UserMessageMetadataV5 {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class UserMessageMetadataV5 {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    ")
+      .append(toIndentedString(super.toString()))
+      .append("\n");
     sb.append("    turnContext: ").append(toIndentedString(turnContext)).append("\n");
     sb.append("}");
     return sb.toString();

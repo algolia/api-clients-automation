@@ -11,7 +11,7 @@ repositories {
 dependencies {
     implementation("com.algolia:algoliasearch-client-kotlin")
     implementation("io.ktor:ktor-client-okhttp:3.5.0")
-    implementation("ch.qos.logback:logback-classic:1.5.32")
+    implementation("ch.qos.logback:logback-classic:1.5.34")
     implementation("io.github.cdimascio:dotenv-kotlin:6.5.1")
 }
 

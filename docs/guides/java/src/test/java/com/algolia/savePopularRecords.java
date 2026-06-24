@@ -14,19 +14,17 @@ public class savePopularRecords {
     try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")) {
       List<Map<String, Object>> records = new ArrayList<>();
 
-      client
-        .browseObjects("<YOUR_INDEX_NAME>", Hit.class)
-        .forEach(hit -> {
-          Map<String, Object> props = hit.getAdditionalProperties();
-          int nbFollowers = (int) props.get("nbFollowers");
+      client.browseObjects("<YOUR_INDEX_NAME>", Hit.class).forEach(hit -> {
+        Map<String, Object> props = hit.getAdditionalProperties();
+        int nbFollowers = (int) props.get("nbFollowers");
 
-          Map<String, Object> record = new HashMap<>();
-          record.put("twitterHandle", props.get("twitterHandle"));
-          record.put("nbFollowers", nbFollowers);
-          record.put("isPopular", nbFollowers >= 1_000_000);
+        Map<String, Object> record = new HashMap<>();
+        record.put("twitterHandle", props.get("twitterHandle"));
+        record.put("nbFollowers", nbFollowers);
+        record.put("isPopular", nbFollowers >= 1_000_000);
 
-          records.add(record);
-        });
+        records.add(record);
+      });
 
       client.saveObjects("<YOUR_INDEX_NAME>", records);
     } catch (Exception e) {

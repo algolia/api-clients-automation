@@ -23,7 +23,9 @@ class MonitoringTest {
     val client = MonitoringClient(appId = "appId", apiKey = "apiKey")
 
     client.runTest(
-      call = { customPost(path = "1/test") },
+      call = {
+        customPost(path = "1/test")
+      },
       intercept = {
         val regexp =
           "^Algolia for Kotlin \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Monitoring (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
@@ -42,7 +44,9 @@ class MonitoringTest {
     val client = MonitoringClient(appId = "appId", apiKey = "apiKey")
 
     client.runTest(
-      call = { customPost(path = "1/test") },
+      call = {
+        customPost(path = "1/test")
+      },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(3.45.1\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
@@ -74,8 +78,12 @@ class MonitoringTest {
       )
 
     client.runTest(
-      call = { customDelete(path = "1/test/no-content") },
-      response = { assertNull(it) },
+      call = {
+        customDelete(path = "1/test/no-content")
+      },
+      response = {
+        assertNull(it)
+      },
     )
   }
 
@@ -84,8 +92,12 @@ class MonitoringTest {
     val client = MonitoringClient(appId = "my-app-id", apiKey = "my-api-key")
 
     client.runTest(
-      call = { customDelete(path = "test") },
-      intercept = { assertEquals("status.algolia.com", it.url.host) },
+      call = {
+        customDelete(path = "test")
+      },
+      intercept = {
+        assertEquals("status.algolia.com", it.url.host)
+      },
     )
   }
 
@@ -109,7 +121,9 @@ class MonitoringTest {
       )
 
     client.runTest(
-      call = { customGet(path = "check-api-key/1") },
+      call = {
+        customGet(path = "check-api-key/1")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(
@@ -120,10 +134,17 @@ class MonitoringTest {
       },
     )
 
-    client.runTest(call = { setClientApiKey(apiKey = "updated-api-key") }, intercept = {})
+    client.runTest(
+      call = {
+        setClientApiKey(apiKey = "updated-api-key")
+      },
+      intercept = {},
+    )
 
     client.runTest(
-      call = { customGet(path = "check-api-key/2") },
+      call = {
+        customGet(path = "check-api-key/2")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(
