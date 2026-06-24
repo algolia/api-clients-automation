@@ -8,7 +8,9 @@ import com.fasterxml.jackson.databind.annotation.*;
 
 /** Gets or Sets booleanString */
 @JsonDeserialize(as = BooleanString.class)
-public enum BooleanString implements IgnorePlurals {
+public enum BooleanString
+  implements IgnorePlurals
+{
   TRUE("true"),
 
   FALSE("false");

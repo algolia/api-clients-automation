@@ -23,7 +23,9 @@ class PersonalizationTest {
     val client = PersonalizationClient(appId = "appId", apiKey = "apiKey", region = "us")
 
     client.runTest(
-      call = { customPost(path = "1/test") },
+      call = {
+        customPost(path = "1/test")
+      },
       intercept = {
         val regexp =
           "^Algolia for Kotlin \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Personalization (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
@@ -42,7 +44,9 @@ class PersonalizationTest {
     val client = PersonalizationClient(appId = "appId", apiKey = "apiKey", region = "us")
 
     client.runTest(
-      call = { customPost(path = "1/test") },
+      call = {
+        customPost(path = "1/test")
+      },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(3.45.1\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
@@ -75,8 +79,12 @@ class PersonalizationTest {
       )
 
     client.runTest(
-      call = { customDelete(path = "1/test/no-content") },
-      response = { assertNull(it) },
+      call = {
+        customDelete(path = "1/test/no-content")
+      },
+      response = {
+        assertNull(it)
+      },
     )
   }
 
@@ -143,7 +151,9 @@ class PersonalizationTest {
       )
 
     client.runTest(
-      call = { customGet(path = "check-api-key/1") },
+      call = {
+        customGet(path = "check-api-key/1")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(
@@ -154,10 +164,17 @@ class PersonalizationTest {
       },
     )
 
-    client.runTest(call = { setClientApiKey(apiKey = "updated-api-key") }, intercept = {})
+    client.runTest(
+      call = {
+        setClientApiKey(apiKey = "updated-api-key")
+      },
+      intercept = {},
+    )
 
     client.runTest(
-      call = { customGet(path = "check-api-key/2") },
+      call = {
+        customGet(path = "check-api-key/2")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(

@@ -671,7 +671,9 @@ public class SearchResponsePartial<T> implements SearchResult<T> {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class SearchResponsePartial {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    ")
+      .append(toIndentedString(super.toString()))
+      .append("\n");
     sb.append("    abTestID: ").append(toIndentedString(abTestID)).append("\n");
     sb.append("    abTestVariantID: ").append(toIndentedString(abTestVariantID)).append("\n");
     sb.append("    aroundLatLng: ").append(toIndentedString(aroundLatLng)).append("\n");

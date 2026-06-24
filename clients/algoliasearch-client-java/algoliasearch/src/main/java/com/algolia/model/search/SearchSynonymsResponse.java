@@ -85,7 +85,9 @@ public class SearchSynonymsResponse {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class SearchSynonymsResponse {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    ")
+      .append(toIndentedString(super.toString()))
+      .append("\n");
     sb.append("    hits: ").append(toIndentedString(hits)).append("\n");
     sb.append("    nbHits: ").append(toIndentedString(nbHits)).append("\n");
     sb.append("}");

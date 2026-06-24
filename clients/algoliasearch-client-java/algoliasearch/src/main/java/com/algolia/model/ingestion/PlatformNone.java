@@ -8,7 +8,9 @@ import com.fasterxml.jackson.databind.annotation.*;
 
 /** Authentication resource not tied to any ecommerce platform, used for filtering. */
 @JsonDeserialize(as = PlatformNone.class)
-public enum PlatformNone implements PlatformWithNone {
+public enum PlatformNone
+  implements PlatformWithNone
+{
   NONE("none");
 
   private final String value;

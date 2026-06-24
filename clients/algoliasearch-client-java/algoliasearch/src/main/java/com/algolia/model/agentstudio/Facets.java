@@ -71,7 +71,9 @@ public class Facets implements FacetsUnion {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Facets {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    ")
+      .append(toIndentedString(super.toString()))
+      .append("\n");
     sb.append("    order: ").append(toIndentedString(order)).append("\n");
     sb.append("}");
     return sb.toString();

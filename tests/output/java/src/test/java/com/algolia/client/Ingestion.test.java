@@ -48,7 +48,10 @@ class IngestionClientClientTests {
   }
 
   private ClientOptions withCustomHosts(List<Host> hosts, boolean gzipEncoding) {
-    return ClientOptions.builder().setHosts(hosts).setCompressionType(gzipEncoding ? CompressionType.GZIP : CompressionType.NONE).build();
+    return ClientOptions.builder()
+      .setHosts(hosts)
+      .setCompressionType(gzipEncoding ? CompressionType.GZIP : CompressionType.NONE)
+      .build();
   }
 
   @Test

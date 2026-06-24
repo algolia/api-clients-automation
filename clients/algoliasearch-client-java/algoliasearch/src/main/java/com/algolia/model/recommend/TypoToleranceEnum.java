@@ -13,7 +13,9 @@ import com.fasterxml.jackson.databind.annotation.*;
  * With `strict`, the Typo ranking criterion is applied first in the `ranking` setting.
  */
 @JsonDeserialize(as = TypoToleranceEnum.class)
-public enum TypoToleranceEnum implements TypoTolerance {
+public enum TypoToleranceEnum
+  implements TypoTolerance
+{
   MIN("min"),
 
   STRICT("strict"),

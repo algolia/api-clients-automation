@@ -171,7 +171,9 @@ public class DictionaryEntry {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class DictionaryEntry {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    ")
+      .append(toIndentedString(super.toString()))
+      .append("\n");
     sb.append("    objectID: ").append(toIndentedString(objectID)).append("\n");
     sb.append("    language: ").append(toIndentedString(language)).append("\n");
     sb.append("    word: ").append(toIndentedString(word)).append("\n");

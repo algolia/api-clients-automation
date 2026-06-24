@@ -8,9 +8,7 @@ import java.util.Map;
 
 public class setHeaderUserIDThenSaveObjects {
 
-  private static final List<Map<String, Object>> playlists = List.of(
-    /* Your records */
-  );
+  private static final List<Map<String, Object>> playlists = List.of(/* Your records */);
 
   public static void main(String[] args) throws Exception {
     try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")) {

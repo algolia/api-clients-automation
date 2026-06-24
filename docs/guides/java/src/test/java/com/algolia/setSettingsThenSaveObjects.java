@@ -8,9 +8,7 @@ import java.util.Map;
 
 public class setSettingsThenSaveObjects {
 
-  private static final List<Map<String, Object>> playlists = List.of(
-    /* Your records */
-  );
+  private static final List<Map<String, Object>> playlists = List.of(/* Your records */);
 
   private static String getAppIDFor(String user) {
     return ""; // Implement your own logic here

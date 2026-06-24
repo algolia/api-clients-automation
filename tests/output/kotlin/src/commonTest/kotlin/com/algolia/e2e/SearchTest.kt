@@ -35,7 +35,9 @@ class SearchTest {
   @Test
   fun `browse with minimal parameters`() = runTest {
     client.runTest(
-      call = { browse(indexName = "cts_e2e_browse") },
+      call = {
+        browse(indexName = "cts_e2e_browse")
+      },
       response = {
         lenientJsonAssert(
           "{\"page\":0,\"nbHits\":33191,\"nbPages\":34,\"hitsPerPage\":1000,\"query\":\"\",\"params\":\"\"}",
@@ -48,7 +50,12 @@ class SearchTest {
   @Test
   fun `search with a real object1`() = runTest {
     client.runTest(
-      call = { getObject(indexName = "cts_e2e_browse", objectID = "Batman and Robin") },
+      call = {
+        getObject(
+          indexName = "cts_e2e_browse",
+          objectID = "Batman and Robin",
+        )
+      },
       response = {
         lenientJsonAssert(
           "{\"objectID\":\"Batman and Robin\",\"title\":\"Batman and Robin\",\"year\":1949,\"cast\":[\"Robert Lowery\",\"Johnny Duncan\",\"Jane Adams\"]}",
@@ -61,7 +68,12 @@ class SearchTest {
   @Test
   fun `getRule`() = runTest {
     client.runTest(
-      call = { getRule(indexName = "cts_e2e_browse", objectID = "qr-1725004648916") },
+      call = {
+        getRule(
+          indexName = "cts_e2e_browse",
+          objectID = "qr-1725004648916",
+        )
+      },
       response = {
         lenientJsonAssert(
           "{\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\",\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"Æon Flux\"],\"position\":0}]}}",
@@ -74,7 +86,12 @@ class SearchTest {
   @Test
   fun `getSettings`() = runTest {
     client.runTest(
-      call = { getSettings(indexName = "cts_e2e_settings", getVersion = 2) },
+      call = {
+        getSettings(
+          indexName = "cts_e2e_settings",
+          getVersion = 2,
+        )
+      },
       response = {
         lenientJsonAssert(
           "{\"minWordSizefor1Typo\":4,\"minWordSizefor2Typos\":8,\"hitsPerPage\":100,\"maxValuesPerFacet\":100,\"paginationLimitedTo\":10,\"exactOnSingleWordQuery\":\"attribute\",\"ranking\":[\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"],\"separatorsToIndex\":\"\",\"removeWordsIfNoResults\":\"none\",\"queryType\":\"prefixLast\",\"highlightPreTag\":\"<em>\",\"highlightPostTag\":\"</em>\",\"alternativesAsExact\":[\"ignorePlurals\",\"singleWordSynonym\"],\"typoTolerance\":\"false\"}",
@@ -294,7 +311,11 @@ class SearchTest {
 
   @Test
   fun `search with special characters in indexName1`() = runTest {
-    client.runTest(call = { searchSingleIndex(indexName = "cts_e2e_space in index") })
+    client.runTest(
+      call = {
+        searchSingleIndex(indexName = "cts_e2e_space in index")
+      }
+    )
   }
 
   @Test
