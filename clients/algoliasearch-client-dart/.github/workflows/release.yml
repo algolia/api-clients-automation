@@ -37,14 +37,19 @@ jobs:
         shell: bash
         run: sleep 300
 
+  # First wave: packages that only depend on client_core. client_search is
+  # excluded on purpose because it depends on client_ingestion and must wait
+  # for it to be available on pub.dev (see publish_search below).
   publish_clients:
     needs:
       - check
       - wait_for_core
     strategy:
+      # Don't let one failing package cancel the others (notably
+      # client_ingestion, which client_search depends on).
+      fail-fast: false
       matrix:
         package:
-          - packages/client_search
           - packages/client_insights
           - packages/client_recommend
           - packages/client_ingestion
@@ -67,12 +72,33 @@ jobs:
         shell: bash
         run: sleep 300
 
+  # Second wave: client_search depends on client_ingestion, so it can only be
+  # published once the first wave is live on pub.dev.
+  publish_search:
+    needs:
+      - check
+      - publish_clients
+      - wait_for_dependencies
+    permissions:
+      id-token: write
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    with:
+      working-directory: packages/client_search
+
+  wait_for_search:
+    needs: publish_search
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for search package to be published
+        shell: bash
+        run: sleep 300
+
+  # Umbrella package depends on core, search, insights and ingestion.
   publish_algoliasearch:
     needs:
       - check
-      - publish_core
-      - publish_clients
-      - wait_for_dependencies
+      - publish_search
+      - wait_for_search
     permissions:
       id-token: write
     uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
