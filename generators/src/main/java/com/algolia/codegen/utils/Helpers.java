@@ -312,8 +312,7 @@ public class Helpers {
       oneOf
         .stream()
         .filter(type -> type != null && type.startsWith("List"))
-        .count() >=
-      2
+        .count() >= 2
     );
   }
 

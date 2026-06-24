@@ -28,7 +28,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     // generator specific options
     setLibrary("multiplatform");
     setApiPackage("api");
-    setApiSuffix(Helpers.API_SUFFIX);
+    setApiNameSuffix(Helpers.API_SUFFIX);
     setGroupId("com.algolia");
     setArtifactId("algoliasearch-client-kotlin");
     setApiPackage("com.algolia.client.api");
