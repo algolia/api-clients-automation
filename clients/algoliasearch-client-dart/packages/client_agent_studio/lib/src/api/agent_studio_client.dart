@@ -31,8 +31,6 @@ import 'package:algolia_client_agent_studio/src/model/secret_key_patch.dart';
 import 'package:algolia_client_agent_studio/src/model/secret_key_response.dart';
 import 'package:algolia_client_agent_studio/src/model/user_data_response.dart';
 
-/// **Beta:** The Agent Studio API is not yet stable and may change without notice.
-/// See https://www.algolia.com/doc/rest-api/agent-studio
 final class AgentStudioClient implements ApiClient {
   @override
   final ClientOptions options;

@@ -6164,8 +6164,8 @@
       "getLogs with parameters": "let response = try await client.getLogs(\n    offset: 5,\n    length: 10,\n    indexName: \"<YOUR_INDEX_NAME>\",\n    type: LogType.all\n)"
     },
     "getObject": {
-      "getObject": "let response = try await client.getObject(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objectID: \"uniqueID\",\n    attributesToRetrieve: [\"attr1\", \"attr2\"]\n)",
-      "search with a real object": "let response = try await client.getObject(indexName: \"<YOUR_INDEX_NAME>\", objectID: \"Batman and Robin\")"
+      "getObject": "let response: [String: AnyCodable] = try await client.getObject(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objectID: \"uniqueID\",\n    attributesToRetrieve: [\"attr1\", \"attr2\"]\n)",
+      "search with a real object": "let response: [String: AnyCodable] = try await client.getObject(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objectID: \"Batman and Robin\"\n)"
     },
     "getObjects": {
       "by ID": "let response: GetObjectsResponse<Hit> = try await client\n    .getObjects(getObjectsParams: GetObjectsParams(requests: [GetObjectsRequest(\n        objectID: \"uniqueID\",\n        indexName: \"<YOUR_INDEX_NAME>\"\n    )]))",

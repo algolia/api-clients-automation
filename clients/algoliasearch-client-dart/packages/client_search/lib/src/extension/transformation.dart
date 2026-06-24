@@ -136,7 +136,9 @@ extension Transformation on SearchClient {
   }) async {
     if (ingestionTransporter == null) throw StateError(_notSetError);
 
-    final effectiveMaxRetries = chunkedOptions?.maxRetries ?? defaultMaxRetries;
+    final effectiveChunkedOptions = chunkedOptions ??
+        ChunkedHelperOptions(maxRetries: defaultReplaceAllObjectsMaxRetries);
+    final effectiveMaxRetries = effectiveChunkedOptions.maxRetries;
     final effectiveScopes =
         scopes ?? [ScopeType.settings, ScopeType.rules, ScopeType.synonyms];
     final tmpIndex = '${indexName}_tmp_${Random().nextInt(900000) + 100000}';
@@ -158,7 +160,7 @@ extension Transformation on SearchClient {
         action: ingestion.Action.addObject,
         waitForTasks: true,
         batchSize: batchSize,
-        chunkedOptions: chunkedOptions,
+        chunkedOptions: effectiveChunkedOptions,
         referenceIndexName: indexName,
         requestOptions: requestOptions,
       );

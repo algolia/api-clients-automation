@@ -70,7 +70,11 @@ post:
                 description: Retrieved records.
                 items:
                   type: object
-                  description: Retrieved record.
+                  description: |
+                    Retrieved record.
+
+                    `null` if the requested `objectID` doesn't exist in the index.
+                  nullable: true
                   x-is-generic: true
             required:
               - results

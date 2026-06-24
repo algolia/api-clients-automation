@@ -17,4 +17,7 @@ object ChunkedHelperOptions {
 
   /** The default maximum number of retries for chunked helpers polling for task completion. */
   val DefaultMaxRetries: Int = 100
+
+  /** The default maximum number of retries for `replaceAllObjects` polling for task completion. */
+  val DefaultReplaceAllObjectsMaxRetries: Int = 800
 }

@@ -1237,7 +1237,8 @@
                       "description": "Retrieved records.",
                       "items": {
                         "type": "object",
-                        "description": "Retrieved record.",
+                        "description": "Retrieved record.\n\n`null` if the requested `objectID` doesn't exist in the index.\n",
+                        "nullable": true,
                         "x-is-generic": true
                       }
                     }

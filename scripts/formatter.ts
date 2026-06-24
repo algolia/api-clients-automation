@@ -66,7 +66,10 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       await run('rubyfmt -i -- .', { cwd, language });
       break;
     case 'scala':
-      await run('sbt -Dsbt.server.forcestart=true scalafmtAll scalafmtSbt', {
+      // sbt 2.x no longer accepts space-separated commands on the CLI, they
+      // must be passed as a single `;`-separated quoted string.
+      // https://www.scala-sbt.org/2.x/docs/en/changes/migrating-from-sbt-1.x.html#Running+a+sequence+of+commands
+      await run('sbt -Dsbt.server.forcestart=true "scalafmtAll; scalafmtSbt"', {
         cwd,
         language,
       });

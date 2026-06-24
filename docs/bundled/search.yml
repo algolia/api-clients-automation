@@ -3710,7 +3710,7 @@ paths:
 
             // Call the API
 
-            let response = try await client.getObject(
+            let response: [String: AnyCodable] = try await client.getObject(
                 indexName: "<YOUR_INDEX_NAME>",
                 objectID: "uniqueID",
                 attributesToRetrieve: ["attr1", "attr2"]
@@ -6226,7 +6226,13 @@ paths:
                     description: Retrieved records.
                     items:
                       type: object
-                      description: Retrieved record.
+                      description: >
+                        Retrieved record.
+
+
+                        `null` if the requested `objectID` doesn't exist in the
+                        index.
+                      nullable: true
                       x-is-generic: true
                   message:
                     type: string

@@ -441,7 +441,7 @@ public class SearchClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.44.0\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.46.0\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }
@@ -598,6 +598,47 @@ public class SearchClientTests
         new SecuredApiKeyRestrictions { UserToken = "user42" }
       );
     }
+  }
+
+  [Fact(DisplayName = "deserializes null records for missing objectIDs")]
+  public async Task GetObjectsTest0()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6686,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.GetObjectsAsync<Hit>(
+      new GetObjectsParams
+      {
+        Requests = new List<GetObjectsRequest>
+        {
+          new GetObjectsRequest { ObjectID = "foo", IndexName = "theIndexName" },
+          new GetObjectsRequest { ObjectID = "missing", IndexName = "theIndexName" },
+        },
+      }
+    );
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"results\":[{\"objectID\":\"foo\"},null]}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
   }
 
   [Fact(DisplayName = "indexExists")]
