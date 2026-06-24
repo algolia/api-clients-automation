@@ -434,6 +434,10 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         $requestOptions = [],
         ?ChunkedHelperOptions $chunkedOptions = null
     ) {
+        if ($batchSize < 1) {
+            throw new \InvalidArgumentException('`batchSize` must be at least 1.');
+        }
+
         $maxRetries = $chunkedOptions?->maxRetries ?? 100;
         $responses = [];
         $records = [];
