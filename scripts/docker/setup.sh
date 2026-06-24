@@ -6,6 +6,8 @@ source "$SCRIPT_DIR/slot.sh"
 
 export NODE_VERSION=$(cat .nvmrc)
 
+# Export each language version file as an env var, e.g. config/.java-version -> JAVA_VERSION.
+# `find` prints "<version> <path>" per file; the sed/tr derives the var name from the path.
 while read line; do
   arr=($line)
   export $(echo ${arr[1]} | sed -e "s/-/_/;s/config\/\.//" | tr "[a-z]" "[A-Z]")=${arr[0]}
@@ -20,28 +22,27 @@ export APIC_BASE_TAG="apic-base:${VERSIONS_HASH}"
 export APIC_RUBY_TAG="apic-ruby:${RUBY_HASH}"
 export APIC_SWIFT_TAG="apic-swift:${SWIFT_HASH}"
 
-PREVIOUS_SLOT=""
-if [ -f "$SLOT_FILE" ]; then
-  PREVIOUS_SLOT=$(cat "$SLOT_FILE")
-fi
-
-WORKTREE_COUNT=$(git worktree list 2>/dev/null | wc -l | tr -d ' ')
-if [ "$WORKTREE_COUNT" -gt 1 ]; then
-  claim_slot
-fi
+# Always claim a slot so the first worktree reserves slot 0 and no later worktree can take it.
+claim_slot
 SLOT=$(read_slot)
 
-if [ -n "$PREVIOUS_SLOT" ] && [ "$PREVIOUS_SLOT" != "$SLOT" ]; then
+# Include the slot in the project name so worktrees that share a directory basename still
+# get distinct Compose projects (and therefore distinct containers/networks).
+DIR_NAME=$(basename "$(pwd)" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9_-]/-/g')
+export COMPOSE_PROJECT_NAME="apic-${DIR_NAME}-${SLOT}"
+APIC_DEBUG_PORT=$((DEBUG_PORT + SLOT * PORTS_PER_SLOT))
+export CTS_PORT_OFFSET=$((SLOT * PORTS_PER_SLOT))
+
+# A non-zero slot offsets the host ports, but the committed client CTS tests bake in the
+# offset-0 ports. Remind the user to regenerate so the client suite targets the right ports
+# (the manual integration suites read the offset at runtime, so they're unaffected).
+if [ "$SLOT" != "0" ]; then
   echo ""
-  echo "WARNING: Slot changed from $PREVIOUS_SLOT to $SLOT."
-  echo "         Re-run 'yarn cli cts generate' to update generated test ports."
+  echo "NOTE: this worktree uses slot $SLOT (port offset $CTS_PORT_OFFSET)."
+  echo "      Run 'yarn cli cts generate <lang>' before the client CTS suite, or the"
+  echo "      committed offset-0 client tests will target the wrong host ports."
   echo ""
 fi
-
-DIR_NAME=$(basename "$(pwd)" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9_-]/-/g')
-export COMPOSE_PROJECT_NAME="apic-${DIR_NAME}"
-APIC_DEBUG_PORT=$((5009 + SLOT * PORTS_PER_SLOT))
-export CTS_PORT_OFFSET=$((SLOT * PORTS_PER_SLOT))
 
 cat > .env.docker <<EOF
 COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME}

@@ -1,5 +1,6 @@
 import type { Server } from 'http';
 import { readFileSync } from 'node:fs';
+import path from 'node:path';
 
 import type { Express } from 'express';
 import express from 'express';
@@ -35,9 +36,10 @@ function getPortOffset(): number {
   const envOffset = process.env.CTS_PORT_OFFSET;
   if (envOffset) return parseInt(envOffset, 10) || 0;
 
-  // Host-side fallback: read the pre-computed offset from .env.docker.
+  // Host-side fallback: read the pre-computed offset from .env.docker at the repo root.
   try {
-    const envDocker = readFileSync('.env.docker', 'utf8');
+    const root = path.resolve(import.meta.dirname, '../../..');
+    const envDocker = readFileSync(path.join(root, '.env.docker'), 'utf8');
     const match = envDocker.match(/^CTS_PORT_OFFSET=(\d+)$/m);
     if (match) return parseInt(match[1], 10);
   } catch {}

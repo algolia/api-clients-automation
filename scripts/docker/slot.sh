@@ -1,20 +1,24 @@
 #!/bin/bash
 # Worktree slot management for multi-worktree Docker isolation.
 # Each worktree gets a unique slot number (0, 1, 2, ...) that determines:
-# - CTS test server port range: base_port + (slot * 21)
-# - Worktree identity for Docker Compose project scoping
+# - the per-slot port block offset: slot * PORTS_PER_SLOT
+# - the Docker Compose project name (so containers/networks don't collide)
 #
-# Slot assignments are tracked in a central registry at ~/.config/apic/worktree-slots.json
-# Each worktree also stores its slot locally in .apic-worktree-slot
+# Slot assignments live in a central registry at ~/.config/apic/worktree-slots.json,
+# keyed by absolute worktree path. There is no per-worktree file.
 
 REGISTRY_DIR="$HOME/.config/apic"
 REGISTRY_FILE="$REGISTRY_DIR/worktree-slots.json"
-SLOT_FILE=".apic-worktree-slot"
 LOCK_DIR="$REGISTRY_DIR/.slot-lock"
-# Derived from scripts/cts/testServer/ports.ts (source of truth).
-# Counts entries in SERVER_PORTS by matching `  key: <digits>,` lines.
-# SYNC: TestsClient.java hardcodes PORTS_PER_SLOT; portsSync.test.ts validates they match.
-PORTS_PER_SLOT=$(grep -cE '^\s+\w+:\s+[0-9]+,' scripts/cts/testServer/ports.ts 2>/dev/null || echo 21)
+
+# scripts/cts/testServer/ports.ts is the single source of truth for the port block.
+# PORTS_PER_SLOT = number of entries; DEBUG_PORT = the `debug` entry's value.
+# Both are also read by the scripts that source this file (setup.sh).
+SLOT_SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PORTS_FILE="$SLOT_SCRIPT_DIR/../cts/testServer/ports.ts"
+PORTS_PER_SLOT=$(grep -cE '^[[:space:]]+[A-Za-z0-9_]+:[[:space:]]*[0-9]+,' "$PORTS_FILE")
+# shellcheck disable=SC2034  # consumed by setup.sh after sourcing
+DEBUG_PORT=$(grep -oE 'debug:[[:space:]]*[0-9]+' "$PORTS_FILE" | grep -oE '[0-9]+')
 
 acquire_lock() {
   local max_attempts=30
@@ -71,7 +75,7 @@ cleanup_stale_entries() {
   mv "$tmp_file" "$REGISTRY_FILE"
 }
 
-# Claim the lowest available slot. Writes to both the registry and .apic-worktree-slot.
+# Claim the lowest available slot, recording it in the central registry.
 claim_slot() {
   local worktree_path
   worktree_path=$(pwd -P)
@@ -83,7 +87,6 @@ claim_slot() {
   local existing
   existing=$(jq -r --arg path "$worktree_path" '.[$path] // empty' "$REGISTRY_FILE")
   if [ -n "$existing" ]; then
-    echo "$existing" > "$SLOT_FILE"
     release_lock
     return
   fi
@@ -97,22 +100,21 @@ claim_slot() {
 
   jq --arg path "$worktree_path" --argjson slot "$slot" '. + {($path): $slot}' "$REGISTRY_FILE" > "${REGISTRY_FILE}.tmp" \
     && mv "${REGISTRY_FILE}.tmp" "$REGISTRY_FILE"
-  echo "$slot" > "$SLOT_FILE"
 
   release_lock
   echo "Claimed slot $slot (port offset: $((slot * PORTS_PER_SLOT)))"
 }
 
-# Read the current worktree's slot. Returns 0 if no slot file exists (standard setup / CI).
+# Read the current worktree's slot from the registry. Returns 0 when unregistered (e.g. CI).
 read_slot() {
-  if [ -f "$SLOT_FILE" ]; then
-    cat "$SLOT_FILE"
+  if [ -f "$REGISTRY_FILE" ]; then
+    jq -r --arg path "$(pwd -P)" '.[$path] // 0' "$REGISTRY_FILE"
   else
     echo "0"
   fi
 }
 
-# Release the current worktree's slot from the registry and remove the local file.
+# Release the current worktree's slot from the registry.
 release_slot() {
   local worktree_path
   worktree_path=$(pwd -P)
@@ -125,6 +127,5 @@ release_slot() {
 
   release_lock
 
-  rm -f "$SLOT_FILE"
   echo "Released slot for $worktree_path"
 }

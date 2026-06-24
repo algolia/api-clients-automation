@@ -4,6 +4,8 @@ import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,11 +22,6 @@ public class TestsClient extends TestsGenerator {
   private final boolean withSyncTests;
   private final String testType;
 
-  // Must match the port count in scripts/cts/testServer/ports.ts (source of truth).
-  // A vitest check (scripts/__tests__/portsSync.test.ts) validates they stay in sync.
-  private static final int PORTS_PER_SLOT = 21;
-  private static final int BASE_PORT = 6671;
-
   public TestsClient(CTSManager ctsManager, boolean withBenchmark) {
     super(ctsManager);
     this.withBenchmark = withBenchmark;
@@ -32,15 +29,33 @@ public class TestsClient extends TestsGenerator {
     this.testType = withBenchmark ? "benchmark" : "client";
   }
 
+  // CTS_PORT_OFFSET is computed by scripts/docker/setup.sh (slot * port-block size).
+  // In Docker it is an env var; on the host we read the pre-computed value from .env.docker.
   private static int getPortOffset() {
     String offset = System.getenv("CTS_PORT_OFFSET");
+    if (offset == null || offset.isEmpty()) {
+      offset = readOffsetFromEnvDocker();
+    }
     if (offset == null || offset.isEmpty()) return 0;
     try {
-      return Integer.parseInt(offset);
+      return Integer.parseInt(offset.trim());
     } catch (NumberFormatException e) {
       System.err.println("Warning: CTS_PORT_OFFSET is not a valid number: " + offset);
       return 0;
     }
+  }
+
+  private static String readOffsetFromEnvDocker() {
+    try {
+      for (String line : Files.readAllLines(Path.of(".env.docker"))) {
+        if (line.startsWith("CTS_PORT_OFFSET=")) {
+          return line.substring("CTS_PORT_OFFSET=".length());
+        }
+      }
+    } catch (Exception ignored) {
+      // .env.docker is absent outside worktree Docker setups; offset 0 is correct there.
+    }
+    return null;
   }
 
   private static List<Map<String, Object>> offsetPorts(List<Map<String, Object>> hosts) {
@@ -59,10 +74,20 @@ public class TestsClient extends TestsGenerator {
       .collect(Collectors.toList());
   }
 
-  private static String offsetPortsInString(String text, int offset) {
-    if (offset == 0 || text == null) return text;
+  private static void collectHostPorts(List<Map<String, Object>> hosts, List<Integer> into) {
+    for (Map<String, Object> host : hosts) {
+      if (host.get("port") instanceof Number port) {
+        into.add(port.intValue());
+      }
+    }
+  }
+
+  // Offset the ports in an expected error string using the test's own custom hosts, so no
+  // global port range is needed.
+  private static String offsetPortsInString(String text, List<Integer> hostPorts, int offset) {
+    if (offset == 0 || text == null || hostPorts.isEmpty()) return text;
     String result = text;
-    for (int port = BASE_PORT; port <= BASE_PORT + PORTS_PER_SLOT - 1; port++) {
+    for (int port : hostPorts) {
       result = result.replace(":" + port, ":" + (port + offset));
     }
     return result;
@@ -119,6 +144,7 @@ public class TestsClient extends TestsGenerator {
         try {
           Map<String, Object> testOut = new HashMap<>();
           List<Map<String, Object>> steps = new ArrayList<>();
+          List<Integer> testHostPorts = new ArrayList<>();
           int methodCount = 0;
           testOut.put("inClientTest", true);
           testOut.put("testName", test.testName);
@@ -140,6 +166,7 @@ public class TestsClient extends TestsGenerator {
               if (hasCustomHosts) {
                 @SuppressWarnings("unchecked")
                 var customHosts = (List<Map<String, Object>>) step.parameters.get("customHosts");
+                collectHostPorts(customHosts, testHostPorts);
                 stepOut.put("customHosts", offsetPorts(customHosts));
               }
 
@@ -162,6 +189,7 @@ public class TestsClient extends TestsGenerator {
                 if (hasTransformationCustomHosts) {
                   @SuppressWarnings("unchecked")
                   var transformationCustomHosts = (List<Map<String, Object>>) transformationOptions.get("customHosts");
+                  collectHostPorts(transformationCustomHosts, testHostPorts);
                   stepOut.put("transformationCustomHosts", offsetPorts(transformationCustomHosts));
                 }
               }
@@ -272,7 +300,7 @@ public class TestsClient extends TestsGenerator {
                 } else {
                   stepOut.put("expectedError", step.expected.error);
                 }
-                stepOut.put("expectedError", offsetPortsInString((String) stepOut.get("expectedError"), getPortOffset()));
+                stepOut.put("expectedError", offsetPortsInString((String) stepOut.get("expectedError"), testHostPorts, getPortOffset()));
                 if (language.equals("go") && step.method != null) {
                   // hack for go that use PascalCase, but just in the operationID
                   stepOut.put(

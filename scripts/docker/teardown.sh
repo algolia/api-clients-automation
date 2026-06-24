@@ -15,10 +15,7 @@ export $(grep '^COMPOSE_PROJECT_NAME=' .env.docker)
 echo "Stopping containers for project: $COMPOSE_PROJECT_NAME"
 docker compose --env-file .env.docker down --remove-orphans
 
-WORKTREE_COUNT=$(git worktree list 2>/dev/null | wc -l | tr -d ' ')
-if [ "$WORKTREE_COUNT" -gt 1 ]; then
-  release_slot
-fi
+release_slot
 
 rm -f .env.docker
 

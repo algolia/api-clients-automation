@@ -13,6 +13,7 @@ import releaseConfig from '../config/release.config.json' with { type: 'json' };
 
 import { Cache } from './cache.ts';
 import { getDockerService } from './config.ts';
+import { DEBUG_PORT } from './cts/testServer/ports.ts';
 import { generateOpenapitools } from './pre-gen/index.ts';
 import { getGitAuthor } from './release/common.ts';
 import { buildSpecs } from './specs/index.ts';
@@ -27,9 +28,9 @@ export const TODAY = new Date().toISOString().split('T')[0];
 
 export const CI = Boolean(process.env.CI);
 
-// The Java debugger always listens on this port INSIDE the container.
-// docker-compose.yml maps APIC_DEBUG_PORT (host) → this port (container).
-const CONTAINER_DEBUG_PORT = 5009;
+// The Java debugger listens on this port INSIDE the container; docker-compose.yml maps the host
+// port APIC_DEBUG_PORT (this + offset) to it. Sourced from the shared ports.ts list.
+const CONTAINER_DEBUG_PORT = DEBUG_PORT;
 
 // This script is run by `yarn workspace ...`, which means the current working directory is `./script`
 export const ROOT_DIR = path.resolve(process.cwd(), '..');
@@ -288,11 +289,11 @@ function getDebugPort(): number {
   } catch (e: unknown) {
     if (!(e instanceof Error && 'code' in e && (e as NodeJS.ErrnoException).code === 'ENOENT')) {
       console.warn(
-        `[worktree] Could not read .env.docker: ${e instanceof Error ? e.message : e}, defaulting to port 5009`,
+        `[worktree] Could not read .env.docker: ${e instanceof Error ? e.message : e}, defaulting to port ${DEBUG_PORT}`,
       );
     }
   }
-  return 5009;
+  return DEBUG_PORT;
 }
 
 export async function callGenerator(gen: Generator, withDebugger: boolean): Promise<void> {

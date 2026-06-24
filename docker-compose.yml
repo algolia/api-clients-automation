@@ -15,7 +15,7 @@ services:
     command: tail -f /dev/null
     volumes: [./:/app]
     ports:
-      - "${APIC_DEBUG_PORT:-5009}:5009"
+      - "${APIC_DEBUG_PORT:-6670}:6670"
     environment:
       - CTS_PORT_OFFSET=${CTS_PORT_OFFSET:-0}
     extra_hosts:

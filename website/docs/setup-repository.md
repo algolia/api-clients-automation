@@ -27,6 +27,12 @@ We use multiple docker images to simplify the build. There is [one base image](h
 yarn docker:setup
 ```
 
+:::note
+
+Requires Docker 20.10+ — the CTS test servers run on the host and the containers reach them via `host.docker.internal`. Each git worktree gets its own slot, port range, and Docker Compose project, so several worktrees can build and run the CTS in parallel; run `yarn docker:teardown` to release a worktree's slot when you're done with it. Running many worktrees at once may require raising Docker's `default-address-pools` so it doesn't run out of networks.
+
+:::
+
 ## Tooling
 
 :::info
@@ -40,11 +46,13 @@ You can run `apic help` to check if it's working properly.
 
 #### Clean
 
-> Stops all containers and clean the images
+> Stops this worktree's containers and releases its slot (shared images are kept)
 
 ```bash
-docker compose down --rmi all
+yarn docker:teardown
 ```
+
+To also remove the shared images: `docker image rm $(docker images 'apic-*' -q)`.
 
 ## Contribute
 

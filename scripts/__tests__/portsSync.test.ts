@@ -1,25 +1,45 @@
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 
 import { describe, expect, it } from 'vitest';
 
-import { BASE_PORT, PORTS_PER_SLOT } from '../cts/testServer/ports.ts';
+import { BASE_PORT, PORTS_PER_SLOT, SERVER_PORTS } from '../cts/testServer/ports.ts';
 
-const ROOT = path.resolve(import.meta.dirname, '../..');
+const TEST_SERVER_DIR = path.resolve(import.meta.dirname, '../cts/testServer');
 
-describe('PORTS_PER_SLOT sync', () => {
-  it('TestsClient.java matches ports.ts', () => {
-    const java = readFileSync(
-      path.join(ROOT, 'generators/src/main/java/com/algolia/codegen/cts/tests/TestsClient.java'),
-      'utf8',
-    );
+describe('SERVER_PORTS is the single source of truth', () => {
+  const values = Object.values(SERVER_PORTS);
 
-    const portsMatch = java.match(/PORTS_PER_SLOT\s*=\s*(\d+)/);
-    expect(portsMatch, 'PORTS_PER_SLOT not found in TestsClient.java').not.toBeNull();
-    expect(Number(portsMatch![1])).toBe(PORTS_PER_SLOT);
+  it('has no duplicate ports', () => {
+    expect(new Set(values).size).toBe(values.length);
+  });
 
-    const baseMatch = java.match(/BASE_PORT\s*=\s*(\d+)/);
-    expect(baseMatch, 'BASE_PORT not found in TestsClient.java').not.toBeNull();
-    expect(Number(baseMatch![1])).toBe(BASE_PORT);
+  it('is a contiguous block of PORTS_PER_SLOT ports starting at BASE_PORT', () => {
+    // Contiguity is what makes `slot * PORTS_PER_SLOT` tile without overlap or gaps.
+    const sorted = [...values].sort((a, b) => a - b);
+    expect(sorted).toHaveLength(PORTS_PER_SLOT);
+    expect(sorted[0]).toBe(BASE_PORT);
+    sorted.forEach((port, i) => expect(port).toBe(BASE_PORT + i));
+  });
+
+  it('matches the entry count scripts/docker/slot.sh parses', () => {
+    // Mirror the grep in slot.sh so the shell-computed offset can never drift from the list.
+    const src = readFileSync(path.join(TEST_SERVER_DIR, 'ports.ts'), 'utf8');
+    const entries = src.match(/^\s+\w+:\s*\d+,/gm) ?? [];
+    expect(entries).toHaveLength(PORTS_PER_SLOT);
+  });
+
+  it('is referenced by every test server (no hardcoded ports)', () => {
+    const offenders: string[] = [];
+    for (const file of readdirSync(TEST_SERVER_DIR)) {
+      if (!file.endsWith('.ts') || file === 'ports.ts' || file === 'index.ts') {
+        continue;
+      }
+      const src = readFileSync(path.join(TEST_SERVER_DIR, file), 'utf8');
+      if (/setupServer\(\s*['"][^'"]+['"]\s*,\s*\d+/.test(src)) {
+        offenders.push(file);
+      }
+    }
+    expect(offenders, `hardcoded ports found in: ${offenders.join(', ')}`).toEqual([]);
   });
 });
