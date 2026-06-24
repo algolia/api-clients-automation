@@ -940,6 +940,124 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('saveObjectsWithTransformation polls every task when waitForTasks is true')]
+    public function test1saveObjectsWithTransformation(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6693'])->setTransformationOptions((new TransformationOptions('us'))->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6693'])));
+
+        $res = $client->saveObjectsWithTransformation(
+            'cts_e2e_chunked_push_wait_php',
+            [
+                ['objectID' => '1',
+                    'name' => 'r1',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'r2',
+                ],
+
+                ['objectID' => '3',
+                    'name' => 'r3',
+                ],
+
+                ['objectID' => '4',
+                    'name' => 'r4',
+                ],
+
+                ['objectID' => '5',
+                    'name' => 'r5',
+                ],
+
+                ['objectID' => '6',
+                    'name' => 'r6',
+                ],
+
+                ['objectID' => '7',
+                    'name' => 'r7',
+                ],
+
+                ['objectID' => '8',
+                    'name' => 'r8',
+                ],
+
+                ['objectID' => '9',
+                    'name' => 'r9',
+                ],
+
+                ['objectID' => '10',
+                    'name' => 'r10',
+                ],
+
+                ['objectID' => '11',
+                    'name' => 'r11',
+                ],
+
+                ['objectID' => '12',
+                    'name' => 'r12',
+                ],
+
+                ['objectID' => '13',
+                    'name' => 'r13',
+                ],
+
+                ['objectID' => '14',
+                    'name' => 'r14',
+                ],
+
+                ['objectID' => '15',
+                    'name' => 'r15',
+                ],
+
+                ['objectID' => '16',
+                    'name' => 'r16',
+                ],
+
+                ['objectID' => '17',
+                    'name' => 'r17',
+                ],
+
+                ['objectID' => '18',
+                    'name' => 'r18',
+                ],
+
+                ['objectID' => '19',
+                    'name' => 'r19',
+                ],
+
+                ['objectID' => '20',
+                    'name' => 'r20',
+                ],
+
+                ['objectID' => '21',
+                    'name' => 'r21',
+                ],
+
+                ['objectID' => '22',
+                    'name' => 'r22',
+                ],
+
+                ['objectID' => '23',
+                    'name' => 'r23',
+                ],
+
+                ['objectID' => '24',
+                    'name' => 'r24',
+                ],
+
+                ['objectID' => '25',
+                    'name' => 'r25',
+                ],
+            ],
+            true,
+            10,
+            [
+                'headers' => [
+                    'x-algolia-user-id' => 'test-user',
+                ],
+            ]
+        );
+    }
+
     #[TestDox('with algolia user id')]
     public function test0searchSingleIndex(): void
     {
