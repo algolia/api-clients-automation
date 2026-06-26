@@ -1536,7 +1536,7 @@ public partial class SearchClient : ISearchClient
       );
     }
 
-    if (objects is ICollection<object> collection && collection.Count == 0)
+    if (objects is System.Collections.ICollection collection && collection.Count == 0)
     {
       _logger.LogWarning(
         "ReplaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the \"{Index}\" index.",
