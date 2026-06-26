@@ -13,6 +13,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"os"
 	"regexp"
 	"slices"
 	"sort"
@@ -9944,6 +9945,8 @@ func (c *APIClient) ChunkedBatch(indexName string, objects []map[string]any, act
 ReplaceAllObjectsWithTransformation is similar to the `replaceAllObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. TransformationOptions must have been passed to the client constructor or set via SetTransformationOptions.
 See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
 
+Warning: calling this method with an empty `objects` slice replaces the index with an empty one, deleting all existing records.
+
 	@param indexName string - the index name to replace objects into.
 	@param objects []map[string]any - List of objects to replace.
 	@param opts ...ReplaceAllObjectsOption - Optional parameters for the request.
@@ -9958,6 +9961,14 @@ func (c *APIClient) ReplaceAllObjectsWithTransformation(
 	if c.ingestionTransporter == nil {
 		return nil, reportError(
 			"TransformationOptions must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion",
+		)
+	}
+
+	if len(objects) == 0 {
+		fmt.Fprintf(
+			os.Stderr,
+			"ReplaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the %q index.\n",
+			indexName,
 		)
 	}
 
@@ -10061,6 +10072,8 @@ func (c *APIClient) ReplaceAllObjectsWithTransformation(
 ReplaceAllObjects replaces all objects (records) in the given `indexName` with the given `objects`. A temporary index is created during this process in order to backup your data.
 See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
 
+Warning: calling this method with an empty `objects` slice replaces the index with an empty one, deleting all existing records.
+
 	@param indexName string - the index name to replace objects into.
 	@param objects []map[string]any - List of objects to replace.
 	@param opts ...ReplaceAllObjectsOption - Optional parameters for the request.
@@ -10072,6 +10085,14 @@ func (c *APIClient) ReplaceAllObjects(
 	objects []map[string]any,
 	opts ...ReplaceAllObjectsOption,
 ) (*ReplaceAllObjectsResponse, error) {
+	if len(objects) == 0 {
+		fmt.Fprintf(
+			os.Stderr,
+			"ReplaceAllObjects was called with an empty list of objects, which will delete all records currently in the %q index.\n",
+			indexName,
+		)
+	}
+
 	tmpIndexName := fmt.Sprintf("%s_tmp_%d", indexName, time.Now().UnixNano())
 
 	conf := config{
