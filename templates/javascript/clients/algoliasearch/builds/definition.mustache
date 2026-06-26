@@ -148,12 +148,19 @@ export function algoliasearch(
       return ingestionTransporter.chunkedPush({ indexName, objects, action: createIfNotExists ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', batchSize, waitForTasks, maxRetries }, requestOptions);
     },
 
+    /**
+     * Warning: calling this method with an empty `objects` list replaces the index with an empty one, deleting all existing records.
+     */
     async replaceAllObjectsWithTransformation(
       { indexName, objects, batchSize, scopes, maxRetries = DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES }: ReplaceAllObjectsOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<ReplaceAllObjectsWithTransformationResponse> {
       if (!ingestionTransporter) {
         throw new Error('`transformationOptions` must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/');
+      }
+
+      if (objects.length === 0) {
+        console.warn(`replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the "${indexName}" index.`);
       }
 
       const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
