@@ -125,6 +125,9 @@ extension Transformation on SearchClient {
 
   /// Replaces all objects in [indexName] via the Ingestion pipeline without downtime.
   /// Requires [TransformationOptions] to be set.
+  ///
+  /// **Warning:** calling this method with an empty [objects] list replaces the index with
+  /// an empty one, deleting all existing records.
   Future<ReplaceAllObjectsWithTransformationResponse>
       replaceAllObjectsWithTransformation({
     required String indexName,
@@ -135,6 +138,12 @@ extension Transformation on SearchClient {
     RequestOptions? requestOptions,
   }) async {
     if (ingestionTransporter == null) throw StateError(_notSetError);
+
+    if (objects.isEmpty) {
+      print(
+        'replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the "$indexName" index.',
+      );
+    }
 
     final effectiveChunkedOptions = chunkedOptions ??
         ChunkedHelperOptions(maxRetries: defaultReplaceAllObjectsMaxRetries);
