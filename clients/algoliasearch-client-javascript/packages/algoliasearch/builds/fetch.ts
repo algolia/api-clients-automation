@@ -204,6 +204,9 @@ export function algoliasearch(
       );
     },
 
+    /**
+     * Warning: calling this method with an empty `objects` list replaces the index with an empty one, deleting all existing records.
+     */
     async replaceAllObjectsWithTransformation(
       {
         indexName,
@@ -217,6 +220,12 @@ export function algoliasearch(
       if (!ingestionTransporter) {
         throw new Error(
           '`transformationOptions` must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/',
+        );
+      }
+
+      if (objects.length === 0) {
+        console.warn(
+          `replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the "${indexName}" index.`,
         );
       }
 
