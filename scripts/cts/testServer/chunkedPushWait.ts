@@ -5,6 +5,7 @@ import type { Express } from 'express';
 import express from 'express';
 
 import { setupServer } from './index.ts';
+import { SERVER_PORTS } from './ports.ts';
 
 const chunkedPushWaitState: Record<string, { pushCount: number; getEventCount: number; polledEventIDs: Set<string> }> =
   {};
@@ -71,5 +72,5 @@ function addRoutes(app: Express): void {
 }
 
 export function chunkedPushWaitServer(): Promise<Server> {
-  return setupServer('chunkedPushWaitServer', 6693, addRoutes);
+  return setupServer('chunkedPushWaitServer', SERVER_PORTS.chunkedPushWait, addRoutes);
 }

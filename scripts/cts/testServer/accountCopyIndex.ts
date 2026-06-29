@@ -5,6 +5,7 @@ import type { Express } from 'express';
 import express from 'express';
 
 import { setupServer } from './index.ts';
+import { SERVER_PORTS } from './ports.ts';
 
 const aciState: Record<
   string,
@@ -205,5 +206,5 @@ function addRoutes(app: Express): void {
 export function accountCopyIndexServer(): Promise<Server> {
   // this server is used to simulate the responses for the accountCopyIndex method,
   // and uses a state machine to determine if the logic is correct.
-  return setupServer('accountCopyIndex', 6687, addRoutes);
+  return setupServer('accountCopyIndex', SERVER_PORTS.accountCopyIndex, addRoutes);
 }

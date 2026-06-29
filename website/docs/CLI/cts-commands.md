@@ -54,6 +54,7 @@ apic cts generate php insights recommend search
 ### Attach a debugger to the generator
 
 Using VS code extension [Debugger For Java](https://code.visualstudio.com/docs/java/java-debugging), you can attach breakpoint to the generator.
+The debug port is `APIC_DEBUG_PORT`, printed by `yarn docker:setup` — `6670` in your main checkout, and offset by the worktree slot in additional worktrees.
 Example config for VS Code in `.vscode/launch.json`:
 
 ```json
@@ -65,7 +66,7 @@ Example config for VS Code in `.vscode/launch.json`:
       "name": "APIC Generator",
       "request": "attach",
       "hostName": "localhost",
-      "port": "5009"
+      "port": "6670"
     }
   ]
 }
