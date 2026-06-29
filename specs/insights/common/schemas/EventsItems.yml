@@ -11,3 +11,4 @@ oneOf:
   - $ref: './ConvertedFilters.yml'
   - $ref: './ViewedObjectIDs.yml'
   - $ref: './ViewedFilters.yml'
+  - $ref: './InstantSearchTelemetry.yml'
