@@ -1,3 +1,9 @@
+## [4.46.2](https://github.com/algolia/algoliasearch-client-php/compare/4.46.1...4.46.2)
+
+- [035c03ecad](https://github.com/algolia/api-clients-automation/commit/035c03ecad) fix(specs): remove recommend query params overridden by the API ([#6604](https://github.com/algolia/api-clients-automation/pull/6604)) by [@raed667](https://github.com/raed667/)
+- [5031c65633](https://github.com/algolia/api-clients-automation/commit/5031c65633) chore(deps): dependencies 2026-06-15 ([#6508](https://github.com/algolia/api-clients-automation/pull/6508)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+- [0f041b7d23](https://github.com/algolia/api-clients-automation/commit/0f041b7d23) fix(php): chunked push polling offset ([#6602](https://github.com/algolia/api-clients-automation/pull/6602)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+
 ## [4.46.1](https://github.com/algolia/algoliasearch-client-php/compare/4.46.0...4.46.1)
 
 - [a676cd9cef](https://github.com/algolia/api-clients-automation/commit/a676cd9cef) fix(clients): bump replaceAllObjects default maxRetries from 100 to 800 ([#6580](https://github.com/algolia/api-clients-automation/pull/6580)) by [@Fluf22](https://github.com/Fluf22/)
