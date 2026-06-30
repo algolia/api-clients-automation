@@ -111,8 +111,7 @@ public class GenericPropagator {
     // We need to check the model too because the tree isn't complete sometime, depending on the ref
     // in the spec, so we get the model with the same name and recurse.
     if (
-      items != null &&
-      ((hasGeneric(items) || propagateGenericRecursive(models, items, getVar) || hasGeneric(propertyToModel(models, items))))
+      items != null && (hasGeneric(items) || propagateGenericRecursive(models, items, getVar) || hasGeneric(propertyToModel(models, items)))
     ) {
       setHasChildGeneric(property);
       return true;
