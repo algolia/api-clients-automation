@@ -1,3 +1,8 @@
+## [4.43.2](https://github.com/algolia/algoliasearch-client-go/compare/4.43.1...4.43.2)
+
+- [035c03ecad](https://github.com/algolia/api-clients-automation/commit/035c03ecad) fix(specs): remove recommend query params overridden by the API ([#6604](https://github.com/algolia/api-clients-automation/pull/6604)) by [@raed667](https://github.com/raed667/)
+- [5031c65633](https://github.com/algolia/api-clients-automation/commit/5031c65633) chore(deps): dependencies 2026-06-15 ([#6508](https://github.com/algolia/api-clients-automation/pull/6508)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+
 ## [4.43.1](https://github.com/algolia/algoliasearch-client-go/compare/4.43.0...4.43.1)
 
 - [a632f9fb75](https://github.com/algolia/api-clients-automation/commit/a632f9fb75) fix(specs): BREAKING CHANGE – allow null records in getObjects response ([#6582](https://github.com/algolia/api-clients-automation/pull/6582)) by [@Fluf22](https://github.com/Fluf22/)
