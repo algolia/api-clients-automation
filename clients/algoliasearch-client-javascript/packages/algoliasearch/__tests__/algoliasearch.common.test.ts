@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'vitest';
 
+import type { EndRequest, Requester } from '@algolia/client-common';
 import {
   DEFAULT_CONNECT_TIMEOUT_BROWSER,
   DEFAULT_READ_TIMEOUT_BROWSER,
   DEFAULT_WRITE_TIMEOUT_BROWSER,
 } from '@algolia/client-common';
-import type { EndRequest, Requester } from '@algolia/client-common';
 import type { EchoResponse } from '@algolia/requester-testing';
 
 import { browserEchoRequester } from '../../requester-testing/src/browserEchoRequester';
