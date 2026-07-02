@@ -12,6 +12,7 @@ import com.algolia.model.search.SearchSynonymsResponse;
 import com.algolia.model.search.SynonymHit;
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -83,7 +84,7 @@ class BrowseSynonymsTest {
         }
       }
 
-      assertEquals(List.of(0, 1), requester.pagesRequested, "browseSynonyms must request page 0 then page 1");
+      assertEquals(Arrays.asList(0, 1), requester.pagesRequested, "browseSynonyms must request page 0 then page 1");
       assertEquals(HITS_PER_PAGE + 3, aggregated.size(), "browseSynonyms must aggregate every hit from both pages exactly once");
 
       long distinctObjectIDs = aggregated.stream().map(SynonymHit::getObjectID).distinct().count();
