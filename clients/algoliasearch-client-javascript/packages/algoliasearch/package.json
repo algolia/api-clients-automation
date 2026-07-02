@@ -101,10 +101,10 @@
   },
   "devDependencies": {
     "@algolia/requester-testing": "5.55.1",
-    "@arethetypeswrong/cli": "0.18.3",
-    "@cloudflare/vitest-pool-workers": "0.16.17",
+    "@arethetypeswrong/cli": "0.18.4",
+    "@cloudflare/vitest-pool-workers": "0.16.19",
     "@cloudflare/workers-types": "4.20260619.1",
-    "@types/node": "25.9.3",
+    "@types/node": "26.0.0",
     "jsdom": "29.1.1",
     "publint": "0.3.21",
     "rollup": "4.62.0",
