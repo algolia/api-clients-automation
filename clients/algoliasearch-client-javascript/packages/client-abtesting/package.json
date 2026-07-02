@@ -60,7 +60,7 @@
     "@algolia/requester-node-http": "5.55.1"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.18.3",
+    "@arethetypeswrong/cli": "0.18.4",
     "@types/node": "25.9.3",
     "publint": "0.3.21",
     "rollup": "4.62.0",
