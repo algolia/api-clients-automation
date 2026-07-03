@@ -35,7 +35,7 @@ class InsightsTest extends TestCase
                     'index' => 'products',
                     'userToken' => 'user-123456',
                     'authenticatedUserToken' => 'user-123456',
-                    'timestamp' => 1782259200000,
+                    'timestamp' => 1783036800000,
                     'objectIDs' => [
                         '9780545139700',
 
@@ -49,7 +49,7 @@ class InsightsTest extends TestCase
                     'index' => 'products',
                     'userToken' => 'user-123456',
                     'authenticatedUserToken' => 'user-123456',
-                    'timestamp' => 1782259200000,
+                    'timestamp' => 1783036800000,
                     'objectIDs' => [
                         '9780545139700',
 
