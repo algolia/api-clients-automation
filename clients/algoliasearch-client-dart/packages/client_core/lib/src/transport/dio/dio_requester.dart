@@ -76,10 +76,7 @@ class DioRequester implements Requester {
             e.response?.statusCode ?? 0,
             e.error ?? e.response,
           );
-        case DioExceptionType.badCertificate:
-        case DioExceptionType.cancel:
-        case DioExceptionType.connectionError:
-        case DioExceptionType.unknown:
+        default:
           throw AlgoliaIOException(e);
       }
     }
