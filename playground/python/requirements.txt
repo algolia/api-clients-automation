@@ -1,5 +1,5 @@
 argcomplete==3.6.3
-click==8.4.1
+click==8.4.2
 packaging==26.2
 pipx==1.14.1
 platformdirs==4.10.0
