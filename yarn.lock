@@ -142,7 +142,7 @@ __metadata:
     lint-staged: "npm:17.0.8"
     oxlint: "npm:1.72.0"
     prettier: "npm:3.8.4"
-    prettier-plugin-java: "npm:2.9.7"
+    prettier-plugin-java: "npm:2.10.0"
     prettier-plugin-organize-imports: "npm:4.3.0"
     renovate-config-algolia: "npm:2.2.0"
     typescript: "npm:5.9.3"
@@ -7780,14 +7780,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-java@npm:2.9.7":
-  version: 2.9.7
-  resolution: "prettier-plugin-java@npm:2.9.7"
+"prettier-plugin-java@npm:2.10.0":
+  version: 2.10.0
+  resolution: "prettier-plugin-java@npm:2.10.0"
   dependencies:
     web-tree-sitter: "npm:0.26.9"
   peerDependencies:
     prettier: ^3.0.0
-  checksum: 10/99c88e6b648148f2bc27c5a25779ef109a44a4b81ba214ae8e21b66a09f3197fc9ff562effb2522976d76d7eb36253bf304197f7205688cd5b045fc6ac3dedea
+  checksum: 10/9c78f3c8c3b079cd7f70c46afe34232a4e36a630260e1ecb61e0c0ca25bd671f181d8e21aac22893b862b92a335ed99fccbd97981dc825c5dad310a3feb72053
   languageName: node
   linkType: hard
 
