@@ -39,7 +39,7 @@ jobs:
           owner: algolia
           repositories: ${{ inputs.name }}
 
-      - run: yarn workspace scripts pushToRepository ${{ inputs.name }} 
+      - run: yarn workspace scripts pushToRepository ${{ inputs.name }}
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
