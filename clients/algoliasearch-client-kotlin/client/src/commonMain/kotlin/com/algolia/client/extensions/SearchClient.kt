@@ -888,12 +888,12 @@ public suspend fun SearchClient.replaceAllObjectsWithTransformation(
   chunkedOptions: ChunkedHelperOptions =
     ChunkedHelperOptions(maxRetries = DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES),
 ): ReplaceAllObjectsWithTransformationResponse {
+  val transporter = requireIngestionTransporter()
   if (objects.isEmpty()) {
     options.logger.log(
       "Warning: replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the \"$indexName\" index.",
     )
   }
-  val transporter = requireIngestionTransporter()
   val maxRetries = chunkedOptions.maxRetries
   val tmpIndexName = "${indexName}_tmp_${Random.nextInt(from = 0, until = 100)}"
 
