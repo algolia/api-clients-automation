@@ -140,8 +140,8 @@ extension Transformation on SearchClient {
     if (ingestionTransporter == null) throw StateError(_notSetError);
 
     if (objects.isEmpty) {
-      print(
-        'replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the "$indexName" index.',
+      (options.logger ?? print)(
+        'Warning: replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the "$indexName" index.',
       );
     }
 
