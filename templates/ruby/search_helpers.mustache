@@ -121,7 +121,7 @@ def replace_all_objects_with_transformation(
   assert_ingestion_transporter!
 
   if objects.empty?
-    warn("replace_all_objects_with_transformation was called with an empty list of objects, which will delete all records currently in the \"#{index_name}\" index.")
+    @api_client.logger.warn("replace_all_objects_with_transformation was called with an empty list of objects, which will delete all records currently in the \"#{index_name}\" index.")
   end
 
   opts = Algolia::ChunkedHelperOptions.resolve(chunked_options, default_max_retries: Algolia::ChunkedHelperOptions::DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES)
@@ -547,7 +547,7 @@ end
 # @return [Array<ReplaceAllObjectsResponse>]
 def replace_all_objects(index_name, objects, batch_size = 1000, scopes = [Search::ScopeType::SETTINGS, Search::ScopeType::RULES, Search::ScopeType::SYNONYMS], request_options = {}, chunked_options = nil)
   if objects.empty?
-    warn("replace_all_objects was called with an empty list of objects, which will delete all records currently in the \"#{index_name}\" index.")
+    @api_client.logger.warn("replace_all_objects was called with an empty list of objects, which will delete all records currently in the \"#{index_name}\" index.")
   end
 
   opts = Algolia::ChunkedHelperOptions.resolve(chunked_options, default_max_retries: Algolia::ChunkedHelperOptions::DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES)
