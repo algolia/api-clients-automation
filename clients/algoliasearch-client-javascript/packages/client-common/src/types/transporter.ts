@@ -1,4 +1,5 @@
 import type { ServerSentEvent } from '../sse';
+import type { AlgoliaHttpResponse } from './algoliaHttpResponse';
 import type { Cache } from './cache';
 import type { Host } from './host';
 import type { Logger } from './logger';
@@ -169,5 +170,14 @@ export type Transporter = TransporterOptions & {
    * The `baseRequest` and `baseRequestOptions` will be merged accordingly.
    */
   request: <TResponse>(baseRequest: Request, baseRequestOptions?: RequestOptions) => Promise<TResponse>;
+  /**
+   * Performs a request and returns the full HTTP response information — status code,
+   * headers (when the requester captures them), raw body and deserialized data.
+   * Both the requests and the responses caches are bypassed: it always hits the network.
+   */
+  requestWithHttpInfo: <TData>(
+    baseRequest: Request,
+    baseRequestOptions?: RequestOptions,
+  ) => Promise<AlgoliaHttpResponse<TData>>;
   requestStream: (baseRequest: Request, baseRequestOptions?: RequestOptions) => AsyncGenerator<ServerSentEvent>;
 };
