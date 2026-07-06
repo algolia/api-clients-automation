@@ -87,6 +87,7 @@ sort:
     $ref: '#/taskSortKeys'
 
 taskSortKeys:
+  title: taskSortKeys
   type: string
   description: Property by which to sort the list of tasks.
   default: createdAt

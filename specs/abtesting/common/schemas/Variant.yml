@@ -1,4 +1,5 @@
 variants:
+  title: variants
   type: array
   description: |
     A/B test variants.
@@ -9,6 +10,7 @@ variants:
     $ref: '#/variant'
 
 variant:
+  title: variant
   type: object
   additionalProperties: false
   properties:

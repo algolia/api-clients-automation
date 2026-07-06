@@ -1,4 +1,5 @@
 InsidePolygonUnion:
+  title: InsidePolygonUnion
   oneOf:
     - type: string
     - items:

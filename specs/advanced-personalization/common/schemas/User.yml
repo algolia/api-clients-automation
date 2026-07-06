@@ -1,4 +1,5 @@
 user:
+  title: user
   type: object
   properties:
     userID:

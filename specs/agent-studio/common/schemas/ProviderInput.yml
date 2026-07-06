@@ -1,4 +1,5 @@
 ProviderInput:
+  title: ProviderInput
   oneOf:
     - $ref: 'OpenAIProviderInput.yml#/OpenAIProviderInput'
     - $ref: 'AzureOpenAIProviderInput.yml#/AzureOpenAIProviderInput'

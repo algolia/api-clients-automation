@@ -1,4 +1,5 @@
 ABTests:
+  title: ABTests
   oneOf:
     - type: array
       description: A/B tests.
@@ -7,6 +8,7 @@ ABTests:
     - type: 'null'
 
 ABTest:
+  title: ABTest
   type: object
   additionalProperties: false
   properties:
@@ -40,6 +42,7 @@ ABTest:
     - variants
 
 Status:
+  title: Status
   type: string
   description: |
     A/B test status.
@@ -68,6 +71,7 @@ ABTestConfiguration:
       $ref: '#/ErrorCorrectionType'
 
 MinimumDetectableEffect:
+  title: MinimumDetectableEffect
   type: object
   description: Configuration for the smallest difference between test variants you want to detect.
   properties:
@@ -86,6 +90,7 @@ MinimumDetectableEffect:
     - metric
 
 EffectMetric:
+  title: EffectMetric
   type: string
   description: Metric for which you want to detect the smallest relative difference.
   enum:
@@ -96,11 +101,13 @@ EffectMetric:
     - noResultsRate
 
 MigratedABTestId:
+  title: MigratedABTestId
   type: integer
   description: Unique migrated A/B test identifier.
   example: 224
 
 MetricsFilter:
+  title: MetricsFilter
   type: object
   additionalProperties: false
   description: |
@@ -126,12 +133,14 @@ MetricsFilter:
     - name
 
 MetricsFilters:
+  title: MetricsFilters
   type: array
   description: List of metric filters applied to the test population.
   items:
     $ref: '#/MetricsFilter'
 
 ErrorCorrectionType:
+  title: ErrorCorrectionType
   type: string
   description: Multiple-testing correction method applied when evaluating metric significance.
   enum:

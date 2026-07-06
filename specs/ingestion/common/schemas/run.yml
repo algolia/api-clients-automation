@@ -1,4 +1,5 @@
 RunResponse:
+  title: RunResponse
   type: object
   additionalProperties: false
   description: API response for running a task.
@@ -12,6 +13,7 @@ RunResponse:
     - createdAt
 
 RunListResponse:
+  title: RunListResponse
   type: object
   additionalProperties: false
   properties:
@@ -29,6 +31,7 @@ RunListResponse:
     - window
 
 Run:
+  title: Run
   type: object
   additionalProperties: false
   properties:
@@ -78,21 +81,25 @@ Run:
     - createdAt
 
 RunStatus:
+  title: RunStatus
   type: string
   description: Task run status.
   enum: [created, started, finished, skipped]
 
 RunOutcome:
+  title: RunOutcome
   type: string
   description: Task run outcome.
   enum: [success, failure]
 
 RunType:
+  title: RunType
   type: string
   description: Task run type.
   enum: [reindex, update, discover, validate, push]
 
 RunReasonCode:
+  title: RunReasonCode
   type: string
   description: A code for the task run's outcome. A readable description of the code is included in the `reason` response property.
   enum: [internal, cancelled, critical, no_events, too_many_errors, lacking_events, ok, blocking, idle]

@@ -23,6 +23,7 @@ sourceType:
   enum: [insights]
 
 strategy:
+  title: strategy
   type: string
   enum:
     - session

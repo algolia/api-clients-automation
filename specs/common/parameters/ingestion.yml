@@ -1,29 +1,35 @@
 RunID:
+  title: RunID
   type: string
   # format: uuid
   description: Universally unique identifier (UUID) of a task run.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
 
 EventID:
+  title: EventID
   type: string
   # format: uuid
   description: Universally unique identifier (UUID) of an event.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
 
 CreatedAt:
+  title: CreatedAt title
   type: string
   description: Date and time when the resource was created, in RFC 3339 format.
 
 PublishedAt:
+  title: PublishedAt
   type: string
   description: Date and time when the resource was published, in RFC 3339 format.
 
 EventStatus:
+  title: EventStatus
   oneOf:
     - type: string
       enum: [created, started, retried, failed, succeeded, critical]
     - type: 'null'
 
 EventType:
+  title: EventType
   type: string
   enum: [fetch, record, log, transform]

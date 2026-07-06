@@ -25,11 +25,13 @@ platform:
     example: commercetools,none
 
 platformNone:
+  title: platformNone
   type: string
   description: Authentication resource not tied to any ecommerce platform, used for filtering.
   enum: ['none']
 
 platformWithNone:
+  title: platformWithNone
   oneOf:
     - $ref: './schemas/authentication.yml#/Platform'
     - $ref: '#/platformNone'
@@ -43,6 +45,7 @@ sort:
     $ref: '#/authenticationSortKeys'
 
 authenticationSortKeys:
+  title: authenticationSortKeys
   type: string
   description: Property by which to sort the list of authentications.
   default: createdAt

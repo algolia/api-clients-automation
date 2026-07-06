@@ -1,19 +1,23 @@
 badRequest:
+  title: badRequest title
   type: string
   description: Details about the response, such as error messages.
   enum: [Invalid request body]
 
 badUserID:
+  title: badUserID
   type: string
   description: Details about the response, such as error messages.
   enum: [Invalid userID format]
 
 unauthorized:
+  title: unauthorized title
   type: string
   description: Details about the response, such as error messages.
   enum: [Unauthorized]
 
 featureNotEnabled:
+  title: featureNotEnabled
   type: string
   description: Details about the response, such as error messages.
   enum:
@@ -21,21 +25,25 @@ featureNotEnabled:
     - 'Realtime Personalization is not allowed for this app. Please contact support to upgrade your plan: https://support.algolia.com/'
 
 genericNotFound:
+  title: genericNotFound
   type: string
   description: Details about the response, such as error messages.
   enum: [Not Found]
 
 genericUnprocessableEntity:
+  title: genericUnprocessableEntity
   type: string
   description: Details about the response, such as error messages.
   enum: [Unprocessable Entity]
 
 invalidUserID:
+  title: invalidUserID
   type: string
   description: Details about the response, such as error messages.
   enum: [UserID must contain only alphanumeric, equal, plus, slash, hyphen, or underscore characters, and be between 1 and 129 characters long]
 
 internalServerError:
+  title: internalServerError title
   type: string
   description: Details about the response, such as error messages.
   enum: [Internal Server Error]

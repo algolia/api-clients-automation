@@ -28,6 +28,7 @@ UserIDInPath:
 
 # misc
 userID:
+  title: userID
   type: string
   pattern: '^[a-zA-Z0-9 \-*.]+$'
   description: Unique identifier of the user who makes the search request.

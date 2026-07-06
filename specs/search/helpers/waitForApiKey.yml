@@ -49,5 +49,6 @@ method:
         $ref: '../../common/responses/IndexNotFound.yml'
 
 apiKeyOperation:
+  title: apiKeyOperation
   type: string
   enum: [add, delete, update]

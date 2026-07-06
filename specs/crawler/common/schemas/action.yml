@@ -1,4 +1,5 @@
 Action:
+  title: Action
   type: object
   description: |
     How to process crawled URLs.
@@ -102,6 +103,7 @@ Action:
     - recordExtractor
 
 configurationRecordExtractorType:
+  title: configurationRecordExtractorType
   type: string
   enum:
     - function
@@ -114,6 +116,7 @@ ActionSchedule:
     - $ref: './configuration.yml#/Configuration'
 
 fileTypes:
+  title: fileTypes
   type: string
   description: |
     For more information, see [Extract data from non-HTML documents](https://www.algolia.com/doc/tools/crawler/extracting-data/non-html-documents).
@@ -129,12 +132,14 @@ fileTypes:
     - xls
 
 urlPattern:
+  title: urlPattern
   type: string
   description: |
     Use [micromatch](https://github.com/micromatch/micromatch) for negation, wildcards, and more.
   example: https://www.algolia.com/**
 
 hostnameAliases:
+  title: hostnameAliases
   type: object
   example:
     'dev.example.com': 'example.com'
@@ -145,6 +150,7 @@ hostnameAliases:
     x-additionalPropertiesName: hostname
 
 pathAliases:
+  title: pathAliases
   type: object
   example:
     'example.com':
@@ -176,6 +182,7 @@ pathAliases:
       x-additionalPropertiesName: path
 
 cache:
+  title: cache
   type: object
   description: |
     Whether the crawler should cache crawled pages.

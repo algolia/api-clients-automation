@@ -1,4 +1,5 @@
 AgentStatus:
+  title: AgentStatus
   type: string
   enum:
     - draft

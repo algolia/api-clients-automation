@@ -79,6 +79,7 @@ order:
     $ref: '#/orderKeys'
 
 orderKeys:
+  title: orderKeys
   type: string
   description: Ascending or descending sort order.
   default: desc

@@ -26,6 +26,7 @@ RealtimeUser:
         $ref: '#/searchFilters'
 
 searchFilters:
+  title: searchFilters
   type: object
   additionalProperties: false
   properties:
@@ -40,6 +41,7 @@ searchFilters:
       $ref: '#/searchFilter'
 
 searchFilter:
+  title: searchFilter
   type: object
   additionalProperties: false
   properties:

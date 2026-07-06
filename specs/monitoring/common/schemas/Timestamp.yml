@@ -1,3 +1,4 @@
+title: Timestamp
 type: integer
 format: int64
 description: Timestamp, measured in milliseconds since the Unix epoch.

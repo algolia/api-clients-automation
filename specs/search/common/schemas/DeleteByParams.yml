@@ -1,4 +1,5 @@
 deleteByParams:
+  title: deleteByParams
   type: object
   additionalProperties: false
   properties:

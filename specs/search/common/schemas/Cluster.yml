@@ -19,16 +19,19 @@ cluster:
     - dataSize
 
 nbRecords:
+  title: nbRecords
   type: integer
   description: Number of records in the cluster.
   example: 3
 
 dataSize:
+  title: dataSize
   type: integer
   description: Data size taken by all the users assigned to the cluster.
   example: 481
 
 clusterName:
+  title: clusterName
   type: string
   description: Cluster name.
   example: c11-test

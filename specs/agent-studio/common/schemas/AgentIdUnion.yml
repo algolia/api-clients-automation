@@ -1,4 +1,5 @@
 AgentIdUnion:
+  title: AgentIdUnion
   oneOf:
     - type: string
     - const: test

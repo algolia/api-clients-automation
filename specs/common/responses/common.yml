@@ -1,4 +1,5 @@
 taskID:
+  title: taskID
   type: integer
   format: int64
   example: 1514562690001
@@ -9,6 +10,7 @@ taskID:
     It might not run immediately.
     You can check the task's progress with the [`task` operation](https://www.algolia.com/doc/rest-api/search/get-task) and this task ID.
 objectIDs:
+  title: objectIDs
   type: array
   items:
     type: string
@@ -18,22 +20,26 @@ objectIDs:
   description: Unique record identifiers.
 
 createdAt:
+  title: createdAt
   type: string
   example: 2023-07-04T12:49:15Z
   description: Date and time when the object was created, in RFC 3339 format.
 
 createdAtTimestamp:
+  title: createdAtTimestamp
   type: integer
   format: int64
   example: 1656345570000
   description: Timestamp when the object was created, in milliseconds since the Unix epoch.
 
 updatedAt:
+  title: updatedAt
   type: string
   example: 2023-07-04T12:49:15Z
   description: Date and time when the object was updated, in RFC 3339 format.
 
 updatedAtNullable:
+  title: updatedAtNullable
   oneOf:
     - type: string
       default: null
@@ -42,11 +48,13 @@ updatedAtNullable:
     - type: 'null'
 
 deletedAt:
+  title: deletedAt
   type: string
   example: 2023-06-27T14:42:38.831Z
   description: Date and time when the object was deleted, in RFC 3339 format.
 
 updatedAtResponse:
+  title: updatedAtResponse
   type: object
   description: Response, taskID, and update timestamp.
   additionalProperties: false
@@ -60,6 +68,7 @@ updatedAtResponse:
       $ref: '#/updatedAt'
 
 taskStatus:
+  title: taskStatus
   type: string
   enum: [published, notPublished]
   description: Task status, `published` if the task is completed, `notPublished` otherwise.

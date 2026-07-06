@@ -101,32 +101,38 @@ AppID:
     $ref: '#/applicationID'
 
 applicationID:
+  title: applicationID
   type: string
   description: |
     Algolia application ID where the crawler creates and updates indices.
 
 CrawlerID:
+  title: CrawlerID
   type: string
   description: Universally unique identifier (UUID) of the crawler.
   example: e0f6db8a-24f5-4092-83a4-1b2c6cb6d809
 
 CrawlerLogID:
+  title: CrawlerLogID
   type: string
   description: Universally unique identifier (UUID) of the crawler log.
   example: a2ebb507-ef64-4b6b-9d84-ef66baaa7a80
 
 TaskID:
+  title: TaskID
   type: string
   description: Universally unique identifier (UUID) of the task.
   example: 98458796-b7bb-4703-8b1b-785c1080b110
 
 CrawlerName:
+  title: CrawlerName
   type: string
   maxLength: 64
   description: Name of the crawler.
   example: test-crawler
 
 UrlsCrawledGroup:
+  title: UrlsCrawledGroup
   type: object
   description: Processed URLs and their status.
   properties:
@@ -151,6 +157,7 @@ UrlsCrawledGroup:
     readable: Forbidden by robots.txt
 
 urlsCrawledGroupStatus:
+  title: urlsCrawledGroupStatus
   type: string
   description: |
     Crawled URL status.
@@ -162,6 +169,7 @@ urlsCrawledGroupStatus:
     - FAILED
 
 urlsCrawledGroupCategory:
+  title: urlsCrawledGroupCategory
   type: string
   description: |
     Step where the status information was generated.
@@ -174,6 +182,7 @@ urlsCrawledGroupCategory:
     - success
 
 itemsPerPage:
+  title: itemsPerPage
   type: integer
   description: Number of items per page of the paginated API response.
   minimum: 1
@@ -181,6 +190,7 @@ itemsPerPage:
   default: 20
 
 page:
+  title: page
   type: integer
   description: Current page of the paginated API response.
   minimum: 1
@@ -188,21 +198,25 @@ page:
   default: 1
 
 total:
+  title: total
   type: integer
   description: Total number of retrievable items.
   example: 100
 
 from:
+  title: from
   type: string
   description: Unix string 'from' date.
   example: 1762264044
 
 until:
+  title: until
   type: string
   description: Unix string 'until' date.
   example: 1762264044
 
 limit:
+  title: limit
   type: integer
   description: Limit of the query results.
   minimum: 1
@@ -211,11 +225,13 @@ limit:
   example: 10
 
 offset:
+  title: offset
   type: integer
   description: Offset of the query results.
   example: 11
 
 order:
+  title: order title
   type: string
   description: |
     Order of the query.
@@ -224,6 +240,7 @@ order:
     - DESC
 
 Pagination:
+  title: Pagination
   type: object
   description: Pagination information.
   properties:
@@ -235,11 +252,13 @@ Pagination:
       $ref: '#/total'
 
 version:
+  title: version
   type: integer
   description: Version of the configuration. Version 1 is the initial configuration you used when creating the crawler.
   minimum: 1
 
 authorId:
+  title: authorId
   type: string
   description: Universally unique identifier (UUID) of the user who created this version of the configuration.
   example: 7d79f0dd-2dab-4296-8098-957a1fdc0637

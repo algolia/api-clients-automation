@@ -1,4 +1,5 @@
 injectionMain:
+  title: injectionMain
   type: object
   additionalProperties: false
   description: Main defines the organic result set of the injection.
@@ -7,6 +8,7 @@ injectionMain:
       $ref: '#/injectionMainSource'
 
 injectionMainSource:
+  title: injectionMainSource
   description: Source to be used to retrieve organic result set.
   oneOf:
     - $ref: './MainSource.yml#/injectionMainSearchSource'

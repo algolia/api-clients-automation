@@ -1,4 +1,5 @@
 ToolInvocationsUnion:
+  title: ToolInvocationsUnion
   oneOf:
     - items:
         $ref: 'ToolInvocationV4.yml#/ToolInvocationV4'

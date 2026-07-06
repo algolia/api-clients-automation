@@ -1,4 +1,5 @@
 listIndicesResponse:
+  title: listIndicesResponse
   type: object
   additionalProperties: false
   properties:
@@ -15,6 +16,7 @@ listIndicesResponse:
     - items
 
 fetchedIndex:
+  title: fetchedIndex
   type: object
   additionalProperties: false
   properties:

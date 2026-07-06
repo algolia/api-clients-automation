@@ -1,4 +1,5 @@
 model:
+  title: model
   type: string
   enum:
     - trending-items

@@ -1,4 +1,5 @@
 personalizationStrategyParams:
+  title: personalizationStrategyParams
   type: object
   additionalProperties: false
   required:
@@ -33,5 +34,6 @@ personalizationStrategyParams:
 
 # misc
 score:
+  title: score
   type: integer
   description: Event score.

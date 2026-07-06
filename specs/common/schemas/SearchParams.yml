@@ -1,4 +1,5 @@
 searchParams:
+  title: searchParams
   oneOf:
     - $ref: '#/searchParamsString'
     - $ref: '#/searchParamsObject'
@@ -11,11 +12,13 @@ searchParamsObject:
     - $ref: '../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams'
 
 baseSearchParams:
+  title: baseSearchParams
   allOf:
     - $ref: '#/searchParamsQuery'
     - $ref: '#/baseSearchParamsWithoutQuery'
 
 searchParamsQuery:
+  title: searchParamsQuery
   type: object
   additionalProperties: false
   properties:
@@ -23,6 +26,7 @@ searchParamsQuery:
       $ref: '#/query'
 
 baseSearchParamsWithoutQuery:
+  title: baseSearchParamsWithoutQuery
   type: object
   additionalProperties: false
   properties:
@@ -43,6 +47,7 @@ baseSearchParamsWithoutQuery:
     restrictSearchableAttributes:
       $ref: '#/restrictSearchableAttributes'
     facets:
+      title: facets
       type: array
       items:
         type: string
@@ -116,6 +121,7 @@ searchParamsString:
       $ref: '#/paramsAsString'
 
 paramsAsString:
+  title: paramsAsString
   description: Search parameters as a URL-encoded query string.
   example: 'hitsPerPage=2&getRankingInfo=1'
   type: string
@@ -126,6 +132,7 @@ paramsAsString:
 #
 
 analytics:
+  title: analytics
   type: boolean
   description: Whether this search will be included in Analytics.
   default: true
@@ -133,6 +140,7 @@ analytics:
     - Analytics
 
 analyticsTags:
+  title: analyticsTags
   type: array
   items:
     type: string
@@ -140,6 +148,7 @@ analyticsTags:
   default: []
 
 aroundRadius:
+  title: aroundRadius
   description: |
     Maximum radius for a search around a central location.
 
@@ -155,6 +164,7 @@ aroundRadius:
     - Geo-Search
 
 aroundPrecision:
+  title: aroundPrecision
   description: |
     Precision of a coordinate-based search in meters to group results with similar distances.
 
@@ -194,6 +204,7 @@ aroundRadiusAll:
   enum: [all]
 
 aroundLatLng:
+  title: aroundLatLng
   type: string
   description: |
     Coordinates for the center of a circle, expressed as a comma-separated string of latitude and longitude.
@@ -207,6 +218,7 @@ aroundLatLng:
     - Geo-Search
 
 aroundLatLngViaIP:
+  title: aroundLatLngViaIP
   type: boolean
   description: Whether to obtain the coordinates from the request's IP address.
   default: false
@@ -214,6 +226,7 @@ aroundLatLngViaIP:
     - Geo-Search
 
 clickAnalytics:
+  title: clickAnalytics
   type: boolean
   description: |
     Whether to include a `queryID` attribute in the response
@@ -223,6 +236,7 @@ clickAnalytics:
     - Analytics
 
 enableABTest:
+  title: enableABTest title
   type: boolean
   description: Whether to enable A/B testing for this search.
   default: true
@@ -230,6 +244,7 @@ enableABTest:
     - Advanced
 
 facetFilters:
+  title: facetFilters
   description: |
     Filter the search by facet values, so that only records with the same facet values are retrieved.
 
@@ -251,6 +266,7 @@ facetFilters:
     - Filtering
 
 facetingAfterDistinct:
+  title: facetingAfterDistinct
   type: boolean
   description: |
     Whether faceting should be applied after deduplication with `distinct`
@@ -262,6 +278,7 @@ facetingAfterDistinct:
     - Faceting
 
 filters:
+  title: filters
   type: string
   description: |
     Filter expression to only include items that match the filter criteria in the response.
@@ -292,6 +309,7 @@ filters:
     - Filtering
 
 getRankingInfo:
+  title: getRankingInfo title
   type: boolean
   description: Whether the search response should include detailed ranking information.
   default: false
@@ -299,12 +317,14 @@ getRankingInfo:
     - Advanced
 
 insideBoundingBox:
+  title: insideBoundingBox
   oneOf:
     - type: string
     - type: 'null'
     - $ref: '#/insideBoundingBoxArray'
 
 insideBoundingBoxArray:
+  title: insideBoundingBoxArray
   type: array
   items:
     type: array
@@ -327,6 +347,7 @@ insideBoundingBoxArray:
     - Geo-Search
 
 insidePolygon:
+  title: insidePolygon
   type: array
   items:
     type: array
@@ -349,6 +370,7 @@ insidePolygon:
     - Geo-Search
 
 query:
+  title: query
   type: string
   description: Search query.
   default: ''
@@ -356,6 +378,7 @@ query:
     - Search
 
 length:
+  title: length
   type: integer
   description: Number of hits to retrieve (used in combination with `offset`).
   minimum: 0
@@ -364,6 +387,7 @@ length:
     - Pagination
 
 minimumAroundRadius:
+  title: minimumAroundRadius
   type: integer
   description: Minimum radius (in meters) for a search around a location when `aroundRadius` isn't set.
   minimum: 1
@@ -371,6 +395,7 @@ minimumAroundRadius:
     - Geo-Search
 
 naturalLanguages:
+  title: naturalLanguages
   type: array
   items:
     $ref: './IndexSettings.yml#/supportedLanguage'
@@ -384,6 +409,7 @@ naturalLanguages:
     - Languages
 
 numericFilters:
+  title: numericFilters
   description: |
     Filter by numeric facets.
 
@@ -403,6 +429,7 @@ numericFilters:
     - Filtering
 
 optionalFilters:
+  title: optionalFilters
   description: |
     Filters to promote or demote records in the search results.
 
@@ -425,6 +452,7 @@ optionalFilters:
     - Filtering
 
 page:
+  title: page
   type: integer
   description: Page of search results to retrieve.
   default: 0
@@ -433,6 +461,7 @@ page:
     - Pagination
 
 percentileComputation:
+  title: percentileComputation
   type: boolean
   description: Whether to include this search when calculating processing-time percentiles.
   default: true
@@ -450,6 +479,7 @@ allowReRankingOnPersonalization:
     - Personalization
 
 personalizationImpact:
+  title: personalizationImpact
   type: integer
   description: |
     Impact that Personalization should have on this search
@@ -462,6 +492,7 @@ personalizationImpact:
     - Personalization
 
 restrictSearchableAttributes:
+  title: restrictSearchableAttributes
   type: array
   items:
     type: string
@@ -474,6 +505,7 @@ restrictSearchableAttributes:
     - Filtering
 
 ruleContexts:
+  title: ruleContexts title
   type: array
   items:
     type: string
@@ -486,6 +518,7 @@ ruleContexts:
     - Rules
 
 similarQuery:
+  title: similarQuery
   type: string
   description: |
     Keywords to be used instead of the search query to conduct a more broader search
@@ -502,6 +535,7 @@ similarQuery:
     - Search
 
 sumOrFiltersScores:
+  title: sumOrFiltersScores
   type: boolean
   description: |
     Whether to sum all filter scores
@@ -513,6 +547,7 @@ sumOrFiltersScores:
     - Filtering
 
 synonyms:
+  title: synonyms
   type: boolean
   description: Whether to take into account an index's synonyms for this search.
   default: true
@@ -520,6 +555,7 @@ synonyms:
     - Advanced
 
 tagFilters:
+  title: tagFilters
   description: |
     Filter the search by values of the special `_tags` attribute.
 
@@ -538,6 +574,7 @@ tagFilters:
     - Filtering
 
 userToken:
+  title: userToken
   type: string
   description: |
     Unique pseudonymous or anonymous user identifier.

@@ -55,6 +55,7 @@ method:
         $ref: '../../common/responses/IndexNotFound.yml'
 
 securedApiKeyRestrictions:
+  title: securedApiKeyRestrictions
   type: object
   additionalProperties: false
   properties:

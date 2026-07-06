@@ -1,3 +1,4 @@
+title: domainsResponse
 allOf:
   - $ref: '../parameters.yml#/Pagination'
   - type: object

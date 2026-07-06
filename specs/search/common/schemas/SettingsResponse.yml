@@ -1,9 +1,11 @@
 settingsResponse:
+  title: settingsResponse
   allOf:
     - $ref: '../../../common/schemas/IndexSettings.yml#/indexSettings'
     - $ref: '#/WithPrimary'
 
 WithPrimary:
+  title: WithPrimary
   type: object
   additionalProperties: false
   properties:

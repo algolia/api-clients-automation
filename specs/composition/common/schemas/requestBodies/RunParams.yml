@@ -65,6 +65,7 @@ params:
       $ref: '../../params/Search.yml#/userToken'
 
 feedsOrder:
+  title: feedsOrder
   type: array
   description: |
     A list of Feed IDs that specifies the order in which to order the results in the response. 

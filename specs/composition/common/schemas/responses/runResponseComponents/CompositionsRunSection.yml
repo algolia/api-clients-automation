@@ -16,12 +16,14 @@
 # }
 
 compositionBaseSearchResponse:
+  title: compositionBaseSearchResponse
   type: object
   properties:
     compositions:
       $ref: '#/compositionsSearchResponse'
 
 compositionsSearchResponse:
+  title: compositionsSearchResponse
   type: object
   additionalProperties: true
   properties:
@@ -33,6 +35,7 @@ compositionsSearchResponse:
     - run
 
 compositionRunSearchResponse:
+  title: compositionRunSearchResponse
   type: object
   additionalProperties: true
   properties:
@@ -48,6 +51,7 @@ compositionRunSearchResponse:
     - objectID
 
 compositionRunAppliedRules:
+  title: compositionRunAppliedRules
   type: object
   properties:
     objectID:

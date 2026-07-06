@@ -1,10 +1,11 @@
 trendingItemsQuery:
-  title: Trending items
+  title: trendingItemsQuery title
   allOf:
     - $ref: './RecommendationsRequest.yml#/baseRecommendRequest'
     - $ref: '#/trendingItems'
 
 trendingItems:
+  title: trendingItems
   type: object
   properties:
     facetName:
@@ -19,6 +20,7 @@ trendingItems:
     - model
 
 trendingItemsModel:
+  title: trendingItemsModel
   description: |
     Trending items model.
 

@@ -1,4 +1,5 @@
 Pagination:
+  title: Pagination
   type: object
   description: Paginated API response.
   additionalProperties: false
@@ -22,6 +23,7 @@ Pagination:
     - itemsPerPage
 
 itemsPerPage:
+  title: itemsPerPage
   type: integer
   description: Number of items per page.
   minimum: 1
@@ -29,6 +31,7 @@ itemsPerPage:
   default: 10
 
 page:
+  title: page
   type: integer
   minimum: 1
   description: Page of the API response to retrieve.

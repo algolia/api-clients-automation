@@ -1,4 +1,5 @@
 compositionRule:
+  title: compositionRule
   type: object
   additionalProperties: false
   properties:
@@ -45,6 +46,7 @@ compositionRule:
     - consequence
 
 condition:
+  title: condition
   type: object
   additionalProperties: false
   properties:
@@ -79,6 +81,7 @@ condition:
       example: 'price-low-to-high'
 
 anchoring:
+  title: anchoring
   type: string
   description: |
     Which part of the search query the pattern should match:

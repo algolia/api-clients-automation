@@ -1,4 +1,5 @@
 AdvancedSyntaxFeaturesUnion:
+  title: AdvancedSyntaxFeaturesUnion
   oneOf:
     - items:
         $ref: 'AdvancedSyntaxFeatures.yml#/AdvancedSyntaxFeatures'

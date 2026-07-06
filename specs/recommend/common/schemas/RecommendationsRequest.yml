@@ -1,4 +1,5 @@
 recommendationsRequest:
+  title: recommendationsRequest
   oneOf:
     - $ref: './FrequentlyBoughtTogetherQuery.yml#/boughtTogetherQuery'
     - $ref: './RelatedQuery.yml#/relatedQuery'
@@ -7,6 +8,7 @@ recommendationsRequest:
     - $ref: './LookingSimilarQuery.yml#/lookingSimilarQuery'
 
 baseRecommendRequest:
+  title: baseRecommendRequest
   type: object
   additionalProperties: false
   properties:

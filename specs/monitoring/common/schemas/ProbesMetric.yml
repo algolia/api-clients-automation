@@ -1,4 +1,4 @@
-title: metric
+title: ProbesMetric title
 type: object
 additionalProperties: false
 properties:

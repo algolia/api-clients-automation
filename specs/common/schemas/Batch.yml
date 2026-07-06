@@ -39,6 +39,7 @@ batchWriteParams:
           email: gayla@geimer.com
 
 action:
+  title: action
   type: string
   enum:
     - addObject

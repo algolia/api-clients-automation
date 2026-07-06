@@ -1,9 +1,11 @@
 compositionObjectID:
+  title: compositionObjectID
   type: string
   example: 'my_composition_object_id'
   description: Composition unique identifier.
 
 compositionRuleObjectID:
+  title: compositionRuleObjectID
   type: string
   example: 'my_composition_rule_object_id'
   description: Composition rule unique identifier.

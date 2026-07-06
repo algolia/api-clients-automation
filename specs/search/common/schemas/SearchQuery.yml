@@ -1,14 +1,17 @@
 SearchQuery:
+  title: SearchQuery
   oneOf:
     - $ref: '#/SearchForHits'
     - $ref: '#/SearchForFacets'
 
 SearchForHits:
+  title: SearchForHits
   allOf:
     - $ref: '../../../common/schemas/SearchParams.yml#/searchParams'
     - $ref: '#/searchForHitsOptions'
 
 SearchForFacets:
+  title: SearchForFacets
   allOf:
     - $ref: '../../../common/schemas/SearchParams.yml#/searchParams'
     - $ref: '#/searchForFacetsOptions'
@@ -17,6 +20,7 @@ SearchForFacets:
     - type
 
 searchForFacetsOptions:
+  title: searchForFacetsOptions
   type: object
   properties:
     facet:
@@ -36,6 +40,7 @@ searchForFacetsOptions:
     - facet
 
 facetQuery:
+  title: facetQuery
   type: string
   description: Text to search inside the facet's values.
   example: 'george'
@@ -44,6 +49,7 @@ facetQuery:
 searchForHitsOptions:
   # This option exists because TypeScript can't distinguish union with optional keys
   # if they are not completely the same, see usage in `templates/javascript/model.mustache`
+  title: searchForHitsOptions
   x-is-SearchForHitsOptions: true
   type: object
   properties:
@@ -57,6 +63,7 @@ searchForHitsOptions:
     - indexName
 
 searchTypeFacet:
+  title: searchTypeFacet
   type: string
   enum: [facet]
   default: facet
@@ -65,6 +72,7 @@ searchTypeFacet:
     - `facet` [searches for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
 
 searchTypeDefault:
+  title: searchTypeDefault
   type: string
   enum: [default]
   default: default
@@ -73,6 +81,7 @@ searchTypeDefault:
     - `facet` [searches for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
 
 searchExtensions:
+  title: searchExtensions
   type: object
   description: |
     Additional parameters for Algolia AI features.
@@ -82,6 +91,7 @@ searchExtensions:
       $ref: '#/searchExtensionsQueryCategorization'
 
 searchExtensionsQueryCategorization:
+  title: searchExtensionsQueryCategorization
   type: object
   description: Parameters for the [Query Categorization](https://www.algolia.com/doc/guides/algolia-ai/query-categorization/) AI feature.
   properties:

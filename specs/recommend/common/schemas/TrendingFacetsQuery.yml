@@ -4,6 +4,7 @@ trendingFacetsQuery:
     - $ref: '#/trendingFacets'
 
 trendingFacets:
+  title: trendingFacets
   type: object
   additionalProperties: false
   properties:
@@ -37,6 +38,7 @@ trendingFacets:
     - model
 
 trendingFacetsModel:
+  title: trendingFacetsModel
   type: string
   description: |
     Trending facet values model.

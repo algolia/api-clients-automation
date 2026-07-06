@@ -1,4 +1,5 @@
 rule:
+  title: rule
   type: object
   description: Rule object.
   additionalProperties: false
@@ -48,6 +49,7 @@ rule:
     - consequence
 
 condition:
+  title: condition
   type: object
   additionalProperties: false
   properties:
@@ -79,6 +81,7 @@ condition:
       example: 'genre:comedy'
 
 anchoring:
+  title: anchoring
   type: string
   description: |
     Which part of the search query the pattern should match:
@@ -92,6 +95,7 @@ anchoring:
   enum: [is, startsWith, endsWith, contains]
 
 consequence:
+  title: consequence
   type: object
   description: |
     Effect of the rule.
@@ -159,18 +163,20 @@ consequence:
         pluginVersion: '1.6.0'
 
 consequenceParams:
+  title: consequenceParams
   allOf:
     - $ref: '../../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery'
     - $ref: '../../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams'
     - $ref: '#/params'
 
 promote:
+  title: promote
   oneOf:
     - $ref: '#/promoteObjectIDs'
     - $ref: '#/promoteObjectID'
 
 promoteObjectID:
-  title: objectID
+  title: promoteObjectID title
   description: Record to promote.
   type: object
   additionalProperties: false
@@ -186,7 +192,7 @@ promoteObjectID:
     - objectID
 
 promoteObjectIDs:
-  title: objectIDs
+  title: promoteObjectIDs title
   description: Records to promote.
   type: object
   additionalProperties: false
@@ -211,11 +217,13 @@ promoteObjectIDs:
     - objectIDs
 
 promotePosition:
+  title: promotePosition
   type: integer
   description: Position in the search results where you want to show the promoted records.
   example: 0
 
 params:
+  title: params
   type: object
   description: |
     Parameters to apply to this search.
@@ -233,6 +241,7 @@ params:
       $ref: '../../../../common/schemas/IndexSettings.yml#/renderingContent'
 
 consequenceQuery:
+  title: consequenceQuery
   description: |
     Replace or edit the search query.
 
@@ -243,6 +252,7 @@ consequenceQuery:
     - type: string
 
 consequenceQueryObject:
+  title: consequenceQueryObject
   type: object
   additionalProperties: false
   properties:
@@ -258,6 +268,7 @@ consequenceQueryObject:
         $ref: '#/edit'
 
 edit:
+  title: edit
   type: object
   additionalProperties: false
   properties:
@@ -271,11 +282,13 @@ edit:
       type: string
 
 editType:
+  title: editType
   description: Type of edit.
   type: string
   enum: [remove, replace]
 
 automaticFacetFilters:
+  title: automaticFacetFilters
   description: |
     Filter to be applied to the search.
 
@@ -295,6 +308,7 @@ automaticOptionalFacetFilters:
   $ref: '#/automaticFacetFilters'
 
 automaticFacetFilter:
+  title: automaticFacetFilter
   type: object
   description: Filter or optional filter to be applied to the search.
   additionalProperties: false

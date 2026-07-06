@@ -1,4 +1,5 @@
 recommendUpdatedAtResponse:
+  title: recommendUpdatedAtResponse
   type: object
   description: Response, taskID, and update timestamp.
   additionalProperties: false

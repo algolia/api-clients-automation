@@ -19,6 +19,7 @@ fallbackParams:
     - $ref: './IndexSettings.yml#/recommendIndexSettings'
 
 baseRecommendSearchParams:
+  title: baseRecommendSearchParams
   type: object
   additionalProperties: false
   properties:

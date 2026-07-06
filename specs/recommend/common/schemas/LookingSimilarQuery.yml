@@ -1,10 +1,11 @@
 lookingSimilarQuery:
-  title: Looking similar
+  title: lookingSimilarQuery title
   allOf:
     - $ref: './RecommendationsRequest.yml#/baseRecommendRequest'
     - $ref: '#/lookingSimilar'
 
 lookingSimilar:
+  title: lookingSimilar
   type: object
   properties:
     model:
@@ -18,6 +19,7 @@ lookingSimilar:
     - objectID
 
 lookingSimilarModel:
+  title: lookingSimilarModel
   type: string
   description: |
     Looking similar model.

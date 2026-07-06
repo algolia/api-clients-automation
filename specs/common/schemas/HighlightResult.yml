@@ -26,11 +26,13 @@ highlightResultOption:
     - matchedWords
 
 highlightedValue:
+  title: highlightedValue
   type: string
   description: Highlighted attribute value, including HTML tags.
   example: '<em>George</em> <em>Clo</em>oney'
 
 matchLevel:
+  title: matchLevel
   type: string
   description: Whether the whole query string matches or only a part.
   enum: [none, partial, full]
@@ -52,6 +54,7 @@ highlightResultMap:
     $ref: '#/highlightResult'
 
 highlightResult:
+  title: highlightResult
   oneOf:
     - $ref: '#/highlightResultOption'
     - $ref: '#/highlightResultMap'

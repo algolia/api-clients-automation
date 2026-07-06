@@ -1,10 +1,12 @@
 synonymHits:
+  title: synonymHits
   type: array
   description: Matching synonyms.
   items:
     $ref: '#/synonymHit'
 
 synonymHit:
+  title: synonymHit
   type: object
   description: Synonym object.
   additionalProperties: false
@@ -51,6 +53,7 @@ synonymHit:
     - type
 
 searchSynonymsResponse:
+  title: searchSynonymsResponse
   type: object
   additionalProperties: true
   properties:

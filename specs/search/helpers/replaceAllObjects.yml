@@ -74,6 +74,7 @@ method:
         $ref: '../../common/responses/IndexNotFound.yml'
 
 replaceAllObjectsResponse:
+  title: replaceAllObjectsResponse
   type: object
   additionalProperties: false
   properties:

@@ -1,4 +1,5 @@
 FacetsUnion:
+  title: FacetsUnion
   oneOf:
     - items:
         type: string

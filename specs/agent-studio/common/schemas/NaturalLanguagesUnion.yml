@@ -1,4 +1,5 @@
 NaturalLanguagesUnion:
+  title: NaturalLanguagesUnion
   oneOf:
     - items:
         $ref: 'SupportedLanguage.yml#/SupportedLanguage'

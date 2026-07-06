@@ -1,20 +1,25 @@
 updatedAt:
+  title: updatedAt
   type: string
   description: Date and time when the resource was last updated, in RFC 3339 format.
 
 startedAt:
+  title: startedAt
   type: string
   description: Date and time when the task started, in RFC 3339 format.
 
 finishedAt:
+  title: finishedAt
   type: string
   description: Date and time when the task finished, in RFC 3339 format.
 
 cursor:
+  title: cursor
   type: string
   description: Date and time when the last cursor was created, in RFC 3339 format.
 
 DeleteResponse:
+  title: DeleteResponse
   type: object
   properties:
     deletedAt:
@@ -24,51 +29,60 @@ DeleteResponse:
     - deletedAt
 
 authenticationID:
+  title: authenticationID
   type: string
   # format: uuid
   description: Universally unique identifier (UUID) of an authentication resource.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
 
 destinationID:
+  title: destinationID
   type: string
   # format: uuid
   description: Universally unique identifier (UUID) of a destination resource.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
 
 sourceID:
+  title: sourceID
   type: string
   # format: uuid
   description: Universally uniqud identifier (UUID) of a source.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
 
 taskID:
+  title: taskID
   type: string
   # format: uuid
   description: Universally unique identifier (UUID) of a task.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
 
 transformationIDs:
+  title: transformationIDs
   type: array
   items:
     $ref: '#/transformationID'
 
 transformationID:
+  title: transformationID
   type: string
   # format: uuid
   description: Universally unique identifier (UUID) of a transformation.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
 
 name:
+  title: name
   type: string
   description: Descriptive name for the resource.
 
 owner:
+  title: owner
   oneOf:
     - type: string
       description: Owner of the resource.
     - type: 'null'
 
 Window:
+  title: Window
   type: object
   additionalProperties: false
   description: Time window by which to filter the observability data.

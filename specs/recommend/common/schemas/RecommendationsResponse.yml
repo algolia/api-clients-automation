@@ -1,4 +1,5 @@
 recommendationsResults:
+  title: recommendationsResults
   allOf:
     # TODO: this isn't correct. Not all elements of the Search response are included for Recommend.
     - $ref: '../../../common/schemas/SearchResponse.yml#/baseSearchResponse'
@@ -6,6 +7,7 @@ recommendationsResults:
     - $ref: '#/recommendationsHits'
 
 recommendationsHits:
+  title: recommendationsHits
   type: object
   additionalProperties: false
   properties:
@@ -17,11 +19,13 @@ recommendationsHits:
     - hits
 
 recommendationsHit:
+  title: recommendationsHit
   oneOf:
     - $ref: '#/recommendHit'
     - $ref: '#/trendingFacetHit'
 
 recommendHit:
+  title: recommendHit
   type: object
   description: Recommend hit.
   additionalProperties: true
@@ -62,6 +66,7 @@ trendingFacetHit:
     - facetValue
 
 recommendScore:
+  title: recommendScore
   type: number
   format: double
   minimum: 0

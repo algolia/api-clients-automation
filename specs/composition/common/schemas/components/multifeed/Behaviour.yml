@@ -43,11 +43,13 @@ multifeed:
       - articles-feed
 
 feedID:
+  title: feedID title
   type: object
   oneOf:
     - $ref: '#/feedInjection' # New behaviour should also be updated here
 
 feedInjection:
+  title: feedInjection
   type: object
   description: 'Feed formatted as an injection.'
   additionalProperties: false

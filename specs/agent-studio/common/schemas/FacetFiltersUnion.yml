@@ -1,4 +1,5 @@
 FacetFiltersUnion:
+  title: FacetFiltersUnion
   oneOf:
     - items:
         $ref: 'FacetFiltersUnion.yml#/FacetFiltersUnion'

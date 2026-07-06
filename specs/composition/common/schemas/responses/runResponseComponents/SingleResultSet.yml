@@ -32,12 +32,14 @@
 # }
 
 searchResultsItem:
+  title: searchResultsItem
   allOf:
     - $ref: '../../../../../common/schemas/SearchResponse.yml#/baseSearchResponse'
     - $ref: '#/SearchFields'
     - $ref: '#/resultsCompositionsResponse'
 
 SearchFields:
+  title: SearchFields
   type: object
   additionalProperties: false
   properties:
@@ -61,26 +63,31 @@ SearchFields:
 # ######################
 
 page:
+  title: page title
   type: integer
   description: The current page of the results.
   example: 0
 
 nbHits:
+  title: nbHits
   type: integer
   description: Number of results (hits).
   example: 20
 
 nbPages:
+  title: nbPages
   type: integer
   description: Number of pages of results.
   example: 1
 
 hitsPerPage:
+  title: hitsPerPage title
   type: integer
   description: Number of hits returned per page.
   example: 20
 
 hits:
+  title: hits
   type: array
   description: |
     Search results (hits).
@@ -90,11 +97,13 @@ hits:
     $ref: 'Hit.yml#/hit'
 
 query:
+  title: query title
   type: string
   description: The search query string.
   example: shoes
 
 params:
+  title: params
   type: string
   description: URL-encoded string of all search parameters.
   example: query=a&hitsPerPage=20
@@ -104,6 +113,7 @@ params:
 # ###########################
 
 resultsCompositionsResponse:
+  title: resultsCompositionsResponse
   type: object
   properties:
     feedID:
@@ -115,11 +125,13 @@ resultsCompositionsResponse:
     - compositions
 
 feedID:
+  title: feedID
   type: string
   description: The ID of the feed.
   example: products-feed
 
 resultsCompositionInfoResponse:
+  title: resultsCompositionInfoResponse
   type: object
   x-additionalPropertiesName: composition-id
   properties:
@@ -131,6 +143,7 @@ resultsCompositionInfoResponse:
     - injectedItems
 
 resultsInjectedItemInfoResponse:
+  title: resultsInjectedItemInfoResponse
   type: object
   additionalProperties: true
   properties:
@@ -146,6 +159,7 @@ resultsInjectedItemInfoResponse:
     - key
 
 resultsInjectedItemAppliedRulesInfoResponse:
+  title: resultsInjectedItemAppliedRulesInfoResponse
   type: object
   properties:
     objectID:

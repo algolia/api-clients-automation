@@ -1,4 +1,5 @@
 searchResponse:
+  title: searchResponse
   additionalProperties: true
   allOf:
     - $ref: '../../../common/schemas/SearchResponse.yml#/baseSearchResponse'
@@ -6,6 +7,7 @@ searchResponse:
     - $ref: '#/searchHits'
 
 searchResponsePartial:
+  title: searchResponsePartial
   description: |
     Partial search response returned when the `responseFields` parameter excludes
     fields like `hits`. Contains all possible search response properties but
@@ -36,6 +38,7 @@ searchResponsePartial:
           $ref: '#/responseExtensions'
 
 searchHits:
+  title: searchHits
   type: object
   additionalProperties: true
   properties:
@@ -59,6 +62,7 @@ searchHits:
     - hits
 
 responseExtensions:
+  title: responseExtensions
   type: object
   description: |
     AI-generated metadata returned alongside search results.
@@ -68,6 +72,7 @@ responseExtensions:
       $ref: '#/queryCategorization'
 
 queryCategorization:
+  title: queryCategorization
   type: object
   description: |
     Query Categorization prediction returned by the AI model.
@@ -91,11 +96,13 @@ queryCategorization:
       $ref: '#/autoFilteringResult'
 
 queryCategorization_type:
+  title: queryCategorization_type
   type: string
   enum: [narrow, broad, ambiguous, none]
   description: Classification of the query scope.
 
 categoryPrediction:
+  title: categoryPrediction
   type: object
   properties:
     bin:
@@ -107,11 +114,13 @@ categoryPrediction:
         $ref: '#/hierarchyPathEntry'
 
 categoryPrediction_bin:
+  title: categoryPrediction_bin
   type: string
   enum: [certain, very high, high, low, very low]
   description: Confidence level of the category prediction.
 
 hierarchyPathEntry:
+  title: hierarchyPathEntry
   type: object
   properties:
     facetName:
@@ -125,6 +134,7 @@ hierarchyPathEntry:
       description: Depth level in the category hierarchy, starting at 0.
 
 autoFilteringResult:
+  title: autoFilteringResult
   type: object
   description: Result of automatic filtering applied by Query Categorization.
   properties:
@@ -146,6 +156,7 @@ autoFilteringResult:
         $ref: '#/autoFilteringFilterEntry'
 
 autoFilteringFilterEntry:
+  title: autoFilteringFilterEntry
   oneOf:
     - type: string
     - type: array

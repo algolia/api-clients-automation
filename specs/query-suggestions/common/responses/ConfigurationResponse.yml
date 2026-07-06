@@ -1,4 +1,5 @@
 ConfigurationResponse:
+  title: ConfigurationResponse
   type: object
   description: API response for retrieving Query Suggestions configurations.
   allOf:
@@ -13,6 +14,7 @@ ConfigurationResponse:
     - sourceIndices
 
 AppID:
+  title: AppID
   type: object
   properties:
     appID:

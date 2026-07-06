@@ -1,15 +1,18 @@
 AddABTestsVariant:
+  title: AddABTestsVariant
   oneOf:
     - title: Variant
       $ref: '#/abTestsVariant'
     - title: Variant with search parameters
       $ref: '#/abTestsVariantSearchParams'
 abTestsVariantSearchParams:
+  title: abTestsVariantSearchParams
   allOf:
     - $ref: '#/abTestsVariant'
     - $ref: '#/customSearchParams'
 
 abTestsVariant:
+  title: abTestsVariant
   type: object
   additionalProperties: false
   properties:
@@ -24,6 +27,7 @@ abTestsVariant:
     - trafficPercentage
 
 customSearchParams:
+  title: customSearchParams
   type: object
   description: |
     Search parameters to add to the test variant.

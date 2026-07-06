@@ -1,4 +1,5 @@
 ABTestResponse:
+  title: ABTestResponse
   type: object
   additionalProperties: false
   properties:

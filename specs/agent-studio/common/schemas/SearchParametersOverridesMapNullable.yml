@@ -1,4 +1,5 @@
 SearchParametersOverridesMapNullable:
+  title: SearchParametersOverridesMapNullable
   oneOf:
     - additionalProperties:
         $ref: 'SearchParametersOverrides.yml#/SearchParametersOverrides'

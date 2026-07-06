@@ -1,4 +1,5 @@
 AroundRadiusUnion:
+  title: AroundRadiusUnion
   oneOf:
     - type: integer
     - type: string

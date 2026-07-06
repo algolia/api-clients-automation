@@ -1,4 +1,5 @@
 composition:
+  title: composition
   type: object
   additionalProperties: false
   properties:
@@ -23,6 +24,7 @@ composition:
     - name
 
 sortingStrategy:
+  title: sortingStrategy
   type: object
   description: |
     A mapping of sorting labels to the indices (or replicas) that implement those sorting rules. The sorting indices MUST be related to the associated main targeted index in the composition.

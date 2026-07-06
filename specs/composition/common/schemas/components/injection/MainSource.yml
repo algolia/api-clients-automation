@@ -1,4 +1,5 @@
 injectionMainSearchSource:
+  title: injectionMainSearchSource
   description: Organic result set will originate from a search request performed on the specified index.
   x-discriminator-fields:
     - search
@@ -22,6 +23,7 @@ injectionMainSearchSource:
     - search
 
 injectionMainRecommendSource:
+  title: injectionMainRecommendSource
   description: Organic result set will originate from a recommend request.
   x-discriminator-fields:
     - recommend

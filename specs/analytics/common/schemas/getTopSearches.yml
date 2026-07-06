@@ -134,6 +134,7 @@ topSearchesResponseWithRevenueAnalytics:
             $ref: '../parameters.yml#/purchaseCount'
 
 getTopSearchesResponse:
+  title: getTopSearchesResponse
   oneOf:
     - $ref: '#/topSearchesResponse'
     - $ref: '#/topSearchesResponseWithAnalytics'

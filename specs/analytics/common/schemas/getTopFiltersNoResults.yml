@@ -1,4 +1,5 @@
 getTopFiltersNoResultsResponse:
+  title: getTopFiltersNoResultsResponse
   type: object
   additionalProperties: false
   required:
@@ -16,6 +17,7 @@ getTopFiltersNoResultsResponse:
         - type: 'null'
 
 getTopFiltersNoResultsValues:
+  title: getTopFiltersNoResultsValues
   type: object
   additionalProperties: false
   required:
@@ -31,6 +33,7 @@ getTopFiltersNoResultsValues:
         $ref: '#/getTopFiltersNoResultsValue'
 
 getTopFiltersNoResultsValue:
+  title: getTopFiltersNoResultsValue
   type: object
   additionalProperties: false
   required:

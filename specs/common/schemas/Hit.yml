@@ -1,4 +1,5 @@
 matchedGeoLocation:
+  title: matchedGeoLocation
   type: object
   properties:
     lat:
@@ -14,6 +15,7 @@ matchedGeoLocation:
       description: Distance between the matched location and the search location (in meters).
 
 personalization:
+  title: personalization
   type: object
   properties:
     filtersScore:
@@ -27,6 +29,7 @@ personalization:
       description: The score of the event.
 
 rankingInfo:
+  title: rankingInfo
   type: object
   description: Object with detailed information about the record's ranking.
   additionalProperties: false
@@ -84,4 +87,5 @@ rankingInfo:
     - userScore
 
 distinctSeqID:
+  title: distinctSeqID
   type: integer

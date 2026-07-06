@@ -31,6 +31,7 @@ snippetResultArray:
     $ref: '#/snippetResult'
 
 snippetResult:
+  title: snippetResult
   oneOf:
     - $ref: '#/snippetResultOption'
     - $ref: '#/snippetResultMap'

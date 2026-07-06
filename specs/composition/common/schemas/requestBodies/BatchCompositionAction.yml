@@ -1,4 +1,5 @@
 deleteCompositionAction:
+  title: deleteCompositionAction
   type: object
   description: Operation arguments when deleting.
   additionalProperties: false
@@ -9,6 +10,7 @@ deleteCompositionAction:
     - objectID
 
 batchCompositionAction:
+  title: batchCompositionAction
   oneOf:
     - title: Upsert (update and insert)
       $ref: '../components/Composition.yml#/composition'

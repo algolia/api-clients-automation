@@ -1,3 +1,4 @@
+title: EventsResponse
 type: object
 description: The response of the Insights API.
 additionalProperties: false

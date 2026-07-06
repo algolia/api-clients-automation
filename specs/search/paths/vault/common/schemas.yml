@@ -1,10 +1,12 @@
 sources:
+  title: sources
   description: Sources.
   type: array
   items:
     $ref: '#/source'
 
 source:
+  title: source
   type: object
   description: Source.
   required:

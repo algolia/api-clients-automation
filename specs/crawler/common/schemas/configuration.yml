@@ -1,4 +1,5 @@
 Configuration:
+  title: Configuration
   type: object
   description: Crawler configuration.
   required:
@@ -224,6 +225,7 @@ Configuration:
         example: https://www.example.com
 
 PartialConfig:
+  title: PartialConfig
   description: |
     Crawler configuration to update.
     You can only update top-level configuration properties.
@@ -233,6 +235,7 @@ PartialConfig:
     - $ref: '#/Configuration'
 
 ignoreCanonicalTo:
+  title: ignoreCanonicalTo
   oneOf:
     - type: boolean
       description: |
@@ -253,6 +256,7 @@ ignoreCanonicalTo:
           Canonical URLs are only ignored if they match this pattern.
 
 renderJavaScript:
+  title: renderJavaScript
   description: |
     If `true`, use a Chrome headless browser to crawl pages.
 
@@ -296,6 +300,7 @@ renderJavaScript:
         - patterns
 
 requestOptions:
+  title: requestOptions
   type: object
   description: Lets you add options to HTTP requests made by the crawler.
   properties:
@@ -314,6 +319,7 @@ requestOptions:
       $ref: '#/headers'
 
 waitTime:
+  title: waitTime
   type: object
   description: Timeout for the HTTP request.
   properties:
@@ -334,6 +340,7 @@ initialIndexSettings:
     [Index settings](/specs/search#tag/_model_index_settings).
 
 headers:
+  title: headers
   type: object
   description: Headers to add to all requests.
   properties:
@@ -351,6 +358,7 @@ headers:
       example: session=1234
 
 login:
+  title: login
   description: |
     Authorization method and credentials for crawling protected content.
 
@@ -472,6 +480,7 @@ oauthRequest:
         resource: 'https://protected.example.com/'
 
 loginRequestOptions:
+  title: loginRequestOptions
   type: object
   description: Options for the HTTP request for logging in.
   properties:
@@ -491,6 +500,7 @@ loginRequestOptions:
       description: Timeout for the request.
 
 accessTokenRequest:
+  title: accessTokenRequest
   type: object
   description: |
     Parameters required to make the [access token request](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4.2).
@@ -520,12 +530,14 @@ accessTokenRequest:
     - clientSecret
 
 grantType:
+  title: grantType
   type: string
   description: OAuth 2.0 grant type.
   enum:
     - client_credentials
 
 extraParameters:
+  title: extraParameters
   type: object
   description: Extra parameters for the authorization request.
   properties:
@@ -536,6 +548,7 @@ extraParameters:
 
         For more information, see [Azure Active Directory](https://learn.microsoft.com/en-us/previous-versions/azure/active-directory/azuread-dev/v1-oauth2-client-creds-grant-flow#first-case-access-token-request-with-a-shared-secret).
 safetyChecks:
+  title: safetyChecks
   type: object
   description: |
     Checks to ensure the crawl was successful.
@@ -546,6 +559,7 @@ safetyChecks:
       $ref: '#/beforeIndexPublishing'
 
 beforeIndexPublishing:
+  title: beforeIndexPublishing
   type: object
   description: Checks triggered after the crawl finishes but before the records are added to the Algolia index.
   properties:
@@ -560,6 +574,7 @@ beforeIndexPublishing:
       description: Stops the crawler if a specified number of pages fail to crawl.
 
 schedule:
+  title: schedule
   type: string
   description: |
     Schedule for running the crawl.

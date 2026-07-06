@@ -1,4 +1,5 @@
 Event:
+  title: Event
   type: object
   description: An event describe a step of the task execution flow.
   additionalProperties: false

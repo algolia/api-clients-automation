@@ -50,6 +50,7 @@ runSort:
     $ref: '#/runSortKeys'
 
 runSortKeys:
+  title: runSortKeys
   type: string
   description: Property by which to sort the list of task runs.
   default: createdAt
@@ -64,6 +65,7 @@ eventSort:
     $ref: '#/eventSortKeys'
 
 eventSortKeys:
+  title: eventSortKeys
   type: string
   description: Property by which to sort the list of task run events.
   enum: [status, type, publishedAt]

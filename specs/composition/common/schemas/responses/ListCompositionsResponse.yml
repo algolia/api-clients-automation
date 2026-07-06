@@ -1,4 +1,5 @@
 listCompositionsResponse:
+  title: listCompositionsResponse
   type: object
   additionalProperties: false
   properties:

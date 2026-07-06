@@ -1,4 +1,5 @@
 builtInOperationType:
+  title: builtInOperationType
   type: string
   enum:
     - Increment
@@ -11,6 +12,7 @@ builtInOperationType:
   description: How to change the attribute.
 
 builtInOperationValue:
+  title: builtInOperationValue
   oneOf:
     - type: string
       description: A string to append or remove for the `Add`, `Remove`, and `AddUnique` operations.
@@ -18,6 +20,7 @@ builtInOperationValue:
       description: A number to add, remove, or append, depending on the operation.
 
 builtInOperation:
+  title: builtInOperation
   type: object
   description: Update to perform on the attribute.
   additionalProperties: false
@@ -38,6 +41,7 @@ attributeToUpdate:
     - $ref: '#/builtInOperation'
 
 batchResponse:
+  title: batchResponse
   type: object
   additionalProperties: false
   properties:

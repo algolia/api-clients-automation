@@ -1,4 +1,5 @@
 variants:
+  title: variants
   type: array
   description: |
     A/B test variants.
@@ -9,6 +10,7 @@ variants:
     $ref: '#/variant'
 
 variant:
+  title: variant
   type: object
   additionalProperties: false
   properties:
@@ -43,12 +45,14 @@ variant:
     - metrics
 
 metrics:
+  title: metrics
   type: array
   description: All ABTest metrics that were defined during test creation.
   items:
     $ref: '#/metricResult'
 
 metricResult:
+  title: metricResult
   type: object
   properties:
     name:
@@ -123,6 +127,7 @@ metricResult:
       metadata: {'winsorizedValue': 888.8}
 
 variantMetadata:
+  title: variantMetadata
   type: object
   description: Variant specific metadata.
   properties:
@@ -130,6 +135,7 @@ variantMetadata:
       $ref: '../parameters.yml#/filterEffects'
 
 metricMetadata:
+  title: metricMetadata
   type: object
   description: Metric specific metadata.
   properties:

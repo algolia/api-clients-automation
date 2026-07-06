@@ -78,6 +78,7 @@ method:
         $ref: '../../common/responses/IndexNotFound.yml'
 
 replaceAllObjectsWithTransformationResponse:
+  title: replaceAllObjectsWithTransformationResponse
   type: object
   additionalProperties: false
   properties:

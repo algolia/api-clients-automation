@@ -7,6 +7,7 @@ ObjectIDRule:
     $ref: '../../../common/parameters.yml#/ruleID'
 
 query:
+  title: composition query title
   type: string
   description: Search query for rules.
   default: ''

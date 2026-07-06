@@ -43,6 +43,7 @@ sort:
     $ref: '#/destinationSortKeys'
 
 destinationSortKeys:
+  title: destinationSortKeys
   type: string
   description: Property by which to sort the destinations.
   default: createdAt

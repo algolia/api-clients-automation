@@ -1,4 +1,5 @@
 action:
+  title: action
   type: string
   enum:
     - upsert

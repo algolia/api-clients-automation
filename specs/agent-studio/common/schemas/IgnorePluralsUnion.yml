@@ -1,4 +1,5 @@
 IgnorePluralsUnion:
+  title: IgnorePluralsUnion
   oneOf:
     - type: boolean
     - items:

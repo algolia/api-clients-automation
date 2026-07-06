@@ -1,2 +1,3 @@
+title: ConversionEvent
 type: string
 enum: [conversion]

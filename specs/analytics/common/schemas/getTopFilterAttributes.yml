@@ -1,4 +1,5 @@
 getTopFilterAttributesResponse:
+  title: getTopFilterAttributesResponse
   type: object
   additionalProperties: false
   required:
@@ -11,6 +12,7 @@ getTopFilterAttributesResponse:
         $ref: '#/getTopFilterAttribute'
 
 getTopFilterAttribute:
+  title: getTopFilterAttribute
   type: object
   additionalProperties: false
   required:

@@ -1,4 +1,5 @@
 VoteEnum:
+  title: VoteEnum
   type: integer
   enum:
     - 0

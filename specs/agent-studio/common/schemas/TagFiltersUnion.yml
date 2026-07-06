@@ -1,4 +1,5 @@
 TagFiltersUnion:
+  title: TagFiltersUnion
   oneOf:
     - type: string
     - type: array

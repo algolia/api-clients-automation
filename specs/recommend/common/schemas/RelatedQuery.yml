@@ -1,10 +1,11 @@
 relatedQuery:
-  title: Related products
+  title: relatedQuery title
   allOf:
     - $ref: './RecommendationsRequest.yml#/baseRecommendRequest'
     - $ref: '#/relatedProducts'
 
 relatedProducts:
+  title: relatedProducts
   type: object
   properties:
     model:
@@ -18,6 +19,7 @@ relatedProducts:
     - objectID
 
 relatedModel:
+  title: relatedModel
   type: string
   description: |
     Related products or similar content model.

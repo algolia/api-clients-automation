@@ -1,10 +1,12 @@
 searchResponse:
+  title: searchResponse
   additionalProperties: true
   allOf:
     - $ref: './runResponseComponents/CompositionsRunSection.yml#/compositionBaseSearchResponse'
     - $ref: '#/searchResults'
 
 searchResults:
+  title: searchResults
   type: object
   additionalProperties: false
   properties:

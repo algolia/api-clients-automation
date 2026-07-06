@@ -1,4 +1,5 @@
 MessagePart:
+  title: MessagePart
   oneOf:
     - $ref: 'TextPart.yml#/TextPart'
     - $ref: 'ToolCallPart.yml#/ToolCallPart'

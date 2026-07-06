@@ -1,4 +1,5 @@
 eventName:
+  title: eventName
   type: string
   minLength: 1
   maxLength: 64
@@ -11,11 +12,13 @@ eventName:
     framework.
 
 index:
+  title: index
   type: string
   description: Index name (case-sensitive) to which the event's items belong.
   example: ALGOLIA_INDEX_NAME
 
 userToken:
+  title: userToken
   type: string
   minLength: 1
   maxLength: 129
@@ -28,6 +31,7 @@ userToken:
   example: test-user-1
 
 authenticatedUserToken:
+  title: authenticatedUserToken
   type: string
   minLength: 1
   maxLength: 129
@@ -42,6 +46,7 @@ authenticatedUserToken:
   example: c6a52c02-d0c7-4b53-8ce3-2b8fd202f3f9
 
 timestamp:
+  title: timestamp
   type: integer
   format: int64
   description: |
@@ -50,6 +55,7 @@ timestamp:
   example: 1687193127
 
 queryID:
+  title: queryID
   type: string
   pattern: '[0-9a-f]{32}'
   minLength: 32
@@ -62,6 +68,7 @@ queryID:
   example: 3e48cd0616e466948dd85abf5c3fbbe2
 
 objectIDs:
+  title: objectIDs
   type: array
   description: Object IDs of the records that are part of the event.
   items:
@@ -71,6 +78,7 @@ objectIDs:
   example: ['object-1', 'object-2', 'object-3']
 
 filters:
+  title: filters
   type: array
   description: |
     Applied facet filters.
@@ -84,6 +92,7 @@ filters:
   example: ['brand:apple']
 
 positions:
+  title: positions
   type: array
   items:
     type: integer
@@ -97,6 +106,7 @@ positions:
   example: [1, 2, 5]
 
 price:
+  title: price
   description: Final price of a single product, including any discounts, in units of `currency`.
   oneOf:
     - type: number
@@ -106,6 +116,7 @@ price:
       example: '9.99'
 
 discount:
+  title: discount
   description: Absolute value of the discount for this product, in units of `currency`.
   oneOf:
     - type: number
@@ -115,6 +126,7 @@ discount:
       example: '20'
 
 quantity:
+  title: quantity
   type: integer
   format: int32
   example: 2
@@ -123,6 +135,7 @@ quantity:
     The total purchase value is the sum of `quantity` multiplied with the `price` for each purchased item.
 
 objectData:
+  title: objectData
   type: object
   additionalProperties: false
   properties:
@@ -134,6 +147,7 @@ objectData:
       $ref: '#/discount'
 
 objectDataList:
+  title: objectDataList
   type: array
   description: |
     Extra information about the records involved in a purchase or add-to-cart event.
@@ -145,6 +159,7 @@ objectDataList:
   maxItems: 20
 
 objectDataAfterSearch:
+  title: objectDataAfterSearch
   type: object
   additionalProperties: false
   properties:
@@ -163,6 +178,7 @@ objectDataAfterSearch:
       $ref: '#/discount'
 
 objectDataAfterSearchList:
+  title: objectDataAfterSearchList
   type: array
   description: |
     Extra information about the records involved in a purchase or add-to-cart events.
@@ -174,6 +190,7 @@ objectDataAfterSearchList:
   maxItems: 20
 
 currency:
+  title: currency
   type: string
   minLength: 3
   maxLength: 3
@@ -182,6 +199,7 @@ currency:
   example: EUR
 
 value:
+  title: value
   description: |
     Total monetary value of this event in units of `currency`.
     This should be equal to the sum of `price` times `quantity`.

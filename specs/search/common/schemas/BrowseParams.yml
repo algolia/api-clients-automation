@@ -1,15 +1,18 @@
 browseParams:
+  title: browseParams
   oneOf:
     - title: Search parameters as object
       $ref: '#/browseParamsObject'
     - $ref: '../../../common/schemas/SearchParams.yml#/searchParamsString'
 
 browseParamsObject:
+  title: browseParamsObject
   allOf:
     - $ref: '../../../common/schemas/SearchParams.yml#/searchParamsObject'
     - $ref: '#/cursor'
 
 cursor:
+  title: cursor
   type: object
   additionalProperties: false
   properties:

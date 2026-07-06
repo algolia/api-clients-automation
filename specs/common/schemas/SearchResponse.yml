@@ -1,4 +1,5 @@
 baseSearchResponse:
+  title: baseSearchResponse
   type: object
   additionalProperties: true
   properties:
@@ -155,21 +156,25 @@ baseSearchResponse:
       description: Whether automatic events collection is enabled for the application.
 
 nbHits:
+  title: nbHits
   type: integer
   description: Number of results (hits).
   example: 20
 
 nbPages:
+  title: nbPages
   type: integer
   description: Number of pages of results.
   example: 1
 
 processingTimeMS:
+  title: processingTimeMS
   type: integer
   description: Time the server took to process the request, in milliseconds.
   example: 20
 
 RedirectRuleIndexMetadata:
+  title: RedirectRuleIndexMetadata
   type: object
   properties:
     source:
@@ -201,6 +206,7 @@ RedirectRuleIndexMetadata:
     - source
 
 SearchPagination:
+  title: SearchPagination
   type: object
   additionalProperties: false
   properties:

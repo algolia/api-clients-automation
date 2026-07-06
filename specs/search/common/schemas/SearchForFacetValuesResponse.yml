@@ -1,4 +1,5 @@
 searchForFacetValuesResponse:
+  title: searchForFacetValuesResponse
   type: object
   additionalProperties: false
   required:

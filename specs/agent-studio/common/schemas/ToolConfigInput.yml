@@ -1,4 +1,5 @@
 ToolConfigInput:
+  title: ToolConfigInput
   oneOf:
     - $ref: 'ClientSideToolConfig.yml#/ClientSideToolConfig'
     - $ref: 'AlgoliaSearchToolConfig.yml#/AlgoliaSearchToolConfig'

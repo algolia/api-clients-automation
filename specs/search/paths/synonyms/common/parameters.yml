@@ -21,6 +21,7 @@ Type:
     $ref: '#/SynonymType'
 
 SynonymType:
+  title: SynonymType
   type: string
   description: Synonym type.
   example: onewaysynonym

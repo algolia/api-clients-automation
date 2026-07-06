@@ -1,4 +1,5 @@
 hit:
+  title: hit
   type: object
   description: |
     Search result.

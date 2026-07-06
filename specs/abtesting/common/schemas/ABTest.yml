@@ -1,4 +1,5 @@
 ABTests:
+  title: ABTests
   oneOf:
     - type: array
       description: The list of A/B tests, null if no A/B tests are configured for this application.
@@ -7,6 +8,7 @@ ABTests:
     - type: 'null'
 
 ABTest:
+  title: ABTest
   type: object
   additionalProperties: false
   properties:
@@ -99,6 +101,7 @@ ABTest:
     - variants
 
 Status:
+  title: Status
   type: string
   description: |
     A/B test status.
@@ -129,6 +132,7 @@ ABTestConfiguration:
       $ref: '#/MinimumDetectableEffect'
 
 Outliers:
+  title: Outliers
   type: object
   description: Configuration for handling outliers.
   properties:
@@ -138,6 +142,7 @@ Outliers:
       default: true
 
 EmptySearch:
+  title: EmptySearch
   type: object
   description: Configuration for handling empty searches.
   properties:
@@ -146,6 +151,7 @@ EmptySearch:
       description: Whether to exclude empty searches when calculating A/B test results.
 
 MinimumDetectableEffect:
+  title: MinimumDetectableEffect
   type: object
   description: Configuration for the smallest difference between test variants you want to detect.
   properties:
@@ -164,6 +170,7 @@ MinimumDetectableEffect:
     - metric
 
 EffectMetric:
+  title: EffectMetric
   type: string
   description: Metric for which you want to detect the smallest relative difference.
   enum:
@@ -173,6 +180,7 @@ EffectMetric:
     - purchaseRate
 
 FeatureFilters:
+  title: FeatureFilters
   type: object
   description: Configuration of feature-based filters applied to the A/B test population.
   properties:

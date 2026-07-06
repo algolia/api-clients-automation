@@ -1,4 +1,5 @@
 deleteCompositionRuleAction:
+  title: deleteCompositionRuleAction
   type: object
   description: Operation arguments when deleting.
   additionalProperties: false
@@ -9,6 +10,7 @@ deleteCompositionRuleAction:
     - objectID
 
 rulesBatchCompositionAction:
+  title: rulesBatchCompositionAction
   oneOf:
     - title: Upsert (update and insert)
       $ref: '../components/CompositionRule.yml#/compositionRule'

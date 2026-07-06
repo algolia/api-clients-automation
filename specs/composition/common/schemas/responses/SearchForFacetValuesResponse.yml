@@ -1,4 +1,5 @@
 searchForFacetValuesResponse:
+  title: searchForFacetValuesResponse
   type: object
   additionalProperties: false
   properties:
@@ -9,6 +10,7 @@ searchForFacetValuesResponse:
         $ref: '#/searchForFacetValuesResults'
 
 searchForFacetValuesResults:
+  title: searchForFacetValuesResults
   type: object
   additionalProperties: false
   required:

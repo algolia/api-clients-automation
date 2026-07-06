@@ -1,4 +1,5 @@
 languages:
+  title: languages
   type: object
   description: Dictionary language.
   additionalProperties: false
@@ -15,6 +16,7 @@ languages:
       $ref: '#/dictionaryLanguage'
 
 dictionaryLanguage:
+  title: dictionaryLanguage
   oneOf:
     - type: object
       additionalProperties: false

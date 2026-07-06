@@ -1,4 +1,5 @@
 compositionBehavior:
+  title: compositionBehavior
   type: object
   additionalProperties: false
   description: An object containing either an `injection` or `multifeed` behavior schema, but not both.
@@ -7,6 +8,7 @@ compositionBehavior:
     - $ref: '#/compositionMultifeedBehavior'
 
 compositionInjectionBehavior:
+  title: compositionInjectionBehavior
   type: object
   additionalProperties: false
   description: An object containing an `injection` behavior.
@@ -17,6 +19,7 @@ compositionInjectionBehavior:
     - injection
 
 compositionMultifeedBehavior:
+  title: compositionMultifeedBehavior
   type: object
   additionalProperties: false
   description: An object containing a `multifeed` behavior.

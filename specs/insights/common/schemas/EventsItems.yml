@@ -1,3 +1,4 @@
+title: EventsItems
 oneOf:
   - $ref: './ClickedObjectIDsAfterSearch.yml'
   - $ref: './AddedToCartObjectIDsAfterSearch.yml'

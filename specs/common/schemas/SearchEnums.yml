@@ -1,10 +1,12 @@
 advancedSyntaxFeatures:
+  title: advancedSyntaxFeatures
   type: string
   enum: [exactPhrase, excludeWords]
   x-categories:
     - Query strategy
 
 alternativesAsExact:
+  title: alternativesAsExact
   type: string
   enum: [ignorePlurals, singleWordSynonym, multiWordsSynonym, ignoreConjugations]
   x-categories:

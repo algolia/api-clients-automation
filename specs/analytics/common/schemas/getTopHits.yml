@@ -113,6 +113,7 @@ topHitsResponseWithRevenueAnalytics:
             $ref: '../parameters.yml#/currencies'
 
 getTopHitsResponse:
+  title: getTopHitsResponse
   oneOf:
     - $ref: '#/topHitsResponse'
     - $ref: '#/topHitsResponseWithAnalytics'

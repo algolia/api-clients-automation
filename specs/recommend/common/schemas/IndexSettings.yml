@@ -1,10 +1,12 @@
 recommendIndexSettings:
+  title: recommendIndexSettings
   description: Index settings.
   allOf:
     - $ref: '../../../common/schemas/IndexSettings.yml#/baseIndexSettings'
     - $ref: '#/baseRecommendIndexSettings'
 
 baseRecommendIndexSettings:
+  title: baseRecommendIndexSettings
   type: object
   additionalProperties: false
   properties:

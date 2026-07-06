@@ -1,4 +1,5 @@
 searchDictionaryEntriesResponse:
+  title: searchDictionaryEntriesResponse
   type: object
   additionalProperties: false
   properties:
@@ -20,6 +21,7 @@ searchDictionaryEntriesResponse:
     - nbPages
 
 dictionaryEntry:
+  title: dictionaryEntry
   type: object
   description: Dictionary entry.
   additionalProperties: true

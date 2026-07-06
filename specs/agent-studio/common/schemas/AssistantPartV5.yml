@@ -1,4 +1,5 @@
 AssistantPartV5:
+  title: AssistantPartV5
   oneOf:
     - $ref: 'StepStartPartV5.yml#/StepStartPartV5'
     - $ref: 'TextPartV5.yml#/TextPartV5'

@@ -35,6 +35,7 @@ sort:
     $ref: '#/sourceSortKeys'
 
 sourceSortKeys:
+  title: sourceSortKeys
   type: string
   description: Property by which to sort the list of sources.
   default: createdAt

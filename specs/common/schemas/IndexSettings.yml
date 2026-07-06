@@ -1,10 +1,12 @@
 indexSettings:
+  title: indexSettings
   description: Index settings.
   allOf:
     - $ref: '#/baseIndexSettings'
     - $ref: '#/indexSettingsAsSearchParams'
 
 baseIndexSettings:
+  title: baseIndexSettings
   type: object
   additionalProperties: false
   properties:
@@ -329,6 +331,7 @@ baseIndexSettings:
         - Ranking
 
 indexSettingsAsSearchParams:
+  title: indexSettingsAsSearchParams
   type: object
   additionalProperties: false
   properties:
@@ -453,6 +456,7 @@ indexSettingsAsSearchParams:
 #
 
 advancedSyntax:
+  title: advancedSyntax
   type: boolean
   description: |
     Whether to support phrase matching and excluding words from search queries
@@ -462,6 +466,7 @@ advancedSyntax:
     - Query strategy
 
 advancedSyntaxFeatures:
+  title: advancedSyntaxFeatures title
   type: array
   items:
     $ref: './SearchEnums.yml#/advancedSyntaxFeatures'
@@ -479,6 +484,7 @@ advancedSyntaxFeatures:
     - Query strategy
 
 allowTyposOnNumericTokens:
+  title: allowTyposOnNumericTokens
   type: boolean
   description: |
     Whether to allow typos on numbers in the search query
@@ -489,6 +495,7 @@ allowTyposOnNumericTokens:
     - Typos
 
 alternativesAsExact:
+  title: alternativesAsExact title
   type: array
   items:
     $ref: './SearchEnums.yml#/alternativesAsExact'
@@ -509,6 +516,7 @@ alternativesAsExact:
     - Query strategy
 
 attributeCriteriaComputedByMinProximity:
+  title: attributeCriteriaComputedByMinProximity
   type: boolean
   description: |
     Whether the best matching attribute should be determined by minimum proximity
@@ -520,6 +528,7 @@ attributeCriteriaComputedByMinProximity:
     - Advanced
 
 attributesToHighlight:
+  title: attributesToHighlight
   type: array
   items:
     type: string
@@ -536,6 +545,7 @@ attributesToHighlight:
     - Highlighting and Snippeting
 
 attributesToSnippet:
+  title: attributesToSnippet
   type: array
   items:
     type: string
@@ -555,6 +565,7 @@ attributesToSnippet:
     - Highlighting and Snippeting
 
 attributesToRetrieve:
+  title: attributesToRetrieve
   type: array
   items:
     type: string
@@ -574,6 +585,7 @@ attributesToRetrieve:
     - Attributes
 
 disableExactOnAttributes:
+  title: disableExactOnAttributes
   type: array
   items:
     type: string
@@ -591,6 +603,7 @@ disableExactOnAttributes:
     - Query strategy
 
 decompoundQuery:
+  title: decompoundQuery
   type: boolean
   description: |
     Whether to split compound words in the query into their building blocks
@@ -603,6 +616,7 @@ decompoundQuery:
     - Languages
 
 disableTypoToleranceOnAttributes:
+  title: disableTypoToleranceOnAttributes
   type: array
   items:
     type: string
@@ -621,6 +635,7 @@ disableTypoToleranceOnAttributes:
     - Typos
 
 enablePersonalization:
+  title: enablePersonalization
   type: boolean
   description: Whether to enable Personalization.
   default: false
@@ -628,6 +643,7 @@ enablePersonalization:
     - Personalization
 
 enableReRanking:
+  title: enableReRanking
   type: boolean
   description: |
     Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking)
@@ -637,6 +653,7 @@ enableReRanking:
     - Filtering
 
 enableRules:
+  title: enableRules title
   type: boolean
   description: Whether to enable rules.
   default: true
@@ -644,6 +661,7 @@ enableRules:
     - Rules
 
 highlightPreTag:
+  title: highlightPreTag
   type: string
   description: HTML tag to insert before the highlighted parts in all highlighted results and snippets.
   default: <em>
@@ -651,6 +669,7 @@ highlightPreTag:
     - Highlighting and Snippeting
 
 highlightPostTag:
+  title: highlightPostTag
   type: string
   description: HTML tag to insert after the highlighted parts in all highlighted results and snippets.
   default: </em>
@@ -658,6 +677,7 @@ highlightPostTag:
     - Highlighting and Snippeting
 
 maxFacetHits:
+  title: maxFacetHits
   type: integer
   description: Maximum number of facet values to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
   maximum: 100
@@ -666,6 +686,7 @@ maxFacetHits:
     - Advanced
 
 maxValuesPerFacet:
+  title: maxValuesPerFacet
   type: integer
   description: Maximum number of facet values to return for each facet.
   default: 100
@@ -674,6 +695,7 @@ maxValuesPerFacet:
     - Faceting
 
 minProximity:
+  title: minProximity
   type: integer
   minimum: 1
   maximum: 7
@@ -687,6 +709,7 @@ minProximity:
     - Advanced
 
 minWordSizefor1Typo:
+  title: minWordSizefor1Typo
   type: integer
   description: Minimum number of characters a word in the search query must contain to accept matches with [one typo](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).
   default: 4
@@ -694,6 +717,7 @@ minWordSizefor1Typo:
     - Typos
 
 minWordSizefor2Typos:
+  title: minWordSizefor2Typos
   type: integer
   description: Minimum number of characters a word in the search query must contain to accept matches with [two typos](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).
   default: 8
@@ -701,6 +725,7 @@ minWordSizefor2Typos:
     - Typos
 
 reRankingApplyFilter:
+  title: reRankingApplyFilter
   description: |
     Restrict [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) to records that match these filters.
   oneOf:
@@ -712,6 +737,7 @@ reRankingApplyFilter:
         - Filtering
 
 hitsPerPage:
+  title: hitsPerPage
   type: integer
   description: Number of hits per page.
   default: 20
@@ -721,6 +747,7 @@ hitsPerPage:
     - Pagination
 
 userData:
+  title: userData
   example:
     settingID: f2a7b51e3503acc6a39b3784ffb84300
     pluginVersion: 1.6.0
@@ -733,6 +760,7 @@ userData:
     - Advanced
 
 queryLanguages:
+  title: queryLanguages
   type: array
   items:
     $ref: '#/supportedLanguage'
@@ -753,6 +781,7 @@ queryLanguages:
     - Languages
 
 queryType:
+  title: queryType
   type: string
   enum:
     - prefixLast
@@ -772,6 +801,7 @@ queryType:
     - Query strategy
 
 mode:
+  title: mode
   type: string
   enum:
     - neuralSearch
@@ -785,6 +815,7 @@ mode:
     - Query strategy
 
 removeWordsIfNoResults:
+  title: removeWordsIfNoResults
   type: string
   enum:
     - none
@@ -816,6 +847,7 @@ removeWordsIfNoResults:
     - Query strategy
 
 exactOnSingleWordQuery:
+  title: exactOnSingleWordQuery
   type: string
   enum:
     - attribute
@@ -841,6 +873,7 @@ exactOnSingleWordQuery:
     - Query strategy
 
 distinct:
+  title: distinct
   description: |
     Determines how many records of a group are included in the search results.
 
@@ -869,6 +902,7 @@ distinct:
     - Advanced
 
 typoTolerance:
+  title: typoTolerance title
   description: |
     Whether [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance) is enabled and how it is applied.
 
@@ -882,6 +916,7 @@ typoTolerance:
     - Typos
 
 ignorePlurals:
+  title: ignorePlurals
   description: |
     Treat singular, plurals, and other forms of declensions as equivalent.
     Only use this feature for the languages used in your index.
@@ -903,6 +938,7 @@ ignorePlurals:
     - Languages
 
 removeStopWords:
+  title: removeStopWords
   description: |
     Removes stop words from the search query.
 
@@ -925,6 +961,7 @@ removeStopWords:
     - Languages
 
 renderingContent:
+  title: renderingContent
   description: |
     Extra data that can be used in the search UI.
 
@@ -943,6 +980,7 @@ renderingContent:
     - Advanced
 
 redirectURL:
+  title: redirectURL
   description: The redirect rule container.
   type: object
   additionalProperties: false
@@ -951,6 +989,7 @@ redirectURL:
       type: string
 
 facetOrdering:
+  title: facetOrdering
   description: Order of facet names and facet values in your UI.
   type: object
   additionalProperties: false
@@ -961,6 +1000,7 @@ facetOrdering:
       $ref: '#/values'
 
 widgets:
+  title: widgets
   description: Widgets returned from any rules that are applied to the current search.
   type: object
   additionalProperties: false
@@ -969,12 +1009,14 @@ widgets:
       $ref: '#/banners'
 
 banners:
+  title: banners
   description: Banners defined in the Merchandising Studio for a given search.
   type: array
   items:
     $ref: '#/banner'
 
 banner:
+  title: banner
   description: Banner with image and link to redirect users.
   type: object
   additionalProperties: false
@@ -985,6 +1027,7 @@ banner:
       $ref: '#/bannerLink'
 
 bannerLink:
+  title: bannerLink
   description: Link for a banner defined in the Merchandising Studio.
   type: object
   additionalProperties: false
@@ -993,6 +1036,7 @@ bannerLink:
       type: string
 
 bannerImage:
+  title: bannerImage
   description: Image to show inside a banner.
   type: object
   additionalProperties: false
@@ -1005,6 +1049,7 @@ bannerImage:
       type: string
 
 bannerImageUrl:
+  title: bannerImageUrl
   description: URL for an image to show inside a banner.
   type: object
   additionalProperties: false
@@ -1013,6 +1058,7 @@ bannerImageUrl:
       type: string
 
 facets:
+  title: facets title
   description: Order of facet names.
   type: object
   additionalProperties: false
@@ -1021,6 +1067,7 @@ facets:
       $ref: '#/order'
 
 values:
+  title: values
   description: Order of facet values. One object for each facet.
   type: object
   additionalProperties:
@@ -1028,6 +1075,7 @@ values:
     $ref: '#/value'
 
 value:
+  title: value
   type: object
   additionalProperties: false
   properties:
@@ -1039,6 +1087,7 @@ value:
       $ref: '#/hide'
 
 order:
+  title: order
   description: |
     Explicit order of facets or facet values.
 
@@ -1048,12 +1097,14 @@ order:
     type: string
 
 hide:
+  title: hide
   description: Hide facet values.
   type: array
   items:
     type: string
 
 sortRemainingBy:
+  title: sortRemainingBy
   description: |
     Order of facet values that aren't explicitly positioned with the `order` setting.
 
@@ -1071,6 +1122,7 @@ sortRemainingBy:
   enum: [count, alpha, hidden]
 
 semanticSearch:
+  title: semanticSearch
   type: object
   description: |
     Settings for the semantic search part of NeuralSearch.
@@ -1088,6 +1140,7 @@ semanticSearch:
         - type: 'null'
 
 supportedLanguage:
+  title: supportedLanguage
   type: string
   description: ISO code for a supported language.
   enum:
@@ -1161,12 +1214,14 @@ supportedLanguage:
     - zh
 
 booleanString:
+  title: booleanString
   type: string
   enum:
     - 'true'
     - 'false'
 
 optionalWords:
+  title: optionalWords
   description: |
     Words that should be considered optional when found in the query.
 
@@ -1191,6 +1246,7 @@ optionalWords:
     - $ref: '#/optionalWordsArray'
 
 optionalWordsArray:
+  title: optionalWordsArray
   type: array
   items:
     type: string
@@ -1203,6 +1259,7 @@ optionalWordsArray:
     - Query strategy
 
 relevancyStrictness:
+  title: relevancyStrictness
   type: integer
   example: 90
   description: |
@@ -1214,6 +1271,7 @@ relevancyStrictness:
     - Ranking
 
 replaceSynonymsInHighlight:
+  title: replaceSynonymsInHighlight
   type: boolean
   description: |
     Whether to replace a highlighted word with the matched synonym
@@ -1228,6 +1286,7 @@ replaceSynonymsInHighlight:
     - Highlighting and Snippeting
 
 responseFields:
+  title: responseFields
   type: array
   items:
     type: string
@@ -1247,6 +1306,7 @@ responseFields:
     - Advanced
   
 restrictHighlightAndSnippetArrays:
+  title: restrictHighlightAndSnippetArrays
   type: boolean
   description: |
     Whether to restrict highlighting and snippeting to items that at least partially matched the search query.
@@ -1256,6 +1316,7 @@ restrictHighlightAndSnippetArrays:
     - Highlighting and Snippeting
 
 sortFacetValuesBy:
+  title: sortFacetValuesBy
   type: string
   description: |
     Order in which to retrieve facet values
@@ -1271,6 +1332,7 @@ sortFacetValuesBy:
     - Faceting
 
 snippetEllipsisText:
+  title: snippetEllipsisText
   type: string
   description: String used as an ellipsis indicator when a snippet is truncated.
   default: …

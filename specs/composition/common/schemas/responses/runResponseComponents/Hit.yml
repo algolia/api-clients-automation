@@ -1,4 +1,5 @@
 hit:
+  title: hit
   type: object
   description: |
     Search result.
@@ -23,6 +24,7 @@ hit:
       $ref: '#/hitMetadata'
 
 hitMetadata:
+  title: hitMetadata
   type: object
   description: An object that contains the extra key-value pairs provided in the injectedItem definition.
   additionalProperties: true
@@ -32,11 +34,13 @@ hitMetadata:
       description: The key of the injectedItem that inserted this metadata.
 
 rankingInfo:
+  title: rankingInfo title
   allOf:
     - $ref: '../../../../../common/schemas/Hit.yml#/rankingInfo'
     - $ref: '#/compositionRankingInfo'
 
 compositionRankingInfo:
+  title: compositionRankingInfo
   type: object
   additionalProperties: false
   properties:

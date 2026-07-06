@@ -1,4 +1,5 @@
 Destination:
+  title: Destination
   type: object
   description: Destinations are Algolia resources like indices or event streams.
   additionalProperties: false
@@ -30,6 +31,7 @@ Destination:
     - updatedAt
 
 DestinationCreate:
+  title: DestinationCreate
   type: object
   additionalProperties: false
   description: API request body for creating a new destination.
@@ -50,6 +52,7 @@ DestinationCreate:
     - input
 
 DestinationCreateResponse:
+  title: DestinationCreateResponse
   type: object
   additionalProperties: false
   description: API response for creating a new destination.
@@ -66,6 +69,7 @@ DestinationCreateResponse:
     - createdAt
 
 DestinationUpdate:
+  title: DestinationUpdate
   type: object
   additionalProperties: false
   description: API request body for updating a destination.
@@ -80,6 +84,7 @@ DestinationUpdate:
       $ref: './common.yml#/transformationIDs'
 
 DestinationUpdateResponse:
+  title: DestinationUpdateResponse
   type: object
   additionalProperties: false
   description: API response for updating a destination.
@@ -96,6 +101,7 @@ DestinationUpdateResponse:
     - updatedAt
 
 DestinationSearch:
+  title: DestinationSearch
   type: object
   additionalProperties: false
   description: API request body for searching destinations.
@@ -108,6 +114,7 @@ DestinationSearch:
     - destinationIDs
 
 DestinationType:
+  title: DestinationType
   type: string
   description: |
     Destination type.
@@ -120,6 +127,7 @@ DestinationType:
   enum: [search, insights]
 
 DestinationInput:
+  title: DestinationInput
   type: object
   additionalProperties: false
   properties:
@@ -134,6 +142,7 @@ DestinationInput:
     - indexName
 
 DestinationUpdateInput:
+  title: DestinationUpdateInput
   type: object
   additionalProperties: false
   properties:
@@ -146,11 +155,13 @@ DestinationUpdateInput:
       $ref: '#/AttributesToExclude'
 
 RecordType:
+  title: RecordType
   type: string
   description: Record type for ecommerce sources.
   enum: [product, variant, collection]
 
 AttributesToExclude:
+  title: AttributesToExclude
   type: array
   description: |
     Attributes from your source to exclude from Algolia records.

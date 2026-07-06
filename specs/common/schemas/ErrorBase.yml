@@ -1,3 +1,4 @@
+title: ErrorBase
 description: Error.
 type: object
 x-keep-model: true

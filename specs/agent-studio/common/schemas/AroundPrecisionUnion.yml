@@ -1,4 +1,5 @@
 AroundPrecisionUnion:
+  title: AroundPrecisionUnion
   oneOf:
     - type: integer
     - items:

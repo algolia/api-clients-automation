@@ -15,6 +15,7 @@ sort:
     $ref: '#/transformationSortKeys'
 
 transformationSortKeys:
+  title: transformationSortKeys
   type: string
   description: Property by which to sort the list of transformations.
   default: createdAt

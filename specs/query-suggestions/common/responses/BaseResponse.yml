@@ -1,3 +1,4 @@
+title: BaseResponse
 type: object
 properties:
   status:

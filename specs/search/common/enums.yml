@@ -1,4 +1,5 @@
 searchStrategy:
+  title: searchStrategy
   type: string
   enum: [none, stopIfEnoughMatches]
   description: |
@@ -8,32 +9,38 @@ searchStrategy:
     - `stopIfEnoughMatches`. Run the queries one by one, stopping as soon as a query matches at least the `hitsPerPage` number of results.
 
 operationType:
+  title: operationType
   type: string
   enum: [move, copy]
   example: copy
   description: Operation to perform on the index.
 
 scopeType:
+  title: scopeType
   type: string
   enum: [settings, synonyms, rules]
 
 dictionaryAction:
+  title: dictionaryAction
   type: string
   enum: [addEntry, deleteEntry]
   description: Actions to perform.
 
 dictionaryEntryState:
+  title: dictionaryEntryState
   type: string
   enum: [enabled, disabled]
   default: enabled
   description: Whether a dictionary entry is active.
 
 dictionaryEntryType:
+  title: dictionaryEntryType
   type: string
   enum: [custom, standard]
   description: Whether a dictionary entry is provided by Algolia (standard), or has been added by you (custom).
 
 logType:
+  title: logType
   type: string
   enum: [all, query, build, error]
   default: all

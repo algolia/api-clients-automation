@@ -1,3 +1,4 @@
+title: crawlerConfigVersionsResponse
 allOf:
   - $ref: '../parameters.yml#/Pagination'
   - type: object

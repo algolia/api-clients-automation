@@ -1,4 +1,5 @@
 configurationObject:
+  title: configurationObject
   type: object
   properties:
     indices:

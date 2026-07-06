@@ -1,4 +1,5 @@
 eventsScoring:
+  title: eventsScoring
   type: object
   additionalProperties: false
   required:

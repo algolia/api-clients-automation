@@ -1,2 +1,3 @@
+title: ClickEvent
 type: string
 enum: [click]

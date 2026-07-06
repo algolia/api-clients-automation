@@ -1,4 +1,5 @@
 Timeseries:
+  title: Timeseries
   type: object
   additionalProperties: false
   properties:
@@ -11,6 +12,7 @@ Timeseries:
     - variants
 
 timeseriesVariants:
+  title: timeseriesVariants
   type: array
   description: |
     A/B test timeseries variants.
@@ -21,17 +23,20 @@ timeseriesVariants:
     $ref: '#/timeseriesVariant'
 
 timeseriesVariant:
+  title: timeseriesVariant
   type: object
   properties:
     dates:
       $ref: '#/metricDates'
 
 metricDates:
+  title: metricDates
   type: array
   items:
     $ref: '#/metricDate'
 
 metricDate:
+  title: metricDate
   type: object
   properties:
     date:
@@ -42,6 +47,7 @@ metricDate:
       $ref: 'Variant.yml#/metrics'
 
 MetricName:
+  title: MetricName
   type: string
   enum:
     - search_count

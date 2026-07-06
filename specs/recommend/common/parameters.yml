@@ -9,6 +9,7 @@ Models:
 
 # This list excludes `looking-similar` as that can't be used with rules.
 recommendModels:
+  title: recommendModels
   type: string
   enum: [related-products, bought-together, trending-facets, trending-items]
 
@@ -22,12 +23,14 @@ ObjectID:
     $ref: '../../common/parameters.yml#/ruleID'
 
 facetName:
+  title: facetName
   type: string
   description: |
     Facet attribute. To be used in combination with `facetValue`.
     If specified, only recommendations matching the facet filter will be returned.
 
 facetValue:
+  title: facetValue
   type: string
   description: |
     Facet value. To be used in combination with `facetName`.
