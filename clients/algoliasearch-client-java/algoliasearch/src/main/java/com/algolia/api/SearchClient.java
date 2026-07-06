@@ -13750,6 +13750,9 @@ public class SearchClient extends ApiClient {
    * https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for
    * implementation details.
    *
+   * <p><b>Warning:</b> calling this method with an empty {@code objects} list replaces the index
+   * with an empty one, deleting all existing records.
+   *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
    * @throws AlgoliaRetryException When the retry has failed on all hosts
@@ -13765,6 +13768,9 @@ public class SearchClient extends ApiClient {
    * untouched. Replace all records in an index without any downtime. See
    * https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for
    * implementation details.
+   *
+   * <p><b>Warning:</b> calling this method with an empty {@code objects} list replaces the index
+   * with an empty one, deleting all existing records.
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -13783,6 +13789,9 @@ public class SearchClient extends ApiClient {
    * untouched. Replace all records in an index without any downtime. See
    * https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for
    * implementation details.
+   *
+   * <p><b>Warning:</b> calling this method with an empty {@code objects} list replaces the index
+   * with an empty one, deleting all existing records.
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -13803,6 +13812,9 @@ public class SearchClient extends ApiClient {
    * untouched. Replace all records in an index without any downtime. See
    * https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for
    * implementation details.
+   *
+   * <p><b>Warning:</b> calling this method with an empty {@code objects} list replaces the index
+   * with an empty one, deleting all existing records.
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -13832,6 +13844,9 @@ public class SearchClient extends ApiClient {
    * https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for
    * implementation details.
    *
+   * <p><b>Warning:</b> calling this method with an empty {@code objects} list replaces the index
+   * with an empty one, deleting all existing records.
+   *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
    * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
@@ -13855,6 +13870,15 @@ public class SearchClient extends ApiClient {
     RequestOptions requestOptions,
     ChunkedHelperOptions chunkedOptions
   ) {
+    if (objects instanceof java.util.Collection ? ((java.util.Collection<?>) objects).isEmpty() : !objects.iterator().hasNext()) {
+      java.util.logging.Logger.getLogger(this.getClass().getName()).warning(
+        "replaceAllObjects was called with an empty list of objects, which will delete all" +
+          " records currently in the \"" +
+          indexName +
+          "\" index."
+      );
+    }
+
     if (chunkedOptions == null) {
       chunkedOptions = new ChunkedHelperOptions().setMaxRetries(ChunkedHelperOptions.DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES);
     }
@@ -14053,6 +14077,15 @@ public class SearchClient extends ApiClient {
         "transformationOptions must be set in the client config before calling this method." +
           " It defaults to the Ingestion API defaults." +
           " See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
+      );
+    }
+
+    if (objects instanceof java.util.Collection ? ((java.util.Collection<?>) objects).isEmpty() : !objects.iterator().hasNext()) {
+      java.util.logging.Logger.getLogger(this.getClass().getName()).warning(
+        "replaceAllObjectsWithTransformation was called with an empty list of objects, which" +
+          " will delete all records currently in the \"" +
+          indexName +
+          "\" index."
       );
     }
 
