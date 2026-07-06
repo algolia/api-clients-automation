@@ -433,8 +433,8 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
           ChunkedHelperOptions(maxRetries = ChunkedHelperOptions.DefaultReplaceAllObjectsMaxRetries)
     )(implicit ec: ExecutionContext): Future[ReplaceAllObjectsResponse] = {
       if (objects.isEmpty) {
-        System.err.println(
-          s"""replaceAllObjects was called with an empty list of objects, which will delete all records currently in the "$indexName" index."""
+        client.logger.log(
+          s"""Warning: replaceAllObjects was called with an empty list of objects, which will delete all records currently in the "$indexName" index."""
         )
       }
 
@@ -814,8 +814,8 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
           ChunkedHelperOptions(maxRetries = ChunkedHelperOptions.DefaultReplaceAllObjectsMaxRetries)
     )(implicit ec: ExecutionContext): Future[ReplaceAllObjectsWithTransformationResponse] = {
       if (objects.isEmpty) {
-        System.err.println(
-          s"""replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the "$indexName" index."""
+        client.logger.log(
+          s"""Warning: replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the "$indexName" index."""
         )
       }
 
