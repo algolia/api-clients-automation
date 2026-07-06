@@ -160,7 +160,7 @@ export function algoliasearch(
       }
 
       if (objects.length === 0) {
-        console.warn(`replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the "${indexName}" index.`);
+        this.transporter.logger.info(`Warning: replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the "${indexName}" index.`);
       }
 
       const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
