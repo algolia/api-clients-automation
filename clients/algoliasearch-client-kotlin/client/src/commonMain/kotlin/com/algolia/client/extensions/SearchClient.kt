@@ -523,8 +523,8 @@ public suspend fun SearchClient.replaceAllObjects(
     ChunkedHelperOptions(maxRetries = DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES),
 ): ReplaceAllObjectsResponse {
   if (objects.isEmpty()) {
-    println(
-      "replaceAllObjects was called with an empty list of objects, which will delete all records currently in the \"$indexName\" index.",
+    options.logger.log(
+      "Warning: replaceAllObjects was called with an empty list of objects, which will delete all records currently in the \"$indexName\" index.",
     )
   }
   val maxRetries = chunkedOptions.maxRetries
@@ -889,8 +889,8 @@ public suspend fun SearchClient.replaceAllObjectsWithTransformation(
     ChunkedHelperOptions(maxRetries = DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES),
 ): ReplaceAllObjectsWithTransformationResponse {
   if (objects.isEmpty()) {
-    println(
-      "replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the \"$indexName\" index.",
+    options.logger.log(
+      "Warning: replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the \"$indexName\" index.",
     )
   }
   val transporter = requireIngestionTransporter()
