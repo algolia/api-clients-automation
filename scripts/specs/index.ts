@@ -51,7 +51,9 @@ async function buildLiteSpec({
   await fsp.writeFile(bundledPath, dump(lite));
 
   // remove unused components for the outputted light spec
-  await run(`yarn redocly bundle ${bundledPath} -o ${bundledPath} --ext ${outputFormat} --remove-unused-components`);
+  await run(
+    `yarn redocly bundle ${bundledPath} -o ${bundledPath} --ext ${outputFormat} --remove-unused-components --component-names-strategy title`,
+  );
 
   await bundleSpecsForClient(bundledPath, spec);
 }
@@ -115,7 +117,9 @@ async function buildSpec({
 
   // Then bundle the file
   const bundledPath = toAbsolutePath(generatedFile);
-  await run(`yarn redocly bundle specs/${specBase}/spec.yml -o ${bundledPath} --ext ${outputFormat} `);
+  await run(
+    `yarn redocly bundle specs/${specBase}/spec.yml -o ${bundledPath} --ext ${outputFormat} --component-names-strategy title`,
+  );
 
   if (!(await exists(bundledPath))) {
     throw new Error(`Bundled file not found ${bundledPath}.`);
