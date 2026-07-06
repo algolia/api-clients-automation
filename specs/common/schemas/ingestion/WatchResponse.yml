@@ -1,4 +1,4 @@
-title: WatchResponse
+title: watchResponse
 type: object
 additionalProperties: false
 properties:

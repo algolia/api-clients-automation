@@ -112,7 +112,7 @@ objectID:
   example: test-record-123
 
 ruleID:
-  title: ruleID title
+  title: ruleID
   type: string
   description: Unique identifier of a rule object.
 
@@ -129,7 +129,7 @@ indexName:
   description: Index name (case-sensitive).
 
 hitsPerPage:
-  title: common hitsPerPage title
+  title: parameters_hitsPerPage
   type: integer
   default: 20
   minimum: 1
@@ -145,13 +145,13 @@ hitsPerPage:
     For example, to display 10 results per page starting from the third page, set `hitsPerPage` to 10 and `page` to 2.
 
 query:
-  title: query title
+  title: parameters_query
   type: string
   description: Search query.
   default: ''
 
 page:
-  title: common page title
+  title: parameters_page
   type: integer
   minimum: 0
   description: |
@@ -165,7 +165,7 @@ page:
     For example, to display 10 results per page starting from the third page, set `hitsPerPage` to 10 and `page` to 2.
 
 count:
-  title: count title
+  title: parameters_count
   description: Number of occurrences.
   example: 2
   type: integer

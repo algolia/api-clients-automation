@@ -5,7 +5,7 @@ settingsResponse:
     - $ref: '#/WithPrimary'
 
 WithPrimary:
-  title: WithPrimary
+  title: withPrimary
   type: object
   additionalProperties: false
   properties:

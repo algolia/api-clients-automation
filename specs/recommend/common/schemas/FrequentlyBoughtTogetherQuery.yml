@@ -1,5 +1,5 @@
 boughtTogetherQuery:
-  title: boughtTogetherQuery title
+  title: boughtTogetherQuery
   allOf:
     - $ref: './RecommendationsRequest.yml#/baseRecommendRequest'
     - $ref: '#/frequentlyBoughtTogether'

@@ -1,5 +1,5 @@
 ToolState:
-  title: ToolState
+  title: toolState
   type: string
   enum:
     - input-streaming

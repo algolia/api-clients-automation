@@ -1,5 +1,5 @@
 Action:
-  title: Action
+  title: action
   type: object
   description: |
     How to process crawled URLs.

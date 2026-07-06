@@ -5,7 +5,7 @@ searchParams:
     - $ref: '#/searchParamsObject'
 
 searchParamsObject:
-  title: Search parameters as object
+  title: searchParamsObject
   description: Each parameter value, including the `query` must not be larger than 512 bytes.
   allOf:
     - $ref: '#/baseSearchParams'
@@ -111,7 +111,7 @@ baseSearchParamsWithoutQuery:
 
 searchParamsString:
   type: object
-  title: Search parameters as query string
+  title: searchParamsString
   description: Search parameters as query string.
   additionalProperties: false
   x-discriminator-fields:
@@ -182,7 +182,7 @@ aroundPrecision:
     - Geo-Search
 
 aroundPrecisionFromValue:
-  title: range objects
+  title: aroundPrecisionFromValue
   type: array
   items:
     title: range
@@ -198,7 +198,7 @@ aroundPrecisionFromValue:
         description: Upper boundary of a range in meters. The Geo ranking criterion considers all records within the range to be equal.
 
 aroundRadiusAll:
-  title: all
+  title: aroundRadiusAll
   type: string
   description: Return all records with a valid `_geoloc` attribute. Don't filter by distance.
   enum: [all]
@@ -236,7 +236,7 @@ clickAnalytics:
     - Analytics
 
 enableABTest:
-  title: enableABTest title
+  title: searchParams_enableABTest
   type: boolean
   description: Whether to enable A/B testing for this search.
   default: true
@@ -309,7 +309,7 @@ filters:
     - Filtering
 
 getRankingInfo:
-  title: getRankingInfo title
+  title: searchParams_getRankingInfo
   type: boolean
   description: Whether the search response should include detailed ranking information.
   default: false
@@ -505,7 +505,7 @@ restrictSearchableAttributes:
     - Filtering
 
 ruleContexts:
-  title: ruleContexts title
+  title: searchParams_ruleContexts
   type: array
   items:
     type: string

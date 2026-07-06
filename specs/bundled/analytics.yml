@@ -339,7 +339,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getTopSearchesResponse'
+                $ref: '#/components/schemas/GetTopSearchesResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -389,7 +389,7 @@ paths:
                   - count
                 properties:
                   count:
-                    $ref: '#/components/schemas/parameters_count'
+                    $ref: '#/components/schemas/Parameters_count'
                   dates:
                     type: array
                     description: Daily number of searches.
@@ -402,9 +402,9 @@ paths:
                         - count
                       properties:
                         date:
-                          $ref: '#/components/schemas/date'
+                          $ref: '#/components/schemas/Date'
                         count:
-                          $ref: '#/components/schemas/parameters_count'
+                          $ref: '#/components/schemas/Parameters_count'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -461,11 +461,11 @@ paths:
                         - withFilterCount
                       properties:
                         search:
-                          $ref: '#/components/schemas/search'
+                          $ref: '#/components/schemas/Search'
                         count:
-                          $ref: '#/components/schemas/parameters_count'
+                          $ref: '#/components/schemas/Parameters_count'
                         withFilterCount:
-                          $ref: '#/components/schemas/withFilterCount'
+                          $ref: '#/components/schemas/WithFilterCount'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -528,14 +528,14 @@ paths:
                         - nbHits
                       properties:
                         search:
-                          $ref: '#/components/schemas/search'
+                          $ref: '#/components/schemas/Search'
                         count:
                           type: integer
                           description: Number of tracked searches.
                           minimum: 1
                           example: 7
                         nbHits:
-                          $ref: '#/components/schemas/nbHits'
+                          $ref: '#/components/schemas/NbHits'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -591,11 +591,11 @@ paths:
                   - dates
                 properties:
                   rate:
-                    $ref: '#/components/schemas/noResultsRate'
+                    $ref: '#/components/schemas/NoResultsRate'
                   count:
-                    $ref: '#/components/schemas/count'
+                    $ref: '#/components/schemas/Count'
                   noResultCount:
-                    $ref: '#/components/schemas/noResultCount'
+                    $ref: '#/components/schemas/NoResultCount'
                   dates:
                     type: array
                     description: Daily no results rates.
@@ -610,13 +610,13 @@ paths:
                         - rate
                       properties:
                         date:
-                          $ref: '#/components/schemas/date'
+                          $ref: '#/components/schemas/Date'
                         noResultCount:
-                          $ref: '#/components/schemas/noResultCount'
+                          $ref: '#/components/schemas/NoResultCount'
                         count:
-                          $ref: '#/components/schemas/count'
+                          $ref: '#/components/schemas/Count'
                         rate:
-                          $ref: '#/components/schemas/noResultsRate'
+                          $ref: '#/components/schemas/NoResultsRate'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -671,11 +671,11 @@ paths:
                   - rate
                 properties:
                   rate:
-                    $ref: '#/components/schemas/noClickRate'
+                    $ref: '#/components/schemas/NoClickRate'
                   count:
-                    $ref: '#/components/schemas/trackedSearchCount'
+                    $ref: '#/components/schemas/TrackedSearchCount'
                   noClickCount:
-                    $ref: '#/components/schemas/noClickCount'
+                    $ref: '#/components/schemas/NoClickCount'
                   dates:
                     type: array
                     description: Daily no click rates.
@@ -690,13 +690,13 @@ paths:
                         - date
                       properties:
                         rate:
-                          $ref: '#/components/schemas/noClickRate'
+                          $ref: '#/components/schemas/NoClickRate'
                         count:
-                          $ref: '#/components/schemas/trackedSearchCount'
+                          $ref: '#/components/schemas/TrackedSearchCount'
                         noClickCount:
-                          $ref: '#/components/schemas/noClickCount'
+                          $ref: '#/components/schemas/NoClickCount'
                         date:
-                          $ref: '#/components/schemas/date'
+                          $ref: '#/components/schemas/Date'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -783,7 +783,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getTopHitsResponse'
+                $ref: '#/components/schemas/GetTopHitsResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -861,7 +861,7 @@ paths:
                         - count
                       properties:
                         date:
-                          $ref: '#/components/schemas/date'
+                          $ref: '#/components/schemas/Date'
                         count:
                           type: integer
                           description: Number of unique users.
@@ -908,7 +908,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getTopFilterAttributesResponse'
+                $ref: '#/components/schemas/GetTopFilterAttributesResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -954,7 +954,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getTopFilterForAttributeResponse'
+                $ref: '#/components/schemas/GetTopFilterForAttributeResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1001,7 +1001,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getTopFiltersNoResultsResponse'
+                $ref: '#/components/schemas/GetTopFiltersNoResultsResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1061,7 +1061,7 @@ paths:
                           type: string
                           example: UK
                         count:
-                          $ref: '#/components/schemas/parameters_count'
+                          $ref: '#/components/schemas/Parameters_count'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1126,9 +1126,9 @@ paths:
                   - dates
                 properties:
                   average:
-                    $ref: '#/components/schemas/averageClickPosition'
+                    $ref: '#/components/schemas/AverageClickPosition'
                   clickCount:
-                    $ref: '#/components/schemas/clickCount'
+                    $ref: '#/components/schemas/ClickCount'
                   dates:
                     type: array
                     description: Daily average click positions.
@@ -1142,11 +1142,11 @@ paths:
                         - date
                       properties:
                         average:
-                          $ref: '#/components/schemas/averageClickPosition'
+                          $ref: '#/components/schemas/AverageClickPosition'
                         clickCount:
-                          $ref: '#/components/schemas/clickCount'
+                          $ref: '#/components/schemas/ClickCount'
                         date:
-                          $ref: '#/components/schemas/date'
+                          $ref: '#/components/schemas/Date'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1201,7 +1201,7 @@ paths:
                   - positions
                 properties:
                   positions:
-                    $ref: '#/components/schemas/clickPositions'
+                    $ref: '#/components/schemas/ClickPositions'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1265,11 +1265,11 @@ paths:
                   - rate
                 properties:
                   rate:
-                    $ref: '#/components/schemas/clickThroughRate'
+                    $ref: '#/components/schemas/ClickThroughRate'
                   clickCount:
-                    $ref: '#/components/schemas/clickCount'
+                    $ref: '#/components/schemas/ClickCount'
                   trackedSearchCount:
-                    $ref: '#/components/schemas/trackedSearchCount'
+                    $ref: '#/components/schemas/TrackedSearchCount'
                   dates:
                     type: array
                     description: Daily click-through rates.
@@ -1284,13 +1284,13 @@ paths:
                         - date
                       properties:
                         rate:
-                          $ref: '#/components/schemas/clickThroughRate'
+                          $ref: '#/components/schemas/ClickThroughRate'
                         clickCount:
-                          $ref: '#/components/schemas/clickCount'
+                          $ref: '#/components/schemas/ClickCount'
                         trackedSearchCount:
-                          $ref: '#/components/schemas/trackedSearchCount'
+                          $ref: '#/components/schemas/TrackedSearchCount'
                         date:
-                          $ref: '#/components/schemas/date'
+                          $ref: '#/components/schemas/Date'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1354,11 +1354,11 @@ paths:
                   - rate
                 properties:
                   rate:
-                    $ref: '#/components/schemas/conversionRate'
+                    $ref: '#/components/schemas/ConversionRate'
                   trackedSearchCount:
-                    $ref: '#/components/schemas/trackedSearchCount'
+                    $ref: '#/components/schemas/TrackedSearchCount'
                   conversionCount:
-                    $ref: '#/components/schemas/conversionCount'
+                    $ref: '#/components/schemas/ConversionCount'
                   dates:
                     type: array
                     description: Daily conversion rates.
@@ -1373,13 +1373,13 @@ paths:
                         - date
                       properties:
                         rate:
-                          $ref: '#/components/schemas/conversionRate'
+                          $ref: '#/components/schemas/ConversionRate'
                         trackedSearchCount:
-                          $ref: '#/components/schemas/trackedSearchCount'
+                          $ref: '#/components/schemas/TrackedSearchCount'
                         conversionCount:
-                          $ref: '#/components/schemas/conversionCount'
+                          $ref: '#/components/schemas/ConversionCount'
                         date:
-                          $ref: '#/components/schemas/date'
+                          $ref: '#/components/schemas/Date'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1453,11 +1453,11 @@ paths:
                   - rate
                 properties:
                   rate:
-                    $ref: '#/components/schemas/addToCartRate'
+                    $ref: '#/components/schemas/AddToCartRate'
                   trackedSearchCount:
-                    $ref: '#/components/schemas/trackedSearchCount'
+                    $ref: '#/components/schemas/TrackedSearchCount'
                   addToCartCount:
-                    $ref: '#/components/schemas/addToCartCount'
+                    $ref: '#/components/schemas/AddToCartCount'
                   dates:
                     type: array
                     description: Daily add-to-cart rates.
@@ -1472,13 +1472,13 @@ paths:
                         - date
                       properties:
                         rate:
-                          $ref: '#/components/schemas/addToCartRate'
+                          $ref: '#/components/schemas/AddToCartRate'
                         trackedSearchCount:
-                          $ref: '#/components/schemas/trackedSearchCount'
+                          $ref: '#/components/schemas/TrackedSearchCount'
                         addToCartCount:
-                          $ref: '#/components/schemas/addToCartCount'
+                          $ref: '#/components/schemas/AddToCartCount'
                         date:
-                          $ref: '#/components/schemas/date'
+                          $ref: '#/components/schemas/Date'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1551,11 +1551,11 @@ paths:
                   - rate
                 properties:
                   rate:
-                    $ref: '#/components/schemas/purchaseRate'
+                    $ref: '#/components/schemas/PurchaseRate'
                   trackedSearchCount:
-                    $ref: '#/components/schemas/trackedSearchCount'
+                    $ref: '#/components/schemas/TrackedSearchCount'
                   purchaseCount:
-                    $ref: '#/components/schemas/purchaseCount'
+                    $ref: '#/components/schemas/PurchaseCount'
                   dates:
                     type: array
                     description: Daily purchase rates.
@@ -1570,13 +1570,13 @@ paths:
                         - date
                       properties:
                         rate:
-                          $ref: '#/components/schemas/purchaseRate'
+                          $ref: '#/components/schemas/PurchaseRate'
                         trackedSearchCount:
-                          $ref: '#/components/schemas/trackedSearchCount'
+                          $ref: '#/components/schemas/TrackedSearchCount'
                         purchaseCount:
-                          $ref: '#/components/schemas/purchaseCount'
+                          $ref: '#/components/schemas/PurchaseCount'
                         date:
-                          $ref: '#/components/schemas/date'
+                          $ref: '#/components/schemas/Date'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1628,7 +1628,7 @@ paths:
                   - dates
                 properties:
                   currencies:
-                    $ref: '#/components/schemas/currencies'
+                    $ref: '#/components/schemas/Currencies'
                   dates:
                     type: array
                     description: Daily revenue.
@@ -1641,9 +1641,9 @@ paths:
                         - date
                       properties:
                         currencies:
-                          $ref: '#/components/schemas/currencies'
+                          $ref: '#/components/schemas/Currencies'
                         date:
-                          $ref: '#/components/schemas/date'
+                          $ref: '#/components/schemas/Date'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1685,7 +1685,7 @@ paths:
                   - updatedAt
                 properties:
                   updatedAt:
-                    $ref: '#/components/schemas/updatedAtNullable'
+                    $ref: '#/components/schemas/UpdatedAtNullable'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1798,14 +1798,14 @@ components:
         If the `clickAnalytics` parameter is false, only `searchCount` is
         available.
       schema:
-        $ref: '#/components/schemas/orderBy'
+        $ref: '#/components/schemas/OrderBy'
     Direction:
       in: query
       name: direction
       description: |
         Sorting direction of the results: ascending or descending.
       schema:
-        $ref: '#/components/schemas/direction'
+        $ref: '#/components/schemas/Direction'
     Limit:
       in: query
       name: limit
@@ -1859,6 +1859,7 @@ components:
         example: brand
   schemas:
     ErrorBase:
+      title: errorBase
       description: Error.
       type: object
       x-keep-model: true
@@ -1867,7 +1868,8 @@ components:
         message:
           type: string
           example: Invalid Application-Id or API-Key
-    orderBy:
+    OrderBy:
+      title: orderBy
       type: string
       description: >
         Attribute by which to order the response items.
@@ -1881,27 +1883,31 @@ components:
         - conversionRate
         - averageClickPosition
       default: searchCount
-    direction:
+    Direction:
+      title: direction
       type: string
       enum:
         - asc
         - desc
       default: asc
-    search:
+    Search:
+      title: search
       description: Search query.
       example: separator
       type: string
-    count:
+    Count:
+      title: count
       description: Number of searches.
       type: integer
       example: 504
-    nbHits:
+    NbHits:
+      title: nbHits
       type: integer
       description: Number of results (hits).
       example: 20
-    topSearchesResponse:
+    TopSearchesResponse:
       type: object
-      title: Top searches
+      title: topSearchesResponse
       additionalProperties: false
       required:
         - searches
@@ -1919,12 +1925,13 @@ components:
               - nbHits
             properties:
               search:
-                $ref: '#/components/schemas/search'
+                $ref: '#/components/schemas/Search'
               count:
-                $ref: '#/components/schemas/count'
+                $ref: '#/components/schemas/Count'
               nbHits:
-                $ref: '#/components/schemas/nbHits'
-    clickThroughRate:
+                $ref: '#/components/schemas/NbHits'
+    ClickThroughRate:
+      title: clickThroughRate
       oneOf:
         - type: number
           format: double
@@ -1940,7 +1947,8 @@ components:
           default: null
           example: 0.49
         - type: 'null'
-    averageClickPosition:
+    AverageClickPosition:
+      title: averageClickPosition
       oneOf:
         - type: number
           format: double
@@ -1954,7 +1962,8 @@ components:
           example: 2.035
           default: null
         - type: 'null'
-    clickPositions:
+    ClickPositions:
+      title: clickPositions
       type: array
       description: >-
         List of positions in the search results and clicks associated with this
@@ -1990,7 +1999,8 @@ components:
             example: 24
             minimum: 0
             default: 0
-    conversionRate:
+    ConversionRate:
+      title: conversionRate
       oneOf:
         - type: number
           format: double
@@ -2006,28 +2016,31 @@ components:
           default: null
           example: 0.05
         - type: 'null'
-    trackedSearchCount:
+    TrackedSearchCount:
+      title: trackedSearchCount
       type: integer
       example: 2
       default: 0
       description: >-
         Number of tracked searches. Tracked searches are search requests where
         the `clickAnalytics` parameter is true.
-    clickCount:
+    ClickCount:
+      title: clickCount
       type: integer
       description: Number of clicks associated with this search.
       example: 162
       minimum: 0
       default: 0
-    conversionCount:
+    ConversionCount:
+      title: conversionCount
       type: integer
       description: Number of conversions from this search.
       example: 10
       minimum: 0
       default: 0
-    topSearchesResponseWithAnalytics:
+    TopSearchesResponseWithAnalytics:
       type: object
-      title: Top searches with click analytics
+      title: topSearchesResponseWithAnalytics
       additionalProperties: false
       required:
         - searches
@@ -2054,26 +2067,27 @@ components:
               - conversionCount
             properties:
               search:
-                $ref: '#/components/schemas/search'
+                $ref: '#/components/schemas/Search'
               count:
-                $ref: '#/components/schemas/count'
+                $ref: '#/components/schemas/Count'
               clickThroughRate:
-                $ref: '#/components/schemas/clickThroughRate'
+                $ref: '#/components/schemas/ClickThroughRate'
               averageClickPosition:
-                $ref: '#/components/schemas/averageClickPosition'
+                $ref: '#/components/schemas/AverageClickPosition'
               clickPositions:
-                $ref: '#/components/schemas/clickPositions'
+                $ref: '#/components/schemas/ClickPositions'
               conversionRate:
-                $ref: '#/components/schemas/conversionRate'
+                $ref: '#/components/schemas/ConversionRate'
               trackedSearchCount:
-                $ref: '#/components/schemas/trackedSearchCount'
+                $ref: '#/components/schemas/TrackedSearchCount'
               clickCount:
-                $ref: '#/components/schemas/clickCount'
+                $ref: '#/components/schemas/ClickCount'
               conversionCount:
-                $ref: '#/components/schemas/conversionCount'
+                $ref: '#/components/schemas/ConversionCount'
               nbHits:
-                $ref: '#/components/schemas/nbHits'
-    currencies:
+                $ref: '#/components/schemas/NbHits'
+    Currencies:
+      title: currencies
       type: object
       description: |
         Revenue associated with this search: broken down by currency.
@@ -2093,7 +2107,8 @@ components:
             format: float
             description: Revenue associated with this search in this currency.
             example: 999.98
-    addToCartRate:
+    AddToCartRate:
+      title: addToCartRate
       oneOf:
         - type: number
           format: double
@@ -2109,13 +2124,15 @@ components:
           default: null
           example: 0.1
         - type: 'null'
-    addToCartCount:
+    AddToCartCount:
+      title: addToCartCount
       type: integer
       description: Number of add-to-cart events from this search.
       minimum: 0
       default: 0
       example: 10
-    purchaseRate:
+    PurchaseRate:
+      title: purchaseRate
       oneOf:
         - type: number
           format: double
@@ -2130,14 +2147,15 @@ components:
           default: null
           example: 0.05
         - type: 'null'
-    purchaseCount:
+    PurchaseCount:
+      title: purchaseCount
       type: integer
       description: Number of purchase events from this search.
       default: 0
       example: 10
-    topSearchesResponseWithRevenueAnalytics:
+    TopSearchesResponseWithRevenueAnalytics:
       type: object
-      title: Top searches with revenue analytics
+      title: topSearchesResponseWithRevenueAnalytics
       additionalProperties: false
       required:
         - searches
@@ -2167,55 +2185,60 @@ components:
               - purchaseCount
             properties:
               search:
-                $ref: '#/components/schemas/search'
+                $ref: '#/components/schemas/Search'
               count:
-                $ref: '#/components/schemas/count'
+                $ref: '#/components/schemas/Count'
               clickThroughRate:
-                $ref: '#/components/schemas/clickThroughRate'
+                $ref: '#/components/schemas/ClickThroughRate'
               averageClickPosition:
-                $ref: '#/components/schemas/averageClickPosition'
+                $ref: '#/components/schemas/AverageClickPosition'
               clickPositions:
-                $ref: '#/components/schemas/clickPositions'
+                $ref: '#/components/schemas/ClickPositions'
               conversionRate:
-                $ref: '#/components/schemas/conversionRate'
+                $ref: '#/components/schemas/ConversionRate'
               trackedSearchCount:
-                $ref: '#/components/schemas/trackedSearchCount'
+                $ref: '#/components/schemas/TrackedSearchCount'
               clickCount:
-                $ref: '#/components/schemas/clickCount'
+                $ref: '#/components/schemas/ClickCount'
               conversionCount:
-                $ref: '#/components/schemas/conversionCount'
+                $ref: '#/components/schemas/ConversionCount'
               nbHits:
-                $ref: '#/components/schemas/nbHits'
+                $ref: '#/components/schemas/NbHits'
               currencies:
-                $ref: '#/components/schemas/currencies'
+                $ref: '#/components/schemas/Currencies'
               addToCartRate:
-                $ref: '#/components/schemas/addToCartRate'
+                $ref: '#/components/schemas/AddToCartRate'
               addToCartCount:
-                $ref: '#/components/schemas/addToCartCount'
+                $ref: '#/components/schemas/AddToCartCount'
               purchaseRate:
-                $ref: '#/components/schemas/purchaseRate'
+                $ref: '#/components/schemas/PurchaseRate'
               purchaseCount:
-                $ref: '#/components/schemas/purchaseCount'
-    getTopSearchesResponse:
+                $ref: '#/components/schemas/PurchaseCount'
+    GetTopSearchesResponse:
+      title: getTopSearchesResponse
       oneOf:
-        - $ref: '#/components/schemas/topSearchesResponse'
-        - $ref: '#/components/schemas/topSearchesResponseWithAnalytics'
-        - $ref: '#/components/schemas/topSearchesResponseWithRevenueAnalytics'
-    parameters_count:
+        - $ref: '#/components/schemas/TopSearchesResponse'
+        - $ref: '#/components/schemas/TopSearchesResponseWithAnalytics'
+        - $ref: '#/components/schemas/TopSearchesResponseWithRevenueAnalytics'
+    Parameters_count:
+      title: parameters_count
       description: Number of occurrences.
       example: 2
       type: integer
-    date:
+    Date:
+      title: date
       type: string
       description: Date in the format YYYY-MM-DD.
       example: '2023-06-14'
-    withFilterCount:
+    WithFilterCount:
+      title: withFilterCount
       type: integer
       description: Number of searches for this term with applied filters.
       example: 5
       minimum: 0
       default: 0
-    noResultsRate:
+    NoResultsRate:
+      title: noResultsRate
       type: number
       format: double
       description: >
@@ -2224,11 +2247,13 @@ components:
       minimum: 0
       maximum: 1
       example: 0.49
-    noResultCount:
+    NoResultCount:
+      title: noResultCount
       description: Number of searches without any results.
       type: integer
       example: 54
-    noClickRate:
+    NoClickRate:
+      title: noClickRate
       type: number
       format: double
       description: >
@@ -2237,18 +2262,20 @@ components:
       minimum: 0
       maximum: 1
       example: 0.15
-    noClickCount:
+    NoClickCount:
+      title: noClickCount
       type: integer
       description: Number of times this search was returned as a result without any click.
       example: 15
       minimum: 1
-    hit:
+    Hit:
+      title: hit
       description: Object ID of a record returned as a search result.
       type: string
       example: method-export-rules-php
-    topHitsResponse:
+    TopHitsResponse:
       type: object
-      title: Top search results
+      title: topHitsResponse
       additionalProperties: false
       required:
         - hits
@@ -2265,12 +2292,12 @@ components:
               - count
             properties:
               hit:
-                $ref: '#/components/schemas/hit'
+                $ref: '#/components/schemas/Hit'
               count:
-                $ref: '#/components/schemas/parameters_count'
-    topHitsResponseWithAnalytics:
+                $ref: '#/components/schemas/Parameters_count'
+    TopHitsResponseWithAnalytics:
       type: object
-      title: Top search results with click analytics
+      title: topHitsResponseWithAnalytics
       additionalProperties: false
       required:
         - hits
@@ -2292,22 +2319,22 @@ components:
               - conversionCount
             properties:
               hit:
-                $ref: '#/components/schemas/hit'
+                $ref: '#/components/schemas/Hit'
               count:
-                $ref: '#/components/schemas/parameters_count'
+                $ref: '#/components/schemas/Parameters_count'
               clickThroughRate:
-                $ref: '#/components/schemas/clickThroughRate'
+                $ref: '#/components/schemas/ClickThroughRate'
               conversionRate:
-                $ref: '#/components/schemas/conversionRate'
+                $ref: '#/components/schemas/ConversionRate'
               trackedHitCount:
-                $ref: '#/components/schemas/trackedSearchCount'
+                $ref: '#/components/schemas/TrackedSearchCount'
               clickCount:
-                $ref: '#/components/schemas/clickCount'
+                $ref: '#/components/schemas/ClickCount'
               conversionCount:
-                $ref: '#/components/schemas/conversionCount'
-    topHitsResponseWithRevenueAnalytics:
+                $ref: '#/components/schemas/ConversionCount'
+    TopHitsResponseWithRevenueAnalytics:
       type: object
-      title: Top search results with revenue analytics
+      title: topHitsResponseWithRevenueAnalytics
       additionalProperties: false
       required:
         - hits
@@ -2336,39 +2363,42 @@ components:
               - currencies
             properties:
               hit:
-                $ref: '#/components/schemas/hit'
+                $ref: '#/components/schemas/Hit'
               count:
-                $ref: '#/components/schemas/parameters_count'
+                $ref: '#/components/schemas/Parameters_count'
               clickThroughRate:
-                $ref: '#/components/schemas/clickThroughRate'
+                $ref: '#/components/schemas/ClickThroughRate'
               conversionRate:
-                $ref: '#/components/schemas/conversionRate'
+                $ref: '#/components/schemas/ConversionRate'
               trackedHitCount:
-                $ref: '#/components/schemas/trackedSearchCount'
+                $ref: '#/components/schemas/TrackedSearchCount'
               clickCount:
-                $ref: '#/components/schemas/clickCount'
+                $ref: '#/components/schemas/ClickCount'
               conversionCount:
-                $ref: '#/components/schemas/conversionCount'
+                $ref: '#/components/schemas/ConversionCount'
               addToCartRate:
-                $ref: '#/components/schemas/addToCartRate'
+                $ref: '#/components/schemas/AddToCartRate'
               addToCartCount:
-                $ref: '#/components/schemas/addToCartCount'
+                $ref: '#/components/schemas/AddToCartCount'
               purchaseRate:
-                $ref: '#/components/schemas/purchaseRate'
+                $ref: '#/components/schemas/PurchaseRate'
               purchaseCount:
-                $ref: '#/components/schemas/purchaseCount'
+                $ref: '#/components/schemas/PurchaseCount'
               currencies:
-                $ref: '#/components/schemas/currencies'
-    getTopHitsResponse:
+                $ref: '#/components/schemas/Currencies'
+    GetTopHitsResponse:
+      title: getTopHitsResponse
       oneOf:
-        - $ref: '#/components/schemas/topHitsResponse'
-        - $ref: '#/components/schemas/topHitsResponseWithAnalytics'
-        - $ref: '#/components/schemas/topHitsResponseWithRevenueAnalytics'
-    attribute:
+        - $ref: '#/components/schemas/TopHitsResponse'
+        - $ref: '#/components/schemas/TopHitsResponseWithAnalytics'
+        - $ref: '#/components/schemas/TopHitsResponseWithRevenueAnalytics'
+    Attribute:
+      title: attribute
       description: Attribute name.
       type: string
       example: url
-    getTopFilterAttribute:
+    GetTopFilterAttribute:
+      title: getTopFilterAttribute
       type: object
       additionalProperties: false
       required:
@@ -2376,10 +2406,11 @@ components:
         - count
       properties:
         attribute:
-          $ref: '#/components/schemas/attribute'
+          $ref: '#/components/schemas/Attribute'
         count:
-          $ref: '#/components/schemas/parameters_count'
-    getTopFilterAttributesResponse:
+          $ref: '#/components/schemas/Parameters_count'
+    GetTopFilterAttributesResponse:
+      title: getTopFilterAttributesResponse
       type: object
       additionalProperties: false
       required:
@@ -2389,8 +2420,9 @@ components:
           type: array
           description: Most frequent filters.
           items:
-            $ref: '#/components/schemas/getTopFilterAttribute'
-    operator:
+            $ref: '#/components/schemas/GetTopFilterAttribute'
+    Operator:
+      title: operator
       description: |
         Character that characterizes how the filter is applied.
 
@@ -2406,11 +2438,13 @@ components:
         - '>'
         - '>='
       example: ':'
-    value:
+    Value:
+      title: value
       description: Attribute value.
       type: string
       example: integration
-    getTopFilterForAttribute:
+    GetTopFilterForAttribute:
+      title: getTopFilterForAttribute
       type: object
       additionalProperties: false
       required:
@@ -2420,14 +2454,15 @@ components:
         - count
       properties:
         attribute:
-          $ref: '#/components/schemas/attribute'
+          $ref: '#/components/schemas/Attribute'
         operator:
-          $ref: '#/components/schemas/operator'
+          $ref: '#/components/schemas/Operator'
         value:
-          $ref: '#/components/schemas/value'
+          $ref: '#/components/schemas/Value'
         count:
-          $ref: '#/components/schemas/parameters_count'
-    getTopFilterForAttributeResponse:
+          $ref: '#/components/schemas/Parameters_count'
+    GetTopFilterForAttributeResponse:
+      title: getTopFilterForAttributeResponse
       type: object
       additionalProperties: false
       required:
@@ -2437,8 +2472,9 @@ components:
           type: array
           description: Filter values for an attribute.
           items:
-            $ref: '#/components/schemas/getTopFilterForAttribute'
-    getTopFiltersNoResultsValue:
+            $ref: '#/components/schemas/GetTopFilterForAttribute'
+    GetTopFiltersNoResultsValue:
+      title: getTopFiltersNoResultsValue
       type: object
       additionalProperties: false
       required:
@@ -2447,12 +2483,13 @@ components:
         - value
       properties:
         attribute:
-          $ref: '#/components/schemas/attribute'
+          $ref: '#/components/schemas/Attribute'
         operator:
-          $ref: '#/components/schemas/operator'
+          $ref: '#/components/schemas/Operator'
         value:
-          $ref: '#/components/schemas/value'
-    getTopFiltersNoResultsValues:
+          $ref: '#/components/schemas/Value'
+    GetTopFiltersNoResultsValues:
+      title: getTopFiltersNoResultsValues
       type: object
       additionalProperties: false
       required:
@@ -2460,13 +2497,14 @@ components:
         - count
       properties:
         count:
-          $ref: '#/components/schemas/parameters_count'
+          $ref: '#/components/schemas/Parameters_count'
         values:
           type: array
           description: Filters with no results.
           items:
-            $ref: '#/components/schemas/getTopFiltersNoResultsValue'
-    getTopFiltersNoResultsResponse:
+            $ref: '#/components/schemas/GetTopFiltersNoResultsValue'
+    GetTopFiltersNoResultsResponse:
+      title: getTopFiltersNoResultsResponse
       type: object
       additionalProperties: false
       required:
@@ -2483,9 +2521,10 @@ components:
 
                 or the `search` parameter is absent from the request.
               items:
-                $ref: '#/components/schemas/getTopFiltersNoResultsValues'
+                $ref: '#/components/schemas/GetTopFiltersNoResultsValues'
             - type: 'null'
-    updatedAtNullable:
+    UpdatedAtNullable:
+      title: updatedAtNullable
       oneOf:
         - type: string
           default: null

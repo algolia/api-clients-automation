@@ -1,5 +1,5 @@
 OptionalWordsUnion:
-  title: OptionalWordsUnion
+  title: optionalWordsUnion
   oneOf:
     - type: string
     - items:

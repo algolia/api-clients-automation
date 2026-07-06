@@ -1,5 +1,5 @@
 EstimateABTestResponse:
-  title: EstimateABTestResponse
+  title: estimateABTestResponse
   type: object
   properties:
     durationDays:

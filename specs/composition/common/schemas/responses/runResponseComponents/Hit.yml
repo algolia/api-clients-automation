@@ -34,7 +34,7 @@ hitMetadata:
       description: The key of the injectedItem that inserted this metadata.
 
 rankingInfo:
-  title: rankingInfo title
+  title: hit_rankingInfo
   allOf:
     - $ref: '../../../../../common/schemas/Hit.yml#/rankingInfo'
     - $ref: '#/compositionRankingInfo'

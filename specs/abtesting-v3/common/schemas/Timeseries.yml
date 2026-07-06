@@ -1,5 +1,5 @@
 Timeseries:
-  title: Timeseries
+  title: timeseries
   type: object
   additionalProperties: false
   properties:
@@ -47,7 +47,7 @@ metricDate:
       $ref: 'Variant.yml#/metrics'
 
 MetricName:
-  title: MetricName
+  title: metricName
   type: string
   enum:
     - search_count

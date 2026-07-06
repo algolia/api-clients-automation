@@ -1,5 +1,5 @@
 InsideBoundingBoxUnion:
-  title: InsideBoundingBoxUnion
+  title: insideBoundingBoxUnion
   oneOf:
     - type: string
     - items:

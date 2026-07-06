@@ -18,7 +18,7 @@ status:
   enum: [pending, active, paused]
 
 sourceType:
-  title: type
+  title: sourceType
   type: string
   enum: [insights]
 

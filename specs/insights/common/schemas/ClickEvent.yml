@@ -1,3 +1,3 @@
-title: ClickEvent
+title: clickEvent
 type: string
 enum: [click]

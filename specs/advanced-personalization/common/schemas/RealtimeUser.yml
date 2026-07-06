@@ -1,5 +1,5 @@
 RealtimeUser:
-  title: RealtimeUser
+  title: realtimeUser
   type: object
   additionalProperties: false
   required:

@@ -1,5 +1,5 @@
 badRequest:
-  title: advanced-personalization badRequest title
+  title: errorResponses_badRequest
   type: object
   properties:
     status:
@@ -8,7 +8,7 @@ badRequest:
       $ref: './ErrorMessages.yml#/badRequest'
 
 badUserID:
-  title: badUserID title
+  title: errorResponses_badUserID
   type: object
   properties:
     status:
@@ -17,7 +17,7 @@ badUserID:
       $ref: './ErrorMessages.yml#/badUserID'
 
 unauthorized:
-  title: advanced-personalization unauthorized title
+  title: errorResponses_unauthorized
   type: object
   properties:
     status:
@@ -26,7 +26,7 @@ unauthorized:
       $ref: './ErrorMessages.yml#/unauthorized'
 
 genericNotFound:
-  title: genericNotFound title
+  title: errorResponses_genericNotFound
   type: object
   properties:
     status:
@@ -35,7 +35,7 @@ genericNotFound:
       $ref: './ErrorMessages.yml#/genericNotFound'
 
 genericUnprocessableEntity:
-  title: genericUnprocessableEntity title
+  title: errorResponses_genericUnprocessableEntity
   type: object
   properties:
     status:
@@ -44,7 +44,7 @@ genericUnprocessableEntity:
       $ref: './ErrorMessages.yml#/genericUnprocessableEntity'
 
 invalidUserID:
-  title: invalidUserID title
+  title: errorResponses_invalidUserID
   type: object
   properties:
     status:
@@ -53,7 +53,7 @@ invalidUserID:
       $ref: './ErrorMessages.yml#/invalidUserID'
 
 internalServerError:
-  title: advanced-personalization internalServerError title
+  title: errorResponses_internalServerError
   type: object
   properties:
     status:
@@ -62,7 +62,7 @@ internalServerError:
       $ref: './ErrorMessages.yml#/internalServerError'
 
 featureNotEnabled:
-  title: featureNotEnabled title
+  title: errorResponses_featureNotEnabled
   type: object
   properties:
     status:

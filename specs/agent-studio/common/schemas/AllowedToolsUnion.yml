@@ -1,5 +1,5 @@
 AllowedToolsUnion:
-  title: AllowedToolsUnion
+  title: allowedToolsUnion
   oneOf:
     - additionalProperties:
         $ref: 'ToolConfig.yml#/ToolConfig'

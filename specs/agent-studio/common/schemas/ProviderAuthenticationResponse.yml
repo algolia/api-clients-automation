@@ -30,4 +30,4 @@ ProviderAuthenticationResponse:
     - input
     - createdAt
     - updatedAt
-  title: provider
+  title: providerAuthenticationResponse

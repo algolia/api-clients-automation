@@ -1,6 +1,6 @@
 topSearchesResponse:
   type: object
-  title: Top searches
+  title: topSearchesResponse
   additionalProperties: false
   required:
     - searches
@@ -26,7 +26,7 @@ topSearchesResponse:
 
 topSearchesResponseWithAnalytics:
   type: object
-  title: Top searches with click analytics
+  title: topSearchesResponseWithAnalytics
   additionalProperties: false
   required:
     - searches
@@ -73,7 +73,7 @@ topSearchesResponseWithAnalytics:
 
 topSearchesResponseWithRevenueAnalytics:
   type: object
-  title: Top searches with revenue analytics
+  title: topSearchesResponseWithRevenueAnalytics
   additionalProperties: false
   required:
     - searches

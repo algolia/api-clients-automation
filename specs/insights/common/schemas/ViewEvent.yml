@@ -1,3 +1,3 @@
-title: ViewEvent
+title: viewEvent
 type: string
 enum: [view]

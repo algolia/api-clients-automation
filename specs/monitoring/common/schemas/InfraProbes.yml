@@ -1,4 +1,4 @@
-title: InfraProbes title
+title: infraProbes_InfraProbes
 type: array
 items:
   $ref: './ProbesMetric.yml'

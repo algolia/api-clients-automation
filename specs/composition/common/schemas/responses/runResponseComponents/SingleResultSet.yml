@@ -39,7 +39,7 @@ searchResultsItem:
     - $ref: '#/resultsCompositionsResponse'
 
 SearchFields:
-  title: SearchFields
+  title: searchFields
   type: object
   additionalProperties: false
   properties:
@@ -63,7 +63,7 @@ SearchFields:
 # ######################
 
 page:
-  title: page title
+  title: singleResultSet_page
   type: integer
   description: The current page of the results.
   example: 0
@@ -81,7 +81,7 @@ nbPages:
   example: 1
 
 hitsPerPage:
-  title: hitsPerPage title
+  title: singleResultSet_hitsPerPage
   type: integer
   description: Number of hits returned per page.
   example: 20
@@ -97,13 +97,13 @@ hits:
     $ref: 'Hit.yml#/hit'
 
 query:
-  title: query title
+  title: singleResultSet_query
   type: string
   description: The search query string.
   example: shoes
 
 params:
-  title: params
+  title: singleResultSet_params
   type: string
   description: URL-encoded string of all search parameters.
   example: query=a&hitsPerPage=20

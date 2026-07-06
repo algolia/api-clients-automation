@@ -1,5 +1,5 @@
 params:
-  title: Run composition parameters as object
+  title: params
   type: object
   additionalProperties: false
   properties:

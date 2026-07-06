@@ -1,17 +1,17 @@
 SearchQuery:
-  title: SearchQuery
+  title: searchQuery
   oneOf:
     - $ref: '#/SearchForHits'
     - $ref: '#/SearchForFacets'
 
 SearchForHits:
-  title: SearchForHits
+  title: searchForHits
   allOf:
     - $ref: '../../../common/schemas/SearchParams.yml#/searchParams'
     - $ref: '#/searchForHitsOptions'
 
 SearchForFacets:
-  title: SearchForFacets
+  title: searchForFacets
   allOf:
     - $ref: '../../../common/schemas/SearchParams.yml#/searchParams'
     - $ref: '#/searchForFacetsOptions'

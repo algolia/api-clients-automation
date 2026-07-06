@@ -1,5 +1,5 @@
 Destination:
-  title: Destination
+  title: destination
   type: object
   description: Destinations are Algolia resources like indices or event streams.
   additionalProperties: false
@@ -31,7 +31,7 @@ Destination:
     - updatedAt
 
 DestinationCreate:
-  title: DestinationCreate
+  title: destinationCreate
   type: object
   additionalProperties: false
   description: API request body for creating a new destination.
@@ -52,7 +52,7 @@ DestinationCreate:
     - input
 
 DestinationCreateResponse:
-  title: DestinationCreateResponse
+  title: destinationCreateResponse
   type: object
   additionalProperties: false
   description: API response for creating a new destination.
@@ -69,7 +69,7 @@ DestinationCreateResponse:
     - createdAt
 
 DestinationUpdate:
-  title: DestinationUpdate
+  title: destinationUpdate
   type: object
   additionalProperties: false
   description: API request body for updating a destination.
@@ -84,7 +84,7 @@ DestinationUpdate:
       $ref: './common.yml#/transformationIDs'
 
 DestinationUpdateResponse:
-  title: DestinationUpdateResponse
+  title: destinationUpdateResponse
   type: object
   additionalProperties: false
   description: API response for updating a destination.
@@ -101,7 +101,7 @@ DestinationUpdateResponse:
     - updatedAt
 
 DestinationSearch:
-  title: DestinationSearch
+  title: destinationSearch
   type: object
   additionalProperties: false
   description: API request body for searching destinations.
@@ -114,7 +114,7 @@ DestinationSearch:
     - destinationIDs
 
 DestinationType:
-  title: DestinationType
+  title: destinationType
   type: string
   description: |
     Destination type.
@@ -127,7 +127,7 @@ DestinationType:
   enum: [search, insights]
 
 DestinationInput:
-  title: DestinationInput
+  title: destinationInput
   type: object
   additionalProperties: false
   properties:
@@ -142,7 +142,7 @@ DestinationInput:
     - indexName
 
 DestinationUpdateInput:
-  title: DestinationUpdateInput
+  title: destinationUpdateInput
   type: object
   additionalProperties: false
   properties:
@@ -155,13 +155,13 @@ DestinationUpdateInput:
       $ref: '#/AttributesToExclude'
 
 RecordType:
-  title: RecordType
+  title: recordType
   type: string
   description: Record type for ecommerce sources.
   enum: [product, variant, collection]
 
 AttributesToExclude:
-  title: AttributesToExclude
+  title: attributesToExclude
   type: array
   description: |
     Attributes from your source to exclude from Algolia records.

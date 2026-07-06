@@ -464,10 +464,10 @@ paths:
       parameters:
         - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/destinationParameters_type'
+        - $ref: '#/components/parameters/type-2'
         - $ref: '#/components/parameters/authenticationID'
         - $ref: '#/components/parameters/transformationID'
-        - $ref: '#/components/parameters/destinationParameters_sort'
+        - $ref: '#/components/parameters/sort-2'
         - $ref: '#/components/parameters/order'
       responses:
         '200':
@@ -632,9 +632,9 @@ paths:
       parameters:
         - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/sourceParameters_type'
-        - $ref: '#/components/parameters/sourceParameters_authenticationID'
-        - $ref: '#/components/parameters/sourceParameters_sort'
+        - $ref: '#/components/parameters/type-3'
+        - $ref: '#/components/parameters/authenticationID-2'
+        - $ref: '#/components/parameters/sort-3'
         - $ref: '#/components/parameters/order'
       responses:
         '200':
@@ -918,7 +918,7 @@ paths:
                     additionalProperties:
                       type: string
                   createdAt:
-                    $ref: '#/components/schemas/CreatedAt'
+                    $ref: '#/components/schemas/Ingestion_CreatedAt'
                 required:
                   - taskWithRunID
                   - createdAt
@@ -946,7 +946,7 @@ paths:
         - $ref: '#/components/parameters/destinationID'
         - $ref: '#/components/parameters/triggerType'
         - $ref: '#/components/parameters/withEmailNotifications'
-        - $ref: '#/components/parameters/taskParameters_sort'
+        - $ref: '#/components/parameters/sort-4'
         - $ref: '#/components/parameters/order'
       responses:
         '200':
@@ -1266,7 +1266,7 @@ paths:
         - $ref: '#/components/parameters/sourceID'
         - $ref: '#/components/parameters/destinationID'
         - $ref: '#/components/parameters/triggerType'
-        - $ref: '#/components/parameters/taskParameters_sort'
+        - $ref: '#/components/parameters/sort-4'
         - $ref: '#/components/parameters/order'
       responses:
         '200':
@@ -1518,9 +1518,9 @@ paths:
       parameters:
         - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/transformationParameters_sort'
+        - $ref: '#/components/parameters/sort-5'
         - $ref: '#/components/parameters/order'
-        - $ref: '#/components/parameters/transformationParameters_type'
+        - $ref: '#/components/parameters/type-4'
       responses:
         '200':
           description: OK
@@ -1935,7 +1935,7 @@ paths:
             defaults to `addObject`.
           required: false
           schema:
-            $ref: '#/components/schemas/action'
+            $ref: '#/components/schemas/Action'
         - in: query
           name: waitForTasks
           description: >-
@@ -2021,14 +2021,14 @@ components:
       description: Number of items per page.
       required: false
       schema:
-        $ref: '#/components/schemas/itemsPerPage'
+        $ref: '#/components/schemas/ItemsPerPage'
     page:
       name: page
       in: query
       description: Page number of the paginated API response.
       required: false
       schema:
-        $ref: '#/components/schemas/page'
+        $ref: '#/components/schemas/Page'
     type:
       name: type
       in: query
@@ -2051,7 +2051,7 @@ components:
       schema:
         type: array
         items:
-          $ref: '#/components/schemas/platformWithNone'
+          $ref: '#/components/schemas/PlatformWithNone'
         example: commercetools,none
     sort:
       name: sort
@@ -2059,22 +2059,22 @@ components:
       description: Property by which to sort the list of authentications.
       required: false
       schema:
-        $ref: '#/components/schemas/authenticationSortKeys'
+        $ref: '#/components/schemas/AuthenticationSortKeys'
     order:
       name: order
       in: query
       description: Sort order of the response, ascending or descending.
       required: false
       schema:
-        $ref: '#/components/schemas/orderKeys'
+        $ref: '#/components/schemas/OrderKeys'
     pathAuthenticationID:
       name: authenticationID
       in: path
       required: true
       description: Unique identifier of an authentication resource.
       schema:
-        $ref: '#/components/schemas/authenticationID'
-    destinationParameters_type:
+        $ref: '#/components/schemas/AuthenticationID'
+    type-2:
       name: type
       in: query
       description: Destination type.
@@ -2096,7 +2096,7 @@ components:
       schema:
         type: array
         items:
-          $ref: '#/components/schemas/authenticationID'
+          $ref: '#/components/schemas/AuthenticationID'
     transformationID:
       name: transformationID
       in: query
@@ -2105,23 +2105,23 @@ components:
       style: form
       explode: false
       schema:
-        $ref: '#/components/schemas/transformationID'
-    destinationParameters_sort:
+        $ref: '#/components/schemas/TransformationID'
+    sort-2:
       name: sort
       in: query
       description: Property by which to sort the destinations.
       required: false
       example: type
       schema:
-        $ref: '#/components/schemas/destinationSortKeys'
+        $ref: '#/components/schemas/DestinationSortKeys'
     pathDestinationID:
       name: destinationID
       in: path
       required: true
       description: Unique identifier of a destination.
       schema:
-        $ref: '#/components/schemas/destinationID'
-    sourceParameters_type:
+        $ref: '#/components/schemas/DestinationID'
+    type-3:
       name: type
       in: query
       description: Source type. Some sources require authentication.
@@ -2133,7 +2133,7 @@ components:
         items:
           $ref: '#/components/schemas/SourceType'
         example: commercetools,bigcommerce
-    sourceParameters_authenticationID:
+    authenticationID-2:
       name: authenticationID
       in: query
       description: |
@@ -2145,24 +2145,24 @@ components:
       schema:
         type: array
         items:
-          $ref: '#/components/schemas/authenticationID'
+          $ref: '#/components/schemas/AuthenticationID'
         example:
           - 10000000-0a75-4000-a000-000000000001
           - none
-    sourceParameters_sort:
+    sort-3:
       name: sort
       in: query
       description: Property by which to sort the list of sources.
       required: false
       schema:
-        $ref: '#/components/schemas/sourceSortKeys'
+        $ref: '#/components/schemas/SourceSortKeys'
     pathSourceID:
       name: sourceID
       in: path
       required: true
       description: Unique identifier of a source.
       schema:
-        $ref: '#/components/schemas/sourceID'
+        $ref: '#/components/schemas/SourceID'
     action:
       name: action
       in: query
@@ -2193,7 +2193,7 @@ components:
       schema:
         type: array
         items:
-          $ref: '#/components/schemas/sourceID'
+          $ref: '#/components/schemas/SourceID'
     sourceType:
       name: sourceType
       in: query
@@ -2216,7 +2216,7 @@ components:
       schema:
         type: array
         items:
-          $ref: '#/components/schemas/destinationID'
+          $ref: '#/components/schemas/DestinationID'
     triggerType:
       name: triggerType
       in: query
@@ -2238,28 +2238,28 @@ components:
       required: false
       schema:
         type: boolean
-    taskParameters_sort:
+    sort-4:
       name: sort
       in: query
       description: Property by which to sort the list of tasks.
       required: false
       schema:
-        $ref: '#/components/schemas/taskSortKeys'
+        $ref: '#/components/schemas/TaskSortKeys'
     pathTaskID:
       name: taskID
       in: path
       required: true
       description: Unique identifier of a task.
       schema:
-        $ref: '#/components/schemas/taskID'
-    transformationParameters_sort:
+        $ref: '#/components/schemas/TaskID'
+    sort-5:
       name: sort
       in: query
       description: Property by which to sort the list of transformations.
       required: false
       schema:
-        $ref: '#/components/schemas/transformationSortKeys'
-    transformationParameters_type:
+        $ref: '#/components/schemas/TransformationSortKeys'
+    type-4:
       name: type
       in: query
       description: >-
@@ -2274,7 +2274,7 @@ components:
       required: true
       description: Unique identifier of a transformation.
       schema:
-        $ref: '#/components/schemas/transformationID'
+        $ref: '#/components/schemas/TransformationID'
     runStatus:
       name: status
       in: query
@@ -2296,14 +2296,14 @@ components:
       in: query
       description: Task ID for filtering the list of task runs.
       schema:
-        $ref: '#/components/schemas/taskID'
+        $ref: '#/components/schemas/TaskID'
     runSort:
       name: sort
       in: query
       description: Property by which to sort the list of task runs.
       required: false
       schema:
-        $ref: '#/components/schemas/runSortKeys'
+        $ref: '#/components/schemas/RunSortKeys'
     pathRunID:
       name: runID
       in: path
@@ -2333,7 +2333,7 @@ components:
       description: Property by which to sort the list of task run events.
       required: false
       schema:
-        $ref: '#/components/schemas/eventSortKeys'
+        $ref: '#/components/schemas/EventSortKeys'
     pathEventID:
       name: eventID
       in: path
@@ -2343,6 +2343,7 @@ components:
         $ref: '#/components/schemas/EventID'
   schemas:
     ErrorBase:
+      title: errorBase
       description: Error.
       type: object
       x-keep-model: true
@@ -2351,7 +2352,8 @@ components:
         message:
           type: string
           example: Invalid Application-Id or API-Key
-    action:
+    Action:
+      title: action
       type: string
       enum:
         - addObject
@@ -2382,7 +2384,8 @@ components:
 
         - `clear`: delete all records from an index. Equivalent to the "Delete
         all records from an index operation".
-    objectID:
+    ObjectID:
+      title: objectID
       type: string
       description: Unique record identifier.
       example: test-record-123
@@ -2391,7 +2394,7 @@ components:
       type: object
       properties:
         action:
-          $ref: '#/components/schemas/action'
+          $ref: '#/components/schemas/Action'
         records:
           type: array
           items:
@@ -2402,19 +2405,22 @@ components:
               - objectID
             properties:
               objectID:
-                $ref: '#/components/schemas/objectID'
+                $ref: '#/components/schemas/ObjectID'
       required:
         - action
         - records
     RunID:
+      title: runID
       type: string
       description: Universally unique identifier (UUID) of a task run.
       example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     EventID:
+      title: eventID
       type: string
       description: Universally unique identifier (UUID) of an event.
       example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     EventStatus:
+      title: eventStatus
       oneOf:
         - type: string
           enum:
@@ -2426,6 +2432,7 @@ components:
             - critical
         - type: 'null'
     EventType:
+      title: eventType
       type: string
       enum:
         - fetch
@@ -2433,9 +2440,11 @@ components:
         - log
         - transform
     PublishedAt:
+      title: publishedAt
       type: string
       description: Date and time when the resource was published, in RFC 3339 format.
     Event:
+      title: event
       type: object
       description: An event describe a step of the task execution flow.
       additionalProperties: false
@@ -2468,10 +2477,12 @@ components:
         - type
         - batchSize
         - publishedAt
-    CreatedAt:
+    Ingestion_CreatedAt:
+      title: ingestion_CreatedAt
       type: string
       description: Date and time when the resource was created, in RFC 3339 format.
     WatchResponse:
+      title: watchResponse
       type: object
       additionalProperties: false
       properties:
@@ -2501,20 +2512,23 @@ components:
             (push, discover or validate) run.
           type: string
         createdAt:
-          $ref: '#/components/schemas/CreatedAt'
+          $ref: '#/components/schemas/Ingestion_CreatedAt'
       required:
         - runID
-    itemsPerPage:
+    ItemsPerPage:
+      title: itemsPerPage
       type: integer
       description: Number of items per page.
       minimum: 1
       maximum: 100
       default: 10
-    page:
+    Page:
+      title: page
       type: integer
       minimum: 1
       description: Page of the API response to retrieve.
     AuthenticationType:
+      title: authenticationType
       type: string
       description: >-
         Type of authentication. This determines the type of credentials required
@@ -2528,6 +2542,7 @@ components:
         - algoliaInsights
         - secrets
     Platform:
+      title: platform
       default: null
       oneOf:
         - type: string
@@ -2539,18 +2554,21 @@ components:
             - commercetools
             - shopify
         - type: 'null'
-    platformNone:
+    PlatformNone:
+      title: platformNone
       type: string
       description: >-
         Authentication resource not tied to any ecommerce platform, used for
         filtering.
       enum:
         - none
-    platformWithNone:
+    PlatformWithNone:
+      title: platformWithNone
       oneOf:
         - $ref: '#/components/schemas/Platform'
-        - $ref: '#/components/schemas/platformNone'
-    authenticationSortKeys:
+        - $ref: '#/components/schemas/PlatformNone'
+    AuthenticationSortKeys:
+      title: authenticationSortKeys
       type: string
       description: Property by which to sort the list of authentications.
       default: createdAt
@@ -2560,26 +2578,31 @@ components:
         - platform
         - updatedAt
         - createdAt
-    orderKeys:
+    OrderKeys:
+      title: orderKeys
       type: string
       description: Ascending or descending sort order.
       default: desc
       enum:
         - asc
         - desc
-    authenticationID:
+    AuthenticationID:
+      title: authenticationID
       type: string
       description: Universally unique identifier (UUID) of an authentication resource.
       example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    name:
+    Name:
+      title: name
       type: string
       description: Descriptive name for the resource.
-    owner:
+    Owner:
+      title: owner
       oneOf:
         - type: string
           description: Owner of the resource.
         - type: 'null'
     AuthGoogleServiceAccountPartial:
+      title: authGoogleServiceAccountPartial
       type: object
       description: >-
         Credentials for authenticating with a Google service account, such as
@@ -2598,6 +2621,7 @@ components:
       x-discriminator-fields:
         - clientEmail
     AuthBasicPartial:
+      title: authBasicPartial
       type: object
       description: Credentials for authenticating with user name and password.
       additionalProperties: false
@@ -2611,6 +2635,7 @@ components:
       x-discriminator-fields:
         - username
     AuthAPIKeyPartial:
+      title: authAPIKeyPartial
       type: object
       description: Credentials for authenticating with an API key.
       additionalProperties: false
@@ -2621,6 +2646,7 @@ components:
       x-discriminator-fields:
         - key
     AuthOAuthPartial:
+      title: authOAuthPartial
       type: object
       description: Credentials for authenticating with OAuth 2.0.
       additionalProperties: false
@@ -2650,6 +2676,7 @@ components:
       x-discriminator-fields:
         - url
     AuthAlgoliaPartial:
+      title: authAlgoliaPartial
       type: object
       description: Credentials for authenticating with Algolia.
       additionalProperties: false
@@ -2665,6 +2692,7 @@ components:
 
             This field is `null` in the API response.
     AuthAlgoliaInsightsPartial:
+      title: authAlgoliaInsightsPartial
       type: object
       additionalProperties: false
       description: Credentials for authenticating with the Algolia Insights API.
@@ -2678,12 +2706,13 @@ components:
             Algolia API key with the ACL: `search`.
             This field is `null` in the API response.
     AuthSecrets:
-      title: Key:value
+      title: authSecrets
       type: object
       description: A key:value authentication for your transformations.
       additionalProperties:
         type: string
     AuthInputPartial:
+      title: authInputPartial
       oneOf:
         - $ref: '#/components/schemas/AuthGoogleServiceAccountPartial'
         - $ref: '#/components/schemas/AuthBasicPartial'
@@ -2692,10 +2721,12 @@ components:
         - $ref: '#/components/schemas/AuthAlgoliaPartial'
         - $ref: '#/components/schemas/AuthAlgoliaInsightsPartial'
         - $ref: '#/components/schemas/AuthSecrets'
-    updatedAt:
+    UpdatedAt:
+      title: updatedAt
       type: string
       description: Date and time when the resource was last updated, in RFC 3339 format.
     Authentication:
+      title: authentication
       type: object
       description: >-
         Resource representing the information required to authenticate with a
@@ -2703,21 +2734,21 @@ components:
       additionalProperties: false
       properties:
         authenticationID:
-          $ref: '#/components/schemas/authenticationID'
+          $ref: '#/components/schemas/AuthenticationID'
         type:
           $ref: '#/components/schemas/AuthenticationType'
         name:
-          $ref: '#/components/schemas/name'
+          $ref: '#/components/schemas/Name'
         platform:
           $ref: '#/components/schemas/Platform'
         owner:
-          $ref: '#/components/schemas/owner'
+          $ref: '#/components/schemas/Owner'
         input:
           $ref: '#/components/schemas/AuthInputPartial'
         createdAt:
-          $ref: '#/components/schemas/CreatedAt'
+          $ref: '#/components/schemas/Ingestion_CreatedAt'
         updatedAt:
-          $ref: '#/components/schemas/updatedAt'
+          $ref: '#/components/schemas/UpdatedAt'
       required:
         - authenticationID
         - type
@@ -2726,6 +2757,7 @@ components:
         - createdAt
         - updatedAt
     Pagination:
+      title: pagination
       type: object
       description: Paginated API response.
       additionalProperties: false
@@ -2735,20 +2767,20 @@ components:
           minimum: 1
           description: Number of pages in the API response.
         page:
-          $ref: '#/components/schemas/page'
+          $ref: '#/components/schemas/Page'
         nbItems:
           type: integer
           minimum: 0
           description: Number of items in the API response.
         itemsPerPage:
-          $ref: '#/components/schemas/itemsPerPage'
+          $ref: '#/components/schemas/ItemsPerPage'
       required:
         - nbPages
         - page
         - nbItems
         - itemsPerPage
     AuthGoogleServiceAccount:
-      title: Google
+      title: authGoogleServiceAccount
       type: object
       description: >-
         Credentials for authenticating with a Google service account, such as
@@ -2771,7 +2803,7 @@ components:
         - clientEmail
         - privateKey
     AuthBasic:
-      title: Basic
+      title: authBasic
       type: object
       description: Credentials for authenticating with user name and password.
       additionalProperties: false
@@ -2789,7 +2821,7 @@ components:
         - username
         - password
     AuthAPIKey:
-      title: API key
+      title: authAPIKey
       type: object
       description: Credentials for authenticating with an API key.
       additionalProperties: false
@@ -2802,7 +2834,7 @@ components:
       x-discriminator-fields:
         - key
     AuthOAuth:
-      title: OAuth 2.0
+      title: authOAuth
       type: object
       description: Credentials for authenticating with OAuth 2.0.
       additionalProperties: false
@@ -2837,7 +2869,7 @@ components:
         - client_secret
         - code
     AuthAlgolia:
-      title: Algolia
+      title: authAlgolia
       type: object
       additionalProperties: false
       description: Credentials for authenticating with Algolia.
@@ -2856,7 +2888,7 @@ components:
         - appID
         - apiKey
     AuthAlgoliaInsights:
-      title: Algolia Insights
+      title: authAlgoliaInsights
       type: object
       additionalProperties: false
       description: Credentials for authenticating with the Algolia Insights API.
@@ -2873,6 +2905,7 @@ components:
         - appID
         - apiKey
     AuthInput:
+      title: authInput
       oneOf:
         - $ref: '#/components/schemas/AuthGoogleServiceAccount'
         - $ref: '#/components/schemas/AuthBasic'
@@ -2882,6 +2915,7 @@ components:
         - $ref: '#/components/schemas/AuthAlgoliaInsights'
         - $ref: '#/components/schemas/AuthSecrets'
     AuthenticationCreate:
+      title: authenticationCreate
       type: object
       description: Request body for creating a new authentication resource.
       additionalProperties: false
@@ -2889,7 +2923,7 @@ components:
         type:
           $ref: '#/components/schemas/AuthenticationType'
         name:
-          $ref: '#/components/schemas/name'
+          $ref: '#/components/schemas/Name'
         platform:
           $ref: '#/components/schemas/Platform'
         input:
@@ -2899,21 +2933,23 @@ components:
         - name
         - input
     AuthenticationCreateResponse:
+      title: authenticationCreateResponse
       type: object
       description: API response for the successful creation of an authentication resource.
       additionalProperties: false
       properties:
         authenticationID:
-          $ref: '#/components/schemas/authenticationID'
+          $ref: '#/components/schemas/AuthenticationID'
         name:
-          $ref: '#/components/schemas/name'
+          $ref: '#/components/schemas/Name'
         createdAt:
-          $ref: '#/components/schemas/CreatedAt'
+          $ref: '#/components/schemas/Ingestion_CreatedAt'
       required:
         - authenticationID
         - name
         - createdAt
     AuthenticationSearch:
+      title: authenticationSearch
       type: object
       additionalProperties: false
       description: Request body for searching for authentication resources.
@@ -2921,10 +2957,11 @@ components:
         authenticationIDs:
           type: array
           items:
-            $ref: '#/components/schemas/authenticationID'
+            $ref: '#/components/schemas/AuthenticationID'
       required:
         - authenticationIDs
     DeleteResponse:
+      title: deleteResponse
       type: object
       properties:
         deletedAt:
@@ -2933,30 +2970,33 @@ components:
       required:
         - deletedAt
     AuthenticationUpdate:
+      title: authenticationUpdate
       type: object
       description: Request body for updating an authentication resource.
       additionalProperties: false
       properties:
         name:
-          $ref: '#/components/schemas/name'
+          $ref: '#/components/schemas/Name'
         input:
           $ref: '#/components/schemas/AuthInputPartial'
     AuthenticationUpdateResponse:
+      title: authenticationUpdateResponse
       type: object
       additionalProperties: false
       description: API response for a successful update of an authentication resource.
       properties:
         authenticationID:
-          $ref: '#/components/schemas/authenticationID'
+          $ref: '#/components/schemas/AuthenticationID'
         name:
-          $ref: '#/components/schemas/name'
+          $ref: '#/components/schemas/Name'
         updatedAt:
-          $ref: '#/components/schemas/updatedAt'
+          $ref: '#/components/schemas/UpdatedAt'
       required:
         - authenticationID
         - name
         - updatedAt
     DestinationType:
+      title: destinationType
       type: string
       description: |
         Destination type.
@@ -2969,11 +3009,13 @@ components:
       enum:
         - search
         - insights
-    transformationID:
+    TransformationID:
+      title: transformationID
       type: string
       description: Universally unique identifier (UUID) of a transformation.
       example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    destinationSortKeys:
+    DestinationSortKeys:
+      title: destinationSortKeys
       type: string
       description: Property by which to sort the destinations.
       default: createdAt
@@ -2982,11 +3024,13 @@ components:
         - type
         - updatedAt
         - createdAt
-    destinationID:
+    DestinationID:
+      title: destinationID
       type: string
       description: Universally unique identifier (UUID) of a destination resource.
       example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     RecordType:
+      title: recordType
       type: string
       description: Record type for ecommerce sources.
       enum:
@@ -2994,6 +3038,7 @@ components:
         - variant
         - collection
     AttributesToExclude:
+      title: attributesToExclude
       type: array
       description: >
         Attributes from your source to exclude from Algolia records.
@@ -3016,6 +3061,7 @@ components:
       items:
         type: string
     DestinationInput:
+      title: destinationInput
       type: object
       additionalProperties: false
       properties:
@@ -3028,33 +3074,35 @@ components:
           $ref: '#/components/schemas/AttributesToExclude'
       required:
         - indexName
-    transformationIDs:
+    TransformationIDs:
+      title: transformationIDs
       type: array
       items:
-        $ref: '#/components/schemas/transformationID'
+        $ref: '#/components/schemas/TransformationID'
     Destination:
+      title: destination
       type: object
       description: Destinations are Algolia resources like indices or event streams.
       additionalProperties: false
       properties:
         destinationID:
-          $ref: '#/components/schemas/destinationID'
+          $ref: '#/components/schemas/DestinationID'
         type:
           $ref: '#/components/schemas/DestinationType'
         name:
-          $ref: '#/components/schemas/name'
+          $ref: '#/components/schemas/Name'
         owner:
-          $ref: '#/components/schemas/owner'
+          $ref: '#/components/schemas/Owner'
         input:
           $ref: '#/components/schemas/DestinationInput'
         createdAt:
-          $ref: '#/components/schemas/CreatedAt'
+          $ref: '#/components/schemas/Ingestion_CreatedAt'
         updatedAt:
-          $ref: '#/components/schemas/updatedAt'
+          $ref: '#/components/schemas/UpdatedAt'
         authenticationID:
-          $ref: '#/components/schemas/authenticationID'
+          $ref: '#/components/schemas/AuthenticationID'
         transformationIDs:
-          $ref: '#/components/schemas/transformationIDs'
+          $ref: '#/components/schemas/TransformationIDs'
       required:
         - destinationID
         - type
@@ -3063,6 +3111,7 @@ components:
         - createdAt
         - updatedAt
     DestinationCreate:
+      title: destinationCreate
       type: object
       additionalProperties: false
       description: API request body for creating a new destination.
@@ -3070,33 +3119,35 @@ components:
         type:
           $ref: '#/components/schemas/DestinationType'
         name:
-          $ref: '#/components/schemas/name'
+          $ref: '#/components/schemas/Name'
         input:
           $ref: '#/components/schemas/DestinationInput'
         authenticationID:
-          $ref: '#/components/schemas/authenticationID'
+          $ref: '#/components/schemas/AuthenticationID'
         transformationIDs:
-          $ref: '#/components/schemas/transformationIDs'
+          $ref: '#/components/schemas/TransformationIDs'
       required:
         - type
         - name
         - input
     DestinationCreateResponse:
+      title: destinationCreateResponse
       type: object
       additionalProperties: false
       description: API response for creating a new destination.
       properties:
         destinationID:
-          $ref: '#/components/schemas/destinationID'
+          $ref: '#/components/schemas/DestinationID'
         name:
-          $ref: '#/components/schemas/name'
+          $ref: '#/components/schemas/Name'
         createdAt:
-          $ref: '#/components/schemas/CreatedAt'
+          $ref: '#/components/schemas/Ingestion_CreatedAt'
       required:
         - destinationID
         - name
         - createdAt
     DestinationSearch:
+      title: destinationSearch
       type: object
       additionalProperties: false
       description: API request body for searching destinations.
@@ -3104,10 +3155,11 @@ components:
         destinationIDs:
           type: array
           items:
-            $ref: '#/components/schemas/destinationID'
+            $ref: '#/components/schemas/DestinationID'
       required:
         - destinationIDs
     DestinationUpdateInput:
+      title: destinationUpdateInput
       type: object
       additionalProperties: false
       properties:
@@ -3119,34 +3171,37 @@ components:
         attributesToExclude:
           $ref: '#/components/schemas/AttributesToExclude'
     DestinationUpdate:
+      title: destinationUpdate
       type: object
       additionalProperties: false
       description: API request body for updating a destination.
       properties:
         name:
-          $ref: '#/components/schemas/name'
+          $ref: '#/components/schemas/Name'
         input:
           $ref: '#/components/schemas/DestinationUpdateInput'
         authenticationID:
-          $ref: '#/components/schemas/authenticationID'
+          $ref: '#/components/schemas/AuthenticationID'
         transformationIDs:
-          $ref: '#/components/schemas/transformationIDs'
+          $ref: '#/components/schemas/TransformationIDs'
     DestinationUpdateResponse:
+      title: destinationUpdateResponse
       type: object
       additionalProperties: false
       description: API response for updating a destination.
       properties:
         destinationID:
-          $ref: '#/components/schemas/destinationID'
+          $ref: '#/components/schemas/DestinationID'
         name:
-          $ref: '#/components/schemas/name'
+          $ref: '#/components/schemas/Name'
         updatedAt:
-          $ref: '#/components/schemas/updatedAt'
+          $ref: '#/components/schemas/UpdatedAt'
       required:
         - destinationID
         - name
         - updatedAt
     SourceType:
+      title: sourceType
       type: string
       enum:
         - algoliaIndex
@@ -3159,7 +3214,8 @@ components:
         - json
         - shopify
         - push
-    sourceSortKeys:
+    SourceSortKeys:
+      title: sourceSortKeys
       type: string
       description: Property by which to sort the list of sources.
       default: createdAt
@@ -3168,11 +3224,13 @@ components:
         - type
         - updatedAt
         - createdAt
-    sourceID:
+    SourceID:
+      title: sourceID
       type: string
       description: Universally uniqud identifier (UUID) of a source.
       example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     CommercetoolsCustomFields:
+      title: commercetoolsCustomFields
       type: object
       additionalProperties: false
       description: >
@@ -3204,6 +3262,7 @@ components:
                 type: string
             - type: 'null'
     SourceCommercetools:
+      title: sourceCommercetools
       type: object
       description: Specific configuration attributes of a `commercetools` source.
       additionalProperties: false
@@ -3252,6 +3311,7 @@ components:
       x-discriminator-fields:
         - projectKey
     BigCommerceChannel:
+      title: bigCommerceChannel
       type: object
       additionalProperties: false
       properties:
@@ -3271,6 +3331,7 @@ components:
       required:
         - id
     BigCommerceMetafield:
+      title: bigCommerceMetafield
       type: object
       additionalProperties: false
       properties:
@@ -3284,6 +3345,7 @@ components:
         - namespace
         - key
     SourceBigCommerce:
+      title: sourceBigCommerce
       type: object
       description: Specific configuration attributes of a `bigcommerce` source.
       additionalProperties: false
@@ -3310,17 +3372,20 @@ components:
       x-discriminator-fields:
         - storeHash
     UniqueIDColumn:
+      title: uniqueIDColumn
       type: string
       description: >-
         Name of a column that contains a unique ID which will be used as
         `objectID` in Algolia.
     MethodType:
+      title: methodType
       type: string
       description: HTTP method to be used for retrieving your data.
       enum:
         - GET
         - POST
     SourceJSON:
+      title: sourceJSON
       type: object
       description: Specific configuration attributes of a `json` source.
       additionalProperties: false
@@ -3335,6 +3400,7 @@ components:
       required:
         - url
     MappingTypeCSV:
+      title: mappingTypeCSV
       type: string
       enum:
         - string
@@ -3343,6 +3409,7 @@ components:
         - boolean
         - json
     SourceCSV:
+      title: sourceCSV
       type: object
       description: Specific configuration attributes of a `csv` source.
       additionalProperties: false
@@ -3372,11 +3439,13 @@ components:
       required:
         - url
     BigQueryDataType:
+      title: bigQueryDataType
       type: string
       enum:
         - ga4
         - ga360
     SourceBigQuery:
+      title: sourceBigQuery
       type: object
       description: Specific configuration attributes of a `bigquery` source.
       additionalProperties: false
@@ -3406,6 +3475,7 @@ components:
       x-discriminator-fields:
         - projectID
     SourceGA4BigQueryExport:
+      title: sourceGA4BigQueryExport
       type: object
       description: Specific configuration attributes of a `ga4BigqueryExport` source.
       additionalProperties: false
@@ -3429,6 +3499,7 @@ components:
         - datasetID
         - tablePrefix
     SourceDocker:
+      title: sourceDocker
       type: object
       description: Specific configuration attributes of a `docker` source.
       additionalProperties: false
@@ -3447,6 +3518,7 @@ components:
         - image
         - configuration
     SourceUpdateShopify:
+      title: sourceUpdateShopify
       type: object
       description: Specific configuration attributes of a `shopify` source.
       additionalProperties: false
@@ -3455,7 +3527,8 @@ components:
           type: object
           description: Feature flags for the Shopify source.
           additionalProperties: true
-    sourceShopifyBase:
+    SourceShopifyBase:
+      title: sourceShopifyBase
       type: object
       additionalProperties: false
       properties:
@@ -3467,10 +3540,12 @@ components:
       x-discriminator-fields:
         - shopURL
     SourceShopify:
+      title: sourceShopify
       allOf:
         - $ref: '#/components/schemas/SourceUpdateShopify'
-        - $ref: '#/components/schemas/sourceShopifyBase'
+        - $ref: '#/components/schemas/SourceShopifyBase'
     SourceAlgoliaIndex:
+      title: sourceAlgoliaIndex
       type: object
       description: Specific configuration attributes of an `algoliaIndex` source.
       additionalProperties: false
@@ -3490,6 +3565,7 @@ components:
       x-discriminator-fields:
         - indexName
     SourceInput:
+      title: sourceInput
       oneOf:
         - $ref: '#/components/schemas/SourceCommercetools'
         - $ref: '#/components/schemas/SourceBigCommerce'
@@ -3501,25 +3577,26 @@ components:
         - $ref: '#/components/schemas/SourceShopify'
         - $ref: '#/components/schemas/SourceAlgoliaIndex'
     Source:
+      title: source
       type: object
       additionalProperties: false
       properties:
         sourceID:
-          $ref: '#/components/schemas/sourceID'
+          $ref: '#/components/schemas/SourceID'
         type:
           $ref: '#/components/schemas/SourceType'
         name:
           type: string
         owner:
-          $ref: '#/components/schemas/owner'
+          $ref: '#/components/schemas/Owner'
         input:
           $ref: '#/components/schemas/SourceInput'
         authenticationID:
-          $ref: '#/components/schemas/authenticationID'
+          $ref: '#/components/schemas/AuthenticationID'
         createdAt:
-          $ref: '#/components/schemas/CreatedAt'
+          $ref: '#/components/schemas/Ingestion_CreatedAt'
         updatedAt:
-          $ref: '#/components/schemas/updatedAt'
+          $ref: '#/components/schemas/UpdatedAt'
       required:
         - sourceID
         - type
@@ -3527,6 +3604,7 @@ components:
         - createdAt
         - updatedAt
     SourceCreate:
+      title: sourceCreate
       type: object
       additionalProperties: false
       properties:
@@ -3538,26 +3616,28 @@ components:
         input:
           $ref: '#/components/schemas/SourceInput'
         authenticationID:
-          $ref: '#/components/schemas/authenticationID'
+          $ref: '#/components/schemas/AuthenticationID'
       required:
         - type
         - name
     SourceCreateResponse:
+      title: sourceCreateResponse
       type: object
       additionalProperties: false
       properties:
         sourceID:
-          $ref: '#/components/schemas/sourceID'
+          $ref: '#/components/schemas/SourceID'
         name:
           type: string
           description: Descriptive name of the source.
         createdAt:
-          $ref: '#/components/schemas/CreatedAt'
+          $ref: '#/components/schemas/Ingestion_CreatedAt'
       required:
         - sourceID
         - name
         - createdAt
     SourceSearch:
+      title: sourceSearch
       type: object
       additionalProperties: false
       properties:
@@ -3568,6 +3648,7 @@ components:
       required:
         - sourceIDs
     SourceUpdateCommercetools:
+      title: sourceUpdateCommercetools
       type: object
       description: Specific configuration attributes of a `commercetools` source.
       additionalProperties: false
@@ -3608,6 +3689,7 @@ components:
         customFields:
           $ref: '#/components/schemas/CommercetoolsCustomFields'
     SourceUpdateDocker:
+      title: sourceUpdateDocker
       type: object
       description: Specific configuration attributes of a `docker` source.
       additionalProperties: false
@@ -3620,6 +3702,7 @@ components:
       x-discriminator-fields:
         - configuration
     SourceUpdateAlgoliaIndex:
+      title: sourceUpdateAlgoliaIndex
       type: object
       description: Specific configuration attributes of an `algoliaIndex` source.
       additionalProperties: false
@@ -3635,6 +3718,7 @@ components:
             See
             [filters](https://www.algolia.com/doc/api-reference/api-parameters/filters/).
     SourceUpdateInput:
+      title: sourceUpdateInput
       oneOf:
         - $ref: '#/components/schemas/SourceUpdateCommercetools'
         - $ref: '#/components/schemas/SourceJSON'
@@ -3645,6 +3729,7 @@ components:
         - $ref: '#/components/schemas/SourceUpdateShopify'
         - $ref: '#/components/schemas/SourceUpdateAlgoliaIndex'
     SourceUpdate:
+      title: sourceUpdate
       type: object
       additionalProperties: false
       properties:
@@ -3654,29 +3739,32 @@ components:
         input:
           $ref: '#/components/schemas/SourceUpdateInput'
         authenticationID:
-          $ref: '#/components/schemas/authenticationID'
+          $ref: '#/components/schemas/AuthenticationID'
     SourceUpdateResponse:
+      title: sourceUpdateResponse
       type: object
       additionalProperties: false
       properties:
         sourceID:
-          $ref: '#/components/schemas/sourceID'
+          $ref: '#/components/schemas/SourceID'
         name:
           type: string
           description: Descriptive name of the source.
         updatedAt:
-          $ref: '#/components/schemas/updatedAt'
+          $ref: '#/components/schemas/UpdatedAt'
       required:
         - sourceID
         - name
         - updatedAt
     EntityType:
+      title: entityType
       type: string
       description: Type of entity to update.
       enum:
         - product
         - collection
     RunSourcePayload:
+      title: runSourcePayload
       type: object
       additionalProperties: false
       properties:
@@ -3702,6 +3790,7 @@ components:
           additionalProperties: true
           description: Additional information that will be passed to the created runs.
     ActionType:
+      title: actionType
       type: string
       description: Action to perform on the Algolia index.
       enum:
@@ -3711,6 +3800,7 @@ components:
         - partialNoCreate
         - append
     TriggerType:
+      title: triggerType
       type: string
       description: |
         Task trigger, describing when a task should run.
@@ -3731,7 +3821,8 @@ components:
         - schedule
         - subscription
         - streaming
-    taskSortKeys:
+    TaskSortKeys:
+      title: taskSortKeys
       type: string
       description: Property by which to sort the list of tasks.
       default: createdAt
@@ -3741,26 +3832,32 @@ components:
         - action
         - updatedAt
         - createdAt
-    taskID:
+    TaskID:
+      title: taskID
       type: string
       description: Universally unique identifier (UUID) of a task.
       example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     Cron:
+      title: cron
       type: string
       description: Cron expression for the task's schedule.
       example: '* * 1 * *'
     LastRun:
+      title: lastRun
       description: The last time the scheduled task ran in RFC 3339 format.
       type: string
     NextRun:
+      title: nextRun
       description: The next scheduled run of the task in RFC 3339 format.
       type: string
     MappingFormatSchema:
+      title: mappingFormatSchema
       type: string
       description: Mapping format schema.
       enum:
         - mappingkit/v1
     MappingFieldDirective:
+      title: mappingFieldDirective
       type: object
       additionalProperties: false
       description: >-
@@ -3778,6 +3875,7 @@ components:
         - fieldKey
         - value
     MappingKitAction:
+      title: mappingKitAction
       type: object
       additionalProperties: false
       description: >-
@@ -3805,6 +3903,7 @@ components:
         - trigger
         - fieldDirectives
     MappingInput:
+      title: mappingInput
       type: object
       additionalProperties: false
       description: Transformations to apply to the source, serialized as a JSON string.
@@ -3822,7 +3921,7 @@ components:
         - format
         - actions
     StreamingInput:
-      title: Streaming input
+      title: streamingInput
       type: object
       additionalProperties: false
       description: >-
@@ -3836,12 +3935,14 @@ components:
       x-discriminator-fields:
         - mapping
     DockerStreamsSyncMode:
+      title: dockerStreamsSyncMode
       type: string
       description: The strategy to use to fetch the data.
       enum:
         - incremental
         - fullTable
     DockerStreams:
+      title: dockerStreams
       type: object
       properties:
         name:
@@ -3858,7 +3959,7 @@ components:
         - name
         - syncMode
     DockerStreamsInput:
-      title: Docker streams
+      title: dockerStreamsInput
       description: The selected streams of an airbyte connector.
       type: object
       properties:
@@ -3871,6 +3972,7 @@ components:
       x-discriminator-fields:
         - streams
     ShopifyMetafield:
+      title: shopifyMetafield
       type: object
       additionalProperties: false
       description: Represents a metafield in Shopify.
@@ -3886,6 +3988,7 @@ components:
         - key
         - value
     ShopifyMarket:
+      title: shopifyMarket
       type: object
       additionalProperties: false
       description: Represents a market in Shopify.
@@ -3907,7 +4010,7 @@ components:
         - currencies
         - locales
     ShopifyInput:
-      title: Shopify input
+      title: shopifyInput
       type: object
       additionalProperties: false
       description: >-
@@ -3924,22 +4027,26 @@ components:
         - metafields
         - market
     TaskInput:
+      title: taskInput
       description: Configuration of the task, depending on its type.
       oneOf:
         - $ref: '#/components/schemas/StreamingInput'
         - $ref: '#/components/schemas/DockerStreamsInput'
         - $ref: '#/components/schemas/ShopifyInput'
-    failureThreshold:
+    FailureThreshold:
+      title: failureThreshold
       type: integer
       minimum: 0
       maximum: 100
       description: >-
         Maximum accepted percentage of failures for a task run to finish
         successfully.
-    cursor:
+    Cursor:
+      title: cursor
       type: string
       description: Date and time when the last cursor was created, in RFC 3339 format.
     Notifications:
+      title: notifications
       type: object
       additionalProperties: false
       description: Notifications settings for a task.
@@ -3957,6 +4064,7 @@ components:
       required:
         - email
     Policies:
+      title: policies
       type: object
       additionalProperties: false
       description: Set of rules for a task.
@@ -3969,15 +4077,16 @@ components:
           minimum: 1
           maximum: 10
     Task:
+      title: task
       type: object
       additionalProperties: false
       properties:
         taskID:
-          $ref: '#/components/schemas/taskID'
+          $ref: '#/components/schemas/TaskID'
         sourceID:
-          $ref: '#/components/schemas/sourceID'
+          $ref: '#/components/schemas/SourceID'
         destinationID:
-          $ref: '#/components/schemas/destinationID'
+          $ref: '#/components/schemas/DestinationID'
         cron:
           $ref: '#/components/schemas/Cron'
         lastRun:
@@ -3985,7 +4094,7 @@ components:
         nextRun:
           $ref: '#/components/schemas/NextRun'
         owner:
-          $ref: '#/components/schemas/owner'
+          $ref: '#/components/schemas/Owner'
         input:
           $ref: '#/components/schemas/TaskInput'
         enabled:
@@ -3993,21 +4102,21 @@ components:
           default: true
           description: Whether the task is enabled.
         failureThreshold:
-          $ref: '#/components/schemas/failureThreshold'
+          $ref: '#/components/schemas/FailureThreshold'
         action:
           $ref: '#/components/schemas/ActionType'
         subscriptionAction:
           $ref: '#/components/schemas/ActionType'
         cursor:
-          $ref: '#/components/schemas/cursor'
+          $ref: '#/components/schemas/Cursor'
         notifications:
           $ref: '#/components/schemas/Notifications'
         policies:
           $ref: '#/components/schemas/Policies'
         createdAt:
-          $ref: '#/components/schemas/CreatedAt'
+          $ref: '#/components/schemas/Ingestion_CreatedAt'
         updatedAt:
-          $ref: '#/components/schemas/updatedAt'
+          $ref: '#/components/schemas/UpdatedAt'
       required:
         - taskID
         - sourceID
@@ -4016,14 +4125,15 @@ components:
         - createdAt
         - updatedAt
     TaskCreate:
+      title: taskCreate
       type: object
       additionalProperties: false
       description: API request body for creating a task.
       properties:
         sourceID:
-          $ref: '#/components/schemas/sourceID'
+          $ref: '#/components/schemas/SourceID'
         destinationID:
-          $ref: '#/components/schemas/destinationID'
+          $ref: '#/components/schemas/DestinationID'
         action:
           $ref: '#/components/schemas/ActionType'
         subscriptionAction:
@@ -4034,11 +4144,11 @@ components:
           type: boolean
           description: Whether the task is enabled.
         failureThreshold:
-          $ref: '#/components/schemas/failureThreshold'
+          $ref: '#/components/schemas/FailureThreshold'
         input:
           $ref: '#/components/schemas/TaskInput'
         cursor:
-          $ref: '#/components/schemas/cursor'
+          $ref: '#/components/schemas/Cursor'
         notifications:
           $ref: '#/components/schemas/Notifications'
         policies:
@@ -4048,34 +4158,37 @@ components:
         - destinationID
         - action
     TaskCreateResponse:
+      title: taskCreateResponse
       type: object
       additionalProperties: false
       description: API response for creating a task.
       properties:
         taskID:
-          $ref: '#/components/schemas/taskID'
+          $ref: '#/components/schemas/TaskID'
         createdAt:
-          $ref: '#/components/schemas/CreatedAt'
+          $ref: '#/components/schemas/Ingestion_CreatedAt'
       required:
         - taskID
         - createdAt
     TaskSearch:
+      title: taskSearch
       type: object
       additionalProperties: false
       properties:
         taskIDs:
           type: array
           items:
-            $ref: '#/components/schemas/taskID'
+            $ref: '#/components/schemas/TaskID'
       required:
         - taskIDs
     TaskReplace:
+      title: taskReplace
       type: object
       additionalProperties: false
       description: API request body for updating a task.
       properties:
         destinationID:
-          $ref: '#/components/schemas/destinationID'
+          $ref: '#/components/schemas/DestinationID'
         action:
           $ref: '#/components/schemas/ActionType'
         subscriptionAction:
@@ -4086,11 +4199,11 @@ components:
           type: boolean
           description: Whether the task is enabled.
         failureThreshold:
-          $ref: '#/components/schemas/failureThreshold'
+          $ref: '#/components/schemas/FailureThreshold'
         input:
           $ref: '#/components/schemas/TaskInput'
         cursor:
-          $ref: '#/components/schemas/cursor'
+          $ref: '#/components/schemas/Cursor'
         notifications:
           $ref: '#/components/schemas/Notifications'
         policies:
@@ -4099,24 +4212,26 @@ components:
         - destinationID
         - action
     TaskUpdateResponse:
+      title: taskUpdateResponse
       type: object
       description: API response for updating a task.
       additionalProperties: false
       properties:
         taskID:
-          $ref: '#/components/schemas/taskID'
+          $ref: '#/components/schemas/TaskID'
         updatedAt:
-          $ref: '#/components/schemas/updatedAt'
+          $ref: '#/components/schemas/UpdatedAt'
       required:
         - taskID
         - updatedAt
     TaskUpdate:
+      title: taskUpdate
       type: object
       additionalProperties: false
       description: API request body for partially updating a task.
       properties:
         destinationID:
-          $ref: '#/components/schemas/destinationID'
+          $ref: '#/components/schemas/DestinationID'
         cron:
           $ref: '#/components/schemas/Cron'
         input:
@@ -4127,12 +4242,13 @@ components:
         subscriptionAction:
           $ref: '#/components/schemas/ActionType'
         failureThreshold:
-          $ref: '#/components/schemas/failureThreshold'
+          $ref: '#/components/schemas/FailureThreshold'
         notifications:
           $ref: '#/components/schemas/Notifications'
         policies:
           $ref: '#/components/schemas/Policies'
     RunTaskPayload:
+      title: runTaskPayload
       type: object
       additionalProperties: false
       properties:
@@ -4141,6 +4257,7 @@ components:
           additionalProperties: true
           description: Additional information that will be passed to the created run.
     RunResponse:
+      title: runResponse
       type: object
       additionalProperties: false
       description: API response for running a task.
@@ -4148,16 +4265,18 @@ components:
         runID:
           $ref: '#/components/schemas/RunID'
         createdAt:
-          $ref: '#/components/schemas/CreatedAt'
+          $ref: '#/components/schemas/Ingestion_CreatedAt'
       required:
         - runID
         - createdAt
     OnDemandTriggerType:
+      title: onDemandTriggerType
       type: string
       description: Task is run manually, with the `/run` endpoint.
       enum:
         - onDemand
     OnDemandTrigger:
+      title: onDemandTrigger
       type: object
       additionalProperties: false
       description: Trigger information for manually-triggered tasks.
@@ -4169,11 +4288,13 @@ components:
       required:
         - type
     ScheduleTriggerType:
+      title: scheduleTriggerType
       type: string
       description: Task runs on a schedule.
       enum:
         - schedule
     ScheduleTrigger:
+      title: scheduleTrigger
       type: object
       additionalProperties: false
       description: Trigger information for scheduled tasks.
@@ -4191,11 +4312,13 @@ components:
         - cron
         - nextRun
     SubscriptionTriggerType:
+      title: subscriptionTriggerType
       type: string
       description: Task runs after receiving subscribed event.
       enum:
         - subscription
     SubscriptionTrigger:
+      title: subscriptionTrigger
       type: object
       additionalProperties: false
       description: Trigger input for subscription tasks.
@@ -4205,11 +4328,13 @@ components:
       required:
         - type
     StreamingTriggerType:
+      title: streamingTriggerType
       type: string
       description: Task runs continuously.
       enum:
         - streaming
     StreamingTrigger:
+      title: streamingTrigger
       type: object
       additionalProperties: false
       description: Trigger input for continuously running tasks.
@@ -4219,6 +4344,7 @@ components:
       required:
         - type
     Trigger:
+      title: trigger
       description: Trigger that runs the task.
       oneOf:
         - $ref: '#/components/schemas/OnDemandTrigger'
@@ -4226,6 +4352,7 @@ components:
         - $ref: '#/components/schemas/SubscriptionTrigger'
         - $ref: '#/components/schemas/StreamingTrigger'
     TaskV1:
+      title: taskV1
       type: object
       additionalProperties: false
       deprecated: true
@@ -4234,11 +4361,11 @@ components:
         suffix.
       properties:
         taskID:
-          $ref: '#/components/schemas/taskID'
+          $ref: '#/components/schemas/TaskID'
         sourceID:
-          $ref: '#/components/schemas/sourceID'
+          $ref: '#/components/schemas/SourceID'
         destinationID:
-          $ref: '#/components/schemas/destinationID'
+          $ref: '#/components/schemas/DestinationID'
         trigger:
           $ref: '#/components/schemas/Trigger'
         input:
@@ -4248,19 +4375,19 @@ components:
           default: true
           description: Whether the task is enabled.
         failureThreshold:
-          $ref: '#/components/schemas/failureThreshold'
+          $ref: '#/components/schemas/FailureThreshold'
         action:
           $ref: '#/components/schemas/ActionType'
         cursor:
-          $ref: '#/components/schemas/cursor'
+          $ref: '#/components/schemas/Cursor'
         notifications:
           $ref: '#/components/schemas/Notifications'
         policies:
           $ref: '#/components/schemas/Policies'
         createdAt:
-          $ref: '#/components/schemas/CreatedAt'
+          $ref: '#/components/schemas/Ingestion_CreatedAt'
         updatedAt:
-          $ref: '#/components/schemas/updatedAt'
+          $ref: '#/components/schemas/UpdatedAt'
       required:
         - taskID
         - sourceID
@@ -4270,6 +4397,7 @@ components:
         - createdAt
         - updatedAt
     OnDemandTriggerInput:
+      title: onDemandTriggerInput
       type: object
       additionalProperties: false
       description: Trigger information for manually-triggered tasks.
@@ -4279,6 +4407,7 @@ components:
       required:
         - type
     ScheduleTriggerInput:
+      title: scheduleTriggerInput
       type: object
       additionalProperties: false
       description: Trigger input for scheduled tasks.
@@ -4293,12 +4422,14 @@ components:
       x-discriminator-fields:
         - cron
     TaskCreateTrigger:
+      title: taskCreateTrigger
       oneOf:
         - $ref: '#/components/schemas/OnDemandTriggerInput'
         - $ref: '#/components/schemas/ScheduleTriggerInput'
         - $ref: '#/components/schemas/SubscriptionTrigger'
         - $ref: '#/components/schemas/StreamingTrigger'
     TaskCreateV1:
+      title: taskCreateV1
       type: object
       additionalProperties: false
       deprecated: true
@@ -4307,9 +4438,9 @@ components:
         types that don't contain the V1 suffix.
       properties:
         sourceID:
-          $ref: '#/components/schemas/sourceID'
+          $ref: '#/components/schemas/SourceID'
         destinationID:
-          $ref: '#/components/schemas/destinationID'
+          $ref: '#/components/schemas/DestinationID'
         trigger:
           $ref: '#/components/schemas/TaskCreateTrigger'
         action:
@@ -4318,17 +4449,18 @@ components:
           type: boolean
           description: Whether the task is enabled.
         failureThreshold:
-          $ref: '#/components/schemas/failureThreshold'
+          $ref: '#/components/schemas/FailureThreshold'
         input:
           $ref: '#/components/schemas/TaskInput'
         cursor:
-          $ref: '#/components/schemas/cursor'
+          $ref: '#/components/schemas/Cursor'
       required:
         - sourceID
         - destinationID
         - trigger
         - action
     TriggerUpdateInput:
+      title: triggerUpdateInput
       type: object
       additionalProperties: false
       description: Trigger for a task update.
@@ -4338,9 +4470,11 @@ components:
       required:
         - cron
     Enabled:
+      title: enabled
       type: boolean
       description: Whether the task is enabled.
     TaskUpdateV1:
+      title: taskUpdateV1
       type: object
       additionalProperties: false
       deprecated: true
@@ -4349,7 +4483,7 @@ components:
         types that don't contain the V1 suffix.
       properties:
         destinationID:
-          $ref: '#/components/schemas/destinationID'
+          $ref: '#/components/schemas/DestinationID'
         trigger:
           $ref: '#/components/schemas/TriggerUpdateInput'
         input:
@@ -4357,8 +4491,9 @@ components:
         enabled:
           $ref: '#/components/schemas/Enabled'
         failureThreshold:
-          $ref: '#/components/schemas/failureThreshold'
-    transformationSortKeys:
+          $ref: '#/components/schemas/FailureThreshold'
+    TransformationSortKeys:
+      title: transformationSortKeys
       type: string
       description: Property by which to sort the list of transformations.
       default: createdAt
@@ -4367,24 +4502,27 @@ components:
         - updatedAt
         - createdAt
     TransformationType:
+      title: transformationType
       type: string
       description: The type of transformation, which can be either 'code' or 'noCode'.
       enum:
         - code
         - noCode
     AuthenticationIDs:
+      title: authenticationIDs
       description: The authentications associated with the current transformation.
       type: array
       items:
-        $ref: '#/components/schemas/authenticationID'
+        $ref: '#/components/schemas/AuthenticationID'
     Code:
+      title: code
       type: string
       deprecated: true
       description: >-
         It is deprecated. Use the `input` field with proper `type` instead to
         specify the transformation code.
     TransformationCode:
-      title: Code
+      title: transformationCode
       type: object
       additionalProperties: false
       description: >-
@@ -4397,10 +4535,11 @@ components:
       required:
         - code
     TransformationNoCodeStep:
+      title: transformationNoCodeStep
       type: object
       description: A step in a no-code transformation.
     TransformationNoCode:
-      title: No-code
+      title: transformationNoCode
       type: object
       additionalProperties: false
       description: Input for a no-code transformation that contains a series of steps.
@@ -4412,24 +4551,28 @@ components:
       required:
         - steps
     TransformationInput:
+      title: transformationInput
       description: >-
         The input for the transformation, which can be either code or a no-code
         configuration.
       oneOf:
         - $ref: '#/components/schemas/TransformationCode'
         - $ref: '#/components/schemas/TransformationNoCode'
-    Name:
+    Transformation_Name:
+      title: transformation_Name
       type: string
       description: The uniquely identified name of your transformation.
     Description:
+      title: description
       type: string
       description: A descriptive name for your transformation of what it does.
     Transformation:
+      title: transformation
       type: object
       additionalProperties: false
       properties:
         transformationID:
-          $ref: '#/components/schemas/transformationID'
+          $ref: '#/components/schemas/TransformationID'
         authenticationIDs:
           $ref: '#/components/schemas/AuthenticationIDs'
         code:
@@ -4439,15 +4582,15 @@ components:
         input:
           $ref: '#/components/schemas/TransformationInput'
         name:
-          $ref: '#/components/schemas/Name'
+          $ref: '#/components/schemas/Transformation_Name'
         description:
           $ref: '#/components/schemas/Description'
         owner:
-          $ref: '#/components/schemas/owner'
+          $ref: '#/components/schemas/Owner'
         createdAt:
-          $ref: '#/components/schemas/CreatedAt'
+          $ref: '#/components/schemas/Ingestion_CreatedAt'
         updatedAt:
-          $ref: '#/components/schemas/updatedAt'
+          $ref: '#/components/schemas/UpdatedAt'
       required:
         - transformationID
         - code
@@ -4455,6 +4598,7 @@ components:
         - createdAt
         - updatedAt
     TransformationCreate:
+      title: transformationCreate
       type: object
       additionalProperties: false
       description: API request body for creating a transformation.
@@ -4462,7 +4606,7 @@ components:
         code:
           $ref: '#/components/schemas/Code'
         name:
-          $ref: '#/components/schemas/Name'
+          $ref: '#/components/schemas/Transformation_Name'
         type:
           $ref: '#/components/schemas/TransformationType'
         input:
@@ -4474,18 +4618,20 @@ components:
       required:
         - name
     TransformationCreateResponse:
+      title: transformationCreateResponse
       type: object
       additionalProperties: false
       description: API response for creating a transformation.
       properties:
         transformationID:
-          $ref: '#/components/schemas/transformationID'
+          $ref: '#/components/schemas/TransformationID'
         createdAt:
-          $ref: '#/components/schemas/CreatedAt'
+          $ref: '#/components/schemas/Ingestion_CreatedAt'
       required:
         - transformationID
         - createdAt
     TransformationTry:
+      title: transformationTry
       type: object
       additionalProperties: false
       properties:
@@ -4505,6 +4651,7 @@ components:
       required:
         - sampleRecord
     TransformationTryResponse:
+      title: transformationTryResponse
       type: object
       additionalProperties: false
       properties:
@@ -4529,28 +4676,31 @@ components:
       required:
         - payloads
     TransformationSearch:
+      title: transformationSearch
       type: object
       additionalProperties: false
       properties:
         transformationIDs:
           type: array
           items:
-            $ref: '#/components/schemas/transformationID'
+            $ref: '#/components/schemas/TransformationID'
       required:
         - transformationIDs
     TransformationUpdateResponse:
+      title: transformationUpdateResponse
       type: object
       description: API response for updating a transformation.
       additionalProperties: false
       properties:
         transformationID:
-          $ref: '#/components/schemas/transformationID'
+          $ref: '#/components/schemas/TransformationID'
         updatedAt:
-          $ref: '#/components/schemas/updatedAt'
+          $ref: '#/components/schemas/UpdatedAt'
       required:
         - transformationID
         - updatedAt
     RunStatus:
+      title: runStatus
       type: string
       description: Task run status.
       enum:
@@ -4559,6 +4709,7 @@ components:
         - finished
         - skipped
     RunType:
+      title: runType
       type: string
       description: Task run type.
       enum:
@@ -4567,7 +4718,8 @@ components:
         - discover
         - validate
         - push
-    runSortKeys:
+    RunSortKeys:
+      title: runSortKeys
       type: string
       description: Property by which to sort the list of task runs.
       default: createdAt
@@ -4576,12 +4728,14 @@ components:
         - updatedAt
         - createdAt
     RunOutcome:
+      title: runOutcome
       type: string
       description: Task run outcome.
       enum:
         - success
         - failure
     RunReasonCode:
+      title: runReasonCode
       type: string
       description: >-
         A code for the task run's outcome. A readable description of the code is
@@ -4596,13 +4750,16 @@ components:
         - ok
         - blocking
         - idle
-    startedAt:
+    StartedAt:
+      title: startedAt
       type: string
       description: Date and time when the task started, in RFC 3339 format.
-    finishedAt:
+    FinishedAt:
+      title: finishedAt
       type: string
       description: Date and time when the task finished, in RFC 3339 format.
     Run:
+      title: run
       type: object
       additionalProperties: false
       properties:
@@ -4611,7 +4768,7 @@ components:
         appID:
           type: string
         taskID:
-          $ref: '#/components/schemas/taskID'
+          $ref: '#/components/schemas/TaskID'
         status:
           $ref: '#/components/schemas/RunStatus'
         progress:
@@ -4629,7 +4786,7 @@ components:
         outcome:
           $ref: '#/components/schemas/RunOutcome'
         failureThreshold:
-          $ref: '#/components/schemas/failureThreshold'
+          $ref: '#/components/schemas/FailureThreshold'
         reason:
           type: string
           description: More information about the task run's outcome.
@@ -4638,11 +4795,11 @@ components:
         type:
           $ref: '#/components/schemas/RunType'
         createdAt:
-          $ref: '#/components/schemas/CreatedAt'
+          $ref: '#/components/schemas/Ingestion_CreatedAt'
         startedAt:
-          $ref: '#/components/schemas/startedAt'
+          $ref: '#/components/schemas/StartedAt'
         finishedAt:
-          $ref: '#/components/schemas/finishedAt'
+          $ref: '#/components/schemas/FinishedAt'
       required:
         - runID
         - appID
@@ -4651,6 +4808,7 @@ components:
         - type
         - createdAt
     Window:
+      title: window
       type: object
       additionalProperties: false
       description: Time window by which to filter the observability data.
@@ -4669,6 +4827,7 @@ components:
         - startDate
         - endDate
     RunListResponse:
+      title: runListResponse
       type: object
       additionalProperties: false
       properties:
@@ -4684,7 +4843,8 @@ components:
         - runs
         - pagination
         - window
-    eventSortKeys:
+    EventSortKeys:
+      title: eventSortKeys
       type: string
       description: Property by which to sort the list of task run events.
       enum:

@@ -1,5 +1,5 @@
 AlternativesAsExactUnion:
-  title: AlternativesAsExactUnion
+  title: alternativesAsExactUnion
   oneOf:
     - items:
         $ref: 'AlternativesAsExact.yml#/AlternativesAsExact'

@@ -11,4 +11,4 @@ PaginatedProviderAuthenticationsResponse:
   required:
     - data
     - pagination
-  title: paginatedProviders
+  title: paginatedProviderAuthenticationsResponse

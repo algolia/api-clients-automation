@@ -1,5 +1,5 @@
 lookingSimilarQuery:
-  title: lookingSimilarQuery title
+  title: lookingSimilarQuery
   allOf:
     - $ref: './RecommendationsRequest.yml#/baseRecommendRequest'
     - $ref: '#/lookingSimilar'

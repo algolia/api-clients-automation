@@ -43,7 +43,7 @@ multifeed:
       - articles-feed
 
 feedID:
-  title: feedID title
+  title: behaviour_feedID
   type: object
   oneOf:
     - $ref: '#/feedInjection' # New behaviour should also be updated here

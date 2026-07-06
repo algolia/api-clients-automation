@@ -1,5 +1,5 @@
 LocationItemUnion:
-  title: LocationItemUnion
+  title: locationItemUnion
   oneOf:
     - type: string
     - type: integer

@@ -89,7 +89,7 @@ fetchedIndex:
     - numberOfPendingTasks
 
 fetchedIndexAbTest:
-  title: abTest
+  title: fetchedIndexAbTest
   type: object
   description: A/B test metadata. Only present if the index is part of an active A/B test.
   properties:
@@ -117,7 +117,7 @@ fetchedIndexAbTest:
     - variants
 
 fetchedIndexAbTestTarget:
-  title: abTestTarget
+  title: fetchedIndexAbTestTarget
   type: object
   description: A/B test target criteria. Only present for v2 and later tests.
   properties:
@@ -129,7 +129,7 @@ fetchedIndexAbTestTarget:
     - indexName
 
 fetchedIndexAbTestVariant:
-  title: abTestVariant
+  title: fetchedIndexAbTestVariant
   type: object
   description: A/B test variant for an index.
   properties:

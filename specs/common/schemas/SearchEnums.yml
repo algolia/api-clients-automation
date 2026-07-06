@@ -14,7 +14,7 @@ alternativesAsExact:
 
 typoToleranceEnum:
   type: string
-  title: typo tolerance
+  title: typoToleranceEnum
   description: |
     - `min`. Return matches with the lowest number of typos.
       For example, if you have matches without typos, only include those.

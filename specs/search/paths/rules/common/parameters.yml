@@ -15,7 +15,7 @@ ObjectIDRule:
     $ref: '../../../../common/parameters.yml#/ruleID'
 
 query:
-  title: query title
+  title: parameters_query
   type: string
   description: Search query for rules.
   default: ''

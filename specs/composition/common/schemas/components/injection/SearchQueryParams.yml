@@ -1,5 +1,5 @@
 baseInjectionQueryParameters:
-  title: Composition common query parameters between main and injected items as object
+  title: baseInjectionQueryParameters
   type: object
   additionalProperties: false
   properties:
@@ -93,7 +93,7 @@ baseInjectionQueryParameters:
       $ref: '../../../params/Search.yml#/typoTolerance'
 
 mainInjectionQueryParameters:
-  title: Composition Main Injection Query parameters as object
+  title: mainInjectionQueryParameters
   type: object
   additionalProperties: false
   allOf:
@@ -117,5 +117,5 @@ mainInjectionQueryParameters:
           $ref: '../../../params/Search.yml#/sumOrFiltersScores'
 
 injectedItemsQueryParameters:
-  title: Composition injectedItems Query parameters as object
+  title: injectedItemsQueryParameters
   $ref: '#/baseInjectionQueryParameters'

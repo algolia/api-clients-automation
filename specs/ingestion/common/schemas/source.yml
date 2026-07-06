@@ -1,5 +1,5 @@
 Source:
-  title: Source
+  title: source
   type: object
   additionalProperties: false
   properties:
@@ -27,7 +27,7 @@ Source:
     - updatedAt
 
 SourceCreate:
-  title: SourceCreate
+  title: sourceCreate
   type: object
   additionalProperties: false
   properties:
@@ -45,7 +45,7 @@ SourceCreate:
     - name
 
 SourceCreateResponse:
-  title: SourceCreateResponse
+  title: sourceCreateResponse
   type: object
   additionalProperties: false
   properties:
@@ -62,7 +62,7 @@ SourceCreateResponse:
     - createdAt
 
 SourceUpdate:
-  title: SourceUpdate
+  title: sourceUpdate
   type: object
   additionalProperties: false
   properties:
@@ -75,7 +75,7 @@ SourceUpdate:
       $ref: './common.yml#/authenticationID'
 
 SourceUpdateResponse:
-  title: SourceUpdateResponse
+  title: sourceUpdateResponse
   type: object
   additionalProperties: false
   properties:
@@ -92,7 +92,7 @@ SourceUpdateResponse:
     - updatedAt
 
 SourceSearch:
-  title: SourceSearch
+  title: sourceSearch
   type: object
   additionalProperties: false
   properties:
@@ -104,7 +104,7 @@ SourceSearch:
     - sourceIDs
 
 SourceType:
-  title: SourceType
+  title: sourceType
   type: string
   enum:
     - algoliaIndex
@@ -119,7 +119,7 @@ SourceType:
     - push
 
 SourceCommercetools:
-  title: SourceCommercetools
+  title: sourceCommercetools
   type: object
   description: Specific configuration attributes of a `commercetools` source.
   additionalProperties: false
@@ -163,7 +163,7 @@ SourceCommercetools:
     - projectKey
 
 CommercetoolsCustomFields:
-  title: CommercetoolsCustomFields
+  title: commercetoolsCustomFields
   type: object
   additionalProperties: false
   description: |
@@ -194,7 +194,7 @@ CommercetoolsCustomFields:
         - type: 'null'
 
 SourceBigCommerce:
-  title: SourceBigCommerce
+  title: sourceBigCommerce
   type: object
   description: Specific configuration attributes of a `bigcommerce` source.
   additionalProperties: false
@@ -222,7 +222,7 @@ SourceBigCommerce:
     - storeHash
 
 BigCommerceMetafield:
-  title: BigCommerceMetafield
+  title: bigCommerceMetafield
   type: object
   additionalProperties: false
   properties:
@@ -237,7 +237,7 @@ BigCommerceMetafield:
     - key
 
 BigCommerceChannel:
-  title: BigCommerceChannel
+  title: bigCommerceChannel
   type: object
   additionalProperties: false
   properties:
@@ -256,18 +256,18 @@ BigCommerceChannel:
     - id
 
 MethodType:
-  title: MethodType
+  title: methodType
   type: string
   description: HTTP method to be used for retrieving your data.
   enum: [GET, POST]
 
 UniqueIDColumn:
-  title: UniqueIDColumn
+  title: uniqueIDColumn
   type: string
   description: Name of a column that contains a unique ID which will be used as `objectID` in Algolia.
 
 SourceJSON:
-  title: SourceJSON
+  title: sourceJSON
   type: object
   description: Specific configuration attributes of a `json` source.
   additionalProperties: false
@@ -283,12 +283,12 @@ SourceJSON:
     - url
 
 MappingTypeCSV:
-  title: MappingTypeCSV
+  title: mappingTypeCSV
   type: string
   enum: [string, integer, float, boolean, json]
 
 SourceCSV:
-  title: SourceCSV
+  title: sourceCSV
   type: object
   description: Specific configuration attributes of a `csv` source.
   additionalProperties: false
@@ -317,7 +317,7 @@ SourceCSV:
     - url
 
 SourceGA4BigQueryExport:
-  title: SourceGA4BigQueryExport
+  title: sourceGA4BigQueryExport
   type: object
   description: Specific configuration attributes of a `ga4BigqueryExport` source.
   additionalProperties: false
@@ -342,7 +342,7 @@ SourceGA4BigQueryExport:
     - tablePrefix
 
 SourceBigQuery:
-  title: SourceBigQuery
+  title: sourceBigQuery
   type: object
   description: Specific configuration attributes of a `bigquery` source.
   additionalProperties: false
@@ -373,12 +373,12 @@ SourceBigQuery:
     - projectID
 
 BigQueryDataType:
-  title: BigQueryDataType
+  title: bigQueryDataType
   type: string
   enum: [ga4, ga360]
 
 SourceDocker:
-  title: SourceDocker
+  title: sourceDocker
   type: object
   description: Specific configuration attributes of a `docker` source.
   additionalProperties: false
@@ -398,7 +398,7 @@ SourceDocker:
     - configuration
 
 SourceUpdateDocker:
-  title: SourceUpdateDocker
+  title: sourceUpdateDocker
   type: object
   description: Specific configuration attributes of a `docker` source.
   additionalProperties: false
@@ -412,7 +412,7 @@ SourceUpdateDocker:
     - configuration
 
 SourceAlgoliaIndex:
-  title: SourceAlgoliaIndex
+  title: sourceAlgoliaIndex
   type: object
   description: Specific configuration attributes of an `algoliaIndex` source.
   additionalProperties: false
@@ -431,7 +431,7 @@ SourceAlgoliaIndex:
     - indexName
 
 SourceUpdateAlgoliaIndex:
-  title: SourceUpdateAlgoliaIndex
+  title: sourceUpdateAlgoliaIndex
   type: object
   description: Specific configuration attributes of an `algoliaIndex` source.
   additionalProperties: false
@@ -446,7 +446,7 @@ SourceUpdateAlgoliaIndex:
         See [filters](https://www.algolia.com/doc/api-reference/api-parameters/filters/).
 
 SourceInput:
-  title: SourceInput
+  title: sourceInput
   oneOf:
     - $ref: '#/SourceCommercetools'
     - $ref: '#/SourceBigCommerce'
@@ -459,7 +459,7 @@ SourceInput:
     - $ref: '#/SourceAlgoliaIndex'
 
 SourceUpdateCommercetools:
-  title: SourceUpdateCommercetools
+  title: sourceUpdateCommercetools
   type: object
   description: Specific configuration attributes of a `commercetools` source.
   additionalProperties: false
@@ -495,7 +495,7 @@ SourceUpdateCommercetools:
       $ref: '#/CommercetoolsCustomFields'
 
 SourceUpdateInput:
-  title: SourceUpdateInput
+  title: sourceUpdateInput
   oneOf:
     - $ref: '#/SourceUpdateCommercetools'
     - $ref: '#/SourceJSON'
@@ -507,7 +507,7 @@ SourceUpdateInput:
     - $ref: '#/SourceUpdateAlgoliaIndex'
 
 SourceUpdateShopify:
-  title: SourceUpdateShopify
+  title: sourceUpdateShopify
   type: object
   description: Specific configuration attributes of a `shopify` source.
   additionalProperties: false
@@ -518,7 +518,7 @@ SourceUpdateShopify:
       additionalProperties: true
 
 SourceShopify:
-  title: SourceShopify
+  title: sourceShopify
   allOf:
     - $ref: '#/SourceUpdateShopify'
     - $ref: '#/sourceShopifyBase'
@@ -537,7 +537,7 @@ sourceShopifyBase:
     - shopURL
 
 RunSourcePayload:
-  title: RunSourcePayload
+  title: runSourcePayload
   type: object
   additionalProperties: false
   properties:
@@ -564,7 +564,7 @@ RunSourcePayload:
       description: Additional information that will be passed to the created runs.
 
 EntityType:
-  title: EntityType
+  title: entityType
   type: string
   description: Type of entity to update.
   enum:

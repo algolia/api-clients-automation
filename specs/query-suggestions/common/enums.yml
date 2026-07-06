@@ -1,5 +1,5 @@
 LogLevel:
-  title: level
+  title: logLevel
   type: string
   description: |
     Type of log entry.

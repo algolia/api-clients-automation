@@ -71,7 +71,7 @@ subtype:
   enum: [addToCart, purchase]
 
 status:
-  title: status title
+  title: configuration_status
   type: object
   properties:
     type:

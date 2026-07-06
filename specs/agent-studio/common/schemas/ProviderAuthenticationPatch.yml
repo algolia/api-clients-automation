@@ -11,4 +11,4 @@ ProviderAuthenticationPatch:
       $ref: 'ProviderInputNullable.yml#/ProviderInputNullable'
   additionalProperties: false
   type: object
-  title: providerPatch
+  title: providerAuthenticationPatch

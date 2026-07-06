@@ -1,5 +1,5 @@
 MessageV4:
-  title: MessageV4
+  title: messageV4
   oneOf:
     - $ref: 'UserMessageV4.yml#/UserMessageV4'
     - $ref: 'AssistantMessageV4.yml#/AssistantMessageV4'

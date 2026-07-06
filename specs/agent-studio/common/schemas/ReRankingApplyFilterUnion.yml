@@ -1,5 +1,5 @@
 ReRankingApplyFilterUnion:
-  title: ReRankingApplyFilterUnion
+  title: reRankingApplyFilterUnion
   oneOf:
     - type: string
     - items:

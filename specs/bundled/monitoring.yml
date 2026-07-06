@@ -457,6 +457,7 @@ components:
         $ref: '#/components/schemas/Period'
   schemas:
     ErrorBase:
+      title: errorBase
       description: Error.
       type: object
       x-keep-model: true
@@ -475,6 +476,7 @@ components:
         - partial_outage
         - major_outage
     Timestamp:
+      title: timestamp
       type: integer
       format: int64
       description: Timestamp, measured in milliseconds since the Unix epoch.
@@ -495,7 +497,7 @@ components:
         reported for this cluster as values.
       type: array
       items:
-        title: incidentEntry
+        title: items
         type: object
         properties:
           t:
@@ -524,7 +526,7 @@ components:
         - za
       example: de
     ServerStatus:
-      title: status
+      title: serverStatus
       type: string
       enum:
         - PRODUCTION
@@ -565,12 +567,12 @@ components:
           $ref: '#/components/schemas/ServerStatus'
         type:
           $ref: '#/components/schemas/Type'
-    Time:
+    Times:
       title: times
       description: Time measured by a probe.
       type: array
       items:
-        title: timeEntry
+        title: items
         type: object
         additionalProperties: false
         properties:
@@ -590,6 +592,7 @@ components:
           Key-value pair with the probe name as the key and the reachability
           status as the value.
     Metric:
+      title: metric
       type: string
       enum:
         - avg_build_time
@@ -600,6 +603,7 @@ components:
         - '*'
       example: '*'
     Period:
+      title: period
       type: string
       enum:
         - minute
@@ -608,8 +612,8 @@ components:
         - week
         - month
       example: week
-    ProbesMetric:
-      title: metric
+    ProbesMetric_ProbesMetric:
+      title: probesMetric_ProbesMetric
       type: object
       additionalProperties: false
       properties:
@@ -618,11 +622,11 @@ components:
         v:
           type: integer
           description: Value of the metric.
-    InfraProbes:
-      title: probes
+    InfraProbes_InfraProbes:
+      title: infraProbes_InfraProbes
       type: array
       items:
-        $ref: '#/components/schemas/ProbesMetric'
+        $ref: '#/components/schemas/ProbesMetric_ProbesMetric'
   responses:
     BadRequest:
       description: Bad request or request arguments.
@@ -786,7 +790,7 @@ components:
                   latency:
                     additionalProperties:
                       x-additionalPropertiesName: latencies
-                      $ref: '#/components/schemas/Time'
+                      $ref: '#/components/schemas/Times'
           examples:
             Success:
               value:
@@ -830,7 +834,7 @@ components:
                   indexing:
                     additionalProperties:
                       x-additionalPropertiesName: cluster
-                      $ref: '#/components/schemas/Time'
+                      $ref: '#/components/schemas/Times'
           examples:
             Success:
               value:
@@ -879,19 +883,19 @@ components:
                     description: CPU idleness in %.
                     additionalProperties:
                       x-additionalPropertiesName: probes
-                      $ref: '#/components/schemas/InfraProbes'
+                      $ref: '#/components/schemas/InfraProbes_InfraProbes'
                   ram_indexing_usage:
                     type: object
                     description: RAM used for indexing in MB.
                     additionalProperties:
                       x-additionalPropertiesName: probes
-                      $ref: '#/components/schemas/InfraProbes'
+                      $ref: '#/components/schemas/InfraProbes_InfraProbes'
                   ram_search_usage:
                     type: object
                     description: RAM used for search in MB.
                     additionalProperties:
                       x-additionalPropertiesName: probes
-                      $ref: '#/components/schemas/InfraProbes'
+                      $ref: '#/components/schemas/InfraProbes_InfraProbes'
                   ssd_usage:
                     type: object
                     description: >
@@ -901,13 +905,13 @@ components:
                       SSD usage for a machine with 64&nbsp;RAM.
                     additionalProperties:
                       x-additionalPropertiesName: probes
-                      $ref: '#/components/schemas/InfraProbes'
+                      $ref: '#/components/schemas/InfraProbes_InfraProbes'
                   avg_build_time:
                     type: object
                     description: Average build time of the indices in seconds.
                     additionalProperties:
                       x-additionalPropertiesName: probes
-                      $ref: '#/components/schemas/InfraProbes'
+                      $ref: '#/components/schemas/InfraProbes_InfraProbes'
           examples:
             success:
               value:

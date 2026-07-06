@@ -1,5 +1,5 @@
 AgentIdUnion:
-  title: AgentIdUnion
+  title: agentIdUnion
   oneOf:
     - type: string
     - const: test

@@ -1,5 +1,5 @@
 recommendSearchParams:
-  title: Search parameters as object
+  title: recommendSearchParams
   description: Search parameters for filtering the recommendations.
   allOf:
     - $ref: '#/baseRecommendSearchParams'
@@ -11,7 +11,7 @@ recommendSearchParams:
           $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/enableRules'
 
 fallbackParams:
-  title: fallbackParameters
+  title: fallbackParams
   description: Search parameters to use for a fallback request if there aren't enough recommendations.
   allOf:
     - $ref: '#/baseRecommendSearchParams'

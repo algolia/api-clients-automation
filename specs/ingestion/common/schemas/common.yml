@@ -19,7 +19,7 @@ cursor:
   description: Date and time when the last cursor was created, in RFC 3339 format.
 
 DeleteResponse:
-  title: DeleteResponse
+  title: deleteResponse
   type: object
   properties:
     deletedAt:
@@ -82,7 +82,7 @@ owner:
     - type: 'null'
 
 Window:
-  title: Window
+  title: window
   type: object
   additionalProperties: false
   description: Time window by which to filter the observability data.

@@ -1,5 +1,5 @@
 trendingItemsQuery:
-  title: trendingItemsQuery title
+  title: trendingItemsQuery
   allOf:
     - $ref: './RecommendationsRequest.yml#/baseRecommendRequest'
     - $ref: '#/trendingItems'

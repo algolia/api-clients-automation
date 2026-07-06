@@ -1,5 +1,5 @@
 NumericFiltersUnion:
-  title: NumericFiltersUnion
+  title: numericFiltersUnion
   oneOf:
     - type: string
     - type: array

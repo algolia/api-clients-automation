@@ -1,5 +1,5 @@
 Metric:
-  title: Metric
+  title: metric
   type: string
   enum:
     - avg_build_time
@@ -11,7 +11,7 @@ Metric:
   example: '*'
 
 Period:
-  title: Period
+  title: period
   type: string
   enum:
     - minute
@@ -54,7 +54,7 @@ Status:
     - major_outage
 
 ServerStatus:
-  title: ServerStatus title
+  title: serverStatus
   type: string
   enum:
     - PRODUCTION

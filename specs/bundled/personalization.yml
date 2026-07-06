@@ -261,7 +261,7 @@ paths:
                   - lastEventAt
                 properties:
                   userToken:
-                    $ref: '#/components/schemas/userToken'
+                    $ref: '#/components/schemas/UserToken'
                   lastEventAt:
                     type: string
                     description: >-
@@ -322,7 +322,7 @@ paths:
                   - deletedUntil
                 properties:
                   userToken:
-                    $ref: '#/components/schemas/userToken'
+                    $ref: '#/components/schemas/UserToken'
                   deletedUntil:
                     type: string
                     description: >
@@ -361,7 +361,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/personalizationStrategyParams'
+                $ref: '#/components/schemas/PersonalizationStrategyParams'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -383,7 +383,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/personalizationStrategyParams'
+              $ref: '#/components/schemas/PersonalizationStrategyParams'
       responses:
         '200':
           description: OK
@@ -472,9 +472,10 @@ components:
         Unique identifier representing a user for which to fetch the
         personalization profile.
       schema:
-        $ref: '#/components/schemas/userToken'
+        $ref: '#/components/schemas/UserToken'
   schemas:
     ErrorBase:
+      title: errorBase
       description: Error.
       type: object
       x-keep-model: true
@@ -483,7 +484,8 @@ components:
         message:
           type: string
           example: Invalid Application-Id or API-Key
-    userToken:
+    UserToken:
+      title: userToken
       type: string
       description: >
         Unique pseudonymous or anonymous user identifier.
@@ -496,7 +498,8 @@ components:
       example: test-user-123
       x-categories:
         - Personalization
-    score:
+    Score:
+      title: score
       type: integer
       description: Event score.
     EventType:
@@ -507,7 +510,8 @@ components:
         - click
         - conversion
         - view
-    eventsScoring:
+    EventsScoring:
+      title: eventsScoring
       type: object
       additionalProperties: false
       required:
@@ -516,13 +520,14 @@ components:
         - eventType
       properties:
         score:
-          $ref: '#/components/schemas/score'
+          $ref: '#/components/schemas/Score'
         eventName:
           type: string
           description: Event name.
         eventType:
           $ref: '#/components/schemas/EventType'
-    facetsScoring:
+    FacetsScoring:
+      title: facetsScoring
       type: object
       additionalProperties: false
       required:
@@ -530,11 +535,12 @@ components:
         - facetName
       properties:
         score:
-          $ref: '#/components/schemas/score'
+          $ref: '#/components/schemas/Score'
         facetName:
           type: string
           description: Facet attribute name.
-    personalizationStrategyParams:
+    PersonalizationStrategyParams:
+      title: personalizationStrategyParams
       type: object
       additionalProperties: false
       required:
@@ -551,7 +557,7 @@ components:
             The higher the scores, the higher the impact of those events on the
             personalization of search results.
           items:
-            $ref: '#/components/schemas/eventsScoring'
+            $ref: '#/components/schemas/EventsScoring'
         facetsScoring:
           type: array
           description: >
@@ -561,7 +567,7 @@ components:
             The higher the scores, the higher the impact of those events on the
             personalization of search results.
           items:
-            $ref: '#/components/schemas/facetsScoring'
+            $ref: '#/components/schemas/FacetsScoring'
         personalizationImpact:
           type: integer
           minimum: 0

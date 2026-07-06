@@ -1,5 +1,5 @@
 ConfigurationWithIndex:
-  title: ConfigurationWithIndex
+  title: configurationWithIndex
   type: object
   description: Query Suggestions configuration.
   required:
@@ -14,7 +14,7 @@ ConfigurationWithIndex:
     - $ref: '#/Configuration'
 
 Configuration:
-  title: Configuration
+  title: configuration
   type: object
   description: Query Suggestions configuration.
   required:
@@ -65,7 +65,7 @@ Languages:
       description: If true, deduplication is enabled for all languages.
 
 SourceIndex:
-  title: SourceIndex
+  title: sourceIndex
   type: object
   description: Configuration of an Algolia index for Query Suggestions.
   required:
@@ -138,7 +138,7 @@ Facets:
       amount: 2
 
 Facet:
-  title: Facet
+  title: facet
   type: object
   description: Facet to use as category.
   properties:
@@ -170,7 +170,7 @@ Generate:
     - [color, brand]
 
 External:
-  title: External
+  title: external
   description: |
     Algolia indices with popular searches to use as query suggestions.
 

@@ -107,32 +107,32 @@ applicationID:
     Algolia application ID where the crawler creates and updates indices.
 
 CrawlerID:
-  title: CrawlerID
+  title: crawlerID
   type: string
   description: Universally unique identifier (UUID) of the crawler.
   example: e0f6db8a-24f5-4092-83a4-1b2c6cb6d809
 
 CrawlerLogID:
-  title: CrawlerLogID
+  title: crawlerLogID
   type: string
   description: Universally unique identifier (UUID) of the crawler log.
   example: a2ebb507-ef64-4b6b-9d84-ef66baaa7a80
 
 TaskID:
-  title: TaskID
+  title: taskID
   type: string
   description: Universally unique identifier (UUID) of the task.
   example: 98458796-b7bb-4703-8b1b-785c1080b110
 
 CrawlerName:
-  title: CrawlerName
+  title: crawlerName
   type: string
   maxLength: 64
   description: Name of the crawler.
   example: test-crawler
 
 UrlsCrawledGroup:
-  title: UrlsCrawledGroup
+  title: urlsCrawledGroup
   type: object
   description: Processed URLs and their status.
   properties:
@@ -231,7 +231,7 @@ offset:
   example: 11
 
 order:
-  title: order title
+  title: parameters_order
   type: string
   description: |
     Order of the query.
@@ -240,7 +240,7 @@ order:
     - DESC
 
 Pagination:
-  title: Pagination
+  title: pagination
   type: object
   description: Pagination information.
   properties:

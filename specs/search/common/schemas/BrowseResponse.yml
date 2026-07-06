@@ -7,7 +7,7 @@ browseResponse:
     - $ref: './BrowseParams.yml#/cursor'
 
 BrowsePagination:
-  title: BrowsePagination
+  title: browsePagination
   type: object
   additionalProperties: false
   properties:

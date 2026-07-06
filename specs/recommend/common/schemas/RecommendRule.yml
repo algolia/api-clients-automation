@@ -1,5 +1,5 @@
 RecommendRule:
-  title: RecommendRule
+  title: recommendRule
   type: object
   description: Recommend rule.
   additionalProperties: false
@@ -32,7 +32,7 @@ RecommendRule:
         $ref: '../../../common/schemas/Rule.yml#/timeRange'
 
 Condition:
-  title: Condition
+  title: condition
   type: object
   description: |
     Condition that triggers the rule.
@@ -44,7 +44,7 @@ Condition:
       $ref: '../../../common/schemas/Rule.yml#/context'
 
 Consequence:
-  title: Consequence
+  title: consequence
   type: object
   description: Effect of the rule.
   properties:
@@ -56,7 +56,7 @@ Consequence:
       $ref: '#/ParamsConsequence'
 
 HideConsequence:
-  title: HideConsequence
+  title: hideConsequence
   type: array
   description: Exclude items from recommendations.
   minItems: 1
@@ -64,7 +64,7 @@ HideConsequence:
     $ref: '#/HideConsequenceObject'
 
 HideConsequenceObject:
-  title: HideConsequenceObject
+  title: hideConsequenceObject
   type: object
   description: Object ID of the recommendation you want to exclude.
   properties:
@@ -72,7 +72,7 @@ HideConsequenceObject:
       $ref: '../../../common/parameters.yml#/objectID'
 
 PromoteConsequence:
-  title: PromoteConsequence
+  title: promoteConsequence
   type: array
   description: Place items at specific positions in the list of recommendations.
   minItems: 1
@@ -80,7 +80,7 @@ PromoteConsequence:
     $ref: '#/PromoteConsequenceObject'
 
 PromoteConsequenceObject:
-  title: PromoteConsequenceObject
+  title: promoteConsequenceObject
   type: object
   description: Object ID and position of the recommendation you want to pin.
   properties:
@@ -92,7 +92,7 @@ PromoteConsequenceObject:
       minimum: 0
 
 ParamsConsequence:
-  title: ParamsConsequence
+  title: paramsConsequence
   type: object
   description: Filter or boost recommendations matching a facet filter.
   properties:
@@ -119,7 +119,7 @@ ParamsConsequence:
         - 'category:-movies<score=1>'
 
 AutoFacetFilter:
-  title: AutoFacetFilter
+  title: autoFacetFilter
   type: object
   description: Facet attribute. Only recommendations with the same value (or only recommendations with a different value) as the original viewed item are included.
   properties:

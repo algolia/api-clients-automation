@@ -334,7 +334,7 @@ paths:
                   items:
                     $ref: '#/components/schemas/SearchQuery'
                 strategy:
-                  $ref: '#/components/schemas/searchStrategy'
+                  $ref: '#/components/schemas/SearchStrategy'
               required:
                 - requests
       responses:
@@ -350,7 +350,7 @@ paths:
                   results:
                     type: array
                     items:
-                      $ref: '#/components/schemas/searchResult'
+                      $ref: '#/components/schemas/SearchResult'
                 required:
                   - results
         '400':
@@ -390,7 +390,7 @@ paths:
                     Recommendation request with parameters depending on the
                     requested model.
                   items:
-                    $ref: '#/components/schemas/recommendationsRequest'
+                    $ref: '#/components/schemas/RecommendationsRequest'
               required:
                 - requests
       responses:
@@ -406,7 +406,7 @@ paths:
                   results:
                     type: array
                     items:
-                      $ref: '#/components/schemas/recommendationsResults'
+                      $ref: '#/components/schemas/RecommendationsResults'
                 required:
                   - results
         '400':
@@ -438,6 +438,7 @@ components:
         reference.
   schemas:
     ErrorBase:
+      title: errorBase
       description: Error.
       type: object
       x-keep-model: true
@@ -446,34 +447,38 @@ components:
         message:
           type: string
           example: Invalid Application-Id or API-Key
-    paramsAsString:
+    ParamsAsString:
+      title: paramsAsString
       description: Search parameters as a URL-encoded query string.
       example: hitsPerPage=2&getRankingInfo=1
       type: string
       default: ''
-    searchParamsString:
+    SearchParamsString:
       type: object
-      title: Search parameters as query string
+      title: searchParamsString
       description: Search parameters as query string.
       additionalProperties: false
       x-discriminator-fields:
         - params
       properties:
         params:
-          $ref: '#/components/schemas/paramsAsString'
-    query:
+          $ref: '#/components/schemas/ParamsAsString'
+    Query:
+      title: query
       type: string
       description: Search query.
       default: ''
       x-categories:
         - Search
-    searchParamsQuery:
+    SearchParamsQuery:
+      title: searchParamsQuery
       type: object
       additionalProperties: false
       properties:
         query:
-          $ref: '#/components/schemas/query'
-    similarQuery:
+          $ref: '#/components/schemas/Query'
+    SimilarQuery:
+      title: similarQuery
       type: string
       description: >
         Keywords to be used instead of the search query to conduct a more
@@ -497,7 +502,8 @@ components:
       example: comedy drama crime Macy Buscemi
       x-categories:
         - Search
-    filters:
+    Filters:
+      title: filters
       type: string
       description: >
         Filter expression to only include items that match the filter criteria
@@ -544,7 +550,8 @@ components:
       example: (category:Book OR category:Ebook) AND _tags:published
       x-categories:
         - Filtering
-    facetFilters:
+    FacetFilters:
+      title: facetFilters
       description: >
         Filter the search by facet values, so that only records with the same
         facet values are retrieved.
@@ -574,11 +581,12 @@ components:
       oneOf:
         - type: array
           items:
-            $ref: '#/components/schemas/facetFilters'
+            $ref: '#/components/schemas/FacetFilters'
         - type: string
       x-categories:
         - Filtering
-    optionalFilters:
+    OptionalFilters:
+      title: optionalFilters
       description: >
         Filters to promote or demote records in the search results.
 
@@ -610,11 +618,12 @@ components:
       oneOf:
         - type: array
           items:
-            $ref: '#/components/schemas/optionalFilters'
+            $ref: '#/components/schemas/OptionalFilters'
         - type: string
       x-categories:
         - Filtering
-    numericFilters:
+    NumericFilters:
+      title: numericFilters
       description: >
         Filter by numeric facets.
 
@@ -640,11 +649,12 @@ components:
       oneOf:
         - type: array
           items:
-            $ref: '#/components/schemas/numericFilters'
+            $ref: '#/components/schemas/NumericFilters'
         - type: string
       x-categories:
         - Filtering
-    tagFilters:
+    TagFilters:
+      title: tagFilters
       description: >
         Filter the search by values of the special `_tags` attribute.
 
@@ -667,11 +677,12 @@ components:
       oneOf:
         - type: array
           items:
-            $ref: '#/components/schemas/tagFilters'
+            $ref: '#/components/schemas/TagFilters'
         - type: string
       x-categories:
         - Filtering
-    sumOrFiltersScores:
+    SumOrFiltersScores:
+      title: sumOrFiltersScores
       type: boolean
       description: >
         Whether to sum all filter scores
@@ -685,7 +696,8 @@ components:
       default: false
       x-categories:
         - Filtering
-    restrictSearchableAttributes:
+    RestrictSearchableAttributes:
+      title: restrictSearchableAttributes
       type: array
       items:
         type: string
@@ -698,7 +710,8 @@ components:
       default: []
       x-categories:
         - Filtering
-    facetingAfterDistinct:
+    FacetingAfterDistinct:
+      title: facetingAfterDistinct
       type: boolean
       description: >
         Whether faceting should be applied after deduplication with `distinct`
@@ -714,21 +727,24 @@ components:
       default: false
       x-categories:
         - Faceting
-    page:
+    Page:
+      title: page
       type: integer
       description: Page of search results to retrieve.
       default: 0
       minimum: 0
       x-categories:
         - Pagination
-    length:
+    Length:
+      title: length
       type: integer
       description: Number of hits to retrieve (used in combination with `offset`).
       minimum: 0
       maximum: 1000
       x-categories:
         - Pagination
-    aroundLatLng:
+    AroundLatLng:
+      title: aroundLatLng
       type: string
       description: >
         Coordinates for the center of a circle, expressed as a comma-separated
@@ -747,21 +763,23 @@ components:
       default: ''
       x-categories:
         - Geo-Search
-    aroundLatLngViaIP:
+    AroundLatLngViaIP:
+      title: aroundLatLngViaIP
       type: boolean
       description: Whether to obtain the coordinates from the request's IP address.
       default: false
       x-categories:
         - Geo-Search
-    aroundRadiusAll:
-      title: all
+    AroundRadiusAll:
+      title: aroundRadiusAll
       type: string
       description: >-
         Return all records with a valid `_geoloc` attribute. Don't filter by
         distance.
       enum:
         - all
-    aroundRadius:
+    AroundRadius:
+      title: aroundRadius
       description: >
         Maximum radius for a search around a central location.
 
@@ -778,11 +796,11 @@ components:
         - type: integer
           minimum: 1
           description: Maximum search radius around a central location in meters.
-        - $ref: '#/components/schemas/aroundRadiusAll'
+        - $ref: '#/components/schemas/AroundRadiusAll'
       x-categories:
         - Geo-Search
-    aroundPrecisionFromValue:
-      title: range objects
+    AroundPrecisionFromValue:
+      title: aroundPrecisionFromValue
       type: array
       items:
         title: range
@@ -802,7 +820,8 @@ components:
             description: >-
               Upper boundary of a range in meters. The Geo ranking criterion
               considers all records within the range to be equal.
-    aroundPrecision:
+    AroundPrecision:
+      title: aroundPrecision
       description: >
         Precision of a coordinate-based search in meters to group results with
         similar distances.
@@ -822,10 +841,11 @@ components:
             distance,
 
             as are records between 100 and 199 meters.
-        - $ref: '#/components/schemas/aroundPrecisionFromValue'
+        - $ref: '#/components/schemas/AroundPrecisionFromValue'
       x-categories:
         - Geo-Search
-    minimumAroundRadius:
+    MinimumAroundRadius:
+      title: minimumAroundRadius
       type: integer
       description: >-
         Minimum radius (in meters) for a search around a location when
@@ -833,7 +853,8 @@ components:
       minimum: 1
       x-categories:
         - Geo-Search
-    insideBoundingBoxArray:
+    InsideBoundingBoxArray:
+      title: insideBoundingBoxArray
       type: array
       items:
         type: array
@@ -868,12 +889,14 @@ components:
           - 1.9916
       x-categories:
         - Geo-Search
-    insideBoundingBox:
+    InsideBoundingBox:
+      title: insideBoundingBox
       oneOf:
         - type: string
         - type: 'null'
-        - $ref: '#/components/schemas/insideBoundingBoxArray'
-    insidePolygon:
+        - $ref: '#/components/schemas/InsideBoundingBoxArray'
+    InsidePolygon:
+      title: insidePolygon
       type: array
       items:
         type: array
@@ -912,7 +935,8 @@ components:
           - 2.0104
       x-categories:
         - Geo-Search
-    supportedLanguage:
+    SupportedLanguage:
+      title: supportedLanguage
       type: string
       description: ISO code for a supported language.
       enum:
@@ -984,10 +1008,11 @@ components:
         - ur
         - uz
         - zh
-    naturalLanguages:
+    NaturalLanguages:
+      title: naturalLanguages
       type: array
       items:
-        $ref: '#/components/schemas/supportedLanguage'
+        $ref: '#/components/schemas/SupportedLanguage'
       description: >
         ISO language codes that adjust settings that are useful for processing
         natural language queries (as opposed to keyword searches)
@@ -1002,7 +1027,8 @@ components:
       default: []
       x-categories:
         - Languages
-    ruleContexts:
+    SearchParams_ruleContexts:
+      title: searchParams_ruleContexts
       type: array
       items:
         type: string
@@ -1017,7 +1043,8 @@ components:
         - mobile
       x-categories:
         - Rules
-    personalizationImpact:
+    PersonalizationImpact:
+      title: personalizationImpact
       type: integer
       description: >
         Impact that Personalization should have on this search
@@ -1032,7 +1059,8 @@ components:
       maximum: 100
       x-categories:
         - Personalization
-    userToken:
+    UserToken:
+      title: userToken
       type: string
       description: >
         Unique pseudonymous or anonymous user identifier.
@@ -1045,19 +1073,22 @@ components:
       example: test-user-123
       x-categories:
         - Personalization
-    getRankingInfo:
+    SearchParams_getRankingInfo:
+      title: searchParams_getRankingInfo
       type: boolean
       description: Whether the search response should include detailed ranking information.
       default: false
       x-categories:
         - Advanced
-    synonyms:
+    Synonyms:
+      title: synonyms
       type: boolean
       description: Whether to take into account an index's synonyms for this search.
       default: true
       x-categories:
         - Advanced
-    clickAnalytics:
+    ClickAnalytics:
+      title: clickAnalytics
       type: boolean
       description: >
         Whether to include a `queryID` attribute in the response
@@ -1068,13 +1099,15 @@ components:
       default: false
       x-categories:
         - Analytics
-    analytics:
+    Analytics:
+      title: analytics
       type: boolean
       description: Whether this search will be included in Analytics.
       default: true
       x-categories:
         - Analytics
-    analyticsTags:
+    AnalyticsTags:
+      title: analyticsTags
       type: array
       items:
         type: string
@@ -1082,7 +1115,8 @@ components:
         Tags to apply to the query for [segmenting analytics
         data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
       default: []
-    percentileComputation:
+    PercentileComputation:
+      title: percentileComputation
       type: boolean
       description: >-
         Whether to include this search when calculating processing-time
@@ -1090,33 +1124,36 @@ components:
       default: true
       x-categories:
         - Advanced
-    enableABTest:
+    SearchParams_enableABTest:
+      title: searchParams_enableABTest
       type: boolean
       description: Whether to enable A/B testing for this search.
       default: true
       x-categories:
         - Advanced
-    baseSearchParamsWithoutQuery:
+    BaseSearchParamsWithoutQuery:
+      title: baseSearchParamsWithoutQuery
       type: object
       additionalProperties: false
       properties:
         similarQuery:
-          $ref: '#/components/schemas/similarQuery'
+          $ref: '#/components/schemas/SimilarQuery'
         filters:
-          $ref: '#/components/schemas/filters'
+          $ref: '#/components/schemas/Filters'
         facetFilters:
-          $ref: '#/components/schemas/facetFilters'
+          $ref: '#/components/schemas/FacetFilters'
         optionalFilters:
-          $ref: '#/components/schemas/optionalFilters'
+          $ref: '#/components/schemas/OptionalFilters'
         numericFilters:
-          $ref: '#/components/schemas/numericFilters'
+          $ref: '#/components/schemas/NumericFilters'
         tagFilters:
-          $ref: '#/components/schemas/tagFilters'
+          $ref: '#/components/schemas/TagFilters'
         sumOrFiltersScores:
-          $ref: '#/components/schemas/sumOrFiltersScores'
+          $ref: '#/components/schemas/SumOrFiltersScores'
         restrictSearchableAttributes:
-          $ref: '#/components/schemas/restrictSearchableAttributes'
+          $ref: '#/components/schemas/RestrictSearchableAttributes'
         facets:
+          title: facets
           type: array
           items:
             type: string
@@ -1134,59 +1171,61 @@ components:
           x-categories:
             - Faceting
         facetingAfterDistinct:
-          $ref: '#/components/schemas/facetingAfterDistinct'
+          $ref: '#/components/schemas/FacetingAfterDistinct'
         page:
-          $ref: '#/components/schemas/page'
+          $ref: '#/components/schemas/Page'
         offset:
           type: integer
           description: Position of the first hit to retrieve.
           x-categories:
             - Pagination
         length:
-          $ref: '#/components/schemas/length'
+          $ref: '#/components/schemas/Length'
         aroundLatLng:
-          $ref: '#/components/schemas/aroundLatLng'
+          $ref: '#/components/schemas/AroundLatLng'
         aroundLatLngViaIP:
-          $ref: '#/components/schemas/aroundLatLngViaIP'
+          $ref: '#/components/schemas/AroundLatLngViaIP'
         aroundRadius:
-          $ref: '#/components/schemas/aroundRadius'
+          $ref: '#/components/schemas/AroundRadius'
         aroundPrecision:
-          $ref: '#/components/schemas/aroundPrecision'
+          $ref: '#/components/schemas/AroundPrecision'
         minimumAroundRadius:
-          $ref: '#/components/schemas/minimumAroundRadius'
+          $ref: '#/components/schemas/MinimumAroundRadius'
         insideBoundingBox:
-          $ref: '#/components/schemas/insideBoundingBox'
+          $ref: '#/components/schemas/InsideBoundingBox'
         insidePolygon:
-          $ref: '#/components/schemas/insidePolygon'
+          $ref: '#/components/schemas/InsidePolygon'
         naturalLanguages:
-          $ref: '#/components/schemas/naturalLanguages'
+          $ref: '#/components/schemas/NaturalLanguages'
         ruleContexts:
-          $ref: '#/components/schemas/ruleContexts'
+          $ref: '#/components/schemas/SearchParams_ruleContexts'
         personalizationImpact:
-          $ref: '#/components/schemas/personalizationImpact'
+          $ref: '#/components/schemas/PersonalizationImpact'
         userToken:
-          $ref: '#/components/schemas/userToken'
+          $ref: '#/components/schemas/UserToken'
         getRankingInfo:
-          $ref: '#/components/schemas/getRankingInfo'
+          $ref: '#/components/schemas/SearchParams_getRankingInfo'
         synonyms:
-          $ref: '#/components/schemas/synonyms'
+          $ref: '#/components/schemas/Synonyms'
         clickAnalytics:
-          $ref: '#/components/schemas/clickAnalytics'
+          $ref: '#/components/schemas/ClickAnalytics'
         analytics:
-          $ref: '#/components/schemas/analytics'
+          $ref: '#/components/schemas/Analytics'
         analyticsTags:
-          $ref: '#/components/schemas/analyticsTags'
+          $ref: '#/components/schemas/AnalyticsTags'
           x-categories:
             - Analytics
         percentileComputation:
-          $ref: '#/components/schemas/percentileComputation'
+          $ref: '#/components/schemas/PercentileComputation'
         enableABTest:
-          $ref: '#/components/schemas/enableABTest'
-    baseSearchParams:
+          $ref: '#/components/schemas/SearchParams_enableABTest'
+    BaseSearchParams:
+      title: baseSearchParams
       allOf:
-        - $ref: '#/components/schemas/searchParamsQuery'
-        - $ref: '#/components/schemas/baseSearchParamsWithoutQuery'
-    attributesToRetrieve:
+        - $ref: '#/components/schemas/SearchParamsQuery'
+        - $ref: '#/components/schemas/BaseSearchParamsWithoutQuery'
+    AttributesToRetrieve:
+      title: attributesToRetrieve
       type: array
       items:
         type: string
@@ -1213,7 +1252,8 @@ components:
         - '*'
       x-categories:
         - Attributes
-    relevancyStrictness:
+    RelevancyStrictness:
+      title: relevancyStrictness
       type: integer
       example: 90
       description: >
@@ -1228,7 +1268,8 @@ components:
       default: 100
       x-categories:
         - Ranking
-    attributesToHighlight:
+    AttributesToHighlight:
+      title: attributesToHighlight
       type: array
       items:
         type: string
@@ -1257,7 +1298,8 @@ components:
         snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js).
       x-categories:
         - Highlighting and Snippeting
-    attributesToSnippet:
+    AttributesToSnippet:
+      title: attributesToSnippet
       type: array
       items:
         type: string
@@ -1283,7 +1325,8 @@ components:
       default: []
       x-categories:
         - Highlighting and Snippeting
-    highlightPreTag:
+    HighlightPreTag:
+      title: highlightPreTag
       type: string
       description: >-
         HTML tag to insert before the highlighted parts in all highlighted
@@ -1291,7 +1334,8 @@ components:
       default: <em>
       x-categories:
         - Highlighting and Snippeting
-    highlightPostTag:
+    HighlightPostTag:
+      title: highlightPostTag
       type: string
       description: >-
         HTML tag to insert after the highlighted parts in all highlighted
@@ -1299,13 +1343,15 @@ components:
       default: </em>
       x-categories:
         - Highlighting and Snippeting
-    snippetEllipsisText:
+    SnippetEllipsisText:
+      title: snippetEllipsisText
       type: string
       description: String used as an ellipsis indicator when a snippet is truncated.
       default: …
       x-categories:
         - Highlighting and Snippeting
-    restrictHighlightAndSnippetArrays:
+    RestrictHighlightAndSnippetArrays:
+      title: restrictHighlightAndSnippetArrays
       type: boolean
       description: >
         Whether to restrict highlighting and snippeting to items that at least
@@ -1315,7 +1361,8 @@ components:
       default: false
       x-categories:
         - Highlighting and Snippeting
-    hitsPerPage:
+    HitsPerPage:
+      title: hitsPerPage
       type: integer
       description: Number of hits per page.
       default: 20
@@ -1323,7 +1370,8 @@ components:
       maximum: 1000
       x-categories:
         - Pagination
-    minWordSizefor1Typo:
+    MinWordSizefor1Typo:
+      title: minWordSizefor1Typo
       type: integer
       description: >-
         Minimum number of characters a word in the search query must contain to
@@ -1332,7 +1380,8 @@ components:
       default: 4
       x-categories:
         - Typos
-    minWordSizefor2Typos:
+    MinWordSizefor2Typos:
+      title: minWordSizefor2Typos
       type: integer
       description: >-
         Minimum number of characters a word in the search query must contain to
@@ -1341,9 +1390,9 @@ components:
       default: 8
       x-categories:
         - Typos
-    typoToleranceEnum:
+    TypoToleranceEnum:
       type: string
-      title: typo tolerance
+      title: typoToleranceEnum
       description: |
         - `min`. Return matches with the lowest number of typos.
           For example, if you have matches without typos, only include those.
@@ -1355,7 +1404,8 @@ components:
         - strict
         - 'true'
         - 'false'
-    typoTolerance:
+    TypoTolerance:
+      title: typoTolerance
       description: >
         Whether [typo
         tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance)
@@ -1371,10 +1421,11 @@ components:
           description: >-
             Whether typo tolerance is active. If true, matches with typos are
             included in the search results and rank after exact matches.
-        - $ref: '#/components/schemas/typoToleranceEnum'
+        - $ref: '#/components/schemas/TypoToleranceEnum'
       x-categories:
         - Typos
-    allowTyposOnNumericTokens:
+    AllowTyposOnNumericTokens:
+      title: allowTyposOnNumericTokens
       type: boolean
       description: |
         Whether to allow typos on numbers in the search query
@@ -1383,7 +1434,8 @@ components:
       default: true
       x-categories:
         - Typos
-    disableTypoToleranceOnAttributes:
+    DisableTypoToleranceOnAttributes:
+      title: disableTypoToleranceOnAttributes
       type: array
       items:
         type: string
@@ -1408,12 +1460,14 @@ components:
       default: []
       x-categories:
         - Typos
-    booleanString:
+    BooleanString:
+      title: booleanString
       type: string
       enum:
         - 'true'
         - 'false'
-    ignorePlurals:
+    IgnorePlurals:
+      title: ignorePlurals
       description: |
         Treat singular, plurals, and other forms of declensions as equivalent.
         Only use this feature for the languages used in your index.
@@ -1426,8 +1480,8 @@ components:
             ISO code for languages for which this feature should be active.
             This overrides languages you set with `queryLanguages`.
           items:
-            $ref: '#/components/schemas/supportedLanguage'
-        - $ref: '#/components/schemas/booleanString'
+            $ref: '#/components/schemas/SupportedLanguage'
+        - $ref: '#/components/schemas/BooleanString'
         - type: boolean
           description: >
             If true, `ignorePlurals` is active for all languages included in
@@ -1439,7 +1493,8 @@ components:
           default: false
       x-categories:
         - Languages
-    removeStopWords:
+    RemoveStopWords:
+      title: removeStopWords
       description: >
         Removes stop words from the search query.
 
@@ -1460,7 +1515,7 @@ components:
             ISO code for languages for which stop words should be removed. This
             overrides languages you set in `queryLanguges`.
           items:
-            $ref: '#/components/schemas/supportedLanguage'
+            $ref: '#/components/schemas/SupportedLanguage'
         - type: boolean
           default: false
           description: >
@@ -1471,10 +1526,11 @@ components:
             If false, stop words are not removed.
       x-categories:
         - Languages
-    queryLanguages:
+    QueryLanguages:
+      title: queryLanguages
       type: array
       items:
-        $ref: '#/components/schemas/supportedLanguage'
+        $ref: '#/components/schemas/SupportedLanguage'
       example:
         - es
       description: >
@@ -1507,7 +1563,8 @@ components:
       default: []
       x-categories:
         - Languages
-    decompoundQuery:
+    DecompoundQuery:
+      title: decompoundQuery
       type: boolean
       description: >
         Whether to split compound words in the query into their building blocks
@@ -1526,19 +1583,22 @@ components:
       default: true
       x-categories:
         - Languages
-    enableRules:
+    IndexSettings_enableRules:
+      title: indexSettings_enableRules
       type: boolean
       description: Whether to enable rules.
       default: true
       x-categories:
         - Rules
-    enablePersonalization:
+    EnablePersonalization:
+      title: enablePersonalization
       type: boolean
       description: Whether to enable Personalization.
       default: false
       x-categories:
         - Personalization
-    queryType:
+    QueryType:
+      title: queryType
       type: string
       enum:
         - prefixLast
@@ -1564,7 +1624,8 @@ components:
       default: prefixLast
       x-categories:
         - Query strategy
-    removeWordsIfNoResults:
+    RemoveWordsIfNoResults:
+      title: removeWordsIfNoResults
       type: string
       enum:
         - none
@@ -1598,7 +1659,8 @@ components:
       default: none
       x-categories:
         - Query strategy
-    mode:
+    Mode:
+      title: mode
       type: string
       enum:
         - neuralSearch
@@ -1612,7 +1674,8 @@ components:
       default: keywordSearch
       x-categories:
         - Query strategy
-    semanticSearch:
+    SemanticSearch:
+      title: semanticSearch
       type: object
       description: |
         Settings for the semantic search part of NeuralSearch.
@@ -1628,7 +1691,8 @@ components:
               items:
                 type: string
             - type: 'null'
-    advancedSyntax:
+    AdvancedSyntax:
+      title: advancedSyntax
       type: boolean
       description: >
         Whether to support phrase matching and excluding words from search
@@ -1639,7 +1703,8 @@ components:
       default: false
       x-categories:
         - Query strategy
-    optionalWordsArray:
+    OptionalWordsArray:
+      title: optionalWordsArray
       type: array
       items:
         type: string
@@ -1652,7 +1717,8 @@ components:
       default: []
       x-categories:
         - Query strategy
-    optionalWords:
+    OptionalWords:
+      title: optionalWords
       description: >
         Words that should be considered optional when found in the query.
 
@@ -1693,8 +1759,9 @@ components:
       oneOf:
         - type: string
         - type: 'null'
-        - $ref: '#/components/schemas/optionalWordsArray'
-    disableExactOnAttributes:
+        - $ref: '#/components/schemas/OptionalWordsArray'
+    DisableExactOnAttributes:
+      title: disableExactOnAttributes
       type: array
       items:
         type: string
@@ -1719,7 +1786,8 @@ components:
       default: []
       x-categories:
         - Query strategy
-    exactOnSingleWordQuery:
+    ExactOnSingleWordQuery:
+      title: exactOnSingleWordQuery
       type: string
       enum:
         - attribute
@@ -1746,7 +1814,8 @@ components:
       default: attribute
       x-categories:
         - Query strategy
-    alternativesAsExact:
+    AlternativesAsExact:
+      title: alternativesAsExact
       type: string
       enum:
         - ignorePlurals
@@ -1756,9 +1825,10 @@ components:
       x-categories:
         - Query strategy
     IndexSettings_alternativesAsExact:
+      title: indexSettings_alternativesAsExact
       type: array
       items:
-        $ref: '#/components/schemas/alternativesAsExact'
+        $ref: '#/components/schemas/AlternativesAsExact'
       description: >
         Determine which plurals and synonyms should be considered an exact
         matches
@@ -1786,7 +1856,8 @@ components:
         - singleWordSynonym
       x-categories:
         - Query strategy
-    advancedSyntaxFeatures:
+    AdvancedSyntaxFeatures:
+      title: advancedSyntaxFeatures
       type: string
       enum:
         - exactPhrase
@@ -1794,9 +1865,10 @@ components:
       x-categories:
         - Query strategy
     IndexSettings_advancedSyntaxFeatures:
+      title: indexSettings_advancedSyntaxFeatures
       type: array
       items:
-        $ref: '#/components/schemas/advancedSyntaxFeatures'
+        $ref: '#/components/schemas/AdvancedSyntaxFeatures'
       description: |
         Advanced search syntax features you want to support
         - `exactPhrase`.
@@ -1811,7 +1883,8 @@ components:
         - excludeWords
       x-categories:
         - Query strategy
-    distinct:
+    Distinct:
+      title: distinct
       description: >
         Determines how many records of a group are included in the search
         results.
@@ -1852,7 +1925,8 @@ components:
           default: 0
       x-categories:
         - Advanced
-    replaceSynonymsInHighlight:
+    ReplaceSynonymsInHighlight:
+      title: replaceSynonymsInHighlight
       type: boolean
       description: >
         Whether to replace a highlighted word with the matched synonym
@@ -1876,7 +1950,8 @@ components:
       default: false
       x-categories:
         - Highlighting and Snippeting
-    minProximity:
+    MinProximity:
+      title: minProximity
       type: integer
       minimum: 1
       maximum: 7
@@ -1893,7 +1968,8 @@ components:
       default: 1
       x-categories:
         - Advanced
-    responseFields:
+    ResponseFields:
+      title: responseFields
       type: array
       items:
         type: string
@@ -1926,14 +2002,16 @@ components:
         - '*'
       x-categories:
         - Advanced
-    maxValuesPerFacet:
+    MaxValuesPerFacet:
+      title: maxValuesPerFacet
       type: integer
       description: Maximum number of facet values to return for each facet.
       default: 100
       maximum: 1000
       x-categories:
         - Faceting
-    sortFacetValuesBy:
+    SortFacetValuesBy:
+      title: sortFacetValuesBy
       type: string
       description: >
         Order in which to retrieve facet values
@@ -1951,7 +2029,8 @@ components:
       default: count
       x-categories:
         - Faceting
-    attributeCriteriaComputedByMinProximity:
+    AttributeCriteriaComputedByMinProximity:
+      title: attributeCriteriaComputedByMinProximity
       type: boolean
       description: >
         Whether the best matching attribute should be determined by minimum
@@ -1968,7 +2047,8 @@ components:
       default: false
       x-categories:
         - Advanced
-    order:
+    Order:
+      title: order
       description: >
         Explicit order of facets or facet values.
 
@@ -1978,24 +2058,16 @@ components:
       type: array
       items:
         type: string
-    facets:
-      type: array
-      items:
-        type: string
-      description: >
-        Facets for which to retrieve facet values that match the search criteria
-        and the number of matching facet values
-
-        To retrieve all facets, use the wildcard character `*`.
-
-        For more information, see
-        [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
-      default: []
-      example:
-        - '*'
-      x-categories:
-        - Faceting
-    sortRemainingBy:
+    IndexSettings_facets:
+      title: indexSettings_facets
+      description: Order of facet names.
+      type: object
+      additionalProperties: false
+      properties:
+        order:
+          $ref: '#/components/schemas/Order'
+    SortRemainingBy:
+      title: sortRemainingBy
       description: >
         Order of facet values that aren't explicitly positioned with the `order`
         setting.
@@ -2015,28 +2087,32 @@ components:
         - count
         - alpha
         - hidden
-    hide:
+    Hide:
+      title: hide
       description: Hide facet values.
       type: array
       items:
         type: string
-    value:
+    Value:
+      title: value
       type: object
       additionalProperties: false
       properties:
         order:
-          $ref: '#/components/schemas/order'
+          $ref: '#/components/schemas/Order'
         sortRemainingBy:
-          $ref: '#/components/schemas/sortRemainingBy'
+          $ref: '#/components/schemas/SortRemainingBy'
         hide:
-          $ref: '#/components/schemas/hide'
-    values:
+          $ref: '#/components/schemas/Hide'
+    Values:
+      title: values
       description: Order of facet values. One object for each facet.
       type: object
       additionalProperties:
         x-additionalPropertiesName: facet
-        $ref: '#/components/schemas/value'
-    facetOrdering:
+        $ref: '#/components/schemas/Value'
+    FacetOrdering:
+      title: facetOrdering
       description: Order of facet names and facet values in your UI.
       type: object
       additionalProperties: false
@@ -2044,22 +2120,25 @@ components:
         facets:
           $ref: '#/components/schemas/IndexSettings_facets'
         values:
-          $ref: '#/components/schemas/values'
-    redirectURL:
+          $ref: '#/components/schemas/Values'
+    RedirectURL:
+      title: redirectURL
       description: The redirect rule container.
       type: object
       additionalProperties: false
       properties:
         url:
           type: string
-    bannerImageUrl:
+    BannerImageUrl:
+      title: bannerImageUrl
       description: URL for an image to show inside a banner.
       type: object
       additionalProperties: false
       properties:
         url:
           type: string
-    bannerImage:
+    BannerImage:
+      title: bannerImage
       description: Image to show inside a banner.
       type: object
       additionalProperties: false
@@ -2067,38 +2146,43 @@ components:
         urls:
           type: array
           items:
-            $ref: '#/components/schemas/bannerImageUrl'
+            $ref: '#/components/schemas/BannerImageUrl'
         title:
           type: string
-    bannerLink:
+    BannerLink:
+      title: bannerLink
       description: Link for a banner defined in the Merchandising Studio.
       type: object
       additionalProperties: false
       properties:
         url:
           type: string
-    banner:
+    Banner:
+      title: banner
       description: Banner with image and link to redirect users.
       type: object
       additionalProperties: false
       properties:
         image:
-          $ref: '#/components/schemas/bannerImage'
+          $ref: '#/components/schemas/BannerImage'
         link:
-          $ref: '#/components/schemas/bannerLink'
-    banners:
+          $ref: '#/components/schemas/BannerLink'
+    Banners:
+      title: banners
       description: Banners defined in the Merchandising Studio for a given search.
       type: array
       items:
-        $ref: '#/components/schemas/banner'
-    widgets:
+        $ref: '#/components/schemas/Banner'
+    Widgets:
+      title: widgets
       description: Widgets returned from any rules that are applied to the current search.
       type: object
       additionalProperties: false
       properties:
         banners:
-          $ref: '#/components/schemas/banners'
-    renderingContent:
+          $ref: '#/components/schemas/Banners'
+    RenderingContent:
+      title: renderingContent
       description: >
         Extra data that can be used in the search UI.
 
@@ -2111,14 +2195,15 @@ components:
       additionalProperties: false
       properties:
         facetOrdering:
-          $ref: '#/components/schemas/facetOrdering'
+          $ref: '#/components/schemas/FacetOrdering'
         redirect:
-          $ref: '#/components/schemas/redirectURL'
+          $ref: '#/components/schemas/RedirectURL'
         widgets:
-          $ref: '#/components/schemas/widgets'
+          $ref: '#/components/schemas/Widgets'
       x-categories:
         - Advanced
-    enableReRanking:
+    EnableReRanking:
+      title: enableReRanking
       type: boolean
       description: >
         Whether this search will use [Dynamic
@@ -2129,7 +2214,8 @@ components:
       default: true
       x-categories:
         - Filtering
-    reRankingApplyFilter:
+    ReRankingApplyFilter:
+      title: reRankingApplyFilter
       description: >
         Restrict [Dynamic
         Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) to
@@ -2137,16 +2223,17 @@ components:
       oneOf:
         - type: array
           items:
-            $ref: '#/components/schemas/reRankingApplyFilter'
+            $ref: '#/components/schemas/ReRankingApplyFilter'
         - type: string
           x-categories:
             - Filtering
-    indexSettingsAsSearchParams:
+    IndexSettingsAsSearchParams:
+      title: indexSettingsAsSearchParams
       type: object
       additionalProperties: false
       properties:
         attributesToRetrieve:
-          $ref: '#/components/schemas/attributesToRetrieve'
+          $ref: '#/components/schemas/AttributesToRetrieve'
         ranking:
           type: array
           items:
@@ -2193,102 +2280,105 @@ components:
           x-categories:
             - Ranking
         relevancyStrictness:
-          $ref: '#/components/schemas/relevancyStrictness'
+          $ref: '#/components/schemas/RelevancyStrictness'
         attributesToHighlight:
-          $ref: '#/components/schemas/attributesToHighlight'
+          $ref: '#/components/schemas/AttributesToHighlight'
         attributesToSnippet:
-          $ref: '#/components/schemas/attributesToSnippet'
+          $ref: '#/components/schemas/AttributesToSnippet'
         highlightPreTag:
-          $ref: '#/components/schemas/highlightPreTag'
+          $ref: '#/components/schemas/HighlightPreTag'
         highlightPostTag:
-          $ref: '#/components/schemas/highlightPostTag'
+          $ref: '#/components/schemas/HighlightPostTag'
         snippetEllipsisText:
-          $ref: '#/components/schemas/snippetEllipsisText'
+          $ref: '#/components/schemas/SnippetEllipsisText'
         restrictHighlightAndSnippetArrays:
-          $ref: '#/components/schemas/restrictHighlightAndSnippetArrays'
+          $ref: '#/components/schemas/RestrictHighlightAndSnippetArrays'
         hitsPerPage:
-          $ref: '#/components/schemas/hitsPerPage'
+          $ref: '#/components/schemas/HitsPerPage'
         minWordSizefor1Typo:
-          $ref: '#/components/schemas/minWordSizefor1Typo'
+          $ref: '#/components/schemas/MinWordSizefor1Typo'
         minWordSizefor2Typos:
-          $ref: '#/components/schemas/minWordSizefor2Typos'
+          $ref: '#/components/schemas/MinWordSizefor2Typos'
         typoTolerance:
-          $ref: '#/components/schemas/typoTolerance'
+          $ref: '#/components/schemas/TypoTolerance'
         allowTyposOnNumericTokens:
-          $ref: '#/components/schemas/allowTyposOnNumericTokens'
+          $ref: '#/components/schemas/AllowTyposOnNumericTokens'
         disableTypoToleranceOnAttributes:
-          $ref: '#/components/schemas/disableTypoToleranceOnAttributes'
+          $ref: '#/components/schemas/DisableTypoToleranceOnAttributes'
         ignorePlurals:
-          $ref: '#/components/schemas/ignorePlurals'
+          $ref: '#/components/schemas/IgnorePlurals'
         removeStopWords:
-          $ref: '#/components/schemas/removeStopWords'
+          $ref: '#/components/schemas/RemoveStopWords'
         queryLanguages:
-          $ref: '#/components/schemas/queryLanguages'
+          $ref: '#/components/schemas/QueryLanguages'
         decompoundQuery:
-          $ref: '#/components/schemas/decompoundQuery'
+          $ref: '#/components/schemas/DecompoundQuery'
         enableRules:
-          $ref: '#/components/schemas/enableRules'
+          $ref: '#/components/schemas/IndexSettings_enableRules'
         enablePersonalization:
-          $ref: '#/components/schemas/enablePersonalization'
+          $ref: '#/components/schemas/EnablePersonalization'
         queryType:
-          $ref: '#/components/schemas/queryType'
+          $ref: '#/components/schemas/QueryType'
         removeWordsIfNoResults:
-          $ref: '#/components/schemas/removeWordsIfNoResults'
+          $ref: '#/components/schemas/RemoveWordsIfNoResults'
         mode:
-          $ref: '#/components/schemas/mode'
+          $ref: '#/components/schemas/Mode'
         semanticSearch:
-          $ref: '#/components/schemas/semanticSearch'
+          $ref: '#/components/schemas/SemanticSearch'
         advancedSyntax:
-          $ref: '#/components/schemas/advancedSyntax'
+          $ref: '#/components/schemas/AdvancedSyntax'
         optionalWords:
-          $ref: '#/components/schemas/optionalWords'
+          $ref: '#/components/schemas/OptionalWords'
         disableExactOnAttributes:
-          $ref: '#/components/schemas/disableExactOnAttributes'
+          $ref: '#/components/schemas/DisableExactOnAttributes'
         exactOnSingleWordQuery:
-          $ref: '#/components/schemas/exactOnSingleWordQuery'
+          $ref: '#/components/schemas/ExactOnSingleWordQuery'
         alternativesAsExact:
           $ref: '#/components/schemas/IndexSettings_alternativesAsExact'
         advancedSyntaxFeatures:
           $ref: '#/components/schemas/IndexSettings_advancedSyntaxFeatures'
         distinct:
-          $ref: '#/components/schemas/distinct'
+          $ref: '#/components/schemas/Distinct'
         replaceSynonymsInHighlight:
-          $ref: '#/components/schemas/replaceSynonymsInHighlight'
+          $ref: '#/components/schemas/ReplaceSynonymsInHighlight'
         minProximity:
-          $ref: '#/components/schemas/minProximity'
+          $ref: '#/components/schemas/MinProximity'
         responseFields:
-          $ref: '#/components/schemas/responseFields'
+          $ref: '#/components/schemas/ResponseFields'
         maxValuesPerFacet:
-          $ref: '#/components/schemas/maxValuesPerFacet'
+          $ref: '#/components/schemas/MaxValuesPerFacet'
         sortFacetValuesBy:
-          $ref: '#/components/schemas/sortFacetValuesBy'
+          $ref: '#/components/schemas/SortFacetValuesBy'
         attributeCriteriaComputedByMinProximity:
-          $ref: '#/components/schemas/attributeCriteriaComputedByMinProximity'
+          $ref: '#/components/schemas/AttributeCriteriaComputedByMinProximity'
         renderingContent:
-          $ref: '#/components/schemas/renderingContent'
+          $ref: '#/components/schemas/RenderingContent'
         enableReRanking:
-          $ref: '#/components/schemas/enableReRanking'
+          $ref: '#/components/schemas/EnableReRanking'
         reRankingApplyFilter:
           oneOf:
-            - $ref: '#/components/schemas/reRankingApplyFilter'
+            - $ref: '#/components/schemas/ReRankingApplyFilter'
             - type: 'null'
-    searchParamsObject:
-      title: Search parameters as object
+    SearchParamsObject:
+      title: searchParamsObject
       description: >-
         Each parameter value, including the `query` must not be larger than 512
         bytes.
       allOf:
-        - $ref: '#/components/schemas/baseSearchParams'
-        - $ref: '#/components/schemas/indexSettingsAsSearchParams'
-    searchParams:
+        - $ref: '#/components/schemas/BaseSearchParams'
+        - $ref: '#/components/schemas/IndexSettingsAsSearchParams'
+    SearchParams:
+      title: searchParams
       oneOf:
-        - $ref: '#/components/schemas/searchParamsString'
-        - $ref: '#/components/schemas/searchParamsObject'
-    processingTimeMS:
+        - $ref: '#/components/schemas/SearchParamsString'
+        - $ref: '#/components/schemas/SearchParamsObject'
+    ProcessingTimeMS:
+      title: processingTimeMS
       type: integer
       description: Time the server took to process the request, in milliseconds.
       example: 20
     RedirectRuleIndexMetadata:
+      title: redirectRuleIndexMetadata
       type: object
       properties:
         source:
@@ -2318,7 +2408,8 @@ components:
         - reason
         - dest
         - source
-    userData:
+    UserData:
+      title: userData
       example:
         settingID: f2a7b51e3503acc6a39b3784ffb84300
         pluginVersion: 1.6.0
@@ -2329,7 +2420,8 @@ components:
       default: {}
       x-categories:
         - Advanced
-    baseSearchResponse:
+    BaseSearchResponse:
+      title: baseSearchResponse
       type: object
       additionalProperties: true
       properties:
@@ -2482,7 +2574,7 @@ components:
             query string that will be searched.
           example: george clo
         processingTimeMS:
-          $ref: '#/components/schemas/processingTimeMS'
+          $ref: '#/components/schemas/ProcessingTimeMS'
         processingTimingsMS:
           type: object
           description: >-
@@ -2507,7 +2599,7 @@ components:
               items:
                 $ref: '#/components/schemas/RedirectRuleIndexMetadata'
         renderingContent:
-          $ref: '#/components/schemas/renderingContent'
+          $ref: '#/components/schemas/RenderingContent'
         serverTimeMS:
           type: integer
           description: Time the server took to process the request, in milliseconds.
@@ -2517,7 +2609,7 @@ components:
           description: Host name of the server that processed the request.
           example: c2-uk-3.algolia.net
         userData:
-          $ref: '#/components/schemas/userData'
+          $ref: '#/components/schemas/UserData'
         queryID:
           type: string
           description: >-
@@ -2527,51 +2619,57 @@ components:
         _automaticInsights:
           type: boolean
           description: Whether automatic events collection is enabled for the application.
-    nbHits:
+    NbHits:
+      title: nbHits
       type: integer
       description: Number of results (hits).
       example: 20
-    nbPages:
+    NbPages:
+      title: nbPages
       type: integer
       description: Number of pages of results.
       example: 1
     SearchPagination:
+      title: searchPagination
       type: object
       additionalProperties: false
       properties:
         page:
-          $ref: '#/components/schemas/page'
+          $ref: '#/components/schemas/Page'
         nbHits:
-          $ref: '#/components/schemas/nbHits'
+          $ref: '#/components/schemas/NbHits'
         nbPages:
-          $ref: '#/components/schemas/nbPages'
+          $ref: '#/components/schemas/NbPages'
         hitsPerPage:
-          $ref: '#/components/schemas/hitsPerPage'
-    objectID:
+          $ref: '#/components/schemas/HitsPerPage'
+    ObjectID:
+      title: objectID
       type: string
       description: Unique record identifier.
       example: test-record-123
-    highlightedValue:
+    HighlightedValue:
+      title: highlightedValue
       type: string
       description: Highlighted attribute value, including HTML tags.
       example: <em>George</em> <em>Clo</em>oney
-    matchLevel:
+    MatchLevel:
+      title: matchLevel
       type: string
       description: Whether the whole query string matches or only a part.
       enum:
         - none
         - partial
         - full
-    highlightResultOption:
+    HighlightResultOption:
       title: highlightResultOption
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
       additionalProperties: false
       properties:
         value:
-          $ref: '#/components/schemas/highlightedValue'
+          $ref: '#/components/schemas/HighlightedValue'
         matchLevel:
-          $ref: '#/components/schemas/matchLevel'
+          $ref: '#/components/schemas/MatchLevel'
         matchedWords:
           type: array
           description: List of matched words from the search query.
@@ -2589,60 +2687,63 @@ components:
       x-discriminator-fields:
         - matchLevel
         - matchedWords
-    highlightResultMap:
+    HighlightResultMap:
       title: highlightResultMap
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
       x-is-free-form: false
       additionalProperties:
         x-additionalPropertiesName: attribute
-        $ref: '#/components/schemas/highlightResult'
-    highlightResult:
+        $ref: '#/components/schemas/HighlightResult'
+    HighlightResult:
+      title: highlightResult
       oneOf:
-        - $ref: '#/components/schemas/highlightResultOption'
-        - $ref: '#/components/schemas/highlightResultMap'
-        - $ref: '#/components/schemas/highlightResultArray'
-    highlightResultArray:
+        - $ref: '#/components/schemas/HighlightResultOption'
+        - $ref: '#/components/schemas/HighlightResultMap'
+        - $ref: '#/components/schemas/HighlightResultArray'
+    HighlightResultArray:
       title: highlightResultArray
       type: array
       description: Surround words that match the query with HTML tags for highlighting.
       items:
-        $ref: '#/components/schemas/highlightResult'
-    snippetResultOption:
+        $ref: '#/components/schemas/HighlightResult'
+    SnippetResultOption:
       title: snippetResultOption
       type: object
       description: Snippets that show the context around a matching search query.
       additionalProperties: false
       properties:
         value:
-          $ref: '#/components/schemas/highlightedValue'
+          $ref: '#/components/schemas/HighlightedValue'
         matchLevel:
-          $ref: '#/components/schemas/matchLevel'
+          $ref: '#/components/schemas/MatchLevel'
       required:
         - value
         - matchLevel
       x-discriminator-fields:
         - matchLevel
-    snippetResultMap:
+    SnippetResultMap:
       title: snippetResultMap
       type: object
       description: Snippets that show the context around a matching search query.
       x-is-free-form: false
       additionalProperties:
         x-additionalPropertiesName: attribute
-        $ref: '#/components/schemas/snippetResult'
-    snippetResult:
+        $ref: '#/components/schemas/SnippetResult'
+    SnippetResult:
+      title: snippetResult
       oneOf:
-        - $ref: '#/components/schemas/snippetResultOption'
-        - $ref: '#/components/schemas/snippetResultMap'
-        - $ref: '#/components/schemas/snippetResultArray'
-    snippetResultArray:
+        - $ref: '#/components/schemas/SnippetResultOption'
+        - $ref: '#/components/schemas/SnippetResultMap'
+        - $ref: '#/components/schemas/SnippetResultArray'
+    SnippetResultArray:
       title: snippetResultArray
       type: array
       description: Snippets that show the context around a matching search query.
       items:
-        $ref: '#/components/schemas/snippetResult'
-    matchedGeoLocation:
+        $ref: '#/components/schemas/SnippetResult'
+    MatchedGeoLocation:
+      title: matchedGeoLocation
       type: object
       properties:
         lat:
@@ -2658,7 +2759,8 @@ components:
           description: >-
             Distance between the matched location and the search location (in
             meters).
-    personalization:
+    Personalization:
+      title: personalization
       type: object
       properties:
         filtersScore:
@@ -2670,7 +2772,8 @@ components:
         score:
           type: integer
           description: The score of the event.
-    rankingInfo:
+    RankingInfo:
+      title: rankingInfo
       type: object
       description: Object with detailed information about the record's ranking.
       additionalProperties: false
@@ -2697,9 +2800,9 @@ components:
           minimum: 1
           description: Precision used when computing the geo distance, in meters.
         matchedGeoLocation:
-          $ref: '#/components/schemas/matchedGeoLocation'
+          $ref: '#/components/schemas/MatchedGeoLocation'
         personalization:
-          $ref: '#/components/schemas/personalization'
+          $ref: '#/components/schemas/Personalization'
         nbExactWords:
           type: integer
           minimum: 0
@@ -2735,9 +2838,11 @@ components:
         - geoDistance
         - nbExactWords
         - userScore
-    distinctSeqID:
+    DistinctSeqID:
+      title: distinctSeqID
       type: integer
-    hit:
+    Hit:
+      title: hit
       type: object
       description: >
         Search result.
@@ -2752,16 +2857,17 @@ components:
         - objectID
       properties:
         objectID:
-          $ref: '#/components/schemas/objectID'
+          $ref: '#/components/schemas/ObjectID'
         _highlightResult:
-          $ref: '#/components/schemas/highlightResultMap'
+          $ref: '#/components/schemas/HighlightResultMap'
         _snippetResult:
-          $ref: '#/components/schemas/snippetResultMap'
+          $ref: '#/components/schemas/SnippetResultMap'
         _rankingInfo:
-          $ref: '#/components/schemas/rankingInfo'
+          $ref: '#/components/schemas/RankingInfo'
         _distinctSeqID:
-          $ref: '#/components/schemas/distinctSeqID'
-    queryCategorization_type:
+          $ref: '#/components/schemas/DistinctSeqID'
+    QueryCategorization_type:
+      title: queryCategorization_type
       type: string
       enum:
         - narrow
@@ -2769,7 +2875,8 @@ components:
         - ambiguous
         - none
       description: Classification of the query scope.
-    categoryPrediction_bin:
+    CategoryPrediction_bin:
+      title: categoryPrediction_bin
       type: string
       enum:
         - certain
@@ -2778,7 +2885,8 @@ components:
         - low
         - very low
       description: Confidence level of the category prediction.
-    hierarchyPathEntry:
+    HierarchyPathEntry:
+      title: hierarchyPathEntry
       type: object
       properties:
         facetName:
@@ -2792,23 +2900,26 @@ components:
         depth:
           type: integer
           description: Depth level in the category hierarchy, starting at 0.
-    categoryPrediction:
+    CategoryPrediction:
+      title: categoryPrediction
       type: object
       properties:
         bin:
-          $ref: '#/components/schemas/categoryPrediction_bin'
+          $ref: '#/components/schemas/CategoryPrediction_bin'
         hierarchyPath:
           type: array
           description: Ordered list of category levels from root to the predicted category.
           items:
-            $ref: '#/components/schemas/hierarchyPathEntry'
-    autoFilteringFilterEntry:
+            $ref: '#/components/schemas/HierarchyPathEntry'
+    AutoFilteringFilterEntry:
+      title: autoFilteringFilterEntry
       oneOf:
         - type: string
         - type: array
           items:
             type: string
-    autoFilteringResult:
+    AutoFilteringResult:
+      title: autoFilteringResult
       type: object
       description: Result of automatic filtering applied by Query Categorization.
       properties:
@@ -2822,13 +2933,14 @@ components:
           type: array
           description: Facet filters automatically applied to the query.
           items:
-            $ref: '#/components/schemas/autoFilteringFilterEntry'
+            $ref: '#/components/schemas/AutoFilteringFilterEntry'
         optionalFilters:
           type: array
           description: Optional filters automatically applied to boost relevant categories.
           items:
-            $ref: '#/components/schemas/autoFilteringFilterEntry'
-    queryCategorization:
+            $ref: '#/components/schemas/AutoFilteringFilterEntry'
+    QueryCategorization:
+      title: queryCategorization
       type: object
       description: >
         Query Categorization prediction returned by the AI model.
@@ -2847,15 +2959,16 @@ components:
             Number of times this normalized query was observed during the
             training window.
         type:
-          $ref: '#/components/schemas/queryCategorization_type'
+          $ref: '#/components/schemas/QueryCategorization_type'
         categories:
           type: array
           description: List of category predictions with confidence levels.
           items:
-            $ref: '#/components/schemas/categoryPrediction'
+            $ref: '#/components/schemas/CategoryPrediction'
         autofiltering:
-          $ref: '#/components/schemas/autoFilteringResult'
-    responseExtensions:
+          $ref: '#/components/schemas/AutoFilteringResult'
+    ResponseExtensions:
+      title: responseExtensions
       type: object
       description: >
         AI-generated metadata returned alongside search results.
@@ -2865,8 +2978,9 @@ components:
         are enabled.
       properties:
         queryCategorization:
-          $ref: '#/components/schemas/queryCategorization'
-    searchHits:
+          $ref: '#/components/schemas/QueryCategorization'
+    SearchHits:
+      title: searchHits
       type: object
       additionalProperties: true
       properties:
@@ -2879,28 +2993,31 @@ components:
             Hits are records from your index that match the search criteria,
             augmented with additional attributes, such as, for highlighting.
           items:
-            $ref: '#/components/schemas/hit'
+            $ref: '#/components/schemas/Hit'
         query:
-          $ref: '#/components/schemas/query'
+          $ref: '#/components/schemas/Query'
         params:
           type: string
           description: URL-encoded string of all search parameters.
           example: query=a&hitsPerPage=20
         extensions:
-          $ref: '#/components/schemas/responseExtensions'
+          $ref: '#/components/schemas/ResponseExtensions'
       required:
         - hits
-    searchResponse:
+    SearchResponse:
+      title: searchResponse
       additionalProperties: true
       allOf:
-        - $ref: '#/components/schemas/baseSearchResponse'
+        - $ref: '#/components/schemas/BaseSearchResponse'
         - $ref: '#/components/schemas/SearchPagination'
-        - $ref: '#/components/schemas/searchHits'
-    indexName:
+        - $ref: '#/components/schemas/SearchHits'
+    IndexName:
+      title: indexName
       type: string
       example: products
       description: Index name (case-sensitive).
-    searchTypeDefault:
+    SearchTypeDefault:
+      title: searchTypeDefault
       type: string
       enum:
         - default
@@ -2910,7 +3027,8 @@ components:
 
         - `facet` [searches for facet
         values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
-    searchExtensionsQueryCategorization:
+    SearchExtensionsQueryCategorization:
+      title: searchExtensionsQueryCategorization
       type: object
       description: >-
         Parameters for the [Query
@@ -2929,7 +3047,8 @@ components:
             Whether to automatically apply category-based filters and boosts to
             search results.
           default: false
-    searchExtensions:
+    SearchExtensions:
+      title: searchExtensions
       type: object
       description: >
         Additional parameters for Algolia AI features.
@@ -2939,29 +3058,33 @@ components:
         and other AI-powered capabilities.
       properties:
         queryCategorization:
-          $ref: '#/components/schemas/searchExtensionsQueryCategorization'
-    searchForHitsOptions:
+          $ref: '#/components/schemas/SearchExtensionsQueryCategorization'
+    SearchForHitsOptions:
+      title: searchForHitsOptions
       x-is-SearchForHitsOptions: true
       type: object
       properties:
         indexName:
-          $ref: '#/components/schemas/indexName'
+          $ref: '#/components/schemas/IndexName'
         type:
-          $ref: '#/components/schemas/searchTypeDefault'
+          $ref: '#/components/schemas/SearchTypeDefault'
         extensions:
-          $ref: '#/components/schemas/searchExtensions'
+          $ref: '#/components/schemas/SearchExtensions'
       required:
         - indexName
     SearchForHits:
+      title: searchForHits
       allOf:
-        - $ref: '#/components/schemas/searchParams'
-        - $ref: '#/components/schemas/searchForHitsOptions'
-    facetQuery:
+        - $ref: '#/components/schemas/SearchParams'
+        - $ref: '#/components/schemas/SearchForHitsOptions'
+    FacetQuery:
+      title: facetQuery
       type: string
       description: Text to search inside the facet's values.
       example: george
       default: ''
-    maxFacetHits:
+    MaxFacetHits:
+      title: maxFacetHits
       type: integer
       description: >-
         Maximum number of facet values to return when [searching for facet
@@ -2970,7 +3093,8 @@ components:
       default: 10
       x-categories:
         - Advanced
-    searchTypeFacet:
+    SearchTypeFacet:
+      title: searchTypeFacet
       type: string
       enum:
         - facet
@@ -2980,36 +3104,40 @@ components:
 
         - `facet` [searches for facet
         values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
-    searchForFacetsOptions:
+    SearchForFacetsOptions:
+      title: searchForFacetsOptions
       type: object
       properties:
         facet:
           type: string
           description: Facet name.
         indexName:
-          $ref: '#/components/schemas/indexName'
+          $ref: '#/components/schemas/IndexName'
         facetQuery:
-          $ref: '#/components/schemas/facetQuery'
+          $ref: '#/components/schemas/FacetQuery'
         maxFacetHits:
-          $ref: '#/components/schemas/maxFacetHits'
+          $ref: '#/components/schemas/MaxFacetHits'
         type:
-          $ref: '#/components/schemas/searchTypeFacet'
+          $ref: '#/components/schemas/SearchTypeFacet'
       required:
         - indexName
         - type
         - facet
     SearchForFacets:
+      title: searchForFacets
       allOf:
-        - $ref: '#/components/schemas/searchParams'
-        - $ref: '#/components/schemas/searchForFacetsOptions'
+        - $ref: '#/components/schemas/SearchParams'
+        - $ref: '#/components/schemas/SearchForFacetsOptions'
       x-discriminator-fields:
         - facet
         - type
     SearchQuery:
+      title: searchQuery
       oneOf:
         - $ref: '#/components/schemas/SearchForHits'
         - $ref: '#/components/schemas/SearchForFacets'
-    searchStrategy:
+    SearchStrategy:
+      title: searchStrategy
       type: string
       enum:
         - none
@@ -3022,7 +3150,8 @@ components:
 
         - `stopIfEnoughMatches`. Run the queries one by one, stopping as soon as
         a query matches at least the `hitsPerPage` number of results.
-    searchForFacetValuesResponse:
+    SearchForFacetValuesResponse:
+      title: searchForFacetValuesResponse
       type: object
       additionalProperties: false
       required:
@@ -3048,7 +3177,7 @@ components:
                 example: Mobile phone
                 type: string
               highlighted:
-                $ref: '#/components/schemas/highlightedValue'
+                $ref: '#/components/schemas/HighlightedValue'
               count:
                 description: >-
                   Number of records with this facet value. [The count may be
@@ -3062,8 +3191,9 @@ components:
             For more information, see [Why are my facet and hit counts not
             accurate](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate).
         processingTimeMS:
-          $ref: '#/components/schemas/processingTimeMS'
-    searchResponsePartial:
+          $ref: '#/components/schemas/ProcessingTimeMS'
+    SearchResponsePartial:
+      title: searchResponsePartial
       description: >
         Partial search response returned when the `responseFields` parameter
         excludes
@@ -3075,7 +3205,7 @@ components:
         deserialization.
       additionalProperties: true
       allOf:
-        - $ref: '#/components/schemas/baseSearchResponse'
+        - $ref: '#/components/schemas/BaseSearchResponse'
         - $ref: '#/components/schemas/SearchPagination'
         - type: object
           additionalProperties: true
@@ -3089,58 +3219,23 @@ components:
                 Hits are records from your index that match the search criteria,
                 augmented with additional attributes, such as, for highlighting.
               items:
-                $ref: '#/components/schemas/hit'
+                $ref: '#/components/schemas/Hit'
             query:
-              $ref: '#/components/schemas/query'
+              $ref: '#/components/schemas/Query'
             params:
               type: string
               description: URL-encoded string of all search parameters.
               example: query=a&hitsPerPage=20
             extensions:
-              $ref: '#/components/schemas/responseExtensions'
-    searchResult:
+              $ref: '#/components/schemas/ResponseExtensions'
+    SearchResult:
+      title: searchResult
       oneOf:
-        - $ref: '#/components/schemas/searchResponse'
-        - $ref: '#/components/schemas/searchForFacetValuesResponse'
-        - $ref: '#/components/schemas/searchResponsePartial'
-    cursor:
-      type: object
-      additionalProperties: false
-      properties:
-        cursor:
-          type: string
-          description: >
-            Cursor to get the next page of the response.
-
-
-            The parameter must match the value returned in the response of a
-            previous request.
-
-            The last page of the response does not return a `cursor` attribute.
-          example: jMDY3M2MwM2QwMWUxMmQwYWI0ZTN
-    browseParamsObject:
-      allOf:
-        - $ref: '#/components/schemas/searchParamsObject'
-        - $ref: '#/components/schemas/cursor'
-    BrowsePagination:
-      type: object
-      additionalProperties: false
-      properties:
-        page:
-          $ref: '#/components/schemas/page'
-        nbHits:
-          $ref: '#/components/schemas/nbHits'
-        nbPages:
-          $ref: '#/components/schemas/nbPages'
-        hitsPerPage:
-          $ref: '#/components/schemas/hitsPerPage'
-    browseResponse:
-      allOf:
-        - $ref: '#/components/schemas/baseSearchResponse'
-        - $ref: '#/components/schemas/BrowsePagination'
-        - $ref: '#/components/schemas/searchHits'
-        - $ref: '#/components/schemas/cursor'
-    baseIndexSettings:
+        - $ref: '#/components/schemas/SearchResponse'
+        - $ref: '#/components/schemas/SearchForFacetValuesResponse'
+        - $ref: '#/components/schemas/SearchResponsePartial'
+    BaseIndexSettings:
+      title: baseIndexSettings
       type: object
       additionalProperties: false
       properties:
@@ -3348,7 +3443,7 @@ components:
         indexLanguages:
           type: array
           items:
-            $ref: '#/components/schemas/supportedLanguage'
+            $ref: '#/components/schemas/SupportedLanguage'
           example:
             - ja
           description: >
@@ -3501,7 +3596,7 @@ components:
           x-categories:
             - Attributes
         userData:
-          $ref: '#/components/schemas/userData'
+          $ref: '#/components/schemas/UserData'
         customNormalization:
           description: >
             Characters and their normalized replacements.
@@ -3543,7 +3638,7 @@ components:
           example: url
           type: string
         maxFacetHits:
-          $ref: '#/components/schemas/maxFacetHits'
+          $ref: '#/components/schemas/MaxFacetHits'
         keepDiacriticsOnCharacters:
           type: string
           example: øé
@@ -3599,483 +3694,184 @@ components:
           default: []
           x-categories:
             - Ranking
-    indexSettings:
-      description: Index settings.
-      allOf:
-        - $ref: '#/components/schemas/baseIndexSettings'
-        - $ref: '#/components/schemas/indexSettingsAsSearchParams'
-    WithPrimary:
-      type: object
-      additionalProperties: false
-      properties:
-        primary:
-          type: string
-          description: >
-            Replica indices only: the name of the primary index for this
-            replica.
-    settingsResponse:
-      allOf:
-        - $ref: '#/components/schemas/indexSettings'
-        - $ref: '#/components/schemas/WithPrimary'
-    keyString:
-      type: string
-      description: API key.
-      example: 13ad45b4d0a2f6ea65ecbddf6aa260f2
-    createdAtTimestamp:
-      type: integer
-      format: int64
-      example: 1656345570000
-      description: >-
-        Timestamp when the object was created, in milliseconds since the Unix
-        epoch.
-    baseGetApiKeyResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        value:
-          $ref: '#/components/schemas/keyString'
-        createdAt:
-          $ref: '#/components/schemas/createdAtTimestamp'
-      required:
-        - value
-        - createdAt
-    acl:
-      description: Access control list permissions.
-      type: string
-      enum:
-        - addObject
-        - analytics
-        - browse
-        - deleteObject
-        - deleteIndex
-        - editSettings
-        - inference
-        - listIndexes
-        - logs
-        - personalization
-        - recommendation
-        - search
-        - seeUnretrievableAttributes
-        - settings
-        - usage
-        - nluWriteProject
-        - nluReadProject
-        - nluWriteEntity
-        - nluReadEntity
-        - nluWriteIntent
-        - nluReadIntent
-        - nluPrediction
-        - nluReadAnswers
-    apiKey:
-      type: object
-      description: API key object.
-      additionalProperties: false
-      properties:
-        acl:
-          type: array
-          description: >
-            Permissions that determine the type of API requests this key can
-            make.
-
-            The required ACL is listed in each endpoint's reference.
-
-            For more information, see [access control
-            list](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl).
-          example:
-            - search
-            - addObject
-          default: []
-          items:
-            $ref: '#/components/schemas/acl'
-        description:
-          type: string
-          description: Description of an API key to help you identify this API key.
-          example: Used for indexing by the CLI
-          default: ''
-        indexes:
-          type: array
-          description: >
-            Index names or patterns that this API key can access.
-
-            By default, an API key can access all indices in the same
-            application.
-
-
-            You can use leading and trailing wildcard characters (`*`):
-
-
-            - `dev_*` matches all indices starting with "dev_"
-
-            - `*_dev` matches all indices ending with "_dev"
-
-            - `*_products_*` matches all indices containing "_products_".
-          example:
-            - dev_*
-            - prod_en_products
-          default: []
-          items:
-            type: string
-        maxHitsPerQuery:
-          type: integer
-          description: |
-            Maximum number of results this API key can retrieve in one query.
-            By default, there's no limit.
-          default: 0
-        maxQueriesPerIPPerHour:
-          type: integer
-          description: >
-            Maximum number of API requests allowed per IP address or [user
-            token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken)
-            per hour.
-
-
-            If this limit is reached, the API returns an error with status code
-            `429`.
-
-            By default, there's no limit.
-          default: 0
-        queryParameters:
-          type: string
-          description: >
-            Query parameters to add when making API requests with this API key.
-
-
-            To restrict this API key to specific IP addresses, add the
-            `restrictSources` parameter.
-
-            You can only add a single source, but you can provide a range of IP
-            addresses.
-
-
-            Creating an API key fails if the request is made from an IP address
-            outside the restricted range.
-          example: typoTolerance=strict&restrictSources=192.168.1.0/24
-          default: ''
-        referers:
-          type: array
-          description: >
-            Allowed HTTP referrers for this API key.
-
-
-            By default, all referrers are allowed.
-
-            You can use leading and trailing wildcard characters (`*`):
-
-
-            - `https://algolia.com/*` allows all referrers starting with
-            "https://algolia.com/"
-
-            - `*.algolia.com` allows all referrers ending with ".algolia.com"
-
-            - `*algolia.com*` allows all referrers in the domain "algolia.com".
-
-
-            Like all HTTP headers, referrers can be spoofed. Don't rely on them
-            to secure your data.
-
-            For more information, see [HTTP referrer
-            restrictions](https://www.algolia.com/doc/guides/security/security-best-practices/#http-referrers-restrictions).
-          example:
-            - '*algolia.com*'
-          default: []
-          items:
-            type: string
-        validity:
-          type: integer
-          description: |
-            Duration (in seconds) after which the API key expires.
-            By default, API keys don't expire.
-          example: 86400
-          default: 0
-      required:
-        - acl
-    getApiKeyResponse:
-      allOf:
-        - $ref: '#/components/schemas/baseGetApiKeyResponse'
-        - $ref: '#/components/schemas/apiKey'
-    editType:
-      description: Type of edit.
-      type: string
-      enum:
-        - remove
-        - replace
-    edit:
-      type: object
-      additionalProperties: false
-      properties:
-        type:
-          $ref: '#/components/schemas/editType'
-        delete:
-          description: Text or patterns to remove from the query string.
-          type: string
-        insert:
-          description: >-
-            Text to be added in place of the deleted text inside the query
-            string.
-          type: string
-    consequenceQueryObject:
-      type: object
-      additionalProperties: false
-      properties:
-        remove:
-          description: Words to remove from the search query.
-          type: array
-          items:
-            type: string
-        edits:
-          description: Changes to make to the search query.
-          type: array
-          items:
-            $ref: '#/components/schemas/edit'
-    consequenceQuery:
+    Facets:
+      title: facets
+      type: array
+      items:
+        type: string
       description: >
-        Replace or edit the search query.
+        Facets for which to retrieve facet values that match the search criteria
+        and the number of matching facet values
 
+        To retrieve all facets, use the wildcard character `*`.
 
-        If `consequenceQuery` is a string, the entire search query is replaced
-        with that string.
-
-        If `consequenceQuery` is an object, it describes incremental edits made
-        to the query.
-      oneOf:
-        - $ref: '#/components/schemas/consequenceQueryObject'
-        - type: string
-    automaticFacetFilter:
-      type: object
-      description: Filter or optional filter to be applied to the search.
-      additionalProperties: false
-      properties:
-        facet:
-          type: string
-          description: >
-            Facet name to be applied as filter.
-
-            The name must match placeholders in the `pattern` parameter.
-
-            For example, with `pattern: {facet:genre}`, `automaticFacetFilters`
-            must be `genre`.
-        score:
-          type: integer
-          default: 1
-          description: Filter scores to give different weights to individual filters.
-        disjunctive:
-          type: boolean
-          default: false
-          description: >
-            Whether the filter is disjunctive or conjunctive.
-
-
-            If true the filter has multiple matches, multiple occurrences are
-            combined with the logical `OR` operation.
-
-            If false, multiple occurrences are combined with the logical `AND`
-            operation.
-      required:
-        - facet
-    automaticFacetFilters:
-      description: >
-        Filter to be applied to the search.
-
-
-        You can use this to respond to search queries that match a facet value.
-
-        For example, if users search for "comedy", which matches a facet value
-        of the "genre" facet,
-
-        you can filter the results to show the top-ranked comedy movies.
-      oneOf:
-        - type: array
-          items:
-            $ref: '#/components/schemas/automaticFacetFilter'
-        - type: array
-          items:
-            type: string
-    params:
-      type: object
-      description: >
-        Parameters to apply to this search.
-
-
-        You can use all search parameters, plus special `automaticFacetFilters`,
-        `automaticOptionalFacetFilters`, and `query`.
-      additionalProperties: false
-      properties:
-        query:
-          $ref: '#/components/schemas/consequenceQuery'
-        automaticFacetFilters:
-          $ref: '#/components/schemas/automaticFacetFilters'
-        automaticOptionalFacetFilters:
-          $ref: '#/components/schemas/automaticFacetFilters'
-        renderingContent:
-          $ref: '#/components/schemas/renderingContent'
-    consequenceParams:
-      allOf:
-        - $ref: '#/components/schemas/baseSearchParamsWithoutQuery'
-        - $ref: '#/components/schemas/indexSettingsAsSearchParams'
-        - $ref: '#/components/schemas/params'
-    baseRecommendSearchParams:
+        For more information, see
+        [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
+      default: []
+      example:
+        - '*'
+      x-categories:
+        - Faceting
+    BaseRecommendSearchParams:
+      title: baseRecommendSearchParams
       type: object
       additionalProperties: false
       properties:
         similarQuery:
-          $ref: '#/components/schemas/similarQuery'
+          $ref: '#/components/schemas/SimilarQuery'
         filters:
-          $ref: '#/components/schemas/filters'
+          $ref: '#/components/schemas/Filters'
         optionalFilters:
-          $ref: '#/components/schemas/optionalFilters'
+          $ref: '#/components/schemas/OptionalFilters'
         numericFilters:
-          $ref: '#/components/schemas/numericFilters'
+          $ref: '#/components/schemas/NumericFilters'
         tagFilters:
-          $ref: '#/components/schemas/tagFilters'
+          $ref: '#/components/schemas/TagFilters'
         sumOrFiltersScores:
-          $ref: '#/components/schemas/sumOrFiltersScores'
+          $ref: '#/components/schemas/SumOrFiltersScores'
         restrictSearchableAttributes:
-          $ref: '#/components/schemas/restrictSearchableAttributes'
+          $ref: '#/components/schemas/RestrictSearchableAttributes'
         facets:
-          $ref: '#/components/schemas/facets'
+          $ref: '#/components/schemas/Facets'
         facetingAfterDistinct:
-          $ref: '#/components/schemas/facetingAfterDistinct'
+          $ref: '#/components/schemas/FacetingAfterDistinct'
         aroundLatLng:
-          $ref: '#/components/schemas/aroundLatLng'
+          $ref: '#/components/schemas/AroundLatLng'
         aroundLatLngViaIP:
-          $ref: '#/components/schemas/aroundLatLngViaIP'
+          $ref: '#/components/schemas/AroundLatLngViaIP'
         aroundRadius:
-          $ref: '#/components/schemas/aroundRadius'
+          $ref: '#/components/schemas/AroundRadius'
         aroundPrecision:
-          $ref: '#/components/schemas/aroundPrecision'
+          $ref: '#/components/schemas/AroundPrecision'
         minimumAroundRadius:
-          $ref: '#/components/schemas/minimumAroundRadius'
+          $ref: '#/components/schemas/MinimumAroundRadius'
         insideBoundingBox:
-          $ref: '#/components/schemas/insideBoundingBox'
+          $ref: '#/components/schemas/InsideBoundingBox'
         insidePolygon:
-          $ref: '#/components/schemas/insidePolygon'
+          $ref: '#/components/schemas/InsidePolygon'
         naturalLanguages:
-          $ref: '#/components/schemas/naturalLanguages'
+          $ref: '#/components/schemas/NaturalLanguages'
         ruleContexts:
-          $ref: '#/components/schemas/ruleContexts'
+          $ref: '#/components/schemas/SearchParams_ruleContexts'
         personalizationImpact:
-          $ref: '#/components/schemas/personalizationImpact'
+          $ref: '#/components/schemas/PersonalizationImpact'
         userToken:
-          $ref: '#/components/schemas/userToken'
+          $ref: '#/components/schemas/UserToken'
         getRankingInfo:
-          $ref: '#/components/schemas/getRankingInfo'
+          $ref: '#/components/schemas/SearchParams_getRankingInfo'
         synonyms:
-          $ref: '#/components/schemas/synonyms'
+          $ref: '#/components/schemas/Synonyms'
         clickAnalytics:
-          $ref: '#/components/schemas/clickAnalytics'
+          $ref: '#/components/schemas/ClickAnalytics'
         analytics:
-          $ref: '#/components/schemas/analytics'
+          $ref: '#/components/schemas/Analytics'
         analyticsTags:
-          $ref: '#/components/schemas/analyticsTags'
+          $ref: '#/components/schemas/AnalyticsTags'
         percentileComputation:
-          $ref: '#/components/schemas/percentileComputation'
-    IndexSettings_facets:
-      description: Order of facet names.
-      type: object
-      additionalProperties: false
-      properties:
-        order:
-          $ref: '#/components/schemas/order'
-    baseRecommendIndexSettings:
+          $ref: '#/components/schemas/PercentileComputation'
+    BaseRecommendIndexSettings:
+      title: baseRecommendIndexSettings
       type: object
       additionalProperties: false
       properties:
         attributesToRetrieve:
-          $ref: '#/components/schemas/attributesToRetrieve'
+          $ref: '#/components/schemas/AttributesToRetrieve'
         relevancyStrictness:
-          $ref: '#/components/schemas/relevancyStrictness'
+          $ref: '#/components/schemas/RelevancyStrictness'
         attributesToHighlight:
-          $ref: '#/components/schemas/attributesToHighlight'
+          $ref: '#/components/schemas/AttributesToHighlight'
         attributesToSnippet:
-          $ref: '#/components/schemas/attributesToSnippet'
+          $ref: '#/components/schemas/AttributesToSnippet'
         highlightPreTag:
-          $ref: '#/components/schemas/highlightPreTag'
+          $ref: '#/components/schemas/HighlightPreTag'
         highlightPostTag:
-          $ref: '#/components/schemas/highlightPostTag'
+          $ref: '#/components/schemas/HighlightPostTag'
         snippetEllipsisText:
-          $ref: '#/components/schemas/snippetEllipsisText'
+          $ref: '#/components/schemas/SnippetEllipsisText'
         restrictHighlightAndSnippetArrays:
-          $ref: '#/components/schemas/restrictHighlightAndSnippetArrays'
+          $ref: '#/components/schemas/RestrictHighlightAndSnippetArrays'
         minWordSizefor1Typo:
-          $ref: '#/components/schemas/minWordSizefor1Typo'
+          $ref: '#/components/schemas/MinWordSizefor1Typo'
         minWordSizefor2Typos:
-          $ref: '#/components/schemas/minWordSizefor2Typos'
+          $ref: '#/components/schemas/MinWordSizefor2Typos'
         typoTolerance:
-          $ref: '#/components/schemas/typoTolerance'
+          $ref: '#/components/schemas/TypoTolerance'
         allowTyposOnNumericTokens:
-          $ref: '#/components/schemas/allowTyposOnNumericTokens'
+          $ref: '#/components/schemas/AllowTyposOnNumericTokens'
         disableTypoToleranceOnAttributes:
-          $ref: '#/components/schemas/disableTypoToleranceOnAttributes'
+          $ref: '#/components/schemas/DisableTypoToleranceOnAttributes'
         ignorePlurals:
-          $ref: '#/components/schemas/ignorePlurals'
+          $ref: '#/components/schemas/IgnorePlurals'
         removeStopWords:
-          $ref: '#/components/schemas/removeStopWords'
+          $ref: '#/components/schemas/RemoveStopWords'
         queryLanguages:
-          $ref: '#/components/schemas/queryLanguages'
+          $ref: '#/components/schemas/QueryLanguages'
         decompoundQuery:
-          $ref: '#/components/schemas/decompoundQuery'
+          $ref: '#/components/schemas/DecompoundQuery'
         enablePersonalization:
-          $ref: '#/components/schemas/enablePersonalization'
+          $ref: '#/components/schemas/EnablePersonalization'
         queryType:
-          $ref: '#/components/schemas/queryType'
+          $ref: '#/components/schemas/QueryType'
         removeWordsIfNoResults:
-          $ref: '#/components/schemas/removeWordsIfNoResults'
+          $ref: '#/components/schemas/RemoveWordsIfNoResults'
         advancedSyntax:
-          $ref: '#/components/schemas/advancedSyntax'
+          $ref: '#/components/schemas/AdvancedSyntax'
         optionalWords:
-          $ref: '#/components/schemas/optionalWords'
+          $ref: '#/components/schemas/OptionalWords'
         disableExactOnAttributes:
-          $ref: '#/components/schemas/disableExactOnAttributes'
+          $ref: '#/components/schemas/DisableExactOnAttributes'
         exactOnSingleWordQuery:
-          $ref: '#/components/schemas/exactOnSingleWordQuery'
+          $ref: '#/components/schemas/ExactOnSingleWordQuery'
         alternativesAsExact:
           $ref: '#/components/schemas/IndexSettings_alternativesAsExact'
         advancedSyntaxFeatures:
           $ref: '#/components/schemas/IndexSettings_advancedSyntaxFeatures'
         distinct:
-          $ref: '#/components/schemas/distinct'
+          $ref: '#/components/schemas/Distinct'
         replaceSynonymsInHighlight:
-          $ref: '#/components/schemas/replaceSynonymsInHighlight'
+          $ref: '#/components/schemas/ReplaceSynonymsInHighlight'
         minProximity:
-          $ref: '#/components/schemas/minProximity'
+          $ref: '#/components/schemas/MinProximity'
         responseFields:
-          $ref: '#/components/schemas/responseFields'
+          $ref: '#/components/schemas/ResponseFields'
         maxValuesPerFacet:
-          $ref: '#/components/schemas/maxValuesPerFacet'
+          $ref: '#/components/schemas/MaxValuesPerFacet'
         sortFacetValuesBy:
-          $ref: '#/components/schemas/sortFacetValuesBy'
+          $ref: '#/components/schemas/SortFacetValuesBy'
         attributeCriteriaComputedByMinProximity:
-          $ref: '#/components/schemas/attributeCriteriaComputedByMinProximity'
+          $ref: '#/components/schemas/AttributeCriteriaComputedByMinProximity'
         renderingContent:
-          $ref: '#/components/schemas/renderingContent'
+          $ref: '#/components/schemas/RenderingContent'
         enableReRanking:
-          $ref: '#/components/schemas/enableReRanking'
+          $ref: '#/components/schemas/EnableReRanking'
         reRankingApplyFilter:
           oneOf:
-            - $ref: '#/components/schemas/reRankingApplyFilter'
+            - $ref: '#/components/schemas/ReRankingApplyFilter'
             - type: 'null'
-    recommendIndexSettings:
+    RecommendIndexSettings:
+      title: recommendIndexSettings
       description: Index settings.
       allOf:
-        - $ref: '#/components/schemas/baseIndexSettings'
-        - $ref: '#/components/schemas/baseRecommendIndexSettings'
-    recommendSearchParams:
-      title: Search parameters as object
+        - $ref: '#/components/schemas/BaseIndexSettings'
+        - $ref: '#/components/schemas/BaseRecommendIndexSettings'
+    RecommendSearchParams:
+      title: recommendSearchParams
       description: Search parameters for filtering the recommendations.
       allOf:
-        - $ref: '#/components/schemas/baseRecommendSearchParams'
-        - $ref: '#/components/schemas/searchParamsQuery'
-        - $ref: '#/components/schemas/recommendIndexSettings'
+        - $ref: '#/components/schemas/BaseRecommendSearchParams'
+        - $ref: '#/components/schemas/SearchParamsQuery'
+        - $ref: '#/components/schemas/RecommendIndexSettings'
         - type: object
           properties:
             enableRules:
-              $ref: '#/components/schemas/enableRules'
-    baseRecommendRequest:
+              $ref: '#/components/schemas/IndexSettings_enableRules'
+    BaseRecommendRequest:
+      title: baseRecommendRequest
       type: object
       additionalProperties: false
       properties:
         indexName:
-          $ref: '#/components/schemas/indexName'
+          $ref: '#/components/schemas/IndexName'
         threshold:
           type: number
           format: double
@@ -4100,11 +3896,12 @@ components:
 
             the actual number of recommendations may be lower than this value.
         queryParameters:
-          $ref: '#/components/schemas/recommendSearchParams'
+          $ref: '#/components/schemas/RecommendSearchParams'
       required:
         - indexName
         - threshold
-    fbtModel:
+    FbtModel:
+      title: fbtModel
       type: string
       description: >
         Frequently bought together model.
@@ -4114,33 +3911,35 @@ components:
         the item with the ID `objectID`.
       enum:
         - bought-together
-    fallbackParams:
-      title: fallbackParameters
+    FallbackParams:
+      title: fallbackParams
       description: >-
         Search parameters to use for a fallback request if there aren't enough
         recommendations.
       allOf:
-        - $ref: '#/components/schemas/baseRecommendSearchParams'
-        - $ref: '#/components/schemas/searchParamsQuery'
-        - $ref: '#/components/schemas/recommendIndexSettings'
-    frequentlyBoughtTogether:
+        - $ref: '#/components/schemas/BaseRecommendSearchParams'
+        - $ref: '#/components/schemas/SearchParamsQuery'
+        - $ref: '#/components/schemas/RecommendIndexSettings'
+    FrequentlyBoughtTogether:
+      title: frequentlyBoughtTogether
       type: object
       properties:
         model:
-          $ref: '#/components/schemas/fbtModel'
+          $ref: '#/components/schemas/FbtModel'
         objectID:
-          $ref: '#/components/schemas/objectID'
+          $ref: '#/components/schemas/ObjectID'
         fallbackParameters:
-          $ref: '#/components/schemas/fallbackParams'
+          $ref: '#/components/schemas/FallbackParams'
       required:
         - model
         - objectID
-    boughtTogetherQuery:
-      title: Frequently bought together
+    BoughtTogetherQuery:
+      title: boughtTogetherQuery
       allOf:
-        - $ref: '#/components/schemas/baseRecommendRequest'
-        - $ref: '#/components/schemas/frequentlyBoughtTogether'
-    relatedModel:
+        - $ref: '#/components/schemas/BaseRecommendRequest'
+        - $ref: '#/components/schemas/FrequentlyBoughtTogether'
+    RelatedModel:
+      title: relatedModel
       type: string
       description: >
         Related products or similar content model.
@@ -4152,38 +3951,42 @@ components:
         Similarity is determined from the user interactions and attributes.
       enum:
         - related-products
-    relatedProducts:
+    RelatedProducts:
+      title: relatedProducts
       type: object
       properties:
         model:
-          $ref: '#/components/schemas/relatedModel'
+          $ref: '#/components/schemas/RelatedModel'
         objectID:
-          $ref: '#/components/schemas/objectID'
+          $ref: '#/components/schemas/ObjectID'
         fallbackParameters:
-          $ref: '#/components/schemas/fallbackParams'
+          $ref: '#/components/schemas/FallbackParams'
       required:
         - model
         - objectID
-    relatedQuery:
-      title: Related products
+    RelatedQuery:
+      title: relatedQuery
       allOf:
-        - $ref: '#/components/schemas/baseRecommendRequest'
-        - $ref: '#/components/schemas/relatedProducts'
-    facetName:
+        - $ref: '#/components/schemas/BaseRecommendRequest'
+        - $ref: '#/components/schemas/RelatedProducts'
+    FacetName:
+      title: facetName
       type: string
       description: >
         Facet attribute. To be used in combination with `facetValue`.
 
         If specified, only recommendations matching the facet filter will be
         returned.
-    facetValue:
+    FacetValue:
+      title: facetValue
       type: string
       description: >
         Facet value. To be used in combination with `facetName`.
 
         If specified, only recommendations matching the facet filter will be
         returned.
-    trendingItemsModel:
+    TrendingItemsModel:
+      title: trendingItemsModel
       description: >
         Trending items model.
 
@@ -4193,25 +3996,27 @@ components:
       type: string
       enum:
         - trending-items
-    trendingItems:
+    TrendingItems:
+      title: trendingItems
       type: object
       properties:
         facetName:
-          $ref: '#/components/schemas/facetName'
+          $ref: '#/components/schemas/FacetName'
         facetValue:
-          $ref: '#/components/schemas/facetValue'
+          $ref: '#/components/schemas/FacetValue'
         model:
-          $ref: '#/components/schemas/trendingItemsModel'
+          $ref: '#/components/schemas/TrendingItemsModel'
         fallbackParameters:
-          $ref: '#/components/schemas/fallbackParams'
+          $ref: '#/components/schemas/FallbackParams'
       required:
         - model
-    trendingItemsQuery:
-      title: Trending items
+    TrendingItemsQuery:
+      title: trendingItemsQuery
       allOf:
-        - $ref: '#/components/schemas/baseRecommendRequest'
-        - $ref: '#/components/schemas/trendingItems'
-    trendingFacetsModel:
+        - $ref: '#/components/schemas/BaseRecommendRequest'
+        - $ref: '#/components/schemas/TrendingItems'
+    TrendingFacetsModel:
+      title: trendingFacetsModel
       type: string
       description: >
         Trending facet values model.
@@ -4221,12 +4026,13 @@ components:
         attribute.
       enum:
         - trending-facets
-    trendingFacets:
+    TrendingFacets:
+      title: trendingFacets
       type: object
       additionalProperties: false
       properties:
         indexName:
-          $ref: '#/components/schemas/indexName'
+          $ref: '#/components/schemas/IndexName'
         threshold:
           type: number
           format: double
@@ -4254,17 +4060,18 @@ components:
           type: string
           description: Facet attribute for which to retrieve trending facet values.
         model:
-          $ref: '#/components/schemas/trendingFacetsModel'
+          $ref: '#/components/schemas/TrendingFacetsModel'
       required:
         - indexName
         - threshold
         - facetName
         - model
-    trendingFacetsQuery:
-      title: Trending facet values
+    TrendingFacetsQuery:
+      title: trendingFacetsQuery
       allOf:
-        - $ref: '#/components/schemas/trendingFacets'
-    lookingSimilarModel:
+        - $ref: '#/components/schemas/TrendingFacets'
+    LookingSimilarModel:
+      title: lookingSimilarModel
       type: string
       description: >
         Looking similar model.
@@ -4274,37 +4081,41 @@ components:
         `objectID` based on image attributes in your index.
       enum:
         - looking-similar
-    lookingSimilar:
+    LookingSimilar:
+      title: lookingSimilar
       type: object
       properties:
         model:
-          $ref: '#/components/schemas/lookingSimilarModel'
+          $ref: '#/components/schemas/LookingSimilarModel'
         objectID:
-          $ref: '#/components/schemas/objectID'
+          $ref: '#/components/schemas/ObjectID'
         fallbackParameters:
-          $ref: '#/components/schemas/fallbackParams'
+          $ref: '#/components/schemas/FallbackParams'
       required:
         - model
         - objectID
-    lookingSimilarQuery:
-      title: Looking similar
+    LookingSimilarQuery:
+      title: lookingSimilarQuery
       allOf:
-        - $ref: '#/components/schemas/baseRecommendRequest'
-        - $ref: '#/components/schemas/lookingSimilar'
-    recommendationsRequest:
+        - $ref: '#/components/schemas/BaseRecommendRequest'
+        - $ref: '#/components/schemas/LookingSimilar'
+    RecommendationsRequest:
+      title: recommendationsRequest
       oneOf:
-        - $ref: '#/components/schemas/boughtTogetherQuery'
-        - $ref: '#/components/schemas/relatedQuery'
-        - $ref: '#/components/schemas/trendingItemsQuery'
-        - $ref: '#/components/schemas/trendingFacetsQuery'
-        - $ref: '#/components/schemas/lookingSimilarQuery'
-    recommendScore:
+        - $ref: '#/components/schemas/BoughtTogetherQuery'
+        - $ref: '#/components/schemas/RelatedQuery'
+        - $ref: '#/components/schemas/TrendingItemsQuery'
+        - $ref: '#/components/schemas/TrendingFacetsQuery'
+        - $ref: '#/components/schemas/LookingSimilarQuery'
+    RecommendScore:
+      title: recommendScore
       type: number
       format: double
       minimum: 0
       maximum: 100
       description: Recommendation score.
-    recommendHit:
+    RecommendHit:
+      title: recommendHit
       type: object
       description: Recommend hit.
       additionalProperties: true
@@ -4312,55 +4123,58 @@ components:
         - objectID
       properties:
         objectID:
-          $ref: '#/components/schemas/objectID'
+          $ref: '#/components/schemas/ObjectID'
         _highlightResult:
-          $ref: '#/components/schemas/highlightResultMap'
+          $ref: '#/components/schemas/HighlightResultMap'
         _snippetResult:
-          $ref: '#/components/schemas/snippetResultMap'
+          $ref: '#/components/schemas/SnippetResultMap'
         _rankingInfo:
-          $ref: '#/components/schemas/rankingInfo'
+          $ref: '#/components/schemas/RankingInfo'
         _distinctSeqID:
-          $ref: '#/components/schemas/distinctSeqID'
+          $ref: '#/components/schemas/DistinctSeqID'
         _score:
-          $ref: '#/components/schemas/recommendScore'
+          $ref: '#/components/schemas/RecommendScore'
       x-discriminator-fields:
         - objectID
-    trendingFacetHit:
+    TrendingFacetHit:
       type: object
-      title: Trending facet hit
+      title: trendingFacetHit
       description: Trending facet hit.
       required:
         - facetName
         - facetValue
       properties:
         _score:
-          $ref: '#/components/schemas/recommendScore'
+          $ref: '#/components/schemas/RecommendScore'
         facetName:
-          $ref: '#/components/schemas/facetName'
+          $ref: '#/components/schemas/FacetName'
         facetValue:
-          $ref: '#/components/schemas/facetValue'
+          $ref: '#/components/schemas/FacetValue'
       x-discriminator-fields:
         - facetName
         - facetValue
-    recommendationsHit:
+    RecommendationsHit:
+      title: recommendationsHit
       oneOf:
-        - $ref: '#/components/schemas/recommendHit'
-        - $ref: '#/components/schemas/trendingFacetHit'
-    recommendationsHits:
+        - $ref: '#/components/schemas/RecommendHit'
+        - $ref: '#/components/schemas/TrendingFacetHit'
+    RecommendationsHits:
+      title: recommendationsHits
       type: object
       additionalProperties: false
       properties:
         hits:
           type: array
           items:
-            $ref: '#/components/schemas/recommendationsHit'
+            $ref: '#/components/schemas/RecommendationsHit'
       required:
         - hits
-    recommendationsResults:
+    RecommendationsResults:
+      title: recommendationsResults
       allOf:
-        - $ref: '#/components/schemas/baseSearchResponse'
+        - $ref: '#/components/schemas/BaseSearchResponse'
         - $ref: '#/components/schemas/SearchPagination'
-        - $ref: '#/components/schemas/recommendationsHits'
+        - $ref: '#/components/schemas/RecommendationsHits'
   parameters:
     PathInPath:
       name: path

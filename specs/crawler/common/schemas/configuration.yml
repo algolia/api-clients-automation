@@ -1,5 +1,5 @@
 Configuration:
-  title: Configuration
+  title: configuration
   type: object
   description: Crawler configuration.
   required:
@@ -225,7 +225,7 @@ Configuration:
         example: https://www.example.com
 
 PartialConfig:
-  title: PartialConfig
+  title: partialConfig
   description: |
     Crawler configuration to update.
     You can only update top-level configuration properties.
@@ -404,7 +404,7 @@ login:
     - $ref: '#/oauthRequest'
 
 fetchRequest:
-  title: HTTP request
+  title: fetchRequest
   type: object
   description: Information for making a HTTP request for authorization.
   properties:
@@ -426,7 +426,7 @@ fetchRequest:
       timeout: 5000
 
 browserRequest:
-  title: Browser-based
+  title: browserRequest
   type: object
   description: |
     Information for using a web browser for authorization.
@@ -459,7 +459,7 @@ browserRequest:
     password: 'my-password'
 
 oauthRequest:
-  title: OAuth 2.0
+  title: oauthRequest
   type: object
   description: |
     Authorization information for using the [OAuth 2.0 client credentials](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) authorization grant.

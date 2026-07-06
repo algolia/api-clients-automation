@@ -1,5 +1,5 @@
 AddABTestsVariant:
-  title: AddABTestsVariant
+  title: addABTestsVariant
   oneOf:
     - title: Variant
       $ref: '#/abTestsVariant'

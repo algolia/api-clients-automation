@@ -1,5 +1,5 @@
 userId:
-  title: userId title
+  title: userId
   type: object
   description: Unique user ID.
   properties:

@@ -1,5 +1,5 @@
 Task:
-  title: Task
+  title: task
   type: object
   additionalProperties: false
   properties:
@@ -48,7 +48,7 @@ Task:
     - updatedAt
 
 TaskV1:
-  title: TaskV1
+  title: taskV1
   type: object
   additionalProperties: false
   deprecated: true
@@ -92,7 +92,7 @@ TaskV1:
     - updatedAt
 
 Trigger:
-  title: Trigger
+  title: trigger
   description: Trigger that runs the task.
   oneOf:
     - $ref: '#/OnDemandTrigger'
@@ -101,7 +101,7 @@ Trigger:
     - $ref: '#/StreamingTrigger'
 
 TaskCreate:
-  title: TaskCreate
+  title: taskCreate
   type: object
   additionalProperties: false
   description: API request body for creating a task.
@@ -135,7 +135,7 @@ TaskCreate:
     - action
 
 TaskCreateV1:
-  title: TaskCreateV1
+  title: taskCreateV1
   type: object
   additionalProperties: false
   deprecated: true
@@ -165,7 +165,7 @@ TaskCreateV1:
     - action
 
 TaskCreateTrigger:
-  title: TaskCreateTrigger
+  title: taskCreateTrigger
   oneOf:
     - $ref: '#/OnDemandTriggerInput'
     - $ref: '#/ScheduleTriggerInput'
@@ -173,7 +173,7 @@ TaskCreateTrigger:
     - $ref: '#/StreamingTrigger'
 
 TaskCreateResponse:
-  title: TaskCreateResponse
+  title: taskCreateResponse
   type: object
   additionalProperties: false
   description: API response for creating a task.
@@ -187,7 +187,7 @@ TaskCreateResponse:
     - createdAt
 
 TaskReplace:
-  title: TaskReplace
+  title: taskReplace
   type: object
   additionalProperties: false
   description: API request body for updating a task.
@@ -219,7 +219,7 @@ TaskReplace:
 
 # TODO: rename TaskUpdate to TaskPartialUpdate next major
 TaskUpdate:
-  title: TaskUpdate
+  title: taskUpdate
   type: object
   additionalProperties: false
   description: API request body for partially updating a task.
@@ -243,7 +243,7 @@ TaskUpdate:
       $ref: '#/Policies'
 
 TaskUpdateV1:
-  title: TaskUpdateV1
+  title: taskUpdateV1
   type: object
   additionalProperties: false
   deprecated: true
@@ -261,7 +261,7 @@ TaskUpdateV1:
       $ref: '#/failureThreshold'
 
 TaskUpdateResponse:
-  title: TaskUpdateResponse
+  title: taskUpdateResponse
   type: object
   description: API response for updating a task.
   additionalProperties: false
@@ -275,7 +275,7 @@ TaskUpdateResponse:
     - updatedAt
 
 TaskSearch:
-  title: TaskSearch
+  title: taskSearch
   type: object
   additionalProperties: false
   properties:
@@ -287,13 +287,13 @@ TaskSearch:
     - taskIDs
 
 ActionType:
-  title: ActionType
+  title: actionType
   type: string
   description: Action to perform on the Algolia index.
   enum: [replace, save, partial, partialNoCreate, append]
 
 TaskInput:
-  title: TaskInput
+  title: taskInput
   description: Configuration of the task, depending on its type.
   oneOf:
     - $ref: '#/StreamingInput'
@@ -311,7 +311,7 @@ TriggerInput:
     - type
 
 TriggerUpdateInput:
-  title: TriggerUpdateInput
+  title: triggerUpdateInput
   type: object
   additionalProperties: false
   description: Trigger for a task update.
@@ -322,7 +322,7 @@ TriggerUpdateInput:
     - cron
 
 TriggerType:
-  title: TriggerType
+  title: triggerType
   type: string
   description: |
     Task trigger, describing when a task should run.
@@ -343,34 +343,34 @@ TriggerType:
 # schedule trigger
 
 LastRun:
-  title: LastRun
+  title: lastRun
   description: The last time the scheduled task ran in RFC 3339 format.
   type: string
 
 NextRun:
-  title: NextRun
+  title: nextRun
   description: The next scheduled run of the task in RFC 3339 format.
   type: string
 
 Cron:
-  title: Cron
+  title: cron
   type: string
   description: Cron expression for the task's schedule.
   example: '* * 1 * *'
 
 Enabled:
-  title: Enabled
+  title: enabled
   type: boolean
   description: Whether the task is enabled.
 
 ScheduleTriggerType:
-  title: ScheduleTriggerType
+  title: scheduleTriggerType
   type: string
   description: Task runs on a schedule.
   enum: [schedule]
 
 ScheduleTriggerInput:
-  title: ScheduleTriggerInput
+  title: scheduleTriggerInput
   type: object
   additionalProperties: false
   description: Trigger input for scheduled tasks.
@@ -386,7 +386,7 @@ ScheduleTriggerInput:
     - cron
 
 ScheduleTrigger:
-  title: ScheduleTrigger
+  title: scheduleTrigger
   type: object
   additionalProperties: false
   description: Trigger information for scheduled tasks.
@@ -407,13 +407,13 @@ ScheduleTrigger:
 # on demand trigger
 
 OnDemandTriggerType:
-  title: OnDemandTriggerType
+  title: onDemandTriggerType
   type: string
   description: Task is run manually, with the `/run` endpoint.
   enum: [onDemand]
 
 OnDemandTriggerInput:
-  title: OnDemandTriggerInput
+  title: onDemandTriggerInput
   type: object
   additionalProperties: false
   description: Trigger information for manually-triggered tasks.
@@ -424,7 +424,7 @@ OnDemandTriggerInput:
     - type
 
 OnDemandTrigger:
-  title: OnDemandTrigger
+  title: onDemandTrigger
   type: object
   additionalProperties: false
   description: Trigger information for manually-triggered tasks.
@@ -439,13 +439,13 @@ OnDemandTrigger:
 # subscription trigger
 
 SubscriptionTriggerType:
-  title: SubscriptionTriggerType
+  title: subscriptionTriggerType
   type: string
   description: Task runs after receiving subscribed event.
   enum: [subscription]
 
 SubscriptionTrigger:
-  title: SubscriptionTrigger
+  title: subscriptionTrigger
   type: object
   additionalProperties: false
   description: Trigger input for subscription tasks.
@@ -458,13 +458,13 @@ SubscriptionTrigger:
 # streaming trigger
 
 StreamingTriggerType:
-  title: StreamingTriggerType
+  title: streamingTriggerType
   type: string
   description: Task runs continuously.
   enum: [streaming]
 
 StreamingTrigger:
-  title: StreamingTrigger
+  title: streamingTrigger
   type: object
   additionalProperties: false
   description: Trigger input for continuously running tasks.
@@ -477,7 +477,7 @@ StreamingTrigger:
 # Task input
 
 MappingFieldDirective:
-  title: MappingFieldDirective
+  title: mappingFieldDirective
   type: object
   additionalProperties: false
   description: Describes how a field should be resolved by applying a set of directives.
@@ -494,7 +494,7 @@ MappingFieldDirective:
     - value
 
 MappingKitAction:
-  title: MappingKitAction
+  title: mappingKitAction
   type: object
   additionalProperties: false
   description: Describes how a destination object should be resolved by means of applying a set of directives.
@@ -518,13 +518,13 @@ MappingKitAction:
     - fieldDirectives
 
 MappingFormatSchema:
-  title: MappingFormatSchema
+  title: mappingFormatSchema
   type: string
   description: Mapping format schema.
   enum: ['mappingkit/v1']
 
 MappingInput:
-  title: MappingInput
+  title: mappingInput
   type: object
   additionalProperties: false
   description: Transformations to apply to the source, serialized as a JSON string.
@@ -543,7 +543,7 @@ MappingInput:
     - actions
 
 StreamingInput:
-  title: Streaming input
+  title: streamingInput
   type: object
   additionalProperties: false
   description: Input for a `streaming` task whose source is of type `ga4BigqueryExport` and for which extracted data is continuously streamed.
@@ -556,7 +556,7 @@ StreamingInput:
     - mapping
 
 DockerStreamsInput:
-  title: DockerStreamsInput title
+  title: dockerStreamsInput
   description: The selected streams of an airbyte connector.
   type: object
   properties:
@@ -570,7 +570,7 @@ DockerStreamsInput:
     - streams
 
 DockerStreams:
-  title: DockerStreams
+  title: dockerStreams
   type: object
   properties:
     name:
@@ -588,7 +588,7 @@ DockerStreams:
     - syncMode
 
 DockerStreamsSyncMode:
-  title: DockerStreamsSyncMode
+  title: dockerStreamsSyncMode
   type: string
   description: The strategy to use to fetch the data.
   enum: [incremental, fullTable]
@@ -601,7 +601,7 @@ failureThreshold:
   description: Maximum accepted percentage of failures for a task run to finish successfully.
 
 ShopifyInput:
-  title: Shopify input
+  title: shopifyInput
   type: object
   additionalProperties: false
   description: Represents the required elements of the task input when using a `shopify` source.
@@ -617,7 +617,7 @@ ShopifyInput:
     - market
 
 ShopifyMetafield:
-  title: ShopifyMetafield
+  title: shopifyMetafield
   type: object
   additionalProperties: false
   description: Represents a metafield in Shopify.
@@ -634,7 +634,7 @@ ShopifyMetafield:
     - value
 
 ShopifyMarket:
-  title: ShopifyMarket
+  title: shopifyMarket
   type: object
   additionalProperties: false
   description: Represents a market in Shopify.
@@ -657,7 +657,7 @@ ShopifyMarket:
     - locales
 
 Notifications:
-  title: Notifications
+  title: notifications
   type: object
   additionalProperties: false
   description: Notifications settings for a task.
@@ -674,7 +674,7 @@ Notifications:
     - email
 
 Policies:
-  title: Policies
+  title: policies
   type: object
   additionalProperties: false
   description: Set of rules for a task.
@@ -707,7 +707,7 @@ PushTaskPayload:
     - records
 
 RunTaskPayload:
-  title: RunTaskPayload
+  title: runTaskPayload
   type: object
   additionalProperties: false
   properties:

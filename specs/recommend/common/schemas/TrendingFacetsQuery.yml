@@ -1,5 +1,5 @@
 trendingFacetsQuery:
-  title: Trending facet values
+  title: trendingFacetsQuery
   allOf:
     - $ref: '#/trendingFacets'
 

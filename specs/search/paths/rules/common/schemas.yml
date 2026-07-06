@@ -176,7 +176,7 @@ promote:
     - $ref: '#/promoteObjectID'
 
 promoteObjectID:
-  title: promoteObjectID title
+  title: promoteObjectID
   description: Record to promote.
   type: object
   additionalProperties: false
@@ -192,7 +192,7 @@ promoteObjectID:
     - objectID
 
 promoteObjectIDs:
-  title: promoteObjectIDs title
+  title: promoteObjectIDs
   description: Records to promote.
   type: object
   additionalProperties: false

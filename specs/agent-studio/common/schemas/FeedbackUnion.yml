@@ -1,5 +1,5 @@
 FeedbackUnion:
-  title: FeedbackUnion
+  title: feedbackUnion
   oneOf:
     - items:
         $ref: 'FeedbackResponse.yml#/FeedbackResponse'

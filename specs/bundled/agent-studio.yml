@@ -1654,6 +1654,7 @@ components:
         reference.
   schemas:
     AgentStatus:
+      title: agentStatus
       type: string
       enum:
         - draft
@@ -1742,7 +1743,7 @@ components:
       required:
         - type
         - name
-      title: algoliaRecommendToolConfig
+      title: algoliaRecommendToolConfig-Input
       description: |-
         Configuration for the Algolia Recommend tool.
         Allows specifying recommend models and related parameters.
@@ -1834,6 +1835,7 @@ components:
       title: supportedLanguage
       description: ISO code for a supported language.
     QueryLanguagesUnion:
+      title: queryLanguagesUnion
       oneOf:
         - items:
             $ref: '#/components/schemas/SupportedLanguage'
@@ -1847,6 +1849,7 @@ components:
       title: advancedSyntaxFeatures
       description: AdvancedSyntaxFeatures.
     AdvancedSyntaxFeaturesUnion:
+      title: advancedSyntaxFeaturesUnion
       oneOf:
         - items:
             $ref: '#/components/schemas/AdvancedSyntaxFeatures'
@@ -1862,6 +1865,7 @@ components:
       title: alternativesAsExact
       description: AlternativesAsExact.
     AlternativesAsExactUnion:
+      title: alternativesAsExactUnion
       oneOf:
         - items:
             $ref: '#/components/schemas/AlternativesAsExact'
@@ -1883,11 +1887,13 @@ components:
         typos.   With `strict`, the Typo ranking criterion is applied first in
         the `ranking` setting.
     TypoToleranceUnion:
+      title: typoToleranceUnion
       oneOf:
         - type: boolean
         - $ref: '#/components/schemas/TypoToleranceEnum'
         - type: 'null'
     FacetFiltersUnion:
+      title: facetFiltersUnion
       oneOf:
         - items:
             $ref: '#/components/schemas/FacetFiltersUnion'
@@ -1907,6 +1913,7 @@ components:
       title: facets
       description: Order of facet names.
     FacetsUnion:
+      title: facetsUnion
       oneOf:
         - items:
             type: string
@@ -1914,6 +1921,7 @@ components:
         - $ref: '#/components/schemas/Facets'
         - type: 'null'
     NumericFiltersUnion:
+      title: numericFiltersUnion
       oneOf:
         - type: string
         - type: array
@@ -1921,6 +1929,7 @@ components:
             $ref: '#/components/schemas/NumericFiltersUnion'
         - type: 'null'
     TagFiltersUnion:
+      title: tagFiltersUnion
       oneOf:
         - type: string
         - type: array
@@ -1928,11 +1937,13 @@ components:
             $ref: '#/components/schemas/TagFiltersUnion'
         - type: 'null'
     AroundRadiusUnion:
+      title: aroundRadiusUnion
       oneOf:
         - type: integer
         - type: string
         - type: 'null'
     AroundPrecisionUnion:
+      title: aroundPrecisionUnion
       oneOf:
         - type: integer
         - items:
@@ -1942,6 +1953,7 @@ components:
           type: array
         - type: 'null'
     InsideBoundingBoxUnion:
+      title: insideBoundingBoxUnion
       oneOf:
         - type: string
         - items:
@@ -1951,6 +1963,7 @@ components:
           type: array
         - type: 'null'
     InsidePolygonUnion:
+      title: insidePolygonUnion
       oneOf:
         - type: string
         - items:
@@ -1960,11 +1973,13 @@ components:
           type: array
         - type: 'null'
     DistinctUnion:
+      title: distinctUnion
       oneOf:
         - type: boolean
         - type: integer
         - type: 'null'
     ReRankingApplyFilterUnion:
+      title: reRankingApplyFilterUnion
       oneOf:
         - type: string
         - items:
@@ -1973,6 +1988,7 @@ components:
           type: array
         - type: 'null'
     RemoveStopWordsUnion:
+      title: removeStopWordsUnion
       oneOf:
         - type: boolean
         - items:
@@ -1980,6 +1996,7 @@ components:
           type: array
         - type: 'null'
     IgnorePluralsUnion:
+      title: ignorePluralsUnion
       oneOf:
         - type: boolean
         - items:
@@ -2006,6 +2023,7 @@ components:
         information, see [Remove words to improve
         results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results).
     OptionalWordsUnion:
+      title: optionalWordsUnion
       oneOf:
         - type: string
         - items:
@@ -2013,6 +2031,7 @@ components:
           type: array
         - type: 'null'
     OptionalFiltersUnion:
+      title: optionalFiltersUnion
       oneOf:
         - type: string
         - type: array
@@ -2039,6 +2058,7 @@ components:
         word.   Only exact matches will be highlighted,   partial and prefix
         matches won't.
     NaturalLanguagesUnion:
+      title: naturalLanguagesUnion
       oneOf:
         - items:
             $ref: '#/components/schemas/SupportedLanguage'
@@ -2604,10 +2624,12 @@ components:
       type: object
       title: mcpToolConfig
     ToolConfig:
+      title: toolConfig
       oneOf:
         - $ref: '#/components/schemas/McpToolConfig'
         - type: boolean
     AllowedToolsUnion:
+      title: allowedToolsUnion
       oneOf:
         - additionalProperties:
             $ref: '#/components/schemas/ToolConfig'
@@ -2677,6 +2699,7 @@ components:
         Exists only to ensure that when you change branch from toolX to
         feat/toolY, your config stays valid.
     ToolConfigInput:
+      title: toolConfigInput
       oneOf:
         - $ref: '#/components/schemas/ClientSideToolConfig'
         - $ref: '#/components/schemas/AlgoliaSearchToolConfig'
@@ -2802,6 +2825,7 @@ components:
         - pagination
       title: paginatedAgentsResponse
     LocationItemUnion:
+      title: locationItemUnion
       oneOf:
         - type: string
         - type: integer
@@ -3037,6 +3061,7 @@ components:
       title: allowedDomainBulkDelete
       description: Request body for bulk delete by IDs.
     AgentIdUnion:
+      title: agentIdUnion
       oneOf:
         - type: string
         - const: test
@@ -3173,12 +3198,14 @@ components:
         - toolInvocation
       title: toolInvocationPartV4
     AssistantPartV4:
+      title: assistantPartV4
       oneOf:
         - $ref: '#/components/schemas/StepStartPartV4'
         - $ref: '#/components/schemas/ReasoningPartV4'
         - $ref: '#/components/schemas/TextPartV4'
         - $ref: '#/components/schemas/ToolInvocationPartV4'
     ToolInvocationsUnion:
+      title: toolInvocationsUnion
       oneOf:
         - items:
             $ref: '#/components/schemas/ToolInvocationV4'
@@ -3239,6 +3266,7 @@ components:
         - content
       title: userMessageV4
     MessageV4:
+      title: messageV4
       oneOf:
         - $ref: '#/components/schemas/UserMessageV4'
         - $ref: '#/components/schemas/AssistantMessageV4'
@@ -3285,6 +3313,7 @@ components:
         - text
       title: reasoningPartV5
     ToolState:
+      title: toolState
       type: string
       enum:
         - input-streaming
@@ -3332,6 +3361,7 @@ components:
       title: toolPartV5
       description: Model for tool invocation in a Message.
     AssistantPartV5:
+      title: assistantPartV5
       oneOf:
         - $ref: '#/components/schemas/StepStartPartV5'
         - $ref: '#/components/schemas/TextPartV5'
@@ -3410,6 +3440,7 @@ components:
       required:
         - role
     MessageV5:
+      title: messageV5
       oneOf:
         - $ref: '#/components/schemas/UserMessageV5'
         - $ref: '#/components/schemas/AssistantMessageV5'
@@ -3419,6 +3450,7 @@ components:
           assistant: '#/components/schemas/AssistantMessageV5'
           user: '#/components/schemas/UserMessageV5'
     MessagesUnion:
+      title: messagesUnion
       oneOf:
         - items:
             $ref: '#/components/schemas/MessageV4'
@@ -3469,6 +3501,7 @@ components:
         A subset of SearchParameters of specific params we allow for runtime
         override.
     SearchParametersOverridesMapNullable:
+      title: searchParametersOverridesMapNullable
       oneOf:
         - additionalProperties:
             $ref: '#/components/schemas/SearchParametersOverrides'
@@ -3565,6 +3598,7 @@ components:
         - updatedAt
       title: feedbackResponse
     FeedbackUnion:
+      title: feedbackUnion
       oneOf:
         - items:
             $ref: '#/components/schemas/FeedbackResponse'
@@ -3832,6 +3866,7 @@ components:
         - output
       title: toolResultPart
     MessagePart:
+      title: messagePart
       oneOf:
         - $ref: '#/components/schemas/TextPart'
         - $ref: '#/components/schemas/ToolCallPart'
@@ -3995,6 +4030,7 @@ components:
       type: object
       title: applicationConfigPatch
     VoteEnum:
+      title: voteEnum
       type: integer
       enum:
         - 0
@@ -4135,6 +4171,7 @@ components:
       title: anthropicProviderInput
       description: Anthropic-specific provider input.
     ProviderInput:
+      title: providerInput
       oneOf:
         - $ref: '#/components/schemas/OpenAIProviderInput'
         - $ref: '#/components/schemas/AzureOpenAIProviderInput'
@@ -4173,7 +4210,7 @@ components:
         - input
         - createdAt
         - updatedAt
-      title: provider
+      title: providerAuthenticationResponse
     PaginatedProviderAuthenticationsResponse:
       properties:
         data:
@@ -4187,7 +4224,7 @@ components:
       required:
         - data
         - pagination
-      title: paginatedProviders
+      title: paginatedProviderAuthenticationsResponse
     ProviderName:
       type: string
       enum:
@@ -4217,6 +4254,7 @@ components:
         - input
       title: providerAuthenticationCreate
     ProviderInputNullable:
+      title: providerInputNullable
       oneOf:
         - $ref: '#/components/schemas/OpenAIProviderInput'
         - $ref: '#/components/schemas/AzureOpenAIProviderInput'
@@ -4237,7 +4275,7 @@ components:
           $ref: '#/components/schemas/ProviderInputNullable'
       additionalProperties: false
       type: object
-      title: providerPatch
+      title: providerAuthenticationPatch
     SecretKeyResponse:
       properties:
         id:
@@ -4522,6 +4560,7 @@ components:
         - memories
       title: userDataResponse
     ErrorBase:
+      title: errorBase
       description: Error.
       type: object
       x-keep-model: true

@@ -394,14 +394,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/searchParams'
+              $ref: '#/components/schemas/SearchParams'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/searchResponse'
+                $ref: '#/components/schemas/SearchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -454,7 +454,7 @@ paths:
                   items:
                     $ref: '#/components/schemas/SearchQuery'
                 strategy:
-                  $ref: '#/components/schemas/searchStrategy'
+                  $ref: '#/components/schemas/SearchStrategy'
               required:
                 - requests
       responses:
@@ -470,7 +470,7 @@ paths:
                   results:
                     type: array
                     items:
-                      $ref: '#/components/schemas/searchResult'
+                      $ref: '#/components/schemas/SearchResult'
                 required:
                   - results
         '400':
@@ -521,18 +521,18 @@ paths:
               additionalProperties: false
               properties:
                 params:
-                  $ref: '#/components/schemas/paramsAsString'
+                  $ref: '#/components/schemas/ParamsAsString'
                 facetQuery:
-                  $ref: '#/components/schemas/facetQuery'
+                  $ref: '#/components/schemas/FacetQuery'
                 maxFacetHits:
-                  $ref: '#/components/schemas/maxFacetHits'
+                  $ref: '#/components/schemas/MaxFacetHits'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/searchForFacetValuesResponse'
+                $ref: '#/components/schemas/SearchForFacetValuesResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -604,14 +604,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/browseParams'
+              $ref: '#/components/schemas/BrowseParams'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/browseResponse'
+                $ref: '#/components/schemas/BrowseResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -682,11 +682,11 @@ paths:
                 additionalProperties: false
                 properties:
                   createdAt:
-                    $ref: '#/components/schemas/createdAt'
+                    $ref: '#/components/schemas/CreatedAt'
                   taskID:
-                    $ref: '#/components/schemas/taskID'
+                    $ref: '#/components/schemas/TaskID'
                   objectID:
-                    $ref: '#/components/schemas/objectID'
+                    $ref: '#/components/schemas/ObjectID'
                 required:
                   - taskID
                   - createdAt
@@ -911,7 +911,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/deleteByParams'
+              $ref: '#/components/schemas/DeleteByParams'
       responses:
         '200':
           $ref: '#/components/responses/UpdatedAt'
@@ -1076,7 +1076,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/batchWriteParams'
+              $ref: '#/components/schemas/BatchWriteParams'
         required: true
       responses:
         '200':
@@ -1084,7 +1084,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/batchResponse'
+                $ref: '#/components/schemas/BatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1133,12 +1133,12 @@ paths:
                     additionalProperties: false
                     properties:
                       action:
-                        $ref: '#/components/schemas/action'
+                        $ref: '#/components/schemas/Action'
                       body:
                         type: object
                         description: Operation arguments (varies with specified `action`).
                       indexName:
-                        $ref: '#/components/schemas/indexName'
+                        $ref: '#/components/schemas/IndexName'
                     required:
                       - action
                       - indexName
@@ -1175,9 +1175,9 @@ paths:
                     type: object
                     description: Task IDs. One for each index.
                     additionalProperties:
-                      $ref: '#/components/schemas/taskID'
+                      $ref: '#/components/schemas/TaskID'
                   objectIDs:
-                    $ref: '#/components/schemas/objectIDs'
+                    $ref: '#/components/schemas/ObjectIDs'
                 required:
                   - taskID
                   - objectIDs
@@ -1304,7 +1304,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/settingsResponse'
+                $ref: '#/components/schemas/SettingsResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1339,7 +1339,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/indexSettings'
+              $ref: '#/components/schemas/IndexSettings'
       responses:
         '200':
           $ref: '#/components/responses/UpdatedAt'
@@ -1368,14 +1368,14 @@ paths:
         operation](https://www.algolia.com/doc/rest-api/search/search-synonyms).
       parameters:
         - $ref: '#/components/parameters/IndexName'
-        - $ref: '#/components/parameters/parameters_ObjectID'
+        - $ref: '#/components/parameters/ObjectID-2'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/synonymHit'
+                $ref: '#/components/schemas/SynonymHit'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1401,14 +1401,14 @@ paths:
         operation](https://www.algolia.com/doc/rest-api/search/save-synonyms).
       parameters:
         - $ref: '#/components/parameters/IndexName'
-        - $ref: '#/components/parameters/parameters_ObjectID'
+        - $ref: '#/components/parameters/ObjectID-2'
         - $ref: '#/components/parameters/ForwardToReplicas'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/synonymHit'
+              $ref: '#/components/schemas/SynonymHit'
       responses:
         '200':
           description: OK
@@ -1420,11 +1420,11 @@ paths:
                 additionalProperties: false
                 properties:
                   taskID:
-                    $ref: '#/components/schemas/taskID'
+                    $ref: '#/components/schemas/TaskID'
                   updatedAt:
-                    $ref: '#/components/schemas/updatedAt'
+                    $ref: '#/components/schemas/UpdatedAt'
                   id:
-                    $ref: '#/components/schemas/id'
+                    $ref: '#/components/schemas/Id'
                 required:
                   - taskID
                   - updatedAt
@@ -1451,7 +1451,7 @@ paths:
         operation](https://www.algolia.com/doc/rest-api/search/search-synonyms).
       parameters:
         - $ref: '#/components/parameters/IndexName'
-        - $ref: '#/components/parameters/parameters_ObjectID'
+        - $ref: '#/components/parameters/ObjectID-2'
         - $ref: '#/components/parameters/ForwardToReplicas'
       responses:
         '200':
@@ -1489,7 +1489,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/synonymHits'
+              $ref: '#/components/schemas/SynonymHits'
       responses:
         '200':
           $ref: '#/components/responses/UpdatedAt'
@@ -1548,20 +1548,20 @@ paths:
               additionalProperties: false
               properties:
                 query:
-                  $ref: '#/components/schemas/query'
+                  $ref: '#/components/schemas/Query'
                 type:
                   $ref: '#/components/schemas/SynonymType'
                 page:
-                  $ref: '#/components/schemas/page'
+                  $ref: '#/components/schemas/Page'
                 hitsPerPage:
-                  $ref: '#/components/schemas/hitsPerPage'
+                  $ref: '#/components/schemas/HitsPerPage'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/searchSynonymsResponse'
+                $ref: '#/components/schemas/SearchSynonymsResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1597,7 +1597,7 @@ paths:
                     type: array
                     description: API keys.
                     items:
-                      $ref: '#/components/schemas/getApiKeyResponse'
+                      $ref: '#/components/schemas/GetApiKeyResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1619,14 +1619,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/apiKey'
+              $ref: '#/components/schemas/ApiKey'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/addApiKeyResponse'
+                $ref: '#/components/schemas/AddApiKeyResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1662,7 +1662,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getApiKeyResponse'
+                $ref: '#/components/schemas/GetApiKeyResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1689,7 +1689,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/apiKey'
+              $ref: '#/components/schemas/ApiKey'
       responses:
         '200':
           description: OK
@@ -1704,9 +1704,9 @@ paths:
                   - updatedAt
                 properties:
                   key:
-                    $ref: '#/components/schemas/keyString'
+                    $ref: '#/components/schemas/KeyString'
                   updatedAt:
-                    $ref: '#/components/schemas/updatedAt'
+                    $ref: '#/components/schemas/UpdatedAt'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1738,7 +1738,7 @@ paths:
                   - deletedAt
                 properties:
                   deletedAt:
-                    $ref: '#/components/schemas/deletedAt'
+                    $ref: '#/components/schemas/DeletedAt'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1774,7 +1774,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/addApiKeyResponse'
+                $ref: '#/components/schemas/AddApiKeyResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1805,7 +1805,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/rule'
+                $ref: '#/components/schemas/Rule'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1838,7 +1838,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/rule'
+              $ref: '#/components/schemas/Rule'
       responses:
         '200':
           $ref: '#/components/responses/UpdatedAt'
@@ -1912,7 +1912,7 @@ paths:
               type: array
               description: Rules to add or replace.
               items:
-                $ref: '#/components/schemas/rule'
+                $ref: '#/components/schemas/Rule'
       responses:
         '200':
           $ref: '#/components/responses/UpdatedAt'
@@ -1971,17 +1971,17 @@ paths:
               additionalProperties: false
               properties:
                 query:
-                  $ref: '#/components/schemas/parameters_query'
+                  $ref: '#/components/schemas/Parameters_query'
                 anchoring:
-                  $ref: '#/components/schemas/anchoring'
+                  $ref: '#/components/schemas/Anchoring'
                 context:
                   type: string
                   description: Only return rules that match the context (exact match).
                   example: mobile
                 page:
-                  $ref: '#/components/schemas/parameters_page'
+                  $ref: '#/components/schemas/Parameters_page'
                 hitsPerPage:
-                  $ref: '#/components/schemas/parameters_hitsPerPage'
+                  $ref: '#/components/schemas/Parameters_hitsPerPage'
                 enabled:
                   oneOf:
                     - type: boolean
@@ -2010,7 +2010,7 @@ paths:
                     type: array
                     description: Rules that matched the search criteria.
                     items:
-                      $ref: '#/components/schemas/rule'
+                      $ref: '#/components/schemas/Rule'
                   nbHits:
                     type: integer
                     description: Number of rules that matched the search criteria.
@@ -2071,9 +2071,9 @@ paths:
                       - body
                     properties:
                       action:
-                        $ref: '#/components/schemas/dictionaryAction'
+                        $ref: '#/components/schemas/DictionaryAction'
                       body:
-                        $ref: '#/components/schemas/dictionaryEntry'
+                        $ref: '#/components/schemas/DictionaryEntry'
       responses:
         '200':
           $ref: '#/components/responses/UpdatedAt'
@@ -2111,20 +2111,20 @@ paths:
               additionalProperties: false
               properties:
                 query:
-                  $ref: '#/components/schemas/query'
+                  $ref: '#/components/schemas/Query'
                 page:
-                  $ref: '#/components/schemas/page'
+                  $ref: '#/components/schemas/Page'
                 hitsPerPage:
-                  $ref: '#/components/schemas/hitsPerPage'
+                  $ref: '#/components/schemas/HitsPerPage'
                 language:
-                  $ref: '#/components/schemas/supportedLanguage'
+                  $ref: '#/components/schemas/SupportedLanguage'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/searchDictionaryEntriesResponse'
+                $ref: '#/components/schemas/SearchDictionaryEntriesResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -2157,7 +2157,7 @@ paths:
                   - disableStandardEntries
                 properties:
                   disableStandardEntries:
-                    $ref: '#/components/schemas/standardEntries'
+                    $ref: '#/components/schemas/StandardEntries'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -2191,7 +2191,7 @@ paths:
                 - disableStandardEntries
               properties:
                 disableStandardEntries:
-                  $ref: '#/components/schemas/standardEntries'
+                  $ref: '#/components/schemas/StandardEntries'
       responses:
         '200':
           $ref: '#/components/responses/UpdatedAt'
@@ -2228,7 +2228,7 @@ paths:
                 type: object
                 additionalProperties:
                   x-additionalPropertiesName: language
-                  $ref: '#/components/schemas/languages'
+                  $ref: '#/components/schemas/Languages'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -2265,7 +2265,7 @@ paths:
               additionalProperties: false
               properties:
                 cluster:
-                  $ref: '#/components/schemas/clusterName'
+                  $ref: '#/components/schemas/ClusterName'
               required:
                 - cluster
       responses:
@@ -2312,7 +2312,7 @@ paths:
                     type: array
                     description: User IDs.
                     items:
-                      $ref: '#/components/schemas/userId'
+                      $ref: '#/components/schemas/UserId'
                 required:
                   - userIDs
         '400':
@@ -2349,7 +2349,7 @@ paths:
               additionalProperties: false
               properties:
                 cluster:
-                  $ref: '#/components/schemas/clusterName'
+                  $ref: '#/components/schemas/ClusterName'
                 users:
                   type: array
                   description: User IDs to assign.
@@ -2413,7 +2413,7 @@ paths:
                         x-additionalPropertiesName: cluster
                         type: array
                         items:
-                          $ref: '#/components/schemas/userId'
+                          $ref: '#/components/schemas/UserId'
                 required:
                   - topUsers
         '400':
@@ -2449,7 +2449,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/userId'
+                $ref: '#/components/schemas/UserId'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -2480,7 +2480,7 @@ paths:
                 additionalProperties: false
                 properties:
                   deletedAt:
-                    $ref: '#/components/schemas/deletedAt'
+                    $ref: '#/components/schemas/DeletedAt'
                 required:
                   - deletedAt
         '400':
@@ -2518,7 +2518,7 @@ paths:
                       users with the highest number of records per cluster as
                       values.
                     items:
-                      $ref: '#/components/schemas/clusterName'
+                      $ref: '#/components/schemas/ClusterName'
                 required:
                   - topUsers
         '400':
@@ -2565,11 +2565,11 @@ paths:
                 query:
                   type: string
                 clusterName:
-                  $ref: '#/components/schemas/clusterName'
+                  $ref: '#/components/schemas/ClusterName'
                 page:
-                  $ref: '#/components/schemas/page'
+                  $ref: '#/components/schemas/Page'
                 hitsPerPage:
-                  $ref: '#/components/schemas/hitsPerPage'
+                  $ref: '#/components/schemas/HitsPerPage'
               required:
                 - query
       responses:
@@ -2590,13 +2590,13 @@ paths:
                       type: object
                       properties:
                         userID:
-                          $ref: '#/components/schemas/userID'
+                          $ref: '#/components/schemas/UserID'
                         clusterName:
-                          $ref: '#/components/schemas/clusterName'
+                          $ref: '#/components/schemas/ClusterName'
                         nbRecords:
-                          $ref: '#/components/schemas/nbRecords'
+                          $ref: '#/components/schemas/NbRecords'
                         dataSize:
-                          $ref: '#/components/schemas/dataSize'
+                          $ref: '#/components/schemas/DataSize'
                         objectID:
                           type: string
                           description: userID of the requested user. Same as userID.
@@ -2605,9 +2605,9 @@ paths:
                           type: object
                           properties:
                             userID:
-                              $ref: '#/components/schemas/highlightResult'
+                              $ref: '#/components/schemas/HighlightResult'
                             clusterName:
-                              $ref: '#/components/schemas/highlightResult'
+                              $ref: '#/components/schemas/HighlightResult'
                           required:
                             - userID
                             - clusterName
@@ -2619,13 +2619,13 @@ paths:
                         - objectID
                         - _highlightResult
                   nbHits:
-                    $ref: '#/components/schemas/nbHits'
+                    $ref: '#/components/schemas/NbHits'
                   page:
-                    $ref: '#/components/schemas/page'
+                    $ref: '#/components/schemas/Page'
                   hitsPerPage:
-                    $ref: '#/components/schemas/parameters_hitsPerPage'
+                    $ref: '#/components/schemas/Parameters_hitsPerPage'
                   updatedAt:
-                    $ref: '#/components/schemas/updatedAt'
+                    $ref: '#/components/schemas/UpdatedAt'
                 required:
                   - hits
                   - nbHits
@@ -2710,7 +2710,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/sources'
+                $ref: '#/components/schemas/Sources'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -2733,7 +2733,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/sources'
+              $ref: '#/components/schemas/Sources'
       responses:
         '200':
           description: OK
@@ -2747,7 +2747,7 @@ paths:
                   - updatedAt
                 properties:
                   updatedAt:
-                    $ref: '#/components/schemas/updatedAt'
+                    $ref: '#/components/schemas/UpdatedAt'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -2771,7 +2771,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/source'
+              $ref: '#/components/schemas/Source'
       responses:
         '200':
           $ref: '#/components/responses/CreatedAt'
@@ -2813,7 +2813,7 @@ paths:
                   - deletedAt
                 properties:
                   deletedAt:
-                    $ref: '#/components/schemas/deletedAt'
+                    $ref: '#/components/schemas/DeletedAt'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -2874,7 +2874,7 @@ paths:
             Type of log entries to retrieve.
             By default, all log entries are retrieved.
           schema:
-            $ref: '#/components/schemas/logType'
+            $ref: '#/components/schemas/LogType'
       responses:
         '200':
           description: OK
@@ -3171,13 +3171,13 @@ paths:
               additionalProperties: false
               properties:
                 operation:
-                  $ref: '#/components/schemas/operationType'
+                  $ref: '#/components/schemas/OperationType'
                 destination:
-                  $ref: '#/components/schemas/indexName'
+                  $ref: '#/components/schemas/IndexName'
                 scope:
                   type: array
                   items:
-                    $ref: '#/components/schemas/scopeType'
+                    $ref: '#/components/schemas/ScopeType'
                   description: >
                     **Only for copying.**
 
@@ -3225,7 +3225,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listIndicesResponse'
+                $ref: '#/components/schemas/ListIndicesResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -3267,7 +3267,7 @@ paths:
           description: Whether the API key was created, updated, or deleted.
           required: true
           schema:
-            $ref: '#/components/schemas/apiKeyOperation'
+            $ref: '#/components/schemas/ApiKeyOperation'
         - in: query
           name: apiKey
           description: >-
@@ -3275,14 +3275,14 @@ paths:
             operation, to check if the `key` has been updated.
           required: false
           schema:
-            $ref: '#/components/schemas/apiKey'
+            $ref: '#/components/schemas/ApiKey'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getApiKeyResponse'
+                $ref: '#/components/schemas/GetApiKeyResponse'
         '400':
           $ref: '#/components/responses/IndexNotFound'
   /waitForTask:
@@ -3407,7 +3407,7 @@ paths:
           description: Browse parameters.
           required: true
           schema:
-            $ref: '#/components/schemas/browseParamsObject'
+            $ref: '#/components/schemas/BrowseParamsObject'
       responses:
         '204':
           description: No content.
@@ -3475,7 +3475,7 @@ paths:
           description: Restrictions to add to the API key.
           required: true
           schema:
-            $ref: '#/components/schemas/securedApiKeyRestrictions'
+            $ref: '#/components/schemas/SecuredApiKeyRestrictions'
       responses:
         '200':
           description: OK
@@ -3635,14 +3635,14 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/scopeType'
+              $ref: '#/components/schemas/ScopeType'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/replaceAllObjectsResponse'
+                $ref: '#/components/schemas/ReplaceAllObjectsResponse'
         '400':
           $ref: '#/components/responses/IndexNotFound'
   /replaceAllObjectsWithTransformation:
@@ -3735,7 +3735,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/scopeType'
+              $ref: '#/components/schemas/ScopeType'
       responses:
         '200':
           description: OK
@@ -3743,7 +3743,7 @@ paths:
             application/json:
               schema:
                 $ref: >-
-                  #/components/schemas/replaceAllObjectsWithTransformationResponse
+                  #/components/schemas/ReplaceAllObjectsWithTransformationResponse
         '400':
           $ref: '#/components/responses/IndexNotFound'
   /chunkedBatch:
@@ -3780,7 +3780,7 @@ paths:
             defaults to `addObject`.
           required: false
           schema:
-            $ref: '#/components/schemas/action'
+            $ref: '#/components/schemas/Action'
         - in: query
           name: waitForTasks
           description: >-
@@ -3805,7 +3805,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/batchResponse'
+                  $ref: '#/components/schemas/BatchResponse'
         '400':
           $ref: '#/components/responses/IndexNotFound'
   /saveObjects:
@@ -3879,7 +3879,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/batchResponse'
+                  $ref: '#/components/schemas/BatchResponse'
         '400':
           $ref: '#/components/responses/IndexNotFound'
   /saveObjectsWithTransformation:
@@ -4034,7 +4034,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/batchResponse'
+                  $ref: '#/components/schemas/BatchResponse'
         '400':
           $ref: '#/components/responses/IndexNotFound'
   /partialUpdateObjects:
@@ -4119,7 +4119,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/batchResponse'
+                  $ref: '#/components/schemas/BatchResponse'
         '400':
           $ref: '#/components/responses/IndexNotFound'
   /partialUpdateObjectsWithTransformation:
@@ -4300,8 +4300,9 @@ components:
       deprecated: true
       oneOf:
         - type: string
-        - $ref: '#/components/schemas/builtInOperation'
+        - $ref: '#/components/schemas/BuiltInOperation'
     ErrorBase:
+      title: errorBase
       description: Error.
       type: object
       x-keep-model: true
@@ -4310,34 +4311,38 @@ components:
         message:
           type: string
           example: Invalid Application-Id or API-Key
-    paramsAsString:
+    ParamsAsString:
+      title: paramsAsString
       description: Search parameters as a URL-encoded query string.
       example: hitsPerPage=2&getRankingInfo=1
       type: string
       default: ''
-    searchParamsString:
+    SearchParamsString:
       type: object
-      title: Search parameters as query string
+      title: searchParamsString
       description: Search parameters as query string.
       additionalProperties: false
       x-discriminator-fields:
         - params
       properties:
         params:
-          $ref: '#/components/schemas/paramsAsString'
-    query:
+          $ref: '#/components/schemas/ParamsAsString'
+    Query:
+      title: query
       type: string
       description: Search query.
       default: ''
       x-categories:
         - Search
-    searchParamsQuery:
+    SearchParamsQuery:
+      title: searchParamsQuery
       type: object
       additionalProperties: false
       properties:
         query:
-          $ref: '#/components/schemas/query'
-    similarQuery:
+          $ref: '#/components/schemas/Query'
+    SimilarQuery:
+      title: similarQuery
       type: string
       description: >
         Keywords to be used instead of the search query to conduct a more
@@ -4361,7 +4366,8 @@ components:
       example: comedy drama crime Macy Buscemi
       x-categories:
         - Search
-    filters:
+    Filters:
+      title: filters
       type: string
       description: >
         Filter expression to only include items that match the filter criteria
@@ -4408,7 +4414,8 @@ components:
       example: (category:Book OR category:Ebook) AND _tags:published
       x-categories:
         - Filtering
-    facetFilters:
+    FacetFilters:
+      title: facetFilters
       description: >
         Filter the search by facet values, so that only records with the same
         facet values are retrieved.
@@ -4438,11 +4445,12 @@ components:
       oneOf:
         - type: array
           items:
-            $ref: '#/components/schemas/facetFilters'
+            $ref: '#/components/schemas/FacetFilters'
         - type: string
       x-categories:
         - Filtering
-    optionalFilters:
+    OptionalFilters:
+      title: optionalFilters
       description: >
         Filters to promote or demote records in the search results.
 
@@ -4474,11 +4482,12 @@ components:
       oneOf:
         - type: array
           items:
-            $ref: '#/components/schemas/optionalFilters'
+            $ref: '#/components/schemas/OptionalFilters'
         - type: string
       x-categories:
         - Filtering
-    numericFilters:
+    NumericFilters:
+      title: numericFilters
       description: >
         Filter by numeric facets.
 
@@ -4504,11 +4513,12 @@ components:
       oneOf:
         - type: array
           items:
-            $ref: '#/components/schemas/numericFilters'
+            $ref: '#/components/schemas/NumericFilters'
         - type: string
       x-categories:
         - Filtering
-    tagFilters:
+    TagFilters:
+      title: tagFilters
       description: >
         Filter the search by values of the special `_tags` attribute.
 
@@ -4531,11 +4541,12 @@ components:
       oneOf:
         - type: array
           items:
-            $ref: '#/components/schemas/tagFilters'
+            $ref: '#/components/schemas/TagFilters'
         - type: string
       x-categories:
         - Filtering
-    sumOrFiltersScores:
+    SumOrFiltersScores:
+      title: sumOrFiltersScores
       type: boolean
       description: >
         Whether to sum all filter scores
@@ -4549,7 +4560,8 @@ components:
       default: false
       x-categories:
         - Filtering
-    restrictSearchableAttributes:
+    RestrictSearchableAttributes:
+      title: restrictSearchableAttributes
       type: array
       items:
         type: string
@@ -4562,7 +4574,8 @@ components:
       default: []
       x-categories:
         - Filtering
-    facetingAfterDistinct:
+    FacetingAfterDistinct:
+      title: facetingAfterDistinct
       type: boolean
       description: >
         Whether faceting should be applied after deduplication with `distinct`
@@ -4578,21 +4591,24 @@ components:
       default: false
       x-categories:
         - Faceting
-    page:
+    Page:
+      title: page
       type: integer
       description: Page of search results to retrieve.
       default: 0
       minimum: 0
       x-categories:
         - Pagination
-    length:
+    Length:
+      title: length
       type: integer
       description: Number of hits to retrieve (used in combination with `offset`).
       minimum: 0
       maximum: 1000
       x-categories:
         - Pagination
-    aroundLatLng:
+    AroundLatLng:
+      title: aroundLatLng
       type: string
       description: >
         Coordinates for the center of a circle, expressed as a comma-separated
@@ -4611,21 +4627,23 @@ components:
       default: ''
       x-categories:
         - Geo-Search
-    aroundLatLngViaIP:
+    AroundLatLngViaIP:
+      title: aroundLatLngViaIP
       type: boolean
       description: Whether to obtain the coordinates from the request's IP address.
       default: false
       x-categories:
         - Geo-Search
-    aroundRadiusAll:
-      title: all
+    AroundRadiusAll:
+      title: aroundRadiusAll
       type: string
       description: >-
         Return all records with a valid `_geoloc` attribute. Don't filter by
         distance.
       enum:
         - all
-    aroundRadius:
+    AroundRadius:
+      title: aroundRadius
       description: >
         Maximum radius for a search around a central location.
 
@@ -4642,11 +4660,11 @@ components:
         - type: integer
           minimum: 1
           description: Maximum search radius around a central location in meters.
-        - $ref: '#/components/schemas/aroundRadiusAll'
+        - $ref: '#/components/schemas/AroundRadiusAll'
       x-categories:
         - Geo-Search
-    aroundPrecisionFromValue:
-      title: range objects
+    AroundPrecisionFromValue:
+      title: aroundPrecisionFromValue
       type: array
       items:
         title: range
@@ -4666,7 +4684,8 @@ components:
             description: >-
               Upper boundary of a range in meters. The Geo ranking criterion
               considers all records within the range to be equal.
-    aroundPrecision:
+    AroundPrecision:
+      title: aroundPrecision
       description: >
         Precision of a coordinate-based search in meters to group results with
         similar distances.
@@ -4686,10 +4705,11 @@ components:
             distance,
 
             as are records between 100 and 199 meters.
-        - $ref: '#/components/schemas/aroundPrecisionFromValue'
+        - $ref: '#/components/schemas/AroundPrecisionFromValue'
       x-categories:
         - Geo-Search
-    minimumAroundRadius:
+    MinimumAroundRadius:
+      title: minimumAroundRadius
       type: integer
       description: >-
         Minimum radius (in meters) for a search around a location when
@@ -4697,7 +4717,8 @@ components:
       minimum: 1
       x-categories:
         - Geo-Search
-    insideBoundingBoxArray:
+    InsideBoundingBoxArray:
+      title: insideBoundingBoxArray
       type: array
       items:
         type: array
@@ -4732,12 +4753,14 @@ components:
           - 1.9916
       x-categories:
         - Geo-Search
-    insideBoundingBox:
+    InsideBoundingBox:
+      title: insideBoundingBox
       oneOf:
         - type: string
         - type: 'null'
-        - $ref: '#/components/schemas/insideBoundingBoxArray'
-    insidePolygon:
+        - $ref: '#/components/schemas/InsideBoundingBoxArray'
+    InsidePolygon:
+      title: insidePolygon
       type: array
       items:
         type: array
@@ -4776,7 +4799,8 @@ components:
           - 2.0104
       x-categories:
         - Geo-Search
-    supportedLanguage:
+    SupportedLanguage:
+      title: supportedLanguage
       type: string
       description: ISO code for a supported language.
       enum:
@@ -4848,10 +4872,11 @@ components:
         - ur
         - uz
         - zh
-    naturalLanguages:
+    NaturalLanguages:
+      title: naturalLanguages
       type: array
       items:
-        $ref: '#/components/schemas/supportedLanguage'
+        $ref: '#/components/schemas/SupportedLanguage'
       description: >
         ISO language codes that adjust settings that are useful for processing
         natural language queries (as opposed to keyword searches)
@@ -4866,7 +4891,8 @@ components:
       default: []
       x-categories:
         - Languages
-    ruleContexts:
+    SearchParams_ruleContexts:
+      title: searchParams_ruleContexts
       type: array
       items:
         type: string
@@ -4881,7 +4907,8 @@ components:
         - mobile
       x-categories:
         - Rules
-    personalizationImpact:
+    PersonalizationImpact:
+      title: personalizationImpact
       type: integer
       description: >
         Impact that Personalization should have on this search
@@ -4896,7 +4923,8 @@ components:
       maximum: 100
       x-categories:
         - Personalization
-    userToken:
+    UserToken:
+      title: userToken
       type: string
       description: >
         Unique pseudonymous or anonymous user identifier.
@@ -4909,19 +4937,22 @@ components:
       example: test-user-123
       x-categories:
         - Personalization
-    getRankingInfo:
+    SearchParams_getRankingInfo:
+      title: searchParams_getRankingInfo
       type: boolean
       description: Whether the search response should include detailed ranking information.
       default: false
       x-categories:
         - Advanced
-    synonyms:
+    Synonyms:
+      title: synonyms
       type: boolean
       description: Whether to take into account an index's synonyms for this search.
       default: true
       x-categories:
         - Advanced
-    clickAnalytics:
+    ClickAnalytics:
+      title: clickAnalytics
       type: boolean
       description: >
         Whether to include a `queryID` attribute in the response
@@ -4932,13 +4963,15 @@ components:
       default: false
       x-categories:
         - Analytics
-    analytics:
+    Analytics:
+      title: analytics
       type: boolean
       description: Whether this search will be included in Analytics.
       default: true
       x-categories:
         - Analytics
-    analyticsTags:
+    AnalyticsTags:
+      title: analyticsTags
       type: array
       items:
         type: string
@@ -4946,7 +4979,8 @@ components:
         Tags to apply to the query for [segmenting analytics
         data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
       default: []
-    percentileComputation:
+    PercentileComputation:
+      title: percentileComputation
       type: boolean
       description: >-
         Whether to include this search when calculating processing-time
@@ -4954,33 +4988,36 @@ components:
       default: true
       x-categories:
         - Advanced
-    enableABTest:
+    SearchParams_enableABTest:
+      title: searchParams_enableABTest
       type: boolean
       description: Whether to enable A/B testing for this search.
       default: true
       x-categories:
         - Advanced
-    baseSearchParamsWithoutQuery:
+    BaseSearchParamsWithoutQuery:
+      title: baseSearchParamsWithoutQuery
       type: object
       additionalProperties: false
       properties:
         similarQuery:
-          $ref: '#/components/schemas/similarQuery'
+          $ref: '#/components/schemas/SimilarQuery'
         filters:
-          $ref: '#/components/schemas/filters'
+          $ref: '#/components/schemas/Filters'
         facetFilters:
-          $ref: '#/components/schemas/facetFilters'
+          $ref: '#/components/schemas/FacetFilters'
         optionalFilters:
-          $ref: '#/components/schemas/optionalFilters'
+          $ref: '#/components/schemas/OptionalFilters'
         numericFilters:
-          $ref: '#/components/schemas/numericFilters'
+          $ref: '#/components/schemas/NumericFilters'
         tagFilters:
-          $ref: '#/components/schemas/tagFilters'
+          $ref: '#/components/schemas/TagFilters'
         sumOrFiltersScores:
-          $ref: '#/components/schemas/sumOrFiltersScores'
+          $ref: '#/components/schemas/SumOrFiltersScores'
         restrictSearchableAttributes:
-          $ref: '#/components/schemas/restrictSearchableAttributes'
+          $ref: '#/components/schemas/RestrictSearchableAttributes'
         facets:
+          title: facets
           type: array
           items:
             type: string
@@ -4998,59 +5035,61 @@ components:
           x-categories:
             - Faceting
         facetingAfterDistinct:
-          $ref: '#/components/schemas/facetingAfterDistinct'
+          $ref: '#/components/schemas/FacetingAfterDistinct'
         page:
-          $ref: '#/components/schemas/page'
+          $ref: '#/components/schemas/Page'
         offset:
           type: integer
           description: Position of the first hit to retrieve.
           x-categories:
             - Pagination
         length:
-          $ref: '#/components/schemas/length'
+          $ref: '#/components/schemas/Length'
         aroundLatLng:
-          $ref: '#/components/schemas/aroundLatLng'
+          $ref: '#/components/schemas/AroundLatLng'
         aroundLatLngViaIP:
-          $ref: '#/components/schemas/aroundLatLngViaIP'
+          $ref: '#/components/schemas/AroundLatLngViaIP'
         aroundRadius:
-          $ref: '#/components/schemas/aroundRadius'
+          $ref: '#/components/schemas/AroundRadius'
         aroundPrecision:
-          $ref: '#/components/schemas/aroundPrecision'
+          $ref: '#/components/schemas/AroundPrecision'
         minimumAroundRadius:
-          $ref: '#/components/schemas/minimumAroundRadius'
+          $ref: '#/components/schemas/MinimumAroundRadius'
         insideBoundingBox:
-          $ref: '#/components/schemas/insideBoundingBox'
+          $ref: '#/components/schemas/InsideBoundingBox'
         insidePolygon:
-          $ref: '#/components/schemas/insidePolygon'
+          $ref: '#/components/schemas/InsidePolygon'
         naturalLanguages:
-          $ref: '#/components/schemas/naturalLanguages'
+          $ref: '#/components/schemas/NaturalLanguages'
         ruleContexts:
-          $ref: '#/components/schemas/ruleContexts'
+          $ref: '#/components/schemas/SearchParams_ruleContexts'
         personalizationImpact:
-          $ref: '#/components/schemas/personalizationImpact'
+          $ref: '#/components/schemas/PersonalizationImpact'
         userToken:
-          $ref: '#/components/schemas/userToken'
+          $ref: '#/components/schemas/UserToken'
         getRankingInfo:
-          $ref: '#/components/schemas/getRankingInfo'
+          $ref: '#/components/schemas/SearchParams_getRankingInfo'
         synonyms:
-          $ref: '#/components/schemas/synonyms'
+          $ref: '#/components/schemas/Synonyms'
         clickAnalytics:
-          $ref: '#/components/schemas/clickAnalytics'
+          $ref: '#/components/schemas/ClickAnalytics'
         analytics:
-          $ref: '#/components/schemas/analytics'
+          $ref: '#/components/schemas/Analytics'
         analyticsTags:
-          $ref: '#/components/schemas/analyticsTags'
+          $ref: '#/components/schemas/AnalyticsTags'
           x-categories:
             - Analytics
         percentileComputation:
-          $ref: '#/components/schemas/percentileComputation'
+          $ref: '#/components/schemas/PercentileComputation'
         enableABTest:
-          $ref: '#/components/schemas/enableABTest'
-    baseSearchParams:
+          $ref: '#/components/schemas/SearchParams_enableABTest'
+    BaseSearchParams:
+      title: baseSearchParams
       allOf:
-        - $ref: '#/components/schemas/searchParamsQuery'
-        - $ref: '#/components/schemas/baseSearchParamsWithoutQuery'
-    attributesToRetrieve:
+        - $ref: '#/components/schemas/SearchParamsQuery'
+        - $ref: '#/components/schemas/BaseSearchParamsWithoutQuery'
+    AttributesToRetrieve:
+      title: attributesToRetrieve
       type: array
       items:
         type: string
@@ -5077,7 +5116,8 @@ components:
         - '*'
       x-categories:
         - Attributes
-    relevancyStrictness:
+    RelevancyStrictness:
+      title: relevancyStrictness
       type: integer
       example: 90
       description: >
@@ -5092,7 +5132,8 @@ components:
       default: 100
       x-categories:
         - Ranking
-    attributesToHighlight:
+    AttributesToHighlight:
+      title: attributesToHighlight
       type: array
       items:
         type: string
@@ -5121,7 +5162,8 @@ components:
         snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js).
       x-categories:
         - Highlighting and Snippeting
-    attributesToSnippet:
+    AttributesToSnippet:
+      title: attributesToSnippet
       type: array
       items:
         type: string
@@ -5147,7 +5189,8 @@ components:
       default: []
       x-categories:
         - Highlighting and Snippeting
-    highlightPreTag:
+    HighlightPreTag:
+      title: highlightPreTag
       type: string
       description: >-
         HTML tag to insert before the highlighted parts in all highlighted
@@ -5155,7 +5198,8 @@ components:
       default: <em>
       x-categories:
         - Highlighting and Snippeting
-    highlightPostTag:
+    HighlightPostTag:
+      title: highlightPostTag
       type: string
       description: >-
         HTML tag to insert after the highlighted parts in all highlighted
@@ -5163,13 +5207,15 @@ components:
       default: </em>
       x-categories:
         - Highlighting and Snippeting
-    snippetEllipsisText:
+    SnippetEllipsisText:
+      title: snippetEllipsisText
       type: string
       description: String used as an ellipsis indicator when a snippet is truncated.
       default: …
       x-categories:
         - Highlighting and Snippeting
-    restrictHighlightAndSnippetArrays:
+    RestrictHighlightAndSnippetArrays:
+      title: restrictHighlightAndSnippetArrays
       type: boolean
       description: >
         Whether to restrict highlighting and snippeting to items that at least
@@ -5179,7 +5225,8 @@ components:
       default: false
       x-categories:
         - Highlighting and Snippeting
-    hitsPerPage:
+    HitsPerPage:
+      title: hitsPerPage
       type: integer
       description: Number of hits per page.
       default: 20
@@ -5187,7 +5234,8 @@ components:
       maximum: 1000
       x-categories:
         - Pagination
-    minWordSizefor1Typo:
+    MinWordSizefor1Typo:
+      title: minWordSizefor1Typo
       type: integer
       description: >-
         Minimum number of characters a word in the search query must contain to
@@ -5196,7 +5244,8 @@ components:
       default: 4
       x-categories:
         - Typos
-    minWordSizefor2Typos:
+    MinWordSizefor2Typos:
+      title: minWordSizefor2Typos
       type: integer
       description: >-
         Minimum number of characters a word in the search query must contain to
@@ -5205,9 +5254,9 @@ components:
       default: 8
       x-categories:
         - Typos
-    typoToleranceEnum:
+    TypoToleranceEnum:
       type: string
-      title: typo tolerance
+      title: typoToleranceEnum
       description: |
         - `min`. Return matches with the lowest number of typos.
           For example, if you have matches without typos, only include those.
@@ -5219,7 +5268,8 @@ components:
         - strict
         - 'true'
         - 'false'
-    typoTolerance:
+    TypoTolerance:
+      title: typoTolerance
       description: >
         Whether [typo
         tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance)
@@ -5235,10 +5285,11 @@ components:
           description: >-
             Whether typo tolerance is active. If true, matches with typos are
             included in the search results and rank after exact matches.
-        - $ref: '#/components/schemas/typoToleranceEnum'
+        - $ref: '#/components/schemas/TypoToleranceEnum'
       x-categories:
         - Typos
-    allowTyposOnNumericTokens:
+    AllowTyposOnNumericTokens:
+      title: allowTyposOnNumericTokens
       type: boolean
       description: |
         Whether to allow typos on numbers in the search query
@@ -5247,7 +5298,8 @@ components:
       default: true
       x-categories:
         - Typos
-    disableTypoToleranceOnAttributes:
+    DisableTypoToleranceOnAttributes:
+      title: disableTypoToleranceOnAttributes
       type: array
       items:
         type: string
@@ -5272,12 +5324,14 @@ components:
       default: []
       x-categories:
         - Typos
-    booleanString:
+    BooleanString:
+      title: booleanString
       type: string
       enum:
         - 'true'
         - 'false'
-    ignorePlurals:
+    IgnorePlurals:
+      title: ignorePlurals
       description: |
         Treat singular, plurals, and other forms of declensions as equivalent.
         Only use this feature for the languages used in your index.
@@ -5290,8 +5344,8 @@ components:
             ISO code for languages for which this feature should be active.
             This overrides languages you set with `queryLanguages`.
           items:
-            $ref: '#/components/schemas/supportedLanguage'
-        - $ref: '#/components/schemas/booleanString'
+            $ref: '#/components/schemas/SupportedLanguage'
+        - $ref: '#/components/schemas/BooleanString'
         - type: boolean
           description: >
             If true, `ignorePlurals` is active for all languages included in
@@ -5303,7 +5357,8 @@ components:
           default: false
       x-categories:
         - Languages
-    removeStopWords:
+    RemoveStopWords:
+      title: removeStopWords
       description: >
         Removes stop words from the search query.
 
@@ -5324,7 +5379,7 @@ components:
             ISO code for languages for which stop words should be removed. This
             overrides languages you set in `queryLanguges`.
           items:
-            $ref: '#/components/schemas/supportedLanguage'
+            $ref: '#/components/schemas/SupportedLanguage'
         - type: boolean
           default: false
           description: >
@@ -5335,10 +5390,11 @@ components:
             If false, stop words are not removed.
       x-categories:
         - Languages
-    queryLanguages:
+    QueryLanguages:
+      title: queryLanguages
       type: array
       items:
-        $ref: '#/components/schemas/supportedLanguage'
+        $ref: '#/components/schemas/SupportedLanguage'
       example:
         - es
       description: >
@@ -5371,7 +5427,8 @@ components:
       default: []
       x-categories:
         - Languages
-    decompoundQuery:
+    DecompoundQuery:
+      title: decompoundQuery
       type: boolean
       description: >
         Whether to split compound words in the query into their building blocks
@@ -5390,19 +5447,22 @@ components:
       default: true
       x-categories:
         - Languages
-    enableRules:
+    IndexSettings_enableRules:
+      title: indexSettings_enableRules
       type: boolean
       description: Whether to enable rules.
       default: true
       x-categories:
         - Rules
-    enablePersonalization:
+    EnablePersonalization:
+      title: enablePersonalization
       type: boolean
       description: Whether to enable Personalization.
       default: false
       x-categories:
         - Personalization
-    queryType:
+    QueryType:
+      title: queryType
       type: string
       enum:
         - prefixLast
@@ -5428,7 +5488,8 @@ components:
       default: prefixLast
       x-categories:
         - Query strategy
-    removeWordsIfNoResults:
+    RemoveWordsIfNoResults:
+      title: removeWordsIfNoResults
       type: string
       enum:
         - none
@@ -5462,7 +5523,8 @@ components:
       default: none
       x-categories:
         - Query strategy
-    mode:
+    Mode:
+      title: mode
       type: string
       enum:
         - neuralSearch
@@ -5476,7 +5538,8 @@ components:
       default: keywordSearch
       x-categories:
         - Query strategy
-    semanticSearch:
+    SemanticSearch:
+      title: semanticSearch
       type: object
       description: |
         Settings for the semantic search part of NeuralSearch.
@@ -5492,7 +5555,8 @@ components:
               items:
                 type: string
             - type: 'null'
-    advancedSyntax:
+    AdvancedSyntax:
+      title: advancedSyntax
       type: boolean
       description: >
         Whether to support phrase matching and excluding words from search
@@ -5503,7 +5567,8 @@ components:
       default: false
       x-categories:
         - Query strategy
-    optionalWordsArray:
+    OptionalWordsArray:
+      title: optionalWordsArray
       type: array
       items:
         type: string
@@ -5516,7 +5581,8 @@ components:
       default: []
       x-categories:
         - Query strategy
-    optionalWords:
+    OptionalWords:
+      title: optionalWords
       description: >
         Words that should be considered optional when found in the query.
 
@@ -5557,8 +5623,9 @@ components:
       oneOf:
         - type: string
         - type: 'null'
-        - $ref: '#/components/schemas/optionalWordsArray'
-    disableExactOnAttributes:
+        - $ref: '#/components/schemas/OptionalWordsArray'
+    DisableExactOnAttributes:
+      title: disableExactOnAttributes
       type: array
       items:
         type: string
@@ -5583,7 +5650,8 @@ components:
       default: []
       x-categories:
         - Query strategy
-    exactOnSingleWordQuery:
+    ExactOnSingleWordQuery:
+      title: exactOnSingleWordQuery
       type: string
       enum:
         - attribute
@@ -5610,7 +5678,8 @@ components:
       default: attribute
       x-categories:
         - Query strategy
-    alternativesAsExact:
+    AlternativesAsExact:
+      title: alternativesAsExact
       type: string
       enum:
         - ignorePlurals
@@ -5620,9 +5689,10 @@ components:
       x-categories:
         - Query strategy
     IndexSettings_alternativesAsExact:
+      title: indexSettings_alternativesAsExact
       type: array
       items:
-        $ref: '#/components/schemas/alternativesAsExact'
+        $ref: '#/components/schemas/AlternativesAsExact'
       description: >
         Determine which plurals and synonyms should be considered an exact
         matches
@@ -5650,7 +5720,8 @@ components:
         - singleWordSynonym
       x-categories:
         - Query strategy
-    advancedSyntaxFeatures:
+    AdvancedSyntaxFeatures:
+      title: advancedSyntaxFeatures
       type: string
       enum:
         - exactPhrase
@@ -5658,9 +5729,10 @@ components:
       x-categories:
         - Query strategy
     IndexSettings_advancedSyntaxFeatures:
+      title: indexSettings_advancedSyntaxFeatures
       type: array
       items:
-        $ref: '#/components/schemas/advancedSyntaxFeatures'
+        $ref: '#/components/schemas/AdvancedSyntaxFeatures'
       description: |
         Advanced search syntax features you want to support
         - `exactPhrase`.
@@ -5675,7 +5747,8 @@ components:
         - excludeWords
       x-categories:
         - Query strategy
-    distinct:
+    Distinct:
+      title: distinct
       description: >
         Determines how many records of a group are included in the search
         results.
@@ -5716,7 +5789,8 @@ components:
           default: 0
       x-categories:
         - Advanced
-    replaceSynonymsInHighlight:
+    ReplaceSynonymsInHighlight:
+      title: replaceSynonymsInHighlight
       type: boolean
       description: >
         Whether to replace a highlighted word with the matched synonym
@@ -5740,7 +5814,8 @@ components:
       default: false
       x-categories:
         - Highlighting and Snippeting
-    minProximity:
+    MinProximity:
+      title: minProximity
       type: integer
       minimum: 1
       maximum: 7
@@ -5757,7 +5832,8 @@ components:
       default: 1
       x-categories:
         - Advanced
-    responseFields:
+    ResponseFields:
+      title: responseFields
       type: array
       items:
         type: string
@@ -5790,14 +5866,16 @@ components:
         - '*'
       x-categories:
         - Advanced
-    maxValuesPerFacet:
+    MaxValuesPerFacet:
+      title: maxValuesPerFacet
       type: integer
       description: Maximum number of facet values to return for each facet.
       default: 100
       maximum: 1000
       x-categories:
         - Faceting
-    sortFacetValuesBy:
+    SortFacetValuesBy:
+      title: sortFacetValuesBy
       type: string
       description: >
         Order in which to retrieve facet values
@@ -5815,7 +5893,8 @@ components:
       default: count
       x-categories:
         - Faceting
-    attributeCriteriaComputedByMinProximity:
+    AttributeCriteriaComputedByMinProximity:
+      title: attributeCriteriaComputedByMinProximity
       type: boolean
       description: >
         Whether the best matching attribute should be determined by minimum
@@ -5832,7 +5911,8 @@ components:
       default: false
       x-categories:
         - Advanced
-    order:
+    Order:
+      title: order
       description: >
         Explicit order of facets or facet values.
 
@@ -5842,14 +5922,16 @@ components:
       type: array
       items:
         type: string
-    facets:
+    IndexSettings_facets:
+      title: indexSettings_facets
       description: Order of facet names.
       type: object
       additionalProperties: false
       properties:
         order:
-          $ref: '#/components/schemas/order'
-    sortRemainingBy:
+          $ref: '#/components/schemas/Order'
+    SortRemainingBy:
+      title: sortRemainingBy
       description: >
         Order of facet values that aren't explicitly positioned with the `order`
         setting.
@@ -5869,51 +5951,58 @@ components:
         - count
         - alpha
         - hidden
-    hide:
+    Hide:
+      title: hide
       description: Hide facet values.
       type: array
       items:
         type: string
-    value:
+    Value:
+      title: value
       type: object
       additionalProperties: false
       properties:
         order:
-          $ref: '#/components/schemas/order'
+          $ref: '#/components/schemas/Order'
         sortRemainingBy:
-          $ref: '#/components/schemas/sortRemainingBy'
+          $ref: '#/components/schemas/SortRemainingBy'
         hide:
-          $ref: '#/components/schemas/hide'
-    values:
+          $ref: '#/components/schemas/Hide'
+    Values:
+      title: values
       description: Order of facet values. One object for each facet.
       type: object
       additionalProperties:
         x-additionalPropertiesName: facet
-        $ref: '#/components/schemas/value'
-    facetOrdering:
+        $ref: '#/components/schemas/Value'
+    FacetOrdering:
+      title: facetOrdering
       description: Order of facet names and facet values in your UI.
       type: object
       additionalProperties: false
       properties:
         facets:
-          $ref: '#/components/schemas/facets'
+          $ref: '#/components/schemas/IndexSettings_facets'
         values:
-          $ref: '#/components/schemas/values'
-    redirectURL:
+          $ref: '#/components/schemas/Values'
+    RedirectURL:
+      title: redirectURL
       description: The redirect rule container.
       type: object
       additionalProperties: false
       properties:
         url:
           type: string
-    bannerImageUrl:
+    BannerImageUrl:
+      title: bannerImageUrl
       description: URL for an image to show inside a banner.
       type: object
       additionalProperties: false
       properties:
         url:
           type: string
-    bannerImage:
+    BannerImage:
+      title: bannerImage
       description: Image to show inside a banner.
       type: object
       additionalProperties: false
@@ -5921,38 +6010,43 @@ components:
         urls:
           type: array
           items:
-            $ref: '#/components/schemas/bannerImageUrl'
+            $ref: '#/components/schemas/BannerImageUrl'
         title:
           type: string
-    bannerLink:
+    BannerLink:
+      title: bannerLink
       description: Link for a banner defined in the Merchandising Studio.
       type: object
       additionalProperties: false
       properties:
         url:
           type: string
-    banner:
+    Banner:
+      title: banner
       description: Banner with image and link to redirect users.
       type: object
       additionalProperties: false
       properties:
         image:
-          $ref: '#/components/schemas/bannerImage'
+          $ref: '#/components/schemas/BannerImage'
         link:
-          $ref: '#/components/schemas/bannerLink'
-    banners:
+          $ref: '#/components/schemas/BannerLink'
+    Banners:
+      title: banners
       description: Banners defined in the Merchandising Studio for a given search.
       type: array
       items:
-        $ref: '#/components/schemas/banner'
-    widgets:
+        $ref: '#/components/schemas/Banner'
+    Widgets:
+      title: widgets
       description: Widgets returned from any rules that are applied to the current search.
       type: object
       additionalProperties: false
       properties:
         banners:
-          $ref: '#/components/schemas/banners'
-    renderingContent:
+          $ref: '#/components/schemas/Banners'
+    RenderingContent:
+      title: renderingContent
       description: >
         Extra data that can be used in the search UI.
 
@@ -5965,14 +6059,15 @@ components:
       additionalProperties: false
       properties:
         facetOrdering:
-          $ref: '#/components/schemas/facetOrdering'
+          $ref: '#/components/schemas/FacetOrdering'
         redirect:
-          $ref: '#/components/schemas/redirectURL'
+          $ref: '#/components/schemas/RedirectURL'
         widgets:
-          $ref: '#/components/schemas/widgets'
+          $ref: '#/components/schemas/Widgets'
       x-categories:
         - Advanced
-    enableReRanking:
+    EnableReRanking:
+      title: enableReRanking
       type: boolean
       description: >
         Whether this search will use [Dynamic
@@ -5983,7 +6078,8 @@ components:
       default: true
       x-categories:
         - Filtering
-    reRankingApplyFilter:
+    ReRankingApplyFilter:
+      title: reRankingApplyFilter
       description: >
         Restrict [Dynamic
         Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) to
@@ -5991,16 +6087,17 @@ components:
       oneOf:
         - type: array
           items:
-            $ref: '#/components/schemas/reRankingApplyFilter'
+            $ref: '#/components/schemas/ReRankingApplyFilter'
         - type: string
           x-categories:
             - Filtering
-    indexSettingsAsSearchParams:
+    IndexSettingsAsSearchParams:
+      title: indexSettingsAsSearchParams
       type: object
       additionalProperties: false
       properties:
         attributesToRetrieve:
-          $ref: '#/components/schemas/attributesToRetrieve'
+          $ref: '#/components/schemas/AttributesToRetrieve'
         ranking:
           type: array
           items:
@@ -6047,102 +6144,105 @@ components:
           x-categories:
             - Ranking
         relevancyStrictness:
-          $ref: '#/components/schemas/relevancyStrictness'
+          $ref: '#/components/schemas/RelevancyStrictness'
         attributesToHighlight:
-          $ref: '#/components/schemas/attributesToHighlight'
+          $ref: '#/components/schemas/AttributesToHighlight'
         attributesToSnippet:
-          $ref: '#/components/schemas/attributesToSnippet'
+          $ref: '#/components/schemas/AttributesToSnippet'
         highlightPreTag:
-          $ref: '#/components/schemas/highlightPreTag'
+          $ref: '#/components/schemas/HighlightPreTag'
         highlightPostTag:
-          $ref: '#/components/schemas/highlightPostTag'
+          $ref: '#/components/schemas/HighlightPostTag'
         snippetEllipsisText:
-          $ref: '#/components/schemas/snippetEllipsisText'
+          $ref: '#/components/schemas/SnippetEllipsisText'
         restrictHighlightAndSnippetArrays:
-          $ref: '#/components/schemas/restrictHighlightAndSnippetArrays'
+          $ref: '#/components/schemas/RestrictHighlightAndSnippetArrays'
         hitsPerPage:
-          $ref: '#/components/schemas/hitsPerPage'
+          $ref: '#/components/schemas/HitsPerPage'
         minWordSizefor1Typo:
-          $ref: '#/components/schemas/minWordSizefor1Typo'
+          $ref: '#/components/schemas/MinWordSizefor1Typo'
         minWordSizefor2Typos:
-          $ref: '#/components/schemas/minWordSizefor2Typos'
+          $ref: '#/components/schemas/MinWordSizefor2Typos'
         typoTolerance:
-          $ref: '#/components/schemas/typoTolerance'
+          $ref: '#/components/schemas/TypoTolerance'
         allowTyposOnNumericTokens:
-          $ref: '#/components/schemas/allowTyposOnNumericTokens'
+          $ref: '#/components/schemas/AllowTyposOnNumericTokens'
         disableTypoToleranceOnAttributes:
-          $ref: '#/components/schemas/disableTypoToleranceOnAttributes'
+          $ref: '#/components/schemas/DisableTypoToleranceOnAttributes'
         ignorePlurals:
-          $ref: '#/components/schemas/ignorePlurals'
+          $ref: '#/components/schemas/IgnorePlurals'
         removeStopWords:
-          $ref: '#/components/schemas/removeStopWords'
+          $ref: '#/components/schemas/RemoveStopWords'
         queryLanguages:
-          $ref: '#/components/schemas/queryLanguages'
+          $ref: '#/components/schemas/QueryLanguages'
         decompoundQuery:
-          $ref: '#/components/schemas/decompoundQuery'
+          $ref: '#/components/schemas/DecompoundQuery'
         enableRules:
-          $ref: '#/components/schemas/enableRules'
+          $ref: '#/components/schemas/IndexSettings_enableRules'
         enablePersonalization:
-          $ref: '#/components/schemas/enablePersonalization'
+          $ref: '#/components/schemas/EnablePersonalization'
         queryType:
-          $ref: '#/components/schemas/queryType'
+          $ref: '#/components/schemas/QueryType'
         removeWordsIfNoResults:
-          $ref: '#/components/schemas/removeWordsIfNoResults'
+          $ref: '#/components/schemas/RemoveWordsIfNoResults'
         mode:
-          $ref: '#/components/schemas/mode'
+          $ref: '#/components/schemas/Mode'
         semanticSearch:
-          $ref: '#/components/schemas/semanticSearch'
+          $ref: '#/components/schemas/SemanticSearch'
         advancedSyntax:
-          $ref: '#/components/schemas/advancedSyntax'
+          $ref: '#/components/schemas/AdvancedSyntax'
         optionalWords:
-          $ref: '#/components/schemas/optionalWords'
+          $ref: '#/components/schemas/OptionalWords'
         disableExactOnAttributes:
-          $ref: '#/components/schemas/disableExactOnAttributes'
+          $ref: '#/components/schemas/DisableExactOnAttributes'
         exactOnSingleWordQuery:
-          $ref: '#/components/schemas/exactOnSingleWordQuery'
+          $ref: '#/components/schemas/ExactOnSingleWordQuery'
         alternativesAsExact:
           $ref: '#/components/schemas/IndexSettings_alternativesAsExact'
         advancedSyntaxFeatures:
           $ref: '#/components/schemas/IndexSettings_advancedSyntaxFeatures'
         distinct:
-          $ref: '#/components/schemas/distinct'
+          $ref: '#/components/schemas/Distinct'
         replaceSynonymsInHighlight:
-          $ref: '#/components/schemas/replaceSynonymsInHighlight'
+          $ref: '#/components/schemas/ReplaceSynonymsInHighlight'
         minProximity:
-          $ref: '#/components/schemas/minProximity'
+          $ref: '#/components/schemas/MinProximity'
         responseFields:
-          $ref: '#/components/schemas/responseFields'
+          $ref: '#/components/schemas/ResponseFields'
         maxValuesPerFacet:
-          $ref: '#/components/schemas/maxValuesPerFacet'
+          $ref: '#/components/schemas/MaxValuesPerFacet'
         sortFacetValuesBy:
-          $ref: '#/components/schemas/sortFacetValuesBy'
+          $ref: '#/components/schemas/SortFacetValuesBy'
         attributeCriteriaComputedByMinProximity:
-          $ref: '#/components/schemas/attributeCriteriaComputedByMinProximity'
+          $ref: '#/components/schemas/AttributeCriteriaComputedByMinProximity'
         renderingContent:
-          $ref: '#/components/schemas/renderingContent'
+          $ref: '#/components/schemas/RenderingContent'
         enableReRanking:
-          $ref: '#/components/schemas/enableReRanking'
+          $ref: '#/components/schemas/EnableReRanking'
         reRankingApplyFilter:
           oneOf:
-            - $ref: '#/components/schemas/reRankingApplyFilter'
+            - $ref: '#/components/schemas/ReRankingApplyFilter'
             - type: 'null'
-    searchParamsObject:
-      title: Search parameters as object
+    SearchParamsObject:
+      title: searchParamsObject
       description: >-
         Each parameter value, including the `query` must not be larger than 512
         bytes.
       allOf:
-        - $ref: '#/components/schemas/baseSearchParams'
-        - $ref: '#/components/schemas/indexSettingsAsSearchParams'
-    searchParams:
+        - $ref: '#/components/schemas/BaseSearchParams'
+        - $ref: '#/components/schemas/IndexSettingsAsSearchParams'
+    SearchParams:
+      title: searchParams
       oneOf:
-        - $ref: '#/components/schemas/searchParamsString'
-        - $ref: '#/components/schemas/searchParamsObject'
-    processingTimeMS:
+        - $ref: '#/components/schemas/SearchParamsString'
+        - $ref: '#/components/schemas/SearchParamsObject'
+    ProcessingTimeMS:
+      title: processingTimeMS
       type: integer
       description: Time the server took to process the request, in milliseconds.
       example: 20
     RedirectRuleIndexMetadata:
+      title: redirectRuleIndexMetadata
       type: object
       properties:
         source:
@@ -6172,7 +6272,8 @@ components:
         - reason
         - dest
         - source
-    userData:
+    UserData:
+      title: userData
       example:
         settingID: f2a7b51e3503acc6a39b3784ffb84300
         pluginVersion: 1.6.0
@@ -6183,7 +6284,8 @@ components:
       default: {}
       x-categories:
         - Advanced
-    baseSearchResponse:
+    BaseSearchResponse:
+      title: baseSearchResponse
       type: object
       additionalProperties: true
       properties:
@@ -6336,7 +6438,7 @@ components:
             query string that will be searched.
           example: george clo
         processingTimeMS:
-          $ref: '#/components/schemas/processingTimeMS'
+          $ref: '#/components/schemas/ProcessingTimeMS'
         processingTimingsMS:
           type: object
           description: >-
@@ -6361,7 +6463,7 @@ components:
               items:
                 $ref: '#/components/schemas/RedirectRuleIndexMetadata'
         renderingContent:
-          $ref: '#/components/schemas/renderingContent'
+          $ref: '#/components/schemas/RenderingContent'
         serverTimeMS:
           type: integer
           description: Time the server took to process the request, in milliseconds.
@@ -6371,7 +6473,7 @@ components:
           description: Host name of the server that processed the request.
           example: c2-uk-3.algolia.net
         userData:
-          $ref: '#/components/schemas/userData'
+          $ref: '#/components/schemas/UserData'
         queryID:
           type: string
           description: >-
@@ -6381,51 +6483,57 @@ components:
         _automaticInsights:
           type: boolean
           description: Whether automatic events collection is enabled for the application.
-    nbHits:
+    NbHits:
+      title: nbHits
       type: integer
       description: Number of results (hits).
       example: 20
-    nbPages:
+    NbPages:
+      title: nbPages
       type: integer
       description: Number of pages of results.
       example: 1
     SearchPagination:
+      title: searchPagination
       type: object
       additionalProperties: false
       properties:
         page:
-          $ref: '#/components/schemas/page'
+          $ref: '#/components/schemas/Page'
         nbHits:
-          $ref: '#/components/schemas/nbHits'
+          $ref: '#/components/schemas/NbHits'
         nbPages:
-          $ref: '#/components/schemas/nbPages'
+          $ref: '#/components/schemas/NbPages'
         hitsPerPage:
-          $ref: '#/components/schemas/hitsPerPage'
-    objectID:
+          $ref: '#/components/schemas/HitsPerPage'
+    ObjectID:
+      title: objectID
       type: string
       description: Unique record identifier.
       example: test-record-123
-    highlightedValue:
+    HighlightedValue:
+      title: highlightedValue
       type: string
       description: Highlighted attribute value, including HTML tags.
       example: <em>George</em> <em>Clo</em>oney
-    matchLevel:
+    MatchLevel:
+      title: matchLevel
       type: string
       description: Whether the whole query string matches or only a part.
       enum:
         - none
         - partial
         - full
-    highlightResultOption:
+    HighlightResultOption:
       title: highlightResultOption
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
       additionalProperties: false
       properties:
         value:
-          $ref: '#/components/schemas/highlightedValue'
+          $ref: '#/components/schemas/HighlightedValue'
         matchLevel:
-          $ref: '#/components/schemas/matchLevel'
+          $ref: '#/components/schemas/MatchLevel'
         matchedWords:
           type: array
           description: List of matched words from the search query.
@@ -6443,60 +6551,63 @@ components:
       x-discriminator-fields:
         - matchLevel
         - matchedWords
-    highlightResultMap:
+    HighlightResultMap:
       title: highlightResultMap
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
       x-is-free-form: false
       additionalProperties:
         x-additionalPropertiesName: attribute
-        $ref: '#/components/schemas/highlightResult'
-    highlightResult:
+        $ref: '#/components/schemas/HighlightResult'
+    HighlightResult:
+      title: highlightResult
       oneOf:
-        - $ref: '#/components/schemas/highlightResultOption'
-        - $ref: '#/components/schemas/highlightResultMap'
-        - $ref: '#/components/schemas/highlightResultArray'
-    highlightResultArray:
+        - $ref: '#/components/schemas/HighlightResultOption'
+        - $ref: '#/components/schemas/HighlightResultMap'
+        - $ref: '#/components/schemas/HighlightResultArray'
+    HighlightResultArray:
       title: highlightResultArray
       type: array
       description: Surround words that match the query with HTML tags for highlighting.
       items:
-        $ref: '#/components/schemas/highlightResult'
-    snippetResultOption:
+        $ref: '#/components/schemas/HighlightResult'
+    SnippetResultOption:
       title: snippetResultOption
       type: object
       description: Snippets that show the context around a matching search query.
       additionalProperties: false
       properties:
         value:
-          $ref: '#/components/schemas/highlightedValue'
+          $ref: '#/components/schemas/HighlightedValue'
         matchLevel:
-          $ref: '#/components/schemas/matchLevel'
+          $ref: '#/components/schemas/MatchLevel'
       required:
         - value
         - matchLevel
       x-discriminator-fields:
         - matchLevel
-    snippetResultMap:
+    SnippetResultMap:
       title: snippetResultMap
       type: object
       description: Snippets that show the context around a matching search query.
       x-is-free-form: false
       additionalProperties:
         x-additionalPropertiesName: attribute
-        $ref: '#/components/schemas/snippetResult'
-    snippetResult:
+        $ref: '#/components/schemas/SnippetResult'
+    SnippetResult:
+      title: snippetResult
       oneOf:
-        - $ref: '#/components/schemas/snippetResultOption'
-        - $ref: '#/components/schemas/snippetResultMap'
-        - $ref: '#/components/schemas/snippetResultArray'
-    snippetResultArray:
+        - $ref: '#/components/schemas/SnippetResultOption'
+        - $ref: '#/components/schemas/SnippetResultMap'
+        - $ref: '#/components/schemas/SnippetResultArray'
+    SnippetResultArray:
       title: snippetResultArray
       type: array
       description: Snippets that show the context around a matching search query.
       items:
-        $ref: '#/components/schemas/snippetResult'
-    matchedGeoLocation:
+        $ref: '#/components/schemas/SnippetResult'
+    MatchedGeoLocation:
+      title: matchedGeoLocation
       type: object
       properties:
         lat:
@@ -6512,7 +6623,8 @@ components:
           description: >-
             Distance between the matched location and the search location (in
             meters).
-    personalization:
+    Personalization:
+      title: personalization
       type: object
       properties:
         filtersScore:
@@ -6524,7 +6636,8 @@ components:
         score:
           type: integer
           description: The score of the event.
-    rankingInfo:
+    RankingInfo:
+      title: rankingInfo
       type: object
       description: Object with detailed information about the record's ranking.
       additionalProperties: false
@@ -6551,9 +6664,9 @@ components:
           minimum: 1
           description: Precision used when computing the geo distance, in meters.
         matchedGeoLocation:
-          $ref: '#/components/schemas/matchedGeoLocation'
+          $ref: '#/components/schemas/MatchedGeoLocation'
         personalization:
-          $ref: '#/components/schemas/personalization'
+          $ref: '#/components/schemas/Personalization'
         nbExactWords:
           type: integer
           minimum: 0
@@ -6589,9 +6702,11 @@ components:
         - geoDistance
         - nbExactWords
         - userScore
-    distinctSeqID:
+    DistinctSeqID:
+      title: distinctSeqID
       type: integer
-    hit:
+    Hit:
+      title: hit
       type: object
       description: >
         Search result.
@@ -6606,16 +6721,17 @@ components:
         - objectID
       properties:
         objectID:
-          $ref: '#/components/schemas/objectID'
+          $ref: '#/components/schemas/ObjectID'
         _highlightResult:
-          $ref: '#/components/schemas/highlightResultMap'
+          $ref: '#/components/schemas/HighlightResultMap'
         _snippetResult:
-          $ref: '#/components/schemas/snippetResultMap'
+          $ref: '#/components/schemas/SnippetResultMap'
         _rankingInfo:
-          $ref: '#/components/schemas/rankingInfo'
+          $ref: '#/components/schemas/RankingInfo'
         _distinctSeqID:
-          $ref: '#/components/schemas/distinctSeqID'
-    queryCategorization_type:
+          $ref: '#/components/schemas/DistinctSeqID'
+    QueryCategorization_type:
+      title: queryCategorization_type
       type: string
       enum:
         - narrow
@@ -6623,7 +6739,8 @@ components:
         - ambiguous
         - none
       description: Classification of the query scope.
-    categoryPrediction_bin:
+    CategoryPrediction_bin:
+      title: categoryPrediction_bin
       type: string
       enum:
         - certain
@@ -6632,7 +6749,8 @@ components:
         - low
         - very low
       description: Confidence level of the category prediction.
-    hierarchyPathEntry:
+    HierarchyPathEntry:
+      title: hierarchyPathEntry
       type: object
       properties:
         facetName:
@@ -6646,23 +6764,26 @@ components:
         depth:
           type: integer
           description: Depth level in the category hierarchy, starting at 0.
-    categoryPrediction:
+    CategoryPrediction:
+      title: categoryPrediction
       type: object
       properties:
         bin:
-          $ref: '#/components/schemas/categoryPrediction_bin'
+          $ref: '#/components/schemas/CategoryPrediction_bin'
         hierarchyPath:
           type: array
           description: Ordered list of category levels from root to the predicted category.
           items:
-            $ref: '#/components/schemas/hierarchyPathEntry'
-    autoFilteringFilterEntry:
+            $ref: '#/components/schemas/HierarchyPathEntry'
+    AutoFilteringFilterEntry:
+      title: autoFilteringFilterEntry
       oneOf:
         - type: string
         - type: array
           items:
             type: string
-    autoFilteringResult:
+    AutoFilteringResult:
+      title: autoFilteringResult
       type: object
       description: Result of automatic filtering applied by Query Categorization.
       properties:
@@ -6676,13 +6797,14 @@ components:
           type: array
           description: Facet filters automatically applied to the query.
           items:
-            $ref: '#/components/schemas/autoFilteringFilterEntry'
+            $ref: '#/components/schemas/AutoFilteringFilterEntry'
         optionalFilters:
           type: array
           description: Optional filters automatically applied to boost relevant categories.
           items:
-            $ref: '#/components/schemas/autoFilteringFilterEntry'
-    queryCategorization:
+            $ref: '#/components/schemas/AutoFilteringFilterEntry'
+    QueryCategorization:
+      title: queryCategorization
       type: object
       description: >
         Query Categorization prediction returned by the AI model.
@@ -6701,15 +6823,16 @@ components:
             Number of times this normalized query was observed during the
             training window.
         type:
-          $ref: '#/components/schemas/queryCategorization_type'
+          $ref: '#/components/schemas/QueryCategorization_type'
         categories:
           type: array
           description: List of category predictions with confidence levels.
           items:
-            $ref: '#/components/schemas/categoryPrediction'
+            $ref: '#/components/schemas/CategoryPrediction'
         autofiltering:
-          $ref: '#/components/schemas/autoFilteringResult'
-    responseExtensions:
+          $ref: '#/components/schemas/AutoFilteringResult'
+    ResponseExtensions:
+      title: responseExtensions
       type: object
       description: >
         AI-generated metadata returned alongside search results.
@@ -6719,8 +6842,9 @@ components:
         are enabled.
       properties:
         queryCategorization:
-          $ref: '#/components/schemas/queryCategorization'
-    searchHits:
+          $ref: '#/components/schemas/QueryCategorization'
+    SearchHits:
+      title: searchHits
       type: object
       additionalProperties: true
       properties:
@@ -6733,28 +6857,31 @@ components:
             Hits are records from your index that match the search criteria,
             augmented with additional attributes, such as, for highlighting.
           items:
-            $ref: '#/components/schemas/hit'
+            $ref: '#/components/schemas/Hit'
         query:
-          $ref: '#/components/schemas/query'
+          $ref: '#/components/schemas/Query'
         params:
           type: string
           description: URL-encoded string of all search parameters.
           example: query=a&hitsPerPage=20
         extensions:
-          $ref: '#/components/schemas/responseExtensions'
+          $ref: '#/components/schemas/ResponseExtensions'
       required:
         - hits
-    searchResponse:
+    SearchResponse:
+      title: searchResponse
       additionalProperties: true
       allOf:
-        - $ref: '#/components/schemas/baseSearchResponse'
+        - $ref: '#/components/schemas/BaseSearchResponse'
         - $ref: '#/components/schemas/SearchPagination'
-        - $ref: '#/components/schemas/searchHits'
-    indexName:
+        - $ref: '#/components/schemas/SearchHits'
+    IndexName:
+      title: indexName
       type: string
       example: products
       description: Index name (case-sensitive).
-    searchTypeDefault:
+    SearchTypeDefault:
+      title: searchTypeDefault
       type: string
       enum:
         - default
@@ -6764,7 +6891,8 @@ components:
 
         - `facet` [searches for facet
         values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
-    searchExtensionsQueryCategorization:
+    SearchExtensionsQueryCategorization:
+      title: searchExtensionsQueryCategorization
       type: object
       description: >-
         Parameters for the [Query
@@ -6783,7 +6911,8 @@ components:
             Whether to automatically apply category-based filters and boosts to
             search results.
           default: false
-    searchExtensions:
+    SearchExtensions:
+      title: searchExtensions
       type: object
       description: >
         Additional parameters for Algolia AI features.
@@ -6793,29 +6922,33 @@ components:
         and other AI-powered capabilities.
       properties:
         queryCategorization:
-          $ref: '#/components/schemas/searchExtensionsQueryCategorization'
-    searchForHitsOptions:
+          $ref: '#/components/schemas/SearchExtensionsQueryCategorization'
+    SearchForHitsOptions:
+      title: searchForHitsOptions
       x-is-SearchForHitsOptions: true
       type: object
       properties:
         indexName:
-          $ref: '#/components/schemas/indexName'
+          $ref: '#/components/schemas/IndexName'
         type:
-          $ref: '#/components/schemas/searchTypeDefault'
+          $ref: '#/components/schemas/SearchTypeDefault'
         extensions:
-          $ref: '#/components/schemas/searchExtensions'
+          $ref: '#/components/schemas/SearchExtensions'
       required:
         - indexName
     SearchForHits:
+      title: searchForHits
       allOf:
-        - $ref: '#/components/schemas/searchParams'
-        - $ref: '#/components/schemas/searchForHitsOptions'
-    facetQuery:
+        - $ref: '#/components/schemas/SearchParams'
+        - $ref: '#/components/schemas/SearchForHitsOptions'
+    FacetQuery:
+      title: facetQuery
       type: string
       description: Text to search inside the facet's values.
       example: george
       default: ''
-    maxFacetHits:
+    MaxFacetHits:
+      title: maxFacetHits
       type: integer
       description: >-
         Maximum number of facet values to return when [searching for facet
@@ -6824,7 +6957,8 @@ components:
       default: 10
       x-categories:
         - Advanced
-    searchTypeFacet:
+    SearchTypeFacet:
+      title: searchTypeFacet
       type: string
       enum:
         - facet
@@ -6834,36 +6968,40 @@ components:
 
         - `facet` [searches for facet
         values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
-    searchForFacetsOptions:
+    SearchForFacetsOptions:
+      title: searchForFacetsOptions
       type: object
       properties:
         facet:
           type: string
           description: Facet name.
         indexName:
-          $ref: '#/components/schemas/indexName'
+          $ref: '#/components/schemas/IndexName'
         facetQuery:
-          $ref: '#/components/schemas/facetQuery'
+          $ref: '#/components/schemas/FacetQuery'
         maxFacetHits:
-          $ref: '#/components/schemas/maxFacetHits'
+          $ref: '#/components/schemas/MaxFacetHits'
         type:
-          $ref: '#/components/schemas/searchTypeFacet'
+          $ref: '#/components/schemas/SearchTypeFacet'
       required:
         - indexName
         - type
         - facet
     SearchForFacets:
+      title: searchForFacets
       allOf:
-        - $ref: '#/components/schemas/searchParams'
-        - $ref: '#/components/schemas/searchForFacetsOptions'
+        - $ref: '#/components/schemas/SearchParams'
+        - $ref: '#/components/schemas/SearchForFacetsOptions'
       x-discriminator-fields:
         - facet
         - type
     SearchQuery:
+      title: searchQuery
       oneOf:
         - $ref: '#/components/schemas/SearchForHits'
         - $ref: '#/components/schemas/SearchForFacets'
-    searchStrategy:
+    SearchStrategy:
+      title: searchStrategy
       type: string
       enum:
         - none
@@ -6876,7 +7014,8 @@ components:
 
         - `stopIfEnoughMatches`. Run the queries one by one, stopping as soon as
         a query matches at least the `hitsPerPage` number of results.
-    searchForFacetValuesResponse:
+    SearchForFacetValuesResponse:
+      title: searchForFacetValuesResponse
       type: object
       additionalProperties: false
       required:
@@ -6902,7 +7041,7 @@ components:
                 example: Mobile phone
                 type: string
               highlighted:
-                $ref: '#/components/schemas/highlightedValue'
+                $ref: '#/components/schemas/HighlightedValue'
               count:
                 description: >-
                   Number of records with this facet value. [The count may be
@@ -6916,8 +7055,9 @@ components:
             For more information, see [Why are my facet and hit counts not
             accurate](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate).
         processingTimeMS:
-          $ref: '#/components/schemas/processingTimeMS'
-    searchResponsePartial:
+          $ref: '#/components/schemas/ProcessingTimeMS'
+    SearchResponsePartial:
+      title: searchResponsePartial
       description: >
         Partial search response returned when the `responseFields` parameter
         excludes
@@ -6929,7 +7069,7 @@ components:
         deserialization.
       additionalProperties: true
       allOf:
-        - $ref: '#/components/schemas/baseSearchResponse'
+        - $ref: '#/components/schemas/BaseSearchResponse'
         - $ref: '#/components/schemas/SearchPagination'
         - type: object
           additionalProperties: true
@@ -6943,21 +7083,23 @@ components:
                 Hits are records from your index that match the search criteria,
                 augmented with additional attributes, such as, for highlighting.
               items:
-                $ref: '#/components/schemas/hit'
+                $ref: '#/components/schemas/Hit'
             query:
-              $ref: '#/components/schemas/query'
+              $ref: '#/components/schemas/Query'
             params:
               type: string
               description: URL-encoded string of all search parameters.
               example: query=a&hitsPerPage=20
             extensions:
-              $ref: '#/components/schemas/responseExtensions'
-    searchResult:
+              $ref: '#/components/schemas/ResponseExtensions'
+    SearchResult:
+      title: searchResult
       oneOf:
-        - $ref: '#/components/schemas/searchResponse'
-        - $ref: '#/components/schemas/searchForFacetValuesResponse'
-        - $ref: '#/components/schemas/searchResponsePartial'
-    cursor:
+        - $ref: '#/components/schemas/SearchResponse'
+        - $ref: '#/components/schemas/SearchForFacetValuesResponse'
+        - $ref: '#/components/schemas/SearchResponsePartial'
+    Cursor:
+      title: cursor
       type: object
       additionalProperties: false
       properties:
@@ -6972,38 +7114,44 @@ components:
 
             The last page of the response does not return a `cursor` attribute.
           example: jMDY3M2MwM2QwMWUxMmQwYWI0ZTN
-    browseParamsObject:
+    BrowseParamsObject:
+      title: browseParamsObject
       allOf:
-        - $ref: '#/components/schemas/searchParamsObject'
-        - $ref: '#/components/schemas/cursor'
-    browseParams:
+        - $ref: '#/components/schemas/SearchParamsObject'
+        - $ref: '#/components/schemas/Cursor'
+    BrowseParams:
+      title: browseParams
       oneOf:
         - title: Search parameters as object
-          $ref: '#/components/schemas/browseParamsObject'
-        - $ref: '#/components/schemas/searchParamsString'
+          $ref: '#/components/schemas/BrowseParamsObject'
+        - $ref: '#/components/schemas/SearchParamsString'
     BrowsePagination:
+      title: browsePagination
       type: object
       additionalProperties: false
       properties:
         page:
-          $ref: '#/components/schemas/page'
+          $ref: '#/components/schemas/Page'
         nbHits:
-          $ref: '#/components/schemas/nbHits'
+          $ref: '#/components/schemas/NbHits'
         nbPages:
-          $ref: '#/components/schemas/nbPages'
+          $ref: '#/components/schemas/NbPages'
         hitsPerPage:
-          $ref: '#/components/schemas/hitsPerPage'
-    browseResponse:
+          $ref: '#/components/schemas/HitsPerPage'
+    BrowseResponse:
+      title: browseResponse
       allOf:
-        - $ref: '#/components/schemas/baseSearchResponse'
+        - $ref: '#/components/schemas/BaseSearchResponse'
         - $ref: '#/components/schemas/BrowsePagination'
-        - $ref: '#/components/schemas/searchHits'
-        - $ref: '#/components/schemas/cursor'
-    createdAt:
+        - $ref: '#/components/schemas/SearchHits'
+        - $ref: '#/components/schemas/Cursor'
+    CreatedAt:
+      title: createdAt
       type: string
       example: '2023-07-04T12:49:15Z'
       description: Date and time when the object was created, in RFC 3339 format.
-    taskID:
+    TaskID:
+      title: taskID
       type: integer
       format: int64
       example: 1514562690001
@@ -7018,35 +7166,39 @@ components:
         You can check the task's progress with the [`task`
         operation](https://www.algolia.com/doc/rest-api/search/get-task) and
         this task ID.
-    deletedAt:
+    DeletedAt:
+      title: deletedAt
       type: string
       example: '2023-06-27T14:42:38.831Z'
       description: Date and time when the object was deleted, in RFC 3339 format.
-    updatedAt:
+    UpdatedAt:
+      title: updatedAt
       type: string
       example: '2023-07-04T12:49:15Z'
       description: Date and time when the object was updated, in RFC 3339 format.
-    deleteByParams:
+    DeleteByParams:
+      title: deleteByParams
       type: object
       additionalProperties: false
       properties:
         facetFilters:
-          $ref: '#/components/schemas/facetFilters'
+          $ref: '#/components/schemas/FacetFilters'
         filters:
-          $ref: '#/components/schemas/filters'
+          $ref: '#/components/schemas/Filters'
         numericFilters:
-          $ref: '#/components/schemas/numericFilters'
+          $ref: '#/components/schemas/NumericFilters'
         tagFilters:
-          $ref: '#/components/schemas/tagFilters'
+          $ref: '#/components/schemas/TagFilters'
         aroundLatLng:
-          $ref: '#/components/schemas/aroundLatLng'
+          $ref: '#/components/schemas/AroundLatLng'
         aroundRadius:
-          $ref: '#/components/schemas/aroundRadius'
+          $ref: '#/components/schemas/AroundRadius'
         insideBoundingBox:
-          $ref: '#/components/schemas/insideBoundingBox'
+          $ref: '#/components/schemas/InsideBoundingBox'
         insidePolygon:
-          $ref: '#/components/schemas/insidePolygon'
-    updatedAtResponse:
+          $ref: '#/components/schemas/InsidePolygon'
+    UpdatedAtResponse:
+      title: updatedAtResponse
       type: object
       description: Response, taskID, and update timestamp.
       additionalProperties: false
@@ -7055,10 +7207,11 @@ components:
         - updatedAt
       properties:
         taskID:
-          $ref: '#/components/schemas/taskID'
+          $ref: '#/components/schemas/TaskID'
         updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-    action:
+          $ref: '#/components/schemas/UpdatedAt'
+    Action:
+      title: action
       type: string
       enum:
         - addObject
@@ -7089,7 +7242,7 @@ components:
 
         - `clear`: delete all records from an index. Equivalent to the "Delete
         all records from an index operation".
-    batchWriteParams:
+    BatchWriteParams:
       title: batchWriteParams
       description: Batch parameters.
       type: object
@@ -7103,7 +7256,7 @@ components:
             additionalProperties: false
             properties:
               action:
-                $ref: '#/components/schemas/action'
+                $ref: '#/components/schemas/Action'
               body:
                 type: object
                 description: Operation arguments (varies with specified `action`).
@@ -7128,7 +7281,8 @@ components:
               name: Gayla geimer
               company: Ortman McCain Co.
               email: gayla@geimer.com
-    objectIDs:
+    ObjectIDs:
+      title: objectIDs
       type: array
       items:
         type: string
@@ -7136,18 +7290,20 @@ components:
         - record-1
         - record-2
       description: Unique record identifiers.
-    batchResponse:
+    BatchResponse:
+      title: batchResponse
       type: object
       additionalProperties: false
       properties:
         taskID:
-          $ref: '#/components/schemas/taskID'
+          $ref: '#/components/schemas/TaskID'
         objectIDs:
-          $ref: '#/components/schemas/objectIDs'
+          $ref: '#/components/schemas/ObjectIDs'
       required:
         - taskID
         - objectIDs
-    baseIndexSettings:
+    BaseIndexSettings:
+      title: baseIndexSettings
       type: object
       additionalProperties: false
       properties:
@@ -7355,7 +7511,7 @@ components:
         indexLanguages:
           type: array
           items:
-            $ref: '#/components/schemas/supportedLanguage'
+            $ref: '#/components/schemas/SupportedLanguage'
           example:
             - ja
           description: >
@@ -7508,7 +7664,7 @@ components:
           x-categories:
             - Attributes
         userData:
-          $ref: '#/components/schemas/userData'
+          $ref: '#/components/schemas/UserData'
         customNormalization:
           description: >
             Characters and their normalized replacements.
@@ -7550,7 +7706,7 @@ components:
           example: url
           type: string
         maxFacetHits:
-          $ref: '#/components/schemas/maxFacetHits'
+          $ref: '#/components/schemas/MaxFacetHits'
         keepDiacriticsOnCharacters:
           type: string
           example: øé
@@ -7606,12 +7762,14 @@ components:
           default: []
           x-categories:
             - Ranking
-    indexSettings:
+    IndexSettings:
+      title: indexSettings
       description: Index settings.
       allOf:
-        - $ref: '#/components/schemas/baseIndexSettings'
-        - $ref: '#/components/schemas/indexSettingsAsSearchParams'
+        - $ref: '#/components/schemas/BaseIndexSettings'
+        - $ref: '#/components/schemas/IndexSettingsAsSearchParams'
     WithPrimary:
+      title: withPrimary
       type: object
       additionalProperties: false
       properties:
@@ -7620,11 +7778,13 @@ components:
           description: >
             Replica indices only: the name of the primary index for this
             replica.
-    settingsResponse:
+    SettingsResponse:
+      title: settingsResponse
       allOf:
-        - $ref: '#/components/schemas/indexSettings'
+        - $ref: '#/components/schemas/IndexSettings'
         - $ref: '#/components/schemas/WithPrimary'
     SynonymType:
+      title: synonymType
       type: string
       description: Synonym type.
       example: onewaysynonym
@@ -7637,7 +7797,8 @@ components:
         - oneWaySynonym
         - altCorrection1
         - altCorrection2
-    synonymHit:
+    SynonymHit:
+      title: synonymHit
       type: object
       description: Synonym object.
       additionalProperties: false
@@ -7696,49 +7857,56 @@ components:
       required:
         - objectID
         - type
-    id:
+    Id:
+      title: id
       type: string
       example: '12'
       description: Unique identifier of a synonym object.
-    synonymHits:
+    SynonymHits:
+      title: synonymHits
       type: array
       description: Matching synonyms.
       items:
-        $ref: '#/components/schemas/synonymHit'
-    searchSynonymsResponse:
+        $ref: '#/components/schemas/SynonymHit'
+    SearchSynonymsResponse:
+      title: searchSynonymsResponse
       type: object
       additionalProperties: true
       properties:
         hits:
-          $ref: '#/components/schemas/synonymHits'
+          $ref: '#/components/schemas/SynonymHits'
         nbHits:
-          $ref: '#/components/schemas/nbHits'
+          $ref: '#/components/schemas/NbHits'
       required:
         - hits
         - nbHits
-    keyString:
+    KeyString:
+      title: keyString
       type: string
       description: API key.
       example: 13ad45b4d0a2f6ea65ecbddf6aa260f2
-    createdAtTimestamp:
+    CreatedAtTimestamp:
+      title: createdAtTimestamp
       type: integer
       format: int64
       example: 1656345570000
       description: >-
         Timestamp when the object was created, in milliseconds since the Unix
         epoch.
-    baseGetApiKeyResponse:
+    BaseGetApiKeyResponse:
+      title: baseGetApiKeyResponse
       type: object
       additionalProperties: false
       properties:
         value:
-          $ref: '#/components/schemas/keyString'
+          $ref: '#/components/schemas/KeyString'
         createdAt:
-          $ref: '#/components/schemas/createdAtTimestamp'
+          $ref: '#/components/schemas/CreatedAtTimestamp'
       required:
         - value
         - createdAt
-    acl:
+    Acl:
+      title: acl
       description: Access control list permissions.
       type: string
       enum:
@@ -7765,7 +7933,8 @@ components:
         - nluReadIntent
         - nluPrediction
         - nluReadAnswers
-    apiKey:
+    ApiKey:
+      title: apiKey
       type: object
       description: API key object.
       additionalProperties: false
@@ -7785,7 +7954,7 @@ components:
             - addObject
           default: []
           items:
-            $ref: '#/components/schemas/acl'
+            $ref: '#/components/schemas/Acl'
         description:
           type: string
           description: Description of an API key to help you identify this API key.
@@ -7888,26 +8057,29 @@ components:
           default: 0
       required:
         - acl
-    getApiKeyResponse:
+    GetApiKeyResponse:
+      title: getApiKeyResponse
       allOf:
-        - $ref: '#/components/schemas/baseGetApiKeyResponse'
-        - $ref: '#/components/schemas/apiKey'
-    addApiKeyResponse:
+        - $ref: '#/components/schemas/BaseGetApiKeyResponse'
+        - $ref: '#/components/schemas/ApiKey'
+    AddApiKeyResponse:
+      title: addApiKeyResponse
       type: object
       additionalProperties: false
       properties:
         key:
-          $ref: '#/components/schemas/keyString'
+          $ref: '#/components/schemas/KeyString'
         createdAt:
-          $ref: '#/components/schemas/createdAt'
+          $ref: '#/components/schemas/CreatedAt'
       required:
         - key
         - createdAt
-    ruleID:
-      title: objectID
+    RuleID:
+      title: ruleID
       type: string
       description: Unique identifier of a rule object.
-    anchoring:
+    Anchoring:
+      title: anchoring
       type: string
       description: |
         Which part of the search query the pattern should match:
@@ -7923,7 +8095,8 @@ components:
         - startsWith
         - endsWith
         - contains
-    context:
+    Context:
+      title: context
       type: string
       pattern: '[A-Za-z0-9_-]+'
       description: >
@@ -7935,7 +8108,8 @@ components:
 
         A rule context must only contain alphanumeric characters.
       example: mobile
-    condition:
+    Condition:
+      title: condition
       type: object
       additionalProperties: false
       properties:
@@ -7955,13 +8129,13 @@ components:
             when users search for a genre, such as "comedy".
           example: '{facet:genre}'
         anchoring:
-          $ref: '#/components/schemas/anchoring'
+          $ref: '#/components/schemas/Anchoring'
         alternatives:
           type: boolean
           description: Whether the pattern should match plurals, synonyms, and typos.
           default: false
         context:
-          $ref: '#/components/schemas/context'
+          $ref: '#/components/schemas/Context'
         filters:
           type: string
           description: >
@@ -7977,18 +8151,20 @@ components:
             You can't combine multiple filters with `OR` and you can't use
             numeric filters.
           example: genre:comedy
-    editType:
+    EditType:
+      title: editType
       description: Type of edit.
       type: string
       enum:
         - remove
         - replace
-    edit:
+    Edit:
+      title: edit
       type: object
       additionalProperties: false
       properties:
         type:
-          $ref: '#/components/schemas/editType'
+          $ref: '#/components/schemas/EditType'
         delete:
           description: Text or patterns to remove from the query string.
           type: string
@@ -7997,7 +8173,8 @@ components:
             Text to be added in place of the deleted text inside the query
             string.
           type: string
-    consequenceQueryObject:
+    ConsequenceQueryObject:
+      title: consequenceQueryObject
       type: object
       additionalProperties: false
       properties:
@@ -8010,8 +8187,9 @@ components:
           description: Changes to make to the search query.
           type: array
           items:
-            $ref: '#/components/schemas/edit'
-    consequenceQuery:
+            $ref: '#/components/schemas/Edit'
+    ConsequenceQuery:
+      title: consequenceQuery
       description: >
         Replace or edit the search query.
 
@@ -8022,9 +8200,10 @@ components:
         If `consequenceQuery` is an object, it describes incremental edits made
         to the query.
       oneOf:
-        - $ref: '#/components/schemas/consequenceQueryObject'
+        - $ref: '#/components/schemas/ConsequenceQueryObject'
         - type: string
-    automaticFacetFilter:
+    AutomaticFacetFilter:
+      title: automaticFacetFilter
       type: object
       description: Filter or optional filter to be applied to the search.
       additionalProperties: false
@@ -8056,7 +8235,8 @@ components:
             operation.
       required:
         - facet
-    automaticFacetFilters:
+    AutomaticFacetFilters:
+      title: automaticFacetFilters
       description: >
         Filter to be applied to the search.
 
@@ -8070,11 +8250,12 @@ components:
       oneOf:
         - type: array
           items:
-            $ref: '#/components/schemas/automaticFacetFilter'
+            $ref: '#/components/schemas/AutomaticFacetFilter'
         - type: array
           items:
             type: string
-    params:
+    Params:
+      title: params
       type: object
       description: >
         Parameters to apply to this search.
@@ -8085,26 +8266,28 @@ components:
       additionalProperties: false
       properties:
         query:
-          $ref: '#/components/schemas/consequenceQuery'
+          $ref: '#/components/schemas/ConsequenceQuery'
         automaticFacetFilters:
-          $ref: '#/components/schemas/automaticFacetFilters'
+          $ref: '#/components/schemas/AutomaticFacetFilters'
         automaticOptionalFacetFilters:
-          $ref: '#/components/schemas/automaticFacetFilters'
+          $ref: '#/components/schemas/AutomaticFacetFilters'
         renderingContent:
-          $ref: '#/components/schemas/renderingContent'
-    consequenceParams:
+          $ref: '#/components/schemas/RenderingContent'
+    ConsequenceParams:
+      title: consequenceParams
       allOf:
-        - $ref: '#/components/schemas/baseSearchParamsWithoutQuery'
-        - $ref: '#/components/schemas/indexSettingsAsSearchParams'
-        - $ref: '#/components/schemas/params'
-    promotePosition:
+        - $ref: '#/components/schemas/BaseSearchParamsWithoutQuery'
+        - $ref: '#/components/schemas/IndexSettingsAsSearchParams'
+        - $ref: '#/components/schemas/Params'
+    PromotePosition:
+      title: promotePosition
       type: integer
       description: >-
         Position in the search results where you want to show the promoted
         records.
       example: 0
-    promoteObjectIDs:
-      title: objectIDs
+    PromoteObjectIDs:
+      title: promoteObjectIDs
       description: Records to promote.
       type: object
       additionalProperties: false
@@ -8119,34 +8302,36 @@ components:
             For example, if you want to promote four records to position `0`,
             they will be the first four search results.
           items:
-            $ref: '#/components/schemas/objectID'
+            $ref: '#/components/schemas/ObjectID'
         position:
-          $ref: '#/components/schemas/promotePosition'
+          $ref: '#/components/schemas/PromotePosition'
       required:
         - position
         - objectIDs
       x-discriminator-fields:
         - objectIDs
-    promoteObjectID:
-      title: objectID
+    PromoteObjectID:
+      title: promoteObjectID
       description: Record to promote.
       type: object
       additionalProperties: false
       properties:
         objectID:
-          $ref: '#/components/schemas/objectID'
+          $ref: '#/components/schemas/ObjectID'
         position:
-          $ref: '#/components/schemas/promotePosition'
+          $ref: '#/components/schemas/PromotePosition'
       required:
         - position
         - objectID
       x-discriminator-fields:
         - objectID
-    promote:
+    Promote:
+      title: promote
       oneOf:
-        - $ref: '#/components/schemas/promoteObjectIDs'
-        - $ref: '#/components/schemas/promoteObjectID'
-    consequence:
+        - $ref: '#/components/schemas/PromoteObjectIDs'
+        - $ref: '#/components/schemas/PromoteObjectID'
+    Consequence:
+      title: consequence
       type: object
       description: >
         Effect of the rule.
@@ -8157,7 +8342,7 @@ components:
       additionalProperties: false
       properties:
         params:
-          $ref: '#/components/schemas/consequenceParams'
+          $ref: '#/components/schemas/ConsequenceParams'
         promote:
           type: array
           maxItems: 300
@@ -8169,7 +8354,7 @@ components:
             You can promote up to 300 records, either individually, or as groups
             of up to 100 records each.
           items:
-            $ref: '#/components/schemas/promote'
+            $ref: '#/components/schemas/Promote'
         filterPromotes:
           type: boolean
           default: false
@@ -8203,7 +8388,7 @@ components:
             additionalProperties: false
             properties:
               objectID:
-                $ref: '#/components/schemas/objectID'
+                $ref: '#/components/schemas/ObjectID'
             required:
               - objectID
         redirect:
@@ -8231,7 +8416,8 @@ components:
           example:
             settingID: f2a7b51e3503acc6a39b3784ffb84300
             pluginVersion: 1.6.0
-    timeRange:
+    TimeRange:
+      title: timeRange
       type: object
       additionalProperties: false
       properties:
@@ -8247,13 +8433,14 @@ components:
           description: >-
             Timestamp when the rule should stop to be active, measured in
             seconds since the Unix epoch.
-    rule:
+    Rule:
+      title: rule
       type: object
       description: Rule object.
       additionalProperties: false
       properties:
         objectID:
-          $ref: '#/components/schemas/ruleID'
+          $ref: '#/components/schemas/RuleID'
         conditions:
           type: array
           minItems: 0
@@ -8268,9 +8455,9 @@ components:
             For more information, see
             [Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions).
           items:
-            $ref: '#/components/schemas/condition'
+            $ref: '#/components/schemas/Condition'
         consequence:
-          $ref: '#/components/schemas/consequence'
+          $ref: '#/components/schemas/Consequence'
         description:
           type: string
           description: >-
@@ -8285,7 +8472,7 @@ components:
           type: array
           description: Time periods when the rule is active.
           items:
-            $ref: '#/components/schemas/timeRange'
+            $ref: '#/components/schemas/TimeRange'
         tags:
           type: array
           items:
@@ -8299,15 +8486,17 @@ components:
             backward compatibility 
 
             with older rules but should not be used in new implementations.
-          $ref: '#/components/schemas/condition'
+          $ref: '#/components/schemas/Condition'
       required:
         - objectID
         - consequence
-    parameters_query:
+    Parameters_query:
+      title: parameters_query
       type: string
       description: Search query for rules.
       default: ''
-    parameters_page:
+    Parameters_page:
+      title: parameters_page
       type: integer
       minimum: 0
       description: >
@@ -8329,7 +8518,8 @@ components:
 
         For example, to display 10 results per page starting from the third
         page, set `hitsPerPage` to 10 and `page` to 2.
-    parameters_hitsPerPage:
+    Parameters_hitsPerPage:
+      title: parameters_hitsPerPage
       type: integer
       default: 20
       minimum: 1
@@ -8353,26 +8543,30 @@ components:
 
         For example, to display 10 results per page starting from the third
         page, set `hitsPerPage` to 10 and `page` to 2.
-    dictionaryType:
+    DictionaryType:
+      title: dictionaryType
       type: string
       enum:
         - plurals
         - stopwords
         - compounds
-    dictionaryAction:
+    DictionaryAction:
+      title: dictionaryAction
       type: string
       enum:
         - addEntry
         - deleteEntry
       description: Actions to perform.
-    dictionaryEntryState:
+    DictionaryEntryState:
+      title: dictionaryEntryState
       type: string
       enum:
         - enabled
         - disabled
       default: enabled
       description: Whether a dictionary entry is active.
-    dictionaryEntryType:
+    DictionaryEntryType:
+      title: dictionaryEntryType
       type: string
       enum:
         - custom
@@ -8380,7 +8574,8 @@ components:
       description: >-
         Whether a dictionary entry is provided by Algolia (standard), or has
         been added by you (custom).
-    dictionaryEntry:
+    DictionaryEntry:
+      title: dictionaryEntry
       type: object
       description: Dictionary entry.
       additionalProperties: true
@@ -8392,7 +8587,7 @@ components:
           description: Unique identifier for the dictionary entry.
           example: 828afd405e1f4fe950b6b98c2c43c032
         language:
-          $ref: '#/components/schemas/supportedLanguage'
+          $ref: '#/components/schemas/SupportedLanguage'
         word:
           type: string
           description: >-
@@ -8419,10 +8614,11 @@ components:
           items:
             type: string
         state:
-          $ref: '#/components/schemas/dictionaryEntryState'
+          $ref: '#/components/schemas/DictionaryEntryState'
         type:
-          $ref: '#/components/schemas/dictionaryEntryType'
-    searchDictionaryEntriesResponse:
+          $ref: '#/components/schemas/DictionaryEntryType'
+    SearchDictionaryEntriesResponse:
+      title: searchDictionaryEntriesResponse
       type: object
       additionalProperties: false
       properties:
@@ -8430,19 +8626,20 @@ components:
           type: array
           description: Dictionary entries matching the search criteria.
           items:
-            $ref: '#/components/schemas/dictionaryEntry'
+            $ref: '#/components/schemas/DictionaryEntry'
         page:
-          $ref: '#/components/schemas/parameters_page'
+          $ref: '#/components/schemas/Parameters_page'
         nbHits:
-          $ref: '#/components/schemas/nbHits'
+          $ref: '#/components/schemas/NbHits'
         nbPages:
-          $ref: '#/components/schemas/nbPages'
+          $ref: '#/components/schemas/NbPages'
       required:
         - hits
         - page
         - nbHits
         - nbPages
-    standardEntry:
+    StandardEntry:
+      title: standardEntry
       oneOf:
         - type: object
           description: Key-value pair of a language ISO code and a boolean value.
@@ -8452,7 +8649,8 @@ components:
             x-additionalPropertiesName: language
             type: boolean
         - type: 'null'
-    standardEntries:
+    StandardEntries:
+      title: standardEntries
       type: object
       description: >
         Key-value pairs of [supported language ISO
@@ -8461,12 +8659,13 @@ components:
       additionalProperties: false
       properties:
         plurals:
-          $ref: '#/components/schemas/standardEntry'
+          $ref: '#/components/schemas/StandardEntry'
         stopwords:
-          $ref: '#/components/schemas/standardEntry'
+          $ref: '#/components/schemas/StandardEntry'
         compounds:
-          $ref: '#/components/schemas/standardEntry'
-    dictionaryLanguage:
+          $ref: '#/components/schemas/StandardEntry'
+    DictionaryLanguage:
+      title: dictionaryLanguage
       oneOf:
         - type: object
           additionalProperties: false
@@ -8478,7 +8677,8 @@ components:
               description: Number of custom dictionary entries.
               type: integer
         - type: 'null'
-    languages:
+    Languages:
+      title: languages
       type: object
       description: Dictionary language.
       additionalProperties: false
@@ -8488,23 +8688,24 @@ components:
         - compounds
       properties:
         plurals:
-          $ref: '#/components/schemas/dictionaryLanguage'
+          $ref: '#/components/schemas/DictionaryLanguage'
         stopwords:
-          $ref: '#/components/schemas/dictionaryLanguage'
+          $ref: '#/components/schemas/DictionaryLanguage'
         compounds:
-          $ref: '#/components/schemas/dictionaryLanguage'
-    userID:
+          $ref: '#/components/schemas/DictionaryLanguage'
+    UserID:
+      title: userID
       type: string
       pattern: ^[a-zA-Z0-9 \-*.]+$
       description: Unique identifier of the user who makes the search request.
       example: user1
-    userId:
-      title: userID
+    UserId:
+      title: userId
       type: object
       description: Unique user ID.
       properties:
         userID:
-          $ref: '#/components/schemas/userID'
+          $ref: '#/components/schemas/UserID'
         clusterName:
           type: string
           description: Cluster to which the user is assigned.
@@ -8522,19 +8723,23 @@ components:
         - clusterName
         - nbRecords
         - dataSize
-    clusterName:
+    ClusterName:
+      title: clusterName
       type: string
       description: Cluster name.
       example: c11-test
-    nbRecords:
+    NbRecords:
+      title: nbRecords
       type: integer
       description: Number of records in the cluster.
       example: 3
-    dataSize:
+    DataSize:
+      title: dataSize
       type: integer
       description: Data size taken by all the users assigned to the cluster.
       example: 481
-    source:
+    Source:
+      title: source
       type: object
       description: Source.
       required:
@@ -8548,12 +8753,14 @@ components:
           description: Source description.
           type: string
           example: Server subnet
-    sources:
+    Sources:
+      title: sources
       description: Sources.
       type: array
       items:
-        $ref: '#/components/schemas/source'
-    logType:
+        $ref: '#/components/schemas/Source'
+    LogType:
+      title: logType
       type: string
       enum:
         - all
@@ -8561,7 +8768,8 @@ components:
         - build
         - error
       default: all
-    taskStatus:
+    TaskStatus:
+      title: taskStatus
       type: string
       enum:
         - published
@@ -8575,24 +8783,26 @@ components:
       additionalProperties: false
       properties:
         status:
-          $ref: '#/components/schemas/taskStatus'
+          $ref: '#/components/schemas/TaskStatus'
       required:
         - status
-    operationType:
+    OperationType:
+      title: operationType
       type: string
       enum:
         - move
         - copy
       example: copy
       description: Operation to perform on the index.
-    scopeType:
+    ScopeType:
+      title: scopeType
       type: string
       enum:
         - settings
         - synonyms
         - rules
-    fetchedIndexAbTestTarget:
-      title: abTestTarget
+    FetchedIndexAbTestTarget:
+      title: fetchedIndexAbTestTarget
       type: object
       description: A/B test target criteria. Only present for v2 and later tests.
       properties:
@@ -8602,8 +8812,8 @@ components:
           example: movies
       required:
         - indexName
-    fetchedIndexAbTestVariant:
-      title: abTestVariant
+    FetchedIndexAbTestVariant:
+      title: fetchedIndexAbTestVariant
       type: object
       description: A/B test variant for an index.
       properties:
@@ -8630,8 +8840,8 @@ components:
             Shape depends on the parent A/B test's `type`.
       required:
         - percentage
-    fetchedIndexAbTest:
-      title: abTest
+    FetchedIndexAbTest:
+      title: fetchedIndexAbTest
       type: object
       description: >-
         A/B test metadata. Only present if the index is part of an active A/B
@@ -8652,16 +8862,17 @@ components:
             `index-configuration`.
           example: index-configuration
         target:
-          $ref: '#/components/schemas/fetchedIndexAbTestTarget'
+          $ref: '#/components/schemas/FetchedIndexAbTestTarget'
         variants:
           type: array
           description: A/B test variants.
           items:
-            $ref: '#/components/schemas/fetchedIndexAbTestVariant'
+            $ref: '#/components/schemas/FetchedIndexAbTestVariant'
       required:
         - id
         - variants
-    fetchedIndex:
+    FetchedIndex:
+      title: fetchedIndex
       type: object
       additionalProperties: false
       properties:
@@ -8676,7 +8887,7 @@ components:
             records.
           example: '2022-09-19T16:36:44.471Z'
         updatedAt:
-          $ref: '#/components/schemas/updatedAt'
+          $ref: '#/components/schemas/UpdatedAt'
         entries:
           type: integer
           description: Number of records contained in the index.
@@ -8731,7 +8942,7 @@ components:
           x-categories:
             - Ranking
         abTest:
-          $ref: '#/components/schemas/fetchedIndexAbTest'
+          $ref: '#/components/schemas/FetchedIndexAbTest'
         sourceABTest:
           type: string
           description: >-
@@ -8749,7 +8960,8 @@ components:
         - lastBuildTimeS
         - pendingTask
         - numberOfPendingTasks
-    listIndicesResponse:
+    ListIndicesResponse:
+      title: listIndicesResponse
       type: object
       additionalProperties: false
       properties:
@@ -8757,25 +8969,27 @@ components:
           type: array
           description: All indices in your Algolia application.
           items:
-            $ref: '#/components/schemas/fetchedIndex'
+            $ref: '#/components/schemas/FetchedIndex'
         nbPages:
           type: integer
           description: Number of pages.
           example: 100
       required:
         - items
-    apiKeyOperation:
+    ApiKeyOperation:
+      title: apiKeyOperation
       type: string
       enum:
         - add
         - delete
         - update
-    securedApiKeyRestrictions:
+    SecuredApiKeyRestrictions:
+      title: securedApiKeyRestrictions
       type: object
       additionalProperties: false
       properties:
         searchParams:
-          $ref: '#/components/schemas/searchParamsObject'
+          $ref: '#/components/schemas/SearchParamsObject'
         filters:
           type: string
           description: >
@@ -8835,7 +9049,8 @@ components:
             an issue if many users search from the same IP address.
 
             To avoid this, add a user token to each generated API key.
-    replaceAllObjectsResponse:
+    ReplaceAllObjectsResponse:
+      title: replaceAllObjectsResponse
       type: object
       additionalProperties: false
       properties:
@@ -8843,30 +9058,33 @@ components:
           description: >-
             The response of the `operationIndex` request for the `copy`
             operation.
-          $ref: '#/components/schemas/updatedAtResponse'
+          $ref: '#/components/schemas/UpdatedAtResponse'
         batchResponses:
           type: array
           description: The response of the `batch` request(s).
           items:
-            $ref: '#/components/schemas/batchResponse'
+            $ref: '#/components/schemas/BatchResponse'
         moveOperationResponse:
           description: >-
             The response of the `operationIndex` request for the `move`
             operation.
-          $ref: '#/components/schemas/updatedAtResponse'
+          $ref: '#/components/schemas/UpdatedAtResponse'
       required:
         - copyOperationResponse
         - batchResponses
         - moveOperationResponse
     RunID:
+      title: runID
       type: string
       description: Universally unique identifier (UUID) of a task run.
       example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     EventID:
+      title: eventID
       type: string
       description: Universally unique identifier (UUID) of an event.
       example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     EventStatus:
+      title: eventStatus
       oneOf:
         - type: string
           enum:
@@ -8878,6 +9096,7 @@ components:
             - critical
         - type: 'null'
     EventType:
+      title: eventType
       type: string
       enum:
         - fetch
@@ -8885,9 +9104,11 @@ components:
         - log
         - transform
     PublishedAt:
+      title: publishedAt
       type: string
       description: Date and time when the resource was published, in RFC 3339 format.
     Event:
+      title: event
       type: object
       description: An event describe a step of the task execution flow.
       additionalProperties: false
@@ -8920,10 +9141,12 @@ components:
         - type
         - batchSize
         - publishedAt
-    CreatedAt:
+    Ingestion_CreatedAt:
+      title: ingestion_CreatedAt
       type: string
       description: Date and time when the resource was created, in RFC 3339 format.
     WatchResponse:
+      title: watchResponse
       type: object
       additionalProperties: false
       properties:
@@ -8953,10 +9176,11 @@ components:
             (push, discover or validate) run.
           type: string
         createdAt:
-          $ref: '#/components/schemas/CreatedAt'
+          $ref: '#/components/schemas/Ingestion_CreatedAt'
       required:
         - runID
-    replaceAllObjectsWithTransformationResponse:
+    ReplaceAllObjectsWithTransformationResponse:
+      title: replaceAllObjectsWithTransformationResponse
       type: object
       additionalProperties: false
       properties:
@@ -8964,7 +9188,7 @@ components:
           description: >-
             The response of the `operationIndex` request for the `copy`
             operation.
-          $ref: '#/components/schemas/updatedAtResponse'
+          $ref: '#/components/schemas/UpdatedAtResponse'
         watchResponses:
           type: array
           description: The response of the `push` request(s).
@@ -8974,12 +9198,13 @@ components:
           description: >-
             The response of the `operationIndex` request for the `move`
             operation.
-          $ref: '#/components/schemas/updatedAtResponse'
+          $ref: '#/components/schemas/UpdatedAtResponse'
       required:
         - copyOperationResponse
         - watchResponses
         - moveOperationResponse
-    builtInOperationType:
+    BuiltInOperationType:
+      title: builtInOperationType
       type: string
       enum:
         - Increment
@@ -8990,7 +9215,8 @@ components:
         - IncrementFrom
         - IncrementSet
       description: How to change the attribute.
-    builtInOperationValue:
+    BuiltInOperationValue:
+      title: builtInOperationValue
       oneOf:
         - type: string
           description: >-
@@ -8998,15 +9224,16 @@ components:
             `AddUnique` operations.
         - type: integer
           description: A number to add, remove, or append, depending on the operation.
-    builtInOperation:
+    BuiltInOperation:
+      title: builtInOperation
       type: object
       description: Update to perform on the attribute.
       additionalProperties: false
       properties:
         _operation:
-          $ref: '#/components/schemas/builtInOperationType'
+          $ref: '#/components/schemas/BuiltInOperationType'
         value:
-          $ref: '#/components/schemas/builtInOperationValue'
+          $ref: '#/components/schemas/BuiltInOperationValue'
       required:
         - _operation
         - value
@@ -9040,7 +9267,7 @@ components:
       description: Unique record identifier.
       required: true
       schema:
-        $ref: '#/components/schemas/objectID'
+        $ref: '#/components/schemas/ObjectID'
     getVersion:
       name: getVersion
       description: >-
@@ -9057,7 +9284,7 @@ components:
       description: Whether changes are applied to replica indices.
       schema:
         type: boolean
-    parameters_ObjectID:
+    ObjectID-2:
       name: objectID
       in: path
       description: Unique identifier of a synonym object.
@@ -9087,7 +9314,7 @@ components:
       description: Unique identifier of a rule object.
       required: true
       schema:
-        $ref: '#/components/schemas/ruleID'
+        $ref: '#/components/schemas/RuleID'
     ClearExistingRules:
       in: query
       name: clearExistingRules
@@ -9101,7 +9328,7 @@ components:
       description: Dictionary type in which to search.
       required: true
       schema:
-        $ref: '#/components/schemas/dictionaryType'
+        $ref: '#/components/schemas/DictionaryType'
     Page:
       in: query
       name: page
@@ -9129,14 +9356,14 @@ components:
       in: header
       required: true
       schema:
-        $ref: '#/components/schemas/userID'
+        $ref: '#/components/schemas/UserID'
     UserIDInPath:
       name: userID
       description: Unique identifier of the user who makes the search request.
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/userID'
+        $ref: '#/components/schemas/UserID'
   responses:
     BadRequest:
       description: Bad request or request arguments.
@@ -9176,9 +9403,9 @@ components:
               - deletedAt
             properties:
               taskID:
-                $ref: '#/components/schemas/taskID'
+                $ref: '#/components/schemas/TaskID'
               deletedAt:
-                $ref: '#/components/schemas/deletedAt'
+                $ref: '#/components/schemas/DeletedAt'
     UpdatedAtWithObjectId:
       description: OK
       content:
@@ -9192,17 +9419,17 @@ components:
             type: object
             properties:
               taskID:
-                $ref: '#/components/schemas/taskID'
+                $ref: '#/components/schemas/TaskID'
               updatedAt:
-                $ref: '#/components/schemas/updatedAt'
+                $ref: '#/components/schemas/UpdatedAt'
               objectID:
-                $ref: '#/components/schemas/objectID'
+                $ref: '#/components/schemas/ObjectID'
     UpdatedAt:
       description: OK
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/updatedAtResponse'
+            $ref: '#/components/schemas/UpdatedAtResponse'
     CreatedAt:
       description: OK
       content:
@@ -9216,7 +9443,7 @@ components:
               - createdAt
             properties:
               createdAt:
-                $ref: '#/components/schemas/createdAt'
+                $ref: '#/components/schemas/CreatedAt'
     IndexInSameApp:
       description: Indices are in the same application. Use operationIndex instead.
       content:

@@ -28,7 +28,7 @@ AlgoliaRecommendToolConfig-Output:
   required:
     - name
     - description
-  title: algoliaRecommendToolConfig
+  title: algoliaRecommendToolConfig-Output
   description: |-
     Configuration for the Algolia Recommend tool.
     Allows specifying recommend models and related parameters.

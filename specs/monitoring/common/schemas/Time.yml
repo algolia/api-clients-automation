@@ -2,7 +2,7 @@ title: times
 description: Time measured by a probe.
 type: array
 items:
-  title: timeEntry
+  title: items
   type: object
   additionalProperties: false
   properties:

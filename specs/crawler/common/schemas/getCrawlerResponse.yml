@@ -1,11 +1,11 @@
 GetCrawlerResponse:
-  title: API response for retrieving crawler information
+  title: getCrawlerResponse
   oneOf:
     - $ref: '#/BaseResponse'
     - $ref: '#/WithConfiguration'
 
 BaseResponse:
-  title: Without configuration
+  title: baseResponse
   type: object
   properties:
     name:
@@ -59,7 +59,7 @@ BaseResponse:
     - lastReindexEndedAt
 
 WithConfiguration:
-  title: With configuration
+  title: withConfiguration
   allOf:
     - $ref: '#/BaseResponse'
     - type: object

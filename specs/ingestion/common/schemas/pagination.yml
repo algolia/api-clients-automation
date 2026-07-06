@@ -1,5 +1,5 @@
 Pagination:
-  title: Pagination
+  title: pagination
   type: object
   description: Paginated API response.
   additionalProperties: false

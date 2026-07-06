@@ -1,5 +1,5 @@
 DistinctUnion:
-  title: DistinctUnion
+  title: distinctUnion
   oneOf:
     - type: boolean
     - type: integer

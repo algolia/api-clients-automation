@@ -1,5 +1,5 @@
 ProviderInputNullable:
-  title: ProviderInputNullable
+  title: providerInputNullable
   oneOf:
     - $ref: 'OpenAIProviderInput.yml#/OpenAIProviderInput'
     - $ref: 'AzureOpenAIProviderInput.yml#/AzureOpenAIProviderInput'

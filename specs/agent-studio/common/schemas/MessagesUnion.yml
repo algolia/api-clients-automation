@@ -1,5 +1,5 @@
 MessagesUnion:
-  title: MessagesUnion
+  title: messagesUnion
   oneOf:
     - items:
         $ref: 'MessageV4.yml#/MessageV4'

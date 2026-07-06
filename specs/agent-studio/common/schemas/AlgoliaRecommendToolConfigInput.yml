@@ -24,7 +24,7 @@ AlgoliaRecommendToolConfig-Input:
   required:
     - type
     - name
-  title: algoliaRecommendToolConfig
+  title: algoliaRecommendToolConfig-Input
   description: |-
     Configuration for the Algolia Recommend tool.
     Allows specifying recommend models and related parameters.

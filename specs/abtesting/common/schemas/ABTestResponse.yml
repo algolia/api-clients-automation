@@ -1,5 +1,5 @@
 ABTestResponse:
-  title: ABTestResponse
+  title: aBTestResponse
   type: object
   additionalProperties: false
   properties:

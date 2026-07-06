@@ -1,5 +1,5 @@
 RemoveStopWordsUnion:
-  title: RemoveStopWordsUnion
+  title: removeStopWordsUnion
   oneOf:
     - type: boolean
     - items:

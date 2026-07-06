@@ -1,5 +1,5 @@
 QueryLanguagesUnion:
-  title: QueryLanguagesUnion
+  title: queryLanguagesUnion
   oneOf:
     - items:
         $ref: 'SupportedLanguage.yml#/SupportedLanguage'

@@ -1,6 +1,6 @@
 topHitsResponse:
   type: object
-  title: Top search results
+  title: topHitsResponse
   additionalProperties: false
   required:
     - hits
@@ -23,7 +23,7 @@ topHitsResponse:
 
 topHitsResponseWithAnalytics:
   type: object
-  title: Top search results with click analytics
+  title: topHitsResponseWithAnalytics
   additionalProperties: false
   required:
     - hits
@@ -61,7 +61,7 @@ topHitsResponseWithAnalytics:
 
 topHitsResponseWithRevenueAnalytics:
   type: object
-  title: Top search results with revenue analytics
+  title: topHitsResponseWithRevenueAnalytics
   additionalProperties: false
   required:
     - hits

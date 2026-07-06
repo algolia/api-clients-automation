@@ -174,7 +174,7 @@ processingTimeMS:
   example: 20
 
 RedirectRuleIndexMetadata:
-  title: RedirectRuleIndexMetadata
+  title: redirectRuleIndexMetadata
   type: object
   properties:
     source:
@@ -206,7 +206,7 @@ RedirectRuleIndexMetadata:
     - source
 
 SearchPagination:
-  title: SearchPagination
+  title: searchPagination
   type: object
   additionalProperties: false
   properties:

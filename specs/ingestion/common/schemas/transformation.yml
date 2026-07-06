@@ -1,5 +1,5 @@
 Transformation:
-  title: Transformation
+  title: transformation
   type: object
   additionalProperties: false
   properties:
@@ -31,7 +31,7 @@ Transformation:
     - updatedAt
 
 TransformationType:
-  title: TransformationType
+  title: transformationType
   type: string
   description: The type of transformation, which can be either 'code' or 'noCode'.
   enum:
@@ -39,14 +39,14 @@ TransformationType:
     - noCode
 
 TransformationInput:
-  title: TransformationInput
+  title: transformationInput
   description: The input for the transformation, which can be either code or a no-code configuration.
   oneOf:
     - $ref: '#/TransformationCode'
     - $ref: '#/TransformationNoCode'
 
 TransformationCode:
-  title: TransformationCode title
+  title: transformationCode
   type: object
   additionalProperties: false
   description: Input for a transformation that contains the source code of the transformation.
@@ -58,7 +58,7 @@ TransformationCode:
     - code
 
 TransformationNoCode:
-  title: No-code
+  title: transformationNoCode
   type: object
   additionalProperties: false
   description: Input for a no-code transformation that contains a series of steps.
@@ -71,35 +71,35 @@ TransformationNoCode:
     - steps
 
 TransformationNoCodeStep:
-  title: TransformationNoCodeStep
+  title: transformationNoCodeStep
   type: object
   description: A step in a no-code transformation.
 
 Code:
-  title: Code
+  title: code
   type: string
   deprecated: true
   description: It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
 
 Name:
-  title: Name title
+  title: transformation_Name
   type: string
   description: The uniquely identified name of your transformation.
 
 Description:
-  title: Description
+  title: description
   type: string
   description: A descriptive name for your transformation of what it does.
 
 AuthenticationIDs:
-  title: AuthenticationIDs
+  title: authenticationIDs
   description: The authentications associated with the current transformation.
   type: array
   items:
     $ref: './common.yml#/authenticationID'
 
 TransformationCreate:
-  title: TransformationCreate
+  title: transformationCreate
   type: object
   additionalProperties: false
   description: API request body for creating a transformation.
@@ -120,7 +120,7 @@ TransformationCreate:
     - name
 
 TransformationCreateResponse:
-  title: TransformationCreateResponse
+  title: transformationCreateResponse
   type: object
   additionalProperties: false
   description: API response for creating a transformation.
@@ -134,7 +134,7 @@ TransformationCreateResponse:
     - createdAt
 
 TransformationUpdateResponse:
-  title: TransformationUpdateResponse
+  title: transformationUpdateResponse
   type: object
   description: API response for updating a transformation.
   additionalProperties: false
@@ -148,7 +148,7 @@ TransformationUpdateResponse:
     - updatedAt
 
 TransformationSearch:
-  title: TransformationSearch
+  title: transformationSearch
   type: object
   additionalProperties: false
   properties:
@@ -160,7 +160,7 @@ TransformationSearch:
     - transformationIDs
 
 TransformationTry:
-  title: TransformationTry
+  title: transformationTry
   type: object
   additionalProperties: false
   properties:
@@ -181,7 +181,7 @@ TransformationTry:
     - sampleRecord
 
 TransformationTryResponse:
-  title: TransformationTryResponse
+  title: transformationTryResponse
   type: object
   additionalProperties: false
   properties:

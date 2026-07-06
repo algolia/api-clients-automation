@@ -1,4 +1,4 @@
-title: ErrorBase
+title: errorBase
 description: Error.
 type: object
 x-keep-model: true

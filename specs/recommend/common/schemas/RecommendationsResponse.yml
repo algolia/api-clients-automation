@@ -49,7 +49,7 @@ recommendHit:
 
 trendingFacetHit:
   type: object
-  title: Trending facet hit
+  title: trendingFacetHit
   description: Trending facet hit.
   required:
     - facetName

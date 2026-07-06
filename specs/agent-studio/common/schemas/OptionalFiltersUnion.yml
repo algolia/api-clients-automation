@@ -1,5 +1,5 @@
 OptionalFiltersUnion:
-  title: OptionalFiltersUnion
+  title: optionalFiltersUnion
   oneOf:
     - type: string
     - type: array

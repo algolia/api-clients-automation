@@ -534,6 +534,7 @@ components:
         $ref: '#/components/schemas/IndexName'
   schemas:
     ErrorBase:
+      title: errorBase
       description: Error.
       type: object
       x-keep-model: true
@@ -543,6 +544,7 @@ components:
           type: string
           example: Invalid Application-Id or API-Key
     AppID:
+      title: appID
       type: object
       properties:
         appID:
@@ -569,6 +571,7 @@ components:
             type: string
         - type: 'null'
     Facet:
+      title: facet
       type: object
       description: Facet to use as category.
       properties:
@@ -623,6 +626,7 @@ components:
           - color
           - brand
     External:
+      title: external
       description: >
         Algolia indices with popular searches to use as query suggestions.
 
@@ -649,6 +653,7 @@ components:
             type: string
         - type: 'null'
     SourceIndex:
+      title: sourceIndex
       type: object
       description: Configuration of an Algolia index for Query Suggestions.
       required:
@@ -721,6 +726,7 @@ components:
             type: string
         - type: 'null'
     Configuration:
+      title: configuration
       type: object
       description: Query Suggestions configuration.
       required:
@@ -747,6 +753,7 @@ components:
           default: false
           description: Whether to include suggestions with special characters.
     ConfigurationWithIndex:
+      title: configurationWithIndex
       type: object
       description: Query Suggestions configuration.
       required:
@@ -760,6 +767,7 @@ components:
               $ref: '#/components/schemas/IndexName'
         - $ref: '#/components/schemas/Configuration'
     ConfigurationResponse:
+      title: configurationResponse
       type: object
       description: API response for retrieving Query Suggestions configurations.
       allOf:
@@ -773,6 +781,7 @@ components:
         - languages
         - sourceIndices
     BaseResponse:
+      title: baseResponse
       type: object
       properties:
         status:
@@ -782,7 +791,7 @@ components:
           type: string
           description: Details about the response, such as error messages.
     LogLevel:
-      title: level
+      title: logLevel
       type: string
       description: >
         Type of log entry.

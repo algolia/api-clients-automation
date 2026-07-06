@@ -211,7 +211,7 @@ post:
         text/html:
           schema:
             type: string
-            title: HTML
+            title: schema
           examples:
             BadRequest:
               summary: Bad request
