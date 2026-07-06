@@ -617,7 +617,7 @@ func (c *APIClient) ReplaceAllObjectsWithTransformation(indexName string, object
 	}
 
 	if len(objects) == 0 {
-		fmt.Fprintf(os.Stderr, "ReplaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the %q index.\n", indexName)
+		slog.Warn(fmt.Sprintf("ReplaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the %q index.", indexName))
 	}
 
 	tmpIndexName := fmt.Sprintf("%s_tmp_%d", indexName, time.Now().UnixNano())
@@ -713,7 +713,7 @@ Warning: calling this method with an empty `objects` slice replaces the index wi
 */
 func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any, opts ...ReplaceAllObjectsOption) (*ReplaceAllObjectsResponse, error) {
 	if len(objects) == 0 {
-		fmt.Fprintf(os.Stderr, "ReplaceAllObjects was called with an empty list of objects, which will delete all records currently in the %q index.\n", indexName)
+		slog.Warn(fmt.Sprintf("ReplaceAllObjects was called with an empty list of objects, which will delete all records currently in the %q index.", indexName))
 	}
 
 	tmpIndexName := fmt.Sprintf("%s_tmp_%d", indexName, time.Now().UnixNano())
