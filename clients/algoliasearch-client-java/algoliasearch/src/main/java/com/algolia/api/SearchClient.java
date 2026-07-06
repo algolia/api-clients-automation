@@ -12781,14 +12781,13 @@ public class SearchClient extends ApiClient {
    */
   public Iterable<SynonymHit> browseSynonyms(String indexName, SearchSynonymsParams params, RequestOptions requestOptions) {
     final Holder<Integer> currentPage = new Holder<>(0);
-
-    params.setPage(0);
-    params.setHitsPerPage(1000);
+    final int hitsPerPage = 1000;
+    params.setHitsPerPage(hitsPerPage);
 
     return AlgoliaIterableHelper.createIterable(
       () -> {
-        SearchSynonymsResponse response = this.searchSynonyms(indexName, params, requestOptions);
-        currentPage.value = response.getHits().size() < params.getHitsPerPage() ? null : currentPage.value + 1;
+        SearchSynonymsResponse response = this.searchSynonyms(indexName, params.setPage(currentPage.value), requestOptions);
+        currentPage.value = response.getHits().size() < hitsPerPage ? null : currentPage.value + 1;
         return response.getHits().iterator();
       },
       () -> currentPage.value != null
@@ -12811,7 +12810,7 @@ public class SearchClient extends ApiClient {
    * @param indexName The index in which to perform the request.
    */
   public Iterable<SynonymHit> browseSynonyms(String indexName) {
-    return browseSynonyms(indexName, null, null);
+    return browseSynonyms(indexName, new SearchSynonymsParams(), null);
   }
 
   /**
