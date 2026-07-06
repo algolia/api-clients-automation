@@ -813,15 +813,15 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
         chunkedOptions: ChunkedHelperOptions =
           ChunkedHelperOptions(maxRetries = ChunkedHelperOptions.DefaultReplaceAllObjectsMaxRetries)
     )(implicit ec: ExecutionContext): Future[ReplaceAllObjectsWithTransformationResponse] = {
-      if (objects.isEmpty) {
-        client.logger.log(
-          s"""Warning: replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the "$indexName" index."""
-        )
-      }
-
       client.ingestionTransporter match {
         case None => Future.failed(new AlgoliaClientException(transformationOptionsRequired))
         case Some(transporter) =>
+          if (objects.isEmpty) {
+            client.logger.log(
+              s"""Warning: replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the "$indexName" index."""
+            )
+          }
+
           val tmpIndexName = s"${indexName}_tmp_${scala.util.Random.nextInt(100)}"
 
           val steps = for {
