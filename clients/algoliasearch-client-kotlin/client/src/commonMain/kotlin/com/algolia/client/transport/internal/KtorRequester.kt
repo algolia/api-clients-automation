@@ -74,7 +74,7 @@ public class KtorRequester(
     val isEmpty = response.status.value == 204 || response.contentLength() == 0L
     AlgoliaHttpResponse(
       statusCode = response.status.value,
-      headers = response.headers.toMap(),
+      headers = CaseInsensitiveMap<List<String>>().apply { putAll(response.headers.toMap()) },
       body = if (isEmpty) null else response.bodyAsText(),
       data = if (isEmpty) null else response.body<T>(returnType),
     )

@@ -6,7 +6,7 @@ package com.algolia.client.transport
  *
  * @param T The type of the deserialized response body.
  * @param statusCode The HTTP status code of the response.
- * @param headers The HTTP response headers.
+ * @param headers The HTTP response headers. Key lookups are case-insensitive.
  * @param body The raw response body, or `null` when the response has no content (e.g. HTTP 204).
  * @param data The deserialized response body, or `null` when the response has no content (e.g.
  *   HTTP 204).

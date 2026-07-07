@@ -40,6 +40,7 @@ class TestWithHttpInfo {
       val response = client.customGetWithHTTPInfo(path = "1/test")
       assertEquals(200, response.statusCode)
       assertEquals(listOf("custom-value"), response.headers["x-custom-header"])
+      assertEquals(listOf("custom-value"), response.headers["X-Custom-Header"])
       assertEquals("""{"foo":"bar"}""", response.body)
       assertEquals(buildJsonObject { put("foo", "bar") }, response.data)
 

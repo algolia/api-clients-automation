@@ -151,11 +151,7 @@ public class {{classname}}(
   public suspend fun {{operationId}}({{#requiredParams}}{{{paramName}}}: {{{dataType}}}, {{/requiredParams}}{{#optionalParams}}{{{paramName}}}: {{{dataType}}}? = null, {{/optionalParams}}requestOptions: RequestOptions? = null){{#returnType}}: {{{.}}}{{/returnType}} {
       return requester.execute(
         requestConfig = {{operationId}}RequestConfig({{#requiredParams}}{{{paramName}}} = {{{paramName}}}, {{/requiredParams}}{{#optionalParams}}{{{paramName}}} = {{{paramName}}}, {{/optionalParams}}),
-        requestOptions = {{#vendorExtensions.x-timeouts}}RequestOptions(
-          readTimeout = {{{read}}}.milliseconds,
-          writeTimeout = {{{write}}}.milliseconds,
-          connectTimeout = {{{connect}}}.milliseconds,
-        ) + {{/vendorExtensions.x-timeouts}}requestOptions,
+        requestOptions = {{#vendorExtensions.x-timeouts}}{{operationId}}RequestOptions(requestOptions){{/vendorExtensions.x-timeouts}}{{^vendorExtensions.x-timeouts}}requestOptions{{/vendorExtensions.x-timeouts}},
       )
   }
 
@@ -178,11 +174,7 @@ public class {{classname}}(
   public suspend fun {{operationId}}WithHTTPInfo({{#requiredParams}}{{{paramName}}}: {{{dataType}}}, {{/requiredParams}}{{#optionalParams}}{{{paramName}}}: {{{dataType}}}? = null, {{/optionalParams}}requestOptions: RequestOptions? = null): AlgoliaHttpResponse<{{#returnType}}{{{.}}}{{/returnType}}{{^returnType}}Unit{{/returnType}}> {
       return requester.executeWithHttpInfo(
         requestConfig = {{operationId}}RequestConfig({{#requiredParams}}{{{paramName}}} = {{{paramName}}}, {{/requiredParams}}{{#optionalParams}}{{{paramName}}} = {{{paramName}}}, {{/optionalParams}}),
-        requestOptions = {{#vendorExtensions.x-timeouts}}RequestOptions(
-          readTimeout = {{{read}}}.milliseconds,
-          writeTimeout = {{{write}}}.milliseconds,
-          connectTimeout = {{{connect}}}.milliseconds,
-        ) + {{/vendorExtensions.x-timeouts}}requestOptions,
+        requestOptions = {{#vendorExtensions.x-timeouts}}{{operationId}}RequestOptions(requestOptions){{/vendorExtensions.x-timeouts}}{{^vendorExtensions.x-timeouts}}requestOptions{{/vendorExtensions.x-timeouts}},
       )
   }
 
@@ -223,6 +215,14 @@ public class {{classname}}(
           {{/hasBodyParam}}
       )
   }
+  {{#vendorExtensions.x-timeouts}}
+
+  private fun {{operationId}}RequestOptions(requestOptions: RequestOptions?): RequestOptions = RequestOptions(
+      readTimeout = {{{read}}}.milliseconds,
+      writeTimeout = {{{write}}}.milliseconds,
+      connectTimeout = {{{connect}}}.milliseconds,
+    ) + requestOptions
+  {{/vendorExtensions.x-timeouts}}
   {{/operation}}
 
 {{#isAgentStudioClient}}
