@@ -11,7 +11,7 @@ import io.ktor.client.engine.mock.*
 import io.ktor.http.*
 import io.ktor.util.reflect.*
 import kotlin.test.*
-import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 
@@ -25,7 +25,7 @@ class TestWithHttpInfo {
     )
 
   @Test
-  fun returnsStatusCodeHeadersRawAndDeserializedBody() = runTest {
+  fun returnsStatusCodeHeadersRawAndDeserializedBody() = runBlocking<Unit> {
     val engine = MockEngine {
       respond(
         content = """{"foo":"bar"}""",
@@ -50,7 +50,7 @@ class TestWithHttpInfo {
   }
 
   @Test
-  fun returnsNullBodyAndDataForEmptyResponses() = runTest {
+  fun returnsNullBodyAndDataForEmptyResponses() = runBlocking<Unit> {
     val engine = MockEngine {
       respond(content = "", status = HttpStatusCode.NoContent)
     }
@@ -63,7 +63,7 @@ class TestWithHttpInfo {
   }
 
   @Test
-  fun throwsApiExceptionOnClientError() = runTest {
+  fun throwsApiExceptionOnClientError() = runBlocking<Unit> {
     val engine = MockEngine {
       respond(
         content = """{"message":"Invalid Application-ID or API key","status":400}""",
@@ -79,7 +79,7 @@ class TestWithHttpInfo {
   }
 
   @Test
-  fun reflectsSuccessfulHostAfterRetry() = runTest {
+  fun reflectsSuccessfulHostAfterRetry() = runBlocking<Unit> {
     val engine = MockEngine { request ->
       if (request.url.host == "failing.host") {
         respondError(HttpStatusCode.InternalServerError)
@@ -101,7 +101,7 @@ class TestWithHttpInfo {
   }
 
   @Test
-  fun customRequesterWithoutOverrideThrows() = runTest {
+  fun customRequesterWithoutOverrideThrows() = runBlocking<Unit> {
     val requester = object : Requester {
       override suspend fun <T> execute(
         requestConfig: RequestConfig,
