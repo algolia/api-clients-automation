@@ -58,27 +58,27 @@ public class KtorRequester(
     requestConfig: RequestConfig,
     requestOptions: RequestOptions?,
     returnType: TypeInfo,
-  ): T = executeWithRetry(requestConfig, requestOptions) { response ->
-    @Suppress("UNCHECKED_CAST")
-    val body: T =
-      if (response.status.value == 204 || response.contentLength() == 0L) null as T
-      else response.body<T>(returnType)
-    body
-  }
+  ): T =
+    executeWithRetry(requestConfig, requestOptions) { response ->
+      @Suppress("UNCHECKED_CAST")
+      val body: T = if (response.hasEmptyBody()) null as T else response.body<T>(returnType)
+      body
+    }
 
   override suspend fun <T> executeWithHttpInfo(
     requestConfig: RequestConfig,
     requestOptions: RequestOptions?,
     returnType: TypeInfo,
-  ): AlgoliaHttpResponse<T> = executeWithRetry(requestConfig, requestOptions) { response ->
-    val isEmpty = response.status.value == 204 || response.contentLength() == 0L
-    AlgoliaHttpResponse(
-      statusCode = response.status.value,
-      headers = CaseInsensitiveMap<List<String>>().apply { putAll(response.headers.toMap()) },
-      body = if (isEmpty) null else response.bodyAsText(),
-      data = if (isEmpty) null else response.body<T>(returnType),
-    )
-  }
+  ): AlgoliaHttpResponse<T> =
+    executeWithRetry(requestConfig, requestOptions) { response ->
+      val isEmpty = response.hasEmptyBody()
+      AlgoliaHttpResponse(
+        statusCode = response.status.value,
+        headers = response.headers.toMap(),
+        body = if (isEmpty) null else response.bodyAsText(),
+        data = if (isEmpty) null else response.body<T>(returnType),
+      )
+    }
 
   private suspend fun <R> executeWithRetry(
     requestConfig: RequestConfig,
@@ -109,6 +109,8 @@ public class KtorRequester(
     }
     throw AlgoliaRetryException(errors)
   }
+
+  private fun HttpResponse.hasEmptyBody(): Boolean = status.value == 204 || contentLength() == 0L
 
   private fun callTypeOf(requestConfig: RequestConfig): CallType =
     if (requestConfig.isRead || requestConfig.method == RequestMethod.GET) {

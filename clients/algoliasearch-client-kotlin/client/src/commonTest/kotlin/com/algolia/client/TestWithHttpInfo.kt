@@ -4,6 +4,7 @@ import com.algolia.client.api.SearchClient
 import com.algolia.client.configuration.ClientOptions
 import com.algolia.client.configuration.Host
 import com.algolia.client.exception.AlgoliaApiException
+import com.algolia.client.exception.AlgoliaRetryException
 import com.algolia.client.transport.RequestConfig
 import com.algolia.client.transport.RequestOptions
 import com.algolia.client.transport.Requester
@@ -11,7 +12,7 @@ import io.ktor.client.engine.mock.*
 import io.ktor.http.*
 import io.ktor.util.reflect.*
 import kotlin.test.*
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 
@@ -25,22 +26,23 @@ class TestWithHttpInfo {
     )
 
   @Test
-  fun returnsStatusCodeHeadersRawAndDeserializedBody() = runBlocking<Unit> {
+  fun returnsStatusCodeHeadersRawAndDeserializedBody() = runTest {
     val engine = MockEngine {
       respond(
         content = """{"foo":"bar"}""",
         status = HttpStatusCode.OK,
-        headers = headersOf(
-          HttpHeaders.ContentType to listOf("application/json"),
-          "x-custom-header" to listOf("custom-value"),
-        ),
+        headers =
+          headersOf(
+            HttpHeaders.ContentType to listOf("application/json"),
+            "x-custom-header" to listOf("custom-value", "other-value"),
+          ),
       )
     }
     clientOf(engine).use { client ->
       val response = client.customGetWithHTTPInfo(path = "1/test")
       assertEquals(200, response.statusCode)
-      assertEquals(listOf("custom-value"), response.headers["x-custom-header"])
-      assertEquals(listOf("custom-value"), response.headers["X-Custom-Header"])
+      assertEquals(listOf("custom-value", "other-value"), response.headers["x-custom-header"])
+      assertEquals(listOf("custom-value", "other-value"), response.headers["X-Custom-Header"])
       assertEquals("""{"foo":"bar"}""", response.body)
       assertEquals(buildJsonObject { put("foo", "bar") }, response.data)
 
@@ -50,7 +52,7 @@ class TestWithHttpInfo {
   }
 
   @Test
-  fun returnsNullBodyAndDataForEmptyResponses() = runBlocking<Unit> {
+  fun returnsNullBodyAndDataForEmptyResponses() = runTest {
     val engine = MockEngine {
       respond(content = "", status = HttpStatusCode.NoContent)
     }
@@ -63,7 +65,7 @@ class TestWithHttpInfo {
   }
 
   @Test
-  fun throwsApiExceptionOnClientError() = runBlocking<Unit> {
+  fun throwsApiExceptionOnClientError() = runTest {
     val engine = MockEngine {
       respond(
         content = """{"message":"Invalid Application-ID or API key","status":400}""",
@@ -79,7 +81,7 @@ class TestWithHttpInfo {
   }
 
   @Test
-  fun reflectsSuccessfulHostAfterRetry() = runBlocking<Unit> {
+  fun reflectsSuccessfulHostAfterRetry() = runTest {
     val engine = MockEngine { request ->
       if (request.url.host == "failing.host") {
         respondError(HttpStatusCode.InternalServerError)
@@ -101,21 +103,31 @@ class TestWithHttpInfo {
   }
 
   @Test
-  fun customRequesterWithoutOverrideThrows() = runBlocking<Unit> {
-    val requester = object : Requester {
-      override suspend fun <T> execute(
-        requestConfig: RequestConfig,
-        requestOptions: RequestOptions?,
-        returnType: TypeInfo,
-      ): T = error("not used in this test")
-
-      override fun setClientApiKey(apiKey: String) {}
+  fun throwsRetryExceptionWhenAllHostsFail() = runTest {
+    val engine = MockEngine { respondError(HttpStatusCode.InternalServerError) }
+    clientOf(engine).use { client ->
+      assertFailsWith<AlgoliaRetryException> { client.customGetWithHTTPInfo(path = "1/test") }
     }
-    val client = SearchClient(
-      appId = "appId",
-      apiKey = "apiKey",
-      options = ClientOptions(requester = requester),
-    )
+  }
+
+  @Test
+  fun customRequesterWithoutOverrideThrows() = runTest {
+    val requester =
+      object : Requester {
+        override suspend fun <T> execute(
+          requestConfig: RequestConfig,
+          requestOptions: RequestOptions?,
+          returnType: TypeInfo,
+        ): T = error("not used in this test")
+
+        override fun setClientApiKey(apiKey: String) {}
+      }
+    val client =
+      SearchClient(
+        appId = "appId",
+        apiKey = "apiKey",
+        options = ClientOptions(requester = requester),
+      )
     assertFailsWith<UnsupportedOperationException> {
       client.customGetWithHTTPInfo(path = "1/test")
     }

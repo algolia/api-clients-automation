@@ -45,6 +45,7 @@ kotlin {
       dependencies {
         implementation(libs.kotlin.test.common)
         implementation(libs.kotlin.test.annotations.common)
+        implementation(libs.kotlinx.coroutines.test)
         implementation(libs.ktor.client.mock)
       }
     }
