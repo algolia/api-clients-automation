@@ -125,53 +125,7 @@ export function create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
       {{/required}}
       {{/allParams}}
 
-      {{#vendorExtensions}}
-      const requestPath = '{{{serverPathSuffix}}}{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>,{{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}encodeURIComponent({{paramName}}){{/x-is-custom-request}}){{/pathParams}};
-      {{/vendorExtensions}}
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {{#vendorExtensions.x-is-custom-request}}parameters ? parameters : {{/vendorExtensions.x-is-custom-request}}{};
-
-      {{^vendorExtensions.x-is-custom-request}}{{#queryParams}}
-      if ({{paramName}} !== undefined) {
-        queryParameters['{{baseName}}'] = {{paramName}}.toString();
-      }
-
-      {{/queryParams}}{{/vendorExtensions.x-is-custom-request}}
-
-      {{#headerParams}}
-      if ({{paramName}} !== undefined) {
-        headers['{{baseName}}'] = {{paramName}}.toString();
-      }
-      {{/headerParams}}
-
-      const request: Request = {
-        method: '{{httpMethod}}',
-        path: requestPath,
-        queryParameters,
-        headers,
-        {{#bodyParam}}
-        data: {{paramName}}{{^required}}? {{paramName}} : {}{{/required}},
-        {{/bodyParam}}
-        {{#vendorExtensions}}
-          {{#x-use-read-transporter}}
-            useReadTransporter: true,
-          {{/x-use-read-transporter}}
-          {{#x-cacheable}}
-            cacheable: true,
-          {{/x-cacheable}}
-        {{/vendorExtensions}}
-      };
-
-      {{#vendorExtensions.x-timeouts}}
-      requestOptions = {
-        timeouts: {
-          connect: {{connect}},
-          read: {{read}},
-          write: {{write}},
-          ...requestOptions?.timeouts,
-        }
-      }
-      {{/vendorExtensions.x-timeouts}}
+      {{> client/api/operation/buildRequest}}
 
       return transporter.request(request, requestOptions);
     },
@@ -198,50 +152,7 @@ export function create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
       {{/required}}
       {{/allParams}}
 
-      {{#vendorExtensions}}
-      const requestPath = '{{{serverPathSuffix}}}{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>,{{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}encodeURIComponent({{paramName}}){{/x-is-custom-request}}){{/pathParams}};
-      {{/vendorExtensions}}
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {{#vendorExtensions.x-is-custom-request}}parameters ? parameters : {{/vendorExtensions.x-is-custom-request}}{};
-
-      {{^vendorExtensions.x-is-custom-request}}{{#queryParams}}
-      if ({{paramName}} !== undefined) {
-        queryParameters['{{baseName}}'] = {{paramName}}.toString();
-      }
-
-      {{/queryParams}}{{/vendorExtensions.x-is-custom-request}}
-
-      {{#headerParams}}
-      if ({{paramName}} !== undefined) {
-        headers['{{baseName}}'] = {{paramName}}.toString();
-      }
-      {{/headerParams}}
-
-      const request: Request = {
-        method: '{{httpMethod}}',
-        path: requestPath,
-        queryParameters,
-        headers,
-        {{#bodyParam}}
-        data: {{paramName}}{{^required}}? {{paramName}} : {}{{/required}},
-        {{/bodyParam}}
-        {{#vendorExtensions}}
-          {{#x-use-read-transporter}}
-            useReadTransporter: true,
-          {{/x-use-read-transporter}}
-        {{/vendorExtensions}}
-      };
-
-      {{#vendorExtensions.x-timeouts}}
-      requestOptions = {
-        timeouts: {
-          connect: {{connect}},
-          read: {{read}},
-          write: {{write}},
-          ...requestOptions?.timeouts,
-        }
-      }
-      {{/vendorExtensions.x-timeouts}}
+      {{> client/api/operation/buildRequest}}
 
       return transporter.requestWithHttpInfo(request, requestOptions);
     },
