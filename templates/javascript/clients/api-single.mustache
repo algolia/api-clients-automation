@@ -38,6 +38,81 @@ export function create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
     },
   });
 
+  {{#operation}}
+  function {{nickname}}CreateRequest{{#vendorExtensions.x-has-generic-parameter}}<T extends object>{{/vendorExtensions.x-has-generic-parameter}}( {{> client/api/operation/parameters}} ): { request: Request; requestOptions: RequestOptions | undefined } {
+    {{#vendorExtensions.x-legacy-signature}}
+      {{> client/api/operation/legacySearchCompatible/implementation}}
+    {{/vendorExtensions.x-legacy-signature}}
+
+    {{#vendorExtensions.x-legacy-signature-recommend}}
+      {{> client/api/operation/legacyGetRecommendationsCompatible/implementation}}
+    {{/vendorExtensions.x-legacy-signature-recommend}}
+
+    {{#allParams}}
+    {{#required}}
+    validateRequired('{{paramName}}', '{{nickname}}', {{paramName}});
+
+    {{#vars}}
+    {{#required}}
+    validateRequired('{{paramName}}.{{baseName}}', '{{nickname}}', {{paramName}}.{{baseName}});
+    {{/required}}
+    {{/vars}}
+
+    {{/required}}
+    {{/allParams}}
+
+    {{#vendorExtensions}}
+    const requestPath = '{{{serverPathSuffix}}}{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>,{{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}encodeURIComponent({{paramName}}){{/x-is-custom-request}}){{/pathParams}};
+    {{/vendorExtensions}}
+    const headers: Headers = {};
+    const queryParameters: QueryParameters = {{#vendorExtensions.x-is-custom-request}}parameters ? parameters : {{/vendorExtensions.x-is-custom-request}}{};
+
+    {{^vendorExtensions.x-is-custom-request}}{{#queryParams}}
+    if ({{paramName}} !== undefined) {
+      queryParameters['{{baseName}}'] = {{paramName}}.toString();
+    }
+
+    {{/queryParams}}{{/vendorExtensions.x-is-custom-request}}
+
+    {{#headerParams}}
+    if ({{paramName}} !== undefined) {
+      headers['{{baseName}}'] = {{paramName}}.toString();
+    }
+    {{/headerParams}}
+
+    const request: Request = {
+      method: '{{httpMethod}}',
+      path: requestPath,
+      queryParameters,
+      headers,
+      {{#bodyParam}}
+      data: {{paramName}}{{^required}}? {{paramName}} : {}{{/required}},
+      {{/bodyParam}}
+      {{#vendorExtensions}}
+        {{#x-use-read-transporter}}
+          useReadTransporter: true,
+        {{/x-use-read-transporter}}
+        {{#x-cacheable}}
+          cacheable: true,
+        {{/x-cacheable}}
+      {{/vendorExtensions}}
+    };
+
+    {{#vendorExtensions.x-timeouts}}
+    requestOptions = {
+      timeouts: {
+        connect: {{connect}},
+        read: {{read}},
+        write: {{write}},
+        ...requestOptions?.timeouts,
+      }
+    }
+    {{/vendorExtensions.x-timeouts}}
+
+    return { request, requestOptions };
+  }
+
+  {{/operation}}
   return {
     transporter,
 
@@ -104,146 +179,15 @@ export function create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
     {{#operation}}
     {{> client/api/operation/jsdoc}}
     {{nickname}}{{#vendorExtensions.x-return-is-generic}}<T = Record<string, unknown>>{{/vendorExtensions.x-return-is-generic}}{{^vendorExtensions.x-return-is-generic}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/vendorExtensions.x-return-is-generic}}{{#vendorExtensions.x-has-generic-parameter}}<T extends object>{{/vendorExtensions.x-has-generic-parameter}}( {{> client/api/operation/parameters}} ) : Promise<{{#vendorExtensions.x-return-is-generic}}T{{/vendorExtensions.x-return-is-generic}}{{^vendorExtensions.x-return-is-generic}}{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/vendorExtensions.x-return-is-generic}}> {
-      {{#vendorExtensions.x-legacy-signature}}
-        {{> client/api/operation/legacySearchCompatible/implementation}}
-      {{/vendorExtensions.x-legacy-signature}}
+      const requestConfig = {{nickname}}CreateRequest({{#vendorExtensions}}{{#x-create-wrapping-object}}{ {{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}} }, {{/x-create-wrapping-object}}{{#x-is-single-body-param}}{{#bodyParams}}{{paramName}}, {{/bodyParams}}{{/x-is-single-body-param}}{{/vendorExtensions}}requestOptions);
 
-      {{#vendorExtensions.x-legacy-signature-recommend}}
-        {{> client/api/operation/legacyGetRecommendationsCompatible/implementation}}
-      {{/vendorExtensions.x-legacy-signature-recommend}}
-
-      {{#allParams}}
-      {{#required}}
-      validateRequired('{{paramName}}', '{{nickname}}', {{paramName}});
-
-      {{#vars}}
-      {{#required}}
-      validateRequired('{{paramName}}.{{baseName}}', '{{nickname}}', {{paramName}}.{{baseName}});
-      {{/required}}
-      {{/vars}}
-
-      {{/required}}
-      {{/allParams}}
-
-      {{#vendorExtensions}}
-      const requestPath = '{{{serverPathSuffix}}}{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>,{{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}encodeURIComponent({{paramName}}){{/x-is-custom-request}}){{/pathParams}};
-      {{/vendorExtensions}}
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {{#vendorExtensions.x-is-custom-request}}parameters ? parameters : {{/vendorExtensions.x-is-custom-request}}{};
-
-      {{^vendorExtensions.x-is-custom-request}}{{#queryParams}}
-      if ({{paramName}} !== undefined) {
-        queryParameters['{{baseName}}'] = {{paramName}}.toString();
-      }
-
-      {{/queryParams}}{{/vendorExtensions.x-is-custom-request}}
-
-      {{#headerParams}}
-      if ({{paramName}} !== undefined) {
-        headers['{{baseName}}'] = {{paramName}}.toString();
-      }
-      {{/headerParams}}
-
-      const request: Request = {
-        method: '{{httpMethod}}',
-        path: requestPath,
-        queryParameters,
-        headers,
-        {{#bodyParam}}
-        data: {{paramName}}{{^required}}? {{paramName}} : {}{{/required}},
-        {{/bodyParam}}
-        {{#vendorExtensions}}
-          {{#x-use-read-transporter}}
-            useReadTransporter: true,
-          {{/x-use-read-transporter}}
-          {{#x-cacheable}}
-            cacheable: true,
-          {{/x-cacheable}}
-        {{/vendorExtensions}}
-      };
-
-      {{#vendorExtensions.x-timeouts}}
-      requestOptions = {
-        timeouts: {
-          connect: {{connect}},
-          read: {{read}},
-          write: {{write}},
-          ...requestOptions?.timeouts,
-        }
-      }
-      {{/vendorExtensions.x-timeouts}}
-
-      return transporter.request(request, requestOptions);
+      return transporter.request(requestConfig.request, requestConfig.requestOptions);
     },
     {{> client/api/operation/jsdoc}}
     {{nickname}}WithHTTPInfo{{#vendorExtensions.x-return-is-generic}}<T = Record<string, unknown>>{{/vendorExtensions.x-return-is-generic}}{{^vendorExtensions.x-return-is-generic}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/vendorExtensions.x-return-is-generic}}{{#vendorExtensions.x-has-generic-parameter}}<T extends object>{{/vendorExtensions.x-has-generic-parameter}}( {{> client/api/operation/parameters}} ) : Promise<AlgoliaHttpResponse<{{#vendorExtensions.x-return-is-generic}}T{{/vendorExtensions.x-return-is-generic}}{{^vendorExtensions.x-return-is-generic}}{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/vendorExtensions.x-return-is-generic}}>> {
-      {{#vendorExtensions.x-legacy-signature}}
-        {{> client/api/operation/legacySearchCompatible/implementation}}
-      {{/vendorExtensions.x-legacy-signature}}
+      const requestConfig = {{nickname}}CreateRequest({{#vendorExtensions}}{{#x-create-wrapping-object}}{ {{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}} }, {{/x-create-wrapping-object}}{{#x-is-single-body-param}}{{#bodyParams}}{{paramName}}, {{/bodyParams}}{{/x-is-single-body-param}}{{/vendorExtensions}}requestOptions);
 
-      {{#vendorExtensions.x-legacy-signature-recommend}}
-        {{> client/api/operation/legacyGetRecommendationsCompatible/implementation}}
-      {{/vendorExtensions.x-legacy-signature-recommend}}
-
-      {{#allParams}}
-      {{#required}}
-      validateRequired('{{paramName}}', '{{nickname}}WithHTTPInfo', {{paramName}});
-
-      {{#vars}}
-      {{#required}}
-      validateRequired('{{paramName}}.{{baseName}}', '{{nickname}}WithHTTPInfo', {{paramName}}.{{baseName}});
-      {{/required}}
-      {{/vars}}
-
-      {{/required}}
-      {{/allParams}}
-
-      {{#vendorExtensions}}
-      const requestPath = '{{{serverPathSuffix}}}{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>,{{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}encodeURIComponent({{paramName}}){{/x-is-custom-request}}){{/pathParams}};
-      {{/vendorExtensions}}
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {{#vendorExtensions.x-is-custom-request}}parameters ? parameters : {{/vendorExtensions.x-is-custom-request}}{};
-
-      {{^vendorExtensions.x-is-custom-request}}{{#queryParams}}
-      if ({{paramName}} !== undefined) {
-        queryParameters['{{baseName}}'] = {{paramName}}.toString();
-      }
-
-      {{/queryParams}}{{/vendorExtensions.x-is-custom-request}}
-
-      {{#headerParams}}
-      if ({{paramName}} !== undefined) {
-        headers['{{baseName}}'] = {{paramName}}.toString();
-      }
-      {{/headerParams}}
-
-      const request: Request = {
-        method: '{{httpMethod}}',
-        path: requestPath,
-        queryParameters,
-        headers,
-        {{#bodyParam}}
-        data: {{paramName}}{{^required}}? {{paramName}} : {}{{/required}},
-        {{/bodyParam}}
-        {{#vendorExtensions}}
-          {{#x-use-read-transporter}}
-            useReadTransporter: true,
-          {{/x-use-read-transporter}}
-        {{/vendorExtensions}}
-      };
-
-      {{#vendorExtensions.x-timeouts}}
-      requestOptions = {
-        timeouts: {
-          connect: {{connect}},
-          read: {{read}},
-          write: {{write}},
-          ...requestOptions?.timeouts,
-        }
-      }
-      {{/vendorExtensions.x-timeouts}}
-
-      return transporter.requestWithHttpInfo(request, requestOptions);
+      return transporter.requestWithHttpInfo(requestConfig.request, requestConfig.requestOptions);
     },
     {{#vendorExtensions.x-streaming}}
     /**
