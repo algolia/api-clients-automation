@@ -147,6 +147,7 @@ If the PR only updates the `crossScalaVersions` 3.x entry or the 2.x `scalaVersi
 Close (do not merge) PRs that update these packages, and add them to the "Abandoned" report list with a note:
 
 - **Dart `json_serializable`**: Updating `json_serializable` requires updating `json_annotation`, which in turn requires bumping the minimum Dart SDK version. This is a breaking change for customers on older Dart versions. Close the PR.
+- **Dart `melos` v8+**: melos ≥7 drops `melos.yaml` in favor of Dart pub workspaces, which requires `resolution: workspace` on every package and therefore raises the minimum Dart SDK to 3.5+ on all published packages — a breaking change for customers on older Dart versions. Keep the Dart client on melos 6.x. Close the PR.
 - **`@redocly/cli` beyond v2.27.0**: v2.27.1 introduces breaking changes (renaming components) that break our spec bundling. Pinned at v2.27.0 for now. Close the PR.
 - **Python runtime ≥ 3.14**: The release toolchain for PyPI (poetry/twine) is not compatible with Python 3.14+. The `python-version` in `clients/algoliasearch-client-python/.github/workflows/release.yml` must stay on the 3.13.x line. If a PR bumps it to 3.14 or above, revert to the latest 3.13.x patch and close the PR.
 
