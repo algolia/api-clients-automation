@@ -47,6 +47,7 @@ describe('noContent', () => {
         ],
       },
     });
+
     const result = await client.customDelete({ path: '1/test/no-content' });
 
     expect(result).toEqual(undefined);
@@ -60,6 +61,7 @@ describe('parameters', () => {
         requester: nodeEchoRequester(),
       },
     });
+
     const result = (await client.customDelete({ path: 'test' })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('status.algolia.com');
@@ -80,6 +82,7 @@ describe('setClientApiKey', () => {
         ],
       },
     });
+
     {
       const result = await client.customGet({ path: 'check-api-key/1' });
 

@@ -1,6 +1,6 @@
 import fsp from 'fs/promises';
 
-import yaml from 'js-yaml';
+import { dump, load } from 'js-yaml';
 
 import clientsConfig from '../../config/clients.config.json' with { type: 'json' };
 import { GENERATORS, toAbsolutePath } from '../common.ts';
@@ -65,7 +65,7 @@ export async function updateDartPackages(changelog: string, nextVersion: string)
 async function getPubspecField(filePath: string, field: string): Promise<string | undefined> {
   try {
     const fileContent = await fsp.readFile(toAbsolutePath(`${filePath}/pubspec.yaml`), 'utf8');
-    const pubspec = yaml.load(fileContent) as Record<string, any>;
+    const pubspec = load(fileContent) as Record<string, any>;
 
     return pubspec[field];
   } catch (error) {
@@ -79,11 +79,11 @@ async function getPubspecField(filePath: string, field: string): Promise<string 
 async function bumpPubspecVersion(filePath: string, nextVersion: string): Promise<void> {
   try {
     const fileContent = await fsp.readFile(toAbsolutePath(filePath), 'utf8');
-    const pubspec = yaml.load(fileContent) as Record<string, any>;
+    const pubspec = load(fileContent) as Record<string, any>;
 
     pubspec.version = nextVersion;
 
-    await fsp.writeFile(filePath, yaml.dump(pubspec));
+    await fsp.writeFile(filePath, dump(pubspec));
   } catch (error) {
     throw new Error(`Error writing file ${filePath}: ${error}`);
   }

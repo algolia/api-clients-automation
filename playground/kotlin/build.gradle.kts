@@ -1,6 +1,6 @@
 plugins {
-    kotlin("jvm") version "2.3.21"
-    kotlin("plugin.serialization") version "2.3.21"
+    kotlin("jvm") version "2.4.0"
+    kotlin("plugin.serialization") version "2.4.0"
     id("application")
 }
 
@@ -10,8 +10,8 @@ repositories {
 
 dependencies {
     implementation("com.algolia:algoliasearch-client-kotlin")
-    implementation("io.ktor:ktor-client-okhttp:3.5.0")
-    implementation("ch.qos.logback:logback-classic:1.5.34")
+    implementation("io.ktor:ktor-client-okhttp:3.5.1")
+    implementation("ch.qos.logback:logback-classic:1.5.37")
     implementation("io.github.cdimascio:dotenv-kotlin:6.5.1")
 }
 

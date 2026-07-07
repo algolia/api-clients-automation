@@ -49,6 +49,7 @@ describe('noContent', () => {
       // @ts-ignore
       region: 'us',
     });
+
     const result = await client.customDelete({ path: '1/test/no-content' });
 
     expect(result).toEqual(undefined);
@@ -64,6 +65,7 @@ describe('parameters', () => {
       // @ts-ignore
       region: 'us',
     });
+
     const result = (await client.getABTest({ id: 123 })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('analytics.us.algolia.com');
@@ -102,6 +104,7 @@ describe('setClientApiKey', () => {
       // @ts-ignore
       region: 'us',
     });
+
     {
       const result = await client.customGet({ path: 'check-api-key/1' });
 
