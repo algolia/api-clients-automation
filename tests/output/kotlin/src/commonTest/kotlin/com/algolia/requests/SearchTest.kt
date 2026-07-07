@@ -14,7 +14,11 @@ import kotlinx.serialization.json.*
 
 class SearchTest {
 
-  val client = SearchClient(appId = "appId", apiKey = "apiKey")
+  val client =
+    SearchClient(
+      appId = "appId",
+      apiKey = "apiKey",
+    )
 
   // addApiKey
 
@@ -109,7 +113,13 @@ class SearchTest {
         addOrUpdateObject(
           indexName = "indexName",
           objectID = "uniqueID",
-          body = buildJsonObject { put("key", JsonPrimitive("value")) },
+          body =
+            buildJsonObject {
+              put(
+                "key",
+                JsonPrimitive("value"),
+              )
+            },
         )
       },
       intercept = {
@@ -126,7 +136,13 @@ class SearchTest {
   fun `appendSource`() = runTest {
     client.runTest(
       call = {
-        appendSource(source = Source(source = "theSource", description = "theDescription"))
+        appendSource(
+          source =
+            Source(
+              source = "theSource",
+              description = "theDescription",
+            )
+        )
       },
       intercept = {
         assertEquals("/1/security/sources/append".toPathSegments(), it.url.pathSegments)
@@ -190,16 +206,28 @@ class SearchTest {
                     action = Action.entries.first { it.value == "addObject" },
                     body =
                       buildJsonObject {
-                        put("key", JsonPrimitive("bar"))
-                        put("foo", JsonPrimitive("1"))
+                        put(
+                          "key",
+                          JsonPrimitive("bar"),
+                        )
+                        put(
+                          "foo",
+                          JsonPrimitive("1"),
+                        )
                       },
                   ),
                   BatchRequest(
                     action = Action.entries.first { it.value == "addObject" },
                     body =
                       buildJsonObject {
-                        put("key", JsonPrimitive("baz"))
-                        put("foo", JsonPrimitive("2"))
+                        put(
+                          "key",
+                          JsonPrimitive("baz"),
+                        )
+                        put(
+                          "foo",
+                          JsonPrimitive("2"),
+                        )
                       },
                   ),
                 )
@@ -229,7 +257,13 @@ class SearchTest {
                 listOf(
                   BatchRequest(
                     action = Action.entries.first { it.value == "clear" },
-                    body = buildJsonObject { put("key", JsonPrimitive("value")) },
+                    body =
+                      buildJsonObject {
+                        put(
+                          "key",
+                          JsonPrimitive("value"),
+                        )
+                      },
                   )
                 )
             ),
@@ -255,7 +289,13 @@ class SearchTest {
                 listOf(
                   BatchRequest(
                     action = Action.entries.first { it.value == "delete" },
-                    body = buildJsonObject { put("key", JsonPrimitive("value")) },
+                    body =
+                      buildJsonObject {
+                        put(
+                          "key",
+                          JsonPrimitive("value"),
+                        )
+                      },
                   )
                 )
             ),
@@ -281,7 +321,13 @@ class SearchTest {
                 listOf(
                   BatchRequest(
                     action = Action.entries.first { it.value == "deleteObject" },
-                    body = buildJsonObject { put("key", JsonPrimitive("value")) },
+                    body =
+                      buildJsonObject {
+                        put(
+                          "key",
+                          JsonPrimitive("value"),
+                        )
+                      },
                   )
                 )
             ),
@@ -310,7 +356,13 @@ class SearchTest {
                 listOf(
                   BatchRequest(
                     action = Action.entries.first { it.value == "partialUpdateObject" },
-                    body = buildJsonObject { put("key", JsonPrimitive("value")) },
+                    body =
+                      buildJsonObject {
+                        put(
+                          "key",
+                          JsonPrimitive("value"),
+                        )
+                      },
                   )
                 )
             ),
@@ -339,7 +391,13 @@ class SearchTest {
                 listOf(
                   BatchRequest(
                     action = Action.entries.first { it.value == "partialUpdateObjectNoCreate" },
-                    body = buildJsonObject { put("key", JsonPrimitive("value")) },
+                    body =
+                      buildJsonObject {
+                        put(
+                          "key",
+                          JsonPrimitive("value"),
+                        )
+                      },
                   )
                 )
             ),
@@ -368,7 +426,13 @@ class SearchTest {
                 listOf(
                   BatchRequest(
                     action = Action.entries.first { it.value == "updateObject" },
-                    body = buildJsonObject { put("key", JsonPrimitive("value")) },
+                    body =
+                      buildJsonObject {
+                        put(
+                          "key",
+                          JsonPrimitive("value"),
+                        )
+                      },
                   )
                 )
             ),
@@ -394,7 +458,10 @@ class SearchTest {
         batchAssignUserIds(
           xAlgoliaUserID = "userID",
           batchAssignUserIdsParams =
-            BatchAssignUserIdsParams(cluster = "theCluster", users = listOf("user1", "user2")),
+            BatchAssignUserIdsParams(
+              cluster = "theCluster",
+              users = listOf("user1", "user2"),
+            ),
         )
       },
       intercept = {
@@ -515,7 +582,9 @@ class SearchTest {
   @Test
   fun `browse with minimal parameters`() = runTest {
     client.runTest(
-      call = { browse(indexName = "cts_e2e_browse") },
+      call = {
+        browse(indexName = "cts_e2e_browse")
+      },
       intercept = {
         assertEquals("/1/indexes/cts_e2e_browse/browse".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
@@ -549,7 +618,10 @@ class SearchTest {
   fun `browse allow a cursor in parameters2`() = runTest {
     client.runTest(
       call = {
-        browse(indexName = "indexName", browseParams = BrowseParamsObject(cursor = "test"))
+        browse(
+          indexName = "indexName",
+          browseParams = BrowseParamsObject(cursor = "test"),
+        )
       },
       intercept = {
         assertEquals("/1/indexes/indexName/browse".toPathSegments(), it.url.pathSegments)
@@ -581,7 +653,9 @@ class SearchTest {
   @Test
   fun `clearObjects`() = runTest {
     client.runTest(
-      call = { clearObjects(indexName = "theIndexName") },
+      call = {
+        clearObjects(indexName = "theIndexName")
+      },
       intercept = {
         assertEquals("/1/indexes/theIndexName/clear".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
@@ -595,7 +669,9 @@ class SearchTest {
   @Test
   fun `clearRules`() = runTest {
     client.runTest(
-      call = { clearRules(indexName = "indexName") },
+      call = {
+        clearRules(indexName = "indexName")
+      },
       intercept = {
         assertEquals("/1/indexes/indexName/rules/clear".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
@@ -609,7 +685,9 @@ class SearchTest {
   @Test
   fun `clearSynonyms`() = runTest {
     client.runTest(
-      call = { clearSynonyms(indexName = "indexName") },
+      call = {
+        clearSynonyms(indexName = "indexName")
+      },
       intercept = {
         assertEquals("/1/indexes/indexName/synonyms/clear".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
@@ -623,7 +701,9 @@ class SearchTest {
   @Test
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
-      call = { customDelete(path = "test/minimal") },
+      call = {
+        customDelete(path = "test/minimal")
+      },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("DELETE"), it.method)
@@ -635,7 +715,12 @@ class SearchTest {
   @Test
   fun `allow del method for a custom path with all parameters1`() = runTest {
     client.runTest(
-      call = { customDelete(path = "test/all", parameters = mapOf("query" to "parameters")) },
+      call = {
+        customDelete(
+          path = "test/all",
+          parameters = mapOf("query" to "parameters"),
+        )
+      },
       intercept = {
         assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("DELETE"), it.method)
@@ -650,7 +735,9 @@ class SearchTest {
   @Test
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
-      call = { customGet(path = "test/minimal") },
+      call = {
+        customGet(path = "test/minimal")
+      },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -663,7 +750,10 @@ class SearchTest {
   fun `allow get method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
-        customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
+        customGet(
+          path = "test/all",
+          parameters = mapOf("query" to "parameters with space"),
+        )
       },
       intercept = {
         assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
@@ -688,7 +778,10 @@ class SearchTest {
                   put("query", "parameters with space")
                   put("and an array", listOf("array", "with spaces"))
                 },
-              headers = buildMap { put("x-header-1", "spaces are left alone") },
+              headers =
+                buildMap {
+                  put("x-header-1", "spaces are left alone")
+                },
             ),
         )
       },
@@ -710,7 +803,9 @@ class SearchTest {
   @Test
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
-      call = { customPost(path = "test/minimal") },
+      call = {
+        customPost(path = "test/minimal")
+      },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
@@ -726,7 +821,13 @@ class SearchTest {
         customPost(
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("body", JsonPrimitive("parameters")) },
+          body =
+            buildJsonObject {
+              put(
+                "body",
+                JsonPrimitive("parameters"),
+              )
+            },
         )
       },
       intercept = {
@@ -745,9 +846,20 @@ class SearchTest {
         customPost(
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("facet", JsonPrimitive("filters")) },
+          body =
+            buildJsonObject {
+              put(
+                "facet",
+                JsonPrimitive("filters"),
+              )
+            },
           requestOptions =
-            RequestOptions(urlParameters = buildMap { put("query", "myQueryParameter") }),
+            RequestOptions(
+              urlParameters =
+                buildMap {
+                  put("query", "myQueryParameter")
+                }
+            ),
         )
       },
       intercept = {
@@ -766,9 +878,20 @@ class SearchTest {
         customPost(
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("facet", JsonPrimitive("filters")) },
+          body =
+            buildJsonObject {
+              put(
+                "facet",
+                JsonPrimitive("filters"),
+              )
+            },
           requestOptions =
-            RequestOptions(urlParameters = buildMap { put("query2", "myQueryParameter") }),
+            RequestOptions(
+              urlParameters =
+                buildMap {
+                  put("query2", "myQueryParameter")
+                }
+            ),
         )
       },
       intercept = {
@@ -790,9 +913,20 @@ class SearchTest {
         customPost(
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("facet", JsonPrimitive("filters")) },
+          body =
+            buildJsonObject {
+              put(
+                "facet",
+                JsonPrimitive("filters"),
+              )
+            },
           requestOptions =
-            RequestOptions(headers = buildMap { put("x-algolia-api-key", "ALGOLIA_API_KEY") }),
+            RequestOptions(
+              headers =
+                buildMap {
+                  put("x-algolia-api-key", "ALGOLIA_API_KEY")
+                }
+            ),
         )
       },
       intercept = {
@@ -812,9 +946,20 @@ class SearchTest {
         customPost(
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("facet", JsonPrimitive("filters")) },
+          body =
+            buildJsonObject {
+              put(
+                "facet",
+                JsonPrimitive("filters"),
+              )
+            },
           requestOptions =
-            RequestOptions(headers = buildMap { put("x-algolia-api-key", "ALGOLIA_API_KEY") }),
+            RequestOptions(
+              headers =
+                buildMap {
+                  put("x-algolia-api-key", "ALGOLIA_API_KEY")
+                }
+            ),
         )
       },
       intercept = {
@@ -834,8 +979,20 @@ class SearchTest {
         customPost(
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("facet", JsonPrimitive("filters")) },
-          requestOptions = RequestOptions(urlParameters = buildMap { put("isItWorking", true) }),
+          body =
+            buildJsonObject {
+              put(
+                "facet",
+                JsonPrimitive("filters"),
+              )
+            },
+          requestOptions =
+            RequestOptions(
+              urlParameters =
+                buildMap {
+                  put("isItWorking", true)
+                }
+            ),
         )
       },
       intercept = {
@@ -857,8 +1014,20 @@ class SearchTest {
         customPost(
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("facet", JsonPrimitive("filters")) },
-          requestOptions = RequestOptions(urlParameters = buildMap { put("myParam", 2) }),
+          body =
+            buildJsonObject {
+              put(
+                "facet",
+                JsonPrimitive("filters"),
+              )
+            },
+          requestOptions =
+            RequestOptions(
+              urlParameters =
+                buildMap {
+                  put("myParam", 2)
+                }
+            ),
         )
       },
       intercept = {
@@ -877,9 +1046,20 @@ class SearchTest {
         customPost(
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("facet", JsonPrimitive("filters")) },
+          body =
+            buildJsonObject {
+              put(
+                "facet",
+                JsonPrimitive("filters"),
+              )
+            },
           requestOptions =
-            RequestOptions(urlParameters = buildMap { put("myParam", listOf("b and c", "d")) }),
+            RequestOptions(
+              urlParameters =
+                buildMap {
+                  put("myParam", listOf("b and c", "d"))
+                }
+            ),
         )
       },
       intercept = {
@@ -901,9 +1081,20 @@ class SearchTest {
         customPost(
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("facet", JsonPrimitive("filters")) },
+          body =
+            buildJsonObject {
+              put(
+                "facet",
+                JsonPrimitive("filters"),
+              )
+            },
           requestOptions =
-            RequestOptions(urlParameters = buildMap { put("myParam", listOf(true, true, false)) }),
+            RequestOptions(
+              urlParameters =
+                buildMap {
+                  put("myParam", listOf(true, true, false))
+                }
+            ),
         )
       },
       intercept = {
@@ -925,8 +1116,20 @@ class SearchTest {
         customPost(
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("facet", JsonPrimitive("filters")) },
-          requestOptions = RequestOptions(urlParameters = buildMap { put("myParam", listOf(1, 2)) }),
+          body =
+            buildJsonObject {
+              put(
+                "facet",
+                JsonPrimitive("filters"),
+              )
+            },
+          requestOptions =
+            RequestOptions(
+              urlParameters =
+                buildMap {
+                  put("myParam", listOf(1, 2))
+                }
+            ),
         )
       },
       intercept = {
@@ -943,7 +1146,9 @@ class SearchTest {
   @Test
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
-      call = { customPut(path = "test/minimal") },
+      call = {
+        customPut(path = "test/minimal")
+      },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
@@ -959,7 +1164,13 @@ class SearchTest {
         customPut(
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
-          body = buildJsonObject { put("body", JsonPrimitive("parameters")) },
+          body =
+            buildJsonObject {
+              put(
+                "body",
+                JsonPrimitive("parameters"),
+              )
+            },
         )
       },
       intercept = {
@@ -976,7 +1187,9 @@ class SearchTest {
   @Test
   fun `deleteApiKey`() = runTest {
     client.runTest(
-      call = { deleteApiKey(key = "myTestApiKey") },
+      call = {
+        deleteApiKey(key = "myTestApiKey")
+      },
       intercept = {
         assertEquals("/1/keys/myTestApiKey".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("DELETE"), it.method)
@@ -1009,7 +1222,9 @@ class SearchTest {
   @Test
   fun `deleteIndex`() = runTest {
     client.runTest(
-      call = { deleteIndex(indexName = "theIndexName") },
+      call = {
+        deleteIndex(indexName = "theIndexName")
+      },
       intercept = {
         assertEquals("/1/indexes/theIndexName".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("DELETE"), it.method)
@@ -1023,7 +1238,12 @@ class SearchTest {
   @Test
   fun `deleteObject`() = runTest {
     client.runTest(
-      call = { deleteObject(indexName = "<YOUR_INDEX_NAME>", objectID = "uniqueID") },
+      call = {
+        deleteObject(
+          indexName = "<YOUR_INDEX_NAME>",
+          objectID = "uniqueID",
+        )
+      },
       intercept = {
         assertEquals(
           "/1/indexes/%3CYOUR_INDEX_NAME%3E/uniqueID".toPathSegments(),
@@ -1040,7 +1260,12 @@ class SearchTest {
   @Test
   fun `delete rule simple case`() = runTest {
     client.runTest(
-      call = { deleteRule(indexName = "indexName", objectID = "id1") },
+      call = {
+        deleteRule(
+          indexName = "indexName",
+          objectID = "id1",
+        )
+      },
       intercept = {
         assertEquals("/1/indexes/indexName/rules/id1".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("DELETE"), it.method)
@@ -1052,7 +1277,12 @@ class SearchTest {
   @Test
   fun `delete rule with simple characters to encode in objectID1`() = runTest {
     client.runTest(
-      call = { deleteRule(indexName = "indexName", objectID = "test/with/slash") },
+      call = {
+        deleteRule(
+          indexName = "indexName",
+          objectID = "test/with/slash",
+        )
+      },
       intercept = {
         assertEquals(
           "/1/indexes/indexName/rules/test%2Fwith%2Fslash".toPathSegments(),
@@ -1069,7 +1299,9 @@ class SearchTest {
   @Test
   fun `deleteSource`() = runTest {
     client.runTest(
-      call = { deleteSource(source = "theSource") },
+      call = {
+        deleteSource(source = "theSource")
+      },
       intercept = {
         assertEquals("/1/security/sources/theSource".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("DELETE"), it.method)
@@ -1083,7 +1315,12 @@ class SearchTest {
   @Test
   fun `deleteSynonym`() = runTest {
     client.runTest(
-      call = { deleteSynonym(indexName = "indexName", objectID = "id1") },
+      call = {
+        deleteSynonym(
+          indexName = "indexName",
+          objectID = "id1",
+        )
+      },
       intercept = {
         assertEquals("/1/indexes/indexName/synonyms/id1".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("DELETE"), it.method)
@@ -1097,7 +1334,9 @@ class SearchTest {
   @Test
   fun `getApiKey`() = runTest {
     client.runTest(
-      call = { getApiKey(key = "myTestApiKey") },
+      call = {
+        getApiKey(key = "myTestApiKey")
+      },
       intercept = {
         assertEquals("/1/keys/myTestApiKey".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -1111,7 +1350,9 @@ class SearchTest {
   @Test
   fun `getAppTask`() = runTest {
     client.runTest(
-      call = { getAppTask(taskID = 123L) },
+      call = {
+        getAppTask(taskID = 123L)
+      },
       intercept = {
         assertEquals("/1/task/123".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -1125,7 +1366,9 @@ class SearchTest {
   @Test
   fun `get getDictionaryLanguages`() = runTest {
     client.runTest(
-      call = { getDictionaryLanguages() },
+      call = {
+        getDictionaryLanguages()
+      },
       intercept = {
         assertEquals("/1/dictionaries/*/languages".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -1139,7 +1382,9 @@ class SearchTest {
   @Test
   fun `get getDictionarySettings results`() = runTest {
     client.runTest(
-      call = { getDictionarySettings() },
+      call = {
+        getDictionarySettings()
+      },
       intercept = {
         assertEquals("/1/dictionaries/*/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -1153,7 +1398,9 @@ class SearchTest {
   @Test
   fun `getLogs with minimal parameters`() = runTest {
     client.runTest(
-      call = { getLogs() },
+      call = {
+        getLogs()
+      },
       intercept = {
         assertEquals("/1/logs".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -1209,7 +1456,12 @@ class SearchTest {
   @Test
   fun `search with a real object1`() = runTest {
     client.runTest(
-      call = { getObject(indexName = "cts_e2e_browse", objectID = "Batman and Robin") },
+      call = {
+        getObject(
+          indexName = "cts_e2e_browse",
+          objectID = "Batman and Robin",
+        )
+      },
       intercept = {
         assertEquals(
           "/1/indexes/cts_e2e_browse/Batman%20and%20Robin".toPathSegments(),
@@ -1231,7 +1483,12 @@ class SearchTest {
           getObjectsParams =
             GetObjectsParams(
               requests =
-                listOf(GetObjectsRequest(objectID = "uniqueID", indexName = "theIndexName"))
+                listOf(
+                  GetObjectsRequest(
+                    objectID = "uniqueID",
+                    indexName = "theIndexName",
+                  )
+                )
             )
         )
       },
@@ -1255,8 +1512,14 @@ class SearchTest {
             GetObjectsParams(
               requests =
                 listOf(
-                  GetObjectsRequest(objectID = "uniqueID1", indexName = "theIndexName1"),
-                  GetObjectsRequest(objectID = "uniqueID2", indexName = "theIndexName2"),
+                  GetObjectsRequest(
+                    objectID = "uniqueID1",
+                    indexName = "theIndexName1",
+                  ),
+                  GetObjectsRequest(
+                    objectID = "uniqueID2",
+                    indexName = "theIndexName2",
+                  ),
                 )
             )
         )
@@ -1306,7 +1569,12 @@ class SearchTest {
   @Test
   fun `getRule`() = runTest {
     client.runTest(
-      call = { getRule(indexName = "cts_e2e_browse", objectID = "qr-1725004648916") },
+      call = {
+        getRule(
+          indexName = "cts_e2e_browse",
+          objectID = "qr-1725004648916",
+        )
+      },
       intercept = {
         assertEquals(
           "/1/indexes/cts_e2e_browse/rules/qr-1725004648916".toPathSegments(),
@@ -1323,7 +1591,12 @@ class SearchTest {
   @Test
   fun `getSettings`() = runTest {
     client.runTest(
-      call = { getSettings(indexName = "cts_e2e_settings", getVersion = 2) },
+      call = {
+        getSettings(
+          indexName = "cts_e2e_settings",
+          getVersion = 2,
+        )
+      },
       intercept = {
         assertEquals("/1/indexes/cts_e2e_settings/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -1338,7 +1611,9 @@ class SearchTest {
   @Test
   fun `getSources`() = runTest {
     client.runTest(
-      call = { getSources() },
+      call = {
+        getSources()
+      },
       intercept = {
         assertEquals("/1/security/sources".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -1352,7 +1627,12 @@ class SearchTest {
   @Test
   fun `getSynonym`() = runTest {
     client.runTest(
-      call = { getSynonym(indexName = "indexName", objectID = "id1") },
+      call = {
+        getSynonym(
+          indexName = "indexName",
+          objectID = "id1",
+        )
+      },
       intercept = {
         assertEquals("/1/indexes/indexName/synonyms/id1".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -1366,7 +1646,12 @@ class SearchTest {
   @Test
   fun `getTask`() = runTest {
     client.runTest(
-      call = { getTask(indexName = "theIndexName", taskID = 123L) },
+      call = {
+        getTask(
+          indexName = "theIndexName",
+          taskID = 123L,
+        )
+      },
       intercept = {
         assertEquals("/1/indexes/theIndexName/task/123".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -1378,7 +1663,12 @@ class SearchTest {
   @Test
   fun `getTask with taskID 01`() = runTest {
     client.runTest(
-      call = { getTask(indexName = "theIndexName", taskID = 0L) },
+      call = {
+        getTask(
+          indexName = "theIndexName",
+          taskID = 0L,
+        )
+      },
       intercept = {
         assertEquals("/1/indexes/theIndexName/task/0".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -1392,7 +1682,9 @@ class SearchTest {
   @Test
   fun `getTopUserIds`() = runTest {
     client.runTest(
-      call = { getTopUserIds() },
+      call = {
+        getTopUserIds()
+      },
       intercept = {
         assertEquals("/1/clusters/mapping/top".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -1406,7 +1698,9 @@ class SearchTest {
   @Test
   fun `getUserId`() = runTest {
     client.runTest(
-      call = { getUserId(userID = "uniqueID") },
+      call = {
+        getUserId(userID = "uniqueID")
+      },
       intercept = {
         assertEquals("/1/clusters/mapping/uniqueID".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -1420,7 +1714,9 @@ class SearchTest {
   @Test
   fun `hasPendingMappings with minimal parameters`() = runTest {
     client.runTest(
-      call = { hasPendingMappings() },
+      call = {
+        hasPendingMappings()
+      },
       intercept = {
         assertEquals("/1/clusters/mapping/pending".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -1432,7 +1728,9 @@ class SearchTest {
   @Test
   fun `hasPendingMappings with parameters1`() = runTest {
     client.runTest(
-      call = { hasPendingMappings(getClusters = true) },
+      call = {
+        hasPendingMappings(getClusters = true)
+      },
       intercept = {
         assertEquals("/1/clusters/mapping/pending".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -1447,7 +1745,9 @@ class SearchTest {
   @Test
   fun `listApiKeys`() = runTest {
     client.runTest(
-      call = { listApiKeys() },
+      call = {
+        listApiKeys()
+      },
       intercept = {
         assertEquals("/1/keys".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -1461,7 +1761,9 @@ class SearchTest {
   @Test
   fun `listClusters`() = runTest {
     client.runTest(
-      call = { listClusters() },
+      call = {
+        listClusters()
+      },
       intercept = {
         assertEquals("/1/clusters".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -1475,7 +1777,9 @@ class SearchTest {
   @Test
   fun `listIndices with minimal parameters`() = runTest {
     client.runTest(
-      call = { listIndices() },
+      call = {
+        listIndices()
+      },
       intercept = {
         assertEquals("/1/indexes".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -1487,7 +1791,12 @@ class SearchTest {
   @Test
   fun `listIndices with parameters1`() = runTest {
     client.runTest(
-      call = { listIndices(page = 8, hitsPerPage = 3) },
+      call = {
+        listIndices(
+          page = 8,
+          hitsPerPage = 3,
+        )
+      },
       intercept = {
         assertEquals("/1/indexes".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -1502,7 +1811,9 @@ class SearchTest {
   @Test
   fun `listUserIds with minimal parameters`() = runTest {
     client.runTest(
-      call = { listUserIds() },
+      call = {
+        listUserIds()
+      },
       intercept = {
         assertEquals("/1/clusters/mapping".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -1514,7 +1825,12 @@ class SearchTest {
   @Test
   fun `listUserIds with parameters1`() = runTest {
     client.runTest(
-      call = { listUserIds(page = 8, hitsPerPage = 100) },
+      call = {
+        listUserIds(
+          page = 8,
+          hitsPerPage = 100,
+        )
+      },
       intercept = {
         assertEquals("/1/clusters/mapping".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
@@ -1537,7 +1853,13 @@ class SearchTest {
                 listOf(
                   MultipleBatchRequest(
                     action = Action.entries.first { it.value == "addObject" },
-                    body = buildJsonObject { put("key", JsonPrimitive("value")) },
+                    body =
+                      buildJsonObject {
+                        put(
+                          "key",
+                          JsonPrimitive("value"),
+                        )
+                      },
                     indexName = "theIndexName",
                   )
                 )
@@ -1646,7 +1968,13 @@ class SearchTest {
         partialUpdateObject(
           indexName = "theIndexName",
           objectID = "uniqueID",
-          attributesToUpdate = buildJsonObject { put("attributeId", JsonPrimitive("new value")) },
+          attributesToUpdate =
+            buildJsonObject {
+              put(
+                "attributeId",
+                JsonPrimitive("new value"),
+              )
+            },
         )
       },
       intercept = {
@@ -1667,7 +1995,13 @@ class SearchTest {
         partialUpdateObject(
           indexName = "theIndexName",
           objectID = "uniqueID",
-          attributesToUpdate = buildJsonObject { put("attributeId", JsonPrimitive(1)) },
+          attributesToUpdate =
+            buildJsonObject {
+              put(
+                "attributeId",
+                JsonPrimitive(1),
+              )
+            },
         )
       },
       intercept = {
@@ -1688,7 +2022,13 @@ class SearchTest {
         partialUpdateObject(
           indexName = "theIndexName",
           objectID = "uniqueID",
-          attributesToUpdate = buildJsonObject { put("attributeId", JsonPrimitive(true)) },
+          attributesToUpdate =
+            buildJsonObject {
+              put(
+                "attributeId",
+                JsonPrimitive(true),
+              )
+            },
         )
       },
       intercept = {
@@ -1714,7 +2054,11 @@ class SearchTest {
               put(
                 "attributeId",
                 JsonArray(
-                  listOf(JsonPrimitive("one"), JsonPrimitive("two"), JsonPrimitive("three"))
+                  listOf(
+                    JsonPrimitive("one"),
+                    JsonPrimitive("two"),
+                    JsonPrimitive("three"),
+                  )
                 ),
               )
             },
@@ -1740,7 +2084,15 @@ class SearchTest {
           objectID = "uniqueID",
           attributesToUpdate =
             buildJsonObject {
-              put("attributeId", buildJsonObject { put("nested", JsonPrimitive("value")) })
+              put(
+                "attributeId",
+                buildJsonObject {
+                  put(
+                    "nested",
+                    JsonPrimitive("value"),
+                  )
+                },
+              )
             },
         )
       },
@@ -1803,8 +2155,14 @@ class SearchTest {
               put(
                 "categoryPageId",
                 buildJsonObject {
-                  put("_operation", JsonPrimitive("Add"))
-                  put("value", JsonPrimitive("men-clothing-pants"))
+                  put(
+                    "_operation",
+                    JsonPrimitive("Add"),
+                  )
+                  put(
+                    "value",
+                    JsonPrimitive("men-clothing-pants"),
+                  )
                 },
               )
             },
@@ -1836,8 +2194,14 @@ class SearchTest {
               put(
                 "categoryPageId",
                 buildJsonObject {
-                  put("_operation", JsonPrimitive("Remove"))
-                  put("value", JsonPrimitive("men-clothing-pants"))
+                  put(
+                    "_operation",
+                    JsonPrimitive("Remove"),
+                  )
+                  put(
+                    "value",
+                    JsonPrimitive("men-clothing-pants"),
+                  )
                 },
               )
             },
@@ -1862,7 +2226,9 @@ class SearchTest {
   @Test
   fun `removeUserId`() = runTest {
     client.runTest(
-      call = { removeUserId(userID = "uniqueID") },
+      call = {
+        removeUserId(userID = "uniqueID")
+      },
       intercept = {
         assertEquals("/1/clusters/mapping/uniqueID".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("DELETE"), it.method)
@@ -1878,7 +2244,13 @@ class SearchTest {
     client.runTest(
       call = {
         replaceSources(
-          source = listOf(Source(source = "theSource", description = "theDescription"))
+          source =
+            listOf(
+              Source(
+                source = "theSource",
+                description = "theDescription",
+              )
+            )
         )
       },
       intercept = {
@@ -1894,7 +2266,9 @@ class SearchTest {
   @Test
   fun `restoreApiKey`() = runTest {
     client.runTest(
-      call = { restoreApiKey(key = "ALGOLIA_API_KEY") },
+      call = {
+        restoreApiKey(key = "ALGOLIA_API_KEY")
+      },
       intercept = {
         assertEquals("/1/keys/ALGOLIA_API_KEY/restore".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
@@ -1913,10 +2287,22 @@ class SearchTest {
           indexName = "<YOUR_INDEX_NAME>",
           body =
             buildJsonObject {
-              put("name", JsonPrimitive("Black T-shirt"))
-              put("color", JsonPrimitive("#000000||black"))
-              put("availableIn", JsonPrimitive("https://source.unsplash.com/100x100/?paris||Paris"))
-              put("objectID", JsonPrimitive("myID"))
+              put(
+                "name",
+                JsonPrimitive("Black T-shirt"),
+              )
+              put(
+                "color",
+                JsonPrimitive("#000000||black"),
+              )
+              put(
+                "availableIn",
+                JsonPrimitive("https://source.unsplash.com/100x100/?paris||Paris"),
+              )
+              put(
+                "objectID",
+                JsonPrimitive("myID"),
+              )
             },
         )
       },
@@ -2009,16 +2395,34 @@ class SearchTest {
                     ),
                   hide = listOf(ConsequenceHide(objectID = "321")),
                   filterPromotes = false,
-                  userData = buildJsonObject { put("algolia", JsonPrimitive("aloglia")) },
+                  userData =
+                    buildJsonObject {
+                      put(
+                        "algolia",
+                        JsonPrimitive("aloglia"),
+                      )
+                    },
                   promote =
                     listOf(
-                      PromoteObjectID(objectID = "abc", position = 3),
-                      PromoteObjectIDs(objectIDs = listOf("abc", "def"), position = 1),
+                      PromoteObjectID(
+                        objectID = "abc",
+                        position = 3,
+                      ),
+                      PromoteObjectIDs(
+                        objectIDs = listOf("abc", "def"),
+                        position = 1,
+                      ),
                     ),
                 ),
               description = "test",
               enabled = true,
-              validity = listOf(TimeRange(from = 1656670273L, until = 1656670277L)),
+              validity =
+                listOf(
+                  TimeRange(
+                    from = 1656670273L,
+                    until = 1656670277L,
+                  )
+                ),
             ),
           forwardToReplicas = true,
         )
@@ -2162,7 +2566,10 @@ class SearchTest {
                 Consequence(
                   userData =
                     buildJsonObject {
-                      put("promo_content", JsonPrimitive("20% OFF on all Harry Potter books!"))
+                      put(
+                        "promo_content",
+                        JsonPrimitive("20% OFF on all Harry Potter books!"),
+                      )
                     }
                 ),
             ),
@@ -2242,7 +2649,10 @@ class SearchTest {
                 Consequence(
                   userData =
                     buildJsonObject {
-                      put("redirect", JsonPrimitive("https://www.algolia.com/support"))
+                      put(
+                        "redirect",
+                        JsonPrimitive("https://www.algolia.com/support"),
+                      )
                     }
                 ),
             ),
@@ -2364,7 +2774,13 @@ class SearchTest {
                 ),
               consequence =
                 Consequence(
-                  promote = listOf(PromoteObjectID(objectID = "iPhone-12345", position = 0))
+                  promote =
+                    listOf(
+                      PromoteObjectID(
+                        objectID = "iPhone-12345",
+                        position = 0,
+                      )
+                    )
                 ),
             ),
         )
@@ -2401,7 +2817,15 @@ class SearchTest {
                   )
                 ),
               consequence =
-                Consequence(promote = listOf(PromoteObjectID(objectID = "HP-12345", position = 0))),
+                Consequence(
+                  promote =
+                    listOf(
+                      PromoteObjectID(
+                        objectID = "HP-12345",
+                        position = 0,
+                      )
+                    )
+                ),
             ),
         )
       },
@@ -2844,7 +3268,13 @@ class SearchTest {
               objectID = "a-rule-id",
               consequence =
                 Consequence(params = ConsequenceParams(aroundRadius = AroundRadius.of(1000))),
-              validity = listOf(TimeRange(from = 1577836800L, until = 1577836800L)),
+              validity =
+                listOf(
+                  TimeRange(
+                    from = 1577836800L,
+                    until = 1577836800L,
+                  )
+                ),
             ),
         )
       },
@@ -2985,16 +3415,34 @@ class SearchTest {
                       ),
                     hide = listOf(ConsequenceHide(objectID = "321")),
                     filterPromotes = false,
-                    userData = buildJsonObject { put("algolia", JsonPrimitive("aloglia")) },
+                    userData =
+                      buildJsonObject {
+                        put(
+                          "algolia",
+                          JsonPrimitive("aloglia"),
+                        )
+                      },
                     promote =
                       listOf(
-                        PromoteObjectID(objectID = "abc", position = 3),
-                        PromoteObjectIDs(objectIDs = listOf("abc", "def"), position = 1),
+                        PromoteObjectID(
+                          objectID = "abc",
+                          position = 3,
+                        ),
+                        PromoteObjectIDs(
+                          objectIDs = listOf("abc", "def"),
+                          position = 1,
+                        ),
                       ),
                   ),
                 description = "test",
                 enabled = true,
-                validity = listOf(TimeRange(from = 1656670273L, until = 1656670277L)),
+                validity =
+                  listOf(
+                    TimeRange(
+                      from = 1656670273L,
+                      until = 1656670277L,
+                    )
+                  ),
               )
             ),
           forwardToReplicas = true,
@@ -3947,7 +4395,12 @@ class SearchTest {
   @Test
   fun `get searchForFacetValues results with minimal parameters`() = runTest {
     client.runTest(
-      call = { searchForFacetValues(indexName = "indexName", facetName = "facetName") },
+      call = {
+        searchForFacetValues(
+          indexName = "indexName",
+          facetName = "facetName",
+        )
+      },
       intercept = {
         assertEquals(
           "/1/indexes/indexName/facets/facetName/query".toPathSegments(),
@@ -4033,7 +4486,9 @@ class SearchTest {
   @Test
   fun `search with minimal parameters`() = runTest {
     client.runTest(
-      call = { searchSingleIndex(indexName = "indexName") },
+      call = {
+        searchSingleIndex(indexName = "indexName")
+      },
       intercept = {
         assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
@@ -4045,7 +4500,9 @@ class SearchTest {
   @Test
   fun `search with special characters in indexName1`() = runTest {
     client.runTest(
-      call = { searchSingleIndex(indexName = "cts_e2e_space in index") },
+      call = {
+        searchSingleIndex(indexName = "cts_e2e_space in index")
+      },
       intercept = {
         assertEquals(
           "/1/indexes/cts_e2e_space%20in%20index/query".toPathSegments(),
@@ -4269,7 +4726,8 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(filters = "NOT date_timestamp:1514764800 TO 1546300799"),
+          searchParams =
+            SearchParamsObject(filters = "NOT date_timestamp:1514764800 TO 1546300799"),
         )
       },
       intercept = {
@@ -4377,7 +4835,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "harry", filters = "_tags:non-fiction"),
+          searchParams =
+            SearchParamsObject(
+              query = "harry",
+              filters = "_tags:non-fiction",
+            ),
         )
       },
       intercept = {
@@ -4880,7 +5342,10 @@ class SearchTest {
         searchSingleIndex(
           indexName = "indexName",
           searchParams =
-            SearchParamsObject(query = "wolf", restrictSearchableAttributes = listOf("title_fr")),
+            SearchParamsObject(
+              query = "wolf",
+              restrictSearchableAttributes = listOf("title_fr"),
+            ),
         )
       },
       intercept = {
@@ -4897,7 +5362,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "test", getRankingInfo = true),
+          searchParams =
+            SearchParamsObject(
+              query = "test",
+              getRankingInfo = true,
+            ),
         )
       },
       intercept = {
@@ -4931,7 +5400,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(clickAnalytics = true, userToken = "user-1"),
+          searchParams =
+            SearchParamsObject(
+              clickAnalytics = true,
+              userToken = "user-1",
+            ),
         )
       },
       intercept = {
@@ -4948,7 +5421,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(enablePersonalization = true, userToken = "user-1"),
+          searchParams =
+            SearchParamsObject(
+              enablePersonalization = true,
+              userToken = "user-1",
+            ),
         )
       },
       intercept = {
@@ -4982,7 +5459,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", userToken = "user-1234"),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              userToken = "user-1234",
+            ),
         )
       },
       intercept = {
@@ -5065,7 +5546,10 @@ class SearchTest {
         searchSingleIndex(
           indexName = "indexName",
           searchParams =
-            SearchParamsObject(query = "query", attributesToHighlight = listOf("title", "content")),
+            SearchParamsObject(
+              query = "query",
+              attributesToHighlight = listOf("title", "content"),
+            ),
         )
       },
       intercept = {
@@ -5121,7 +5605,10 @@ class SearchTest {
   fun `search_everything52`() = runTest {
     client.runTest(
       call = {
-        searchSingleIndex(indexName = "indexName", searchParams = SearchParamsObject(query = ""))
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(query = ""),
+        )
       },
       intercept = {
         assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
@@ -5137,7 +5624,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "books", filters = "price:10 TO 20"),
+          searchParams =
+            SearchParamsObject(
+              query = "books",
+              filters = "price:10 TO 20",
+            ),
         )
       },
       intercept = {
@@ -5180,7 +5671,10 @@ class SearchTest {
         searchSingleIndex(
           indexName = "indexName",
           searchParams =
-            SearchParamsObject(query = "query", attributesToRetrieve = listOf("title", "content")),
+            SearchParamsObject(
+              query = "query",
+              attributesToRetrieve = listOf("title", "content"),
+            ),
         )
       },
       intercept = {
@@ -5221,7 +5715,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", relevancyStrictness = 70),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              relevancyStrictness = 70,
+            ),
         )
       },
       intercept = {
@@ -5288,7 +5786,10 @@ class SearchTest {
         searchSingleIndex(
           indexName = "indexName",
           searchParams =
-            SearchParamsObject(query = "query", filters = "category:\"Books and Comics\""),
+            SearchParamsObject(
+              query = "query",
+              filters = "category:\"Books and Comics\"",
+            ),
         )
       },
       intercept = {
@@ -5305,7 +5806,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", filters = "keyword:\"OR\""),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              filters = "keyword:\"OR\"",
+            ),
         )
       },
       intercept = {
@@ -5323,7 +5828,10 @@ class SearchTest {
         searchSingleIndex(
           indexName = "indexName",
           searchParams =
-            SearchParamsObject(query = "query", filters = "content:\"It's a wonderful day\""),
+            SearchParamsObject(
+              query = "query",
+              filters = "content:\"It's a wonderful day\"",
+            ),
         )
       },
       intercept = {
@@ -5344,7 +5852,10 @@ class SearchTest {
         searchSingleIndex(
           indexName = "indexName",
           searchParams =
-            SearchParamsObject(query = "query", filters = "content:\"She said \"Hello World\""),
+            SearchParamsObject(
+              query = "query",
+              filters = "content:\"She said \"Hello World\"",
+            ),
         )
       },
       intercept = {
@@ -5508,7 +6019,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", sumOrFiltersScores = true),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              sumOrFiltersScores = true,
+            ),
         )
       },
       intercept = {
@@ -5525,7 +6040,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", facets = listOf("*")),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              facets = listOf("*"),
+            ),
         )
       },
       intercept = {
@@ -5542,7 +6061,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", facets = listOf("category", "author")),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              facets = listOf("category", "author"),
+            ),
         )
       },
       intercept = {
@@ -5559,7 +6082,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", maxValuesPerFacet = 20),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              maxValuesPerFacet = 20,
+            ),
         )
       },
       intercept = {
@@ -5576,7 +6103,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", facetingAfterDistinct = true),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              facetingAfterDistinct = true,
+            ),
         )
       },
       intercept = {
@@ -5593,7 +6124,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", sortFacetValuesBy = "count"),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              sortFacetValuesBy = "count",
+            ),
         )
       },
       intercept = {
@@ -5611,7 +6146,10 @@ class SearchTest {
         searchSingleIndex(
           indexName = "indexName",
           searchParams =
-            SearchParamsObject(query = "query", attributesToSnippet = listOf("title", "content:80")),
+            SearchParamsObject(
+              query = "query",
+              attributesToSnippet = listOf("title", "content:80"),
+            ),
         )
       },
       intercept = {
@@ -5631,7 +6169,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", highlightPreTag = "<strong>"),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              highlightPreTag = "<strong>",
+            ),
         )
       },
       intercept = {
@@ -5648,7 +6190,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", highlightPostTag = "</strong>"),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              highlightPostTag = "</strong>",
+            ),
         )
       },
       intercept = {
@@ -5665,7 +6211,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", snippetEllipsisText = ""),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              snippetEllipsisText = "",
+            ),
         )
       },
       intercept = {
@@ -5683,7 +6233,10 @@ class SearchTest {
         searchSingleIndex(
           indexName = "indexName",
           searchParams =
-            SearchParamsObject(query = "query", restrictHighlightAndSnippetArrays = false),
+            SearchParamsObject(
+              query = "query",
+              restrictHighlightAndSnippetArrays = false,
+            ),
         )
       },
       intercept = {
@@ -5700,7 +6253,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", page = 0),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              page = 0,
+            ),
         )
       },
       intercept = {
@@ -5717,7 +6274,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", hitsPerPage = 10),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              hitsPerPage = 10,
+            ),
         )
       },
       intercept = {
@@ -5734,7 +6295,12 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", page = 2, hitsPerPage = 5),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              page = 2,
+              hitsPerPage = 5,
+            ),
         )
       },
       intercept = {
@@ -5751,7 +6317,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", offset = 4),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              offset = 4,
+            ),
         )
       },
       intercept = {
@@ -5768,7 +6338,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", length = 4),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              length = 4,
+            ),
         )
       },
       intercept = {
@@ -5785,7 +6359,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", minWordSizefor1Typo = 2),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              minWordSizefor1Typo = 2,
+            ),
         )
       },
       intercept = {
@@ -5802,7 +6380,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", minWordSizefor2Typos = 2),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              minWordSizefor2Typos = 2,
+            ),
         )
       },
       intercept = {
@@ -5820,7 +6402,10 @@ class SearchTest {
         searchSingleIndex(
           indexName = "indexName",
           searchParams =
-            SearchParamsObject(query = "query", typoTolerance = TypoTolerance.of(false)),
+            SearchParamsObject(
+              query = "query",
+              typoTolerance = TypoTolerance.of(false),
+            ),
         )
       },
       intercept = {
@@ -5837,7 +6422,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", allowTyposOnNumericTokens = false),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              allowTyposOnNumericTokens = false,
+            ),
         )
       },
       intercept = {
@@ -5854,7 +6443,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", aroundLatLng = "40.71, -74.01"),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              aroundLatLng = "40.71, -74.01",
+            ),
         )
       },
       intercept = {
@@ -5871,9 +6464,18 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", aroundLatLngViaIP = true),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              aroundLatLngViaIP = true,
+            ),
           requestOptions =
-            RequestOptions(headers = buildMap { put("x-forwarded-for", "XX.XXX.XXX.XXX") }),
+            RequestOptions(
+              headers =
+                buildMap {
+                  put("x-forwarded-for", "XX.XXX.XXX.XXX")
+                }
+            ),
         )
       },
       intercept = {
@@ -5893,7 +6495,12 @@ class SearchTest {
           indexName = "indexName",
           searchParams = SearchParamsString(),
           requestOptions =
-            RequestOptions(headers = buildMap { put("x-forwarded-for", "XX.XXX.XXX.XXX") }),
+            RequestOptions(
+              headers =
+                buildMap {
+                  put("x-forwarded-for", "XX.XXX.XXX.XXX")
+                }
+            ),
         )
       },
       intercept = {
@@ -5911,7 +6518,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", aroundRadius = AroundRadius.of(1000)),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              aroundRadius = AroundRadius.of(1000),
+            ),
         )
       },
       intercept = {
@@ -5950,7 +6561,10 @@ class SearchTest {
         searchSingleIndex(
           indexName = "indexName",
           searchParams =
-            SearchParamsObject(query = "query", aroundPrecision = AroundPrecision.of(100)),
+            SearchParamsObject(
+              query = "query",
+              aroundPrecision = AroundPrecision.of(100),
+            ),
         )
       },
       intercept = {
@@ -5972,7 +6586,16 @@ class SearchTest {
               query = "query",
               aroundPrecision =
                 AroundPrecision.of(
-                  listOf(Range(from = 0, value = 25), Range(from = 2000, value = 1000))
+                  listOf(
+                    Range(
+                      from = 0,
+                      value = 25,
+                    ),
+                    Range(
+                      from = 2000,
+                      value = 1000,
+                    ),
+                  )
                 ),
             ),
         )
@@ -5994,7 +6617,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", minimumAroundRadius = 1000),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              minimumAroundRadius = 1000,
+            ),
         )
       },
       intercept = {
@@ -6245,7 +6872,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", decompoundQuery = true),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              decompoundQuery = true,
+            ),
         )
       },
       intercept = {
@@ -6262,7 +6893,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", enableRules = true),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              enableRules = true,
+            ),
         )
       },
       intercept = {
@@ -6280,7 +6915,10 @@ class SearchTest {
         searchSingleIndex(
           indexName = "indexName",
           searchParams =
-            SearchParamsObject(query = "query", ruleContexts = listOf("front_end", "website2")),
+            SearchParamsObject(
+              query = "query",
+              ruleContexts = listOf("front_end", "website2"),
+            ),
         )
       },
       intercept = {
@@ -6297,7 +6935,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", enablePersonalization = true),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              enablePersonalization = true,
+            ),
         )
       },
       intercept = {
@@ -6315,7 +6957,11 @@ class SearchTest {
         searchSingleIndex(
           indexName = "indexName",
           searchParams =
-            SearchParamsObject(query = "query", enablePersonalization = true, userToken = "123456"),
+            SearchParamsObject(
+              query = "query",
+              enablePersonalization = true,
+              userToken = "123456",
+            ),
         )
       },
       intercept = {
@@ -6335,7 +6981,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", personalizationImpact = 20),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              personalizationImpact = 20,
+            ),
         )
       },
       intercept = {
@@ -6352,7 +7002,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", userToken = "123456"),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              userToken = "123456",
+            ),
         )
       },
       intercept = {
@@ -6370,7 +7024,11 @@ class SearchTest {
         searchSingleIndex(
           indexName = "indexName",
           searchParams =
-            SearchParamsObject(query = "query", enablePersonalization = true, userToken = "123456"),
+            SearchParamsObject(
+              query = "query",
+              enablePersonalization = true,
+              userToken = "123456",
+            ),
         )
       },
       intercept = {
@@ -6433,7 +7091,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", advancedSyntax = true),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              advancedSyntax = true,
+            ),
         )
       },
       intercept = {
@@ -6472,7 +7134,10 @@ class SearchTest {
         searchSingleIndex(
           indexName = "indexName",
           searchParams =
-            SearchParamsObject(query = "query", disableExactOnAttributes = listOf("description")),
+            SearchParamsObject(
+              query = "query",
+              disableExactOnAttributes = listOf("description"),
+            ),
         )
       },
       intercept = {
@@ -6584,7 +7249,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", distinct = Distinct.of(0)),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              distinct = Distinct.of(0),
+            ),
         )
       },
       intercept = {
@@ -6601,7 +7270,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", getRankingInfo = true),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              getRankingInfo = true,
+            ),
         )
       },
       intercept = {
@@ -6618,7 +7291,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", clickAnalytics = false),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              clickAnalytics = false,
+            ),
         )
       },
       intercept = {
@@ -6635,7 +7312,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", clickAnalytics = true),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              clickAnalytics = true,
+            ),
         )
       },
       intercept = {
@@ -6652,7 +7333,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", analytics = false),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              analytics = false,
+            ),
         )
       },
       intercept = {
@@ -6670,7 +7355,10 @@ class SearchTest {
         searchSingleIndex(
           indexName = "indexName",
           searchParams =
-            SearchParamsObject(query = "query", analyticsTags = listOf("front_end", "website2")),
+            SearchParamsObject(
+              query = "query",
+              analyticsTags = listOf("front_end", "website2"),
+            ),
         )
       },
       intercept = {
@@ -6687,7 +7375,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", synonyms = false),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              synonyms = false,
+            ),
         )
       },
       intercept = {
@@ -6704,7 +7396,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", replaceSynonymsInHighlight = true),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              replaceSynonymsInHighlight = true,
+            ),
         )
       },
       intercept = {
@@ -6721,7 +7417,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", minProximity = 2),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              minProximity = 2,
+            ),
         )
       },
       intercept = {
@@ -6739,7 +7439,10 @@ class SearchTest {
         searchSingleIndex(
           indexName = "indexName",
           searchParams =
-            SearchParamsObject(query = "query", responseFields = listOf("hits", "facets")),
+            SearchParamsObject(
+              query = "query",
+              responseFields = listOf("hits", "facets"),
+            ),
         )
       },
       intercept = {
@@ -6756,7 +7459,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", percentileComputation = false),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              percentileComputation = false,
+            ),
         )
       },
       intercept = {
@@ -6773,7 +7480,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", enableABTest = false),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              enableABTest = false,
+            ),
         )
       },
       intercept = {
@@ -6790,7 +7501,11 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query", enableReRanking = false),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+              enableReRanking = false,
+            ),
         )
       },
       intercept = {
@@ -6809,7 +7524,12 @@ class SearchTest {
           indexName = "indexName",
           searchParams = SearchParamsObject(query = "query"),
           requestOptions =
-            RequestOptions(headers = buildMap { put("X-Algolia-User-ID", "user1234") }),
+            RequestOptions(
+              headers =
+                buildMap {
+                  put("X-Algolia-User-ID", "user1234")
+                }
+            ),
         )
       },
       intercept = {
@@ -6827,7 +7547,13 @@ class SearchTest {
         searchSingleIndex(
           indexName = "playlists",
           searchParams = SearchParamsObject(query = "peace"),
-          requestOptions = RequestOptions(headers = buildMap { put("X-Algolia-User-ID", "user42") }),
+          requestOptions =
+            RequestOptions(
+              headers =
+                buildMap {
+                  put("X-Algolia-User-ID", "user42")
+                }
+            ),
         )
       },
       intercept = {
@@ -6843,7 +7569,9 @@ class SearchTest {
   @Test
   fun `searchSynonyms with minimal parameters`() = runTest {
     client.runTest(
-      call = { searchSynonyms(indexName = "indexName") },
+      call = {
+        searchSynonyms(indexName = "indexName")
+      },
       intercept = {
         assertEquals("/1/indexes/indexName/synonyms/search".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
@@ -7150,7 +7878,10 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings =
-            IndexSettings(attributeForDistinct = "company", distinct = Distinct.of(true)),
+            IndexSettings(
+              attributeForDistinct = "company",
+              distinct = Distinct.of(true),
+            ),
         )
       },
       intercept = {
@@ -7168,7 +7899,10 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings =
-            IndexSettings(attributeForDistinct = "design", distinct = Distinct.of(true)),
+            IndexSettings(
+              attributeForDistinct = "design",
+              distinct = Distinct.of(true),
+            ),
         )
       },
       intercept = {
@@ -7203,7 +7937,10 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings =
-            IndexSettings(attributeForDistinct = "section", distinct = Distinct.of(true)),
+            IndexSettings(
+              attributeForDistinct = "section",
+              distinct = Distinct.of(true),
+            ),
         )
       },
       intercept = {
@@ -7570,7 +8307,8 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(customRanking = listOf("desc(pageviews)", "desc(comments)")),
+          indexSettings =
+            IndexSettings(customRanking = listOf("desc(pageviews)", "desc(comments)")),
         )
       },
       intercept = {
@@ -7786,7 +8524,10 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings =
-            IndexSettings(customRanking = listOf("asc(textual_attribute)"), relevancyStrictness = 0),
+            IndexSettings(
+              customRanking = listOf("asc(textual_attribute)"),
+              relevancyStrictness = 0,
+            ),
         )
       },
       intercept = {
@@ -7908,7 +8649,10 @@ class SearchTest {
   fun `maxFacetHits47`() = runTest {
     client.runTest(
       call = {
-        setSettings(indexName = "theIndexName", indexSettings = IndexSettings(maxFacetHits = 100))
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(maxFacetHits = 100),
+        )
       },
       intercept = {
         assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
@@ -8106,7 +8850,13 @@ class SearchTest {
               customNormalization = mapOf("algolia" to mapOf("aloglia" to "aglolia")),
               customRanking = listOf("algolia"),
               decompoundQuery = false,
-              decompoundedAttributes = buildJsonObject { put("algolia", JsonPrimitive("aloglia")) },
+              decompoundedAttributes =
+                buildJsonObject {
+                  put(
+                    "algolia",
+                    JsonPrimitive("aloglia"),
+                  )
+                },
               disableExactOnAttributes = listOf("algolia"),
               disablePrefixOnAttributes = listOf("algolia"),
               disableTypoToleranceOnAttributes = listOf("algolia"),
@@ -8167,7 +8917,10 @@ class SearchTest {
               sortFacetValuesBy = "date",
               typoTolerance = TypoTolerance.of(false),
               unretrievableAttributes = listOf("foo"),
-              userData = buildJsonObject { put("user", "data") },
+              userData =
+                buildJsonObject {
+                  put("user", "data")
+                },
             ),
         )
       },
@@ -8437,7 +9190,8 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(attributesToRetrieve = listOf("author", "title", "content")),
+          indexSettings =
+            IndexSettings(attributesToRetrieve = listOf("author", "title", "content")),
         )
       },
       intercept = {
@@ -8813,7 +9567,10 @@ class SearchTest {
   fun `set_default_hits_per_page87`() = runTest {
     client.runTest(
       call = {
-        setSettings(indexName = "theIndexName", indexSettings = IndexSettings(hitsPerPage = 20))
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(hitsPerPage = 20),
+        )
       },
       intercept = {
         assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
@@ -9034,7 +9791,12 @@ class SearchTest {
           indexSettings =
             IndexSettings(
               decompoundedAttributes =
-                buildJsonObject { put("de", JsonArray(listOf(JsonPrimitive("name")))) }
+                buildJsonObject {
+                  put(
+                    "de",
+                    JsonArray(listOf(JsonPrimitive("name"))),
+                  )
+                }
             ),
         )
       },
@@ -9058,11 +9820,21 @@ class SearchTest {
                 buildJsonObject {
                   put(
                     "de",
-                    JsonArray(listOf(JsonPrimitive("name_de"), JsonPrimitive("description_de"))),
+                    JsonArray(
+                      listOf(
+                        JsonPrimitive("name_de"),
+                        JsonPrimitive("description_de"),
+                      )
+                    ),
                   )
                   put(
                     "fi",
-                    JsonArray(listOf(JsonPrimitive("name_fi"), JsonPrimitive("description_fi"))),
+                    JsonArray(
+                      listOf(
+                        JsonPrimitive("name_fi"),
+                        JsonPrimitive("description_fi"),
+                      )
+                    ),
                   )
                 }
             ),
@@ -9180,7 +9952,10 @@ class SearchTest {
   fun `enable_rules_syntax_by_default106`() = runTest {
     client.runTest(
       call = {
-        setSettings(indexName = "theIndexName", indexSettings = IndexSettings(enableRules = true))
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(enableRules = true),
+        )
       },
       intercept = {
         assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
@@ -9417,7 +10192,11 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(distinct = Distinct.of(1), attributeForDistinct = "url"),
+          indexSettings =
+            IndexSettings(
+              distinct = Distinct.of(1),
+              attributeForDistinct = "url",
+            ),
         )
       },
       intercept = {
@@ -9449,7 +10228,10 @@ class SearchTest {
   fun `set_min_proximity121`() = runTest {
     client.runTest(
       call = {
-        setSettings(indexName = "theIndexName", indexSettings = IndexSettings(minProximity = 1))
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(minProximity = 1),
+        )
       },
       intercept = {
         assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
@@ -9481,7 +10263,10 @@ class SearchTest {
   fun `set_max_facet_hits123`() = runTest {
     client.runTest(
       call = {
-        setSettings(indexName = "theIndexName", indexSettings = IndexSettings(maxFacetHits = 10))
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(maxFacetHits = 10),
+        )
       },
       intercept = {
         assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)

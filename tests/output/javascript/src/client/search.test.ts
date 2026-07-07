@@ -301,7 +301,7 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.55.1\).*/);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.55.2\).*/);
   }, 25000);
 });
 
@@ -1076,6 +1076,70 @@ describe('saveObjectsWithTransformation', () => {
           createdAt: '2022-05-12T06:24:30.049Z',
         },
       ]);
+    }
+  }, 25000);
+
+  test('saveObjectsWithTransformation polls every task when waitForTasks is true', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6693,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+      transformationOptions: {
+        region: 'us',
+        hosts: [
+          {
+            url: 'localhost',
+            port: 6693,
+            accept: 'readWrite',
+            protocol: 'http',
+          },
+        ],
+      },
+    });
+
+    {
+      const result = await client.saveObjectsWithTransformation(
+        {
+          indexName: 'cts_e2e_chunked_push_wait_javascript',
+          objects: [
+            { objectID: '1', name: 'r1' },
+            { objectID: '2', name: 'r2' },
+            { objectID: '3', name: 'r3' },
+            { objectID: '4', name: 'r4' },
+            { objectID: '5', name: 'r5' },
+            { objectID: '6', name: 'r6' },
+            { objectID: '7', name: 'r7' },
+            { objectID: '8', name: 'r8' },
+            { objectID: '9', name: 'r9' },
+            { objectID: '10', name: 'r10' },
+            { objectID: '11', name: 'r11' },
+            { objectID: '12', name: 'r12' },
+            { objectID: '13', name: 'r13' },
+            { objectID: '14', name: 'r14' },
+            { objectID: '15', name: 'r15' },
+            { objectID: '16', name: 'r16' },
+            { objectID: '17', name: 'r17' },
+            { objectID: '18', name: 'r18' },
+            { objectID: '19', name: 'r19' },
+            { objectID: '20', name: 'r20' },
+            { objectID: '21', name: 'r21' },
+            { objectID: '22', name: 'r22' },
+            { objectID: '23', name: 'r23' },
+            { objectID: '24', name: 'r24' },
+            { objectID: '25', name: 'r25' },
+          ],
+          waitForTasks: true,
+          batchSize: 10,
+        },
+        {
+          headers: { 'x-algolia-user-id': 'test-user' },
+        },
+      );
     }
   }, 25000);
 });

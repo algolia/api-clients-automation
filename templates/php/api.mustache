@@ -434,6 +434,10 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         $requestOptions = [],
         ?ChunkedHelperOptions $chunkedOptions = null
     ) {
+        if ($batchSize < 1) {
+            throw new \InvalidArgumentException('`batchSize` must be at least 1.');
+        }
+
         $maxRetries = $chunkedOptions?->maxRetries ?? 100;
         $responses = [];
         $records = [];
@@ -449,9 +453,35 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         $startTime = microtime(true);
         $logger->info('Algolia API client: Batch operation started: '.$action.' on '.$indexName);
 
+        // Polls every task in the `[$start, $end)` window of `$responses` until it completes.
+        $waitForBatch = function ($start, $end) use (&$responses, $maxRetries) {
+            foreach (array_slice($responses, $start, $end - $start) as $response) {
+                $retry = 0;
+                $ok = false;
+
+                while ($retry < $maxRetries) {
+                    try {
+                        $this->getEvent($response['runID'], $response['eventID']);
+
+                        $ok = true;
+
+                        break;
+                    } catch (NotFoundException $e) {
+                        // just retry
+                    }
+
+                    ++$retry;
+                    usleep(min($retry * 1500, 5000) * 1000);
+                }
+
+                if (false === $ok) {
+                    throw new ExceededRetriesException('Stopped waiting for the task after '.$maxRetries.' retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher $maxRetries.');
+                }
+            }
+        };
+
         foreach ($objects as $object) {
             $records[] = $object;
-            $ok = false;
             ++$count;
 
             if (sizeof($records) === $batchSize || $count === sizeof($objects)) {
@@ -460,31 +490,17 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
                 $logger->info('Algolia API client: Batch progress: '.$count.'/'.$totalObjects.' objects processed');
             }
 
-            if ($waitForTasks && !empty($responses) && (0 === sizeof($responses) % $waitBatchSize || $count === sizeof($objects))) {
-                foreach (array_slice($responses, $offset, $waitBatchSize) as $response) {
-                    $retry = 0;
-
-                    while ($retry < $maxRetries) {
-                        try {
-                            $this->getEvent($response['runID'], $response['eventID']);
-
-                            $ok = true;
-
-                            break;
-                        } catch (NotFoundException $e) {
-                            // just retry
-                        }
-
-                        ++$retry;
-                        usleep(min($retry * 1500, 5000) * 1000);
-                    }
-
-                    if (false === $ok) {
-                        throw new ExceededRetriesException('Stopped waiting for the task after '.$maxRetries.' retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher $maxRetries.');
-                    }
-                }
-                $offset = $offset + $waitBatchSize;
+            // Only wait once at least `$waitBatchSize` un-polled responses have accumulated, and advance
+            // the cursor by exactly that many, so every pushed task is polled once and only once.
+            if ($waitForTasks && sizeof($responses) - $offset >= $waitBatchSize) {
+                $waitForBatch($offset, $offset + $waitBatchSize);
+                $offset += $waitBatchSize;
             }
+        }
+
+        // Drain the remaining responses that didn't fill a complete `$waitBatchSize` window.
+        if ($waitForTasks) {
+            $waitForBatch($offset, sizeof($responses));
         }
 
         $durationMs = round((microtime(true) - $startTime) * 1000);
@@ -655,6 +671,8 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
     *
     * @see https://www.algolia.com/doc/libraries/sdk/methods/ingestion/
     *
+    * Warning: calling this method with an empty `$objects` list replaces the index with an empty one, deleting all existing records.
+    *
     * @param string $indexName      The `indexName` to replace `objects` in.
     * @param array  $objects        The array of `objects` to store in the given Algolia `indexName`.
     * @param array  $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
@@ -665,6 +683,10 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
     {
         if (null == $this->ingestionTransporter) {
             throw new \InvalidArgumentException('`transformationOptions` must be set on `SearchConfig` before creating the client, or via `SearchClient::setTransformationOptions(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/');
+        }
+
+        if (empty($objects)) {
+            Algolia::getLogger()->warning("replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the \"{$indexName}\" index.");
         }
 
         $chunkedOptions ??= new ChunkedHelperOptions(ChunkedHelperOptions::DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES);
@@ -724,6 +746,8 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
     * Helper: Replace all objects in an index using a temporary one.
     * See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
     *
+    * Warning: calling this method with an empty `$objects` list replaces the index with an empty one, deleting all existing records.
+    *
     * @param string $indexName      The `indexName` to replace `objects` in.
     * @param array  $objects        The array of `objects` to store in the given Algolia `indexName`.
     * @param array  $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
@@ -732,6 +756,10 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
     */
     public function replaceAllObjects($indexName, $objects, $batchSize = 1000, $scopes = ['settings', 'rules', 'synonyms'], $requestOptions = [], ?ChunkedHelperOptions $chunkedOptions = null)
     {
+        if (empty($objects)) {
+            Algolia::getLogger()->warning("replaceAllObjects was called with an empty list of objects, which will delete all records currently in the \"{$indexName}\" index.");
+        }
+
         $chunkedOptions ??= new ChunkedHelperOptions(ChunkedHelperOptions::DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES);
         $tmpIndexName = $indexName.'_tmp_'.rand(10000000, 99999999);
 

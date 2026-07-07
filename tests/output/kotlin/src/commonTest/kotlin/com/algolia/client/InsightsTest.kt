@@ -23,7 +23,9 @@ class InsightsTest {
     val client = InsightsClient(appId = "appId", apiKey = "apiKey", region = "us")
 
     client.runTest(
-      call = { customPost(path = "1/test") },
+      call = {
+        customPost(path = "1/test")
+      },
       intercept = {
         val regexp =
           "^Algolia for Kotlin \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Insights (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
@@ -42,9 +44,11 @@ class InsightsTest {
     val client = InsightsClient(appId = "appId", apiKey = "apiKey", region = "us")
 
     client.runTest(
-      call = { customPost(path = "1/test") },
+      call = {
+        customPost(path = "1/test")
+      },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.45.1\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.45.2\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),
@@ -75,8 +79,12 @@ class InsightsTest {
       )
 
     client.runTest(
-      call = { customDelete(path = "1/test/no-content") },
-      response = { assertNull(it) },
+      call = {
+        customDelete(path = "1/test/no-content")
+      },
+      response = {
+        assertNull(it)
+      },
     )
   }
 
@@ -106,7 +114,9 @@ class InsightsTest {
             )
         )
       },
-      intercept = { assertEquals("insights.algolia.io", it.url.host) },
+      intercept = {
+        assertEquals("insights.algolia.io", it.url.host)
+      },
     )
   }
 
@@ -115,8 +125,12 @@ class InsightsTest {
     val client = InsightsClient(appId = "my-app-id", apiKey = "my-api-key", "us")
 
     client.runTest(
-      call = { customDelete(path = "test") },
-      intercept = { assertEquals("insights.us.algolia.io", it.url.host) },
+      call = {
+        customDelete(path = "test")
+      },
+      intercept = {
+        assertEquals("insights.us.algolia.io", it.url.host)
+      },
     )
   }
 
@@ -159,7 +173,9 @@ class InsightsTest {
       )
 
     client.runTest(
-      call = { customGet(path = "check-api-key/1") },
+      call = {
+        customGet(path = "check-api-key/1")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(
@@ -170,10 +186,17 @@ class InsightsTest {
       },
     )
 
-    client.runTest(call = { setClientApiKey(apiKey = "updated-api-key") }, intercept = {})
+    client.runTest(
+      call = {
+        setClientApiKey(apiKey = "updated-api-key")
+      },
+      intercept = {},
+    )
 
     client.runTest(
-      call = { customGet(path = "check-api-key/2") },
+      call = {
+        customGet(path = "check-api-key/2")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(

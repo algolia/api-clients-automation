@@ -40,7 +40,9 @@ class QuerySuggestionsTest {
   @Test
   fun `Retrieve QS config e2e`() = runTest {
     client.runTest(
-      call = { getConfig(indexName = "cts_e2e_browse_query_suggestions") },
+      call = {
+        getConfig(indexName = "cts_e2e_browse_query_suggestions")
+      },
       response = {
         lenientJsonAssert(
           "{\"appID\":\"T8JK9S7I7X\",\"allowSpecialCharacters\":true,\"enablePersonalization\":false,\"exclude\":[\"^cocaines$\"],\"indexName\":\"cts_e2e_browse_query_suggestions\",\"languages\":[],\"sourceIndices\":[{\"facets\":[{\"amount\":1,\"attribute\":\"title\"}],\"generate\":[[\"year\"]],\"indexName\":\"cts_e2e_browse\",\"minHits\":5,\"minLetters\":4,\"replicas\":false}]}",

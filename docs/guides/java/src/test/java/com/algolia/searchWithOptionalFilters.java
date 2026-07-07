@@ -7,9 +7,7 @@ import java.util.List;
 
 public class searchWithOptionalFilters {
 
-  private static final List<String> labels = List.of(
-    /* Your labels */
-  );
+  private static final List<String> labels = List.of(/* Your labels */);
 
   private static OptionalFilters reduceLabelsToFilters(List<String> labels) {
     return OptionalFilters.of(""); // Implement your logic here

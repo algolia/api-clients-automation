@@ -15,7 +15,7 @@ final class SynonymIterator extends AbstractAlgoliaIterator
     {
         if (
             is_array($this->response)
-            && $this->key >= count($this->response['hits'])
+            && count($this->response['hits']) < $this->requestOptions['hitsPerPage']
         ) {
             return;
         }

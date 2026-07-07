@@ -23,7 +23,9 @@ class AnalyticsTest {
     val client = AnalyticsClient(appId = "appId", apiKey = "apiKey", region = "us")
 
     client.runTest(
-      call = { customPost(path = "1/test") },
+      call = {
+        customPost(path = "1/test")
+      },
       intercept = {
         val regexp =
           "^Algolia for Kotlin \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Analytics (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
@@ -42,9 +44,11 @@ class AnalyticsTest {
     val client = AnalyticsClient(appId = "appId", apiKey = "apiKey", region = "us")
 
     client.runTest(
-      call = { customPost(path = "1/test") },
+      call = {
+        customPost(path = "1/test")
+      },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.45.1\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.45.2\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),
@@ -75,8 +79,12 @@ class AnalyticsTest {
       )
 
     client.runTest(
-      call = { customDelete(path = "1/test/no-content") },
-      response = { assertNull(it) },
+      call = {
+        customDelete(path = "1/test/no-content")
+      },
+      response = {
+        assertNull(it)
+      },
     )
   }
 
@@ -85,8 +93,12 @@ class AnalyticsTest {
     val client = AnalyticsClient(appId = "my-app-id", apiKey = "my-api-key")
 
     client.runTest(
-      call = { getAverageClickPosition(index = "my-index") },
-      intercept = { assertEquals("analytics.algolia.com", it.url.host) },
+      call = {
+        getAverageClickPosition(index = "my-index")
+      },
+      intercept = {
+        assertEquals("analytics.algolia.com", it.url.host)
+      },
     )
   }
 
@@ -95,8 +107,12 @@ class AnalyticsTest {
     val client = AnalyticsClient(appId = "my-app-id", apiKey = "my-api-key", "de")
 
     client.runTest(
-      call = { customPost(path = "test") },
-      intercept = { assertEquals("analytics.de.algolia.com", it.url.host) },
+      call = {
+        customPost(path = "test")
+      },
+      intercept = {
+        assertEquals("analytics.de.algolia.com", it.url.host)
+      },
     )
   }
 
@@ -122,7 +138,9 @@ class AnalyticsTest {
   fun `getAverageClickPosition throws without index`() = runTest {
     val client = AnalyticsClient(appId = "appId", apiKey = "apiKey", region = "us")
 
-    assertFails { client.getClickPositions(index = empty()) }
+    assertFails {
+        client.getClickPositions(index = empty())
+      }
       .let { error ->
         assertError(
           error,
@@ -156,7 +174,9 @@ class AnalyticsTest {
       )
 
     client.runTest(
-      call = { customGet(path = "check-api-key/1") },
+      call = {
+        customGet(path = "check-api-key/1")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(
@@ -167,10 +187,17 @@ class AnalyticsTest {
       },
     )
 
-    client.runTest(call = { setClientApiKey(apiKey = "updated-api-key") }, intercept = {})
+    client.runTest(
+      call = {
+        setClientApiKey(apiKey = "updated-api-key")
+      },
+      intercept = {},
+    )
 
     client.runTest(
-      call = { customGet(path = "check-api-key/2") },
+      call = {
+        customGet(path = "check-api-key/2")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(

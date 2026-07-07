@@ -39,7 +39,9 @@ class IngestionTest {
           ),
       )
 
-    assertFails { client.customGet(path = "1/html-error") }
+    assertFails {
+        client.customGet(path = "1/html-error")
+      }
       .let { error ->
         assertError(
           error,
@@ -57,7 +59,9 @@ class IngestionTest {
     val client = IngestionClient(appId = "appId", apiKey = "apiKey", region = "us")
 
     client.runTest(
-      call = { customGet(path = "1/test") },
+      call = {
+        customGet(path = "1/test")
+      },
       intercept = {
         assertEquals(25000, it.connectTimeout)
         assertEquals(25000, it.socketTimeout)
@@ -70,7 +74,9 @@ class IngestionTest {
     val client = IngestionClient(appId = "appId", apiKey = "apiKey", region = "us")
 
     client.runTest(
-      call = { customPost(path = "1/test") },
+      call = {
+        customPost(path = "1/test")
+      },
       intercept = {
         assertEquals(25000, it.connectTimeout)
         assertEquals(25000, it.socketTimeout)
@@ -99,7 +105,9 @@ class IngestionTest {
       )
 
     client.runTest(
-      call = { customGet(path = "1/long-wait") },
+      call = {
+        customGet(path = "1/long-wait")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(
@@ -153,7 +161,9 @@ class IngestionTest {
     val client = IngestionClient(appId = "appId", apiKey = "apiKey", region = "us")
 
     client.runTest(
-      call = { customPost(path = "1/test") },
+      call = {
+        customPost(path = "1/test")
+      },
       intercept = {
         val regexp =
           "^Algolia for Kotlin \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Ingestion (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
@@ -172,9 +182,11 @@ class IngestionTest {
     val client = IngestionClient(appId = "appId", apiKey = "apiKey", region = "us")
 
     client.runTest(
-      call = { customPost(path = "1/test") },
+      call = {
+        customPost(path = "1/test")
+      },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.45.1\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.45.2\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),
@@ -205,8 +217,12 @@ class IngestionTest {
       )
 
     client.runTest(
-      call = { customDelete(path = "1/test/no-content") },
-      response = { assertNull(it) },
+      call = {
+        customDelete(path = "1/test/no-content")
+      },
+      response = {
+        assertNull(it)
+      },
     )
   }
 
@@ -215,8 +231,12 @@ class IngestionTest {
     val client = IngestionClient(appId = "my-app-id", apiKey = "my-api-key", "us")
 
     client.runTest(
-      call = { getSource(sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f") },
-      intercept = { assertEquals("data.us.algolia.com", it.url.host) },
+      call = {
+        getSource(sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+      },
+      intercept = {
+        assertEquals("data.us.algolia.com", it.url.host)
+      },
     )
   }
 
@@ -259,7 +279,9 @@ class IngestionTest {
       )
 
     client.runTest(
-      call = { customGet(path = "check-api-key/1") },
+      call = {
+        customGet(path = "check-api-key/1")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(
@@ -270,10 +292,17 @@ class IngestionTest {
       },
     )
 
-    client.runTest(call = { setClientApiKey(apiKey = "updated-api-key") }, intercept = {})
+    client.runTest(
+      call = {
+        setClientApiKey(apiKey = "updated-api-key")
+      },
+      intercept = {},
+    )
 
     client.runTest(
-      call = { customGet(path = "check-api-key/2") },
+      call = {
+        customGet(path = "check-api-key/2")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(

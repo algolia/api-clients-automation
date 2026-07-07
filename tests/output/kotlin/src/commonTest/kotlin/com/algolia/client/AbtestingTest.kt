@@ -23,7 +23,9 @@ class AbtestingTest {
     val client = AbtestingClient(appId = "appId", apiKey = "apiKey", region = "us")
 
     client.runTest(
-      call = { customPost(path = "1/test") },
+      call = {
+        customPost(path = "1/test")
+      },
       intercept = {
         val regexp =
           "^Algolia for Kotlin \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Abtesting (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
@@ -42,9 +44,11 @@ class AbtestingTest {
     val client = AbtestingClient(appId = "appId", apiKey = "apiKey", region = "us")
 
     client.runTest(
-      call = { customPost(path = "1/test") },
+      call = {
+        customPost(path = "1/test")
+      },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.45.1\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.45.2\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),
@@ -75,8 +79,12 @@ class AbtestingTest {
       )
 
     client.runTest(
-      call = { customDelete(path = "1/test/no-content") },
-      response = { assertNull(it) },
+      call = {
+        customDelete(path = "1/test/no-content")
+      },
+      response = {
+        assertNull(it)
+      },
     )
   }
 
@@ -85,8 +93,12 @@ class AbtestingTest {
     val client = AbtestingClient(appId = "my-app-id", apiKey = "my-api-key")
 
     client.runTest(
-      call = { getABTest(id = 123) },
-      intercept = { assertEquals("analytics.algolia.com", it.url.host) },
+      call = {
+        getABTest(id = 123)
+      },
+      intercept = {
+        assertEquals("analytics.algolia.com", it.url.host)
+      },
     )
   }
 
@@ -95,8 +107,12 @@ class AbtestingTest {
     val client = AbtestingClient(appId = "my-app-id", apiKey = "my-api-key", "us")
 
     client.runTest(
-      call = { getABTest(id = 123) },
-      intercept = { assertEquals("analytics.us.algolia.com", it.url.host) },
+      call = {
+        getABTest(id = 123)
+      },
+      intercept = {
+        assertEquals("analytics.us.algolia.com", it.url.host)
+      },
     )
   }
 
@@ -139,7 +155,9 @@ class AbtestingTest {
       )
 
     client.runTest(
-      call = { customGet(path = "check-api-key/1") },
+      call = {
+        customGet(path = "check-api-key/1")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(
@@ -150,10 +168,17 @@ class AbtestingTest {
       },
     )
 
-    client.runTest(call = { setClientApiKey(apiKey = "updated-api-key") }, intercept = {})
+    client.runTest(
+      call = {
+        setClientApiKey(apiKey = "updated-api-key")
+      },
+      intercept = {},
+    )
 
     client.runTest(
-      call = { customGet(path = "check-api-key/2") },
+      call = {
+        customGet(path = "check-api-key/2")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(

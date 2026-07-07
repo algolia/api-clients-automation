@@ -46,7 +46,10 @@ class AgentStudioClientClientTests {
   }
 
   private ClientOptions withCustomHosts(List<Host> hosts, boolean gzipEncoding) {
-    return ClientOptions.builder().setHosts(hosts).setCompressionType(gzipEncoding ? CompressionType.GZIP : CompressionType.NONE).build();
+    return ClientOptions.builder()
+      .setHosts(hosts)
+      .setCompressionType(gzipEncoding ? CompressionType.GZIP : CompressionType.NONE)
+      .build();
   }
 
   @Test
@@ -99,7 +102,7 @@ class AgentStudioClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.41.1\\).*";
+      String regexp = "^Algolia for Java \\(4.41.2\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp

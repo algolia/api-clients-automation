@@ -23,8 +23,12 @@ class SearchTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key")
 
     client.runTest(
-      call = { customGet(path = "test") },
-      intercept = { assertEquals("test-app-id-dsn.algolia.net", it.url.host) },
+      call = {
+        customGet(path = "test")
+      },
+      intercept = {
+        assertEquals("test-app-id-dsn.algolia.net", it.url.host)
+      },
     )
   }
 
@@ -33,8 +37,12 @@ class SearchTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key")
 
     client.runTest(
-      call = { searchSingleIndex(indexName = "indexName") },
-      intercept = { assertEquals("test-app-id-dsn.algolia.net", it.url.host) },
+      call = {
+        searchSingleIndex(indexName = "indexName")
+      },
+      intercept = {
+        assertEquals("test-app-id-dsn.algolia.net", it.url.host)
+      },
     )
   }
 
@@ -43,8 +51,12 @@ class SearchTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key")
 
     client.runTest(
-      call = { customPost(path = "test") },
-      intercept = { assertEquals("test-app-id.algolia.net", it.url.host) },
+      call = {
+        customPost(path = "test")
+      },
+      intercept = {
+        assertEquals("test-app-id.algolia.net", it.url.host)
+      },
     )
   }
 
@@ -78,7 +90,9 @@ class SearchTest {
       )
 
     client.runTest(
-      call = { customGet(path = "1/test/retry/kotlin") },
+      call = {
+        customGet(path = "1/test/retry/kotlin")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(
@@ -109,7 +123,9 @@ class SearchTest {
           ),
       )
 
-    assertFails { client.customGet(path = "1/test/hang/kotlin") }
+    assertFails {
+        client.customGet(path = "1/test/hang/kotlin")
+      }
       .let { error ->
         assertError(
           error,
@@ -152,7 +168,9 @@ class SearchTest {
       )
 
     client.runTest(
-      call = { customPost(path = "1/test/error/kotlin") },
+      call = {
+        customPost(path = "1/test/error/kotlin")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(
@@ -231,7 +249,9 @@ class SearchTest {
       )
 
     client.runTest(
-      call = { customGet(path = "1/test/gzip-response") },
+      call = {
+        customGet(path = "1/test/gzip-response")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(
@@ -248,7 +268,9 @@ class SearchTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
 
     client.runTest(
-      call = { customGet(path = "1/test") },
+      call = {
+        customGet(path = "1/test")
+      },
       intercept = {
         assertEquals(2000, it.connectTimeout)
         assertEquals(5000, it.socketTimeout)
@@ -261,7 +283,9 @@ class SearchTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
 
     client.runTest(
-      call = { customPost(path = "1/test") },
+      call = {
+        customPost(path = "1/test")
+      },
       intercept = {
         assertEquals(2000, it.connectTimeout)
         assertEquals(30000, it.socketTimeout)
@@ -289,7 +313,9 @@ class SearchTest {
       )
 
     client.runTest(
-      call = { getSettings(indexName = "cts_e2e_unknownField_kotlin") },
+      call = {
+        getSettings(indexName = "cts_e2e_unknownField_kotlin")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(
@@ -322,7 +348,10 @@ class SearchTest {
 
     client.runTest(
       call = {
-        getRule(indexName = "cts_e2e_unknownFieldNested_kotlin", objectID = "ruleObjectID")
+        getRule(
+          indexName = "cts_e2e_unknownFieldNested_kotlin",
+          objectID = "ruleObjectID",
+        )
       },
       response = {
         assertNotNull(it)
@@ -360,7 +389,9 @@ class SearchTest {
       )
 
     client.runTest(
-      call = { customGet(path = "1/test/calling/kotlin") },
+      call = {
+        customGet(path = "1/test/calling/kotlin")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(
@@ -372,7 +403,9 @@ class SearchTest {
     )
 
     client.runTest(
-      call = { customGet(path = "1/test/calling/kotlin") },
+      call = {
+        customGet(path = "1/test/calling/kotlin")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(
@@ -389,7 +422,9 @@ class SearchTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
 
     client.runTest(
-      call = { customPost(path = "1/test") },
+      call = {
+        customPost(path = "1/test")
+      },
       intercept = {
         val regexp =
           "^Algolia for Kotlin \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Search (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
@@ -408,9 +443,11 @@ class SearchTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
 
     client.runTest(
-      call = { customPost(path = "1/test") },
+      call = {
+        customPost(path = "1/test")
+      },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.45.1\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.45.2\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),
@@ -441,7 +478,10 @@ class SearchTest {
 
     client.runTest(
       call = {
-        deleteObjects(indexName = "cts_e2e_deleteObjects_kotlin", objectIDs = listOf("1", "2"))
+        deleteObjects(
+          indexName = "cts_e2e_deleteObjects_kotlin",
+          objectIDs = listOf("1", "2"),
+        )
       },
       response = {
         assertNotNull(it)
@@ -463,7 +503,10 @@ class SearchTest {
         generateSecuredApiKey(
           parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
           restrictions =
-            SecuredApiKeyRestrictions(validUntil = 2524604400L, restrictIndices = listOf("Movies")),
+            SecuredApiKeyRestrictions(
+              validUntil = 2524604400L,
+              restrictIndices = listOf("Movies"),
+            ),
         )
       },
       response = {
@@ -616,8 +659,14 @@ class SearchTest {
             GetObjectsParams(
               requests =
                 listOf(
-                  GetObjectsRequest(objectID = "foo", indexName = "theIndexName"),
-                  GetObjectsRequest(objectID = "missing", indexName = "theIndexName"),
+                  GetObjectsRequest(
+                    objectID = "foo",
+                    indexName = "theIndexName",
+                  ),
+                  GetObjectsRequest(
+                    objectID = "missing",
+                    indexName = "theIndexName",
+                  ),
                 )
             )
         )
@@ -653,8 +702,12 @@ class SearchTest {
       )
 
     client.runTest(
-      call = { indexExists(indexName = "indexExistsYES") },
-      response = { assertEquals(true, it) },
+      call = {
+        indexExists(indexName = "indexExistsYES")
+      },
+      response = {
+        assertEquals(true, it)
+      },
     )
   }
 
@@ -678,8 +731,12 @@ class SearchTest {
       )
 
     client.runTest(
-      call = { indexExists(indexName = "indexExistsNO") },
-      response = { assertEquals(false, it) },
+      call = {
+        indexExists(indexName = "indexExistsNO")
+      },
+      response = {
+        assertEquals(false, it)
+      },
     )
   }
 
@@ -702,7 +759,9 @@ class SearchTest {
           ),
       )
 
-    assertFails { client.indexExists(indexName = "indexExistsERROR") }
+    assertFails {
+        client.indexExists(indexName = "indexExistsERROR")
+      }
       .let { error ->
         assertError(
           error,
@@ -735,8 +794,12 @@ class SearchTest {
       )
 
     client.runTest(
-      call = { customDelete(path = "1/test/no-content") },
-      response = { assertNull(it) },
+      call = {
+        customDelete(path = "1/test/no-content")
+      },
+      response = {
+        assertNull(it)
+      },
     )
   }
 
@@ -792,7 +855,9 @@ class SearchTest {
   fun `'addApiKey' throws with invalid parameters`() = runTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
 
-    assertFails { client.addApiKey(apiKey = empty()) }
+    assertFails {
+        client.addApiKey(apiKey = empty())
+      }
       .let { error ->
         assertError(
           error,
@@ -890,12 +955,24 @@ class SearchTest {
           objects =
             listOf(
               buildJsonObject {
-                put("objectID", JsonPrimitive("1"))
-                put("name", JsonPrimitive("Adam"))
+                put(
+                  "objectID",
+                  JsonPrimitive("1"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Adam"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("2"))
-                put("name", JsonPrimitive("Benoit"))
+                put(
+                  "objectID",
+                  JsonPrimitive("2"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Benoit"),
+                )
               },
             ),
           createIfNotExists = true,
@@ -938,12 +1015,24 @@ class SearchTest {
           objects =
             listOf(
               buildJsonObject {
-                put("objectID", JsonPrimitive("3"))
-                put("name", JsonPrimitive("Cyril"))
+                put(
+                  "objectID",
+                  JsonPrimitive("3"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Cyril"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("4"))
-                put("name", JsonPrimitive("David"))
+                put(
+                  "objectID",
+                  JsonPrimitive("4"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("David"),
+                )
               },
             ),
           createIfNotExists = false,
@@ -1013,12 +1102,24 @@ class SearchTest {
           objects =
             listOf(
               buildJsonObject {
-                put("objectID", JsonPrimitive("1"))
-                put("name", JsonPrimitive("Adam"))
+                put(
+                  "objectID",
+                  JsonPrimitive("1"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Adam"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("2"))
-                put("name", JsonPrimitive("Benoit"))
+                put(
+                  "objectID",
+                  JsonPrimitive("2"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Benoit"),
+                )
               },
             ),
           createIfNotExists = true,
@@ -1062,44 +1163,104 @@ class SearchTest {
           objects =
             listOf(
               buildJsonObject {
-                put("objectID", JsonPrimitive("1"))
-                put("name", JsonPrimitive("Adam"))
+                put(
+                  "objectID",
+                  JsonPrimitive("1"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Adam"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("2"))
-                put("name", JsonPrimitive("Benoit"))
+                put(
+                  "objectID",
+                  JsonPrimitive("2"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Benoit"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("3"))
-                put("name", JsonPrimitive("Cyril"))
+                put(
+                  "objectID",
+                  JsonPrimitive("3"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Cyril"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("4"))
-                put("name", JsonPrimitive("David"))
+                put(
+                  "objectID",
+                  JsonPrimitive("4"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("David"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("5"))
-                put("name", JsonPrimitive("Eva"))
+                put(
+                  "objectID",
+                  JsonPrimitive("5"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Eva"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("6"))
-                put("name", JsonPrimitive("Fiona"))
+                put(
+                  "objectID",
+                  JsonPrimitive("6"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Fiona"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("7"))
-                put("name", JsonPrimitive("Gael"))
+                put(
+                  "objectID",
+                  JsonPrimitive("7"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Gael"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("8"))
-                put("name", JsonPrimitive("Hugo"))
+                put(
+                  "objectID",
+                  JsonPrimitive("8"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Hugo"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("9"))
-                put("name", JsonPrimitive("Igor"))
+                put(
+                  "objectID",
+                  JsonPrimitive("9"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Igor"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("10"))
-                put("name", JsonPrimitive("Julia"))
+                put(
+                  "objectID",
+                  JsonPrimitive("10"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Julia"),
+                )
               },
             ),
           batchSize = 3,
@@ -1142,12 +1303,24 @@ class SearchTest {
           objects =
             listOf(
               buildJsonObject {
-                put("objectID", JsonPrimitive("1"))
-                put("name", JsonPrimitive("Adam"))
+                put(
+                  "objectID",
+                  JsonPrimitive("1"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Adam"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("2"))
-                put("name", JsonPrimitive("Benoit"))
+                put(
+                  "objectID",
+                  JsonPrimitive("2"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Benoit"),
+                )
               },
             ),
           batchSize = 77,
@@ -1194,12 +1367,24 @@ class SearchTest {
           objects =
             listOf(
               buildJsonObject {
-                put("objectID", JsonPrimitive("fine"))
-                put("body", JsonPrimitive("small obj"))
+                put(
+                  "objectID",
+                  JsonPrimitive("fine"),
+                )
+                put(
+                  "body",
+                  JsonPrimitive("small obj"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("toolarge"))
-                put("body", JsonPrimitive("something bigger than 10KB"))
+                put(
+                  "objectID",
+                  JsonPrimitive("toolarge"),
+                )
+                put(
+                  "body",
+                  JsonPrimitive("something bigger than 10KB"),
+                )
               },
             ),
         )
@@ -1258,44 +1443,104 @@ class SearchTest {
           objects =
             listOf(
               buildJsonObject {
-                put("objectID", JsonPrimitive("1"))
-                put("name", JsonPrimitive("Adam"))
+                put(
+                  "objectID",
+                  JsonPrimitive("1"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Adam"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("2"))
-                put("name", JsonPrimitive("Benoit"))
+                put(
+                  "objectID",
+                  JsonPrimitive("2"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Benoit"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("3"))
-                put("name", JsonPrimitive("Cyril"))
+                put(
+                  "objectID",
+                  JsonPrimitive("3"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Cyril"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("4"))
-                put("name", JsonPrimitive("David"))
+                put(
+                  "objectID",
+                  JsonPrimitive("4"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("David"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("5"))
-                put("name", JsonPrimitive("Eva"))
+                put(
+                  "objectID",
+                  JsonPrimitive("5"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Eva"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("6"))
-                put("name", JsonPrimitive("Fiona"))
+                put(
+                  "objectID",
+                  JsonPrimitive("6"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Fiona"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("7"))
-                put("name", JsonPrimitive("Gael"))
+                put(
+                  "objectID",
+                  JsonPrimitive("7"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Gael"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("8"))
-                put("name", JsonPrimitive("Hugo"))
+                put(
+                  "objectID",
+                  JsonPrimitive("8"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Hugo"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("9"))
-                put("name", JsonPrimitive("Igor"))
+                put(
+                  "objectID",
+                  JsonPrimitive("9"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Igor"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("10"))
-                put("name", JsonPrimitive("Julia"))
+                put(
+                  "objectID",
+                  JsonPrimitive("10"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Julia"),
+                )
               },
             ),
           batchSize = 3,
@@ -1338,12 +1583,24 @@ class SearchTest {
           objects =
             listOf(
               buildJsonObject {
-                put("objectID", JsonPrimitive("1"))
-                put("name", JsonPrimitive("Adam"))
+                put(
+                  "objectID",
+                  JsonPrimitive("1"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Adam"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("2"))
-                put("name", JsonPrimitive("Benoit"))
+                put(
+                  "objectID",
+                  JsonPrimitive("2"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Benoit"),
+                )
               },
             ),
         )
@@ -1384,12 +1641,24 @@ class SearchTest {
           objects =
             listOf(
               buildJsonObject {
-                put("objectID", JsonPrimitive("1"))
-                put("name", JsonPrimitive("Adam"))
+                put(
+                  "objectID",
+                  JsonPrimitive("1"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Adam"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("2"))
-                put("name", JsonPrimitive("Benoit"))
+                put(
+                  "objectID",
+                  JsonPrimitive("2"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Benoit"),
+                )
               },
             ),
         )
@@ -1432,11 +1701,26 @@ class SearchTest {
           objects =
             listOf(
               buildJsonObject {
-                put("objectID", JsonPrimitive("1"))
-                put("visibility", JsonPrimitive("public"))
-                put("name", JsonPrimitive("Hot 100 Billboard Charts"))
-                put("playlistId", JsonPrimitive("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f"))
-                put("createdAt", JsonPrimitive("1500240452"))
+                put(
+                  "objectID",
+                  JsonPrimitive("1"),
+                )
+                put(
+                  "visibility",
+                  JsonPrimitive("public"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Hot 100 Billboard Charts"),
+                )
+                put(
+                  "playlistId",
+                  JsonPrimitive("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f"),
+                )
+                put(
+                  "createdAt",
+                  JsonPrimitive("1500240452"),
+                )
               }
             ),
         )
@@ -1471,16 +1755,37 @@ class SearchTest {
           objects =
             listOf(
               buildJsonObject {
-                put("objectID", JsonPrimitive("1"))
-                put("visibility", JsonPrimitive("public"))
-                put("name", JsonPrimitive("Hot 100 Billboard Charts"))
-                put("playlistId", JsonPrimitive("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f"))
-                put("createdAt", JsonPrimitive("1500240452"))
+                put(
+                  "objectID",
+                  JsonPrimitive("1"),
+                )
+                put(
+                  "visibility",
+                  JsonPrimitive("public"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Hot 100 Billboard Charts"),
+                )
+                put(
+                  "playlistId",
+                  JsonPrimitive("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f"),
+                )
+                put(
+                  "createdAt",
+                  JsonPrimitive("1500240452"),
+                )
               }
             ),
           waitForTasks = false,
           batchSize = 1000,
-          requestOptions = RequestOptions(headers = buildMap { put("X-Algolia-User-ID", "*") }),
+          requestOptions =
+            RequestOptions(
+              headers =
+                buildMap {
+                  put("X-Algolia-User-ID", "*")
+                }
+            ),
         )
       },
       intercept = {},
@@ -1540,12 +1845,24 @@ class SearchTest {
           objects =
             listOf(
               buildJsonObject {
-                put("objectID", JsonPrimitive("1"))
-                put("name", JsonPrimitive("Adam"))
+                put(
+                  "objectID",
+                  JsonPrimitive("1"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Adam"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("2"))
-                put("name", JsonPrimitive("Benoit"))
+                put(
+                  "objectID",
+                  JsonPrimitive("2"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Benoit"),
+                )
               },
             ),
           waitForTasks = true,
@@ -1604,110 +1921,265 @@ class SearchTest {
           objects =
             listOf(
               buildJsonObject {
-                put("objectID", JsonPrimitive("1"))
-                put("name", JsonPrimitive("r1"))
+                put(
+                  "objectID",
+                  JsonPrimitive("1"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r1"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("2"))
-                put("name", JsonPrimitive("r2"))
+                put(
+                  "objectID",
+                  JsonPrimitive("2"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r2"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("3"))
-                put("name", JsonPrimitive("r3"))
+                put(
+                  "objectID",
+                  JsonPrimitive("3"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r3"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("4"))
-                put("name", JsonPrimitive("r4"))
+                put(
+                  "objectID",
+                  JsonPrimitive("4"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r4"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("5"))
-                put("name", JsonPrimitive("r5"))
+                put(
+                  "objectID",
+                  JsonPrimitive("5"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r5"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("6"))
-                put("name", JsonPrimitive("r6"))
+                put(
+                  "objectID",
+                  JsonPrimitive("6"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r6"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("7"))
-                put("name", JsonPrimitive("r7"))
+                put(
+                  "objectID",
+                  JsonPrimitive("7"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r7"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("8"))
-                put("name", JsonPrimitive("r8"))
+                put(
+                  "objectID",
+                  JsonPrimitive("8"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r8"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("9"))
-                put("name", JsonPrimitive("r9"))
+                put(
+                  "objectID",
+                  JsonPrimitive("9"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r9"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("10"))
-                put("name", JsonPrimitive("r10"))
+                put(
+                  "objectID",
+                  JsonPrimitive("10"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r10"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("11"))
-                put("name", JsonPrimitive("r11"))
+                put(
+                  "objectID",
+                  JsonPrimitive("11"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r11"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("12"))
-                put("name", JsonPrimitive("r12"))
+                put(
+                  "objectID",
+                  JsonPrimitive("12"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r12"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("13"))
-                put("name", JsonPrimitive("r13"))
+                put(
+                  "objectID",
+                  JsonPrimitive("13"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r13"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("14"))
-                put("name", JsonPrimitive("r14"))
+                put(
+                  "objectID",
+                  JsonPrimitive("14"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r14"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("15"))
-                put("name", JsonPrimitive("r15"))
+                put(
+                  "objectID",
+                  JsonPrimitive("15"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r15"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("16"))
-                put("name", JsonPrimitive("r16"))
+                put(
+                  "objectID",
+                  JsonPrimitive("16"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r16"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("17"))
-                put("name", JsonPrimitive("r17"))
+                put(
+                  "objectID",
+                  JsonPrimitive("17"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r17"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("18"))
-                put("name", JsonPrimitive("r18"))
+                put(
+                  "objectID",
+                  JsonPrimitive("18"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r18"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("19"))
-                put("name", JsonPrimitive("r19"))
+                put(
+                  "objectID",
+                  JsonPrimitive("19"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r19"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("20"))
-                put("name", JsonPrimitive("r20"))
+                put(
+                  "objectID",
+                  JsonPrimitive("20"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r20"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("21"))
-                put("name", JsonPrimitive("r21"))
+                put(
+                  "objectID",
+                  JsonPrimitive("21"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r21"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("22"))
-                put("name", JsonPrimitive("r22"))
+                put(
+                  "objectID",
+                  JsonPrimitive("22"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r22"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("23"))
-                put("name", JsonPrimitive("r23"))
+                put(
+                  "objectID",
+                  JsonPrimitive("23"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r23"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("24"))
-                put("name", JsonPrimitive("r24"))
+                put(
+                  "objectID",
+                  JsonPrimitive("24"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r24"),
+                )
               },
               buildJsonObject {
-                put("objectID", JsonPrimitive("25"))
-                put("name", JsonPrimitive("r25"))
+                put(
+                  "objectID",
+                  JsonPrimitive("25"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("r25"),
+                )
               },
             ),
           waitForTasks = true,
           batchSize = 10,
           requestOptions =
-            RequestOptions(headers = buildMap { put("x-algolia-user-id", "test-user") }),
+            RequestOptions(
+              headers =
+                buildMap {
+                  put("x-algolia-user-id", "test-user")
+                }
+            ),
         )
       },
       intercept = {},
@@ -1739,7 +2211,12 @@ class SearchTest {
           indexName = "playlists",
           searchParams = SearchParamsObject(query = "foo"),
           requestOptions =
-            RequestOptions(headers = buildMap { put("X-Algolia-User-ID", "user1234") }),
+            RequestOptions(
+              headers =
+                buildMap {
+                  put("X-Algolia-User-ID", "user1234")
+                }
+            ),
         )
       },
       intercept = {},
@@ -1766,7 +2243,9 @@ class SearchTest {
       )
 
     client.runTest(
-      call = { customGet(path = "check-api-key/1") },
+      call = {
+        customGet(path = "check-api-key/1")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(
@@ -1777,10 +2256,17 @@ class SearchTest {
       },
     )
 
-    client.runTest(call = { setClientApiKey(apiKey = "updated-api-key") }, intercept = {})
+    client.runTest(
+      call = {
+        setClientApiKey(apiKey = "updated-api-key")
+      },
+      intercept = {},
+    )
 
     client.runTest(
-      call = { customGet(path = "check-api-key/2") },
+      call = {
+        customGet(path = "check-api-key/2")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(
@@ -1907,7 +2393,9 @@ class SearchTest {
           operation = ApiKeyOperation.entries.first { it.value == "delete" },
         )
       },
-      response = { assertNull(it) },
+      response = {
+        assertNull(it)
+      },
     )
   }
 
@@ -1931,7 +2419,9 @@ class SearchTest {
       )
 
     client.runTest(
-      call = { waitForAppTask(taskID = 123L) },
+      call = {
+        waitForAppTask(taskID = 123L)
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(
@@ -1963,7 +2453,12 @@ class SearchTest {
       )
 
     client.runTest(
-      call = { waitForTask(indexName = "wait-task-kotlin", taskID = 123L) },
+      call = {
+        waitForTask(
+          indexName = "wait-task-kotlin",
+          taskID = 123L,
+        )
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(

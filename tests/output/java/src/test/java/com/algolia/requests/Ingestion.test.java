@@ -1798,16 +1798,13 @@ class IngestionClientRequestsTests {
   void tryTransformationTest() {
     assertDoesNotThrow(() -> {
       client.tryTransformation(
-        new TransformationTry()
-          .setType(TransformationType.CODE)
-          .setInput(new TransformationCode().setCode("foo"))
-          .setSampleRecord(
-            new HashMap() {
-              {
-                put("bar", "baz");
-              }
+        new TransformationTry().setType(TransformationType.CODE).setInput(new TransformationCode().setCode("foo")).setSampleRecord(
+          new HashMap() {
+            {
+              put("bar", "baz");
             }
-          )
+          }
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1865,16 +1862,13 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.tryTransformationBeforeUpdate(
         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        new TransformationTry()
-          .setType(TransformationType.CODE)
-          .setInput(new TransformationCode().setCode("foo"))
-          .setSampleRecord(
-            new HashMap() {
-              {
-                put("bar", "baz");
-              }
+        new TransformationTry().setType(TransformationType.CODE).setInput(new TransformationCode().setCode("foo")).setSampleRecord(
+          new HashMap() {
+            {
+              put("bar", "baz");
             }
-          )
+          }
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();

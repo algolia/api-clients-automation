@@ -23,8 +23,12 @@ class RecommendTest {
     val client = RecommendClient(appId = "test-app-id", apiKey = "test-api-key")
 
     client.runTest(
-      call = { customGet(path = "test") },
-      intercept = { assertEquals("test-app-id-dsn.algolia.net", it.url.host) },
+      call = {
+        customGet(path = "test")
+      },
+      intercept = {
+        assertEquals("test-app-id-dsn.algolia.net", it.url.host)
+      },
     )
   }
 
@@ -33,8 +37,12 @@ class RecommendTest {
     val client = RecommendClient(appId = "test-app-id", apiKey = "test-api-key")
 
     client.runTest(
-      call = { customPost(path = "test") },
-      intercept = { assertEquals("test-app-id.algolia.net", it.url.host) },
+      call = {
+        customPost(path = "test")
+      },
+      intercept = {
+        assertEquals("test-app-id.algolia.net", it.url.host)
+      },
     )
   }
 
@@ -43,7 +51,9 @@ class RecommendTest {
     val client = RecommendClient(appId = "appId", apiKey = "apiKey")
 
     client.runTest(
-      call = { customPost(path = "1/test") },
+      call = {
+        customPost(path = "1/test")
+      },
       intercept = {
         val regexp =
           "^Algolia for Kotlin \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Recommend (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
@@ -62,9 +72,11 @@ class RecommendTest {
     val client = RecommendClient(appId = "appId", apiKey = "apiKey")
 
     client.runTest(
-      call = { customPost(path = "1/test") },
+      call = {
+        customPost(path = "1/test")
+      },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.45.1\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.45.2\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),
@@ -94,8 +106,12 @@ class RecommendTest {
       )
 
     client.runTest(
-      call = { customDelete(path = "1/test/no-content") },
-      response = { assertNull(it) },
+      call = {
+        customDelete(path = "1/test/no-content")
+      },
+      response = {
+        assertNull(it)
+      },
     )
   }
 
@@ -119,7 +135,9 @@ class RecommendTest {
       )
 
     client.runTest(
-      call = { customGet(path = "check-api-key/1") },
+      call = {
+        customGet(path = "check-api-key/1")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(
@@ -130,10 +148,17 @@ class RecommendTest {
       },
     )
 
-    client.runTest(call = { setClientApiKey(apiKey = "updated-api-key") }, intercept = {})
+    client.runTest(
+      call = {
+        setClientApiKey(apiKey = "updated-api-key")
+      },
+      intercept = {},
+    )
 
     client.runTest(
-      call = { customGet(path = "check-api-key/2") },
+      call = {
+        customGet(path = "check-api-key/2")
+      },
       response = {
         assertNotNull(it)
         JSONAssert.assertEquals(

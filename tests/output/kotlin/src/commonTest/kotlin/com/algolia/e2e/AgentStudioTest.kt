@@ -37,13 +37,19 @@ class AgentStudioTest {
 
   @Test
   fun `e2e export conversations2`() = runTest {
-    client.runTest(call = { exportConversations(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15") })
+    client.runTest(
+      call = {
+        exportConversations(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
+      }
+    )
   }
 
   @Test
   fun `e2e get agent1`() = runTest {
     client.runTest(
-      call = { getAgent(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15") },
+      call = {
+        getAgent(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
+      },
       response = {
         lenientJsonAssert(
           "{\"id\":\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\"name\":\"cts_e2e_agent\",\"status\":\"published\",\"instructions\":\"You are a helpful assistant for CTS e2e testing.\"}",
@@ -74,8 +80,12 @@ class AgentStudioTest {
   @Test
   fun `e2e getConfiguration1`() = runTest {
     client.runTest(
-      call = { getConfiguration() },
-      response = { lenientJsonAssert("{\"maxRetentionDays\":90}", Json.encodeToString(it)) },
+      call = {
+        getConfiguration()
+      },
+      response = {
+        lenientJsonAssert("{\"maxRetentionDays\":90}", Json.encodeToString(it))
+      },
     )
   }
 
@@ -100,7 +110,9 @@ class AgentStudioTest {
   @Test
   fun `e2e get provider1`() = runTest {
     client.runTest(
-      call = { getProvider(providerId = "c2905529-b933-4b69-87ec-75f9829d5f59") },
+      call = {
+        getProvider(providerId = "c2905529-b933-4b69-87ec-75f9829d5f59")
+      },
       response = {
         lenientJsonAssert(
           "{\"id\":\"c2905529-b933-4b69-87ec-75f9829d5f59\",\"name\":\"cts_e2e_provider\",\"providerName\":\"openai\"}",
@@ -113,7 +125,9 @@ class AgentStudioTest {
   @Test
   fun `e2e get secret key1`() = runTest {
     client.runTest(
-      call = { getSecretKey(secretKeyId = "c110e615-7d5a-4103-865f-c5062c0d6f4d") },
+      call = {
+        getSecretKey(secretKeyId = "c110e615-7d5a-4103-865f-c5062c0d6f4d")
+      },
       response = {
         lenientJsonAssert(
           "{\"id\":\"c110e615-7d5a-4103-865f-c5062c0d6f4d\",\"name\":\"cts_e2e_secret_key\"}",
@@ -126,7 +140,9 @@ class AgentStudioTest {
   @Test
   fun `e2e list agent allowed domains1`() = runTest {
     client.runTest(
-      call = { listAgentAllowedDomains(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15") },
+      call = {
+        listAgentAllowedDomains(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
+      },
       response = {
         lenientJsonAssert(
           "{\"domains\":[{\"id\":\"6e8a0441-9a41-477c-a1d6-679a461e0990\",\"domain\":\"cts-e2e.algolia.com\"}]}",
@@ -162,7 +178,9 @@ class AgentStudioTest {
   @Test
   fun `e2e list agent conversations2`() = runTest {
     client.runTest(
-      call = { listAgentConversations(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15") },
+      call = {
+        listAgentConversations(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
+      },
       response = {
         lenientJsonAssert(
           "{\"data\":[{\"id\":\"alg_cnv_miss_yqcZtaOSPTF8bJsJ\",\"agentId\":\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\"title\":\"General Greeting\"}]}",
@@ -175,7 +193,12 @@ class AgentStudioTest {
   @Test
   fun `e2e list agents2`() = runTest {
     client.runTest(
-      call = { listAgents(page = 1, limit = 2) },
+      call = {
+        listAgents(
+          page = 1,
+          limit = 2,
+        )
+      },
       response = {
         lenientJsonAssert(
           "{\"data\":[{\"name\":\"cts_e2e_agent\",\"status\":\"published\"}],\"pagination\":{\"page\":1,\"limit\":2}}",
@@ -188,22 +211,33 @@ class AgentStudioTest {
   @Test
   fun `e2e list models1`() = runTest {
     client.runTest(
-      call = { listModels() },
-      response = { lenientJsonAssert("{\"openai\":[\"gpt-4\"]}", Json.encodeToString(it)) },
+      call = {
+        listModels()
+      },
+      response = {
+        lenientJsonAssert("{\"openai\":[\"gpt-4\"]}", Json.encodeToString(it))
+      },
     )
   }
 
   @Test
   fun `e2e list provider models1`() = runTest {
     client.runTest(
-      call = { listProviderModels(providerId = "c2905529-b933-4b69-87ec-75f9829d5f59") }
+      call = {
+        listProviderModels(providerId = "c2905529-b933-4b69-87ec-75f9829d5f59")
+      }
     )
   }
 
   @Test
   fun `e2e list providers2`() = runTest {
     client.runTest(
-      call = { listProviders(page = 1, limit = 2) },
+      call = {
+        listProviders(
+          page = 1,
+          limit = 2,
+        )
+      },
       response = {
         lenientJsonAssert(
           "{\"data\":[{\"name\":\"cts_e2e_provider\"}],\"pagination\":{\"page\":1,\"limit\":2}}",
@@ -216,7 +250,12 @@ class AgentStudioTest {
   @Test
   fun `e2e list secret keys2`() = runTest {
     client.runTest(
-      call = { listSecretKeys(page = 1, limit = 10) },
+      call = {
+        listSecretKeys(
+          page = 1,
+          limit = 10,
+        )
+      },
       response = {
         lenientJsonAssert(
           "{\"data\":[{\"name\":\"cts_e2e_secret_key\"}],\"pagination\":{\"page\":1,\"limit\":10}}",

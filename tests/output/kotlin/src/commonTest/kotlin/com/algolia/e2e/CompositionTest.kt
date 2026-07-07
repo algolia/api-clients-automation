@@ -35,7 +35,9 @@ class CompositionTest {
   @Test
   fun `listCompositions1`() = runTest {
     client.runTest(
-      call = { listCompositions() },
+      call = {
+        listCompositions()
+      },
       response = {
         lenientJsonAssert(
           "{\"items\":[{\"objectID\":\"id1\",\"name\":\"my first composition\",\"description\":\"the first ever composition from the client\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"cts_e2e_small\"}}}}}}],\"nbPages\":1}",

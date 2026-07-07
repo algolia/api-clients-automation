@@ -4466,29 +4466,27 @@ paths:
             MultipleBatchResponse response = client.multipleBatch(
               new BatchParams().setRequests(
                 Arrays.asList(
-                  new MultipleBatchRequest()
-                    .setAction(Action.UPSERT)
-                    .setBody(
-                      new Composition()
-                        .setObjectID("my-compo")
-                        .setName("my composition")
-                        .setBehavior(
-                          new CompositionInjectionBehavior().setInjection(
-                            new Injection()
-                              .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("foo"))))
-                              .setInjectedItems(
-                                Arrays.asList(
-                                  new InjectionInjectedItem()
-                                    .setKey("my-unique-injected-item-key")
-                                    .setSource(new InjectedItemSearchSource().setSearch(new InjectedItemSearch().setIndex("foo")))
-                                    .setPosition(2)
-                                    .setLength(1)
-                                )
+                  new MultipleBatchRequest().setAction(Action.UPSERT).setBody(
+                    new Composition()
+                      .setObjectID("my-compo")
+                      .setName("my composition")
+                      .setBehavior(
+                        new CompositionInjectionBehavior().setInjection(
+                          new Injection()
+                            .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("foo"))))
+                            .setInjectedItems(
+                              Arrays.asList(
+                                new InjectionInjectedItem()
+                                  .setKey("my-unique-injected-item-key")
+                                  .setSource(new InjectedItemSearchSource().setSearch(new InjectedItemSearch().setIndex("foo")))
+                                  .setPosition(2)
+                                  .setLength(1)
                               )
-                              .setDeduplication(new Deduplication().setPositioning(DedupPositioning.HIGHEST))
-                          )
+                            )
+                            .setDeduplication(new Deduplication().setPositioning(DedupPositioning.HIGHEST))
                         )
-                    )
+                      )
+                  )
                 )
               )
             );
@@ -7214,40 +7212,38 @@ paths:
               "my-compo",
               new CompositionRulesBatchParams().setRequests(
                 Arrays.asList(
-                  new RulesMultipleBatchRequest()
-                    .setAction(Action.UPSERT)
-                    .setBody(
-                      new CompositionRule()
-                        .setObjectID("rule-with-deduplication")
-                        .setDescription("my description")
-                        .setEnabled(true)
-                        .setConditions(
-                          Arrays.asList(
-                            new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry"),
-                            new Condition().setSortBy("price-low-to-high")
+                  new RulesMultipleBatchRequest().setAction(Action.UPSERT).setBody(
+                    new CompositionRule()
+                      .setObjectID("rule-with-deduplication")
+                      .setDescription("my description")
+                      .setEnabled(true)
+                      .setConditions(
+                        Arrays.asList(
+                          new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry"),
+                          new Condition().setSortBy("price-low-to-high")
+                        )
+                      )
+                      .setConsequence(
+                        new CompositionRuleConsequence().setBehavior(
+                          new CompositionInjectionBehavior().setInjection(
+                            new Injection()
+                              .setMain(
+                                new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("my-index")))
+                              )
+                              .setInjectedItems(
+                                Arrays.asList(
+                                  new InjectionInjectedItem()
+                                    .setKey("my-unique-injected-item-key")
+                                    .setSource(new InjectedItemSearchSource().setSearch(new InjectedItemSearch().setIndex("my-index")))
+                                    .setPosition(0)
+                                    .setLength(3)
+                                )
+                              )
+                              .setDeduplication(new Deduplication().setPositioning(DedupPositioning.HIGHEST_INJECTED))
                           )
                         )
-                        .setConsequence(
-                          new CompositionRuleConsequence().setBehavior(
-                            new CompositionInjectionBehavior().setInjection(
-                              new Injection()
-                                .setMain(
-                                  new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("my-index")))
-                                )
-                                .setInjectedItems(
-                                  Arrays.asList(
-                                    new InjectionInjectedItem()
-                                      .setKey("my-unique-injected-item-key")
-                                      .setSource(new InjectedItemSearchSource().setSearch(new InjectedItemSearch().setIndex("my-index")))
-                                      .setPosition(0)
-                                      .setLength(3)
-                                  )
-                                )
-                                .setDeduplication(new Deduplication().setPositioning(DedupPositioning.HIGHEST_INJECTED))
-                            )
-                          )
-                        )
-                    )
+                      )
+                  )
                 )
               )
             );

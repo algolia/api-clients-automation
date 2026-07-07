@@ -40,7 +40,9 @@ class IngestionTest {
   @Test
   fun `enableTask`() = runTest {
     client.runTest(
-      call = { enableTask(taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498") },
+      call = {
+        enableTask(taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+      },
       response = {
         lenientJsonAssert(
           "{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}",
@@ -53,7 +55,9 @@ class IngestionTest {
   @Test
   fun `enableTaskV1`() = runTest {
     client.runTest(
-      call = { enableTaskV1(taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498") },
+      call = {
+        enableTaskV1(taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+      },
       response = {
         lenientJsonAssert(
           "{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}",
@@ -66,7 +70,9 @@ class IngestionTest {
   @Test
   fun `getSource`() = runTest {
     client.runTest(
-      call = { getSource(sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac") },
+      call = {
+        getSource(sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac")
+      },
       response = {
         lenientJsonAssert(
           "{\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"name\":\"cts_e2e_browse\",\"type\":\"json\",\"input\":{\"url\":\"https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json\"}}",

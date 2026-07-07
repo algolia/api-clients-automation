@@ -19,7 +19,7 @@ jobs:
     name: Push generated files to the given repository
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ref: main
@@ -39,7 +39,7 @@ jobs:
           owner: algolia
           repositories: ${{ inputs.name }}
 
-      - run: yarn workspace scripts pushToRepository ${{ inputs.name }} 
+      - run: yarn workspace scripts pushToRepository ${{ inputs.name }}
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           GH_TOKEN: ${{ steps.app-token.outputs.token }}

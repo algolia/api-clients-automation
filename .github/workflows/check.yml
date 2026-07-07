@@ -25,7 +25,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Generate GitHub App Token
         id: app-token
@@ -55,7 +55,7 @@ jobs:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -136,7 +136,7 @@ jobs:
     needs: setup
     if: ${{ needs.setup.outputs.RUN_SCRIPTS == 'true' }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -160,7 +160,7 @@ jobs:
     timeout-minutes: 10
     needs: setup
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -197,7 +197,7 @@ jobs:
       METIS_API_KEY: ${{ secrets.METIS_API_KEY }}
     name: client javascript${{ needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' && format('@{0}', fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).version) || '' }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Download specs artifacts
         uses: ./scripts/ci/actions/restore-artifacts
@@ -253,13 +253,13 @@ jobs:
         run: echo "dir=$(cd tests/output/javascript && yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
       - name: Restore Yarn js tests
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ${{ steps.yarn-cache-dir-tests.outputs.dir || 'tests/output/javascript/.yarn/cache' }}
           key: yarn-cache-tests-${{ hashFiles('tests/output/javascript/yarn.lock') }}
 
       - name: Cache js tests node modules
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: tests/output/javascript/node_modules
           key: node-modules-tests-${{ hashFiles('tests/output/javascript/yarn.lock') }}
@@ -327,7 +327,7 @@ jobs:
       hasBreakingChanges: ${{ steps.breakingChanges.outputs.hasBreakingChanges }}
     name: client ${{ matrix.client.language }}@${{ matrix.client.version }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Download specs artifacts
         uses: ./scripts/ci/actions/restore-artifacts
@@ -442,7 +442,7 @@ jobs:
       success: ${{ steps.setoutput.outputs.success }}
     name: client kotlin${{ format('@{0}', fromJSON(needs.setup.outputs.KOTLIN_DATA).version) }} macos
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Download specs artifacts
         uses: ./scripts/ci/actions/restore-artifacts
@@ -492,7 +492,7 @@ jobs:
       success: ${{ steps.setoutput.outputs.success }}
     name: client swift${{ format('@{0}', fromJSON(needs.setup.outputs.SWIFT_DATA).version) }} linux
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
 
       - name: Download specs artifacts
@@ -544,7 +544,7 @@ jobs:
           client-id: ${{ vars.ALGOLIA_BOT_CLIENT_ID }}
           private-key: ${{ secrets.ALGOLIA_BOT_PRIVATE_KEY }}
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
@@ -643,7 +643,7 @@ jobs:
 
       - name: Deploy documentation
         if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' && needs.setup.outputs.RUN_WEBSITE == 'true' }}
-        uses: nwtgck/actions-netlify@v3.0
+        uses: nwtgck/actions-netlify@v4.0
         with:
           publish-dir: 'website/build'
           production-branch: main
@@ -700,7 +700,7 @@ jobs:
           # Here, we push to most of the allowed repo, so no need to scope
           owner: algolia
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ref: ${{ needs.codegen.outputs.generatedCommit }}

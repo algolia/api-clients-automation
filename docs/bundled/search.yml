@@ -5426,26 +5426,22 @@ paths:
               "<YOUR_INDEX_NAME>",
               new BatchWriteParams().setRequests(
                 Arrays.asList(
-                  new BatchRequest()
-                    .setAction(Action.ADD_OBJECT)
-                    .setBody(
-                      new HashMap() {
-                        {
-                          put("key", "bar");
-                          put("foo", "1");
-                        }
+                  new BatchRequest().setAction(Action.ADD_OBJECT).setBody(
+                    new HashMap() {
+                      {
+                        put("key", "bar");
+                        put("foo", "1");
                       }
-                    ),
-                  new BatchRequest()
-                    .setAction(Action.ADD_OBJECT)
-                    .setBody(
-                      new HashMap() {
-                        {
-                          put("key", "baz");
-                          put("foo", "2");
-                        }
+                    }
+                  ),
+                  new BatchRequest().setAction(Action.ADD_OBJECT).setBody(
+                    new HashMap() {
+                      {
+                        put("key", "baz");
+                        put("foo", "2");
                       }
-                    )
+                    }
+                  )
                 )
               )
             );
@@ -7733,7 +7729,10 @@ paths:
             SaveSynonymResponse response = client.saveSynonym(
               "<YOUR_INDEX_NAME>",
               "id1",
-              new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(Arrays.asList("car", "vehicule", "auto")),
+              new SynonymHit()
+                .setObjectID("id1")
+                .setType(SynonymType.SYNONYM)
+                .setSynonyms(Arrays.asList("car", "vehicule", "auto")),
               true
             );
 
@@ -8378,7 +8377,10 @@ paths:
             UpdatedAtResponse response = client.saveSynonyms(
               "<YOUR_INDEX_NAME>",
               Arrays.asList(
-                new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(Arrays.asList("car", "vehicule", "auto")),
+                new SynonymHit()
+                  .setObjectID("id1")
+                  .setType(SynonymType.SYNONYM)
+                  .setSynonyms(Arrays.asList("car", "vehicule", "auto")),
                 new SynonymHit()
                   .setObjectID("id2")
                   .setType(SynonymType.ONEWAYSYNONYM)

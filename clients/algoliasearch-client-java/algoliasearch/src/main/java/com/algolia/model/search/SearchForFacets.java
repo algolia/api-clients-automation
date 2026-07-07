@@ -1730,8 +1730,7 @@ public class SearchForFacets implements SearchQuery {
     sb.append("    responseFields: ").append(toIndentedString(responseFields)).append("\n");
     sb.append("    maxValuesPerFacet: ").append(toIndentedString(maxValuesPerFacet)).append("\n");
     sb.append("    sortFacetValuesBy: ").append(toIndentedString(sortFacetValuesBy)).append("\n");
-    sb
-      .append("    attributeCriteriaComputedByMinProximity: ")
+    sb.append("    attributeCriteriaComputedByMinProximity: ")
       .append(toIndentedString(attributeCriteriaComputedByMinProximity))
       .append("\n");
     sb.append("    renderingContent: ").append(toIndentedString(renderingContent)).append("\n");

@@ -1,5 +1,5 @@
 {
-  "version": "1.21.1",
+  "version": "1.21.2",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
@@ -54,16 +54,16 @@
     "index.d.ts"
   ],
   "dependencies": {
-    "@algolia/client-common": "5.55.1",
-    "@algolia/requester-browser-xhr": "5.55.1",
-    "@algolia/requester-fetch": "5.55.1",
-    "@algolia/requester-node-http": "5.55.1"
+    "@algolia/client-common": "5.55.2",
+    "@algolia/requester-browser-xhr": "5.55.2",
+    "@algolia/requester-fetch": "5.55.2",
+    "@algolia/requester-node-http": "5.55.2"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.18.2",
-    "@types/node": "25.8.0",
+    "@arethetypeswrong/cli": "0.18.4",
+    "@types/node": "26.0.1",
     "publint": "0.3.21",
-    "rollup": "4.60.4",
+    "rollup": "4.62.2",
     "tsup": "8.5.1",
     "typescript": "5.9.3"
   },

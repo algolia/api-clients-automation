@@ -144,7 +144,7 @@ public class CompositionClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.46.1\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.46.2\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }

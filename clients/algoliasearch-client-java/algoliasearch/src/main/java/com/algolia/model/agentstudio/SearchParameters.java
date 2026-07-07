@@ -1232,8 +1232,7 @@ public class SearchParameters {
     sb.append("    getRankingInfo: ").append(toIndentedString(getRankingInfo)).append("\n");
     sb.append("    relevancyStrictness: ").append(toIndentedString(relevancyStrictness)).append("\n");
     sb.append("    minProximity: ").append(toIndentedString(minProximity)).append("\n");
-    sb
-      .append("    attributeCriteriaComputedByMinProximity: ")
+    sb.append("    attributeCriteriaComputedByMinProximity: ")
       .append(toIndentedString(attributeCriteriaComputedByMinProximity))
       .append("\n");
     sb.append("    distinct: ").append(toIndentedString(distinct)).append("\n");

@@ -129,23 +129,23 @@ export function algoliasearch(
   return {
     ...client,
 
-    async saveObjectsWithTransformation({ indexName, objects, waitForTasks, maxRetries }, requestOptions): Promise<Array<WatchResponse>> {
+    async saveObjectsWithTransformation({ indexName, objects, batchSize, waitForTasks, maxRetries }, requestOptions): Promise<Array<WatchResponse>> {
       if (!ingestionTransporter) {
         throw new Error('`transformationOptions` must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/');
       }
 
-      return ingestionTransporter.chunkedPush({ indexName, objects, action: 'addObject', waitForTasks, maxRetries }, requestOptions);
+      return ingestionTransporter.chunkedPush({ indexName, objects, action: 'addObject', batchSize, waitForTasks, maxRetries }, requestOptions);
     },
 
     async partialUpdateObjectsWithTransformation(
-      { indexName, objects, createIfNotExists, waitForTasks, maxRetries },
+      { indexName, objects, createIfNotExists, batchSize, waitForTasks, maxRetries },
       requestOptions,
     ): Promise<Array<WatchResponse>> {
       if (!ingestionTransporter) {
         throw new Error('`transformationOptions` must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/');
       }
 
-      return ingestionTransporter.chunkedPush({ indexName, objects, action: createIfNotExists ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', waitForTasks, maxRetries }, requestOptions);
+      return ingestionTransporter.chunkedPush({ indexName, objects, action: createIfNotExists ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', batchSize, waitForTasks, maxRetries }, requestOptions);
     },
 
     async replaceAllObjectsWithTransformation(

@@ -47,7 +47,10 @@ class SearchClientClientTests {
   }
 
   private ClientOptions withCustomHosts(List<Host> hosts, boolean gzipEncoding) {
-    return ClientOptions.builder().setHosts(hosts).setCompressionType(gzipEncoding ? CompressionType.GZIP : CompressionType.NONE).build();
+    return ClientOptions.builder()
+      .setHosts(hosts)
+      .setCompressionType(gzipEncoding ? CompressionType.GZIP : CompressionType.NONE)
+      .build();
   }
 
   @Test
@@ -209,7 +212,8 @@ class SearchClientClientTests {
     Object res = client.customPost(
       "1/test/gzip",
       new HashMap() {
-        {}
+        {
+        }
       },
       new HashMap() {
         {
@@ -433,7 +437,7 @@ class SearchClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.41.1\\).*";
+      String regexp = "^Algolia for Java \\(4.41.2\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
@@ -763,7 +767,8 @@ class SearchClientClientTests {
           null,
           "my-object-id",
           new HashMap() {
-            {}
+            {
+            }
           }
         );
         EchoResponse result = echo.getLastResponse();
@@ -776,7 +781,8 @@ class SearchClientClientTests {
           "my-index-name",
           null,
           new HashMap() {
-            {}
+            {
+            }
           }
         );
         EchoResponse result = echo.getLastResponse();
