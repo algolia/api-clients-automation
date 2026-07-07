@@ -175,7 +175,7 @@ export function create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
 
       return transporter.request(request, requestOptions);
     },
-    {{> client/api/operation/jsdoc}}
+    {{> client/api/operation/jsdocWithHttpInfo}}
     {{nickname}}WithHTTPInfo{{#vendorExtensions.x-return-is-generic}}<T = Record<string, unknown>>{{/vendorExtensions.x-return-is-generic}}{{^vendorExtensions.x-return-is-generic}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/vendorExtensions.x-return-is-generic}}{{#vendorExtensions.x-has-generic-parameter}}<T extends object>{{/vendorExtensions.x-has-generic-parameter}}( {{> client/api/operation/parameters}} ) : Promise<AlgoliaHttpResponse<{{#vendorExtensions.x-return-is-generic}}T{{/vendorExtensions.x-return-is-generic}}{{^vendorExtensions.x-return-is-generic}}{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/vendorExtensions.x-return-is-generic}}>> {
       {{#vendorExtensions.x-legacy-signature}}
         {{> client/api/operation/legacySearchCompatible/implementation}}

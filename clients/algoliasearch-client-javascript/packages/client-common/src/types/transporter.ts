@@ -170,6 +170,14 @@ export type Transporter = TransporterOptions & {
    * The `baseRequest` and `baseRequestOptions` will be merged accordingly.
    */
   request: <TResponse>(baseRequest: Request, baseRequestOptions?: RequestOptions) => Promise<TResponse>;
+  requestStream: (baseRequest: Request, baseRequestOptions?: RequestOptions) => AsyncGenerator<ServerSentEvent>;
+};
+
+/**
+ * The transporter returned by `createTransporter`. Kept separate from `Transporter` so that
+ * existing implementations of `Transporter` remain type-valid.
+ */
+export type TransporterWithHttpInfo = Transporter & {
   /**
    * Performs a request and returns the full HTTP response information — status code,
    * headers (when the requester captures them), raw body and deserialized data.
@@ -179,5 +187,4 @@ export type Transporter = TransporterOptions & {
     baseRequest: Request,
     baseRequestOptions?: RequestOptions,
   ) => Promise<AlgoliaHttpResponse<TData>>;
-  requestStream: (baseRequest: Request, baseRequestOptions?: RequestOptions) => AsyncGenerator<ServerSentEvent>;
 };

@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 import { createMemoryCache, createNullCache } from '../../cache';
 import { createNullLogger } from '../../logger';
 import { ApiError, DetailedApiError, createTransporter } from '../../transporter';
-import type { AlgoliaAgent, Requester, Transporter } from '../../types';
+import type { AlgoliaAgent, Requester, TransporterWithHttpInfo } from '../../types';
 
 describe('transporter requestWithHttpInfo', () => {
   const algoliaAgent: AlgoliaAgent = {
@@ -10,7 +10,7 @@ describe('transporter requestWithHttpInfo', () => {
     add: () => algoliaAgent,
   };
 
-  function createTestTransporter(requester: Requester): Transporter {
+  function createTestTransporter(requester: Requester): TransporterWithHttpInfo {
     return createTransporter({
       hosts: [{ url: 'localhost', accept: 'readWrite', protocol: 'https' }],
       hostsCache: createNullCache(),

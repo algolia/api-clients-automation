@@ -9,8 +9,8 @@ import type {
   RequestOptions,
   Response,
   StackFrame,
-  Transporter,
   TransporterOptions,
+  TransporterWithHttpInfo,
 } from '../types';
 import { COMPRESSION_THRESHOLD } from './compress';
 import { createStatefulHost } from './createStatefulHost';
@@ -44,7 +44,7 @@ export function createTransporter({
   responsesCache,
   compress,
   compression,
-}: TransporterOptions): Transporter {
+}: TransporterOptions): TransporterWithHttpInfo {
   async function createRetryableOptions(compatibleHosts: Host[]): Promise<RetryableOptions> {
     const statefulHosts = await Promise.all(
       compatibleHosts.map((compatibleHost) => {
