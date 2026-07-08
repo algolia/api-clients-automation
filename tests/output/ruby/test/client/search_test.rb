@@ -339,7 +339,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.42.1\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.42.2\).*/))
   end
 
   # call deleteObjects without error

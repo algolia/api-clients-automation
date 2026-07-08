@@ -4,7 +4,7 @@ import { isDeepStrictEqual } from 'node:util';
 import oas2har from '@har-sdk/oas';
 import type { HarRequest } from '@readme/httpsnippet';
 import { HTTPSnippet } from '@readme/httpsnippet';
-import yaml from 'js-yaml';
+import { dump, load } from 'js-yaml';
 
 import { Cache } from '../cache.ts';
 import { GENERATORS, run, toAbsolutePath } from '../common.ts';
@@ -588,17 +588,17 @@ export async function lintCommon(useCache: boolean): Promise<void> {
 }
 
 export async function bundleSpecsForClient(bundledPath: string, clientName: string): Promise<void> {
-  const bundledSpec = yaml.load(await fsp.readFile(bundledPath, 'utf8')) as Spec;
+  const bundledSpec = load(await fsp.readFile(bundledPath, 'utf8')) as Spec;
 
   Object.values(bundledSpec.paths).forEach((pathMethods) => {
     Object.values(pathMethods).forEach((specMethod) => (specMethod.tags = [clientName]));
   });
 
-  await fsp.writeFile(bundledPath, yaml.dump(bundledSpec, { noRefs: true }));
+  await fsp.writeFile(bundledPath, dump(bundledSpec, { noRefs: true }));
 }
 
 export async function bundleSpecsForDoc(bundledPath: string, clientName: string): Promise<void> {
-  const bundledSpec = yaml.load(await fsp.readFile(bundledPath, 'utf8')) as Spec;
+  const bundledSpec = load(await fsp.readFile(bundledPath, 'utf8')) as Spec;
   const harRequests = await oas2har.oas2har(bundledSpec as any, { includeVendorExamples: true });
   const tagsDefinitions = bundledSpec.tags;
   const codeSamples = await transformGeneratedSnippetsToCodeSamples(clientName);
@@ -703,5 +703,5 @@ export async function bundleSpecsForDoc(bundledPath: string, clientName: string)
 
   sortDocSpec(bundledSpec);
 
-  await fsp.writeFile(toAbsolutePath(`docs/bundled/${clientName}.yml`), yaml.dump(bundledSpec, { noRefs: true }));
+  await fsp.writeFile(toAbsolutePath(`docs/bundled/${clientName}.yml`), dump(bundledSpec, { noRefs: true }));
 }
