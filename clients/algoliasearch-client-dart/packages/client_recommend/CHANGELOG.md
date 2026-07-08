@@ -1,3 +1,7 @@
+## [1.51.3](https://github.com/algolia/algoliasearch-client-dart/compare/1.51.2...1.51.3)
+
+- [07511de2ea](https://github.com/algolia/api-clients-automation/commit/07511de2ea) fix(dart): publish ingestion before search in release workflow ([#6605](https://github.com/algolia/api-clients-automation/pull/6605)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [1.51.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.51.1...1.51.2)
 
 - [035c03ecad](https://github.com/algolia/api-clients-automation/commit/035c03ecad) fix(specs): BREAKING CHANGE – remove recommend query params overridden by the API ([#6604](https://github.com/algolia/api-clients-automation/pull/6604)) by [@raed667](https://github.com/raed667/)
