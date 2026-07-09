@@ -84,7 +84,7 @@ getRankingInfo:
 
 highlightPreTag:
   $ref: '../../../common/schemas/IndexSettings.yml#/highlightPreTag'
-    
+
 highlightPostTag:
   $ref: '../../../common/schemas/IndexSettings.yml#/highlightPostTag'
 
