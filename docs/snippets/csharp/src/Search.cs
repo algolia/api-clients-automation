@@ -1202,7 +1202,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // Call the API
-    var response = await client.DeleteObjectsAsync(
+    List<BatchResponse> response = await client.DeleteObjectsAsync(
       "<YOUR_INDEX_NAME>",
       new List<string> { "1", "2" }
     );
@@ -2423,7 +2423,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // Call the API
-    var response = await client.PartialUpdateObjectsAsync(
+    List<BatchResponse> response = await client.PartialUpdateObjectsAsync(
       "<YOUR_INDEX_NAME>",
       new List<Object>
       {
@@ -2450,7 +2450,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // Call the API
-    var response = await client.PartialUpdateObjectsAsync(
+    List<BatchResponse> response = await client.PartialUpdateObjectsAsync(
       "<YOUR_INDEX_NAME>",
       new List<Object>
       {
@@ -2723,7 +2723,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // Call the API
-    var response = await client.SaveObjectsAsync(
+    List<BatchResponse> response = await client.SaveObjectsAsync(
       "<YOUR_INDEX_NAME>",
       new List<Object>
       {
@@ -2749,7 +2749,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // Call the API
-    var response = await client.SaveObjectsAsync(
+    List<BatchResponse> response = await client.SaveObjectsAsync(
       "<YOUR_INDEX_NAME>",
       new List<Object>
       {
@@ -2775,7 +2775,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // Call the API
-    var response = await client.SaveObjectsAsync(
+    List<BatchResponse> response = await client.SaveObjectsAsync(
       "<YOUR_INDEX_NAME>",
       new List<Object>
       {
@@ -2807,7 +2807,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // Call the API
-    var response = await client.SaveObjectsAsync(
+    List<BatchResponse> response = await client.SaveObjectsAsync(
       "<YOUR_INDEX_NAME>",
       new List<Object>
       {

@@ -89,7 +89,7 @@
       "default": "var response = await client.DeleteObjectAsync(\"<YOUR_INDEX_NAME>\", \"uniqueID\");"
     },
     "deleteObjects": {
-      "default": "var response = await client.DeleteObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<string> { \"1\", \"2\" }\n);"
+      "default": "List<BatchResponse> response = await client.DeleteObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<string> { \"1\", \"2\" }\n);"
     },
     "deleteRule": {
       "delete rule simple case": "var response = await client.DeleteRuleAsync(\"<YOUR_INDEX_NAME>\", \"id1\");",
@@ -199,8 +199,8 @@
       "remove men pant": "var response = await client.PartialUpdateObjectAsync(\n  \"<YOUR_INDEX_NAME>\",\n  \"productId\",\n  new Dictionary<string, Object>\n  {\n    {\n      \"categoryPageId\",\n      new Dictionary<string, string>\n      {\n        { \"_operation\", \"Remove\" },\n        { \"value\", \"men-clothing-pants\" },\n      }\n    },\n  }\n);"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists=true": "var response = await client.PartialUpdateObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"1\" }, { \"name\", \"Adam\" } },\n    new Dictionary<string, string> { { \"objectID\", \"2\" }, { \"name\", \"Benoit\" } },\n  },\n  true\n);",
-      "call partialUpdateObjects with createIfNotExists=false": "var response = await client.PartialUpdateObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"3\" }, { \"name\", \"Cyril\" } },\n    new Dictionary<string, string> { { \"objectID\", \"4\" }, { \"name\", \"David\" } },\n  },\n  false\n);"
+      "call partialUpdateObjects with createIfNotExists=true": "List<BatchResponse> response = await client.PartialUpdateObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"1\" }, { \"name\", \"Adam\" } },\n    new Dictionary<string, string> { { \"objectID\", \"2\" }, { \"name\", \"Benoit\" } },\n  },\n  true\n);",
+      "call partialUpdateObjects with createIfNotExists=false": "List<BatchResponse> response = await client.PartialUpdateObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"3\" }, { \"name\", \"Cyril\" } },\n    new Dictionary<string, string> { { \"objectID\", \"4\" }, { \"name\", \"David\" } },\n  },\n  false\n);"
     },
     "partialUpdateObjectsWithTransformation": {
       "default": "var response = await client.PartialUpdateObjectsWithTransformationAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"1\" }, { \"name\", \"Adam\" } },\n    new Dictionary<string, string> { { \"objectID\", \"2\" }, { \"name\", \"Benoit\" } },\n  },\n  true,\n  true\n);"
@@ -226,10 +226,10 @@
       "default": "var response = await client.SaveObjectAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new Dictionary<string, string>\n  {\n    { \"name\", \"Black T-shirt\" },\n    { \"color\", \"#000000||black\" },\n    { \"availableIn\", \"https://source.unsplash.com/100x100/?paris||Paris\" },\n    { \"objectID\", \"myID\" },\n  }\n);"
     },
     "saveObjects": {
-      "call saveObjects without error": "var response = await client.SaveObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"1\" }, { \"name\", \"Adam\" } },\n    new Dictionary<string, string> { { \"objectID\", \"2\" }, { \"name\", \"Benoit\" } },\n  }\n);",
-      "saveObjects should report errors": "var response = await client.SaveObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"1\" }, { \"name\", \"Adam\" } },\n    new Dictionary<string, string> { { \"objectID\", \"2\" }, { \"name\", \"Benoit\" } },\n  }\n);",
-      "saveObjectsPlaylist": "var response = await client.SaveObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string>\n    {\n      { \"objectID\", \"1\" },\n      { \"visibility\", \"public\" },\n      { \"name\", \"Hot 100 Billboard Charts\" },\n      { \"playlistId\", \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\" },\n      { \"createdAt\", \"1500240452\" },\n    },\n  }\n);",
-      "saveObjectsPublicUser": "var response = await client.SaveObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string>\n    {\n      { \"objectID\", \"1\" },\n      { \"visibility\", \"public\" },\n      { \"name\", \"Hot 100 Billboard Charts\" },\n      { \"playlistId\", \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\" },\n      { \"createdAt\", \"1500240452\" },\n    },\n  },\n  false,\n  1000,\n  new RequestOptionBuilder().AddExtraHeader(\"X-Algolia-User-ID\", \"*\").Build()\n);"
+      "call saveObjects without error": "List<BatchResponse> response = await client.SaveObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"1\" }, { \"name\", \"Adam\" } },\n    new Dictionary<string, string> { { \"objectID\", \"2\" }, { \"name\", \"Benoit\" } },\n  }\n);",
+      "saveObjects should report errors": "List<BatchResponse> response = await client.SaveObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"1\" }, { \"name\", \"Adam\" } },\n    new Dictionary<string, string> { { \"objectID\", \"2\" }, { \"name\", \"Benoit\" } },\n  }\n);",
+      "saveObjectsPlaylist": "List<BatchResponse> response = await client.SaveObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string>\n    {\n      { \"objectID\", \"1\" },\n      { \"visibility\", \"public\" },\n      { \"name\", \"Hot 100 Billboard Charts\" },\n      { \"playlistId\", \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\" },\n      { \"createdAt\", \"1500240452\" },\n    },\n  }\n);",
+      "saveObjectsPublicUser": "List<BatchResponse> response = await client.SaveObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string>\n    {\n      { \"objectID\", \"1\" },\n      { \"visibility\", \"public\" },\n      { \"name\", \"Hot 100 Billboard Charts\" },\n      { \"playlistId\", \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\" },\n      { \"createdAt\", \"1500240452\" },\n    },\n  },\n  false,\n  1000,\n  new RequestOptionBuilder().AddExtraHeader(\"X-Algolia-User-ID\", \"*\").Build()\n);"
     },
     "saveObjectsWithTransformation": {
       "call saveObjectsWithTransformation without error": "var response = await client.SaveObjectsWithTransformationAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"1\" }, { \"name\", \"Adam\" } },\n    new Dictionary<string, string> { { \"objectID\", \"2\" }, { \"name\", \"Benoit\" } },\n  },\n  true\n);",
@@ -1262,7 +1262,7 @@
       "default": "response, err := client.DeleteObject(client.NewApiDeleteObjectRequest(\n  \"<YOUR_INDEX_NAME>\", \"uniqueID\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "deleteObjects": {
-      "default": "response, err := client.DeleteObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []string{\"1\", \"2\"})\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DeleteObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []string{\"1\", \"2\"})\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// response is a slice of search.BatchResponse"
     },
     "deleteRule": {
       "delete rule simple case": "response, err := client.DeleteRule(client.NewApiDeleteRuleRequest(\n  \"<YOUR_INDEX_NAME>\", \"id1\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -1372,8 +1372,8 @@
       "remove men pant": "response, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(\n  \"<YOUR_INDEX_NAME>\", \"productId\", map[string]any{\"categoryPageId\": map[string]any{\"_operation\": \"Remove\", \"value\": \"men-clothing-pants\"}}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists=true": "response, err := client.PartialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{{\"objectID\": \"1\", \"name\": \"Adam\"}, {\"objectID\": \"2\", \"name\": \"Benoit\"}}, search.WithCreateIfNotExists(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "call partialUpdateObjects with createIfNotExists=false": "response, err := client.PartialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{{\"objectID\": \"3\", \"name\": \"Cyril\"}, {\"objectID\": \"4\", \"name\": \"David\"}}, search.WithCreateIfNotExists(false))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "call partialUpdateObjects with createIfNotExists=true": "response, err := client.PartialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{{\"objectID\": \"1\", \"name\": \"Adam\"}, {\"objectID\": \"2\", \"name\": \"Benoit\"}}, search.WithCreateIfNotExists(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// response is a slice of search.BatchResponse",
+      "call partialUpdateObjects with createIfNotExists=false": "response, err := client.PartialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{{\"objectID\": \"3\", \"name\": \"Cyril\"}, {\"objectID\": \"4\", \"name\": \"David\"}}, search.WithCreateIfNotExists(false))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// response is a slice of search.BatchResponse"
     },
     "partialUpdateObjectsWithTransformation": {
       "default": "response, err := client.PartialUpdateObjectsWithTransformation(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{\n    {\"objectID\": \"1\", \"name\": \"Adam\"},\n    {\"objectID\": \"2\", \"name\": \"Benoit\"},\n  },\n  search.WithCreateIfNotExists(true),\n  search.WithWaitForTasks(true),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -1399,10 +1399,10 @@
       "default": "response, err := client.SaveObject(client.NewApiSaveObjectRequest(\n  \"<YOUR_INDEX_NAME>\",\n  map[string]any{\n    \"name\":        \"Black T-shirt\",\n    \"color\":       \"#000000||black\",\n    \"availableIn\": \"https://source.unsplash.com/100x100/?paris||Paris\",\n    \"objectID\":    \"myID\",\n  },\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "saveObjects": {
-      "call saveObjects without error": "response, err := client.SaveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{{\"objectID\": \"1\", \"name\": \"Adam\"}, {\"objectID\": \"2\", \"name\": \"Benoit\"}})\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "saveObjects should report errors": "response, err := client.SaveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{{\"objectID\": \"1\", \"name\": \"Adam\"}, {\"objectID\": \"2\", \"name\": \"Benoit\"}})\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "saveObjectsPlaylist": "response, err := client.SaveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{\n    {\n      \"objectID\":   \"1\",\n      \"visibility\": \"public\",\n      \"name\":       \"Hot 100 Billboard Charts\",\n      \"playlistId\": \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n      \"createdAt\":  \"1500240452\",\n    },\n  },\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "saveObjectsPublicUser": "response, err := client.SaveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{\n    {\n      \"objectID\":   \"1\",\n      \"visibility\": \"public\",\n      \"name\":       \"Hot 100 Billboard Charts\",\n      \"playlistId\": \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n      \"createdAt\":  \"1500240452\",\n    },\n  },\n  search.WithWaitForTasks(false),\n  search.WithBatchSize(1000),\n  search.WithHeaderParam(\"X-Algolia-User-ID\", \"*\"),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "call saveObjects without error": "response, err := client.SaveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{{\"objectID\": \"1\", \"name\": \"Adam\"}, {\"objectID\": \"2\", \"name\": \"Benoit\"}})\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// response is a slice of search.BatchResponse",
+      "saveObjects should report errors": "response, err := client.SaveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{{\"objectID\": \"1\", \"name\": \"Adam\"}, {\"objectID\": \"2\", \"name\": \"Benoit\"}})\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// response is a slice of search.BatchResponse",
+      "saveObjectsPlaylist": "response, err := client.SaveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{\n    {\n      \"objectID\":   \"1\",\n      \"visibility\": \"public\",\n      \"name\":       \"Hot 100 Billboard Charts\",\n      \"playlistId\": \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n      \"createdAt\":  \"1500240452\",\n    },\n  },\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// response is a slice of search.BatchResponse",
+      "saveObjectsPublicUser": "response, err := client.SaveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{\n    {\n      \"objectID\":   \"1\",\n      \"visibility\": \"public\",\n      \"name\":       \"Hot 100 Billboard Charts\",\n      \"playlistId\": \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n      \"createdAt\":  \"1500240452\",\n    },\n  },\n  search.WithWaitForTasks(false),\n  search.WithBatchSize(1000),\n  search.WithHeaderParam(\"X-Algolia-User-ID\", \"*\"),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// response is a slice of search.BatchResponse"
     },
     "saveObjectsWithTransformation": {
       "call saveObjectsWithTransformation without error": "response, err := client.SaveObjectsWithTransformation(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{{\"objectID\": \"1\", \"name\": \"Adam\"}, {\"objectID\": \"2\", \"name\": \"Benoit\"}}, search.WithWaitForTasks(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -1870,7 +1870,7 @@
       "default": "DeletedAtResponse response = client.deleteObject(\"<YOUR_INDEX_NAME>\", \"uniqueID\");"
     },
     "deleteObjects": {
-      "default": "List response = client.deleteObjects(\"<YOUR_INDEX_NAME>\", Arrays.asList(\"1\", \"2\"));"
+      "default": "List<BatchResponse> response = client.deleteObjects(\"<YOUR_INDEX_NAME>\", Arrays.asList(\"1\", \"2\"));"
     },
     "deleteRule": {
       "delete rule simple case": "UpdatedAtResponse response = client.deleteRule(\"<YOUR_INDEX_NAME>\", \"id1\");",
@@ -1980,8 +1980,8 @@
       "remove men pant": "UpdatedAtWithObjectIdResponse response = client.partialUpdateObject(\n  \"<YOUR_INDEX_NAME>\",\n  \"productId\",\n  new HashMap() {\n    {\n      put(\n        \"categoryPageId\",\n        new HashMap() {\n          {\n            put(\"_operation\", \"Remove\");\n            put(\"value\", \"men-clothing-pants\");\n          }\n        }\n      );\n    }\n  }\n);"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists=true": "List response = client.partialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  ),\n  true\n);",
-      "call partialUpdateObjects with createIfNotExists=false": "List response = client.partialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"3\");\n        put(\"name\", \"Cyril\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"4\");\n        put(\"name\", \"David\");\n      }\n    }\n  ),\n  false\n);"
+      "call partialUpdateObjects with createIfNotExists=true": "List<BatchResponse> response = client.partialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  ),\n  true\n);",
+      "call partialUpdateObjects with createIfNotExists=false": "List<BatchResponse> response = client.partialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"3\");\n        put(\"name\", \"Cyril\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"4\");\n        put(\"name\", \"David\");\n      }\n    }\n  ),\n  false\n);"
     },
     "partialUpdateObjectsWithTransformation": {
       "default": "List response = client.partialUpdateObjectsWithTransformation(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  ),\n  true,\n  true\n);"
@@ -2007,10 +2007,10 @@
       "default": "SaveObjectResponse response = client.saveObject(\n  \"<YOUR_INDEX_NAME>\",\n  new HashMap() {\n    {\n      put(\"name\", \"Black T-shirt\");\n      put(\"color\", \"#000000||black\");\n      put(\"availableIn\", \"https://source.unsplash.com/100x100/?paris||Paris\");\n      put(\"objectID\", \"myID\");\n    }\n  }\n);"
     },
     "saveObjects": {
-      "call saveObjects without error": "List response = client.saveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  )\n);",
-      "saveObjects should report errors": "List response = client.saveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  )\n);",
-      "saveObjectsPlaylist": "List response = client.saveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"visibility\", \"public\");\n        put(\"name\", \"Hot 100 Billboard Charts\");\n        put(\"playlistId\", \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\");\n        put(\"createdAt\", \"1500240452\");\n      }\n    }\n  )\n);",
-      "saveObjectsPublicUser": "List response = client.saveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"visibility\", \"public\");\n        put(\"name\", \"Hot 100 Billboard Charts\");\n        put(\"playlistId\", \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\");\n        put(\"createdAt\", \"1500240452\");\n      }\n    }\n  ),\n  false,\n  1000,\n  new RequestOptions().addExtraHeader(\"X-Algolia-User-ID\", \"*\")\n);"
+      "call saveObjects without error": "List<BatchResponse> response = client.saveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  )\n);",
+      "saveObjects should report errors": "List<BatchResponse> response = client.saveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  )\n);",
+      "saveObjectsPlaylist": "List<BatchResponse> response = client.saveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"visibility\", \"public\");\n        put(\"name\", \"Hot 100 Billboard Charts\");\n        put(\"playlistId\", \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\");\n        put(\"createdAt\", \"1500240452\");\n      }\n    }\n  )\n);",
+      "saveObjectsPublicUser": "List<BatchResponse> response = client.saveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"visibility\", \"public\");\n        put(\"name\", \"Hot 100 Billboard Charts\");\n        put(\"playlistId\", \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\");\n        put(\"createdAt\", \"1500240452\");\n      }\n    }\n  ),\n  false,\n  1000,\n  new RequestOptions().addExtraHeader(\"X-Algolia-User-ID\", \"*\")\n);"
     },
     "saveObjectsWithTransformation": {
       "call saveObjectsWithTransformation without error": "List response = client.saveObjectsWithTransformation(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  ),\n  true\n);",
@@ -2390,7 +2390,7 @@
   },
   "javascript": {
     "import": {
-      "default": "import { algoliasearch } from 'algoliasearch';"
+      "default": "import { algoliasearch, type BatchResponse } from 'algoliasearch';"
     },
     "accountCopyIndex": {
       "default": "const response = await client.accountCopyIndex({\n  sourceIndexName: 'cts_e2e_account_copy_index_source_javascript',\n  destinationAppID: 'test-app-id-destination',\n  destinationApiKey: 'test-api-key-destination',\n  destinationIndexName: 'cts_e2e_account_copy_index_destination_javascript',\n  batchSize: 2,\n});"
@@ -2481,7 +2481,7 @@
       "default": "const response = await client.deleteObject({ indexName: '<YOUR_INDEX_NAME>', objectID: 'uniqueID' });"
     },
     "deleteObjects": {
-      "default": "const response = await client.deleteObjects({ indexName: 'cts_e2e_deleteObjects_javascript', objectIDs: ['1', '2'] });"
+      "default": "const response: BatchResponse[] = await client.deleteObjects({\n  indexName: 'cts_e2e_deleteObjects_javascript',\n  objectIDs: ['1', '2'],\n});"
     },
     "deleteRule": {
       "delete rule simple case": "const response = await client.deleteRule({ indexName: 'indexName', objectID: 'id1' });",
@@ -2591,8 +2591,8 @@
       "remove men pant": "const response = await client.partialUpdateObject({\n  indexName: 'theIndexName',\n  objectID: 'productId',\n  attributesToUpdate: { categoryPageId: { _operation: 'Remove', value: 'men-clothing-pants' } },\n});"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists=true": "const response = await client.partialUpdateObjects({\n  indexName: 'cts_e2e_partialUpdateObjects_javascript',\n  objects: [\n    { objectID: '1', name: 'Adam' },\n    { objectID: '2', name: 'Benoit' },\n  ],\n  createIfNotExists: true,\n});",
-      "call partialUpdateObjects with createIfNotExists=false": "const response = await client.partialUpdateObjects({\n  indexName: 'cts_e2e_partialUpdateObjects_javascript',\n  objects: [\n    { objectID: '3', name: 'Cyril' },\n    { objectID: '4', name: 'David' },\n  ],\n  createIfNotExists: false,\n});"
+      "call partialUpdateObjects with createIfNotExists=true": "const response: BatchResponse[] = await client.partialUpdateObjects({\n  indexName: 'cts_e2e_partialUpdateObjects_javascript',\n  objects: [\n    { objectID: '1', name: 'Adam' },\n    { objectID: '2', name: 'Benoit' },\n  ],\n  createIfNotExists: true,\n});",
+      "call partialUpdateObjects with createIfNotExists=false": "const response: BatchResponse[] = await client.partialUpdateObjects({\n  indexName: 'cts_e2e_partialUpdateObjects_javascript',\n  objects: [\n    { objectID: '3', name: 'Cyril' },\n    { objectID: '4', name: 'David' },\n  ],\n  createIfNotExists: false,\n});"
     },
     "partialUpdateObjectsWithTransformation": {
       "default": "const response = await client.partialUpdateObjectsWithTransformation({\n  indexName: 'cts_e2e_partialUpdateObjectsWithTransformation_javascript',\n  objects: [\n    { objectID: '1', name: 'Adam' },\n    { objectID: '2', name: 'Benoit' },\n  ],\n  createIfNotExists: true,\n  waitForTasks: true,\n});"
@@ -2618,10 +2618,10 @@
       "default": "const response = await client.saveObject({\n  indexName: '<YOUR_INDEX_NAME>',\n  body: {\n    name: 'Black T-shirt',\n    color: '#000000||black',\n    availableIn: 'https://source.unsplash.com/100x100/?paris||Paris',\n    objectID: 'myID',\n  },\n});"
     },
     "saveObjects": {
-      "call saveObjects without error": "const response = await client.saveObjects({\n  indexName: 'cts_e2e_saveObjects_javascript',\n  objects: [\n    { objectID: '1', name: 'Adam' },\n    { objectID: '2', name: 'Benoit' },\n  ],\n});",
-      "saveObjects should report errors": "const response = await client.saveObjects({\n  indexName: 'cts_e2e_saveObjects_javascript',\n  objects: [\n    { objectID: '1', name: 'Adam' },\n    { objectID: '2', name: 'Benoit' },\n  ],\n});",
-      "saveObjectsPlaylist": "const response = await client.saveObjects({\n  indexName: 'playlists',\n  objects: [\n    {\n      objectID: '1',\n      visibility: 'public',\n      name: 'Hot 100 Billboard Charts',\n      playlistId: 'd3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f',\n      createdAt: '1500240452',\n    },\n  ],\n});",
-      "saveObjectsPublicUser": "const response = await client.saveObjects(\n  {\n    indexName: 'playlists',\n    objects: [\n      {\n        objectID: '1',\n        visibility: 'public',\n        name: 'Hot 100 Billboard Charts',\n        playlistId: 'd3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f',\n        createdAt: '1500240452',\n      },\n    ],\n    waitForTasks: false,\n    batchSize: 1000,\n  },\n  {\n    headers: { 'X-Algolia-User-ID': '*' },\n  },\n);"
+      "call saveObjects without error": "const response: BatchResponse[] = await client.saveObjects({\n  indexName: 'cts_e2e_saveObjects_javascript',\n  objects: [\n    { objectID: '1', name: 'Adam' },\n    { objectID: '2', name: 'Benoit' },\n  ],\n});",
+      "saveObjects should report errors": "const response: BatchResponse[] = await client.saveObjects({\n  indexName: 'cts_e2e_saveObjects_javascript',\n  objects: [\n    { objectID: '1', name: 'Adam' },\n    { objectID: '2', name: 'Benoit' },\n  ],\n});",
+      "saveObjectsPlaylist": "const response: BatchResponse[] = await client.saveObjects({\n  indexName: 'playlists',\n  objects: [\n    {\n      objectID: '1',\n      visibility: 'public',\n      name: 'Hot 100 Billboard Charts',\n      playlistId: 'd3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f',\n      createdAt: '1500240452',\n    },\n  ],\n});",
+      "saveObjectsPublicUser": "const response: BatchResponse[] = await client.saveObjects(\n  {\n    indexName: 'playlists',\n    objects: [\n      {\n        objectID: '1',\n        visibility: 'public',\n        name: 'Hot 100 Billboard Charts',\n        playlistId: 'd3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f',\n        createdAt: '1500240452',\n      },\n    ],\n    waitForTasks: false,\n    batchSize: 1000,\n  },\n  {\n    headers: { 'X-Algolia-User-ID': '*' },\n  },\n);"
     },
     "saveObjectsWithTransformation": {
       "call saveObjectsWithTransformation without error": "const response = await client.saveObjectsWithTransformation({\n  indexName: 'cts_e2e_saveObjectsWithTransformation_javascript',\n  objects: [\n    { objectID: '1', name: 'Adam' },\n    { objectID: '2', name: 'Benoit' },\n  ],\n  waitForTasks: true,\n});",
@@ -3086,7 +3086,7 @@
       "default": "var response = client.deleteObject(indexName = \"<YOUR_INDEX_NAME>\", objectID = \"uniqueID\")"
     },
     "deleteObjects": {
-      "default": "var response =\n  client.deleteObjects(indexName = \"<YOUR_INDEX_NAME>\", objectIDs = listOf(\"1\", \"2\"))"
+      "default": "var response: List<BatchResponse> =\n  client.deleteObjects(indexName = \"<YOUR_INDEX_NAME>\", objectIDs = listOf(\"1\", \"2\"))"
     },
     "deleteRule": {
       "delete rule simple case": "var response = client.deleteRule(indexName = \"<YOUR_INDEX_NAME>\", objectID = \"id1\")",
@@ -3196,8 +3196,8 @@
       "remove men pant": "var response =\n  client.partialUpdateObject(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objectID = \"productId\",\n    attributesToUpdate =\n      buildJsonObject {\n        put(\n          \"categoryPageId\",\n          buildJsonObject {\n            put(\"_operation\", JsonPrimitive(\"Remove\"))\n            put(\"value\", JsonPrimitive(\"men-clothing-pants\"))\n          },\n        )\n      },\n  )"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists=true": "var response =\n  client.partialUpdateObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects =\n      listOf(\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"1\"))\n          put(\"name\", JsonPrimitive(\"Adam\"))\n        },\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"2\"))\n          put(\"name\", JsonPrimitive(\"Benoit\"))\n        },\n      ),\n    createIfNotExists = true,\n  )",
-      "call partialUpdateObjects with createIfNotExists=false": "var response =\n  client.partialUpdateObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects =\n      listOf(\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"3\"))\n          put(\"name\", JsonPrimitive(\"Cyril\"))\n        },\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"4\"))\n          put(\"name\", JsonPrimitive(\"David\"))\n        },\n      ),\n    createIfNotExists = false,\n  )"
+      "call partialUpdateObjects with createIfNotExists=true": "var response: List<BatchResponse> =\n  client.partialUpdateObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects =\n      listOf(\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"1\"))\n          put(\"name\", JsonPrimitive(\"Adam\"))\n        },\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"2\"))\n          put(\"name\", JsonPrimitive(\"Benoit\"))\n        },\n      ),\n    createIfNotExists = true,\n  )",
+      "call partialUpdateObjects with createIfNotExists=false": "var response: List<BatchResponse> =\n  client.partialUpdateObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects =\n      listOf(\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"3\"))\n          put(\"name\", JsonPrimitive(\"Cyril\"))\n        },\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"4\"))\n          put(\"name\", JsonPrimitive(\"David\"))\n        },\n      ),\n    createIfNotExists = false,\n  )"
     },
     "partialUpdateObjectsWithTransformation": {
       "default": "var response =\n  client.partialUpdateObjectsWithTransformation(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects =\n      listOf(\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"1\"))\n          put(\"name\", JsonPrimitive(\"Adam\"))\n        },\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"2\"))\n          put(\"name\", JsonPrimitive(\"Benoit\"))\n        },\n      ),\n    createIfNotExists = true,\n    waitForTasks = true,\n  )"
@@ -3223,10 +3223,10 @@
       "default": "var response =\n  client.saveObject(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    body =\n      buildJsonObject {\n        put(\"name\", JsonPrimitive(\"Black T-shirt\"))\n        put(\"color\", JsonPrimitive(\"#000000||black\"))\n        put(\"availableIn\", JsonPrimitive(\"https://source.unsplash.com/100x100/?paris||Paris\"))\n        put(\"objectID\", JsonPrimitive(\"myID\"))\n      },\n  )"
     },
     "saveObjects": {
-      "call saveObjects without error": "var response =\n  client.saveObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects =\n      listOf(\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"1\"))\n          put(\"name\", JsonPrimitive(\"Adam\"))\n        },\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"2\"))\n          put(\"name\", JsonPrimitive(\"Benoit\"))\n        },\n      ),\n  )",
-      "saveObjects should report errors": "var response =\n  client.saveObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects =\n      listOf(\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"1\"))\n          put(\"name\", JsonPrimitive(\"Adam\"))\n        },\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"2\"))\n          put(\"name\", JsonPrimitive(\"Benoit\"))\n        },\n      ),\n  )",
-      "saveObjectsPlaylist": "var response =\n  client.saveObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects =\n      listOf(\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"1\"))\n          put(\"visibility\", JsonPrimitive(\"public\"))\n          put(\"name\", JsonPrimitive(\"Hot 100 Billboard Charts\"))\n          put(\"playlistId\", JsonPrimitive(\"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\"))\n          put(\"createdAt\", JsonPrimitive(\"1500240452\"))\n        }\n      ),\n  )",
-      "saveObjectsPublicUser": "var response =\n  client.saveObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects =\n      listOf(\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"1\"))\n          put(\"visibility\", JsonPrimitive(\"public\"))\n          put(\"name\", JsonPrimitive(\"Hot 100 Billboard Charts\"))\n          put(\"playlistId\", JsonPrimitive(\"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\"))\n          put(\"createdAt\", JsonPrimitive(\"1500240452\"))\n        }\n      ),\n    waitForTasks = false,\n    batchSize = 1000,\n    requestOptions = RequestOptions(headers = buildMap { put(\"X-Algolia-User-ID\", \"*\") }),\n  )"
+      "call saveObjects without error": "var response: List<BatchResponse> =\n  client.saveObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects =\n      listOf(\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"1\"))\n          put(\"name\", JsonPrimitive(\"Adam\"))\n        },\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"2\"))\n          put(\"name\", JsonPrimitive(\"Benoit\"))\n        },\n      ),\n  )",
+      "saveObjects should report errors": "var response: List<BatchResponse> =\n  client.saveObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects =\n      listOf(\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"1\"))\n          put(\"name\", JsonPrimitive(\"Adam\"))\n        },\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"2\"))\n          put(\"name\", JsonPrimitive(\"Benoit\"))\n        },\n      ),\n  )",
+      "saveObjectsPlaylist": "var response: List<BatchResponse> =\n  client.saveObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects =\n      listOf(\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"1\"))\n          put(\"visibility\", JsonPrimitive(\"public\"))\n          put(\"name\", JsonPrimitive(\"Hot 100 Billboard Charts\"))\n          put(\"playlistId\", JsonPrimitive(\"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\"))\n          put(\"createdAt\", JsonPrimitive(\"1500240452\"))\n        }\n      ),\n  )",
+      "saveObjectsPublicUser": "var response: List<BatchResponse> =\n  client.saveObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects =\n      listOf(\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"1\"))\n          put(\"visibility\", JsonPrimitive(\"public\"))\n          put(\"name\", JsonPrimitive(\"Hot 100 Billboard Charts\"))\n          put(\"playlistId\", JsonPrimitive(\"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\"))\n          put(\"createdAt\", JsonPrimitive(\"1500240452\"))\n        }\n      ),\n    waitForTasks = false,\n    batchSize = 1000,\n    requestOptions = RequestOptions(headers = buildMap { put(\"X-Algolia-User-ID\", \"*\") }),\n  )"
     },
     "saveObjectsWithTransformation": {
       "call saveObjectsWithTransformation without error": "var response =\n  client.saveObjectsWithTransformation(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects =\n      listOf(\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"1\"))\n          put(\"name\", JsonPrimitive(\"Adam\"))\n        },\n        buildJsonObject {\n          put(\"objectID\", JsonPrimitive(\"2\"))\n          put(\"name\", JsonPrimitive(\"Benoit\"))\n        },\n      ),\n    waitForTasks = true,\n  )",
@@ -3606,7 +3606,7 @@
   },
   "php": {
     "import": {
-      "default": "use Algolia\\AlgoliaSearch\\Api\\SearchClient;"
+      "default": "use Algolia\\AlgoliaSearch\\Api\\SearchClient;\nuse Algolia\\AlgoliaSearch\\Model\\Search\\BatchResponse;"
     },
     "addApiKey": {
       "minimal": "$response = $client->addApiKey(\n    ['acl' => [\n        'search',\n\n        'addObject',\n    ],\n        'description' => 'my new api key',\n    ],\n);",
@@ -3694,7 +3694,7 @@
       "default": "$response = $client->deleteObject(\n    '<YOUR_INDEX_NAME>',\n    'uniqueID',\n);"
     },
     "deleteObjects": {
-      "default": "$response = $client->deleteObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        '1',\n\n        '2',\n    ],\n);"
+      "default": "/** @var array<BatchResponse> $response */\n$response = $client->deleteObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        '1',\n\n        '2',\n    ],\n);"
     },
     "deleteRule": {
       "delete rule simple case": "$response = $client->deleteRule(\n    '<YOUR_INDEX_NAME>',\n    'id1',\n);",
@@ -3804,8 +3804,8 @@
       "remove men pant": "$response = $client->partialUpdateObject(\n    '<YOUR_INDEX_NAME>',\n    'productId',\n    ['categoryPageId' => ['_operation' => 'Remove',\n        'value' => 'men-clothing-pants',\n    ],\n    ],\n);"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists=true": "$response = $client->partialUpdateObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '1',\n            'name' => 'Adam',\n        ],\n\n        ['objectID' => '2',\n            'name' => 'Benoit',\n        ],\n    ],\n    true,\n);",
-      "call partialUpdateObjects with createIfNotExists=false": "$response = $client->partialUpdateObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '3',\n            'name' => 'Cyril',\n        ],\n\n        ['objectID' => '4',\n            'name' => 'David',\n        ],\n    ],\n    false,\n);"
+      "call partialUpdateObjects with createIfNotExists=true": "/** @var array<BatchResponse> $response */\n$response = $client->partialUpdateObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '1',\n            'name' => 'Adam',\n        ],\n\n        ['objectID' => '2',\n            'name' => 'Benoit',\n        ],\n    ],\n    true,\n);",
+      "call partialUpdateObjects with createIfNotExists=false": "/** @var array<BatchResponse> $response */\n$response = $client->partialUpdateObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '3',\n            'name' => 'Cyril',\n        ],\n\n        ['objectID' => '4',\n            'name' => 'David',\n        ],\n    ],\n    false,\n);"
     },
     "partialUpdateObjectsWithTransformation": {
       "default": "$response = $client->partialUpdateObjectsWithTransformation(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '1',\n            'name' => 'Adam',\n        ],\n\n        ['objectID' => '2',\n            'name' => 'Benoit',\n        ],\n    ],\n    true,\n    true,\n);"
@@ -3831,10 +3831,10 @@
       "default": "$response = $client->saveObject(\n    '<YOUR_INDEX_NAME>',\n    ['name' => 'Black T-shirt',\n        'color' => '#000000||black',\n        'availableIn' => 'https://source.unsplash.com/100x100/?paris||Paris',\n        'objectID' => 'myID',\n    ],\n);"
     },
     "saveObjects": {
-      "call saveObjects without error": "$response = $client->saveObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '1',\n            'name' => 'Adam',\n        ],\n\n        ['objectID' => '2',\n            'name' => 'Benoit',\n        ],\n    ],\n);",
-      "saveObjects should report errors": "$response = $client->saveObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '1',\n            'name' => 'Adam',\n        ],\n\n        ['objectID' => '2',\n            'name' => 'Benoit',\n        ],\n    ],\n);",
-      "saveObjectsPlaylist": "$response = $client->saveObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '1',\n            'visibility' => 'public',\n            'name' => 'Hot 100 Billboard Charts',\n            'playlistId' => 'd3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f',\n            'createdAt' => '1500240452',\n        ],\n    ],\n);",
-      "saveObjectsPublicUser": "$response = $client->saveObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '1',\n            'visibility' => 'public',\n            'name' => 'Hot 100 Billboard Charts',\n            'playlistId' => 'd3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f',\n            'createdAt' => '1500240452',\n        ],\n    ],\n    false,\n    1000,\n    [\n        'headers' => [\n            'X-Algolia-User-ID' => '*',\n        ],\n    ]\n);"
+      "call saveObjects without error": "/** @var array<BatchResponse> $response */\n$response = $client->saveObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '1',\n            'name' => 'Adam',\n        ],\n\n        ['objectID' => '2',\n            'name' => 'Benoit',\n        ],\n    ],\n);",
+      "saveObjects should report errors": "/** @var array<BatchResponse> $response */\n$response = $client->saveObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '1',\n            'name' => 'Adam',\n        ],\n\n        ['objectID' => '2',\n            'name' => 'Benoit',\n        ],\n    ],\n);",
+      "saveObjectsPlaylist": "/** @var array<BatchResponse> $response */\n$response = $client->saveObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '1',\n            'visibility' => 'public',\n            'name' => 'Hot 100 Billboard Charts',\n            'playlistId' => 'd3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f',\n            'createdAt' => '1500240452',\n        ],\n    ],\n);",
+      "saveObjectsPublicUser": "/** @var array<BatchResponse> $response */\n$response = $client->saveObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '1',\n            'visibility' => 'public',\n            'name' => 'Hot 100 Billboard Charts',\n            'playlistId' => 'd3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f',\n            'createdAt' => '1500240452',\n        ],\n    ],\n    false,\n    1000,\n    [\n        'headers' => [\n            'X-Algolia-User-ID' => '*',\n        ],\n    ]\n);"
     },
     "saveObjectsWithTransformation": {
       "call saveObjectsWithTransformation without error": "$response = $client->saveObjectsWithTransformation(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '1',\n            'name' => 'Adam',\n        ],\n\n        ['objectID' => '2',\n            'name' => 'Benoit',\n        ],\n    ],\n    true,\n);",
@@ -4214,7 +4214,7 @@
   },
   "python": {
     "import": {
-      "default": "from algoliasearch.search.client import SearchClientSync\nfrom json import loads"
+      "default": "from algoliasearch.search.client import SearchClientSync\nfrom algoliasearch.search.models import BatchResponse\nfrom json import loads"
     },
     "addApiKey": {
       "minimal": "response = client.add_api_key(\n    api_key={\n        \"acl\": [\n            \"search\",\n            \"addObject\",\n        ],\n        \"description\": \"my new api key\",\n    },\n)",
@@ -4302,7 +4302,7 @@
       "default": "response = client.delete_object(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"uniqueID\",\n)"
     },
     "deleteObjects": {
-      "default": "response = client.delete_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_ids=[\n        \"1\",\n        \"2\",\n    ],\n)"
+      "default": "response: list[BatchResponse] = client.delete_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_ids=[\n        \"1\",\n        \"2\",\n    ],\n)"
     },
     "deleteRule": {
       "delete rule simple case": "response = client.delete_rule(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"id1\",\n)",
@@ -4412,8 +4412,8 @@
       "remove men pant": "response = client.partial_update_object(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"productId\",\n    attributes_to_update={\n        \"categoryPageId\": {\n            \"_operation\": \"Remove\",\n            \"value\": \"men-clothing-pants\",\n        },\n    },\n)"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists=true": "response = client.partial_update_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n    create_if_not_exists=True,\n)",
-      "call partialUpdateObjects with createIfNotExists=false": "response = client.partial_update_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"3\",\n            \"name\": \"Cyril\",\n        },\n        {\n            \"objectID\": \"4\",\n            \"name\": \"David\",\n        },\n    ],\n    create_if_not_exists=False,\n)"
+      "call partialUpdateObjects with createIfNotExists=true": "response: list[BatchResponse] = client.partial_update_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n    create_if_not_exists=True,\n)",
+      "call partialUpdateObjects with createIfNotExists=false": "response: list[BatchResponse] = client.partial_update_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"3\",\n            \"name\": \"Cyril\",\n        },\n        {\n            \"objectID\": \"4\",\n            \"name\": \"David\",\n        },\n    ],\n    create_if_not_exists=False,\n)"
     },
     "partialUpdateObjectsWithTransformation": {
       "default": "response = client.partial_update_objects_with_transformation(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n    create_if_not_exists=True,\n    wait_for_tasks=True,\n)"
@@ -4439,10 +4439,10 @@
       "default": "response = client.save_object(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    body={\n        \"name\": \"Black T-shirt\",\n        \"color\": \"#000000||black\",\n        \"availableIn\": \"https://source.unsplash.com/100x100/?paris||Paris\",\n        \"objectID\": \"myID\",\n    },\n)"
     },
     "saveObjects": {
-      "call saveObjects without error": "response = client.save_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n)",
-      "saveObjects should report errors": "response = client.save_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n)",
-      "saveObjectsPlaylist": "response = client.save_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"visibility\": \"public\",\n            \"name\": \"Hot 100 Billboard Charts\",\n            \"playlistId\": \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n            \"createdAt\": \"1500240452\",\n        },\n    ],\n)",
-      "saveObjectsPublicUser": "response = client.save_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"visibility\": \"public\",\n            \"name\": \"Hot 100 Billboard Charts\",\n            \"playlistId\": \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n            \"createdAt\": \"1500240452\",\n        },\n    ],\n    wait_for_tasks=False,\n    batch_size=1000,\n    request_options={\n        \"headers\": loads(\"\"\"{\"X-Algolia-User-ID\":\"*\"}\"\"\"),\n    },\n)"
+      "call saveObjects without error": "response: list[BatchResponse] = client.save_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n)",
+      "saveObjects should report errors": "response: list[BatchResponse] = client.save_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n)",
+      "saveObjectsPlaylist": "response: list[BatchResponse] = client.save_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"visibility\": \"public\",\n            \"name\": \"Hot 100 Billboard Charts\",\n            \"playlistId\": \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n            \"createdAt\": \"1500240452\",\n        },\n    ],\n)",
+      "saveObjectsPublicUser": "response: list[BatchResponse] = client.save_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"visibility\": \"public\",\n            \"name\": \"Hot 100 Billboard Charts\",\n            \"playlistId\": \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n            \"createdAt\": \"1500240452\",\n        },\n    ],\n    wait_for_tasks=False,\n    batch_size=1000,\n    request_options={\n        \"headers\": loads(\"\"\"{\"X-Algolia-User-ID\":\"*\"}\"\"\"),\n    },\n)"
     },
     "saveObjectsWithTransformation": {
       "call saveObjectsWithTransformation without error": "response = client.save_objects_with_transformation(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n    wait_for_tasks=True,\n)",
@@ -4910,7 +4910,7 @@
       "default": "response = client.delete_object(\"<YOUR_INDEX_NAME>\", \"uniqueID\")"
     },
     "deleteObjects": {
-      "default": "response = client.delete_objects(\"<YOUR_INDEX_NAME>\", [\"1\", \"2\"])"
+      "default": "response = client.delete_objects(\"<YOUR_INDEX_NAME>\", [\"1\", \"2\"])\n# response is an array of BatchResponse objects"
     },
     "deleteRule": {
       "delete rule simple case": "response = client.delete_rule(\"<YOUR_INDEX_NAME>\", \"id1\")",
@@ -5020,8 +5020,8 @@
       "remove men pant": "response = client.partial_update_object(\n  \"<YOUR_INDEX_NAME>\",\n  \"productId\",\n  {categoryPageId: {_operation: \"Remove\", value: \"men-clothing-pants\"}}\n)"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists=true": "response = client.partial_update_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"1\", name: \"Adam\"}, {objectID: \"2\", name: \"Benoit\"}],\n  true\n)",
-      "call partialUpdateObjects with createIfNotExists=false": "response = client.partial_update_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"3\", name: \"Cyril\"}, {objectID: \"4\", name: \"David\"}],\n  false\n)"
+      "call partialUpdateObjects with createIfNotExists=true": "response = client.partial_update_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"1\", name: \"Adam\"}, {objectID: \"2\", name: \"Benoit\"}],\n  true\n)\n# response is an array of BatchResponse objects",
+      "call partialUpdateObjects with createIfNotExists=false": "response = client.partial_update_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"3\", name: \"Cyril\"}, {objectID: \"4\", name: \"David\"}],\n  false\n)\n# response is an array of BatchResponse objects"
     },
     "partialUpdateObjectsWithTransformation": {
       "default": "response = client.partial_update_objects_with_transformation(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"1\", name: \"Adam\"}, {objectID: \"2\", name: \"Benoit\"}],\n  true,\n  true\n)"
@@ -5047,10 +5047,10 @@
       "default": "response = client.save_object(\n  \"<YOUR_INDEX_NAME>\",\n  {\n    name: \"Black T-shirt\",\n    color: \"#000000||black\",\n    availableIn: \"https://source.unsplash.com/100x100/?paris||Paris\",\n    objectID: \"myID\"\n  }\n)"
     },
     "saveObjects": {
-      "call saveObjects without error": "response = client.save_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"1\", name: \"Adam\"}, {objectID: \"2\", name: \"Benoit\"}]\n)",
-      "saveObjects should report errors": "response = client.save_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"1\", name: \"Adam\"}, {objectID: \"2\", name: \"Benoit\"}]\n)",
-      "saveObjectsPlaylist": "response = client.save_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [\n    {\n      objectID: \"1\",\n      visibility: \"public\",\n      name: \"Hot 100 Billboard Charts\",\n      playlistId: \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n      createdAt: \"1500240452\"\n    }\n  ]\n)",
-      "saveObjectsPublicUser": "response = client.save_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [\n    {\n      objectID: \"1\",\n      visibility: \"public\",\n      name: \"Hot 100 Billboard Charts\",\n      playlistId: \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n      createdAt: \"1500240452\"\n    }\n  ],\n  false,\n  1000,\n  {:header_params => {\"X-Algolia-User-ID\" => \"*\"}}\n)"
+      "call saveObjects without error": "response = client.save_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"1\", name: \"Adam\"}, {objectID: \"2\", name: \"Benoit\"}]\n)\n# response is an array of BatchResponse objects",
+      "saveObjects should report errors": "response = client.save_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"1\", name: \"Adam\"}, {objectID: \"2\", name: \"Benoit\"}]\n)\n# response is an array of BatchResponse objects",
+      "saveObjectsPlaylist": "response = client.save_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [\n    {\n      objectID: \"1\",\n      visibility: \"public\",\n      name: \"Hot 100 Billboard Charts\",\n      playlistId: \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n      createdAt: \"1500240452\"\n    }\n  ]\n)\n# response is an array of BatchResponse objects",
+      "saveObjectsPublicUser": "response = client.save_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [\n    {\n      objectID: \"1\",\n      visibility: \"public\",\n      name: \"Hot 100 Billboard Charts\",\n      playlistId: \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n      createdAt: \"1500240452\"\n    }\n  ],\n  false,\n  1000,\n  {:header_params => {\"X-Algolia-User-ID\" => \"*\"}}\n)\n# response is an array of BatchResponse objects"
     },
     "saveObjectsWithTransformation": {
       "call saveObjectsWithTransformation without error": "response = client.save_objects_with_transformation(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"1\", name: \"Adam\"}, {objectID: \"2\", name: \"Benoit\"}],\n  true\n)",
@@ -5518,7 +5518,7 @@
       "default": "val response = Await.result(\n  client.deleteObject(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objectID = \"uniqueID\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "deleteObjects": {
-      "default": "val response = Await.result(\n  client.deleteObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objectIDs = Seq(\"1\", \"2\")\n  ),\n  Duration(100, \"sec\")\n)"
+      "default": "val response: Seq[BatchResponse] = Await.result(\n  client.deleteObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objectIDs = Seq(\"1\", \"2\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "deleteRule": {
       "delete rule simple case": "val response = Await.result(\n  client.deleteRule(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objectID = \"id1\"\n  ),\n  Duration(100, \"sec\")\n)",
@@ -5628,8 +5628,8 @@
       "remove men pant": "val response = Await.result(\n  client.partialUpdateObject(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objectID = \"productId\",\n    attributesToUpdate = JObject(\n      List(\n        JField(\n          \"categoryPageId\",\n          JObject(List(JField(\"_operation\", JString(\"Remove\")), JField(\"value\", JString(\"men-clothing-pants\"))))\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists=true": "val response = Await.result(\n  client.partialUpdateObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects = Seq(\n      JObject(List(JField(\"objectID\", JString(\"1\")), JField(\"name\", JString(\"Adam\")))),\n      JObject(List(JField(\"objectID\", JString(\"2\")), JField(\"name\", JString(\"Benoit\"))))\n    ),\n    createIfNotExists = true\n  ),\n  Duration(100, \"sec\")\n)",
-      "call partialUpdateObjects with createIfNotExists=false": "val response = Await.result(\n  client.partialUpdateObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects = Seq(\n      JObject(List(JField(\"objectID\", JString(\"3\")), JField(\"name\", JString(\"Cyril\")))),\n      JObject(List(JField(\"objectID\", JString(\"4\")), JField(\"name\", JString(\"David\"))))\n    ),\n    createIfNotExists = false\n  ),\n  Duration(100, \"sec\")\n)"
+      "call partialUpdateObjects with createIfNotExists=true": "val response: Seq[BatchResponse] = Await.result(\n  client.partialUpdateObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects = Seq(\n      JObject(List(JField(\"objectID\", JString(\"1\")), JField(\"name\", JString(\"Adam\")))),\n      JObject(List(JField(\"objectID\", JString(\"2\")), JField(\"name\", JString(\"Benoit\"))))\n    ),\n    createIfNotExists = true\n  ),\n  Duration(100, \"sec\")\n)",
+      "call partialUpdateObjects with createIfNotExists=false": "val response: Seq[BatchResponse] = Await.result(\n  client.partialUpdateObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects = Seq(\n      JObject(List(JField(\"objectID\", JString(\"3\")), JField(\"name\", JString(\"Cyril\")))),\n      JObject(List(JField(\"objectID\", JString(\"4\")), JField(\"name\", JString(\"David\"))))\n    ),\n    createIfNotExists = false\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "partialUpdateObjectsWithTransformation": {
       "default": "val response = Await.result(\n  client.partialUpdateObjectsWithTransformation(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects = Seq(\n      JObject(List(JField(\"objectID\", JString(\"1\")), JField(\"name\", JString(\"Adam\")))),\n      JObject(List(JField(\"objectID\", JString(\"2\")), JField(\"name\", JString(\"Benoit\"))))\n    ),\n    createIfNotExists = true,\n    waitForTasks = true\n  ),\n  Duration(100, \"sec\")\n)"
@@ -5655,10 +5655,10 @@
       "default": "val response = Await.result(\n  client.saveObject(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    body = JObject(\n      List(\n        JField(\"name\", JString(\"Black T-shirt\")),\n        JField(\"color\", JString(\"#000000||black\")),\n        JField(\"availableIn\", JString(\"https://source.unsplash.com/100x100/?paris||Paris\")),\n        JField(\"objectID\", JString(\"myID\"))\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "saveObjects": {
-      "call saveObjects without error": "val response = Await.result(\n  client.saveObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects = Seq(\n      JObject(List(JField(\"objectID\", JString(\"1\")), JField(\"name\", JString(\"Adam\")))),\n      JObject(List(JField(\"objectID\", JString(\"2\")), JField(\"name\", JString(\"Benoit\"))))\n    )\n  ),\n  Duration(100, \"sec\")\n)",
-      "saveObjects should report errors": "val response = Await.result(\n  client.saveObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects = Seq(\n      JObject(List(JField(\"objectID\", JString(\"1\")), JField(\"name\", JString(\"Adam\")))),\n      JObject(List(JField(\"objectID\", JString(\"2\")), JField(\"name\", JString(\"Benoit\"))))\n    )\n  ),\n  Duration(100, \"sec\")\n)",
-      "saveObjectsPlaylist": "val response = Await.result(\n  client.saveObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects = Seq(\n      JObject(\n        List(\n          JField(\"objectID\", JString(\"1\")),\n          JField(\"visibility\", JString(\"public\")),\n          JField(\"name\", JString(\"Hot 100 Billboard Charts\")),\n          JField(\"playlistId\", JString(\"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\")),\n          JField(\"createdAt\", JString(\"1500240452\"))\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)",
-      "saveObjectsPublicUser": "val response = Await.result(\n  client.saveObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects = Seq(\n      JObject(\n        List(\n          JField(\"objectID\", JString(\"1\")),\n          JField(\"visibility\", JString(\"public\")),\n          JField(\"name\", JString(\"Hot 100 Billboard Charts\")),\n          JField(\"playlistId\", JString(\"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\")),\n          JField(\"createdAt\", JString(\"1500240452\"))\n        )\n      )\n    ),\n    waitForTasks = false,\n    batchSize = 1000,\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withHeader(\"X-Algolia-User-ID\", \"*\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+      "call saveObjects without error": "val response: Seq[BatchResponse] = Await.result(\n  client.saveObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects = Seq(\n      JObject(List(JField(\"objectID\", JString(\"1\")), JField(\"name\", JString(\"Adam\")))),\n      JObject(List(JField(\"objectID\", JString(\"2\")), JField(\"name\", JString(\"Benoit\"))))\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "saveObjects should report errors": "val response: Seq[BatchResponse] = Await.result(\n  client.saveObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects = Seq(\n      JObject(List(JField(\"objectID\", JString(\"1\")), JField(\"name\", JString(\"Adam\")))),\n      JObject(List(JField(\"objectID\", JString(\"2\")), JField(\"name\", JString(\"Benoit\"))))\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "saveObjectsPlaylist": "val response: Seq[BatchResponse] = Await.result(\n  client.saveObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects = Seq(\n      JObject(\n        List(\n          JField(\"objectID\", JString(\"1\")),\n          JField(\"visibility\", JString(\"public\")),\n          JField(\"name\", JString(\"Hot 100 Billboard Charts\")),\n          JField(\"playlistId\", JString(\"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\")),\n          JField(\"createdAt\", JString(\"1500240452\"))\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "saveObjectsPublicUser": "val response: Seq[BatchResponse] = Await.result(\n  client.saveObjects(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects = Seq(\n      JObject(\n        List(\n          JField(\"objectID\", JString(\"1\")),\n          JField(\"visibility\", JString(\"public\")),\n          JField(\"name\", JString(\"Hot 100 Billboard Charts\")),\n          JField(\"playlistId\", JString(\"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\")),\n          JField(\"createdAt\", JString(\"1500240452\"))\n        )\n      )\n    ),\n    waitForTasks = false,\n    batchSize = 1000,\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withHeader(\"X-Algolia-User-ID\", \"*\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "saveObjectsWithTransformation": {
       "call saveObjectsWithTransformation without error": "val response = Await.result(\n  client.saveObjectsWithTransformation(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objects = Seq(\n      JObject(List(JField(\"objectID\", JString(\"1\")), JField(\"name\", JString(\"Adam\")))),\n      JObject(List(JField(\"objectID\", JString(\"2\")), JField(\"name\", JString(\"Benoit\"))))\n    ),\n    waitForTasks = true\n  ),\n  Duration(100, \"sec\")\n)",
@@ -6126,7 +6126,7 @@
       "default": "let response = try await client.deleteObject(indexName: \"<YOUR_INDEX_NAME>\", objectID: \"uniqueID\")"
     },
     "deleteObjects": {
-      "default": "let response = try await client.deleteObjects(indexName: \"<YOUR_INDEX_NAME>\", objectIDs: [\"1\", \"2\"])"
+      "default": "let response: [BatchResponse] = try await client.deleteObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objectIDs: [\"1\", \"2\"]\n)"
     },
     "deleteRule": {
       "delete rule simple case": "let response = try await client.deleteRule(indexName: \"<YOUR_INDEX_NAME>\", objectID: \"id1\")",
@@ -6236,8 +6236,8 @@
       "remove men pant": "let response = try await client.partialUpdateObject(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objectID: \"productId\",\n    attributesToUpdate: [\"categoryPageId\": [\"_operation\": \"Remove\", \"value\": \"men-clothing-pants\"]]\n)"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists=true": "let response = try await client.partialUpdateObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"1\", \"name\": \"Adam\"], [\"objectID\": \"2\", \"name\": \"Benoit\"]],\n    createIfNotExists: true\n)",
-      "call partialUpdateObjects with createIfNotExists=false": "let response = try await client.partialUpdateObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"3\", \"name\": \"Cyril\"], [\"objectID\": \"4\", \"name\": \"David\"]],\n    createIfNotExists: false\n)"
+      "call partialUpdateObjects with createIfNotExists=true": "let response: [BatchResponse] = try await client.partialUpdateObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"1\", \"name\": \"Adam\"], [\"objectID\": \"2\", \"name\": \"Benoit\"]],\n    createIfNotExists: true\n)",
+      "call partialUpdateObjects with createIfNotExists=false": "let response: [BatchResponse] = try await client.partialUpdateObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"3\", \"name\": \"Cyril\"], [\"objectID\": \"4\", \"name\": \"David\"]],\n    createIfNotExists: false\n)"
     },
     "partialUpdateObjectsWithTransformation": {
       "default": "let response = try await client.partialUpdateObjectsWithTransformation(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"1\", \"name\": \"Adam\"], [\"objectID\": \"2\", \"name\": \"Benoit\"]],\n    createIfNotExists: true,\n    waitForTasks: true\n)"
@@ -6263,10 +6263,10 @@
       "default": "let response = try await client.saveObject(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    body: [\n        \"name\": \"Black T-shirt\",\n        \"color\": \"#000000||black\",\n        \"availableIn\": \"https://source.unsplash.com/100x100/?paris||Paris\",\n        \"objectID\": \"myID\",\n    ]\n)"
     },
     "saveObjects": {
-      "call saveObjects without error": "let response = try await client.saveObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"1\", \"name\": \"Adam\"], [\"objectID\": \"2\", \"name\": \"Benoit\"]]\n)",
-      "saveObjects should report errors": "let response = try await client.saveObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"1\", \"name\": \"Adam\"], [\"objectID\": \"2\", \"name\": \"Benoit\"]]\n)",
-      "saveObjectsPlaylist": "let response = try await client.saveObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\n        \"objectID\": \"1\",\n        \"visibility\": \"public\",\n        \"name\": \"Hot 100 Billboard Charts\",\n        \"playlistId\": \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n        \"createdAt\": \"1500240452\",\n    ]]\n)",
-      "saveObjectsPublicUser": "let response = try await client.saveObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\n        \"objectID\": \"1\",\n        \"visibility\": \"public\",\n        \"name\": \"Hot 100 Billboard Charts\",\n        \"playlistId\": \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n        \"createdAt\": \"1500240452\",\n    ]],\n    waitForTasks: false,\n    batchSize: 1000,\n    requestOptions: RequestOptions(\n        headers: [\"X-Algolia-User-ID\": \"*\"]\n    )\n)"
+      "call saveObjects without error": "let response: [BatchResponse] = try await client.saveObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"1\", \"name\": \"Adam\"], [\"objectID\": \"2\", \"name\": \"Benoit\"]]\n)",
+      "saveObjects should report errors": "let response: [BatchResponse] = try await client.saveObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"1\", \"name\": \"Adam\"], [\"objectID\": \"2\", \"name\": \"Benoit\"]]\n)",
+      "saveObjectsPlaylist": "let response: [BatchResponse] = try await client.saveObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\n        \"objectID\": \"1\",\n        \"visibility\": \"public\",\n        \"name\": \"Hot 100 Billboard Charts\",\n        \"playlistId\": \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n        \"createdAt\": \"1500240452\",\n    ]]\n)",
+      "saveObjectsPublicUser": "let response: [BatchResponse] = try await client.saveObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\n        \"objectID\": \"1\",\n        \"visibility\": \"public\",\n        \"name\": \"Hot 100 Billboard Charts\",\n        \"playlistId\": \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n        \"createdAt\": \"1500240452\",\n    ]],\n    waitForTasks: false,\n    batchSize: 1000,\n    requestOptions: RequestOptions(\n        headers: [\"X-Algolia-User-ID\": \"*\"]\n    )\n)"
     },
     "saveObjectsWithTransformation": {
       "call saveObjectsWithTransformation without error": "let response = try await client.saveObjectsWithTransformation(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"1\", \"name\": \"Adam\"], [\"objectID\": \"2\", \"name\": \"Benoit\"]],\n    waitForTasks: true\n)",

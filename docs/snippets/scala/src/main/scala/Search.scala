@@ -1295,7 +1295,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = Await.result(
+    val response: Seq[BatchResponse] = Await.result(
       client.deleteObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objectIDs = Seq("1", "2")
@@ -2583,7 +2583,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = Await.result(
+    val response: Seq[BatchResponse] = Await.result(
       client.partialUpdateObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects = Seq(
@@ -2610,7 +2610,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = Await.result(
+    val response: Seq[BatchResponse] = Await.result(
       client.partialUpdateObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects = Seq(
@@ -2890,7 +2890,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = Await.result(
+    val response: Seq[BatchResponse] = Await.result(
       client.saveObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects = Seq(
@@ -2916,7 +2916,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = Await.result(
+    val response: Seq[BatchResponse] = Await.result(
       client.saveObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects = Seq(
@@ -2942,7 +2942,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = Await.result(
+    val response: Seq[BatchResponse] = Await.result(
       client.saveObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects = Seq(
@@ -2975,7 +2975,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = Await.result(
+    val response: Seq[BatchResponse] = Await.result(
       client.saveObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects = Seq(

@@ -1099,7 +1099,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    List response = client.deleteObjects("<YOUR_INDEX_NAME>", Arrays.asList("1", "2"));
+    List<BatchResponse> response = client.deleteObjects("<YOUR_INDEX_NAME>", Arrays.asList("1", "2"));
     // >LOG
     // print the response
     System.out.println(response);
@@ -2130,7 +2130,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    List response = client.partialUpdateObjects(
+    List<BatchResponse> response = client.partialUpdateObjects(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new HashMap() {
@@ -2163,7 +2163,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    List response = client.partialUpdateObjects(
+    List<BatchResponse> response = client.partialUpdateObjects(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new HashMap() {
@@ -2534,7 +2534,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    List response = client.saveObjects(
+    List<BatchResponse> response = client.saveObjects(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new HashMap() {
@@ -2566,7 +2566,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    List response = client.saveObjects(
+    List<BatchResponse> response = client.saveObjects(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new HashMap() {
@@ -2598,7 +2598,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    List response = client.saveObjects(
+    List<BatchResponse> response = client.saveObjects(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new HashMap() {
@@ -2627,7 +2627,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    List response = client.saveObjects(
+    List<BatchResponse> response = client.saveObjects(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new HashMap() {
