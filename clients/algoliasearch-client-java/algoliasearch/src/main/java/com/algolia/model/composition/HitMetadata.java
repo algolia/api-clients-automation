@@ -60,9 +60,7 @@ public class HitMetadata {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class HitMetadata {\n");
-    sb.append("    ")
-      .append(toIndentedString(super.toString()))
-      .append("\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    injectedItemKey: ").append(toIndentedString(injectedItemKey)).append("\n");
     sb.append("}");
     return sb.toString();

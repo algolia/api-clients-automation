@@ -140,8 +140,50 @@ gh run view <RUN_ID> --log-failed
 
 Summarize each failure in 1–3 lines. If a failure looks like rate limiting / a transient external dependant (timeouts, 429s, network resets) rather than a code regression, say so and suggest re-running the skill once limits reset.
 
+## Rebasing a stale renovate PR onto the base branch
+
+When a PR's `mergeStateStatus` is `DIRTY` (conflicts) or it's simply behind `chore/renovateBaseBranch`, it needs a rebase before it can go green/merge. **Do NOT** naively `git rebase origin/chore/renovateBaseBranch` and replay every commit on the branch.
+
+Why: Renovate periodically **recreates** `chore/renovateBaseBranch` from `main`, so the base already contains newer-or-equal versions of most bumps the PR branch still carries. The PR branch's older bump commits are stale/superseded (e.g. the base has `@types/node` v26.0.1 while the PR still carries a commit setting it to v26). Replaying them all would try to *downgrade* those deps and manufacture needless `yarn.lock`/`package.json` conflicts.
+
+Correct approach — replay **only the PR's own unique commits** with `git rebase --onto` (this mirrors what Renovate's own "rebase" checkbox does), in a **detached throwaway worktree** so the current branch/working tree is untouched:
+
+```bash
+git fetch origin chore/renovateBaseBranch <pr-branch>
+# Inspect what's unique to the PR vs the (recreated) base:
+git log --oneline origin/chore/renovateBaseBranch..origin/<pr-branch>
+```
+
+Identify the commits genuinely unique to this PR — its own dependency bump plus any follow-up (e.g. a "format" commit). Everything below the first unique commit is stale and already on the base in newer form, so drop it. Then:
+
+```bash
+WT=/tmp/renovate-rebase-<pr>
+git worktree add --detach "$WT" origin/<pr-branch>
+cd "$WT"
+# <first-unique-commit>^ is the boundary between stale (drop) and unique (keep)
+git rebase --onto origin/chore/renovateBaseBranch <first-unique-commit>^
+```
+
+- If the replay is clean (usual case), verify `git diff --stat origin/chore/renovateBaseBranch..HEAD` shows **only** the PR's own changes, and that `package.json` and `yarn.lock` reference the same bumped version.
+- If a `yarn.lock`/`package.json` conflict appears, resolve per the lockfile rule: take the base's lockfile, keep the PR's version bump in `package.json`, then regenerate the lock (never hand-edit it).
+
+Then force-push with lease and clean up:
+
+```bash
+git push --force-with-lease=<pr-branch>:origin/<pr-branch> origin HEAD:<pr-branch>
+cd - && git worktree remove --force "$WT"
+```
+
+Merge state should flip `DIRTY` → `UNSTABLE` (conflict resolved, CI running) and a fresh `Checks` run triggers on the new head. This rebase (rewriting a renovate branch's history + force-push) is authorized only when the user explicitly asks to rebase — it's the one exception to "never push to a renovate branch."
+
+Gotcha: never `git worktree remove` the directory you're currently `cd`'d into — deleting the shell's cwd wedges the session. `cd` out first.
+
 ## Notes
 
+- **Don't block on the base branch CI or the rebase "storm."** Each merge into `chore/renovateBaseBranch` advances it, which makes Renovate auto-rebase every other open `renovate/*` PR (cancelling their in-flight runs and starting fresh ones) and triggers a run on the base-branch→`main` PR. Do **not** wait for those base-branch runs or for the whole storm to drain. Stay focused on the target PRs: keep retrying their own `check.yml` runs and **merge each the moment its own checks are green**, regardless of what the base branch or other PRs are doing.
+- Merges advancing the base will cancel/supersede reruns you started on the other targets — that's expected. Just re-check each target, rerun its failed/cancelled jobs, and merge when green; iterate until the batch is done rather than serializing behind base-branch CI.
 - Renovate PRs in this repo target the `chore/renovateBaseBranch` base, not `main` — `gh pr merge` targets each PR's own base automatically, so no special handling is needed.
 - Keep CI load low: rerun only failed jobs, never the whole workflow, and never push commits to retrigger unless the user approves.
 - Never edit generated client code to "fix" a Renovate failure — these PRs only bump dependencies; a real failure should be surfaced, not patched.
+- **Never merge a Python runtime bump to 3.14+.** The PyPI release toolchain (poetry/twine) is not compatible with Python 3.14+, and the release workflow fails to publish the `algoliasearch` package. The `python-version` in `clients/algoliasearch-client-python/.github/workflows/release.yml` must stay on the latest **3.13.x** patch. Before merging any PR (including grouped/batch ones), check its diff for this file: if it bumps `python-version` to 3.14 or above, do not merge — revert to the latest 3.13.x patch or close the PR with an explanation.
+- **Hold bumps that would force a customer-facing runtime bump.** If merging a bump requires raising a *published* client's minimum language/runtime, it's a breaking change for consumers — close the PR with a short explanation instead of migrating (same policy as JUnit 6 → JVM 17+, pytest-aiohttp → Py 3.10+). Known case: **`renovate/melos-8.x`** (Dart) — melos ≥7 drops `melos.yaml` for Dart pub workspaces, which requires `resolution: workspace` on every package and raises the minimum Dart SDK to 3.5+ on all published packages. Keep the Dart client on **melos 6.x**. (Renovate may recreate a closed PR on its next run; to hold permanently, add the dep to the Renovate config's ignore list.)

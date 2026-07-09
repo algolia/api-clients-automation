@@ -47,7 +47,7 @@ public final class RetryStrategy implements Interceptor {
   public Response intercept(@Nonnull Chain chain) {
     Request request = chain.request();
     UseReadTransporter useReadTransporter = (UseReadTransporter) request.tag();
-    CallType callType = (useReadTransporter != null || request.method().equals("GET")) ? CallType.READ : CallType.WRITE;
+    CallType callType = useReadTransporter != null || request.method().equals("GET") ? CallType.READ : CallType.WRITE;
     List<Throwable> errors = new ArrayList<>();
     for (StatefulHost currentHost : callableHosts(callType)) {
       try {
