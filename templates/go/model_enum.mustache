@@ -63,3 +63,8 @@ func (v {{{classname}}}) IsValid() bool {
 func (v {{{classname}}}) Ptr() *{{{classname}}} {
 	return &v
 }
+
+// Values returns the list of allowed values of {{{classname}}}.
+func (v {{{classname}}}) Values() []{{{classname}}} {
+	return Allowed{{{classname}}}EnumValues
+}

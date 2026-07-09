@@ -20,6 +20,7 @@ describe('api', () => {
         requester: nodeEchoRequester(),
       },
     });
+
     const result = (await client.customGet({ path: 'test' })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('test-app-id-dsn.algolia.net');
@@ -31,6 +32,7 @@ describe('api', () => {
         requester: nodeEchoRequester(),
       },
     });
+
     const result = (await client.customPost({ path: 'test' })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('test-app-id.algolia.net');
@@ -53,7 +55,7 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.55.1\).*/);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.55.2\).*/);
   }, 25000);
 });
 
@@ -71,6 +73,7 @@ describe('noContent', () => {
         ],
       },
     });
+
     const result = await client.customDelete({ path: '1/test/no-content' });
 
     expect(result).toEqual(undefined);
@@ -91,6 +94,7 @@ describe('setClientApiKey', () => {
         ],
       },
     });
+
     {
       const result = await client.customGet({ path: 'check-api-key/1' });
 
