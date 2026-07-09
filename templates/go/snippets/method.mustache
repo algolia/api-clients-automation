@@ -24,6 +24,10 @@ func SnippetFor{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Of{{#lambda.p
       // handle the eventual error
       panic(err)
     }
+    {{#listReturnType}}
+
+    // response is a slice of {{clientImport}}.{{.}}
+    {{/listReturnType}}
     
     // >LOG
     {{#hasResponse}}

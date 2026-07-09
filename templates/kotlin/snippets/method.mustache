@@ -17,7 +17,7 @@ class Snippet{{client}} {
       {{> snippets/init}}
 
       // Call the API
-      {{#hasResponse}}var response = {{/hasResponse}}client.{{> tests/method}}
+      {{#hasResponse}}var response{{#listReturnType}}: List<{{.}}>{{/listReturnType}} = {{/hasResponse}}client.{{> tests/method}}
       
       // >LOG
       {{#hasResponse}}
