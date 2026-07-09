@@ -88,9 +88,7 @@ public class ResultsInjectedItemInfoResponse {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ResultsInjectedItemInfoResponse {\n");
-    sb.append("    ")
-      .append(toIndentedString(super.toString()))
-      .append("\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    key: ").append(toIndentedString(key)).append("\n");
     sb.append("    appliedRules: ").append(toIndentedString(appliedRules)).append("\n");
     sb.append("}");

@@ -88,7 +88,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class SearchClient
 {
-    public const VERSION = '4.46.1';
+    public const VERSION = '4.46.2';
 
     /**
      * @var ApiWrapperInterface
@@ -4591,6 +4591,8 @@ class SearchClient
      *
      * @see https://www.algolia.com/doc/libraries/sdk/methods/ingestion/
      *
+     * Warning: calling this method with an empty `$objects` list replaces the index with an empty one, deleting all existing records.
+     *
      * @param string                    $indexName      the `indexName` to replace `objects` in
      * @param array                     $objects        the array of `objects` to store in the given Algolia `indexName`
      * @param array                     $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
@@ -4602,6 +4604,10 @@ class SearchClient
     {
         if (null == $this->ingestionTransporter) {
             throw new \InvalidArgumentException('`transformationOptions` must be set on `SearchConfig` before creating the client, or via `SearchClient::setTransformationOptions(...)` before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/');
+        }
+
+        if (empty($objects)) {
+            Algolia::getLogger()->warning("replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the \"{$indexName}\" index.");
         }
 
         $chunkedOptions ??= new ChunkedHelperOptions(ChunkedHelperOptions::DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES);
@@ -4661,6 +4667,8 @@ class SearchClient
      * Helper: Replace all objects in an index using a temporary one.
      * See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
      *
+     * Warning: calling this method with an empty `$objects` list replaces the index with an empty one, deleting all existing records.
+     *
      * @param string                    $indexName      the `indexName` to replace `objects` in
      * @param array                     $objects        the array of `objects` to store in the given Algolia `indexName`
      * @param array                     $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
@@ -4670,6 +4678,10 @@ class SearchClient
      */
     public function replaceAllObjects($indexName, $objects, $batchSize = 1000, $scopes = ['settings', 'rules', 'synonyms'], $requestOptions = [], ?ChunkedHelperOptions $chunkedOptions = null)
     {
+        if (empty($objects)) {
+            Algolia::getLogger()->warning("replaceAllObjects was called with an empty list of objects, which will delete all records currently in the \"{$indexName}\" index.");
+        }
+
         $chunkedOptions ??= new ChunkedHelperOptions(ChunkedHelperOptions::DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES);
         $tmpIndexName = $indexName.'_tmp_'.rand(10000000, 99999999);
 
