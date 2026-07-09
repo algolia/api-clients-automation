@@ -503,6 +503,9 @@ public suspend fun SearchClient.partialUpdateObjects(
  * See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for
  * implementation details.
  *
+ * **Warning:** calling this method with an empty `objects` list replaces the index with an empty
+ * one, deleting all existing records.
+ *
  * @param indexName The index in which to perform the request.
  * @param objects The list of objects to replace.
  * @param batchSize The size of the batch. Default is 1000.
@@ -519,6 +522,11 @@ public suspend fun SearchClient.replaceAllObjects(
   chunkedOptions: ChunkedHelperOptions =
     ChunkedHelperOptions(maxRetries = DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES),
 ): ReplaceAllObjectsResponse {
+  if (objects.isEmpty()) {
+    options.logger.log(
+      "Warning: replaceAllObjects was called with an empty list of objects, which will delete all records currently in the \"$indexName\" index.",
+    )
+  }
   val maxRetries = chunkedOptions.maxRetries
   val tmpIndexName = "${indexName}_tmp_${Random.nextInt(from = 0, until = 100)}"
 
@@ -859,6 +867,9 @@ public suspend fun SearchClient.partialUpdateObjectsWithTransformation(
  * new records to a temporary index through the ingestion pipeline, and finally moves the temporary
  * index over the original one.
  *
+ * **Warning:** calling this method with an empty `objects` list replaces the index with an empty
+ * one, deleting all existing records.
+ *
  * @param indexName The index in which to perform the request.
  * @param objects The list of objects to replace.
  * @param batchSize The size of the batch. Default is 1000.
@@ -878,6 +889,11 @@ public suspend fun SearchClient.replaceAllObjectsWithTransformation(
     ChunkedHelperOptions(maxRetries = DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES),
 ): ReplaceAllObjectsWithTransformationResponse {
   val transporter = requireIngestionTransporter()
+  if (objects.isEmpty()) {
+    options.logger.log(
+      "Warning: replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the \"$indexName\" index.",
+    )
+  }
   val maxRetries = chunkedOptions.maxRetries
   val tmpIndexName = "${indexName}_tmp_${Random.nextInt(from = 0, until = 100)}"
 
