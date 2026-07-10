@@ -32,14 +32,16 @@ import kotlinx.serialization.json.jsonPrimitive
  * Placed under `jvmTest` (not `commonTest`) on purpose: the client module's test classpath has no
  * coroutine runner in `commonTest` (`kotlinx-coroutines-test` is not a declared dependency, and
  * `runBlocking` is not part of the JS-less multiplatform common source set), so a self-contained
- * coroutine-driven test must live on the JVM target where `runBlocking` is available. `ktor-client-mock`
- * is a `commonTest` dependency and is inherited here.
+ * coroutine-driven test must live on the JVM target where `runBlocking` is available.
+ * `ktor-client-mock` is a `commonTest` dependency and is inherited here.
  */
 class TestBrowseSynonyms {
 
   private val hitsPerPage = 1000
 
-  /** Builds a canned `SearchSynonymsResponse` body with [count] hits prefixed by [objectIdPrefix]. */
+  /**
+   * Builds a canned `SearchSynonymsResponse` body with [count] hits prefixed by [objectIdPrefix].
+   */
   private fun synonymsPageBody(objectIdPrefix: String, count: Int): String {
     val hits =
       (0 until count).joinToString(",") { i ->
@@ -53,32 +55,27 @@ class TestBrowseSynonyms {
     val requestedPages = mutableListOf<Int>()
     val requestedPaths = mutableListOf<String>()
 
-    val engine =
-      MockEngine { request ->
-        requestedPaths += request.url.encodedPath
+    val engine = MockEngine { request ->
+      requestedPaths += request.url.encodedPath
 
-        val bodyBytes =
-          (request.body as? OutgoingContent.ByteArrayContent)?.bytes()
-            ?: error("Unexpected request body type: ${request.body::class}")
-        val page =
-          Json.parseToJsonElement(bodyBytes.decodeToString())
-            .jsonObject["page"]!!
-            .jsonPrimitive
-            .int
-        requestedPages += page
+      val bodyBytes =
+        (request.body as? OutgoingContent.ByteArrayContent)?.bytes()
+          ?: error("Unexpected request body type: ${request.body::class}")
+      val page =
+        Json.parseToJsonElement(bodyBytes.decodeToString()).jsonObject["page"]!!.jsonPrimitive.int
+      requestedPages += page
 
-        // page 0 -> a full page (1000 hits) so iteration continues.
-        // page >= 1 -> a partial page (3 hits) so iteration stops.
-        val content =
-          if (page == 0) synonymsPageBody("page0", hitsPerPage)
-          else synonymsPageBody("page$page", 3)
+      // page 0 -> a full page (1000 hits) so iteration continues.
+      // page >= 1 -> a partial page (3 hits) so iteration stops.
+      val content =
+        if (page == 0) synonymsPageBody("page0", hitsPerPage) else synonymsPageBody("page$page", 3)
 
-        respond(
-          content = content,
-          status = HttpStatusCode.OK,
-          headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString()),
-        )
-      }
+      respond(
+        content = content,
+        status = HttpStatusCode.OK,
+        headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString()),
+      )
+    }
 
     val client =
       SearchClient(appId = "appId", apiKey = "apiKey", options = ClientOptions(engine = engine))
@@ -93,7 +90,11 @@ class TestBrowseSynonyms {
     }
 
     // The helper must request page 0 then page 1 (proving the incremented page is sent), and stop.
-    assertEquals(listOf(0, 1), requestedPages, "browseSynonyms should request consecutive pages 0, 1")
+    assertEquals(
+      listOf(0, 1),
+      requestedPages,
+      "browseSynonyms should request consecutive pages 0, 1",
+    )
 
     // Every request must target the synonyms search endpoint (page read from that POST body).
     assertTrue(

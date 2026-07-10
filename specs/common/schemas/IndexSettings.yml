@@ -1245,7 +1245,7 @@ responseFields:
   default: ['*']
   x-categories:
     - Advanced
-  
+
 restrictHighlightAndSnippetArrays:
   type: boolean
   description: |

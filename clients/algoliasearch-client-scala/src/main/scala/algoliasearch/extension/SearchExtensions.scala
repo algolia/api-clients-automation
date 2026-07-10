@@ -407,6 +407,9 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
       * See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation
       * details.
       *
+      * '''Warning:''' calling this method with an empty `objects` list replaces the index with an empty one, deleting
+      * all existing records.
+      *
       * @param indexName
       *   The index in which to perform the request.
       * @param objects
@@ -429,6 +432,12 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
         chunkedOptions: ChunkedHelperOptions =
           ChunkedHelperOptions(maxRetries = ChunkedHelperOptions.DefaultReplaceAllObjectsMaxRetries)
     )(implicit ec: ExecutionContext): Future[ReplaceAllObjectsResponse] = {
+      if (objects.isEmpty) {
+        client.logger.log(
+          s"""Warning: replaceAllObjects was called with an empty list of objects, which will delete all records currently in the "$indexName" index."""
+        )
+      }
+
       val tmpIndexName = s"${indexName}_tmp_${scala.util.Random.nextInt(100)}"
 
       val steps = for {
@@ -780,6 +789,9 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
       * See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation
       * details.
       *
+      * '''Warning:''' calling this method with an empty `objects` list replaces the index with an empty one, deleting
+      * all existing records.
+      *
       * @param indexName
       *   The `indexName` to replace `objects` in.
       * @param objects
@@ -804,6 +816,12 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
       client.ingestionTransporter match {
         case None => Future.failed(new AlgoliaClientException(transformationOptionsRequired))
         case Some(transporter) =>
+          if (objects.isEmpty) {
+            client.logger.log(
+              s"""Warning: replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the "$indexName" index."""
+            )
+          }
+
           val tmpIndexName = s"${indexName}_tmp_${scala.util.Random.nextInt(100)}"
 
           val steps = for {

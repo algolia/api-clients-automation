@@ -78,9 +78,7 @@ public class UnknownToolConfig implements ToolConfigInput {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class UnknownToolConfig {\n");
-    sb.append("    ")
-      .append(toIndentedString(super.toString()))
-      .append("\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("}");
