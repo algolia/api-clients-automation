@@ -88,9 +88,7 @@ public class CompositionRunSearchResponse {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CompositionRunSearchResponse {\n");
-    sb.append("    ")
-      .append(toIndentedString(super.toString()))
-      .append("\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    objectID: ").append(toIndentedString(objectID)).append("\n");
     sb.append("    appliedRules: ").append(toIndentedString(appliedRules)).append("\n");
     sb.append("}");

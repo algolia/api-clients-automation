@@ -24,7 +24,7 @@ baseInjectionQueryParameters:
     disableExactOnAttributes:
       $ref: '../../../params/Search.yml#/disableExactOnAttributes'
     disableTypoToleranceOnAttributes:
-      $ref: '../../../params/Search.yml#/disableTypoToleranceOnAttributes'    
+      $ref: '../../../params/Search.yml#/disableTypoToleranceOnAttributes'
     distinct:
       $ref: '../../../params/Search.yml#/distinct'
     enableABTest:

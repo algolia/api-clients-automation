@@ -52,6 +52,16 @@
         "dart-version"
       ],
       "allowedVersions": "/^[0-9]+\\.[0-9]+\\.[0-9]+$/"
+    },
+    {
+      "description": "The PyPI release toolchain (poetry/twine) is not compatible with Python 3.14+, which breaks publishing. Keep the Python release workflow on the 3.13.x line.",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchDepNames": [
+        "python"
+      ],
+      "allowedVersions": "<3.14"
     }
   ],
   "customManagers": [
