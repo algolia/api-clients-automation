@@ -65,6 +65,8 @@ export type Algoliasearch = SearchClient & {
   /**
    * Helper: Similar to the `replaceAllObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must have been passed to the client instantiation method.
    *
+   * Warning: calling this method with an empty `objects` list replaces the index with an empty one, deleting all existing records.
+   *
    * @summary Helper: Replaces all objects (records) in the given `index_name` by leveraging the Transformation pipeline setup in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) with the given `objects`. A temporary index is created during this process in order to backup your data.
    * @param replaceAllObjects - The `replaceAllObjects` object.
    * @param replaceAllObjects.indexName - The `indexName` to replace `objects` in.
@@ -148,9 +150,6 @@ export function algoliasearch(
       return ingestionTransporter.chunkedPush({ indexName, objects, action: createIfNotExists ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', batchSize, waitForTasks, maxRetries }, requestOptions);
     },
 
-    /**
-     * Warning: calling this method with an empty `objects` list replaces the index with an empty one, deleting all existing records.
-     */
     async replaceAllObjectsWithTransformation(
       { indexName, objects, batchSize, scopes, maxRetries = DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES }: ReplaceAllObjectsOptions,
       requestOptions?: RequestOptions | undefined,
@@ -160,7 +159,7 @@ export function algoliasearch(
       }
 
       if (objects.length === 0) {
-        this.transporter.logger.info(`Warning: replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the "${indexName}" index.`);
+        console.warn(`replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the "${indexName}" index.`);
       }
 
       const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
