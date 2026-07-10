@@ -56,7 +56,7 @@ public struct Logger {
         self.loggingService.log(level: .notice, message: message)
     }
 
-    public static func warning(_ message: String) {
+    static func warning(_ message: String) {
         self.loggingService.log(level: .warning, message: message)
     }
 
