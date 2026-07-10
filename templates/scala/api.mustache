@@ -205,22 +205,7 @@ class {{classname}}(
 {{/allParams}}
 */
   def {{operationId}}{{#vendorExtensions}}{{#x-is-custom-request}}[T: Manifest]{{/x-is-custom-request}}{{/vendorExtensions}}({{> methodParameters}} requestOptions: Option[RequestOptions] = None)(implicit ec: ExecutionContext): Future[{{#vendorExtensions}}{{#x-is-custom-request}}T{{/x-is-custom-request}}{{^x-is-custom-request}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/x-is-custom-request}}{{/vendorExtensions}}] = Future {
-    {{#requiredParams}}
-    requireNotNull({{paramName}}, "Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
-    {{#isString}}
-    requireNotEmpty({{paramName}}, "Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
-    {{/isString}}
-    {{/requiredParams}}
-
-    val request = HttpRequest.builder()
-      .withMethod("{{httpMethod}}")
-      .withPath({{#vendorExtensions}}{{#x-is-custom-request}}s"{{{serverPathSuffix}}}{{{path}}}"{{/x-is-custom-request}}{{^x-is-custom-request}}s"{{{serverPathSuffix}}}{{#lambda.escape-path}}{{{path}}}{{/lambda.escape-path}}"{{/x-is-custom-request}}{{/vendorExtensions}})
-      {{#bodyParam}}.withBody({{paramName}}){{/bodyParam}}
-      {{#headerParams}}.withHeader("{{baseName}}", {{paramName}}){{/headerParams}}
-      {{#vendorExtensions.x-use-read-transporter}}.withRead(true){{/vendorExtensions.x-use-read-transporter}}
-      {{#vendorExtensions}}{{#queryParams}}{{^x-is-custom-request}}.withQueryParameter("{{baseName}}", {{paramName}}){{/x-is-custom-request}}{{#x-is-custom-request}}.withQueryParameters(parameters){{/x-is-custom-request}}{{/queryParams}}{{/vendorExtensions}}
-      .build()
-    execute[{{#vendorExtensions}}{{#x-is-custom-request}}T{{/x-is-custom-request}}{{^x-is-custom-request}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/x-is-custom-request}}{{/vendorExtensions}}](request, {{#vendorExtensions.x-timeouts}}Some(RequestOptions(writeTimeout = Some(Duration({{write}}, TimeUnit.MILLISECONDS)), readTimeout = Some(Duration({{read}}, TimeUnit.MILLISECONDS)), connectTimeout = Some(Duration({{connect}}, TimeUnit.MILLISECONDS))) + {{/vendorExtensions.x-timeouts}}requestOptions{{#vendorExtensions.x-timeouts}}){{/vendorExtensions.x-timeouts}})
+    execute[{{#vendorExtensions}}{{#x-is-custom-request}}T{{/x-is-custom-request}}{{^x-is-custom-request}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/x-is-custom-request}}{{/vendorExtensions}}]({{operationId}}Request({{#allParams}}{{paramName}} = {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}), {{#vendorExtensions.x-timeouts}}{{operationId}}RequestOptions(requestOptions){{/vendorExtensions.x-timeouts}}{{^vendorExtensions.x-timeouts}}requestOptions{{/vendorExtensions.x-timeouts}})
   }
 
 /** Variant of `{{operationId}}` that returns the full HTTP response: status code, headers, raw body and deserialized data.
@@ -245,14 +230,20 @@ class {{classname}}(
 {{/allParams}}
 */
   def {{operationId}}WithHTTPInfo{{#vendorExtensions}}{{#x-is-custom-request}}[T: Manifest]{{/x-is-custom-request}}{{/vendorExtensions}}({{> methodParameters}} requestOptions: Option[RequestOptions] = None)(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[{{#vendorExtensions}}{{#x-is-custom-request}}T{{/x-is-custom-request}}{{^x-is-custom-request}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/x-is-custom-request}}{{/vendorExtensions}}]] = Future {
+    executeWithHttpInfo[{{#vendorExtensions}}{{#x-is-custom-request}}T{{/x-is-custom-request}}{{^x-is-custom-request}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/x-is-custom-request}}{{/vendorExtensions}}]({{operationId}}Request({{#allParams}}{{paramName}} = {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}), {{#vendorExtensions.x-timeouts}}{{operationId}}RequestOptions(requestOptions){{/vendorExtensions.x-timeouts}}{{^vendorExtensions.x-timeouts}}requestOptions{{/vendorExtensions.x-timeouts}})
+  }
+
+/** Validates the parameters and builds the request shared by `{{operationId}}` and `{{operationId}}WithHTTPInfo`.
+*/
+  private def {{operationId}}Request({{> methodParameters}}): HttpRequest = {
     {{#requiredParams}}
-    requireNotNull({{paramName}}, "Parameter `{{paramName}}` is required when calling `{{operationId}}WithHTTPInfo`.")
+    requireNotNull({{paramName}}, "Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
     {{#isString}}
-    requireNotEmpty({{paramName}}, "Parameter `{{paramName}}` is required when calling `{{operationId}}WithHTTPInfo`.")
+    requireNotEmpty({{paramName}}, "Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
     {{/isString}}
     {{/requiredParams}}
 
-    val request = HttpRequest.builder()
+    HttpRequest.builder()
       .withMethod("{{httpMethod}}")
       .withPath({{#vendorExtensions}}{{#x-is-custom-request}}s"{{{serverPathSuffix}}}{{{path}}}"{{/x-is-custom-request}}{{^x-is-custom-request}}s"{{{serverPathSuffix}}}{{#lambda.escape-path}}{{{path}}}{{/lambda.escape-path}}"{{/x-is-custom-request}}{{/vendorExtensions}})
       {{#bodyParam}}.withBody({{paramName}}){{/bodyParam}}
@@ -260,8 +251,14 @@ class {{classname}}(
       {{#vendorExtensions.x-use-read-transporter}}.withRead(true){{/vendorExtensions.x-use-read-transporter}}
       {{#vendorExtensions}}{{#queryParams}}{{^x-is-custom-request}}.withQueryParameter("{{baseName}}", {{paramName}}){{/x-is-custom-request}}{{#x-is-custom-request}}.withQueryParameters(parameters){{/x-is-custom-request}}{{/queryParams}}{{/vendorExtensions}}
       .build()
-    executeWithHttpInfo[{{#vendorExtensions}}{{#x-is-custom-request}}T{{/x-is-custom-request}}{{^x-is-custom-request}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/x-is-custom-request}}{{/vendorExtensions}}](request, {{#vendorExtensions.x-timeouts}}Some(RequestOptions(writeTimeout = Some(Duration({{write}}, TimeUnit.MILLISECONDS)), readTimeout = Some(Duration({{read}}, TimeUnit.MILLISECONDS)), connectTimeout = Some(Duration({{connect}}, TimeUnit.MILLISECONDS))) + {{/vendorExtensions.x-timeouts}}requestOptions{{#vendorExtensions.x-timeouts}}){{/vendorExtensions.x-timeouts}})
   }
+  {{#vendorExtensions.x-timeouts}}
+
+/** Merges `{{operationId}}`'s default timeouts into the given request options.
+*/
+  private def {{operationId}}RequestOptions(requestOptions: Option[RequestOptions]): Option[RequestOptions] =
+    Some(RequestOptions(writeTimeout = Some(Duration({{write}}, TimeUnit.MILLISECONDS)), readTimeout = Some(Duration({{read}}, TimeUnit.MILLISECONDS)), connectTimeout = Some(Duration({{connect}}, TimeUnit.MILLISECONDS))) + requestOptions)
+  {{/vendorExtensions.x-timeouts}}
 
 {{/operation}}
 
