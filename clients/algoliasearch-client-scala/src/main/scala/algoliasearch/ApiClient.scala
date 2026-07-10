@@ -50,6 +50,10 @@ abstract class ApiClient(
     throw AlgoliaClientException("`apiKey` is missing.")
   }
 
+  /** The logger from the client options, or [[Logger.Default]] when logging is not configured. */
+  private[algoliasearch] val logger: Logger =
+    options.logging.map(_.logger).getOrElse(Logger.Default)
+
   private val authInterceptor = new AuthInterceptor(appId, apiKey)
 
   private val requester = options.customRequester match {

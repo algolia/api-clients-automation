@@ -11,9 +11,7 @@ import com.fasterxml.jackson.databind.annotation.*;
  * type you can select.
  */
 @JsonDeserialize(as = Platform.class)
-public enum Platform
-  implements PlatformWithNone
-{
+public enum Platform implements PlatformWithNone {
   BIGCOMMERCE("bigcommerce"),
 
   COMMERCETOOLS("commercetools"),
