@@ -1,6 +1,6 @@
 import fsp from 'fs/promises';
 
-import yaml from 'js-yaml';
+import { dump, load } from 'js-yaml';
 
 import { Cache } from '../cache.ts';
 import { exists, GENERATORS, run, toAbsolutePath } from '../common.ts';
@@ -29,8 +29,8 @@ async function buildLiteSpec({
 }): Promise<void> {
   await buildSpec({ spec: 'recommend', outputFormat: outputFormat, docs, useCache });
 
-  const base = yaml.load(await fsp.readFile(toAbsolutePath(bundledPath), 'utf8')) as Spec;
-  const recommend = yaml.load(
+  const base = load(await fsp.readFile(toAbsolutePath(bundledPath), 'utf8')) as Spec;
+  const recommend = load(
     await fsp.readFile(toAbsolutePath(bundledPath.replace('algoliasearch', 'recommend')), 'utf8'),
   ) as Spec;
   base.paths = { ...base.paths, ...recommend.paths };
@@ -48,7 +48,7 @@ async function buildLiteSpec({
     }
   }
 
-  await fsp.writeFile(bundledPath, yaml.dump(lite));
+  await fsp.writeFile(bundledPath, dump(lite));
 
   // remove unused components for the outputted light spec
   await run(`yarn redocly bundle ${bundledPath} -o ${bundledPath} --ext ${outputFormat} --remove-unused-components`);

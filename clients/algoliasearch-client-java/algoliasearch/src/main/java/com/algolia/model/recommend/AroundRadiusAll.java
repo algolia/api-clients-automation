@@ -8,9 +8,7 @@ import com.fasterxml.jackson.databind.annotation.*;
 
 /** Return all records with a valid `_geoloc` attribute. Don't filter by distance. */
 @JsonDeserialize(as = AroundRadiusAll.class)
-public enum AroundRadiusAll
-  implements AroundRadius
-{
+public enum AroundRadiusAll implements AroundRadius {
   ALL("all");
 
   private final String value;

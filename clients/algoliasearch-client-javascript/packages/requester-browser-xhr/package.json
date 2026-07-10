@@ -1,6 +1,6 @@
 {
   "name": "@algolia/requester-browser-xhr",
-  "version": "5.55.1",
+  "version": "5.55.2",
   "description": "Promise-based request library for browser using xhr.",
   "repository": {
     "type": "git",
@@ -32,10 +32,10 @@
     "test:bundle": "publint . && attw --pack . --ignore-rules cjs-resolves-to-esm"
   },
   "dependencies": {
-    "@algolia/client-common": "5.55.1"
+    "@algolia/client-common": "5.55.2"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.18.3",
+    "@arethetypeswrong/cli": "0.18.4",
     "@types/node": "24.13.2",
     "jsdom": "29.1.1",
     "publint": "0.3.21",

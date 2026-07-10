@@ -60,9 +60,7 @@ public class ErrorBase {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ErrorBase {\n");
-    sb.append("    ")
-      .append(toIndentedString(super.toString()))
-      .append("\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("}");
     return sb.toString();
