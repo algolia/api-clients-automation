@@ -26,7 +26,7 @@ public final class RequestOptions {
 
   public RequestOptions addExtraQueryParameters(String key, Object value) {
     if (value == null) return this;
-    queryParameters.put(key, StringUtils.paramToString((value)));
+    queryParameters.put(key, StringUtils.paramToString(value));
     return this;
   }
 

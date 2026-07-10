@@ -1,8 +1,6 @@
 import { algoliasearch } from 'algoliasearch';
 
-const playlists: Record<string, any>[] = [
-  /* Your records */
-];
+const playlists: Record<string, any>[] = [/* Your records */];
 
 const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
