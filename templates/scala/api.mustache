@@ -205,7 +205,7 @@ class {{classname}}(
 {{/allParams}}
 */
   def {{operationId}}{{#vendorExtensions}}{{#x-is-custom-request}}[T: Manifest]{{/x-is-custom-request}}{{/vendorExtensions}}({{> methodParameters}} requestOptions: Option[RequestOptions] = None)(implicit ec: ExecutionContext): Future[{{#vendorExtensions}}{{#x-is-custom-request}}T{{/x-is-custom-request}}{{^x-is-custom-request}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/x-is-custom-request}}{{/vendorExtensions}}] = Future {
-    execute[{{#vendorExtensions}}{{#x-is-custom-request}}T{{/x-is-custom-request}}{{^x-is-custom-request}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/x-is-custom-request}}{{/vendorExtensions}}]({{operationId}}Request({{#allParams}}{{paramName}} = {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}), {{#vendorExtensions.x-timeouts}}{{operationId}}RequestOptions(requestOptions){{/vendorExtensions.x-timeouts}}{{^vendorExtensions.x-timeouts}}requestOptions{{/vendorExtensions.x-timeouts}})
+    execute[{{#vendorExtensions}}{{#x-is-custom-request}}T{{/x-is-custom-request}}{{^x-is-custom-request}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/x-is-custom-request}}{{/vendorExtensions}}]({{operationId}}HttpRequest({{#allParams}}{{paramName}} = {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}), {{#vendorExtensions.x-timeouts}}{{operationId}}HttpRequestOptions(requestOptions){{/vendorExtensions.x-timeouts}}{{^vendorExtensions.x-timeouts}}requestOptions{{/vendorExtensions.x-timeouts}})
   }
 
 /** Variant of `{{operationId}}` that returns the full HTTP response: status code, headers, raw body and deserialized data.
@@ -230,12 +230,12 @@ class {{classname}}(
 {{/allParams}}
 */
   def {{operationId}}WithHTTPInfo{{#vendorExtensions}}{{#x-is-custom-request}}[T: Manifest]{{/x-is-custom-request}}{{/vendorExtensions}}({{> methodParameters}} requestOptions: Option[RequestOptions] = None)(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[{{#vendorExtensions}}{{#x-is-custom-request}}T{{/x-is-custom-request}}{{^x-is-custom-request}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/x-is-custom-request}}{{/vendorExtensions}}]] = Future {
-    executeWithHttpInfo[{{#vendorExtensions}}{{#x-is-custom-request}}T{{/x-is-custom-request}}{{^x-is-custom-request}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/x-is-custom-request}}{{/vendorExtensions}}]({{operationId}}Request({{#allParams}}{{paramName}} = {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}), {{#vendorExtensions.x-timeouts}}{{operationId}}RequestOptions(requestOptions){{/vendorExtensions.x-timeouts}}{{^vendorExtensions.x-timeouts}}requestOptions{{/vendorExtensions.x-timeouts}})
+    executeWithHttpInfo[{{#vendorExtensions}}{{#x-is-custom-request}}T{{/x-is-custom-request}}{{^x-is-custom-request}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/x-is-custom-request}}{{/vendorExtensions}}]({{operationId}}HttpRequest({{#allParams}}{{paramName}} = {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}), {{#vendorExtensions.x-timeouts}}{{operationId}}HttpRequestOptions(requestOptions){{/vendorExtensions.x-timeouts}}{{^vendorExtensions.x-timeouts}}requestOptions{{/vendorExtensions.x-timeouts}})
   }
 
 /** Validates the parameters and builds the request shared by `{{operationId}}` and `{{operationId}}WithHTTPInfo`.
 */
-  private def {{operationId}}Request({{> methodParameters}}): HttpRequest = {
+  private def {{operationId}}HttpRequest({{> methodParameters}}): HttpRequest = {
     {{#requiredParams}}
     requireNotNull({{paramName}}, "Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
     {{#isString}}
@@ -256,7 +256,7 @@ class {{classname}}(
 
 /** Merges `{{operationId}}`'s default timeouts into the given request options.
 */
-  private def {{operationId}}RequestOptions(requestOptions: Option[RequestOptions]): Option[RequestOptions] =
+  private def {{operationId}}HttpRequestOptions(requestOptions: Option[RequestOptions]): Option[RequestOptions] =
     Some(RequestOptions(writeTimeout = Some(Duration({{write}}, TimeUnit.MILLISECONDS)), readTimeout = Some(Duration({{read}}, TimeUnit.MILLISECONDS)), connectTimeout = Some(Duration({{connect}}, TimeUnit.MILLISECONDS))) + requestOptions)
   {{/vendorExtensions.x-timeouts}}
 
