@@ -29,6 +29,7 @@ describe('api', () => {
       // @ts-ignore
       region: 'us',
     });
+
     try {
       // @ts-ignore
       const result = await client.customGet({ path: '1/html-error' });
@@ -69,6 +70,7 @@ describe('api', () => {
       // @ts-ignore
       region: 'us',
     });
+
     const result = await client.customGet({ path: '1/long-wait' });
 
     expect(result).toEqual({ message: 'OK' });
@@ -115,7 +117,7 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.55.1\).*/);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.55.2\).*/);
   }, 25000);
 });
 
@@ -135,6 +137,7 @@ describe('noContent', () => {
       // @ts-ignore
       region: 'us',
     });
+
     const result = await client.customDelete({ path: '1/test/no-content' });
 
     expect(result).toEqual(undefined);
@@ -150,6 +153,7 @@ describe('parameters', () => {
       // @ts-ignore
       region: 'us',
     });
+
     const result = (await client.getSource({
       sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
@@ -190,6 +194,7 @@ describe('setClientApiKey', () => {
       // @ts-ignore
       region: 'us',
     });
+
     {
       const result = await client.customGet({ path: 'check-api-key/1' });
 
