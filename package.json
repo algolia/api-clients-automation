@@ -43,7 +43,7 @@
     "prettier-plugin-java": "2.10.2",
     "prettier-plugin-organize-imports": "4.3.0",
     "renovate-config-algolia": "2.2.0",
-    "typescript": "5.9.3"
+    "typescript": "7.0.2"
   },
   "resolutions": {
     "axios": "^1.16.0",

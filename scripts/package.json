@@ -47,7 +47,7 @@
     "micromatch": "4.0.8",
     "semver": "7.8.5",
     "spinnies": "0.5.1",
-    "typescript": "5.9.3",
+    "typescript": "7.0.2",
     "vitest": "4.1.10"
   }
 }
