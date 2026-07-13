@@ -180,4 +180,25 @@ describe('buildVersionRanges', () => {
   it('handles an empty timeline', () => {
     expect(buildVersionRanges([])).toEqual([]);
   });
+
+  it('throws when a language version goes backwards, naming the offending tag', () => {
+    const timeline = [
+      release('t1', '2024-10-10', { python: '4.19.0' }, { search: { python: { addApiKey: { minimal: 'A' } } } }),
+      // e.g. a 4.18.2 backport tagged after the 4.19.0 release.
+      release('t2', '2024-11-01', { python: '4.18.2' }, { search: { python: { addApiKey: { minimal: 'A' } } } }),
+    ];
+
+    expect(() => buildVersionRanges(timeline)).toThrow(
+      /python package version went backwards at t2: 4\.19\.0 -> 4\.18\.2/,
+    );
+  });
+
+  it('accepts a release that does not bump a language version', () => {
+    const timeline = [
+      release('t1', '2024-10-10', { python: '4.19.0' }, { search: { python: { addApiKey: { minimal: 'A' } } } }),
+      release('t2', '2024-11-01', { python: '4.19.0' }, { search: { python: { addApiKey: { minimal: 'A' } } } }),
+    ];
+
+    expect(buildVersionRanges(timeline)).toHaveLength(1);
+  });
 });

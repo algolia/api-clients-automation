@@ -8,6 +8,8 @@
  * old range and start a new one; when a snippet disappears, close its range too.
  */
 
+import { encodeVersion } from './version.ts';
+
 /** language -> operationId -> variant -> code. Structurally compatible with specs' `CodeSamples`. */
 export type ApiSnippets = Record<string, Record<string, Record<string, string>>>;
 
@@ -50,8 +52,20 @@ export interface VersionedSnippet {
 export function buildVersionRanges(timeline: ReleaseSnapshot[]): VersionedSnippet[] {
   const open = new Map<string, VersionedSnippet>();
   const done: VersionedSnippet[] = [];
+  const lastVersions = new Map<string, string>();
 
   timeline.forEach((release, index) => {
+    // Range stretching assumes each language's version stream never goes backwards
+    // across the timeline. A backport release (tagged after a newer one) or a bad
+    // clients.config.json at one tag would silently corrupt the ranges — fail loud.
+    for (const [language, version] of Object.entries(release.versions)) {
+      const previous = lastVersions.get(language);
+      if (previous !== undefined && encodeVersion(version) < encodeVersion(previous)) {
+        throw new Error(`${language} package version went backwards at ${release.tag}: ${previous} -> ${version}`);
+      }
+      lastVersions.set(language, version);
+    }
+
     const seenThisRelease = new Set<string>();
 
     for (const [api, byLanguage] of Object.entries(release.snippets)) {
