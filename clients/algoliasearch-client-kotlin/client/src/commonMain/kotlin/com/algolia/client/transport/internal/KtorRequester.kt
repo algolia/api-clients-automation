@@ -6,6 +6,7 @@ import com.algolia.client.configuration.internal.HEADER_APIKEY
 import com.algolia.client.exception.AlgoliaRetryException
 import com.algolia.client.exception.internal.asApiException
 import com.algolia.client.exception.internal.asClientException
+import com.algolia.client.transport.AlgoliaHttpResponse
 import com.algolia.client.transport.RequestConfig
 import com.algolia.client.transport.RequestMethod
 import com.algolia.client.transport.RequestOptions
@@ -15,6 +16,7 @@ import io.ktor.client.call.*
 import io.ktor.client.network.sockets.*
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.client.utils.*
 import io.ktor.http.*
 import io.ktor.util.*
@@ -56,7 +58,33 @@ public class KtorRequester(
     requestConfig: RequestConfig,
     requestOptions: RequestOptions?,
     returnType: TypeInfo,
-  ): T {
+  ): T =
+    executeWithRetry(requestConfig, requestOptions) { response ->
+      @Suppress("UNCHECKED_CAST")
+      val body: T = if (response.hasEmptyBody()) null as T else response.body<T>(returnType)
+      body
+    }
+
+  override suspend fun <T> executeWithHttpInfo(
+    requestConfig: RequestConfig,
+    requestOptions: RequestOptions?,
+    returnType: TypeInfo,
+  ): AlgoliaHttpResponse<T> =
+    executeWithRetry(requestConfig, requestOptions) { response ->
+      val isEmpty = response.hasEmptyBody()
+      AlgoliaHttpResponse(
+        statusCode = response.status.value,
+        headers = response.headers.toMap(),
+        body = if (isEmpty) null else response.bodyAsText(),
+        data = if (isEmpty) null else response.body<T>(returnType),
+      )
+    }
+
+  private suspend fun <R> executeWithRetry(
+    requestConfig: RequestConfig,
+    requestOptions: RequestOptions?,
+    handleResponse: suspend (HttpResponse) -> R,
+  ): R {
     val callType = callTypeOf(requestConfig)
     val hosts = callableHosts(callType)
     val errors by lazy(LazyThreadSafetyMode.NONE) { mutableListOf<Throwable>() }
@@ -71,12 +99,9 @@ public class KtorRequester(
       requestBuilder.setTimeout(requestOptions, callType, host)
       try {
         val response = httpClient.request(requestBuilder)
-        @Suppress("UNCHECKED_CAST")
-        val body: T =
-          if (response.status.value == 204 || response.contentLength() == 0L) null as T
-          else response.body<T>(returnType)
+        val result = handleResponse(response)
         mutex.withLock { host.reset() }
-        return body
+        return result
       } catch (exception: Throwable) {
         host.onError(exception)
         errors += exception.asClientException()
@@ -84,6 +109,8 @@ public class KtorRequester(
     }
     throw AlgoliaRetryException(errors)
   }
+
+  private fun HttpResponse.hasEmptyBody(): Boolean = status.value == 204 || contentLength() == 0L
 
   private fun callTypeOf(requestConfig: RequestConfig): CallType =
     if (requestConfig.isRead || requestConfig.method == RequestMethod.GET) {
