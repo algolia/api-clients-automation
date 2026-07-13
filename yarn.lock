@@ -4914,7 +4914,7 @@ __metadata:
     eslint-vitest-rule-tester: "npm:3.1.0"
     typescript: "npm:5.9.3"
     vitest: "npm:4.1.10"
-    yaml-eslint-parser: "npm:2.0.0"
+    yaml-eslint-parser: "npm:2.1.0"
   languageName: unknown
   linkType: soft
 
@@ -9811,7 +9811,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yaml-eslint-parser@npm:2.0.0, yaml-eslint-parser@npm:^2.0.0":
+"yaml-eslint-parser@npm:2.1.0":
+  version: 2.1.0
+  resolution: "yaml-eslint-parser@npm:2.1.0"
+  dependencies:
+    eslint-visitor-keys: "npm:^5.0.0"
+    yaml: "npm:^2.0.0"
+  checksum: 10/f8e6eea0bb6b70c339db5f6748017f0bfc72398c94bccf61cb22a5fbfa08f092756eff3a0615cf0637523ba7e61a916d192d498ab6699e380c42c0cf3b167169
+  languageName: node
+  linkType: hard
+
+"yaml-eslint-parser@npm:^2.0.0":
   version: 2.0.0
   resolution: "yaml-eslint-parser@npm:2.0.0"
   dependencies:
