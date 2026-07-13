@@ -8,7 +8,7 @@
  * old range and start a new one; when a snippet disappears, close its range too.
  */
 
-import { encodeVersion } from './version.ts';
+import semver from 'semver';
 
 /** language -> operationId -> variant -> code. Structurally compatible with specs' `CodeSamples`. */
 export type ApiSnippets = Record<string, Record<string, Record<string, string>>>;
@@ -75,9 +75,11 @@ export function buildVersionRanges(timeline: ReleaseSnapshot[]): VersionedSnippe
     // Range stretching assumes each language's version stream never goes backwards
     // across the timeline. A backport release (tagged after a newer one) or a bad
     // clients.config.json at one tag would silently corrupt the ranges — fail loud.
+    // Full semver precedence, so a prerelease after its release (6.0.0 -> 6.0.0-beta.2)
+    // is backwards too, and an unparseable version throws instead of slipping through.
     for (const [language, version] of Object.entries(release.versions)) {
       const previous = lastVersions.get(language);
-      if (previous !== undefined && encodeVersion(version) < encodeVersion(previous)) {
+      if (previous !== undefined && semver.lt(version, previous)) {
         throw new Error(`${language} package version went backwards at ${release.tag}: ${previous} -> ${version}`);
       }
       lastVersions.set(language, version);

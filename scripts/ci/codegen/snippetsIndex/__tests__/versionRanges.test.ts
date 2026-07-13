@@ -202,6 +202,33 @@ describe('buildVersionRanges', () => {
     expect(buildVersionRanges(timeline)).toHaveLength(1);
   });
 
+  it('throws when a prerelease follows its own release (semver precedence, not numeric collapse)', () => {
+    const timeline = [
+      release('t1', '2024-10-10', { python: '6.0.0' }, { search: { python: { addApiKey: { minimal: 'A' } } } }),
+      release('t2', '2024-11-01', { python: '6.0.0-beta.2' }, { search: { python: { addApiKey: { minimal: 'A' } } } }),
+    ];
+
+    expect(() => buildVersionRanges(timeline)).toThrow(
+      /python package version went backwards at t2: 6\.0\.0 -> 6\.0\.0-beta\.2/,
+    );
+  });
+
+  it('keeps eras split at a prerelease boundary distinct (beta and GA never merge)', () => {
+    const ranges = buildVersionRanges([
+      release('t1', '2024-10-10', { python: '6.0.0-beta.1' }, { search: { python: { addApiKey: { minimal: 'B' } } } }),
+      release('t2', '2024-11-01', { python: '6.0.0' }, { search: { python: { addApiKey: { minimal: 'C' } } } }),
+    ]);
+
+    expect(ranges).toHaveLength(2);
+    expect(ranges[0]).toMatchObject({
+      code: 'B',
+      versionFrom: '6.0.0-beta.1',
+      versionTo: '6.0.0-beta.1',
+      isCurrent: false,
+    });
+    expect(ranges[1]).toMatchObject({ code: 'C', versionFrom: '6.0.0', versionTo: '6.0.0', isCurrent: true });
+  });
+
   it('drops a range superseded at its own version (code changed with no version bump)', () => {
     // e.g. a snippet regeneration fix between two tags that did not release the language:
     // code A never shipped under a version of its own, so only B survives for 4.19.0.
