@@ -130,12 +130,17 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
         language,
       });
       break;
-    case 'scala':
-      await run(`sbt 'testOnly ${filter((f) => `algoliasearch.${f}.*`)}'`, {
+    case 'scala': {
+      const scalaTests = [
+        ...folders.map((folder) => `algoliasearch.${folder}.*`),
+        ...(suites.client ? ['algoliasearch.manual.*'] : []),
+      ].join(' ');
+      await run(`sbt 'testOnly ${scalaTests}'`, {
         cwd,
         language,
       });
       break;
+    }
     case 'swift':
       await run(
         `swift test -Xswiftc -suppress-warnings --build-path ${getSwiftBuildFolder()} --parallel ${filter((f) => `--filter "${f}.*"`)}`,
