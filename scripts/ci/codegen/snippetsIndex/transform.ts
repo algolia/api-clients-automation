@@ -149,8 +149,12 @@ export async function readDescriptions(apis: string[]): Promise<DescriptionLooku
     let spec: OpenApiSpec;
     try {
       spec = JSON.parse(await readFile(toAbsolutePath(`docs/bundled/${api}.json`), 'utf8')) as OpenApiSpec;
-    } catch {
-      continue; // no spec for this api (e.g. a snippets-only bundle) — ops fall back to pseudo/raw
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+        continue; // no spec for this api (e.g. a snippets-only bundle) — ops fall back to pseudo/raw
+      }
+      // An existing spec that fails to read or parse would silently degrade every catalog title.
+      throw new Error(`failed to read spec docs/bundled/${api}.json: ${error}`);
     }
     for (const byMethod of Object.values(spec.paths ?? {})) {
       for (const op of Object.values(byMethod)) {

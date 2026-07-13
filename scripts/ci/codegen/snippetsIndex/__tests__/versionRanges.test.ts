@@ -266,6 +266,33 @@ describe('buildVersionRanges', () => {
     expect(ranges[0]).toMatchObject({ versionFrom: '0.0.0', versionTo: '4.1.0', isCurrent: true });
   });
 
+  it('starts a new snippet at the last-seen language version when the version disappears', () => {
+    const ranges = buildVersionRanges([
+      release('t1', '2024-10-10', { python: '4.0.0' }, { search: { python: { search: { default: 'S' } } } }),
+      release(
+        't2',
+        '2024-11-01',
+        {},
+        { search: { python: { search: { default: 'S' }, addApiKey: { minimal: 'A' } } } },
+      ),
+    ]);
+
+    // The new snippet has no open range to lean on, but the language's version is still known.
+    expect(select(ranges, { operationId: 'addApiKey' })[0]).toMatchObject({
+      versionFrom: '4.0.0',
+      versionTo: '4.0.0',
+      isCurrent: true,
+    });
+  });
+
+  it('throws on an unparseable language version, naming the offending tag', () => {
+    const timeline = [
+      release('t1', '2024-10-10', { python: 'not-a-version' }, { search: { python: { addApiKey: { minimal: 'A' } } } }),
+    ];
+
+    expect(() => buildVersionRanges(timeline)).toThrow(/invalid python package version at t1: "not-a-version"/);
+  });
+
   it('carries the previous versionTo forward when a version disappears mid-range', () => {
     const ranges = buildVersionRanges([
       release('t1', '2024-10-10', { python: '4.0.0' }, { search: { python: { addApiKey: { minimal: 'A' } } } }),

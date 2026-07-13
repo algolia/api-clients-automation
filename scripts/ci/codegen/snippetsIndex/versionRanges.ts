@@ -76,8 +76,11 @@ export function buildVersionRanges(timeline: ReleaseSnapshot[]): VersionedSnippe
     // across the timeline. A backport release (tagged after a newer one) or a bad
     // clients.config.json at one tag would silently corrupt the ranges — fail loud.
     // Full semver precedence, so a prerelease after its release (6.0.0 -> 6.0.0-beta.2)
-    // is backwards too, and an unparseable version throws instead of slipping through.
+    // is backwards too, and an unparseable version throws, naming the offending tag.
     for (const [language, version] of Object.entries(release.versions)) {
+      if (!semver.valid(version)) {
+        throw new Error(`invalid ${language} package version at ${release.tag}: "${version}"`);
+      }
       const previous = lastVersions.get(language);
       if (previous !== undefined && semver.lt(version, previous)) {
         throw new Error(`${language} package version went backwards at ${release.tag}: ${previous} -> ${version}`);
@@ -94,7 +97,7 @@ export function buildVersionRanges(timeline: ReleaseSnapshot[]): VersionedSnippe
             const key = `${api} ${language} ${operationId} ${variant}`;
             seenThisRelease.add(key);
             const current = open.get(key);
-            const version = release.versions[language] ?? current?.versionTo ?? '0.0.0';
+            const version = release.versions[language] ?? lastVersions.get(language) ?? '0.0.0';
 
             if (current && current.code === code) {
               // Same code, newer release: stretch the range forward.
