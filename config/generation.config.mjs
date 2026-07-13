@@ -51,6 +51,7 @@ export const patterns = [
   '!clients/algoliasearch-client-go/*',
   '!clients/algoliasearch-client-go/algolia/transport/**',
   '!clients/algoliasearch-client-go/algolia/errs/**',
+  '!clients/algoliasearch-client-go/algolia/sse/**',
   '!clients/algoliasearch-client-go/algolia/call/*',
   '!clients/algoliasearch-client-go/algolia/compression/*',
   '!clients/algoliasearch-client-go/algolia/debug/*',
