@@ -26,8 +26,8 @@ export type SnippetRecord = {
   code: string;
   versionFrom: string;
   versionTo: string;
+  /** Ranking-only (customRanking keeps the newest eras when a query truncates); matching uses the strings. */
   versionFromNum: number;
-  versionToNum: number;
   isCurrent: boolean;
   firstVersionUnknown: boolean;
 };
@@ -92,7 +92,6 @@ export function snippetRecord(range: VersionedSnippet): SnippetRecord {
     versionFrom: range.versionFrom,
     versionTo: range.versionTo,
     versionFromNum: encodeVersion(range.versionFrom),
-    versionToNum: encodeVersion(range.versionTo),
     isCurrent: range.isCurrent,
     firstVersionUnknown: range.firstVersionUnknown,
   };

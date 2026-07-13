@@ -21,7 +21,10 @@ const snippetsSettings = {
     'filterOnly(variant)',
     'filterOnly(isCurrent)',
   ],
-  numericAttributesForFiltering: ['versionFromNum', 'versionToNum'],
+  // Version matching happens in the MCP reader on the versionFrom/versionTo strings; no
+  // numeric filtering is used. versionFromNum only feeds customRanking, so that a query
+  // hitting the reader's page cap truncates the oldest eras, never the current ones.
+  numericAttributesForFiltering: [],
   customRanking: ['desc(versionFromNum)'],
 };
 

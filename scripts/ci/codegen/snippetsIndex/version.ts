@@ -9,8 +9,8 @@ const MAJOR_MULT = 1_000_000;
  * 0 (sorts first — matches the `'0.0.0'` sentinel `buildVersionRanges` uses when no version
  * is known). Throws if minor or patch reach 1000, so a silent ordering bug fails loud instead.
  *
- * Only feeds the `versionFromNum`/`versionToNum` ranking fields (`customRanking` orders an
- * operation's eras by them). Version *matching* happens in the MCP reader (algolia/mcp-server,
+ * Only feeds the `versionFromNum` ranking field (`customRanking` orders an operation's
+ * eras by it). Version *matching* happens in the MCP reader (algolia/mcp-server,
  * `src/tools/snippets/`), which compares the `versionFrom`/`versionTo` strings with real
  * semver — so the prerelease collapse is harmless: eras split at a prerelease boundary may
  * tie in ranking, never in matching.

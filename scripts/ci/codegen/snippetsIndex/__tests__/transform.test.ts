@@ -20,7 +20,7 @@ function range(overrides: Partial<VersionedSnippet> = {}): VersionedSnippet {
 }
 
 describe('snippetRecord', () => {
-  it('carries the snippet fields through and encodes the versions numerically', () => {
+  it('carries the snippet fields through and adds the ranking encoding', () => {
     const record = snippetRecord(range({ versionFrom: '5.8.1', versionTo: '5.10.0' }));
     expect(record).toMatchObject({
       api: 'abtesting',
@@ -31,10 +31,10 @@ describe('snippetRecord', () => {
       versionFrom: '5.8.1',
       versionTo: '5.10.0',
       versionFromNum: 5_008_001,
-      versionToNum: 5_010_000,
       isCurrent: true,
       firstVersionUnknown: false,
     });
+    expect(record).not.toHaveProperty('versionToNum'); // ranking never looks at versionTo
   });
 
   it('produces a stable objectID from identity + versionFrom', () => {
