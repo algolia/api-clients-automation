@@ -112,6 +112,15 @@ export interface BuildTimelineOptions {
 export async function buildTimeline(options: BuildTimelineOptions = {}): Promise<ReleaseSnapshot[]> {
   const tags = selectReachable(await listReleaseTags(), options.sinceDate ?? FIRST_SNAPSHOT_DATE);
 
+  // An empty tag list means we can't see history (shallow clone, missing tags) — pushing
+  // from here would replace the full index with a HEAD-only snapshot. Fail loud instead.
+  if (tags.length === 0) {
+    throw new Error(
+      'no released-* tags found in range — shallow clone or missing tags? ' +
+        'run `git fetch --unshallow --tags` (or check SINCE_DATE) before indexing',
+    );
+  }
+
   // Parse each unique blob once; many tags share the same file contents.
   const snippetsByOid = new Map<string, ApiSnippets>();
   const versionsByOid = new Map<string, Record<string, string>>();
