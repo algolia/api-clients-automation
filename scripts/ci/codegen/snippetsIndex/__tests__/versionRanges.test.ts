@@ -214,6 +214,21 @@ describe('buildVersionRanges', () => {
     expect(ranges[0]).toMatchObject({ code: 'B', versionFrom: '4.19.0', versionTo: '4.19.0', isCurrent: true });
   });
 
+  it('rewinds a multi-version range superseded at its final version (code changed with no version bump)', () => {
+    // Same event as the drop case, but the old range also covered earlier versions, so it
+    // survives — rewound to 4.18.0 so it does not share 4.19.0 with its replacement.
+    const ranges = buildVersionRanges([
+      release('t1', '2024-10-10', { python: '4.18.0' }, { search: { python: { addApiKey: { minimal: 'A' } } } }),
+      release('t2', '2024-11-01', { python: '4.19.0' }, { search: { python: { addApiKey: { minimal: 'A' } } } }),
+      release('t3', '2024-12-01', { python: '4.19.0' }, { search: { python: { addApiKey: { minimal: 'B' } } } }),
+    ]);
+
+    expect(ranges).toHaveLength(2);
+    expect(ranges[0]).toMatchObject({ code: 'A', versionFrom: '4.18.0', versionTo: '4.18.0', isCurrent: false });
+    expect(ranges[0]).not.toHaveProperty('prevVersionTo'); // bookkeeping stays internal
+    expect(ranges[1]).toMatchObject({ code: 'B', versionFrom: '4.19.0', versionTo: '4.19.0', isCurrent: true });
+  });
+
   it('falls back to the 0.0.0 sentinel when a language has no version, then picks up a real one', () => {
     const ranges = buildVersionRanges([
       release('t1', '2024-10-10', {}, { search: { python: { addApiKey: { minimal: 'A' } } } }),

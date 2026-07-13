@@ -34,7 +34,11 @@ export interface VersionedSnippet {
   code: string;
   /** First version we saw this code at. A lower bound when `firstVersionUnknown` is true. */
   versionFrom: string;
-  /** Last version we saw this code at. For current snippets, the newest release's version. */
+  /**
+   * Last version at which this code was the newest for that version. For current snippets,
+   * the newest release's version. Rewound past versions where a later range superseded it
+   * (code changed with no version bump), so ranges never share a version.
+   */
   versionTo: string;
   /**
    * True when this code was already shipping at the start of our history, so its real first
@@ -45,12 +49,24 @@ export interface VersionedSnippet {
   isCurrent: boolean;
 }
 
+/** An open range plus the bookkeeping needed to rewind it if it gets superseded. */
+interface OpenRange extends VersionedSnippet {
+  /** Last distinct version before `versionTo` — where a rewind lands. Unset until the first version bump. */
+  prevVersionTo?: string;
+}
+
+/** A range leaving the open set: strip the internal bookkeeping field. */
+function seal(range: OpenRange, isCurrent: boolean): VersionedSnippet {
+  const { prevVersionTo: _prevVersionTo, ...sealed } = range;
+  return { ...sealed, isCurrent };
+}
+
 /**
  * Collapse a chronological timeline of releases into per-version-range snippet records.
  * See the file header for the one-paragraph explanation.
  */
 export function buildVersionRanges(timeline: ReleaseSnapshot[]): VersionedSnippet[] {
-  const open = new Map<string, VersionedSnippet>();
+  const open = new Map<string, OpenRange>();
   const done: VersionedSnippet[] = [];
   const lastVersions = new Map<string, string>();
   let sawSnippets = false;
@@ -80,6 +96,9 @@ export function buildVersionRanges(timeline: ReleaseSnapshot[]): VersionedSnippe
 
             if (current && current.code === code) {
               // Same code, newer release: stretch the range forward.
+              if (version !== current.versionTo) {
+                current.prevVersionTo = current.versionTo;
+              }
               current.versionTo = version;
             } else {
               // Code changed (or first sight): close the old range, start a new one.
@@ -88,7 +107,12 @@ export function buildVersionRanges(timeline: ReleaseSnapshot[]): VersionedSnippe
               // a version of its own. It is unreachable at the version grain and would
               // collide with the new range on objectID, so drop it instead of closing it.
               if (current && current.versionFrom !== version) {
-                done.push({ ...current, isCurrent: false });
+                // Same no-bump supersede mid-range: the old code did ship at `version` first,
+                // but the new range now owns it — rewind so ranges never share a version.
+                if (current.versionTo === version) {
+                  current.versionTo = current.prevVersionTo ?? current.versionFrom;
+                }
+                done.push(seal(current, false));
               }
               open.set(key, {
                 api,
@@ -119,12 +143,12 @@ export function buildVersionRanges(timeline: ReleaseSnapshot[]): VersionedSnippe
     // A snippet present before but missing now was removed/renamed: close its range.
     for (const [key, range] of open) {
       if (!seenThisRelease.has(key)) {
-        done.push({ ...range, isCurrent: false });
+        done.push(seal(range, false));
         open.delete(key);
       }
     }
   });
 
   // Whatever is still open is the code shipping at HEAD.
-  return [...done, ...open.values()];
+  return [...done, ...[...open.values()].map((range) => seal(range, true))];
 }
