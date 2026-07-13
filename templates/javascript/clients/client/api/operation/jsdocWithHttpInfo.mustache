@@ -1,0 +1,30 @@
+/**
+{{#notes}}
+  * {{{.}}}
+  *
+{{/notes}}
+  * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.{{#vendorExtensions}}{{#x-acl.0}}
+  *
+  * Required API Key ACLs:{{/x-acl.0}}
+  {{#x-acl}}
+  *  - {{.}}
+  {{/x-acl}}
+  {{#isDeprecated}}
+  *
+  * @deprecated
+  {{/isDeprecated}}
+  {{#x-create-wrapping-object}}
+    * @param {{nickname}} - The {{nickname}} object.
+    {{#allParams}}
+      * @param {{nickname}}.{{paramName}} - {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
+    {{/allParams}}
+  {{/x-create-wrapping-object}}
+  {{#x-is-single-body-param}}
+    {{#bodyParams}}
+      * @param {{paramName}} - {{^description}}The {{paramName}} object.{{/description}}{{#description}}{{{description}}}{{/description}}
+    {{/bodyParams}}
+  {{/x-is-single-body-param}}
+{{/vendorExtensions}}
+ * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+ * @see {{nickname}} for the plain version.
+*/
