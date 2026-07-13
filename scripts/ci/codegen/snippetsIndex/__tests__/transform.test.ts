@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import type { DescriptionLookup } from '../transform.ts';
-import { buildCatalog, snippetObjectID, snippetRecord } from '../transform.ts';
+import { assertUniqueObjectIDs, buildCatalog, snippetObjectID, snippetRecord } from '../transform.ts';
 import type { VersionedSnippet } from '../versionRanges.ts';
 
 function range(overrides: Partial<VersionedSnippet> = {}): VersionedSnippet {
@@ -47,6 +47,27 @@ describe('snippetRecord', () => {
   it('gives different eras of the same snippet different objectIDs', () => {
     expect(snippetObjectID(range({ versionFrom: '5.8.1' }))).not.toBe(
       snippetObjectID(range({ versionFrom: '5.10.0' })),
+    );
+  });
+});
+
+describe('assertUniqueObjectIDs', () => {
+  it('accepts records whose eras all have distinct versionFroms', () => {
+    const records = [
+      snippetRecord(range({ versionFrom: '5.8.1', versionTo: '5.9.1', isCurrent: false })),
+      snippetRecord(range({ versionFrom: '5.10.0', versionTo: '5.10.0' })),
+    ];
+    expect(() => assertUniqueObjectIDs(records)).not.toThrow();
+  });
+
+  it('throws when two eras of the same snippet share a versionFrom (would silently drop one record)', () => {
+    // e.g. the code changed between two tags that did not bump the language version.
+    const records = [
+      snippetRecord(range({ code: 'old', versionFrom: '5.9.1', versionTo: '5.9.1', isCurrent: false })),
+      snippetRecord(range({ code: 'new', versionFrom: '5.9.1', versionTo: '5.9.1' })),
+    ];
+    expect(() => assertUniqueObjectIDs(records)).toThrow(
+      /objectID collision: two eras of abtesting\|addABTests\|javascript\|default share versionFrom 5\.9\.1/,
     );
   });
 });

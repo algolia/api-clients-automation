@@ -201,4 +201,55 @@ describe('buildVersionRanges', () => {
 
     expect(buildVersionRanges(timeline)).toHaveLength(1);
   });
+
+  it('drops a range superseded at its own version (code changed with no version bump)', () => {
+    // e.g. a snippet regeneration fix between two tags that did not release the language:
+    // code A never shipped under a version of its own, so only B survives for 4.19.0.
+    const ranges = buildVersionRanges([
+      release('t1', '2024-10-10', { python: '4.19.0' }, { search: { python: { addApiKey: { minimal: 'A' } } } }),
+      release('t2', '2024-11-01', { python: '4.19.0' }, { search: { python: { addApiKey: { minimal: 'B' } } } }),
+    ]);
+
+    expect(ranges).toHaveLength(1);
+    expect(ranges[0]).toMatchObject({ code: 'B', versionFrom: '4.19.0', versionTo: '4.19.0', isCurrent: true });
+  });
+
+  it('falls back to the 0.0.0 sentinel when a language has no version, then picks up a real one', () => {
+    const ranges = buildVersionRanges([
+      release('t1', '2024-10-10', {}, { search: { python: { addApiKey: { minimal: 'A' } } } }),
+      release('t2', '2024-11-01', { python: '4.1.0' }, { search: { python: { addApiKey: { minimal: 'A' } } } }),
+    ]);
+
+    expect(ranges).toHaveLength(1);
+    expect(ranges[0]).toMatchObject({ versionFrom: '0.0.0', versionTo: '4.1.0', isCurrent: true });
+  });
+
+  it('carries the previous versionTo forward when a version disappears mid-range', () => {
+    const ranges = buildVersionRanges([
+      release('t1', '2024-10-10', { python: '4.0.0' }, { search: { python: { addApiKey: { minimal: 'A' } } } }),
+      release('t2', '2024-11-01', {}, { search: { python: { addApiKey: { minimal: 'A' } } } }),
+    ]);
+
+    expect(ranges).toHaveLength(1);
+    expect(ranges[0]).toMatchObject({ versionFrom: '4.0.0', versionTo: '4.0.0', isCurrent: true });
+  });
+
+  it('throws on a release with no snippets after snippets have been seen (corrupt tag guard)', () => {
+    const timeline = [
+      release('t1', '2024-10-10', { python: '4.0.0' }, { search: { python: { addApiKey: { minimal: 'A' } } } }),
+      release('t2', '2024-11-01', { python: '4.1.0' }, {}), // bundled files missing at this tag
+    ];
+
+    expect(() => buildVersionRanges(timeline)).toThrow(/no snippets found at t2/);
+  });
+
+  it('tolerates leading releases with no snippets yet', () => {
+    const ranges = buildVersionRanges([
+      release('t1', '2024-10-10', { python: '4.0.0' }, {}),
+      release('t2', '2024-11-01', { python: '4.1.0' }, { search: { python: { addApiKey: { minimal: 'A' } } } }),
+    ]);
+
+    expect(ranges).toHaveLength(1);
+    expect(ranges[0]).toMatchObject({ versionFrom: '4.1.0', isCurrent: true });
+  });
 });

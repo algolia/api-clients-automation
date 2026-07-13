@@ -17,7 +17,7 @@ import type { VersionedSnippet } from './versionRanges.ts';
  *     joined from the OpenAPI spec (`docs/bundled/<api>.json`). This is the discovery grain.
  */
 
-export interface SnippetRecord {
+export type SnippetRecord = {
   objectID: string;
   api: string;
   operationId: string;
@@ -30,9 +30,9 @@ export interface SnippetRecord {
   versionToNum: number;
   isCurrent: boolean;
   firstVersionUnknown: boolean;
-}
+};
 
-export interface CatalogRecord {
+export type CatalogRecord = {
   objectID: string;
   api: string;
   operationId: string;
@@ -40,7 +40,7 @@ export interface CatalogRecord {
   description: string;
   /** Languages this operation currently ships a snippet for, sorted. */
   languages: string[];
-}
+};
 
 /** `${api}|${operationId}` -> its human title/description. */
 export type DescriptionLookup = Map<string, { title: string; description: string }>;
@@ -55,10 +55,29 @@ function descriptionKey(api: string, operationId: string): string {
   return `${api}|${operationId}`;
 }
 
-/** Stable, collision-free id for one snippet era. */
+/** Stable id for one snippet era. Uniqueness is enforced by {@link assertUniqueObjectIDs}. */
 export function snippetObjectID(range: VersionedSnippet): string {
   const identity = `${range.api}|${range.operationId}|${range.language}|${range.variant}|${range.versionFrom}`;
   return createHash('sha1').update(identity).digest('hex');
+}
+
+/**
+ * Two eras of the same snippet can share a `versionFrom` (code changed between tags without a
+ * version bump, or the `0.0.0` sentinel), which would collide on `objectID` and silently drop
+ * one record at index time. Fail loud instead so a human resolves the ambiguity.
+ */
+export function assertUniqueObjectIDs(records: SnippetRecord[]): void {
+  const seen = new Map<string, SnippetRecord>();
+  for (const record of records) {
+    const other = seen.get(record.objectID);
+    if (other) {
+      throw new Error(
+        `objectID collision: two eras of ${record.api}|${record.operationId}|${record.language}|${record.variant}` +
+          ` share versionFrom ${record.versionFrom} (versionTo ${other.versionTo} vs ${record.versionTo})`,
+      );
+    }
+    seen.set(record.objectID, record);
+  }
 }
 
 /** One `VersionedSnippet` -> one `snippets` record (adds objectID + numeric versions). */
@@ -155,8 +174,10 @@ export async function transform(
 ): Promise<{ snippets: SnippetRecord[]; catalog: CatalogRecord[] }> {
   const apis = [...new Set(ranges.map((range) => range.api))];
   const descriptions = await readDescriptions(apis);
+  const snippets = ranges.map(snippetRecord);
+  assertUniqueObjectIDs(snippets);
   return {
-    snippets: ranges.map(snippetRecord),
+    snippets,
     catalog: buildCatalog(ranges, descriptions),
   };
 }

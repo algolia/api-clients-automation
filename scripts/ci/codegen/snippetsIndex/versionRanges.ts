@@ -53,6 +53,7 @@ export function buildVersionRanges(timeline: ReleaseSnapshot[]): VersionedSnippe
   const open = new Map<string, VersionedSnippet>();
   const done: VersionedSnippet[] = [];
   const lastVersions = new Map<string, string>();
+  let sawSnippets = false;
 
   timeline.forEach((release, index) => {
     // Range stretching assumes each language's version stream never goes backwards
@@ -82,7 +83,11 @@ export function buildVersionRanges(timeline: ReleaseSnapshot[]): VersionedSnippe
               current.versionTo = version;
             } else {
               // Code changed (or first sight): close the old range, start a new one.
-              if (current) {
+              // Exception: if the old range starts at this same version (code changed with
+              // no version bump — e.g. a snippet regeneration fix), it never shipped under
+              // a version of its own. It is unreachable at the version grain and would
+              // collide with the new range on objectID, so drop it instead of closing it.
+              if (current && current.versionFrom !== version) {
                 done.push({ ...current, isCurrent: false });
               }
               open.set(key, {
@@ -102,6 +107,14 @@ export function buildVersionRanges(timeline: ReleaseSnapshot[]): VersionedSnippe
         }
       }
     }
+
+    // A release with no snippets at all after we've seen some means the bundled files were
+    // missing/unreadable at that tag, not that every snippet was removed. Letting it through
+    // would close every open range and reopen them next release with wrong versionFroms.
+    if (seenThisRelease.size === 0 && sawSnippets) {
+      throw new Error(`no snippets found at ${release.tag}; refusing to close every open range`);
+    }
+    sawSnippets = sawSnippets || seenThisRelease.size > 0;
 
     // A snippet present before but missing now was removed/renamed: close its range.
     for (const [key, range] of open) {

@@ -5,7 +5,9 @@ import { transform } from './transform.ts';
 import { buildVersionRanges } from './versionRanges.ts';
 
 // Build the snippet + catalog records from git history and push them to Algolia.
-// Pass --dry-run to run the whole pipeline and print what would be pushed, without pushing.
+// Pass --dry-run (or DRY_RUN=true) to run the whole pipeline and print what would be pushed, without pushing.
+// SINCE_DATE=YYYY-MM-DD skips tags before that date — the escape hatch if a backport tag
+// makes buildVersionRanges throw on a backwards version.
 
 const SNIPPETS_INDEX = process.env.SNIPPETS_INDEX_NAME ?? 'api_clients_snippets_mcp';
 const CATALOG_INDEX = process.env.CATALOG_INDEX_NAME ?? 'api_clients_catalog_mcp';
@@ -29,9 +31,9 @@ const catalogSettings = {
 };
 
 async function main(): Promise<void> {
-  const dryRun = process.argv.slice(2).includes('--dry-run') || Boolean(process.env.DRY_RUN);
+  const dryRun = process.argv.slice(2).includes('--dry-run') || process.env.DRY_RUN === 'true';
 
-  const ranges = buildVersionRanges(await buildTimeline());
+  const ranges = buildVersionRanges(await buildTimeline({ sinceDate: process.env.SINCE_DATE }));
   const { snippets, catalog } = await transform(ranges);
 
   console.log(`snippets: ${snippets.length} -> ${SNIPPETS_INDEX}`);
@@ -51,14 +53,8 @@ async function main(): Promise<void> {
   const client = algoliasearch(appId, apiKey);
   await client.setSettings({ indexName: SNIPPETS_INDEX, indexSettings: snippetsSettings });
   await client.setSettings({ indexName: CATALOG_INDEX, indexSettings: catalogSettings });
-  await client.replaceAllObjects({
-    indexName: SNIPPETS_INDEX,
-    objects: snippets as unknown as Array<Record<string, unknown>>,
-  });
-  await client.replaceAllObjects({
-    indexName: CATALOG_INDEX,
-    objects: catalog as unknown as Array<Record<string, unknown>>,
-  });
+  await client.replaceAllObjects({ indexName: SNIPPETS_INDEX, objects: snippets });
+  await client.replaceAllObjects({ indexName: CATALOG_INDEX, objects: catalog });
   console.log('pushed');
 }
 
