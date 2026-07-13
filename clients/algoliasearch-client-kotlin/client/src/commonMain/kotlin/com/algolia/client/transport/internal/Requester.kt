@@ -7,6 +7,7 @@ import com.algolia.client.configuration.Host
 import com.algolia.client.configuration.internal.AlgoliaAgent
 import com.algolia.client.configuration.internal.algoliaHttpClient
 import com.algolia.client.configuration.internal.platformAgentSegment
+import com.algolia.client.transport.AlgoliaHttpResponse
 import com.algolia.client.transport.RequestConfig
 import com.algolia.client.transport.RequestOptions
 import com.algolia.client.transport.Requester
@@ -31,6 +32,25 @@ internal suspend inline fun <reified T> Requester.execute(
   requestConfig: RequestConfig,
   requestOptions: RequestOptions? = null,
 ): T = execute(requestConfig, requestOptions, typeInfo<T>())
+
+/**
+ * Executes a network request with the specified configuration and options, then returns the full
+ * HTTP response information: status code, headers, raw body and the body deserialized as the
+ * specified type.
+ *
+ * This is a suspending function, which means it can be used with coroutines for asynchronous
+ * execution.
+ *
+ * @param T The type of the deserialized response body.
+ * @param requestConfig The configuration for the network request, including the URL, method,
+ *   headers, and body.
+ * @param requestOptions Optional settings for the request execution, such as timeouts or cache
+ *   policies. Default value is null.
+ */
+internal suspend inline fun <reified T> Requester.executeWithHttpInfo(
+  requestConfig: RequestConfig,
+  requestOptions: RequestOptions? = null,
+): AlgoliaHttpResponse<T> = executeWithHttpInfo(requestConfig, requestOptions, typeInfo<T>())
 
 /** Creates a [Requester] instance. */
 internal fun requesterOf(

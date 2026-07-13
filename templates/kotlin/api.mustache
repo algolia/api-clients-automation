@@ -149,6 +149,36 @@ public class {{classname}}(
    * @param requestOptions additional request configuration.
    */
   public suspend fun {{operationId}}({{#requiredParams}}{{{paramName}}}: {{{dataType}}}, {{/requiredParams}}{{#optionalParams}}{{{paramName}}}: {{{dataType}}}? = null, {{/optionalParams}}requestOptions: RequestOptions? = null){{#returnType}}: {{{.}}}{{/returnType}} {
+      return requester.execute(
+        requestConfig = {{operationId}}RequestConfig({{#requiredParams}}{{{paramName}}} = {{{paramName}}}, {{/requiredParams}}{{#optionalParams}}{{{paramName}}} = {{{paramName}}}, {{/optionalParams}}),
+        requestOptions = {{#vendorExtensions.x-timeouts}}{{operationId}}RequestOptions(requestOptions){{/vendorExtensions.x-timeouts}}{{^vendorExtensions.x-timeouts}}requestOptions{{/vendorExtensions.x-timeouts}},
+      )
+  }
+
+  /**
+   * {{{notes}}} This variant of [{{operationId}}] returns the full HTTP response information (status code, headers, raw body) along with the deserialized response body.{{#vendorExtensions}}{{#x-acl.0}}
+   *
+   * Required API Key ACLs:{{/x-acl.0}}
+   {{#x-acl}}
+   *   - {{.}}
+   {{/x-acl}}
+   {{/vendorExtensions}}
+   {{#isDeprecated}}
+   * @deprecated
+   {{/isDeprecated}}
+   {{#allParams}}
+   * @param {{{paramName}}} {{{description}}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
+   {{/allParams}}
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun {{operationId}}WithHTTPInfo({{#requiredParams}}{{{paramName}}}: {{{dataType}}}, {{/requiredParams}}{{#optionalParams}}{{{paramName}}}: {{{dataType}}}? = null, {{/optionalParams}}requestOptions: RequestOptions? = null): AlgoliaHttpResponse<{{#returnType}}{{{.}}}{{/returnType}}{{^returnType}}Unit{{/returnType}}> {
+      return requester.executeWithHttpInfo(
+        requestConfig = {{operationId}}RequestConfig({{#requiredParams}}{{{paramName}}} = {{{paramName}}}, {{/requiredParams}}{{#optionalParams}}{{{paramName}}} = {{{paramName}}}, {{/optionalParams}}),
+        requestOptions = {{#vendorExtensions.x-timeouts}}{{operationId}}RequestOptions(requestOptions){{/vendorExtensions.x-timeouts}}{{^vendorExtensions.x-timeouts}}requestOptions{{/vendorExtensions.x-timeouts}},
+      )
+  }
+
+  private fun {{operationId}}RequestConfig({{#requiredParams}}{{{paramName}}}: {{{dataType}}}, {{/requiredParams}}{{#optionalParams}}{{{paramName}}}: {{{dataType}}}?, {{/optionalParams}}): RequestConfig {
       {{#requiredParams}}
       {{#isString}}
       require({{paramName}}.isNotBlank()) { "Parameter `{{paramName}}` is required when calling `{{operationId}}`." }
@@ -157,7 +187,7 @@ public class {{classname}}(
       require({{paramName}}.isNotEmpty()) { "Parameter `{{paramName}}` is required when calling `{{operationId}}`." }
       {{/isFreeFormObject}}
       {{/requiredParams}}
-      val requestConfig = RequestConfig(
+      return RequestConfig(
           method = RequestMethod.{{httpMethod}},
           path = {{#vendorExtensions}}{{#x-is-custom-request}}"{{{serverPathSuffix}}}{{{path}}}".replace("{path}", path){{/x-is-custom-request}}{{^x-is-custom-request}}"{{{serverPathSuffix}}}".split("/").filter { it.isNotBlank() } + listOf({{#pathSegments}}{{{.}}}, {{/pathSegments}}){{/x-is-custom-request}}{{/vendorExtensions}},
           {{#vendorExtensions.x-use-read-transporter}}
@@ -184,15 +214,15 @@ public class {{classname}}(
           body = {{#bodyParam}}{{{paramName}}},{{/bodyParam}}
           {{/hasBodyParam}}
       )
-      return requester.execute(
-        requestConfig = requestConfig,
-        requestOptions = {{#vendorExtensions.x-timeouts}}RequestOptions(
-          readTimeout = {{{read}}}.milliseconds,
-          writeTimeout = {{{write}}}.milliseconds,
-          connectTimeout = {{{connect}}}.milliseconds,
-        ) + {{/vendorExtensions.x-timeouts}}requestOptions,
-      )
   }
+  {{#vendorExtensions.x-timeouts}}
+
+  private fun {{operationId}}RequestOptions(requestOptions: RequestOptions?): RequestOptions = RequestOptions(
+      readTimeout = {{{read}}}.milliseconds,
+      writeTimeout = {{{write}}}.milliseconds,
+      connectTimeout = {{{connect}}}.milliseconds,
+    ) + requestOptions
+  {{/vendorExtensions.x-timeouts}}
   {{/operation}}
 
 {{#isAgentStudioClient}}
