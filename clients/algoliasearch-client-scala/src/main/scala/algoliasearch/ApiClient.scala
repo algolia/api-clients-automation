@@ -50,6 +50,10 @@ abstract class ApiClient(
     throw AlgoliaClientException("`apiKey` is missing.")
   }
 
+  /** The logger from the client options, or [[Logger.Default]] when logging is not configured. */
+  private[algoliasearch] val logger: Logger =
+    options.logging.map(_.logger).getOrElse(Logger.Default)
+
   private val authInterceptor = new AuthInterceptor(appId, apiKey)
 
   private val requester = options.customRequester match {
@@ -116,6 +120,23 @@ abstract class ApiClient(
       httpRequest: HttpRequest,
       requestOptions: Option[RequestOptions] = None
   ): T = requester.execute(httpRequest, requestOptions)
+
+  /** Executes the given request and returns the full HTTP response.
+    *
+    * @param httpRequest
+    *   the request to execute
+    * @param requestOptions
+    *   the request options
+    * @tparam T
+    *   the type of the deserialized response body
+    * @return
+    *   the full HTTP response
+    */
+  protected def executeWithHttpInfo[T: Manifest](
+      httpRequest: HttpRequest,
+      requestOptions: Option[RequestOptions] = None
+  ): AlgoliaHttpResponse[T] = requester.executeWithHttpInfo(httpRequest, requestOptions)
+
   override def close(): Unit = {
     Try(requester.close())
   }
