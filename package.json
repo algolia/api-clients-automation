@@ -30,7 +30,7 @@
     "website:build": "bash scripts/website/build.sh"
   },
   "devDependencies": {
-    "@eslint/json": "2.0.0",
+    "@eslint/json": "2.0.1",
     "@openapitools/openapi-generator-cli": "2.39.1",
     "@redocly/cli": "2.27.0",
     "eslint": "10.6.0",
