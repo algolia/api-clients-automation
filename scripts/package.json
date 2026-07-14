@@ -6,6 +6,7 @@
     "build:actions": "cd ci/actions/restore-artifacts && esbuild --bundle --format=cjs --minify --platform=node --outfile=builddir/index.cjs --log-level=error src/index.ts",
     "createGitHubReleases": "yarn runScript ci/codegen/createGitHubReleases.ts",
     "createMatrix": "yarn runScript ci/githubActions/createMatrix.ts",
+    "indexSnippets": "yarn runScript ci/codegen/snippetsIndex/index.ts",
     "lint:deadcode": "knip",
     "pre-commit": "node ./ci/husky/pre-commit.mjs",
     "pushGeneratedCode": "yarn runScript ci/codegen/pushGeneratedCode.ts",

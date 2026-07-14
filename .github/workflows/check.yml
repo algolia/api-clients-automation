@@ -736,6 +736,13 @@ jobs:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
+      - name: Index snippets to Algolia
+        run: yarn workspace scripts indexSnippets
+        if: ${{ steps.waitForAllReleases.outputs.CAN_PUSH_TO_REPO == 'true' }}
+        env:
+          ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
+          ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
+
       - name: notify failures
         uses: slackapi/slack-github-action@v3.0.3
         if: ${{ !cancelled() && (steps.spreadGeneration.outputs.FAILED_LANGUAGES != '' || steps.waitForAllReleases.outputs.FAILED_RELEASES != '') }}
