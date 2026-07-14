@@ -187,6 +187,10 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind,
 // would abort the stream while it is being consumed. Cancellation is
 // controlled by the caller through ctx.
 //
+// A response with a non-2xx status code is consumed and returned as an
+// [errs.HTTPStatusError] carrying the status code and the error body,
+// consistent with the JavaScript and Python clients.
+//
 // The caller is responsible for closing the response body.
 func (t *Transport) RequestStream(ctx context.Context, req *http.Request, k call.Kind, c RequestConfiguration) (*http.Response, error) {
 	// Add Content-Encoding header, if needed
@@ -233,6 +237,21 @@ func (t *Transport) RequestStream(ctx context.Context, req *http.Request, k call
 	res, err := t.requester.Request(req, timeout, connectTimeout)
 	if err != nil {
 		return nil, wrapRequestError(req, err)
+	}
+
+	if !is2xx(res.StatusCode) {
+		body, errBody := io.ReadAll(res.Body)
+		errClose := res.Body.Close()
+
+		if errBody != nil {
+			return nil, fmt.Errorf("cannot read error response body: %w", errBody)
+		}
+
+		if errClose != nil {
+			return nil, fmt.Errorf("cannot close error response body: %w", errClose)
+		}
+
+		return nil, errs.NewHTTPStatusError(res.StatusCode, body)
 	}
 
 	return res, nil

@@ -128,7 +128,7 @@ func TestRequestStream(t *testing.T) {
 	}
 }
 
-func TestRequestStream_ReturnsErrorResponsesUntouched(t *testing.T) {
+func TestRequestStream_HTTPStatusError(t *testing.T) {
 	t.Parallel()
 
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
@@ -141,24 +141,23 @@ func TestRequestStream_ReturnsErrorResponsesUntouched(t *testing.T) {
 
 	tr := newTestTransport(t, srv.URL)
 
+	//nolint:bodyclose // The response is nil on error.
 	res, err := tr.RequestStream(ctx, newStreamRequest(t, ctx), call.Read, transport.RequestConfiguration{})
-	if err != nil {
-		t.Fatalf("expected no transport error on HTTP error status, got: %v", err)
+	if res != nil {
+		t.Error("expected no response on HTTP error status")
 	}
 
-	defer func() { _ = res.Body.Close() }()
-
-	if res.StatusCode != http.StatusBadRequest {
-		t.Errorf("expected status code %d, got %d", http.StatusBadRequest, res.StatusCode)
+	var statusErr *errs.HTTPStatusError
+	if !errors.As(err, &statusErr) {
+		t.Fatalf("expected an HTTPStatusError, got: %v", err)
 	}
 
-	body, err := io.ReadAll(res.Body)
-	if err != nil {
-		t.Fatalf("cannot read body: %v", err)
+	if statusErr.StatusCode() != http.StatusBadRequest {
+		t.Errorf("expected status code %d, got %d", http.StatusBadRequest, statusErr.StatusCode())
 	}
 
-	if !strings.Contains(string(body), "invalid request") {
-		t.Errorf("expected the error body to be readable by the caller, got %q", body)
+	if !strings.Contains(string(statusErr.Body()), "invalid request") {
+		t.Errorf("expected the error body to be carried by the error, got %q", statusErr.Body())
 	}
 }
 

@@ -24,6 +24,10 @@ func NewStream[T any](decoder Decoder, err error) *Stream[T] {
 // Next advances the stream to the next event and deserializes its payload
 // into the value returned by Current. It returns false when the stream is
 // exhausted or an error occurred, in which case Err reports it.
+//
+// Errors are terminal: a payload that fails to unmarshal stops the stream
+// and the remaining events are not consumed. Use a raw [Decoder] to consume
+// events regardless of their payload.
 func (s *Stream[T]) Next() bool {
 	if s.err != nil {
 		return false

@@ -12,10 +12,12 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"strconv"
 )
 
-// maxLineSize bounds a single line of the stream to 8 MB.
-const maxLineSize = 8 << 20
+// maxLineSize bounds a single line of the stream to 10 MB, matching the
+// JavaScript and Python clients.
+const maxLineSize = 10 << 20
 
 // Event is a single Server-Sent Event dispatched from the event stream.
 type Event struct {
@@ -23,6 +25,14 @@ type Event struct {
 	Type string
 	// Data is the concatenation of the "data:" field values, joined by '\n'.
 	Data []byte
+	// ID is the last event ID from the "id:" field. It persists across
+	// events until the server sends a new one, and is "" when no "id:"
+	// field was received.
+	ID string
+	// Retry is the reconnection interval in milliseconds from the "retry:"
+	// field, or -1 when no valid "retry:" field was received. It persists
+	// across events.
+	Retry int
 }
 
 // Decoder decodes a raw byte stream into Server-Sent Events.
@@ -46,15 +56,17 @@ func NewEventStreamDecoder(rc io.ReadCloser) Decoder { //nolint:ireturn // The i
 	scn.Buffer(make([]byte, 0, 64<<10), maxLineSize)
 	scn.Split(scanLines)
 
-	return &eventStreamDecoder{rc: rc, scn: scn}
+	return &eventStreamDecoder{rc: rc, scn: scn, retry: -1}
 }
 
 type eventStreamDecoder struct {
-	rc         io.ReadCloser
-	scn        *bufio.Scanner
-	evt        Event
-	err        error
-	bomChecked bool
+	rc          io.ReadCloser
+	scn         *bufio.Scanner
+	evt         Event
+	err         error
+	bomChecked  bool
+	lastEventID string
+	retry       int
 }
 
 func (d *eventStreamDecoder) Next() bool {
@@ -87,7 +99,7 @@ func (d *eventStreamDecoder) Next() bool {
 				continue
 			}
 
-			d.evt = Event{Type: currentEventType, Data: data.Bytes()}
+			d.evt = Event{Type: currentEventType, Data: data.Bytes(), ID: d.lastEventID, Retry: d.retry}
 
 			return true
 		}
@@ -115,10 +127,15 @@ func (d *eventStreamDecoder) Next() bool {
 			hasData = true
 		case "event":
 			eventType = string(value)
-		case "id", "retry":
-			// Parsed for spec compliance but not surfaced: the client does
-			// not implement SSE reconnection, so the last event ID and the
-			// retry interval are unused.
+		case "id":
+			// A value containing a NUL character is ignored entirely, per spec.
+			if bytes.IndexByte(value, 0) < 0 {
+				d.lastEventID = string(value)
+			}
+		case "retry":
+			if n, ok := parseRetry(value); ok {
+				d.retry = n
+			}
 		default:
 			// Unknown fields are ignored, per spec.
 		}
@@ -149,6 +166,27 @@ func (d *eventStreamDecoder) Close() error {
 	}
 
 	return nil
+}
+
+// parseRetry parses the value of a "retry:" field: a base-10 integer made of
+// ASCII digits only, per spec. Invalid values are ignored.
+func parseRetry(value []byte) (int, bool) {
+	if len(value) == 0 {
+		return 0, false
+	}
+
+	for _, b := range value {
+		if b < '0' || b > '9' {
+			return 0, false
+		}
+	}
+
+	n, err := strconv.Atoi(string(value))
+	if err != nil {
+		return 0, false
+	}
+
+	return n, true
 }
 
 // scanLines is a [bufio.SplitFunc] handling the three line endings allowed by

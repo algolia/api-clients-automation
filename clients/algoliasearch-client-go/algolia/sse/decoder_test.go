@@ -200,10 +200,79 @@ func TestEventStreamDecoder_CRLFSplitAcrossReads(t *testing.T) {
 	}, events)
 }
 
+func TestEventStreamDecoder_IDAndRetryPersistAcrossEvents(t *testing.T) {
+	t.Parallel()
+
+	input := "id: 42\nretry: 1000\ndata: one\n\ndata: two\n\nid: 43\ndata: three\n\n"
+	d := sse.NewEventStreamDecoder(io.NopCloser(strings.NewReader(input)))
+	events := collectEvents(t, d)
+
+	expected := []sse.Event{
+		{Data: []byte("one"), ID: "42", Retry: 1000},
+		{Data: []byte("two"), ID: "42", Retry: 1000},
+		{Data: []byte("three"), ID: "43", Retry: 1000},
+	}
+
+	if len(events) != len(expected) {
+		t.Fatalf("expected %d events, got %d: %+v", len(expected), len(events), events)
+	}
+
+	for i, e := range expected {
+		if events[i].ID != e.ID {
+			t.Errorf("event %d: expected ID %q, got %q", i, e.ID, events[i].ID)
+		}
+
+		if events[i].Retry != e.Retry {
+			t.Errorf("event %d: expected Retry %d, got %d", i, e.Retry, events[i].Retry)
+		}
+	}
+}
+
+func TestEventStreamDecoder_IDAndRetryDefaults(t *testing.T) {
+	t.Parallel()
+
+	d := sse.NewEventStreamDecoder(io.NopCloser(strings.NewReader("data: hello\n\n")))
+	events := collectEvents(t, d)
+
+	if len(events) != 1 {
+		t.Fatalf("expected 1 event, got %d", len(events))
+	}
+
+	if events[0].ID != "" {
+		t.Errorf("expected empty ID when no id field was received, got %q", events[0].ID)
+	}
+
+	if events[0].Retry != -1 {
+		t.Errorf("expected Retry to be -1 when no retry field was received, got %d", events[0].Retry)
+	}
+}
+
+func TestEventStreamDecoder_InvalidIDAndRetryAreIgnored(t *testing.T) {
+	t.Parallel()
+
+	// An id containing a NUL character and a retry value that is not made of
+	// ASCII digits only must be ignored, per spec.
+	input := "id: 4\x002\nretry: -100\nretry: 5s\nretry:\ndata: hello\n\n"
+	d := sse.NewEventStreamDecoder(io.NopCloser(strings.NewReader(input)))
+	events := collectEvents(t, d)
+
+	if len(events) != 1 {
+		t.Fatalf("expected 1 event, got %d", len(events))
+	}
+
+	if events[0].ID != "" {
+		t.Errorf("expected an id containing NUL to be ignored, got %q", events[0].ID)
+	}
+
+	if events[0].Retry != -1 {
+		t.Errorf("expected invalid retry values to be ignored, got %d", events[0].Retry)
+	}
+}
+
 func TestEventStreamDecoder_LineExceedingBufferSize(t *testing.T) {
 	t.Parallel()
 
-	input := "data: " + strings.Repeat("x", 9<<20) + "\n\n"
+	input := "data: " + strings.Repeat("x", 11<<20) + "\n\n"
 	d := sse.NewEventStreamDecoder(io.NopCloser(strings.NewReader(input)))
 
 	if d.Next() {
@@ -218,7 +287,7 @@ func TestEventStreamDecoder_LineExceedingBufferSize(t *testing.T) {
 func TestEventStreamDecoder_LineWithinBufferSize(t *testing.T) {
 	t.Parallel()
 
-	payload := strings.Repeat("x", 7<<20)
+	payload := strings.Repeat("x", 9<<20)
 	input := "data: " + payload + "\n\n"
 	d := sse.NewEventStreamDecoder(io.NopCloser(strings.NewReader(input)))
 	events := collectEvents(t, d)
