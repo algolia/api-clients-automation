@@ -41,10 +41,26 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
     client, echo := create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t)
     _ = echo
 
-    {{#tests}} 
+    {{#tests}}
     t.Run("{{{testName}}}", func(t *testing.T) {
+      {{^isStreamingTest}}
       {{#hasResponse}}_, {{/hasResponse}}err := {{> tests/method}}
       require.NoError(t, err)
+      {{/isStreamingTest}}
+      {{#isStreamingTest}}
+      decoder, err := {{> tests/method}}
+      require.NoError(t, err)
+
+      defer func() { _ = decoder.Close() }()
+
+      eventCount := 0
+      for decoder.Next() {
+        require.NotEmpty(t, decoder.Event().Data)
+        eventCount++
+      }
+      require.NoError(t, decoder.Err())
+      require.Equal(t, 1, eventCount)
+      {{/isStreamingTest}}
 
       {{#request}}
       require.Equal(t, "{{{serverPathSuffix}}}{{path}}", echo.Path)

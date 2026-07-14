@@ -39,6 +39,7 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}E2E_{{#lambda
       t.Parallel()
 
       client := createE2E{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t)
+      {{^isStreamingTest}}
       res, err := {{> tests/method}}
       require.NoError(t, err)
       _ = res
@@ -64,6 +65,39 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}E2E_{{#lambda
       jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
       {{/body}}
       {{/response}}
+      {{/isStreamingTest}}
+      {{#isStreamingTest}}
+      decoder, err := {{> tests/method}}
+      require.NoError(t, err)
+
+      defer func() { _ = decoder.Close() }()
+
+      var events [][]byte
+      for decoder.Next() {
+        events = append(events, decoder.Event().Data)
+      }
+      require.NoError(t, decoder.Err())
+      require.NotEmpty(t, events)
+
+      {{#response}}
+      {{#body}}
+      var rawBodyMap any
+      err = json.Unmarshal(events[0], &rawBodyMap)
+      require.NoError(t, err)
+
+      expectedBodyRaw := `{{{.}}}`
+      var expectedBody any
+      err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+      require.NoError(t, err)
+
+      unionBody := tests.Union(t, expectedBody, rawBodyMap)
+      unionBodyRaw, err := json.Marshal(unionBody)
+      require.NoError(t, err)
+
+      jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
+      {{/body}}
+      {{/response}}
+      {{/isStreamingTest}}
     })
 {{/tests}}
 }

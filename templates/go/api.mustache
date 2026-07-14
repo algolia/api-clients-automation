@@ -29,6 +29,9 @@ import (
   "time"
 
   "github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
+  {{#hasStreamingOperations}}
+  "github.com/algolia/algoliasearch-client-go/v4/algolia/sse"
+  {{/hasStreamingOperations}}
   "github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
@@ -589,6 +592,146 @@ func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}
 	{{/returnType}}
 	return {{#returnType}}returnValue, {{/returnType}}nil
 }
+
+{{#vendorExtensions.x-streaming}}
+/*
+{{operationId}}StreamRaw calls the API and returns a raw sse.Decoder over the Server-Sent Events of the response ({{operationId}} streaming version).
+  {{#notes}}
+
+    {{{unescapedNotes}}}
+  {{/notes}}
+
+  Request can be constructed by NewApi{{operationId}}Request with parameters below.
+  {{#allParams}}
+    @param {{paramName}} {{dataType}}{{#description}} - {{{.}}}{{/description}}
+  {{/allParams}}
+  @param opts ...RequestOption - Optional parameters for the API call
+  @return sse.Decoder - A decoder over the raw events{{#returnType}}, each event's Data field contains a JSON-encoded {{{returnType}}}{{/returnType}}. The caller is responsible for closing it.
+  @return error - An error if the API call fails
+*/
+//nolint:ireturn // The interface is the API, the implementation is not exposed.
+func (c *APIClient) {{nickname}}StreamRaw({{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...RequestOption) (sse.Decoder, error) {
+  {{#vendorExtensions}}
+  requestPath := "{{{serverPathSuffix}}}{{{path}}}"{{#pathParams}}
+  requestPath = strings.ReplaceAll(requestPath, {{=<% %>=}}"{<%baseName%>}"<%={{ }}=%>, {{#x-is-custom-request}}utils.ParameterToString(r.{{paramName}}){{/x-is-custom-request}}{{^x-is-custom-request}}url.PathEscape(utils.ParameterToString(r.{{paramName}})){{/x-is-custom-request}}){{/pathParams}}
+  {{/vendorExtensions}}
+
+	{{#allParams}}
+	{{#required}}
+  {{#isString}}
+	if r.{{paramName}} == "" {
+    return nil, reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
+  }{{/isString}}{{#isContainer}}
+  if len(r.{{paramName}}) == 0 {
+    return nil, reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
+  }{{/isContainer}}{{#isMap}}
+  if len(r.{{paramName}}) == 0 {
+    return nil, reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
+  }{{/isMap}}{{^isPrimitiveType}}{{^isContainer}}{{^isMap}}{{^isEnumRef}}
+  if r.{{paramName}} == nil {
+	  return nil, reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
+	}{{/isEnumRef}}{{/isMap}}{{/isContainer}}{{/isPrimitiveType}}
+	{{/required}}
+	{{/allParams}}
+
+  conf := config{
+    context:      context.Background(),
+    queryParams:  url.Values{},
+    headerParams: map[string]string{},
+    {{#vendorExtensions.x-timeouts}}
+    timeouts: transport.RequestConfiguration{
+      ReadTimeout:  utils.ToPtr({{read}} * time.Millisecond),
+      WriteTimeout: utils.ToPtr({{write}} * time.Millisecond),
+      ConnectTimeout: utils.ToPtr({{connect}} * time.Millisecond),
+    },
+    {{/vendorExtensions.x-timeouts}}
+  }
+
+  {{#vendorExtensions.x-is-custom-request}}
+    {{#queryParams}}
+      {{^required}}if !utils.IsNilOrEmpty(r.{{paramName}}) { {{/required}}
+          for k, v := range r.{{paramName}} {
+           conf.queryParams.Set(k, utils.QueryParameterToString(v))
+          }
+      {{^required}} } {{/required}}
+    {{/queryParams}}
+  {{/vendorExtensions.x-is-custom-request}}
+  {{^vendorExtensions.x-is-custom-request}}
+	{{#queryParams}}
+	{{#required}}
+	conf.queryParams.Set("{{baseName}}", utils.QueryParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
+	{{/required}}
+  {{^required}}
+  if !utils.IsNilOrEmpty(r.{{paramName}}) {
+    conf.queryParams.Set("{{baseName}}", utils.QueryParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isEnumRef}}*{{/isEnumRef}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
+  }
+  {{/required}}
+	{{/queryParams}}
+  {{/vendorExtensions.x-is-custom-request}}
+  {{#headerParams}}
+	{{#required}}
+	conf.headerParams["{{baseName}}"] = utils.ParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
+	{{/required}}
+  {{^required}}
+  if !utils.IsNilOrEmpty(r.{{paramName}}) {
+    conf.headerParams["{{baseName}}"] = utils.ParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isEnumRef}}*{{/isEnumRef}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
+  }
+  {{/required}}
+{{/headerParams}}
+
+  // optional params if any
+  for _, opt := range opts {
+    opt.apply(&conf)
+  }
+
+  var postBody any
+
+{{#bodyParams}}
+  // body params{{^required}}
+  if utils.IsNilOrEmpty(r.{{paramName}}) {
+    postBody = "{}"
+  } else { {{/required}}
+    postBody = r.{{paramName}}{{^required}}
+   } {{/required}}
+{{/bodyParams}}
+	req, err := c.prepareRequest(conf.context, requestPath, http.Method{{httpMethod}}, postBody, conf.bodyParams, conf.headerParams, conf.queryParams)
+	if err != nil {
+		return nil, err
+	}
+
+	//nolint:bodyclose // The body is closed by the decoder.
+	res, err := c.callAPIStream(req, {{#vendorExtensions}}{{#x-use-read-transporter}}true{{/x-use-read-transporter}}{{^x-use-read-transporter}}false{{/x-use-read-transporter}},{{/vendorExtensions}}conf.timeouts)
+	if err != nil {
+		return nil, err
+	}
+
+	return sse.NewEventStreamDecoder(res.Body), nil
+}
+
+/*
+{{operationId}}Stream calls the API and returns a typed sse.Stream over the Server-Sent Events of the response ({{operationId}} streaming version).
+  {{#notes}}
+
+    {{{unescapedNotes}}}
+  {{/notes}}
+
+  Request can be constructed by NewApi{{operationId}}Request with parameters below.
+  {{#allParams}}
+    @param {{paramName}} {{dataType}}{{#description}} - {{{.}}}{{/description}}
+  {{/allParams}}
+  @param opts ...RequestOption - Optional parameters for the API call
+  @return *sse.Stream[{{#returnType}}{{{.}}}{{/returnType}}{{^returnType}}map[string]any{{/returnType}}] - A stream deserializing each event's payload. The caller is responsible for closing it.
+  @return error - An error if the API call fails
+*/
+func (c *APIClient) {{nickname}}Stream({{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...RequestOption) (*sse.Stream[{{#returnType}}{{{.}}}{{/returnType}}{{^returnType}}map[string]any{{/returnType}}], error) {
+	decoder, err := c.{{nickname}}StreamRaw({{#hasParams}}r,{{/hasParams}} opts...)
+	if err != nil {
+		return nil, err
+	}
+
+	return sse.NewStream[{{#returnType}}{{{.}}}{{/returnType}}{{^returnType}}map[string]any{{/returnType}}](decoder, nil), nil
+}
+{{/vendorExtensions.x-streaming}}
 
 {{/operation}}
 {{/operations}}
