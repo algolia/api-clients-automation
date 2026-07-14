@@ -1,3 +1,8 @@
+## [1.51.4](https://github.com/algolia/algoliasearch-client-dart/compare/1.51.3...1.51.4)
+
+- [76dd01ea75](https://github.com/algolia/api-clients-automation/commit/76dd01ea75) fix(dart): add missing READMEs for ingestion and agent studio packages ([#6689](https://github.com/algolia/api-clients-automation/pull/6689)) by [@Fluf22](https://github.com/Fluf22/)
+- [e6f54ed6b7](https://github.com/algolia/api-clients-automation/commit/e6f54ed6b7) fix(dart): add warning in replaceAllObjectsWithTransformation for empty objects ([#6616](https://github.com/algolia/api-clients-automation/pull/6616)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+
 ## [1.51.3](https://github.com/algolia/algoliasearch-client-dart/compare/1.51.2...1.51.3)
 
 - [07511de2ea](https://github.com/algolia/api-clients-automation/commit/07511de2ea) fix(dart): publish ingestion before search in release workflow ([#6605](https://github.com/algolia/api-clients-automation/pull/6605)) by [@Fluf22](https://github.com/Fluf22/)

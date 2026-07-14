@@ -1,3 +1,7 @@
+## [3.42.3](https://github.com/algolia/algoliasearch-client-ruby/compare/3.42.2...3.42.3)
+
+- [772f7055cc](https://github.com/algolia/api-clients-automation/commit/772f7055cc) fix(clients): add warning in replace_all_objects for empty objects ([#6610](https://github.com/algolia/api-clients-automation/pull/6610)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+
 ## [3.42.2](https://github.com/algolia/algoliasearch-client-ruby/compare/3.42.1...3.42.2)
 
 - [035c03ecad](https://github.com/algolia/api-clients-automation/commit/035c03ecad) fix(specs): BREAKING CHANGE – remove recommend query params overridden by the API ([#6604](https://github.com/algolia/api-clients-automation/pull/6604)) by [@raed667](https://github.com/raed667/)
