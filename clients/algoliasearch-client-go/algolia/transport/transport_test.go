@@ -183,7 +183,6 @@ func TestRequestStream_NoTryableHost(t *testing.T) {
 func TestRequestStream_NetworkErrorIsWrapped(t *testing.T) {
 	t.Parallel()
 
-	// Point the transport to a closed port to trigger a network error.
 	srv := httptest.NewServer(http.HandlerFunc(func(http.ResponseWriter, *http.Request) {}))
 	srv.Close()
 

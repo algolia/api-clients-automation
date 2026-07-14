@@ -89,7 +89,6 @@ func (d *eventStreamDecoder) Next() bool {
 			line = bytes.TrimPrefix(line, []byte("\xEF\xBB\xBF"))
 		}
 
-		// A blank line dispatches the buffered event, if any.
 		if len(line) == 0 {
 			// The event type resets on every blank line, dispatch or not.
 			currentEventType := eventType
@@ -104,12 +103,11 @@ func (d *eventStreamDecoder) Next() bool {
 			return true
 		}
 
-		// Comment line.
+		// A leading colon marks a comment line, per spec.
 		if line[0] == ':' {
 			continue
 		}
 
-		// A line without a colon is a field with an empty value.
 		field, value, _ := bytes.Cut(line, []byte{':'})
 		// A single space after the colon is part of the separator.
 		if len(value) > 0 && value[0] == ' ' {

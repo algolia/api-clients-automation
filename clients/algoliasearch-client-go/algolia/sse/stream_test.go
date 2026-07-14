@@ -59,8 +59,6 @@ func TestStream_FieldsDoNotLeakAcrossEvents(t *testing.T) {
 		t.Fatalf("expected the second event to be read, got error: %v", s.Err())
 	}
 
-	// Each event is unmarshalled into a fresh value: "text" is absent from
-	// the second payload, so it must be zero, not "first".
 	if got := s.Current(); got.Text != "" || got.Index != 8 {
 		t.Fatalf("expected {Text:\"\" Index:8}, got %+v", got)
 	}

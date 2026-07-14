@@ -250,8 +250,6 @@ func TestEventStreamDecoder_IDAndRetryDefaults(t *testing.T) {
 func TestEventStreamDecoder_InvalidIDAndRetryAreIgnored(t *testing.T) {
 	t.Parallel()
 
-	// An id containing a NUL character and a retry value that is not made of
-	// ASCII digits only must be ignored, per spec.
 	input := "id: 4\x002\nretry: -100\nretry: 5s\nretry:\ndata: hello\n\n"
 	d := sse.NewEventStreamDecoder(io.NopCloser(strings.NewReader(input)))
 	events := collectEvents(t, d)
