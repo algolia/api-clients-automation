@@ -159,7 +159,12 @@ export function algoliasearch(
       }
 
       if (objects.length === 0) {
-        console.warn(`replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the "${indexName}" index.`);
+        const warning = `replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the "${indexName}" index.`;
+        if (client.transporter.logger.warn) {
+          client.transporter.logger.warn(warning);
+        } else {
+          console.warn(warning);
+        }
       }
 
       const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;

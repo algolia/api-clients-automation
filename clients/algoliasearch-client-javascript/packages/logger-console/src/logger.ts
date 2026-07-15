@@ -19,6 +19,14 @@ export function createConsoleLogger(logLevel: LogLevelType): Logger {
       return Promise.resolve();
     },
 
+    warn(message: string, args?: any | undefined): Readonly<Promise<void>> {
+      if (LogLevelEnum.Info >= logLevel) {
+        console.warn(message, args);
+      }
+
+      return Promise.resolve();
+    },
+
     error(message: string, args?: any | undefined): Readonly<Promise<void>> {
       console.error(message, args);
 
