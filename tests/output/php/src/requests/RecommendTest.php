@@ -599,6 +599,9 @@ class RecommendTest extends TestCase implements HttpClientInterface
                         'optionalFilters' => [
                             'brand:samsung',
                         ],
+                        'facetFilters' => [
+                            'brand:apple',
+                        ],
                     ],
                 ],
             ],
@@ -609,7 +612,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/*/recommendations',
                 'method' => 'POST',
-                'body' => json_decode('{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}'),
+                'body' => json_decode('{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"],"facetFilters":["brand:apple"]}}]}'),
             ],
         ]);
     }

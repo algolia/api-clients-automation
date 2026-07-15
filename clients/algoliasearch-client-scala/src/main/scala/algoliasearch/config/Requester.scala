@@ -21,4 +21,24 @@ trait Requester extends AutoCloseable {
       httpRequest: HttpRequest,
       requestOptions: Option[RequestOptions]
   ): T
+
+  /** Executes an HTTP request and returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * The default implementation throws [[UnsupportedOperationException]]; custom requesters must override it to support
+    * the `*WithHTTPInfo` method derivatives.
+    *
+    * @param httpRequest
+    *   The HTTP request to be executed.
+    * @param requestOptions
+    *   Optional request options.
+    * @tparam T
+    *   The type of the deserialized response body.
+    * @return
+    *   The full HTTP response.
+    */
+  def executeWithHttpInfo[T: Manifest](
+      httpRequest: HttpRequest,
+      requestOptions: Option[RequestOptions]
+  ): AlgoliaHttpResponse[T] =
+    throw new UnsupportedOperationException("this Requester does not expose HTTP info")
 }

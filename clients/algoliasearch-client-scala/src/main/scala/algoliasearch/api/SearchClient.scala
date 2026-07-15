@@ -216,15 +216,31 @@ class SearchClient(
   def addApiKey(apiKey: ApiKey, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[AddApiKeyResponse] = Future {
+    execute[AddApiKeyResponse](addApiKeyHttpRequest(apiKey = apiKey), requestOptions)
+  }
+
+  /** Variant of `addApiKey` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    */
+  def addApiKeyWithHTTPInfo(apiKey: ApiKey, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[AddApiKeyResponse]] = Future {
+    executeWithHttpInfo[AddApiKeyResponse](addApiKeyHttpRequest(apiKey = apiKey), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `addApiKey` and `addApiKeyWithHTTPInfo`.
+    */
+  private def addApiKeyHttpRequest(apiKey: ApiKey): HttpRequest = {
     requireNotNull(apiKey, "Parameter `apiKey` is required when calling `addApiKey`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/keys")
       .withBody(apiKey)
       .build()
-    execute[AddApiKeyResponse](request, requestOptions)
   }
 
   /** If a record with the specified object ID exists, the existing record is replaced. Otherwise, a new record is added
@@ -247,19 +263,52 @@ class SearchClient(
   def addOrUpdateObject(indexName: String, objectID: String, body: Any, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
   ): Future[UpdatedAtWithObjectIdResponse] = Future {
+    execute[UpdatedAtWithObjectIdResponse](
+      addOrUpdateObjectHttpRequest(indexName = indexName, objectID = objectID, body = body),
+      requestOptions
+    )
+  }
+
+  /** Variant of `addOrUpdateObject` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param objectID
+    *   Unique record identifier.
+    * @param body
+    *   The record. A schemaless object with attributes that are useful in the context of search and discovery.
+    */
+  def addOrUpdateObjectWithHTTPInfo(
+      indexName: String,
+      objectID: String,
+      body: Any,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[UpdatedAtWithObjectIdResponse]] = Future {
+    executeWithHttpInfo[UpdatedAtWithObjectIdResponse](
+      addOrUpdateObjectHttpRequest(indexName = indexName, objectID = objectID, body = body),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `addOrUpdateObject` and `addOrUpdateObjectWithHTTPInfo`.
+    */
+  private def addOrUpdateObjectHttpRequest(indexName: String, objectID: String, body: Any): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `addOrUpdateObject`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `addOrUpdateObject`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `addOrUpdateObject`.")
     requireNotEmpty(objectID, "Parameter `objectID` is required when calling `addOrUpdateObject`.")
     requireNotNull(body, "Parameter `body` is required when calling `addOrUpdateObject`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/1/indexes/${escape(indexName)}/${escape(objectID)}")
       .withBody(body)
       .build()
-    execute[UpdatedAtWithObjectIdResponse](request, requestOptions)
   }
 
   /** Adds a source to the list of allowed sources.
@@ -273,15 +322,35 @@ class SearchClient(
   def appendSource(source: Source, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[CreatedAtResponse] = Future {
+    execute[CreatedAtResponse](appendSourceHttpRequest(source = source), requestOptions)
+  }
+
+  /** Variant of `appendSource` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    *
+    * @param source
+    *   Source to add.
+    */
+  def appendSourceWithHTTPInfo(source: Source, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[CreatedAtResponse]] = Future {
+    executeWithHttpInfo[CreatedAtResponse](appendSourceHttpRequest(source = source), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `appendSource` and `appendSourceWithHTTPInfo`.
+    */
+  private def appendSourceHttpRequest(source: Source): HttpRequest = {
     requireNotNull(source, "Parameter `source` is required when calling `appendSource`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/security/sources/append")
       .withBody(source)
       .build()
-    execute[CreatedAtResponse](request, requestOptions)
   }
 
   /** Assigns or moves a user ID to a cluster. The time it takes to move a user is proportional to the amount of data
@@ -300,18 +369,48 @@ class SearchClient(
       assignUserIdParams: AssignUserIdParams,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[CreatedAtResponse] = Future {
+    execute[CreatedAtResponse](
+      assignUserIdHttpRequest(xAlgoliaUserID = xAlgoliaUserID, assignUserIdParams = assignUserIdParams),
+      requestOptions
+    )
+  }
+
+  /** Variant of `assignUserId` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    *
+    * @deprecated
+    *
+    * @param xAlgoliaUserID
+    *   Unique identifier of the user who makes the search request.
+    */
+  def assignUserIdWithHTTPInfo(
+      xAlgoliaUserID: String,
+      assignUserIdParams: AssignUserIdParams,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[CreatedAtResponse]] = Future {
+    executeWithHttpInfo[CreatedAtResponse](
+      assignUserIdHttpRequest(xAlgoliaUserID = xAlgoliaUserID, assignUserIdParams = assignUserIdParams),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `assignUserId` and `assignUserIdWithHTTPInfo`.
+    */
+  private def assignUserIdHttpRequest(xAlgoliaUserID: String, assignUserIdParams: AssignUserIdParams): HttpRequest = {
     requireNotNull(xAlgoliaUserID, "Parameter `xAlgoliaUserID` is required when calling `assignUserId`.")
     requireNotEmpty(xAlgoliaUserID, "Parameter `xAlgoliaUserID` is required when calling `assignUserId`.")
     requireNotNull(assignUserIdParams, "Parameter `assignUserIdParams` is required when calling `assignUserId`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/clusters/mapping")
       .withBody(assignUserIdParams)
       .withHeader("X-Algolia-User-ID", xAlgoliaUserID)
       .build()
-    execute[CreatedAtResponse](request, requestOptions)
   }
 
   /** Adds, updates, or deletes records in one index with a single API request. Batching index updates reduces latency
@@ -328,17 +427,41 @@ class SearchClient(
   def batch(indexName: String, batchWriteParams: BatchWriteParams, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
   ): Future[BatchResponse] = Future {
+    execute[BatchResponse](batchHttpRequest(indexName = indexName, batchWriteParams = batchWriteParams), requestOptions)
+  }
+
+  /** Variant of `batch` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    */
+  def batchWithHTTPInfo(
+      indexName: String,
+      batchWriteParams: BatchWriteParams,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[BatchResponse]] = Future {
+    executeWithHttpInfo[BatchResponse](
+      batchHttpRequest(indexName = indexName, batchWriteParams = batchWriteParams),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `batch` and `batchWithHTTPInfo`.
+    */
+  private def batchHttpRequest(indexName: String, batchWriteParams: BatchWriteParams): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `batch`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `batch`.")
     requireNotNull(batchWriteParams, "Parameter `batchWriteParams` is required when calling `batch`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/batch")
       .withBody(batchWriteParams)
       .build()
-    execute[BatchResponse](request, requestOptions)
   }
 
   /** Assigns multiple user IDs to a cluster. **You can't move users with this operation**.
@@ -356,6 +479,47 @@ class SearchClient(
       batchAssignUserIdsParams: BatchAssignUserIdsParams,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[CreatedAtResponse] = Future {
+    execute[CreatedAtResponse](
+      batchAssignUserIdsHttpRequest(
+        xAlgoliaUserID = xAlgoliaUserID,
+        batchAssignUserIdsParams = batchAssignUserIdsParams
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `batchAssignUserIds` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    *
+    * @deprecated
+    *
+    * @param xAlgoliaUserID
+    *   Unique identifier of the user who makes the search request.
+    */
+  def batchAssignUserIdsWithHTTPInfo(
+      xAlgoliaUserID: String,
+      batchAssignUserIdsParams: BatchAssignUserIdsParams,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[CreatedAtResponse]] = Future {
+    executeWithHttpInfo[CreatedAtResponse](
+      batchAssignUserIdsHttpRequest(
+        xAlgoliaUserID = xAlgoliaUserID,
+        batchAssignUserIdsParams = batchAssignUserIdsParams
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `batchAssignUserIds` and
+    * `batchAssignUserIdsWithHTTPInfo`.
+    */
+  private def batchAssignUserIdsHttpRequest(
+      xAlgoliaUserID: String,
+      batchAssignUserIdsParams: BatchAssignUserIdsParams
+  ): HttpRequest = {
     requireNotNull(xAlgoliaUserID, "Parameter `xAlgoliaUserID` is required when calling `batchAssignUserIds`.")
     requireNotEmpty(xAlgoliaUserID, "Parameter `xAlgoliaUserID` is required when calling `batchAssignUserIds`.")
     requireNotNull(
@@ -363,14 +527,13 @@ class SearchClient(
       "Parameter `batchAssignUserIdsParams` is required when calling `batchAssignUserIds`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/clusters/mapping/batch")
       .withBody(batchAssignUserIdsParams)
       .withHeader("X-Algolia-User-ID", xAlgoliaUserID)
       .build()
-    execute[CreatedAtResponse](request, requestOptions)
   }
 
   /** Adds or deletes multiple entries from your plurals, segmentation, or stop word dictionaries.
@@ -386,19 +549,57 @@ class SearchClient(
       batchDictionaryEntriesParams: BatchDictionaryEntriesParams,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
+    execute[UpdatedAtResponse](
+      batchDictionaryEntriesHttpRequest(
+        dictionaryName = dictionaryName,
+        batchDictionaryEntriesParams = batchDictionaryEntriesParams
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `batchDictionaryEntries` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param dictionaryName
+    *   Dictionary type in which to search.
+    */
+  def batchDictionaryEntriesWithHTTPInfo(
+      dictionaryName: DictionaryType,
+      batchDictionaryEntriesParams: BatchDictionaryEntriesParams,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[UpdatedAtResponse]] = Future {
+    executeWithHttpInfo[UpdatedAtResponse](
+      batchDictionaryEntriesHttpRequest(
+        dictionaryName = dictionaryName,
+        batchDictionaryEntriesParams = batchDictionaryEntriesParams
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `batchDictionaryEntries` and
+    * `batchDictionaryEntriesWithHTTPInfo`.
+    */
+  private def batchDictionaryEntriesHttpRequest(
+      dictionaryName: DictionaryType,
+      batchDictionaryEntriesParams: BatchDictionaryEntriesParams
+  ): HttpRequest = {
     requireNotNull(dictionaryName, "Parameter `dictionaryName` is required when calling `batchDictionaryEntries`.")
     requireNotNull(
       batchDictionaryEntriesParams,
       "Parameter `batchDictionaryEntriesParams` is required when calling `batchDictionaryEntries`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/dictionaries/${escape(dictionaryName)}/batch")
       .withBody(batchDictionaryEntriesParams)
       .build()
-    execute[UpdatedAtResponse](request, requestOptions)
   }
 
   /** Retrieves records from an index, up to 1,000 per request. Searching returns _hits_ (records augmented with
@@ -422,17 +623,41 @@ class SearchClient(
       browseParams: Option[BrowseParams] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[BrowseResponse] = Future {
+    execute[BrowseResponse](browseHttpRequest(indexName = indexName, browseParams = browseParams), requestOptions)
+  }
+
+  /** Variant of `browse` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - browse
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    */
+  def browseWithHTTPInfo(
+      indexName: String,
+      browseParams: Option[BrowseParams] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[BrowseResponse]] = Future {
+    executeWithHttpInfo[BrowseResponse](
+      browseHttpRequest(indexName = indexName, browseParams = browseParams),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `browse` and `browseWithHTTPInfo`.
+    */
+  private def browseHttpRequest(indexName: String, browseParams: Option[BrowseParams] = None): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `browse`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `browse`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/browse")
       .withBody(browseParams)
       .withRead(true)
       .build()
-    execute[BrowseResponse](request, requestOptions)
   }
 
   /** Deletes only the records from an index while keeping settings, synonyms, and rules. This operation is
@@ -448,15 +673,35 @@ class SearchClient(
   def clearObjects(indexName: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[UpdatedAtResponse] = Future {
+    execute[UpdatedAtResponse](clearObjectsHttpRequest(indexName = indexName), requestOptions)
+  }
+
+  /** Variant of `clearObjects` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - deleteIndex
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    */
+  def clearObjectsWithHTTPInfo(indexName: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[UpdatedAtResponse]] = Future {
+    executeWithHttpInfo[UpdatedAtResponse](clearObjectsHttpRequest(indexName = indexName), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `clearObjects` and `clearObjectsWithHTTPInfo`.
+    */
+  private def clearObjectsHttpRequest(indexName: String): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `clearObjects`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `clearObjects`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/clear")
       .build()
-    execute[UpdatedAtResponse](request, requestOptions)
   }
 
   /** Deletes all rules from the index.
@@ -474,16 +719,45 @@ class SearchClient(
       forwardToReplicas: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
+    execute[UpdatedAtResponse](
+      clearRulesHttpRequest(indexName = indexName, forwardToReplicas = forwardToReplicas),
+      requestOptions
+    )
+  }
+
+  /** Variant of `clearRules` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param forwardToReplicas
+    *   Whether changes are applied to replica indices.
+    */
+  def clearRulesWithHTTPInfo(
+      indexName: String,
+      forwardToReplicas: Option[Boolean] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[UpdatedAtResponse]] = Future {
+    executeWithHttpInfo[UpdatedAtResponse](
+      clearRulesHttpRequest(indexName = indexName, forwardToReplicas = forwardToReplicas),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `clearRules` and `clearRulesWithHTTPInfo`.
+    */
+  private def clearRulesHttpRequest(indexName: String, forwardToReplicas: Option[Boolean] = None): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `clearRules`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `clearRules`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/rules/clear")
       .withQueryParameter("forwardToReplicas", forwardToReplicas)
       .build()
-    execute[UpdatedAtResponse](request, requestOptions)
   }
 
   /** Deletes all synonyms from the index.
@@ -501,16 +775,46 @@ class SearchClient(
       forwardToReplicas: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
+    execute[UpdatedAtResponse](
+      clearSynonymsHttpRequest(indexName = indexName, forwardToReplicas = forwardToReplicas),
+      requestOptions
+    )
+  }
+
+  /** Variant of `clearSynonyms` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param forwardToReplicas
+    *   Whether changes are applied to replica indices.
+    */
+  def clearSynonymsWithHTTPInfo(
+      indexName: String,
+      forwardToReplicas: Option[Boolean] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[UpdatedAtResponse]] = Future {
+    executeWithHttpInfo[UpdatedAtResponse](
+      clearSynonymsHttpRequest(indexName = indexName, forwardToReplicas = forwardToReplicas),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `clearSynonyms` and `clearSynonymsWithHTTPInfo`.
+    */
+  private def clearSynonymsHttpRequest(indexName: String, forwardToReplicas: Option[Boolean] = None): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `clearSynonyms`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `clearSynonyms`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/synonyms/clear")
       .withQueryParameter("forwardToReplicas", forwardToReplicas)
       .build()
-    execute[UpdatedAtResponse](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -525,16 +829,37 @@ class SearchClient(
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customDeleteHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Variant of `customDelete` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customDeleteWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customDeleteHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customDelete` and `customDeleteWithHTTPInfo`.
+    */
+  private def customDeleteHttpRequest(path: String, parameters: Option[Map[String, Any]] = None): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customDelete`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/${path}")
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -549,16 +874,36 @@ class SearchClient(
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customGetHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Variant of `customGet` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customGetWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customGetHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customGet` and `customGetWithHTTPInfo`.
+    */
+  private def customGetHttpRequest(path: String, parameters: Option[Map[String, Any]] = None): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customGet`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/${path}")
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -576,17 +921,44 @@ class SearchClient(
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customPostHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Variant of `customPost` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPostWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customPostHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customPost` and `customPostWithHTTPInfo`.
+    */
+  private def customPostHttpRequest(
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None
+  ): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customPost`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -604,17 +976,44 @@ class SearchClient(
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customPutHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Variant of `customPut` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPutWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customPutHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customPut` and `customPutWithHTTPInfo`.
+    */
+  private def customPutHttpRequest(
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None
+  ): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customPut`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** Deletes the API key.
@@ -628,15 +1027,35 @@ class SearchClient(
   def deleteApiKey(key: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[DeleteApiKeyResponse] = Future {
+    execute[DeleteApiKeyResponse](deleteApiKeyHttpRequest(key = key), requestOptions)
+  }
+
+  /** Variant of `deleteApiKey` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    *
+    * @param key
+    *   API key.
+    */
+  def deleteApiKeyWithHTTPInfo(key: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[DeleteApiKeyResponse]] = Future {
+    executeWithHttpInfo[DeleteApiKeyResponse](deleteApiKeyHttpRequest(key = key), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteApiKey` and `deleteApiKeyWithHTTPInfo`.
+    */
+  private def deleteApiKeyHttpRequest(key: String): HttpRequest = {
     requireNotNull(key, "Parameter `key` is required when calling `deleteApiKey`.")
     requireNotEmpty(key, "Parameter `key` is required when calling `deleteApiKey`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/1/keys/${escape(key)}")
       .build()
-    execute[DeleteApiKeyResponse](request, requestOptions)
   }
 
   /** This operation doesn't accept empty filters. This operation is resource-intensive. Use it only if you can't get
@@ -654,17 +1073,44 @@ class SearchClient(
   def deleteBy(indexName: String, deleteByParams: DeleteByParams, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
   ): Future[UpdatedAtResponse] = Future {
+    execute[UpdatedAtResponse](
+      deleteByHttpRequest(indexName = indexName, deleteByParams = deleteByParams),
+      requestOptions
+    )
+  }
+
+  /** Variant of `deleteBy` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - deleteIndex
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    */
+  def deleteByWithHTTPInfo(
+      indexName: String,
+      deleteByParams: DeleteByParams,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[UpdatedAtResponse]] = Future {
+    executeWithHttpInfo[UpdatedAtResponse](
+      deleteByHttpRequest(indexName = indexName, deleteByParams = deleteByParams),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteBy` and `deleteByWithHTTPInfo`.
+    */
+  private def deleteByHttpRequest(indexName: String, deleteByParams: DeleteByParams): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `deleteBy`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `deleteBy`.")
     requireNotNull(deleteByParams, "Parameter `deleteByParams` is required when calling `deleteBy`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/deleteByQuery")
       .withBody(deleteByParams)
       .build()
-    execute[UpdatedAtResponse](request, requestOptions)
   }
 
   /** Deletes an index and all its settings. - Deleting an index doesn't delete its analytics data. - If you try to
@@ -683,15 +1129,35 @@ class SearchClient(
   def deleteIndex(indexName: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[DeletedAtResponse] = Future {
+    execute[DeletedAtResponse](deleteIndexHttpRequest(indexName = indexName), requestOptions)
+  }
+
+  /** Variant of `deleteIndex` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - deleteIndex
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    */
+  def deleteIndexWithHTTPInfo(indexName: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[DeletedAtResponse]] = Future {
+    executeWithHttpInfo[DeletedAtResponse](deleteIndexHttpRequest(indexName = indexName), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteIndex` and `deleteIndexWithHTTPInfo`.
+    */
+  private def deleteIndexHttpRequest(indexName: String): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `deleteIndex`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `deleteIndex`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/1/indexes/${escape(indexName)}")
       .build()
-    execute[DeletedAtResponse](request, requestOptions)
   }
 
   /** Deletes a record by its object ID. To delete more than one record, use the [`batch`
@@ -709,17 +1175,42 @@ class SearchClient(
   def deleteObject(indexName: String, objectID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[DeletedAtResponse] = Future {
+    execute[DeletedAtResponse](deleteObjectHttpRequest(indexName = indexName, objectID = objectID), requestOptions)
+  }
+
+  /** Variant of `deleteObject` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - deleteObject
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param objectID
+    *   Unique record identifier.
+    */
+  def deleteObjectWithHTTPInfo(indexName: String, objectID: String, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[DeletedAtResponse]] = Future {
+    executeWithHttpInfo[DeletedAtResponse](
+      deleteObjectHttpRequest(indexName = indexName, objectID = objectID),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteObject` and `deleteObjectWithHTTPInfo`.
+    */
+  private def deleteObjectHttpRequest(indexName: String, objectID: String): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `deleteObject`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `deleteObject`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `deleteObject`.")
     requireNotEmpty(objectID, "Parameter `objectID` is required when calling `deleteObject`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/1/indexes/${escape(indexName)}/${escape(objectID)}")
       .build()
-    execute[DeletedAtResponse](request, requestOptions)
   }
 
   /** Deletes a rule by its ID. To find the object ID for rules, use the [`search`
@@ -741,18 +1232,54 @@ class SearchClient(
       forwardToReplicas: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
+    execute[UpdatedAtResponse](
+      deleteRuleHttpRequest(indexName = indexName, objectID = objectID, forwardToReplicas = forwardToReplicas),
+      requestOptions
+    )
+  }
+
+  /** Variant of `deleteRule` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param objectID
+    *   Unique identifier of a rule object.
+    * @param forwardToReplicas
+    *   Whether changes are applied to replica indices.
+    */
+  def deleteRuleWithHTTPInfo(
+      indexName: String,
+      objectID: String,
+      forwardToReplicas: Option[Boolean] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[UpdatedAtResponse]] = Future {
+    executeWithHttpInfo[UpdatedAtResponse](
+      deleteRuleHttpRequest(indexName = indexName, objectID = objectID, forwardToReplicas = forwardToReplicas),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteRule` and `deleteRuleWithHTTPInfo`.
+    */
+  private def deleteRuleHttpRequest(
+      indexName: String,
+      objectID: String,
+      forwardToReplicas: Option[Boolean] = None
+  ): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `deleteRule`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `deleteRule`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `deleteRule`.")
     requireNotEmpty(objectID, "Parameter `objectID` is required when calling `deleteRule`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/1/indexes/${escape(indexName)}/rules/${escape(objectID)}")
       .withQueryParameter("forwardToReplicas", forwardToReplicas)
       .build()
-    execute[UpdatedAtResponse](request, requestOptions)
   }
 
   /** Deletes a source from the list of allowed sources.
@@ -766,15 +1293,35 @@ class SearchClient(
   def deleteSource(source: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[DeleteSourceResponse] = Future {
+    execute[DeleteSourceResponse](deleteSourceHttpRequest(source = source), requestOptions)
+  }
+
+  /** Variant of `deleteSource` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    *
+    * @param source
+    *   IP address range of the source.
+    */
+  def deleteSourceWithHTTPInfo(source: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[DeleteSourceResponse]] = Future {
+    executeWithHttpInfo[DeleteSourceResponse](deleteSourceHttpRequest(source = source), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteSource` and `deleteSourceWithHTTPInfo`.
+    */
+  private def deleteSourceHttpRequest(source: String): HttpRequest = {
     requireNotNull(source, "Parameter `source` is required when calling `deleteSource`.")
     requireNotEmpty(source, "Parameter `source` is required when calling `deleteSource`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/1/security/sources/${escape(source)}")
       .build()
-    execute[DeleteSourceResponse](request, requestOptions)
   }
 
   /** Deletes a synonym by its ID. To find the object IDs of your synonyms, use the [`search`
@@ -796,18 +1343,55 @@ class SearchClient(
       forwardToReplicas: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[DeletedAtResponse] = Future {
+    execute[DeletedAtResponse](
+      deleteSynonymHttpRequest(indexName = indexName, objectID = objectID, forwardToReplicas = forwardToReplicas),
+      requestOptions
+    )
+  }
+
+  /** Variant of `deleteSynonym` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param objectID
+    *   Unique identifier of a synonym object.
+    * @param forwardToReplicas
+    *   Whether changes are applied to replica indices.
+    */
+  def deleteSynonymWithHTTPInfo(
+      indexName: String,
+      objectID: String,
+      forwardToReplicas: Option[Boolean] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[DeletedAtResponse]] = Future {
+    executeWithHttpInfo[DeletedAtResponse](
+      deleteSynonymHttpRequest(indexName = indexName, objectID = objectID, forwardToReplicas = forwardToReplicas),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteSynonym` and `deleteSynonymWithHTTPInfo`.
+    */
+  private def deleteSynonymHttpRequest(
+      indexName: String,
+      objectID: String,
+      forwardToReplicas: Option[Boolean] = None
+  ): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `deleteSynonym`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `deleteSynonym`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `deleteSynonym`.")
     requireNotEmpty(objectID, "Parameter `objectID` is required when calling `deleteSynonym`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/1/indexes/${escape(indexName)}/synonyms/${escape(objectID)}")
       .withQueryParameter("forwardToReplicas", forwardToReplicas)
       .build()
-    execute[DeletedAtResponse](request, requestOptions)
   }
 
   /** Gets the permissions and restrictions of an API key. When authenticating with the admin API key, you can request
@@ -823,15 +1407,34 @@ class SearchClient(
   def getApiKey(key: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[GetApiKeyResponse] = Future {
+    execute[GetApiKeyResponse](getApiKeyHttpRequest(key = key), requestOptions)
+  }
+
+  /** Variant of `getApiKey` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - search
+    *
+    * @param key
+    *   API key.
+    */
+  def getApiKeyWithHTTPInfo(key: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[GetApiKeyResponse]] = Future {
+    executeWithHttpInfo[GetApiKeyResponse](getApiKeyHttpRequest(key = key), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getApiKey` and `getApiKeyWithHTTPInfo`.
+    */
+  private def getApiKeyHttpRequest(key: String): HttpRequest = {
     requireNotNull(key, "Parameter `key` is required when calling `getApiKey`.")
     requireNotEmpty(key, "Parameter `key` is required when calling `getApiKey`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/keys/${escape(key)}")
       .build()
-    execute[GetApiKeyResponse](request, requestOptions)
   }
 
   /** Checks the status of a given application task.
@@ -845,14 +1448,33 @@ class SearchClient(
   def getAppTask(taskID: Long, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[GetTaskResponse] = Future {
+    execute[GetTaskResponse](getAppTaskHttpRequest(taskID = taskID), requestOptions)
+  }
+
+  /** Variant of `getAppTask` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param taskID
+    *   Unique task identifier.
+    */
+  def getAppTaskWithHTTPInfo(taskID: Long, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[GetTaskResponse]] = Future {
+    executeWithHttpInfo[GetTaskResponse](getAppTaskHttpRequest(taskID = taskID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getAppTask` and `getAppTaskWithHTTPInfo`.
+    */
+  private def getAppTaskHttpRequest(taskID: Long): HttpRequest = {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `getAppTask`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/task/${escape(taskID)}")
       .build()
-    execute[GetTaskResponse](request, requestOptions)
   }
 
   /** Lists supported languages with their supported dictionary types and number of custom entries.
@@ -863,13 +1485,31 @@ class SearchClient(
   def getDictionaryLanguages(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[Map[String, Languages]] = Future {
+    execute[Map[String, Languages]](getDictionaryLanguagesHttpRequest(), requestOptions)
+  }
 
-    val request = HttpRequest
+  /** Variant of `getDictionaryLanguages` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    */
+  def getDictionaryLanguagesWithHTTPInfo(
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Map[String, Languages]]] = Future {
+    executeWithHttpInfo[Map[String, Languages]](getDictionaryLanguagesHttpRequest(), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getDictionaryLanguages` and
+    * `getDictionaryLanguagesWithHTTPInfo`.
+    */
+  private def getDictionaryLanguagesHttpRequest(): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/dictionaries/*/languages")
       .build()
-    execute[Map[String, Languages]](request, requestOptions)
   }
 
   /** Retrieves the languages for which standard dictionary entries are turned off.
@@ -880,13 +1520,31 @@ class SearchClient(
   def getDictionarySettings(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetDictionarySettingsResponse] = Future {
+    execute[GetDictionarySettingsResponse](getDictionarySettingsHttpRequest(), requestOptions)
+  }
 
-    val request = HttpRequest
+  /** Variant of `getDictionarySettings` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    */
+  def getDictionarySettingsWithHTTPInfo(
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetDictionarySettingsResponse]] = Future {
+    executeWithHttpInfo[GetDictionarySettingsResponse](getDictionarySettingsHttpRequest(), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getDictionarySettings` and
+    * `getDictionarySettingsWithHTTPInfo`.
+    */
+  private def getDictionarySettingsHttpRequest(): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/dictionaries/*/settings")
       .build()
-    execute[GetDictionarySettingsResponse](request, requestOptions)
   }
 
   /** The request must be authenticated by an API key with the [`logs`
@@ -914,8 +1572,49 @@ class SearchClient(
       `type`: Option[LogType] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetLogsResponse] = Future {
+    execute[GetLogsResponse](
+      getLogsHttpRequest(offset = offset, length = length, indexName = indexName, `type` = `type`),
+      requestOptions
+    )
+  }
 
-    val request = HttpRequest
+  /** Variant of `getLogs` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - logs
+    *
+    * @param offset
+    *   First log entry to retrieve. The most recent entries are listed first.
+    * @param length
+    *   Maximum number of entries to retrieve.
+    * @param indexName
+    *   Index for which to retrieve log entries. By default, log entries are retrieved for all indices.
+    * @param `type`
+    *   Type of log entries to retrieve. By default, all log entries are retrieved.
+    */
+  def getLogsWithHTTPInfo(
+      offset: Option[Int] = None,
+      length: Option[Int] = None,
+      indexName: Option[String] = None,
+      `type`: Option[LogType] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetLogsResponse]] = Future {
+    executeWithHttpInfo[GetLogsResponse](
+      getLogsHttpRequest(offset = offset, length = length, indexName = indexName, `type` = `type`),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getLogs` and `getLogsWithHTTPInfo`.
+    */
+  private def getLogsHttpRequest(
+      offset: Option[Int] = None,
+      length: Option[Int] = None,
+      indexName: Option[String] = None,
+      `type`: Option[LogType] = None
+  ): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/logs")
@@ -924,7 +1623,6 @@ class SearchClient(
       .withQueryParameter("indexName", indexName)
       .withQueryParameter("type", `type`)
       .build()
-    execute[GetLogsResponse](request, requestOptions)
   }
 
   /** Retrieves one record by its object ID. To retrieve more than one record, use the [`objects`
@@ -948,18 +1646,56 @@ class SearchClient(
       attributesToRetrieve: Option[Seq[String]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[Any] = Future {
+    execute[Any](
+      getObjectHttpRequest(indexName = indexName, objectID = objectID, attributesToRetrieve = attributesToRetrieve),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getObject` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - search
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param objectID
+    *   Unique record identifier.
+    * @param attributesToRetrieve
+    *   Attributes to include with the records in the response. This is useful to reduce the size of the API response.
+    *   By default, all retrievable attributes are returned. `objectID` is always retrieved. Attributes included in
+    *   `unretrievableAttributes` won't be retrieved unless the request is authenticated with the admin API key.
+    */
+  def getObjectWithHTTPInfo(
+      indexName: String,
+      objectID: String,
+      attributesToRetrieve: Option[Seq[String]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Any]] = Future {
+    executeWithHttpInfo[Any](
+      getObjectHttpRequest(indexName = indexName, objectID = objectID, attributesToRetrieve = attributesToRetrieve),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getObject` and `getObjectWithHTTPInfo`.
+    */
+  private def getObjectHttpRequest(
+      indexName: String,
+      objectID: String,
+      attributesToRetrieve: Option[Seq[String]] = None
+  ): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getObject`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getObject`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `getObject`.")
     requireNotEmpty(objectID, "Parameter `objectID` is required when calling `getObject`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/indexes/${escape(indexName)}/${escape(objectID)}")
       .withQueryParameter("attributesToRetrieve", attributesToRetrieve)
       .build()
-    execute[Any](request, requestOptions)
   }
 
   /** Retrieves one or more records, potentially from different indices. Records are returned in the same order as the
@@ -974,16 +1710,35 @@ class SearchClient(
   def getObjects(getObjectsParams: GetObjectsParams, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[GetObjectsResponse] = Future {
+    execute[GetObjectsResponse](getObjectsHttpRequest(getObjectsParams = getObjectsParams), requestOptions)
+  }
+
+  /** Variant of `getObjects` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - search
+    *
+    * @param getObjectsParams
+    *   Request object.
+    */
+  def getObjectsWithHTTPInfo(getObjectsParams: GetObjectsParams, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[GetObjectsResponse]] = Future {
+    executeWithHttpInfo[GetObjectsResponse](getObjectsHttpRequest(getObjectsParams = getObjectsParams), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getObjects` and `getObjectsWithHTTPInfo`.
+    */
+  private def getObjectsHttpRequest(getObjectsParams: GetObjectsParams): HttpRequest = {
     requireNotNull(getObjectsParams, "Parameter `getObjectsParams` is required when calling `getObjects`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/*/objects")
       .withBody(getObjectsParams)
       .withRead(true)
       .build()
-    execute[GetObjectsResponse](request, requestOptions)
   }
 
   /** Retrieves a rule by its ID. To find the object ID of rules, use the [`search`
@@ -1000,17 +1755,38 @@ class SearchClient(
   def getRule(indexName: String, objectID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[Rule] = Future {
+    execute[Rule](getRuleHttpRequest(indexName = indexName, objectID = objectID), requestOptions)
+  }
+
+  /** Variant of `getRule` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param objectID
+    *   Unique identifier of a rule object.
+    */
+  def getRuleWithHTTPInfo(indexName: String, objectID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Rule]] = Future {
+    executeWithHttpInfo[Rule](getRuleHttpRequest(indexName = indexName, objectID = objectID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getRule` and `getRuleWithHTTPInfo`.
+    */
+  private def getRuleHttpRequest(indexName: String, objectID: String): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getRule`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getRule`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `getRule`.")
     requireNotEmpty(objectID, "Parameter `objectID` is required when calling `getRule`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/indexes/${escape(indexName)}/rules/${escape(objectID)}")
       .build()
-    execute[Rule](request, requestOptions)
   }
 
   /** Retrieves an object with non-null index settings.
@@ -1027,16 +1803,44 @@ class SearchClient(
   def getSettings(indexName: String, getVersion: Option[Int] = None, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
   ): Future[SettingsResponse] = Future {
+    execute[SettingsResponse](getSettingsHttpRequest(indexName = indexName, getVersion = getVersion), requestOptions)
+  }
+
+  /** Variant of `getSettings` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param getVersion
+    *   When set to 2, the endpoint will not include `synonyms` in the response. This parameter is here for backward
+    *   compatibility.
+    */
+  def getSettingsWithHTTPInfo(
+      indexName: String,
+      getVersion: Option[Int] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[SettingsResponse]] = Future {
+    executeWithHttpInfo[SettingsResponse](
+      getSettingsHttpRequest(indexName = indexName, getVersion = getVersion),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getSettings` and `getSettingsWithHTTPInfo`.
+    */
+  private def getSettingsHttpRequest(indexName: String, getVersion: Option[Int] = None): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getSettings`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getSettings`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/indexes/${escape(indexName)}/settings")
       .withQueryParameter("getVersion", getVersion)
       .build()
-    execute[SettingsResponse](request, requestOptions)
   }
 
   /** Retrieves all allowed IP addresses with access to your application.
@@ -1046,14 +1850,30 @@ class SearchClient(
     */
   def getSources(requestOptions: Option[RequestOptions] = None)(implicit ec: ExecutionContext): Future[Seq[Source]] =
     Future {
-
-      val request = HttpRequest
-        .builder()
-        .withMethod("GET")
-        .withPath(s"/1/security/sources")
-        .build()
-      execute[Seq[Source]](request, requestOptions)
+      execute[Seq[Source]](getSourcesHttpRequest(), requestOptions)
     }
+
+  /** Variant of `getSources` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    */
+  def getSourcesWithHTTPInfo(
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Seq[Source]]] = Future {
+    executeWithHttpInfo[Seq[Source]](getSourcesHttpRequest(), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getSources` and `getSourcesWithHTTPInfo`.
+    */
+  private def getSourcesHttpRequest(): HttpRequest = {
+
+    HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/1/security/sources")
+      .build()
+  }
 
   /** Retrieves a synonym by its ID. To find the object IDs for your synonyms, use the [`search`
     * operation](https://www.algolia.com/doc/rest-api/search/search-synonyms).
@@ -1069,17 +1889,38 @@ class SearchClient(
   def getSynonym(indexName: String, objectID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[SynonymHit] = Future {
+    execute[SynonymHit](getSynonymHttpRequest(indexName = indexName, objectID = objectID), requestOptions)
+  }
+
+  /** Variant of `getSynonym` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param objectID
+    *   Unique identifier of a synonym object.
+    */
+  def getSynonymWithHTTPInfo(indexName: String, objectID: String, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[SynonymHit]] = Future {
+    executeWithHttpInfo[SynonymHit](getSynonymHttpRequest(indexName = indexName, objectID = objectID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getSynonym` and `getSynonymWithHTTPInfo`.
+    */
+  private def getSynonymHttpRequest(indexName: String, objectID: String): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getSynonym`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getSynonym`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `getSynonym`.")
     requireNotEmpty(objectID, "Parameter `objectID` is required when calling `getSynonym`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/indexes/${escape(indexName)}/synonyms/${escape(objectID)}")
       .build()
-    execute[SynonymHit](request, requestOptions)
   }
 
   /** Checks the status of a given task. Indexing tasks are asynchronous. When you add, update, or delete records or
@@ -1097,16 +1938,37 @@ class SearchClient(
   def getTask(indexName: String, taskID: Long, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[GetTaskResponse] = Future {
+    execute[GetTaskResponse](getTaskHttpRequest(indexName = indexName, taskID = taskID), requestOptions)
+  }
+
+  /** Variant of `getTask` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param taskID
+    *   Unique task identifier.
+    */
+  def getTaskWithHTTPInfo(indexName: String, taskID: Long, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[GetTaskResponse]] = Future {
+    executeWithHttpInfo[GetTaskResponse](getTaskHttpRequest(indexName = indexName, taskID = taskID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getTask` and `getTaskWithHTTPInfo`.
+    */
+  private def getTaskHttpRequest(indexName: String, taskID: Long): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getTask`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getTask`.")
     requireNotNull(taskID, "Parameter `taskID` is required when calling `getTask`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/indexes/${escape(indexName)}/task/${escape(taskID)}")
       .build()
-    execute[GetTaskResponse](request, requestOptions)
   }
 
   /** Get the IDs of the 10 users with the highest number of records per cluster. Since it can take a few seconds to get
@@ -1120,13 +1982,32 @@ class SearchClient(
   def getTopUserIds(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetTopUserIdsResponse] = Future {
+    execute[GetTopUserIdsResponse](getTopUserIdsHttpRequest(), requestOptions)
+  }
 
-    val request = HttpRequest
+  /** Variant of `getTopUserIds` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    *
+    * @deprecated
+    */
+  def getTopUserIdsWithHTTPInfo(
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetTopUserIdsResponse]] = Future {
+    executeWithHttpInfo[GetTopUserIdsResponse](getTopUserIdsHttpRequest(), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getTopUserIds` and `getTopUserIdsWithHTTPInfo`.
+    */
+  private def getTopUserIdsHttpRequest(): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/clusters/mapping/top")
       .build()
-    execute[GetTopUserIdsResponse](request, requestOptions)
   }
 
   /** Returns the user ID data stored in the mapping. Since it can take a few seconds to get the data from the different
@@ -1143,15 +2024,36 @@ class SearchClient(
   def getUserId(userID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[UserId] = Future {
+    execute[UserId](getUserIdHttpRequest(userID = userID), requestOptions)
+  }
+
+  /** Variant of `getUserId` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    *
+    * @deprecated
+    *
+    * @param userID
+    *   Unique identifier of the user who makes the search request.
+    */
+  def getUserIdWithHTTPInfo(userID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[UserId]] = Future {
+    executeWithHttpInfo[UserId](getUserIdHttpRequest(userID = userID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getUserId` and `getUserIdWithHTTPInfo`.
+    */
+  private def getUserIdHttpRequest(userID: String): HttpRequest = {
     requireNotNull(userID, "Parameter `userID` is required when calling `getUserId`.")
     requireNotEmpty(userID, "Parameter `userID` is required when calling `getUserId`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/clusters/mapping/${escape(userID)}")
       .build()
-    execute[UserId](request, requestOptions)
   }
 
   /** To determine when the time-consuming process of creating a large batch of users or migrating users from one
@@ -1168,14 +2070,41 @@ class SearchClient(
   def hasPendingMappings(getClusters: Option[Boolean] = None, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[HasPendingMappingsResponse] = Future {
+    execute[HasPendingMappingsResponse](hasPendingMappingsHttpRequest(getClusters = getClusters), requestOptions)
+  }
 
-    val request = HttpRequest
+  /** Variant of `hasPendingMappings` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    *
+    * @deprecated
+    *
+    * @param getClusters
+    *   Whether to include the cluster's pending mapping state in the response.
+    */
+  def hasPendingMappingsWithHTTPInfo(
+      getClusters: Option[Boolean] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[HasPendingMappingsResponse]] = Future {
+    executeWithHttpInfo[HasPendingMappingsResponse](
+      hasPendingMappingsHttpRequest(getClusters = getClusters),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `hasPendingMappings` and
+    * `hasPendingMappingsWithHTTPInfo`.
+    */
+  private def hasPendingMappingsHttpRequest(getClusters: Option[Boolean] = None): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/clusters/mapping/pending")
       .withQueryParameter("getClusters", getClusters)
       .build()
-    execute[HasPendingMappingsResponse](request, requestOptions)
   }
 
   /** Lists all API keys associated with your Algolia application, including their permissions and restrictions.
@@ -1186,13 +2115,30 @@ class SearchClient(
   def listApiKeys(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ListApiKeysResponse] = Future {
+    execute[ListApiKeysResponse](listApiKeysHttpRequest(), requestOptions)
+  }
 
-    val request = HttpRequest
+  /** Variant of `listApiKeys` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    */
+  def listApiKeysWithHTTPInfo(
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ListApiKeysResponse]] = Future {
+    executeWithHttpInfo[ListApiKeysResponse](listApiKeysHttpRequest(), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `listApiKeys` and `listApiKeysWithHTTPInfo`.
+    */
+  private def listApiKeysHttpRequest(): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/keys")
       .build()
-    execute[ListApiKeysResponse](request, requestOptions)
   }
 
   /** Lists the available clusters in a multi-cluster setup.
@@ -1205,13 +2151,32 @@ class SearchClient(
   def listClusters(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ListClustersResponse] = Future {
+    execute[ListClustersResponse](listClustersHttpRequest(), requestOptions)
+  }
 
-    val request = HttpRequest
+  /** Variant of `listClusters` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    *
+    * @deprecated
+    */
+  def listClustersWithHTTPInfo(
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ListClustersResponse]] = Future {
+    executeWithHttpInfo[ListClustersResponse](listClustersHttpRequest(), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `listClusters` and `listClustersWithHTTPInfo`.
+    */
+  private def listClustersHttpRequest(): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/clusters")
       .build()
-    execute[ListClustersResponse](request, requestOptions)
   }
 
   /** Lists all indices in the current Algolia application. The request follows any index restrictions of the API key
@@ -1230,15 +2195,42 @@ class SearchClient(
       hitsPerPage: Option[Int] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ListIndicesResponse] = Future {
+    execute[ListIndicesResponse](listIndicesHttpRequest(page = page, hitsPerPage = hitsPerPage), requestOptions)
+  }
 
-    val request = HttpRequest
+  /** Variant of `listIndices` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - listIndexes
+    *
+    * @param page
+    *   Requested page of the API response. If `null`, the API response is not paginated.
+    * @param hitsPerPage
+    *   Number of hits per page.
+    */
+  def listIndicesWithHTTPInfo(
+      page: Option[Int] = None,
+      hitsPerPage: Option[Int] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ListIndicesResponse]] = Future {
+    executeWithHttpInfo[ListIndicesResponse](
+      listIndicesHttpRequest(page = page, hitsPerPage = hitsPerPage),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `listIndices` and `listIndicesWithHTTPInfo`.
+    */
+  private def listIndicesHttpRequest(page: Option[Int] = None, hitsPerPage: Option[Int] = None): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/indexes")
       .withQueryParameter("page", page)
       .withQueryParameter("hitsPerPage", hitsPerPage)
       .build()
-    execute[ListIndicesResponse](request, requestOptions)
   }
 
   /** Lists the userIDs assigned to a multi-cluster application. Since it can take a few seconds to get the data from
@@ -1259,15 +2251,44 @@ class SearchClient(
       hitsPerPage: Option[Int] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ListUserIdsResponse] = Future {
+    execute[ListUserIdsResponse](listUserIdsHttpRequest(page = page, hitsPerPage = hitsPerPage), requestOptions)
+  }
 
-    val request = HttpRequest
+  /** Variant of `listUserIds` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    *
+    * @deprecated
+    *
+    * @param page
+    *   Requested page of the API response. If `null`, the API response is not paginated.
+    * @param hitsPerPage
+    *   Number of hits per page.
+    */
+  def listUserIdsWithHTTPInfo(
+      page: Option[Int] = None,
+      hitsPerPage: Option[Int] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ListUserIdsResponse]] = Future {
+    executeWithHttpInfo[ListUserIdsResponse](
+      listUserIdsHttpRequest(page = page, hitsPerPage = hitsPerPage),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `listUserIds` and `listUserIdsWithHTTPInfo`.
+    */
+  private def listUserIdsHttpRequest(page: Option[Int] = None, hitsPerPage: Option[Int] = None): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/clusters/mapping")
       .withQueryParameter("page", page)
       .withQueryParameter("hitsPerPage", hitsPerPage)
       .build()
-    execute[ListUserIdsResponse](request, requestOptions)
   }
 
   /** Adds, updates, or deletes records in multiple indices with a single API request. - Actions are applied in the
@@ -1281,15 +2302,32 @@ class SearchClient(
   def multipleBatch(batchParams: BatchParams, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[MultipleBatchResponse] = Future {
+    execute[MultipleBatchResponse](multipleBatchHttpRequest(batchParams = batchParams), requestOptions)
+  }
+
+  /** Variant of `multipleBatch` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    */
+  def multipleBatchWithHTTPInfo(batchParams: BatchParams, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[MultipleBatchResponse]] = Future {
+    executeWithHttpInfo[MultipleBatchResponse](multipleBatchHttpRequest(batchParams = batchParams), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `multipleBatch` and `multipleBatchWithHTTPInfo`.
+    */
+  private def multipleBatchHttpRequest(batchParams: BatchParams): HttpRequest = {
     requireNotNull(batchParams, "Parameter `batchParams` is required when calling `multipleBatch`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/*/batch")
       .withBody(batchParams)
       .build()
-    execute[MultipleBatchResponse](request, requestOptions)
   }
 
   /** Copies or moves (renames) an index within the same Algolia application. Notes: - Existing destination indices are
@@ -1321,17 +2359,45 @@ class SearchClient(
       operationIndexParams: OperationIndexParams,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
+    execute[UpdatedAtResponse](
+      operationIndexHttpRequest(indexName = indexName, operationIndexParams = operationIndexParams),
+      requestOptions
+    )
+  }
+
+  /** Variant of `operationIndex` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    */
+  def operationIndexWithHTTPInfo(
+      indexName: String,
+      operationIndexParams: OperationIndexParams,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[UpdatedAtResponse]] = Future {
+    executeWithHttpInfo[UpdatedAtResponse](
+      operationIndexHttpRequest(indexName = indexName, operationIndexParams = operationIndexParams),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `operationIndex` and `operationIndexWithHTTPInfo`.
+    */
+  private def operationIndexHttpRequest(indexName: String, operationIndexParams: OperationIndexParams): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `operationIndex`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `operationIndex`.")
     requireNotNull(operationIndexParams, "Parameter `operationIndexParams` is required when calling `operationIndex`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/operation")
       .withBody(operationIndexParams)
       .build()
-    execute[UpdatedAtResponse](request, requestOptions)
   }
 
   /** Adds new attributes to a record, or updates existing ones. - If a record with the specified object ID doesn't
@@ -1376,20 +2442,72 @@ class SearchClient(
       createIfNotExists: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtWithObjectIdResponse] = Future {
+    execute[UpdatedAtWithObjectIdResponse](
+      partialUpdateObjectHttpRequest(
+        indexName = indexName,
+        objectID = objectID,
+        attributesToUpdate = attributesToUpdate,
+        createIfNotExists = createIfNotExists
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `partialUpdateObject` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param objectID
+    *   Unique record identifier.
+    * @param attributesToUpdate
+    *   Attributes with their values.
+    * @param createIfNotExists
+    *   Whether to create a new record if it doesn't exist.
+    */
+  def partialUpdateObjectWithHTTPInfo(
+      indexName: String,
+      objectID: String,
+      attributesToUpdate: Any,
+      createIfNotExists: Option[Boolean] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[UpdatedAtWithObjectIdResponse]] = Future {
+    executeWithHttpInfo[UpdatedAtWithObjectIdResponse](
+      partialUpdateObjectHttpRequest(
+        indexName = indexName,
+        objectID = objectID,
+        attributesToUpdate = attributesToUpdate,
+        createIfNotExists = createIfNotExists
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `partialUpdateObject` and
+    * `partialUpdateObjectWithHTTPInfo`.
+    */
+  private def partialUpdateObjectHttpRequest(
+      indexName: String,
+      objectID: String,
+      attributesToUpdate: Any,
+      createIfNotExists: Option[Boolean] = None
+  ): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `partialUpdateObject`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `partialUpdateObject`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `partialUpdateObject`.")
     requireNotEmpty(objectID, "Parameter `objectID` is required when calling `partialUpdateObject`.")
     requireNotNull(attributesToUpdate, "Parameter `attributesToUpdate` is required when calling `partialUpdateObject`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/${escape(objectID)}/partial")
       .withBody(attributesToUpdate)
       .withQueryParameter("createIfNotExists", createIfNotExists)
       .build()
-    execute[UpdatedAtWithObjectIdResponse](request, requestOptions)
   }
 
   /** Deletes a user ID and its associated data from the clusters.
@@ -1405,15 +2523,37 @@ class SearchClient(
   def removeUserId(userID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[RemoveUserIdResponse] = Future {
+    execute[RemoveUserIdResponse](removeUserIdHttpRequest(userID = userID), requestOptions)
+  }
+
+  /** Variant of `removeUserId` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    *
+    * @deprecated
+    *
+    * @param userID
+    *   Unique identifier of the user who makes the search request.
+    */
+  def removeUserIdWithHTTPInfo(userID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[RemoveUserIdResponse]] = Future {
+    executeWithHttpInfo[RemoveUserIdResponse](removeUserIdHttpRequest(userID = userID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `removeUserId` and `removeUserIdWithHTTPInfo`.
+    */
+  private def removeUserIdHttpRequest(userID: String): HttpRequest = {
     requireNotNull(userID, "Parameter `userID` is required when calling `removeUserId`.")
     requireNotEmpty(userID, "Parameter `userID` is required when calling `removeUserId`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/1/clusters/mapping/${escape(userID)}")
       .build()
-    execute[RemoveUserIdResponse](request, requestOptions)
   }
 
   /** Replaces the list of allowed sources.
@@ -1427,15 +2567,35 @@ class SearchClient(
   def replaceSources(source: Seq[Source], requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[ReplaceSourceResponse] = Future {
+    execute[ReplaceSourceResponse](replaceSourcesHttpRequest(source = source), requestOptions)
+  }
+
+  /** Variant of `replaceSources` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    *
+    * @param source
+    *   Allowed sources.
+    */
+  def replaceSourcesWithHTTPInfo(source: Seq[Source], requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[ReplaceSourceResponse]] = Future {
+    executeWithHttpInfo[ReplaceSourceResponse](replaceSourcesHttpRequest(source = source), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `replaceSources` and `replaceSourcesWithHTTPInfo`.
+    */
+  private def replaceSourcesHttpRequest(source: Seq[Source]): HttpRequest = {
     requireNotNull(source, "Parameter `source` is required when calling `replaceSources`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/1/security/sources")
       .withBody(source)
       .build()
-    execute[ReplaceSourceResponse](request, requestOptions)
   }
 
   /** Restores a deleted API key. Restoring resets the `validity` attribute to `0`. Algolia stores up to 1,000 API keys
@@ -1450,15 +2610,35 @@ class SearchClient(
   def restoreApiKey(key: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[AddApiKeyResponse] = Future {
+    execute[AddApiKeyResponse](restoreApiKeyHttpRequest(key = key), requestOptions)
+  }
+
+  /** Variant of `restoreApiKey` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    *
+    * @param key
+    *   API key.
+    */
+  def restoreApiKeyWithHTTPInfo(key: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[AddApiKeyResponse]] = Future {
+    executeWithHttpInfo[AddApiKeyResponse](restoreApiKeyHttpRequest(key = key), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `restoreApiKey` and `restoreApiKeyWithHTTPInfo`.
+    */
+  private def restoreApiKeyHttpRequest(key: String): HttpRequest = {
     requireNotNull(key, "Parameter `key` is required when calling `restoreApiKey`.")
     requireNotEmpty(key, "Parameter `key` is required when calling `restoreApiKey`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/keys/${escape(key)}/restore")
       .build()
-    execute[AddApiKeyResponse](request, requestOptions)
   }
 
   /** Adds a record to an index or replaces it. - If the record doesn't have an object ID, a new record with an
@@ -1481,17 +2661,38 @@ class SearchClient(
   def saveObject(indexName: String, body: Any, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[SaveObjectResponse] = Future {
+    execute[SaveObjectResponse](saveObjectHttpRequest(indexName = indexName, body = body), requestOptions)
+  }
+
+  /** Variant of `saveObject` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param body
+    *   The record. A schemaless object with attributes that are useful in the context of search and discovery.
+    */
+  def saveObjectWithHTTPInfo(indexName: String, body: Any, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[SaveObjectResponse]] = Future {
+    executeWithHttpInfo[SaveObjectResponse](saveObjectHttpRequest(indexName = indexName, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `saveObject` and `saveObjectWithHTTPInfo`.
+    */
+  private def saveObjectHttpRequest(indexName: String, body: Any): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `saveObject`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `saveObject`.")
     requireNotNull(body, "Parameter `body` is required when calling `saveObject`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}")
       .withBody(body)
       .build()
-    execute[SaveObjectResponse](request, requestOptions)
   }
 
   /** If a rule with the specified object ID doesn't exist, it's created. Otherwise, the existing rule is replaced. To
@@ -1515,20 +2716,68 @@ class SearchClient(
       forwardToReplicas: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
+    execute[UpdatedAtResponse](
+      saveRuleHttpRequest(
+        indexName = indexName,
+        objectID = objectID,
+        rule = rule,
+        forwardToReplicas = forwardToReplicas
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `saveRule` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param objectID
+    *   Unique identifier of a rule object.
+    * @param forwardToReplicas
+    *   Whether changes are applied to replica indices.
+    */
+  def saveRuleWithHTTPInfo(
+      indexName: String,
+      objectID: String,
+      rule: Rule,
+      forwardToReplicas: Option[Boolean] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[UpdatedAtResponse]] = Future {
+    executeWithHttpInfo[UpdatedAtResponse](
+      saveRuleHttpRequest(
+        indexName = indexName,
+        objectID = objectID,
+        rule = rule,
+        forwardToReplicas = forwardToReplicas
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `saveRule` and `saveRuleWithHTTPInfo`.
+    */
+  private def saveRuleHttpRequest(
+      indexName: String,
+      objectID: String,
+      rule: Rule,
+      forwardToReplicas: Option[Boolean] = None
+  ): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `saveRule`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `saveRule`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `saveRule`.")
     requireNotEmpty(objectID, "Parameter `objectID` is required when calling `saveRule`.")
     requireNotNull(rule, "Parameter `rule` is required when calling `saveRule`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/1/indexes/${escape(indexName)}/rules/${escape(objectID)}")
       .withBody(rule)
       .withQueryParameter("forwardToReplicas", forwardToReplicas)
       .build()
-    execute[UpdatedAtResponse](request, requestOptions)
   }
 
   /** Create or update multiple rules. If a rule with the specified object ID doesn't exist, Algolia creates a new one.
@@ -1552,11 +2801,60 @@ class SearchClient(
       clearExistingRules: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
+    execute[UpdatedAtResponse](
+      saveRulesHttpRequest(
+        indexName = indexName,
+        rules = rules,
+        forwardToReplicas = forwardToReplicas,
+        clearExistingRules = clearExistingRules
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `saveRules` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param forwardToReplicas
+    *   Whether changes are applied to replica indices.
+    * @param clearExistingRules
+    *   Whether existing rules should be deleted before adding this batch.
+    */
+  def saveRulesWithHTTPInfo(
+      indexName: String,
+      rules: Seq[Rule],
+      forwardToReplicas: Option[Boolean] = None,
+      clearExistingRules: Option[Boolean] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[UpdatedAtResponse]] = Future {
+    executeWithHttpInfo[UpdatedAtResponse](
+      saveRulesHttpRequest(
+        indexName = indexName,
+        rules = rules,
+        forwardToReplicas = forwardToReplicas,
+        clearExistingRules = clearExistingRules
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `saveRules` and `saveRulesWithHTTPInfo`.
+    */
+  private def saveRulesHttpRequest(
+      indexName: String,
+      rules: Seq[Rule],
+      forwardToReplicas: Option[Boolean] = None,
+      clearExistingRules: Option[Boolean] = None
+  ): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `saveRules`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `saveRules`.")
     requireNotNull(rules, "Parameter `rules` is required when calling `saveRules`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/rules/batch")
@@ -1564,7 +2862,6 @@ class SearchClient(
       .withQueryParameter("forwardToReplicas", forwardToReplicas)
       .withQueryParameter("clearExistingRules", clearExistingRules)
       .build()
-    execute[UpdatedAtResponse](request, requestOptions)
   }
 
   /** If a synonym with the specified object ID doesn't exist, Algolia adds a new one. Otherwise, the existing synonym
@@ -1588,20 +2885,69 @@ class SearchClient(
       forwardToReplicas: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[SaveSynonymResponse] = Future {
+    execute[SaveSynonymResponse](
+      saveSynonymHttpRequest(
+        indexName = indexName,
+        objectID = objectID,
+        synonymHit = synonymHit,
+        forwardToReplicas = forwardToReplicas
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `saveSynonym` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param objectID
+    *   Unique identifier of a synonym object.
+    * @param forwardToReplicas
+    *   Whether changes are applied to replica indices.
+    */
+  def saveSynonymWithHTTPInfo(
+      indexName: String,
+      objectID: String,
+      synonymHit: SynonymHit,
+      forwardToReplicas: Option[Boolean] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[SaveSynonymResponse]] = Future {
+    executeWithHttpInfo[SaveSynonymResponse](
+      saveSynonymHttpRequest(
+        indexName = indexName,
+        objectID = objectID,
+        synonymHit = synonymHit,
+        forwardToReplicas = forwardToReplicas
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `saveSynonym` and `saveSynonymWithHTTPInfo`.
+    */
+  private def saveSynonymHttpRequest(
+      indexName: String,
+      objectID: String,
+      synonymHit: SynonymHit,
+      forwardToReplicas: Option[Boolean] = None
+  ): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `saveSynonym`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `saveSynonym`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `saveSynonym`.")
     requireNotEmpty(objectID, "Parameter `objectID` is required when calling `saveSynonym`.")
     requireNotNull(synonymHit, "Parameter `synonymHit` is required when calling `saveSynonym`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/1/indexes/${escape(indexName)}/synonyms/${escape(objectID)}")
       .withBody(synonymHit)
       .withQueryParameter("forwardToReplicas", forwardToReplicas)
       .build()
-    execute[SaveSynonymResponse](request, requestOptions)
   }
 
   /** If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing synonyms are replaced.
@@ -1625,11 +2971,61 @@ class SearchClient(
       replaceExistingSynonyms: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
+    execute[UpdatedAtResponse](
+      saveSynonymsHttpRequest(
+        indexName = indexName,
+        synonymHit = synonymHit,
+        forwardToReplicas = forwardToReplicas,
+        replaceExistingSynonyms = replaceExistingSynonyms
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `saveSynonyms` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param forwardToReplicas
+    *   Whether changes are applied to replica indices.
+    * @param replaceExistingSynonyms
+    *   Whether to replace all synonyms in the index with the ones sent with this request.
+    */
+  def saveSynonymsWithHTTPInfo(
+      indexName: String,
+      synonymHit: Seq[SynonymHit],
+      forwardToReplicas: Option[Boolean] = None,
+      replaceExistingSynonyms: Option[Boolean] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[UpdatedAtResponse]] = Future {
+    executeWithHttpInfo[UpdatedAtResponse](
+      saveSynonymsHttpRequest(
+        indexName = indexName,
+        synonymHit = synonymHit,
+        forwardToReplicas = forwardToReplicas,
+        replaceExistingSynonyms = replaceExistingSynonyms
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `saveSynonyms` and `saveSynonymsWithHTTPInfo`.
+    */
+  private def saveSynonymsHttpRequest(
+      indexName: String,
+      synonymHit: Seq[SynonymHit],
+      forwardToReplicas: Option[Boolean] = None,
+      replaceExistingSynonyms: Option[Boolean] = None
+  ): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `saveSynonyms`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `saveSynonyms`.")
     requireNotNull(synonymHit, "Parameter `synonymHit` is required when calling `saveSynonyms`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/synonyms/batch")
@@ -1637,7 +3033,6 @@ class SearchClient(
       .withQueryParameter("forwardToReplicas", forwardToReplicas)
       .withQueryParameter("replaceExistingSynonyms", replaceExistingSynonyms)
       .build()
-    execute[UpdatedAtResponse](request, requestOptions)
   }
 
   /** Runs multiple search queries against one or more indices in a single API request. Use cases include: - Searching
@@ -1654,16 +3049,35 @@ class SearchClient(
   def search(searchMethodParams: SearchMethodParams, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[SearchResponses] = Future {
+    execute[SearchResponses](searchHttpRequest(searchMethodParams = searchMethodParams), requestOptions)
+  }
+
+  /** Variant of `search` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - search
+    *
+    * @param searchMethodParams
+    *   Multi-query search request body. Results are returned in the same order as the requests.
+    */
+  def searchWithHTTPInfo(searchMethodParams: SearchMethodParams, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[SearchResponses]] = Future {
+    executeWithHttpInfo[SearchResponses](searchHttpRequest(searchMethodParams = searchMethodParams), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `search` and `searchWithHTTPInfo`.
+    */
+  private def searchHttpRequest(searchMethodParams: SearchMethodParams): HttpRequest = {
     requireNotNull(searchMethodParams, "Parameter `searchMethodParams` is required when calling `search`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/*/queries")
       .withBody(searchMethodParams)
       .withRead(true)
       .build()
-    execute[SearchResponses](request, requestOptions)
   }
 
   /** Searches for standard and custom dictionary entries.
@@ -1679,20 +3093,58 @@ class SearchClient(
       searchDictionaryEntriesParams: SearchDictionaryEntriesParams,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[SearchDictionaryEntriesResponse] = Future {
+    execute[SearchDictionaryEntriesResponse](
+      searchDictionaryEntriesHttpRequest(
+        dictionaryName = dictionaryName,
+        searchDictionaryEntriesParams = searchDictionaryEntriesParams
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `searchDictionaryEntries` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param dictionaryName
+    *   Dictionary type in which to search.
+    */
+  def searchDictionaryEntriesWithHTTPInfo(
+      dictionaryName: DictionaryType,
+      searchDictionaryEntriesParams: SearchDictionaryEntriesParams,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[SearchDictionaryEntriesResponse]] = Future {
+    executeWithHttpInfo[SearchDictionaryEntriesResponse](
+      searchDictionaryEntriesHttpRequest(
+        dictionaryName = dictionaryName,
+        searchDictionaryEntriesParams = searchDictionaryEntriesParams
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `searchDictionaryEntries` and
+    * `searchDictionaryEntriesWithHTTPInfo`.
+    */
+  private def searchDictionaryEntriesHttpRequest(
+      dictionaryName: DictionaryType,
+      searchDictionaryEntriesParams: SearchDictionaryEntriesParams
+  ): HttpRequest = {
     requireNotNull(dictionaryName, "Parameter `dictionaryName` is required when calling `searchDictionaryEntries`.")
     requireNotNull(
       searchDictionaryEntriesParams,
       "Parameter `searchDictionaryEntriesParams` is required when calling `searchDictionaryEntries`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/dictionaries/${escape(dictionaryName)}/search")
       .withBody(searchDictionaryEntriesParams)
       .withRead(true)
       .build()
-    execute[SearchDictionaryEntriesResponse](request, requestOptions)
   }
 
   /** Searches for values of a specified facet attribute. - By default, facet values are sorted by decreasing count. You
@@ -1714,19 +3166,64 @@ class SearchClient(
       searchForFacetValuesRequest: Option[SearchForFacetValuesRequest] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[SearchForFacetValuesResponse] = Future {
+    execute[SearchForFacetValuesResponse](
+      searchForFacetValuesHttpRequest(
+        indexName = indexName,
+        facetName = facetName,
+        searchForFacetValuesRequest = searchForFacetValuesRequest
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `searchForFacetValues` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - search
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param facetName
+    *   Facet attribute in which to search for values. This attribute must be included in the `attributesForFaceting`
+    *   index setting with the `searchable()` modifier.
+    */
+  def searchForFacetValuesWithHTTPInfo(
+      indexName: String,
+      facetName: String,
+      searchForFacetValuesRequest: Option[SearchForFacetValuesRequest] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[SearchForFacetValuesResponse]] = Future {
+    executeWithHttpInfo[SearchForFacetValuesResponse](
+      searchForFacetValuesHttpRequest(
+        indexName = indexName,
+        facetName = facetName,
+        searchForFacetValuesRequest = searchForFacetValuesRequest
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `searchForFacetValues` and
+    * `searchForFacetValuesWithHTTPInfo`.
+    */
+  private def searchForFacetValuesHttpRequest(
+      indexName: String,
+      facetName: String,
+      searchForFacetValuesRequest: Option[SearchForFacetValuesRequest] = None
+  ): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `searchForFacetValues`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `searchForFacetValues`.")
     requireNotNull(facetName, "Parameter `facetName` is required when calling `searchForFacetValues`.")
     requireNotEmpty(facetName, "Parameter `facetName` is required when calling `searchForFacetValues`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/facets/${escape(facetName)}/query")
       .withBody(searchForFacetValuesRequest)
       .withRead(true)
       .build()
-    execute[SearchForFacetValuesResponse](request, requestOptions)
   }
 
   /** Searches for rules in your index.
@@ -1742,17 +3239,48 @@ class SearchClient(
       searchRulesParams: Option[SearchRulesParams] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[SearchRulesResponse] = Future {
+    execute[SearchRulesResponse](
+      searchRulesHttpRequest(indexName = indexName, searchRulesParams = searchRulesParams),
+      requestOptions
+    )
+  }
+
+  /** Variant of `searchRules` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    */
+  def searchRulesWithHTTPInfo(
+      indexName: String,
+      searchRulesParams: Option[SearchRulesParams] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[SearchRulesResponse]] = Future {
+    executeWithHttpInfo[SearchRulesResponse](
+      searchRulesHttpRequest(indexName = indexName, searchRulesParams = searchRulesParams),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `searchRules` and `searchRulesWithHTTPInfo`.
+    */
+  private def searchRulesHttpRequest(
+      indexName: String,
+      searchRulesParams: Option[SearchRulesParams] = None
+  ): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `searchRules`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `searchRules`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/rules/search")
       .withBody(searchRulesParams)
       .withRead(true)
       .build()
-    execute[SearchRulesResponse](request, requestOptions)
   }
 
   /** Searches a single index and returns matching search results as hits. This method lets you retrieve up to 1,000
@@ -1770,17 +3298,48 @@ class SearchClient(
       searchParams: Option[SearchParams] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[SearchResponse] = Future {
+    execute[SearchResponse](
+      searchSingleIndexHttpRequest(indexName = indexName, searchParams = searchParams),
+      requestOptions
+    )
+  }
+
+  /** Variant of `searchSingleIndex` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - search
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    */
+  def searchSingleIndexWithHTTPInfo(
+      indexName: String,
+      searchParams: Option[SearchParams] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[SearchResponse]] = Future {
+    executeWithHttpInfo[SearchResponse](
+      searchSingleIndexHttpRequest(indexName = indexName, searchParams = searchParams),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `searchSingleIndex` and `searchSingleIndexWithHTTPInfo`.
+    */
+  private def searchSingleIndexHttpRequest(
+      indexName: String,
+      searchParams: Option[SearchParams] = None
+  ): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `searchSingleIndex`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `searchSingleIndex`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/query")
       .withBody(searchParams)
       .withRead(true)
       .build()
-    execute[SearchResponse](request, requestOptions)
   }
 
   /** Searches for synonyms in your index.
@@ -1798,17 +3357,50 @@ class SearchClient(
       searchSynonymsParams: Option[SearchSynonymsParams] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[SearchSynonymsResponse] = Future {
+    execute[SearchSynonymsResponse](
+      searchSynonymsHttpRequest(indexName = indexName, searchSynonymsParams = searchSynonymsParams),
+      requestOptions
+    )
+  }
+
+  /** Variant of `searchSynonyms` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param searchSynonymsParams
+    *   Body of the `searchSynonyms` operation.
+    */
+  def searchSynonymsWithHTTPInfo(
+      indexName: String,
+      searchSynonymsParams: Option[SearchSynonymsParams] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[SearchSynonymsResponse]] = Future {
+    executeWithHttpInfo[SearchSynonymsResponse](
+      searchSynonymsHttpRequest(indexName = indexName, searchSynonymsParams = searchSynonymsParams),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `searchSynonyms` and `searchSynonymsWithHTTPInfo`.
+    */
+  private def searchSynonymsHttpRequest(
+      indexName: String,
+      searchSynonymsParams: Option[SearchSynonymsParams] = None
+  ): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `searchSynonyms`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `searchSynonyms`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/synonyms/search")
       .withBody(searchSynonymsParams)
       .withRead(true)
       .build()
-    execute[SearchSynonymsResponse](request, requestOptions)
   }
 
   /** Since it can take a few seconds to get the data from the different clusters, the response isn't real-time. To
@@ -1824,16 +3416,39 @@ class SearchClient(
   def searchUserIds(searchUserIdsParams: SearchUserIdsParams, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[SearchUserIdsResponse] = Future {
+    execute[SearchUserIdsResponse](searchUserIdsHttpRequest(searchUserIdsParams = searchUserIdsParams), requestOptions)
+  }
+
+  /** Variant of `searchUserIds` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    *
+    * @deprecated
+    */
+  def searchUserIdsWithHTTPInfo(
+      searchUserIdsParams: SearchUserIdsParams,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[SearchUserIdsResponse]] = Future {
+    executeWithHttpInfo[SearchUserIdsResponse](
+      searchUserIdsHttpRequest(searchUserIdsParams = searchUserIdsParams),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `searchUserIds` and `searchUserIdsWithHTTPInfo`.
+    */
+  private def searchUserIdsHttpRequest(searchUserIdsParams: SearchUserIdsParams): HttpRequest = {
     requireNotNull(searchUserIdsParams, "Parameter `searchUserIdsParams` is required when calling `searchUserIds`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/clusters/mapping/search")
       .withBody(searchUserIdsParams)
       .withRead(true)
       .build()
-    execute[SearchUserIdsResponse](request, requestOptions)
   }
 
   /** Turns standard stop word dictionary entries on or off for a given language.
@@ -1845,18 +3460,43 @@ class SearchClient(
       dictionarySettingsParams: DictionarySettingsParams,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
+    execute[UpdatedAtResponse](
+      setDictionarySettingsHttpRequest(dictionarySettingsParams = dictionarySettingsParams),
+      requestOptions
+    )
+  }
+
+  /** Variant of `setDictionarySettings` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    */
+  def setDictionarySettingsWithHTTPInfo(
+      dictionarySettingsParams: DictionarySettingsParams,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[UpdatedAtResponse]] = Future {
+    executeWithHttpInfo[UpdatedAtResponse](
+      setDictionarySettingsHttpRequest(dictionarySettingsParams = dictionarySettingsParams),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `setDictionarySettings` and
+    * `setDictionarySettingsWithHTTPInfo`.
+    */
+  private def setDictionarySettingsHttpRequest(dictionarySettingsParams: DictionarySettingsParams): HttpRequest = {
     requireNotNull(
       dictionarySettingsParams,
       "Parameter `dictionarySettingsParams` is required when calling `setDictionarySettings`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/1/dictionaries/*/settings")
       .withBody(dictionarySettingsParams)
       .build()
-    execute[UpdatedAtResponse](request, requestOptions)
   }
 
   /** Update the specified index settings. Index settings that you don't specify are left unchanged. Specify `null` to
@@ -1877,18 +3517,61 @@ class SearchClient(
       forwardToReplicas: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
+    execute[UpdatedAtResponse](
+      setSettingsHttpRequest(
+        indexName = indexName,
+        indexSettings = indexSettings,
+        forwardToReplicas = forwardToReplicas
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `setSettings` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param forwardToReplicas
+    *   Whether changes are applied to replica indices.
+    */
+  def setSettingsWithHTTPInfo(
+      indexName: String,
+      indexSettings: IndexSettings,
+      forwardToReplicas: Option[Boolean] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[UpdatedAtResponse]] = Future {
+    executeWithHttpInfo[UpdatedAtResponse](
+      setSettingsHttpRequest(
+        indexName = indexName,
+        indexSettings = indexSettings,
+        forwardToReplicas = forwardToReplicas
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `setSettings` and `setSettingsWithHTTPInfo`.
+    */
+  private def setSettingsHttpRequest(
+      indexName: String,
+      indexSettings: IndexSettings,
+      forwardToReplicas: Option[Boolean] = None
+  ): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `setSettings`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `setSettings`.")
     requireNotNull(indexSettings, "Parameter `indexSettings` is required when calling `setSettings`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/1/indexes/${escape(indexName)}/settings")
       .withBody(indexSettings)
       .withQueryParameter("forwardToReplicas", forwardToReplicas)
       .build()
-    execute[UpdatedAtResponse](request, requestOptions)
   }
 
   /** Replaces the permissions of an existing API key. Any unspecified attribute resets that attribute to its default
@@ -1903,17 +3586,37 @@ class SearchClient(
   def updateApiKey(key: String, apiKey: ApiKey, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[UpdateApiKeyResponse] = Future {
+    execute[UpdateApiKeyResponse](updateApiKeyHttpRequest(key = key, apiKey = apiKey), requestOptions)
+  }
+
+  /** Variant of `updateApiKey` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    *
+    * @param key
+    *   API key.
+    */
+  def updateApiKeyWithHTTPInfo(key: String, apiKey: ApiKey, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[UpdateApiKeyResponse]] = Future {
+    executeWithHttpInfo[UpdateApiKeyResponse](updateApiKeyHttpRequest(key = key, apiKey = apiKey), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `updateApiKey` and `updateApiKeyWithHTTPInfo`.
+    */
+  private def updateApiKeyHttpRequest(key: String, apiKey: ApiKey): HttpRequest = {
     requireNotNull(key, "Parameter `key` is required when calling `updateApiKey`.")
     requireNotEmpty(key, "Parameter `key` is required when calling `updateApiKey`.")
     requireNotNull(apiKey, "Parameter `apiKey` is required when calling `updateApiKey`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/1/keys/${escape(key)}")
       .withBody(apiKey)
       .build()
-    execute[UpdateApiKeyResponse](request, requestOptions)
   }
 
 }

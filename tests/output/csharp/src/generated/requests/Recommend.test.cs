@@ -667,6 +667,9 @@ public class RecommendClientRequestTests
                 OptionalFilters = new OptionalFilters(
                   new List<OptionalFilters> { new OptionalFilters("brand:samsung") }
                 ),
+                FacetFilters = new FacetFilters(
+                  new List<FacetFilters> { new FacetFilters("brand:apple") }
+                ),
               },
             }
           ),
@@ -678,7 +681,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/indexes/*/recommendations", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42.1,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:apple\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:samsung\"]}}]}",
+      "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42.1,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:apple\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:samsung\"],\"facetFilters\":[\"brand:apple\"]}}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
