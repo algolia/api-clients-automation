@@ -55,7 +55,10 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
 
       eventCount := 0
       for decoder.Next() {
-        require.NotEmpty(t, decoder.Event().Data)
+        var echoedRequest map[string]any
+        require.NoError(t, json.Unmarshal(decoder.Event().Data, &echoedRequest))
+        require.Equal(t, echo.Path, echoedRequest["path"])
+        require.Equal(t, echo.Method, echoedRequest["method"])
         eventCount++
       }
       require.NoError(t, decoder.Err())

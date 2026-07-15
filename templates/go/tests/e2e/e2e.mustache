@@ -67,22 +67,25 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}E2E_{{#lambda
       {{/response}}
       {{/isStreamingTest}}
       {{#isStreamingTest}}
-      decoder, err := {{> tests/method}}
+      stream, err := {{#typedStream}}{{> tests/method}}{{/typedStream}}
       require.NoError(t, err)
 
-      defer func() { _ = decoder.Close() }()
+      defer func() { _ = stream.Close() }()
 
-      var events [][]byte
-      for decoder.Next() {
-        events = append(events, decoder.Event().Data)
+      var events []any
+      for stream.Next() {
+        events = append(events, stream.Current())
       }
-      require.NoError(t, decoder.Err())
+      require.NoError(t, stream.Err())
       require.NotEmpty(t, events)
 
       {{#response}}
       {{#body}}
+      rawBody, err := json.Marshal(events[0])
+      require.NoError(t, err)
+
       var rawBodyMap any
-      err = json.Unmarshal(events[0], &rawBodyMap)
+      err = json.Unmarshal(rawBody, &rawBodyMap)
       require.NoError(t, err)
 
       expectedBodyRaw := `{{{.}}}`
