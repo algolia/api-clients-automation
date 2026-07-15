@@ -1,3 +1,9 @@
+## [3.46.0](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.45.2...3.46.0)
+
+- [33a932c1c2](https://github.com/algolia/api-clients-automation/commit/33a932c1c2) fix(kotlin): add warning in replaceAllObjects for empty objects ([#6613](https://github.com/algolia/api-clients-automation/pull/6613)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [ce313b2c71](https://github.com/algolia/api-clients-automation/commit/ce313b2c71) feat(kotlin): add WithHTTPInfo methods ([#6681](https://github.com/algolia/api-clients-automation/pull/6681)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [ac68c1a79c](https://github.com/algolia/api-clients-automation/commit/ac68c1a79c) fix(specs): add facetFilters back to recommend fallbackParameters ([#6727](https://github.com/algolia/api-clients-automation/pull/6727)) by [@raed667](https://github.com/raed667/)
+
 ## [3.45.2](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.45.1...3.45.2)
 
 - [035c03ecad](https://github.com/algolia/api-clients-automation/commit/035c03ecad) fix(specs): BREAKING CHANGE – remove recommend query params overridden by the API ([#6604](https://github.com/algolia/api-clients-automation/pull/6604)) by [@raed667](https://github.com/raed667/)
