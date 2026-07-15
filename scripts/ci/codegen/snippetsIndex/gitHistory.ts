@@ -98,6 +98,44 @@ async function blobsAt(ref: string): Promise<{ config?: string; snippets: Record
   return { config, snippets };
 }
 
+/**
+ * Split `git cat-file --batch` output into per-oid contents. The framing is
+ * `<oid> blob <size>\n` followed by exactly `size` payload bytes and a trailing newline,
+ * repeated per requested oid. Sizes are bytes, so slicing happens on the buffer, never
+ * on a decoded string. Throws on any non-blob response (e.g. `<oid> missing`).
+ */
+export function parseBatchBlobs(output: Buffer): Map<string, string> {
+  const blobs = new Map<string, string>();
+  let pos = 0;
+  while (pos < output.length) {
+    const newline = output.indexOf(0x0a, pos);
+    const header = output.subarray(pos, newline === -1 ? output.length : newline).toString();
+    const [oid, type, size] = header.split(' ');
+    if (newline === -1 || type !== 'blob') {
+      throw new Error(`unexpected cat-file response: "${header}"`);
+    }
+    const start = newline + 1;
+    const end = start + Number(size);
+    blobs.set(oid, output.subarray(start, end).toString());
+    pos = end + 1; // skip the newline that terminates the payload
+  }
+  return blobs;
+}
+
+/** All blob contents for `oids`, via a single `git cat-file --batch` process. */
+async function readBlobs(oids: string[]): Promise<Map<string, string>> {
+  if (oids.length === 0) {
+    return new Map();
+  }
+  const { stdout } = await execa('git', ['cat-file', '--batch'], {
+    cwd: ROOT_DIR,
+    input: oids.join('\n'),
+    encoding: 'buffer',
+    maxBuffer: 256 * 1024 * 1024,
+  });
+  return parseBatchBlobs(Buffer.from(stdout.buffer, stdout.byteOffset, stdout.byteLength));
+}
+
 export interface BuildTimelineOptions {
   /** Date stamped on the HEAD snapshot (defaults to today). */
   headDate?: string;
@@ -121,40 +159,61 @@ export async function buildTimeline(options: BuildTimelineOptions = {}): Promise
     );
   }
 
-  // Parse each unique blob once; many tags share the same file contents.
+  // One ls-tree per tag to learn which blobs it points at, then one cat-file --batch
+  // call for every unique blob — many tags share the same file contents, and per-blob
+  // subprocesses would make the walk spawn-bound.
+  const refs: Array<{ tag: string; date: string; config?: string; snippets: Record<string, string> }> = [];
+  for (const { tag, date } of tags) {
+    refs.push({ tag, date, ...(await blobsAt(tag)) });
+  }
+
+  const oids = new Set<string>();
+  for (const ref of refs) {
+    if (ref.config) {
+      oids.add(ref.config);
+    }
+    Object.values(ref.snippets).forEach((oid) => oids.add(oid));
+  }
+  const blobs = await readBlobs([...oids]);
+
+  const blobFor = (oid: string): string => {
+    const content = blobs.get(oid);
+    if (content === undefined) {
+      throw new Error(`blob ${oid} missing from the cat-file --batch output`);
+    }
+    return content;
+  };
+
+  // Parse each unique blob once.
   const snippetsByOid = new Map<string, ApiSnippets>();
   const versionsByOid = new Map<string, Record<string, string>>();
 
-  const snippetsForOid = async (oid: string): Promise<ApiSnippets> => {
-    const cached = snippetsByOid.get(oid);
-    if (cached) {
-      return cached;
+  const snippetsForOid = (oid: string): ApiSnippets => {
+    let parsed = snippetsByOid.get(oid);
+    if (!parsed) {
+      parsed = JSON.parse(blobFor(oid)) as ApiSnippets;
+      snippetsByOid.set(oid, parsed);
     }
-    const parsed = JSON.parse(await git(['cat-file', '-p', oid])) as ApiSnippets;
-    snippetsByOid.set(oid, parsed);
     return parsed;
   };
 
-  const versionsForOid = async (oid: string): Promise<Record<string, string>> => {
-    const cached = versionsByOid.get(oid);
-    if (cached) {
-      return cached;
+  const versionsForOid = (oid: string): Record<string, string> => {
+    let parsed = versionsByOid.get(oid);
+    if (!parsed) {
+      parsed = parseVersions(blobFor(oid));
+      versionsByOid.set(oid, parsed);
     }
-    const parsed = parseVersions(await git(['cat-file', '-p', oid]));
-    versionsByOid.set(oid, parsed);
     return parsed;
   };
 
-  const timeline: ReleaseSnapshot[] = [];
-  for (const { tag, date } of tags) {
-    const { config, snippets } = await blobsAt(tag);
-    const versions = config ? await versionsForOid(config) : {};
+  const timeline: ReleaseSnapshot[] = refs.map(({ tag, date, config, snippets }) => {
+    const versions = config ? versionsForOid(config) : {};
     const apiSnippets: Record<string, ApiSnippets> = {};
     for (const [api, oid] of Object.entries(snippets)) {
-      apiSnippets[api] = await snippetsForOid(oid);
+      apiSnippets[api] = snippetsForOid(oid);
     }
-    timeline.push({ tag, date, versions, snippets: apiSnippets });
-  }
+    return { tag, date, versions, snippets: apiSnippets };
+  });
 
   timeline.push(await readHeadSnapshot(options.headDate));
   return timeline;

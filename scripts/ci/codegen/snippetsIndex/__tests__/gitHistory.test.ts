@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { apiFromSnippetsPath, parseVersions, selectReachable } from '../gitHistory.ts';
+import { apiFromSnippetsPath, parseBatchBlobs, parseVersions, selectReachable } from '../gitHistory.ts';
 
 describe('apiFromSnippetsPath', () => {
   it('extracts the api name from a bundled snippets path', () => {
@@ -32,6 +32,49 @@ describe('parseVersions', () => {
       weird: { clients: ['search'] },
     });
     expect(parseVersions(config)).toEqual({ go: '4.43.1' });
+  });
+});
+
+describe('parseBatchBlobs', () => {
+  /** One framed `cat-file --batch` response: header, payload, terminating newline. */
+  function entry(oid: string, content: string): Buffer {
+    const payload = Buffer.from(content, 'utf8');
+    return Buffer.concat([Buffer.from(`${oid} blob ${payload.length}\n`), payload, Buffer.from('\n')]);
+  }
+
+  it('splits the framed output into per-oid contents', () => {
+    const output = Buffer.concat([entry('aaa', '{"x":1}'), entry('bbb', 'second')]);
+    expect(parseBatchBlobs(output)).toEqual(
+      new Map([
+        ['aaa', '{"x":1}'],
+        ['bbb', 'second'],
+      ]),
+    );
+  });
+
+  it('slices by bytes, not characters (multi-byte payloads stay framed)', () => {
+    // 'héllo — ✓' is 9 characters but 14 bytes; slicing by characters would eat
+    // into the next entry's header.
+    const output = Buffer.concat([entry('aaa', 'héllo — ✓'), entry('bbb', 'after')]);
+    expect(parseBatchBlobs(output)).toEqual(
+      new Map([
+        ['aaa', 'héllo — ✓'],
+        ['bbb', 'after'],
+      ]),
+    );
+  });
+
+  it('handles payloads containing newlines', () => {
+    const output = entry('aaa', '{\n  "multi": "line"\n}');
+    expect(parseBatchBlobs(output).get('aaa')).toBe('{\n  "multi": "line"\n}');
+  });
+
+  it('throws on a missing oid instead of silently skipping it', () => {
+    expect(() => parseBatchBlobs(Buffer.from('aaa missing\n'))).toThrow(/unexpected cat-file response: "aaa missing"/);
+  });
+
+  it('returns an empty map for empty output', () => {
+    expect(parseBatchBlobs(Buffer.alloc(0))).toEqual(new Map());
   });
 });
 
