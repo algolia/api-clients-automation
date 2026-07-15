@@ -7,7 +7,8 @@ import { buildVersionRanges } from './versionRanges.ts';
 // Build the snippet + catalog records from git history and push them to Algolia.
 // Pass --dry-run (or DRY_RUN=true) to run the whole pipeline and print what would be pushed, without pushing.
 // SINCE_DATE=YYYY-MM-DD skips tags before that date — the escape hatch if a backport tag
-// makes buildVersionRanges throw on a backwards version.
+// makes buildVersionRanges throw on a backwards version. In CI it comes from the
+// SNIPPETS_SINCE_DATE repo variable, so recovery is a settings change, not a workflow PR.
 
 const SNIPPETS_INDEX = process.env.SNIPPETS_INDEX_NAME ?? 'api_clients_snippets_mcp';
 const CATALOG_INDEX = process.env.CATALOG_INDEX_NAME ?? 'api_clients_catalog_mcp';
@@ -36,7 +37,9 @@ const catalogSettings = {
 async function main(): Promise<void> {
   const dryRun = process.argv.slice(2).includes('--dry-run') || process.env.DRY_RUN === 'true';
 
-  const ranges = buildVersionRanges(await buildTimeline({ sinceDate: process.env.SINCE_DATE }));
+  // `|| undefined` so an unset CI variable (empty string) falls back to the default date
+  // instead of admitting every pre-snippets tag into the timeline.
+  const ranges = buildVersionRanges(await buildTimeline({ sinceDate: process.env.SINCE_DATE || undefined }));
   const { snippets, catalog } = await transform(ranges);
 
   console.log(`snippets: ${snippets.length} -> ${SNIPPETS_INDEX}`);

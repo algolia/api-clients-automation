@@ -83,7 +83,10 @@ export function buildVersionRanges(timeline: ReleaseSnapshot[]): VersionedSnippe
       }
       const previous = lastVersions.get(language);
       if (previous !== undefined && semver.lt(version, previous)) {
-        throw new Error(`${language} package version went backwards at ${release.tag}: ${previous} -> ${version}`);
+        throw new Error(
+          `${language} package version went backwards at ${release.tag}: ${previous} -> ${version}` +
+            ' — skip older tags with SINCE_DATE (the SNIPPETS_SINCE_DATE repo variable in CI)',
+        );
       }
       lastVersions.set(language, version);
     }
@@ -141,7 +144,10 @@ export function buildVersionRanges(timeline: ReleaseSnapshot[]): VersionedSnippe
     // missing/unreadable at that tag, not that every snippet was removed. Letting it through
     // would close every open range and reopen them next release with wrong versionFroms.
     if (seenThisRelease.size === 0 && sawSnippets) {
-      throw new Error(`no snippets found at ${release.tag}; refusing to close every open range`);
+      throw new Error(
+        `no snippets found at ${release.tag}; refusing to close every open range` +
+          ' — a SINCE_DATE past this tag (the SNIPPETS_SINCE_DATE repo variable in CI) skips it',
+      );
     }
     sawSnippets = sawSnippets || seenThisRelease.size > 0;
 
