@@ -415,12 +415,7 @@ async replaceAllObjects(
   requestOptions?: RequestOptions | undefined
 ): Promise<ReplaceAllObjectsResponse> {
   if (objects.length === 0) {
-    const warning = `replaceAllObjects was called with an empty list of objects, which will delete all records currently in the "${indexName}" index.`;
-    if (transporter.logger.warn) {
-      transporter.logger.warn(warning);
-    } else {
-      console.warn(warning);
-    }
+    logWarning(transporter.logger, `replaceAllObjects was called with an empty list of objects, which will delete all records currently in the "${indexName}" index.`);
   }
 
   const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;

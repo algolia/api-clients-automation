@@ -1,6 +1,6 @@
 // {{{generationBanner}}}
 
-import { createIterablePromise, DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES } from '@algolia/client-common';
+import { createIterablePromise, DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES, logWarning } from '@algolia/client-common';
 import type { ApiError, ClientOptions, RequestOptions } from '@algolia/client-common';
 
 {{#dependencies}}
@@ -159,12 +159,7 @@ export function algoliasearch(
       }
 
       if (objects.length === 0) {
-        const warning = `replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the "${indexName}" index.`;
-        if (client.transporter.logger.warn) {
-          client.transporter.logger.warn(warning);
-        } else {
-          console.warn(warning);
-        }
+        logWarning(client.transporter.logger, `replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the "${indexName}" index.`);
       }
 
       const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
