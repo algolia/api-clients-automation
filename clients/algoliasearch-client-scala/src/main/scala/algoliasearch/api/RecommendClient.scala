@@ -116,17 +116,53 @@ class RecommendClient(
       recommendRule: Option[Seq[RecommendRule]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[RecommendUpdatedAtResponse] = Future {
+    execute[RecommendUpdatedAtResponse](
+      batchRecommendRulesHttpRequest(indexName = indexName, model = model, recommendRule = recommendRule),
+      requestOptions
+    )
+  }
+
+  /** Variant of `batchRecommendRules` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param model
+    *   [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+    */
+  def batchRecommendRulesWithHTTPInfo(
+      indexName: String,
+      model: RecommendModels,
+      recommendRule: Option[Seq[RecommendRule]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[RecommendUpdatedAtResponse]] = Future {
+    executeWithHttpInfo[RecommendUpdatedAtResponse](
+      batchRecommendRulesHttpRequest(indexName = indexName, model = model, recommendRule = recommendRule),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `batchRecommendRules` and
+    * `batchRecommendRulesWithHTTPInfo`.
+    */
+  private def batchRecommendRulesHttpRequest(
+      indexName: String,
+      model: RecommendModels,
+      recommendRule: Option[Seq[RecommendRule]] = None
+  ): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `batchRecommendRules`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `batchRecommendRules`.")
     requireNotNull(model, "Parameter `model` is required when calling `batchRecommendRules`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/${escape(model)}/recommend/rules/batch")
       .withBody(recommendRule)
       .build()
-    execute[RecommendUpdatedAtResponse](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -141,16 +177,37 @@ class RecommendClient(
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customDeleteHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Variant of `customDelete` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customDeleteWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customDeleteHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customDelete` and `customDeleteWithHTTPInfo`.
+    */
+  private def customDeleteHttpRequest(path: String, parameters: Option[Map[String, Any]] = None): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customDelete`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/${path}")
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -165,16 +222,36 @@ class RecommendClient(
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customGetHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Variant of `customGet` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customGetWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customGetHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customGet` and `customGetWithHTTPInfo`.
+    */
+  private def customGetHttpRequest(path: String, parameters: Option[Map[String, Any]] = None): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customGet`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/${path}")
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -192,17 +269,44 @@ class RecommendClient(
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customPostHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Variant of `customPost` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPostWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customPostHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customPost` and `customPostWithHTTPInfo`.
+    */
+  private def customPostHttpRequest(
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None
+  ): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customPost`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -220,17 +324,44 @@ class RecommendClient(
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customPutHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Variant of `customPut` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPutWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customPutHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customPut` and `customPutWithHTTPInfo`.
+    */
+  private def customPutHttpRequest(
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None
+  ): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customPut`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** Deletes a Recommend rule from a recommendation scenario.
@@ -251,18 +382,56 @@ class RecommendClient(
       objectID: String,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[DeletedAtResponse] = Future {
+    execute[DeletedAtResponse](
+      deleteRecommendRuleHttpRequest(indexName = indexName, model = model, objectID = objectID),
+      requestOptions
+    )
+  }
+
+  /** Variant of `deleteRecommendRule` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param model
+    *   [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+    * @param objectID
+    *   Unique record identifier.
+    */
+  def deleteRecommendRuleWithHTTPInfo(
+      indexName: String,
+      model: RecommendModels,
+      objectID: String,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[DeletedAtResponse]] = Future {
+    executeWithHttpInfo[DeletedAtResponse](
+      deleteRecommendRuleHttpRequest(indexName = indexName, model = model, objectID = objectID),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteRecommendRule` and
+    * `deleteRecommendRuleWithHTTPInfo`.
+    */
+  private def deleteRecommendRuleHttpRequest(
+      indexName: String,
+      model: RecommendModels,
+      objectID: String
+  ): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `deleteRecommendRule`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `deleteRecommendRule`.")
     requireNotNull(model, "Parameter `model` is required when calling `deleteRecommendRule`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `deleteRecommendRule`.")
     requireNotEmpty(objectID, "Parameter `objectID` is required when calling `deleteRecommendRule`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/1/indexes/${escape(indexName)}/${escape(model)}/recommend/rules/${escape(objectID)}")
       .build()
-    execute[DeletedAtResponse](request, requestOptions)
   }
 
   /** Retrieves a Recommend rule that you previously created in the Algolia dashboard.
@@ -283,18 +452,51 @@ class RecommendClient(
       objectID: String,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[RecommendRule] = Future {
+    execute[RecommendRule](
+      getRecommendRuleHttpRequest(indexName = indexName, model = model, objectID = objectID),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getRecommendRule` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param model
+    *   [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+    * @param objectID
+    *   Unique record identifier.
+    */
+  def getRecommendRuleWithHTTPInfo(
+      indexName: String,
+      model: RecommendModels,
+      objectID: String,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[RecommendRule]] = Future {
+    executeWithHttpInfo[RecommendRule](
+      getRecommendRuleHttpRequest(indexName = indexName, model = model, objectID = objectID),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getRecommendRule` and `getRecommendRuleWithHTTPInfo`.
+    */
+  private def getRecommendRuleHttpRequest(indexName: String, model: RecommendModels, objectID: String): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getRecommendRule`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getRecommendRule`.")
     requireNotNull(model, "Parameter `model` is required when calling `getRecommendRule`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `getRecommendRule`.")
     requireNotEmpty(objectID, "Parameter `objectID` is required when calling `getRecommendRule`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/indexes/${escape(indexName)}/${escape(model)}/recommend/rules/${escape(objectID)}")
       .build()
-    execute[RecommendRule](request, requestOptions)
   }
 
   /** Checks the status of a given task. Deleting a Recommend rule is asynchronous. When you delete a rule, a task is
@@ -317,17 +519,51 @@ class RecommendClient(
       taskID: Long,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetRecommendTaskResponse] = Future {
+    execute[GetRecommendTaskResponse](
+      getRecommendStatusHttpRequest(indexName = indexName, model = model, taskID = taskID),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getRecommendStatus` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param model
+    *   [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+    * @param taskID
+    *   Unique task identifier.
+    */
+  def getRecommendStatusWithHTTPInfo(
+      indexName: String,
+      model: RecommendModels,
+      taskID: Long,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetRecommendTaskResponse]] = Future {
+    executeWithHttpInfo[GetRecommendTaskResponse](
+      getRecommendStatusHttpRequest(indexName = indexName, model = model, taskID = taskID),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getRecommendStatus` and
+    * `getRecommendStatusWithHTTPInfo`.
+    */
+  private def getRecommendStatusHttpRequest(indexName: String, model: RecommendModels, taskID: Long): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getRecommendStatus`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getRecommendStatus`.")
     requireNotNull(model, "Parameter `model` is required when calling `getRecommendStatus`.")
     requireNotNull(taskID, "Parameter `taskID` is required when calling `getRecommendStatus`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/indexes/${escape(indexName)}/${escape(model)}/task/${escape(taskID)}")
       .build()
-    execute[GetRecommendTaskResponse](request, requestOptions)
   }
 
   /** Retrieves recommendations from selected AI models.
@@ -339,19 +575,44 @@ class RecommendClient(
       getRecommendationsParams: GetRecommendationsParams,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetRecommendationsResponse] = Future {
+    execute[GetRecommendationsResponse](
+      getRecommendationsHttpRequest(getRecommendationsParams = getRecommendationsParams),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getRecommendations` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - search
+    */
+  def getRecommendationsWithHTTPInfo(
+      getRecommendationsParams: GetRecommendationsParams,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetRecommendationsResponse]] = Future {
+    executeWithHttpInfo[GetRecommendationsResponse](
+      getRecommendationsHttpRequest(getRecommendationsParams = getRecommendationsParams),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getRecommendations` and
+    * `getRecommendationsWithHTTPInfo`.
+    */
+  private def getRecommendationsHttpRequest(getRecommendationsParams: GetRecommendationsParams): HttpRequest = {
     requireNotNull(
       getRecommendationsParams,
       "Parameter `getRecommendationsParams` is required when calling `getRecommendations`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/*/recommendations")
       .withBody(getRecommendationsParams)
       .withRead(true)
       .build()
-    execute[GetRecommendationsResponse](request, requestOptions)
   }
 
   /** Searches for Recommend rules. Use an empty query to list all rules for this recommendation scenario.
@@ -370,18 +631,62 @@ class RecommendClient(
       searchRecommendRulesParams: Option[SearchRecommendRulesParams] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[SearchRecommendRulesResponse] = Future {
+    execute[SearchRecommendRulesResponse](
+      searchRecommendRulesHttpRequest(
+        indexName = indexName,
+        model = model,
+        searchRecommendRulesParams = searchRecommendRulesParams
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `searchRecommendRules` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param model
+    *   [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+    */
+  def searchRecommendRulesWithHTTPInfo(
+      indexName: String,
+      model: RecommendModels,
+      searchRecommendRulesParams: Option[SearchRecommendRulesParams] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[SearchRecommendRulesResponse]] = Future {
+    executeWithHttpInfo[SearchRecommendRulesResponse](
+      searchRecommendRulesHttpRequest(
+        indexName = indexName,
+        model = model,
+        searchRecommendRulesParams = searchRecommendRulesParams
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `searchRecommendRules` and
+    * `searchRecommendRulesWithHTTPInfo`.
+    */
+  private def searchRecommendRulesHttpRequest(
+      indexName: String,
+      model: RecommendModels,
+      searchRecommendRulesParams: Option[SearchRecommendRulesParams] = None
+  ): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `searchRecommendRules`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `searchRecommendRules`.")
     requireNotNull(model, "Parameter `model` is required when calling `searchRecommendRules`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/${escape(model)}/recommend/rules/search")
       .withBody(searchRecommendRulesParams)
       .withRead(true)
       .build()
-    execute[SearchRecommendRulesResponse](request, requestOptions)
   }
 
 }

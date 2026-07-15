@@ -528,7 +528,9 @@ final class RecommendClientSnippet {
                         fallbackParameters: FallbackParams(
                             optionalFilters: RecommendOptionalFilters
                                 .arrayOfRecommendOptionalFilters([RecommendOptionalFilters.string("brand:samsung")]),
-                            query: "myQuery"
+                            query: "myQuery",
+                            facetFilters: RecommendFacetFilters
+                                .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("brand:apple")])
                         )
                     ))]))
         // >LOG

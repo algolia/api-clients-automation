@@ -746,7 +746,8 @@ func SnippetForGetRecommendationsOfRecommend2() {
 					recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetOptionalFilters(recommend.ArrayOfOptionalFiltersAsOptionalFilters(
 						[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:apple")}))).SetFallbackParameters(
 					recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetOptionalFilters(recommend.ArrayOfOptionalFiltersAsOptionalFilters(
-						[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:samsung")}))))})))
+						[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:samsung")})).SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("brand:apple")}))))})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

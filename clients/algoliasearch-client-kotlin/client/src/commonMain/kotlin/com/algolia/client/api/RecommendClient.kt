@@ -81,20 +81,72 @@ public class RecommendClient(
     recommendRule: List<RecommendRule>? = null,
     requestOptions: RequestOptions? = null,
   ): RecommendUpdatedAtResponse {
+    return requester.execute(
+      requestConfig =
+        batchRecommendRulesRequestConfig(
+          indexName = indexName,
+          model = model,
+          recommendRule = recommendRule,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
+   * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
+   * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
+   * conditions and consequences apply to a
+   * [source item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The
+   * main differences are the following: - Conditions `pattern` and `anchoring` are unavailable. -
+   * Condition `filters` triggers if the source item matches the specified filters. - Condition
+   * `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. -
+   * Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to
+   * match the data source item's attributes instead). This variant of [batchRecommendRules] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param model
+   *   [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   * @param recommendRule
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun batchRecommendRulesWithHTTPInfo(
+    indexName: String,
+    model: RecommendModels,
+    recommendRule: List<RecommendRule>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<RecommendUpdatedAtResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        batchRecommendRulesRequestConfig(
+          indexName = indexName,
+          model = model,
+          recommendRule = recommendRule,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun batchRecommendRulesRequestConfig(
+    indexName: String,
+    model: RecommendModels,
+    recommendRule: List<RecommendRule>?,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `batchRecommendRules`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "$model", "recommend", "rules", "batch"),
-        body = recommendRule,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "$model", "recommend", "rules", "batch"),
+      body = recommendRule,
     )
   }
 
@@ -110,19 +162,44 @@ public class RecommendClient(
     parameters: Map<kotlin.String, Any>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customDelete`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customDeleteRequestConfig(path = path, parameters = parameters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customDelete]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customDeleteWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customDeleteRequestConfig(path = path, parameters = parameters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customDeleteRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customDelete`." }
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
     )
   }
 
@@ -138,19 +215,44 @@ public class RecommendClient(
     parameters: Map<kotlin.String, Any>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customGet`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customGetRequestConfig(path = path, parameters = parameters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customGet] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customGetWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customGetRequestConfig(path = path, parameters = parameters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customGetRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customGet`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
     )
   }
 
@@ -168,20 +270,48 @@ public class RecommendClient(
     body: JsonObject? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPost`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-        body = body,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customPostRequestConfig(path = path, parameters = parameters, body = body),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customPost]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param body Parameters to send with the custom request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customPostWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    body: JsonObject? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customPostRequestConfig(path = path, parameters = parameters, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customPostRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+    body: JsonObject?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPost`." }
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
+      body = body,
     )
   }
 
@@ -199,20 +329,48 @@ public class RecommendClient(
     body: JsonObject? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPut`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-        body = body,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customPutRequestConfig(path = path, parameters = parameters, body = body),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customPut] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param body Parameters to send with the custom request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customPutWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    body: JsonObject? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customPutRequestConfig(path = path, parameters = parameters, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customPutRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+    body: JsonObject?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPut`." }
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
+      body = body,
     )
   }
 
@@ -234,22 +392,56 @@ public class RecommendClient(
     objectID: String,
     requestOptions: RequestOptions? = null,
   ): DeletedAtResponse {
+    return requester.execute(
+      requestConfig =
+        deleteRecommendRuleRequestConfig(indexName = indexName, model = model, objectID = objectID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes a Recommend rule from a recommendation scenario. This variant of [deleteRecommendRule]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param model
+   *   [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   * @param objectID Unique record identifier.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteRecommendRuleWithHTTPInfo(
+    indexName: String,
+    model: RecommendModels,
+    objectID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<DeletedAtResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        deleteRecommendRuleRequestConfig(indexName = indexName, model = model, objectID = objectID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteRecommendRuleRequestConfig(
+    indexName: String,
+    model: RecommendModels,
+    objectID: String,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `deleteRecommendRule`."
     }
     require(objectID.isNotBlank()) {
       "Parameter `objectID` is required when calling `deleteRecommendRule`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "$model", "recommend", "rules", "$objectID"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "$model", "recommend", "rules", "$objectID"),
     )
   }
 
@@ -271,22 +463,56 @@ public class RecommendClient(
     objectID: String,
     requestOptions: RequestOptions? = null,
   ): RecommendRule {
+    return requester.execute(
+      requestConfig =
+        getRecommendRuleRequestConfig(indexName = indexName, model = model, objectID = objectID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves a Recommend rule that you previously created in the Algolia dashboard. This variant
+   * of [getRecommendRule] returns the full HTTP response information (status code, headers, raw
+   * body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param model
+   *   [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   * @param objectID Unique record identifier.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getRecommendRuleWithHTTPInfo(
+    indexName: String,
+    model: RecommendModels,
+    objectID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<RecommendRule> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getRecommendRuleRequestConfig(indexName = indexName, model = model, objectID = objectID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getRecommendRuleRequestConfig(
+    indexName: String,
+    model: RecommendModels,
+    objectID: String,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `getRecommendRule`."
     }
     require(objectID.isNotBlank()) {
       "Parameter `objectID` is required when calling `getRecommendRule`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "$model", "recommend", "rules", "$objectID"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "$model", "recommend", "rules", "$objectID"),
     )
   }
 
@@ -310,19 +536,55 @@ public class RecommendClient(
     taskID: Long,
     requestOptions: RequestOptions? = null,
   ): GetRecommendTaskResponse {
+    return requester.execute(
+      requestConfig =
+        getRecommendStatusRequestConfig(indexName = indexName, model = model, taskID = taskID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Checks the status of a given task. Deleting a Recommend rule is asynchronous. When you delete a
+   * rule, a task is created on a queue and completed depending on the load on the server. The API
+   * response includes a task ID that you can use to check the status. This variant of
+   * [getRecommendStatus] returns the full HTTP response information (status code, headers, raw
+   * body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param model
+   *   [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   * @param taskID Unique task identifier.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getRecommendStatusWithHTTPInfo(
+    indexName: String,
+    model: RecommendModels,
+    taskID: Long,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetRecommendTaskResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getRecommendStatusRequestConfig(indexName = indexName, model = model, taskID = taskID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getRecommendStatusRequestConfig(
+    indexName: String,
+    model: RecommendModels,
+    taskID: Long,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `getRecommendStatus`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "$model", "task", "$taskID"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "$model", "task", "$taskID"),
     )
   }
 
@@ -339,17 +601,44 @@ public class RecommendClient(
     getRecommendationsParams: GetRecommendationsParams,
     requestOptions: RequestOptions? = null,
   ): GetRecommendationsResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "*", "recommendations"),
-        isRead = true,
-        body = getRecommendationsParams,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        getRecommendationsRequestConfig(getRecommendationsParams = getRecommendationsParams),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves recommendations from selected AI models. This variant of [getRecommendations] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - search
+   *
+   * @param getRecommendationsParams
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getRecommendationsWithHTTPInfo(
+    getRecommendationsParams: GetRecommendationsParams,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetRecommendationsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getRecommendationsRequestConfig(getRecommendationsParams = getRecommendationsParams),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getRecommendationsRequestConfig(
+    getRecommendationsParams: GetRecommendationsParams
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "*", "recommendations"),
+      isRead = true,
+      body = getRecommendationsParams,
     )
   }
 
@@ -372,21 +661,63 @@ public class RecommendClient(
     searchRecommendRulesParams: SearchRecommendRulesParams? = null,
     requestOptions: RequestOptions? = null,
   ): SearchRecommendRulesResponse {
+    return requester.execute(
+      requestConfig =
+        searchRecommendRulesRequestConfig(
+          indexName = indexName,
+          model = model,
+          searchRecommendRulesParams = searchRecommendRulesParams,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Searches for Recommend rules. Use an empty query to list all rules for this recommendation
+   * scenario. This variant of [searchRecommendRules] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param model
+   *   [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   * @param searchRecommendRulesParams
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun searchRecommendRulesWithHTTPInfo(
+    indexName: String,
+    model: RecommendModels,
+    searchRecommendRulesParams: SearchRecommendRulesParams? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SearchRecommendRulesResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        searchRecommendRulesRequestConfig(
+          indexName = indexName,
+          model = model,
+          searchRecommendRulesParams = searchRecommendRulesParams,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun searchRecommendRulesRequestConfig(
+    indexName: String,
+    model: RecommendModels,
+    searchRecommendRulesParams: SearchRecommendRulesParams?,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `searchRecommendRules`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "$model", "recommend", "rules", "search"),
-        isRead = true,
-        body = searchRecommendRulesParams,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "$model", "recommend", "rules", "search"),
+      isRead = true,
+      body = searchRecommendRulesParams,
     )
   }
 }
