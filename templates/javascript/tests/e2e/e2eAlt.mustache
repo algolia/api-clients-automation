@@ -1,0 +1,37 @@
+// {{generationBanner}}
+import { describe, test, expect } from 'vitest';
+
+import { union } from '../helpers.js';
+
+import { {{{clientName}}} } from '{{{importPackage}}}';
+import type { RequestOptions } from '@algolia/client-common';
+
+if (!process.env.METIS_APPLICATION_ID) {
+  throw new Error("please provide an `METIS_APPLICATION_ID` env var for e2e tests");
+}
+
+if (!process.env.METIS_API_KEY) {
+  throw new Error("please provide an `METIS_API_KEY` env var for e2e tests");
+}
+
+const client = {{{clientName}}}(process.env.METIS_APPLICATION_ID, process.env.METIS_API_KEY){{^isStandaloneClient}}.{{{initMethod}}}({{#hasRegionalHost}} {region:'{{{defaultRegion}}}'} {{/hasRegionalHost}}){{/isStandaloneClient}};
+
+{{#blocksE2E}}
+describe('{{operationId}}', () => {
+  {{#tests}}
+  test('{{{testName}}}', async () => {
+    {{#response}}
+    {{#body}}const resp = {{/body}}{{> tests/method}};
+  
+    {{#body}}
+    const expectedBody = {{{.}}};
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
+    {{/body}}
+    {{/response}}
+  });
+
+  {{/tests}}
+})
+
+{{/blocksE2E}}
