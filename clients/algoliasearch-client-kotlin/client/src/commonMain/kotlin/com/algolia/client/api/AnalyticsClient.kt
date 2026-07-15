@@ -62,19 +62,44 @@ public class AnalyticsClient(
     parameters: Map<kotlin.String, Any>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customDelete`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customDeleteRequestConfig(path = path, parameters = parameters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customDelete]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customDeleteWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customDeleteRequestConfig(path = path, parameters = parameters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customDeleteRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customDelete`." }
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
     )
   }
 
@@ -90,19 +115,44 @@ public class AnalyticsClient(
     parameters: Map<kotlin.String, Any>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customGet`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customGetRequestConfig(path = path, parameters = parameters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customGet] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customGetWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customGetRequestConfig(path = path, parameters = parameters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customGetRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customGet`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
     )
   }
 
@@ -120,20 +170,48 @@ public class AnalyticsClient(
     body: JsonObject? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPost`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-        body = body,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customPostRequestConfig(path = path, parameters = parameters, body = body),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customPost]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param body Parameters to send with the custom request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customPostWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    body: JsonObject? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customPostRequestConfig(path = path, parameters = parameters, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customPostRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+    body: JsonObject?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPost`." }
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
+      body = body,
     )
   }
 
@@ -151,20 +229,48 @@ public class AnalyticsClient(
     body: JsonObject? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPut`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-        body = body,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customPutRequestConfig(path = path, parameters = parameters, body = body),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customPut] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param body Parameters to send with the custom request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customPutWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    body: JsonObject? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customPutRequestConfig(path = path, parameters = parameters, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customPutRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+    body: JsonObject?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPut`." }
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
+      body = body,
     )
   }
 
@@ -199,23 +305,79 @@ public class AnalyticsClient(
     tags: String? = null,
     requestOptions: RequestOptions? = null,
   ): GetAddToCartRateResponse {
-    require(index.isNotBlank()) { "Parameter `index` is required when calling `getAddToCartRate`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("2", "conversions", "addToCartRate"),
-        query =
-          buildMap {
-            put("index", index)
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-            tags?.let { put("tags", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        getAddToCartRateRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the add-to-cart rate for all your searches with at least one add-to-cart event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day. The rate is the number of add-to-cart conversion events divided by
+   * the number of tracked searches. A search is tracked if it returns a queryID (`clickAnalytics`
+   * is `true`). This differs from the response's `count`, which shows the overall number of
+   * searches, including those where `clickAnalytics` is `false`. **There's a difference between a 0
+   * and null add-to-cart rate when `clickAnalytics` is enabled:** - **Null** means there were no
+   * queries: since Algolia didn't receive any events, the add-to-cart rate is null. - **0** mean
+   * there _were_ queries but no
+   * [add-to-cart events](https://www.algolia.com/doc/guides/sending-events/getting-started) were
+   * received. This variant of [getAddToCartRate] returns the full HTTP response information (status
+   * code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param index Index name.
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *   `AND`. Tags must be URL-encoded. For more information, see
+   *   [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getAddToCartRateWithHTTPInfo(
+    index: String,
+    startDate: String? = null,
+    endDate: String? = null,
+    tags: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetAddToCartRateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getAddToCartRateRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getAddToCartRateRequestConfig(
+    index: String,
+    startDate: String?,
+    endDate: String?,
+    tags: String?,
+  ): RequestConfig {
+    require(index.isNotBlank()) { "Parameter `index` is required when calling `getAddToCartRate`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "conversions", "addToCartRate"),
+      query =
+        buildMap {
+          put("index", index)
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+          tags?.let { put("tags", it) }
+        },
     )
   }
 
@@ -246,25 +408,79 @@ public class AnalyticsClient(
     tags: String? = null,
     requestOptions: RequestOptions? = null,
   ): GetAverageClickPositionResponse {
+    return requester.execute(
+      requestConfig =
+        getAverageClickPositionRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the average click position of your search results, including a daily breakdown. The
+   * average click position is the average of all clicked search result positions. For example, if
+   * users only ever click on the first result for any search, the average click position is 1. By
+   * default, the analyzed period includes the last eight days including the current day. An average
+   * of `null` when `clickAnalytics` is enabled means Algolia didn't receive any
+   * [click events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the
+   * queries. The average is `null` until Algolia receives at least one click event. This variant of
+   * [getAverageClickPosition] returns the full HTTP response information (status code, headers, raw
+   * body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param index Index name.
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *   `AND`. Tags must be URL-encoded. For more information, see
+   *   [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getAverageClickPositionWithHTTPInfo(
+    index: String,
+    startDate: String? = null,
+    endDate: String? = null,
+    tags: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetAverageClickPositionResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getAverageClickPositionRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getAverageClickPositionRequestConfig(
+    index: String,
+    startDate: String?,
+    endDate: String?,
+    tags: String?,
+  ): RequestConfig {
     require(index.isNotBlank()) {
       "Parameter `index` is required when calling `getAverageClickPosition`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("2", "clicks", "averageClickPosition"),
-        query =
-          buildMap {
-            put("index", index)
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-            tags?.let { put("tags", it) }
-          },
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("2", "clicks", "averageClickPosition"),
+      query =
+        buildMap {
+          put("index", index)
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+          tags?.let { put("tags", it) }
+        },
     )
   }
 
@@ -293,24 +509,75 @@ public class AnalyticsClient(
     tags: String? = null,
     requestOptions: RequestOptions? = null,
   ): GetClickPositionsResponse {
+    return requester.execute(
+      requestConfig =
+        getClickPositionsRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the positions in the search results and their associated number of clicks. This lets
+   * you check how many clicks the first, second, or tenth search results receive. An average of `0`
+   * when `clickAnalytics` is enabled means Algolia didn't receive any
+   * [click events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the
+   * queries. This variant of [getClickPositions] returns the full HTTP response information (status
+   * code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param index Index name.
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *   `AND`. Tags must be URL-encoded. For more information, see
+   *   [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getClickPositionsWithHTTPInfo(
+    index: String,
+    startDate: String? = null,
+    endDate: String? = null,
+    tags: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetClickPositionsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getClickPositionsRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getClickPositionsRequestConfig(
+    index: String,
+    startDate: String?,
+    endDate: String?,
+    tags: String?,
+  ): RequestConfig {
     require(index.isNotBlank()) {
       "Parameter `index` is required when calling `getClickPositions`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "clicks", "positions"),
-        query =
-          buildMap {
-            put("index", index)
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-            tags?.let { put("tags", it) }
-          },
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "clicks", "positions"),
+      query =
+        buildMap {
+          put("index", index)
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+          tags?.let { put("tags", it) }
+        },
     )
   }
 
@@ -341,24 +608,77 @@ public class AnalyticsClient(
     tags: String? = null,
     requestOptions: RequestOptions? = null,
   ): GetClickThroughRateResponse {
+    return requester.execute(
+      requestConfig =
+        getClickThroughRateRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the click-through rate (CTR) for all your searches with at least one click event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day. **There's a difference between a 0 and null CTR when
+   * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
+   * receive any events, CTR is null. - **0** mean there _were_ queries but no
+   * [click events](https://www.algolia.com/doc/guides/sending-events/getting-started) were
+   * received. This variant of [getClickThroughRate] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param index Index name.
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *   `AND`. Tags must be URL-encoded. For more information, see
+   *   [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getClickThroughRateWithHTTPInfo(
+    index: String,
+    startDate: String? = null,
+    endDate: String? = null,
+    tags: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetClickThroughRateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getClickThroughRateRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getClickThroughRateRequestConfig(
+    index: String,
+    startDate: String?,
+    endDate: String?,
+    tags: String?,
+  ): RequestConfig {
     require(index.isNotBlank()) {
       "Parameter `index` is required when calling `getClickThroughRate`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "clicks", "clickThroughRate"),
-        query =
-          buildMap {
-            put("index", index)
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-            tags?.let { put("tags", it) }
-          },
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "clicks", "clickThroughRate"),
+      query =
+        buildMap {
+          put("index", index)
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+          tags?.let { put("tags", it) }
+        },
     )
   }
 
@@ -389,25 +709,78 @@ public class AnalyticsClient(
     tags: String? = null,
     requestOptions: RequestOptions? = null,
   ): GetConversionRateResponse {
+    return requester.execute(
+      requestConfig =
+        getConversionRateRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the conversion rate (CR) for all your searches with at least one conversion event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day. **There's a difference between a 0 and null CR when `clickAnalytics`
+   * is enabled:** - **Null** means there were no queries: since Algolia didn't receive any events,
+   * CR is null. - **0** mean there _were_ queries but no
+   * [conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were
+   * received. This variant of [getConversionRate] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param index Index name.
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *   `AND`. Tags must be URL-encoded. For more information, see
+   *   [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getConversionRateWithHTTPInfo(
+    index: String,
+    startDate: String? = null,
+    endDate: String? = null,
+    tags: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetConversionRateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getConversionRateRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getConversionRateRequestConfig(
+    index: String,
+    startDate: String?,
+    endDate: String?,
+    tags: String?,
+  ): RequestConfig {
     require(index.isNotBlank()) {
       "Parameter `index` is required when calling `getConversionRate`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("2", "conversions", "conversionRate"),
-        query =
-          buildMap {
-            put("index", index)
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-            tags?.let { put("tags", it) }
-          },
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("2", "conversions", "conversionRate"),
+      query =
+        buildMap {
+          put("index", index)
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+          tags?.let { put("tags", it) }
+        },
     )
   }
 
@@ -434,22 +807,72 @@ public class AnalyticsClient(
     tags: String? = null,
     requestOptions: RequestOptions? = null,
   ): GetNoClickRateResponse {
-    require(index.isNotBlank()) { "Parameter `index` is required when calling `getNoClickRate`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "searches", "noClickRate"),
-        query =
-          buildMap {
-            put("index", index)
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-            tags?.let { put("tags", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        getNoClickRateRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the fraction of searches that didn't lead to any click within a time range, including
+   * a daily breakdown. It also returns the number of tracked searches and tracked searches without
+   * clicks. By default, the analyzed period includes the last eight days including the current day.
+   * This variant of [getNoClickRate] returns the full HTTP response information (status code,
+   * headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param index Index name.
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *   `AND`. Tags must be URL-encoded. For more information, see
+   *   [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getNoClickRateWithHTTPInfo(
+    index: String,
+    startDate: String? = null,
+    endDate: String? = null,
+    tags: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetNoClickRateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getNoClickRateRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getNoClickRateRequestConfig(
+    index: String,
+    startDate: String?,
+    endDate: String?,
+    tags: String?,
+  ): RequestConfig {
+    require(index.isNotBlank()) { "Parameter `index` is required when calling `getNoClickRate`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "searches", "noClickRate"),
+      query =
+        buildMap {
+          put("index", index)
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+          tags?.let { put("tags", it) }
+        },
     )
   }
 
@@ -477,22 +900,72 @@ public class AnalyticsClient(
     tags: String? = null,
     requestOptions: RequestOptions? = null,
   ): GetNoResultsRateResponse {
-    require(index.isNotBlank()) { "Parameter `index` is required when calling `getNoResultsRate`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "searches", "noResultRate"),
-        query =
-          buildMap {
-            put("index", index)
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-            tags?.let { put("tags", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        getNoResultsRateRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the fraction of searches that didn't return any results within a time range,
+   * including a daily breakdown. It also returns the count of searches and searches without results
+   * used to compute the rates. By default, the analyzed period includes the last eight days
+   * including the current day. This variant of [getNoResultsRate] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param index Index name.
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *   `AND`. Tags must be URL-encoded. For more information, see
+   *   [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getNoResultsRateWithHTTPInfo(
+    index: String,
+    startDate: String? = null,
+    endDate: String? = null,
+    tags: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetNoResultsRateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getNoResultsRateRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getNoResultsRateRequestConfig(
+    index: String,
+    startDate: String?,
+    endDate: String?,
+    tags: String?,
+  ): RequestConfig {
+    require(index.isNotBlank()) { "Parameter `index` is required when calling `getNoResultsRate`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "searches", "noResultRate"),
+      query =
+        buildMap {
+          put("index", index)
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+          tags?.let { put("tags", it) }
+        },
     )
   }
 
@@ -526,23 +999,78 @@ public class AnalyticsClient(
     tags: String? = null,
     requestOptions: RequestOptions? = null,
   ): GetPurchaseRateResponse {
-    require(index.isNotBlank()) { "Parameter `index` is required when calling `getPurchaseRate`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("2", "conversions", "purchaseRate"),
-        query =
-          buildMap {
-            put("index", index)
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-            tags?.let { put("tags", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        getPurchaseRateRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the purchase rate for all your searches with at least one purchase event, including a
+   * daily breakdown. By default, the analyzed period includes the last eight days, including the
+   * current day. The rate is purchase conversion events divided by tracked searches. A search is
+   * tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's
+   * `count`, which includes searches where `clickAnalytics` is `false`. **There's a difference
+   * between a 0 and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there
+   * were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means
+   * there were queries but no
+   * [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started)
+   * were received. This variant of [getPurchaseRate] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param index Index name.
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *   `AND`. Tags must be URL-encoded. For more information, see
+   *   [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getPurchaseRateWithHTTPInfo(
+    index: String,
+    startDate: String? = null,
+    endDate: String? = null,
+    tags: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetPurchaseRateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getPurchaseRateRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getPurchaseRateRequestConfig(
+    index: String,
+    startDate: String?,
+    endDate: String?,
+    tags: String?,
+  ): RequestConfig {
+    require(index.isNotBlank()) { "Parameter `index` is required when calling `getPurchaseRate`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "conversions", "purchaseRate"),
+      query =
+        buildMap {
+          put("index", index)
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+          tags?.let { put("tags", it) }
+        },
     )
   }
 
@@ -572,22 +1100,74 @@ public class AnalyticsClient(
     tags: String? = null,
     requestOptions: RequestOptions? = null,
   ): GetRevenue {
-    require(index.isNotBlank()) { "Parameter `index` is required when calling `getRevenue`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "conversions", "revenue"),
-        query =
-          buildMap {
-            put("index", index)
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-            tags?.let { put("tags", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        getRevenueRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves revenue-related metrics, such as the total revenue or the average order value. To
+   * retrieve revenue-related metrics, send purchase events. By default, the analyzed period
+   * includes the last eight days including the current day. Revenue is based on purchase conversion
+   * events (a conversion event with an `eventSubtype` attribute of `purchase`). The revenue is the
+   * `price` attribute multiplied by the `quantity` attribute for each object in the event's
+   * `objectData` array. This variant of [getRevenue] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param index Index name.
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *   `AND`. Tags must be URL-encoded. For more information, see
+   *   [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getRevenueWithHTTPInfo(
+    index: String,
+    startDate: String? = null,
+    endDate: String? = null,
+    tags: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetRevenue> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getRevenueRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getRevenueRequestConfig(
+    index: String,
+    startDate: String?,
+    endDate: String?,
+    tags: String?,
+  ): RequestConfig {
+    require(index.isNotBlank()) { "Parameter `index` is required when calling `getRevenue`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "conversions", "revenue"),
+      query =
+        buildMap {
+          put("index", index)
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+          tags?.let { put("tags", it) }
+        },
     )
   }
 
@@ -613,22 +1193,71 @@ public class AnalyticsClient(
     tags: String? = null,
     requestOptions: RequestOptions? = null,
   ): GetSearchesCountResponse {
-    require(index.isNotBlank()) { "Parameter `index` is required when calling `getSearchesCount`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "searches", "count"),
-        query =
-          buildMap {
-            put("index", index)
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-            tags?.let { put("tags", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        getSearchesCountRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the number of searches within a time range, including a daily breakdown. By default,
+   * the analyzed period includes the last eight days including the current day. This variant of
+   * [getSearchesCount] returns the full HTTP response information (status code, headers, raw body)
+   * along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param index Index name.
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *   `AND`. Tags must be URL-encoded. For more information, see
+   *   [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getSearchesCountWithHTTPInfo(
+    index: String,
+    startDate: String? = null,
+    endDate: String? = null,
+    tags: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetSearchesCountResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getSearchesCountRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getSearchesCountRequestConfig(
+    index: String,
+    startDate: String?,
+    endDate: String?,
+    tags: String?,
+  ): RequestConfig {
+    require(index.isNotBlank()) { "Parameter `index` is required when calling `getSearchesCount`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "searches", "count"),
+      query =
+        buildMap {
+          put("index", index)
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+          tags?.let { put("tags", it) }
+        },
     )
   }
 
@@ -659,26 +1288,85 @@ public class AnalyticsClient(
     tags: String? = null,
     requestOptions: RequestOptions? = null,
   ): GetSearchesNoClicksResponse {
+    return requester.execute(
+      requestConfig =
+        getSearchesNoClicksRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          limit = limit,
+          offset = offset,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the most popular searches that didn't lead to any clicks, from the 1,000 most
+   * frequent searches. For each search, it also returns the number of displayed search results that
+   * remained unclicked. This variant of [getSearchesNoClicks] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param index Index name.
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param limit Number of items to return. (default to 10)
+   * @param offset Position of the first item to return. (default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *   `AND`. Tags must be URL-encoded. For more information, see
+   *   [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getSearchesNoClicksWithHTTPInfo(
+    index: String,
+    startDate: String? = null,
+    endDate: String? = null,
+    limit: Int? = null,
+    offset: Int? = null,
+    tags: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetSearchesNoClicksResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getSearchesNoClicksRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          limit = limit,
+          offset = offset,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getSearchesNoClicksRequestConfig(
+    index: String,
+    startDate: String?,
+    endDate: String?,
+    limit: Int?,
+    offset: Int?,
+    tags: String?,
+  ): RequestConfig {
     require(index.isNotBlank()) {
       "Parameter `index` is required when calling `getSearchesNoClicks`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "searches", "noClicks"),
-        query =
-          buildMap {
-            put("index", index)
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-            limit?.let { put("limit", it) }
-            offset?.let { put("offset", it) }
-            tags?.let { put("tags", it) }
-          },
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "searches", "noClicks"),
+      query =
+        buildMap {
+          put("index", index)
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+          limit?.let { put("limit", it) }
+          offset?.let { put("offset", it) }
+          tags?.let { put("tags", it) }
+        },
     )
   }
 
@@ -707,26 +1395,84 @@ public class AnalyticsClient(
     tags: String? = null,
     requestOptions: RequestOptions? = null,
   ): GetSearchesNoResultsResponse {
+    return requester.execute(
+      requestConfig =
+        getSearchesNoResultsRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          limit = limit,
+          offset = offset,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the 1,000 most frequent searches that produced zero results. This variant of
+   * [getSearchesNoResults] returns the full HTTP response information (status code, headers, raw
+   * body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param index Index name.
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param limit Number of items to return. (default to 10)
+   * @param offset Position of the first item to return. (default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *   `AND`. Tags must be URL-encoded. For more information, see
+   *   [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getSearchesNoResultsWithHTTPInfo(
+    index: String,
+    startDate: String? = null,
+    endDate: String? = null,
+    limit: Int? = null,
+    offset: Int? = null,
+    tags: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetSearchesNoResultsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getSearchesNoResultsRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          limit = limit,
+          offset = offset,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getSearchesNoResultsRequestConfig(
+    index: String,
+    startDate: String?,
+    endDate: String?,
+    limit: Int?,
+    offset: Int?,
+    tags: String?,
+  ): RequestConfig {
     require(index.isNotBlank()) {
       "Parameter `index` is required when calling `getSearchesNoResults`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "searches", "noResults"),
-        query =
-          buildMap {
-            put("index", index)
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-            limit?.let { put("limit", it) }
-            offset?.let { put("offset", it) }
-            tags?.let { put("tags", it) }
-          },
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "searches", "noResults"),
+      query =
+        buildMap {
+          put("index", index)
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+          limit?.let { put("limit", it) }
+          offset?.let { put("offset", it) }
+          tags?.let { put("tags", it) }
+        },
     )
   }
 
@@ -745,19 +1491,44 @@ public class AnalyticsClient(
     index: String,
     requestOptions: RequestOptions? = null,
   ): GetStatusResponse {
-    require(index.isNotBlank()) { "Parameter `index` is required when calling `getStatus`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "status"),
-        query =
-          buildMap {
-            put("index", index)
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getStatusRequestConfig(index = index),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the time when the Analytics data for the specified index was last updated. If the
+   * index has been recently created or no search has been performed yet the updated time is `null`.
+   * The Analytics data is updated every 5&nbsp;minutes. This variant of [getStatus] returns the
+   * full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param index Index name.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getStatusWithHTTPInfo(
+    index: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetStatusResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getStatusRequestConfig(index = index),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getStatusRequestConfig(index: String): RequestConfig {
+    require(index.isNotBlank()) { "Parameter `index` is required when calling `getStatus`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "status"),
+      query =
+        buildMap {
+          put("index", index)
+        },
     )
   }
 
@@ -786,24 +1557,82 @@ public class AnalyticsClient(
     tags: String? = null,
     requestOptions: RequestOptions? = null,
   ): GetTopCountriesResponse {
-    require(index.isNotBlank()) { "Parameter `index` is required when calling `getTopCountries`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "countries"),
-        query =
-          buildMap {
-            put("index", index)
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-            limit?.let { put("limit", it) }
-            offset?.let { put("offset", it) }
-            tags?.let { put("tags", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        getTopCountriesRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          limit = limit,
+          offset = offset,
+          tags = tags,
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the countries with the most searches in your index. This variant of [getTopCountries]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param index Index name.
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param limit Number of items to return. (default to 10)
+   * @param offset Position of the first item to return. (default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *   `AND`. Tags must be URL-encoded. For more information, see
+   *   [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getTopCountriesWithHTTPInfo(
+    index: String,
+    startDate: String? = null,
+    endDate: String? = null,
+    limit: Int? = null,
+    offset: Int? = null,
+    tags: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetTopCountriesResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getTopCountriesRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          limit = limit,
+          offset = offset,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getTopCountriesRequestConfig(
+    index: String,
+    startDate: String?,
+    endDate: String?,
+    limit: Int?,
+    offset: Int?,
+    tags: String?,
+  ): RequestConfig {
+    require(index.isNotBlank()) { "Parameter `index` is required when calling `getTopCountries`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "countries"),
+      query =
+        buildMap {
+          put("index", index)
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+          limit?.let { put("limit", it) }
+          offset?.let { put("offset", it) }
+          tags?.let { put("tags", it) }
+        },
     )
   }
 
@@ -835,27 +1664,91 @@ public class AnalyticsClient(
     tags: String? = null,
     requestOptions: RequestOptions? = null,
   ): GetTopFilterAttributesResponse {
+    return requester.execute(
+      requestConfig =
+        getTopFilterAttributesRequestConfig(
+          index = index,
+          search = search,
+          startDate = startDate,
+          endDate = endDate,
+          limit = limit,
+          offset = offset,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the 1,000 most frequently used filter attributes. These are attributes of your
+   * records that you included in the `attributesForFaceting` setting. This variant of
+   * [getTopFilterAttributes] returns the full HTTP response information (status code, headers, raw
+   * body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param index Index name.
+   * @param search Search query.
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param limit Number of items to return. (default to 10)
+   * @param offset Position of the first item to return. (default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *   `AND`. Tags must be URL-encoded. For more information, see
+   *   [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getTopFilterAttributesWithHTTPInfo(
+    index: String,
+    search: String? = null,
+    startDate: String? = null,
+    endDate: String? = null,
+    limit: Int? = null,
+    offset: Int? = null,
+    tags: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetTopFilterAttributesResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getTopFilterAttributesRequestConfig(
+          index = index,
+          search = search,
+          startDate = startDate,
+          endDate = endDate,
+          limit = limit,
+          offset = offset,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getTopFilterAttributesRequestConfig(
+    index: String,
+    search: String?,
+    startDate: String?,
+    endDate: String?,
+    limit: Int?,
+    offset: Int?,
+    tags: String?,
+  ): RequestConfig {
     require(index.isNotBlank()) {
       "Parameter `index` is required when calling `getTopFilterAttributes`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "filters"),
-        query =
-          buildMap {
-            put("index", index)
-            search?.let { put("search", it) }
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-            limit?.let { put("limit", it) }
-            offset?.let { put("offset", it) }
-            tags?.let { put("tags", it) }
-          },
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "filters"),
+      query =
+        buildMap {
+          put("index", index)
+          search?.let { put("search", it) }
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+          limit?.let { put("limit", it) }
+          offset?.let { put("offset", it) }
+          tags?.let { put("tags", it) }
+        },
     )
   }
 
@@ -889,30 +1782,99 @@ public class AnalyticsClient(
     tags: String? = null,
     requestOptions: RequestOptions? = null,
   ): GetTopFilterForAttributeResponse {
+    return requester.execute(
+      requestConfig =
+        getTopFilterForAttributeRequestConfig(
+          attribute = attribute,
+          index = index,
+          search = search,
+          startDate = startDate,
+          endDate = endDate,
+          limit = limit,
+          offset = offset,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the 1,000 most frequent filter (facet) values for a filter attribute. These are
+   * attributes of your records that you included in the `attributesForFaceting` setting. This
+   * variant of [getTopFilterForAttribute] returns the full HTTP response information (status code,
+   * headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param attribute Attribute name.
+   * @param index Index name.
+   * @param search Search query.
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param limit Number of items to return. (default to 10)
+   * @param offset Position of the first item to return. (default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *   `AND`. Tags must be URL-encoded. For more information, see
+   *   [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getTopFilterForAttributeWithHTTPInfo(
+    attribute: String,
+    index: String,
+    search: String? = null,
+    startDate: String? = null,
+    endDate: String? = null,
+    limit: Int? = null,
+    offset: Int? = null,
+    tags: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetTopFilterForAttributeResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getTopFilterForAttributeRequestConfig(
+          attribute = attribute,
+          index = index,
+          search = search,
+          startDate = startDate,
+          endDate = endDate,
+          limit = limit,
+          offset = offset,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getTopFilterForAttributeRequestConfig(
+    attribute: String,
+    index: String,
+    search: String?,
+    startDate: String?,
+    endDate: String?,
+    limit: Int?,
+    offset: Int?,
+    tags: String?,
+  ): RequestConfig {
     require(attribute.isNotBlank()) {
       "Parameter `attribute` is required when calling `getTopFilterForAttribute`."
     }
     require(index.isNotBlank()) {
       "Parameter `index` is required when calling `getTopFilterForAttribute`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "filters", "$attribute"),
-        query =
-          buildMap {
-            put("index", index)
-            search?.let { put("search", it) }
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-            limit?.let { put("limit", it) }
-            offset?.let { put("offset", it) }
-            tags?.let { put("tags", it) }
-          },
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "filters", "$attribute"),
+      query =
+        buildMap {
+          put("index", index)
+          search?.let { put("search", it) }
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+          limit?.let { put("limit", it) }
+          offset?.let { put("offset", it) }
+          tags?.let { put("tags", it) }
+        },
     )
   }
 
@@ -946,27 +1908,92 @@ public class AnalyticsClient(
     tags: String? = null,
     requestOptions: RequestOptions? = null,
   ): GetTopFiltersNoResultsResponse {
+    return requester.execute(
+      requestConfig =
+        getTopFiltersNoResultsRequestConfig(
+          index = index,
+          search = search,
+          startDate = startDate,
+          endDate = endDate,
+          limit = limit,
+          offset = offset,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the 1,000 most frequently used filters for a search that didn't return any results.
+   * To get the most frequent searches without results, use the
+   * [Retrieve searches without results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results)
+   * operation. This variant of [getTopFiltersNoResults] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param index Index name.
+   * @param search Search query.
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param limit Number of items to return. (default to 10)
+   * @param offset Position of the first item to return. (default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *   `AND`. Tags must be URL-encoded. For more information, see
+   *   [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getTopFiltersNoResultsWithHTTPInfo(
+    index: String,
+    search: String? = null,
+    startDate: String? = null,
+    endDate: String? = null,
+    limit: Int? = null,
+    offset: Int? = null,
+    tags: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetTopFiltersNoResultsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getTopFiltersNoResultsRequestConfig(
+          index = index,
+          search = search,
+          startDate = startDate,
+          endDate = endDate,
+          limit = limit,
+          offset = offset,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getTopFiltersNoResultsRequestConfig(
+    index: String,
+    search: String?,
+    startDate: String?,
+    endDate: String?,
+    limit: Int?,
+    offset: Int?,
+    tags: String?,
+  ): RequestConfig {
     require(index.isNotBlank()) {
       "Parameter `index` is required when calling `getTopFiltersNoResults`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "filters", "noResults"),
-        query =
-          buildMap {
-            put("index", index)
-            search?.let { put("search", it) }
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-            limit?.let { put("limit", it) }
-            offset?.let { put("offset", it) }
-            tags?.let { put("tags", it) }
-          },
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "filters", "noResults"),
+      query =
+        buildMap {
+          put("index", index)
+          search?.let { put("search", it) }
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+          limit?.let { put("limit", it) }
+          offset?.let { put("offset", it) }
+          tags?.let { put("tags", it) }
+        },
     )
   }
 
@@ -1014,27 +2041,112 @@ public class AnalyticsClient(
     tags: String? = null,
     requestOptions: RequestOptions? = null,
   ): GetTopHitsResponse {
-    require(index.isNotBlank()) { "Parameter `index` is required when calling `getTopHits`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "hits"),
-        query =
-          buildMap {
-            put("index", index)
-            search?.let { put("search", it) }
-            clickAnalytics?.let { put("clickAnalytics", it) }
-            revenueAnalytics?.let { put("revenueAnalytics", it) }
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-            limit?.let { put("limit", it) }
-            offset?.let { put("offset", it) }
-            tags?.let { put("tags", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        getTopHitsRequestConfig(
+          index = index,
+          search = search,
+          clickAnalytics = clickAnalytics,
+          revenueAnalytics = revenueAnalytics,
+          startDate = startDate,
+          endDate = endDate,
+          limit = limit,
+          offset = offset,
+          tags = tags,
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the object IDs of the 1,000 most frequent search results. If you set the
+   * `clickAnalytics` query parameter to `true`, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with `clickAnalytics` set to `true`. This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is
+   * `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) -
+   * Average click position If you set the `revenueAnalytics` parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so rates are null. -
+   * **0% rates** mean there were queries but no
+   * [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started)
+   * were received. This variant of [getTopHits] returns the full HTTP response information (status
+   * code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param index Index name.
+   * @param search Search query.
+   * @param clickAnalytics Whether to include metrics related to click and conversion events in the
+   *   response. (default to false)
+   * @param revenueAnalytics Whether to include metrics related to revenue events in the response.
+   *   (default to false)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param limit Number of items to return. (default to 10)
+   * @param offset Position of the first item to return. (default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *   `AND`. Tags must be URL-encoded. For more information, see
+   *   [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getTopHitsWithHTTPInfo(
+    index: String,
+    search: String? = null,
+    clickAnalytics: Boolean? = null,
+    revenueAnalytics: Boolean? = null,
+    startDate: String? = null,
+    endDate: String? = null,
+    limit: Int? = null,
+    offset: Int? = null,
+    tags: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetTopHitsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getTopHitsRequestConfig(
+          index = index,
+          search = search,
+          clickAnalytics = clickAnalytics,
+          revenueAnalytics = revenueAnalytics,
+          startDate = startDate,
+          endDate = endDate,
+          limit = limit,
+          offset = offset,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getTopHitsRequestConfig(
+    index: String,
+    search: String?,
+    clickAnalytics: Boolean?,
+    revenueAnalytics: Boolean?,
+    startDate: String?,
+    endDate: String?,
+    limit: Int?,
+    offset: Int?,
+    tags: String?,
+  ): RequestConfig {
+    require(index.isNotBlank()) { "Parameter `index` is required when calling `getTopHits`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "hits"),
+      query =
+        buildMap {
+          put("index", index)
+          search?.let { put("search", it) }
+          clickAnalytics?.let { put("clickAnalytics", it) }
+          revenueAnalytics?.let { put("revenueAnalytics", it) }
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+          limit?.let { put("limit", it) }
+          offset?.let { put("offset", it) }
+          tags?.let { put("tags", it) }
+        },
     )
   }
 
@@ -1086,28 +2198,120 @@ public class AnalyticsClient(
     tags: String? = null,
     requestOptions: RequestOptions? = null,
   ): GetTopSearchesResponse {
-    require(index.isNotBlank()) { "Parameter `index` is required when calling `getTopSearches`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "searches"),
-        query =
-          buildMap {
-            put("index", index)
-            clickAnalytics?.let { put("clickAnalytics", it) }
-            revenueAnalytics?.let { put("revenueAnalytics", it) }
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-            orderBy?.let { put("orderBy", it) }
-            direction?.let { put("direction", it) }
-            limit?.let { put("limit", it) }
-            offset?.let { put("offset", it) }
-            tags?.let { put("tags", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        getTopSearchesRequestConfig(
+          index = index,
+          clickAnalytics = clickAnalytics,
+          revenueAnalytics = revenueAnalytics,
+          startDate = startDate,
+          endDate = endDate,
+          orderBy = orderBy,
+          direction = direction,
+          limit = limit,
+          offset = offset,
+          tags = tags,
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Returns the most popular searches. For each search, it also includes the average number of
+   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes: -
+   * Tracked searches count Tracked searches are Search API requests with `clickAnalytics` set to
+   * `true`. This differs from the response's `count`, which includes searches where
+   * `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count -
+   * Conversion rate (CR) - Average click position If you set the `revenueAnalytics` query parameter
+   * to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase
+   * count - Purchase rate - Revenue details for each currency **There's a difference between 0%
+   * rates and null rates:** - **Null** means there were no queries. Algolia didn't receive any
+   * events, so rates are null. - **0% rates** mean there were queries but no
+   * [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started)
+   * were received. This variant of [getTopSearches] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param index Index name.
+   * @param clickAnalytics Whether to include metrics related to click and conversion events in the
+   *   response. (default to false)
+   * @param revenueAnalytics Whether to include metrics related to revenue events in the response.
+   *   (default to false)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param orderBy Attribute by which to order the response items. If the `clickAnalytics`
+   *   parameter is false, only `searchCount` is available. (default to OrderBy.searchCount)
+   * @param direction Sorting direction of the results: ascending or descending. (default to
+   *   Direction.asc)
+   * @param limit Number of items to return. (default to 10)
+   * @param offset Position of the first item to return. (default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *   `AND`. Tags must be URL-encoded. For more information, see
+   *   [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getTopSearchesWithHTTPInfo(
+    index: String,
+    clickAnalytics: Boolean? = null,
+    revenueAnalytics: Boolean? = null,
+    startDate: String? = null,
+    endDate: String? = null,
+    orderBy: OrderBy? = null,
+    direction: Direction? = null,
+    limit: Int? = null,
+    offset: Int? = null,
+    tags: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetTopSearchesResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getTopSearchesRequestConfig(
+          index = index,
+          clickAnalytics = clickAnalytics,
+          revenueAnalytics = revenueAnalytics,
+          startDate = startDate,
+          endDate = endDate,
+          orderBy = orderBy,
+          direction = direction,
+          limit = limit,
+          offset = offset,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getTopSearchesRequestConfig(
+    index: String,
+    clickAnalytics: Boolean?,
+    revenueAnalytics: Boolean?,
+    startDate: String?,
+    endDate: String?,
+    orderBy: OrderBy?,
+    direction: Direction?,
+    limit: Int?,
+    offset: Int?,
+    tags: String?,
+  ): RequestConfig {
+    require(index.isNotBlank()) { "Parameter `index` is required when calling `getTopSearches`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "searches"),
+      query =
+        buildMap {
+          put("index", index)
+          clickAnalytics?.let { put("clickAnalytics", it) }
+          revenueAnalytics?.let { put("revenueAnalytics", it) }
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+          orderBy?.let { put("orderBy", it) }
+          direction?.let { put("direction", it) }
+          limit?.let { put("limit", it) }
+          offset?.let { put("offset", it) }
+          tags?.let { put("tags", it) }
+        },
     )
   }
 
@@ -1137,22 +2341,75 @@ public class AnalyticsClient(
     tags: String? = null,
     requestOptions: RequestOptions? = null,
   ): GetUsersCountResponse {
-    require(index.isNotBlank()) { "Parameter `index` is required when calling `getUsersCount`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "users", "count"),
-        query =
-          buildMap {
-            put("index", index)
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-            tags?.let { put("tags", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        getUsersCountRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the number of unique users within a time range, including a daily breakdown. Since it
+   * returns the number of unique users, the sum of the daily values might be different from the
+   * total number. By default: - Algolia distinguishes search users by their IP address, _unless_
+   * you include a pseudonymous user identifier in your search requests with the `userToken` API
+   * parameter or `x-algolia-usertoken` request header. - The analyzed period includes the last
+   * eight days including the current day. This variant of [getUsersCount] returns the full HTTP
+   * response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param index Index name.
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format.
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *   `AND`. Tags must be URL-encoded. For more information, see
+   *   [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getUsersCountWithHTTPInfo(
+    index: String,
+    startDate: String? = null,
+    endDate: String? = null,
+    tags: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetUsersCountResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getUsersCountRequestConfig(
+          index = index,
+          startDate = startDate,
+          endDate = endDate,
+          tags = tags,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getUsersCountRequestConfig(
+    index: String,
+    startDate: String?,
+    endDate: String?,
+    tags: String?,
+  ): RequestConfig {
+    require(index.isNotBlank()) { "Parameter `index` is required when calling `getUsersCount`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "users", "count"),
+      query =
+        buildMap {
+          put("index", index)
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+          tags?.let { put("tags", it) }
+        },
     )
   }
 }

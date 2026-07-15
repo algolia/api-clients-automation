@@ -690,6 +690,9 @@ class SnippetRecommendClient
                         'optionalFilters' => [
                             'brand:samsung',
                         ],
+                        'facetFilters' => [
+                            'brand:apple',
+                        ],
                     ],
                 ],
             ],

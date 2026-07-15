@@ -263,6 +263,9 @@ public class FallbackParams {
   @JsonProperty("reRankingApplyFilter")
   private ReRankingApplyFilter reRankingApplyFilter;
 
+  @JsonProperty("facetFilters")
+  private FacetFilters facetFilters;
+
   public FallbackParams setSimilarQuery(String similarQuery) {
     this.similarQuery = similarQuery;
     return this;
@@ -1740,6 +1743,17 @@ public class FallbackParams {
     return reRankingApplyFilter;
   }
 
+  public FallbackParams setFacetFilters(FacetFilters facetFilters) {
+    this.facetFilters = facetFilters;
+    return this;
+  }
+
+  /** Get facetFilters */
+  @javax.annotation.Nullable
+  public FacetFilters getFacetFilters() {
+    return facetFilters;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -1832,7 +1846,8 @@ public class FallbackParams {
       Objects.equals(this.attributeCriteriaComputedByMinProximity, fallbackParams.attributeCriteriaComputedByMinProximity) &&
       Objects.equals(this.renderingContent, fallbackParams.renderingContent) &&
       Objects.equals(this.enableReRanking, fallbackParams.enableReRanking) &&
-      Objects.equals(this.reRankingApplyFilter, fallbackParams.reRankingApplyFilter)
+      Objects.equals(this.reRankingApplyFilter, fallbackParams.reRankingApplyFilter) &&
+      Objects.equals(this.facetFilters, fallbackParams.facetFilters)
     );
   }
 
@@ -1921,7 +1936,8 @@ public class FallbackParams {
       attributeCriteriaComputedByMinProximity,
       renderingContent,
       enableReRanking,
-      reRankingApplyFilter
+      reRankingApplyFilter,
+      facetFilters
     );
   }
 
@@ -2014,6 +2030,7 @@ public class FallbackParams {
     sb.append("    renderingContent: ").append(toIndentedString(renderingContent)).append("\n");
     sb.append("    enableReRanking: ").append(toIndentedString(enableReRanking)).append("\n");
     sb.append("    reRankingApplyFilter: ").append(toIndentedString(reRankingApplyFilter)).append("\n");
+    sb.append("    facetFilters: ").append(toIndentedString(facetFilters)).append("\n");
     sb.append("}");
     return sb.toString();
   }

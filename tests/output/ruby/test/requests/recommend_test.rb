@@ -401,7 +401,8 @@ class TestRecommendClient < Test::Unit::TestCase
             ),
             fallback_parameters: Algolia::Recommend::FallbackParams.new(
               query: "myQuery",
-              optional_filters: ["brand:samsung"]
+              optional_filters: ["brand:samsung"],
+              facet_filters: ["brand:apple"]
             )
           )
         ]
@@ -414,7 +415,7 @@ class TestRecommendClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42.1,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:apple\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:samsung\"]}}]}"
+        "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42.1,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:apple\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:samsung\"],\"facetFilters\":[\"brand:apple\"]}}]}"
       ),
       JSON.parse(req.body)
     )

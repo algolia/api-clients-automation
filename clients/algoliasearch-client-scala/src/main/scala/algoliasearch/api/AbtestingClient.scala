@@ -97,15 +97,31 @@ class AbtestingClient(
   def addABTests(addABTestsRequest: AddABTestsRequest, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[ABTestResponse] = Future {
+    execute[ABTestResponse](addABTestsHttpRequest(addABTestsRequest = addABTestsRequest), requestOptions)
+  }
+
+  /** Variant of `addABTests` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    */
+  def addABTestsWithHTTPInfo(addABTestsRequest: AddABTestsRequest, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[ABTestResponse]] = Future {
+    executeWithHttpInfo[ABTestResponse](addABTestsHttpRequest(addABTestsRequest = addABTestsRequest), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `addABTests` and `addABTestsWithHTTPInfo`.
+    */
+  private def addABTestsHttpRequest(addABTestsRequest: AddABTestsRequest): HttpRequest = {
     requireNotNull(addABTestsRequest, "Parameter `addABTestsRequest` is required when calling `addABTests`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/2/abtests")
       .withBody(addABTestsRequest)
       .build()
-    execute[ABTestResponse](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -120,16 +136,37 @@ class AbtestingClient(
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customDeleteHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Variant of `customDelete` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customDeleteWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customDeleteHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customDelete` and `customDeleteWithHTTPInfo`.
+    */
+  private def customDeleteHttpRequest(path: String, parameters: Option[Map[String, Any]] = None): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customDelete`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/${path}")
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -144,16 +181,36 @@ class AbtestingClient(
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customGetHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Variant of `customGet` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customGetWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customGetHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customGet` and `customGetWithHTTPInfo`.
+    */
+  private def customGetHttpRequest(path: String, parameters: Option[Map[String, Any]] = None): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customGet`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/${path}")
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -171,17 +228,44 @@ class AbtestingClient(
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customPostHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Variant of `customPost` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPostWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customPostHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customPost` and `customPostWithHTTPInfo`.
+    */
+  private def customPostHttpRequest(
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None
+  ): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customPost`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -199,17 +283,44 @@ class AbtestingClient(
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customPutHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Variant of `customPut` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPutWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customPutHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customPut` and `customPutWithHTTPInfo`.
+    */
+  private def customPutHttpRequest(
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None
+  ): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customPut`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** Deletes an A/B test by its ID.
@@ -223,14 +334,34 @@ class AbtestingClient(
   def deleteABTest(id: Int, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[ABTestResponse] = Future {
+    execute[ABTestResponse](deleteABTestHttpRequest(id = id), requestOptions)
+  }
+
+  /** Variant of `deleteABTest` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param id
+    *   Unique A/B test identifier.
+    */
+  def deleteABTestWithHTTPInfo(id: Int, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[ABTestResponse]] = Future {
+    executeWithHttpInfo[ABTestResponse](deleteABTestHttpRequest(id = id), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteABTest` and `deleteABTestWithHTTPInfo`.
+    */
+  private def deleteABTestHttpRequest(id: Int): HttpRequest = {
     requireNotNull(id, "Parameter `id` is required when calling `deleteABTest`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/2/abtests/${escape(id)}")
       .build()
-    execute[ABTestResponse](request, requestOptions)
   }
 
   /** Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of
@@ -242,18 +373,42 @@ class AbtestingClient(
   def estimateABTest(estimateABTestRequest: EstimateABTestRequest, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
   ): Future[EstimateABTestResponse] = Future {
+    execute[EstimateABTestResponse](
+      estimateABTestHttpRequest(estimateABTestRequest = estimateABTestRequest),
+      requestOptions
+    )
+  }
+
+  /** Variant of `estimateABTest` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    */
+  def estimateABTestWithHTTPInfo(
+      estimateABTestRequest: EstimateABTestRequest,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[EstimateABTestResponse]] = Future {
+    executeWithHttpInfo[EstimateABTestResponse](
+      estimateABTestHttpRequest(estimateABTestRequest = estimateABTestRequest),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `estimateABTest` and `estimateABTestWithHTTPInfo`.
+    */
+  private def estimateABTestHttpRequest(estimateABTestRequest: EstimateABTestRequest): HttpRequest = {
     requireNotNull(
       estimateABTestRequest,
       "Parameter `estimateABTestRequest` is required when calling `estimateABTest`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/2/abtests/estimate")
       .withBody(estimateABTestRequest)
       .build()
-    execute[EstimateABTestResponse](request, requestOptions)
   }
 
   /** Retrieves the details for an A/B test by its ID.
@@ -266,15 +421,34 @@ class AbtestingClient(
     */
   def getABTest(id: Int, requestOptions: Option[RequestOptions] = None)(implicit ec: ExecutionContext): Future[ABTest] =
     Future {
-      requireNotNull(id, "Parameter `id` is required when calling `getABTest`.")
-
-      val request = HttpRequest
-        .builder()
-        .withMethod("GET")
-        .withPath(s"/2/abtests/${escape(id)}")
-        .build()
-      execute[ABTest](request, requestOptions)
+      execute[ABTest](getABTestHttpRequest(id = id), requestOptions)
     }
+
+  /** Variant of `getABTest` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param id
+    *   Unique A/B test identifier.
+    */
+  def getABTestWithHTTPInfo(id: Int, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[ABTest]] = Future {
+    executeWithHttpInfo[ABTest](getABTestHttpRequest(id = id), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getABTest` and `getABTestWithHTTPInfo`.
+    */
+  private def getABTestHttpRequest(id: Int): HttpRequest = {
+    requireNotNull(id, "Parameter `id` is required when calling `getABTest`.")
+
+    HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/2/abtests/${escape(id)}")
+      .build()
+  }
 
   /** Lists all A/B tests you configured for this application.
     *
@@ -297,8 +471,50 @@ class AbtestingClient(
       indexSuffix: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ListABTestsResponse] = Future {
+    execute[ListABTestsResponse](
+      listABTestsHttpRequest(offset = offset, limit = limit, indexPrefix = indexPrefix, indexSuffix = indexSuffix),
+      requestOptions
+    )
+  }
 
-    val request = HttpRequest
+  /** Variant of `listABTests` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param offset
+    *   Position of the first item to return.
+    * @param limit
+    *   Number of items to return.
+    * @param indexPrefix
+    *   Index name prefix. Only A/B tests for indices starting with this string are included in the response.
+    * @param indexSuffix
+    *   Index name suffix. Only A/B tests for indices ending with this string are included in the response.
+    */
+  def listABTestsWithHTTPInfo(
+      offset: Option[Int] = None,
+      limit: Option[Int] = None,
+      indexPrefix: Option[String] = None,
+      indexSuffix: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ListABTestsResponse]] = Future {
+    executeWithHttpInfo[ListABTestsResponse](
+      listABTestsHttpRequest(offset = offset, limit = limit, indexPrefix = indexPrefix, indexSuffix = indexSuffix),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `listABTests` and `listABTestsWithHTTPInfo`.
+    */
+  private def listABTestsHttpRequest(
+      offset: Option[Int] = None,
+      limit: Option[Int] = None,
+      indexPrefix: Option[String] = None,
+      indexSuffix: Option[String] = None
+  ): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/abtests")
@@ -307,7 +523,6 @@ class AbtestingClient(
       .withQueryParameter("indexPrefix", indexPrefix)
       .withQueryParameter("indexSuffix", indexSuffix)
       .build()
-    execute[ListABTestsResponse](request, requestOptions)
   }
 
   /** Stops an A/B test by its ID. You can't restart stopped A/B tests.
@@ -321,14 +536,33 @@ class AbtestingClient(
   def stopABTest(id: Int, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[ABTestResponse] = Future {
+    execute[ABTestResponse](stopABTestHttpRequest(id = id), requestOptions)
+  }
+
+  /** Variant of `stopABTest` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param id
+    *   Unique A/B test identifier.
+    */
+  def stopABTestWithHTTPInfo(id: Int, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[ABTestResponse]] = Future {
+    executeWithHttpInfo[ABTestResponse](stopABTestHttpRequest(id = id), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `stopABTest` and `stopABTestWithHTTPInfo`.
+    */
+  private def stopABTestHttpRequest(id: Int): HttpRequest = {
     requireNotNull(id, "Parameter `id` is required when calling `stopABTest`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/2/abtests/${escape(id)}/stop")
       .build()
-    execute[ABTestResponse](request, requestOptions)
   }
 
 }

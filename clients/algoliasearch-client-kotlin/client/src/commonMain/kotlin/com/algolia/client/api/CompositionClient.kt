@@ -66,19 +66,44 @@ public class CompositionClient(
     parameters: Map<kotlin.String, Any>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customDelete`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customDeleteRequestConfig(path = path, parameters = parameters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customDelete]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customDeleteWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customDeleteRequestConfig(path = path, parameters = parameters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customDeleteRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customDelete`." }
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
     )
   }
 
@@ -94,19 +119,44 @@ public class CompositionClient(
     parameters: Map<kotlin.String, Any>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customGet`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customGetRequestConfig(path = path, parameters = parameters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customGet] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customGetWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customGetRequestConfig(path = path, parameters = parameters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customGetRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customGet`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
     )
   }
 
@@ -124,20 +174,48 @@ public class CompositionClient(
     body: JsonObject? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPost`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-        body = body,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customPostRequestConfig(path = path, parameters = parameters, body = body),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customPost]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param body Parameters to send with the custom request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customPostWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    body: JsonObject? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customPostRequestConfig(path = path, parameters = parameters, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customPostRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+    body: JsonObject?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPost`." }
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
+      body = body,
     )
   }
 
@@ -155,20 +233,48 @@ public class CompositionClient(
     body: JsonObject? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPut`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-        body = body,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customPutRequestConfig(path = path, parameters = parameters, body = body),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customPut] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param body Parameters to send with the custom request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customPutWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    body: JsonObject? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customPutRequestConfig(path = path, parameters = parameters, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customPutRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+    body: JsonObject?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPut`." }
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
+      body = body,
     )
   }
 
@@ -185,18 +291,41 @@ public class CompositionClient(
     compositionID: String,
     requestOptions: RequestOptions? = null,
   ): TaskIDResponse {
+    return requester.execute(
+      requestConfig = deleteCompositionRequestConfig(compositionID = compositionID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Delete a composition from the current Algolia application. This variant of [deleteComposition]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param compositionID Unique Composition ObjectID.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteCompositionWithHTTPInfo(
+    compositionID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<TaskIDResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = deleteCompositionRequestConfig(compositionID = compositionID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteCompositionRequestConfig(compositionID: String): RequestConfig {
     require(compositionID.isNotBlank()) {
       "Parameter `compositionID` is required when calling `deleteComposition`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "compositions", "$compositionID"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "compositions", "$compositionID"),
     )
   }
 
@@ -215,22 +344,52 @@ public class CompositionClient(
     objectID: String,
     requestOptions: RequestOptions? = null,
   ): TaskIDResponse {
+    return requester.execute(
+      requestConfig =
+        deleteCompositionRuleRequestConfig(compositionID = compositionID, objectID = objectID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Delete a Composition Rule from the specified Composition ID. This variant of
+   * [deleteCompositionRule] returns the full HTTP response information (status code, headers, raw
+   * body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param compositionID Unique Composition ObjectID.
+   * @param objectID Unique identifier of a rule object.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteCompositionRuleWithHTTPInfo(
+    compositionID: String,
+    objectID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<TaskIDResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        deleteCompositionRuleRequestConfig(compositionID = compositionID, objectID = objectID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteCompositionRuleRequestConfig(
+    compositionID: String,
+    objectID: String,
+  ): RequestConfig {
     require(compositionID.isNotBlank()) {
       "Parameter `compositionID` is required when calling `deleteCompositionRule`."
     }
     require(objectID.isNotBlank()) {
       "Parameter `objectID` is required when calling `deleteCompositionRule`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "compositions", "$compositionID", "rules", "$objectID"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "compositions", "$compositionID", "rules", "$objectID"),
     )
   }
 
@@ -248,18 +407,42 @@ public class CompositionClient(
     compositionID: String,
     requestOptions: RequestOptions? = null,
   ): Composition {
+    return requester.execute(
+      requestConfig = getCompositionRequestConfig(compositionID = compositionID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieve a single composition in the current Algolia application. This variant of
+   * [getComposition] returns the full HTTP response information (status code, headers, raw body)
+   * along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   * - settings
+   *
+   * @param compositionID Unique Composition ObjectID.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getCompositionWithHTTPInfo(
+    compositionID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<Composition> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getCompositionRequestConfig(compositionID = compositionID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getCompositionRequestConfig(compositionID: String): RequestConfig {
     require(compositionID.isNotBlank()) {
       "Parameter `compositionID` is required when calling `getComposition`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "compositions", "$compositionID"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "compositions", "$compositionID"),
     )
   }
 
@@ -280,20 +463,47 @@ public class CompositionClient(
     objectID: String,
     requestOptions: RequestOptions? = null,
   ): CompositionRule {
+    return requester.execute(
+      requestConfig = getRuleRequestConfig(compositionID = compositionID, objectID = objectID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves a rule by its ID. To find the object ID of a rule, use the
+   * [`search` operation](https://www.algolia.com/doc/rest-api/composition/search-composition-rules).
+   * This variant of [getRule] returns the full HTTP response information (status code, headers, raw
+   * body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   * - settings
+   *
+   * @param compositionID Unique Composition ObjectID.
+   * @param objectID Unique identifier of a rule object.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getRuleWithHTTPInfo(
+    compositionID: String,
+    objectID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<CompositionRule> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getRuleRequestConfig(compositionID = compositionID, objectID = objectID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getRuleRequestConfig(compositionID: String, objectID: String): RequestConfig {
     require(compositionID.isNotBlank()) {
       "Parameter `compositionID` is required when calling `getRule`."
     }
     require(objectID.isNotBlank()) { "Parameter `objectID` is required when calling `getRule`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "compositions", "$compositionID", "rules", "$objectID"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "compositions", "$compositionID", "rules", "$objectID"),
     )
   }
 
@@ -316,19 +526,47 @@ public class CompositionClient(
     taskID: Long,
     requestOptions: RequestOptions? = null,
   ): GetTaskResponse {
+    return requester.execute(
+      requestConfig = getTaskRequestConfig(compositionID = compositionID, taskID = taskID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Checks the status of a given task. This variant of [getTask] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   * - settings
+   * - addObject
+   * - deleteObject
+   * - deleteIndex
+   *
+   * @param compositionID Unique Composition ObjectID.
+   * @param taskID Unique task identifier.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getTaskWithHTTPInfo(
+    compositionID: String,
+    taskID: Long,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetTaskResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getTaskRequestConfig(compositionID = compositionID, taskID = taskID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getTaskRequestConfig(compositionID: String, taskID: Long): RequestConfig {
     require(compositionID.isNotBlank()) {
       "Parameter `compositionID` is required when calling `getTask`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "compositions", "$compositionID", "task", "$taskID"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "compositions", "$compositionID", "task", "$taskID"),
     )
   }
 
@@ -348,19 +586,45 @@ public class CompositionClient(
     hitsPerPage: Int? = null,
     requestOptions: RequestOptions? = null,
   ): ListCompositionsResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "compositions"),
-        query =
-          buildMap {
-            page?.let { put("page", it) }
-            hitsPerPage?.let { put("hitsPerPage", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = listCompositionsRequestConfig(page = page, hitsPerPage = hitsPerPage),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Lists all compositions in the current Algolia application. This variant of [listCompositions]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   * - settings
+   *
+   * @param page Requested page of the API response. If `null`, the API response is not paginated.
+   * @param hitsPerPage Number of hits per page. (default to 100)
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun listCompositionsWithHTTPInfo(
+    page: Int? = null,
+    hitsPerPage: Int? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ListCompositionsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = listCompositionsRequestConfig(page = page, hitsPerPage = hitsPerPage),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listCompositionsRequestConfig(page: Int?, hitsPerPage: Int?): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "compositions"),
+      query =
+        buildMap {
+          page?.let { put("page", it) }
+          hitsPerPage?.let { put("hitsPerPage", it) }
+        },
     )
   }
 
@@ -377,15 +641,38 @@ public class CompositionClient(
     batchParams: BatchParams,
     requestOptions: RequestOptions? = null,
   ): MultipleBatchResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "compositions", "*", "batch"),
-        body = batchParams,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = multipleBatchRequestConfig(batchParams = batchParams),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Adds, updates, or deletes compositions with a single API request. This variant of
+   * [multipleBatch] returns the full HTTP response information (status code, headers, raw body)
+   * along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param batchParams
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun multipleBatchWithHTTPInfo(
+    batchParams: BatchParams,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<MultipleBatchResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = multipleBatchRequestConfig(batchParams = batchParams),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun multipleBatchRequestConfig(batchParams: BatchParams): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "compositions", "*", "batch"),
+      body = batchParams,
     )
   }
 
@@ -404,19 +691,49 @@ public class CompositionClient(
     composition: Composition,
     requestOptions: RequestOptions? = null,
   ): TaskIDResponse {
+    return requester.execute(
+      requestConfig =
+        putCompositionRequestConfig(compositionID = compositionID, composition = composition),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Update and insert a composition in the current Algolia application. This variant of
+   * [putComposition] returns the full HTTP response information (status code, headers, raw body)
+   * along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param compositionID Unique Composition ObjectID.
+   * @param composition
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun putCompositionWithHTTPInfo(
+    compositionID: String,
+    composition: Composition,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<TaskIDResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        putCompositionRequestConfig(compositionID = compositionID, composition = composition),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun putCompositionRequestConfig(
+    compositionID: String,
+    composition: Composition,
+  ): RequestConfig {
     require(compositionID.isNotBlank()) {
       "Parameter `compositionID` is required when calling `putComposition`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "compositions", "$compositionID"),
-        body = composition,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "compositions", "$compositionID"),
+      body = composition,
     )
   }
 
@@ -438,23 +755,64 @@ public class CompositionClient(
     compositionRule: CompositionRule,
     requestOptions: RequestOptions? = null,
   ): TaskIDResponse {
+    return requester.execute(
+      requestConfig =
+        putCompositionRuleRequestConfig(
+          compositionID = compositionID,
+          objectID = objectID,
+          compositionRule = compositionRule,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * If a composition rule with the provided ID already exists, it's replaced. Otherwise, a new one
+   * is added. This variant of [putCompositionRule] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param compositionID Unique Composition ObjectID.
+   * @param objectID Unique identifier of a rule object.
+   * @param compositionRule
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun putCompositionRuleWithHTTPInfo(
+    compositionID: String,
+    objectID: String,
+    compositionRule: CompositionRule,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<TaskIDResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        putCompositionRuleRequestConfig(
+          compositionID = compositionID,
+          objectID = objectID,
+          compositionRule = compositionRule,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun putCompositionRuleRequestConfig(
+    compositionID: String,
+    objectID: String,
+    compositionRule: CompositionRule,
+  ): RequestConfig {
     require(compositionID.isNotBlank()) {
       "Parameter `compositionID` is required when calling `putCompositionRule`."
     }
     require(objectID.isNotBlank()) {
       "Parameter `objectID` is required when calling `putCompositionRule`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "compositions", "$compositionID", "rules", "$objectID"),
-        body = compositionRule,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "compositions", "$compositionID", "rules", "$objectID"),
+      body = compositionRule,
     )
   }
 
@@ -473,20 +831,48 @@ public class CompositionClient(
     rules: CompositionRulesBatchParams,
     requestOptions: RequestOptions? = null,
   ): RulesMultipleBatchResponse {
+    return requester.execute(
+      requestConfig = saveRulesRequestConfig(compositionID = compositionID, rules = rules),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Create or update or delete multiple composition rules. This variant of [saveRules] returns the
+   * full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param compositionID Unique Composition ObjectID.
+   * @param rules
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun saveRulesWithHTTPInfo(
+    compositionID: String,
+    rules: CompositionRulesBatchParams,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<RulesMultipleBatchResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = saveRulesRequestConfig(compositionID = compositionID, rules = rules),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun saveRulesRequestConfig(
+    compositionID: String,
+    rules: CompositionRulesBatchParams,
+  ): RequestConfig {
     require(compositionID.isNotBlank()) {
       "Parameter `compositionID` is required when calling `saveRules`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "compositions", "$compositionID", "rules", "batch"),
-        body = rules,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "compositions", "$compositionID", "rules", "batch"),
+      body = rules,
     )
   }
 
@@ -505,21 +891,46 @@ public class CompositionClient(
     requestBody: RequestBody,
     requestOptions: RequestOptions? = null,
   ): SearchResponse {
+    return requester.execute(
+      requestConfig = searchRequestConfig(compositionID = compositionID, requestBody = requestBody),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Runs a query on a single composition and returns matching results. This variant of [search]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - search
+   *
+   * @param compositionID Unique Composition ObjectID.
+   * @param requestBody
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun searchWithHTTPInfo(
+    compositionID: String,
+    requestBody: RequestBody,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SearchResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = searchRequestConfig(compositionID = compositionID, requestBody = requestBody),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun searchRequestConfig(compositionID: String, requestBody: RequestBody): RequestConfig {
     require(compositionID.isNotBlank()) {
       "Parameter `compositionID` is required when calling `search`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "compositions", "$compositionID", "run"),
-        isRead = true,
-        body = requestBody,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "compositions", "$compositionID", "run"),
+      isRead = true,
+      body = requestBody,
     )
   }
 
@@ -538,20 +949,56 @@ public class CompositionClient(
     searchCompositionRulesParams: SearchCompositionRulesParams? = null,
     requestOptions: RequestOptions? = null,
   ): SearchCompositionRulesResponse {
+    return requester.execute(
+      requestConfig =
+        searchCompositionRulesRequestConfig(
+          compositionID = compositionID,
+          searchCompositionRulesParams = searchCompositionRulesParams,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Searches for composition rules in your index. This variant of [searchCompositionRules] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param compositionID Unique Composition ObjectID.
+   * @param searchCompositionRulesParams
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun searchCompositionRulesWithHTTPInfo(
+    compositionID: String,
+    searchCompositionRulesParams: SearchCompositionRulesParams? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SearchCompositionRulesResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        searchCompositionRulesRequestConfig(
+          compositionID = compositionID,
+          searchCompositionRulesParams = searchCompositionRulesParams,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun searchCompositionRulesRequestConfig(
+    compositionID: String,
+    searchCompositionRulesParams: SearchCompositionRulesParams?,
+  ): RequestConfig {
     require(compositionID.isNotBlank()) {
       "Parameter `compositionID` is required when calling `searchCompositionRules`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "compositions", "$compositionID", "rules", "search"),
-        body = searchCompositionRulesParams,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "compositions", "$compositionID", "rules", "search"),
+      body = searchCompositionRulesParams,
     )
   }
 
@@ -576,24 +1023,69 @@ public class CompositionClient(
     searchForFacetValuesRequest: SearchForFacetValuesRequest? = null,
     requestOptions: RequestOptions? = null,
   ): SearchForFacetValuesResponse {
+    return requester.execute(
+      requestConfig =
+        searchForFacetValuesRequestConfig(
+          compositionID = compositionID,
+          facetName = facetName,
+          searchForFacetValuesRequest = searchForFacetValuesRequest,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Searches for values of a specified facet attribute on the composition's main source's index. -
+   * By default, facet values are sorted by decreasing count. You can adjust this with the
+   * `sortFacetValueBy` parameter. - Searching for facet values doesn't work if you have **more than
+   * 65 searchable facets and searchable attributes combined**. This variant of
+   * [searchForFacetValues] returns the full HTTP response information (status code, headers, raw
+   * body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - search
+   *
+   * @param compositionID Unique Composition ObjectID.
+   * @param facetName Facet attribute in which to search for values. This attribute must be included
+   *   in the `attributesForFaceting` index setting with the `searchable()` modifier.
+   * @param searchForFacetValuesRequest
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun searchForFacetValuesWithHTTPInfo(
+    compositionID: String,
+    facetName: String,
+    searchForFacetValuesRequest: SearchForFacetValuesRequest? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SearchForFacetValuesResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        searchForFacetValuesRequestConfig(
+          compositionID = compositionID,
+          facetName = facetName,
+          searchForFacetValuesRequest = searchForFacetValuesRequest,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun searchForFacetValuesRequestConfig(
+    compositionID: String,
+    facetName: String,
+    searchForFacetValuesRequest: SearchForFacetValuesRequest?,
+  ): RequestConfig {
     require(compositionID.isNotBlank()) {
       "Parameter `compositionID` is required when calling `searchForFacetValues`."
     }
     require(facetName.isNotBlank()) {
       "Parameter `facetName` is required when calling `searchForFacetValues`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "compositions", "$compositionID", "facets", "$facetName", "query"),
-        isRead = true,
-        body = searchForFacetValuesRequest,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "compositions", "$compositionID", "facets", "$facetName", "query"),
+      isRead = true,
+      body = searchForFacetValuesRequest,
     )
   }
 
@@ -618,20 +1110,62 @@ public class CompositionClient(
     requestBody: Map<kotlin.String, String>,
     requestOptions: RequestOptions? = null,
   ): TaskIDResponse {
+    return requester.execute(
+      requestConfig =
+        updateSortingStrategyCompositionRequestConfig(
+          compositionID = compositionID,
+          requestBody = requestBody,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Updates the \"sortingStrategy\" field of an existing composition. This endpoint lets you create
+   * a new sorting strategy mapping or replace the configured one. The provided sorting indices must
+   * be associated indices or replicas of the main targeted index. This endpoint can't validate
+   * whether the sort index is related to the composition's main index. Validation fails at runtime
+   * if the index you updated isn't related. The update is applied to the specified composition
+   * within the current Algolia application and returns a taskID that can be used to track the
+   * operation’s completion. This variant of [updateSortingStrategyComposition] returns the full
+   * HTTP response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param compositionID Unique Composition ObjectID.
+   * @param requestBody
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun updateSortingStrategyCompositionWithHTTPInfo(
+    compositionID: String,
+    requestBody: Map<kotlin.String, String>,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<TaskIDResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        updateSortingStrategyCompositionRequestConfig(
+          compositionID = compositionID,
+          requestBody = requestBody,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun updateSortingStrategyCompositionRequestConfig(
+    compositionID: String,
+    requestBody: Map<kotlin.String, String>,
+  ): RequestConfig {
     require(compositionID.isNotBlank()) {
       "Parameter `compositionID` is required when calling `updateSortingStrategyComposition`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "compositions", "$compositionID", "sortingStrategy"),
-        body = requestBody,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "compositions", "$compositionID", "sortingStrategy"),
+      body = requestBody,
     )
   }
 }
