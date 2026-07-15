@@ -64,15 +64,40 @@ public class QuerySuggestionsClient(
     configurationWithIndex: ConfigurationWithIndex,
     requestOptions: RequestOptions? = null,
   ): BaseResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "configs"),
-        body = configurationWithIndex,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = createConfigRequestConfig(configurationWithIndex = configurationWithIndex),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Creates a new Query Suggestions configuration. You can have up to 100 configurations per
+   * Algolia application. This variant of [createConfig] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param configurationWithIndex
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun createConfigWithHTTPInfo(
+    configurationWithIndex: ConfigurationWithIndex,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<BaseResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = createConfigRequestConfig(configurationWithIndex = configurationWithIndex),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun createConfigRequestConfig(
+    configurationWithIndex: ConfigurationWithIndex
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "configs"),
+      body = configurationWithIndex,
     )
   }
 
@@ -88,19 +113,44 @@ public class QuerySuggestionsClient(
     parameters: Map<kotlin.String, Any>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customDelete`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customDeleteRequestConfig(path = path, parameters = parameters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customDelete]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customDeleteWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customDeleteRequestConfig(path = path, parameters = parameters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customDeleteRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customDelete`." }
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
     )
   }
 
@@ -116,19 +166,44 @@ public class QuerySuggestionsClient(
     parameters: Map<kotlin.String, Any>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customGet`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customGetRequestConfig(path = path, parameters = parameters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customGet] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customGetWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customGetRequestConfig(path = path, parameters = parameters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customGetRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customGet`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
     )
   }
 
@@ -146,20 +221,48 @@ public class QuerySuggestionsClient(
     body: JsonObject? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPost`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-        body = body,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customPostRequestConfig(path = path, parameters = parameters, body = body),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customPost]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param body Parameters to send with the custom request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customPostWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    body: JsonObject? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customPostRequestConfig(path = path, parameters = parameters, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customPostRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+    body: JsonObject?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPost`." }
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
+      body = body,
     )
   }
 
@@ -177,20 +280,48 @@ public class QuerySuggestionsClient(
     body: JsonObject? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPut`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-        body = body,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customPutRequestConfig(path = path, parameters = parameters, body = body),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customPut] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param body Parameters to send with the custom request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customPutWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    body: JsonObject? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customPutRequestConfig(path = path, parameters = parameters, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customPutRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+    body: JsonObject?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPut`." }
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
+      body = body,
     )
   }
 
@@ -209,17 +340,42 @@ public class QuerySuggestionsClient(
     indexName: String,
     requestOptions: RequestOptions? = null,
   ): BaseResponse {
+    return requester.execute(
+      requestConfig = deleteConfigRequestConfig(indexName = indexName),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes a Query Suggestions configuration. Deleting only removes the configuration and stops
+   * updates to the Query Suggestions index. To delete the Query Suggestions index itself, use the
+   * Search API and the `Delete an index` operation. This variant of [deleteConfig] returns the full
+   * HTTP response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param indexName Query Suggestions index name.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteConfigWithHTTPInfo(
+    indexName: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<BaseResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = deleteConfigRequestConfig(indexName = indexName),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteConfigRequestConfig(indexName: String): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `deleteConfig`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "configs", "$indexName"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "configs", "$indexName"),
     )
   }
 
@@ -234,14 +390,35 @@ public class QuerySuggestionsClient(
   public suspend fun getAllConfigs(
     requestOptions: RequestOptions? = null
   ): List<ConfigurationResponse> {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "configs"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getAllConfigsRequestConfig(),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves all Query Suggestions configurations of your Algolia application. This variant of
+   * [getAllConfigs] returns the full HTTP response information (status code, headers, raw body)
+   * along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getAllConfigsWithHTTPInfo(
+    requestOptions: RequestOptions? = null
+  ): AlgoliaHttpResponse<List<ConfigurationResponse>> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getAllConfigsRequestConfig(),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getAllConfigsRequestConfig(): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "configs"),
     )
   }
 
@@ -258,17 +435,40 @@ public class QuerySuggestionsClient(
     indexName: String,
     requestOptions: RequestOptions? = null,
   ): ConfigurationResponse {
+    return requester.execute(
+      requestConfig = getConfigRequestConfig(indexName = indexName),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves a single Query Suggestions configuration by its index name. This variant of
+   * [getConfig] returns the full HTTP response information (status code, headers, raw body) along
+   * with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param indexName Query Suggestions index name.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getConfigWithHTTPInfo(
+    indexName: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ConfigurationResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getConfigRequestConfig(indexName = indexName),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getConfigRequestConfig(indexName: String): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `getConfig`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "configs", "$indexName"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "configs", "$indexName"),
     )
   }
 
@@ -285,18 +485,41 @@ public class QuerySuggestionsClient(
     indexName: String,
     requestOptions: RequestOptions? = null,
   ): ConfigStatus {
+    return requester.execute(
+      requestConfig = getConfigStatusRequestConfig(indexName = indexName),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Reports the status of a Query Suggestions index. This variant of [getConfigStatus] returns the
+   * full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param indexName Query Suggestions index name.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getConfigStatusWithHTTPInfo(
+    indexName: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ConfigStatus> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getConfigStatusRequestConfig(indexName = indexName),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getConfigStatusRequestConfig(indexName: String): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `getConfigStatus`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "configs", "$indexName", "status"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "configs", "$indexName", "status"),
     )
   }
 
@@ -313,17 +536,40 @@ public class QuerySuggestionsClient(
     indexName: String,
     requestOptions: RequestOptions? = null,
   ): LogFile {
+    return requester.execute(
+      requestConfig = getLogFileRequestConfig(indexName = indexName),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the logs for a single Query Suggestions index. This variant of [getLogFile] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param indexName Query Suggestions index name.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getLogFileWithHTTPInfo(
+    indexName: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<LogFile> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getLogFileRequestConfig(indexName = indexName),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getLogFileRequestConfig(indexName: String): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `getLogFile`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "logs", "$indexName"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "logs", "$indexName"),
     )
   }
 
@@ -342,18 +588,48 @@ public class QuerySuggestionsClient(
     configuration: Configuration,
     requestOptions: RequestOptions? = null,
   ): BaseResponse {
+    return requester.execute(
+      requestConfig =
+        updateConfigRequestConfig(indexName = indexName, configuration = configuration),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Updates a QuerySuggestions configuration. This variant of [updateConfig] returns the full HTTP
+   * response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param indexName Query Suggestions index name.
+   * @param configuration
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun updateConfigWithHTTPInfo(
+    indexName: String,
+    configuration: Configuration,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<BaseResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        updateConfigRequestConfig(indexName = indexName, configuration = configuration),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun updateConfigRequestConfig(
+    indexName: String,
+    configuration: Configuration,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `updateConfig`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "configs", "$indexName"),
-        body = configuration,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "configs", "$indexName"),
+      body = configuration,
     )
   }
 }

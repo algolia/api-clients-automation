@@ -68,20 +68,56 @@ public class AgentStudioClient(
     allowedDomainBulkInsert: AllowedDomainBulkInsert,
     requestOptions: RequestOptions? = null,
   ): AllowedDomainListResponse {
+    return requester.execute(
+      requestConfig =
+        bulkCreateAllowedDomainsRequestConfig(
+          agentId = agentId,
+          allowedDomainBulkInsert = allowedDomainBulkInsert,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Add multiple allowed domain patterns. Duplicates are skipped. This variant of
+   * [bulkCreateAllowedDomains] returns the full HTTP response information (status code, headers,
+   * raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param agentId The agentId.
+   * @param allowedDomainBulkInsert
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun bulkCreateAllowedDomainsWithHTTPInfo(
+    agentId: String,
+    allowedDomainBulkInsert: AllowedDomainBulkInsert,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<AllowedDomainListResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        bulkCreateAllowedDomainsRequestConfig(
+          agentId = agentId,
+          allowedDomainBulkInsert = allowedDomainBulkInsert,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun bulkCreateAllowedDomainsRequestConfig(
+    agentId: String,
+    allowedDomainBulkInsert: AllowedDomainBulkInsert,
+  ): RequestConfig {
     require(agentId.isNotBlank()) {
       "Parameter `agentId` is required when calling `bulkCreateAllowedDomains`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "agents", "$agentId", "allowed-domains", "bulk"),
-        body = allowedDomainBulkInsert,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "agents", "$agentId", "allowed-domains", "bulk"),
+      body = allowedDomainBulkInsert,
     )
   }
 
@@ -100,20 +136,56 @@ public class AgentStudioClient(
     allowedDomainBulkDelete: AllowedDomainBulkDelete,
     requestOptions: RequestOptions? = null,
   ) {
+    return requester.execute(
+      requestConfig =
+        bulkDeleteAllowedDomainsRequestConfig(
+          agentId = agentId,
+          allowedDomainBulkDelete = allowedDomainBulkDelete,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Delete allowed domains by id list. This variant of [bulkDeleteAllowedDomains] returns the full
+   * HTTP response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param agentId The agentId.
+   * @param allowedDomainBulkDelete
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun bulkDeleteAllowedDomainsWithHTTPInfo(
+    agentId: String,
+    allowedDomainBulkDelete: AllowedDomainBulkDelete,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<Unit> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        bulkDeleteAllowedDomainsRequestConfig(
+          agentId = agentId,
+          allowedDomainBulkDelete = allowedDomainBulkDelete,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun bulkDeleteAllowedDomainsRequestConfig(
+    agentId: String,
+    allowedDomainBulkDelete: AllowedDomainBulkDelete,
+  ): RequestConfig {
     require(agentId.isNotBlank()) {
       "Parameter `agentId` is required when calling `bulkDeleteAllowedDomains`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "agents", "$agentId", "allowed-domains", "bulk"),
-        body = allowedDomainBulkDelete,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "agents", "$agentId", "allowed-domains", "bulk"),
+      body = allowedDomainBulkDelete,
     )
   }
 
@@ -130,15 +202,37 @@ public class AgentStudioClient(
     agentConfigCreate: AgentConfigCreate,
     requestOptions: RequestOptions? = null,
   ): AgentWithVersionResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "agents"),
-        body = agentConfigCreate,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = createAgentRequestConfig(agentConfigCreate = agentConfigCreate),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Create a new agent. This variant of [createAgent] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param agentConfigCreate
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun createAgentWithHTTPInfo(
+    agentConfigCreate: AgentConfigCreate,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<AgentWithVersionResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = createAgentRequestConfig(agentConfigCreate = agentConfigCreate),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun createAgentRequestConfig(agentConfigCreate: AgentConfigCreate): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "agents"),
+      body = agentConfigCreate,
     )
   }
 
@@ -157,20 +251,56 @@ public class AgentStudioClient(
     allowedDomainCreate: AllowedDomainCreate,
     requestOptions: RequestOptions? = null,
   ): AllowedDomainResponse {
+    return requester.execute(
+      requestConfig =
+        createAgentAllowedDomainRequestConfig(
+          agentId = agentId,
+          allowedDomainCreate = allowedDomainCreate,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Add a single allowed domain pattern (e.g. https://app.example.com or *.example.com). This
+   * variant of [createAgentAllowedDomain] returns the full HTTP response information (status code,
+   * headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param agentId The agentId.
+   * @param allowedDomainCreate
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun createAgentAllowedDomainWithHTTPInfo(
+    agentId: String,
+    allowedDomainCreate: AllowedDomainCreate,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<AllowedDomainResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        createAgentAllowedDomainRequestConfig(
+          agentId = agentId,
+          allowedDomainCreate = allowedDomainCreate,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun createAgentAllowedDomainRequestConfig(
+    agentId: String,
+    allowedDomainCreate: AllowedDomainCreate,
+  ): RequestConfig {
     require(agentId.isNotBlank()) {
       "Parameter `agentId` is required when calling `createAgentAllowedDomain`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "agents", "$agentId", "allowed-domains"),
-        body = allowedDomainCreate,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "agents", "$agentId", "allowed-domains"),
+      body = allowedDomainCreate,
     )
   }
 
@@ -207,32 +337,104 @@ public class AgentStudioClient(
     xAlgoliaSecureUserToken: String? = null,
     requestOptions: RequestOptions? = null,
   ): Map<kotlin.String, Any> {
+    return requester.execute(
+      requestConfig =
+        createAgentCompletionRequestConfig(
+          agentId = agentId,
+          compatibilityMode = compatibilityMode,
+          agentCompletionRequest = agentCompletionRequest,
+          stream = stream,
+          cache = cache,
+          memory = memory,
+          analytics = analytics,
+          xAlgoliaSecureUserToken = xAlgoliaSecureUserToken,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Create a completion for the specified agent. This endpoint handles two types of requests: 1.
+   * Normal completion request: User message -> Agent response 2. Tool approval response: User
+   * approval -> Execute tool -> Agent response Tool Approval Flow (for MCP tools with
+   * requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return
+   * approval request - Request 2: User approves -> Execute tool -> Agent continues with result.
+   * This variant of [createAgentCompletion] returns the full HTTP response information (status
+   * code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - search
+   *
+   * @param agentId The agentId.
+   * @param compatibilityMode Compatibility mode for the completion API.
+   * @param agentCompletionRequest
+   * @param stream Whether to stream the response or not. (default to true)
+   * @param cache Use cached responses if available. (default to true)
+   * @param memory Set to false to disable memory (enabled by default).
+   * @param analytics Set to false to skip analytics for this completion (default: true). Disables
+   *   Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and
+   *   query-suggestions training. Useful for offline-eval workflows. (default to true)
+   * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun createAgentCompletionWithHTTPInfo(
+    agentId: String,
+    compatibilityMode: CompatibilityMode,
+    agentCompletionRequest: AgentCompletionRequest,
+    stream: Boolean? = null,
+    cache: Boolean? = null,
+    memory: Boolean? = null,
+    analytics: Boolean? = null,
+    xAlgoliaSecureUserToken: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<Map<kotlin.String, Any>> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        createAgentCompletionRequestConfig(
+          agentId = agentId,
+          compatibilityMode = compatibilityMode,
+          agentCompletionRequest = agentCompletionRequest,
+          stream = stream,
+          cache = cache,
+          memory = memory,
+          analytics = analytics,
+          xAlgoliaSecureUserToken = xAlgoliaSecureUserToken,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun createAgentCompletionRequestConfig(
+    agentId: String,
+    compatibilityMode: CompatibilityMode,
+    agentCompletionRequest: AgentCompletionRequest,
+    stream: Boolean?,
+    cache: Boolean?,
+    memory: Boolean?,
+    analytics: Boolean?,
+    xAlgoliaSecureUserToken: String?,
+  ): RequestConfig {
     require(agentId.isNotBlank()) {
       "Parameter `agentId` is required when calling `createAgentCompletion`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "agents", "$agentId", "completions"),
-        headers =
-          buildMap {
-            xAlgoliaSecureUserToken?.let { header -> put("X-Algolia-Secure-User-Token", header) }
-          },
-        query =
-          buildMap {
-            put("compatibilityMode", compatibilityMode)
-            stream?.let { put("stream", it) }
-            cache?.let { put("cache", it) }
-            memory?.let { put("memory", it) }
-            analytics?.let { put("analytics", it) }
-          },
-        body = agentCompletionRequest,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "agents", "$agentId", "completions"),
+      headers =
+        buildMap {
+          xAlgoliaSecureUserToken?.let { header -> put("X-Algolia-Secure-User-Token", header) }
+        },
+      query =
+        buildMap {
+          put("compatibilityMode", compatibilityMode)
+          stream?.let { put("stream", it) }
+          cache?.let { put("cache", it) }
+          memory?.let { put("memory", it) }
+          analytics?.let { put("analytics", it) }
+        },
+      body = agentCompletionRequest,
     )
   }
 
@@ -249,15 +451,41 @@ public class AgentStudioClient(
     feedbackCreationRequest: FeedbackCreationRequest,
     requestOptions: RequestOptions? = null,
   ): FeedbackResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "feedback"),
-        body = feedbackCreationRequest,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        createFeedbackRequestConfig(feedbackCreationRequest = feedbackCreationRequest),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Create new feedback entry. This variant of [createFeedback] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - search
+   *
+   * @param feedbackCreationRequest
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun createFeedbackWithHTTPInfo(
+    feedbackCreationRequest: FeedbackCreationRequest,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<FeedbackResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        createFeedbackRequestConfig(feedbackCreationRequest = feedbackCreationRequest),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun createFeedbackRequestConfig(
+    feedbackCreationRequest: FeedbackCreationRequest
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "feedback"),
+      body = feedbackCreationRequest,
     )
   }
 
@@ -274,15 +502,41 @@ public class AgentStudioClient(
     providerAuthenticationCreate: ProviderAuthenticationCreate,
     requestOptions: RequestOptions? = null,
   ): ProviderAuthenticationResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "providers"),
-        body = providerAuthenticationCreate,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        createProviderRequestConfig(providerAuthenticationCreate = providerAuthenticationCreate),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Create Provider. This variant of [createProvider] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param providerAuthenticationCreate
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun createProviderWithHTTPInfo(
+    providerAuthenticationCreate: ProviderAuthenticationCreate,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ProviderAuthenticationResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        createProviderRequestConfig(providerAuthenticationCreate = providerAuthenticationCreate),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun createProviderRequestConfig(
+    providerAuthenticationCreate: ProviderAuthenticationCreate
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "providers"),
+      body = providerAuthenticationCreate,
     )
   }
 
@@ -299,15 +553,37 @@ public class AgentStudioClient(
     secretKeyCreate: SecretKeyCreate,
     requestOptions: RequestOptions? = null,
   ): SecretKeyResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "secret-keys"),
-        body = secretKeyCreate,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = createSecretKeyRequestConfig(secretKeyCreate = secretKeyCreate),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Create Secret Key. This variant of [createSecretKey] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param secretKeyCreate
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun createSecretKeyWithHTTPInfo(
+    secretKeyCreate: SecretKeyCreate,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SecretKeyResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = createSecretKeyRequestConfig(secretKeyCreate = secretKeyCreate),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun createSecretKeyRequestConfig(secretKeyCreate: SecretKeyCreate): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "secret-keys"),
+      body = secretKeyCreate,
     )
   }
 
@@ -323,19 +599,44 @@ public class AgentStudioClient(
     parameters: Map<kotlin.String, Any>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customDelete`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path = "/agent-studio/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customDeleteRequestConfig(path = path, parameters = parameters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customDelete]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customDeleteWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customDeleteRequestConfig(path = path, parameters = parameters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customDeleteRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customDelete`." }
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path = "/agent-studio/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
     )
   }
 
@@ -351,19 +652,44 @@ public class AgentStudioClient(
     parameters: Map<kotlin.String, Any>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customGet`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "/agent-studio/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customGetRequestConfig(path = path, parameters = parameters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customGet] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customGetWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customGetRequestConfig(path = path, parameters = parameters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customGetRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customGet`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "/agent-studio/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
     )
   }
 
@@ -381,20 +707,48 @@ public class AgentStudioClient(
     body: JsonObject? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPost`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "/agent-studio/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-        body = body,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customPostRequestConfig(path = path, parameters = parameters, body = body),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customPost]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param body Parameters to send with the custom request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customPostWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    body: JsonObject? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customPostRequestConfig(path = path, parameters = parameters, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customPostRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+    body: JsonObject?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPost`." }
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "/agent-studio/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
+      body = body,
     )
   }
 
@@ -412,20 +766,48 @@ public class AgentStudioClient(
     body: JsonObject? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPut`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path = "/agent-studio/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-        body = body,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customPutRequestConfig(path = path, parameters = parameters, body = body),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customPut] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param body Parameters to send with the custom request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customPutWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    body: JsonObject? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customPutRequestConfig(path = path, parameters = parameters, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customPutRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+    body: JsonObject?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPut`." }
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path = "/agent-studio/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
+      body = body,
     )
   }
 
@@ -439,16 +821,38 @@ public class AgentStudioClient(
    * @param requestOptions additional request configuration.
    */
   public suspend fun deleteAgent(agentId: String, requestOptions: RequestOptions? = null) {
-    require(agentId.isNotBlank()) { "Parameter `agentId` is required when calling `deleteAgent`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "agents", "$agentId"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = deleteAgentRequestConfig(agentId = agentId),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Delete the specified agent. This variant of [deleteAgent] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param agentId The agentId.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteAgentWithHTTPInfo(
+    agentId: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<Unit> {
+    return requester.executeWithHttpInfo(
+      requestConfig = deleteAgentRequestConfig(agentId = agentId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteAgentRequestConfig(agentId: String): RequestConfig {
+    require(agentId.isNotBlank()) { "Parameter `agentId` is required when calling `deleteAgent`." }
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "agents", "$agentId"),
     )
   }
 
@@ -469,24 +873,65 @@ public class AgentStudioClient(
     endDate: String? = null,
     requestOptions: RequestOptions? = null,
   ) {
+    return requester.execute(
+      requestConfig =
+        deleteAgentConversationsRequestConfig(
+          agentId = agentId,
+          startDate = startDate,
+          endDate = endDate,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes the conversations matching the given filers. This variant of [deleteAgentConversations]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - logs
+   *
+   * @param agentId The agentId.
+   * @param startDate Filter conversations created after this date (format: YYYY-MM-DD).
+   * @param endDate Filter conversations created before this date (format: YYYY-MM-DD).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteAgentConversationsWithHTTPInfo(
+    agentId: String,
+    startDate: String? = null,
+    endDate: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<Unit> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        deleteAgentConversationsRequestConfig(
+          agentId = agentId,
+          startDate = startDate,
+          endDate = endDate,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteAgentConversationsRequestConfig(
+    agentId: String,
+    startDate: String?,
+    endDate: String?,
+  ): RequestConfig {
     require(agentId.isNotBlank()) {
       "Parameter `agentId` is required when calling `deleteAgentConversations`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "agents", "$agentId", "conversations"),
-        query =
-          buildMap {
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-          },
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "agents", "$agentId", "conversations"),
+      query =
+        buildMap {
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+        },
     )
   }
 
@@ -505,22 +950,47 @@ public class AgentStudioClient(
     agentId: String,
     requestOptions: RequestOptions? = null,
   ) {
+    return requester.execute(
+      requestConfig = deleteAllowedDomainRequestConfig(domainId = domainId, agentId = agentId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Remove an allowed domain by id. This variant of [deleteAllowedDomain] returns the full HTTP
+   * response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param domainId The domainId.
+   * @param agentId The agentId.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteAllowedDomainWithHTTPInfo(
+    domainId: String,
+    agentId: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<Unit> {
+    return requester.executeWithHttpInfo(
+      requestConfig = deleteAllowedDomainRequestConfig(domainId = domainId, agentId = agentId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteAllowedDomainRequestConfig(domainId: String, agentId: String): RequestConfig {
     require(domainId.isNotBlank()) {
       "Parameter `domainId` is required when calling `deleteAllowedDomain`."
     }
     require(agentId.isNotBlank()) {
       "Parameter `agentId` is required when calling `deleteAllowedDomain`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "agents", "$agentId", "allowed-domains", "$domainId"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "agents", "$agentId", "allowed-domains", "$domainId"),
     )
   }
 
@@ -539,22 +1009,52 @@ public class AgentStudioClient(
     agentId: String,
     requestOptions: RequestOptions? = null,
   ) {
+    return requester.execute(
+      requestConfig =
+        deleteConversationRequestConfig(conversationId = conversationId, agentId = agentId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes the conversation with the given ID. This variant of [deleteConversation] returns the
+   * full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - logs
+   *
+   * @param conversationId The conversationId.
+   * @param agentId The agentId.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteConversationWithHTTPInfo(
+    conversationId: String,
+    agentId: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<Unit> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        deleteConversationRequestConfig(conversationId = conversationId, agentId = agentId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteConversationRequestConfig(
+    conversationId: String,
+    agentId: String,
+  ): RequestConfig {
     require(conversationId.isNotBlank()) {
       "Parameter `conversationId` is required when calling `deleteConversation`."
     }
     require(agentId.isNotBlank()) {
       "Parameter `agentId` is required when calling `deleteConversation`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "agents", "$agentId", "conversations", "$conversationId"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "agents", "$agentId", "conversations", "$conversationId"),
     )
   }
 
@@ -568,19 +1068,41 @@ public class AgentStudioClient(
    * @param requestOptions additional request configuration.
    */
   public suspend fun deleteProvider(providerId: String, requestOptions: RequestOptions? = null) {
+    return requester.execute(
+      requestConfig = deleteProviderRequestConfig(providerId = providerId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Delete Provider. This variant of [deleteProvider] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param providerId The providerId.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteProviderWithHTTPInfo(
+    providerId: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<Unit> {
+    return requester.executeWithHttpInfo(
+      requestConfig = deleteProviderRequestConfig(providerId = providerId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteProviderRequestConfig(providerId: String): RequestConfig {
     require(providerId.isNotBlank()) {
       "Parameter `providerId` is required when calling `deleteProvider`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "providers", "$providerId"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "providers", "$providerId"),
     )
   }
 
@@ -594,19 +1116,41 @@ public class AgentStudioClient(
    * @param requestOptions additional request configuration.
    */
   public suspend fun deleteSecretKey(secretKeyId: String, requestOptions: RequestOptions? = null) {
+    return requester.execute(
+      requestConfig = deleteSecretKeyRequestConfig(secretKeyId = secretKeyId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Delete Secret Key. This variant of [deleteSecretKey] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param secretKeyId The secretKeyId.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteSecretKeyWithHTTPInfo(
+    secretKeyId: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<Unit> {
+    return requester.executeWithHttpInfo(
+      requestConfig = deleteSecretKeyRequestConfig(secretKeyId = secretKeyId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteSecretKeyRequestConfig(secretKeyId: String): RequestConfig {
     require(secretKeyId.isNotBlank()) {
       "Parameter `secretKeyId` is required when calling `deleteSecretKey`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "secret-keys", "$secretKeyId"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "secret-keys", "$secretKeyId"),
     )
   }
 
@@ -620,19 +1164,42 @@ public class AgentStudioClient(
    * @param requestOptions additional request configuration.
    */
   public suspend fun deleteUserData(userToken: String, requestOptions: RequestOptions? = null) {
+    return requester.execute(
+      requestConfig = deleteUserDataRequestConfig(userToken = userToken),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Permanently deletes all messages for the given user token. Does not delete conversations. This
+   * variant of [deleteUserData] returns the full HTTP response information (status code, headers,
+   * raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - logs
+   *
+   * @param userToken The userToken.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteUserDataWithHTTPInfo(
+    userToken: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<Unit> {
+    return requester.executeWithHttpInfo(
+      requestConfig = deleteUserDataRequestConfig(userToken = userToken),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteUserDataRequestConfig(userToken: String): RequestConfig {
     require(userToken.isNotBlank()) {
       "Parameter `userToken` is required when calling `deleteUserData`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "user-data", "$userToken"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "user-data", "$userToken"),
     )
   }
 
@@ -653,24 +1220,65 @@ public class AgentStudioClient(
     endDate: String? = null,
     requestOptions: RequestOptions? = null,
   ): List<ConversationFullResponse> {
+    return requester.execute(
+      requestConfig =
+        exportConversationsRequestConfig(
+          agentId = agentId,
+          startDate = startDate,
+          endDate = endDate,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Exports all conversations based on the passed filters. This variant of [exportConversations]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - logs
+   *
+   * @param agentId The agentId.
+   * @param startDate Filter conversations created after this date (format: YYYY-MM-DD).
+   * @param endDate Filter conversations created before this date (format: YYYY-MM-DD).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun exportConversationsWithHTTPInfo(
+    agentId: String,
+    startDate: String? = null,
+    endDate: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<List<ConversationFullResponse>> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        exportConversationsRequestConfig(
+          agentId = agentId,
+          startDate = startDate,
+          endDate = endDate,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun exportConversationsRequestConfig(
+    agentId: String,
+    startDate: String?,
+    endDate: String?,
+  ): RequestConfig {
     require(agentId.isNotBlank()) {
       "Parameter `agentId` is required when calling `exportConversations`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "agents", "$agentId", "conversations", "export"),
-        query =
-          buildMap {
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-          },
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "agents", "$agentId", "conversations", "export"),
+      query =
+        buildMap {
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+        },
     )
   }
 
@@ -687,16 +1295,39 @@ public class AgentStudioClient(
     agentId: String,
     requestOptions: RequestOptions? = null,
   ): AgentWithVersionResponse {
-    require(agentId.isNotBlank()) { "Parameter `agentId` is required when calling `getAgent`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "agents", "$agentId"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getAgentRequestConfig(agentId = agentId),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieve details of the specified agent. This variant of [getAgent] returns the full HTTP
+   * response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param agentId The agentId.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getAgentWithHTTPInfo(
+    agentId: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<AgentWithVersionResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getAgentRequestConfig(agentId = agentId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getAgentRequestConfig(agentId: String): RequestConfig {
+    require(agentId.isNotBlank()) { "Parameter `agentId` is required when calling `getAgent`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "agents", "$agentId"),
     )
   }
 
@@ -715,22 +1346,47 @@ public class AgentStudioClient(
     agentId: String,
     requestOptions: RequestOptions? = null,
   ): AllowedDomainResponse {
+    return requester.execute(
+      requestConfig = getAllowedDomainRequestConfig(domainId = domainId, agentId = agentId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Get a single allowed domain by id. This variant of [getAllowedDomain] returns the full HTTP
+   * response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param domainId The domainId.
+   * @param agentId The agentId.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getAllowedDomainWithHTTPInfo(
+    domainId: String,
+    agentId: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<AllowedDomainResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getAllowedDomainRequestConfig(domainId = domainId, agentId = agentId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getAllowedDomainRequestConfig(domainId: String, agentId: String): RequestConfig {
     require(domainId.isNotBlank()) {
       "Parameter `domainId` is required when calling `getAllowedDomain`."
     }
     require(agentId.isNotBlank()) {
       "Parameter `agentId` is required when calling `getAllowedDomain`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "agents", "$agentId", "allowed-domains", "$domainId"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "agents", "$agentId", "allowed-domains", "$domainId"),
     )
   }
 
@@ -745,14 +1401,34 @@ public class AgentStudioClient(
   public suspend fun getConfiguration(
     requestOptions: RequestOptions? = null
   ): ApplicationConfigResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "configuration"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getConfigurationRequestConfig(),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Get Configuration. This variant of [getConfiguration] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - logs
+   *
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getConfigurationWithHTTPInfo(
+    requestOptions: RequestOptions? = null
+  ): AlgoliaHttpResponse<ApplicationConfigResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getConfigurationRequestConfig(),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getConfigurationRequestConfig(): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "configuration"),
     )
   }
 
@@ -775,30 +1451,76 @@ public class AgentStudioClient(
     xAlgoliaSecureUserToken: String? = null,
     requestOptions: RequestOptions? = null,
   ): ConversationFullResponse {
+    return requester.execute(
+      requestConfig =
+        getConversationRequestConfig(
+          conversationId = conversationId,
+          agentId = agentId,
+          includeFeedback = includeFeedback,
+          xAlgoliaSecureUserToken = xAlgoliaSecureUserToken,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the conversation and its messages for the given ID. This variant of [getConversation]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - logs
+   *
+   * @param conversationId The conversationId.
+   * @param agentId The agentId.
+   * @param includeFeedback Include feedback for the conversation. (default to false)
+   * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getConversationWithHTTPInfo(
+    conversationId: String,
+    agentId: String,
+    includeFeedback: Boolean? = null,
+    xAlgoliaSecureUserToken: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ConversationFullResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getConversationRequestConfig(
+          conversationId = conversationId,
+          agentId = agentId,
+          includeFeedback = includeFeedback,
+          xAlgoliaSecureUserToken = xAlgoliaSecureUserToken,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getConversationRequestConfig(
+    conversationId: String,
+    agentId: String,
+    includeFeedback: Boolean?,
+    xAlgoliaSecureUserToken: String?,
+  ): RequestConfig {
     require(conversationId.isNotBlank()) {
       "Parameter `conversationId` is required when calling `getConversation`."
     }
     require(agentId.isNotBlank()) {
       "Parameter `agentId` is required when calling `getConversation`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "agents", "$agentId", "conversations", "$conversationId"),
-        headers =
-          buildMap {
-            xAlgoliaSecureUserToken?.let { header -> put("X-Algolia-Secure-User-Token", header) }
-          },
-        query =
-          buildMap {
-            includeFeedback?.let { put("includeFeedback", it) }
-          },
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "agents", "$agentId", "conversations", "$conversationId"),
+      headers =
+        buildMap {
+          xAlgoliaSecureUserToken?.let { header -> put("X-Algolia-Secure-User-Token", header) }
+        },
+      query =
+        buildMap {
+          includeFeedback?.let { put("includeFeedback", it) }
+        },
     )
   }
 
@@ -815,19 +1537,41 @@ public class AgentStudioClient(
     providerId: String,
     requestOptions: RequestOptions? = null,
   ): ProviderAuthenticationResponse {
+    return requester.execute(
+      requestConfig = getProviderRequestConfig(providerId = providerId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Get Provider. This variant of [getProvider] returns the full HTTP response information (status
+   * code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param providerId The providerId.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getProviderWithHTTPInfo(
+    providerId: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ProviderAuthenticationResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getProviderRequestConfig(providerId = providerId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getProviderRequestConfig(providerId: String): RequestConfig {
     require(providerId.isNotBlank()) {
       "Parameter `providerId` is required when calling `getProvider`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "providers", "$providerId"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "providers", "$providerId"),
     )
   }
 
@@ -844,19 +1588,41 @@ public class AgentStudioClient(
     secretKeyId: String,
     requestOptions: RequestOptions? = null,
   ): SecretKeyResponse {
+    return requester.execute(
+      requestConfig = getSecretKeyRequestConfig(secretKeyId = secretKeyId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Get Secret Key. This variant of [getSecretKey] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param secretKeyId The secretKeyId.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getSecretKeyWithHTTPInfo(
+    secretKeyId: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SecretKeyResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getSecretKeyRequestConfig(secretKeyId = secretKeyId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getSecretKeyRequestConfig(secretKeyId: String): RequestConfig {
     require(secretKeyId.isNotBlank()) {
       "Parameter `secretKeyId` is required when calling `getSecretKey`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "secret-keys", "$secretKeyId"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "secret-keys", "$secretKeyId"),
     )
   }
 
@@ -873,19 +1639,42 @@ public class AgentStudioClient(
     userToken: String,
     requestOptions: RequestOptions? = null,
   ): UserDataResponse {
+    return requester.execute(
+      requestConfig = getUserDataRequestConfig(userToken = userToken),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves all memories, conversations and their messages for the given user token. This variant
+   * of [getUserData] returns the full HTTP response information (status code, headers, raw body)
+   * along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - logs
+   *
+   * @param userToken The userToken.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getUserDataWithHTTPInfo(
+    userToken: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<UserDataResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getUserDataRequestConfig(userToken = userToken),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getUserDataRequestConfig(userToken: String): RequestConfig {
     require(userToken.isNotBlank()) {
       "Parameter `userToken` is required when calling `getUserData`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "user-data", "$userToken"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "user-data", "$userToken"),
     )
   }
 
@@ -904,23 +1693,48 @@ public class AgentStudioClient(
     before: String? = null,
     requestOptions: RequestOptions? = null,
   ) {
+    return requester.execute(
+      requestConfig = invalidateAgentCacheRequestConfig(agentId = agentId, before = before),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Invalidate cached completions for this agent. Filter with `before` (exclusive). This variant of
+   * [invalidateAgentCache] returns the full HTTP response information (status code, headers, raw
+   * body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param agentId The agentId.
+   * @param before Delete entries strictly before this date (exclusive, YYYY-MM-DD).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun invalidateAgentCacheWithHTTPInfo(
+    agentId: String,
+    before: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<Unit> {
+    return requester.executeWithHttpInfo(
+      requestConfig = invalidateAgentCacheRequestConfig(agentId = agentId, before = before),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun invalidateAgentCacheRequestConfig(agentId: String, before: String?): RequestConfig {
     require(agentId.isNotBlank()) {
       "Parameter `agentId` is required when calling `invalidateAgentCache`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "agents", "$agentId", "cache"),
-        query =
-          buildMap {
-            before?.let { put("before", it) }
-          },
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "agents", "$agentId", "cache"),
+      query =
+        buildMap {
+          before?.let { put("before", it) }
+        },
     )
   }
 
@@ -937,19 +1751,42 @@ public class AgentStudioClient(
     agentId: String,
     requestOptions: RequestOptions? = null,
   ): AllowedDomainListResponse {
+    return requester.execute(
+      requestConfig = listAgentAllowedDomainsRequestConfig(agentId = agentId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * List all allowed domain patterns for this agent. This variant of [listAgentAllowedDomains]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param agentId The agentId.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun listAgentAllowedDomainsWithHTTPInfo(
+    agentId: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<AllowedDomainListResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = listAgentAllowedDomainsRequestConfig(agentId = agentId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listAgentAllowedDomainsRequestConfig(agentId: String): RequestConfig {
     require(agentId.isNotBlank()) {
       "Parameter `agentId` is required when calling `listAgentAllowedDomains`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "agents", "$agentId", "allowed-domains"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "agents", "$agentId", "allowed-domains"),
     )
   }
 
@@ -980,32 +1817,98 @@ public class AgentStudioClient(
     xAlgoliaSecureUserToken: String? = null,
     requestOptions: RequestOptions? = null,
   ): PaginatedConversationsResponse {
+    return requester.execute(
+      requestConfig =
+        listAgentConversationsRequestConfig(
+          agentId = agentId,
+          startDate = startDate,
+          endDate = endDate,
+          includeFeedback = includeFeedback,
+          feedbackVote = feedbackVote,
+          page = page,
+          limit = limit,
+          xAlgoliaSecureUserToken = xAlgoliaSecureUserToken,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the conversations for the given agent ID. This variant of [listAgentConversations]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - logs
+   *
+   * @param agentId The agentId.
+   * @param startDate Filter conversations created after this date (format: YYYY-MM-DD).
+   * @param endDate Filter conversations created before this date (format: YYYY-MM-DD).
+   * @param includeFeedback Include feedback per conversation.
+   * @param feedbackVote Filter by feedback value (requires includeFeedback=true).
+   * @param page Page number. (default to 1)
+   * @param limit Items per page. (default to 20)
+   * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun listAgentConversationsWithHTTPInfo(
+    agentId: String,
+    startDate: String? = null,
+    endDate: String? = null,
+    includeFeedback: Boolean? = null,
+    feedbackVote: Int? = null,
+    page: Int? = null,
+    limit: Int? = null,
+    xAlgoliaSecureUserToken: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<PaginatedConversationsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        listAgentConversationsRequestConfig(
+          agentId = agentId,
+          startDate = startDate,
+          endDate = endDate,
+          includeFeedback = includeFeedback,
+          feedbackVote = feedbackVote,
+          page = page,
+          limit = limit,
+          xAlgoliaSecureUserToken = xAlgoliaSecureUserToken,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listAgentConversationsRequestConfig(
+    agentId: String,
+    startDate: String?,
+    endDate: String?,
+    includeFeedback: Boolean?,
+    feedbackVote: Int?,
+    page: Int?,
+    limit: Int?,
+    xAlgoliaSecureUserToken: String?,
+  ): RequestConfig {
     require(agentId.isNotBlank()) {
       "Parameter `agentId` is required when calling `listAgentConversations`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "agents", "$agentId", "conversations"),
-        headers =
-          buildMap {
-            xAlgoliaSecureUserToken?.let { header -> put("X-Algolia-Secure-User-Token", header) }
-          },
-        query =
-          buildMap {
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-            includeFeedback?.let { put("includeFeedback", it) }
-            feedbackVote?.let { put("feedbackVote", it) }
-            page?.let { put("page", it) }
-            limit?.let { put("limit", it) }
-          },
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "agents", "$agentId", "conversations"),
+      headers =
+        buildMap {
+          xAlgoliaSecureUserToken?.let { header -> put("X-Algolia-Secure-User-Token", header) }
+        },
+      query =
+        buildMap {
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+          includeFeedback?.let { put("includeFeedback", it) }
+          feedbackVote?.let { put("feedbackVote", it) }
+          page?.let { put("page", it) }
+          limit?.let { put("limit", it) }
+        },
     )
   }
 
@@ -1026,20 +1929,47 @@ public class AgentStudioClient(
     providerId: String? = null,
     requestOptions: RequestOptions? = null,
   ): PaginatedAgentsResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "agents"),
-        query =
-          buildMap {
-            page?.let { put("page", it) }
-            limit?.let { put("limit", it) }
-            providerId?.let { put("providerId", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = listAgentsRequestConfig(page = page, limit = limit, providerId = providerId),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * List all agents with pagination and filtering. This variant of [listAgents] returns the full
+   * HTTP response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param page Page number. (default to 1)
+   * @param limit Items per page. (default to 10)
+   * @param providerId Filter by provider id.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun listAgentsWithHTTPInfo(
+    page: Int? = null,
+    limit: Int? = null,
+    providerId: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<PaginatedAgentsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = listAgentsRequestConfig(page = page, limit = limit, providerId = providerId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listAgentsRequestConfig(page: Int?, limit: Int?, providerId: String?): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "agents"),
+      query =
+        buildMap {
+          page?.let { put("page", it) }
+          limit?.let { put("limit", it) }
+          providerId?.let { put("providerId", it) }
+        },
     )
   }
 
@@ -1054,16 +1984,35 @@ public class AgentStudioClient(
   public suspend fun listModels(
     requestOptions: RequestOptions? = null
   ): Map<kotlin.String, List<String>> {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "providers", "models"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = listModelsRequestConfig(),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Get Provider Models. This variant of [listModels] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun listModelsWithHTTPInfo(
+    requestOptions: RequestOptions? = null
+  ): AlgoliaHttpResponse<Map<kotlin.String, List<String>>> {
+    return requester.executeWithHttpInfo(
+      requestConfig = listModelsRequestConfig(),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listModelsRequestConfig(): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "providers", "models"),
     )
   }
 
@@ -1080,19 +2029,42 @@ public class AgentStudioClient(
     providerId: String,
     requestOptions: RequestOptions? = null,
   ): List<String> {
+    return requester.execute(
+      requestConfig = listProviderModelsRequestConfig(providerId = providerId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Get available models for a specific provider. This variant of [listProviderModels] returns the
+   * full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param providerId The providerId.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun listProviderModelsWithHTTPInfo(
+    providerId: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<List<String>> {
+    return requester.executeWithHttpInfo(
+      requestConfig = listProviderModelsRequestConfig(providerId = providerId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listProviderModelsRequestConfig(providerId: String): RequestConfig {
     require(providerId.isNotBlank()) {
       "Parameter `providerId` is required when calling `listProviderModels`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "providers", "$providerId", "models"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "providers", "$providerId", "models"),
     )
   }
 
@@ -1111,19 +2083,43 @@ public class AgentStudioClient(
     limit: Int? = null,
     requestOptions: RequestOptions? = null,
   ): PaginatedProviderAuthenticationsResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "providers"),
-        query =
-          buildMap {
-            page?.let { put("page", it) }
-            limit?.let { put("limit", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = listProvidersRequestConfig(page = page, limit = limit),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * List Providers. This variant of [listProviders] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param page Page number. (default to 1)
+   * @param limit Items per page. (default to 10)
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun listProvidersWithHTTPInfo(
+    page: Int? = null,
+    limit: Int? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<PaginatedProviderAuthenticationsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = listProvidersRequestConfig(page = page, limit = limit),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listProvidersRequestConfig(page: Int?, limit: Int?): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "providers"),
+      query =
+        buildMap {
+          page?.let { put("page", it) }
+          limit?.let { put("limit", it) }
+        },
     )
   }
 
@@ -1142,19 +2138,43 @@ public class AgentStudioClient(
     limit: Int? = null,
     requestOptions: RequestOptions? = null,
   ): PaginatedSecretKeysResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "secret-keys"),
-        query =
-          buildMap {
-            page?.let { put("page", it) }
-            limit?.let { put("limit", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = listSecretKeysRequestConfig(page = page, limit = limit),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * List Secret Keys. This variant of [listSecretKeys] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param page Page number. (default to 1)
+   * @param limit Items per page. (default to 10)
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun listSecretKeysWithHTTPInfo(
+    page: Int? = null,
+    limit: Int? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<PaginatedSecretKeysResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = listSecretKeysRequestConfig(page = page, limit = limit),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listSecretKeysRequestConfig(page: Int?, limit: Int?): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "secret-keys"),
+      query =
+        buildMap {
+          page?.let { put("page", it) }
+          limit?.let { put("limit", it) }
+        },
     )
   }
 
@@ -1171,17 +2191,39 @@ public class AgentStudioClient(
     agentId: String,
     requestOptions: RequestOptions? = null,
   ): AgentWithVersionResponse {
-    require(agentId.isNotBlank()) { "Parameter `agentId` is required when calling `publishAgent`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "agents", "$agentId", "publish"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = publishAgentRequestConfig(agentId = agentId),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Publish the specified agent. This variant of [publishAgent] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param agentId The agentId.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun publishAgentWithHTTPInfo(
+    agentId: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<AgentWithVersionResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = publishAgentRequestConfig(agentId = agentId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun publishAgentRequestConfig(agentId: String): RequestConfig {
+    require(agentId.isNotBlank()) { "Parameter `agentId` is required when calling `publishAgent`." }
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "agents", "$agentId", "publish"),
     )
   }
 
@@ -1198,19 +2240,41 @@ public class AgentStudioClient(
     agentId: String,
     requestOptions: RequestOptions? = null,
   ): AgentWithVersionResponse {
+    return requester.execute(
+      requestConfig = unpublishAgentRequestConfig(agentId = agentId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Unpublish the specified agent. This variant of [unpublishAgent] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param agentId The agentId.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun unpublishAgentWithHTTPInfo(
+    agentId: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<AgentWithVersionResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = unpublishAgentRequestConfig(agentId = agentId),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun unpublishAgentRequestConfig(agentId: String): RequestConfig {
     require(agentId.isNotBlank()) {
       "Parameter `agentId` is required when calling `unpublishAgent`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "agents", "$agentId", "unpublish"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "agents", "$agentId", "unpublish"),
     )
   }
 
@@ -1229,17 +2293,46 @@ public class AgentStudioClient(
     agentConfigUpdate: AgentConfigUpdate,
     requestOptions: RequestOptions? = null,
   ): AgentWithVersionResponse {
-    require(agentId.isNotBlank()) { "Parameter `agentId` is required when calling `updateAgent`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PATCH,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "agents", "$agentId"),
-        body = agentConfigUpdate,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        updateAgentRequestConfig(agentId = agentId, agentConfigUpdate = agentConfigUpdate),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Update the specified agent. This variant of [updateAgent] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param agentId The agentId.
+   * @param agentConfigUpdate
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun updateAgentWithHTTPInfo(
+    agentId: String,
+    agentConfigUpdate: AgentConfigUpdate,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<AgentWithVersionResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        updateAgentRequestConfig(agentId = agentId, agentConfigUpdate = agentConfigUpdate),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun updateAgentRequestConfig(
+    agentId: String,
+    agentConfigUpdate: AgentConfigUpdate,
+  ): RequestConfig {
+    require(agentId.isNotBlank()) { "Parameter `agentId` is required when calling `updateAgent`." }
+    return RequestConfig(
+      method = RequestMethod.PATCH,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "agents", "$agentId"),
+      body = agentConfigUpdate,
     )
   }
 
@@ -1256,15 +2349,41 @@ public class AgentStudioClient(
     applicationConfigPatch: ApplicationConfigPatch,
     requestOptions: RequestOptions? = null,
   ): ApplicationConfigResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PATCH,
-        path = "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "configuration"),
-        body = applicationConfigPatch,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        updateConfigurationRequestConfig(applicationConfigPatch = applicationConfigPatch),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Patch Configuration. This variant of [updateConfiguration] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - logs
+   *
+   * @param applicationConfigPatch
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun updateConfigurationWithHTTPInfo(
+    applicationConfigPatch: ApplicationConfigPatch,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ApplicationConfigResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        updateConfigurationRequestConfig(applicationConfigPatch = applicationConfigPatch),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun updateConfigurationRequestConfig(
+    applicationConfigPatch: ApplicationConfigPatch
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.PATCH,
+      path = "/agent-studio".split("/").filter { it.isNotBlank() } + listOf("1", "configuration"),
+      body = applicationConfigPatch,
     )
   }
 
@@ -1283,20 +2402,55 @@ public class AgentStudioClient(
     providerAuthenticationPatch: ProviderAuthenticationPatch,
     requestOptions: RequestOptions? = null,
   ): ProviderAuthenticationResponse {
+    return requester.execute(
+      requestConfig =
+        updateProviderRequestConfig(
+          providerId = providerId,
+          providerAuthenticationPatch = providerAuthenticationPatch,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Update Provider. This variant of [updateProvider] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param providerId The providerId.
+   * @param providerAuthenticationPatch
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun updateProviderWithHTTPInfo(
+    providerId: String,
+    providerAuthenticationPatch: ProviderAuthenticationPatch,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ProviderAuthenticationResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        updateProviderRequestConfig(
+          providerId = providerId,
+          providerAuthenticationPatch = providerAuthenticationPatch,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun updateProviderRequestConfig(
+    providerId: String,
+    providerAuthenticationPatch: ProviderAuthenticationPatch,
+  ): RequestConfig {
     require(providerId.isNotBlank()) {
       "Parameter `providerId` is required when calling `updateProvider`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PATCH,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "providers", "$providerId"),
-        body = providerAuthenticationPatch,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.PATCH,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "providers", "$providerId"),
+      body = providerAuthenticationPatch,
     )
   }
 
@@ -1315,20 +2469,49 @@ public class AgentStudioClient(
     secretKeyPatch: SecretKeyPatch,
     requestOptions: RequestOptions? = null,
   ): SecretKeyResponse {
+    return requester.execute(
+      requestConfig =
+        updateSecretKeyRequestConfig(secretKeyId = secretKeyId, secretKeyPatch = secretKeyPatch),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Patch Secret Key. This variant of [updateSecretKey] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param secretKeyId The secretKeyId.
+   * @param secretKeyPatch
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun updateSecretKeyWithHTTPInfo(
+    secretKeyId: String,
+    secretKeyPatch: SecretKeyPatch,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SecretKeyResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        updateSecretKeyRequestConfig(secretKeyId = secretKeyId, secretKeyPatch = secretKeyPatch),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun updateSecretKeyRequestConfig(
+    secretKeyId: String,
+    secretKeyPatch: SecretKeyPatch,
+  ): RequestConfig {
     require(secretKeyId.isNotBlank()) {
       "Parameter `secretKeyId` is required when calling `updateSecretKey`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PATCH,
-        path =
-          "/agent-studio".split("/").filter { it.isNotBlank() } +
-            listOf("1", "secret-keys", "$secretKeyId"),
-        body = secretKeyPatch,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.PATCH,
+      path =
+        "/agent-studio".split("/").filter { it.isNotBlank() } +
+          listOf("1", "secret-keys", "$secretKeyId"),
+      body = secretKeyPatch,
     )
   }
 
