@@ -4149,6 +4149,10 @@ components:
         - $ref: '#/components/schemas/baseRecommendSearchParams'
         - $ref: '#/components/schemas/searchParamsQuery'
         - $ref: '#/components/schemas/recommendIndexSettings'
+        - type: object
+          properties:
+            facetFilters:
+              $ref: '#/components/schemas/facetFilters'
     frequentlyBoughtTogether:
       type: object
       properties:

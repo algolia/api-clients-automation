@@ -216,7 +216,7 @@ describe('getRecommendations', () => {
           threshold: 42.1,
           maxRecommendations: 10,
           queryParameters: { query: 'myQuery', optionalFilters: ['brand:apple'] },
-          fallbackParameters: { query: 'myQuery', optionalFilters: ['brand:samsung'] },
+          fallbackParameters: { query: 'myQuery', optionalFilters: ['brand:samsung'], facetFilters: ['brand:apple'] },
         },
       ],
     })) as unknown as EchoResponse;
@@ -232,7 +232,7 @@ describe('getRecommendations', () => {
           threshold: 42.1,
           maxRecommendations: 10,
           queryParameters: { query: 'myQuery', optionalFilters: ['brand:apple'] },
-          fallbackParameters: { query: 'myQuery', optionalFilters: ['brand:samsung'] },
+          fallbackParameters: { query: 'myQuery', optionalFilters: ['brand:samsung'], facetFilters: ['brand:apple'] },
         },
       ],
     });

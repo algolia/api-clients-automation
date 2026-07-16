@@ -125,15 +125,38 @@ public class SearchClient(
     apiKey: ApiKey,
     requestOptions: RequestOptions? = null,
   ): AddApiKeyResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "keys"),
-        body = apiKey,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = addApiKeyRequestConfig(apiKey = apiKey),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Creates a new API key with specific permissions and restrictions. This variant of [addApiKey]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param apiKey
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun addApiKeyWithHTTPInfo(
+    apiKey: ApiKey,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<AddApiKeyResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = addApiKeyRequestConfig(apiKey = apiKey),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun addApiKeyRequestConfig(apiKey: ApiKey): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "keys"),
+      body = apiKey,
     )
   }
 
@@ -161,6 +184,51 @@ public class SearchClient(
     body: JsonObject,
     requestOptions: RequestOptions? = null,
   ): UpdatedAtWithObjectIdResponse {
+    return requester.execute(
+      requestConfig =
+        addOrUpdateObjectRequestConfig(indexName = indexName, objectID = objectID, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * If a record with the specified object ID exists, the existing record is replaced. Otherwise, a
+   * new record is added to the index. If you want to use auto-generated object IDs, use the
+   * [`saveObject` operation](https://www.algolia.com/doc/rest-api/search/save-object). To update
+   * _some_ attributes of an existing record, use the
+   * [`partial` operation](https://www.algolia.com/doc/rest-api/search/partial-update-object)
+   * instead. To add, update, or replace multiple records, use the
+   * [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This variant of
+   * [addOrUpdateObject] returns the full HTTP response information (status code, headers, raw body)
+   * along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param objectID Unique record identifier.
+   * @param body The record. A schemaless object with attributes that are useful in the context of
+   *   search and discovery.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun addOrUpdateObjectWithHTTPInfo(
+    indexName: String,
+    objectID: String,
+    body: JsonObject,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<UpdatedAtWithObjectIdResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        addOrUpdateObjectRequestConfig(indexName = indexName, objectID = objectID, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun addOrUpdateObjectRequestConfig(
+    indexName: String,
+    objectID: String,
+    body: JsonObject,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `addOrUpdateObject`."
     }
@@ -168,17 +236,12 @@ public class SearchClient(
       "Parameter `objectID` is required when calling `addOrUpdateObject`."
     }
     require(body.isNotEmpty()) { "Parameter `body` is required when calling `addOrUpdateObject`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "$objectID"),
-        body = body,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "$objectID"),
+      body = body,
     )
   }
 
@@ -195,16 +258,39 @@ public class SearchClient(
     source: Source,
     requestOptions: RequestOptions? = null,
   ): CreatedAtResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "security", "sources", "append"),
-        body = source,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = appendSourceRequestConfig(source = source),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Adds a source to the list of allowed sources. This variant of [appendSource] returns the full
+   * HTTP response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param source Source to add.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun appendSourceWithHTTPInfo(
+    source: Source,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<CreatedAtResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = appendSourceRequestConfig(source = source),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun appendSourceRequestConfig(source: Source): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "security", "sources", "append"),
+      body = source,
     )
   }
 
@@ -225,22 +311,60 @@ public class SearchClient(
     assignUserIdParams: AssignUserIdParams,
     requestOptions: RequestOptions? = null,
   ): CreatedAtResponse {
+    return requester.execute(
+      requestConfig =
+        assignUserIdRequestConfig(
+          xAlgoliaUserID = xAlgoliaUserID,
+          assignUserIdParams = assignUserIdParams,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Assigns or moves a user ID to a cluster. The time it takes to move a user is proportional to
+   * the amount of data linked to the user ID. This variant of [assignUserId] returns the full HTTP
+   * response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param xAlgoliaUserID Unique identifier of the user who makes the search request.
+   * @param assignUserIdParams
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun assignUserIdWithHTTPInfo(
+    xAlgoliaUserID: String,
+    assignUserIdParams: AssignUserIdParams,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<CreatedAtResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        assignUserIdRequestConfig(
+          xAlgoliaUserID = xAlgoliaUserID,
+          assignUserIdParams = assignUserIdParams,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun assignUserIdRequestConfig(
+    xAlgoliaUserID: String,
+    assignUserIdParams: AssignUserIdParams,
+  ): RequestConfig {
     require(xAlgoliaUserID.isNotBlank()) {
       "Parameter `xAlgoliaUserID` is required when calling `assignUserId`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping"),
-        headers =
-          buildMap {
-            put("X-Algolia-User-ID", xAlgoliaUserID)
-          },
-        body = assignUserIdParams,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping"),
+      headers =
+        buildMap {
+          put("X-Algolia-User-ID", xAlgoliaUserID)
+        },
+      body = assignUserIdParams,
     )
   }
 
@@ -263,17 +387,51 @@ public class SearchClient(
     batchWriteParams: BatchWriteParams,
     requestOptions: RequestOptions? = null,
   ): BatchResponse {
-    require(indexName.isNotBlank()) { "Parameter `indexName` is required when calling `batch`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "$indexName", "batch"),
-        body = batchWriteParams,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        batchRequestConfig(indexName = indexName, batchWriteParams = batchWriteParams),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Adds, updates, or deletes records in one index with a single API request. Batching index
+   * updates reduces latency and increases data integrity. - Actions are applied in the order
+   * they're specified. - Actions are equivalent to the individual API requests of the same name.
+   * This operation is subject to
+   * [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * This variant of [batch] returns the full HTTP response information (status code, headers, raw
+   * body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param batchWriteParams
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun batchWithHTTPInfo(
+    indexName: String,
+    batchWriteParams: BatchWriteParams,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<BatchResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        batchRequestConfig(indexName = indexName, batchWriteParams = batchWriteParams),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun batchRequestConfig(
+    indexName: String,
+    batchWriteParams: BatchWriteParams,
+  ): RequestConfig {
+    require(indexName.isNotBlank()) { "Parameter `indexName` is required when calling `batch`." }
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "$indexName", "batch"),
+      body = batchWriteParams,
     )
   }
 
@@ -293,23 +451,59 @@ public class SearchClient(
     batchAssignUserIdsParams: BatchAssignUserIdsParams,
     requestOptions: RequestOptions? = null,
   ): CreatedAtResponse {
+    return requester.execute(
+      requestConfig =
+        batchAssignUserIdsRequestConfig(
+          xAlgoliaUserID = xAlgoliaUserID,
+          batchAssignUserIdsParams = batchAssignUserIdsParams,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Assigns multiple user IDs to a cluster. **You can't move users with this operation**. This
+   * variant of [batchAssignUserIds] returns the full HTTP response information (status code,
+   * headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param xAlgoliaUserID Unique identifier of the user who makes the search request.
+   * @param batchAssignUserIdsParams
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun batchAssignUserIdsWithHTTPInfo(
+    xAlgoliaUserID: String,
+    batchAssignUserIdsParams: BatchAssignUserIdsParams,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<CreatedAtResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        batchAssignUserIdsRequestConfig(
+          xAlgoliaUserID = xAlgoliaUserID,
+          batchAssignUserIdsParams = batchAssignUserIdsParams,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun batchAssignUserIdsRequestConfig(
+    xAlgoliaUserID: String,
+    batchAssignUserIdsParams: BatchAssignUserIdsParams,
+  ): RequestConfig {
     require(xAlgoliaUserID.isNotBlank()) {
       "Parameter `xAlgoliaUserID` is required when calling `batchAssignUserIds`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping", "batch"),
-        headers =
-          buildMap {
-            put("X-Algolia-User-ID", xAlgoliaUserID)
-          },
-        body = batchAssignUserIdsParams,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping", "batch"),
+      headers =
+        buildMap {
+          put("X-Algolia-User-ID", xAlgoliaUserID)
+        },
+      body = batchAssignUserIdsParams,
     )
   }
 
@@ -328,17 +522,53 @@ public class SearchClient(
     batchDictionaryEntriesParams: BatchDictionaryEntriesParams,
     requestOptions: RequestOptions? = null,
   ): UpdatedAtResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "dictionaries", "$dictionaryName", "batch"),
-        body = batchDictionaryEntriesParams,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        batchDictionaryEntriesRequestConfig(
+          dictionaryName = dictionaryName,
+          batchDictionaryEntriesParams = batchDictionaryEntriesParams,
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Adds or deletes multiple entries from your plurals, segmentation, or stop word dictionaries.
+   * This variant of [batchDictionaryEntries] returns the full HTTP response information (status
+   * code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param dictionaryName Dictionary type in which to search.
+   * @param batchDictionaryEntriesParams
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun batchDictionaryEntriesWithHTTPInfo(
+    dictionaryName: DictionaryType,
+    batchDictionaryEntriesParams: BatchDictionaryEntriesParams,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<UpdatedAtResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        batchDictionaryEntriesRequestConfig(
+          dictionaryName = dictionaryName,
+          batchDictionaryEntriesParams = batchDictionaryEntriesParams,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun batchDictionaryEntriesRequestConfig(
+    dictionaryName: DictionaryType,
+    batchDictionaryEntriesParams: BatchDictionaryEntriesParams,
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "dictionaries", "$dictionaryName", "batch"),
+      body = batchDictionaryEntriesParams,
     )
   }
 
@@ -366,18 +596,52 @@ public class SearchClient(
     browseParams: BrowseParams? = null,
     requestOptions: RequestOptions? = null,
   ): BrowseResponse {
-    require(indexName.isNotBlank()) { "Parameter `indexName` is required when calling `browse`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "$indexName", "browse"),
-        isRead = true,
-        body = browseParams,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = browseRequestConfig(indexName = indexName, browseParams = browseParams),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves records from an index, up to 1,000 per request. Searching returns _hits_ (records
+   * augmented with highlighting and ranking details). Browsing returns matching records only. Use
+   * browse to export your indices. - The Analytics API doesn't collect data when using `browse`. -
+   * Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance,
+   * number of matched words, proximity, or geo distance. Browse requests automatically apply these
+   * settings: - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`:
+   * `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` -
+   * `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`:
+   * `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send
+   * these parameters with your browse requests, they're ignored. This variant of [browse] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - browse
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param browseParams
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun browseWithHTTPInfo(
+    indexName: String,
+    browseParams: BrowseParams? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<BrowseResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = browseRequestConfig(indexName = indexName, browseParams = browseParams),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun browseRequestConfig(indexName: String, browseParams: BrowseParams?): RequestConfig {
+    require(indexName.isNotBlank()) { "Parameter `indexName` is required when calling `browse`." }
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "$indexName", "browse"),
+      isRead = true,
+      body = browseParams,
     )
   }
 
@@ -396,18 +660,43 @@ public class SearchClient(
     indexName: String,
     requestOptions: RequestOptions? = null,
   ): UpdatedAtResponse {
+    return requester.execute(
+      requestConfig = clearObjectsRequestConfig(indexName = indexName),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes only the records from an index while keeping settings, synonyms, and rules. This
+   * operation is resource-intensive and subject to
+   * [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * This variant of [clearObjects] returns the full HTTP response information (status code,
+   * headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - deleteIndex
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun clearObjectsWithHTTPInfo(
+    indexName: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<UpdatedAtResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = clearObjectsRequestConfig(indexName = indexName),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun clearObjectsRequestConfig(indexName: String): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `clearObjects`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "$indexName", "clear"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "$indexName", "clear"),
     )
   }
 
@@ -426,23 +715,52 @@ public class SearchClient(
     forwardToReplicas: Boolean? = null,
     requestOptions: RequestOptions? = null,
   ): UpdatedAtResponse {
+    return requester.execute(
+      requestConfig =
+        clearRulesRequestConfig(indexName = indexName, forwardToReplicas = forwardToReplicas),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes all rules from the index. This variant of [clearRules] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param forwardToReplicas Whether changes are applied to replica indices.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun clearRulesWithHTTPInfo(
+    indexName: String,
+    forwardToReplicas: Boolean? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<UpdatedAtResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        clearRulesRequestConfig(indexName = indexName, forwardToReplicas = forwardToReplicas),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun clearRulesRequestConfig(
+    indexName: String,
+    forwardToReplicas: Boolean?,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `clearRules`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "rules", "clear"),
-        query =
-          buildMap {
-            forwardToReplicas?.let { put("forwardToReplicas", it) }
-          },
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "rules", "clear"),
+      query =
+        buildMap {
+          forwardToReplicas?.let { put("forwardToReplicas", it) }
+        },
     )
   }
 
@@ -461,23 +779,53 @@ public class SearchClient(
     forwardToReplicas: Boolean? = null,
     requestOptions: RequestOptions? = null,
   ): UpdatedAtResponse {
+    return requester.execute(
+      requestConfig =
+        clearSynonymsRequestConfig(indexName = indexName, forwardToReplicas = forwardToReplicas),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes all synonyms from the index. This variant of [clearSynonyms] returns the full HTTP
+   * response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param forwardToReplicas Whether changes are applied to replica indices.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun clearSynonymsWithHTTPInfo(
+    indexName: String,
+    forwardToReplicas: Boolean? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<UpdatedAtResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        clearSynonymsRequestConfig(indexName = indexName, forwardToReplicas = forwardToReplicas),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun clearSynonymsRequestConfig(
+    indexName: String,
+    forwardToReplicas: Boolean?,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `clearSynonyms`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "synonyms", "clear"),
-        query =
-          buildMap {
-            forwardToReplicas?.let { put("forwardToReplicas", it) }
-          },
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "synonyms", "clear"),
+      query =
+        buildMap {
+          forwardToReplicas?.let { put("forwardToReplicas", it) }
+        },
     )
   }
 
@@ -493,19 +841,44 @@ public class SearchClient(
     parameters: Map<kotlin.String, Any>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customDelete`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customDeleteRequestConfig(path = path, parameters = parameters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customDelete]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customDeleteWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customDeleteRequestConfig(path = path, parameters = parameters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customDeleteRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customDelete`." }
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
     )
   }
 
@@ -521,19 +894,44 @@ public class SearchClient(
     parameters: Map<kotlin.String, Any>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customGet`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customGetRequestConfig(path = path, parameters = parameters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customGet] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customGetWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customGetRequestConfig(path = path, parameters = parameters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customGetRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customGet`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
     )
   }
 
@@ -551,20 +949,48 @@ public class SearchClient(
     body: JsonObject? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPost`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-        body = body,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customPostRequestConfig(path = path, parameters = parameters, body = body),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customPost]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param body Parameters to send with the custom request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customPostWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    body: JsonObject? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customPostRequestConfig(path = path, parameters = parameters, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customPostRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+    body: JsonObject?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPost`." }
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
+      body = body,
     )
   }
 
@@ -582,20 +1008,48 @@ public class SearchClient(
     body: JsonObject? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPut`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-        body = body,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customPutRequestConfig(path = path, parameters = parameters, body = body),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customPut] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param body Parameters to send with the custom request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customPutWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    body: JsonObject? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customPutRequestConfig(path = path, parameters = parameters, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customPutRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+    body: JsonObject?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPut`." }
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
+      body = body,
     )
   }
 
@@ -612,15 +1066,37 @@ public class SearchClient(
     key: String,
     requestOptions: RequestOptions? = null,
   ): DeleteApiKeyResponse {
-    require(key.isNotBlank()) { "Parameter `key` is required when calling `deleteApiKey`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "keys", "$key"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = deleteApiKeyRequestConfig(key = key),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes the API key. This variant of [deleteApiKey] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param key API key.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteApiKeyWithHTTPInfo(
+    key: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<DeleteApiKeyResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = deleteApiKeyRequestConfig(key = key),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteApiKeyRequestConfig(key: String): RequestConfig {
+    require(key.isNotBlank()) { "Parameter `key` is required when calling `deleteApiKey`." }
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "keys", "$key"),
     )
   }
 
@@ -645,18 +1121,52 @@ public class SearchClient(
     deleteByParams: DeleteByParams,
     requestOptions: RequestOptions? = null,
   ): UpdatedAtResponse {
-    require(indexName.isNotBlank()) { "Parameter `indexName` is required when calling `deleteBy`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "deleteByQuery"),
-        body = deleteByParams,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = deleteByRequestConfig(indexName = indexName, deleteByParams = deleteByParams),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This operation doesn't accept empty filters. This operation is resource-intensive. Use it only
+   * if you can't get the object IDs of the records you want to delete. It's more efficient to get a
+   * list of object IDs with the
+   * [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the
+   * records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This
+   * operation is subject to
+   * [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * This variant of [deleteBy] returns the full HTTP response information (status code, headers,
+   * raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - deleteIndex
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param deleteByParams
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteByWithHTTPInfo(
+    indexName: String,
+    deleteByParams: DeleteByParams,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<UpdatedAtResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = deleteByRequestConfig(indexName = indexName, deleteByParams = deleteByParams),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteByRequestConfig(
+    indexName: String,
+    deleteByParams: DeleteByParams,
+  ): RequestConfig {
+    require(indexName.isNotBlank()) { "Parameter `indexName` is required when calling `deleteBy`." }
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "deleteByQuery"),
+      body = deleteByParams,
     )
   }
 
@@ -678,17 +1188,45 @@ public class SearchClient(
     indexName: String,
     requestOptions: RequestOptions? = null,
   ): DeletedAtResponse {
+    return requester.execute(
+      requestConfig = deleteIndexRequestConfig(indexName = indexName),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes an index and all its settings. - Deleting an index doesn't delete its analytics data. -
+   * If you try to delete a non-existing index, the operation is ignored without warning. - If the
+   * index you want to delete has replica indices, the replicas become independent indices. - If the
+   * index you want to delete is a replica index, you must first unlink it from its primary index
+   * before you can delete it. For more information, see
+   * [Delete replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas).
+   * This variant of [deleteIndex] returns the full HTTP response information (status code, headers,
+   * raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - deleteIndex
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteIndexWithHTTPInfo(
+    indexName: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<DeletedAtResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = deleteIndexRequestConfig(indexName = indexName),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteIndexRequestConfig(indexName: String): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `deleteIndex`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "$indexName"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "$indexName"),
     )
   }
 
@@ -710,22 +1248,50 @@ public class SearchClient(
     objectID: String,
     requestOptions: RequestOptions? = null,
   ): DeletedAtResponse {
+    return requester.execute(
+      requestConfig = deleteObjectRequestConfig(indexName = indexName, objectID = objectID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes a record by its object ID. To delete more than one record, use the
+   * [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). To delete records
+   * matching a query, use the
+   * [`deleteBy` operation](https://www.algolia.com/doc/rest-api/search/delete-by). This variant of
+   * [deleteObject] returns the full HTTP response information (status code, headers, raw body)
+   * along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - deleteObject
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param objectID Unique record identifier.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteObjectWithHTTPInfo(
+    indexName: String,
+    objectID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<DeletedAtResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = deleteObjectRequestConfig(indexName = indexName, objectID = objectID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteObjectRequestConfig(indexName: String, objectID: String): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `deleteObject`."
     }
     require(objectID.isNotBlank()) {
       "Parameter `objectID` is required when calling `deleteObject`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "$objectID"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "$objectID"),
     )
   }
 
@@ -747,24 +1313,66 @@ public class SearchClient(
     forwardToReplicas: Boolean? = null,
     requestOptions: RequestOptions? = null,
   ): UpdatedAtResponse {
+    return requester.execute(
+      requestConfig =
+        deleteRuleRequestConfig(
+          indexName = indexName,
+          objectID = objectID,
+          forwardToReplicas = forwardToReplicas,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes a rule by its ID. To find the object ID for rules, use the
+   * [`search` operation](https://www.algolia.com/doc/rest-api/search/search-rules). This variant of
+   * [deleteRule] returns the full HTTP response information (status code, headers, raw body) along
+   * with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param objectID Unique identifier of a rule object.
+   * @param forwardToReplicas Whether changes are applied to replica indices.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteRuleWithHTTPInfo(
+    indexName: String,
+    objectID: String,
+    forwardToReplicas: Boolean? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<UpdatedAtResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        deleteRuleRequestConfig(
+          indexName = indexName,
+          objectID = objectID,
+          forwardToReplicas = forwardToReplicas,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteRuleRequestConfig(
+    indexName: String,
+    objectID: String,
+    forwardToReplicas: Boolean?,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `deleteRule`."
     }
     require(objectID.isNotBlank()) { "Parameter `objectID` is required when calling `deleteRule`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "rules", "$objectID"),
-        query =
-          buildMap {
-            forwardToReplicas?.let { put("forwardToReplicas", it) }
-          },
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "rules", "$objectID"),
+      query =
+        buildMap {
+          forwardToReplicas?.let { put("forwardToReplicas", it) }
+        },
     )
   }
 
@@ -781,16 +1389,39 @@ public class SearchClient(
     source: String,
     requestOptions: RequestOptions? = null,
   ): DeleteSourceResponse {
-    require(source.isNotBlank()) { "Parameter `source` is required when calling `deleteSource`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "security", "sources", "$source"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = deleteSourceRequestConfig(source = source),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes a source from the list of allowed sources. This variant of [deleteSource] returns the
+   * full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param source IP address range of the source.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteSourceWithHTTPInfo(
+    source: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<DeleteSourceResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = deleteSourceRequestConfig(source = source),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteSourceRequestConfig(source: String): RequestConfig {
+    require(source.isNotBlank()) { "Parameter `source` is required when calling `deleteSource`." }
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "security", "sources", "$source"),
     )
   }
 
@@ -812,26 +1443,68 @@ public class SearchClient(
     forwardToReplicas: Boolean? = null,
     requestOptions: RequestOptions? = null,
   ): DeletedAtResponse {
+    return requester.execute(
+      requestConfig =
+        deleteSynonymRequestConfig(
+          indexName = indexName,
+          objectID = objectID,
+          forwardToReplicas = forwardToReplicas,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes a synonym by its ID. To find the object IDs of your synonyms, use the
+   * [`search` operation](https://www.algolia.com/doc/rest-api/search/search-synonyms). This variant
+   * of [deleteSynonym] returns the full HTTP response information (status code, headers, raw body)
+   * along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param objectID Unique identifier of a synonym object.
+   * @param forwardToReplicas Whether changes are applied to replica indices.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteSynonymWithHTTPInfo(
+    indexName: String,
+    objectID: String,
+    forwardToReplicas: Boolean? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<DeletedAtResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        deleteSynonymRequestConfig(
+          indexName = indexName,
+          objectID = objectID,
+          forwardToReplicas = forwardToReplicas,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteSynonymRequestConfig(
+    indexName: String,
+    objectID: String,
+    forwardToReplicas: Boolean?,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `deleteSynonym`."
     }
     require(objectID.isNotBlank()) {
       "Parameter `objectID` is required when calling `deleteSynonym`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "synonyms", "$objectID"),
-        query =
-          buildMap {
-            forwardToReplicas?.let { put("forwardToReplicas", it) }
-          },
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "synonyms", "$objectID"),
+      query =
+        buildMap {
+          forwardToReplicas?.let { put("forwardToReplicas", it) }
+        },
     )
   }
 
@@ -851,15 +1524,40 @@ public class SearchClient(
     key: String,
     requestOptions: RequestOptions? = null,
   ): GetApiKeyResponse {
-    require(key.isNotBlank()) { "Parameter `key` is required when calling `getApiKey`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "keys", "$key"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getApiKeyRequestConfig(key = key),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Gets the permissions and restrictions of an API key. When authenticating with the admin API
+   * key, you can request information for any of your application's keys. When authenticating with
+   * other API keys, you can only retrieve information for that key, with the description replaced
+   * by `<redacted>`. This variant of [getApiKey] returns the full HTTP response information (status
+   * code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - search
+   *
+   * @param key API key.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getApiKeyWithHTTPInfo(
+    key: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetApiKeyResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getApiKeyRequestConfig(key = key),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getApiKeyRequestConfig(key: String): RequestConfig {
+    require(key.isNotBlank()) { "Parameter `key` is required when calling `getApiKey`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "keys", "$key"),
     )
   }
 
@@ -876,14 +1574,37 @@ public class SearchClient(
     taskID: Long,
     requestOptions: RequestOptions? = null,
   ): GetTaskResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "task", "$taskID"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getAppTaskRequestConfig(taskID = taskID),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Checks the status of a given application task. This variant of [getAppTask] returns the full
+   * HTTP response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param taskID Unique task identifier.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getAppTaskWithHTTPInfo(
+    taskID: Long,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetTaskResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getAppTaskRequestConfig(taskID = taskID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getAppTaskRequestConfig(taskID: Long): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "task", "$taskID"),
     )
   }
 
@@ -898,15 +1619,36 @@ public class SearchClient(
   public suspend fun getDictionaryLanguages(
     requestOptions: RequestOptions? = null
   ): Map<kotlin.String, Languages> {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "dictionaries", "*", "languages"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getDictionaryLanguagesRequestConfig(),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Lists supported languages with their supported dictionary types and number of custom entries.
+   * This variant of [getDictionaryLanguages] returns the full HTTP response information (status
+   * code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getDictionaryLanguagesWithHTTPInfo(
+    requestOptions: RequestOptions? = null
+  ): AlgoliaHttpResponse<Map<kotlin.String, Languages>> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getDictionaryLanguagesRequestConfig(),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getDictionaryLanguagesRequestConfig(): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "dictionaries", "*", "languages"),
     )
   }
 
@@ -921,15 +1663,36 @@ public class SearchClient(
   public suspend fun getDictionarySettings(
     requestOptions: RequestOptions? = null
   ): GetDictionarySettingsResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "dictionaries", "*", "settings"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getDictionarySettingsRequestConfig(),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the languages for which standard dictionary entries are turned off. This variant of
+   * [getDictionarySettings] returns the full HTTP response information (status code, headers, raw
+   * body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getDictionarySettingsWithHTTPInfo(
+    requestOptions: RequestOptions? = null
+  ): AlgoliaHttpResponse<GetDictionarySettingsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getDictionarySettingsRequestConfig(),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getDictionarySettingsRequestConfig(): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "dictionaries", "*", "settings"),
     )
   }
 
@@ -960,21 +1723,64 @@ public class SearchClient(
     type: LogType? = null,
     requestOptions: RequestOptions? = null,
   ): GetLogsResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "logs"),
-        query =
-          buildMap {
-            offset?.let { put("offset", it) }
-            length?.let { put("length", it) }
-            indexName?.let { put("indexName", it) }
-            type?.let { put("type", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        getLogsRequestConfig(offset = offset, length = length, indexName = indexName, type = type),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * The request must be authenticated by an API key with the [`logs`
+   * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). - Logs are
+   * held for the last seven days. - Up to 1,000 API requests per server are logged. - This request
+   * counts towards your
+   * [operations quota](https://support.algolia.com/hc/articles/17245378392977-How-does-Algolia-count-records-and-operations)
+   * but doesn't appear in the logs itself. This variant of [getLogs] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - logs
+   *
+   * @param offset First log entry to retrieve. The most recent entries are listed first. (default
+   *   to 0)
+   * @param length Maximum number of entries to retrieve. (default to 10)
+   * @param indexName Index for which to retrieve log entries. By default, log entries are retrieved
+   *   for all indices.
+   * @param type Type of log entries to retrieve. By default, all log entries are retrieved.
+   *   (default to LogType.all)
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getLogsWithHTTPInfo(
+    offset: Int? = null,
+    length: Int? = null,
+    indexName: String? = null,
+    type: LogType? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetLogsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getLogsRequestConfig(offset = offset, length = length, indexName = indexName, type = type),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getLogsRequestConfig(
+    offset: Int?,
+    length: Int?,
+    indexName: String?,
+    type: LogType?,
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "logs"),
+      query =
+        buildMap {
+          offset?.let { put("offset", it) }
+          length?.let { put("length", it) }
+          indexName?.let { put("indexName", it) }
+          type?.let { put("type", it) }
+        },
     )
   }
 
@@ -999,24 +1805,69 @@ public class SearchClient(
     attributesToRetrieve: List<String>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
+    return requester.execute(
+      requestConfig =
+        getObjectRequestConfig(
+          indexName = indexName,
+          objectID = objectID,
+          attributesToRetrieve = attributesToRetrieve,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves one record by its object ID. To retrieve more than one record, use the
+   * [`objects` operation](https://www.algolia.com/doc/rest-api/search/get-objects). This variant of
+   * [getObject] returns the full HTTP response information (status code, headers, raw body) along
+   * with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - search
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param objectID Unique record identifier.
+   * @param attributesToRetrieve Attributes to include with the records in the response. This is
+   *   useful to reduce the size of the API response. By default, all retrievable attributes are
+   *   returned. `objectID` is always retrieved. Attributes included in `unretrievableAttributes`
+   *   won't be retrieved unless the request is authenticated with the admin API key.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getObjectWithHTTPInfo(
+    indexName: String,
+    objectID: String,
+    attributesToRetrieve: List<String>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        getObjectRequestConfig(
+          indexName = indexName,
+          objectID = objectID,
+          attributesToRetrieve = attributesToRetrieve,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getObjectRequestConfig(
+    indexName: String,
+    objectID: String,
+    attributesToRetrieve: List<String>?,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `getObject`."
     }
     require(objectID.isNotBlank()) { "Parameter `objectID` is required when calling `getObject`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "$objectID"),
-        query =
-          buildMap {
-            attributesToRetrieve?.let { put("attributesToRetrieve", it.joinToString(",")) }
-          },
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "$objectID"),
+      query =
+        buildMap {
+          attributesToRetrieve?.let { put("attributesToRetrieve", it.joinToString(",")) }
+        },
     )
   }
 
@@ -1034,16 +1885,39 @@ public class SearchClient(
     getObjectsParams: GetObjectsParams,
     requestOptions: RequestOptions? = null,
   ): GetObjectsResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "*", "objects"),
-        isRead = true,
-        body = getObjectsParams,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getObjectsRequestConfig(getObjectsParams = getObjectsParams),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves one or more records, potentially from different indices. Records are returned in the
+   * same order as the requests. This variant of [getObjects] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - search
+   *
+   * @param getObjectsParams Request object.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getObjectsWithHTTPInfo(
+    getObjectsParams: GetObjectsParams,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetObjectsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getObjectsRequestConfig(getObjectsParams = getObjectsParams),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getObjectsRequestConfig(getObjectsParams: GetObjectsParams): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "*", "objects"),
+      isRead = true,
+      body = getObjectsParams,
     )
   }
 
@@ -1063,18 +1937,44 @@ public class SearchClient(
     objectID: String,
     requestOptions: RequestOptions? = null,
   ): Rule {
+    return requester.execute(
+      requestConfig = getRuleRequestConfig(indexName = indexName, objectID = objectID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves a rule by its ID. To find the object ID of rules, use the
+   * [`search` operation](https://www.algolia.com/doc/rest-api/search/search-rules). This variant of
+   * [getRule] returns the full HTTP response information (status code, headers, raw body) along
+   * with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param objectID Unique identifier of a rule object.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getRuleWithHTTPInfo(
+    indexName: String,
+    objectID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<Rule> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getRuleRequestConfig(indexName = indexName, objectID = objectID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getRuleRequestConfig(indexName: String, objectID: String): RequestConfig {
     require(indexName.isNotBlank()) { "Parameter `indexName` is required when calling `getRule`." }
     require(objectID.isNotBlank()) { "Parameter `objectID` is required when calling `getRule`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "rules", "$objectID"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "rules", "$objectID"),
     )
   }
 
@@ -1094,23 +1994,48 @@ public class SearchClient(
     getVersion: Int? = null,
     requestOptions: RequestOptions? = null,
   ): SettingsResponse {
+    return requester.execute(
+      requestConfig = getSettingsRequestConfig(indexName = indexName, getVersion = getVersion),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves an object with non-null index settings. This variant of [getSettings] returns the
+   * full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param getVersion When set to 2, the endpoint will not include `synonyms` in the response. This
+   *   parameter is here for backward compatibility. (default to 1)
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getSettingsWithHTTPInfo(
+    indexName: String,
+    getVersion: Int? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SettingsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getSettingsRequestConfig(indexName = indexName, getVersion = getVersion),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getSettingsRequestConfig(indexName: String, getVersion: Int?): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `getSettings`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "settings"),
-        query =
-          buildMap {
-            getVersion?.let { put("getVersion", it) }
-          },
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "$indexName", "settings"),
+      query =
+        buildMap {
+          getVersion?.let { put("getVersion", it) }
+        },
     )
   }
 
@@ -1123,14 +2048,35 @@ public class SearchClient(
    * @param requestOptions additional request configuration.
    */
   public suspend fun getSources(requestOptions: RequestOptions? = null): List<Source> {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "security", "sources"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getSourcesRequestConfig(),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves all allowed IP addresses with access to your application. This variant of
+   * [getSources] returns the full HTTP response information (status code, headers, raw body) along
+   * with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getSourcesWithHTTPInfo(
+    requestOptions: RequestOptions? = null
+  ): AlgoliaHttpResponse<List<Source>> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getSourcesRequestConfig(),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getSourcesRequestConfig(): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "security", "sources"),
     )
   }
 
@@ -1150,20 +2096,46 @@ public class SearchClient(
     objectID: String,
     requestOptions: RequestOptions? = null,
   ): SynonymHit {
+    return requester.execute(
+      requestConfig = getSynonymRequestConfig(indexName = indexName, objectID = objectID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves a synonym by its ID. To find the object IDs for your synonyms, use the
+   * [`search` operation](https://www.algolia.com/doc/rest-api/search/search-synonyms). This variant
+   * of [getSynonym] returns the full HTTP response information (status code, headers, raw body)
+   * along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param objectID Unique identifier of a synonym object.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getSynonymWithHTTPInfo(
+    indexName: String,
+    objectID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SynonymHit> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getSynonymRequestConfig(indexName = indexName, objectID = objectID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getSynonymRequestConfig(indexName: String, objectID: String): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `getSynonym`."
     }
     require(objectID.isNotBlank()) { "Parameter `objectID` is required when calling `getSynonym`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "synonyms", "$objectID"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "synonyms", "$objectID"),
     )
   }
 
@@ -1185,17 +2157,44 @@ public class SearchClient(
     taskID: Long,
     requestOptions: RequestOptions? = null,
   ): GetTaskResponse {
-    require(indexName.isNotBlank()) { "Parameter `indexName` is required when calling `getTask`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "task", "$taskID"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getTaskRequestConfig(indexName = indexName, taskID = taskID),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Checks the status of a given task. Indexing tasks are asynchronous. When you add, update, or
+   * delete records or indices, a task is created on a queue and completed depending on the load on
+   * the server. The indexing tasks' responses include a task ID that you can use to check the
+   * status. This variant of [getTask] returns the full HTTP response information (status code,
+   * headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param taskID Unique task identifier.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getTaskWithHTTPInfo(
+    indexName: String,
+    taskID: Long,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetTaskResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getTaskRequestConfig(indexName = indexName, taskID = taskID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getTaskRequestConfig(indexName: String, taskID: Long): RequestConfig {
+    require(indexName.isNotBlank()) { "Parameter `indexName` is required when calling `getTask`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "task", "$taskID"),
     )
   }
 
@@ -1210,14 +2209,37 @@ public class SearchClient(
    * @deprecated
    */
   public suspend fun getTopUserIds(requestOptions: RequestOptions? = null): GetTopUserIdsResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping", "top"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getTopUserIdsRequestConfig(),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Get the IDs of the 10 users with the highest number of records per cluster. Since it can take a
+   * few seconds to get the data from the different clusters, the response isn't real-time. This
+   * variant of [getTopUserIds] returns the full HTTP response information (status code, headers,
+   * raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun getTopUserIdsWithHTTPInfo(
+    requestOptions: RequestOptions? = null
+  ): AlgoliaHttpResponse<GetTopUserIdsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getTopUserIdsRequestConfig(),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getTopUserIdsRequestConfig(): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping", "top"),
     )
   }
 
@@ -1233,16 +2255,41 @@ public class SearchClient(
    * @deprecated
    */
   public suspend fun getUserId(userID: String, requestOptions: RequestOptions? = null): UserId {
-    require(userID.isNotBlank()) { "Parameter `userID` is required when calling `getUserId`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping", "$userID"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getUserIdRequestConfig(userID = userID),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Returns the user ID data stored in the mapping. Since it can take a few seconds to get the data
+   * from the different clusters, the response isn't real-time. This variant of [getUserId] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param userID Unique identifier of the user who makes the search request.
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun getUserIdWithHTTPInfo(
+    userID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<UserId> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getUserIdRequestConfig(userID = userID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getUserIdRequestConfig(userID: String): RequestConfig {
+    require(userID.isNotBlank()) { "Parameter `userID` is required when calling `getUserId`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping", "$userID"),
     )
   }
 
@@ -1262,19 +2309,44 @@ public class SearchClient(
     getClusters: Boolean? = null,
     requestOptions: RequestOptions? = null,
   ): HasPendingMappingsResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping", "pending"),
-        query =
-          buildMap {
-            getClusters?.let { put("getClusters", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = hasPendingMappingsRequestConfig(getClusters = getClusters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * To determine when the time-consuming process of creating a large batch of users or migrating
+   * users from one cluster to another is complete, this operation retrieves the status of the
+   * process. This variant of [hasPendingMappings] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param getClusters Whether to include the cluster's pending mapping state in the response.
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun hasPendingMappingsWithHTTPInfo(
+    getClusters: Boolean? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<HasPendingMappingsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = hasPendingMappingsRequestConfig(getClusters = getClusters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun hasPendingMappingsRequestConfig(getClusters: Boolean?): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping", "pending"),
+      query =
+        buildMap {
+          getClusters?.let { put("getClusters", it) }
+        },
     )
   }
 
@@ -1288,14 +2360,35 @@ public class SearchClient(
    * @param requestOptions additional request configuration.
    */
   public suspend fun listApiKeys(requestOptions: RequestOptions? = null): ListApiKeysResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "keys"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = listApiKeysRequestConfig(),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Lists all API keys associated with your Algolia application, including their permissions and
+   * restrictions. This variant of [listApiKeys] returns the full HTTP response information (status
+   * code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun listApiKeysWithHTTPInfo(
+    requestOptions: RequestOptions? = null
+  ): AlgoliaHttpResponse<ListApiKeysResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = listApiKeysRequestConfig(),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listApiKeysRequestConfig(): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "keys"),
     )
   }
 
@@ -1309,14 +2402,36 @@ public class SearchClient(
    * @deprecated
    */
   public suspend fun listClusters(requestOptions: RequestOptions? = null): ListClustersResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = listClustersRequestConfig(),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Lists the available clusters in a multi-cluster setup. This variant of [listClusters] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun listClustersWithHTTPInfo(
+    requestOptions: RequestOptions? = null
+  ): AlgoliaHttpResponse<ListClustersResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = listClustersRequestConfig(),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listClustersRequestConfig(): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters"),
     )
   }
 
@@ -1336,19 +2451,45 @@ public class SearchClient(
     hitsPerPage: Int? = null,
     requestOptions: RequestOptions? = null,
   ): ListIndicesResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes"),
-        query =
-          buildMap {
-            page?.let { put("page", it) }
-            hitsPerPage?.let { put("hitsPerPage", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = listIndicesRequestConfig(page = page, hitsPerPage = hitsPerPage),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Lists all indices in the current Algolia application. The request follows any index
+   * restrictions of the API key you use to make the request. This variant of [listIndices] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - listIndexes
+   *
+   * @param page Requested page of the API response. If `null`, the API response is not paginated.
+   * @param hitsPerPage Number of hits per page. (default to 100)
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun listIndicesWithHTTPInfo(
+    page: Int? = null,
+    hitsPerPage: Int? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ListIndicesResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = listIndicesRequestConfig(page = page, hitsPerPage = hitsPerPage),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listIndicesRequestConfig(page: Int?, hitsPerPage: Int?): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes"),
+      query =
+        buildMap {
+          page?.let { put("page", it) }
+          hitsPerPage?.let { put("hitsPerPage", it) }
+        },
     )
   }
 
@@ -1369,19 +2510,46 @@ public class SearchClient(
     hitsPerPage: Int? = null,
     requestOptions: RequestOptions? = null,
   ): ListUserIdsResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping"),
-        query =
-          buildMap {
-            page?.let { put("page", it) }
-            hitsPerPage?.let { put("hitsPerPage", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = listUserIdsRequestConfig(page = page, hitsPerPage = hitsPerPage),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Lists the userIDs assigned to a multi-cluster application. Since it can take a few seconds to
+   * get the data from the different clusters, the response isn't real-time. This variant of
+   * [listUserIds] returns the full HTTP response information (status code, headers, raw body) along
+   * with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param page Requested page of the API response. If `null`, the API response is not paginated.
+   * @param hitsPerPage Number of hits per page. (default to 100)
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun listUserIdsWithHTTPInfo(
+    page: Int? = null,
+    hitsPerPage: Int? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ListUserIdsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = listUserIdsRequestConfig(page = page, hitsPerPage = hitsPerPage),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listUserIdsRequestConfig(page: Int?, hitsPerPage: Int?): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping"),
+      query =
+        buildMap {
+          page?.let { put("page", it) }
+          hitsPerPage?.let { put("hitsPerPage", it) }
+        },
     )
   }
 
@@ -1401,15 +2569,41 @@ public class SearchClient(
     batchParams: BatchParams,
     requestOptions: RequestOptions? = null,
   ): MultipleBatchResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "*", "batch"),
-        body = batchParams,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = multipleBatchRequestConfig(batchParams = batchParams),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Adds, updates, or deletes records in multiple indices with a single API request. - Actions are
+   * applied in the order they are specified. - Actions are equivalent to the individual API
+   * requests of the same name. This operation is subject to
+   * [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * This variant of [multipleBatch] returns the full HTTP response information (status code,
+   * headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   *
+   * @param batchParams
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun multipleBatchWithHTTPInfo(
+    batchParams: BatchParams,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<MultipleBatchResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = multipleBatchRequestConfig(batchParams = batchParams),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun multipleBatchRequestConfig(batchParams: BatchParams): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "*", "batch"),
+      body = batchParams,
     )
   }
 
@@ -1445,20 +2639,73 @@ public class SearchClient(
     operationIndexParams: OperationIndexParams,
     requestOptions: RequestOptions? = null,
   ): UpdatedAtResponse {
+    return requester.execute(
+      requestConfig =
+        operationIndexRequestConfig(
+          indexName = indexName,
+          operationIndexParams = operationIndexParams,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Copies or moves (renames) an index within the same Algolia application. Notes: - Existing
+   * destination indices are overwritten, except for their analytics data. - If the destination
+   * index doesn't exist yet, it's created. - This operation is resource-intensive. **Copy** - If
+   * the source index doesn't exist, copying creates a new index with 0 records and default
+   * settings. - API keys from the source index are merged with the existing keys in the destination
+   * index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't
+   * copy to a destination index that already has replicas. - Be aware of the [size
+   * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). -
+   * For more information, see
+   * [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).
+   * **Move** - If the source index doesn't exist, moving is ignored without returning an error. -
+   * When moving an index, the analytics data keeps its original name, and a new set of analytics
+   * data is started for the new name. To access the original analytics in the dashboard, create an
+   * index with the original name. - If the destination index has replicas, moving will overwrite
+   * the existing index and copy the data to the replica indices. - For more information, see
+   * [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
+   * This operation is subject to
+   * [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * This variant of [operationIndex] returns the full HTTP response information (status code,
+   * headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param operationIndexParams
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun operationIndexWithHTTPInfo(
+    indexName: String,
+    operationIndexParams: OperationIndexParams,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<UpdatedAtResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        operationIndexRequestConfig(
+          indexName = indexName,
+          operationIndexParams = operationIndexParams,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun operationIndexRequestConfig(
+    indexName: String,
+    operationIndexParams: OperationIndexParams,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `operationIndex`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "operation"),
-        body = operationIndexParams,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "operation"),
+      body = operationIndexParams,
     )
   }
 
@@ -1505,6 +2752,81 @@ public class SearchClient(
     createIfNotExists: Boolean? = null,
     requestOptions: RequestOptions? = null,
   ): UpdatedAtWithObjectIdResponse {
+    return requester.execute(
+      requestConfig =
+        partialUpdateObjectRequestConfig(
+          indexName = indexName,
+          objectID = objectID,
+          attributesToUpdate = attributesToUpdate,
+          createIfNotExists = createIfNotExists,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Adds new attributes to a record, or updates existing ones. - If a record with the specified
+   * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is
+   * true. - If the index doesn't exist yet, this method creates a new index. - Use first-level
+   * attributes only. Nested attributes aren't supported. If you specify a nested attribute, this
+   * operation replaces its first-level ancestor. To update attributes without replacing the full
+   * record, use these built-in operations. These operations are useful when the initial data isn't
+   * available. - `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric
+   * attribute. - `Add`: append a number or string element to an array attribute. - `Remove`: remove
+   * all matching number or string elements from an array attribute made of numbers or strings. -
+   * `AddUnique`: add a number or string element to an array attribute made of numbers or strings
+   * only if it's not already present. - `IncrementFrom`: increment a numeric integer attribute only
+   * if the provided value matches the current value. Otherwise, the update is ignored. Example: If
+   * you pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1,
+   * the API ignores the update. If the object doesn't exist, the API only creates it if you pass an
+   * `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the
+   * provided value is greater than the current value. Otherwise, the update is ignored. Example: If
+   * you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1,
+   * the API updates the object. If the object doesn't exist yet, the API only creates it if you
+   * pass an `IncrementSet` value greater than 0. Specify an operation by providing an object with
+   * the attribute to update as the key and its value as an object with these properties: -
+   * `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument
+   * to the operation, for example, increment or decrement step, or a value to add or remove. When
+   * updating multiple attributes or using multiple operations targeting the same record, use a
+   * single partial update for faster processing. This operation is subject to
+   * [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * This variant of [partialUpdateObject] returns the full HTTP response information (status code,
+   * headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param objectID Unique record identifier.
+   * @param attributesToUpdate Attributes with their values.
+   * @param createIfNotExists Whether to create a new record if it doesn't exist. (default to true)
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun partialUpdateObjectWithHTTPInfo(
+    indexName: String,
+    objectID: String,
+    attributesToUpdate: JsonObject,
+    createIfNotExists: Boolean? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<UpdatedAtWithObjectIdResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        partialUpdateObjectRequestConfig(
+          indexName = indexName,
+          objectID = objectID,
+          attributesToUpdate = attributesToUpdate,
+          createIfNotExists = createIfNotExists,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun partialUpdateObjectRequestConfig(
+    indexName: String,
+    objectID: String,
+    attributesToUpdate: JsonObject,
+    createIfNotExists: Boolean?,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `partialUpdateObject`."
     }
@@ -1514,21 +2836,16 @@ public class SearchClient(
     require(attributesToUpdate.isNotEmpty()) {
       "Parameter `attributesToUpdate` is required when calling `partialUpdateObject`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "$objectID", "partial"),
-        query =
-          buildMap {
-            createIfNotExists?.let { put("createIfNotExists", it) }
-          },
-        body = attributesToUpdate,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "$objectID", "partial"),
+      query =
+        buildMap {
+          createIfNotExists?.let { put("createIfNotExists", it) }
+        },
+      body = attributesToUpdate,
     )
   }
 
@@ -1546,16 +2863,40 @@ public class SearchClient(
     userID: String,
     requestOptions: RequestOptions? = null,
   ): RemoveUserIdResponse {
-    require(userID.isNotBlank()) { "Parameter `userID` is required when calling `removeUserId`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping", "$userID"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = removeUserIdRequestConfig(userID = userID),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes a user ID and its associated data from the clusters. This variant of [removeUserId]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param userID Unique identifier of the user who makes the search request.
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun removeUserIdWithHTTPInfo(
+    userID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<RemoveUserIdResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = removeUserIdRequestConfig(userID = userID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun removeUserIdRequestConfig(userID: String): RequestConfig {
+    require(userID.isNotBlank()) { "Parameter `userID` is required when calling `removeUserId`." }
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping", "$userID"),
     )
   }
 
@@ -1572,15 +2913,38 @@ public class SearchClient(
     source: List<Source>,
     requestOptions: RequestOptions? = null,
   ): ReplaceSourceResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "security", "sources"),
-        body = source,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = replaceSourcesRequestConfig(source = source),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Replaces the list of allowed sources. This variant of [replaceSources] returns the full HTTP
+   * response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param source Allowed sources.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun replaceSourcesWithHTTPInfo(
+    source: List<Source>,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ReplaceSourceResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = replaceSourcesRequestConfig(source = source),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun replaceSourcesRequestConfig(source: List<Source>): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "security", "sources"),
+      body = source,
     )
   }
 
@@ -1599,15 +2963,39 @@ public class SearchClient(
     key: String,
     requestOptions: RequestOptions? = null,
   ): AddApiKeyResponse {
-    require(key.isNotBlank()) { "Parameter `key` is required when calling `restoreApiKey`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "keys", "$key", "restore"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = restoreApiKeyRequestConfig(key = key),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Restores a deleted API key. Restoring resets the `validity` attribute to `0`. Algolia stores up
+   * to 1,000 API keys per application. If you create more, the oldest API keys are deleted and
+   * can't be restored. This variant of [restoreApiKey] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param key API key.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun restoreApiKeyWithHTTPInfo(
+    key: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<AddApiKeyResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = restoreApiKeyRequestConfig(key = key),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun restoreApiKeyRequestConfig(key: String): RequestConfig {
+    require(key.isNotBlank()) { "Parameter `key` is required when calling `restoreApiKey`." }
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "keys", "$key", "restore"),
     )
   }
 
@@ -1636,19 +3024,54 @@ public class SearchClient(
     body: JsonObject,
     requestOptions: RequestOptions? = null,
   ): SaveObjectResponse {
+    return requester.execute(
+      requestConfig = saveObjectRequestConfig(indexName = indexName, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Adds a record to an index or replaces it. - If the record doesn't have an object ID, a new
+   * record with an auto-generated object ID is added to your index. - If a record with the
+   * specified object ID exists, the existing record is replaced. - If a record with the specified
+   * object ID doesn't exist, a new record is added to your index. - If you add a record to an index
+   * that doesn't exist yet, a new index is created. To update _some_ attributes of a record, use
+   * the [`partial` operation](https://www.algolia.com/doc/rest-api/search/partial-update-object).
+   * To add, update, or replace multiple records, use the
+   * [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This operation is
+   * subject to
+   * [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * This variant of [saveObject] returns the full HTTP response information (status code, headers,
+   * raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param body The record. A schemaless object with attributes that are useful in the context of
+   *   search and discovery.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun saveObjectWithHTTPInfo(
+    indexName: String,
+    body: JsonObject,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SaveObjectResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = saveObjectRequestConfig(indexName = indexName, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun saveObjectRequestConfig(indexName: String, body: JsonObject): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `saveObject`."
     }
     require(body.isNotEmpty()) { "Parameter `body` is required when calling `saveObject`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "$indexName"),
-        body = body,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "$indexName"),
+      body = body,
     )
   }
 
@@ -1673,23 +3096,71 @@ public class SearchClient(
     forwardToReplicas: Boolean? = null,
     requestOptions: RequestOptions? = null,
   ): UpdatedAtResponse {
+    return requester.execute(
+      requestConfig =
+        saveRuleRequestConfig(
+          indexName = indexName,
+          objectID = objectID,
+          rule = rule,
+          forwardToReplicas = forwardToReplicas,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * If a rule with the specified object ID doesn't exist, it's created. Otherwise, the existing
+   * rule is replaced. To create or update more than one rule, use the
+   * [`batch` operation](https://www.algolia.com/doc/rest-api/search/save-rules). This variant of
+   * [saveRule] returns the full HTTP response information (status code, headers, raw body) along
+   * with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param objectID Unique identifier of a rule object.
+   * @param rule
+   * @param forwardToReplicas Whether changes are applied to replica indices.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun saveRuleWithHTTPInfo(
+    indexName: String,
+    objectID: String,
+    rule: Rule,
+    forwardToReplicas: Boolean? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<UpdatedAtResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        saveRuleRequestConfig(
+          indexName = indexName,
+          objectID = objectID,
+          rule = rule,
+          forwardToReplicas = forwardToReplicas,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun saveRuleRequestConfig(
+    indexName: String,
+    objectID: String,
+    rule: Rule,
+    forwardToReplicas: Boolean?,
+  ): RequestConfig {
     require(indexName.isNotBlank()) { "Parameter `indexName` is required when calling `saveRule`." }
     require(objectID.isNotBlank()) { "Parameter `objectID` is required when calling `saveRule`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "rules", "$objectID"),
-        query =
-          buildMap {
-            forwardToReplicas?.let { put("forwardToReplicas", it) }
-          },
-        body = rule,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "rules", "$objectID"),
+      query =
+        buildMap {
+          forwardToReplicas?.let { put("forwardToReplicas", it) }
+        },
+      body = rule,
     )
   }
 
@@ -1714,25 +3185,73 @@ public class SearchClient(
     clearExistingRules: Boolean? = null,
     requestOptions: RequestOptions? = null,
   ): UpdatedAtResponse {
+    return requester.execute(
+      requestConfig =
+        saveRulesRequestConfig(
+          indexName = indexName,
+          rules = rules,
+          forwardToReplicas = forwardToReplicas,
+          clearExistingRules = clearExistingRules,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Create or update multiple rules. If a rule with the specified object ID doesn't exist, Algolia
+   * creates a new one. Otherwise, existing rules are replaced. This operation is subject to
+   * [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * This variant of [saveRules] returns the full HTTP response information (status code, headers,
+   * raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param rules
+   * @param forwardToReplicas Whether changes are applied to replica indices.
+   * @param clearExistingRules Whether existing rules should be deleted before adding this batch.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun saveRulesWithHTTPInfo(
+    indexName: String,
+    rules: List<Rule>,
+    forwardToReplicas: Boolean? = null,
+    clearExistingRules: Boolean? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<UpdatedAtResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        saveRulesRequestConfig(
+          indexName = indexName,
+          rules = rules,
+          forwardToReplicas = forwardToReplicas,
+          clearExistingRules = clearExistingRules,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun saveRulesRequestConfig(
+    indexName: String,
+    rules: List<Rule>,
+    forwardToReplicas: Boolean?,
+    clearExistingRules: Boolean?,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `saveRules`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "rules", "batch"),
-        query =
-          buildMap {
-            forwardToReplicas?.let { put("forwardToReplicas", it) }
-            clearExistingRules?.let { put("clearExistingRules", it) }
-          },
-        body = rules,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "rules", "batch"),
+      query =
+        buildMap {
+          forwardToReplicas?.let { put("forwardToReplicas", it) }
+          clearExistingRules?.let { put("clearExistingRules", it) }
+        },
+      body = rules,
     )
   }
 
@@ -1757,27 +3276,75 @@ public class SearchClient(
     forwardToReplicas: Boolean? = null,
     requestOptions: RequestOptions? = null,
   ): SaveSynonymResponse {
+    return requester.execute(
+      requestConfig =
+        saveSynonymRequestConfig(
+          indexName = indexName,
+          objectID = objectID,
+          synonymHit = synonymHit,
+          forwardToReplicas = forwardToReplicas,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * If a synonym with the specified object ID doesn't exist, Algolia adds a new one. Otherwise, the
+   * existing synonym is replaced. To add multiple synonyms in a single API request, use the
+   * [`batch` operation](https://www.algolia.com/doc/rest-api/search/save-synonyms). This variant of
+   * [saveSynonym] returns the full HTTP response information (status code, headers, raw body) along
+   * with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param objectID Unique identifier of a synonym object.
+   * @param synonymHit
+   * @param forwardToReplicas Whether changes are applied to replica indices.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun saveSynonymWithHTTPInfo(
+    indexName: String,
+    objectID: String,
+    synonymHit: SynonymHit,
+    forwardToReplicas: Boolean? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SaveSynonymResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        saveSynonymRequestConfig(
+          indexName = indexName,
+          objectID = objectID,
+          synonymHit = synonymHit,
+          forwardToReplicas = forwardToReplicas,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun saveSynonymRequestConfig(
+    indexName: String,
+    objectID: String,
+    synonymHit: SynonymHit,
+    forwardToReplicas: Boolean?,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `saveSynonym`."
     }
     require(objectID.isNotBlank()) {
       "Parameter `objectID` is required when calling `saveSynonym`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "synonyms", "$objectID"),
-        query =
-          buildMap {
-            forwardToReplicas?.let { put("forwardToReplicas", it) }
-          },
-        body = synonymHit,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "synonyms", "$objectID"),
+      query =
+        buildMap {
+          forwardToReplicas?.let { put("forwardToReplicas", it) }
+        },
+      body = synonymHit,
     )
   }
 
@@ -1803,25 +3370,74 @@ public class SearchClient(
     replaceExistingSynonyms: Boolean? = null,
     requestOptions: RequestOptions? = null,
   ): UpdatedAtResponse {
+    return requester.execute(
+      requestConfig =
+        saveSynonymsRequestConfig(
+          indexName = indexName,
+          synonymHit = synonymHit,
+          forwardToReplicas = forwardToReplicas,
+          replaceExistingSynonyms = replaceExistingSynonyms,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing
+   * synonyms are replaced. This operation is subject to
+   * [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * This variant of [saveSynonyms] returns the full HTTP response information (status code,
+   * headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param synonymHit
+   * @param forwardToReplicas Whether changes are applied to replica indices.
+   * @param replaceExistingSynonyms Whether to replace all synonyms in the index with the ones sent
+   *   with this request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun saveSynonymsWithHTTPInfo(
+    indexName: String,
+    synonymHit: List<SynonymHit>,
+    forwardToReplicas: Boolean? = null,
+    replaceExistingSynonyms: Boolean? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<UpdatedAtResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        saveSynonymsRequestConfig(
+          indexName = indexName,
+          synonymHit = synonymHit,
+          forwardToReplicas = forwardToReplicas,
+          replaceExistingSynonyms = replaceExistingSynonyms,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun saveSynonymsRequestConfig(
+    indexName: String,
+    synonymHit: List<SynonymHit>,
+    forwardToReplicas: Boolean?,
+    replaceExistingSynonyms: Boolean?,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `saveSynonyms`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "synonyms", "batch"),
-        query =
-          buildMap {
-            forwardToReplicas?.let { put("forwardToReplicas", it) }
-            replaceExistingSynonyms?.let { put("replaceExistingSynonyms", it) }
-          },
-        body = synonymHit,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "synonyms", "batch"),
+      query =
+        buildMap {
+          forwardToReplicas?.let { put("forwardToReplicas", it) }
+          replaceExistingSynonyms?.let { put("replaceExistingSynonyms", it) }
+        },
+      body = synonymHit,
     )
   }
 
@@ -1842,16 +3458,43 @@ public class SearchClient(
     searchMethodParams: SearchMethodParams,
     requestOptions: RequestOptions? = null,
   ): SearchResponses {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "*", "queries"),
-        isRead = true,
-        body = searchMethodParams,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = searchRequestConfig(searchMethodParams = searchMethodParams),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Runs multiple search queries against one or more indices in a single API request. Use cases
+   * include: - Searching different indices, such as products and marketing content. - Run multiple
+   * queries on the same index with different parameters or filters. If you know the expected result
+   * type, use the `searchForHits` or `searchForFacets` helper to simplify the response format. This
+   * variant of [search] returns the full HTTP response information (status code, headers, raw body)
+   * along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - search
+   *
+   * @param searchMethodParams Multi-query search request body. Results are returned in the same
+   *   order as the requests.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun searchWithHTTPInfo(
+    searchMethodParams: SearchMethodParams,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SearchResponses> {
+    return requester.executeWithHttpInfo(
+      requestConfig = searchRequestConfig(searchMethodParams = searchMethodParams),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun searchRequestConfig(searchMethodParams: SearchMethodParams): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "*", "queries"),
+      isRead = true,
+      body = searchMethodParams,
     )
   }
 
@@ -1870,18 +3513,54 @@ public class SearchClient(
     searchDictionaryEntriesParams: SearchDictionaryEntriesParams,
     requestOptions: RequestOptions? = null,
   ): SearchDictionaryEntriesResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "dictionaries", "$dictionaryName", "search"),
-        isRead = true,
-        body = searchDictionaryEntriesParams,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        searchDictionaryEntriesRequestConfig(
+          dictionaryName = dictionaryName,
+          searchDictionaryEntriesParams = searchDictionaryEntriesParams,
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Searches for standard and custom dictionary entries. This variant of [searchDictionaryEntries]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param dictionaryName Dictionary type in which to search.
+   * @param searchDictionaryEntriesParams
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun searchDictionaryEntriesWithHTTPInfo(
+    dictionaryName: DictionaryType,
+    searchDictionaryEntriesParams: SearchDictionaryEntriesParams,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SearchDictionaryEntriesResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        searchDictionaryEntriesRequestConfig(
+          dictionaryName = dictionaryName,
+          searchDictionaryEntriesParams = searchDictionaryEntriesParams,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun searchDictionaryEntriesRequestConfig(
+    dictionaryName: DictionaryType,
+    searchDictionaryEntriesParams: SearchDictionaryEntriesParams,
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "dictionaries", "$dictionaryName", "search"),
+      isRead = true,
+      body = searchDictionaryEntriesParams,
     )
   }
 
@@ -1906,24 +3585,68 @@ public class SearchClient(
     searchForFacetValuesRequest: SearchForFacetValuesRequest? = null,
     requestOptions: RequestOptions? = null,
   ): SearchForFacetValuesResponse {
+    return requester.execute(
+      requestConfig =
+        searchForFacetValuesRequestConfig(
+          indexName = indexName,
+          facetName = facetName,
+          searchForFacetValuesRequest = searchForFacetValuesRequest,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Searches for values of a specified facet attribute. - By default, facet values are sorted by
+   * decreasing count. You can adjust this with the `sortFacetValueBy` parameter. - Searching for
+   * facet values doesn't work if you have **more than 65 searchable facets and searchable
+   * attributes combined**. This variant of [searchForFacetValues] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - search
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param facetName Facet attribute in which to search for values. This attribute must be included
+   *   in the `attributesForFaceting` index setting with the `searchable()` modifier.
+   * @param searchForFacetValuesRequest
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun searchForFacetValuesWithHTTPInfo(
+    indexName: String,
+    facetName: String,
+    searchForFacetValuesRequest: SearchForFacetValuesRequest? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SearchForFacetValuesResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        searchForFacetValuesRequestConfig(
+          indexName = indexName,
+          facetName = facetName,
+          searchForFacetValuesRequest = searchForFacetValuesRequest,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun searchForFacetValuesRequestConfig(
+    indexName: String,
+    facetName: String,
+    searchForFacetValuesRequest: SearchForFacetValuesRequest?,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `searchForFacetValues`."
     }
     require(facetName.isNotBlank()) {
       "Parameter `facetName` is required when calling `searchForFacetValues`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "facets", "$facetName", "query"),
-        isRead = true,
-        body = searchForFacetValuesRequest,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "facets", "$facetName", "query"),
+      isRead = true,
+      body = searchForFacetValuesRequest,
     )
   }
 
@@ -1942,21 +3665,50 @@ public class SearchClient(
     searchRulesParams: SearchRulesParams? = null,
     requestOptions: RequestOptions? = null,
   ): SearchRulesResponse {
+    return requester.execute(
+      requestConfig =
+        searchRulesRequestConfig(indexName = indexName, searchRulesParams = searchRulesParams),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Searches for rules in your index. This variant of [searchRules] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param searchRulesParams
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun searchRulesWithHTTPInfo(
+    indexName: String,
+    searchRulesParams: SearchRulesParams? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SearchRulesResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        searchRulesRequestConfig(indexName = indexName, searchRulesParams = searchRulesParams),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun searchRulesRequestConfig(
+    indexName: String,
+    searchRulesParams: SearchRulesParams?,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `searchRules`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "rules", "search"),
-        isRead = true,
-        body = searchRulesParams,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "rules", "search"),
+      isRead = true,
+      body = searchRulesParams,
     )
   }
 
@@ -1978,20 +3730,53 @@ public class SearchClient(
     searchParams: SearchParams? = null,
     requestOptions: RequestOptions? = null,
   ): SearchResponse {
+    return requester.execute(
+      requestConfig =
+        searchSingleIndexRequestConfig(indexName = indexName, searchParams = searchParams),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Searches a single index and returns matching search results as hits. This method lets you
+   * retrieve up to 1,000 hits. If you need more, use the
+   * [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse) or increase the
+   * `paginatedLimitedTo` index setting. This variant of [searchSingleIndex] returns the full HTTP
+   * response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - search
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param searchParams
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun searchSingleIndexWithHTTPInfo(
+    indexName: String,
+    searchParams: SearchParams? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SearchResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        searchSingleIndexRequestConfig(indexName = indexName, searchParams = searchParams),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun searchSingleIndexRequestConfig(
+    indexName: String,
+    searchParams: SearchParams?,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `searchSingleIndex`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "$indexName", "query"),
-        isRead = true,
-        body = searchParams,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "$indexName", "query"),
+      isRead = true,
+      body = searchParams,
     )
   }
 
@@ -2010,21 +3795,57 @@ public class SearchClient(
     searchSynonymsParams: SearchSynonymsParams? = null,
     requestOptions: RequestOptions? = null,
   ): SearchSynonymsResponse {
+    return requester.execute(
+      requestConfig =
+        searchSynonymsRequestConfig(
+          indexName = indexName,
+          searchSynonymsParams = searchSynonymsParams,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Searches for synonyms in your index. This variant of [searchSynonyms] returns the full HTTP
+   * response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - settings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param searchSynonymsParams Body of the `searchSynonyms` operation.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun searchSynonymsWithHTTPInfo(
+    indexName: String,
+    searchSynonymsParams: SearchSynonymsParams? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SearchSynonymsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        searchSynonymsRequestConfig(
+          indexName = indexName,
+          searchSynonymsParams = searchSynonymsParams,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun searchSynonymsRequestConfig(
+    indexName: String,
+    searchSynonymsParams: SearchSynonymsParams?,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `searchSynonyms`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "synonyms", "search"),
-        isRead = true,
-        body = searchSynonymsParams,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "indexes", "$indexName", "synonyms", "search"),
+      isRead = true,
+      body = searchSynonymsParams,
     )
   }
 
@@ -2046,17 +3867,45 @@ public class SearchClient(
     searchUserIdsParams: SearchUserIdsParams,
     requestOptions: RequestOptions? = null,
   ): SearchUserIdsResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping", "search"),
-        isRead = true,
-        body = searchUserIdsParams,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = searchUserIdsRequestConfig(searchUserIdsParams = searchUserIdsParams),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Since it can take a few seconds to get the data from the different clusters, the response isn't
+   * real-time. To ensure rapid updates, the user IDs index isn't built at the same time as the
+   * mapping. Instead, it's built every 12 hours, at the same time as the update of user ID usage.
+   * For example, if you add or move a user ID, the search will show an old value until the next
+   * time the mapping is rebuilt (every 12 hours). This variant of [searchUserIds] returns the full
+   * HTTP response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param searchUserIdsParams
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun searchUserIdsWithHTTPInfo(
+    searchUserIdsParams: SearchUserIdsParams,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SearchUserIdsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = searchUserIdsRequestConfig(searchUserIdsParams = searchUserIdsParams),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun searchUserIdsRequestConfig(searchUserIdsParams: SearchUserIdsParams): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "clusters", "mapping", "search"),
+      isRead = true,
+      body = searchUserIdsParams,
     )
   }
 
@@ -2073,16 +3922,43 @@ public class SearchClient(
     dictionarySettingsParams: DictionarySettingsParams,
     requestOptions: RequestOptions? = null,
   ): UpdatedAtResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "dictionaries", "*", "settings"),
-        body = dictionarySettingsParams,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        setDictionarySettingsRequestConfig(dictionarySettingsParams = dictionarySettingsParams),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Turns standard stop word dictionary entries on or off for a given language. This variant of
+   * [setDictionarySettings] returns the full HTTP response information (status code, headers, raw
+   * body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param dictionarySettingsParams
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun setDictionarySettingsWithHTTPInfo(
+    dictionarySettingsParams: DictionarySettingsParams,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<UpdatedAtResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        setDictionarySettingsRequestConfig(dictionarySettingsParams = dictionarySettingsParams),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun setDictionarySettingsRequestConfig(
+    dictionarySettingsParams: DictionarySettingsParams
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "dictionaries", "*", "settings"),
+      body = dictionarySettingsParams,
     )
   }
 
@@ -2105,24 +3981,66 @@ public class SearchClient(
     forwardToReplicas: Boolean? = null,
     requestOptions: RequestOptions? = null,
   ): UpdatedAtResponse {
+    return requester.execute(
+      requestConfig =
+        setSettingsRequestConfig(
+          indexName = indexName,
+          indexSettings = indexSettings,
+          forwardToReplicas = forwardToReplicas,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Update the specified index settings. Index settings that you don't specify are left unchanged.
+   * Specify `null` to reset a setting to its default value. For best performance, update the index
+   * settings before you add new records to your index. This variant of [setSettings] returns the
+   * full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param indexSettings
+   * @param forwardToReplicas Whether changes are applied to replica indices.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun setSettingsWithHTTPInfo(
+    indexName: String,
+    indexSettings: IndexSettings,
+    forwardToReplicas: Boolean? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<UpdatedAtResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        setSettingsRequestConfig(
+          indexName = indexName,
+          indexSettings = indexSettings,
+          forwardToReplicas = forwardToReplicas,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun setSettingsRequestConfig(
+    indexName: String,
+    indexSettings: IndexSettings,
+    forwardToReplicas: Boolean?,
+  ): RequestConfig {
     require(indexName.isNotBlank()) {
       "Parameter `indexName` is required when calling `setSettings`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "indexes", "$indexName", "settings"),
-        query =
-          buildMap {
-            forwardToReplicas?.let { put("forwardToReplicas", it) }
-          },
-        body = indexSettings,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "indexes", "$indexName", "settings"),
+      query =
+        buildMap {
+          forwardToReplicas?.let { put("forwardToReplicas", it) }
+        },
+      body = indexSettings,
     )
   }
 
@@ -2142,16 +4060,41 @@ public class SearchClient(
     apiKey: ApiKey,
     requestOptions: RequestOptions? = null,
   ): UpdateApiKeyResponse {
-    require(key.isNotBlank()) { "Parameter `key` is required when calling `updateApiKey`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "keys", "$key"),
-        body = apiKey,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = updateApiKeyRequestConfig(key = key, apiKey = apiKey),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Replaces the permissions of an existing API key. Any unspecified attribute resets that
+   * attribute to its default value. This variant of [updateApiKey] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - admin
+   *
+   * @param key API key.
+   * @param apiKey
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun updateApiKeyWithHTTPInfo(
+    key: String,
+    apiKey: ApiKey,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<UpdateApiKeyResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = updateApiKeyRequestConfig(key = key, apiKey = apiKey),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun updateApiKeyRequestConfig(key: String, apiKey: ApiKey): RequestConfig {
+    require(key.isNotBlank()) { "Parameter `key` is required when calling `updateApiKey`." }
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "keys", "$key"),
+      body = apiKey,
     )
   }
 }

@@ -15,10 +15,10 @@
     "@types/eslint": "9.6.1",
     "esbuild": "0.28.1",
     "eslint": "10.6.0",
-    "eslint-plugin-yml": "3.5.0",
+    "eslint-plugin-yml": "3.6.0",
     "eslint-vitest-rule-tester": "3.1.0",
     "typescript": "5.9.3",
-    "vitest": "4.1.9",
-    "yaml-eslint-parser": "2.0.0"
+    "vitest": "4.1.10",
+    "yaml-eslint-parser": "2.1.0"
   }
 }

@@ -168,18 +168,47 @@ class IngestionClient(
   def createAuthentication(authenticationCreate: AuthenticationCreate, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
   ): Future[AuthenticationCreateResponse] = Future {
+    execute[AuthenticationCreateResponse](
+      createAuthenticationHttpRequest(authenticationCreate = authenticationCreate),
+      requestOptions
+    )
+  }
+
+  /** Variant of `createAuthentication` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param authenticationCreate
+    */
+  def createAuthenticationWithHTTPInfo(
+      authenticationCreate: AuthenticationCreate,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[AuthenticationCreateResponse]] = Future {
+    executeWithHttpInfo[AuthenticationCreateResponse](
+      createAuthenticationHttpRequest(authenticationCreate = authenticationCreate),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `createAuthentication` and
+    * `createAuthenticationWithHTTPInfo`.
+    */
+  private def createAuthenticationHttpRequest(authenticationCreate: AuthenticationCreate): HttpRequest = {
     requireNotNull(
       authenticationCreate,
       "Parameter `authenticationCreate` is required when calling `createAuthentication`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/authentications")
       .withBody(authenticationCreate)
       .build()
-    execute[AuthenticationCreateResponse](request, requestOptions)
   }
 
   /** Creates a new destination.
@@ -194,15 +223,43 @@ class IngestionClient(
   def createDestination(destinationCreate: DestinationCreate, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[DestinationCreateResponse] = Future {
+    execute[DestinationCreateResponse](
+      createDestinationHttpRequest(destinationCreate = destinationCreate),
+      requestOptions
+    )
+  }
+
+  /** Variant of `createDestination` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param destinationCreate
+    */
+  def createDestinationWithHTTPInfo(
+      destinationCreate: DestinationCreate,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[DestinationCreateResponse]] = Future {
+    executeWithHttpInfo[DestinationCreateResponse](
+      createDestinationHttpRequest(destinationCreate = destinationCreate),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `createDestination` and `createDestinationWithHTTPInfo`.
+    */
+  private def createDestinationHttpRequest(destinationCreate: DestinationCreate): HttpRequest = {
     requireNotNull(destinationCreate, "Parameter `destinationCreate` is required when calling `createDestination`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/destinations")
       .withBody(destinationCreate)
       .build()
-    execute[DestinationCreateResponse](request, requestOptions)
   }
 
   /** Creates a new source.
@@ -217,15 +274,36 @@ class IngestionClient(
   def createSource(sourceCreate: SourceCreate, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[SourceCreateResponse] = Future {
+    execute[SourceCreateResponse](createSourceHttpRequest(sourceCreate = sourceCreate), requestOptions)
+  }
+
+  /** Variant of `createSource` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param sourceCreate
+    */
+  def createSourceWithHTTPInfo(sourceCreate: SourceCreate, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[SourceCreateResponse]] = Future {
+    executeWithHttpInfo[SourceCreateResponse](createSourceHttpRequest(sourceCreate = sourceCreate), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `createSource` and `createSourceWithHTTPInfo`.
+    */
+  private def createSourceHttpRequest(sourceCreate: SourceCreate): HttpRequest = {
     requireNotNull(sourceCreate, "Parameter `sourceCreate` is required when calling `createSource`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/sources")
       .withBody(sourceCreate)
       .build()
-    execute[SourceCreateResponse](request, requestOptions)
   }
 
   /** Creates a new task.
@@ -241,15 +319,36 @@ class IngestionClient(
   def createTask(taskCreate: TaskCreate, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[TaskCreateResponse] = Future {
+    execute[TaskCreateResponse](createTaskHttpRequest(taskCreate = taskCreate), requestOptions)
+  }
+
+  /** Variant of `createTask` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param taskCreate
+    *   Request body for creating a task.
+    */
+  def createTaskWithHTTPInfo(taskCreate: TaskCreate, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[TaskCreateResponse]] = Future {
+    executeWithHttpInfo[TaskCreateResponse](createTaskHttpRequest(taskCreate = taskCreate), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `createTask` and `createTaskWithHTTPInfo`.
+    */
+  private def createTaskHttpRequest(taskCreate: TaskCreate): HttpRequest = {
     requireNotNull(taskCreate, "Parameter `taskCreate` is required when calling `createTask`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/2/tasks")
       .withBody(taskCreate)
       .build()
-    execute[TaskCreateResponse](request, requestOptions)
   }
 
   /** Creates a new task using the v1 endpoint. Use `createTask` instead.
@@ -267,15 +366,39 @@ class IngestionClient(
   def createTaskV1(taskCreate: TaskCreateV1, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[TaskCreateResponse] = Future {
+    execute[TaskCreateResponse](createTaskV1HttpRequest(taskCreate = taskCreate), requestOptions)
+  }
+
+  /** Variant of `createTaskV1` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @deprecated
+    *
+    * @param taskCreate
+    *   Request body for creating a task.
+    */
+  def createTaskV1WithHTTPInfo(taskCreate: TaskCreateV1, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[TaskCreateResponse]] = Future {
+    executeWithHttpInfo[TaskCreateResponse](createTaskV1HttpRequest(taskCreate = taskCreate), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `createTaskV1` and `createTaskV1WithHTTPInfo`.
+    */
+  private def createTaskV1HttpRequest(taskCreate: TaskCreateV1): HttpRequest = {
     requireNotNull(taskCreate, "Parameter `taskCreate` is required when calling `createTaskV1`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/tasks")
       .withBody(taskCreate)
       .build()
-    execute[TaskCreateResponse](request, requestOptions)
   }
 
   /** Creates a new transformation.
@@ -291,18 +414,48 @@ class IngestionClient(
   def createTransformation(transformationCreate: TransformationCreate, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
   ): Future[TransformationCreateResponse] = Future {
+    execute[TransformationCreateResponse](
+      createTransformationHttpRequest(transformationCreate = transformationCreate),
+      requestOptions
+    )
+  }
+
+  /** Variant of `createTransformation` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param transformationCreate
+    *   Request body for creating a transformation.
+    */
+  def createTransformationWithHTTPInfo(
+      transformationCreate: TransformationCreate,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[TransformationCreateResponse]] = Future {
+    executeWithHttpInfo[TransformationCreateResponse](
+      createTransformationHttpRequest(transformationCreate = transformationCreate),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `createTransformation` and
+    * `createTransformationWithHTTPInfo`.
+    */
+  private def createTransformationHttpRequest(transformationCreate: TransformationCreate): HttpRequest = {
     requireNotNull(
       transformationCreate,
       "Parameter `transformationCreate` is required when calling `createTransformation`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/transformations")
       .withBody(transformationCreate)
       .build()
-    execute[TransformationCreateResponse](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -317,16 +470,37 @@ class IngestionClient(
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customDeleteHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Variant of `customDelete` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customDeleteWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customDeleteHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customDelete` and `customDeleteWithHTTPInfo`.
+    */
+  private def customDeleteHttpRequest(path: String, parameters: Option[Map[String, Any]] = None): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customDelete`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/${path}")
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -341,16 +515,36 @@ class IngestionClient(
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customGetHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Variant of `customGet` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customGetWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customGetHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customGet` and `customGetWithHTTPInfo`.
+    */
+  private def customGetHttpRequest(path: String, parameters: Option[Map[String, Any]] = None): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customGet`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/${path}")
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -368,17 +562,44 @@ class IngestionClient(
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customPostHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Variant of `customPost` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPostWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customPostHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customPost` and `customPostWithHTTPInfo`.
+    */
+  private def customPostHttpRequest(
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None
+  ): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customPost`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -396,17 +617,44 @@ class IngestionClient(
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customPutHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Variant of `customPut` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPutWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customPutHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customPut` and `customPutWithHTTPInfo`.
+    */
+  private def customPutHttpRequest(
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None
+  ): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customPut`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** Deletes an authentication resource. You can't delete authentication resources that are used by a source or a
@@ -423,15 +671,41 @@ class IngestionClient(
   def deleteAuthentication(authenticationID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[DeleteResponse] = Future {
+    execute[DeleteResponse](deleteAuthenticationHttpRequest(authenticationID = authenticationID), requestOptions)
+  }
+
+  /** Variant of `deleteAuthentication` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param authenticationID
+    *   Unique identifier of an authentication resource.
+    */
+  def deleteAuthenticationWithHTTPInfo(authenticationID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[DeleteResponse]] = Future {
+    executeWithHttpInfo[DeleteResponse](
+      deleteAuthenticationHttpRequest(authenticationID = authenticationID),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteAuthentication` and
+    * `deleteAuthenticationWithHTTPInfo`.
+    */
+  private def deleteAuthenticationHttpRequest(authenticationID: String): HttpRequest = {
     requireNotNull(authenticationID, "Parameter `authenticationID` is required when calling `deleteAuthentication`.")
     requireNotEmpty(authenticationID, "Parameter `authenticationID` is required when calling `deleteAuthentication`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/1/authentications/${escape(authenticationID)}")
       .build()
-    execute[DeleteResponse](request, requestOptions)
   }
 
   /** Deletes a destination by its ID. You can't delete destinations that are referenced in tasks.
@@ -447,15 +721,37 @@ class IngestionClient(
   def deleteDestination(destinationID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[DeleteResponse] = Future {
+    execute[DeleteResponse](deleteDestinationHttpRequest(destinationID = destinationID), requestOptions)
+  }
+
+  /** Variant of `deleteDestination` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param destinationID
+    *   Unique identifier of a destination.
+    */
+  def deleteDestinationWithHTTPInfo(destinationID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[DeleteResponse]] = Future {
+    executeWithHttpInfo[DeleteResponse](deleteDestinationHttpRequest(destinationID = destinationID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteDestination` and `deleteDestinationWithHTTPInfo`.
+    */
+  private def deleteDestinationHttpRequest(destinationID: String): HttpRequest = {
     requireNotNull(destinationID, "Parameter `destinationID` is required when calling `deleteDestination`.")
     requireNotEmpty(destinationID, "Parameter `destinationID` is required when calling `deleteDestination`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/1/destinations/${escape(destinationID)}")
       .build()
-    execute[DeleteResponse](request, requestOptions)
   }
 
   /** Deletes a source by its ID. You can't delete sources that are referenced in tasks.
@@ -471,15 +767,37 @@ class IngestionClient(
   def deleteSource(sourceID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[DeleteResponse] = Future {
+    execute[DeleteResponse](deleteSourceHttpRequest(sourceID = sourceID), requestOptions)
+  }
+
+  /** Variant of `deleteSource` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param sourceID
+    *   Unique identifier of a source.
+    */
+  def deleteSourceWithHTTPInfo(sourceID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[DeleteResponse]] = Future {
+    executeWithHttpInfo[DeleteResponse](deleteSourceHttpRequest(sourceID = sourceID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteSource` and `deleteSourceWithHTTPInfo`.
+    */
+  private def deleteSourceHttpRequest(sourceID: String): HttpRequest = {
     requireNotNull(sourceID, "Parameter `sourceID` is required when calling `deleteSource`.")
     requireNotEmpty(sourceID, "Parameter `sourceID` is required when calling `deleteSource`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/1/sources/${escape(sourceID)}")
       .build()
-    execute[DeleteResponse](request, requestOptions)
   }
 
   /** Deletes a task by its ID.
@@ -495,15 +813,36 @@ class IngestionClient(
   def deleteTask(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[DeleteResponse] = Future {
+    execute[DeleteResponse](deleteTaskHttpRequest(taskID = taskID), requestOptions)
+  }
+
+  /** Variant of `deleteTask` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    */
+  def deleteTaskWithHTTPInfo(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[DeleteResponse]] = Future {
+    executeWithHttpInfo[DeleteResponse](deleteTaskHttpRequest(taskID = taskID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteTask` and `deleteTaskWithHTTPInfo`.
+    */
+  private def deleteTaskHttpRequest(taskID: String): HttpRequest = {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `deleteTask`.")
     requireNotEmpty(taskID, "Parameter `taskID` is required when calling `deleteTask`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/2/tasks/${escape(taskID)}")
       .build()
-    execute[DeleteResponse](request, requestOptions)
   }
 
   /** Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
@@ -521,15 +860,39 @@ class IngestionClient(
   def deleteTaskV1(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[DeleteResponse] = Future {
+    execute[DeleteResponse](deleteTaskV1HttpRequest(taskID = taskID), requestOptions)
+  }
+
+  /** Variant of `deleteTaskV1` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @deprecated
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    */
+  def deleteTaskV1WithHTTPInfo(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[DeleteResponse]] = Future {
+    executeWithHttpInfo[DeleteResponse](deleteTaskV1HttpRequest(taskID = taskID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteTaskV1` and `deleteTaskV1WithHTTPInfo`.
+    */
+  private def deleteTaskV1HttpRequest(taskID: String): HttpRequest = {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `deleteTaskV1`.")
     requireNotEmpty(taskID, "Parameter `taskID` is required when calling `deleteTaskV1`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/1/tasks/${escape(taskID)}")
       .build()
-    execute[DeleteResponse](request, requestOptions)
   }
 
   /** Deletes a transformation by its ID.
@@ -545,15 +908,41 @@ class IngestionClient(
   def deleteTransformation(transformationID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[DeleteResponse] = Future {
+    execute[DeleteResponse](deleteTransformationHttpRequest(transformationID = transformationID), requestOptions)
+  }
+
+  /** Variant of `deleteTransformation` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param transformationID
+    *   Unique identifier of a transformation.
+    */
+  def deleteTransformationWithHTTPInfo(transformationID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[DeleteResponse]] = Future {
+    executeWithHttpInfo[DeleteResponse](
+      deleteTransformationHttpRequest(transformationID = transformationID),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteTransformation` and
+    * `deleteTransformationWithHTTPInfo`.
+    */
+  private def deleteTransformationHttpRequest(transformationID: String): HttpRequest = {
     requireNotNull(transformationID, "Parameter `transformationID` is required when calling `deleteTransformation`.")
     requireNotEmpty(transformationID, "Parameter `transformationID` is required when calling `deleteTransformation`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/1/transformations/${escape(transformationID)}")
       .build()
-    execute[DeleteResponse](request, requestOptions)
   }
 
   /** Disables a task.
@@ -569,15 +958,37 @@ class IngestionClient(
   def disableTask(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[TaskUpdateResponse] = Future {
+    execute[TaskUpdateResponse](disableTaskHttpRequest(taskID = taskID), requestOptions)
+  }
+
+  /** Variant of `disableTask` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    */
+  def disableTaskWithHTTPInfo(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[TaskUpdateResponse]] = Future {
+    executeWithHttpInfo[TaskUpdateResponse](disableTaskHttpRequest(taskID = taskID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `disableTask` and `disableTaskWithHTTPInfo`.
+    */
+  private def disableTaskHttpRequest(taskID: String): HttpRequest = {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `disableTask`.")
     requireNotEmpty(taskID, "Parameter `taskID` is required when calling `disableTask`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/2/tasks/${escape(taskID)}/disable")
       .build()
-    execute[TaskUpdateResponse](request, requestOptions)
   }
 
   /** Disables a task using the v1 endpoint. Use `disableTask` instead.
@@ -595,15 +1006,39 @@ class IngestionClient(
   def disableTaskV1(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[TaskUpdateResponse] = Future {
+    execute[TaskUpdateResponse](disableTaskV1HttpRequest(taskID = taskID), requestOptions)
+  }
+
+  /** Variant of `disableTaskV1` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @deprecated
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    */
+  def disableTaskV1WithHTTPInfo(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[TaskUpdateResponse]] = Future {
+    executeWithHttpInfo[TaskUpdateResponse](disableTaskV1HttpRequest(taskID = taskID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `disableTaskV1` and `disableTaskV1WithHTTPInfo`.
+    */
+  private def disableTaskV1HttpRequest(taskID: String): HttpRequest = {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `disableTaskV1`.")
     requireNotEmpty(taskID, "Parameter `taskID` is required when calling `disableTaskV1`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/1/tasks/${escape(taskID)}/disable")
       .build()
-    execute[TaskUpdateResponse](request, requestOptions)
   }
 
   /** Enables a task.
@@ -619,15 +1054,36 @@ class IngestionClient(
   def enableTask(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[TaskUpdateResponse] = Future {
+    execute[TaskUpdateResponse](enableTaskHttpRequest(taskID = taskID), requestOptions)
+  }
+
+  /** Variant of `enableTask` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    */
+  def enableTaskWithHTTPInfo(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[TaskUpdateResponse]] = Future {
+    executeWithHttpInfo[TaskUpdateResponse](enableTaskHttpRequest(taskID = taskID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `enableTask` and `enableTaskWithHTTPInfo`.
+    */
+  private def enableTaskHttpRequest(taskID: String): HttpRequest = {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `enableTask`.")
     requireNotEmpty(taskID, "Parameter `taskID` is required when calling `enableTask`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/2/tasks/${escape(taskID)}/enable")
       .build()
-    execute[TaskUpdateResponse](request, requestOptions)
   }
 
   /** Enables a task using the v1 endpoint. Use `enableTask` instead.
@@ -645,15 +1101,39 @@ class IngestionClient(
   def enableTaskV1(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[TaskUpdateResponse] = Future {
+    execute[TaskUpdateResponse](enableTaskV1HttpRequest(taskID = taskID), requestOptions)
+  }
+
+  /** Variant of `enableTaskV1` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @deprecated
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    */
+  def enableTaskV1WithHTTPInfo(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[TaskUpdateResponse]] = Future {
+    executeWithHttpInfo[TaskUpdateResponse](enableTaskV1HttpRequest(taskID = taskID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `enableTaskV1` and `enableTaskV1WithHTTPInfo`.
+    */
+  private def enableTaskV1HttpRequest(taskID: String): HttpRequest = {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `enableTaskV1`.")
     requireNotEmpty(taskID, "Parameter `taskID` is required when calling `enableTaskV1`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/1/tasks/${escape(taskID)}/enable")
       .build()
-    execute[TaskUpdateResponse](request, requestOptions)
   }
 
   /** Retrieves an authentication resource by its ID.
@@ -669,15 +1149,40 @@ class IngestionClient(
   def getAuthentication(authenticationID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[Authentication] = Future {
+    execute[Authentication](getAuthenticationHttpRequest(authenticationID = authenticationID), requestOptions)
+  }
+
+  /** Variant of `getAuthentication` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param authenticationID
+    *   Unique identifier of an authentication resource.
+    */
+  def getAuthenticationWithHTTPInfo(authenticationID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Authentication]] = Future {
+    executeWithHttpInfo[Authentication](
+      getAuthenticationHttpRequest(authenticationID = authenticationID),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getAuthentication` and `getAuthenticationWithHTTPInfo`.
+    */
+  private def getAuthenticationHttpRequest(authenticationID: String): HttpRequest = {
     requireNotNull(authenticationID, "Parameter `authenticationID` is required when calling `getAuthentication`.")
     requireNotEmpty(authenticationID, "Parameter `authenticationID` is required when calling `getAuthentication`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/authentications/${escape(authenticationID)}")
       .build()
-    execute[Authentication](request, requestOptions)
   }
 
   /** Retrieves a destination by its ID.
@@ -693,15 +1198,37 @@ class IngestionClient(
   def getDestination(destinationID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[Destination] = Future {
+    execute[Destination](getDestinationHttpRequest(destinationID = destinationID), requestOptions)
+  }
+
+  /** Variant of `getDestination` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param destinationID
+    *   Unique identifier of a destination.
+    */
+  def getDestinationWithHTTPInfo(destinationID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Destination]] = Future {
+    executeWithHttpInfo[Destination](getDestinationHttpRequest(destinationID = destinationID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getDestination` and `getDestinationWithHTTPInfo`.
+    */
+  private def getDestinationHttpRequest(destinationID: String): HttpRequest = {
     requireNotNull(destinationID, "Parameter `destinationID` is required when calling `getDestination`.")
     requireNotEmpty(destinationID, "Parameter `destinationID` is required when calling `getDestination`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/destinations/${escape(destinationID)}")
       .build()
-    execute[Destination](request, requestOptions)
   }
 
   /** Retrieves a single task run event by its ID.
@@ -719,17 +1246,40 @@ class IngestionClient(
   def getEvent(runID: String, eventID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[Event] = Future {
+    execute[Event](getEventHttpRequest(runID = runID, eventID = eventID), requestOptions)
+  }
+
+  /** Variant of `getEvent` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param runID
+    *   Unique identifier of a task run.
+    * @param eventID
+    *   Unique identifier of an event.
+    */
+  def getEventWithHTTPInfo(runID: String, eventID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Event]] = Future {
+    executeWithHttpInfo[Event](getEventHttpRequest(runID = runID, eventID = eventID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getEvent` and `getEventWithHTTPInfo`.
+    */
+  private def getEventHttpRequest(runID: String, eventID: String): HttpRequest = {
     requireNotNull(runID, "Parameter `runID` is required when calling `getEvent`.")
     requireNotEmpty(runID, "Parameter `runID` is required when calling `getEvent`.")
     requireNotNull(eventID, "Parameter `eventID` is required when calling `getEvent`.")
     requireNotEmpty(eventID, "Parameter `eventID` is required when calling `getEvent`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/runs/${escape(runID)}/events/${escape(eventID)}")
       .build()
-    execute[Event](request, requestOptions)
   }
 
   /** Retrieve a single task run by its ID.
@@ -744,16 +1294,37 @@ class IngestionClient(
     */
   def getRun(runID: String, requestOptions: Option[RequestOptions] = None)(implicit ec: ExecutionContext): Future[Run] =
     Future {
-      requireNotNull(runID, "Parameter `runID` is required when calling `getRun`.")
-      requireNotEmpty(runID, "Parameter `runID` is required when calling `getRun`.")
-
-      val request = HttpRequest
-        .builder()
-        .withMethod("GET")
-        .withPath(s"/1/runs/${escape(runID)}")
-        .build()
-      execute[Run](request, requestOptions)
+      execute[Run](getRunHttpRequest(runID = runID), requestOptions)
     }
+
+  /** Variant of `getRun` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param runID
+    *   Unique identifier of a task run.
+    */
+  def getRunWithHTTPInfo(runID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Run]] = Future {
+    executeWithHttpInfo[Run](getRunHttpRequest(runID = runID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getRun` and `getRunWithHTTPInfo`.
+    */
+  private def getRunHttpRequest(runID: String): HttpRequest = {
+    requireNotNull(runID, "Parameter `runID` is required when calling `getRun`.")
+    requireNotEmpty(runID, "Parameter `runID` is required when calling `getRun`.")
+
+    HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/1/runs/${escape(runID)}")
+      .build()
+  }
 
   /** Retrieve a source by its ID.
     *
@@ -768,15 +1339,36 @@ class IngestionClient(
   def getSource(sourceID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[Source] = Future {
+    execute[Source](getSourceHttpRequest(sourceID = sourceID), requestOptions)
+  }
+
+  /** Variant of `getSource` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param sourceID
+    *   Unique identifier of a source.
+    */
+  def getSourceWithHTTPInfo(sourceID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Source]] = Future {
+    executeWithHttpInfo[Source](getSourceHttpRequest(sourceID = sourceID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getSource` and `getSourceWithHTTPInfo`.
+    */
+  private def getSourceHttpRequest(sourceID: String): HttpRequest = {
     requireNotNull(sourceID, "Parameter `sourceID` is required when calling `getSource`.")
     requireNotEmpty(sourceID, "Parameter `sourceID` is required when calling `getSource`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/sources/${escape(sourceID)}")
       .build()
-    execute[Source](request, requestOptions)
   }
 
   /** Retrieves a task by its ID.
@@ -792,15 +1384,36 @@ class IngestionClient(
   def getTask(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[Task] = Future {
+    execute[Task](getTaskHttpRequest(taskID = taskID), requestOptions)
+  }
+
+  /** Variant of `getTask` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    */
+  def getTaskWithHTTPInfo(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Task]] = Future {
+    executeWithHttpInfo[Task](getTaskHttpRequest(taskID = taskID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getTask` and `getTaskWithHTTPInfo`.
+    */
+  private def getTaskHttpRequest(taskID: String): HttpRequest = {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `getTask`.")
     requireNotEmpty(taskID, "Parameter `taskID` is required when calling `getTask`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/tasks/${escape(taskID)}")
       .build()
-    execute[Task](request, requestOptions)
   }
 
   /** Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
@@ -818,15 +1431,38 @@ class IngestionClient(
   def getTaskV1(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[TaskV1] = Future {
+    execute[TaskV1](getTaskV1HttpRequest(taskID = taskID), requestOptions)
+  }
+
+  /** Variant of `getTaskV1` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @deprecated
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    */
+  def getTaskV1WithHTTPInfo(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[TaskV1]] = Future {
+    executeWithHttpInfo[TaskV1](getTaskV1HttpRequest(taskID = taskID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getTaskV1` and `getTaskV1WithHTTPInfo`.
+    */
+  private def getTaskV1HttpRequest(taskID: String): HttpRequest = {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `getTaskV1`.")
     requireNotEmpty(taskID, "Parameter `taskID` is required when calling `getTaskV1`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/tasks/${escape(taskID)}")
       .build()
-    execute[TaskV1](request, requestOptions)
   }
 
   /** Retrieves a transformation by its ID.
@@ -842,15 +1478,40 @@ class IngestionClient(
   def getTransformation(transformationID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[Transformation] = Future {
+    execute[Transformation](getTransformationHttpRequest(transformationID = transformationID), requestOptions)
+  }
+
+  /** Variant of `getTransformation` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param transformationID
+    *   Unique identifier of a transformation.
+    */
+  def getTransformationWithHTTPInfo(transformationID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Transformation]] = Future {
+    executeWithHttpInfo[Transformation](
+      getTransformationHttpRequest(transformationID = transformationID),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getTransformation` and `getTransformationWithHTTPInfo`.
+    */
+  private def getTransformationHttpRequest(transformationID: String): HttpRequest = {
     requireNotNull(transformationID, "Parameter `transformationID` is required when calling `getTransformation`.")
     requireNotEmpty(transformationID, "Parameter `transformationID` is required when calling `getTransformation`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/transformations/${escape(transformationID)}")
       .build()
-    execute[Transformation](request, requestOptions)
   }
 
   /** Retrieves a list of all authentication resources.
@@ -882,8 +1543,75 @@ class IngestionClient(
       order: Option[OrderKeys] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ListAuthenticationsResponse] = Future {
+    execute[ListAuthenticationsResponse](
+      listAuthenticationsHttpRequest(
+        itemsPerPage = itemsPerPage,
+        page = page,
+        `type` = `type`,
+        platform = platform,
+        sort = sort,
+        order = order
+      ),
+      requestOptions
+    )
+  }
 
-    val request = HttpRequest
+  /** Variant of `listAuthentications` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param itemsPerPage
+    *   Number of items per page.
+    * @param page
+    *   Page number of the paginated API response.
+    * @param `type`
+    *   Type of authentication resource to retrieve.
+    * @param platform
+    *   Ecommerce platform for which to retrieve authentications.
+    * @param sort
+    *   Property by which to sort the list of authentications.
+    * @param order
+    *   Sort order of the response, ascending or descending.
+    */
+  def listAuthenticationsWithHTTPInfo(
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
+      `type`: Option[Seq[AuthenticationType]] = None,
+      platform: Option[Seq[PlatformWithNone]] = None,
+      sort: Option[AuthenticationSortKeys] = None,
+      order: Option[OrderKeys] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ListAuthenticationsResponse]] = Future {
+    executeWithHttpInfo[ListAuthenticationsResponse](
+      listAuthenticationsHttpRequest(
+        itemsPerPage = itemsPerPage,
+        page = page,
+        `type` = `type`,
+        platform = platform,
+        sort = sort,
+        order = order
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `listAuthentications` and
+    * `listAuthenticationsWithHTTPInfo`.
+    */
+  private def listAuthenticationsHttpRequest(
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
+      `type`: Option[Seq[AuthenticationType]] = None,
+      platform: Option[Seq[PlatformWithNone]] = None,
+      sort: Option[AuthenticationSortKeys] = None,
+      order: Option[OrderKeys] = None
+  ): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/authentications")
@@ -894,7 +1622,6 @@ class IngestionClient(
       .withQueryParameter("sort", sort)
       .withQueryParameter("order", order)
       .build()
-    execute[ListAuthenticationsResponse](request, requestOptions)
   }
 
   /** Retrieves a list of destinations.
@@ -929,8 +1656,80 @@ class IngestionClient(
       order: Option[OrderKeys] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ListDestinationsResponse] = Future {
+    execute[ListDestinationsResponse](
+      listDestinationsHttpRequest(
+        itemsPerPage = itemsPerPage,
+        page = page,
+        `type` = `type`,
+        authenticationID = authenticationID,
+        transformationID = transformationID,
+        sort = sort,
+        order = order
+      ),
+      requestOptions
+    )
+  }
 
-    val request = HttpRequest
+  /** Variant of `listDestinations` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param itemsPerPage
+    *   Number of items per page.
+    * @param page
+    *   Page number of the paginated API response.
+    * @param `type`
+    *   Destination type.
+    * @param authenticationID
+    *   Authentication ID used by destinations.
+    * @param transformationID
+    *   Get the list of destinations used by a transformation.
+    * @param sort
+    *   Property by which to sort the destinations.
+    * @param order
+    *   Sort order of the response, ascending or descending.
+    */
+  def listDestinationsWithHTTPInfo(
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
+      `type`: Option[Seq[DestinationType]] = None,
+      authenticationID: Option[Seq[String]] = None,
+      transformationID: Option[String] = None,
+      sort: Option[DestinationSortKeys] = None,
+      order: Option[OrderKeys] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ListDestinationsResponse]] = Future {
+    executeWithHttpInfo[ListDestinationsResponse](
+      listDestinationsHttpRequest(
+        itemsPerPage = itemsPerPage,
+        page = page,
+        `type` = `type`,
+        authenticationID = authenticationID,
+        transformationID = transformationID,
+        sort = sort,
+        order = order
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `listDestinations` and `listDestinationsWithHTTPInfo`.
+    */
+  private def listDestinationsHttpRequest(
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
+      `type`: Option[Seq[DestinationType]] = None,
+      authenticationID: Option[Seq[String]] = None,
+      transformationID: Option[String] = None,
+      sort: Option[DestinationSortKeys] = None,
+      order: Option[OrderKeys] = None
+  ): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/destinations")
@@ -942,7 +1741,6 @@ class IngestionClient(
       .withQueryParameter("sort", sort)
       .withQueryParameter("order", order)
       .build()
-    execute[ListDestinationsResponse](request, requestOptions)
   }
 
   /** Retrieves a list of events for a task run, identified by its ID.
@@ -984,10 +1782,94 @@ class IngestionClient(
       endDate: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ListEventsResponse] = Future {
+    execute[ListEventsResponse](
+      listEventsHttpRequest(
+        runID = runID,
+        itemsPerPage = itemsPerPage,
+        page = page,
+        status = status,
+        `type` = `type`,
+        sort = sort,
+        order = order,
+        startDate = startDate,
+        endDate = endDate
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `listEvents` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param runID
+    *   Unique identifier of a task run.
+    * @param itemsPerPage
+    *   Number of items per page.
+    * @param page
+    *   Page number of the paginated API response.
+    * @param status
+    *   Event status for filtering the list of task runs.
+    * @param `type`
+    *   Event type for filtering the list of task runs.
+    * @param sort
+    *   Property by which to sort the list of task run events.
+    * @param order
+    *   Sort order of the response, ascending or descending.
+    * @param startDate
+    *   Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three
+    *   hours is used.
+    * @param endDate
+    *   Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
+    */
+  def listEventsWithHTTPInfo(
+      runID: String,
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
+      status: Option[Seq[EventStatus]] = None,
+      `type`: Option[Seq[EventType]] = None,
+      sort: Option[EventSortKeys] = None,
+      order: Option[OrderKeys] = None,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ListEventsResponse]] = Future {
+    executeWithHttpInfo[ListEventsResponse](
+      listEventsHttpRequest(
+        runID = runID,
+        itemsPerPage = itemsPerPage,
+        page = page,
+        status = status,
+        `type` = `type`,
+        sort = sort,
+        order = order,
+        startDate = startDate,
+        endDate = endDate
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `listEvents` and `listEventsWithHTTPInfo`.
+    */
+  private def listEventsHttpRequest(
+      runID: String,
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
+      status: Option[Seq[EventStatus]] = None,
+      `type`: Option[Seq[EventType]] = None,
+      sort: Option[EventSortKeys] = None,
+      order: Option[OrderKeys] = None,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(runID, "Parameter `runID` is required when calling `listEvents`.")
     requireNotEmpty(runID, "Parameter `runID` is required when calling `listEvents`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/runs/${escape(runID)}/events")
@@ -1000,7 +1882,6 @@ class IngestionClient(
       .withQueryParameter("startDate", startDate)
       .withQueryParameter("endDate", endDate)
       .build()
-    execute[ListEventsResponse](request, requestOptions)
   }
 
   /** Retrieve a list of task runs.
@@ -1042,8 +1923,92 @@ class IngestionClient(
       endDate: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[RunListResponse] = Future {
+    execute[RunListResponse](
+      listRunsHttpRequest(
+        itemsPerPage = itemsPerPage,
+        page = page,
+        status = status,
+        `type` = `type`,
+        taskID = taskID,
+        sort = sort,
+        order = order,
+        startDate = startDate,
+        endDate = endDate
+      ),
+      requestOptions
+    )
+  }
 
-    val request = HttpRequest
+  /** Variant of `listRuns` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param itemsPerPage
+    *   Number of items per page.
+    * @param page
+    *   Page number of the paginated API response.
+    * @param status
+    *   Run status for filtering the list of task runs.
+    * @param `type`
+    *   Run type for filtering the list of task runs.
+    * @param taskID
+    *   Task ID for filtering the list of task runs.
+    * @param sort
+    *   Property by which to sort the list of task runs.
+    * @param order
+    *   Sort order of the response, ascending or descending.
+    * @param startDate
+    *   Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days
+    *   is used.
+    * @param endDate
+    *   Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used.
+    */
+  def listRunsWithHTTPInfo(
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
+      status: Option[Seq[RunStatus]] = None,
+      `type`: Option[Seq[RunType]] = None,
+      taskID: Option[String] = None,
+      sort: Option[RunSortKeys] = None,
+      order: Option[OrderKeys] = None,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[RunListResponse]] = Future {
+    executeWithHttpInfo[RunListResponse](
+      listRunsHttpRequest(
+        itemsPerPage = itemsPerPage,
+        page = page,
+        status = status,
+        `type` = `type`,
+        taskID = taskID,
+        sort = sort,
+        order = order,
+        startDate = startDate,
+        endDate = endDate
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `listRuns` and `listRunsWithHTTPInfo`.
+    */
+  private def listRunsHttpRequest(
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
+      status: Option[Seq[RunStatus]] = None,
+      `type`: Option[Seq[RunType]] = None,
+      taskID: Option[String] = None,
+      sort: Option[RunSortKeys] = None,
+      order: Option[OrderKeys] = None,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None
+  ): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/runs")
@@ -1057,7 +2022,6 @@ class IngestionClient(
       .withQueryParameter("startDate", startDate)
       .withQueryParameter("endDate", endDate)
       .build()
-    execute[RunListResponse](request, requestOptions)
   }
 
   /** Retrieves a list of sources.
@@ -1089,8 +2053,74 @@ class IngestionClient(
       order: Option[OrderKeys] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ListSourcesResponse] = Future {
+    execute[ListSourcesResponse](
+      listSourcesHttpRequest(
+        itemsPerPage = itemsPerPage,
+        page = page,
+        `type` = `type`,
+        authenticationID = authenticationID,
+        sort = sort,
+        order = order
+      ),
+      requestOptions
+    )
+  }
 
-    val request = HttpRequest
+  /** Variant of `listSources` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param itemsPerPage
+    *   Number of items per page.
+    * @param page
+    *   Page number of the paginated API response.
+    * @param `type`
+    *   Source type. Some sources require authentication.
+    * @param authenticationID
+    *   Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication.
+    * @param sort
+    *   Property by which to sort the list of sources.
+    * @param order
+    *   Sort order of the response, ascending or descending.
+    */
+  def listSourcesWithHTTPInfo(
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
+      `type`: Option[Seq[SourceType]] = None,
+      authenticationID: Option[Seq[String]] = None,
+      sort: Option[SourceSortKeys] = None,
+      order: Option[OrderKeys] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ListSourcesResponse]] = Future {
+    executeWithHttpInfo[ListSourcesResponse](
+      listSourcesHttpRequest(
+        itemsPerPage = itemsPerPage,
+        page = page,
+        `type` = `type`,
+        authenticationID = authenticationID,
+        sort = sort,
+        order = order
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `listSources` and `listSourcesWithHTTPInfo`.
+    */
+  private def listSourcesHttpRequest(
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
+      `type`: Option[Seq[SourceType]] = None,
+      authenticationID: Option[Seq[String]] = None,
+      sort: Option[SourceSortKeys] = None,
+      order: Option[OrderKeys] = None
+  ): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/sources")
@@ -1101,7 +2131,6 @@ class IngestionClient(
       .withQueryParameter("sort", sort)
       .withQueryParameter("order", order)
       .build()
-    execute[ListSourcesResponse](request, requestOptions)
   }
 
   /** Retrieves a list of tasks.
@@ -1148,8 +2177,103 @@ class IngestionClient(
       order: Option[OrderKeys] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ListTasksResponse] = Future {
+    execute[ListTasksResponse](
+      listTasksHttpRequest(
+        itemsPerPage = itemsPerPage,
+        page = page,
+        action = action,
+        enabled = enabled,
+        sourceID = sourceID,
+        sourceType = sourceType,
+        destinationID = destinationID,
+        triggerType = triggerType,
+        withEmailNotifications = withEmailNotifications,
+        sort = sort,
+        order = order
+      ),
+      requestOptions
+    )
+  }
 
-    val request = HttpRequest
+  /** Variant of `listTasks` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param itemsPerPage
+    *   Number of items per page.
+    * @param page
+    *   Page number of the paginated API response.
+    * @param action
+    *   Actions for filtering the list of tasks.
+    * @param enabled
+    *   Whether to filter the list of tasks by the `enabled` status.
+    * @param sourceID
+    *   Source IDs for filtering the list of tasks.
+    * @param sourceType
+    *   Filters the tasks with the specified source type.
+    * @param destinationID
+    *   Destination IDs for filtering the list of tasks.
+    * @param triggerType
+    *   Type of task trigger for filtering the list of tasks.
+    * @param withEmailNotifications
+    *   If specified, the response only includes tasks with notifications.email.enabled set to this value.
+    * @param sort
+    *   Property by which to sort the list of tasks.
+    * @param order
+    *   Sort order of the response, ascending or descending.
+    */
+  def listTasksWithHTTPInfo(
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
+      action: Option[Seq[ActionType]] = None,
+      enabled: Option[Boolean] = None,
+      sourceID: Option[Seq[String]] = None,
+      sourceType: Option[Seq[SourceType]] = None,
+      destinationID: Option[Seq[String]] = None,
+      triggerType: Option[Seq[TriggerType]] = None,
+      withEmailNotifications: Option[Boolean] = None,
+      sort: Option[TaskSortKeys] = None,
+      order: Option[OrderKeys] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ListTasksResponse]] = Future {
+    executeWithHttpInfo[ListTasksResponse](
+      listTasksHttpRequest(
+        itemsPerPage = itemsPerPage,
+        page = page,
+        action = action,
+        enabled = enabled,
+        sourceID = sourceID,
+        sourceType = sourceType,
+        destinationID = destinationID,
+        triggerType = triggerType,
+        withEmailNotifications = withEmailNotifications,
+        sort = sort,
+        order = order
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `listTasks` and `listTasksWithHTTPInfo`.
+    */
+  private def listTasksHttpRequest(
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
+      action: Option[Seq[ActionType]] = None,
+      enabled: Option[Boolean] = None,
+      sourceID: Option[Seq[String]] = None,
+      sourceType: Option[Seq[SourceType]] = None,
+      destinationID: Option[Seq[String]] = None,
+      triggerType: Option[Seq[TriggerType]] = None,
+      withEmailNotifications: Option[Boolean] = None,
+      sort: Option[TaskSortKeys] = None,
+      order: Option[OrderKeys] = None
+  ): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/tasks")
@@ -1165,7 +2289,6 @@ class IngestionClient(
       .withQueryParameter("sort", sort)
       .withQueryParameter("order", order)
       .build()
-    execute[ListTasksResponse](request, requestOptions)
   }
 
   /** Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
@@ -1208,8 +2331,94 @@ class IngestionClient(
       order: Option[OrderKeys] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ListTasksResponseV1] = Future {
+    execute[ListTasksResponseV1](
+      listTasksV1HttpRequest(
+        itemsPerPage = itemsPerPage,
+        page = page,
+        action = action,
+        enabled = enabled,
+        sourceID = sourceID,
+        destinationID = destinationID,
+        triggerType = triggerType,
+        sort = sort,
+        order = order
+      ),
+      requestOptions
+    )
+  }
 
-    val request = HttpRequest
+  /** Variant of `listTasksV1` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @deprecated
+    *
+    * @param itemsPerPage
+    *   Number of items per page.
+    * @param page
+    *   Page number of the paginated API response.
+    * @param action
+    *   Actions for filtering the list of tasks.
+    * @param enabled
+    *   Whether to filter the list of tasks by the `enabled` status.
+    * @param sourceID
+    *   Source IDs for filtering the list of tasks.
+    * @param destinationID
+    *   Destination IDs for filtering the list of tasks.
+    * @param triggerType
+    *   Type of task trigger for filtering the list of tasks.
+    * @param sort
+    *   Property by which to sort the list of tasks.
+    * @param order
+    *   Sort order of the response, ascending or descending.
+    */
+  def listTasksV1WithHTTPInfo(
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
+      action: Option[Seq[ActionType]] = None,
+      enabled: Option[Boolean] = None,
+      sourceID: Option[Seq[String]] = None,
+      destinationID: Option[Seq[String]] = None,
+      triggerType: Option[Seq[TriggerType]] = None,
+      sort: Option[TaskSortKeys] = None,
+      order: Option[OrderKeys] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ListTasksResponseV1]] = Future {
+    executeWithHttpInfo[ListTasksResponseV1](
+      listTasksV1HttpRequest(
+        itemsPerPage = itemsPerPage,
+        page = page,
+        action = action,
+        enabled = enabled,
+        sourceID = sourceID,
+        destinationID = destinationID,
+        triggerType = triggerType,
+        sort = sort,
+        order = order
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `listTasksV1` and `listTasksV1WithHTTPInfo`.
+    */
+  private def listTasksV1HttpRequest(
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
+      action: Option[Seq[ActionType]] = None,
+      enabled: Option[Boolean] = None,
+      sourceID: Option[Seq[String]] = None,
+      destinationID: Option[Seq[String]] = None,
+      triggerType: Option[Seq[TriggerType]] = None,
+      sort: Option[TaskSortKeys] = None,
+      order: Option[OrderKeys] = None
+  ): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/tasks")
@@ -1223,7 +2432,6 @@ class IngestionClient(
       .withQueryParameter("sort", sort)
       .withQueryParameter("order", order)
       .build()
-    execute[ListTasksResponseV1](request, requestOptions)
   }
 
   /** Retrieves a list of transformations.
@@ -1252,8 +2460,69 @@ class IngestionClient(
       `type`: Option[TransformationType] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ListTransformationsResponse] = Future {
+    execute[ListTransformationsResponse](
+      listTransformationsHttpRequest(
+        itemsPerPage = itemsPerPage,
+        page = page,
+        sort = sort,
+        order = order,
+        `type` = `type`
+      ),
+      requestOptions
+    )
+  }
 
-    val request = HttpRequest
+  /** Variant of `listTransformations` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param itemsPerPage
+    *   Number of items per page.
+    * @param page
+    *   Page number of the paginated API response.
+    * @param sort
+    *   Property by which to sort the list of transformations.
+    * @param order
+    *   Sort order of the response, ascending or descending.
+    * @param `type`
+    *   Whether to filter the list of transformations by the type of transformation.
+    */
+  def listTransformationsWithHTTPInfo(
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
+      sort: Option[TransformationSortKeys] = None,
+      order: Option[OrderKeys] = None,
+      `type`: Option[TransformationType] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ListTransformationsResponse]] = Future {
+    executeWithHttpInfo[ListTransformationsResponse](
+      listTransformationsHttpRequest(
+        itemsPerPage = itemsPerPage,
+        page = page,
+        sort = sort,
+        order = order,
+        `type` = `type`
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `listTransformations` and
+    * `listTransformationsWithHTTPInfo`.
+    */
+  private def listTransformationsHttpRequest(
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
+      sort: Option[TransformationSortKeys] = None,
+      order: Option[OrderKeys] = None,
+      `type`: Option[TransformationType] = None
+  ): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/transformations")
@@ -1263,7 +2532,6 @@ class IngestionClient(
       .withQueryParameter("order", order)
       .withQueryParameter("type", `type`)
       .build()
-    execute[ListTransformationsResponse](request, requestOptions)
   }
 
   /** Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the
@@ -1294,11 +2562,64 @@ class IngestionClient(
       referenceIndexName: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[WatchResponse] = Future {
+    execute[WatchResponse](
+      pushHttpRequest(
+        indexName = indexName,
+        pushTaskPayload = pushTaskPayload,
+        watch = watch,
+        referenceIndexName = referenceIndexName
+      ),
+      pushHttpRequestOptions(requestOptions)
+    )
+  }
+
+  /** Variant of `push` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param watch
+    *   When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished
+    *   before responding.
+    * @param referenceIndexName
+    *   This is required when targeting an index that does not have a push connector setup (e.g. a tmp index), but you
+    *   wish to attach another index's transformation to it (e.g. the source index name).
+    */
+  def pushWithHTTPInfo(
+      indexName: String,
+      pushTaskPayload: PushTaskPayload,
+      watch: Option[Boolean] = None,
+      referenceIndexName: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[WatchResponse]] = Future {
+    executeWithHttpInfo[WatchResponse](
+      pushHttpRequest(
+        indexName = indexName,
+        pushTaskPayload = pushTaskPayload,
+        watch = watch,
+        referenceIndexName = referenceIndexName
+      ),
+      pushHttpRequestOptions(requestOptions)
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `push` and `pushWithHTTPInfo`.
+    */
+  private def pushHttpRequest(
+      indexName: String,
+      pushTaskPayload: PushTaskPayload,
+      watch: Option[Boolean] = None,
+      referenceIndexName: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `push`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `push`.")
     requireNotNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `push`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/push/${escape(indexName)}")
@@ -1306,17 +2627,18 @@ class IngestionClient(
       .withQueryParameter("watch", watch)
       .withQueryParameter("referenceIndexName", referenceIndexName)
       .build()
-    execute[WatchResponse](
-      request,
-      Some(
-        RequestOptions(
-          writeTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
-          readTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
-          connectTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS))
-        ) + requestOptions
-      )
-    )
   }
+
+  /** Merges `push`'s default timeouts into the given request options.
+    */
+  private def pushHttpRequestOptions(requestOptions: Option[RequestOptions]): Option[RequestOptions] =
+    Some(
+      RequestOptions(
+        writeTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+        readTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+        connectTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS))
+      ) + requestOptions
+    )
 
   /** Pushes records through the pipeline, directly to an index. You can make the call synchronous by providing the
     * `watch` parameter, for asynchronous calls, you can use the observability endpoints or the debugger dashboard to
@@ -1341,28 +2663,67 @@ class IngestionClient(
       watch: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[WatchResponse] = Future {
+    execute[WatchResponse](
+      pushTaskHttpRequest(taskID = taskID, pushTaskPayload = pushTaskPayload, watch = watch),
+      pushTaskHttpRequestOptions(requestOptions)
+    )
+  }
+
+  /** Variant of `pushTask` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    * @param watch
+    *   When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished
+    *   before responding.
+    */
+  def pushTaskWithHTTPInfo(
+      taskID: String,
+      pushTaskPayload: PushTaskPayload,
+      watch: Option[Boolean] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[WatchResponse]] = Future {
+    executeWithHttpInfo[WatchResponse](
+      pushTaskHttpRequest(taskID = taskID, pushTaskPayload = pushTaskPayload, watch = watch),
+      pushTaskHttpRequestOptions(requestOptions)
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `pushTask` and `pushTaskWithHTTPInfo`.
+    */
+  private def pushTaskHttpRequest(
+      taskID: String,
+      pushTaskPayload: PushTaskPayload,
+      watch: Option[Boolean] = None
+  ): HttpRequest = {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `pushTask`.")
     requireNotEmpty(taskID, "Parameter `taskID` is required when calling `pushTask`.")
     requireNotNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `pushTask`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/2/tasks/${escape(taskID)}/push")
       .withBody(pushTaskPayload)
       .withQueryParameter("watch", watch)
       .build()
-    execute[WatchResponse](
-      request,
-      Some(
-        RequestOptions(
-          writeTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
-          readTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
-          connectTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS))
-        ) + requestOptions
-      )
-    )
   }
+
+  /** Merges `pushTask`'s default timeouts into the given request options.
+    */
+  private def pushTaskHttpRequestOptions(requestOptions: Option[RequestOptions]): Option[RequestOptions] =
+    Some(
+      RequestOptions(
+        writeTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+        readTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+        connectTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS))
+      ) + requestOptions
+    )
 
   /** Fully updates a task by its ID, use partialUpdateTask if you only want to update a subset of fields.
     *
@@ -1377,17 +2738,42 @@ class IngestionClient(
   def replaceTask(taskID: String, taskReplace: TaskReplace, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[TaskUpdateResponse] = Future {
+    execute[TaskUpdateResponse](replaceTaskHttpRequest(taskID = taskID, taskReplace = taskReplace), requestOptions)
+  }
+
+  /** Variant of `replaceTask` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    */
+  def replaceTaskWithHTTPInfo(taskID: String, taskReplace: TaskReplace, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[TaskUpdateResponse]] = Future {
+    executeWithHttpInfo[TaskUpdateResponse](
+      replaceTaskHttpRequest(taskID = taskID, taskReplace = taskReplace),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `replaceTask` and `replaceTaskWithHTTPInfo`.
+    */
+  private def replaceTaskHttpRequest(taskID: String, taskReplace: TaskReplace): HttpRequest = {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `replaceTask`.")
     requireNotEmpty(taskID, "Parameter `taskID` is required when calling `replaceTask`.")
     requireNotNull(taskReplace, "Parameter `taskReplace` is required when calling `replaceTask`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/2/tasks/${escape(taskID)}")
       .withBody(taskReplace)
       .build()
-    execute[TaskUpdateResponse](request, requestOptions)
   }
 
   /** Runs all tasks linked to a source, only available for Shopify, BigCommerce and commercetools sources. Creates one
@@ -1407,16 +2793,46 @@ class IngestionClient(
       runSourcePayload: Option[RunSourcePayload] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[RunSourceResponse] = Future {
+    execute[RunSourceResponse](
+      runSourceHttpRequest(sourceID = sourceID, runSourcePayload = runSourcePayload),
+      requestOptions
+    )
+  }
+
+  /** Variant of `runSource` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param sourceID
+    *   Unique identifier of a source.
+    * @param runSourcePayload
+    */
+  def runSourceWithHTTPInfo(
+      sourceID: String,
+      runSourcePayload: Option[RunSourcePayload] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[RunSourceResponse]] = Future {
+    executeWithHttpInfo[RunSourceResponse](
+      runSourceHttpRequest(sourceID = sourceID, runSourcePayload = runSourcePayload),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `runSource` and `runSourceWithHTTPInfo`.
+    */
+  private def runSourceHttpRequest(sourceID: String, runSourcePayload: Option[RunSourcePayload] = None): HttpRequest = {
     requireNotNull(sourceID, "Parameter `sourceID` is required when calling `runSource`.")
     requireNotEmpty(sourceID, "Parameter `sourceID` is required when calling `runSource`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/sources/${escape(sourceID)}/run")
       .withBody(runSourcePayload)
       .build()
-    execute[RunSourceResponse](request, requestOptions)
   }
 
   /** Runs a task. You can check the status of task runs with the observability endpoints.
@@ -1435,16 +2851,43 @@ class IngestionClient(
       runTaskPayload: Option[RunTaskPayload] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[RunResponse] = Future {
+    execute[RunResponse](runTaskHttpRequest(taskID = taskID, runTaskPayload = runTaskPayload), requestOptions)
+  }
+
+  /** Variant of `runTask` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    * @param runTaskPayload
+    */
+  def runTaskWithHTTPInfo(
+      taskID: String,
+      runTaskPayload: Option[RunTaskPayload] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[RunResponse]] = Future {
+    executeWithHttpInfo[RunResponse](
+      runTaskHttpRequest(taskID = taskID, runTaskPayload = runTaskPayload),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `runTask` and `runTaskWithHTTPInfo`.
+    */
+  private def runTaskHttpRequest(taskID: String, runTaskPayload: Option[RunTaskPayload] = None): HttpRequest = {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `runTask`.")
     requireNotEmpty(taskID, "Parameter `taskID` is required when calling `runTask`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/2/tasks/${escape(taskID)}/run")
       .withBody(runTaskPayload)
       .build()
-    execute[RunResponse](request, requestOptions)
   }
 
   /** Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs with the
@@ -1466,16 +2909,45 @@ class IngestionClient(
       runTaskPayload: Option[RunTaskPayload] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[RunResponse] = Future {
+    execute[RunResponse](runTaskV1HttpRequest(taskID = taskID, runTaskPayload = runTaskPayload), requestOptions)
+  }
+
+  /** Variant of `runTaskV1` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @deprecated
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    * @param runTaskPayload
+    */
+  def runTaskV1WithHTTPInfo(
+      taskID: String,
+      runTaskPayload: Option[RunTaskPayload] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[RunResponse]] = Future {
+    executeWithHttpInfo[RunResponse](
+      runTaskV1HttpRequest(taskID = taskID, runTaskPayload = runTaskPayload),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `runTaskV1` and `runTaskV1WithHTTPInfo`.
+    */
+  private def runTaskV1HttpRequest(taskID: String, runTaskPayload: Option[RunTaskPayload] = None): HttpRequest = {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `runTaskV1`.")
     requireNotEmpty(taskID, "Parameter `taskID` is required when calling `runTaskV1`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/tasks/${escape(taskID)}/run")
       .withBody(runTaskPayload)
       .build()
-    execute[RunResponse](request, requestOptions)
   }
 
   /** Searches for authentication resources.
@@ -1488,18 +2960,45 @@ class IngestionClient(
   def searchAuthentications(authenticationSearch: AuthenticationSearch, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
   ): Future[Seq[Authentication]] = Future {
+    execute[Seq[Authentication]](
+      searchAuthenticationsHttpRequest(authenticationSearch = authenticationSearch),
+      requestOptions
+    )
+  }
+
+  /** Variant of `searchAuthentications` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    */
+  def searchAuthenticationsWithHTTPInfo(
+      authenticationSearch: AuthenticationSearch,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Seq[Authentication]]] = Future {
+    executeWithHttpInfo[Seq[Authentication]](
+      searchAuthenticationsHttpRequest(authenticationSearch = authenticationSearch),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `searchAuthentications` and
+    * `searchAuthenticationsWithHTTPInfo`.
+    */
+  private def searchAuthenticationsHttpRequest(authenticationSearch: AuthenticationSearch): HttpRequest = {
     requireNotNull(
       authenticationSearch,
       "Parameter `authenticationSearch` is required when calling `searchAuthentications`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/authentications/search")
       .withBody(authenticationSearch)
       .build()
-    execute[Seq[Authentication]](request, requestOptions)
   }
 
   /** Searches for destinations.
@@ -1512,15 +3011,39 @@ class IngestionClient(
   def searchDestinations(destinationSearch: DestinationSearch, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[Seq[Destination]] = Future {
+    execute[Seq[Destination]](searchDestinationsHttpRequest(destinationSearch = destinationSearch), requestOptions)
+  }
+
+  /** Variant of `searchDestinations` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    */
+  def searchDestinationsWithHTTPInfo(
+      destinationSearch: DestinationSearch,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Seq[Destination]]] = Future {
+    executeWithHttpInfo[Seq[Destination]](
+      searchDestinationsHttpRequest(destinationSearch = destinationSearch),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `searchDestinations` and
+    * `searchDestinationsWithHTTPInfo`.
+    */
+  private def searchDestinationsHttpRequest(destinationSearch: DestinationSearch): HttpRequest = {
     requireNotNull(destinationSearch, "Parameter `destinationSearch` is required when calling `searchDestinations`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/destinations/search")
       .withBody(destinationSearch)
       .build()
-    execute[Seq[Destination]](request, requestOptions)
   }
 
   /** Searches for sources.
@@ -1533,15 +3056,34 @@ class IngestionClient(
   def searchSources(sourceSearch: SourceSearch, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[Seq[Source]] = Future {
+    execute[Seq[Source]](searchSourcesHttpRequest(sourceSearch = sourceSearch), requestOptions)
+  }
+
+  /** Variant of `searchSources` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    */
+  def searchSourcesWithHTTPInfo(sourceSearch: SourceSearch, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Seq[Source]]] = Future {
+    executeWithHttpInfo[Seq[Source]](searchSourcesHttpRequest(sourceSearch = sourceSearch), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `searchSources` and `searchSourcesWithHTTPInfo`.
+    */
+  private def searchSourcesHttpRequest(sourceSearch: SourceSearch): HttpRequest = {
     requireNotNull(sourceSearch, "Parameter `sourceSearch` is required when calling `searchSources`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/sources/search")
       .withBody(sourceSearch)
       .build()
-    execute[Seq[Source]](request, requestOptions)
   }
 
   /** Searches for tasks.
@@ -1554,15 +3096,34 @@ class IngestionClient(
   def searchTasks(taskSearch: TaskSearch, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[Seq[Task]] = Future {
+    execute[Seq[Task]](searchTasksHttpRequest(taskSearch = taskSearch), requestOptions)
+  }
+
+  /** Variant of `searchTasks` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    */
+  def searchTasksWithHTTPInfo(taskSearch: TaskSearch, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Seq[Task]]] = Future {
+    executeWithHttpInfo[Seq[Task]](searchTasksHttpRequest(taskSearch = taskSearch), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `searchTasks` and `searchTasksWithHTTPInfo`.
+    */
+  private def searchTasksHttpRequest(taskSearch: TaskSearch): HttpRequest = {
     requireNotNull(taskSearch, "Parameter `taskSearch` is required when calling `searchTasks`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/2/tasks/search")
       .withBody(taskSearch)
       .build()
-    execute[Seq[Task]](request, requestOptions)
   }
 
   /** Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
@@ -1577,15 +3138,36 @@ class IngestionClient(
   def searchTasksV1(taskSearch: TaskSearch, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[Seq[TaskV1]] = Future {
+    execute[Seq[TaskV1]](searchTasksV1HttpRequest(taskSearch = taskSearch), requestOptions)
+  }
+
+  /** Variant of `searchTasksV1` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @deprecated
+    */
+  def searchTasksV1WithHTTPInfo(taskSearch: TaskSearch, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Seq[TaskV1]]] = Future {
+    executeWithHttpInfo[Seq[TaskV1]](searchTasksV1HttpRequest(taskSearch = taskSearch), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `searchTasksV1` and `searchTasksV1WithHTTPInfo`.
+    */
+  private def searchTasksV1HttpRequest(taskSearch: TaskSearch): HttpRequest = {
     requireNotNull(taskSearch, "Parameter `taskSearch` is required when calling `searchTasksV1`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/tasks/search")
       .withBody(taskSearch)
       .build()
-    execute[Seq[TaskV1]](request, requestOptions)
   }
 
   /** Searches for transformations.
@@ -1598,18 +3180,45 @@ class IngestionClient(
   def searchTransformations(transformationSearch: TransformationSearch, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
   ): Future[Seq[Transformation]] = Future {
+    execute[Seq[Transformation]](
+      searchTransformationsHttpRequest(transformationSearch = transformationSearch),
+      requestOptions
+    )
+  }
+
+  /** Variant of `searchTransformations` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    */
+  def searchTransformationsWithHTTPInfo(
+      transformationSearch: TransformationSearch,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Seq[Transformation]]] = Future {
+    executeWithHttpInfo[Seq[Transformation]](
+      searchTransformationsHttpRequest(transformationSearch = transformationSearch),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `searchTransformations` and
+    * `searchTransformationsWithHTTPInfo`.
+    */
+  private def searchTransformationsHttpRequest(transformationSearch: TransformationSearch): HttpRequest = {
     requireNotNull(
       transformationSearch,
       "Parameter `transformationSearch` is required when calling `searchTransformations`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/transformations/search")
       .withBody(transformationSearch)
       .build()
-    execute[Seq[Transformation]](request, requestOptions)
   }
 
   /** Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with
@@ -1626,25 +3235,58 @@ class IngestionClient(
   def triggerDockerSourceDiscover(sourceID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[WatchResponse] = Future {
+    execute[WatchResponse](
+      triggerDockerSourceDiscoverHttpRequest(sourceID = sourceID),
+      triggerDockerSourceDiscoverHttpRequestOptions(requestOptions)
+    )
+  }
+
+  /** Variant of `triggerDockerSourceDiscover` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param sourceID
+    *   Unique identifier of a source.
+    */
+  def triggerDockerSourceDiscoverWithHTTPInfo(sourceID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[WatchResponse]] = Future {
+    executeWithHttpInfo[WatchResponse](
+      triggerDockerSourceDiscoverHttpRequest(sourceID = sourceID),
+      triggerDockerSourceDiscoverHttpRequestOptions(requestOptions)
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `triggerDockerSourceDiscover` and
+    * `triggerDockerSourceDiscoverWithHTTPInfo`.
+    */
+  private def triggerDockerSourceDiscoverHttpRequest(sourceID: String): HttpRequest = {
     requireNotNull(sourceID, "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.")
     requireNotEmpty(sourceID, "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/sources/${escape(sourceID)}/discover")
       .build()
-    execute[WatchResponse](
-      request,
-      Some(
-        RequestOptions(
-          writeTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
-          readTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
-          connectTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS))
-        ) + requestOptions
-      )
-    )
   }
+
+  /** Merges `triggerDockerSourceDiscover`'s default timeouts into the given request options.
+    */
+  private def triggerDockerSourceDiscoverHttpRequestOptions(
+      requestOptions: Option[RequestOptions]
+  ): Option[RequestOptions] =
+    Some(
+      RequestOptions(
+        writeTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+        readTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+        connectTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS))
+      ) + requestOptions
+    )
 
   /** Try a transformation before creating it.
     *
@@ -1656,15 +3298,41 @@ class IngestionClient(
   def tryTransformation(transformationTry: TransformationTry, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[TransformationTryResponse] = Future {
+    execute[TransformationTryResponse](
+      tryTransformationHttpRequest(transformationTry = transformationTry),
+      requestOptions
+    )
+  }
+
+  /** Variant of `tryTransformation` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    */
+  def tryTransformationWithHTTPInfo(
+      transformationTry: TransformationTry,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[TransformationTryResponse]] = Future {
+    executeWithHttpInfo[TransformationTryResponse](
+      tryTransformationHttpRequest(transformationTry = transformationTry),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `tryTransformation` and `tryTransformationWithHTTPInfo`.
+    */
+  private def tryTransformationHttpRequest(transformationTry: TransformationTry): HttpRequest = {
     requireNotNull(transformationTry, "Parameter `transformationTry` is required when calling `tryTransformation`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/transformations/try")
       .withBody(transformationTry)
       .build()
-    execute[TransformationTryResponse](request, requestOptions)
   }
 
   /** Try a transformation before updating it.
@@ -1682,6 +3350,47 @@ class IngestionClient(
       transformationTry: TransformationTry,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[TransformationTryResponse] = Future {
+    execute[TransformationTryResponse](
+      tryTransformationBeforeUpdateHttpRequest(
+        transformationID = transformationID,
+        transformationTry = transformationTry
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `tryTransformationBeforeUpdate` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param transformationID
+    *   Unique identifier of a transformation.
+    */
+  def tryTransformationBeforeUpdateWithHTTPInfo(
+      transformationID: String,
+      transformationTry: TransformationTry,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[TransformationTryResponse]] = Future {
+    executeWithHttpInfo[TransformationTryResponse](
+      tryTransformationBeforeUpdateHttpRequest(
+        transformationID = transformationID,
+        transformationTry = transformationTry
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `tryTransformationBeforeUpdate` and
+    * `tryTransformationBeforeUpdateWithHTTPInfo`.
+    */
+  private def tryTransformationBeforeUpdateHttpRequest(
+      transformationID: String,
+      transformationTry: TransformationTry
+  ): HttpRequest = {
     requireNotNull(
       transformationID,
       "Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`."
@@ -1695,13 +3404,12 @@ class IngestionClient(
       "Parameter `transformationTry` is required when calling `tryTransformationBeforeUpdate`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/transformations/${escape(transformationID)}/try")
       .withBody(transformationTry)
       .build()
-    execute[TransformationTryResponse](request, requestOptions)
   }
 
   /** Updates an authentication resource.
@@ -1719,6 +3427,41 @@ class IngestionClient(
       authenticationUpdate: AuthenticationUpdate,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[AuthenticationUpdateResponse] = Future {
+    execute[AuthenticationUpdateResponse](
+      updateAuthenticationHttpRequest(authenticationID = authenticationID, authenticationUpdate = authenticationUpdate),
+      requestOptions
+    )
+  }
+
+  /** Variant of `updateAuthentication` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param authenticationID
+    *   Unique identifier of an authentication resource.
+    */
+  def updateAuthenticationWithHTTPInfo(
+      authenticationID: String,
+      authenticationUpdate: AuthenticationUpdate,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[AuthenticationUpdateResponse]] = Future {
+    executeWithHttpInfo[AuthenticationUpdateResponse](
+      updateAuthenticationHttpRequest(authenticationID = authenticationID, authenticationUpdate = authenticationUpdate),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `updateAuthentication` and
+    * `updateAuthenticationWithHTTPInfo`.
+    */
+  private def updateAuthenticationHttpRequest(
+      authenticationID: String,
+      authenticationUpdate: AuthenticationUpdate
+  ): HttpRequest = {
     requireNotNull(authenticationID, "Parameter `authenticationID` is required when calling `updateAuthentication`.")
     requireNotEmpty(authenticationID, "Parameter `authenticationID` is required when calling `updateAuthentication`.")
     requireNotNull(
@@ -1726,13 +3469,12 @@ class IngestionClient(
       "Parameter `authenticationUpdate` is required when calling `updateAuthentication`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PATCH")
       .withPath(s"/1/authentications/${escape(authenticationID)}")
       .withBody(authenticationUpdate)
       .build()
-    execute[AuthenticationUpdateResponse](request, requestOptions)
   }
 
   /** Updates the destination by its ID.
@@ -1750,17 +3492,47 @@ class IngestionClient(
       destinationUpdate: DestinationUpdate,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[DestinationUpdateResponse] = Future {
+    execute[DestinationUpdateResponse](
+      updateDestinationHttpRequest(destinationID = destinationID, destinationUpdate = destinationUpdate),
+      requestOptions
+    )
+  }
+
+  /** Variant of `updateDestination` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param destinationID
+    *   Unique identifier of a destination.
+    */
+  def updateDestinationWithHTTPInfo(
+      destinationID: String,
+      destinationUpdate: DestinationUpdate,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[DestinationUpdateResponse]] = Future {
+    executeWithHttpInfo[DestinationUpdateResponse](
+      updateDestinationHttpRequest(destinationID = destinationID, destinationUpdate = destinationUpdate),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `updateDestination` and `updateDestinationWithHTTPInfo`.
+    */
+  private def updateDestinationHttpRequest(destinationID: String, destinationUpdate: DestinationUpdate): HttpRequest = {
     requireNotNull(destinationID, "Parameter `destinationID` is required when calling `updateDestination`.")
     requireNotEmpty(destinationID, "Parameter `destinationID` is required when calling `updateDestination`.")
     requireNotNull(destinationUpdate, "Parameter `destinationUpdate` is required when calling `updateDestination`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PATCH")
       .withPath(s"/1/destinations/${escape(destinationID)}")
       .withBody(destinationUpdate)
       .build()
-    execute[DestinationUpdateResponse](request, requestOptions)
   }
 
   /** Updates a source by its ID.
@@ -1776,17 +3548,47 @@ class IngestionClient(
   def updateSource(sourceID: String, sourceUpdate: SourceUpdate, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[SourceUpdateResponse] = Future {
+    execute[SourceUpdateResponse](
+      updateSourceHttpRequest(sourceID = sourceID, sourceUpdate = sourceUpdate),
+      requestOptions
+    )
+  }
+
+  /** Variant of `updateSource` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param sourceID
+    *   Unique identifier of a source.
+    */
+  def updateSourceWithHTTPInfo(
+      sourceID: String,
+      sourceUpdate: SourceUpdate,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[SourceUpdateResponse]] = Future {
+    executeWithHttpInfo[SourceUpdateResponse](
+      updateSourceHttpRequest(sourceID = sourceID, sourceUpdate = sourceUpdate),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `updateSource` and `updateSourceWithHTTPInfo`.
+    */
+  private def updateSourceHttpRequest(sourceID: String, sourceUpdate: SourceUpdate): HttpRequest = {
     requireNotNull(sourceID, "Parameter `sourceID` is required when calling `updateSource`.")
     requireNotEmpty(sourceID, "Parameter `sourceID` is required when calling `updateSource`.")
     requireNotNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `updateSource`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PATCH")
       .withPath(s"/1/sources/${escape(sourceID)}")
       .withBody(sourceUpdate)
       .build()
-    execute[SourceUpdateResponse](request, requestOptions)
   }
 
   /** Partially updates a task by its ID.
@@ -1802,17 +3604,41 @@ class IngestionClient(
   def updateTask(taskID: String, taskUpdate: TaskUpdate, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[TaskUpdateResponse] = Future {
+    execute[TaskUpdateResponse](updateTaskHttpRequest(taskID = taskID, taskUpdate = taskUpdate), requestOptions)
+  }
+
+  /** Variant of `updateTask` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    */
+  def updateTaskWithHTTPInfo(taskID: String, taskUpdate: TaskUpdate, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[TaskUpdateResponse]] = Future {
+    executeWithHttpInfo[TaskUpdateResponse](
+      updateTaskHttpRequest(taskID = taskID, taskUpdate = taskUpdate),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `updateTask` and `updateTaskWithHTTPInfo`.
+    */
+  private def updateTaskHttpRequest(taskID: String, taskUpdate: TaskUpdate): HttpRequest = {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `updateTask`.")
     requireNotEmpty(taskID, "Parameter `taskID` is required when calling `updateTask`.")
     requireNotNull(taskUpdate, "Parameter `taskUpdate` is required when calling `updateTask`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PATCH")
       .withPath(s"/2/tasks/${escape(taskID)}")
       .withBody(taskUpdate)
       .build()
-    execute[TaskUpdateResponse](request, requestOptions)
   }
 
   /** Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
@@ -1830,17 +3656,44 @@ class IngestionClient(
   def updateTaskV1(taskID: String, taskUpdate: TaskUpdateV1, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[TaskUpdateResponse] = Future {
+    execute[TaskUpdateResponse](updateTaskV1HttpRequest(taskID = taskID, taskUpdate = taskUpdate), requestOptions)
+  }
+
+  /** Variant of `updateTaskV1` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @deprecated
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    */
+  def updateTaskV1WithHTTPInfo(taskID: String, taskUpdate: TaskUpdateV1, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[TaskUpdateResponse]] = Future {
+    executeWithHttpInfo[TaskUpdateResponse](
+      updateTaskV1HttpRequest(taskID = taskID, taskUpdate = taskUpdate),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `updateTaskV1` and `updateTaskV1WithHTTPInfo`.
+    */
+  private def updateTaskV1HttpRequest(taskID: String, taskUpdate: TaskUpdateV1): HttpRequest = {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `updateTaskV1`.")
     requireNotEmpty(taskID, "Parameter `taskID` is required when calling `updateTaskV1`.")
     requireNotNull(taskUpdate, "Parameter `taskUpdate` is required when calling `updateTaskV1`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PATCH")
       .withPath(s"/1/tasks/${escape(taskID)}")
       .withBody(taskUpdate)
       .build()
-    execute[TaskUpdateResponse](request, requestOptions)
   }
 
   /** Updates a transformation by its ID.
@@ -1858,6 +3711,41 @@ class IngestionClient(
       transformationCreate: TransformationCreate,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[TransformationUpdateResponse] = Future {
+    execute[TransformationUpdateResponse](
+      updateTransformationHttpRequest(transformationID = transformationID, transformationCreate = transformationCreate),
+      requestOptions
+    )
+  }
+
+  /** Variant of `updateTransformation` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param transformationID
+    *   Unique identifier of a transformation.
+    */
+  def updateTransformationWithHTTPInfo(
+      transformationID: String,
+      transformationCreate: TransformationCreate,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[TransformationUpdateResponse]] = Future {
+    executeWithHttpInfo[TransformationUpdateResponse](
+      updateTransformationHttpRequest(transformationID = transformationID, transformationCreate = transformationCreate),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `updateTransformation` and
+    * `updateTransformationWithHTTPInfo`.
+    */
+  private def updateTransformationHttpRequest(
+      transformationID: String,
+      transformationCreate: TransformationCreate
+  ): HttpRequest = {
     requireNotNull(transformationID, "Parameter `transformationID` is required when calling `updateTransformation`.")
     requireNotEmpty(transformationID, "Parameter `transformationID` is required when calling `updateTransformation`.")
     requireNotNull(
@@ -1865,13 +3753,12 @@ class IngestionClient(
       "Parameter `transformationCreate` is required when calling `updateTransformation`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/1/transformations/${escape(transformationID)}")
       .withBody(transformationCreate)
       .build()
-    execute[TransformationUpdateResponse](request, requestOptions)
   }
 
   /** Validates a source payload to ensure it can be created and that the data source can be reached by Algolia.
@@ -1886,24 +3773,54 @@ class IngestionClient(
   def validateSource(sourceCreate: Option[SourceCreate] = None, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[WatchResponse] = Future {
+    execute[WatchResponse](
+      validateSourceHttpRequest(sourceCreate = sourceCreate),
+      validateSourceHttpRequestOptions(requestOptions)
+    )
+  }
 
-    val request = HttpRequest
+  /** Variant of `validateSource` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param sourceCreate
+    */
+  def validateSourceWithHTTPInfo(
+      sourceCreate: Option[SourceCreate] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[WatchResponse]] = Future {
+    executeWithHttpInfo[WatchResponse](
+      validateSourceHttpRequest(sourceCreate = sourceCreate),
+      validateSourceHttpRequestOptions(requestOptions)
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `validateSource` and `validateSourceWithHTTPInfo`.
+    */
+  private def validateSourceHttpRequest(sourceCreate: Option[SourceCreate] = None): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/sources/validate")
       .withBody(sourceCreate)
       .build()
-    execute[WatchResponse](
-      request,
-      Some(
-        RequestOptions(
-          writeTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
-          readTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
-          connectTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS))
-        ) + requestOptions
-      )
-    )
   }
+
+  /** Merges `validateSource`'s default timeouts into the given request options.
+    */
+  private def validateSourceHttpRequestOptions(requestOptions: Option[RequestOptions]): Option[RequestOptions] =
+    Some(
+      RequestOptions(
+        writeTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+        readTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+        connectTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS))
+      ) + requestOptions
+    )
 
   /** Validates an update of a source payload to ensure it can be created and that the data source can be reached by
     * Algolia.
@@ -1921,26 +3838,61 @@ class IngestionClient(
       sourceUpdate: SourceUpdate,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[WatchResponse] = Future {
+    execute[WatchResponse](
+      validateSourceBeforeUpdateHttpRequest(sourceID = sourceID, sourceUpdate = sourceUpdate),
+      validateSourceBeforeUpdateHttpRequestOptions(requestOptions)
+    )
+  }
+
+  /** Variant of `validateSourceBeforeUpdate` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param sourceID
+    *   Unique identifier of a source.
+    */
+  def validateSourceBeforeUpdateWithHTTPInfo(
+      sourceID: String,
+      sourceUpdate: SourceUpdate,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[WatchResponse]] = Future {
+    executeWithHttpInfo[WatchResponse](
+      validateSourceBeforeUpdateHttpRequest(sourceID = sourceID, sourceUpdate = sourceUpdate),
+      validateSourceBeforeUpdateHttpRequestOptions(requestOptions)
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `validateSourceBeforeUpdate` and
+    * `validateSourceBeforeUpdateWithHTTPInfo`.
+    */
+  private def validateSourceBeforeUpdateHttpRequest(sourceID: String, sourceUpdate: SourceUpdate): HttpRequest = {
     requireNotNull(sourceID, "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.")
     requireNotEmpty(sourceID, "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.")
     requireNotNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `validateSourceBeforeUpdate`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/sources/${escape(sourceID)}/validate")
       .withBody(sourceUpdate)
       .build()
-    execute[WatchResponse](
-      request,
-      Some(
-        RequestOptions(
-          writeTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
-          readTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
-          connectTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS))
-        ) + requestOptions
-      )
-    )
   }
+
+  /** Merges `validateSourceBeforeUpdate`'s default timeouts into the given request options.
+    */
+  private def validateSourceBeforeUpdateHttpRequestOptions(
+      requestOptions: Option[RequestOptions]
+  ): Option[RequestOptions] =
+    Some(
+      RequestOptions(
+        writeTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+        readTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+        connectTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS))
+      ) + requestOptions
+    )
 
 }
