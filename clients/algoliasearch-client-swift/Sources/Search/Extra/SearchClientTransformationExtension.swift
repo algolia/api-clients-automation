@@ -212,7 +212,7 @@ public extension SearchClient {
         if objects.isEmpty {
             let warning =
                 "replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the \"\(indexName)\" index.\n"
-            FileHandle.standardError.write(Data(warning.utf8))
+            self.emitWarning(warning)
         }
 
         let tmpIndexName = "\(indexName)_tmp_\(Int.random(in: 1_000_000 ..< 10_000_000))"

@@ -592,7 +592,7 @@ public extension SearchClient {
         if objects.isEmpty {
             let warning =
                 "replaceAllObjects was called with an empty list of objects, which will delete all records currently in the \"\(indexName)\" index.\n"
-            FileHandle.standardError.write(Data(warning.utf8))
+            self.emitWarning(warning)
         }
 
         let tmpIndexName = "\(indexName)_tmp_\(Int.random(in: 1_000_000 ..< 10_000_000))"
@@ -747,5 +747,13 @@ public extension SearchClient {
             requestOptions: requestOptions
         )
         return try helper.mergeResponses(responses)
+    }
+}
+
+extension SearchClient {
+    /// Best-effort diagnostic output: a warning must never crash the caller, so write failures
+    /// (closed or redirected stderr) are swallowed.
+    func emitWarning(_ message: String) {
+        try? FileHandle.standardError.write(contentsOf: Data(message.utf8))
     }
 }
