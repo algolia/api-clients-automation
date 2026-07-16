@@ -591,7 +591,7 @@ public extension SearchClient {
     ) async throws -> ReplaceAllObjectsResponse {
         if objects.isEmpty {
             let warning =
-                "replaceAllObjects was called with an empty list of objects, which will delete all records currently in the \"\(indexName)\" index.\n"
+                "Warning: replaceAllObjects was called with an empty list of objects, which will delete all records currently in the \"\(indexName)\" index.\n"
             self.emitWarning(warning)
         }
 

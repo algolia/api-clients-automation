@@ -211,7 +211,7 @@ public extension SearchClient {
 
         if objects.isEmpty {
             let warning =
-                "replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the \"\(indexName)\" index.\n"
+                "Warning: replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the \"\(indexName)\" index.\n"
             self.emitWarning(warning)
         }
 
