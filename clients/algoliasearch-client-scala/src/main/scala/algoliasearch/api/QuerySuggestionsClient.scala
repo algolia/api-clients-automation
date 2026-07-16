@@ -98,18 +98,39 @@ class QuerySuggestionsClient(
   def createConfig(configurationWithIndex: ConfigurationWithIndex, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
   ): Future[BaseResponse] = Future {
+    execute[BaseResponse](createConfigHttpRequest(configurationWithIndex = configurationWithIndex), requestOptions)
+  }
+
+  /** Variant of `createConfig` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    */
+  def createConfigWithHTTPInfo(
+      configurationWithIndex: ConfigurationWithIndex,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[BaseResponse]] = Future {
+    executeWithHttpInfo[BaseResponse](
+      createConfigHttpRequest(configurationWithIndex = configurationWithIndex),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `createConfig` and `createConfigWithHTTPInfo`.
+    */
+  private def createConfigHttpRequest(configurationWithIndex: ConfigurationWithIndex): HttpRequest = {
     requireNotNull(
       configurationWithIndex,
       "Parameter `configurationWithIndex` is required when calling `createConfig`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/configs")
       .withBody(configurationWithIndex)
       .build()
-    execute[BaseResponse](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -124,16 +145,37 @@ class QuerySuggestionsClient(
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customDeleteHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Variant of `customDelete` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customDeleteWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customDeleteHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customDelete` and `customDeleteWithHTTPInfo`.
+    */
+  private def customDeleteHttpRequest(path: String, parameters: Option[Map[String, Any]] = None): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customDelete`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/${path}")
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -148,16 +190,36 @@ class QuerySuggestionsClient(
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customGetHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Variant of `customGet` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customGetWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customGetHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customGet` and `customGetWithHTTPInfo`.
+    */
+  private def customGetHttpRequest(path: String, parameters: Option[Map[String, Any]] = None): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customGet`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/${path}")
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -175,17 +237,44 @@ class QuerySuggestionsClient(
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customPostHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Variant of `customPost` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPostWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customPostHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customPost` and `customPostWithHTTPInfo`.
+    */
+  private def customPostHttpRequest(
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None
+  ): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customPost`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -203,17 +292,44 @@ class QuerySuggestionsClient(
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customPutHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Variant of `customPut` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPutWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customPutHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customPut` and `customPutWithHTTPInfo`.
+    */
+  private def customPutHttpRequest(
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None
+  ): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customPut`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** Deletes a Query Suggestions configuration. Deleting only removes the configuration and stops updates to the Query
@@ -229,15 +345,35 @@ class QuerySuggestionsClient(
   def deleteConfig(indexName: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[BaseResponse] = Future {
+    execute[BaseResponse](deleteConfigHttpRequest(indexName = indexName), requestOptions)
+  }
+
+  /** Variant of `deleteConfig` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param indexName
+    *   Query Suggestions index name.
+    */
+  def deleteConfigWithHTTPInfo(indexName: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[BaseResponse]] = Future {
+    executeWithHttpInfo[BaseResponse](deleteConfigHttpRequest(indexName = indexName), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteConfig` and `deleteConfigWithHTTPInfo`.
+    */
+  private def deleteConfigHttpRequest(indexName: String): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `deleteConfig`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `deleteConfig`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/1/configs/${escape(indexName)}")
       .build()
-    execute[BaseResponse](request, requestOptions)
   }
 
   /** Retrieves all Query Suggestions configurations of your Algolia application.
@@ -248,13 +384,30 @@ class QuerySuggestionsClient(
   def getAllConfigs(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[Seq[ConfigurationResponse]] = Future {
+    execute[Seq[ConfigurationResponse]](getAllConfigsHttpRequest(), requestOptions)
+  }
 
-    val request = HttpRequest
+  /** Variant of `getAllConfigs` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    */
+  def getAllConfigsWithHTTPInfo(
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Seq[ConfigurationResponse]]] = Future {
+    executeWithHttpInfo[Seq[ConfigurationResponse]](getAllConfigsHttpRequest(), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getAllConfigs` and `getAllConfigsWithHTTPInfo`.
+    */
+  private def getAllConfigsHttpRequest(): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/configs")
       .build()
-    execute[Seq[ConfigurationResponse]](request, requestOptions)
   }
 
   /** Retrieves a single Query Suggestions configuration by its index name.
@@ -268,15 +421,34 @@ class QuerySuggestionsClient(
   def getConfig(indexName: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[ConfigurationResponse] = Future {
+    execute[ConfigurationResponse](getConfigHttpRequest(indexName = indexName), requestOptions)
+  }
+
+  /** Variant of `getConfig` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param indexName
+    *   Query Suggestions index name.
+    */
+  def getConfigWithHTTPInfo(indexName: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[ConfigurationResponse]] = Future {
+    executeWithHttpInfo[ConfigurationResponse](getConfigHttpRequest(indexName = indexName), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getConfig` and `getConfigWithHTTPInfo`.
+    */
+  private def getConfigHttpRequest(indexName: String): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getConfig`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getConfig`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/configs/${escape(indexName)}")
       .build()
-    execute[ConfigurationResponse](request, requestOptions)
   }
 
   /** Reports the status of a Query Suggestions index.
@@ -290,15 +462,35 @@ class QuerySuggestionsClient(
   def getConfigStatus(indexName: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[ConfigStatus] = Future {
+    execute[ConfigStatus](getConfigStatusHttpRequest(indexName = indexName), requestOptions)
+  }
+
+  /** Variant of `getConfigStatus` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param indexName
+    *   Query Suggestions index name.
+    */
+  def getConfigStatusWithHTTPInfo(indexName: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[ConfigStatus]] = Future {
+    executeWithHttpInfo[ConfigStatus](getConfigStatusHttpRequest(indexName = indexName), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getConfigStatus` and `getConfigStatusWithHTTPInfo`.
+    */
+  private def getConfigStatusHttpRequest(indexName: String): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getConfigStatus`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getConfigStatus`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/configs/${escape(indexName)}/status")
       .build()
-    execute[ConfigStatus](request, requestOptions)
   }
 
   /** Retrieves the logs for a single Query Suggestions index.
@@ -312,15 +504,34 @@ class QuerySuggestionsClient(
   def getLogFile(indexName: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[LogFile] = Future {
+    execute[LogFile](getLogFileHttpRequest(indexName = indexName), requestOptions)
+  }
+
+  /** Variant of `getLogFile` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param indexName
+    *   Query Suggestions index name.
+    */
+  def getLogFileWithHTTPInfo(indexName: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[LogFile]] = Future {
+    executeWithHttpInfo[LogFile](getLogFileHttpRequest(indexName = indexName), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getLogFile` and `getLogFileWithHTTPInfo`.
+    */
+  private def getLogFileHttpRequest(indexName: String): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getLogFile`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `getLogFile`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/logs/${escape(indexName)}")
       .build()
-    execute[LogFile](request, requestOptions)
   }
 
   /** Updates a QuerySuggestions configuration.
@@ -334,17 +545,42 @@ class QuerySuggestionsClient(
   def updateConfig(indexName: String, configuration: Configuration, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
   ): Future[BaseResponse] = Future {
+    execute[BaseResponse](updateConfigHttpRequest(indexName = indexName, configuration = configuration), requestOptions)
+  }
+
+  /** Variant of `updateConfig` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param indexName
+    *   Query Suggestions index name.
+    */
+  def updateConfigWithHTTPInfo(
+      indexName: String,
+      configuration: Configuration,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[BaseResponse]] = Future {
+    executeWithHttpInfo[BaseResponse](
+      updateConfigHttpRequest(indexName = indexName, configuration = configuration),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `updateConfig` and `updateConfigWithHTTPInfo`.
+    */
+  private def updateConfigHttpRequest(indexName: String, configuration: Configuration): HttpRequest = {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `updateConfig`.")
     requireNotEmpty(indexName, "Parameter `indexName` is required when calling `updateConfig`.")
     requireNotNull(configuration, "Parameter `configuration` is required when calling `updateConfig`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/1/configs/${escape(indexName)}")
       .withBody(configuration)
       .build()
-    execute[BaseResponse](request, requestOptions)
   }
 
 }

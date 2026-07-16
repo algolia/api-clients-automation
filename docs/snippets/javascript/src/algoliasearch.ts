@@ -304,7 +304,7 @@ export async function snippetForGetRecommendations2(): Promise<void> {
         threshold: 42.1,
         maxRecommendations: 10,
         queryParameters: { query: 'myQuery', optionalFilters: ['brand:apple'] },
-        fallbackParameters: { query: 'myQuery', optionalFilters: ['brand:samsung'] },
+        fallbackParameters: { query: 'myQuery', optionalFilters: ['brand:samsung'], facetFilters: ['brand:apple'] },
       },
     ],
   });

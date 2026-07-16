@@ -22,11 +22,10 @@ trait Requester extends AutoCloseable {
       requestOptions: Option[RequestOptions]
   ): T
 
-  /** Executes an HTTP request and returns the full HTTP response: status code, headers, raw body and deserialized
-    * data.
+  /** Executes an HTTP request and returns the full HTTP response: status code, headers, raw body and deserialized data.
     *
-    * The default implementation throws [[UnsupportedOperationException]]; custom requesters must override it to
-    * support the `*WithHTTPInfo` method derivatives.
+    * The default implementation throws [[UnsupportedOperationException]]; custom requesters must override it to support
+    * the `*WithHTTPInfo` method derivatives.
     *
     * @param httpRequest
     *   The HTTP request to be executed.

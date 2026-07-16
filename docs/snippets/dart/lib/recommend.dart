@@ -658,6 +658,9 @@ void snippetForgetRecommendations2() async {
             optionalFilters: [
               "brand:samsung",
             ],
+            facetFilters: [
+              "brand:apple",
+            ],
           ),
         ),
       ],

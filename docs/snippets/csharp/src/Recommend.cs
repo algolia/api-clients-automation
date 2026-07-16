@@ -673,6 +673,9 @@ public class SnippetRecommendClient
                 OptionalFilters = new OptionalFilters(
                   new List<OptionalFilters> { new OptionalFilters("brand:samsung") }
                 ),
+                FacetFilters = new FacetFilters(
+                  new List<FacetFilters> { new FacetFilters("brand:apple") }
+                ),
               },
             }
           ),

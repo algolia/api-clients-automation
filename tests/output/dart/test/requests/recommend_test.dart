@@ -706,6 +706,9 @@ void main() {
                 optionalFilters: [
                   "brand:samsung",
                 ],
+                facetFilters: [
+                  "brand:apple",
+                ],
               ),
             ),
           ],
@@ -715,7 +718,7 @@ void main() {
         expectPath(request.path, '/1/indexes/*/recommendations');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}""");
+            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"],"facetFilters":["brand:apple"]}}]}""");
       },
     ),
   );
