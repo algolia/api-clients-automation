@@ -50,10 +50,10 @@ async function main(): Promise<void> {
     return;
   }
 
-  const appId = process.env.ALGOLIA_APPLICATION_ID;
-  const apiKey = process.env.ALGOLIA_ADMIN_KEY;
+  const appId = process.env.SNIPPETS_APPLICATION_ID;
+  const apiKey = process.env.SNIPPETS_API_KEY;
   if (!appId || !apiKey) {
-    throw new Error('set ALGOLIA_APPLICATION_ID and ALGOLIA_ADMIN_KEY to push');
+    throw new Error('set SNIPPETS_APPLICATION_ID and SNIPPETS_API_KEY to push');
   }
 
   const client = algoliasearch(appId, apiKey);
