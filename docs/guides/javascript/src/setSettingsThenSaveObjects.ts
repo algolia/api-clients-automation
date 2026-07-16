@@ -2,9 +2,7 @@ import { algoliasearch } from 'algoliasearch';
 
 import type { IndexSettings } from 'algoliasearch';
 
-const playlists: Record<string, any>[] = [
-  /* Your records */
-];
+const playlists: Record<string, any>[] = [/* Your records */];
 
 const getAppIDFor = (_: string) => {
   return ''; // Implement your own logic here

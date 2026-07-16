@@ -87,7 +87,9 @@ public class TestsRequest extends TestsGenerator {
       "e2eApiKey",
       client.startsWith("composition") || client.startsWith("advanced-personalization")
         ? "METIS_API_KEY"
-        : (client.equals("monitoring") ? "MONITORING_API_KEY" : "ALGOLIA_ADMIN_KEY")
+        : client.equals("monitoring")
+          ? "MONITORING_API_KEY"
+          : "ALGOLIA_ADMIN_KEY"
     );
     bundle.put("useEchoRequester", true);
 

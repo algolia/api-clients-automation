@@ -18,7 +18,7 @@ private[algoliasearch] object RetryUntil {
       delay: Long => Long = DEFAULT_DELAY
   )(implicit ec: ExecutionContext): Future[T] = {
 
-    def attempt(retryCount: Int, currentDelay: Long): Future[T] = {
+    def attempt(retryCount: Int): Future[T] = {
       if (retryCount >= maxRetries) {
         Future.failed(
           AlgoliaWaitException(
@@ -30,15 +30,14 @@ private[algoliasearch] object RetryUntil {
           if (until(result)) {
             Future.successful(result)
           } else {
-            val nextDelay = delay(currentDelay)
-            after(nextDelay)(attempt(retryCount + 1, nextDelay))
+            val nextDelay = delay(retryCount)
+            after(nextDelay)(attempt(retryCount + 1))
           }
         }
       }
     }
 
-    val initialDelay = delay(0)
-    attempt(0, initialDelay)
+    attempt(0)
   }
 
   private def after[T](delay: Long)(block: => Future[T])(implicit ec: ExecutionContext): Future[T] = {
