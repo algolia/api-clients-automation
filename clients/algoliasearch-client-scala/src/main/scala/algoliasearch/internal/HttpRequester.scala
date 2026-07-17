@@ -12,11 +12,13 @@ import org.json4s.native.{JsonMethods, JsonParser, parseJson}
 import org.json4s.{DefaultFormats, Extraction, Formats}
 import org.json4s.native.Serialization.read
 
-import java.io.IOException
+import java.io.{ByteArrayInputStream, IOException}
+import java.nio.charset.StandardCharsets
 import java.util.Collections
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 import scala.collection.mutable.ListBuffer
+import scala.jdk.CollectionConverters._
 import scala.util.Try
 
 /** HttpRequester is responsible for making HTTP requests using the OkHttp client. It provides a mechanism for request
@@ -138,7 +140,41 @@ private[algoliasearch] class HttpRequester private (
   override def execute[T: Manifest](
       httpRequest: HttpRequest,
       requestOptions: Option[RequestOptions] = None
-  ): T = {
+  ): T =
+    executeRequest(httpRequest, requestOptions) { response =>
+      if (response.code == 204) null.asInstanceOf[T]
+      else jsonSerializer.deserialize[T](response.body.byteStream)
+    }
+
+  /** Executes an HTTP request and returns the full HTTP response: status code, headers, raw body and deserialized data.
+    * The body is materialized before the underlying okhttp response is closed.
+    */
+  override def executeWithHttpInfo[T: Manifest](
+      httpRequest: HttpRequest,
+      requestOptions: Option[RequestOptions] = None
+  ): AlgoliaHttpResponse[T] =
+    executeRequest(httpRequest, requestOptions) { response =>
+      val body = response.body.string
+      val data =
+        if (response.code == 204 || body.isEmpty) None
+        else Some(jsonSerializer.deserialize[T](new ByteArrayInputStream(body.getBytes(StandardCharsets.UTF_8))))
+      AlgoliaHttpResponse(
+        statusCode = response.code,
+        headers = response.headers.toMultimap.asScala.map { case (name, values) =>
+          name -> values.asScala.toSeq
+        }.toMap,
+        body = body,
+        data = data
+      )
+    }
+
+  /** Builds and executes the HTTP request, maps errors, and passes the successful response to `handler` before the
+    * response is closed.
+    */
+  private def executeRequest[R](
+      httpRequest: HttpRequest,
+      requestOptions: Option[RequestOptions]
+  )(handler: Response => R): R = {
     if (isClosed.get) throw new IllegalStateException("HttpRequester is closed")
     // Create the request components.
     val url = createHttpUrl(httpRequest, requestOptions)
@@ -161,8 +197,7 @@ private[algoliasearch] class HttpRequester private (
       // Handle unsuccessful responses.
       if (!response.isSuccessful)
         throw AlgoliaApiException(message = response.message, httpErrorCode = response.code)
-      if (response.code == 204) null.asInstanceOf[T]
-      else jsonSerializer.deserialize[T](response.body.byteStream)
+      handler(response)
     } catch {
       case exception: IOException => throw AlgoliaClientException(cause = exception)
       case exception: AlgoliaApiException =>

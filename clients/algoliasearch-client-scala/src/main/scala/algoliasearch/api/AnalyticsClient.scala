@@ -117,16 +117,37 @@ class AnalyticsClient(
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customDeleteHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Variant of `customDelete` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customDeleteWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customDeleteHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customDelete` and `customDeleteWithHTTPInfo`.
+    */
+  private def customDeleteHttpRequest(path: String, parameters: Option[Map[String, Any]] = None): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customDelete`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/${path}")
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -141,16 +162,36 @@ class AnalyticsClient(
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customGetHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Variant of `customGet` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customGetWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customGetHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customGet` and `customGetWithHTTPInfo`.
+    */
+  private def customGetHttpRequest(path: String, parameters: Option[Map[String, Any]] = None): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customGet`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/${path}")
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -168,17 +209,44 @@ class AnalyticsClient(
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customPostHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Variant of `customPost` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPostWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customPostHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customPost` and `customPostWithHTTPInfo`.
+    */
+  private def customPostHttpRequest(
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None
+  ): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customPost`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -196,17 +264,44 @@ class AnalyticsClient(
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customPutHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Variant of `customPut` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPutWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customPutHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customPut` and `customPutWithHTTPInfo`.
+    */
+  private def customPutHttpRequest(
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None
+  ): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customPut`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** Retrieves the add-to-cart rate for all your searches with at least one add-to-cart event, including a daily
@@ -239,10 +334,54 @@ class AnalyticsClient(
       tags: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetAddToCartRateResponse] = Future {
+    execute[GetAddToCartRateResponse](
+      getAddToCartRateHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getAddToCartRate` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param startDate
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param endDate
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+    */
+  def getAddToCartRateWithHTTPInfo(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetAddToCartRateResponse]] = Future {
+    executeWithHttpInfo[GetAddToCartRateResponse](
+      getAddToCartRateHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getAddToCartRate` and `getAddToCartRateWithHTTPInfo`.
+    */
+  private def getAddToCartRateHttpRequest(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(index, "Parameter `index` is required when calling `getAddToCartRate`.")
     requireNotEmpty(index, "Parameter `index` is required when calling `getAddToCartRate`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/conversions/addToCartRate")
@@ -251,7 +390,6 @@ class AnalyticsClient(
       .withQueryParameter("endDate", endDate)
       .withQueryParameter("tags", tags)
       .build()
-    execute[GetAddToCartRateResponse](request, requestOptions)
   }
 
   /** Retrieves the average click position of your search results, including a daily breakdown. The average click
@@ -282,10 +420,55 @@ class AnalyticsClient(
       tags: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetAverageClickPositionResponse] = Future {
+    execute[GetAverageClickPositionResponse](
+      getAverageClickPositionHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getAverageClickPosition` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param startDate
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param endDate
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+    */
+  def getAverageClickPositionWithHTTPInfo(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetAverageClickPositionResponse]] = Future {
+    executeWithHttpInfo[GetAverageClickPositionResponse](
+      getAverageClickPositionHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getAverageClickPosition` and
+    * `getAverageClickPositionWithHTTPInfo`.
+    */
+  private def getAverageClickPositionHttpRequest(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(index, "Parameter `index` is required when calling `getAverageClickPosition`.")
     requireNotEmpty(index, "Parameter `index` is required when calling `getAverageClickPosition`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/clicks/averageClickPosition")
@@ -294,7 +477,6 @@ class AnalyticsClient(
       .withQueryParameter("endDate", endDate)
       .withQueryParameter("tags", tags)
       .build()
-    execute[GetAverageClickPositionResponse](request, requestOptions)
   }
 
   /** Retrieves the positions in the search results and their associated number of clicks. This lets you check how many
@@ -323,10 +505,54 @@ class AnalyticsClient(
       tags: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetClickPositionsResponse] = Future {
+    execute[GetClickPositionsResponse](
+      getClickPositionsHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getClickPositions` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param startDate
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param endDate
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+    */
+  def getClickPositionsWithHTTPInfo(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetClickPositionsResponse]] = Future {
+    executeWithHttpInfo[GetClickPositionsResponse](
+      getClickPositionsHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getClickPositions` and `getClickPositionsWithHTTPInfo`.
+    */
+  private def getClickPositionsHttpRequest(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(index, "Parameter `index` is required when calling `getClickPositions`.")
     requireNotEmpty(index, "Parameter `index` is required when calling `getClickPositions`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/clicks/positions")
@@ -335,7 +561,6 @@ class AnalyticsClient(
       .withQueryParameter("endDate", endDate)
       .withQueryParameter("tags", tags)
       .build()
-    execute[GetClickPositionsResponse](request, requestOptions)
   }
 
   /** Retrieves the click-through rate (CTR) for all your searches with at least one click event, including a daily
@@ -365,10 +590,55 @@ class AnalyticsClient(
       tags: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetClickThroughRateResponse] = Future {
+    execute[GetClickThroughRateResponse](
+      getClickThroughRateHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getClickThroughRate` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param startDate
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param endDate
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+    */
+  def getClickThroughRateWithHTTPInfo(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetClickThroughRateResponse]] = Future {
+    executeWithHttpInfo[GetClickThroughRateResponse](
+      getClickThroughRateHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getClickThroughRate` and
+    * `getClickThroughRateWithHTTPInfo`.
+    */
+  private def getClickThroughRateHttpRequest(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(index, "Parameter `index` is required when calling `getClickThroughRate`.")
     requireNotEmpty(index, "Parameter `index` is required when calling `getClickThroughRate`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/clicks/clickThroughRate")
@@ -377,7 +647,6 @@ class AnalyticsClient(
       .withQueryParameter("endDate", endDate)
       .withQueryParameter("tags", tags)
       .build()
-    execute[GetClickThroughRateResponse](request, requestOptions)
   }
 
   /** Retrieves the conversion rate (CR) for all your searches with at least one conversion event, including a daily
@@ -407,10 +676,54 @@ class AnalyticsClient(
       tags: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetConversionRateResponse] = Future {
+    execute[GetConversionRateResponse](
+      getConversionRateHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getConversionRate` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param startDate
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param endDate
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+    */
+  def getConversionRateWithHTTPInfo(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetConversionRateResponse]] = Future {
+    executeWithHttpInfo[GetConversionRateResponse](
+      getConversionRateHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getConversionRate` and `getConversionRateWithHTTPInfo`.
+    */
+  private def getConversionRateHttpRequest(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(index, "Parameter `index` is required when calling `getConversionRate`.")
     requireNotEmpty(index, "Parameter `index` is required when calling `getConversionRate`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/conversions/conversionRate")
@@ -419,7 +732,6 @@ class AnalyticsClient(
       .withQueryParameter("endDate", endDate)
       .withQueryParameter("tags", tags)
       .build()
-    execute[GetConversionRateResponse](request, requestOptions)
   }
 
   /** Retrieves the fraction of searches that didn't lead to any click within a time range, including a daily breakdown.
@@ -447,10 +759,54 @@ class AnalyticsClient(
       tags: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetNoClickRateResponse] = Future {
+    execute[GetNoClickRateResponse](
+      getNoClickRateHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getNoClickRate` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param startDate
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param endDate
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+    */
+  def getNoClickRateWithHTTPInfo(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetNoClickRateResponse]] = Future {
+    executeWithHttpInfo[GetNoClickRateResponse](
+      getNoClickRateHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getNoClickRate` and `getNoClickRateWithHTTPInfo`.
+    */
+  private def getNoClickRateHttpRequest(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(index, "Parameter `index` is required when calling `getNoClickRate`.")
     requireNotEmpty(index, "Parameter `index` is required when calling `getNoClickRate`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/searches/noClickRate")
@@ -459,7 +815,6 @@ class AnalyticsClient(
       .withQueryParameter("endDate", endDate)
       .withQueryParameter("tags", tags)
       .build()
-    execute[GetNoClickRateResponse](request, requestOptions)
   }
 
   /** Retrieves the fraction of searches that didn't return any results within a time range, including a daily
@@ -487,10 +842,54 @@ class AnalyticsClient(
       tags: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetNoResultsRateResponse] = Future {
+    execute[GetNoResultsRateResponse](
+      getNoResultsRateHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getNoResultsRate` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param startDate
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param endDate
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+    */
+  def getNoResultsRateWithHTTPInfo(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetNoResultsRateResponse]] = Future {
+    executeWithHttpInfo[GetNoResultsRateResponse](
+      getNoResultsRateHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getNoResultsRate` and `getNoResultsRateWithHTTPInfo`.
+    */
+  private def getNoResultsRateHttpRequest(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(index, "Parameter `index` is required when calling `getNoResultsRate`.")
     requireNotEmpty(index, "Parameter `index` is required when calling `getNoResultsRate`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/searches/noResultRate")
@@ -499,7 +898,6 @@ class AnalyticsClient(
       .withQueryParameter("endDate", endDate)
       .withQueryParameter("tags", tags)
       .build()
-    execute[GetNoResultsRateResponse](request, requestOptions)
   }
 
   /** Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.
@@ -532,10 +930,54 @@ class AnalyticsClient(
       tags: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetPurchaseRateResponse] = Future {
+    execute[GetPurchaseRateResponse](
+      getPurchaseRateHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getPurchaseRate` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param startDate
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param endDate
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+    */
+  def getPurchaseRateWithHTTPInfo(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetPurchaseRateResponse]] = Future {
+    executeWithHttpInfo[GetPurchaseRateResponse](
+      getPurchaseRateHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getPurchaseRate` and `getPurchaseRateWithHTTPInfo`.
+    */
+  private def getPurchaseRateHttpRequest(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(index, "Parameter `index` is required when calling `getPurchaseRate`.")
     requireNotEmpty(index, "Parameter `index` is required when calling `getPurchaseRate`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/conversions/purchaseRate")
@@ -544,7 +986,6 @@ class AnalyticsClient(
       .withQueryParameter("endDate", endDate)
       .withQueryParameter("tags", tags)
       .build()
-    execute[GetPurchaseRateResponse](request, requestOptions)
   }
 
   /** Retrieves revenue-related metrics, such as the total revenue or the average order value. To retrieve
@@ -574,10 +1015,53 @@ class AnalyticsClient(
       tags: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetRevenue] = Future {
+    execute[GetRevenue](
+      getRevenueHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getRevenue` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param startDate
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param endDate
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+    */
+  def getRevenueWithHTTPInfo(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetRevenue]] = Future {
+    executeWithHttpInfo[GetRevenue](
+      getRevenueHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getRevenue` and `getRevenueWithHTTPInfo`.
+    */
+  private def getRevenueHttpRequest(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(index, "Parameter `index` is required when calling `getRevenue`.")
     requireNotEmpty(index, "Parameter `index` is required when calling `getRevenue`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/conversions/revenue")
@@ -586,7 +1070,6 @@ class AnalyticsClient(
       .withQueryParameter("endDate", endDate)
       .withQueryParameter("tags", tags)
       .build()
-    execute[GetRevenue](request, requestOptions)
   }
 
   /** Retrieves the number of searches within a time range, including a daily breakdown. By default, the analyzed period
@@ -613,10 +1096,54 @@ class AnalyticsClient(
       tags: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetSearchesCountResponse] = Future {
+    execute[GetSearchesCountResponse](
+      getSearchesCountHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getSearchesCount` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param startDate
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param endDate
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+    */
+  def getSearchesCountWithHTTPInfo(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetSearchesCountResponse]] = Future {
+    executeWithHttpInfo[GetSearchesCountResponse](
+      getSearchesCountHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getSearchesCount` and `getSearchesCountWithHTTPInfo`.
+    */
+  private def getSearchesCountHttpRequest(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(index, "Parameter `index` is required when calling `getSearchesCount`.")
     requireNotEmpty(index, "Parameter `index` is required when calling `getSearchesCount`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/searches/count")
@@ -625,7 +1152,6 @@ class AnalyticsClient(
       .withQueryParameter("endDate", endDate)
       .withQueryParameter("tags", tags)
       .build()
-    execute[GetSearchesCountResponse](request, requestOptions)
   }
 
   /** Retrieves the most popular searches that didn't lead to any clicks, from the 1,000 most frequent searches. For
@@ -658,10 +1184,77 @@ class AnalyticsClient(
       tags: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetSearchesNoClicksResponse] = Future {
+    execute[GetSearchesNoClicksResponse](
+      getSearchesNoClicksHttpRequest(
+        index = index,
+        startDate = startDate,
+        endDate = endDate,
+        limit = limit,
+        offset = offset,
+        tags = tags
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getSearchesNoClicks` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param startDate
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param endDate
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param limit
+    *   Number of items to return.
+    * @param offset
+    *   Position of the first item to return.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+    */
+  def getSearchesNoClicksWithHTTPInfo(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      limit: Option[Int] = None,
+      offset: Option[Int] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetSearchesNoClicksResponse]] = Future {
+    executeWithHttpInfo[GetSearchesNoClicksResponse](
+      getSearchesNoClicksHttpRequest(
+        index = index,
+        startDate = startDate,
+        endDate = endDate,
+        limit = limit,
+        offset = offset,
+        tags = tags
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getSearchesNoClicks` and
+    * `getSearchesNoClicksWithHTTPInfo`.
+    */
+  private def getSearchesNoClicksHttpRequest(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      limit: Option[Int] = None,
+      offset: Option[Int] = None,
+      tags: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(index, "Parameter `index` is required when calling `getSearchesNoClicks`.")
     requireNotEmpty(index, "Parameter `index` is required when calling `getSearchesNoClicks`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/searches/noClicks")
@@ -672,7 +1265,6 @@ class AnalyticsClient(
       .withQueryParameter("offset", offset)
       .withQueryParameter("tags", tags)
       .build()
-    execute[GetSearchesNoClicksResponse](request, requestOptions)
   }
 
   /** Retrieves the 1,000 most frequent searches that produced zero results.
@@ -704,10 +1296,77 @@ class AnalyticsClient(
       tags: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetSearchesNoResultsResponse] = Future {
+    execute[GetSearchesNoResultsResponse](
+      getSearchesNoResultsHttpRequest(
+        index = index,
+        startDate = startDate,
+        endDate = endDate,
+        limit = limit,
+        offset = offset,
+        tags = tags
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getSearchesNoResults` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param startDate
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param endDate
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param limit
+    *   Number of items to return.
+    * @param offset
+    *   Position of the first item to return.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+    */
+  def getSearchesNoResultsWithHTTPInfo(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      limit: Option[Int] = None,
+      offset: Option[Int] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetSearchesNoResultsResponse]] = Future {
+    executeWithHttpInfo[GetSearchesNoResultsResponse](
+      getSearchesNoResultsHttpRequest(
+        index = index,
+        startDate = startDate,
+        endDate = endDate,
+        limit = limit,
+        offset = offset,
+        tags = tags
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getSearchesNoResults` and
+    * `getSearchesNoResultsWithHTTPInfo`.
+    */
+  private def getSearchesNoResultsHttpRequest(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      limit: Option[Int] = None,
+      offset: Option[Int] = None,
+      tags: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(index, "Parameter `index` is required when calling `getSearchesNoResults`.")
     requireNotEmpty(index, "Parameter `index` is required when calling `getSearchesNoResults`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/searches/noResults")
@@ -718,7 +1377,6 @@ class AnalyticsClient(
       .withQueryParameter("offset", offset)
       .withQueryParameter("tags", tags)
       .build()
-    execute[GetSearchesNoResultsResponse](request, requestOptions)
   }
 
   /** Retrieves the time when the Analytics data for the specified index was last updated. If the index has been
@@ -734,16 +1392,35 @@ class AnalyticsClient(
   def getStatus(index: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[GetStatusResponse] = Future {
+    execute[GetStatusResponse](getStatusHttpRequest(index = index), requestOptions)
+  }
+
+  /** Variant of `getStatus` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    */
+  def getStatusWithHTTPInfo(index: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[GetStatusResponse]] = Future {
+    executeWithHttpInfo[GetStatusResponse](getStatusHttpRequest(index = index), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getStatus` and `getStatusWithHTTPInfo`.
+    */
+  private def getStatusHttpRequest(index: String): HttpRequest = {
     requireNotNull(index, "Parameter `index` is required when calling `getStatus`.")
     requireNotEmpty(index, "Parameter `index` is required when calling `getStatus`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/status")
       .withQueryParameter("index", index)
       .build()
-    execute[GetStatusResponse](request, requestOptions)
   }
 
   /** Retrieves the countries with the most searches in your index.
@@ -775,10 +1452,76 @@ class AnalyticsClient(
       tags: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetTopCountriesResponse] = Future {
+    execute[GetTopCountriesResponse](
+      getTopCountriesHttpRequest(
+        index = index,
+        startDate = startDate,
+        endDate = endDate,
+        limit = limit,
+        offset = offset,
+        tags = tags
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getTopCountries` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param startDate
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param endDate
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param limit
+    *   Number of items to return.
+    * @param offset
+    *   Position of the first item to return.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+    */
+  def getTopCountriesWithHTTPInfo(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      limit: Option[Int] = None,
+      offset: Option[Int] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetTopCountriesResponse]] = Future {
+    executeWithHttpInfo[GetTopCountriesResponse](
+      getTopCountriesHttpRequest(
+        index = index,
+        startDate = startDate,
+        endDate = endDate,
+        limit = limit,
+        offset = offset,
+        tags = tags
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getTopCountries` and `getTopCountriesWithHTTPInfo`.
+    */
+  private def getTopCountriesHttpRequest(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      limit: Option[Int] = None,
+      offset: Option[Int] = None,
+      tags: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(index, "Parameter `index` is required when calling `getTopCountries`.")
     requireNotEmpty(index, "Parameter `index` is required when calling `getTopCountries`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/countries")
@@ -789,7 +1532,6 @@ class AnalyticsClient(
       .withQueryParameter("offset", offset)
       .withQueryParameter("tags", tags)
       .build()
-    execute[GetTopCountriesResponse](request, requestOptions)
   }
 
   /** Retrieves the 1,000 most frequently used filter attributes. These are attributes of your records that you included
@@ -825,10 +1567,83 @@ class AnalyticsClient(
       tags: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetTopFilterAttributesResponse] = Future {
+    execute[GetTopFilterAttributesResponse](
+      getTopFilterAttributesHttpRequest(
+        index = index,
+        search = search,
+        startDate = startDate,
+        endDate = endDate,
+        limit = limit,
+        offset = offset,
+        tags = tags
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getTopFilterAttributes` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param search
+    *   Search query.
+    * @param startDate
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param endDate
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param limit
+    *   Number of items to return.
+    * @param offset
+    *   Position of the first item to return.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+    */
+  def getTopFilterAttributesWithHTTPInfo(
+      index: String,
+      search: Option[String] = None,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      limit: Option[Int] = None,
+      offset: Option[Int] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetTopFilterAttributesResponse]] = Future {
+    executeWithHttpInfo[GetTopFilterAttributesResponse](
+      getTopFilterAttributesHttpRequest(
+        index = index,
+        search = search,
+        startDate = startDate,
+        endDate = endDate,
+        limit = limit,
+        offset = offset,
+        tags = tags
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getTopFilterAttributes` and
+    * `getTopFilterAttributesWithHTTPInfo`.
+    */
+  private def getTopFilterAttributesHttpRequest(
+      index: String,
+      search: Option[String] = None,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      limit: Option[Int] = None,
+      offset: Option[Int] = None,
+      tags: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(index, "Parameter `index` is required when calling `getTopFilterAttributes`.")
     requireNotEmpty(index, "Parameter `index` is required when calling `getTopFilterAttributes`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/filters")
@@ -840,7 +1655,6 @@ class AnalyticsClient(
       .withQueryParameter("offset", offset)
       .withQueryParameter("tags", tags)
       .build()
-    execute[GetTopFilterAttributesResponse](request, requestOptions)
   }
 
   /** Retrieves the 1,000 most frequent filter (facet) values for a filter attribute. These are attributes of your
@@ -879,12 +1693,91 @@ class AnalyticsClient(
       tags: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetTopFilterForAttributeResponse] = Future {
+    execute[GetTopFilterForAttributeResponse](
+      getTopFilterForAttributeHttpRequest(
+        attribute = attribute,
+        index = index,
+        search = search,
+        startDate = startDate,
+        endDate = endDate,
+        limit = limit,
+        offset = offset,
+        tags = tags
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getTopFilterForAttribute` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param attribute
+    *   Attribute name.
+    * @param index
+    *   Index name.
+    * @param search
+    *   Search query.
+    * @param startDate
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param endDate
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param limit
+    *   Number of items to return.
+    * @param offset
+    *   Position of the first item to return.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+    */
+  def getTopFilterForAttributeWithHTTPInfo(
+      attribute: String,
+      index: String,
+      search: Option[String] = None,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      limit: Option[Int] = None,
+      offset: Option[Int] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetTopFilterForAttributeResponse]] = Future {
+    executeWithHttpInfo[GetTopFilterForAttributeResponse](
+      getTopFilterForAttributeHttpRequest(
+        attribute = attribute,
+        index = index,
+        search = search,
+        startDate = startDate,
+        endDate = endDate,
+        limit = limit,
+        offset = offset,
+        tags = tags
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getTopFilterForAttribute` and
+    * `getTopFilterForAttributeWithHTTPInfo`.
+    */
+  private def getTopFilterForAttributeHttpRequest(
+      attribute: String,
+      index: String,
+      search: Option[String] = None,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      limit: Option[Int] = None,
+      offset: Option[Int] = None,
+      tags: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(attribute, "Parameter `attribute` is required when calling `getTopFilterForAttribute`.")
     requireNotEmpty(attribute, "Parameter `attribute` is required when calling `getTopFilterForAttribute`.")
     requireNotNull(index, "Parameter `index` is required when calling `getTopFilterForAttribute`.")
     requireNotEmpty(index, "Parameter `index` is required when calling `getTopFilterForAttribute`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/filters/${escape(attribute)}")
@@ -896,7 +1789,6 @@ class AnalyticsClient(
       .withQueryParameter("offset", offset)
       .withQueryParameter("tags", tags)
       .build()
-    execute[GetTopFilterForAttributeResponse](request, requestOptions)
   }
 
   /** Retrieves the 1,000 most frequently used filters for a search that didn't return any results. To get the most
@@ -933,10 +1825,83 @@ class AnalyticsClient(
       tags: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetTopFiltersNoResultsResponse] = Future {
+    execute[GetTopFiltersNoResultsResponse](
+      getTopFiltersNoResultsHttpRequest(
+        index = index,
+        search = search,
+        startDate = startDate,
+        endDate = endDate,
+        limit = limit,
+        offset = offset,
+        tags = tags
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getTopFiltersNoResults` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param search
+    *   Search query.
+    * @param startDate
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param endDate
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param limit
+    *   Number of items to return.
+    * @param offset
+    *   Position of the first item to return.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+    */
+  def getTopFiltersNoResultsWithHTTPInfo(
+      index: String,
+      search: Option[String] = None,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      limit: Option[Int] = None,
+      offset: Option[Int] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetTopFiltersNoResultsResponse]] = Future {
+    executeWithHttpInfo[GetTopFiltersNoResultsResponse](
+      getTopFiltersNoResultsHttpRequest(
+        index = index,
+        search = search,
+        startDate = startDate,
+        endDate = endDate,
+        limit = limit,
+        offset = offset,
+        tags = tags
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getTopFiltersNoResults` and
+    * `getTopFiltersNoResultsWithHTTPInfo`.
+    */
+  private def getTopFiltersNoResultsHttpRequest(
+      index: String,
+      search: Option[String] = None,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      limit: Option[Int] = None,
+      offset: Option[Int] = None,
+      tags: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(index, "Parameter `index` is required when calling `getTopFiltersNoResults`.")
     requireNotEmpty(index, "Parameter `index` is required when calling `getTopFiltersNoResults`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/filters/noResults")
@@ -948,7 +1913,6 @@ class AnalyticsClient(
       .withQueryParameter("offset", offset)
       .withQueryParameter("tags", tags)
       .build()
-    execute[GetTopFiltersNoResultsResponse](request, requestOptions)
   }
 
   /** Retrieves the object IDs of the 1,000 most frequent search results. If you set the `clickAnalytics` query
@@ -997,10 +1961,93 @@ class AnalyticsClient(
       tags: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetTopHitsResponse] = Future {
+    execute[GetTopHitsResponse](
+      getTopHitsHttpRequest(
+        index = index,
+        search = search,
+        clickAnalytics = clickAnalytics,
+        revenueAnalytics = revenueAnalytics,
+        startDate = startDate,
+        endDate = endDate,
+        limit = limit,
+        offset = offset,
+        tags = tags
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getTopHits` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param search
+    *   Search query.
+    * @param clickAnalytics
+    *   Whether to include metrics related to click and conversion events in the response.
+    * @param revenueAnalytics
+    *   Whether to include metrics related to revenue events in the response.
+    * @param startDate
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param endDate
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param limit
+    *   Number of items to return.
+    * @param offset
+    *   Position of the first item to return.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+    */
+  def getTopHitsWithHTTPInfo(
+      index: String,
+      search: Option[String] = None,
+      clickAnalytics: Option[Boolean] = None,
+      revenueAnalytics: Option[Boolean] = None,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      limit: Option[Int] = None,
+      offset: Option[Int] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetTopHitsResponse]] = Future {
+    executeWithHttpInfo[GetTopHitsResponse](
+      getTopHitsHttpRequest(
+        index = index,
+        search = search,
+        clickAnalytics = clickAnalytics,
+        revenueAnalytics = revenueAnalytics,
+        startDate = startDate,
+        endDate = endDate,
+        limit = limit,
+        offset = offset,
+        tags = tags
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getTopHits` and `getTopHitsWithHTTPInfo`.
+    */
+  private def getTopHitsHttpRequest(
+      index: String,
+      search: Option[String] = None,
+      clickAnalytics: Option[Boolean] = None,
+      revenueAnalytics: Option[Boolean] = None,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      limit: Option[Int] = None,
+      offset: Option[Int] = None,
+      tags: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(index, "Parameter `index` is required when calling `getTopHits`.")
     requireNotEmpty(index, "Parameter `index` is required when calling `getTopHits`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/hits")
@@ -1014,7 +2061,6 @@ class AnalyticsClient(
       .withQueryParameter("offset", offset)
       .withQueryParameter("tags", tags)
       .build()
-    execute[GetTopHitsResponse](request, requestOptions)
   }
 
   /** Returns the most popular searches. For each search, it also includes the average number of hits. If you set the
@@ -1067,10 +2113,101 @@ class AnalyticsClient(
       tags: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetTopSearchesResponse] = Future {
+    execute[GetTopSearchesResponse](
+      getTopSearchesHttpRequest(
+        index = index,
+        clickAnalytics = clickAnalytics,
+        revenueAnalytics = revenueAnalytics,
+        startDate = startDate,
+        endDate = endDate,
+        orderBy = orderBy,
+        direction = direction,
+        limit = limit,
+        offset = offset,
+        tags = tags
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getTopSearches` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param clickAnalytics
+    *   Whether to include metrics related to click and conversion events in the response.
+    * @param revenueAnalytics
+    *   Whether to include metrics related to revenue events in the response.
+    * @param startDate
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param endDate
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param orderBy
+    *   Attribute by which to order the response items. If the `clickAnalytics` parameter is false, only `searchCount`
+    *   is available.
+    * @param direction
+    *   Sorting direction of the results: ascending or descending.
+    * @param limit
+    *   Number of items to return.
+    * @param offset
+    *   Position of the first item to return.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+    */
+  def getTopSearchesWithHTTPInfo(
+      index: String,
+      clickAnalytics: Option[Boolean] = None,
+      revenueAnalytics: Option[Boolean] = None,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      orderBy: Option[OrderBy] = None,
+      direction: Option[Direction] = None,
+      limit: Option[Int] = None,
+      offset: Option[Int] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetTopSearchesResponse]] = Future {
+    executeWithHttpInfo[GetTopSearchesResponse](
+      getTopSearchesHttpRequest(
+        index = index,
+        clickAnalytics = clickAnalytics,
+        revenueAnalytics = revenueAnalytics,
+        startDate = startDate,
+        endDate = endDate,
+        orderBy = orderBy,
+        direction = direction,
+        limit = limit,
+        offset = offset,
+        tags = tags
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getTopSearches` and `getTopSearchesWithHTTPInfo`.
+    */
+  private def getTopSearchesHttpRequest(
+      index: String,
+      clickAnalytics: Option[Boolean] = None,
+      revenueAnalytics: Option[Boolean] = None,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      orderBy: Option[OrderBy] = None,
+      direction: Option[Direction] = None,
+      limit: Option[Int] = None,
+      offset: Option[Int] = None,
+      tags: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(index, "Parameter `index` is required when calling `getTopSearches`.")
     requireNotEmpty(index, "Parameter `index` is required when calling `getTopSearches`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/searches")
@@ -1085,7 +2222,6 @@ class AnalyticsClient(
       .withQueryParameter("offset", offset)
       .withQueryParameter("tags", tags)
       .build()
-    execute[GetTopSearchesResponse](request, requestOptions)
   }
 
   /** Retrieves the number of unique users within a time range, including a daily breakdown. Since it returns the number
@@ -1115,10 +2251,54 @@ class AnalyticsClient(
       tags: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[GetUsersCountResponse] = Future {
+    execute[GetUsersCountResponse](
+      getUsersCountHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getUsersCount` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param startDate
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param endDate
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+    */
+  def getUsersCountWithHTTPInfo(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[GetUsersCountResponse]] = Future {
+    executeWithHttpInfo[GetUsersCountResponse](
+      getUsersCountHttpRequest(index = index, startDate = startDate, endDate = endDate, tags = tags),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getUsersCount` and `getUsersCountWithHTTPInfo`.
+    */
+  private def getUsersCountHttpRequest(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(index, "Parameter `index` is required when calling `getUsersCount`.")
     requireNotEmpty(index, "Parameter `index` is required when calling `getUsersCount`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/2/users/count")
@@ -1127,7 +2307,6 @@ class AnalyticsClient(
       .withQueryParameter("endDate", endDate)
       .withQueryParameter("tags", tags)
       .build()
-    execute[GetUsersCountResponse](request, requestOptions)
   }
 
 }

@@ -123,6 +123,39 @@ class AgentStudioClient(
       allowedDomainBulkInsert: AllowedDomainBulkInsert,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[AllowedDomainListResponse] = Future {
+    execute[AllowedDomainListResponse](
+      bulkCreateAllowedDomainsHttpRequest(agentId = agentId, allowedDomainBulkInsert = allowedDomainBulkInsert),
+      requestOptions
+    )
+  }
+
+  /** Variant of `bulkCreateAllowedDomains` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param agentId
+    *   The agentId.
+    */
+  def bulkCreateAllowedDomainsWithHTTPInfo(
+      agentId: String,
+      allowedDomainBulkInsert: AllowedDomainBulkInsert,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[AllowedDomainListResponse]] = Future {
+    executeWithHttpInfo[AllowedDomainListResponse](
+      bulkCreateAllowedDomainsHttpRequest(agentId = agentId, allowedDomainBulkInsert = allowedDomainBulkInsert),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `bulkCreateAllowedDomains` and
+    * `bulkCreateAllowedDomainsWithHTTPInfo`.
+    */
+  private def bulkCreateAllowedDomainsHttpRequest(
+      agentId: String,
+      allowedDomainBulkInsert: AllowedDomainBulkInsert
+  ): HttpRequest = {
     requireNotNull(agentId, "Parameter `agentId` is required when calling `bulkCreateAllowedDomains`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `bulkCreateAllowedDomains`.")
     requireNotNull(
@@ -130,13 +163,12 @@ class AgentStudioClient(
       "Parameter `allowedDomainBulkInsert` is required when calling `bulkCreateAllowedDomains`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}/allowed-domains/bulk")
       .withBody(allowedDomainBulkInsert)
       .build()
-    execute[AllowedDomainListResponse](request, requestOptions)
   }
 
   /** Delete allowed domains by id list.
@@ -152,6 +184,39 @@ class AgentStudioClient(
       allowedDomainBulkDelete: AllowedDomainBulkDelete,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[Unit] = Future {
+    execute[Unit](
+      bulkDeleteAllowedDomainsHttpRequest(agentId = agentId, allowedDomainBulkDelete = allowedDomainBulkDelete),
+      requestOptions
+    )
+  }
+
+  /** Variant of `bulkDeleteAllowedDomains` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param agentId
+    *   The agentId.
+    */
+  def bulkDeleteAllowedDomainsWithHTTPInfo(
+      agentId: String,
+      allowedDomainBulkDelete: AllowedDomainBulkDelete,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Unit]] = Future {
+    executeWithHttpInfo[Unit](
+      bulkDeleteAllowedDomainsHttpRequest(agentId = agentId, allowedDomainBulkDelete = allowedDomainBulkDelete),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `bulkDeleteAllowedDomains` and
+    * `bulkDeleteAllowedDomainsWithHTTPInfo`.
+    */
+  private def bulkDeleteAllowedDomainsHttpRequest(
+      agentId: String,
+      allowedDomainBulkDelete: AllowedDomainBulkDelete
+  ): HttpRequest = {
     requireNotNull(agentId, "Parameter `agentId` is required when calling `bulkDeleteAllowedDomains`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `bulkDeleteAllowedDomains`.")
     requireNotNull(
@@ -159,13 +224,12 @@ class AgentStudioClient(
       "Parameter `allowedDomainBulkDelete` is required when calling `bulkDeleteAllowedDomains`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}/allowed-domains/bulk")
       .withBody(allowedDomainBulkDelete)
       .build()
-    execute[Unit](request, requestOptions)
   }
 
   /** Create a new agent.
@@ -176,15 +240,35 @@ class AgentStudioClient(
   def createAgent(agentConfigCreate: AgentConfigCreate, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[AgentWithVersionResponse] = Future {
+    execute[AgentWithVersionResponse](createAgentHttpRequest(agentConfigCreate = agentConfigCreate), requestOptions)
+  }
+
+  /** Variant of `createAgent` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    */
+  def createAgentWithHTTPInfo(agentConfigCreate: AgentConfigCreate, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[AgentWithVersionResponse]] = Future {
+    executeWithHttpInfo[AgentWithVersionResponse](
+      createAgentHttpRequest(agentConfigCreate = agentConfigCreate),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `createAgent` and `createAgentWithHTTPInfo`.
+    */
+  private def createAgentHttpRequest(agentConfigCreate: AgentConfigCreate): HttpRequest = {
     requireNotNull(agentConfigCreate, "Parameter `agentConfigCreate` is required when calling `createAgent`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/agent-studio/1/agents")
       .withBody(agentConfigCreate)
       .build()
-    execute[AgentWithVersionResponse](request, requestOptions)
   }
 
   /** Add a single allowed domain pattern (e.g. https://app.example.com or *.example.com).
@@ -200,6 +284,39 @@ class AgentStudioClient(
       allowedDomainCreate: AllowedDomainCreate,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[AllowedDomainResponse] = Future {
+    execute[AllowedDomainResponse](
+      createAgentAllowedDomainHttpRequest(agentId = agentId, allowedDomainCreate = allowedDomainCreate),
+      requestOptions
+    )
+  }
+
+  /** Variant of `createAgentAllowedDomain` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param agentId
+    *   The agentId.
+    */
+  def createAgentAllowedDomainWithHTTPInfo(
+      agentId: String,
+      allowedDomainCreate: AllowedDomainCreate,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[AllowedDomainResponse]] = Future {
+    executeWithHttpInfo[AllowedDomainResponse](
+      createAgentAllowedDomainHttpRequest(agentId = agentId, allowedDomainCreate = allowedDomainCreate),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `createAgentAllowedDomain` and
+    * `createAgentAllowedDomainWithHTTPInfo`.
+    */
+  private def createAgentAllowedDomainHttpRequest(
+      agentId: String,
+      allowedDomainCreate: AllowedDomainCreate
+  ): HttpRequest = {
     requireNotNull(agentId, "Parameter `agentId` is required when calling `createAgentAllowedDomain`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `createAgentAllowedDomain`.")
     requireNotNull(
@@ -207,13 +324,12 @@ class AgentStudioClient(
       "Parameter `allowedDomainCreate` is required when calling `createAgentAllowedDomain`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}/allowed-domains")
       .withBody(allowedDomainCreate)
       .build()
-    execute[AllowedDomainResponse](request, requestOptions)
   }
 
   /** Create a completion for the specified agent. This endpoint handles two types of requests: 1. Normal completion
@@ -251,6 +367,82 @@ class AgentStudioClient(
       xAlgoliaSecureUserToken: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[Map[String, Any]] = Future {
+    execute[Map[String, Any]](
+      createAgentCompletionHttpRequest(
+        agentId = agentId,
+        compatibilityMode = compatibilityMode,
+        agentCompletionRequest = agentCompletionRequest,
+        stream = stream,
+        cache = cache,
+        memory = memory,
+        analytics = analytics,
+        xAlgoliaSecureUserToken = xAlgoliaSecureUserToken
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `createAgentCompletion` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - search
+    *
+    * @param agentId
+    *   The agentId.
+    * @param compatibilityMode
+    *   Compatibility mode for the completion API.
+    * @param stream
+    *   Whether to stream the response or not.
+    * @param cache
+    *   Use cached responses if available.
+    * @param memory
+    *   Set to false to disable memory (enabled by default).
+    * @param analytics
+    *   Set to false to skip analytics for this completion (default: true). Disables Agent Studio BigQuery analytics,
+    *   Algolia search analytics, click analytics, and query-suggestions training. Useful for offline-eval workflows.
+    * @param xAlgoliaSecureUserToken
+    *   The X-Algolia-Secure-User-Token.
+    */
+  def createAgentCompletionWithHTTPInfo(
+      agentId: String,
+      compatibilityMode: CompatibilityMode,
+      agentCompletionRequest: AgentCompletionRequest,
+      stream: Option[Boolean] = None,
+      cache: Option[Boolean] = None,
+      memory: Option[Boolean] = None,
+      analytics: Option[Boolean] = None,
+      xAlgoliaSecureUserToken: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Map[String, Any]]] = Future {
+    executeWithHttpInfo[Map[String, Any]](
+      createAgentCompletionHttpRequest(
+        agentId = agentId,
+        compatibilityMode = compatibilityMode,
+        agentCompletionRequest = agentCompletionRequest,
+        stream = stream,
+        cache = cache,
+        memory = memory,
+        analytics = analytics,
+        xAlgoliaSecureUserToken = xAlgoliaSecureUserToken
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `createAgentCompletion` and
+    * `createAgentCompletionWithHTTPInfo`.
+    */
+  private def createAgentCompletionHttpRequest(
+      agentId: String,
+      compatibilityMode: CompatibilityMode,
+      agentCompletionRequest: AgentCompletionRequest,
+      stream: Option[Boolean] = None,
+      cache: Option[Boolean] = None,
+      memory: Option[Boolean] = None,
+      analytics: Option[Boolean] = None,
+      xAlgoliaSecureUserToken: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(agentId, "Parameter `agentId` is required when calling `createAgentCompletion`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `createAgentCompletion`.")
     requireNotNull(compatibilityMode, "Parameter `compatibilityMode` is required when calling `createAgentCompletion`.")
@@ -259,7 +451,7 @@ class AgentStudioClient(
       "Parameter `agentCompletionRequest` is required when calling `createAgentCompletion`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}/completions")
@@ -271,7 +463,6 @@ class AgentStudioClient(
       .withQueryParameter("memory", memory)
       .withQueryParameter("analytics", analytics)
       .build()
-    execute[Map[String, Any]](request, requestOptions)
   }
 
   /** Create new feedback entry.
@@ -282,18 +473,42 @@ class AgentStudioClient(
   def createFeedback(feedbackCreationRequest: FeedbackCreationRequest, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
   ): Future[FeedbackResponse] = Future {
+    execute[FeedbackResponse](
+      createFeedbackHttpRequest(feedbackCreationRequest = feedbackCreationRequest),
+      requestOptions
+    )
+  }
+
+  /** Variant of `createFeedback` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - search
+    */
+  def createFeedbackWithHTTPInfo(
+      feedbackCreationRequest: FeedbackCreationRequest,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[FeedbackResponse]] = Future {
+    executeWithHttpInfo[FeedbackResponse](
+      createFeedbackHttpRequest(feedbackCreationRequest = feedbackCreationRequest),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `createFeedback` and `createFeedbackWithHTTPInfo`.
+    */
+  private def createFeedbackHttpRequest(feedbackCreationRequest: FeedbackCreationRequest): HttpRequest = {
     requireNotNull(
       feedbackCreationRequest,
       "Parameter `feedbackCreationRequest` is required when calling `createFeedback`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/agent-studio/1/feedback")
       .withBody(feedbackCreationRequest)
       .build()
-    execute[FeedbackResponse](request, requestOptions)
   }
 
   /** Create Provider.
@@ -305,18 +520,42 @@ class AgentStudioClient(
       providerAuthenticationCreate: ProviderAuthenticationCreate,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ProviderAuthenticationResponse] = Future {
+    execute[ProviderAuthenticationResponse](
+      createProviderHttpRequest(providerAuthenticationCreate = providerAuthenticationCreate),
+      requestOptions
+    )
+  }
+
+  /** Variant of `createProvider` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    */
+  def createProviderWithHTTPInfo(
+      providerAuthenticationCreate: ProviderAuthenticationCreate,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ProviderAuthenticationResponse]] = Future {
+    executeWithHttpInfo[ProviderAuthenticationResponse](
+      createProviderHttpRequest(providerAuthenticationCreate = providerAuthenticationCreate),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `createProvider` and `createProviderWithHTTPInfo`.
+    */
+  private def createProviderHttpRequest(providerAuthenticationCreate: ProviderAuthenticationCreate): HttpRequest = {
     requireNotNull(
       providerAuthenticationCreate,
       "Parameter `providerAuthenticationCreate` is required when calling `createProvider`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/agent-studio/1/providers")
       .withBody(providerAuthenticationCreate)
       .build()
-    execute[ProviderAuthenticationResponse](request, requestOptions)
   }
 
   /** Create Secret Key.
@@ -327,15 +566,35 @@ class AgentStudioClient(
   def createSecretKey(secretKeyCreate: SecretKeyCreate, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[SecretKeyResponse] = Future {
+    execute[SecretKeyResponse](createSecretKeyHttpRequest(secretKeyCreate = secretKeyCreate), requestOptions)
+  }
+
+  /** Variant of `createSecretKey` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    */
+  def createSecretKeyWithHTTPInfo(secretKeyCreate: SecretKeyCreate, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[SecretKeyResponse]] = Future {
+    executeWithHttpInfo[SecretKeyResponse](
+      createSecretKeyHttpRequest(secretKeyCreate = secretKeyCreate),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `createSecretKey` and `createSecretKeyWithHTTPInfo`.
+    */
+  private def createSecretKeyHttpRequest(secretKeyCreate: SecretKeyCreate): HttpRequest = {
     requireNotNull(secretKeyCreate, "Parameter `secretKeyCreate` is required when calling `createSecretKey`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/agent-studio/1/secret-keys")
       .withBody(secretKeyCreate)
       .build()
-    execute[SecretKeyResponse](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -350,16 +609,37 @@ class AgentStudioClient(
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customDeleteHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Variant of `customDelete` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customDeleteWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customDeleteHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customDelete` and `customDeleteWithHTTPInfo`.
+    */
+  private def customDeleteHttpRequest(path: String, parameters: Option[Map[String, Any]] = None): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customDelete`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/agent-studio/${path}")
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -374,16 +654,36 @@ class AgentStudioClient(
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customGetHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Variant of `customGet` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customGetWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customGetHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customGet` and `customGetWithHTTPInfo`.
+    */
+  private def customGetHttpRequest(path: String, parameters: Option[Map[String, Any]] = None): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customGet`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/agent-studio/${path}")
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -401,17 +701,44 @@ class AgentStudioClient(
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customPostHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Variant of `customPost` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPostWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customPostHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customPost` and `customPostWithHTTPInfo`.
+    */
+  private def customPostHttpRequest(
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None
+  ): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customPost`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/agent-studio/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -429,17 +756,44 @@ class AgentStudioClient(
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customPutHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Variant of `customPut` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPutWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customPutHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customPut` and `customPutWithHTTPInfo`.
+    */
+  private def customPutHttpRequest(
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None
+  ): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customPut`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/agent-studio/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** Delete the specified agent.
@@ -453,15 +807,35 @@ class AgentStudioClient(
   def deleteAgent(agentId: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[Unit] = Future {
+    execute[Unit](deleteAgentHttpRequest(agentId = agentId), requestOptions)
+  }
+
+  /** Variant of `deleteAgent` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param agentId
+    *   The agentId.
+    */
+  def deleteAgentWithHTTPInfo(agentId: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Unit]] = Future {
+    executeWithHttpInfo[Unit](deleteAgentHttpRequest(agentId = agentId), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteAgent` and `deleteAgentWithHTTPInfo`.
+    */
+  private def deleteAgentHttpRequest(agentId: String): HttpRequest = {
     requireNotNull(agentId, "Parameter `agentId` is required when calling `deleteAgent`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `deleteAgent`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}")
       .build()
-    execute[Unit](request, requestOptions)
   }
 
   /** Deletes the conversations matching the given filers.
@@ -482,17 +856,55 @@ class AgentStudioClient(
       endDate: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[Unit] = Future {
+    execute[Unit](
+      deleteAgentConversationsHttpRequest(agentId = agentId, startDate = startDate, endDate = endDate),
+      requestOptions
+    )
+  }
+
+  /** Variant of `deleteAgentConversations` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - logs
+    *
+    * @param agentId
+    *   The agentId.
+    * @param startDate
+    *   Filter conversations created after this date (format: YYYY-MM-DD).
+    * @param endDate
+    *   Filter conversations created before this date (format: YYYY-MM-DD).
+    */
+  def deleteAgentConversationsWithHTTPInfo(
+      agentId: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Unit]] = Future {
+    executeWithHttpInfo[Unit](
+      deleteAgentConversationsHttpRequest(agentId = agentId, startDate = startDate, endDate = endDate),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteAgentConversations` and
+    * `deleteAgentConversationsWithHTTPInfo`.
+    */
+  private def deleteAgentConversationsHttpRequest(
+      agentId: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(agentId, "Parameter `agentId` is required when calling `deleteAgentConversations`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `deleteAgentConversations`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}/conversations")
       .withQueryParameter("startDate", startDate)
       .withQueryParameter("endDate", endDate)
       .build()
-    execute[Unit](request, requestOptions)
   }
 
   /** Remove an allowed domain by id.
@@ -508,17 +920,40 @@ class AgentStudioClient(
   def deleteAllowedDomain(domainId: String, agentId: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[Unit] = Future {
+    execute[Unit](deleteAllowedDomainHttpRequest(domainId = domainId, agentId = agentId), requestOptions)
+  }
+
+  /** Variant of `deleteAllowedDomain` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param domainId
+    *   The domainId.
+    * @param agentId
+    *   The agentId.
+    */
+  def deleteAllowedDomainWithHTTPInfo(domainId: String, agentId: String, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Unit]] = Future {
+    executeWithHttpInfo[Unit](deleteAllowedDomainHttpRequest(domainId = domainId, agentId = agentId), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteAllowedDomain` and
+    * `deleteAllowedDomainWithHTTPInfo`.
+    */
+  private def deleteAllowedDomainHttpRequest(domainId: String, agentId: String): HttpRequest = {
     requireNotNull(domainId, "Parameter `domainId` is required when calling `deleteAllowedDomain`.")
     requireNotEmpty(domainId, "Parameter `domainId` is required when calling `deleteAllowedDomain`.")
     requireNotNull(agentId, "Parameter `agentId` is required when calling `deleteAllowedDomain`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `deleteAllowedDomain`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}/allowed-domains/${escape(domainId)}")
       .build()
-    execute[Unit](request, requestOptions)
   }
 
   /** Deletes the conversation with the given ID.
@@ -534,17 +969,45 @@ class AgentStudioClient(
   def deleteConversation(conversationId: String, agentId: String, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
   ): Future[Unit] = Future {
+    execute[Unit](deleteConversationHttpRequest(conversationId = conversationId, agentId = agentId), requestOptions)
+  }
+
+  /** Variant of `deleteConversation` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - logs
+    *
+    * @param conversationId
+    *   The conversationId.
+    * @param agentId
+    *   The agentId.
+    */
+  def deleteConversationWithHTTPInfo(
+      conversationId: String,
+      agentId: String,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Unit]] = Future {
+    executeWithHttpInfo[Unit](
+      deleteConversationHttpRequest(conversationId = conversationId, agentId = agentId),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteConversation` and
+    * `deleteConversationWithHTTPInfo`.
+    */
+  private def deleteConversationHttpRequest(conversationId: String, agentId: String): HttpRequest = {
     requireNotNull(conversationId, "Parameter `conversationId` is required when calling `deleteConversation`.")
     requireNotEmpty(conversationId, "Parameter `conversationId` is required when calling `deleteConversation`.")
     requireNotNull(agentId, "Parameter `agentId` is required when calling `deleteConversation`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `deleteConversation`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}/conversations/${escape(conversationId)}")
       .build()
-    execute[Unit](request, requestOptions)
   }
 
   /** Delete Provider.
@@ -558,15 +1021,35 @@ class AgentStudioClient(
   def deleteProvider(providerId: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[Unit] = Future {
+    execute[Unit](deleteProviderHttpRequest(providerId = providerId), requestOptions)
+  }
+
+  /** Variant of `deleteProvider` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param providerId
+    *   The providerId.
+    */
+  def deleteProviderWithHTTPInfo(providerId: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Unit]] = Future {
+    executeWithHttpInfo[Unit](deleteProviderHttpRequest(providerId = providerId), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteProvider` and `deleteProviderWithHTTPInfo`.
+    */
+  private def deleteProviderHttpRequest(providerId: String): HttpRequest = {
     requireNotNull(providerId, "Parameter `providerId` is required when calling `deleteProvider`.")
     requireNotEmpty(providerId, "Parameter `providerId` is required when calling `deleteProvider`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/agent-studio/1/providers/${escape(providerId)}")
       .build()
-    execute[Unit](request, requestOptions)
   }
 
   /** Delete Secret Key.
@@ -580,15 +1063,35 @@ class AgentStudioClient(
   def deleteSecretKey(secretKeyId: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[Unit] = Future {
+    execute[Unit](deleteSecretKeyHttpRequest(secretKeyId = secretKeyId), requestOptions)
+  }
+
+  /** Variant of `deleteSecretKey` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    *
+    * @param secretKeyId
+    *   The secretKeyId.
+    */
+  def deleteSecretKeyWithHTTPInfo(secretKeyId: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Unit]] = Future {
+    executeWithHttpInfo[Unit](deleteSecretKeyHttpRequest(secretKeyId = secretKeyId), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteSecretKey` and `deleteSecretKeyWithHTTPInfo`.
+    */
+  private def deleteSecretKeyHttpRequest(secretKeyId: String): HttpRequest = {
     requireNotNull(secretKeyId, "Parameter `secretKeyId` is required when calling `deleteSecretKey`.")
     requireNotEmpty(secretKeyId, "Parameter `secretKeyId` is required when calling `deleteSecretKey`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/agent-studio/1/secret-keys/${escape(secretKeyId)}")
       .build()
-    execute[Unit](request, requestOptions)
   }
 
   /** Permanently deletes all messages for the given user token. Does not delete conversations.
@@ -602,15 +1105,35 @@ class AgentStudioClient(
   def deleteUserData(userToken: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[Unit] = Future {
+    execute[Unit](deleteUserDataHttpRequest(userToken = userToken), requestOptions)
+  }
+
+  /** Variant of `deleteUserData` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - logs
+    *
+    * @param userToken
+    *   The userToken.
+    */
+  def deleteUserDataWithHTTPInfo(userToken: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Unit]] = Future {
+    executeWithHttpInfo[Unit](deleteUserDataHttpRequest(userToken = userToken), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteUserData` and `deleteUserDataWithHTTPInfo`.
+    */
+  private def deleteUserDataHttpRequest(userToken: String): HttpRequest = {
     requireNotNull(userToken, "Parameter `userToken` is required when calling `deleteUserData`.")
     requireNotEmpty(userToken, "Parameter `userToken` is required when calling `deleteUserData`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/agent-studio/1/user-data/${escape(userToken)}")
       .build()
-    execute[Unit](request, requestOptions)
   }
 
   /** Exports all conversations based on the passed filters.
@@ -631,17 +1154,55 @@ class AgentStudioClient(
       endDate: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[Seq[ConversationFullResponse]] = Future {
+    execute[Seq[ConversationFullResponse]](
+      exportConversationsHttpRequest(agentId = agentId, startDate = startDate, endDate = endDate),
+      requestOptions
+    )
+  }
+
+  /** Variant of `exportConversations` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - logs
+    *
+    * @param agentId
+    *   The agentId.
+    * @param startDate
+    *   Filter conversations created after this date (format: YYYY-MM-DD).
+    * @param endDate
+    *   Filter conversations created before this date (format: YYYY-MM-DD).
+    */
+  def exportConversationsWithHTTPInfo(
+      agentId: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Seq[ConversationFullResponse]]] = Future {
+    executeWithHttpInfo[Seq[ConversationFullResponse]](
+      exportConversationsHttpRequest(agentId = agentId, startDate = startDate, endDate = endDate),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `exportConversations` and
+    * `exportConversationsWithHTTPInfo`.
+    */
+  private def exportConversationsHttpRequest(
+      agentId: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(agentId, "Parameter `agentId` is required when calling `exportConversations`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `exportConversations`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}/conversations/export")
       .withQueryParameter("startDate", startDate)
       .withQueryParameter("endDate", endDate)
       .build()
-    execute[Seq[ConversationFullResponse]](request, requestOptions)
   }
 
   /** Retrieve details of the specified agent.
@@ -655,15 +1216,34 @@ class AgentStudioClient(
   def getAgent(agentId: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[AgentWithVersionResponse] = Future {
+    execute[AgentWithVersionResponse](getAgentHttpRequest(agentId = agentId), requestOptions)
+  }
+
+  /** Variant of `getAgent` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param agentId
+    *   The agentId.
+    */
+  def getAgentWithHTTPInfo(agentId: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[AgentWithVersionResponse]] = Future {
+    executeWithHttpInfo[AgentWithVersionResponse](getAgentHttpRequest(agentId = agentId), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getAgent` and `getAgentWithHTTPInfo`.
+    */
+  private def getAgentHttpRequest(agentId: String): HttpRequest = {
     requireNotNull(agentId, "Parameter `agentId` is required when calling `getAgent`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `getAgent`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}")
       .build()
-    execute[AgentWithVersionResponse](request, requestOptions)
   }
 
   /** Get a single allowed domain by id.
@@ -679,17 +1259,42 @@ class AgentStudioClient(
   def getAllowedDomain(domainId: String, agentId: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[AllowedDomainResponse] = Future {
+    execute[AllowedDomainResponse](getAllowedDomainHttpRequest(domainId = domainId, agentId = agentId), requestOptions)
+  }
+
+  /** Variant of `getAllowedDomain` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param domainId
+    *   The domainId.
+    * @param agentId
+    *   The agentId.
+    */
+  def getAllowedDomainWithHTTPInfo(domainId: String, agentId: String, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[AllowedDomainResponse]] = Future {
+    executeWithHttpInfo[AllowedDomainResponse](
+      getAllowedDomainHttpRequest(domainId = domainId, agentId = agentId),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getAllowedDomain` and `getAllowedDomainWithHTTPInfo`.
+    */
+  private def getAllowedDomainHttpRequest(domainId: String, agentId: String): HttpRequest = {
     requireNotNull(domainId, "Parameter `domainId` is required when calling `getAllowedDomain`.")
     requireNotEmpty(domainId, "Parameter `domainId` is required when calling `getAllowedDomain`.")
     requireNotNull(agentId, "Parameter `agentId` is required when calling `getAllowedDomain`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `getAllowedDomain`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}/allowed-domains/${escape(domainId)}")
       .build()
-    execute[AllowedDomainResponse](request, requestOptions)
   }
 
   /** Get Configuration.
@@ -700,13 +1305,30 @@ class AgentStudioClient(
   def getConfiguration(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ApplicationConfigResponse] = Future {
+    execute[ApplicationConfigResponse](getConfigurationHttpRequest(), requestOptions)
+  }
 
-    val request = HttpRequest
+  /** Variant of `getConfiguration` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - logs
+    */
+  def getConfigurationWithHTTPInfo(
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ApplicationConfigResponse]] = Future {
+    executeWithHttpInfo[ApplicationConfigResponse](getConfigurationHttpRequest(), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getConfiguration` and `getConfigurationWithHTTPInfo`.
+    */
+  private def getConfigurationHttpRequest(): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/agent-studio/1/configuration")
       .build()
-    execute[ApplicationConfigResponse](request, requestOptions)
   }
 
   /** Retrieves the conversation and its messages for the given ID.
@@ -730,19 +1352,70 @@ class AgentStudioClient(
       xAlgoliaSecureUserToken: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ConversationFullResponse] = Future {
+    execute[ConversationFullResponse](
+      getConversationHttpRequest(
+        conversationId = conversationId,
+        agentId = agentId,
+        includeFeedback = includeFeedback,
+        xAlgoliaSecureUserToken = xAlgoliaSecureUserToken
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `getConversation` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - logs
+    *
+    * @param conversationId
+    *   The conversationId.
+    * @param agentId
+    *   The agentId.
+    * @param includeFeedback
+    *   Include feedback for the conversation.
+    * @param xAlgoliaSecureUserToken
+    *   The X-Algolia-Secure-User-Token.
+    */
+  def getConversationWithHTTPInfo(
+      conversationId: String,
+      agentId: String,
+      includeFeedback: Option[Boolean] = None,
+      xAlgoliaSecureUserToken: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ConversationFullResponse]] = Future {
+    executeWithHttpInfo[ConversationFullResponse](
+      getConversationHttpRequest(
+        conversationId = conversationId,
+        agentId = agentId,
+        includeFeedback = includeFeedback,
+        xAlgoliaSecureUserToken = xAlgoliaSecureUserToken
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getConversation` and `getConversationWithHTTPInfo`.
+    */
+  private def getConversationHttpRequest(
+      conversationId: String,
+      agentId: String,
+      includeFeedback: Option[Boolean] = None,
+      xAlgoliaSecureUserToken: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(conversationId, "Parameter `conversationId` is required when calling `getConversation`.")
     requireNotEmpty(conversationId, "Parameter `conversationId` is required when calling `getConversation`.")
     requireNotNull(agentId, "Parameter `agentId` is required when calling `getConversation`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `getConversation`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}/conversations/${escape(conversationId)}")
       .withHeader("X-Algolia-Secure-User-Token", xAlgoliaSecureUserToken)
       .withQueryParameter("includeFeedback", includeFeedback)
       .build()
-    execute[ConversationFullResponse](request, requestOptions)
   }
 
   /** Get Provider.
@@ -756,15 +1429,35 @@ class AgentStudioClient(
   def getProvider(providerId: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[ProviderAuthenticationResponse] = Future {
+    execute[ProviderAuthenticationResponse](getProviderHttpRequest(providerId = providerId), requestOptions)
+  }
+
+  /** Variant of `getProvider` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param providerId
+    *   The providerId.
+    */
+  def getProviderWithHTTPInfo(providerId: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[ProviderAuthenticationResponse]] = Future {
+    executeWithHttpInfo[ProviderAuthenticationResponse](getProviderHttpRequest(providerId = providerId), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getProvider` and `getProviderWithHTTPInfo`.
+    */
+  private def getProviderHttpRequest(providerId: String): HttpRequest = {
     requireNotNull(providerId, "Parameter `providerId` is required when calling `getProvider`.")
     requireNotEmpty(providerId, "Parameter `providerId` is required when calling `getProvider`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/agent-studio/1/providers/${escape(providerId)}")
       .build()
-    execute[ProviderAuthenticationResponse](request, requestOptions)
   }
 
   /** Get Secret Key.
@@ -778,15 +1471,35 @@ class AgentStudioClient(
   def getSecretKey(secretKeyId: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[SecretKeyResponse] = Future {
+    execute[SecretKeyResponse](getSecretKeyHttpRequest(secretKeyId = secretKeyId), requestOptions)
+  }
+
+  /** Variant of `getSecretKey` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param secretKeyId
+    *   The secretKeyId.
+    */
+  def getSecretKeyWithHTTPInfo(secretKeyId: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[SecretKeyResponse]] = Future {
+    executeWithHttpInfo[SecretKeyResponse](getSecretKeyHttpRequest(secretKeyId = secretKeyId), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getSecretKey` and `getSecretKeyWithHTTPInfo`.
+    */
+  private def getSecretKeyHttpRequest(secretKeyId: String): HttpRequest = {
     requireNotNull(secretKeyId, "Parameter `secretKeyId` is required when calling `getSecretKey`.")
     requireNotEmpty(secretKeyId, "Parameter `secretKeyId` is required when calling `getSecretKey`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/agent-studio/1/secret-keys/${escape(secretKeyId)}")
       .build()
-    execute[SecretKeyResponse](request, requestOptions)
   }
 
   /** Retrieves all memories, conversations and their messages for the given user token.
@@ -800,15 +1513,35 @@ class AgentStudioClient(
   def getUserData(userToken: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[UserDataResponse] = Future {
+    execute[UserDataResponse](getUserDataHttpRequest(userToken = userToken), requestOptions)
+  }
+
+  /** Variant of `getUserData` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - logs
+    *
+    * @param userToken
+    *   The userToken.
+    */
+  def getUserDataWithHTTPInfo(userToken: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[UserDataResponse]] = Future {
+    executeWithHttpInfo[UserDataResponse](getUserDataHttpRequest(userToken = userToken), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getUserData` and `getUserDataWithHTTPInfo`.
+    */
+  private def getUserDataHttpRequest(userToken: String): HttpRequest = {
     requireNotNull(userToken, "Parameter `userToken` is required when calling `getUserData`.")
     requireNotEmpty(userToken, "Parameter `userToken` is required when calling `getUserData`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/agent-studio/1/user-data/${escape(userToken)}")
       .build()
-    execute[UserDataResponse](request, requestOptions)
   }
 
   /** Invalidate cached completions for this agent. Filter with `before` (exclusive).
@@ -826,16 +1559,41 @@ class AgentStudioClient(
       before: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[Unit] = Future {
+    execute[Unit](invalidateAgentCacheHttpRequest(agentId = agentId, before = before), requestOptions)
+  }
+
+  /** Variant of `invalidateAgentCache` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param agentId
+    *   The agentId.
+    * @param before
+    *   Delete entries strictly before this date (exclusive, YYYY-MM-DD).
+    */
+  def invalidateAgentCacheWithHTTPInfo(
+      agentId: String,
+      before: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Unit]] = Future {
+    executeWithHttpInfo[Unit](invalidateAgentCacheHttpRequest(agentId = agentId, before = before), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `invalidateAgentCache` and
+    * `invalidateAgentCacheWithHTTPInfo`.
+    */
+  private def invalidateAgentCacheHttpRequest(agentId: String, before: Option[String] = None): HttpRequest = {
     requireNotNull(agentId, "Parameter `agentId` is required when calling `invalidateAgentCache`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `invalidateAgentCache`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}/cache")
       .withQueryParameter("before", before)
       .build()
-    execute[Unit](request, requestOptions)
   }
 
   /** List all allowed domain patterns for this agent.
@@ -849,15 +1607,39 @@ class AgentStudioClient(
   def listAgentAllowedDomains(agentId: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[AllowedDomainListResponse] = Future {
+    execute[AllowedDomainListResponse](listAgentAllowedDomainsHttpRequest(agentId = agentId), requestOptions)
+  }
+
+  /** Variant of `listAgentAllowedDomains` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param agentId
+    *   The agentId.
+    */
+  def listAgentAllowedDomainsWithHTTPInfo(agentId: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[AllowedDomainListResponse]] = Future {
+    executeWithHttpInfo[AllowedDomainListResponse](
+      listAgentAllowedDomainsHttpRequest(agentId = agentId),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `listAgentAllowedDomains` and
+    * `listAgentAllowedDomainsWithHTTPInfo`.
+    */
+  private def listAgentAllowedDomainsHttpRequest(agentId: String): HttpRequest = {
     requireNotNull(agentId, "Parameter `agentId` is required when calling `listAgentAllowedDomains`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `listAgentAllowedDomains`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}/allowed-domains")
       .build()
-    execute[AllowedDomainListResponse](request, requestOptions)
   }
 
   /** Retrieves the conversations for the given agent ID.
@@ -893,10 +1675,87 @@ class AgentStudioClient(
       xAlgoliaSecureUserToken: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[PaginatedConversationsResponse] = Future {
+    execute[PaginatedConversationsResponse](
+      listAgentConversationsHttpRequest(
+        agentId = agentId,
+        startDate = startDate,
+        endDate = endDate,
+        includeFeedback = includeFeedback,
+        feedbackVote = feedbackVote,
+        page = page,
+        limit = limit,
+        xAlgoliaSecureUserToken = xAlgoliaSecureUserToken
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `listAgentConversations` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - logs
+    *
+    * @param agentId
+    *   The agentId.
+    * @param startDate
+    *   Filter conversations created after this date (format: YYYY-MM-DD).
+    * @param endDate
+    *   Filter conversations created before this date (format: YYYY-MM-DD).
+    * @param includeFeedback
+    *   Include feedback per conversation.
+    * @param feedbackVote
+    *   Filter by feedback value (requires includeFeedback=true).
+    * @param page
+    *   Page number.
+    * @param limit
+    *   Items per page.
+    * @param xAlgoliaSecureUserToken
+    *   The X-Algolia-Secure-User-Token.
+    */
+  def listAgentConversationsWithHTTPInfo(
+      agentId: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      includeFeedback: Option[Boolean] = None,
+      feedbackVote: Option[Int] = None,
+      page: Option[Int] = None,
+      limit: Option[Int] = None,
+      xAlgoliaSecureUserToken: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[PaginatedConversationsResponse]] = Future {
+    executeWithHttpInfo[PaginatedConversationsResponse](
+      listAgentConversationsHttpRequest(
+        agentId = agentId,
+        startDate = startDate,
+        endDate = endDate,
+        includeFeedback = includeFeedback,
+        feedbackVote = feedbackVote,
+        page = page,
+        limit = limit,
+        xAlgoliaSecureUserToken = xAlgoliaSecureUserToken
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `listAgentConversations` and
+    * `listAgentConversationsWithHTTPInfo`.
+    */
+  private def listAgentConversationsHttpRequest(
+      agentId: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      includeFeedback: Option[Boolean] = None,
+      feedbackVote: Option[Int] = None,
+      page: Option[Int] = None,
+      limit: Option[Int] = None,
+      xAlgoliaSecureUserToken: Option[String] = None
+  ): HttpRequest = {
     requireNotNull(agentId, "Parameter `agentId` is required when calling `listAgentConversations`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `listAgentConversations`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}/conversations")
@@ -908,7 +1767,6 @@ class AgentStudioClient(
       .withQueryParameter("page", page)
       .withQueryParameter("limit", limit)
       .build()
-    execute[PaginatedConversationsResponse](request, requestOptions)
   }
 
   /** List all agents with pagination and filtering.
@@ -929,8 +1787,45 @@ class AgentStudioClient(
       providerId: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[PaginatedAgentsResponse] = Future {
+    execute[PaginatedAgentsResponse](
+      listAgentsHttpRequest(page = page, limit = limit, providerId = providerId),
+      requestOptions
+    )
+  }
 
-    val request = HttpRequest
+  /** Variant of `listAgents` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param page
+    *   Page number.
+    * @param limit
+    *   Items per page.
+    * @param providerId
+    *   Filter by provider id.
+    */
+  def listAgentsWithHTTPInfo(
+      page: Option[Int] = None,
+      limit: Option[Int] = None,
+      providerId: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[PaginatedAgentsResponse]] = Future {
+    executeWithHttpInfo[PaginatedAgentsResponse](
+      listAgentsHttpRequest(page = page, limit = limit, providerId = providerId),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `listAgents` and `listAgentsWithHTTPInfo`.
+    */
+  private def listAgentsHttpRequest(
+      page: Option[Int] = None,
+      limit: Option[Int] = None,
+      providerId: Option[String] = None
+  ): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/agent-studio/1/agents")
@@ -938,7 +1833,6 @@ class AgentStudioClient(
       .withQueryParameter("limit", limit)
       .withQueryParameter("providerId", providerId)
       .build()
-    execute[PaginatedAgentsResponse](request, requestOptions)
   }
 
   /** Get Provider Models.
@@ -949,13 +1843,29 @@ class AgentStudioClient(
   def listModels(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[Map[String, Seq[String]]] = Future {
+    execute[Map[String, Seq[String]]](listModelsHttpRequest(), requestOptions)
+  }
 
-    val request = HttpRequest
+  /** Variant of `listModels` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    */
+  def listModelsWithHTTPInfo(
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Map[String, Seq[String]]]] = Future {
+    executeWithHttpInfo[Map[String, Seq[String]]](listModelsHttpRequest(), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `listModels` and `listModelsWithHTTPInfo`.
+    */
+  private def listModelsHttpRequest(): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/agent-studio/1/providers/models")
       .build()
-    execute[Map[String, Seq[String]]](request, requestOptions)
   }
 
   /** Get available models for a specific provider.
@@ -969,15 +1879,36 @@ class AgentStudioClient(
   def listProviderModels(providerId: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[Seq[String]] = Future {
+    execute[Seq[String]](listProviderModelsHttpRequest(providerId = providerId), requestOptions)
+  }
+
+  /** Variant of `listProviderModels` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param providerId
+    *   The providerId.
+    */
+  def listProviderModelsWithHTTPInfo(providerId: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Seq[String]]] = Future {
+    executeWithHttpInfo[Seq[String]](listProviderModelsHttpRequest(providerId = providerId), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `listProviderModels` and
+    * `listProviderModelsWithHTTPInfo`.
+    */
+  private def listProviderModelsHttpRequest(providerId: String): HttpRequest = {
     requireNotNull(providerId, "Parameter `providerId` is required when calling `listProviderModels`.")
     requireNotEmpty(providerId, "Parameter `providerId` is required when calling `listProviderModels`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/agent-studio/1/providers/${escape(providerId)}/models")
       .build()
-    execute[Seq[String]](request, requestOptions)
   }
 
   /** List Providers.
@@ -993,15 +1924,45 @@ class AgentStudioClient(
   def listProviders(page: Option[Int] = None, limit: Option[Int] = None, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
   ): Future[PaginatedProviderAuthenticationsResponse] = Future {
+    execute[PaginatedProviderAuthenticationsResponse](
+      listProvidersHttpRequest(page = page, limit = limit),
+      requestOptions
+    )
+  }
 
-    val request = HttpRequest
+  /** Variant of `listProviders` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param page
+    *   Page number.
+    * @param limit
+    *   Items per page.
+    */
+  def listProvidersWithHTTPInfo(
+      page: Option[Int] = None,
+      limit: Option[Int] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[PaginatedProviderAuthenticationsResponse]] = Future {
+    executeWithHttpInfo[PaginatedProviderAuthenticationsResponse](
+      listProvidersHttpRequest(page = page, limit = limit),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `listProviders` and `listProvidersWithHTTPInfo`.
+    */
+  private def listProvidersHttpRequest(page: Option[Int] = None, limit: Option[Int] = None): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/agent-studio/1/providers")
       .withQueryParameter("page", page)
       .withQueryParameter("limit", limit)
       .build()
-    execute[PaginatedProviderAuthenticationsResponse](request, requestOptions)
   }
 
   /** List Secret Keys.
@@ -1019,15 +1980,42 @@ class AgentStudioClient(
       limit: Option[Int] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[PaginatedSecretKeysResponse] = Future {
+    execute[PaginatedSecretKeysResponse](listSecretKeysHttpRequest(page = page, limit = limit), requestOptions)
+  }
 
-    val request = HttpRequest
+  /** Variant of `listSecretKeys` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param page
+    *   Page number.
+    * @param limit
+    *   Items per page.
+    */
+  def listSecretKeysWithHTTPInfo(
+      page: Option[Int] = None,
+      limit: Option[Int] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[PaginatedSecretKeysResponse]] = Future {
+    executeWithHttpInfo[PaginatedSecretKeysResponse](
+      listSecretKeysHttpRequest(page = page, limit = limit),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `listSecretKeys` and `listSecretKeysWithHTTPInfo`.
+    */
+  private def listSecretKeysHttpRequest(page: Option[Int] = None, limit: Option[Int] = None): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/agent-studio/1/secret-keys")
       .withQueryParameter("page", page)
       .withQueryParameter("limit", limit)
       .build()
-    execute[PaginatedSecretKeysResponse](request, requestOptions)
   }
 
   /** Publish the specified agent.
@@ -1041,15 +2029,35 @@ class AgentStudioClient(
   def publishAgent(agentId: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[AgentWithVersionResponse] = Future {
+    execute[AgentWithVersionResponse](publishAgentHttpRequest(agentId = agentId), requestOptions)
+  }
+
+  /** Variant of `publishAgent` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param agentId
+    *   The agentId.
+    */
+  def publishAgentWithHTTPInfo(agentId: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[AgentWithVersionResponse]] = Future {
+    executeWithHttpInfo[AgentWithVersionResponse](publishAgentHttpRequest(agentId = agentId), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `publishAgent` and `publishAgentWithHTTPInfo`.
+    */
+  private def publishAgentHttpRequest(agentId: String): HttpRequest = {
     requireNotNull(agentId, "Parameter `agentId` is required when calling `publishAgent`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `publishAgent`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}/publish")
       .build()
-    execute[AgentWithVersionResponse](request, requestOptions)
   }
 
   /** Unpublish the specified agent.
@@ -1063,15 +2071,35 @@ class AgentStudioClient(
   def unpublishAgent(agentId: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[AgentWithVersionResponse] = Future {
+    execute[AgentWithVersionResponse](unpublishAgentHttpRequest(agentId = agentId), requestOptions)
+  }
+
+  /** Variant of `unpublishAgent` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param agentId
+    *   The agentId.
+    */
+  def unpublishAgentWithHTTPInfo(agentId: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[AgentWithVersionResponse]] = Future {
+    executeWithHttpInfo[AgentWithVersionResponse](unpublishAgentHttpRequest(agentId = agentId), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `unpublishAgent` and `unpublishAgentWithHTTPInfo`.
+    */
+  private def unpublishAgentHttpRequest(agentId: String): HttpRequest = {
     requireNotNull(agentId, "Parameter `agentId` is required when calling `unpublishAgent`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `unpublishAgent`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}/unpublish")
       .build()
-    execute[AgentWithVersionResponse](request, requestOptions)
   }
 
   /** Update the specified agent.
@@ -1085,17 +2113,45 @@ class AgentStudioClient(
   def updateAgent(agentId: String, agentConfigUpdate: AgentConfigUpdate, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
   ): Future[AgentWithVersionResponse] = Future {
+    execute[AgentWithVersionResponse](
+      updateAgentHttpRequest(agentId = agentId, agentConfigUpdate = agentConfigUpdate),
+      requestOptions
+    )
+  }
+
+  /** Variant of `updateAgent` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param agentId
+    *   The agentId.
+    */
+  def updateAgentWithHTTPInfo(
+      agentId: String,
+      agentConfigUpdate: AgentConfigUpdate,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[AgentWithVersionResponse]] = Future {
+    executeWithHttpInfo[AgentWithVersionResponse](
+      updateAgentHttpRequest(agentId = agentId, agentConfigUpdate = agentConfigUpdate),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `updateAgent` and `updateAgentWithHTTPInfo`.
+    */
+  private def updateAgentHttpRequest(agentId: String, agentConfigUpdate: AgentConfigUpdate): HttpRequest = {
     requireNotNull(agentId, "Parameter `agentId` is required when calling `updateAgent`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `updateAgent`.")
     requireNotNull(agentConfigUpdate, "Parameter `agentConfigUpdate` is required when calling `updateAgent`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PATCH")
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}")
       .withBody(agentConfigUpdate)
       .build()
-    execute[AgentWithVersionResponse](request, requestOptions)
   }
 
   /** Patch Configuration.
@@ -1107,18 +2163,43 @@ class AgentStudioClient(
       applicationConfigPatch: ApplicationConfigPatch,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ApplicationConfigResponse] = Future {
+    execute[ApplicationConfigResponse](
+      updateConfigurationHttpRequest(applicationConfigPatch = applicationConfigPatch),
+      requestOptions
+    )
+  }
+
+  /** Variant of `updateConfiguration` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - logs
+    */
+  def updateConfigurationWithHTTPInfo(
+      applicationConfigPatch: ApplicationConfigPatch,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ApplicationConfigResponse]] = Future {
+    executeWithHttpInfo[ApplicationConfigResponse](
+      updateConfigurationHttpRequest(applicationConfigPatch = applicationConfigPatch),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `updateConfiguration` and
+    * `updateConfigurationWithHTTPInfo`.
+    */
+  private def updateConfigurationHttpRequest(applicationConfigPatch: ApplicationConfigPatch): HttpRequest = {
     requireNotNull(
       applicationConfigPatch,
       "Parameter `applicationConfigPatch` is required when calling `updateConfiguration`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PATCH")
       .withPath(s"/agent-studio/1/configuration")
       .withBody(applicationConfigPatch)
       .build()
-    execute[ApplicationConfigResponse](request, requestOptions)
   }
 
   /** Update Provider.
@@ -1134,6 +2215,38 @@ class AgentStudioClient(
       providerAuthenticationPatch: ProviderAuthenticationPatch,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ProviderAuthenticationResponse] = Future {
+    execute[ProviderAuthenticationResponse](
+      updateProviderHttpRequest(providerId = providerId, providerAuthenticationPatch = providerAuthenticationPatch),
+      requestOptions
+    )
+  }
+
+  /** Variant of `updateProvider` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param providerId
+    *   The providerId.
+    */
+  def updateProviderWithHTTPInfo(
+      providerId: String,
+      providerAuthenticationPatch: ProviderAuthenticationPatch,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ProviderAuthenticationResponse]] = Future {
+    executeWithHttpInfo[ProviderAuthenticationResponse](
+      updateProviderHttpRequest(providerId = providerId, providerAuthenticationPatch = providerAuthenticationPatch),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `updateProvider` and `updateProviderWithHTTPInfo`.
+    */
+  private def updateProviderHttpRequest(
+      providerId: String,
+      providerAuthenticationPatch: ProviderAuthenticationPatch
+  ): HttpRequest = {
     requireNotNull(providerId, "Parameter `providerId` is required when calling `updateProvider`.")
     requireNotEmpty(providerId, "Parameter `providerId` is required when calling `updateProvider`.")
     requireNotNull(
@@ -1141,13 +2254,12 @@ class AgentStudioClient(
       "Parameter `providerAuthenticationPatch` is required when calling `updateProvider`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PATCH")
       .withPath(s"/agent-studio/1/providers/${escape(providerId)}")
       .withBody(providerAuthenticationPatch)
       .build()
-    execute[ProviderAuthenticationResponse](request, requestOptions)
   }
 
   /** Patch Secret Key.
@@ -1163,17 +2275,45 @@ class AgentStudioClient(
       secretKeyPatch: SecretKeyPatch,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[SecretKeyResponse] = Future {
+    execute[SecretKeyResponse](
+      updateSecretKeyHttpRequest(secretKeyId = secretKeyId, secretKeyPatch = secretKeyPatch),
+      requestOptions
+    )
+  }
+
+  /** Variant of `updateSecretKey` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - admin
+    *
+    * @param secretKeyId
+    *   The secretKeyId.
+    */
+  def updateSecretKeyWithHTTPInfo(
+      secretKeyId: String,
+      secretKeyPatch: SecretKeyPatch,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[SecretKeyResponse]] = Future {
+    executeWithHttpInfo[SecretKeyResponse](
+      updateSecretKeyHttpRequest(secretKeyId = secretKeyId, secretKeyPatch = secretKeyPatch),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `updateSecretKey` and `updateSecretKeyWithHTTPInfo`.
+    */
+  private def updateSecretKeyHttpRequest(secretKeyId: String, secretKeyPatch: SecretKeyPatch): HttpRequest = {
     requireNotNull(secretKeyId, "Parameter `secretKeyId` is required when calling `updateSecretKey`.")
     requireNotEmpty(secretKeyId, "Parameter `secretKeyId` is required when calling `updateSecretKey`.")
     requireNotNull(secretKeyPatch, "Parameter `secretKeyPatch` is required when calling `updateSecretKey`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PATCH")
       .withPath(s"/agent-studio/1/secret-keys/${escape(secretKeyId)}")
       .withBody(secretKeyPatch)
       .build()
-    execute[SecretKeyResponse](request, requestOptions)
   }
 
   /** Helper: Forges a secured user token (JWT) for Agent Studio authenticated requests.

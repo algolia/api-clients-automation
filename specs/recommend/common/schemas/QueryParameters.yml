@@ -17,6 +17,10 @@ fallbackParams:
     - $ref: '#/baseRecommendSearchParams'
     - $ref: '../../../common/schemas/SearchParams.yml#/searchParamsQuery'
     - $ref: './IndexSettings.yml#/recommendIndexSettings'
+    - type: object
+      properties:
+        facetFilters:
+          $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/facetFilters'
 
 baseRecommendSearchParams:
   type: object

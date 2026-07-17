@@ -699,6 +699,9 @@ def snippet_for_get_recommendations2():
                         "optionalFilters": [
                             "brand:samsung",
                         ],
+                        "facetFilters": [
+                            "brand:apple",
+                        ],
                     },
                 },
             ],
