@@ -15,6 +15,9 @@ def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{testIndex}
 
   # Call the API
   {{#hasResponse}}response = {{/hasResponse}}{{> tests/method}}
+  {{#listReturnType}}
+  # response is an array of {{.}} objects
+  {{/listReturnType}}
 
   # >LOG
   {{#hasResponse}}

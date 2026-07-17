@@ -100,6 +100,8 @@ public class SnippetsGenerator extends TestsGenerator {
     }
 
     List<Object> blocks = new ArrayList<>();
+    // model names of list-returning helpers, so import templates can bring the types in scope
+    Set<String> listReturnTypes = new TreeSet<>();
     ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client, true);
 
     for (Map.Entry<String, CodegenOperation> entry : operations.entrySet()) {
@@ -126,6 +128,9 @@ public class SnippetsGenerator extends TestsGenerator {
         test.put("testIndex", i == 0 ? "" : i);
         snippet.addMethodCall(test, paramsType, ope);
         addRequestOptions(paramsType, snippet.requestOptions, test);
+        if (test.get("listReturnType") != null) {
+          listReturnTypes.add((String) test.get("listReturnType"));
+        }
         tests.add(test);
       }
       Map<String, Object> testObj = new HashMap<>();
@@ -133,5 +138,6 @@ public class SnippetsGenerator extends TestsGenerator {
       blocks.add(testObj);
     }
     bundle.put("blocksRequests", blocks);
+    bundle.put("listReturnTypes", new ArrayList<>(listReturnTypes));
   }
 }
