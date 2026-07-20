@@ -263,6 +263,29 @@ func TestSSEDecoderLineWithinBufferSize(t *testing.T) {
 	require.Equal(t, payload, string(events[0].Data))
 }
 
+func TestSSEDecoderCRLFSplitAtFullBuffer(t *testing.T) {
+	// The line content plus its CR fill the 10MB buffer exactly, leaving the
+	// LF of the CRLF sequence for the next read: the line is one byte under
+	// the limit and must be emitted, not fail with bufio.ErrTooLong.
+	payload := strings.Repeat("x", 10<<20-len("data: ")-1)
+	input := "data: " + payload + "\r\n\r\n"
+	decoder := sse.NewEventStreamDecoder(io.NopCloser(strings.NewReader(input)))
+	events := collectEvents(t, decoder)
+
+	require.Len(t, events, 1)
+	require.Equal(t, payload, string(events[0].Data))
+}
+
+func TestSSEDecoderBareCRAtFullBuffer(t *testing.T) {
+	payload := strings.Repeat("x", 10<<20-len("data: ")-1)
+	input := "data: " + payload + "\r" + "data: b\n\n"
+	decoder := sse.NewEventStreamDecoder(io.NopCloser(strings.NewReader(input)))
+	events := collectEvents(t, decoder)
+
+	require.Len(t, events, 1)
+	require.Equal(t, payload+"\nb", string(events[0].Data))
+}
+
 func TestSSEDecoderReadError(t *testing.T) {
 	decoder := sse.NewEventStreamDecoder(io.NopCloser(io.MultiReader(
 		strings.NewReader("data: one\n\n"),

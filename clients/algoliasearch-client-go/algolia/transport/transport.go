@@ -185,7 +185,9 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind,
 // Unlike Request, it does not retry: the request is only sent to the first
 // available host, and no read deadline is applied to the response body, as it
 // would abort the stream while it is being consumed. Cancellation is
-// controlled by the caller through ctx.
+// controlled by the caller through ctx. The outcome does not update the host
+// health state used by the retry strategy, consistent with the JavaScript and
+// Python clients.
 //
 // The RequestConfiguration timeouts are forwarded to the [Requester], but the
 // default requester ignores them and no context deadline is applied here:
