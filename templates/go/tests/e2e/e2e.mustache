@@ -73,18 +73,30 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}E2E_{{#lambda
       defer func() { _ = stream.Close() }()
 
       var events []any
+      {{#response}}
+      {{#body}}
+      var allData []any
+      {{/body}}
+      {{/response}}
       for stream.Next() {
         event := stream.Current()
-        require.NoError(t, event.Err)
-
-        events = append(events, event.Data)
+        events = append(events, event)
+        {{#response}}
+        {{#body}}
+        if event.Data != nil {
+          allData = append(allData, event.Data)
+        }
+        {{/body}}
+        {{/response}}
       }
       require.NoError(t, stream.Err())
       require.NotEmpty(t, events)
 
       {{#response}}
       {{#body}}
-      rawBody, err := json.Marshal(events[0])
+      require.NotEmpty(t, allData)
+
+      rawBody, err := json.Marshal(allData[0])
       require.NoError(t, err)
 
       var rawBodyMap any
