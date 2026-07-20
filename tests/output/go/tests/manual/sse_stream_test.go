@@ -80,6 +80,14 @@ func TestSSEStreamCleanEndOfStream(t *testing.T) {
 	require.NoError(t, stream.Err())
 }
 
+func TestSSEStreamNilDecoder(t *testing.T) {
+	stream := sse.NewStream[message](nil, nil)
+
+	require.False(t, stream.Next())
+	require.NoError(t, stream.Err())
+	require.NoError(t, stream.Close())
+}
+
 func TestSSEStreamCreatedInFailedState(t *testing.T) {
 	stream := sse.NewStream[message](nil, errRequestFailure)
 

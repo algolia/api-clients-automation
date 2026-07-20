@@ -41,7 +41,7 @@ func NewStream[T any](decoder Decoder, err error) *Stream[T] {
 // with Err set and a nil Data, and the stream continues, consistent with the
 // JavaScript and Python clients.
 func (s *Stream[T]) Next() bool {
-	if s.err != nil {
+	if s.err != nil || s.decoder == nil {
 		return false
 	}
 
