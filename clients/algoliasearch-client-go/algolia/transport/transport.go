@@ -187,6 +187,12 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind,
 // would abort the stream while it is being consumed. Cancellation is
 // controlled by the caller through ctx.
 //
+// The RequestConfiguration timeouts are forwarded to the [Requester], but the
+// default requester ignores them and no context deadline is applied here:
+// with the default requester, the time to the response headers is bounded
+// only by ctx. Use a custom [Requester] to enforce a time-to-first-byte
+// limit.
+//
 // A response with a non-2xx status code is consumed and returned as an
 // [errs.HTTPStatusError] carrying the status code and the error body,
 // consistent with the JavaScript and Python clients.
@@ -244,11 +250,11 @@ func (t *Transport) RequestStream(ctx context.Context, req *http.Request, k call
 		errClose := res.Body.Close()
 
 		if errBody != nil {
-			return nil, fmt.Errorf("cannot read error response body: %w", errBody)
+			return nil, fmt.Errorf("cannot read error response body: %w: %w", errBody, errs.NewHTTPStatusError(res.StatusCode, nil))
 		}
 
 		if errClose != nil {
-			return nil, fmt.Errorf("cannot close error response body: %w", errClose)
+			return nil, fmt.Errorf("cannot close error response body: %w: %w", errClose, errs.NewHTTPStatusError(res.StatusCode, body))
 		}
 
 		return nil, errs.NewHTTPStatusError(res.StatusCode, body)

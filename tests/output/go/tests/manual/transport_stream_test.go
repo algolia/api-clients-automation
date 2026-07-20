@@ -121,6 +121,33 @@ func TestRequestStreamHTTPStatusError(t *testing.T) {
 	require.Contains(t, string(statusErr.Body()), "invalid request")
 }
 
+func TestRequestStreamHTTPStatusErrorBodyReadFailure(t *testing.T) {
+	srv := httptest.NewServer(http.HandlerFunc(func(writer http.ResponseWriter, _ *http.Request) {
+		// Announce a bigger body than is actually written: the server closes
+		// the connection early and the client fails to read the error body.
+		writer.Header().Set("Content-Length", "100")
+		writer.WriteHeader(http.StatusInternalServerError)
+
+		_, _ = io.WriteString(writer, "partial")
+	}))
+	defer srv.Close()
+
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	transporter := newStreamTransport(t, srv.URL)
+
+	//nolint:bodyclose // The response is nil on error.
+	res, err := transporter.RequestStream(ctx, newStreamRequest(t, ctx), call.Read, transport.RequestConfiguration{})
+	require.Nil(t, res)
+	require.Contains(t, err.Error(), "cannot read error response body")
+
+	var statusErr *errs.HTTPStatusError
+	require.ErrorAs(t, err, &statusErr)
+	require.Equal(t, http.StatusInternalServerError, statusErr.StatusCode())
+	require.Empty(t, statusErr.Body())
+}
+
 func TestRequestStreamNoTryableHost(t *testing.T) {
 	transporter := transport.New(transport.Configuration{
 		Hosts: []transport.StatefulHost{

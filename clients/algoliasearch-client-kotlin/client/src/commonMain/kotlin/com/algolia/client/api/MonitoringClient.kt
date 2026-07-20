@@ -56,19 +56,44 @@ public class MonitoringClient(
     parameters: Map<kotlin.String, Any>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customDelete`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customDeleteRequestConfig(path = path, parameters = parameters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customDelete]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customDeleteWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customDeleteRequestConfig(path = path, parameters = parameters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customDeleteRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customDelete`." }
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
     )
   }
 
@@ -84,19 +109,44 @@ public class MonitoringClient(
     parameters: Map<kotlin.String, Any>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customGet`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customGetRequestConfig(path = path, parameters = parameters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customGet] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customGetWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customGetRequestConfig(path = path, parameters = parameters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customGetRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customGet`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
     )
   }
 
@@ -114,20 +164,48 @@ public class MonitoringClient(
     body: JsonObject? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPost`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-        body = body,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customPostRequestConfig(path = path, parameters = parameters, body = body),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customPost]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param body Parameters to send with the custom request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customPostWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    body: JsonObject? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customPostRequestConfig(path = path, parameters = parameters, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customPostRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+    body: JsonObject?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPost`." }
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
+      body = body,
     )
   }
 
@@ -145,20 +223,48 @@ public class MonitoringClient(
     body: JsonObject? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPut`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-        body = body,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customPutRequestConfig(path = path, parameters = parameters, body = body),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customPut] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param body Parameters to send with the custom request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customPutWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    body: JsonObject? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customPutRequestConfig(path = path, parameters = parameters, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customPutRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+    body: JsonObject?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPut`." }
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
+      body = body,
     )
   }
 
@@ -172,17 +278,37 @@ public class MonitoringClient(
     clusters: String,
     requestOptions: RequestOptions? = null,
   ): IncidentsResponse {
+    return requester.execute(
+      requestConfig = getClusterIncidentsRequestConfig(clusters = clusters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves known incidents for the selected clusters. This variant of [getClusterIncidents]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param clusters Subset of clusters, separated by commas.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getClusterIncidentsWithHTTPInfo(
+    clusters: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<IncidentsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getClusterIncidentsRequestConfig(clusters = clusters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getClusterIncidentsRequestConfig(clusters: String): RequestConfig {
     require(clusters.isNotBlank()) {
       "Parameter `clusters` is required when calling `getClusterIncidents`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "incidents", "$clusters"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "incidents", "$clusters"),
     )
   }
 
@@ -196,17 +322,37 @@ public class MonitoringClient(
     clusters: String,
     requestOptions: RequestOptions? = null,
   ): StatusResponse {
+    return requester.execute(
+      requestConfig = getClusterStatusRequestConfig(clusters = clusters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the status of selected clusters. This variant of [getClusterStatus] returns the full
+   * HTTP response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * @param clusters Subset of clusters, separated by commas.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getClusterStatusWithHTTPInfo(
+    clusters: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<StatusResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getClusterStatusRequestConfig(clusters = clusters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getClusterStatusRequestConfig(clusters: String): RequestConfig {
     require(clusters.isNotBlank()) {
       "Parameter `clusters` is required when calling `getClusterStatus`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "status", "$clusters"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "status", "$clusters"),
     )
   }
 
@@ -216,14 +362,32 @@ public class MonitoringClient(
    * @param requestOptions additional request configuration.
    */
   public suspend fun getIncidents(requestOptions: RequestOptions? = null): IncidentsResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "incidents"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getIncidentsRequestConfig(),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves known incidents for all clusters. This variant of [getIncidents] returns the full
+   * HTTP response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getIncidentsWithHTTPInfo(
+    requestOptions: RequestOptions? = null
+  ): AlgoliaHttpResponse<IncidentsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getIncidentsRequestConfig(),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getIncidentsRequestConfig(): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "incidents"),
     )
   }
 
@@ -242,17 +406,41 @@ public class MonitoringClient(
     clusters: String,
     requestOptions: RequestOptions? = null,
   ): IndexingTimeResponse {
+    return requester.execute(
+      requestConfig = getIndexingTimeRequestConfig(clusters = clusters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves indexing latency metrics for selected clusters. This endpoint is intended for
+   * infrastructure-level monitoring and availability checks. The returned value reflects latency
+   * measured on Algolia's internal monitoring index and is reported in milliseconds. This metric
+   * isn't intended to represent the indexing performance of an individual application or index. To
+   * measure when an indexing operation has completed for your application, use the `waitTask`
+   * method. This variant of [getIndexingTime] returns the full HTTP response information (status
+   * code, headers, raw body) along with the deserialized response body.
+   *
+   * @param clusters Subset of clusters, separated by commas.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getIndexingTimeWithHTTPInfo(
+    clusters: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<IndexingTimeResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getIndexingTimeRequestConfig(clusters = clusters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getIndexingTimeRequestConfig(clusters: String): RequestConfig {
     require(clusters.isNotBlank()) {
       "Parameter `clusters` is required when calling `getIndexingTime`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexing", "$clusters"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "indexing", "$clusters"),
     )
   }
 
@@ -266,15 +454,35 @@ public class MonitoringClient(
     clusters: String,
     requestOptions: RequestOptions? = null,
   ): LatencyResponse {
-    require(clusters.isNotBlank()) { "Parameter `clusters` is required when calling `getLatency`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "latency", "$clusters"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getLatencyRequestConfig(clusters = clusters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the average latency for search requests for selected clusters. This variant of
+   * [getLatency] returns the full HTTP response information (status code, headers, raw body) along
+   * with the deserialized response body.
+   *
+   * @param clusters Subset of clusters, separated by commas.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getLatencyWithHTTPInfo(
+    clusters: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<LatencyResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getLatencyRequestConfig(clusters = clusters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getLatencyRequestConfig(clusters: String): RequestConfig {
+    require(clusters.isNotBlank()) { "Parameter `clusters` is required when calling `getLatency`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "latency", "$clusters"),
     )
   }
 
@@ -298,16 +506,45 @@ public class MonitoringClient(
     period: Period,
     requestOptions: RequestOptions? = null,
   ): InfrastructureResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "infrastructure", "$metric", "period", "$period"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getMetricsRequestConfig(metric = metric, period = period),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves metrics related to your Algolia infrastructure, aggregated over a selected time
+   * window. Access to this API is available as part of the
+   * [Premium or Elevate plans](https://www.algolia.com/pricing). You must authenticate requests
+   * with the `x-algolia-application-id` and `x-algolia-api-key` headers (using the Monitoring API
+   * key). This variant of [getMetrics] returns the full HTTP response information (status code,
+   * headers, raw body) along with the deserialized response body.
+   *
+   * @param metric Metric to report. For more information about the individual metrics, see the
+   *   description of the API response. To include all metrics, use `*`.
+   * @param period Period over which to aggregate the metrics: - `minute`. Aggregate the last
+   *   minute. 1 data point per 10 seconds. - `hour`. Aggregate the last hour. 1 data point per
+   *   minute. - `day`. Aggregate the last day. 1 data point per 10 minutes. - `week`. Aggregate the
+   *   last week. 1 data point per hour. - `month`. Aggregate the last month. 1 data point per day.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getMetricsWithHTTPInfo(
+    metric: Metric,
+    period: Period,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<InfrastructureResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getMetricsRequestConfig(metric = metric, period = period),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getMetricsRequestConfig(metric: Metric, period: Period): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "infrastructure", "$metric", "period", "$period"),
     )
   }
 
@@ -321,19 +558,39 @@ public class MonitoringClient(
     clusters: String,
     requestOptions: RequestOptions? = null,
   ): Map<kotlin.String, Map<kotlin.String, Boolean>> {
+    return requester.execute(
+      requestConfig = getReachabilityRequestConfig(clusters = clusters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Test whether clusters are reachable or not. This variant of [getReachability] returns the full
+   * HTTP response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * @param clusters Subset of clusters, separated by commas.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getReachabilityWithHTTPInfo(
+    clusters: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<Map<kotlin.String, Map<kotlin.String, Boolean>>> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getReachabilityRequestConfig(clusters = clusters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getReachabilityRequestConfig(clusters: String): RequestConfig {
     require(clusters.isNotBlank()) {
       "Parameter `clusters` is required when calling `getReachability`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "reachability", "$clusters", "probes"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "reachability", "$clusters", "probes"),
     )
   }
 
@@ -346,14 +603,34 @@ public class MonitoringClient(
    * @param requestOptions additional request configuration.
    */
   public suspend fun getServers(requestOptions: RequestOptions? = null): InventoryResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "inventory", "servers"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getServersRequestConfig(),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the servers that belong to clusters. The response depends on whether you authenticate
+   * your API request: - With authentication, the response lists the servers assigned to your
+   * Algolia application's cluster. - Without authentication, the response lists the servers for all
+   * Algolia clusters. This variant of [getServers] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getServersWithHTTPInfo(
+    requestOptions: RequestOptions? = null
+  ): AlgoliaHttpResponse<InventoryResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getServersRequestConfig(),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getServersRequestConfig(): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "inventory", "servers"),
     )
   }
 
@@ -363,14 +640,32 @@ public class MonitoringClient(
    * @param requestOptions additional request configuration.
    */
   public suspend fun getStatus(requestOptions: RequestOptions? = null): StatusResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "status"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getStatusRequestConfig(),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the status of all Algolia clusters and instances. This variant of [getStatus] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getStatusWithHTTPInfo(
+    requestOptions: RequestOptions? = null
+  ): AlgoliaHttpResponse<StatusResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getStatusRequestConfig(),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getStatusRequestConfig(): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "status"),
     )
   }
 }

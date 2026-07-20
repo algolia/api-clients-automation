@@ -62,19 +62,44 @@ public class PersonalizationClient(
     parameters: Map<kotlin.String, Any>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customDelete`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customDeleteRequestConfig(path = path, parameters = parameters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customDelete]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customDeleteWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customDeleteRequestConfig(path = path, parameters = parameters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customDeleteRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customDelete`." }
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
     )
   }
 
@@ -90,19 +115,44 @@ public class PersonalizationClient(
     parameters: Map<kotlin.String, Any>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customGet`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customGetRequestConfig(path = path, parameters = parameters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customGet] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customGetWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customGetRequestConfig(path = path, parameters = parameters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customGetRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customGet`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
     )
   }
 
@@ -120,20 +170,48 @@ public class PersonalizationClient(
     body: JsonObject? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPost`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-        body = body,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customPostRequestConfig(path = path, parameters = parameters, body = body),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customPost]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param body Parameters to send with the custom request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customPostWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    body: JsonObject? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customPostRequestConfig(path = path, parameters = parameters, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customPostRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+    body: JsonObject?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPost`." }
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
+      body = body,
     )
   }
 
@@ -151,20 +229,48 @@ public class PersonalizationClient(
     body: JsonObject? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPut`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-        body = body,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customPutRequestConfig(path = path, parameters = parameters, body = body),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customPut] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param body Parameters to send with the custom request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customPutWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    body: JsonObject? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customPutRequestConfig(path = path, parameters = parameters, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customPutRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+    body: JsonObject?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPut`." }
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
+      body = body,
     )
   }
 
@@ -183,17 +289,41 @@ public class PersonalizationClient(
     userToken: String,
     requestOptions: RequestOptions? = null,
   ): DeleteUserProfileResponse {
+    return requester.execute(
+      requestConfig = deleteUserProfileRequestConfig(userToken = userToken),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes a user profile. The response includes a date and time when the user profile can safely
+   * be considered deleted. This variant of [deleteUserProfile] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - recommendation
+   *
+   * @param userToken Unique identifier representing a user for which to fetch the personalization
+   *   profile.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteUserProfileWithHTTPInfo(
+    userToken: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<DeleteUserProfileResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = deleteUserProfileRequestConfig(userToken = userToken),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteUserProfileRequestConfig(userToken: String): RequestConfig {
     require(userToken.isNotBlank()) {
       "Parameter `userToken` is required when calling `deleteUserProfile`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "profiles", "$userToken"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "profiles", "$userToken"),
     )
   }
 
@@ -208,15 +338,36 @@ public class PersonalizationClient(
   public suspend fun getPersonalizationStrategy(
     requestOptions: RequestOptions? = null
   ): PersonalizationStrategyParams {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "strategies", "personalization"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getPersonalizationStrategyRequestConfig(),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves the current personalization strategy. This variant of [getPersonalizationStrategy]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - recommendation
+   *
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getPersonalizationStrategyWithHTTPInfo(
+    requestOptions: RequestOptions? = null
+  ): AlgoliaHttpResponse<PersonalizationStrategyParams> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getPersonalizationStrategyRequestConfig(),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getPersonalizationStrategyRequestConfig(): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "strategies", "personalization"),
     )
   }
 
@@ -234,19 +385,43 @@ public class PersonalizationClient(
     userToken: String,
     requestOptions: RequestOptions? = null,
   ): GetUserTokenResponse {
+    return requester.execute(
+      requestConfig = getUserTokenProfileRequestConfig(userToken = userToken),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves a user profile and their affinities for different facets. This variant of
+   * [getUserTokenProfile] returns the full HTTP response information (status code, headers, raw
+   * body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - recommendation
+   *
+   * @param userToken Unique identifier representing a user for which to fetch the personalization
+   *   profile.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getUserTokenProfileWithHTTPInfo(
+    userToken: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<GetUserTokenResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getUserTokenProfileRequestConfig(userToken = userToken),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getUserTokenProfileRequestConfig(userToken: String): RequestConfig {
     require(userToken.isNotBlank()) {
       "Parameter `userToken` is required when calling `getUserTokenProfile`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "profiles", "personalization", "$userToken"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "profiles", "personalization", "$userToken"),
     )
   }
 
@@ -263,16 +438,47 @@ public class PersonalizationClient(
     personalizationStrategyParams: PersonalizationStrategyParams,
     requestOptions: RequestOptions? = null,
   ): SetPersonalizationStrategyResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "strategies", "personalization"),
-        body = personalizationStrategyParams,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        setPersonalizationStrategyRequestConfig(
+          personalizationStrategyParams = personalizationStrategyParams
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Creates a new personalization strategy. This variant of [setPersonalizationStrategy] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - recommendation
+   *
+   * @param personalizationStrategyParams
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun setPersonalizationStrategyWithHTTPInfo(
+    personalizationStrategyParams: PersonalizationStrategyParams,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SetPersonalizationStrategyResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        setPersonalizationStrategyRequestConfig(
+          personalizationStrategyParams = personalizationStrategyParams
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun setPersonalizationStrategyRequestConfig(
+    personalizationStrategyParams: PersonalizationStrategyParams
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "strategies", "personalization"),
+      body = personalizationStrategyParams,
     )
   }
 }

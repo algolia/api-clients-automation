@@ -110,16 +110,37 @@ class CompositionClient(
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customDeleteHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Variant of `customDelete` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customDeleteWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customDeleteHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customDelete` and `customDeleteWithHTTPInfo`.
+    */
+  private def customDeleteHttpRequest(path: String, parameters: Option[Map[String, Any]] = None): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customDelete`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/${path}")
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -134,16 +155,36 @@ class CompositionClient(
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customGetHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Variant of `customGet` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customGetWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customGetHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customGet` and `customGetWithHTTPInfo`.
+    */
+  private def customGetHttpRequest(path: String, parameters: Option[Map[String, Any]] = None): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customGet`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/${path}")
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -161,17 +202,44 @@ class CompositionClient(
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customPostHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Variant of `customPost` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPostWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customPostHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customPost` and `customPostWithHTTPInfo`.
+    */
+  private def customPostHttpRequest(
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None
+  ): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customPost`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -189,17 +257,44 @@ class CompositionClient(
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customPutHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Variant of `customPut` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPutWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customPutHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customPut` and `customPutWithHTTPInfo`.
+    */
+  private def customPutHttpRequest(
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None
+  ): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customPut`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** Delete a composition from the current Algolia application.
@@ -213,15 +308,35 @@ class CompositionClient(
   def deleteComposition(compositionID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[TaskIDResponse] = Future {
+    execute[TaskIDResponse](deleteCompositionHttpRequest(compositionID = compositionID), requestOptions)
+  }
+
+  /** Variant of `deleteComposition` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param compositionID
+    *   Unique Composition ObjectID.
+    */
+  def deleteCompositionWithHTTPInfo(compositionID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[TaskIDResponse]] = Future {
+    executeWithHttpInfo[TaskIDResponse](deleteCompositionHttpRequest(compositionID = compositionID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteComposition` and `deleteCompositionWithHTTPInfo`.
+    */
+  private def deleteCompositionHttpRequest(compositionID: String): HttpRequest = {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `deleteComposition`.")
     requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `deleteComposition`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/1/compositions/${escape(compositionID)}")
       .build()
-    execute[TaskIDResponse](request, requestOptions)
   }
 
   /** Delete a Composition Rule from the specified Composition ID.
@@ -237,17 +352,48 @@ class CompositionClient(
   def deleteCompositionRule(compositionID: String, objectID: String, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
   ): Future[TaskIDResponse] = Future {
+    execute[TaskIDResponse](
+      deleteCompositionRuleHttpRequest(compositionID = compositionID, objectID = objectID),
+      requestOptions
+    )
+  }
+
+  /** Variant of `deleteCompositionRule` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param compositionID
+    *   Unique Composition ObjectID.
+    * @param objectID
+    *   Unique identifier of a rule object.
+    */
+  def deleteCompositionRuleWithHTTPInfo(
+      compositionID: String,
+      objectID: String,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[TaskIDResponse]] = Future {
+    executeWithHttpInfo[TaskIDResponse](
+      deleteCompositionRuleHttpRequest(compositionID = compositionID, objectID = objectID),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteCompositionRule` and
+    * `deleteCompositionRuleWithHTTPInfo`.
+    */
+  private def deleteCompositionRuleHttpRequest(compositionID: String, objectID: String): HttpRequest = {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `deleteCompositionRule`.")
     requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `deleteCompositionRule`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `deleteCompositionRule`.")
     requireNotEmpty(objectID, "Parameter `objectID` is required when calling `deleteCompositionRule`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/1/compositions/${escape(compositionID)}/rules/${escape(objectID)}")
       .build()
-    execute[TaskIDResponse](request, requestOptions)
   }
 
   /** Retrieve a single composition in the current Algolia application.
@@ -262,15 +408,36 @@ class CompositionClient(
   def getComposition(compositionID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[Composition] = Future {
+    execute[Composition](getCompositionHttpRequest(compositionID = compositionID), requestOptions)
+  }
+
+  /** Variant of `getComposition` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *   - settings
+    *
+    * @param compositionID
+    *   Unique Composition ObjectID.
+    */
+  def getCompositionWithHTTPInfo(compositionID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Composition]] = Future {
+    executeWithHttpInfo[Composition](getCompositionHttpRequest(compositionID = compositionID), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getComposition` and `getCompositionWithHTTPInfo`.
+    */
+  private def getCompositionHttpRequest(compositionID: String): HttpRequest = {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `getComposition`.")
     requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `getComposition`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/compositions/${escape(compositionID)}")
       .build()
-    execute[Composition](request, requestOptions)
   }
 
   /** Retrieves a rule by its ID. To find the object ID of a rule, use the [`search`
@@ -288,17 +455,42 @@ class CompositionClient(
   def getRule(compositionID: String, objectID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[CompositionRule] = Future {
+    execute[CompositionRule](getRuleHttpRequest(compositionID = compositionID, objectID = objectID), requestOptions)
+  }
+
+  /** Variant of `getRule` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *   - settings
+    *
+    * @param compositionID
+    *   Unique Composition ObjectID.
+    * @param objectID
+    *   Unique identifier of a rule object.
+    */
+  def getRuleWithHTTPInfo(compositionID: String, objectID: String, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[CompositionRule]] = Future {
+    executeWithHttpInfo[CompositionRule](
+      getRuleHttpRequest(compositionID = compositionID, objectID = objectID),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getRule` and `getRuleWithHTTPInfo`.
+    */
+  private def getRuleHttpRequest(compositionID: String, objectID: String): HttpRequest = {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `getRule`.")
     requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `getRule`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `getRule`.")
     requireNotEmpty(objectID, "Parameter `objectID` is required when calling `getRule`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/compositions/${escape(compositionID)}/rules/${escape(objectID)}")
       .build()
-    execute[CompositionRule](request, requestOptions)
   }
 
   /** Checks the status of a given task.
@@ -318,16 +510,44 @@ class CompositionClient(
   def getTask(compositionID: String, taskID: Long, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[GetTaskResponse] = Future {
+    execute[GetTaskResponse](getTaskHttpRequest(compositionID = compositionID, taskID = taskID), requestOptions)
+  }
+
+  /** Variant of `getTask` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *   - settings
+    *   - addObject
+    *   - deleteObject
+    *   - deleteIndex
+    *
+    * @param compositionID
+    *   Unique Composition ObjectID.
+    * @param taskID
+    *   Unique task identifier.
+    */
+  def getTaskWithHTTPInfo(compositionID: String, taskID: Long, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[GetTaskResponse]] = Future {
+    executeWithHttpInfo[GetTaskResponse](
+      getTaskHttpRequest(compositionID = compositionID, taskID = taskID),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getTask` and `getTaskWithHTTPInfo`.
+    */
+  private def getTaskHttpRequest(compositionID: String, taskID: Long): HttpRequest = {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `getTask`.")
     requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `getTask`.")
     requireNotNull(taskID, "Parameter `taskID` is required when calling `getTask`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/compositions/${escape(compositionID)}/task/${escape(taskID)}")
       .build()
-    execute[GetTaskResponse](request, requestOptions)
   }
 
   /** Lists all compositions in the current Algolia application.
@@ -346,15 +566,46 @@ class CompositionClient(
       hitsPerPage: Option[Int] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ListCompositionsResponse] = Future {
+    execute[ListCompositionsResponse](
+      listCompositionsHttpRequest(page = page, hitsPerPage = hitsPerPage),
+      requestOptions
+    )
+  }
 
-    val request = HttpRequest
+  /** Variant of `listCompositions` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *   - settings
+    *
+    * @param page
+    *   Requested page of the API response. If `null`, the API response is not paginated.
+    * @param hitsPerPage
+    *   Number of hits per page.
+    */
+  def listCompositionsWithHTTPInfo(
+      page: Option[Int] = None,
+      hitsPerPage: Option[Int] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ListCompositionsResponse]] = Future {
+    executeWithHttpInfo[ListCompositionsResponse](
+      listCompositionsHttpRequest(page = page, hitsPerPage = hitsPerPage),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `listCompositions` and `listCompositionsWithHTTPInfo`.
+    */
+  private def listCompositionsHttpRequest(page: Option[Int] = None, hitsPerPage: Option[Int] = None): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/compositions")
       .withQueryParameter("page", page)
       .withQueryParameter("hitsPerPage", hitsPerPage)
       .build()
-    execute[ListCompositionsResponse](request, requestOptions)
   }
 
   /** Adds, updates, or deletes compositions with a single API request.
@@ -365,15 +616,32 @@ class CompositionClient(
   def multipleBatch(batchParams: BatchParams, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[MultipleBatchResponse] = Future {
+    execute[MultipleBatchResponse](multipleBatchHttpRequest(batchParams = batchParams), requestOptions)
+  }
+
+  /** Variant of `multipleBatch` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    */
+  def multipleBatchWithHTTPInfo(batchParams: BatchParams, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[MultipleBatchResponse]] = Future {
+    executeWithHttpInfo[MultipleBatchResponse](multipleBatchHttpRequest(batchParams = batchParams), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `multipleBatch` and `multipleBatchWithHTTPInfo`.
+    */
+  private def multipleBatchHttpRequest(batchParams: BatchParams): HttpRequest = {
     requireNotNull(batchParams, "Parameter `batchParams` is required when calling `multipleBatch`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/compositions/*/batch")
       .withBody(batchParams)
       .build()
-    execute[MultipleBatchResponse](request, requestOptions)
   }
 
   /** Update and insert a composition in the current Algolia application.
@@ -387,17 +655,45 @@ class CompositionClient(
   def putComposition(compositionID: String, composition: Composition, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
   ): Future[TaskIDResponse] = Future {
+    execute[TaskIDResponse](
+      putCompositionHttpRequest(compositionID = compositionID, composition = composition),
+      requestOptions
+    )
+  }
+
+  /** Variant of `putComposition` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param compositionID
+    *   Unique Composition ObjectID.
+    */
+  def putCompositionWithHTTPInfo(
+      compositionID: String,
+      composition: Composition,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[TaskIDResponse]] = Future {
+    executeWithHttpInfo[TaskIDResponse](
+      putCompositionHttpRequest(compositionID = compositionID, composition = composition),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `putComposition` and `putCompositionWithHTTPInfo`.
+    */
+  private def putCompositionHttpRequest(compositionID: String, composition: Composition): HttpRequest = {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `putComposition`.")
     requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `putComposition`.")
     requireNotNull(composition, "Parameter `composition` is required when calling `putComposition`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/1/compositions/${escape(compositionID)}")
       .withBody(composition)
       .build()
-    execute[TaskIDResponse](request, requestOptions)
   }
 
   /** If a composition rule with the provided ID already exists, it's replaced. Otherwise, a new one is added.
@@ -416,19 +712,63 @@ class CompositionClient(
       compositionRule: CompositionRule,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[TaskIDResponse] = Future {
+    execute[TaskIDResponse](
+      putCompositionRuleHttpRequest(
+        compositionID = compositionID,
+        objectID = objectID,
+        compositionRule = compositionRule
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `putCompositionRule` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param compositionID
+    *   Unique Composition ObjectID.
+    * @param objectID
+    *   Unique identifier of a rule object.
+    */
+  def putCompositionRuleWithHTTPInfo(
+      compositionID: String,
+      objectID: String,
+      compositionRule: CompositionRule,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[TaskIDResponse]] = Future {
+    executeWithHttpInfo[TaskIDResponse](
+      putCompositionRuleHttpRequest(
+        compositionID = compositionID,
+        objectID = objectID,
+        compositionRule = compositionRule
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `putCompositionRule` and
+    * `putCompositionRuleWithHTTPInfo`.
+    */
+  private def putCompositionRuleHttpRequest(
+      compositionID: String,
+      objectID: String,
+      compositionRule: CompositionRule
+  ): HttpRequest = {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `putCompositionRule`.")
     requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `putCompositionRule`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `putCompositionRule`.")
     requireNotEmpty(objectID, "Parameter `objectID` is required when calling `putCompositionRule`.")
     requireNotNull(compositionRule, "Parameter `compositionRule` is required when calling `putCompositionRule`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/1/compositions/${escape(compositionID)}/rules/${escape(objectID)}")
       .withBody(compositionRule)
       .build()
-    execute[TaskIDResponse](request, requestOptions)
   }
 
   /** Create or update or delete multiple composition rules.
@@ -444,17 +784,44 @@ class CompositionClient(
       rules: CompositionRulesBatchParams,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[RulesMultipleBatchResponse] = Future {
+    execute[RulesMultipleBatchResponse](
+      saveRulesHttpRequest(compositionID = compositionID, rules = rules),
+      requestOptions
+    )
+  }
+
+  /** Variant of `saveRules` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param compositionID
+    *   Unique Composition ObjectID.
+    */
+  def saveRulesWithHTTPInfo(
+      compositionID: String,
+      rules: CompositionRulesBatchParams,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[RulesMultipleBatchResponse]] = Future {
+    executeWithHttpInfo[RulesMultipleBatchResponse](
+      saveRulesHttpRequest(compositionID = compositionID, rules = rules),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `saveRules` and `saveRulesWithHTTPInfo`.
+    */
+  private def saveRulesHttpRequest(compositionID: String, rules: CompositionRulesBatchParams): HttpRequest = {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `saveRules`.")
     requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `saveRules`.")
     requireNotNull(rules, "Parameter `rules` is required when calling `saveRules`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/compositions/${escape(compositionID)}/rules/batch")
       .withBody(rules)
       .build()
-    execute[RulesMultipleBatchResponse](request, requestOptions)
   }
 
   /** Runs a query on a single composition and returns matching results.
@@ -468,18 +835,42 @@ class CompositionClient(
   def search(compositionID: String, requestBody: RequestBody, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[SearchResponse] = Future {
+    execute[SearchResponse](searchHttpRequest(compositionID = compositionID, requestBody = requestBody), requestOptions)
+  }
+
+  /** Variant of `search` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - search
+    *
+    * @param compositionID
+    *   Unique Composition ObjectID.
+    */
+  def searchWithHTTPInfo(
+      compositionID: String,
+      requestBody: RequestBody,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[SearchResponse]] = Future {
+    executeWithHttpInfo[SearchResponse](
+      searchHttpRequest(compositionID = compositionID, requestBody = requestBody),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `search` and `searchWithHTTPInfo`.
+    */
+  private def searchHttpRequest(compositionID: String, requestBody: RequestBody): HttpRequest = {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `search`.")
     requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `search`.")
     requireNotNull(requestBody, "Parameter `requestBody` is required when calling `search`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/compositions/${escape(compositionID)}/run")
       .withBody(requestBody)
       .withRead(true)
       .build()
-    execute[SearchResponse](request, requestOptions)
   }
 
   /** Searches for composition rules in your index.
@@ -495,16 +886,54 @@ class CompositionClient(
       searchCompositionRulesParams: Option[SearchCompositionRulesParams] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[SearchCompositionRulesResponse] = Future {
+    execute[SearchCompositionRulesResponse](
+      searchCompositionRulesHttpRequest(
+        compositionID = compositionID,
+        searchCompositionRulesParams = searchCompositionRulesParams
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `searchCompositionRules` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - settings
+    *
+    * @param compositionID
+    *   Unique Composition ObjectID.
+    */
+  def searchCompositionRulesWithHTTPInfo(
+      compositionID: String,
+      searchCompositionRulesParams: Option[SearchCompositionRulesParams] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[SearchCompositionRulesResponse]] = Future {
+    executeWithHttpInfo[SearchCompositionRulesResponse](
+      searchCompositionRulesHttpRequest(
+        compositionID = compositionID,
+        searchCompositionRulesParams = searchCompositionRulesParams
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `searchCompositionRules` and
+    * `searchCompositionRulesWithHTTPInfo`.
+    */
+  private def searchCompositionRulesHttpRequest(
+      compositionID: String,
+      searchCompositionRulesParams: Option[SearchCompositionRulesParams] = None
+  ): HttpRequest = {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `searchCompositionRules`.")
     requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `searchCompositionRules`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/compositions/${escape(compositionID)}/rules/search")
       .withBody(searchCompositionRulesParams)
       .build()
-    execute[SearchCompositionRulesResponse](request, requestOptions)
   }
 
   /** Searches for values of a specified facet attribute on the composition's main source's index. - By default, facet
@@ -526,19 +955,64 @@ class CompositionClient(
       searchForFacetValuesRequest: Option[SearchForFacetValuesRequest] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[SearchForFacetValuesResponse] = Future {
+    execute[SearchForFacetValuesResponse](
+      searchForFacetValuesHttpRequest(
+        compositionID = compositionID,
+        facetName = facetName,
+        searchForFacetValuesRequest = searchForFacetValuesRequest
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `searchForFacetValues` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - search
+    *
+    * @param compositionID
+    *   Unique Composition ObjectID.
+    * @param facetName
+    *   Facet attribute in which to search for values. This attribute must be included in the `attributesForFaceting`
+    *   index setting with the `searchable()` modifier.
+    */
+  def searchForFacetValuesWithHTTPInfo(
+      compositionID: String,
+      facetName: String,
+      searchForFacetValuesRequest: Option[SearchForFacetValuesRequest] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[SearchForFacetValuesResponse]] = Future {
+    executeWithHttpInfo[SearchForFacetValuesResponse](
+      searchForFacetValuesHttpRequest(
+        compositionID = compositionID,
+        facetName = facetName,
+        searchForFacetValuesRequest = searchForFacetValuesRequest
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `searchForFacetValues` and
+    * `searchForFacetValuesWithHTTPInfo`.
+    */
+  private def searchForFacetValuesHttpRequest(
+      compositionID: String,
+      facetName: String,
+      searchForFacetValuesRequest: Option[SearchForFacetValuesRequest] = None
+  ): HttpRequest = {
     requireNotNull(compositionID, "Parameter `compositionID` is required when calling `searchForFacetValues`.")
     requireNotEmpty(compositionID, "Parameter `compositionID` is required when calling `searchForFacetValues`.")
     requireNotNull(facetName, "Parameter `facetName` is required when calling `searchForFacetValues`.")
     requireNotEmpty(facetName, "Parameter `facetName` is required when calling `searchForFacetValues`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/compositions/${escape(compositionID)}/facets/${escape(facetName)}/query")
       .withBody(searchForFacetValuesRequest)
       .withRead(true)
       .build()
-    execute[SearchForFacetValuesResponse](request, requestOptions)
   }
 
   /** Updates the \"sortingStrategy\" field of an existing composition. This endpoint lets you create a new sorting
@@ -559,6 +1033,39 @@ class CompositionClient(
       requestBody: Map[String, String],
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[TaskIDResponse] = Future {
+    execute[TaskIDResponse](
+      updateSortingStrategyCompositionHttpRequest(compositionID = compositionID, requestBody = requestBody),
+      requestOptions
+    )
+  }
+
+  /** Variant of `updateSortingStrategyComposition` that returns the full HTTP response: status code, headers, raw body
+    * and deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param compositionID
+    *   Unique Composition ObjectID.
+    */
+  def updateSortingStrategyCompositionWithHTTPInfo(
+      compositionID: String,
+      requestBody: Map[String, String],
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[TaskIDResponse]] = Future {
+    executeWithHttpInfo[TaskIDResponse](
+      updateSortingStrategyCompositionHttpRequest(compositionID = compositionID, requestBody = requestBody),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `updateSortingStrategyComposition` and
+    * `updateSortingStrategyCompositionWithHTTPInfo`.
+    */
+  private def updateSortingStrategyCompositionHttpRequest(
+      compositionID: String,
+      requestBody: Map[String, String]
+  ): HttpRequest = {
     requireNotNull(
       compositionID,
       "Parameter `compositionID` is required when calling `updateSortingStrategyComposition`."
@@ -569,13 +1076,12 @@ class CompositionClient(
     )
     requireNotNull(requestBody, "Parameter `requestBody` is required when calling `updateSortingStrategyComposition`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/compositions/${escape(compositionID)}/sortingStrategy")
       .withBody(requestBody)
       .build()
-    execute[TaskIDResponse](request, requestOptions)
   }
 
 }

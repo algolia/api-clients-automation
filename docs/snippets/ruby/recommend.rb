@@ -514,7 +514,8 @@ def snippet_for_get_recommendations2
           ),
           fallback_parameters: Algolia::Recommend::FallbackParams.new(
             query: "myQuery",
-            optional_filters: ["brand:samsung"]
+            optional_filters: ["brand:samsung"],
+            facet_filters: ["brand:apple"]
           )
         )
       ]

@@ -146,8 +146,8 @@ private[algoliasearch] class HttpRequester private (
       else jsonSerializer.deserialize[T](response.body.byteStream)
     }
 
-  /** Executes an HTTP request and returns the full HTTP response: status code, headers, raw body and deserialized
-    * data. The body is materialized before the underlying okhttp response is closed.
+  /** Executes an HTTP request and returns the full HTTP response: status code, headers, raw body and deserialized data.
+    * The body is materialized before the underlying okhttp response is closed.
     */
   override def executeWithHttpInfo[T: Manifest](
       httpRequest: HttpRequest,
