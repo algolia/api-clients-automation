@@ -21,7 +21,12 @@ export function createConsoleLogger(logLevel: LogLevelType): Logger {
 
     warn(message: string, args?: any | undefined): Readonly<Promise<void>> {
       if (LogLevelEnum.Info >= logLevel) {
-        console.warn(message, args);
+        // single-arg calls (e.g. via `logWarning`) must not print a trailing `undefined`
+        if (args === undefined) {
+          console.warn(message);
+        } else {
+          console.warn(message, args);
+        }
       }
 
       return Promise.resolve();

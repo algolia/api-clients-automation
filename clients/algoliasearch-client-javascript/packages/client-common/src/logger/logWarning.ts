@@ -5,7 +5,8 @@ import type { Logger } from '../types';
  */
 export function logWarning(logger: Logger, message: string): void {
   if (logger.warn) {
-    logger.warn(message);
+    // a rejecting custom `warn` must not become a fatal unhandled rejection
+    void Promise.resolve(logger.warn(message)).catch(() => {});
   } else {
     console.warn(message);
   }

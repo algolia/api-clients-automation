@@ -41,6 +41,14 @@ describe('console logger', () => {
     expect(console.error).toHaveBeenCalledTimes(1);
   });
 
+  test('omits undefined args from warn output', async () => {
+    const logger = createConsoleLogger(LogLevelEnum.Info);
+
+    await logger.warn?.('foo');
+
+    expect(console.warn).toHaveBeenCalledWith('foo');
+  });
+
   test('respects log level type error', async () => {
     const logger = createConsoleLogger(LogLevelEnum.Error);
 
