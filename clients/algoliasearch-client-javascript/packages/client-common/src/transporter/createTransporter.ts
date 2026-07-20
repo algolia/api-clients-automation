@@ -19,6 +19,7 @@ import {
   deserializeFailure,
   deserializeSuccess,
   deserializeSuccessWithHttpInfo,
+  getLastCorrelationId,
   serializeData,
   serializeHeaders,
   serializeUrl,
@@ -157,7 +158,7 @@ export function createTransporter({
        */
       const host = retryableHosts.pop();
       if (host === undefined) {
-        throw new RetryError(stackTraceWithoutCredentials(stackTrace));
+        throw new RetryError(stackTraceWithoutCredentials(stackTrace), getLastCorrelationId(stackTrace));
       }
 
       const timeout = { ...timeouts, ...requestOptions.timeouts };
