@@ -54,7 +54,7 @@ type Decoder interface {
 func NewEventStreamDecoder(rc io.ReadCloser) Decoder { //nolint:ireturn // The interface is the API, the implementation is not exposed.
 	scn := bufio.NewScanner(rc)
 	scn.Buffer(make([]byte, 0, 64<<10), maxLineSize)
-	scn.Split(scanLines)
+	scn.Split(newScanLines())
 
 	return &eventStreamDecoder{rc: rc, scn: scn, retry: -1}
 }
@@ -187,42 +187,68 @@ func parseRetry(value []byte) (int, bool) {
 	return n, true
 }
 
-// scanLines is a [bufio.SplitFunc] handling the three line endings allowed by
-// the WHATWG event-stream format: LF, CRLF and bare CR. Unlike
+// newScanLines returns a [bufio.SplitFunc] handling the three line endings
+// allowed by the WHATWG event-stream format: LF, CRLF and bare CR. Unlike
 // [bufio.ScanLines], a bare CR terminates a line, and a CRLF sequence split
 // across two reads is not mistaken for two line endings.
-func scanLines(data []byte, atEOF bool) (int, []byte, error) {
-	if atEOF && len(data) == 0 {
-		return 0, nil, nil
-	}
+//
+// The returned function is stateful and must be given to a single
+// [bufio.Scanner]: when a CR sits at the end of a full buffer, the line is
+// emitted right away and a LF arriving on the next read is swallowed as the
+// second half of a CRLF sequence.
+func newScanLines() bufio.SplitFunc {
+	skipLF := false
 
-	if i := bytes.IndexAny(data, "\r\n"); i >= 0 {
-		if data[i] == '\n' {
-			return i + 1, data[:i], nil
+	return func(data []byte, atEOF bool) (int, []byte, error) {
+		if skipLF && len(data) > 0 {
+			skipLF = false
+
+			if data[0] == '\n' {
+				return 1, nil, nil
+			}
 		}
 
-		// The line ends with a CR: peek at the next byte to consume a
-		// potential CRLF sequence as a single line ending.
-		if i+1 < len(data) {
-			if data[i+1] == '\n' {
-				return i + 2, data[:i], nil
+		if atEOF && len(data) == 0 {
+			return 0, nil, nil
+		}
+
+		if i := bytes.IndexAny(data, "\r\n"); i >= 0 {
+			if data[i] == '\n' {
+				return i + 1, data[:i], nil
 			}
 
-			return i + 1, data[:i], nil
+			// The line ends with a CR: peek at the next byte to consume a
+			// potential CRLF sequence as a single line ending.
+			if i+1 < len(data) {
+				if data[i+1] == '\n' {
+					return i + 2, data[:i], nil
+				}
+
+				return i + 1, data[:i], nil
+			}
+
+			// The CR is the last byte of the buffer: unless the stream is
+			// done, request more data to see whether a LF follows.
+			if atEOF {
+				return i + 1, data[:i], nil
+			}
+
+			// The buffer cannot grow past maxLineSize, so no more data can
+			// arrive to disambiguate: emit the line now instead of failing
+			// with [bufio.ErrTooLong], and swallow a LF on the next read.
+			if len(data) >= maxLineSize {
+				skipLF = true
+
+				return i + 1, data[:i], nil
+			}
+
+			return 0, nil, nil
 		}
 
-		// The CR is the last byte of the buffer: unless the stream is done,
-		// request more data to see whether a LF follows.
 		if atEOF {
-			return i + 1, data[:i], nil
+			return len(data), data, nil
 		}
 
 		return 0, nil, nil
 	}
-
-	if atEOF {
-		return len(data), data, nil
-	}
-
-	return 0, nil, nil
 }
