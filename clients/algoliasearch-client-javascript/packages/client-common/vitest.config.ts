@@ -14,6 +14,8 @@ export default defineConfig({
             'src/__tests__/sse.test.ts',
             'src/__tests__/transporter/cache.test.ts',
             'src/__tests__/transporter/compression.test.ts',
+            'src/__tests__/transporter/correlationId.test.ts',
+            'src/__tests__/transporter/withHttpInfo.test.ts',
           ],
           name: 'node',
           environment: 'node',
