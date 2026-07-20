@@ -123,8 +123,15 @@ func testAgentStudioStreaming(appID, apiKey string) int {
 	for stream.Next() {
 		eventCount++
 
-		keys := make([]string, 0, len(stream.Current()))
-		for key := range stream.Current() {
+		event := stream.Current()
+		if event.Err != nil {
+			fmt.Printf("[EVENT #%d] (t+%.2fs) parse error: %v\n", eventCount, time.Since(start).Seconds(), event.Err)
+
+			continue
+		}
+
+		keys := make([]string, 0, len(*event.Data))
+		for key := range *event.Data {
 			keys = append(keys, key)
 		}
 

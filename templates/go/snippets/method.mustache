@@ -44,7 +44,7 @@ func SnippetFor{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Of{{#lambda.p
 
     for stream.Next() {
       // >LOG
-      print(stream.Current())
+      print(stream.Current().Data)
     }
 
     err = stream.Err()

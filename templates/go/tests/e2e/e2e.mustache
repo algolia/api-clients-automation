@@ -74,7 +74,10 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}E2E_{{#lambda
 
       var events []any
       for stream.Next() {
-        events = append(events, stream.Current())
+        event := stream.Current()
+        require.NoError(t, event.Err)
+
+        events = append(events, event.Data)
       }
       require.NoError(t, stream.Err())
       require.NotEmpty(t, events)
