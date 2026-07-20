@@ -25,7 +25,10 @@ func TestSSEStreamTypedDeserialization(t *testing.T) {
 	var messages []message
 
 	for stream.Next() {
-		messages = append(messages, stream.Current())
+		event := stream.Current()
+		require.NoError(t, event.Err)
+
+		messages = append(messages, *event.Data)
 	}
 
 	require.NoError(t, stream.Err())
@@ -37,16 +40,29 @@ func TestSSEStreamFieldsDoNotLeakAcrossEvents(t *testing.T) {
 
 	require.True(t, stream.Next())
 	require.True(t, stream.Next())
-	require.Equal(t, message{Text: "", Index: 8}, stream.Current())
+	require.Equal(t, message{Text: "", Index: 8}, *stream.Current().Data)
 }
 
-func TestSSEStreamParseErrorIsTerminal(t *testing.T) {
-	stream := newMessageStream(`data: {"text":"valid"}` + "\n\n" + "data: not json\n\n" + `data: {"text":"unreachable"}` + "\n\n")
+func TestSSEStreamParseErrorIsPerEvent(t *testing.T) {
+	stream := newMessageStream(`data: {"text":"valid"}` + "\n\n" + "data: not json\n\n" + `data: {"text":"still reachable"}` + "\n\n")
 
 	require.True(t, stream.Next())
+	require.NoError(t, stream.Current().Err)
+	require.Equal(t, "valid", stream.Current().Data.Text)
+
+	// A payload that fails to parse is delivered with Err set and the raw
+	// event preserved, and the stream continues, like in JS and Python.
+	require.True(t, stream.Next())
+	require.Error(t, stream.Current().Err)
+	require.Nil(t, stream.Current().Data)
+	require.Equal(t, "not json", string(stream.Current().Raw.Data))
+
+	require.True(t, stream.Next())
+	require.NoError(t, stream.Current().Err)
+	require.Equal(t, "still reachable", stream.Current().Data.Text)
+
 	require.False(t, stream.Next())
-	require.Error(t, stream.Err())
-	require.False(t, stream.Next())
+	require.NoError(t, stream.Err())
 }
 
 func TestSSEStreamDecoderErrorIsSurfaced(t *testing.T) {
