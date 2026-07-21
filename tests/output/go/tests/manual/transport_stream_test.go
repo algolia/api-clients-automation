@@ -1,6 +1,7 @@
 package manual
 
 import (
+	"bytes"
 	"context"
 	"io"
 	"net/http"
@@ -119,6 +120,30 @@ func TestRequestStreamHTTPStatusError(t *testing.T) {
 	require.ErrorAs(t, err, &statusErr)
 	require.Equal(t, http.StatusBadRequest, statusErr.StatusCode())
 	require.Contains(t, string(statusErr.Body()), "invalid request")
+}
+
+func TestRequestStreamHTTPStatusErrorBodyTruncated(t *testing.T) {
+	srv := httptest.NewServer(http.HandlerFunc(func(writer http.ResponseWriter, _ *http.Request) {
+		writer.WriteHeader(http.StatusInternalServerError)
+
+		_, _ = writer.Write(bytes.Repeat([]byte("x"), 2<<20))
+	}))
+	defer srv.Close()
+
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	transporter := newStreamTransport(t, srv.URL)
+
+	//nolint:bodyclose // The response is nil on error.
+	_, err := transporter.RequestStream(ctx, newStreamRequest(t, ctx), call.Read, transport.RequestConfiguration{})
+
+	// The error body read is capped so that an endless error body cannot
+	// stall the caller forever.
+	var statusErr *errs.HTTPStatusError
+	require.ErrorAs(t, err, &statusErr)
+	require.Equal(t, http.StatusInternalServerError, statusErr.StatusCode())
+	require.Len(t, statusErr.Body(), 1<<20)
 }
 
 func TestRequestStreamHTTPStatusErrorBodyReadFailure(t *testing.T) {
