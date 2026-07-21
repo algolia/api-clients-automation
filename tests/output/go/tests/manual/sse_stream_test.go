@@ -50,8 +50,6 @@ func TestSSEStreamParseErrorIsPerEvent(t *testing.T) {
 	require.NoError(t, stream.Current().Err)
 	require.Equal(t, "valid", stream.Current().Data.Text)
 
-	// A payload that fails to parse is delivered with Err set and the raw
-	// event preserved, and the stream continues, like in JS and Python.
 	require.True(t, stream.Next())
 	require.Error(t, stream.Current().Err)
 	require.Nil(t, stream.Current().Data)

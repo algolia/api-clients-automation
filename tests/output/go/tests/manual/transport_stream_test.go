@@ -138,8 +138,6 @@ func TestRequestStreamHTTPStatusErrorBodyTruncated(t *testing.T) {
 	//nolint:bodyclose // The response is nil on error.
 	_, err := transporter.RequestStream(ctx, newStreamRequest(t, ctx), call.Read, transport.RequestConfiguration{})
 
-	// The error body read is capped so that an endless error body cannot
-	// stall the caller forever.
 	var statusErr *errs.HTTPStatusError
 	require.ErrorAs(t, err, &statusErr)
 	require.Equal(t, http.StatusInternalServerError, statusErr.StatusCode())
