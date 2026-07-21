@@ -47,8 +47,6 @@ Decision:
   description: |
     Outcome of the A/B test once a winner has been declared.
     Only present when a winning variant has been declared, so its presence indicates the test has been decided.
-    This is a container for future decision signals (for example, Bayesian probability to be better),
-    so both frequentist and Bayesian outcomes can be surfaced here.
   properties:
     winnerVariantId:
       type: integer
