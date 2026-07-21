@@ -87,11 +87,7 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind,
 		// before the early returns, but when we do so, we do it **after**
 		// reading the body content of the response. Otherwise, a `context
 		// cancelled` error may happen when the body is read.
-		var (
-			ctxTimeout     time.Duration
-			connectTimeout time.Duration
-			err            error
-		)
+		var err error
 
 		// Reassign a fresh body for the retry
 		if i > 0 && req.GetBody != nil {
@@ -101,20 +97,7 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind,
 			}
 		}
 
-		switch {
-		case k == call.Read && c.ReadTimeout != nil:
-			ctxTimeout = *c.ReadTimeout
-		case k == call.Write && c.WriteTimeout != nil:
-			ctxTimeout = *c.WriteTimeout
-		default:
-			ctxTimeout = h.timeout
-		}
-
-		if c.ConnectTimeout != nil {
-			connectTimeout = *c.ConnectTimeout
-		} else {
-			connectTimeout = t.connectTimeout
-		}
+		ctxTimeout, connectTimeout := t.resolveTimeouts(k, c, h)
 
 		perRequestCtx, cancel := context.WithTimeout(ctx, ctxTimeout)
 		req = req.WithContext(perRequestCtx)
@@ -180,6 +163,11 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind,
 	return nil, nil, errs.ErrNoMoreHostToTry
 }
 
+// maxErrorBodySize bounds the error body read of a failed streaming request,
+// so that a server streaming an endless error body cannot stall the caller
+// forever.
+const maxErrorBodySize = 1 << 20
+
 // RequestStream performs the given request and returns the raw response
 // without reading its body, so that the caller can consume it as a stream.
 // Unlike Request, it does not retry: the request is only sent to the first
@@ -187,7 +175,8 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind,
 // would abort the stream while it is being consumed. Cancellation is
 // controlled by the caller through ctx. The outcome does not update the host
 // health state used by the retry strategy, consistent with the JavaScript and
-// Python clients.
+// Python clients. The Accept header is always overwritten with
+// text/event-stream.
 //
 // The RequestConfiguration timeouts are forwarded to the [Requester], but the
 // default requester ignores them and no context deadline is applied here:
@@ -215,23 +204,7 @@ func (t *Transport) RequestStream(ctx context.Context, req *http.Request, k call
 
 	host := hosts[0]
 
-	var timeout time.Duration
-
-	switch {
-	case k == call.Read && c.ReadTimeout != nil:
-		timeout = *c.ReadTimeout
-	case k == call.Write && c.WriteTimeout != nil:
-		timeout = *c.WriteTimeout
-	default:
-		timeout = host.timeout
-	}
-
-	var connectTimeout time.Duration
-	if c.ConnectTimeout != nil {
-		connectTimeout = *c.ConnectTimeout
-	} else {
-		connectTimeout = t.connectTimeout
-	}
+	timeout, connectTimeout := t.resolveTimeouts(k, c, host)
 
 	req = req.WithContext(ctx)
 	req.URL.Scheme = host.scheme
@@ -248,7 +221,7 @@ func (t *Transport) RequestStream(ctx context.Context, req *http.Request, k call
 	}
 
 	if !is2xx(res.StatusCode) {
-		body, errBody := io.ReadAll(res.Body)
+		body, errBody := io.ReadAll(io.LimitReader(res.Body, maxErrorBodySize))
 		errClose := res.Body.Close()
 
 		if errBody != nil {
@@ -263,6 +236,30 @@ func (t *Transport) RequestStream(ctx context.Context, req *http.Request, k call
 	}
 
 	return res, nil
+}
+
+// resolveTimeouts returns the request and connect timeouts applying to a call
+// of kind k against host h, honoring the overrides of c.
+func (t *Transport) resolveTimeouts(k call.Kind, c RequestConfiguration, h Host) (time.Duration, time.Duration) {
+	var timeout time.Duration
+
+	switch {
+	case k == call.Read && c.ReadTimeout != nil:
+		timeout = *c.ReadTimeout
+	case k == call.Write && c.WriteTimeout != nil:
+		timeout = *c.WriteTimeout
+	default:
+		timeout = h.timeout
+	}
+
+	var connectTimeout time.Duration
+	if c.ConnectTimeout != nil {
+		connectTimeout = *c.ConnectTimeout
+	} else {
+		connectTimeout = t.connectTimeout
+	}
+
+	return timeout, connectTimeout
 }
 
 func (t *Transport) request(req *http.Request, host Host, timeout time.Duration, connectTimeout time.Duration) (*http.Response, error) {
