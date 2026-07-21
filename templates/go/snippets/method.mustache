@@ -43,8 +43,14 @@ func SnippetFor{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Of{{#lambda.p
     defer func() { _ = stream.Close() }()
 
     for stream.Next() {
+      event := stream.Current()
+      if event.Err != nil {
+        // handle the eventual per-event deserialization error
+        continue
+      }
+
       // >LOG
-      print(stream.Current().Data)
+      fmt.Println(*event.Data)
     }
 
     err = stream.Err()

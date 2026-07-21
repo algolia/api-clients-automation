@@ -600,6 +600,14 @@ func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}
 
     {{{unescapedNotes}}}
   {{/notes}}
+  {{#vendorExtensions}}
+    {{#x-acl.0}}
+
+      Required API Key ACLs:{{/x-acl.0}}
+    {{#x-acl}}
+      - {{.}}
+    {{/x-acl}}
+  {{/vendorExtensions}}
 
   Request can be constructed by NewApi{{operationId}}Request with parameters below.
   {{#allParams}}
@@ -608,6 +616,10 @@ func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}
   @param opts ...RequestOption - Optional parameters for the API call
   @return sse.Decoder - A decoder over the raw events{{#returnType}}, each event's Data field contains a JSON-encoded {{{returnType}}}{{/returnType}}. The caller is responsible for closing it.
   @return error - An error if the API call fails
+  {{#isDeprecated}}
+
+    Deprecated
+  {{/isDeprecated}}
 */
 //nolint:ireturn // The interface is the API, the implementation is not exposed.
 func (c *APIClient) {{nickname}}StreamRaw({{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...RequestOption) (sse.Decoder, error) {
@@ -714,6 +726,14 @@ func (c *APIClient) {{nickname}}StreamRaw({{#hasParams}}r {{#structPrefix}}{{&cl
 
     {{{unescapedNotes}}}
   {{/notes}}
+  {{#vendorExtensions}}
+    {{#x-acl.0}}
+
+      Required API Key ACLs:{{/x-acl.0}}
+    {{#x-acl}}
+      - {{.}}
+    {{/x-acl}}
+  {{/vendorExtensions}}
 
   Request can be constructed by NewApi{{operationId}}Request with parameters below.
   {{#allParams}}
@@ -722,6 +742,10 @@ func (c *APIClient) {{nickname}}StreamRaw({{#hasParams}}r {{#structPrefix}}{{&cl
   @param opts ...RequestOption - Optional parameters for the API call
   @return *sse.Stream[{{#returnType}}{{{.}}}{{/returnType}}{{^returnType}}map[string]any{{/returnType}}] - A stream deserializing each event's payload. The caller is responsible for closing it.
   @return error - An error if the API call fails
+  {{#isDeprecated}}
+
+    Deprecated
+  {{/isDeprecated}}
 */
 func (c *APIClient) {{nickname}}Stream({{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...RequestOption) (*sse.Stream[{{#returnType}}{{{.}}}{{/returnType}}{{^returnType}}map[string]any{{/returnType}}], error) {
 	decoder, err := c.{{nickname}}StreamRaw({{#hasParams}}r,{{/hasParams}} opts...)

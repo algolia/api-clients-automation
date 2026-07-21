@@ -94,6 +94,9 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}E2E_{{#lambda
 
       {{#response}}
       {{#body}}
+      {{! Like the Python e2e template, the expected body is compared against
+          the first parsed event. Revisit in every language if real streams
+          lead with a metadata frame instead of the payload of interest. }}
       require.NotEmpty(t, allData)
 
       rawBody, err := json.Marshal(allData[0])
