@@ -156,6 +156,128 @@ func TestAgentStudio_CreateAgentCompletion(t *testing.T) {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
+	t.Run("createAgentCompletion streaming with simple messages", func(t *testing.T) {
+		decoder, err := client.CreateAgentCompletionStreamRaw(client.NewApiCreateAgentCompletionRequest(
+			"76710f1b-8231-42e5-b0d1-f43aac618e15", agentStudio.CompatibilityMode("ai-sdk-5"),
+			agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
+				[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+					agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))}))))
+		require.NoError(t, err)
+
+		defer func() { _ = decoder.Close() }()
+
+		eventCount := 0
+
+		for decoder.Next() {
+			var echoedRequest map[string]any
+			require.NoError(t, json.Unmarshal(decoder.Event().Data, &echoedRequest))
+			require.Equal(t, echo.Path, echoedRequest["path"])
+			require.Equal(t, echo.Method, echoedRequest["method"])
+
+			eventCount++
+		}
+
+		require.NoError(t, decoder.Err())
+		require.Equal(t, 1, eventCount)
+
+		require.Equal(t, "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"messages":[{"role":"user","content":"Hello, how are you?"}]}`)
+
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"compatibilityMode":"ai-sdk-5"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
+	t.Run("createAgentCompletion streaming with v5 messages and all query params", func(t *testing.T) {
+		decoder, err := client.CreateAgentCompletionStreamRaw(client.NewApiCreateAgentCompletionRequest(
+			"76710f1b-8231-42e5-b0d1-f43aac618e15", agentStudio.CompatibilityMode("ai-sdk-5"),
+			agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV5AsMessagesUnion(
+				[]agentStudio.MessageV5{*agentStudio.UserMessageV5AsMessageV5(
+					agentStudio.NewEmptyUserMessageV5().SetRole("user").SetParts(
+						[]agentStudio.TextPartV5{*agentStudio.NewEmptyTextPartV5().SetType("text").SetText("What is Algolia?")}))})).SetId("test-conversation-id")).WithStream(false).WithCache(false).WithMemory(false))
+		require.NoError(t, err)
+
+		defer func() { _ = decoder.Close() }()
+
+		eventCount := 0
+
+		for decoder.Next() {
+			var echoedRequest map[string]any
+			require.NoError(t, json.Unmarshal(decoder.Event().Data, &echoedRequest))
+			require.Equal(t, echo.Path, echoedRequest["path"])
+			require.Equal(t, echo.Method, echoedRequest["method"])
+
+			eventCount++
+		}
+
+		require.NoError(t, decoder.Err())
+		require.Equal(t, 1, eventCount)
+
+		require.Equal(t, "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"messages":[{"role":"user","parts":[{"type":"text","text":"What is Algolia?"}]}],"id":"test-conversation-id"}`)
+
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"compatibilityMode":"ai-sdk-5","stream":"false","cache":"false","memory":"false"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
+	t.Run("createAgentCompletion streaming with test configuration", func(t *testing.T) {
+		decoder, err := client.CreateAgentCompletionStreamRaw(client.NewApiCreateAgentCompletionRequest(
+			"76710f1b-8231-42e5-b0d1-f43aac618e15", agentStudio.CompatibilityMode("ai-sdk-5"),
+			agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
+				[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+					agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello"))})).SetConfiguration(
+				agentStudio.NewEmptyAgentTestConfiguration().
+					SetInstructions("Test instructions override").
+					SetConfig(map[string]any{"temperature": 0.2}).
+					SetTools(
+						[]agentStudio.ToolConfigInput{*agentStudio.AlgoliaDisplayResultsToolConfigAsToolConfigInput(
+							agentStudio.NewEmptyAlgoliaDisplayResultsToolConfig().SetType("start"))}),
+			),
+		))
+		require.NoError(t, err)
+
+		defer func() { _ = decoder.Close() }()
+
+		eventCount := 0
+
+		for decoder.Next() {
+			var echoedRequest map[string]any
+			require.NoError(t, json.Unmarshal(decoder.Event().Data, &echoedRequest))
+			require.Equal(t, echo.Path, echoedRequest["path"])
+			require.Equal(t, echo.Method, echoedRequest["method"])
+
+			eventCount++
+		}
+
+		require.NoError(t, decoder.Err())
+		require.Equal(t, 1, eventCount)
+
+		require.Equal(t, "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"messages":[{"role":"user","content":"Hello"}],"configuration":{"instructions":"Test instructions override","config":{"temperature":0.2},"tools":[{"type":"start"}]}}`)
+
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"compatibilityMode":"ai-sdk-5"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
 }
 
 func TestAgentStudio_CreateFeedback(t *testing.T) {

@@ -159,7 +159,6 @@ def snippet_for_create_agent_completion():
     # In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.
     client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
-    # Call the API
     # Use the streaming variant to iterate over events
     for event in client.create_agent_completion_stream(
         agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
@@ -189,7 +188,6 @@ def snippet_for_create_agent_completion1():
     # In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.
     client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
-    # Call the API
     # Use the streaming variant to iterate over events
     for event in client.create_agent_completion_stream(
         agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
@@ -219,7 +217,6 @@ def snippet_for_create_agent_completion2():
     # In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.
     client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
-    # Call the API
     # Use the streaming variant to iterate over events
     for event in client.create_agent_completion_stream(
         agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
@@ -258,7 +255,6 @@ def snippet_for_create_agent_completion3():
     # In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.
     client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
-    # Call the API
     # Use the streaming variant to iterate over events
     for event in client.create_agent_completion_stream(
         agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
