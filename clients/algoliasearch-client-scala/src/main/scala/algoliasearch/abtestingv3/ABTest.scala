@@ -55,5 +55,6 @@ case class ABTest(
     status: Status,
     variants: Seq[Variant],
     configuration: Option[ABTestConfiguration] = scala.None,
-    migratedAbTestID: Option[Int] = scala.None
+    migratedAbTestID: Option[Int] = scala.None,
+    decision: Option[Decision] = scala.None
 )

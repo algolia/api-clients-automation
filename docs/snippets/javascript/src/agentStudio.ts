@@ -114,7 +114,6 @@ export async function snippetForCreateAgentCompletion(): Promise<void> {
   // Initialize the client
   const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
-  // Call the API
   // Use the streaming variant to iterate over events
   for await (const event of client.createAgentCompletionStream({
     agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
@@ -134,7 +133,6 @@ export async function snippetForCreateAgentCompletion1(): Promise<void> {
   // Initialize the client
   const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
-  // Call the API
   // Use the streaming variant to iterate over events
   for await (const event of client.createAgentCompletionStream({
     agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
@@ -154,7 +152,6 @@ export async function snippetForCreateAgentCompletion2(): Promise<void> {
   // Initialize the client
   const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
-  // Call the API
   // Use the streaming variant to iterate over events
   for await (const event of client.createAgentCompletionStream({
     agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
@@ -180,7 +177,6 @@ export async function snippetForCreateAgentCompletion3(): Promise<void> {
   // Initialize the client
   const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
-  // Call the API
   // Use the streaming variant to iterate over events
   for await (const event of client.createAgentCompletionStream({
     agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',

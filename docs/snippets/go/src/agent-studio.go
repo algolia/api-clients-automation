@@ -3,6 +3,8 @@ package snippets
 
 // >IMPORT
 import (
+	"fmt"
+
 	agentStudio "github.com/algolia/algoliasearch-client-go/v4/algolia/agent-studio"
 ) // IMPORT<
 
@@ -180,8 +182,8 @@ func SnippetForCreateAgentCompletionOfAgentStudio() {
 		panic(err)
 	}
 
-	// Call the API
-	response, err := client.CreateAgentCompletion(client.NewApiCreateAgentCompletionRequest(
+	// Use the streaming variant to iterate over events
+	stream, err := client.CreateAgentCompletionStream(client.NewApiCreateAgentCompletionRequest(
 		"76710f1b-8231-42e5-b0d1-f43aac618e15", agentStudio.CompatibilityMode("ai-sdk-4"),
 		agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
 			[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
@@ -191,9 +193,174 @@ func SnippetForCreateAgentCompletionOfAgentStudio() {
 		panic(err)
 	}
 
-	// >LOG
-	// print the response
-	print(response)
+	defer func() { _ = stream.Close() }()
+
+	for stream.Next() {
+		event := stream.Current()
+		if event.Err != nil {
+			// handle the eventual per-event deserialization error
+			continue
+		}
+
+		// >LOG
+		fmt.Println(*event.Data)
+	}
+
+	err = stream.Err()
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+	// SEPARATOR<
+}
+
+func SnippetForCreateAgentCompletionOfAgentStudio1() {
+	/*
+	   Snippet for the createAgentCompletion method.
+
+	   createAgentCompletion streaming with simple messages
+	*/
+
+	// >SEPARATOR createAgentCompletion createAgentCompletion streaming with simple messages
+	// Initialize the client
+	client, err := agentStudio.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Use the streaming variant to iterate over events
+	stream, err := client.CreateAgentCompletionStream(client.NewApiCreateAgentCompletionRequest(
+		"76710f1b-8231-42e5-b0d1-f43aac618e15", agentStudio.CompatibilityMode("ai-sdk-5"),
+		agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
+			[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+				agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))}))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	defer func() { _ = stream.Close() }()
+
+	for stream.Next() {
+		event := stream.Current()
+		if event.Err != nil {
+			// handle the eventual per-event deserialization error
+			continue
+		}
+
+		// >LOG
+		fmt.Println(*event.Data)
+	}
+
+	err = stream.Err()
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+	// SEPARATOR<
+}
+
+func SnippetForCreateAgentCompletionOfAgentStudio2() {
+	/*
+	   Snippet for the createAgentCompletion method.
+
+	   createAgentCompletion streaming with v5 messages and all query params
+	*/
+
+	// >SEPARATOR createAgentCompletion createAgentCompletion streaming with v5 messages and all query params
+	// Initialize the client
+	client, err := agentStudio.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Use the streaming variant to iterate over events
+	stream, err := client.CreateAgentCompletionStream(client.NewApiCreateAgentCompletionRequest(
+		"76710f1b-8231-42e5-b0d1-f43aac618e15", agentStudio.CompatibilityMode("ai-sdk-5"),
+		agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV5AsMessagesUnion(
+			[]agentStudio.MessageV5{*agentStudio.UserMessageV5AsMessageV5(
+				agentStudio.NewEmptyUserMessageV5().SetRole("user").SetParts(
+					[]agentStudio.TextPartV5{*agentStudio.NewEmptyTextPartV5().SetType("text").SetText("What is Algolia?")}))})).SetId("test-conversation-id")).WithStream(false).WithCache(false).WithMemory(false))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	defer func() { _ = stream.Close() }()
+
+	for stream.Next() {
+		event := stream.Current()
+		if event.Err != nil {
+			// handle the eventual per-event deserialization error
+			continue
+		}
+
+		// >LOG
+		fmt.Println(*event.Data)
+	}
+
+	err = stream.Err()
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+	// SEPARATOR<
+}
+
+func SnippetForCreateAgentCompletionOfAgentStudio3() {
+	/*
+	   Snippet for the createAgentCompletion method.
+
+	   createAgentCompletion streaming with test configuration
+	*/
+
+	// >SEPARATOR createAgentCompletion createAgentCompletion streaming with test configuration
+	// Initialize the client
+	client, err := agentStudio.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Use the streaming variant to iterate over events
+	stream, err := client.CreateAgentCompletionStream(client.NewApiCreateAgentCompletionRequest(
+		"76710f1b-8231-42e5-b0d1-f43aac618e15", agentStudio.CompatibilityMode("ai-sdk-5"),
+		agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
+			[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+				agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello"))})).SetConfiguration(
+			agentStudio.NewEmptyAgentTestConfiguration().
+				SetInstructions("Test instructions override").
+				SetConfig(map[string]any{"temperature": 0.2}).
+				SetTools(
+					[]agentStudio.ToolConfigInput{*agentStudio.AlgoliaDisplayResultsToolConfigAsToolConfigInput(
+						agentStudio.NewEmptyAlgoliaDisplayResultsToolConfig().SetType("start"))}),
+		),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	defer func() { _ = stream.Close() }()
+
+	for stream.Next() {
+		event := stream.Current()
+		if event.Err != nil {
+			// handle the eventual per-event deserialization error
+			continue
+		}
+
+		// >LOG
+		fmt.Println(*event.Data)
+	}
+
+	err = stream.Err()
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
 	// SEPARATOR<
 }
 

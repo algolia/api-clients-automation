@@ -13,6 +13,7 @@ export 'src/model/ab_tests_variant_search_params.dart';
 export 'src/model/add_ab_tests_request.dart';
 export 'src/model/create_metric.dart';
 export 'src/model/custom_search_params.dart';
+export 'src/model/decision.dart';
 export 'src/model/direction.dart';
 export 'src/model/effect_metric.dart';
 export 'src/model/empty_search_filter.dart';

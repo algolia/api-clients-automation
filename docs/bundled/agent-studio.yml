@@ -3421,10 +3421,10 @@ paths:
             }
 
 
-            // Call the API
+            // Use the streaming variant to iterate over events
 
-            response, err :=
-            client.CreateAgentCompletion(client.NewApiCreateAgentCompletionRequest(
+            stream, err :=
+            client.CreateAgentCompletionStream(client.NewApiCreateAgentCompletionRequest(
               "76710f1b-8231-42e5-b0d1-f43aac618e15", agentStudio.CompatibilityMode("ai-sdk-4"),
               agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
                 []agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
@@ -3435,10 +3435,27 @@ paths:
             }
 
 
+            defer func() { _ = stream.Close() }()
 
-            // print the response
 
-            print(response)
+            for stream.Next() {
+              event := stream.Current()
+              if event.Err != nil {
+                // handle the eventual per-event deserialization error
+                continue
+              }
+
+              
+              fmt.Println(*event.Data)
+            }
+
+
+            err = stream.Err()
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
         - lang: java
           label: Java
           source: >-
@@ -3470,8 +3487,6 @@ paths:
             const client = agentStudioClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
-
-            // Call the API
 
             // Use the streaming variant to iterate over events
 
@@ -3548,8 +3563,6 @@ paths:
             client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
-
-            # Call the API
 
             # Use the streaming variant to iterate over events
 
