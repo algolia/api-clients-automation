@@ -30,6 +30,8 @@ ABTest:
       $ref: '#/ABTestConfiguration'
     migratedAbTestID:
       $ref: '#/MigratedABTestId'
+    decision:
+      $ref: '#/Decision'
   required:
     - status
     - name
@@ -38,6 +40,25 @@ ABTest:
     - updatedAt
     - abTestID
     - variants
+
+Decision:
+  type: object
+  additionalProperties: false
+  description: |
+    Outcome of the A/B test once a winner has been declared.
+    Only present when a winning variant has been declared, so its presence indicates the test has been decided.
+  properties:
+    winnerVariantId:
+      type: integer
+      description: Identifier of the declared winning variant. The control variant is 1.
+      example: 2
+    declaredAt:
+      type: string
+      description: Date and time when the winning variant was declared, in RFC 3339 format.
+      example: 2026-06-16T00:00:00Z
+  required:
+    - winnerVariantId
+    - declaredAt
 
 Status:
   type: string
