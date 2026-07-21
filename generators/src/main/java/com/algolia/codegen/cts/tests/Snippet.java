@@ -59,7 +59,15 @@ public class Snippet {
       context.put("isAsyncMethod", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
       context.put("hasParams", ope.getHasParams());
       context.put("isHelper", (boolean) ope.vendorExtensions.getOrDefault("x-helper", false));
-      context.put("isStreaming", (boolean) ope.vendorExtensions.getOrDefault("x-streaming", false));
+
+      boolean isStreaming = (boolean) ope.vendorExtensions.getOrDefault("x-streaming", false);
+      context.put("isStreaming", isStreaming);
+      if (isStreaming) {
+        // Nested context overriding the suffix, for templates calling the
+        // typed streaming variant through the shared method partial.
+        context.put("typedStream", Map.of("streamMethodSuffix", "Stream"));
+      }
+
       context.put("hasRequestOptions", requestOptions != null);
 
       if (requestOptions != null) {

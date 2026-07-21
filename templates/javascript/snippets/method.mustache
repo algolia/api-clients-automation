@@ -18,8 +18,8 @@ export {{#isAsyncMethod}}async{{/isAsyncMethod}} function snippetFor{{#lambda.pa
   {{/hasRegionalHost}}
   {{> snippets/init}}
 
-  // Call the API
   {{^isStreaming}}
+  // Call the API
   {{#hasResponse}}const response = {{/hasResponse}}{{> tests/method}};
 
   // >LOG

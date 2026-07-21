@@ -178,6 +178,9 @@ public class TestsRequest extends TestsGenerator {
           if (isStreamingTest) {
             test.put("streamMethodSuffix", "StreamRaw");
             test.put("streamMethodSuffixSnake", "_stream_raw");
+            // Nested context overriding the suffix, for templates calling the
+            // typed streaming variant instead of the raw one.
+            test.put("typedStream", Map.of("streamMethodSuffix", "Stream"));
           }
 
           addRequestOptions(paramsType, req.requestOptions, test);

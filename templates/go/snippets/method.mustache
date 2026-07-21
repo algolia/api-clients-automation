@@ -18,18 +18,47 @@ func SnippetFor{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Of{{#lambda.p
     // Initialize the client{{#hasRegionalHost}} with your application region, eg. {{clientPrefix}}.ALGOLIA_APPLICATION_REGION{{/hasRegionalHost}}
     {{> snippets/init}}
 
+    {{^isStreaming}}
     // Call the API
     {{#hasResponse}}response, err :={{/hasResponse}}{{^hasResponse}}err ={{/hasResponse}} {{> tests/method}}
     if err != nil {
       // handle the eventual error
       panic(err)
     }
-    
+
     // >LOG
     {{#hasResponse}}
     // print the response
     print(response)
     {{/hasResponse}}
+    {{/isStreaming}}
+    {{#isStreaming}}
+    // Use the streaming variant to iterate over events
+    stream, err := {{#typedStream}}{{> tests/method}}{{/typedStream}}
+    if err != nil {
+      // handle the eventual error
+      panic(err)
+    }
+
+    defer func() { _ = stream.Close() }()
+
+    for stream.Next() {
+      event := stream.Current()
+      if event.Err != nil {
+        // handle the eventual per-event deserialization error
+        continue
+      }
+
+      // >LOG
+      fmt.Println(*event.Data)
+    }
+
+    err = stream.Err()
+    if err != nil {
+      // handle the eventual error
+      panic(err)
+    }
+    {{/isStreaming}}
     // SEPARATOR<
 }
 {{/snippets}}
