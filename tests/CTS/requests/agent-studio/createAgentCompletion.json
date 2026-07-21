@@ -59,7 +59,7 @@
         ]
       }
     },
-    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "ruby", "scala", "swift"]
+    "skipLanguages": ["csharp", "dart", "java", "kotlin", "php", "ruby", "scala", "swift"]
   },
   {
     "testName": "createAgentCompletion streaming with v5 messages and all query params",
@@ -109,7 +109,7 @@
         "id": "test-conversation-id"
       }
     },
-    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "ruby", "scala", "swift"]
+    "skipLanguages": ["csharp", "dart", "java", "kotlin", "php", "ruby", "scala", "swift"]
   },
   {
     "testName": "createAgentCompletion streaming with test configuration",
@@ -155,7 +155,7 @@
         }
       }
     },
-    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "ruby", "scala", "swift"]
+    "skipLanguages": ["csharp", "dart", "java", "kotlin", "php", "ruby", "scala", "swift"]
   },
   {
     "testName": "createAgentCompletion streaming raw events",
@@ -188,6 +188,6 @@
         ]
       }
     },
-    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "ruby", "scala", "swift"]
+    "skipLanguages": ["csharp", "dart", "java", "kotlin", "php", "ruby", "scala", "swift"]
   }
 ]

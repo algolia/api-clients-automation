@@ -63,11 +63,16 @@ public class Snippet {
       context.put("isAsyncMethod", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
       context.put("hasParams", ope.getHasParams());
       context.put("isHelper", (boolean) ope.vendorExtensions.getOrDefault("x-helper", false));
-      context.put("isStreaming", (boolean) ope.vendorExtensions.getOrDefault("x-streaming", false));
-      boolean useRawStream = raw != null && raw;
-      context.put("useRawStream", useRawStream);
-      context.put("streamMethodSuffix", useRawStream ? "StreamRaw" : "Stream");
-      context.put("streamMethodSuffixSnake", useRawStream ? "_stream_raw" : "_stream");
+
+      boolean isStreaming = (boolean) ope.vendorExtensions.getOrDefault("x-streaming", false);
+      context.put("isStreaming", isStreaming);
+      if (isStreaming) {
+        boolean useRawStream = raw != null && raw;
+        context.put("useRawStream", useRawStream);
+        context.put("streamMethodSuffix", useRawStream ? "StreamRaw" : "Stream");
+        context.put("streamMethodSuffixSnake", useRawStream ? "_stream_raw" : "_stream");
+      }
+
       context.put("hasRequestOptions", requestOptions != null);
 
       if (requestOptions != null) {

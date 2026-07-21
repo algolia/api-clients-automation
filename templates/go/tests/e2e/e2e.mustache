@@ -39,6 +39,7 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}E2E_{{#lambda
       t.Parallel()
 
       client := createE2E{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t)
+      {{^isStreamingTest}}
       res, err := {{> tests/method}}
       require.NoError(t, err)
       _ = res
@@ -64,6 +65,60 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}E2E_{{#lambda
       jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
       {{/body}}
       {{/response}}
+      {{/isStreamingTest}}
+      {{#isStreamingTest}}
+      stream, err := {{#typedStream}}{{> tests/method}}{{/typedStream}}
+      require.NoError(t, err)
+
+      defer func() { _ = stream.Close() }()
+
+      var events []any
+      {{#response}}
+      {{#body}}
+      var allData []any
+      {{/body}}
+      {{/response}}
+      for stream.Next() {
+        event := stream.Current()
+        events = append(events, event)
+        {{#response}}
+        {{#body}}
+        if event.Data != nil {
+          allData = append(allData, event.Data)
+        }
+        {{/body}}
+        {{/response}}
+      }
+      require.NoError(t, stream.Err())
+      require.NotEmpty(t, events)
+
+      {{#response}}
+      {{#body}}
+      {{! Like the Python e2e template, the expected body is compared against
+          the first parsed event. Revisit in every language if real streams
+          lead with a metadata frame instead of the payload of interest. }}
+      require.NotEmpty(t, allData)
+
+      rawBody, err := json.Marshal(allData[0])
+      require.NoError(t, err)
+
+      var rawBodyMap any
+      err = json.Unmarshal(rawBody, &rawBodyMap)
+      require.NoError(t, err)
+
+      expectedBodyRaw := `{{{.}}}`
+      var expectedBody any
+      err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+      require.NoError(t, err)
+
+      unionBody := tests.Union(t, expectedBody, rawBodyMap)
+      unionBodyRaw, err := json.Marshal(unionBody)
+      require.NoError(t, err)
+
+      jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
+      {{/body}}
+      {{/response}}
+      {{/isStreamingTest}}
     })
 {{/tests}}
 }

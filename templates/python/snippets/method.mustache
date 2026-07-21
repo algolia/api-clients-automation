@@ -16,8 +16,8 @@ def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{testIndex}
     # In an asynchronous context, you can use {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} instead, which exposes the exact same methods.
     {{> snippets/init}}
 
-    # Call the API 
     {{^isStreaming}}
+    # Call the API
     {{#hasResponse}}response = {{/hasResponse}}client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
 
     # >LOG

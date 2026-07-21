@@ -28,6 +28,10 @@ func main() {
 	// debug.Enable()
 
 	switch client {
+	case "agent-studio":
+		returnCode = testAgentStudio(appID, apiKey)
+	case "agent-studio-streaming":
+		returnCode = testAgentStudioStreaming(appID, apiKey)
 	case "ingestion":
 		returnCode = testIngestion(appID, apiKey)
 	case "search":
