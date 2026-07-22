@@ -16,6 +16,7 @@ import { assertValidReplaceAllObjects } from './testServer/replaceAllObjects.ts'
 import { assertValidReplaceAllObjectsFailed } from './testServer/replaceAllObjectsFailed.ts';
 import { assertValidReplaceAllObjectsScopes } from './testServer/replaceAllObjectsScopes.ts';
 import { assertValidReplaceAllObjectsWithTransformation } from './testServer/replaceAllObjectsWithTransformation.ts';
+import { assertValidRequestIds } from './testServer/requestId.ts';
 import { assertSuccessServerCalled } from './testServer/success.ts';
 import { assertValidTimeouts } from './testServer/timeout.ts';
 import { assertValidWaitForApiKey } from './testServer/waitFor.ts';
@@ -191,6 +192,7 @@ export async function runCts(
     assertValidReplaceAllObjects(languages.length - skip('dart'));
     assertValidReplaceAllObjectsWithTransformation(languages.length);
     assertValidAccountCopyIndex(only('javascript'));
+    assertValidRequestIds(only('javascript'));
     assertValidReplaceAllObjectsFailed(languages.length - skip('dart'));
     assertValidReplaceAllObjectsScopes(languages.length - skip('dart'));
     assertValidWaitForApiKey(languages.length - skip('dart'));
