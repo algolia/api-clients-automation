@@ -773,6 +773,9 @@ public <T> List<BatchResponse> chunkedBatch(
  * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit
  * in `batch` requests.
  *
+ * <p>{@code chunkedOptions.maxConcurrency} is honored; see
+ * {@link ChunkedHelperOptions#setMaxConcurrency(int)}.
+ *
  * @summary Helper: Chunks the given `objects` list in subset of 1000 elements max in order to
  *     make it fit in `batch` requests.
  * @param indexName - The `indexName` to replace `objects` in.
@@ -799,28 +802,13 @@ public <T> List<BatchResponse> chunkedBatch(
   ChunkedHelperOptions chunkedOptions
 ) {
   int maxRetries = chunkedOptions != null ? chunkedOptions.getMaxRetries() : TaskUtils.DEFAULT_MAX_RETRIES;
-  List<BatchResponse> responses = new ArrayList<>();
-  List<BatchRequest> requests = new ArrayList<>();
-
-  for (T item : objects) {
-    if (requests.size() == batchSize) {
-      BatchResponse batch = batch(indexName, new BatchWriteParams().setRequests(requests), requestOptions);
-      responses.add(batch);
-      requests.clear();
-    }
-
-    requests.add(new BatchRequest().setAction(action).setBody(item));
-  }
-
-  if (requests.size() > 0) {
-    BatchResponse batch = batch(indexName, new BatchWriteParams().setRequests(requests), requestOptions);
-    responses.add(batch);
-  }
-
+  List<BatchResponse> responses = LaunderThrowable.await(
+    chunkedBatchAsync(indexName, objects, action, batchSize, requestOptions, chunkedOptions)
+  );
   if (waitForTasks) {
-    responses.forEach(response -> waitForTask(indexName, response.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions));
+    responses.forEach(response ->
+      waitForTask(indexName, response.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions));
   }
-
   return responses;
 }
 
@@ -1075,7 +1063,7 @@ public List<BatchResponse> deleteObjects(String indexName, List<String> objectID
  *     the transporter requestOptions. (optional)
  */
 public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs, RequestOptions requestOptions) {
-  return deleteObjects(indexName, objectIDs, false, null);
+  return deleteObjects(indexName, objectIDs, false, requestOptions);
 }
 
 /**
@@ -1128,15 +1116,25 @@ public List<BatchResponse> deleteObjects(String indexName, List<String> objectID
  * @see ChunkedHelperOptions
  */
 public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs, boolean waitForTasks, int batchSize, RequestOptions requestOptions, ChunkedHelperOptions chunkedOptions) {
-  List<Map<String, String>> objects = new ArrayList<>();
+  return chunkedBatch(
+    indexName,
+    objectIDsToDeleteRequests(objectIDs),
+    Action.DELETE_OBJECT,
+    waitForTasks,
+    batchSize,
+    requestOptions,
+    chunkedOptions
+  );
+}
 
+private static List<Map<String, String>> objectIDsToDeleteRequests(List<String> objectIDs) {
+  List<Map<String, String>> objects = new ArrayList<>();
   for (String id : objectIDs) {
     Map<String, String> obj = new HashMap<>();
     obj.put("objectID", id);
     objects.add(obj);
   }
-
-  return chunkedBatch(indexName, objects, Action.DELETE_OBJECT, waitForTasks, batchSize, requestOptions, chunkedOptions);
+  return objects;
 }
 
 /**
@@ -1910,6 +1908,7 @@ public boolean indexExists(String indexName) {
   }
   return true;
 }
+{{> async_batch_helpers}}
 {{/isSearchClient}}
 {{#isAgentStudioClient}}
 {{> agent_studio_helpers}}
