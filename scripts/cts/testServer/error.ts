@@ -4,6 +4,7 @@ import { expect } from 'chai';
 import type express from 'express';
 
 import { setupServer } from './index.ts';
+import { SERVER_PORTS } from './ports.ts';
 
 const errorState: Record<string, { errorCount: number; maxError: number }> = {};
 const neverCalledState: Record<string, number> = {};
@@ -58,15 +59,15 @@ function addRoutes(app: express.Express): void {
 }
 
 export function errorServer(): Promise<Server> {
-  return setupServer('error', 6671, addRoutes);
+  return setupServer('error', SERVER_PORTS.error, addRoutes);
 }
 
 export function errorServerRetriedOnce(): Promise<Server> {
-  return setupServer('errorRetriedOnce', 6672, addRoutes);
+  return setupServer('errorRetriedOnce', SERVER_PORTS.errorRetriedOnce, addRoutes);
 }
 
 export function errorServerRetriedTwice(): Promise<Server> {
-  return setupServer('errorRetriedTwice', 6673, addRoutes);
+  return setupServer('errorRetriedTwice', SERVER_PORTS.errorRetriedTwice, addRoutes);
 }
 
 function addNeverCalledRoutes(app: express.Express): void {
@@ -87,5 +88,5 @@ function addNeverCalledRoutes(app: express.Express): void {
 }
 
 export function neverCalledServer(): Promise<Server> {
-  return setupServer('neverCalled', 6674, addNeverCalledRoutes);
+  return setupServer('neverCalled', SERVER_PORTS.neverCalled, addNeverCalledRoutes);
 }

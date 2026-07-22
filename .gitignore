@@ -17,6 +17,7 @@ debug.log
 .vscode/
 .idea/
 .fleet/
+.env.docker
 
 target
 **/.DS_Store

@@ -4,6 +4,7 @@ import { expect } from 'chai';
 import type { Express } from 'express';
 
 import { setupServer } from './index.ts';
+import { SERVER_PORTS } from './ports.ts';
 
 const retryCount: Record<
   string,
@@ -143,5 +144,5 @@ function addRoutes(app: Express): void {
 }
 
 export function waitForApiKeyServer(): Promise<Server> {
-  return setupServer('waitFor', 6681, addRoutes);
+  return setupServer('waitFor', SERVER_PORTS.waitFor, addRoutes);
 }

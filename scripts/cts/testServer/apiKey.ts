@@ -4,6 +4,7 @@ import { expect } from 'chai';
 import type { Express, Request, Response } from 'express';
 
 import { setupServer } from './index.ts';
+import { SERVER_PORTS } from './ports.ts';
 
 // Checks that the client sends a different API key after the first request.
 function addRoutes(app: Express): void {
@@ -30,5 +31,5 @@ function addRoutes(app: Express): void {
 }
 
 export function apiKeyServer(): Promise<Server> {
-  return setupServer('apiKey', 6683, addRoutes);
+  return setupServer('apiKey', SERVER_PORTS.apiKey, addRoutes);
 }

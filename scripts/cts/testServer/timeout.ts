@@ -4,6 +4,7 @@ import { expect } from 'chai';
 import type express from 'express';
 
 import { setupServer } from './index.ts';
+import { SERVER_PORTS } from './ports.ts';
 
 const timeoutState: Record<string, { timestamp: number[]; duration: number[]; hangCount: number }> = {};
 
@@ -114,5 +115,5 @@ function addRoutes(app: express.Express): void {
 }
 
 export function timeoutServer(): Promise<Server> {
-  return setupServer('timeout', 6676, addRoutes);
+  return setupServer('timeout', SERVER_PORTS.timeout, addRoutes);
 }

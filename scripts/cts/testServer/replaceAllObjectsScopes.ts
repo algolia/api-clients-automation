@@ -5,6 +5,7 @@ import type { Express } from 'express';
 import express from 'express';
 
 import { setupServer } from './index.ts';
+import { SERVER_PORTS } from './ports.ts';
 
 const raoState: Record<
   string,
@@ -118,5 +119,5 @@ function addRoutes(app: Express): void {
 export function replaceAllObjectsScopesServer(): Promise<Server> {
   // this server is used to simulate the responses for the replaceAllObjects method with partial scopes,
   // and uses a state machine to determine if the logic is correct.
-  return setupServer('replaceAllObjectsScopes', 6685, addRoutes);
+  return setupServer('replaceAllObjectsScopes', SERVER_PORTS.replaceAllObjectsScopes, addRoutes);
 }

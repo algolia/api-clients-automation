@@ -4,6 +4,7 @@ import { expect } from 'chai';
 import type express from 'express';
 
 import { setupServer } from './index.ts';
+import { SERVER_PORTS } from './ports.ts';
 
 const successState: Record<string, number> = {};
 
@@ -44,5 +45,5 @@ function addRoutes(app: express.Express): void {
 }
 
 export function successServer(): Promise<Server> {
-  return setupServer('success', 6675, addRoutes);
+  return setupServer('success', SERVER_PORTS.success, addRoutes);
 }

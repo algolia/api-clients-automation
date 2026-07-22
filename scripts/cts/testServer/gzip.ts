@@ -7,6 +7,7 @@ import type { Express } from 'express';
 import { retryHandler } from './timeout.ts';
 
 import { setupServer } from './index.ts';
+import { SERVER_PORTS } from './ports.ts';
 
 function addRoutes(app: Express): void {
   app.get('/1/test/retry/:lang', retryHandler(0, 'ok test server response'));
@@ -84,5 +85,5 @@ function addRoutes(app: Express): void {
 }
 
 export function gzipServer(): Promise<Server> {
-  return setupServer('gzip', 6678, addRoutes);
+  return setupServer('gzip', SERVER_PORTS.gzip, addRoutes);
 }

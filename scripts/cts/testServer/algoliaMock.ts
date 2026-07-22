@@ -3,6 +3,7 @@ import type { Server } from 'http';
 import type { Express, Request, Response } from 'express';
 
 import { setupServer } from './index.ts';
+import { SERVER_PORTS } from './ports.ts';
 
 // Checks that the client sends a different API key after the first request.
 function addRoutes(app: Express): void {
@@ -93,5 +94,5 @@ function addRoutes(app: Express): void {
 }
 
 export function algoliaMockServer(): Promise<Server> {
-  return setupServer('algoliaMock', 6686, addRoutes);
+  return setupServer('algoliaMock', SERVER_PORTS.algoliaMock, addRoutes);
 }
