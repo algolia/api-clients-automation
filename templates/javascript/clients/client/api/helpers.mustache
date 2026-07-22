@@ -20,6 +20,7 @@ waitForTask(
   }: WaitForTaskOptions,
   requestOptions?: RequestOptions | undefined
 ): Promise<GetTaskResponse> {
+  requestOptions = withRequestId(transporter, requestOptions);
   let retryCount = 0;
 
   return createIterablePromise({
@@ -54,6 +55,7 @@ waitForAppTask(
   }: WaitForAppTaskOptions,
   requestOptions?: RequestOptions | undefined
 ): Promise<GetTaskResponse> {
+  requestOptions = withRequestId(transporter, requestOptions);
   let retryCount = 0;
 
   return createIterablePromise({
@@ -92,6 +94,7 @@ waitForApiKey(
   }: WaitForApiKeyOptions,
   requestOptions?: RequestOptions | undefined
 ): Promise<GetApiKeyResponse | undefined> {
+  requestOptions = withRequestId(transporter, requestOptions);
   let retryCount = 0;
   const baseIteratorOptions: IterableOptions<
     GetApiKeyResponse | undefined
@@ -169,6 +172,8 @@ browseObjects<T>(
   }: BrowseOptions<BrowseResponse<T>> & BrowseProps,
   requestOptions?: RequestOptions | undefined
 ): Promise<BrowseResponse<T>> {
+  requestOptions = withRequestId(transporter, requestOptions);
+
   return createIterablePromise<BrowseResponse<T>>({
     func: (previousResponse) => {
       return this.browse(
@@ -207,6 +212,7 @@ browseRules(
   }: BrowseOptions<SearchRulesResponse> & SearchRulesProps,
   requestOptions?: RequestOptions | undefined
 ): Promise<SearchRulesResponse> {
+  requestOptions = withRequestId(transporter, requestOptions);
   const params = {
     ...searchRulesParams,
     hitsPerPage: searchRulesParams?.hitsPerPage || 1000,
@@ -251,6 +257,7 @@ browseSynonyms(
   }: BrowseOptions<SearchSynonymsResponse> & SearchSynonymsProps,
   requestOptions?: RequestOptions | undefined
 ): Promise<SearchSynonymsResponse> {
+  requestOptions = withRequestId(transporter, requestOptions);
   const params = {
     ...searchSynonymsParams,
     page: searchSynonymsParams?.page || 0,
@@ -291,6 +298,7 @@ browseSynonyms(
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
  */
 async chunkedBatch({ indexName, objects, action = 'addObject', waitForTasks, batchSize = 1000, maxRetries = 100 }: ChunkedBatchOptions, requestOptions?: RequestOptions): Promise<Array<BatchResponse>> {
+  requestOptions = withRequestId(transporter, requestOptions);
   let requests: Array<BatchRequest> = [];
   const responses: Array<BatchResponse> = [];
 
@@ -305,7 +313,7 @@ async chunkedBatch({ indexName, objects, action = 'addObject', waitForTasks, bat
 
   if (waitForTasks) {
     for (const resp of responses) {
-      await this.waitForTask({indexName, taskID: resp.taskID, maxRetries});
+      await this.waitForTask({indexName, taskID: resp.taskID, maxRetries}, requestOptions);
     }
   }
 
@@ -414,6 +422,8 @@ async replaceAllObjects(
   { indexName, objects, batchSize, scopes, maxRetries = DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES }: ReplaceAllObjectsOptions,
   requestOptions?: RequestOptions | undefined
 ): Promise<ReplaceAllObjectsResponse> {
+  requestOptions = withRequestId(transporter, requestOptions);
+
   if (objects.length === 0) {
     logWarning(transporter.logger, `replaceAllObjects was called with an empty list of objects, which will delete all records currently in the "${indexName}" index.`);
   }
@@ -447,7 +457,7 @@ async replaceAllObjects(
       indexName: tmpIndexName,
       taskID: copyOperationResponse.taskID,
       maxRetries,
-    });
+    }, requestOptions);
 
     copyOperationResponse = await this.operationIndex(
       {
@@ -464,7 +474,7 @@ async replaceAllObjects(
       indexName: tmpIndexName,
       taskID: copyOperationResponse.taskID,
       maxRetries,
-    });
+    }, requestOptions);
 
     const moveOperationResponse = await this.operationIndex(
       {
@@ -477,11 +487,11 @@ async replaceAllObjects(
       indexName: tmpIndexName,
       taskID: moveOperationResponse.taskID,
       maxRetries,
-    });
+    }, requestOptions);
 
     return { copyOperationResponse, batchResponses, moveOperationResponse };
   } catch (error) {
-    await this.deleteIndex({ indexName: tmpIndexName });
+    await this.deleteIndex({ indexName: tmpIndexName }, requestOptions);
 
     throw error;
   }
