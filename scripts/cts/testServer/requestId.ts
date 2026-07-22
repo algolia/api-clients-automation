@@ -58,7 +58,7 @@ export function assertValidRequestIds(expectedCount: number): void {
   for (const [lang, ids] of Object.entries(helperState)) {
     const suites = lang === 'python' ? 2 : 1;
 
-    // one chunkedBatch call = 2 batch requests + 2 task polls
+    // one saveObjects call = 2 batch requests + 2 task polls
     expect(ids).to.have.length(4 * suites);
     for (let i = 0; i < suites; i++) {
       const helperRun = ids.slice(4 * i, 4 * i + 4);
