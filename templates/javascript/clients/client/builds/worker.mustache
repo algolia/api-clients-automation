@@ -24,6 +24,9 @@ export type {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} = ReturnTyp
       logger: createNullLogger(),
       requester: createFetchRequester(),
       algoliaAgents: [{ segment: 'Worker' }],
+      {{#requestIdSupport}}
+      requestIdChannel: 'queryParameters',
+      {{/requestIdSupport}}
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),
