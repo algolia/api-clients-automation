@@ -443,6 +443,7 @@ export function createTransporter({
     algoliaAgent,
     baseHeaders,
     baseQueryParameters,
+    requestIdChannel,
     hosts,
     request: createRequest,
     requestWithHttpInfo: createRequestWithHttpInfo,
