@@ -364,6 +364,47 @@ func SnippetForCreateAgentCompletionOfAgentStudio3() {
 	// SEPARATOR<
 }
 
+func SnippetForCreateAgentCompletionOfAgentStudio4() {
+	/*
+	   Snippet for the createAgentCompletion method.
+
+	   createAgentCompletion streaming raw events
+	*/
+
+	// >SEPARATOR createAgentCompletion createAgentCompletion streaming raw events
+	// Initialize the client
+	client, err := agentStudio.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Use the raw streaming variant to access the unparsed server-sent events
+	decoder, err := client.CreateAgentCompletionStreamRaw(client.NewApiCreateAgentCompletionRequest(
+		"76710f1b-8231-42e5-b0d1-f43aac618e15", agentStudio.CompatibilityMode("ai-sdk-5"),
+		agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
+			[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+				agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))}))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	defer func() { _ = decoder.Close() }()
+
+	for decoder.Next() {
+		// >LOG
+		fmt.Println(string(decoder.Event().Data))
+	}
+
+	err = decoder.Err()
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+	// SEPARATOR<
+}
+
 func SnippetForCreateFeedbackOfAgentStudio() {
 	/*
 	   Snippet for the createFeedback method.
