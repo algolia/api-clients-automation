@@ -71,6 +71,8 @@ public class Snippet {
         context.put("useRawStream", useRawStream);
         context.put("streamMethodSuffix", useRawStream ? "StreamRaw" : "Stream");
         context.put("streamMethodSuffixSnake", useRawStream ? "_stream_raw" : "_stream");
+      } else if (raw != null) {
+        throw new CTSException("`raw` is only valid on streaming operations, remove it from the snippet '" + testName + "' of " + method);
       }
 
       context.put("hasRequestOptions", requestOptions != null);
