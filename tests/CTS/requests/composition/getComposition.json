@@ -7,5 +7,31 @@
       "path": "/1/compositions/foo",
       "method": "GET"
     }
+  },
+  {
+    "testName": "the Correlation-ID ends with the sent Request-ID",
+    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "python", "ruby", "scala", "swift"],
+    "parameters": {
+      "compositionID": "id1"
+    },
+    "requestOptions": {
+      "headers": {
+        "request-id": "CtsE2eEcho4"
+      }
+    },
+    "request": {
+      "path": "/1/compositions/id1",
+      "method": "GET",
+      "headers": {
+        "request-id": "CtsE2eEcho4"
+      }
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "objectID": "id1"
+      },
+      "correlationIdSuffix": "CtsE2eEcho4"
+    }
   }
 ]
