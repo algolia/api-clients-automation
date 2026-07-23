@@ -36,6 +36,9 @@ export function generateSnippetsJSON(codeSamples: CodeSamples): CodeSamples {
           /.*Initialize the client.*([\s\S]*?)(#|\/\/) Call the API([\s\S]*?)(#|\/\/) >LOG/,
         );
         if (!sampleMatch) {
+          // snippets without a `Call the API` section (e.g. streaming) are kept
+          // whole, but the `>LOG` markers still must not reach the doc
+          codeSamples[language][operation][sampleName] = sample.replace(/^[ \t]*(#|\/\/) >LOG\n/gm, '');
           continue;
         }
 
