@@ -29,8 +29,13 @@ export {{#isAsyncMethod}}async{{/isAsyncMethod}} function snippetFor{{#lambda.pa
   {{/hasResponse}}
   {{/isStreaming}}
   {{#isStreaming}}
+  {{#useRawStream}}
+  // Use the raw streaming variant to access the unparsed server-sent events
+  {{/useRawStream}}
+  {{^useRawStream}}
   // Use the streaming variant to iterate over events
-  for await (const event of client.{{method}}Stream({{#hasParams}}{{#parametersWithDataType.size}}{{{parameters}}}{{/parametersWithDataType.size}}{{/hasParams}}{{#hasRequestOptions}}, {
+  {{/useRawStream}}
+  for await (const event of client.{{method}}{{streamMethodSuffix}}({{#hasParams}}{{#parametersWithDataType.size}}{{{parameters}}}{{/parametersWithDataType.size}}{{/hasParams}}{{#hasRequestOptions}}, {
     {{#requestOptions.queryParameters.parameters}}
       queryParameters: {{{.}}},
     {{/requestOptions.queryParameters.parameters}}

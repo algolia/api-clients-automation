@@ -156,5 +156,38 @@
       }
     },
     "skipLanguages": ["csharp", "dart", "java", "kotlin", "php", "ruby", "scala", "swift"]
+  },
+  {
+    "testName": "createAgentCompletion streaming raw events",
+    "isStreaming": true,
+    "raw": true,
+    "parameters": {
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      "compatibilityMode": "ai-sdk-5",
+      "agentCompletionRequest": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Hello, how are you?"
+          }
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions",
+      "method": "POST",
+      "queryParameters": {
+        "compatibilityMode": "ai-sdk-5"
+      },
+      "body": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Hello, how are you?"
+          }
+        ]
+      }
+    },
+    "skipLanguages": ["csharp", "dart", "java", "kotlin", "php", "ruby", "scala", "swift"]
   }
 ]

@@ -33,8 +33,30 @@ func SnippetFor{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Of{{#lambda.p
     {{/hasResponse}}
     {{/isStreaming}}
     {{#isStreaming}}
+    {{#useRawStream}}
+    // Use the raw streaming variant to access the unparsed server-sent events
+    decoder, err := {{> tests/method}}
+    if err != nil {
+      // handle the eventual error
+      panic(err)
+    }
+
+    defer func() { _ = decoder.Close() }()
+
+    for decoder.Next() {
+      // >LOG
+      fmt.Println(string(decoder.Event().Data))
+    }
+
+    err = decoder.Err()
+    if err != nil {
+      // handle the eventual error
+      panic(err)
+    }
+    {{/useRawStream}}
+    {{^useRawStream}}
     // Use the streaming variant to iterate over events
-    stream, err := {{#typedStream}}{{> tests/method}}{{/typedStream}}
+    stream, err := {{> tests/method}}
     if err != nil {
       // handle the eventual error
       panic(err)
@@ -58,6 +80,7 @@ func SnippetFor{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Of{{#lambda.p
       // handle the eventual error
       panic(err)
     }
+    {{/useRawStream}}
     {{/isStreaming}}
     // SEPARATOR<
 }
