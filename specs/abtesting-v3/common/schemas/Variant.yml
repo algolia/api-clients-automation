@@ -130,7 +130,7 @@ bayesianMetricResult:
     Bayesian inference results for this variant metric.
     Absent when Bayesian inference isn't available for this metric.
   properties:
-    p2bb:
+    probabilityToBeBetter:
       type: number
       format: double
       description: Probability that this variant is better than the control.
