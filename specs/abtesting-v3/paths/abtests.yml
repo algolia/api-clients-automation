@@ -104,6 +104,7 @@ get:
       example: desc
       schema:
         $ref: '../common/parameters.yml#/direction'
+    - $ref: '../common/parameters.yml#/methods'
   responses:
     '200':
       description: OK
