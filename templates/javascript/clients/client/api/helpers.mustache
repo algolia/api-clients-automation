@@ -497,9 +497,9 @@ async replaceAllObjects(
   }
 },
 
-async indexExists({ indexName }: GetSettingsProps): Promise<boolean> {
+async indexExists({ indexName }: GetSettingsProps, requestOptions?: RequestOptions | undefined): Promise<boolean> {
   try {
-    await this.getSettings({ indexName });
+    await this.getSettings({ indexName }, requestOptions);
   } catch (error) {
     if (error instanceof ApiError && error.status === 404) {
       return false;
