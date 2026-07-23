@@ -163,3 +163,25 @@ direction:
     - asc
     - desc
   example: desc
+
+AnalysisMethod:
+  type: string
+  description: A/B test statistical analysis method.
+  enum:
+    - bayesian
+    - frequentist
+
+methods:
+  name: methods
+  in: query
+  description: |
+    Inferential methods to return in the response.
+    If omitted, the API returns fields for the test's selected method only.
+  required: false
+  style: form
+  explode: false
+  schema:
+    type: array
+    items:
+      $ref: '#/AnalysisMethod'
+    example: frequentist,bayesian

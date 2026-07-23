@@ -66,6 +66,12 @@ ABTestConfiguration:
       $ref: '#/MetricsFilters'
     errorCorrection:
       $ref: '#/ErrorCorrectionType'
+    method:
+      $ref: '../parameters.yml#/AnalysisMethod'
+    primaryMetric:
+      type: string
+      description: Public metric name that drives the Bayesian end-test recommendation. Only relevant when `method` is `bayesian`.
+      example: conversionRate
 
 MinimumDetectableEffect:
   type: object

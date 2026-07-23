@@ -95,6 +95,8 @@ metricResult:
       type: boolean
       description: |
         Whether the pValue is significant or not based on the critical value and the error correction algorithm used.
+    bayesian:
+      $ref: '#/bayesianMetricResult'
   required:
     - name
     - updatedAt
@@ -121,6 +123,28 @@ metricResult:
       value: 999.66
       pValue: 0.04
       metadata: {'winsorizedValue': 888.8}
+
+bayesianMetricResult:
+  type: object
+  description: |
+    Bayesian inference results for this variant metric.
+    Absent when Bayesian inference isn't available for this metric.
+  properties:
+    probabilityToBeBetter:
+      type: number
+      format: double
+      description: Probability that this variant is better than the control.
+      example: 0.991
+    relativeEffectCILow:
+      type: number
+      format: double
+      description: Lower bound of the 95% credible interval for the relative effect (variant/control minus 1).
+      example: 0.04
+    relativeEffectCIHigh:
+      type: number
+      format: double
+      description: Upper bound of the 95% credible interval for the relative effect (variant/control minus 1).
+      example: 0.39
 
 variantMetadata:
   type: object

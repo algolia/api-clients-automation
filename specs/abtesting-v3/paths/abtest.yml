@@ -8,6 +8,7 @@ get:
   description: Retrieves the details for an A/B test by its ID.
   parameters:
     - $ref: '../common/parameters.yml#/ID'
+    - $ref: '../common/parameters.yml#/methods'
   responses:
     '200':
       description: OK
