@@ -1,0 +1,18 @@
+[
+  {
+    "testName": "set minimal parameters",
+    "parameters": {
+      "indexName": "cts_e2e_settings",
+      "semanticSearchSettings": {
+        "neuralSearchPreset": "default"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/cts_e2e_settings/semanticSearch/settings",
+      "method": "PUT",
+      "body": {
+        "neuralSearchPreset": "default"
+      }
+    }
+  }
+]

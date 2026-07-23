@@ -1,0 +1,96 @@
+SemanticSearchSettings:
+  type: object
+  description: Configuration for the NeuralSearch Semantic Settings API.
+  properties:
+    neuralSearchMode:
+      $ref: '../../common/enums.yml#/neuralSearchMode'
+    eventSources:
+      type: array
+      items:
+        type: string
+      description: |
+        Indices to use as event sources for training.
+        Defaults to the current index if not provided.
+    neuralExpression:
+      type: object
+      description: |
+        Key-value pairs of record attributes and their weights used in the vectorization process.
+        Generated automatically during training.
+      additionalProperties:
+        type: number
+        format: float
+      example:
+        brand: 0.587878
+        category: 0.683043
+        description: 0.39828
+        name: 1
+    vectorModelId:
+      type: string
+      description: The language model used to generate embeddings. Set automatically during training.
+      example: "external://algolia-large-multilang-generic-v2410"
+    neuralSearchPreset:
+      $ref: '../../common/enums.yml#/neuralSearchPreset'
+    semanticBlendWeight:
+      type: number
+      format: float
+      minimum: 0.0001
+      maximum: 0.999
+      default: 0.2
+      description: |
+        Relative weight given to semantic results when blending with keyword results.
+        Only use with the `custom` preset.
+    minHitsForSemantic:
+      type: integer
+      minimum: 0
+      maximum: 20
+      default: 0
+      description: |
+        Minimum number of keyword results required before semantic results are included.
+        Only use with the `custom` preset.
+    enableNeuralSearchSortBy:
+      type: boolean
+      default: true
+      description: |
+        When `true`, your index's ranking and sorting settings apply to the full NeuralSearch result set.
+        When `false`, semantic results are ranked by similarity score only.
+        Only use with the `custom` preset.
+    dynamicThreshold:
+      $ref: '#/DynamicThreshold'
+    usePositionalSemanticRanking:
+      type: boolean
+      default: false
+      description: |
+        When `true`, vector results are ranked using Algolia's standard tie-breaking algorithm rather than cosine similarity alone.
+        Enables custom ranking attributes, optional filters, and geo distance for semantic results.
+
+DynamicThreshold:
+  type: object
+  description: |
+    Configures Semantic Precision filtering. Filters low-quality vector results using a dynamically
+    calculated relevance threshold at query time.
+  properties:
+    enabled:
+      type: boolean
+      description: Enables or disables Semantic Precision filtering.
+    aggression:
+      type: number
+      format: float
+      default: 0.3
+      description: |
+        Controls filtering strictness. Lower values keep more results; higher values filter more aggressively.
+        Formula: `threshold = mean - (aggression * stddev)`.
+    upperLimit:
+      type: number
+      format: float
+      default: 0.85
+      description: Maximum cosine similarity threshold. Prevents over-filtering on high-confidence queries.
+    lowerLimit:
+      type: number
+      format: float
+      default: 0.64
+      description: Minimum cosine similarity threshold. Prevents the threshold from dropping too low.
+  example:
+    enabled: true
+    aggression: 0.3
+    upperLimit: 0.85
+    lowerLimit: 0.64
