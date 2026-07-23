@@ -51,6 +51,9 @@ public class Snippet {
     context.put("parameters", null);
     context.put("parametersWithDataType", null);
     context.put("parametersWithDataTypeMap", null);
+    context.put("useRawStream", false);
+    context.put("streamMethodSuffix", null);
+    context.put("streamMethodSuffixSnake", null);
 
     if (ope.returnType != null && ope.returnType.length() > 0) {
       context.put("returnType", camelize(ope.returnType));
