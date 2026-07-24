@@ -22,10 +22,27 @@ const aciState: Record<
   }
 > = {};
 
+const aciRequestIds: Record<string, string[]> = {};
+
+// languages that have ported Request-ID support (API-516)
+const hasRequestIdSupport = (lang: string) => {
+  return lang === 'javascript';
+};
+
 export function assertValidAccountCopyIndex(expectedCount: number): void {
   expect(Object.keys(aciState)).to.have.length(expectedCount);
   for (const lang in aciState) {
     expect(aciState[lang].waitTaskCount).to.equal(5);
+
+    if (hasRequestIdSupport(lang)) {
+      const requestIds = aciRequestIds[lang] ?? [];
+      expect(requestIds).to.not.be.empty;
+      expect(requestIds[0]).to.match(/^[0-9A-Za-z]{11}$/);
+      expect(new Set(requestIds).size).to.equal(
+        1,
+        `every accountCopyIndex request on both applications must share one Request-ID for ${lang}`,
+      );
+    }
   }
 }
 
@@ -36,6 +53,14 @@ function addRoutes(app: Express): void {
       type: ['application/json', 'text/plain'], // the js client sends the body as text/plain
     }),
   );
+
+  app.use((req, _res, next) => {
+    const lang = req.url.match(/cts_e2e_account_copy_index_(?:source|destination)_([^/?]+)/)?.[1];
+    if (lang) {
+      (aciRequestIds[lang] ??= []).push((req.headers['request-id'] as string) ?? '');
+    }
+    next();
+  });
 
   app.get('/1/indexes/:indexName/settings', (req, res) => {
     const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_(source|destination)_(.*)$/)?.[2] as string;

@@ -75,6 +75,7 @@ public class SnippetsGenerator extends TestsGenerator {
             }
 
             Snippet newSnippet = new Snippet(step.method, test.testName, step.parameters, step.requestOptions);
+            newSnippet.skipLanguages = test.skipLanguages;
             Snippet[] existing = snippets.get(step.method);
             if (existing == null) {
               snippets.put(step.method, new Snippet[] { newSnippet });

@@ -29,6 +29,16 @@ describe('{{operationId}}', () => {
 
     expect(expectedBody).toEqual(union(expectedBody, resp));
     {{/body}}
+    {{#correlationIdSuffix}}
+    const httpResp = await client.transporter.requestWithHttpInfo({ method: '{{{request.method}}}', path: '{{{request.path}}}', queryParameters: {}, headers: {} }{{#hasRequestOptions}}, {
+      {{#requestOptions.headers.parameters}}
+      headers: {{{.}}},
+      {{/requestOptions.headers.parameters}}
+    }{{/hasRequestOptions}});
+
+    expect(httpResp.headers?.['correlation-id']).toBeDefined();
+    expect(httpResp.headers?.['correlation-id']?.endsWith('{{{correlationIdSuffix}}}')).toBe(true);
+    {{/correlationIdSuffix}}
     {{/response}}
   });
   {{/isStreamingTest}}
