@@ -33,9 +33,21 @@ function createRecordingRequester(): { requester: Requester; requests: EndReques
     requester: {
       send(request: EndRequest) {
         requests.push(request);
-        const content = request.url.includes('/task/')
-          ? JSON.stringify({ status: 'published', updatedAt: '2026-01-01T00:00:00Z' })
-          : JSON.stringify({ taskID: 42, objectIDs: [], updatedAt: '2026-01-01T00:00:00Z' });
+        let content = JSON.stringify({ taskID: 42, objectIDs: [], updatedAt: '2026-01-01T00:00:00Z' });
+        if (request.url.includes('/task/')) {
+          content = JSON.stringify({ status: 'published', updatedAt: '2026-01-01T00:00:00Z' });
+        } else if (request.url.includes('/push/')) {
+          content = JSON.stringify({ runID: 'run-1', eventID: 'event-1', message: 'pushed' });
+        } else if (request.url.includes('/events/')) {
+          content = JSON.stringify({
+            eventID: 'event-1',
+            runID: 'run-1',
+            status: 'succeeded',
+            type: 'record',
+            batchSize: 1,
+            publishedAt: '2026-01-01T00:00:00Z',
+          });
+        }
 
         return Promise.resolve({ content, isTimedOut: false, status: 200 });
       },
@@ -66,6 +78,32 @@ test('replaceAllObjects shares one request-id across copy, batch, wait and move'
   const ids = requests.map((request) => request.headers['request-id']);
   expect(ids[0]).toMatch(/^[0-9A-Za-z]{11}$/);
   expect(new Set(ids).size).toBe(1);
+});
+
+test('replaceAllObjectsWithTransformation shares one request-id across its search calls and sends none to ingestion', async () => {
+  const { requester, requests } = createRecordingRequester();
+  const client = algoliasearch('APP_ID', 'API_KEY', {
+    requester,
+    transformationOptions: { region: 'eu', requester },
+  });
+
+  await client.replaceAllObjectsWithTransformation({ indexName: 'foo', objects: [{ objectID: '1' }] });
+
+  const searchRequests = requests.filter((request) => request.url.includes('algolia.net'));
+  const ingestionRequests = requests.filter((request) => request.url.includes('data.eu.algolia.com'));
+
+  expect(requests).toHaveLength(8);
+  expect(searchRequests).toHaveLength(6);
+  expect(ingestionRequests).toHaveLength(2);
+
+  const searchIds = searchRequests.map((request) => request.headers['request-id']);
+  expect(searchIds[0]).toMatch(/^[0-9A-Za-z]{11}$/);
+  expect(new Set(searchIds).size).toBe(1);
+
+  for (const request of ingestionRequests) {
+    expect(request.headers['request-id']).toBeUndefined();
+    expect(new URL(request.url).searchParams.get('x-algolia-request-id')).toBeNull();
+  }
 });
 
 test('each helper invocation mints a fresh request-id', async () => {
