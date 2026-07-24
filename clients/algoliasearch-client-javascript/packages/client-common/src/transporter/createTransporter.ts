@@ -53,7 +53,7 @@ export function createTransporter({
     if (
       requestIdChannel === undefined ||
       headers['request-id'] !== undefined ||
-      queryParameters['x-algolia-request-id'] !== undefined
+      Object.keys(queryParameters).some((parameter) => parameter.toLowerCase() === 'x-algolia-request-id')
     ) {
       return;
     }

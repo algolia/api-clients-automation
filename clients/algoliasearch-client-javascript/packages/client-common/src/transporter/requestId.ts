@@ -26,7 +26,8 @@ export function generateRequestId(): string {
 function hasRequestId(headers: Headers | undefined, queryParameters: QueryParameters | undefined): boolean {
   return (
     (headers !== undefined && Object.keys(headers).some((header) => header.toLowerCase() === 'request-id')) ||
-    queryParameters?.['x-algolia-request-id'] !== undefined
+    (queryParameters !== undefined &&
+      Object.keys(queryParameters).some((parameter) => parameter.toLowerCase() === 'x-algolia-request-id'))
   );
 }
 
