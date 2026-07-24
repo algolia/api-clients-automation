@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { createMemoryCache, createNullCache } from '../../cache';
 import { createNullLogger } from '../../logger';
-import { ApiError, DetailedApiError, RetryError, createTransporter } from '../../transporter';
+import { ApiError, DeserializationError, DetailedApiError, RetryError, createTransporter } from '../../transporter';
 import type { AlgoliaAgent, Requester, Transporter } from '../../types';
 
 describe('correlation ID on errors', () => {
@@ -182,6 +182,46 @@ describe('correlation ID on errors', () => {
     );
 
     expect(error).toBeInstanceOf(RetryError);
+    expect(error.correlationId).toBeUndefined();
+    expect(error.message).not.toContain('Correlation-ID');
+  });
+
+  test('surfaces the correlation ID when a successful response body fails to parse', async () => {
+    const transporter = createTestTransporter({
+      send: async () => ({
+        status: 200,
+        content: 'not json',
+        headers: { 'correlation-id': 'abc123def45' },
+        isTimedOut: false,
+      }),
+    });
+
+    const error: DeserializationError = await transporter.request(request).then(
+      () => Promise.reject(new Error('should have thrown')),
+      (err) => err,
+    );
+
+    expect(error).toBeInstanceOf(DeserializationError);
+    expect(error.correlationId).toBe('abc123def45');
+    expect(error.message).toContain('(Correlation-ID: abc123def45)');
+  });
+
+  test('omits the correlation ID from a parse failure when the header is absent', async () => {
+    const transporter = createTestTransporter({
+      send: async () => ({
+        status: 200,
+        content: 'not json',
+        headers: {},
+        isTimedOut: false,
+      }),
+    });
+
+    const error: DeserializationError = await transporter.request(request).then(
+      () => Promise.reject(new Error('should have thrown')),
+      (err) => err,
+    );
+
+    expect(error).toBeInstanceOf(DeserializationError);
     expect(error.correlationId).toBeUndefined();
     expect(error.message).not.toContain('Correlation-ID');
   });

@@ -154,6 +154,25 @@ describe('request ID channel', () => {
     expect(requests[0].headers['request-id']).toBeUndefined();
   });
 
+  test('never mints when the caller supplied a query parameter, even on the headers channel', async () => {
+    const { requester, requests } = createEchoRequester();
+    const transporter = createTestTransporter(requester, { requestIdChannel: 'headers' });
+
+    await transporter.request(request, { queryParameters: { 'x-algolia-request-id': 'callerSuppl1' } });
+
+    expect(requests[0].headers['request-id']).toBeUndefined();
+    expect(sentQueryParameterId(requests[0])).toBe('callerSuppl1');
+  });
+
+  test('detects a caller-supplied query parameter case-insensitively on the headers channel', async () => {
+    const { requester, requests } = createEchoRequester();
+    const transporter = createTestTransporter(requester, { requestIdChannel: 'headers' });
+
+    await transporter.request(request, { queryParameters: { 'X-Algolia-Request-Id': 'callerSuppl1' } });
+
+    expect(requests[0].headers['request-id']).toBeUndefined();
+  });
+
   test('leaves the cache key unchanged so cacheable calls still hit the cache', async () => {
     const { requester, requests } = createEchoRequester();
     const transporter = createTestTransporter(requester, { requestIdChannel: 'queryParameters' });
