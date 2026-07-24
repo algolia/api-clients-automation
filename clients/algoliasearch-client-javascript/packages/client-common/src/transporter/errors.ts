@@ -72,9 +72,12 @@ export class ApiError extends ErrorWithStackTrace {
 export class DeserializationError extends AlgoliaError {
   response: Response;
 
-  constructor(message: string, response: Response) {
-    super(message, 'DeserializationError');
+  correlationId?: string | undefined;
+
+  constructor(message: string, response: Response, correlationId?: string | undefined) {
+    super(correlationId ? `${message} (Correlation-ID: ${correlationId})` : message, 'DeserializationError');
     this.response = response;
+    this.correlationId = correlationId;
   }
 }
 
