@@ -195,6 +195,25 @@ export async function snippetForCreateAgentCompletion3(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the createAgentCompletion method.
+//
+// createAgentCompletion streaming raw events
+export async function snippetForCreateAgentCompletion4(): Promise<void> {
+  // >SEPARATOR createAgentCompletion createAgentCompletion streaming raw events
+  // Initialize the client
+  const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Use the raw streaming variant to access the unparsed server-sent events
+  for await (const event of client.createAgentCompletionStreamRaw({
+    agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
+    compatibilityMode: 'ai-sdk-5',
+    agentCompletionRequest: { messages: [{ role: 'user', content: 'Hello, how are you?' }] },
+  })) {
+    console.log(event.data);
+  }
+  // SEPARATOR<
+}
+
 // Snippet for the createFeedback method.
 //
 // createFeedback with required parameters
