@@ -2,18 +2,7 @@
   {
     "testName": "the Request-ID stays stable across retries",
     "autoCreateClient": false,
-    "skipLanguages": [
-      "csharp",
-      "dart",
-      "go",
-      "java",
-      "kotlin",
-      "php",
-      "python",
-      "ruby",
-      "scala",
-      "swift"
-    ],
+    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "python", "ruby", "scala", "swift"],
     "steps": [
       {
         "type": "createClient",
@@ -51,18 +40,7 @@
   {
     "testName": "each call mints a fresh Request-ID",
     "autoCreateClient": false,
-    "skipLanguages": [
-      "csharp",
-      "dart",
-      "go",
-      "java",
-      "kotlin",
-      "php",
-      "python",
-      "ruby",
-      "scala",
-      "swift"
-    ],
+    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "python", "ruby", "scala", "swift"],
     "steps": [
       {
         "type": "createClient",
@@ -107,18 +85,7 @@
   {
     "testName": "a caller-supplied Request-ID is never overwritten",
     "autoCreateClient": false,
-    "skipLanguages": [
-      "csharp",
-      "dart",
-      "go",
-      "java",
-      "kotlin",
-      "php",
-      "python",
-      "ruby",
-      "scala",
-      "swift"
-    ],
+    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "python", "ruby", "scala", "swift"],
     "steps": [
       {
         "type": "createClient",
@@ -155,18 +122,7 @@
   {
     "testName": "every request of one helper call shares one Request-ID",
     "autoCreateClient": false,
-    "skipLanguages": [
-      "csharp",
-      "dart",
-      "go",
-      "java",
-      "kotlin",
-      "php",
-      "python",
-      "ruby",
-      "scala",
-      "swift"
-    ],
+    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "python", "ruby", "scala", "swift"],
     "steps": [
       {
         "type": "createClient",
@@ -231,18 +187,7 @@
   {
     "testName": "client errors expose the Correlation-ID",
     "autoCreateClient": false,
-    "skipLanguages": [
-      "csharp",
-      "dart",
-      "go",
-      "java",
-      "kotlin",
-      "php",
-      "python",
-      "ruby",
-      "scala",
-      "swift"
-    ],
+    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "python", "ruby", "scala", "swift"],
     "steps": [
       {
         "type": "createClient",
