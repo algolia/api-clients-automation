@@ -34,7 +34,8 @@ function hasRequestId(headers: Headers | undefined, queryParameters: QueryParame
 /**
  * Returns request options carrying a Request-ID on the transporter's channel, so that every
  * request a multi-request helper performs shares the same ID. Returns the options unchanged
- * when the channel is off or when a Request-ID is already supplied.
+ * when the channel is off or when a Request-ID is already supplied. Never apply ahead of a
+ * cacheable operation: the ID enters the cache key and defeats caching and deduplication.
  */
 export function withRequestId(
   transporter: Pick<Transporter, 'requestIdChannel' | 'baseHeaders' | 'baseQueryParameters'>,
