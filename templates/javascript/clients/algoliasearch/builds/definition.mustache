@@ -1,6 +1,6 @@
 // {{{generationBanner}}}
 
-import { createIterablePromise, DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES, logWarning } from '@algolia/client-common';
+import { createIterablePromise, DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES, logWarning, withRequestId } from '@algolia/client-common';
 import type { ApiError, ClientOptions, RequestOptions } from '@algolia/client-common';
 
 {{#dependencies}}
@@ -158,6 +158,8 @@ export function algoliasearch(
         throw new Error('`transformationOptions` must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/');
       }
 
+      const searchRequestOptions = withRequestId(client.transporter, requestOptions);
+
       if (objects.length === 0) {
         logWarning(client.transporter.logger, `replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the "${indexName}" index.`);
       }
@@ -179,7 +181,7 @@ export function algoliasearch(
               scope: scopes,
             },
           },
-          requestOptions,
+          searchRequestOptions,
         );
 
         const watchResponses = await ingestionTransporter.chunkedPush(
@@ -191,7 +193,7 @@ export function algoliasearch(
           indexName: tmpIndexName,
           taskID: copyOperationResponse.taskID,
           maxRetries,
-        });
+        }, searchRequestOptions);
 
         copyOperationResponse = await this.operationIndex(
           {
@@ -202,30 +204,30 @@ export function algoliasearch(
               scope: scopes,
             },
           },
-          requestOptions,
+          searchRequestOptions,
         );
         await this.waitForTask({
           indexName: tmpIndexName,
           taskID: copyOperationResponse.taskID,
           maxRetries,
-        });
+        }, searchRequestOptions);
 
         const moveOperationResponse = await this.operationIndex(
           {
             indexName: tmpIndexName,
             operationIndexParams: { operation: 'move', destination: indexName },
           },
-          requestOptions,
+          searchRequestOptions,
         );
         await this.waitForTask({
           indexName: tmpIndexName,
           taskID: moveOperationResponse.taskID,
           maxRetries,
-        });
+        }, searchRequestOptions);
 
         return { copyOperationResponse, watchResponses, moveOperationResponse };
       } catch (error) {
-        await this.deleteIndex({ indexName: tmpIndexName });
+        await this.deleteIndex({ indexName: tmpIndexName }, searchRequestOptions);
 
         throw error;
       }
