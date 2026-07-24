@@ -6,6 +6,9 @@ import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
@@ -64,6 +67,18 @@ public class TestsRequest extends TestsGenerator {
         return body.replace("$", "\\$");
       default:
         return body;
+    }
+  }
+
+  private boolean e2eTemplateRenders(String tag) {
+    Path e2eTemplate = Path.of("templates", language, "tests", "e2e", "e2e.mustache");
+    if (!Files.exists(e2eTemplate)) {
+      return true;
+    }
+    try {
+      return Files.readString(e2eTemplate).contains(tag);
+    } catch (IOException e) {
+      return false;
     }
   }
 
@@ -165,6 +180,18 @@ public class TestsRequest extends TestsGenerator {
 
           if (req.response != null) {
             req.response.body = escapeBody(req.response.body);
+            if (req.response.correlationIdSuffix != null && !e2eTemplateRenders("correlationIdSuffix")) {
+              throw new CTSException(
+                "the test asserts 'correlationIdSuffix' but templates/" +
+                  language +
+                  "/tests/e2e/e2e.mustache never references it, so the generated e2e test" +
+                  " would pass without asserting anything. Implement the" +
+                  " {{#correlationIdSuffix}} section (see" +
+                  " templates/javascript/tests/e2e/e2e.mustache) before removing '" +
+                  language +
+                  "' from skipLanguages."
+              );
+            }
             test.put("response", req.response);
           }
 
