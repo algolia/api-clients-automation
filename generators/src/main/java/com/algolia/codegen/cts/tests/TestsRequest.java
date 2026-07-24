@@ -180,17 +180,33 @@ public class TestsRequest extends TestsGenerator {
 
           if (req.response != null) {
             req.response.body = escapeBody(req.response.body);
-            if (req.response.correlationIdSuffix != null && !e2eTemplateRenders("correlationIdSuffix")) {
-              throw new CTSException(
-                "the test asserts 'correlationIdSuffix' but templates/" +
-                  language +
-                  "/tests/e2e/e2e.mustache never references it, so the generated e2e test" +
-                  " would pass without asserting anything. Implement the" +
-                  " {{#correlationIdSuffix}} section (see" +
-                  " templates/javascript/tests/e2e/e2e.mustache) before removing '" +
-                  language +
-                  "' from skipLanguages."
-              );
+            if (req.response.correlationIdSuffix != null) {
+              if (req.request == null || !"GET".equals(req.request.method)) {
+                throw new CTSException(
+                  "'correlationIdSuffix' re-issues the request through the transporter to read" +
+                    " the response headers, so it only supports GET operations: anything else" +
+                    " would execute the operation twice."
+                );
+              }
+              if (req.request.queryParameters != null || (req.requestOptions != null && req.requestOptions.queryParameters != null)) {
+                throw new CTSException(
+                  "'correlationIdSuffix' re-issues the request with only the path and the" +
+                    " requestOptions headers: query parameters would be silently dropped from" +
+                    " the second call."
+                );
+              }
+              if (!e2eTemplateRenders("correlationIdSuffix")) {
+                throw new CTSException(
+                  "the test asserts 'correlationIdSuffix' but templates/" +
+                    language +
+                    "/tests/e2e/e2e.mustache never references it, so the generated e2e test" +
+                    " would pass without asserting anything. Implement the" +
+                    " {{#correlationIdSuffix}} section (see" +
+                    " templates/javascript/tests/e2e/e2e.mustache) before removing '" +
+                    language +
+                    "' from skipLanguages."
+                );
+              }
             }
             test.put("response", req.response);
           }
