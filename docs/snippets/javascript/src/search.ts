@@ -2232,8 +2232,35 @@ export async function snippetForSaveObject(): Promise<void> {
 
 // Snippet for the saveObjects method.
 //
-// call saveObjects without error
+// every request of one helper call shares one Request-ID
 export async function snippetForSaveObjects(): Promise<void> {
+  // >SEPARATOR saveObjects every request of one helper call shares one Request-ID
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveObjects({
+    indexName: 'cts_request_id_javascript',
+    objects: [
+      { objectID: '1', name: 'Adam' },
+      { objectID: '2', name: 'Benoit' },
+      { objectID: '3', name: 'Cyril' },
+      { objectID: '4', name: 'David' },
+    ],
+    batchSize: 2,
+    waitForTasks: true,
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveObjects method.
+//
+// call saveObjects without error
+export async function snippetForSaveObjects1(): Promise<void> {
   // >SEPARATOR saveObjects call saveObjects without error
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -2256,7 +2283,7 @@ export async function snippetForSaveObjects(): Promise<void> {
 // Snippet for the saveObjects method.
 //
 // saveObjects should report errors
-export async function snippetForSaveObjects1(): Promise<void> {
+export async function snippetForSaveObjects2(): Promise<void> {
   // >SEPARATOR saveObjects saveObjects should report errors
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -2279,7 +2306,7 @@ export async function snippetForSaveObjects1(): Promise<void> {
 // Snippet for the saveObjects method.
 //
 // saveObjectsPlaylist
-export async function snippetForSaveObjects2(): Promise<void> {
+export async function snippetForSaveObjects3(): Promise<void> {
   // >SEPARATOR saveObjects saveObjectsPlaylist
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -2307,7 +2334,7 @@ export async function snippetForSaveObjects2(): Promise<void> {
 // Snippet for the saveObjects method.
 //
 // saveObjectsPublicUser
-export async function snippetForSaveObjects3(): Promise<void> {
+export async function snippetForSaveObjects4(): Promise<void> {
   // >SEPARATOR saveObjects saveObjectsPublicUser
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');

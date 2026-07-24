@@ -2618,6 +2618,7 @@
       "default": "const response = await client.saveObject({\n  indexName: '<YOUR_INDEX_NAME>',\n  body: {\n    name: 'Black T-shirt',\n    color: '#000000||black',\n    availableIn: 'https://source.unsplash.com/100x100/?paris||Paris',\n    objectID: 'myID',\n  },\n});"
     },
     "saveObjects": {
+      "every request of one helper call shares one Request-ID": "const response = await client.saveObjects({\n  indexName: 'cts_request_id_javascript',\n  objects: [\n    { objectID: '1', name: 'Adam' },\n    { objectID: '2', name: 'Benoit' },\n    { objectID: '3', name: 'Cyril' },\n    { objectID: '4', name: 'David' },\n  ],\n  batchSize: 2,\n  waitForTasks: true,\n});",
       "call saveObjects without error": "const response = await client.saveObjects({\n  indexName: 'cts_e2e_saveObjects_javascript',\n  objects: [\n    { objectID: '1', name: 'Adam' },\n    { objectID: '2', name: 'Benoit' },\n  ],\n});",
       "saveObjects should report errors": "const response = await client.saveObjects({\n  indexName: 'cts_e2e_saveObjects_javascript',\n  objects: [\n    { objectID: '1', name: 'Adam' },\n    { objectID: '2', name: 'Benoit' },\n  ],\n});",
       "saveObjectsPlaylist": "const response = await client.saveObjects({\n  indexName: 'playlists',\n  objects: [\n    {\n      objectID: '1',\n      visibility: 'public',\n      name: 'Hot 100 Billboard Charts',\n      playlistId: 'd3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f',\n      createdAt: '1500240452',\n    },\n  ],\n});",

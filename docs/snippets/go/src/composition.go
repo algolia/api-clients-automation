@@ -607,7 +607,7 @@ func SnippetForGetCompositionOfComposition() {
 	   getComposition
 	*/
 
-	// >SEPARATOR getComposition default
+	// >SEPARATOR getComposition getComposition
 	// Initialize the client
 	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {

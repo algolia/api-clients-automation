@@ -2884,7 +2884,7 @@ class SnippetSearchClient {
     *
     * call saveObjects without error
     */
-  def snippetForSearchClientSaveObjects(): Unit = {
+  def snippetForSearchClientSaveObjects1(): Unit = {
     // >SEPARATOR saveObjects call saveObjects without error
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
@@ -2910,7 +2910,7 @@ class SnippetSearchClient {
     *
     * saveObjects should report errors
     */
-  def snippetForSearchClientSaveObjects1(): Unit = {
+  def snippetForSearchClientSaveObjects2(): Unit = {
     // >SEPARATOR saveObjects saveObjects should report errors
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
@@ -2936,7 +2936,7 @@ class SnippetSearchClient {
     *
     * saveObjectsPlaylist
     */
-  def snippetForSearchClientSaveObjects2(): Unit = {
+  def snippetForSearchClientSaveObjects3(): Unit = {
     // >SEPARATOR saveObjects saveObjectsPlaylist
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
@@ -2969,7 +2969,7 @@ class SnippetSearchClient {
     *
     * saveObjectsPublicUser
     */
-  def snippetForSearchClientSaveObjects3(): Unit = {
+  def snippetForSearchClientSaveObjects4(): Unit = {
     // >SEPARATOR saveObjects saveObjectsPublicUser
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")

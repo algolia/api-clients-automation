@@ -286,6 +286,21 @@ describe('getComposition', () => {
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('the Correlation-ID ends with the sent Request-ID', async () => {
+    const req = (await client.getComposition(
+      { compositionID: 'id1' },
+      {
+        headers: { 'request-id': 'CtsE2eEcho4' },
+      },
+    )) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/id1');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+    expect(req.headers).toEqual(expect.objectContaining({ 'request-id': 'CtsE2eEcho4' }));
+  });
 });
 
 describe('getRule', () => {

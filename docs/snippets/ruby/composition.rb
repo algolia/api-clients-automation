@@ -403,7 +403,7 @@ end
 #
 # getComposition
 def snippet_for_get_composition
-  # >SEPARATOR getComposition default
+  # >SEPARATOR getComposition getComposition
   # Initialize the client
   client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 

@@ -2189,7 +2189,7 @@ final class SearchClientSnippet {
     /// Snippet for the saveObjects method.
     ///
     /// call saveObjects without error
-    func snippetForSaveObjects() async throws {
+    func snippetForSaveObjects1() async throws {
         // >SEPARATOR saveObjects call saveObjects without error
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -2208,7 +2208,7 @@ final class SearchClientSnippet {
     /// Snippet for the saveObjects method.
     ///
     /// saveObjects should report errors
-    func snippetForSaveObjects1() async throws {
+    func snippetForSaveObjects2() async throws {
         // >SEPARATOR saveObjects saveObjects should report errors
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -2227,7 +2227,7 @@ final class SearchClientSnippet {
     /// Snippet for the saveObjects method.
     ///
     /// saveObjectsPlaylist
-    func snippetForSaveObjects2() async throws {
+    func snippetForSaveObjects3() async throws {
         // >SEPARATOR saveObjects saveObjectsPlaylist
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
@@ -2252,7 +2252,7 @@ final class SearchClientSnippet {
     /// Snippet for the saveObjects method.
     ///
     /// saveObjectsPublicUser
-    func snippetForSaveObjects3() async throws {
+    func snippetForSaveObjects4() async throws {
         // >SEPARATOR saveObjects saveObjectsPublicUser
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")

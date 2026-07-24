@@ -407,12 +407,34 @@ export async function snippetForDeleteCompositionRule(): Promise<void> {
 //
 // getComposition
 export async function snippetForGetComposition(): Promise<void> {
-  // >SEPARATOR getComposition default
+  // >SEPARATOR getComposition getComposition
   // Initialize the client
   const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getComposition({ compositionID: 'foo' });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getComposition method.
+//
+// the Correlation-ID ends with the sent Request-ID
+export async function snippetForGetComposition1(): Promise<void> {
+  // >SEPARATOR getComposition the Correlation-ID ends with the sent Request-ID
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.getComposition(
+    { compositionID: 'id1' },
+    {
+      headers: { 'request-id': 'CtsE2eEcho4' },
+    },
+  );
 
   // >LOG
   // print the response

@@ -2522,7 +2522,7 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
-  suspend fun snippetForSaveObjects() {
+  suspend fun snippetForSaveObjects1() {
     // >SEPARATOR saveObjects call saveObjects without error
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
@@ -2552,7 +2552,7 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
-  suspend fun snippetForSaveObjects1() {
+  suspend fun snippetForSaveObjects2() {
     // >SEPARATOR saveObjects saveObjects should report errors
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
@@ -2582,7 +2582,7 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
-  suspend fun snippetForSaveObjects2() {
+  suspend fun snippetForSaveObjects3() {
     // >SEPARATOR saveObjects saveObjectsPlaylist
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
@@ -2611,7 +2611,7 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
-  suspend fun snippetForSaveObjects3() {
+  suspend fun snippetForSaveObjects4() {
     // >SEPARATOR saveObjects saveObjectsPublicUser
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")

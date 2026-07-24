@@ -2216,7 +2216,7 @@ end
 # Snippet for the saveObjects method.
 #
 # call saveObjects without error
-def snippet_for_save_objects
+def snippet_for_save_objects1
   # >SEPARATOR saveObjects call saveObjects without error
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -2236,7 +2236,7 @@ end
 # Snippet for the saveObjects method.
 #
 # saveObjects should report errors
-def snippet_for_save_objects1
+def snippet_for_save_objects2
   # >SEPARATOR saveObjects saveObjects should report errors
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -2256,7 +2256,7 @@ end
 # Snippet for the saveObjects method.
 #
 # saveObjectsPlaylist
-def snippet_for_save_objects2
+def snippet_for_save_objects3
   # >SEPARATOR saveObjects saveObjectsPlaylist
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -2284,7 +2284,7 @@ end
 # Snippet for the saveObjects method.
 #
 # saveObjectsPublicUser
-def snippet_for_save_objects3
+def snippet_for_save_objects4
   # >SEPARATOR saveObjects saveObjectsPublicUser
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")

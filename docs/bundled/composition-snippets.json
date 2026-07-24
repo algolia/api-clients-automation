@@ -36,7 +36,7 @@
       "default": "var response = await client.DeleteCompositionRuleAsync(\"1234\", \"5678\");"
     },
     "getComposition": {
-      "default": "var response = await client.GetCompositionAsync(\"foo\");"
+      "getComposition": "var response = await client.GetCompositionAsync(\"foo\");"
     },
     "getRule": {
       "default": "var response = await client.GetRuleAsync(\"foo\", \"123\");"
@@ -115,7 +115,7 @@
       "default": "final response = await client.deleteCompositionRule(\n  compositionID: \"1234\",\n  objectID: \"5678\",\n);"
     },
     "getComposition": {
-      "default": "final response = await client.getComposition(\n  compositionID: \"foo\",\n);"
+      "getComposition": "final response = await client.getComposition(\n  compositionID: \"foo\",\n);"
     },
     "getRule": {
       "default": "final response = await client.getRule(\n  compositionID: \"foo\",\n  objectID: \"123\",\n);"
@@ -194,7 +194,7 @@
       "default": "response, err := client.DeleteCompositionRule(client.NewApiDeleteCompositionRuleRequest(\n  \"1234\", \"5678\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getComposition": {
-      "default": "response, err := client.GetComposition(client.NewApiGetCompositionRequest(\n  \"foo\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "getComposition": "response, err := client.GetComposition(client.NewApiGetCompositionRequest(\n  \"foo\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getRule": {
       "default": "response, err := client.GetRule(client.NewApiGetRuleRequest(\n  \"foo\", \"123\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -273,7 +273,7 @@
       "default": "TaskIDResponse response = client.deleteCompositionRule(\"1234\", \"5678\");"
     },
     "getComposition": {
-      "default": "Composition response = client.getComposition(\"foo\");"
+      "getComposition": "Composition response = client.getComposition(\"foo\");"
     },
     "getRule": {
       "default": "CompositionRule response = client.getRule(\"foo\", \"123\");"
@@ -352,7 +352,8 @@
       "default": "const response = await client.deleteCompositionRule({ compositionID: '1234', objectID: '5678' });"
     },
     "getComposition": {
-      "default": "const response = await client.getComposition({ compositionID: 'foo' });"
+      "getComposition": "const response = await client.getComposition({ compositionID: 'foo' });",
+      "the Correlation-ID ends with the sent Request-ID": "const response = await client.getComposition(\n  { compositionID: 'id1' },\n  {\n    headers: { 'request-id': 'CtsE2eEcho4' },\n  },\n);"
     },
     "getRule": {
       "default": "const response = await client.getRule({ compositionID: 'foo', objectID: '123' });"
@@ -428,7 +429,7 @@
       "default": "var response = client.deleteCompositionRule(compositionID = \"1234\", objectID = \"5678\")"
     },
     "getComposition": {
-      "default": "var response = client.getComposition(compositionID = \"foo\")"
+      "getComposition": "var response = client.getComposition(compositionID = \"foo\")"
     },
     "getRule": {
       "default": "var response = client.getRule(compositionID = \"foo\", objectID = \"123\")"
@@ -507,7 +508,7 @@
       "default": "$response = $client->deleteCompositionRule(\n    '1234',\n    '5678',\n);"
     },
     "getComposition": {
-      "default": "$response = $client->getComposition(\n    'foo',\n);"
+      "getComposition": "$response = $client->getComposition(\n    'foo',\n);"
     },
     "getRule": {
       "default": "$response = $client->getRule(\n    'foo',\n    '123',\n);"
@@ -586,7 +587,7 @@
       "default": "response = client.delete_composition_rule(\n    composition_id=\"1234\",\n    object_id=\"5678\",\n)"
     },
     "getComposition": {
-      "default": "response = client.get_composition(\n    composition_id=\"foo\",\n)"
+      "getComposition": "response = client.get_composition(\n    composition_id=\"foo\",\n)"
     },
     "getRule": {
       "default": "response = client.get_rule(\n    composition_id=\"foo\",\n    object_id=\"123\",\n)"
@@ -665,7 +666,7 @@
       "default": "response = client.delete_composition_rule(\"1234\", \"5678\")"
     },
     "getComposition": {
-      "default": "response = client.get_composition(\"foo\")"
+      "getComposition": "response = client.get_composition(\"foo\")"
     },
     "getRule": {
       "default": "response = client.get_rule(\"foo\", \"123\")"
@@ -744,7 +745,7 @@
       "default": "val response = Await.result(\n  client.deleteCompositionRule(\n    compositionID = \"1234\",\n    objectID = \"5678\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getComposition": {
-      "default": "val response = Await.result(\n  client.getComposition(\n    compositionID = \"foo\"\n  ),\n  Duration(100, \"sec\")\n)"
+      "getComposition": "val response = Await.result(\n  client.getComposition(\n    compositionID = \"foo\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getRule": {
       "default": "val response = Await.result(\n  client.getRule(\n    compositionID = \"foo\",\n    objectID = \"123\"\n  ),\n  Duration(100, \"sec\")\n)"
@@ -823,7 +824,7 @@
       "default": "let response = try await client.deleteCompositionRule(compositionID: \"1234\", objectID: \"5678\")"
     },
     "getComposition": {
-      "default": "let response = try await client.getComposition(compositionID: \"foo\")"
+      "getComposition": "let response = try await client.getComposition(compositionID: \"foo\")"
     },
     "getRule": {
       "default": "let response = try await client.getRule(compositionID: \"foo\", objectID: \"123\")"

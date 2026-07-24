@@ -2716,7 +2716,7 @@ public class SnippetSearchClient
   ///
   /// call saveObjects without error
   /// </summary>
-  public async Task SnippetForSearchClientSaveObjects()
+  public async Task SnippetForSearchClientSaveObjects1()
   {
     // >SEPARATOR saveObjects call saveObjects without error
     // Initialize the client
@@ -2742,7 +2742,7 @@ public class SnippetSearchClient
   ///
   /// saveObjects should report errors
   /// </summary>
-  public async Task SnippetForSearchClientSaveObjects1()
+  public async Task SnippetForSearchClientSaveObjects2()
   {
     // >SEPARATOR saveObjects saveObjects should report errors
     // Initialize the client
@@ -2768,7 +2768,7 @@ public class SnippetSearchClient
   ///
   /// saveObjectsPlaylist
   /// </summary>
-  public async Task SnippetForSearchClientSaveObjects2()
+  public async Task SnippetForSearchClientSaveObjects3()
   {
     // >SEPARATOR saveObjects saveObjectsPlaylist
     // Initialize the client
@@ -2800,7 +2800,7 @@ public class SnippetSearchClient
   ///
   /// saveObjectsPublicUser
   /// </summary>
-  public async Task SnippetForSearchClientSaveObjects3()
+  public async Task SnippetForSearchClientSaveObjects4()
   {
     // >SEPARATOR saveObjects saveObjectsPublicUser
     // Initialize the client

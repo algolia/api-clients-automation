@@ -125,6 +125,25 @@ describe('noContent', () => {
   }, 25000);
 });
 
+describe('requestId', () => {
+  test('the composition client sends a Request-ID', async () => {
+    const client = compositionClient('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6694,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.customGet({ path: '1/test/request-id/smoke/composition/javascript' });
+
+    expect(result).toEqual({ status: 'ok' });
+  }, 25000);
+});
+
 describe('setClientApiKey', () => {
   test('switch API key', async () => {
     const client = compositionClient('test-app-id', 'test-api-key', {

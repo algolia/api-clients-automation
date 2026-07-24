@@ -531,7 +531,7 @@ void snippetFordeleteCompositionRule() async {
 //
 // getComposition
 void snippetForgetComposition() async {
-  // >SEPARATOR getComposition default
+  // >SEPARATOR getComposition getComposition
   // Initialize the client
   final client = CompositionClient(
       appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');

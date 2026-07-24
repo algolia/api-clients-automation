@@ -2528,7 +2528,7 @@ class SnippetSearchClient {
   // Snippet for the saveObjects method.
   //
   // call saveObjects without error
-  void snippetForSaveObjects() throws Exception {
+  void snippetForSaveObjects1() throws Exception {
     // >SEPARATOR saveObjects call saveObjects without error
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -2560,7 +2560,7 @@ class SnippetSearchClient {
   // Snippet for the saveObjects method.
   //
   // saveObjects should report errors
-  void snippetForSaveObjects1() throws Exception {
+  void snippetForSaveObjects2() throws Exception {
     // >SEPARATOR saveObjects saveObjects should report errors
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -2592,7 +2592,7 @@ class SnippetSearchClient {
   // Snippet for the saveObjects method.
   //
   // saveObjectsPlaylist
-  void snippetForSaveObjects2() throws Exception {
+  void snippetForSaveObjects3() throws Exception {
     // >SEPARATOR saveObjects saveObjectsPlaylist
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -2621,7 +2621,7 @@ class SnippetSearchClient {
   // Snippet for the saveObjects method.
   //
   // saveObjectsPublicUser
-  void snippetForSaveObjects3() throws Exception {
+  void snippetForSaveObjects4() throws Exception {
     // >SEPARATOR saveObjects saveObjectsPublicUser
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
