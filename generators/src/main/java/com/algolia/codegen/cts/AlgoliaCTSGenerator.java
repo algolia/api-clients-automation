@@ -147,6 +147,10 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       bundle.put("mode", mode);
       bundle.put("is" + Helpers.capitalize(Helpers.camelize(client)) + "Client", true);
       bundle.put("isSearchClient", client.contains("search")); // just so algoliasearch is treated as a search client too
+      bundle.put(
+        "requestIdSupport",
+        client.equals("search") || client.equals("recommend") || client.equals("composition") || client.equals("algoliasearch")
+      );
       bundle.put("client", Helpers.createClientName(importClientName, language) + "Client");
       bundle.put("clientPrefix", Helpers.createClientName(importClientName, language));
       bundle.put("hasRegionalHost", hasRegionalHost);

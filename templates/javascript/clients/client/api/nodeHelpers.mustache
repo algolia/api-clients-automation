@@ -53,13 +53,14 @@ async accountCopyIndex(
   { sourceIndexName, destinationAppID, destinationApiKey, destinationIndexName, batchSize, maxRetries = 100 }: AccountCopyIndexOptions,
   requestOptions?: RequestOptions | undefined,
 ): Promise<void> {
+  requestOptions = withRequestId(this.transporter, requestOptions);
   const responses: Array<{ taskID: UpdatedAtResponse['taskID'] }> = [];
 
   if (this.appId === destinationAppID) {
     throw new IndicesInSameAppError();
   }
 
-  if (!(await this.indexExists({ indexName: sourceIndexName }))) {
+  if (!(await this.indexExists({ indexName: sourceIndexName }, requestOptions))) {
     throw new IndexNotFoundError(sourceIndexName);
   }
 
@@ -80,7 +81,7 @@ async accountCopyIndex(
     ...options,
   });
 
-  if (await destinationClient.indexExists({ indexName: destinationIndexName })) {
+  if (await destinationClient.indexExists({ indexName: destinationIndexName }, requestOptions)) {
     throw new IndexAlreadyExistsError(destinationIndexName);
   }
 
@@ -88,7 +89,7 @@ async accountCopyIndex(
     await destinationClient.setSettings(
       {
         indexName: destinationIndexName,
-        indexSettings: await this.getSettings({ indexName: sourceIndexName }),
+        indexSettings: await this.getSettings({ indexName: sourceIndexName }, requestOptions),
       },
       requestOptions,
     ),
@@ -104,7 +105,7 @@ async accountCopyIndex(
         ),
       );
     },
-  });
+  }, requestOptions);
 
   await this.browseSynonyms({
     indexName: sourceIndexName,
@@ -116,7 +117,7 @@ async accountCopyIndex(
         ),
       );
     },
-  });
+  }, requestOptions);
 
   await this.browseObjects({
     indexName: sourceIndexName,
@@ -129,9 +130,9 @@ async accountCopyIndex(
         )),
       );
     },
-  });
+  }, requestOptions);
 
   for (const response of responses) {
-    await destinationClient.waitForTask({ indexName: destinationIndexName, taskID: response.taskID, maxRetries });
+    await destinationClient.waitForTask({ indexName: destinationIndexName, taskID: response.taskID, maxRetries }, requestOptions);
   }
 },
