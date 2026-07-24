@@ -92,7 +92,7 @@ export function deserializeSuccess<TObject>(response: Response): TObject {
   try {
     return JSON.parse(response.content);
   } catch (e) {
-    throw new DeserializationError((e as Error).message, response);
+    throw new DeserializationError((e as Error).message, response, getCorrelationId(response.headers));
   }
 }
 
