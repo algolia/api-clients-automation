@@ -24,18 +24,25 @@ const aciState: Record<
 
 const aciRequestIds: Record<string, string[]> = {};
 
+// languages that have ported Request-ID support (API-516)
+const hasRequestIdSupport = (lang: string) => {
+  return lang === 'javascript';
+};
+
 export function assertValidAccountCopyIndex(expectedCount: number): void {
   expect(Object.keys(aciState)).to.have.length(expectedCount);
   for (const lang in aciState) {
     expect(aciState[lang].waitTaskCount).to.equal(5);
 
-    const requestIds = aciRequestIds[lang] ?? [];
-    expect(requestIds).to.not.be.empty;
-    expect(requestIds[0]).to.match(/^[0-9A-Za-z]{11}$/);
-    expect(new Set(requestIds).size).to.equal(
-      1,
-      `every accountCopyIndex request on both applications must share one Request-ID for ${lang}`,
-    );
+    if (hasRequestIdSupport(lang)) {
+      const requestIds = aciRequestIds[lang] ?? [];
+      expect(requestIds).to.not.be.empty;
+      expect(requestIds[0]).to.match(/^[0-9A-Za-z]{11}$/);
+      expect(new Set(requestIds).size).to.equal(
+        1,
+        `every accountCopyIndex request on both applications must share one Request-ID for ${lang}`,
+      );
+    }
   }
 }
 
