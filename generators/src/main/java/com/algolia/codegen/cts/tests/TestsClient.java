@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
-import org.openapitools.codegen.CodegenResponse;
 import org.openapitools.codegen.SupportingFile;
 
 public class TestsClient extends TestsGenerator {
@@ -156,14 +155,7 @@ public class TestsClient extends TestsGenerator {
               // default to true because most api calls are asynchronous
               stepOut.put("isAsyncMethod", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
 
-              // Determines whether the endpoint is expected to return a response payload
-              // deserialized and therefore a variable to store it into.
-              stepOut.put("hasResponse", true);
-              for (CodegenResponse response : ope.responses) {
-                if (response.code.equals("204")) {
-                  stepOut.put("hasResponse", false);
-                }
-              }
+              stepOut.put("hasResponse", ope.returnType != null && !ope.returnType.isEmpty());
 
               // set on testOut because we need to wrap everything for java.
               testOut.put("isHelper", isHelper);
