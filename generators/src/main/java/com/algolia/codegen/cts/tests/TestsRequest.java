@@ -13,7 +13,6 @@ import java.nio.file.Path;
 import java.util.*;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
-import org.openapitools.codegen.CodegenResponse;
 import org.openapitools.codegen.SupportingFile;
 
 public class TestsRequest extends TestsGenerator {
@@ -257,15 +256,7 @@ public class TestsRequest extends TestsGenerator {
 
           addRequestOptions(paramsType, req.requestOptions, test);
 
-          // Determines whether the endpoint is expected to return a response payload deserialized
-          // and therefore a variable to store it into.
-          test.put("hasResponse", true);
-
-          for (CodegenResponse response : ope.responses) {
-            if (response.code.equals("204")) {
-              test.put("hasResponse", false);
-            }
-          }
+          test.put("hasResponse", ope.returnType != null && !ope.returnType.isEmpty());
 
           paramsType.enhanceParameters(req.parameters, test, ope);
           tests.add(test);
