@@ -168,6 +168,15 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
       }
     }
 
+    // Gates the sse imports and the callAPIStream helper in the templates, as Go
+    // fails to compile on unused imports.
+    for (CodegenOperation op : operations.getOperations().getOperation()) {
+      if ((boolean) op.vendorExtensions.getOrDefault("x-streaming", false)) {
+        additionalProperties.put("hasStreamingOperations", true);
+        break;
+      }
+    }
+
     return operations;
   }
 }
