@@ -471,10 +471,10 @@ advancedSyntaxFeatures:
     Advanced search syntax features you want to support.
     - `exactPhrase`.
       Phrases in quotes must match exactly.
-      For example, `sparkly blue "iPhone case"` only returns records with the exact string "iPhone case"
+      For example, `sparkly blue "iPhone case"` only returns records with the exact string "iPhone case".
     - `excludeWords`.
       Query words prefixed with a `-` must not occur in a record.
-      For example, `search -engine` matches records that contain "search" but not "engine"
+      For example, `search -engine` matches records that contain "search" but not "engine".
     This setting only has an effect if `advancedSyntax` is true.
   default: [exactPhrase, excludeWords]
   x-categories:
@@ -497,13 +497,13 @@ alternativesAsExact:
   description: |
     Determine which plurals and synonyms should be considered an exact matches.
     By default, Algolia treats singular and plural forms of a word, and single-word synonyms, as [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact) matches when searching.
-    For example
-    - "swimsuit" and "swimsuits" are treated the same
-    - "swimsuit" and "swimwear" are treated the same (if they are [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms))
+    For example:
+    - "swimsuit" and "swimsuits" are treated the same.
+    - "swimsuit" and "swimwear" are treated the same (if they are [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms)).
     - `ignorePlurals`.
-      Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches
+      Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.
     - `singleWordSynonym`.
-      Single-word synonyms, such as "NY" = "NYC", are considered exact matches
+      Single-word synonyms, such as "NY" = "NYC", are considered exact matches.
     - `multiWordsSynonym`.
       Multi-word synonyms, such as "NY" = "New York", are considered exact matches.
   default: [ignorePlurals, singleWordSynonym]
@@ -638,7 +638,7 @@ disableTypoToleranceOnAttributes:
     Returning only exact matches can help when
     - [Searching in hyphenated attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes).
     - Reducing the number of matches when you have too many.
-      This can happen with attributes that are long blocks of text, such as product descriptions
+      This can happen with attributes that are long blocks of text, such as product descriptions.
     Consider alternatives such as `disableTypoToleranceOnWords` or adding synonyms if your attributes have intentional unusual spellings that might look like typos.
   default: []
   x-categories:
@@ -1285,9 +1285,9 @@ sortFacetValuesBy:
     Order in which to retrieve facet values.
     - `count`.
       Facet values are retrieved by decreasing count.
-      The count is the number of matching records containing this facet value
+      The count is the number of matching records containing this facet value.
     - `alpha`.
-      Retrieve facet values alphabetically
+      Retrieve facet values alphabetically.
     This setting doesn't influence how facet values are displayed in your UI (see `renderingContent`).
     For more information, see [facet value display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js).
   default: count
