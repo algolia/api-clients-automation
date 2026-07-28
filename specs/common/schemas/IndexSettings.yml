@@ -439,6 +439,8 @@ indexSettingsAsSearchParams:
       $ref: '#/sortFacetValuesBy'
     attributeCriteriaComputedByMinProximity:
       $ref: '#/attributeCriteriaComputedByMinProximity'
+    attributeCriteriaComputedBy:
+      $ref: '#/attributeCriteriaComputedBy'
     renderingContent:
       $ref: '#/renderingContent'
     enableReRanking:
@@ -510,12 +512,40 @@ alternativesAsExact:
 
 attributeCriteriaComputedByMinProximity:
   type: boolean
+  deprecated: true
   description: |
+    **Deprecated:** use `attributeCriteriaComputedBy` instead.
+
     Whether the best matching attribute should be determined by minimum proximity.
     This setting only affects ranking if the Attribute ranking criterion comes before Proximity in the `ranking` setting.
     If true, the best matching attribute is selected based on the minimum proximity of multiple matches.
     Otherwise, the best matching attribute is determined by the order in the `searchableAttributes` setting.
   default: false
+  x-categories:
+    - Advanced
+
+attributeCriteriaComputedBy:
+  description: |
+    Strategy for computing the Attribute ranking criterion.
+    This mainly affects multi-word queries where matches occur in and across multiple attributes.
+
+    - `minProximity`.
+      Determine the best matching attribute from those with the best proximity score.
+      This is the default when Attribute follows Proximity in the `ranking` setting.
+      Ties on an ordered attribute are broken by the match position.
+    - `best`.
+      Determine the best matching attribute from all attributes matching any query term.
+      This is the default when Attribute comes before Proximity in the `ranking` setting.
+      Ties on an ordered attribute are broken by the match position.
+    - `sum`.
+      Instead of picking one best attribute, add up a score for every query word.
+      Each word's score depends on which attribute it matched (and, for ordered attributes, where in that attribute).
+      Records with a lower total score rank higher.
+      This stops a record from ranking high just because one word of a multi-word query matched in a top attribute.
+      For most use cases, use `sum` when you place Attribute before Proximity in the `ranking` setting, especially for indices with short, relevant attributes.
+      For long-text fields, set those attributes to unordered.
+  allOf:
+    - $ref: './SearchEnums.yml#/attributeCriteriaComputedBy'
   x-categories:
     - Advanced
 
