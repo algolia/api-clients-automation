@@ -5,6 +5,7 @@ import type { Express } from 'express';
 import express from 'express';
 
 import { setupServer } from './index.ts';
+import { SERVER_PORTS } from './ports.ts';
 
 const chunkWrapperState: Record<string, any> = {};
 
@@ -111,5 +112,5 @@ function addRoutes(app: Express): void {
 }
 
 export function chunkWrapperServer(): Promise<Server> {
-  return setupServer('chunkWrapper', 6680, addRoutes);
+  return setupServer('chunkWrapper', SERVER_PORTS.chunkWrapper, addRoutes);
 }

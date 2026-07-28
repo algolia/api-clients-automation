@@ -17,6 +17,7 @@
     "clean": "rm -rf **/dist **/build **/.build **/node_modules **/.gradle **/vendor **/bin **/obj **/__pycache__ || true",
     "cli": "yarn workspace scripts start",
     "docker:setup": "./scripts/docker/setup.sh",
+    "docker:teardown": "./scripts/docker/teardown.sh",
     "fix:json": "eslint '**/*.json' --fix",
     "github-actions:lint": "eslint '.github/**/*.yml'",
     "postinstall": "husky && yarn workspace eslint-plugin-automation-custom build",

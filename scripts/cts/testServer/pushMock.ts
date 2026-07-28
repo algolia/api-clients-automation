@@ -5,6 +5,7 @@ import type { Express } from 'express';
 import express from 'express';
 
 import { setupServer } from './index.ts';
+import { SERVER_PORTS } from './ports.ts';
 
 const pushMockState: Record<
   string,
@@ -124,9 +125,9 @@ function addRoutes(app: Express): void {
 }
 
 export function pushMockServerRetriedOnce(): Promise<Server> {
-  return setupServer('pushMockRetriedOnce', 6689, addRoutes);
+  return setupServer('pushMockRetriedOnce', SERVER_PORTS.pushMockRetriedOnce, addRoutes);
 }
 
 export function pushMockServer(): Promise<Server> {
-  return setupServer('pushMock', 6688, addRoutes);
+  return setupServer('pushMock', SERVER_PORTS.pushMock, addRoutes);
 }

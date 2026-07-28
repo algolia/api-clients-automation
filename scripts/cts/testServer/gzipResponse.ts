@@ -5,6 +5,7 @@ import zlib from 'node:zlib';
 import type { Express } from 'express';
 
 import { setupServer } from './index.ts';
+import { SERVER_PORTS } from './ports.ts';
 
 const RESPONSE_BODY = {
   message: 'ok decompression test server response',
@@ -36,5 +37,5 @@ function addRoutes(app: Express): void {
 }
 
 export function gzipResponseServer(): Promise<Server> {
-  return setupServer('gzipResponse', 6691, addRoutes);
+  return setupServer('gzipResponse', SERVER_PORTS.gzipResponse, addRoutes);
 }

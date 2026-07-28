@@ -5,6 +5,7 @@ import type { Express } from 'express';
 import express from 'express';
 
 import { setupServer } from './index.ts';
+import { SERVER_PORTS } from './ports.ts';
 
 const raoState: Record<
   string,
@@ -55,5 +56,5 @@ function addRoutes(app: Express): void {
 
 export function replaceAllObjectsServerFailed(): Promise<Server> {
   // this server is used to simulate the responses for the replaceAllObjects method, with cleanup
-  return setupServer('replaceAllObjectsFailed', 6684, addRoutes);
+  return setupServer('replaceAllObjectsFailed', SERVER_PORTS.replaceAllObjectsFailed, addRoutes);
 }

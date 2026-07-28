@@ -5,6 +5,7 @@ import type express from 'express';
 import { retryHandler } from './timeout.ts';
 
 import { setupServer } from './index.ts';
+import { SERVER_PORTS } from './ports.ts';
 
 function addRoutes(app: express.Express): void {
   // this endpoint is also defined in the gzip server but without the timeout
@@ -12,5 +13,5 @@ function addRoutes(app: express.Express): void {
 }
 
 export function timeoutServerBis(): Promise<Server> {
-  return setupServer('timeoutBis', 6677, addRoutes);
+  return setupServer('timeoutBis', SERVER_PORTS.timeoutBis, addRoutes);
 }

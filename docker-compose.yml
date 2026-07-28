@@ -1,6 +1,6 @@
 services:
   base:
-    container_name: apic_base
+    image: ${APIC_BASE_TAG:-apic-base:latest}
     build:
       context: .
       dockerfile: scripts/docker/Dockerfile.base
@@ -15,10 +15,14 @@ services:
     command: tail -f /dev/null
     volumes: [./:/app]
     ports:
-      - "5009:5009" # So we can debug the OpenAPI Generator process
+      - "${APIC_DEBUG_PORT:-6670}:6670"
+    environment:
+      - CTS_PORT_OFFSET=${CTS_PORT_OFFSET:-0}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   ruby:
-    container_name: apic_ruby
+    image: ${APIC_RUBY_TAG:-apic-ruby:latest}
     build:
       context: .
       dockerfile: scripts/docker/Dockerfile.ruby
@@ -28,9 +32,13 @@ services:
         - RUBY_VERSION=${RUBY_VERSION}
     command: tail -f /dev/null
     volumes: [./:/app]
+    environment:
+      - CTS_PORT_OFFSET=${CTS_PORT_OFFSET:-0}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   swift:
-    container_name: apic_swift
+    image: ${APIC_SWIFT_TAG:-apic-swift:latest}
     build:
       context: .
       dockerfile: scripts/docker/Dockerfile.swift
@@ -40,3 +48,7 @@ services:
         - SWIFT_VERSION=${SWIFT_VERSION}
     command: tail -f /dev/null
     volumes: [./:/app]
+    environment:
+      - CTS_PORT_OFFSET=${CTS_PORT_OFFSET:-0}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

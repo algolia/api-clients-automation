@@ -9,6 +9,7 @@ import express from 'express';
 import { CI, toAbsolutePath } from '../../common.ts';
 
 import { setupServer } from './index.ts';
+import { SERVER_PORTS } from './ports.ts';
 
 const benchmarkStatus: Record<
   string,
@@ -124,5 +125,5 @@ function addRoutes(app: Express): void {
 }
 
 export function benchmarkServer(): Promise<Server> {
-  return setupServer('benchmark', 6682, addRoutes);
+  return setupServer('benchmark', SERVER_PORTS.benchmark, addRoutes);
 }

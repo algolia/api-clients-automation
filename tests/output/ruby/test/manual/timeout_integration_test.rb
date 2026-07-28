@@ -6,6 +6,8 @@ class TestTimeoutIntegration < Test::Unit::TestCase
   include CallType
 
   TEST_SERVER = ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+  # SYNC: CTS_PORT_OFFSET is set by scripts/docker/setup.sh → docker-compose.yml.
+  PORT_OFFSET = Integer(ENV.fetch("CTS_PORT_OFFSET", "0"))
 
   def create_config_with_host(host_url)
     host = Algolia::Transport::StatefulHost.new(
@@ -26,7 +28,7 @@ class TestTimeoutIntegration < Test::Unit::TestCase
     Algolia::Transport::StatefulHost.new(
       TEST_SERVER,
       protocol: "http://",
-      port: 6676,
+      port: 6676 + PORT_OFFSET,
       accept: READ | WRITE
     )
   end

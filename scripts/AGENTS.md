@@ -81,7 +81,7 @@ All language metadata from `config/clients.config.json`. Access via:
 import {
   getLanguageFolder,
   getTestExtension,
-  getDockerImage,
+  getDockerService,
 } from '../config.ts';
 ```
 

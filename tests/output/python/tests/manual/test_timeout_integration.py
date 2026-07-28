@@ -10,9 +10,15 @@ from algoliasearch.http.transporter import Transporter
 from algoliasearch.http.transporter_sync import TransporterSync
 from algoliasearch.http.verb import Verb
 
+
+# SYNC: CTS_PORT_OFFSET is set by scripts/docker/setup.sh → docker-compose.yml.
+def _port_offset() -> int:
+    return int(environ.get("CTS_PORT_OFFSET", "0") or "0")
+
+
 TEST_SERVER = (
     "localhost" if environ.get("CI") == "true" else "host.docker.internal"
-) + ":6676"
+) + f":{6676 + _port_offset()}"
 
 
 def create_config_with_host(host_url: str) -> Tuple[BaseConfig, Host]:

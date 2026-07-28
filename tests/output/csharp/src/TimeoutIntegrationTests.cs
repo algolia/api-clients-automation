@@ -16,6 +16,13 @@ namespace Algolia.Search.client;
 
 public class TimeoutIntegrationTests
 {
+  // SYNC: CTS_PORT_OFFSET is set by scripts/docker/setup.sh → docker-compose.yml.
+  private static int GetPortOffset()
+  {
+    var offset = Environment.GetEnvironmentVariable("CTS_PORT_OFFSET");
+    return int.TryParse(offset, out var n) ? n : 0;
+  }
+
   private static (AlgoliaConfig, StatefulHost) CreateConfigWithHost(string hostUrl)
   {
     var config = new SearchConfig("test-app", "test-key");
@@ -32,7 +39,7 @@ public class TimeoutIntegrationTests
     return new StatefulHost
     {
       Url = serverHost,
-      Port = 6676,
+      Port = 6676 + GetPortOffset(),
       Scheme = HttpScheme.Http,
       Accept = CallType.Read | CallType.Write,
     };

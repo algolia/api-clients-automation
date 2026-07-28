@@ -4,6 +4,11 @@ import 'package:algolia_client_core/algolia_client_core.dart';
 import 'package:algolia_client_core/src/transport/dio/dio_requester.dart';
 import 'package:test/test.dart';
 
+// SYNC: CTS_PORT_OFFSET is set by scripts/docker/setup.sh → docker-compose.yml.
+int get _portOffset {
+  return int.tryParse(Platform.environment['CTS_PORT_OFFSET'] ?? '') ?? 0;
+}
+
 /// Test server address
 String get testServer {
   final isDocker = File('/.dockerenv').existsSync();
@@ -24,7 +29,7 @@ RetryStrategy createRetryStrategyWithHost(String hostUrl,
 
 /// Creates a RetryStrategy pointing to the test server
 RetryStrategy createServerRetryStrategy() {
-  return createRetryStrategyWithHost(testServer, scheme: 'http', port: 6676);
+  return createRetryStrategyWithHost(testServer, scheme: 'http', port: 6676 + _portOffset);
 }
 
 void main() {
@@ -222,7 +227,7 @@ void main() {
 
     test('mixed hosts: only bad host gets increased timeout', () async {
       final badHost = Host(url: '10.255.255.1', scheme: 'https');
-      final goodHost = Host(url: testServer, scheme: 'http', port: 6676);
+      final goodHost = Host(url: testServer, scheme: 'http', port: 6676 + _portOffset);
 
       final retryStrategy = RetryStrategy(
         requester: DioRequester(appId: 'test-app', apiKey: 'test-key'),

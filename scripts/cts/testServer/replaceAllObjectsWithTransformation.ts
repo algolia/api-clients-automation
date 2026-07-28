@@ -5,6 +5,7 @@ import type { Express } from 'express';
 import express from 'express';
 
 import { setupServer } from './index.ts';
+import { SERVER_PORTS } from './ports.ts';
 
 const raowtState: Record<
   string,
@@ -177,5 +178,5 @@ function addRoutes(app: Express): void {
 export function replaceAllObjectsWithTransformationServer(): Promise<Server> {
   // this server is used to simulate the responses for the replaceAllObjectsWithTransformationServer method,
   // and uses a state machine to determine if the logic is correct.
-  return setupServer('replaceAllObjectsWithTransformationServer', 6690, addRoutes);
+  return setupServer('replaceAllObjectsWithTransformationServer', SERVER_PORTS.replaceAllObjectsWithTransformation, addRoutes);
 }

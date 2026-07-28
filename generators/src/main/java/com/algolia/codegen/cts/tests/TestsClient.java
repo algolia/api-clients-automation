@@ -4,10 +4,13 @@ import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.CodegenResponse;
@@ -24,6 +27,70 @@ public class TestsClient extends TestsGenerator {
     this.withBenchmark = withBenchmark;
     this.withSyncTests = language.equals("python") && !withBenchmark;
     this.testType = withBenchmark ? "benchmark" : "client";
+  }
+
+  // CTS_PORT_OFFSET is computed by scripts/docker/setup.sh (slot * port-block size).
+  // In Docker it is an env var; on the host we read the pre-computed value from .env.docker.
+  private static int getPortOffset() {
+    String offset = System.getenv("CTS_PORT_OFFSET");
+    if (offset == null || offset.isEmpty()) {
+      offset = readOffsetFromEnvDocker();
+    }
+    if (offset == null || offset.isEmpty()) return 0;
+    try {
+      return Integer.parseInt(offset.trim());
+    } catch (NumberFormatException e) {
+      System.err.println("Warning: CTS_PORT_OFFSET is not a valid number: " + offset);
+      return 0;
+    }
+  }
+
+  private static String readOffsetFromEnvDocker() {
+    try {
+      for (String line : Files.readAllLines(Path.of(".env.docker"))) {
+        if (line.startsWith("CTS_PORT_OFFSET=")) {
+          return line.substring("CTS_PORT_OFFSET=".length());
+        }
+      }
+    } catch (Exception ignored) {
+      // .env.docker is absent outside worktree Docker setups; offset 0 is correct there.
+    }
+    return null;
+  }
+
+  private static List<Map<String, Object>> offsetPorts(List<Map<String, Object>> hosts) {
+    int offset = getPortOffset();
+    if (offset == 0) return hosts;
+
+    return hosts
+      .stream()
+      .map(host -> {
+        Map<String, Object> copy = new HashMap<>(host);
+        if (copy.containsKey("port")) {
+          copy.put("port", ((Number) copy.get("port")).intValue() + offset);
+        }
+        return copy;
+      })
+      .collect(Collectors.toList());
+  }
+
+  private static void collectHostPorts(List<Map<String, Object>> hosts, List<Integer> into) {
+    for (Map<String, Object> host : hosts) {
+      if (host.get("port") instanceof Number port) {
+        into.add(port.intValue());
+      }
+    }
+  }
+
+  // Offset the ports in an expected error string using the test's own custom hosts, so no
+  // global port range is needed.
+  private static String offsetPortsInString(String text, List<Integer> hostPorts, int offset) {
+    if (offset == 0 || text == null || hostPorts.isEmpty()) return text;
+    String result = text;
+    for (int port : hostPorts) {
+      result = result.replace(":" + port, ":" + (port + offset));
+    }
+    return result;
   }
 
   @Override
@@ -77,6 +144,7 @@ public class TestsClient extends TestsGenerator {
         try {
           Map<String, Object> testOut = new HashMap<>();
           List<Map<String, Object>> steps = new ArrayList<>();
+          List<Integer> testHostPorts = new ArrayList<>();
           int methodCount = 0;
           testOut.put("inClientTest", true);
           testOut.put("testName", test.testName);
@@ -96,7 +164,10 @@ public class TestsClient extends TestsGenerator {
               if (hasCustomHosts) testOut.put("useEchoRequester", false);
               stepOut.put("hasCustomHosts", hasCustomHosts);
               if (hasCustomHosts) {
-                stepOut.put("customHosts", step.parameters.get("customHosts"));
+                @SuppressWarnings("unchecked")
+                var customHosts = (List<Map<String, Object>>) step.parameters.get("customHosts");
+                collectHostPorts(customHosts, testHostPorts);
+                stepOut.put("customHosts", offsetPorts(customHosts));
               }
 
               boolean hasTransformationRegion = step.parameters != null && step.parameters.containsKey("transformationRegion");
@@ -116,7 +187,10 @@ public class TestsClient extends TestsGenerator {
                 boolean hasTransformationCustomHosts = transformationOptions.containsKey("customHosts");
                 stepOut.put("hasTransformationCustomHosts", hasTransformationCustomHosts);
                 if (hasTransformationCustomHosts) {
-                  stepOut.put("transformationCustomHosts", transformationOptions.get("customHosts"));
+                  @SuppressWarnings("unchecked")
+                  var transformationCustomHosts = (List<Map<String, Object>>) transformationOptions.get("customHosts");
+                  collectHostPorts(transformationCustomHosts, testHostPorts);
+                  stepOut.put("transformationCustomHosts", offsetPorts(transformationCustomHosts));
                 }
               }
               stepOut.put("hasTransformationOptions", hasTransformationOptions);
@@ -226,6 +300,7 @@ public class TestsClient extends TestsGenerator {
                 } else {
                   stepOut.put("expectedError", step.expected.error);
                 }
+                stepOut.put("expectedError", offsetPortsInString((String) stepOut.get("expectedError"), testHostPorts, getPortOffset()));
                 if (language.equals("go") && step.method != null) {
                   // hack for go that use PascalCase, but just in the operationID
                   stepOut.put(

@@ -1,4 +1,5 @@
 import fsp from 'fs/promises';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'path';
 
 import { Octokit } from '@octokit/rest';
@@ -11,7 +12,8 @@ import clientsConfig from '../config/clients.config.json' with { type: 'json' };
 import releaseConfig from '../config/release.config.json' with { type: 'json' };
 
 import { Cache } from './cache.ts';
-import { getDockerImage } from './config.ts';
+import { getDockerService } from './config.ts';
+import { DEBUG_PORT } from './cts/testServer/ports.ts';
 import { generateOpenapitools } from './pre-gen/index.ts';
 import { getGitAuthor } from './release/common.ts';
 import { buildSpecs } from './specs/index.ts';
@@ -25,6 +27,10 @@ export const REPO_URL = `https://github.com/${OWNER}/${REPO}`;
 export const TODAY = new Date().toISOString().split('T')[0];
 
 export const CI = Boolean(process.env.CI);
+
+// The Java debugger listens on this port INSIDE the container; docker-compose.yml maps the host
+// port APIC_DEBUG_PORT (this + offset) to it. Sourced from the shared ports.ts list.
+const CONTAINER_DEBUG_PORT = DEBUG_PORT;
 
 // This script is run by `yarn workspace ...`, which means the current working directory is `./script`
 export const ROOT_DIR = path.resolve(process.cwd(), '..');
@@ -78,10 +84,14 @@ export const CLIENTS = [...new Set(Object.values(GENERATORS).map((gen) => gen.cl
 
 export async function run(command: string, { errorMessage, cwd, language }: RunOptions = {}): Promise<string> {
   const realCwd = path.resolve(ROOT_DIR, cwd ?? '.');
-  const dockerImage = getDockerImage(language);
+  const dockerService = getDockerService(language);
   let wrappedCmd = command;
-  if (dockerImage) {
-    wrappedCmd = `docker exec ${dockerImage} bash -lc "cd ${cwd ?? '.'} && ${command}"`;
+  if (dockerService) {
+    const envFile = path.resolve(ROOT_DIR, '.env.docker');
+    if (!existsSync(envFile)) {
+      throw new Error('.env.docker not found — run `yarn docker:setup` first.');
+    }
+    wrappedCmd = `docker compose --env-file .env.docker exec ${dockerService} bash -lc "cd ${cwd ?? '.'} && ${command}"`;
   }
   try {
     if (isVerbose()) {
@@ -93,7 +103,7 @@ export async function run(command: string, { errorMessage, cwd, language }: RunO
             stdin: 'inherit',
             all: true,
             shell: 'bash',
-            cwd: dockerImage ? ROOT_DIR : realCwd,
+            cwd: dockerService ? ROOT_DIR : realCwd,
           })
         ).all ?? ''
       );
@@ -103,7 +113,7 @@ export async function run(command: string, { errorMessage, cwd, language }: RunO
         await execaCommand(wrappedCmd, {
           shell: 'bash',
           all: true,
-          cwd: dockerImage ? ROOT_DIR : realCwd,
+          cwd: dockerService ? ROOT_DIR : realCwd,
         })
       ).all ?? ''
     );
@@ -271,6 +281,21 @@ export function isVerbose(): boolean {
   return verbose;
 }
 
+function getDebugPort(): number {
+  try {
+    const envDocker = readFileSync(path.resolve(ROOT_DIR, '.env.docker'), 'utf8');
+    const match = envDocker.match(/^APIC_DEBUG_PORT=(\d+)$/m);
+    if (match) return parseInt(match[1], 10);
+  } catch (e: unknown) {
+    if (!(e instanceof Error && 'code' in e && (e as NodeJS.ErrnoException).code === 'ENOENT')) {
+      console.warn(
+        `[worktree] Could not read .env.docker: ${e instanceof Error ? e.message : e}, defaulting to port ${DEBUG_PORT}`,
+      );
+    }
+  }
+  return DEBUG_PORT;
+}
+
 export async function callGenerator(gen: Generator, withDebugger: boolean): Promise<void> {
   const cmd = `yarn openapi-generator-cli --custom-generator=generators/build/libs/algolia-java-openapi-generator-1.0.0.jar generate --generator-key ${gen.key}`;
   if (!withDebugger) {
@@ -278,9 +303,10 @@ export async function callGenerator(gen: Generator, withDebugger: boolean): Prom
     return;
   }
 
+  const debugPort = getDebugPort();
   console.log(
     chalk.yellow(
-      'Running the generator in debug mode, waiting for debugger to be attached on port 5009\nsee the doc for reference: https://api-clients-automation.netlify.app/docs/CLI/cts-commands#attach-a-debugger-to-the-generator',
+      `Running the generator in debug mode, waiting for debugger to be attached on port ${debugPort}\nsee the doc for reference: https://api-clients-automation.netlify.app/docs/CLI/cts-commands#attach-a-debugger-to-the-generator`,
     ),
   );
 
@@ -288,16 +314,17 @@ export async function callGenerator(gen: Generator, withDebugger: boolean): Prom
   const verbose = isVerbose();
   setVerbose(false);
 
-  const previous = await run('lsof -ti:5009 || true', { language: 'java' });
+  const previous = await run(`lsof -ti:${CONTAINER_DEBUG_PORT} || true`, { language: 'java' });
   if (previous) {
-    console.log(chalk.italic(`killing previous generator on port 5009: ${previous}`));
+    console.log(chalk.italic(`killing previous generator on container port ${CONTAINER_DEBUG_PORT}: ${previous}`));
     await run(`kill -9 ${previous} && sleep 2`, { language: 'java' });
   }
   setVerbose(verbose);
 
-  await run(`JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5009" ${cmd}`, {
-    language: 'java',
-  });
+  await run(
+    `JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:${CONTAINER_DEBUG_PORT}" ${cmd}`,
+    { language: 'java' },
+  );
 }
 
 export function isWSL(): boolean {
