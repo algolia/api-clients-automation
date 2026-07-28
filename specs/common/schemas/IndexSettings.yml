@@ -439,6 +439,8 @@ indexSettingsAsSearchParams:
       $ref: '#/sortFacetValuesBy'
     attributeCriteriaComputedByMinProximity:
       $ref: '#/attributeCriteriaComputedByMinProximity'
+    attributeCriteriaComputedBy:
+      $ref: '#/attributeCriteriaComputedBy'
     renderingContent:
       $ref: '#/renderingContent'
     enableReRanking:
@@ -516,6 +518,28 @@ attributeCriteriaComputedByMinProximity:
     If true, the best matching attribute is selected based on the minimum proximity of multiple matches.
     Otherwise, the best matching attribute is determined by the order in the `searchableAttributes` setting.
   default: false
+  x-categories:
+    - Advanced
+
+attributeCriteriaComputedBy:
+  description: |
+    Strategy for computing the Attribute ranking criterion.
+    This mainly affects multi-word queries where matches occur in and across multiple attributes.
+    - `minProximity`.
+      Determine the best matching attribute from those with the best proximity score.
+      This is the default when Attribute follows Proximity in the `ranking` setting.
+      Ties on an ordered attribute are broken by the match position.
+    - `best`.
+      Determine the best matching attribute from all attributes matching any query term.
+      This is the default when Attribute comes before Proximity in the `ranking` setting.
+      Ties on an ordered attribute are broken by the match position.
+    - `sum`.
+      Instead of a single best attribute, compute a score across each query term's best matching attribute (and position, for ordered attributes).
+      Lower total scores rank higher.
+      This keeps Attribute before Proximity while preventing a record from being boosted just because a single word of a multi-word query matched in a high-ranked attribute.
+      Recommended with unordered attributes for any long-text field.
+  allOf:
+    - $ref: './SearchEnums.yml#/attributeCriteriaComputedBy'
   x-categories:
     - Advanced
 
