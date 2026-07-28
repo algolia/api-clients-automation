@@ -10,6 +10,13 @@ alternativesAsExact:
   x-categories:
     - Query strategy
 
+attributeCriteriaComputedBy:
+  type: string
+  title: attribute criteria computed by
+  enum: [minProximity, best, sum]
+  x-categories:
+    - Advanced
+
 typoToleranceEnum:
   type: string
   title: typo tolerance
