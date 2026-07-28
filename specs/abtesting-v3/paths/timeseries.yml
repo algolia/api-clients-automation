@@ -13,6 +13,8 @@ get:
     - in: query
       name: metric
       description: List of metrics to retrieve. If not specified, all metrics are returned.
+      style: form
+      explode: false
       schema:
         type: array
         items:
