@@ -1,0 +1,41 @@
+post:
+  tags:
+    - pattern
+  operationId: queryPatternsTable
+  x-acl:
+    - analytics
+  summary: (Beta) Query a grouped table
+  description: |
+    **Beta**: this endpoint is under active development and may change without notice.
+
+    Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;
+    `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy` is set.
+    Discover valid field kinds per domain with `/3/patterns/fields`.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/patterns.yml#/TablePayload'
+  responses:
+    '200':
+      description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../../common/responses/rateLimit.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../../common/responses/rateLimit.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../../common/responses/rateLimit.yml#/x-ratelimit-reset'
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/patterns.yml#/TableResponse'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'
