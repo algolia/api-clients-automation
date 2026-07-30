@@ -47,20 +47,7 @@ FilterDefinition:
       description: Field to filter on. With no `operator`, the field must be boolean.
       example: country
     operator:
-      type: string
-      description: Comparison operator. Requires `parameter` to carry the operand.
-      enum:
-        - '='
-        - '!='
-        - '>'
-        - '<'
-        - '>='
-        - '<='
-        - IN
-        - TAG_TREE
-        - CONTAINS
-        - STARTS_WITH
-        - CONTAINS_PREFIX
+      $ref: '#/filterOperator'
     parameter:
       $ref: '#/ParameterReference'
 
@@ -98,11 +85,7 @@ OrderDefinition:
       description: Field to sort by. Must appear in `metrics` or `groupBy`.
       example: searchesCount
     direction:
-      type: string
-      description: Sort direction.
-      enum:
-        - asc
-        - desc
+      $ref: '#/orderDirection'
 
 DistributionDefinition:
   type: object
@@ -289,8 +272,8 @@ TimeseriesResponse:
       type: array
       description: One entry per `groupBy` combination.
       items:
+        title: series
         type: object
-        title: Series
         additionalProperties: false
         properties:
           key:
@@ -305,8 +288,8 @@ TimeseriesResponse:
             type: array
             description: Per-day metric breakdown.
             items:
+              title: seriesDate
               type: object
-              title: Series date
               additionalProperties: false
               properties:
                 date:
@@ -401,3 +384,26 @@ CatalogEntry:
       description: Public ACL identifiers required to read the field, for example `clickAnalyticsEnabled`.
       items:
         type: string
+
+filterOperator:
+  type: string
+  description: Comparison operator applied to a filter field. Requires a `parameter` to carry the operand.
+  enum:
+    - '='
+    - '!='
+    - '>'
+    - '<'
+    - '>='
+    - '<='
+    - IN
+    - TAG_TREE
+    - CONTAINS
+    - STARTS_WITH
+    - CONTAINS_PREFIX
+
+orderDirection:
+  type: string
+  description: Sort direction.
+  enum:
+    - asc
+    - desc
