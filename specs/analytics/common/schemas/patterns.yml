@@ -110,8 +110,7 @@ DistributionDefinition:
       type: array
       description: Bin edges.
       items:
-        type: number
-        format: double
+        $ref: '#/binEdge'
       example: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 21, -1]
 
 TimeseriesPayload:
@@ -408,6 +407,13 @@ orderDirection:
   enum:
     - asc
     - desc
+
+binEdge:
+  description: A histogram bin edge. Use integers for discrete distributions and floating-point values for continuous ones.
+  oneOf:
+    - type: integer
+    - type: number
+      format: double
 
 parameterValue:
   description: Literal value. Its JSON type depends on `kind` (array of strings for `indices`, string for dates, tags, and country, number for numeric operands, and so on).
