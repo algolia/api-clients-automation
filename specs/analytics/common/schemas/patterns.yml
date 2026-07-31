@@ -111,6 +111,7 @@ DistributionDefinition:
       description: Bin edges.
       items:
         type: number
+        format: double
       example: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 21, -1]
 
 TimeseriesPayload:
@@ -409,10 +410,11 @@ orderDirection:
     - desc
 
 parameterValue:
-  description: Literal value. Its JSON type depends on `kind` (array for `indices`, RFC 3339 string for dates, and so on).
+  description: Literal value. Its JSON type depends on `kind` (array of strings for `indices`, string for dates, tags, and country, number for numeric operands, and so on).
   oneOf:
     - type: string
     - type: number
+      format: double
     - type: boolean
     - type: array
       items:
