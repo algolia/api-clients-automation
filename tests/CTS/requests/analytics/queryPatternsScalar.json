@@ -1,0 +1,17 @@
+[
+  {
+    "testName": "queryPatternsScalar with minimal parameters",
+    "parameters": {
+      "metrics": [{ "kind": "conversionRate" }],
+      "parameters": [{ "kind": "indices", "value": ["index"] }]
+    },
+    "request": {
+      "path": "/3/patterns/scalar",
+      "method": "POST",
+      "body": {
+        "metrics": [{ "kind": "conversionRate" }],
+        "parameters": [{ "kind": "indices", "value": ["index"] }]
+      }
+    }
+  }
+]
