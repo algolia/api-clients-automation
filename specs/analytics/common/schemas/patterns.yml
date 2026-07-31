@@ -387,19 +387,8 @@ CatalogEntry:
 
 filterOperator:
   type: string
-  description: Comparison operator applied to a filter field. Requires a `parameter` to carry the operand.
-  enum:
-    - =
-    - '!='
-    - '>'
-    - <
-    - '>='
-    - <=
-    - IN
-    - TAG_TREE
-    - CONTAINS
-    - STARTS_WITH
-    - CONTAINS_PREFIX
+  description: 'Comparison operator applied to a filter field, one of: `=`, `!=`, `>`, `<`, `>=`, `<=`, `IN`, `TAG_TREE`, `CONTAINS`, `STARTS_WITH`, `CONTAINS_PREFIX`. Requires a `parameter` to carry the operand.'
+  example: =
 
 orderDirection:
   type: string
