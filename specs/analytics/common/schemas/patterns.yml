@@ -68,6 +68,13 @@ ParameterDefinition:
       example: indices
     value:
       description: Literal value. Its JSON type depends on `kind` (array for `indices`, RFC 3339 string for dates, and so on).
+      oneOf:
+        - type: string
+        - type: number
+        - type: boolean
+        - type: array
+          items:
+            type: string
 
 OrderDefinition:
   type: object
