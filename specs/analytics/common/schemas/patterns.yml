@@ -67,14 +67,7 @@ ParameterDefinition:
       description: Parameter identifier, for example `indices`, `startDate`, `endDate`, `tags`, or `country`.
       example: indices
     value:
-      description: Literal value. Its JSON type depends on `kind` (array for `indices`, RFC 3339 string for dates, and so on).
-      oneOf:
-        - type: string
-        - type: number
-        - type: boolean
-        - type: array
-          items:
-            type: string
+      $ref: '#/parameterValue'
 
 OrderDefinition:
   type: object
@@ -396,12 +389,12 @@ filterOperator:
   type: string
   description: Comparison operator applied to a filter field. Requires a `parameter` to carry the operand.
   enum:
-    - '='
+    - =
     - '!='
     - '>'
-    - '<'
+    - <
     - '>='
-    - '<='
+    - <=
     - IN
     - TAG_TREE
     - CONTAINS
@@ -414,3 +407,13 @@ orderDirection:
   enum:
     - asc
     - desc
+
+parameterValue:
+  description: Literal value. Its JSON type depends on `kind` (array for `indices`, RFC 3339 string for dates, and so on).
+  oneOf:
+    - type: string
+    - type: number
+    - type: boolean
+    - type: array
+      items:
+        type: string
