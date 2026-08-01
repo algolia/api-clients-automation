@@ -15802,15 +15802,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remark-smartypants@npm:3.0.2":
-  version: 3.0.2
-  resolution: "remark-smartypants@npm:3.0.2"
+"remark-smartypants@npm:3.0.3":
+  version: 3.0.3
+  resolution: "remark-smartypants@npm:3.0.3"
   dependencies:
     retext: "npm:^9.0.0"
     retext-smartypants: "npm:^6.0.0"
     unified: "npm:^11.0.4"
     unist-util-visit: "npm:^5.0.0"
-  checksum: 10/c2d16ad997f5ebbf1c13b13e56192c6d39d0f9dcff3a00f2015d27fe18efb38f5d1b5f48229c57b2656ae53cd1e6ec1c1f686216bae159cb04337cb4ce7da345
+  checksum: 10/c3e6f88e87976644103b965ea2853dfb33da7bd0eeb3b67c76d7d5e63b0c1a1253297933e7887937067add76248e90dbd9943f989fc0f7d3c815dfdb0656a966
   languageName: node
   linkType: hard
 
@@ -18572,7 +18572,7 @@ __metadata:
     clsx: "npm:2.1.1"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
-    remark-smartypants: "npm:3.0.2"
+    remark-smartypants: "npm:3.0.3"
   languageName: unknown
   linkType: soft
 
