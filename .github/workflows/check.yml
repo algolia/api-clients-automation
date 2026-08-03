@@ -258,12 +258,6 @@ jobs:
           path: ${{ steps.yarn-cache-dir-tests.outputs.dir || 'tests/output/javascript/.yarn/cache' }}
           key: yarn-cache-tests-${{ hashFiles('tests/output/javascript/yarn.lock') }}
 
-      - name: Cache js tests node modules
-        uses: actions/cache@v6
-        with:
-          path: tests/output/javascript/node_modules
-          key: node-modules-tests-${{ hashFiles('tests/output/javascript/yarn.lock') }}
-
       - name: Run unit CTS
         run: yarn cli cts run javascript --no-e2e
 
