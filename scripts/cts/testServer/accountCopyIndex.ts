@@ -5,7 +5,7 @@ import type { Express } from 'express';
 import express from 'express';
 
 import { setupServer } from './index.ts';
-import { REQUEST_ID_FORMAT, REQUEST_ID_LANGUAGES } from './requestId.ts';
+import { observedRequestId, REQUEST_ID_FORMAT, REQUEST_ID_LANGUAGES } from './requestId.ts';
 
 const aciState: Record<
   string,
@@ -53,7 +53,7 @@ function addRoutes(app: Express): void {
   app.use((req, _res, next) => {
     const lang = req.url.match(/cts_e2e_account_copy_index_(?:source|destination)_([^/?]+)/)?.[1];
     if (lang) {
-      (aciRequestIds[lang] ??= []).push((req.headers['request-id'] as string) ?? '');
+      (aciRequestIds[lang] ??= []).push(observedRequestId(req));
     }
     next();
   });

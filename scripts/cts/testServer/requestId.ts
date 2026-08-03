@@ -17,7 +17,7 @@ const helperState: Record<string, string[]> = {};
 const smokeState: Record<string, string[]> = {};
 const negativeState: Record<string, string[]> = {};
 
-function observedRequestId(req: express.Request): string {
+export function observedRequestId(req: express.Request): string {
   return (req.headers['request-id'] as string) ?? (req.query['x-algolia-request-id'] as string) ?? '';
 }
 
