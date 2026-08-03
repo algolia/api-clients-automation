@@ -181,6 +181,52 @@
             }
           ]
         }
+      },
+      {
+        "type": "method",
+        "method": "saveObjects",
+        "parameters": {
+          "indexName": "cts_request_id_${{language}}",
+          "objects": [
+            {
+              "objectID": "5",
+              "name": "Eva"
+            },
+            {
+              "objectID": "6",
+              "name": "Fred"
+            },
+            {
+              "objectID": "7",
+              "name": "Gina"
+            },
+            {
+              "objectID": "8",
+              "name": "Hugo"
+            }
+          ],
+          "batchSize": 2,
+          "waitForTasks": true
+        },
+        "expected": {
+          "type": "response",
+          "match": [
+            {
+              "taskID": 42,
+              "objectIDs": [
+                "5",
+                "6"
+              ]
+            },
+            {
+              "taskID": 42,
+              "objectIDs": [
+                "7",
+                "8"
+              ]
+            }
+          ]
+        }
       }
     ]
   },

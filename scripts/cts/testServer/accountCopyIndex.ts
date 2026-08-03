@@ -5,6 +5,7 @@ import type { Express } from 'express';
 import express from 'express';
 
 import { setupServer } from './index.ts';
+import { REQUEST_ID_LANGUAGES } from './requestId.ts';
 
 const aciState: Record<
   string,
@@ -24,17 +25,12 @@ const aciState: Record<
 
 const aciRequestIds: Record<string, string[]> = {};
 
-// languages that have ported Request-ID support (API-516)
-const hasRequestIdSupport = (lang: string) => {
-  return lang === 'javascript';
-};
-
 export function assertValidAccountCopyIndex(expectedCount: number): void {
   expect(Object.keys(aciState)).to.have.length(expectedCount);
   for (const lang in aciState) {
     expect(aciState[lang].waitTaskCount).to.equal(5);
 
-    if (hasRequestIdSupport(lang)) {
+    if (REQUEST_ID_LANGUAGES.includes(lang)) {
       const requestIds = aciRequestIds[lang] ?? [];
       expect(requestIds).to.not.be.empty;
       expect(requestIds[0]).to.match(/^[0-9A-Za-z]{11}$/);

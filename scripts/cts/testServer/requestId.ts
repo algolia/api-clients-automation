@@ -8,10 +8,14 @@ import { setupServer } from './index.ts';
 
 const REQUEST_ID_FORMAT = /^[0-9A-Za-z]{11}$/;
 
+// languages that have ported Request-ID support (API-516)
+export const REQUEST_ID_LANGUAGES = ['javascript'];
+
 const retryState: Record<string, string[]> = {};
 const freshState: Record<string, string[]> = {};
 const helperState: Record<string, string[]> = {};
 const smokeState: Record<string, string[]> = {};
+const negativeState: Record<string, string[]> = {};
 
 function observedRequestId(req: express.Request): string {
   return (req.headers['request-id'] as string) ?? (req.query['x-algolia-request-id'] as string) ?? '';
@@ -58,18 +62,28 @@ export function assertValidRequestIds(expectedCount: number): void {
   for (const [lang, ids] of Object.entries(helperState)) {
     const suites = lang === 'python' ? 2 : 1;
 
-    // one saveObjects call = 2 batch requests + 2 task polls
-    expect(ids).to.have.length(4 * suites);
-    for (let i = 0; i < suites; i++) {
+    // the test makes 2 saveObjects calls, each one = 2 batch requests + 2 task polls
+    expect(ids).to.have.length(8 * suites);
+    for (let i = 0; i < 2 * suites; i++) {
       const helperRun = ids.slice(4 * i, 4 * i + 4);
       expect(helperRun[0]).to.match(REQUEST_ID_FORMAT);
       expect(new Set(helperRun).size).to.equal(1, `every request of one ${lang} helper call must share one Request-ID`);
     }
+    expect(new Set(ids).size).to.equal(2 * suites, `each ${lang} helper call must mint its own Request-ID`);
   }
 
   for (const [key, ids] of Object.entries(smokeState)) {
     for (const id of ids) {
       expect(id).to.match(REQUEST_ID_FORMAT, `the ${key} client must send a well-formed Request-ID`);
+    }
+  }
+}
+
+export function assertNoRequestIdLeaks(expectedCount: number): void {
+  expect(Object.keys(negativeState)).to.have.length(expectedCount);
+  for (const [lang, ids] of Object.entries(negativeState)) {
+    for (const id of ids) {
+      expect(id).to.equal('', `the ${lang} ingestion client must not send a Request-ID`);
     }
   }
 }
@@ -105,6 +119,11 @@ function addRoutes(app: Express): void {
 
   app.get('/1/test/request-id/smoke/:client/:lang', (req, res) => {
     record(smokeState, `${req.params.client}:${req.params.lang}`, req);
+    res.status(200).json({ status: 'ok' });
+  });
+
+  app.get('/1/test/request-id/negative/:lang', (req, res) => {
+    record(negativeState, req.params.lang, req);
     res.status(200).json({ status: 'ok' });
   });
 

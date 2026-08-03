@@ -70,7 +70,7 @@ public class TestsRequest extends TestsGenerator {
     }
   }
 
-  private boolean e2eTemplateRenders(String tag) {
+  private boolean e2eTemplateRenders(String tag) throws CTSException {
     Path e2eTemplate = Path.of("templates", language, "tests", "e2e", "e2e.mustache");
     if (!Files.exists(e2eTemplate)) {
       return true;
@@ -78,7 +78,7 @@ public class TestsRequest extends TestsGenerator {
     try {
       return Files.readString(e2eTemplate).contains(tag);
     } catch (IOException e) {
-      return false;
+      throw new CTSException("failed to read " + e2eTemplate + " while validating '" + tag + "'", e);
     }
   }
 
@@ -193,6 +193,13 @@ public class TestsRequest extends TestsGenerator {
                   "'correlationIdSuffix' re-issues the request with only the path and the" +
                     " requestOptions headers: query parameters would be silently dropped from" +
                     " the second call."
+                );
+              }
+              if (!ope.headerParams.isEmpty()) {
+                throw new CTSException(
+                  "'correlationIdSuffix' re-issues the request with only the path and the" +
+                    " requestOptions headers: operation-level header parameters would be" +
+                    " silently dropped from the second call."
                 );
               }
               if (!e2eTemplateRenders("correlationIdSuffix")) {
