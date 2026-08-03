@@ -131,7 +131,9 @@ describe('init', () => {
     const headerResult = (await headerClient.customGet({
       path: '1/bar',
     })) as unknown as EchoResponse;
-    expect(headerResult.headers).toEqual({
+    const { 'request-id': requestId, ...headers } = headerResult.headers;
+    expect(requestId).toMatch(/^[0-9A-Za-z]{11}$/);
+    expect(headers).toEqual({
       accept: 'application/json',
       'content-type': 'text/plain',
       'x-algolia-api-key': 'bar',
