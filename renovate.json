@@ -3,7 +3,8 @@
   "extends": [
     "config:js-app",
     "github>algolia/renovate-config-algolia",
-    ":preserveSemverRanges"
+    ":preserveSemverRanges",
+    "helpers:pinGitHubActionDigests"
   ],
   "enabledManagers": [
     "bundler",
@@ -279,7 +280,8 @@
   ],
   "github-actions": {
     "managerFilePatterns": [
-      "/\\.github/workflows/.*\\.ya?ml$/"
+      "/\\.github/workflows/.*\\.ya?ml$/",
+      "/\\.github/actions/.*/action\\.ya?ml$/"
     ]
   },
   "ignorePaths": [
