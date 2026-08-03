@@ -74,6 +74,8 @@ function addRoutes(app: Express): void {
         waitTaskCount: 0,
         successful: false,
       };
+      // the recording middleware already ran for this request, so the new run's first
+      // request-id is the last element — keep it, drop any previous run's residue
       aciRequestIds[lang] = (aciRequestIds[lang] ?? []).slice(-1);
     } else {
       expect(aciState).to.include.keys(lang);

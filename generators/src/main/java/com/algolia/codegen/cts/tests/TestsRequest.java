@@ -18,6 +18,8 @@ import org.openapitools.codegen.SupportingFile;
 
 public class TestsRequest extends TestsGenerator {
 
+  private static final ObjectMapper JSON = new ObjectMapper();
+
   private final boolean withSyncTests;
   private List<SupportingFile> supportingFiles;
 
@@ -199,7 +201,7 @@ public class TestsRequest extends TestsGenerator {
                   ? Set.of()
                   : req.requestOptions.queryParameters.keySet();
               if (req.request.queryParameters != null) {
-                Iterator<String> expectedQueryParams = new ObjectMapper().readTree(req.request.queryParameters).fieldNames();
+                Iterator<String> expectedQueryParams = JSON.readTree(req.request.queryParameters).fieldNames();
                 while (expectedQueryParams.hasNext()) {
                   String param = expectedQueryParams.next();
                   if (!reissuedQueryParams.contains(param)) {

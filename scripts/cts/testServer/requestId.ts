@@ -96,6 +96,9 @@ function addRoutes(app: Express): void {
     }),
   );
 
+  // fails twice then succeeds, so one client test call produces exactly 3 attempts: a port's
+  // retry strategy must reach 3 attempts (the client tests configure 3 hosts). Recorder state
+  // persists across the suites of one run (python runs sync + async), which `% 3` absorbs.
   app.post('/1/test/request-id/retry/:lang', (req, res) => {
     const lang = req.params.lang;
     record(retryState, lang, req);
