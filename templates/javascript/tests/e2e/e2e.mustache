@@ -31,6 +31,9 @@ describe('{{operationId}}', () => {
     {{/body}}
     {{#correlationIdSuffix}}
     const httpResp = await client.transporter.requestWithHttpInfo({ method: '{{{request.method}}}', path: '{{{request.path}}}', queryParameters: {}, headers: {} }{{#hasRequestOptions}}, {
+      {{#requestOptions.queryParameters.parameters}}
+      queryParameters: {{{.}}},
+      {{/requestOptions.queryParameters.parameters}}
       {{#requestOptions.headers.parameters}}
       headers: {{{.}}},
       {{/requestOptions.headers.parameters}}

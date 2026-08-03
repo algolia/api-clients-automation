@@ -33,5 +33,31 @@
       },
       "correlationIdSuffix": "CtsE2eEcho4"
     }
+  },
+  {
+    "testName": "the Correlation-ID ends with the Request-ID sent as a query parameter",
+    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "python", "ruby", "scala", "swift"],
+    "parameters": {
+      "compositionID": "id1"
+    },
+    "requestOptions": {
+      "queryParameters": {
+        "x-algolia-request-id": "CtsE2eEchoQ"
+      }
+    },
+    "request": {
+      "path": "/1/compositions/id1",
+      "method": "GET",
+      "queryParameters": {
+        "x-algolia-request-id": "CtsE2eEchoQ"
+      }
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "objectID": "id1"
+      },
+      "correlationIdSuffix": "CtsE2eEchoQ"
+    }
   }
 ]

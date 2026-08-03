@@ -5,6 +5,7 @@ import static org.openapitools.codegen.utils.StringUtils.camelize;
 import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -193,18 +194,32 @@ public class TestsRequest extends TestsGenerator {
                     " would execute the operation twice."
                 );
               }
-              if (req.request.queryParameters != null || (req.requestOptions != null && req.requestOptions.queryParameters != null)) {
-                throw new CTSException(
-                  "'correlationIdSuffix' re-issues the request with only the path and the" +
-                    " requestOptions headers: query parameters would be silently dropped from" +
-                    " the second call."
-                );
+              Set<String> reissuedQueryParams =
+                req.requestOptions == null || req.requestOptions.queryParameters == null
+                  ? Set.of()
+                  : req.requestOptions.queryParameters.keySet();
+              if (req.request.queryParameters != null) {
+                Iterator<String> expectedQueryParams = new ObjectMapper().readTree(req.request.queryParameters).fieldNames();
+                while (expectedQueryParams.hasNext()) {
+                  String param = expectedQueryParams.next();
+                  if (!reissuedQueryParams.contains(param)) {
+                    throw new CTSException(
+                      "'correlationIdSuffix' re-issues the request with only the path, the" +
+                        " requestOptions headers and the requestOptions query parameters: the" +
+                        " '" +
+                        param +
+                        "' query parameter comes from the operation parameters and would be" +
+                        " silently dropped from the second call."
+                    );
+                  }
+                }
               }
               if (!ope.headerParams.isEmpty()) {
                 throw new CTSException(
-                  "'correlationIdSuffix' re-issues the request with only the path and the" +
-                    " requestOptions headers: operation-level header parameters would be" +
-                    " silently dropped from the second call."
+                  "'correlationIdSuffix' re-issues the request with only the path, the" +
+                    " requestOptions headers and the requestOptions query parameters:" +
+                    " operation-level header parameters would be silently dropped from the" +
+                    " second call."
                 );
               }
               if (!e2eTemplateRenders("correlationIdSuffix")) {
