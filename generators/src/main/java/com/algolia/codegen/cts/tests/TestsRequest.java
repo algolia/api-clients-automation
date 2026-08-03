@@ -181,6 +181,11 @@ public class TestsRequest extends TestsGenerator {
           if (req.response != null) {
             req.response.body = escapeBody(req.response.body);
             if (req.response.correlationIdSuffix != null) {
+              if (req.response.correlationIdSuffix.isEmpty()) {
+                throw new CTSException(
+                  "'correlationIdSuffix' must not be empty: the generated 'endsWith' assertion" + " would always pass."
+                );
+              }
               if (req.request == null || !"GET".equals(req.request.method)) {
                 throw new CTSException(
                   "'correlationIdSuffix' re-issues the request through the transporter to read" +

@@ -6,7 +6,7 @@ import express from 'express';
 
 import { setupServer } from './index.ts';
 
-const REQUEST_ID_FORMAT = /^[0-9A-Za-z]{11}$/;
+export const REQUEST_ID_FORMAT = /^[0-9A-Za-z]{11}$/;
 
 // languages that have ported Request-ID support (API-516)
 export const REQUEST_ID_LANGUAGES = ['javascript'];

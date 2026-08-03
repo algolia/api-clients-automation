@@ -5,7 +5,7 @@ import type { Express } from 'express';
 import express from 'express';
 
 import { setupServer } from './index.ts';
-import { REQUEST_ID_LANGUAGES } from './requestId.ts';
+import { REQUEST_ID_FORMAT, REQUEST_ID_LANGUAGES } from './requestId.ts';
 
 const aciState: Record<
   string,
@@ -33,7 +33,7 @@ export function assertValidAccountCopyIndex(expectedCount: number): void {
     if (REQUEST_ID_LANGUAGES.includes(lang)) {
       const requestIds = aciRequestIds[lang] ?? [];
       expect(requestIds).to.not.be.empty;
-      expect(requestIds[0]).to.match(/^[0-9A-Za-z]{11}$/);
+      expect(requestIds[0]).to.match(REQUEST_ID_FORMAT);
       expect(new Set(requestIds).size).to.equal(
         1,
         `every accountCopyIndex request on both applications must share one Request-ID for ${lang}`,
@@ -74,6 +74,7 @@ function addRoutes(app: Express): void {
         waitTaskCount: 0,
         successful: false,
       };
+      aciRequestIds[lang] = (aciRequestIds[lang] ?? []).slice(-1);
     } else {
       expect(aciState).to.include.keys(lang);
     }
