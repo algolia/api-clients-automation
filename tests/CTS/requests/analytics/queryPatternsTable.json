@@ -2,12 +2,16 @@
   {
     "testName": "queryPatternsTable with minimal parameters",
     "parameters": {
-      "metrics": [{ "kind": "searchesCount" }],
-      "parameters": [{ "kind": "indices", "value": ["index"] }]
+      "tablePayload": {
+        "metrics": [{ "kind": "searchesCount" }],
+        "parameters": [{ "kind": "indices", "value": ["index"] }]
+      },
+      "index": "index"
     },
     "request": {
       "path": "/3/patterns/table",
       "method": "POST",
+      "queryParameters": { "index": "index" },
       "body": {
         "metrics": [{ "kind": "searchesCount" }],
         "parameters": [{ "kind": "indices", "value": ["index"] }]
@@ -17,18 +21,22 @@
   {
     "testName": "queryPatternsTable with all parameters",
     "parameters": {
-      "domain": "core",
-      "metrics": [{ "kind": "searchesCount" }],
-      "groupBy": [{ "kind": "query" }],
-      "filters": [{ "kind": "clicked" }],
-      "parameters": [{ "kind": "indices", "value": ["index"] }],
-      "orderBy": [{ "kind": "searchesCount", "direction": "desc" }],
-      "limit": 100,
-      "offset": 0
+      "tablePayload": {
+        "domain": "core",
+        "metrics": [{ "kind": "searchesCount" }],
+        "groupBy": [{ "kind": "query" }],
+        "filters": [{ "kind": "clicked" }],
+        "parameters": [{ "kind": "indices", "value": ["index"] }],
+        "orderBy": [{ "kind": "searchesCount", "direction": "desc" }],
+        "limit": 100,
+        "offset": 0
+      },
+      "index": "index"
     },
     "request": {
       "path": "/3/patterns/table",
       "method": "POST",
+      "queryParameters": { "index": "index" },
       "body": {
         "domain": "core",
         "metrics": [{ "kind": "searchesCount" }],

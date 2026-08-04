@@ -267,14 +267,20 @@ TimeseriesResponse:
   type: object
   title: Timeseries response
   additionalProperties: false
+  required:
+    - series
   properties:
     series:
       type: array
-      description: One entry per `groupBy` combination.
+      nullable: true
+      description: One entry per `groupBy` combination. `null` when the query matched no data.
       items:
         title: series
         type: object
         additionalProperties: false
+        required:
+          - totals
+          - dates
         properties:
           key:
             type: object
@@ -291,6 +297,9 @@ TimeseriesResponse:
               title: seriesDate
               type: object
               additionalProperties: false
+              required:
+                - date
+                - metrics
               properties:
                 date:
                   type: string
@@ -304,6 +313,8 @@ TableResponse:
   type: object
   title: Table response
   additionalProperties: false
+  required:
+    - rows
   properties:
     rows:
       type: array
@@ -328,6 +339,8 @@ Catalog:
   type: object
   title: Field catalog
   additionalProperties: false
+  required:
+    - domains
   properties:
     domains:
       type: object
@@ -339,6 +352,11 @@ DomainCatalog:
   type: object
   title: Domain catalog
   additionalProperties: false
+  required:
+    - metrics
+    - filters
+    - groups
+    - distributions
   properties:
     metrics:
       type: array
@@ -367,6 +385,9 @@ CatalogEntry:
   additionalProperties: false
   required:
     - kind
+    - description
+    - roots
+    - requires
   properties:
     kind:
       type: string

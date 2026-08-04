@@ -1,13 +1,17 @@
 [
   {
-    "testName": "queryPatternsDistribution with minimal parameters",
+    "testName": "queryPatternsDistribution",
     "parameters": {
-      "distributions": [{ "kind": "clickPosition", "bins": [1, 2, 3, 4, 5] }],
-      "parameters": [{ "kind": "indices", "value": ["index"] }]
+      "distributionPayload": {
+        "distributions": [{ "kind": "clickPosition", "bins": [1, 2, 3, 4, 5] }],
+        "parameters": [{ "kind": "indices", "value": ["index"] }]
+      },
+      "index": "index"
     },
     "request": {
       "path": "/3/patterns/distribution",
       "method": "POST",
+      "queryParameters": { "index": "index" },
       "body": {
         "distributions": [{ "kind": "clickPosition", "bins": [1, 2, 3, 4, 5] }],
         "parameters": [{ "kind": "indices", "value": ["index"] }]

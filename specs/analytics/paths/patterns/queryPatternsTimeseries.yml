@@ -11,6 +11,8 @@ post:
     Returns one time series per `groupBy` combination, each with period `totals` and a per-day metric
     breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional. Discover
     valid field kinds per domain with `/3/patterns/fields`.
+  parameters:
+    - $ref: '../../common/parameters.yml#/IndexQuery'
   requestBody:
     required: true
     content:

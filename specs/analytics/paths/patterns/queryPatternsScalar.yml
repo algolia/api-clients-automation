@@ -11,6 +11,8 @@ post:
     Aggregates the requested `metrics` over the whole period and returns a single object keyed by metric
     kind. `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per
     domain with `/3/patterns/fields`.
+  parameters:
+    - $ref: '../../common/parameters.yml#/IndexQuery'
   requestBody:
     required: true
     content:

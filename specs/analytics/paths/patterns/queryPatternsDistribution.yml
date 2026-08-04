@@ -11,6 +11,8 @@ post:
     Buckets one or more numeric fields into histograms and returns an object keyed by `histogram<Field>`,
     each mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is
     optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+  parameters:
+    - $ref: '../../common/parameters.yml#/IndexQuery'
   requestBody:
     required: true
     content:

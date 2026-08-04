@@ -11,6 +11,8 @@ post:
     Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;
     `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy` is set.
     Discover valid field kinds per domain with `/3/patterns/fields`.
+  parameters:
+    - $ref: '../../common/parameters.yml#/IndexQuery'
   requestBody:
     required: true
     content:

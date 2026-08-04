@@ -2,12 +2,16 @@
   {
     "testName": "queryPatternsTimeseries with minimal parameters",
     "parameters": {
-      "metrics": [{ "kind": "searchesCount" }],
-      "parameters": [{ "kind": "indices", "value": ["index"] }]
+      "timeseriesPayload": {
+        "metrics": [{ "kind": "searchesCount" }],
+        "parameters": [{ "kind": "indices", "value": ["index"] }]
+      },
+      "index": "index"
     },
     "request": {
       "path": "/3/patterns/timeseries",
       "method": "POST",
+      "queryParameters": { "index": "index" },
       "body": {
         "metrics": [{ "kind": "searchesCount" }],
         "parameters": [{ "kind": "indices", "value": ["index"] }]
@@ -17,29 +21,33 @@
   {
     "testName": "queryPatternsTimeseries with all parameters",
     "parameters": {
-      "domain": "core",
-      "metrics": [{ "kind": "searchesCount" }, { "domain": "abtesting", "kind": "isMsrQuery" }],
-      "groupBy": [{ "kind": "index" }],
-      "filters": [{ "kind": "clicked" }, { "kind": "country", "operator": "=", "parameter": { "kind": "country" } }],
-      "parameters": [
-        { "kind": "indices", "value": ["index"] },
-        { "kind": "startDate", "value": "2024-01-01T00:00:00Z" },
-        { "kind": "endDate", "value": "2024-01-07T23:59:59Z" },
-        { "kind": "country", "value": "FR" }
-      ],
-      "limit": 50,
-      "offset": 0
+      "timeseriesPayload": {
+        "domain": "core",
+        "metrics": [{ "kind": "searchesCount" }, { "domain": "abtesting", "kind": "isMsrQuery" }],
+        "groupBy": [{ "kind": "index" }],
+        "filters": [{ "kind": "clicked" }, { "kind": "country", "operator": "=", "parameter": { "kind": "country" } }],
+        "parameters": [
+          { "kind": "indices", "value": ["indexA", "indexB"] },
+          { "kind": "startDate", "value": "2024-01-01T00:00:00Z" },
+          { "kind": "endDate", "value": "2024-01-07T23:59:59Z" },
+          { "kind": "country", "value": "FR" }
+        ],
+        "limit": 50,
+        "offset": 0
+      },
+      "index": "indexA,indexB"
     },
     "request": {
       "path": "/3/patterns/timeseries",
       "method": "POST",
+      "queryParameters": { "index": "indexA,indexB" },
       "body": {
         "domain": "core",
         "metrics": [{ "kind": "searchesCount" }, { "domain": "abtesting", "kind": "isMsrQuery" }],
         "groupBy": [{ "kind": "index" }],
         "filters": [{ "kind": "clicked" }, { "kind": "country", "operator": "=", "parameter": { "kind": "country" } }],
         "parameters": [
-          { "kind": "indices", "value": ["index"] },
+          { "kind": "indices", "value": ["indexA", "indexB"] },
           { "kind": "startDate", "value": "2024-01-01T00:00:00Z" },
           { "kind": "endDate", "value": "2024-01-07T23:59:59Z" },
           { "kind": "country", "value": "FR" }
