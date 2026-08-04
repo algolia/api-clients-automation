@@ -22,6 +22,8 @@ ABTest:
       $ref: '../parameters.yml#/stoppedAt'
     name:
       $ref: '../parameters.yml#/name'
+    hypothesis:
+      $ref: '../parameters.yml#/hypothesis'
     status:
       $ref: '#/Status'
     variants:
