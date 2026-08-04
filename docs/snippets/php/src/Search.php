@@ -3001,7 +3001,7 @@ class SnippetSearchClient
      *
      * call saveObjects without error
      */
-    public function snippetForSaveObjects(): void
+    public function snippetForSaveObjects2(): void
     {
         // >SEPARATOR saveObjects call saveObjects without error
         // Initialize the client
@@ -3032,7 +3032,7 @@ class SnippetSearchClient
      *
      * saveObjects should report errors
      */
-    public function snippetForSaveObjects1(): void
+    public function snippetForSaveObjects3(): void
     {
         // >SEPARATOR saveObjects saveObjects should report errors
         // Initialize the client
@@ -3063,7 +3063,7 @@ class SnippetSearchClient
      *
      * saveObjectsPlaylist
      */
-    public function snippetForSaveObjects2(): void
+    public function snippetForSaveObjects4(): void
     {
         // >SEPARATOR saveObjects saveObjectsPlaylist
         // Initialize the client
@@ -3093,7 +3093,7 @@ class SnippetSearchClient
      *
      * saveObjectsPublicUser
      */
-    public function snippetForSaveObjects3(): void
+    public function snippetForSaveObjects5(): void
     {
         // >SEPARATOR saveObjects saveObjectsPublicUser
         // Initialize the client
@@ -5377,7 +5377,7 @@ class SnippetSearchClient
      */
     public function snippetForSearchRules(): void
     {
-        // >SEPARATOR searchRules default
+        // >SEPARATOR searchRules searchRules
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 

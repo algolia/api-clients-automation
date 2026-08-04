@@ -560,7 +560,7 @@ class SnippetCompositionClient
      */
     public function snippetForGetComposition(): void
     {
-        // >SEPARATOR getComposition default
+        // >SEPARATOR getComposition getComposition
         // Initialize the client
         $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 

@@ -11,9 +11,11 @@ import {
   serializeQueryParameters,
   createIterablePromise,
   logWarning,
+  withRequestId,
   {{/isSearchClient}}
   {{#isCompositionClient}}
   createIterablePromise,
+  withRequestId,
   {{/isCompositionClient}}
   {{#isIngestionClient}}
   createIterablePromise,

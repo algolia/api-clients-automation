@@ -5,6 +5,7 @@ import type { Express } from 'express';
 import express from 'express';
 
 import { setupServer } from './index.ts';
+import { observedRequestId, REQUEST_ID_FORMAT, REQUEST_ID_LANGUAGES } from './requestId.ts';
 
 const aciState: Record<
   string,
@@ -22,10 +23,22 @@ const aciState: Record<
   }
 > = {};
 
+const aciRequestIds: Record<string, string[]> = {};
+
 export function assertValidAccountCopyIndex(expectedCount: number): void {
   expect(Object.keys(aciState)).to.have.length(expectedCount);
   for (const lang in aciState) {
     expect(aciState[lang].waitTaskCount).to.equal(5);
+
+    if (REQUEST_ID_LANGUAGES.includes(lang)) {
+      const requestIds = aciRequestIds[lang] ?? [];
+      expect(requestIds).to.not.be.empty;
+      expect(requestIds[0]).to.match(REQUEST_ID_FORMAT);
+      expect(new Set(requestIds).size).to.equal(
+        1,
+        `every accountCopyIndex request on both applications must share one Request-ID for ${lang}`,
+      );
+    }
   }
 }
 
@@ -36,6 +49,14 @@ function addRoutes(app: Express): void {
       type: ['application/json', 'text/plain'], // the js client sends the body as text/plain
     }),
   );
+
+  app.use((req, _res, next) => {
+    const lang = req.url.match(/cts_e2e_account_copy_index_(?:source|destination)_([^/?]+)/)?.[1];
+    if (lang) {
+      (aciRequestIds[lang] ??= []).push(observedRequestId(req));
+    }
+    next();
+  });
 
   app.get('/1/indexes/:indexName/settings', (req, res) => {
     const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_(source|destination)_(.*)$/)?.[2] as string;
@@ -53,6 +74,9 @@ function addRoutes(app: Express): void {
         waitTaskCount: 0,
         successful: false,
       };
+      // the recording middleware already ran for this request, so the new run's first
+      // request-id is the last element — keep it, drop any previous run's residue
+      aciRequestIds[lang] = (aciRequestIds[lang] ?? []).slice(-1);
     } else {
       expect(aciState).to.include.keys(lang);
     }

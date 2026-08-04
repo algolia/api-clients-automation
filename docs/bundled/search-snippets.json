@@ -301,7 +301,7 @@
       "facetName and facetQuery": "var response = await client.SearchForFacetValuesAsync(\n  \"<YOUR_INDEX_NAME>\",\n  \"author\",\n  new SearchForFacetValuesRequest { FacetQuery = \"stephen\" }\n);"
     },
     "searchRules": {
-      "default": "var response = await client.SearchRulesAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchRulesParams { Query = \"zorro\" }\n);"
+      "searchRules": "var response = await client.SearchRulesAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchRulesParams { Query = \"zorro\" }\n);"
     },
     "searchSingleIndex": {
       "search with minimal parameters": "var response = await client.SearchSingleIndexAsync<Hit>(\"<YOUR_INDEX_NAME>\");",
@@ -877,7 +877,7 @@
       "facetName and facetQuery": "final response = await client.searchForFacetValues(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  facetName: \"author\",\n  searchForFacetValuesRequest: SearchForFacetValuesRequest(\n    facetQuery: \"stephen\",\n  ),\n);"
     },
     "searchRules": {
-      "default": "final response = await client.searchRules(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchRulesParams: SearchRulesParams(\n    query: \"zorro\",\n  ),\n);"
+      "searchRules": "final response = await client.searchRules(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchRulesParams: SearchRulesParams(\n    query: \"zorro\",\n  ),\n);"
     },
     "searchSingleIndex": {
       "search with minimal parameters": "final response = await client.searchSingleIndex(\n  indexName: \"<YOUR_INDEX_NAME>\",\n);",
@@ -1474,7 +1474,7 @@
       "facetName and facetQuery": "response, err := client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(\n  \"<YOUR_INDEX_NAME>\", \"author\").WithSearchForFacetValuesRequest(\n  search.NewEmptySearchForFacetValuesRequest().SetFacetQuery(\"stephen\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "searchRules": {
-      "default": "response, err := client.SearchRules(client.NewApiSearchRulesRequest(\n  \"<YOUR_INDEX_NAME>\").WithSearchRulesParams(\n  search.NewEmptySearchRulesParams().SetQuery(\"zorro\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "searchRules": "response, err := client.SearchRules(client.NewApiSearchRulesRequest(\n  \"<YOUR_INDEX_NAME>\").WithSearchRulesParams(\n  search.NewEmptySearchRulesParams().SetQuery(\"zorro\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "searchSingleIndex": {
       "search with minimal parameters": "response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(\n  \"<YOUR_INDEX_NAME>\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -2082,7 +2082,7 @@
       "facetName and facetQuery": "SearchForFacetValuesResponse response = client.searchForFacetValues(\n  \"<YOUR_INDEX_NAME>\",\n  \"author\",\n  new SearchForFacetValuesRequest().setFacetQuery(\"stephen\")\n);"
     },
     "searchRules": {
-      "default": "SearchRulesResponse response = client.searchRules(\"<YOUR_INDEX_NAME>\", new SearchRulesParams().setQuery(\"zorro\"));"
+      "searchRules": "SearchRulesResponse response = client.searchRules(\"<YOUR_INDEX_NAME>\", new SearchRulesParams().setQuery(\"zorro\"));"
     },
     "searchSingleIndex": {
       "search with minimal parameters": "SearchResponse response = client.searchSingleIndex(\"<YOUR_INDEX_NAME>\", Hit.class);",
@@ -2618,6 +2618,7 @@
       "default": "const response = await client.saveObject({\n  indexName: '<YOUR_INDEX_NAME>',\n  body: {\n    name: 'Black T-shirt',\n    color: '#000000||black',\n    availableIn: 'https://source.unsplash.com/100x100/?paris||Paris',\n    objectID: 'myID',\n  },\n});"
     },
     "saveObjects": {
+      "every request of one helper call shares one Request-ID": "const response = await client.saveObjects({\n  indexName: 'cts_request_id_javascript',\n  objects: [\n    { objectID: '5', name: 'Eva' },\n    { objectID: '6', name: 'Fred' },\n    { objectID: '7', name: 'Gina' },\n    { objectID: '8', name: 'Hugo' },\n  ],\n  batchSize: 2,\n  waitForTasks: true,\n});",
       "call saveObjects without error": "const response = await client.saveObjects({\n  indexName: 'cts_e2e_saveObjects_javascript',\n  objects: [\n    { objectID: '1', name: 'Adam' },\n    { objectID: '2', name: 'Benoit' },\n  ],\n});",
       "saveObjects should report errors": "const response = await client.saveObjects({\n  indexName: 'cts_e2e_saveObjects_javascript',\n  objects: [\n    { objectID: '1', name: 'Adam' },\n    { objectID: '2', name: 'Benoit' },\n  ],\n});",
       "saveObjectsPlaylist": "const response = await client.saveObjects({\n  indexName: 'playlists',\n  objects: [\n    {\n      objectID: '1',\n      visibility: 'public',\n      name: 'Hot 100 Billboard Charts',\n      playlistId: 'd3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f',\n      createdAt: '1500240452',\n    },\n  ],\n});",
@@ -2693,7 +2694,8 @@
       "facetName and facetQuery": "const response = await client.searchForFacetValues({\n  indexName: 'indexName',\n  facetName: 'author',\n  searchForFacetValuesRequest: { facetQuery: 'stephen' },\n});"
     },
     "searchRules": {
-      "default": "const response = await client.searchRules({ indexName: 'cts_e2e_browse', searchRulesParams: { query: 'zorro' } });"
+      "searchRules": "const response = await client.searchRules({ indexName: 'cts_e2e_browse', searchRulesParams: { query: 'zorro' } });",
+      "the classic engine accepts a Request-ID sent as a query parameter": "const response = await client.searchRules(\n  { indexName: 'cts_e2e_browse', searchRulesParams: { query: 'zorro' } },\n  {\n    queryParameters: { 'x-algolia-request-id': 'CtsE2eQry11' },\n  },\n);"
     },
     "searchSingleIndex": {
       "search with minimal parameters": "const response = await client.searchSingleIndex({ indexName: 'indexName' });",
@@ -3298,7 +3300,7 @@
       "facetName and facetQuery": "var response =\n  client.searchForFacetValues(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    facetName = \"author\",\n    searchForFacetValuesRequest = SearchForFacetValuesRequest(facetQuery = \"stephen\"),\n  )"
     },
     "searchRules": {
-      "default": "var response =\n  client.searchRules(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    searchRulesParams = SearchRulesParams(query = \"zorro\"),\n  )"
+      "searchRules": "var response =\n  client.searchRules(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    searchRulesParams = SearchRulesParams(query = \"zorro\"),\n  )"
     },
     "searchSingleIndex": {
       "search with minimal parameters": "var response = client.searchSingleIndex(indexName = \"<YOUR_INDEX_NAME>\")",
@@ -3906,7 +3908,7 @@
       "facetName and facetQuery": "$response = $client->searchForFacetValues(\n    '<YOUR_INDEX_NAME>',\n    'author',\n    ['facetQuery' => 'stephen',\n    ],\n);"
     },
     "searchRules": {
-      "default": "$response = $client->searchRules(\n    '<YOUR_INDEX_NAME>',\n    ['query' => 'zorro',\n    ],\n);"
+      "searchRules": "$response = $client->searchRules(\n    '<YOUR_INDEX_NAME>',\n    ['query' => 'zorro',\n    ],\n);"
     },
     "searchSingleIndex": {
       "search with minimal parameters": "$response = $client->searchSingleIndex(\n    '<YOUR_INDEX_NAME>',\n);",
@@ -4514,7 +4516,7 @@
       "facetName and facetQuery": "response = client.search_for_facet_values(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    facet_name=\"author\",\n    search_for_facet_values_request={\n        \"facetQuery\": \"stephen\",\n    },\n)"
     },
     "searchRules": {
-      "default": "response = client.search_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_rules_params={\n        \"query\": \"zorro\",\n    },\n)"
+      "searchRules": "response = client.search_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_rules_params={\n        \"query\": \"zorro\",\n    },\n)"
     },
     "searchSingleIndex": {
       "search with minimal parameters": "response = client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)",
@@ -5122,7 +5124,7 @@
       "facetName and facetQuery": "response = client.search_for_facet_values(\n  \"<YOUR_INDEX_NAME>\",\n  \"author\",\n  Algolia::Search::SearchForFacetValuesRequest.new(facet_query: \"stephen\")\n)"
     },
     "searchRules": {
-      "default": "response = client.search_rules(\"<YOUR_INDEX_NAME>\", Algolia::Search::SearchRulesParams.new(query: \"zorro\"))"
+      "searchRules": "response = client.search_rules(\"<YOUR_INDEX_NAME>\", Algolia::Search::SearchRulesParams.new(query: \"zorro\"))"
     },
     "searchSingleIndex": {
       "search with minimal parameters": "response = client.search_single_index(\"<YOUR_INDEX_NAME>\")",
@@ -5730,7 +5732,7 @@
       "facetName and facetQuery": "val response = Await.result(\n  client.searchForFacetValues(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    facetName = \"author\",\n    searchForFacetValuesRequest = Some(\n      SearchForFacetValuesRequest(\n        facetQuery = Some(\"stephen\")\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "searchRules": {
-      "default": "val response = Await.result(\n  client.searchRules(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    searchRulesParams = Some(\n      SearchRulesParams(\n        query = Some(\"zorro\")\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+      "searchRules": "val response = Await.result(\n  client.searchRules(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    searchRulesParams = Some(\n      SearchRulesParams(\n        query = Some(\"zorro\")\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "searchSingleIndex": {
       "search with minimal parameters": "val response = Await.result(\n  client.searchSingleIndex(\n    indexName = \"<YOUR_INDEX_NAME>\"\n  ),\n  Duration(100, \"sec\")\n)",
@@ -6338,7 +6340,7 @@
       "facetName and facetQuery": "let response = try await client.searchForFacetValues(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    facetName: \"author\",\n    searchForFacetValuesRequest: SearchForFacetValuesRequest(facetQuery: \"stephen\")\n)"
     },
     "searchRules": {
-      "default": "let response = try await client.searchRules(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchRulesParams: SearchRulesParams(query: \"zorro\")\n)"
+      "searchRules": "let response = try await client.searchRules(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchRulesParams: SearchRulesParams(query: \"zorro\")\n)"
     },
     "searchSingleIndex": {
       "search with minimal parameters": "let response: SearchResponse<Hit> = try await client.searchSingleIndex(indexName: \"<YOUR_INDEX_NAME>\")",

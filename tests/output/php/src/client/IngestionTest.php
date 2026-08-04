@@ -225,6 +225,20 @@ class IngestionTest extends TestCase implements HttpClientInterface
         }
     }
 
+    #[TestDox('the ingestion client sends no Request-ID')]
+    public function test0requestId(): void
+    {
+        $client = IngestionClient::createWithConfig(IngestionConfig::create('test-app-id', 'test-api-key', 'us')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6694']));
+
+        $res = $client->customGet(
+            '1/test/request-id/negative/php',
+        );
+        $this->assertEquals(
+            '{"status":"ok"}',
+            json_encode($res)
+        );
+    }
+
     #[TestDox('switch API key')]
     public function test0setClientApiKey(): void
     {
