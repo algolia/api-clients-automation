@@ -44,6 +44,11 @@ name:
   description: A/B test name.
   example: Custom ranking sales rank test
 
+hypothesis:
+  type: string
+  description: Expected outcome of the A/B test.
+  example: Enabling the feature increases conversion rate
+
 description:
   type: string
   description: Description for this variant.
