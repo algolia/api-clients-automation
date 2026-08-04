@@ -3414,7 +3414,7 @@ func SnippetForSaveObjectOfSearch() {
 	// SEPARATOR<
 }
 
-func SnippetForSaveObjectsOfSearch() {
+func SnippetForSaveObjectsOfSearch2() {
 	/*
 	   Snippet for the saveObjects method.
 
@@ -3444,7 +3444,7 @@ func SnippetForSaveObjectsOfSearch() {
 	// SEPARATOR<
 }
 
-func SnippetForSaveObjectsOfSearch1() {
+func SnippetForSaveObjectsOfSearch3() {
 	/*
 	   Snippet for the saveObjects method.
 
@@ -3474,7 +3474,7 @@ func SnippetForSaveObjectsOfSearch1() {
 	// SEPARATOR<
 }
 
-func SnippetForSaveObjectsOfSearch2() {
+func SnippetForSaveObjectsOfSearch4() {
 	/*
 	   Snippet for the saveObjects method.
 
@@ -3513,7 +3513,7 @@ func SnippetForSaveObjectsOfSearch2() {
 	// SEPARATOR<
 }
 
-func SnippetForSaveObjectsOfSearch3() {
+func SnippetForSaveObjectsOfSearch5() {
 	/*
 	   Snippet for the saveObjects method.
 
@@ -5448,7 +5448,7 @@ func SnippetForSearchRulesOfSearch() {
 	   searchRules
 	*/
 
-	// >SEPARATOR searchRules default
+	// >SEPARATOR searchRules searchRules
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {

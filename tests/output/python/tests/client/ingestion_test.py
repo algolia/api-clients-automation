@@ -210,6 +210,35 @@ class TestIngestionClient:
                 == "`region` is required and must be one of the following: eu, us"
             )
 
+    async def test_request_id_0(self):
+        """
+        the ingestion client sends no Request-ID
+        """
+
+        _config = IngestionConfig("test-app-id", "test-api-key", "us")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6694,
+                )
+            ]
+        )
+        _client = IngestionClient.create_with_config(config=_config)
+        _req = await _client.custom_get(
+            path="1/test/request-id/negative/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"status":"ok"}""")
+
     async def test_set_client_api_key_0(self):
         """
         switch API key
@@ -451,6 +480,35 @@ class TestIngestionClientSync:
                 str(e)
                 == "`region` is required and must be one of the following: eu, us"
             )
+
+    def test_request_id_0(self):
+        """
+        the ingestion client sends no Request-ID
+        """
+
+        _config = IngestionConfig("test-app-id", "test-api-key", "us")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6694,
+                )
+            ]
+        )
+        _client = IngestionClientSync.create_with_config(config=_config)
+        _req = _client.custom_get(
+            path="1/test/request-id/negative/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"status":"ok"}""")
 
     def test_set_client_api_key_0(self):
         """

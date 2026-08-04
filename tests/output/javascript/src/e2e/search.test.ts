@@ -326,6 +326,19 @@ describe('searchRules', () => {
 
     expect(expectedBody).toEqual(union(expectedBody, resp));
   });
+
+  test('the classic engine accepts a Request-ID sent as a query parameter', async () => {
+    const resp = await client.searchRules(
+      { indexName: 'cts_e2e_browse', searchRulesParams: { query: 'zorro' } },
+      {
+        queryParameters: { 'x-algolia-request-id': 'CtsE2eQry11' },
+      },
+    );
+
+    const expectedBody = { nbHits: 1, nbPages: 1, page: 0 };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
+  });
 });
 
 describe('searchSingleIndex', () => {

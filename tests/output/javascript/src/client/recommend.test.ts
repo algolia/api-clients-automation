@@ -80,6 +80,27 @@ describe('noContent', () => {
   }, 25000);
 });
 
+describe('requestId', () => {
+  test('the recommend client sends a Request-ID', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key').initRecommend({
+      options: {
+        hosts: [
+          {
+            url: 'localhost',
+            port: 6694,
+            accept: 'readWrite',
+            protocol: 'http',
+          },
+        ],
+      },
+    });
+
+    const result = await client.customGet({ path: '1/test/request-id/smoke/recommend/javascript' });
+
+    expect(result).toEqual({ status: 'ok' });
+  }, 25000);
+});
+
 describe('setClientApiKey', () => {
   test('switch API key', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key').initRecommend({
@@ -131,7 +152,9 @@ describe('init', () => {
     const headerResult = (await headerClient.customGet({
       path: '1/bar',
     })) as unknown as EchoResponse;
-    expect(headerResult.headers).toEqual({
+    const { 'request-id': requestId, ...headers } = headerResult.headers;
+    expect(requestId).toMatch(/^[0-9A-Za-z]{11}$/);
+    expect(headers).toEqual({
       accept: 'application/json',
       'content-type': 'text/plain',
       'x-algolia-api-key': 'bar',
