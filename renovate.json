@@ -281,7 +281,8 @@
   "github-actions": {
     "managerFilePatterns": [
       "/\\.github/workflows/.*\\.ya?ml$/",
-      "/\\.github/actions/.*/action\\.ya?ml$/"
+      "/\\.github/actions/.*/action\\.ya?ml$/",
+      "/^templates/.*\\.ya?ml$/"
     ]
   },
   "ignorePaths": [
