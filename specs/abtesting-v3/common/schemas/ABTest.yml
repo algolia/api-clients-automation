@@ -37,6 +37,7 @@ ABTest:
   required:
     - status
     - name
+    - hypothesis
     - createdAt
     - endAt
     - updatedAt
