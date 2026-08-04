@@ -681,6 +681,15 @@ jobs:
             exit 1
           fi
 
+      - name: Check that action refs in workflow templates are pinned to a commit SHA
+        run: |
+          grep -rnE 'uses:.*@' templates | grep -vE 'uses:\s*[^@]+@[0-9a-f]{40}(\s|$)' > unpinned-templates.txt || true
+          if [[ -s unpinned-templates.txt ]]; then
+            echo "The following action refs in templates/ are not pinned to a commit SHA:"
+            cat unpinned-templates.txt
+            exit 1
+          fi
+
   check_green:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
