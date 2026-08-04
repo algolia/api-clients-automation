@@ -413,7 +413,7 @@ final class CompositionClientSnippet {
     ///
     /// getComposition
     func snippetForGetComposition() async throws {
-        // >SEPARATOR getComposition default
+        // >SEPARATOR getComposition getComposition
         // Initialize the client
         let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 

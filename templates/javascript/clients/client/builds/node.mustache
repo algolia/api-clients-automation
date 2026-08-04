@@ -24,6 +24,9 @@ import { createHmac } from 'node:crypto';
       logger: createNullLogger(),
       requester: createHttpRequester(),
       algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],
+      {{#requestIdSupport}}
+      requestIdChannel: 'headers',
+      {{/requestIdSupport}}
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),

@@ -305,6 +305,42 @@ func TestIngestionparameters1(t *testing.T) {
 	require.EqualError(t, err, "`region` is required and must be one of the following: eu, us")
 }
 
+// the ingestion client sends no Request-ID.
+func TestIngestionrequestId0(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *ingestion.APIClient
+		cfg    ingestion.IngestionConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = ingestion.IngestionConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6694", call.IsReadWrite)},
+		},
+		Region: ingestion.Region("us"),
+	}
+	client, err = ingestion.NewClientWithConfig(cfg)
+
+	require.NoError(t, err)
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
+		"1/test/request-id/negative/go"))
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `{"status":"ok"}`, string(rawBody))
+}
+
 // switch API key.
 func TestIngestionsetClientApiKey0(t *testing.T) {
 	var (

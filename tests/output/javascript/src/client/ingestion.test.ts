@@ -178,6 +178,29 @@ describe('parameters', () => {
   }, 25000);
 });
 
+describe('requestId', () => {
+  test('the ingestion client sends no Request-ID', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key').initIngestion({
+      options: {
+        hosts: [
+          {
+            url: 'localhost',
+            port: 6694,
+            accept: 'readWrite',
+            protocol: 'http',
+          },
+        ],
+      },
+      // @ts-ignore
+      region: 'us',
+    });
+
+    const result = await client.customGet({ path: '1/test/request-id/negative/javascript' });
+
+    expect(result).toEqual({ status: 'ok' });
+  }, 25000);
+});
+
 describe('setClientApiKey', () => {
   test('switch API key', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key').initIngestion({

@@ -3062,7 +3062,7 @@ def snippet_for_save_object():
     # SEPARATOR<
 
 
-def snippet_for_save_objects():
+def snippet_for_save_objects2():
     """
     Snippet for the saveObjects method.
 
@@ -3094,7 +3094,7 @@ def snippet_for_save_objects():
     # SEPARATOR<
 
 
-def snippet_for_save_objects1():
+def snippet_for_save_objects3():
     """
     Snippet for the saveObjects method.
 
@@ -3126,7 +3126,7 @@ def snippet_for_save_objects1():
     # SEPARATOR<
 
 
-def snippet_for_save_objects2():
+def snippet_for_save_objects4():
     """
     Snippet for the saveObjects method.
 
@@ -3157,7 +3157,7 @@ def snippet_for_save_objects2():
     # SEPARATOR<
 
 
-def snippet_for_save_objects3():
+def snippet_for_save_objects5():
     """
     Snippet for the saveObjects method.
 
@@ -5596,7 +5596,7 @@ def snippet_for_search_rules():
 
     searchRules
     """
-    # >SEPARATOR searchRules default
+    # >SEPARATOR searchRules searchRules
     # Initialize the client
     # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
     client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
