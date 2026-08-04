@@ -674,7 +674,7 @@ jobs:
       - name: Check that every action ref is pinned to a commit SHA
         run: |
           zizmor --no-progress --no-exit-codes --format json .github clients/*/.github > zizmor.json
-          jq -r '.[] | select(.ident == "unpinned-uses") | "\(.locations[0].symbolic.key.Local.verbatim_path): \(.locations[0].symbolic.annotation)"' zizmor.json | sort -u > unpinned.txt
+          jq -r '.[] | select(.ident == "unpinned-uses") | "\(.locations[0].symbolic.key.Local.verbatim_path):\(.locations[0].concrete.location.start_point.row + 1): \(.locations[0].concrete.feature)"' zizmor.json | sort -u > unpinned.txt
           if [[ -s unpinned.txt ]]; then
             echo "The following action refs are not pinned to a commit SHA:"
             cat unpinned.txt
