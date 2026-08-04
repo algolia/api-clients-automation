@@ -40,7 +40,7 @@
     "request": {
       "path": "/3/patterns/timeseries",
       "method": "POST",
-      "queryParameters": { "index": "indexA,indexB" },
+      "queryParameters": { "index": "indexA%2CindexB" },
       "body": {
         "domain": "core",
         "metrics": [{ "kind": "searchesCount" }, { "domain": "abtesting", "kind": "isMsrQuery" }],
