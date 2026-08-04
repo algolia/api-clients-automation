@@ -1,0 +1,34 @@
+[
+  {
+    "testName": "the recommend client sends a Request-ID",
+    "autoCreateClient": false,
+    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "python", "ruby", "scala", "swift"],
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "port": 6694
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "customGet",
+        "parameters": {
+          "path": "1/test/request-id/smoke/recommend/${{language}}"
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "status": "ok"
+          }
+        }
+      }
+    ]
+  }
+]
