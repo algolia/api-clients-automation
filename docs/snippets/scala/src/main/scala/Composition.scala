@@ -550,7 +550,7 @@ class SnippetCompositionClient {
     * getComposition
     */
   def snippetForCompositionClientGetComposition(): Unit = {
-    // >SEPARATOR getComposition default
+    // >SEPARATOR getComposition getComposition
     // Initialize the client
     val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 

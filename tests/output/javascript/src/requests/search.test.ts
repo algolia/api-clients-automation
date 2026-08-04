@@ -2655,6 +2655,20 @@ describe('searchRules', () => {
     expect(req.data).toEqual({ query: 'zorro' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('the classic engine accepts a Request-ID sent as a query parameter', async () => {
+    const req = (await client.searchRules(
+      { indexName: 'cts_e2e_browse', searchRulesParams: { query: 'zorro' } },
+      {
+        queryParameters: { 'x-algolia-request-id': 'CtsE2eQry11' },
+      },
+    )) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/cts_e2e_browse/rules/search');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'zorro' });
+    expect(req.searchParams).toStrictEqual({ 'x-algolia-request-id': 'CtsE2eQry11' });
+  });
 });
 
 describe('searchSingleIndex', () => {
