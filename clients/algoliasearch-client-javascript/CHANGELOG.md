@@ -1,3 +1,8 @@
+## [5.57.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.56.0...5.57.0)
+
+- [816ba11161](https://github.com/algolia/api-clients-automation/commit/816ba11161) fix(javascript): add warning in replaceAllObjects for empty objects ([#6608](https://github.com/algolia/api-clients-automation/pull/6608)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [2d0d8f3252](https://github.com/algolia/api-clients-automation/commit/2d0d8f3252) feat(javascript): Request-ID and Correlation-ID support ([#6747](https://github.com/algolia/api-clients-automation/pull/6747)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+
 ## [5.56.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.55.2...5.56.0)
 
 - [8a5ab6f7e8](https://github.com/algolia/api-clients-automation/commit/8a5ab6f7e8) feat(javascript): add WithHTTPInfo methods ([#6682](https://github.com/algolia/api-clients-automation/pull/6682)) by [@eric-zaharia](https://github.com/eric-zaharia/)
