@@ -165,6 +165,7 @@ final class ApiWrapper implements ApiWrapperInterface
         $hostCount = count($hosts);
         $attemptNumber = 0;
         $totalStartTime = microtime(true);
+        $errors = [];
 
         foreach ($hosts as $hostUrl) {
             if ($this->config->getHasFullHosts()) {
@@ -227,11 +228,13 @@ final class ApiWrapper implements ApiWrapperInterface
                 return $responseBody;
             } catch (TimeoutException $e) {
                 $this->clusterHosts->timedOut($hostUrl);
+                $errors[] = ['host' => $uri->getHost(), 'error' => $e];
 
                 $this->log(LogLevel::INFO, 'Attempt '.$attemptNumber.'/'.$hostCount.' failed for '.$method.' '.$path, $logParams);
                 $this->log(LogLevel::DEBUG, 'Attempt '.$attemptNumber.'/'.$hostCount.': Timeout on '.$hostUrl.' after '.($timeout * 1000).'ms ('.$e->getMessage().')', $logParams);
             } catch (RetriableException $e) {
                 $this->clusterHosts->failed($hostUrl);
+                $errors[] = ['host' => $uri->getHost(), 'error' => $e];
 
                 $this->log(LogLevel::INFO, 'Attempt '.$attemptNumber.'/'.$hostCount.' failed for '.$method.' '.$path, $logParams);
                 $this->log(LogLevel::DEBUG, 'Attempt '.$attemptNumber.'/'.$hostCount.': '.$e->getMessage().' on '.$hostUrl, $logParams);
@@ -248,7 +251,14 @@ final class ApiWrapper implements ApiWrapperInterface
 
         $this->log(LogLevel::ERROR, 'Request failed after '.$hostCount.' retries: All hosts exhausted', $logParams);
 
-        throw new UnreachableException();
+        $lastError = end($errors);
+
+        throw new UnreachableException(
+            '',
+            false !== $lastError ? $lastError['error']->getCode() : 0,
+            false !== $lastError ? $lastError['error'] : null,
+            $errors
+        );
     }
 
     private function handleResponse(
