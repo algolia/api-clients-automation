@@ -132,7 +132,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
 
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), '`region` must be one of the following: de, us');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', '`region` must be one of the following: de, us'), $e->getMessage());
         }
     }
 
@@ -147,7 +147,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             );
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Parameter `index` is required when calling `getClickPositions`.');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Parameter `index` is required when calling `getClickPositions`.'), $e->getMessage());
         }
     }
 
