@@ -656,6 +656,34 @@ jobs:
         id: setoutput
         run: echo "success=true" >> "$GITHUB_OUTPUT"
 
+  action_pins:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install zizmor
+        run: pipx install zizmor==1.29.0
+
+      - name: Check that every action ref is pinned to a commit SHA
+        run: |
+          zizmor --no-progress --no-exit-codes --format json .github clients/*/.github > zizmor.json
+          jq -r '.[] | select(.ident == "unpinned-uses") | "\(.locations[0].symbolic.key.Local.verbatim_path):\(.locations[0].concrete.location.start_point.row + 1): \(.locations[0].concrete.feature)"' zizmor.json | sort -u > unpinned.txt
+          if [[ -s unpinned.txt ]]; then
+            echo "The following action refs are not pinned to a commit SHA:"
+            cat unpinned.txt
+            exit 1
+          fi
+
+      - name: Check that action refs in workflow templates are pinned to a commit SHA
+        run: |
+          grep -rnE 'uses:.*@' templates | grep -vE 'uses:\s*[^@]+@[0-9a-f]{40}(\s|$)' > unpinned-templates.txt || true
+          if [[ -s unpinned-templates.txt ]]; then
+            echo "The following action refs in templates/ are not pinned to a commit SHA:"
+            cat unpinned-templates.txt
+            exit 1
+          fi
+
   check_green:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -663,10 +691,11 @@ jobs:
       - codegen
       - swift_build_linux
       - kotlin_build_macos
+      - action_pins
     if: always()
     steps:
       - run: |
-          if [[ ("${{ needs.codegen.outputs.success }}" != "true") || ("${{ needs.swift_build_linux.result }}" != "skipped" && "${{ needs.swift_build_linux.outputs.success }}" != "true") || ("${{ needs.kotlin_build_macos.result }}" != "skipped" && "${{ needs.kotlin_build_macos.outputs.success }}" != "true")]]; then
+          if [[ ("${{ needs.codegen.outputs.success }}" != "true") || ("${{ needs.swift_build_linux.result }}" != "skipped" && "${{ needs.swift_build_linux.outputs.success }}" != "true") || ("${{ needs.kotlin_build_macos.result }}" != "skipped" && "${{ needs.kotlin_build_macos.outputs.success }}" != "true") || ("${{ needs.action_pins.result }}" != "success") ]]; then
             echo "a needed step failed"
             exit 1
           fi
