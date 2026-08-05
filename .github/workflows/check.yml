@@ -25,7 +25,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Generate GitHub App Token
         id: app-token
@@ -34,7 +34,7 @@ jobs:
           client-id: ${{ vars.ALGOLIA_BOT_CLIENT_ID }}
           private-key: ${{ secrets.ALGOLIA_BOT_PRIVATE_KEY }}
 
-      - uses: marocchino/sticky-pull-request-comment@v3
+      - uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3.0.5
         with:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           message: |
@@ -55,7 +55,7 @@ jobs:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
 
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
@@ -136,7 +136,7 @@ jobs:
     needs: setup
     if: ${{ needs.setup.outputs.RUN_SCRIPTS == 'true' }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -160,7 +160,7 @@ jobs:
     timeout-minutes: 10
     needs: setup
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -171,7 +171,7 @@ jobs:
         run: yarn cli build specs -s
 
       - name: Store bundled specs
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           if-no-files-found: error
           name: specs
@@ -197,7 +197,7 @@ jobs:
       METIS_API_KEY: ${{ secrets.METIS_API_KEY }}
     name: client javascript${{ needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' && format('@{0}', fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).version) || '' }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Download specs artifacts
         uses: ./scripts/ci/actions/restore-artifacts
@@ -253,16 +253,10 @@ jobs:
         run: echo "dir=$(cd tests/output/javascript && yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
       - name: Restore Yarn js tests
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ${{ steps.yarn-cache-dir-tests.outputs.dir || 'tests/output/javascript/.yarn/cache' }}
           key: yarn-cache-tests-${{ hashFiles('tests/output/javascript/yarn.lock') }}
-
-      - name: Cache js tests node modules
-        uses: actions/cache@v6
-        with:
-          path: tests/output/javascript/node_modules
-          key: node-modules-tests-${{ hashFiles('tests/output/javascript/yarn.lock') }}
 
       - name: Run unit CTS
         run: yarn cli cts run javascript --no-e2e
@@ -296,7 +290,7 @@ jobs:
         run: zip -r -y clients-javascript.zip clients/algoliasearch-client-javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).testsToStore }} ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).guidesToStore }} -x "**/node_modules**" "**/.yarn/cache/**" "**/.yarn/install-state.gz" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/.nx/**"
 
       - name: Store javascript clients
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           if-no-files-found: error
           name: clients-javascript
@@ -327,7 +321,7 @@ jobs:
       hasBreakingChanges: ${{ steps.breakingChanges.outputs.hasBreakingChanges }}
     name: client ${{ matrix.client.language }}@${{ matrix.client.version }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Download specs artifacts
         uses: ./scripts/ci/actions/restore-artifacts
@@ -419,7 +413,7 @@ jobs:
 
       - name: Store ${{ matrix.client.language }} clients
         if: ${{ matrix.client.isMainVersion }}
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           if-no-files-found: error
           name: clients-${{matrix.client.language }}
@@ -442,7 +436,7 @@ jobs:
       success: ${{ steps.setoutput.outputs.success }}
     name: client kotlin${{ format('@{0}', fromJSON(needs.setup.outputs.KOTLIN_DATA).version) }} macos
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Download specs artifacts
         uses: ./scripts/ci/actions/restore-artifacts
@@ -492,7 +486,7 @@ jobs:
       success: ${{ steps.setoutput.outputs.success }}
     name: client swift${{ format('@{0}', fromJSON(needs.setup.outputs.SWIFT_DATA).version) }} linux
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
 
       - name: Download specs artifacts
@@ -544,7 +538,7 @@ jobs:
           client-id: ${{ vars.ALGOLIA_BOT_CLIENT_ID }}
           private-key: ${{ secrets.ALGOLIA_BOT_PRIVATE_KEY }}
 
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
@@ -608,7 +602,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: update generation comment
-        uses: marocchino/sticky-pull-request-comment@v3
+        uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3.0.5
         if: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT == '' }}
         with:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
@@ -621,7 +615,7 @@ jobs:
             ${{ steps.benchmark.outputs.BENCHMARK_SECTION }}
 
       - name: update generation comment
-        uses: marocchino/sticky-pull-request-comment@v3
+        uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3.0.5
         if: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT != '' }}
         with:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
@@ -643,7 +637,7 @@ jobs:
 
       - name: Deploy documentation
         if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' && needs.setup.outputs.RUN_WEBSITE == 'true' }}
-        uses: nwtgck/actions-netlify@v4.0
+        uses: nwtgck/actions-netlify@d22a32a27c918fe470bbc562e984f80ec48c2668 # v4.0.0
         with:
           publish-dir: 'website/build'
           production-branch: main
@@ -662,6 +656,34 @@ jobs:
         id: setoutput
         run: echo "success=true" >> "$GITHUB_OUTPUT"
 
+  action_pins:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install zizmor
+        run: pipx install zizmor==1.29.0
+
+      - name: Check that every action ref is pinned to a commit SHA
+        run: |
+          zizmor --no-progress --no-exit-codes --format json .github clients/*/.github > zizmor.json
+          jq -r '.[] | select(.ident == "unpinned-uses") | "\(.locations[0].symbolic.key.Local.verbatim_path):\(.locations[0].concrete.location.start_point.row + 1): \(.locations[0].concrete.feature)"' zizmor.json | sort -u > unpinned.txt
+          if [[ -s unpinned.txt ]]; then
+            echo "The following action refs are not pinned to a commit SHA:"
+            cat unpinned.txt
+            exit 1
+          fi
+
+      - name: Check that action refs in workflow templates are pinned to a commit SHA
+        run: |
+          grep -rnE 'uses:.*@' templates | grep -vE 'uses:\s*[^@]+@[0-9a-f]{40}(\s|$)' > unpinned-templates.txt || true
+          if [[ -s unpinned-templates.txt ]]; then
+            echo "The following action refs in templates/ are not pinned to a commit SHA:"
+            cat unpinned-templates.txt
+            exit 1
+          fi
+
   check_green:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -669,10 +691,11 @@ jobs:
       - codegen
       - swift_build_linux
       - kotlin_build_macos
+      - action_pins
     if: always()
     steps:
       - run: |
-          if [[ ("${{ needs.codegen.outputs.success }}" != "true") || ("${{ needs.swift_build_linux.result }}" != "skipped" && "${{ needs.swift_build_linux.outputs.success }}" != "true") || ("${{ needs.kotlin_build_macos.result }}" != "skipped" && "${{ needs.kotlin_build_macos.outputs.success }}" != "true")]]; then
+          if [[ ("${{ needs.codegen.outputs.success }}" != "true") || ("${{ needs.swift_build_linux.result }}" != "skipped" && "${{ needs.swift_build_linux.outputs.success }}" != "true") || ("${{ needs.kotlin_build_macos.result }}" != "skipped" && "${{ needs.kotlin_build_macos.outputs.success }}" != "true") || ("${{ needs.action_pins.result }}" != "success") ]]; then
             echo "a needed step failed"
             exit 1
           fi
@@ -700,7 +723,7 @@ jobs:
           # Here, we push to most of the allowed repo, so no need to scope
           owner: algolia
 
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           ref: ${{ needs.codegen.outputs.generatedCommit }}
@@ -736,12 +759,21 @@ jobs:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
+      - name: Index snippets to Algolia
+        id: indexSnippets
+        run: yarn workspace scripts indexSnippets
+        if: ${{ steps.waitForAllReleases.outputs.CAN_PUSH_TO_REPO == 'true' }}
+        env:
+          SNIPPETS_APPLICATION_ID: ${{ secrets.SNIPPETS_APPLICATION_ID }}
+          SNIPPETS_API_KEY: ${{ secrets.SNIPPETS_API_KEY }}
+          SINCE_DATE: ${{ vars.SNIPPETS_SINCE_DATE }}
+
       - name: notify failures
-        uses: slackapi/slack-github-action@v3.0.3
-        if: ${{ !cancelled() && (steps.spreadGeneration.outputs.FAILED_LANGUAGES != '' || steps.waitForAllReleases.outputs.FAILED_RELEASES != '') }}
+        uses: slackapi/slack-github-action@45a88b9581bfab2566dc881e2cd66d334e621e2c # v3.0.3
+        if: ${{ !cancelled() && (steps.spreadGeneration.outputs.FAILED_LANGUAGES != '' || steps.waitForAllReleases.outputs.FAILED_RELEASES != '' || steps.indexSnippets.outcome == 'failure') }}
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             channel: ${{ secrets.SLACK_CHANNEL_ID }}
-            text: ":alert: Some clients failed during release :alert: \nSpread generation failures: **${{ steps.spreadGeneration.outputs.FAILED_LANGUAGES || 'none' }}**\nRelease CI failures: **${{ steps.waitForAllReleases.outputs.FAILED_RELEASES || 'none' }}**\n\nYou can retry the CI jobs to release them again, it will not affect already released clients."
+            text: ":alert: Some clients failed during release :alert: \nSpread generation failures: **${{ steps.spreadGeneration.outputs.FAILED_LANGUAGES || 'none' }}**\nRelease CI failures: **${{ steps.waitForAllReleases.outputs.FAILED_RELEASES || 'none' }}**\nSnippets indexing: **${{ steps.indexSnippets.outcome }}**\n\nYou can retry the CI jobs to release them again, it will not affect already released clients."

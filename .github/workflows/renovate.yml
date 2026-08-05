@@ -17,7 +17,7 @@ jobs:
           private-key: ${{ secrets.ALGOLIA_BOT_PRIVATE_KEY }}
 
       - name: Renovate Automatic Branch
-        uses: bodinsamuel/renovate-automatic-branch@v1.0.13
+        uses: bodinsamuel/renovate-automatic-branch@8a2f5201c591e669091cea33195ad108dbcf34a1 # v1.0.13
         with:
           github-token: ${{ steps.app-token.outputs.token }}
           repo-owner: algolia

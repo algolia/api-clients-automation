@@ -223,6 +223,38 @@ public class IngestionClientTests
     );
   }
 
+  [Fact(DisplayName = "the ingestion client sends no Request-ID")]
+  public async Task RequestIdTest0()
+  {
+    IngestionConfig _config = new IngestionConfig("test-app-id", "test-api-key", "us")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6694,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new IngestionClient(_config);
+
+    var res = await client.CustomGetAsync("1/test/request-id/negative/csharp");
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"status\":\"ok\"}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "switch API key")]
   public async Task SetClientApiKeyTest0()
   {

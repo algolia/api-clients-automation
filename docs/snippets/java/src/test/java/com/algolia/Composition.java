@@ -499,7 +499,7 @@ class SnippetCompositionClient {
   //
   // getComposition
   void snippetForGetComposition() throws Exception {
-    // >SEPARATOR getComposition default
+    // >SEPARATOR getComposition getComposition
     // Initialize the client
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 

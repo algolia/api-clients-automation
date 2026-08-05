@@ -1,4 +1,8 @@
 import (
+  {{#hasStreamingSnippets}}
+  "fmt"
+
+  {{/hasStreamingSnippets}}
   "github.com/algolia/algoliasearch-client-go/v4/algolia/{{clientImport}}"
   "github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )

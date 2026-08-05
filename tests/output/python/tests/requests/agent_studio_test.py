@@ -295,6 +295,41 @@ class TestAgentStudioClient:
             """{"messages":[{"role":"user","content":"Hello"}],"configuration":{"instructions":"Test instructions override","config":{"temperature":0.2},"tools":[{"type":"start"}]}}"""
         )
 
+    async def test_create_agent_completion_4(self):
+        """
+        createAgentCompletion streaming raw events
+        """
+        _events = []
+        async for event in self._client.create_agent_completion_stream_raw(
+            agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
+            compatibility_mode="ai-sdk-5",
+            agent_completion_request={
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": "Hello, how are you?",
+                    },
+                ],
+            },
+        ):
+            _events.append(event)
+        assert len(_events) > 0
+        _req = loads(_events[0].data)
+
+        assert (
+            _req["path"]
+            == "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions"
+        )
+        assert _req["verb"] == "POST"
+        assert (
+            dict(_req["query_parameters"]).items()
+            == {"compatibilityMode": "ai-sdk-5"}.items()
+        )
+        assert dict(_req["headers"]).items() >= {}.items()
+        assert loads(_req["data"]) == loads(
+            """{"messages":[{"role":"user","content":"Hello, how are you?"}]}"""
+        )
+
     async def test_create_feedback_(self):
         """
         createFeedback with required parameters
@@ -2002,6 +2037,41 @@ class TestAgentStudioClientSync:
         assert dict(_req["headers"]).items() >= {}.items()
         assert loads(_req["data"]) == loads(
             """{"messages":[{"role":"user","content":"Hello"}],"configuration":{"instructions":"Test instructions override","config":{"temperature":0.2},"tools":[{"type":"start"}]}}"""
+        )
+
+    def test_create_agent_completion_4(self):
+        """
+        createAgentCompletion streaming raw events
+        """
+        _events = []
+        for event in self._client.create_agent_completion_stream_raw(
+            agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
+            compatibility_mode="ai-sdk-5",
+            agent_completion_request={
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": "Hello, how are you?",
+                    },
+                ],
+            },
+        ):
+            _events.append(event)
+        assert len(_events) > 0
+        _req = loads(_events[0].data)
+
+        assert (
+            _req["path"]
+            == "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions"
+        )
+        assert _req["verb"] == "POST"
+        assert (
+            dict(_req["query_parameters"]).items()
+            == {"compatibilityMode": "ai-sdk-5"}.items()
+        )
+        assert dict(_req["headers"]).items() >= {}.items()
+        assert loads(_req["data"]) == loads(
+            """{"messages":[{"role":"user","content":"Hello, how are you?"}]}"""
         )
 
     def test_create_feedback_(self):

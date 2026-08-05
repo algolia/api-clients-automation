@@ -17,8 +17,10 @@ import {
   createIterablePromise,
   createTransporter,
   getAlgoliaAgent,
+  logWarning,
   shuffle,
   validateRequired,
+  withRequestId,
 } from '@algolia/client-common';
 
 import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
@@ -267,6 +269,7 @@ export function createSearchClient({
       }: WaitForTaskOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<GetTaskResponse> {
+      requestOptions = withRequestId(transporter, requestOptions);
       let retryCount = 0;
 
       return createIterablePromise({
@@ -300,6 +303,7 @@ export function createSearchClient({
       }: WaitForAppTaskOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<GetTaskResponse> {
+      requestOptions = withRequestId(transporter, requestOptions);
       let retryCount = 0;
 
       return createIterablePromise({
@@ -337,6 +341,7 @@ export function createSearchClient({
       }: WaitForApiKeyOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<GetApiKeyResponse | undefined> {
+      requestOptions = withRequestId(transporter, requestOptions);
       let retryCount = 0;
       const baseIteratorOptions: IterableOptions<GetApiKeyResponse | undefined> = {
         aggregator: () => (retryCount += 1),
@@ -402,6 +407,8 @@ export function createSearchClient({
       { indexName, browseParams, ...browseObjectsOptions }: BrowseOptions<BrowseResponse<T>> & BrowseProps,
       requestOptions?: RequestOptions | undefined,
     ): Promise<BrowseResponse<T>> {
+      requestOptions = withRequestId(transporter, requestOptions);
+
       return createIterablePromise<BrowseResponse<T>>({
         func: (previousResponse) => {
           return this.browse(
@@ -436,6 +443,7 @@ export function createSearchClient({
       { indexName, searchRulesParams, ...browseRulesOptions }: BrowseOptions<SearchRulesResponse> & SearchRulesProps,
       requestOptions?: RequestOptions | undefined,
     ): Promise<SearchRulesResponse> {
+      requestOptions = withRequestId(transporter, requestOptions);
       const params = {
         ...searchRulesParams,
         hitsPerPage: searchRulesParams?.hitsPerPage || 1000,
@@ -478,6 +486,7 @@ export function createSearchClient({
       }: BrowseOptions<SearchSynonymsResponse> & SearchSynonymsProps,
       requestOptions?: RequestOptions | undefined,
     ): Promise<SearchSynonymsResponse> {
+      requestOptions = withRequestId(transporter, requestOptions);
       const params = {
         ...searchSynonymsParams,
         page: searchSynonymsParams?.page || 0,
@@ -528,6 +537,7 @@ export function createSearchClient({
       }: ChunkedBatchOptions,
       requestOptions?: RequestOptions,
     ): Promise<Array<BatchResponse>> {
+      requestOptions = withRequestId(transporter, requestOptions);
       let requests: Array<BatchRequest> = [];
       const responses: Array<BatchResponse> = [];
 
@@ -542,7 +552,7 @@ export function createSearchClient({
 
       if (waitForTasks) {
         for (const resp of responses) {
-          await this.waitForTask({ indexName, taskID: resp.taskID, maxRetries });
+          await this.waitForTask({ indexName, taskID: resp.taskID, maxRetries }, requestOptions);
         }
       }
 
@@ -634,6 +644,8 @@ export function createSearchClient({
      * Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
      * See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
      *
+     * Warning: calling this method with an empty `objects` list replaces the index with an empty one, deleting all existing records.
+     *
      * @summary Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
      * @param replaceAllObjects - The `replaceAllObjects` object.
      * @param replaceAllObjects.indexName - The `indexName` to replace `objects` in.
@@ -653,6 +665,15 @@ export function createSearchClient({
       }: ReplaceAllObjectsOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<ReplaceAllObjectsResponse> {
+      requestOptions = withRequestId(transporter, requestOptions);
+
+      if (objects.length === 0) {
+        logWarning(
+          transporter.logger,
+          `replaceAllObjects was called with an empty list of objects, which will delete all records currently in the "${indexName}" index.`,
+        );
+      }
+
       const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
       const tmpIndexName = `${indexName}_tmp_${randomSuffix}`;
 
@@ -678,11 +699,14 @@ export function createSearchClient({
           requestOptions,
         );
 
-        await this.waitForTask({
-          indexName: tmpIndexName,
-          taskID: copyOperationResponse.taskID,
-          maxRetries,
-        });
+        await this.waitForTask(
+          {
+            indexName: tmpIndexName,
+            taskID: copyOperationResponse.taskID,
+            maxRetries,
+          },
+          requestOptions,
+        );
 
         copyOperationResponse = await this.operationIndex(
           {
@@ -695,11 +719,14 @@ export function createSearchClient({
           },
           requestOptions,
         );
-        await this.waitForTask({
-          indexName: tmpIndexName,
-          taskID: copyOperationResponse.taskID,
-          maxRetries,
-        });
+        await this.waitForTask(
+          {
+            indexName: tmpIndexName,
+            taskID: copyOperationResponse.taskID,
+            maxRetries,
+          },
+          requestOptions,
+        );
 
         const moveOperationResponse = await this.operationIndex(
           {
@@ -708,23 +735,26 @@ export function createSearchClient({
           },
           requestOptions,
         );
-        await this.waitForTask({
-          indexName: tmpIndexName,
-          taskID: moveOperationResponse.taskID,
-          maxRetries,
-        });
+        await this.waitForTask(
+          {
+            indexName: tmpIndexName,
+            taskID: moveOperationResponse.taskID,
+            maxRetries,
+          },
+          requestOptions,
+        );
 
         return { copyOperationResponse, batchResponses, moveOperationResponse };
       } catch (error) {
-        await this.deleteIndex({ indexName: tmpIndexName });
+        await this.deleteIndex({ indexName: tmpIndexName }, requestOptions);
 
         throw error;
       }
     },
 
-    async indexExists({ indexName }: GetSettingsProps): Promise<boolean> {
+    async indexExists({ indexName }: GetSettingsProps, requestOptions?: RequestOptions | undefined): Promise<boolean> {
       try {
-        await this.getSettings({ indexName });
+        await this.getSettings({ indexName }, requestOptions);
       } catch (error) {
         if (error instanceof ApiError && error.status === 404) {
           return false;

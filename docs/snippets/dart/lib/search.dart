@@ -4566,7 +4566,7 @@ void snippetForsearchForFacetValues2() async {
 //
 // searchRules
 void snippetForsearchRules() async {
-  // >SEPARATOR searchRules default
+  // >SEPARATOR searchRules searchRules
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');

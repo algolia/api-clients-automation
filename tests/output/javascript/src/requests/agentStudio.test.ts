@@ -192,6 +192,24 @@ describe('createAgentCompletion', () => {
     });
     expect(req.searchParams).toStrictEqual({ compatibilityMode: 'ai-sdk-5' });
   });
+
+  test('createAgentCompletion streaming raw events', async () => {
+    const events: ServerSentEvent[] = [];
+    for await (const event of client.createAgentCompletionStreamRaw({
+      agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
+      compatibilityMode: 'ai-sdk-5',
+      agentCompletionRequest: { messages: [{ role: 'user', content: 'Hello, how are you?' }] },
+    })) {
+      events.push(event);
+    }
+    expect(events.length).toBeGreaterThan(0);
+    const req = JSON.parse(events[0].data) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ messages: [{ role: 'user', content: 'Hello, how are you?' }] });
+    expect(req.searchParams).toStrictEqual({ compatibilityMode: 'ai-sdk-5' });
+  });
 });
 
 describe('createFeedback', () => {

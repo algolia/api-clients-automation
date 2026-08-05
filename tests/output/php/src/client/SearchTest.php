@@ -118,7 +118,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             );
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Impossible to connect, please check your Algolia Application Id. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Unreachable hosts. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support Last error for %localhost%: Connection timed out'), $e->getMessage());
         }
     }
 
@@ -479,7 +479,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             );
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Invalid API key');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Invalid API key'), $e->getMessage());
         }
     }
 
@@ -508,7 +508,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), '`appId` is missing.');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', '`appId` is missing.'), $e->getMessage());
         }
 
         try {
@@ -519,7 +519,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), '`appId` is missing.');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', '`appId` is missing.'), $e->getMessage());
         }
 
         try {
@@ -530,7 +530,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), '`apiKey` is missing.');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', '`apiKey` is missing.'), $e->getMessage());
         }
     }
 
@@ -545,7 +545,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             );
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Parameter `apiKey` is required when calling `addApiKey`.');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Parameter `apiKey` is required when calling `addApiKey`.'), $e->getMessage());
         }
     }
 
@@ -562,7 +562,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             );
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Parameter `indexName` is required when calling `addOrUpdateObject`.');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Parameter `indexName` is required when calling `addOrUpdateObject`.'), $e->getMessage());
         }
 
         try {
@@ -573,7 +573,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             );
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Parameter `objectID` is required when calling `addOrUpdateObject`.');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Parameter `objectID` is required when calling `addOrUpdateObject`.'), $e->getMessage());
         }
 
         try {
@@ -584,7 +584,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             );
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Parameter `body` is required when calling `addOrUpdateObject`.');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Parameter `body` is required when calling `addOrUpdateObject`.'), $e->getMessage());
         }
     }
 
@@ -766,7 +766,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             );
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Record is too big');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Record is too big'), $e->getMessage());
         }
     }
 
@@ -869,7 +869,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             );
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Invalid Application-ID or API key');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Invalid Application-ID or API key'), $e->getMessage());
         }
     }
 

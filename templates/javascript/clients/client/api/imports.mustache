@@ -10,9 +10,12 @@ import {
   DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES,
   serializeQueryParameters,
   createIterablePromise,
+  logWarning,
+  withRequestId,
   {{/isSearchClient}}
   {{#isCompositionClient}}
   createIterablePromise,
+  withRequestId,
   {{/isCompositionClient}}
   {{#isIngestionClient}}
   createIterablePromise,

@@ -5,7 +5,11 @@ import static org.openapitools.codegen.utils.StringUtils.camelize;
 import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
@@ -13,6 +17,8 @@ import org.openapitools.codegen.CodegenResponse;
 import org.openapitools.codegen.SupportingFile;
 
 public class TestsRequest extends TestsGenerator {
+
+  private static final ObjectMapper JSON = new ObjectMapper();
 
   private final boolean withSyncTests;
   private List<SupportingFile> supportingFiles;
@@ -64,6 +70,18 @@ public class TestsRequest extends TestsGenerator {
         return body.replace("$", "\\$");
       default:
         return body;
+    }
+  }
+
+  private boolean e2eTemplateRenders(String tag) throws CTSException {
+    Path e2eTemplate = Path.of("templates", language, "tests", "e2e", "e2e.mustache");
+    if (!Files.exists(e2eTemplate)) {
+      return true;
+    }
+    try {
+      return Files.readString(e2eTemplate).contains(tag);
+    } catch (IOException e) {
+      throw new CTSException("failed to read " + e2eTemplate + " while validating '" + tag + "'", e);
     }
   }
 
@@ -165,6 +183,60 @@ public class TestsRequest extends TestsGenerator {
 
           if (req.response != null) {
             req.response.body = escapeBody(req.response.body);
+            if (req.response.correlationIdSuffix != null) {
+              if (req.response.correlationIdSuffix.isEmpty()) {
+                throw new CTSException(
+                  "'correlationIdSuffix' must not be empty: the generated 'endsWith' assertion" + " would always pass."
+                );
+              }
+              if (req.request == null || !"GET".equals(req.request.method)) {
+                throw new CTSException(
+                  "'correlationIdSuffix' re-issues the request through the transporter to read" +
+                    " the response headers, so it only supports GET operations: anything else" +
+                    " would execute the operation twice."
+                );
+              }
+              Set<String> reissuedQueryParams =
+                req.requestOptions == null || req.requestOptions.queryParameters == null
+                  ? Set.of()
+                  : req.requestOptions.queryParameters.keySet();
+              if (req.request.queryParameters != null) {
+                Iterator<String> expectedQueryParams = JSON.readTree(req.request.queryParameters).fieldNames();
+                while (expectedQueryParams.hasNext()) {
+                  String param = expectedQueryParams.next();
+                  if (!reissuedQueryParams.contains(param)) {
+                    throw new CTSException(
+                      "'correlationIdSuffix' re-issues the request with only the path, the" +
+                        " requestOptions headers and the requestOptions query parameters: the" +
+                        " '" +
+                        param +
+                        "' query parameter comes from the operation parameters and would be" +
+                        " silently dropped from the second call."
+                    );
+                  }
+                }
+              }
+              if (!ope.headerParams.isEmpty()) {
+                throw new CTSException(
+                  "'correlationIdSuffix' re-issues the request with only the path, the" +
+                    " requestOptions headers and the requestOptions query parameters:" +
+                    " operation-level header parameters would be silently dropped from the" +
+                    " second call."
+                );
+              }
+              if (!e2eTemplateRenders("correlationIdSuffix")) {
+                throw new CTSException(
+                  "the test asserts 'correlationIdSuffix' but templates/" +
+                    language +
+                    "/tests/e2e/e2e.mustache never references it, so the generated e2e test" +
+                    " would pass without asserting anything. Implement the" +
+                    " {{#correlationIdSuffix}} section (see" +
+                    " templates/javascript/tests/e2e/e2e.mustache) before removing '" +
+                    language +
+                    "' from skipLanguages."
+                );
+              }
+            }
             test.put("response", req.response);
           }
 
@@ -178,6 +250,9 @@ public class TestsRequest extends TestsGenerator {
           if (isStreamingTest) {
             test.put("streamMethodSuffix", "StreamRaw");
             test.put("streamMethodSuffixSnake", "_stream_raw");
+            // Nested context overriding the suffix, for templates calling the
+            // typed streaming variant instead of the raw one.
+            test.put("typedStream", Map.of("streamMethodSuffix", "Stream"));
           }
 
           addRequestOptions(paramsType, req.requestOptions, test);
