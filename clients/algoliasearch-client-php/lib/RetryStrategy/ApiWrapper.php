@@ -251,14 +251,7 @@ final class ApiWrapper implements ApiWrapperInterface
 
         $this->log(LogLevel::ERROR, 'Request failed after '.$hostCount.' retries: All hosts exhausted', $logParams);
 
-        $lastError = end($errors);
-
-        throw new UnreachableException(
-            '',
-            false !== $lastError ? $lastError['error']->getCode() : 0,
-            false !== $lastError ? $lastError['error'] : null,
-            $errors
-        );
+        throw UnreachableException::fromErrors($errors);
     }
 
     private function handleResponse(
@@ -276,14 +269,10 @@ final class ApiWrapper implements ApiWrapperInterface
         ) {
             $reason = $response->getReasonPhrase();
 
-            if (
-                null === $response->getReasonPhrase()
-                || '' === $response->getReasonPhrase()
-            ) {
-                $reason
-                    = $statusCode >= 500
-                        ? 'Internal Server Error'
-                        : 'Unreachable Host';
+            if ('' === $reason) {
+                $reason = $statusCode >= 500
+                    ? 'HTTP '.$statusCode
+                    : 'Unreachable Host';
             }
 
             throw new RetriableException('Retriable failure on '.$request->getUri()->getHost().': '.$reason, $statusCode);

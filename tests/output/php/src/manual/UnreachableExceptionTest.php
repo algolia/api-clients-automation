@@ -18,7 +18,8 @@ use Psr\Http\Message\RequestInterface;
 /**
  * Contract test for UnreachableException raised on retry exhaustion:
  * the message names the last failing host, getPrevious() chains the last
- * underlying error, and getErrors() lists every attempt.
+ * underlying error, and getErrors() lists every attempt. With no attempt
+ * recorded, the bare message is kept and no error is chained.
  *
  * @internal
  *
@@ -42,9 +43,8 @@ class UnreachableExceptionTest extends TestCase
             $this->fail('Expected UnreachableException to be thrown');
         } catch (UnreachableException $e) {
             $errors = $e->getErrors();
-            $this->assertCount(count(self::HOSTS), $errors);
+            $this->assertSame(self::HOSTS, array_column($errors, 'host'));
             foreach ($errors as $entry) {
-                $this->assertContains($entry['host'], self::HOSTS);
                 $this->assertInstanceOf(RetriableException::class, $entry['error']);
             }
 
@@ -84,12 +84,33 @@ class UnreachableExceptionTest extends TestCase
         }
     }
 
-    private function makeClient(HttpClientInterface $mockHttp): SearchClient
+    public function testNoRecordedErrorKeepsBareMessage(): void
+    {
+        $mockHttp = new class implements HttpClientInterface {
+            public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+            {
+                throw new \LogicException('sendRequest must not be called when no host is configured');
+            }
+        };
+
+        try {
+            $this->makeClient($mockHttp, [])->customGet('1/test');
+            $this->fail('Expected UnreachableException to be thrown');
+        } catch (UnreachableException $e) {
+            $this->assertSame([], $e->getErrors());
+            $this->assertNull($e->getPrevious());
+            $this->assertSame(0, $e->getCode());
+            $this->assertStringStartsWith('Unreachable hosts.', $e->getMessage());
+            $this->assertStringNotContainsString('Last error for', $e->getMessage());
+        }
+    }
+
+    private function makeClient(HttpClientInterface $mockHttp, array $hosts = self::HOSTS): SearchClient
     {
         $config = SearchConfig::create('test-app-id', 'test-api-key');
 
         return new SearchClient(
-            new ApiWrapper($mockHttp, $config, ClusterHosts::create(self::HOSTS), new RequestOptionsFactory($config)),
+            new ApiWrapper($mockHttp, $config, ClusterHosts::create($hosts), new RequestOptionsFactory($config)),
             $config
         );
     }
