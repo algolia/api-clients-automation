@@ -14,7 +14,7 @@ public function test{{testIndex}}{{testType}}(): void
               {{#dynamicTemplate}}{{/dynamicTemplate}}
               $this->fail('Expected exception to be thrown');
           } catch (\Exception $e) {
-              $this->assertStringContainsString(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', '{{{expectedError}}}'), $e->getMessage());
+              $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', '{{{expectedError}}}'), $e->getMessage());
           }
         {{/isError}}
         {{^isError}}
