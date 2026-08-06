@@ -12,7 +12,7 @@ import org.json4s.native.{JsonMethods, JsonParser, parseJson}
 import org.json4s.{DefaultFormats, Extraction, Formats}
 import org.json4s.native.Serialization.read
 
-import java.io.{ByteArrayInputStream, IOException}
+import java.io.{ByteArrayInputStream, ByteArrayOutputStream, IOException}
 import java.nio.charset.StandardCharsets
 import java.util.Collections
 import java.util.concurrent.TimeUnit
@@ -83,12 +83,19 @@ private[algoliasearch] class HttpRequester private (
     buildRequestBody(body)
   }
 
-  /** Serializes the request body into JSON format. */
-  private def buildRequestBody(requestBody: AnyRef) = new RequestBody() {
-    override def contentType: MediaType = MediaType.parse("application/json")
+  /** Serializes the request body into JSON and returns a fixed-length request body. */
+  private def buildRequestBody(requestBody: AnyRef): RequestBody = {
+    val stream = new ByteArrayOutputStream()
+    jsonSerializer.serialize(stream, requestBody)
+    val bytes = stream.toByteArray
+    new RequestBody() {
+      override def contentType: MediaType = MediaType.parse("application/json")
 
-    override def writeTo(bufferedSink: BufferedSink): Unit = {
-      jsonSerializer.serialize(bufferedSink.outputStream, requestBody)
+      override def contentLength: Long = bytes.length
+
+      override def writeTo(bufferedSink: BufferedSink): Unit = {
+        bufferedSink.write(bytes)
+      }
     }
   }
 
