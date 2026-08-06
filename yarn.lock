@@ -2435,14 +2435,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@readme/httpsnippet@npm:11.3.2":
-  version: 11.3.2
-  resolution: "@readme/httpsnippet@npm:11.3.2"
+"@readme/httpsnippet@npm:11.4.0":
+  version: 11.4.0
+  resolution: "@readme/httpsnippet@npm:11.4.0"
   dependencies:
     qs: "npm:^6.15.0"
     stringify-object: "npm:^3.3.0"
     type-fest: "npm:^5.5.0"
-  checksum: 10/cbd30f35226c9f7156697d1549a4c36ef30376a933e728733b84a1c2588c93700e2b497f226aae23f2ffe34d44e22353128726a7def58b2f6b4e61417a2d5c2c
+  checksum: 10/da0fae356b05ea1feb60152d12d5aed8052b53b5c2a2b839ea82289b3c351ce5f53ab3241db0690a8f0a27bf4bc05f608611ef104ddec1fb69d7f28b1502f3a9
   languageName: node
   linkType: hard
 
@@ -8406,7 +8406,7 @@ __metadata:
     "@algolia/client-insights": "npm:5.56.0"
     "@har-sdk/oas": "npm:2.12.2"
     "@octokit/rest": "npm:22.0.1"
-    "@readme/httpsnippet": "npm:11.3.2"
+    "@readme/httpsnippet": "npm:11.4.0"
     "@types/express": "npm:5.0.6"
     "@types/folder-hash": "npm:4.0.4"
     "@types/fs-extra": "npm:11.0.4"
