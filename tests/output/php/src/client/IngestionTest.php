@@ -49,7 +49,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             );
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), '429: Too Many Requests');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', '429: Too Many Requests'), $e->getMessage());
         }
     }
 
@@ -221,7 +221,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
 
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), '`region` is required and must be one of the following: eu, us');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', '`region` is required and must be one of the following: eu, us'), $e->getMessage());
         }
     }
 
