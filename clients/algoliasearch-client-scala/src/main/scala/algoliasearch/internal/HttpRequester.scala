@@ -7,7 +7,6 @@ import algoliasearch.internal.util.escape
 import algoliasearch.internal.util.UseReadTransporter
 import okhttp3._
 import okhttp3.internal.http.HttpMethod
-import okio.BufferedSink
 import org.json4s.native.{JsonMethods, JsonParser, parseJson}
 import org.json4s.{DefaultFormats, Extraction, Formats}
 import org.json4s.native.Serialization.read
@@ -87,16 +86,7 @@ private[algoliasearch] class HttpRequester private (
   private def buildRequestBody(requestBody: AnyRef): RequestBody = {
     val stream = new ByteArrayOutputStream()
     jsonSerializer.serialize(stream, requestBody)
-    val bytes = stream.toByteArray
-    new RequestBody() {
-      override def contentType: MediaType = MediaType.parse("application/json")
-
-      override def contentLength: Long = bytes.length
-
-      override def writeTo(bufferedSink: BufferedSink): Unit = {
-        bufferedSink.write(bytes)
-      }
-    }
+    RequestBody.create(stream.toByteArray, MediaType.parse("application/json"))
   }
 
   /** Constructs the headers for the HTTP request. */
