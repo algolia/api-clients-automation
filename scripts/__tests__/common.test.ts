@@ -6,7 +6,6 @@ import { getClientsConfigField } from '../config.ts';
 
 vi.mock('execa', () => {
   return {
-    execaCommand: vi.fn(),
     execa: vi.fn(),
   };
 });
