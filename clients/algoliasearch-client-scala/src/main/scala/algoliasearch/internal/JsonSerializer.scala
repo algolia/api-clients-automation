@@ -6,6 +6,7 @@ import org.json4s.native.JsonParser.parse
 import org.json4s.native.Serialization.write
 
 import java.io.{InputStream, InputStreamReader, OutputStream, OutputStreamWriter}
+import java.nio.charset.StandardCharsets
 
 /** Utility class for JSON serialization and deserialization using JSON4S. It provides functionality to convert Scala
   * objects to their JSON representation and vice versa.
@@ -20,7 +21,7 @@ class JsonSerializer(implicit val formats: Formats) {
     *   The Scala object to serialize.
     */
   def serialize[T](stream: OutputStream, obj: T): Unit = {
-    val writer = new OutputStreamWriter(stream)
+    val writer = new OutputStreamWriter(stream, StandardCharsets.UTF_8)
     try {
       val json = write[T](obj)
       writer.write(json)
@@ -42,7 +43,7 @@ class JsonSerializer(implicit val formats: Formats) {
     *   The deserialized Scala object.
     */
   def deserialize[T: Manifest](stream: InputStream): T = {
-    val reader = new InputStreamReader(stream)
+    val reader = new InputStreamReader(stream, StandardCharsets.UTF_8)
     try {
       val json = parse(reader)
       json.extract[T]
