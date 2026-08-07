@@ -53,6 +53,7 @@ metricResult:
   properties:
     name:
       type: string
+      description: Metric name. Revenue per search results use `revenue_per_search`.
     updatedAt:
       type: string
       description: Date and time when the metric was last updated, in RFC 3339 format.
@@ -81,7 +82,7 @@ metricResult:
       description: PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the current variant based on the control.
     dimension:
       type: string
-      description: Dimension defined during test creation.
+      description: Dimension defined during test creation. For revenue metrics, including `revenue_per_search`, this is the currency.
     metadata:
       $ref: '#/metricMetadata'
     criticalValue:
@@ -95,11 +96,12 @@ metricResult:
       type: boolean
       description: |
         Whether the pValue is significant or not based on the critical value and the error correction algorithm used.
+    bayesian:
+      $ref: '#/bayesianMetricResult'
   required:
     - name
     - updatedAt
     - value
-    - pValue
   example:
     - name: addToCartCount
       updatedAt: 2025-06-15T15:06:44.400601Z
@@ -121,6 +123,37 @@ metricResult:
       value: 999.66
       pValue: 0.04
       metadata: {'winsorizedValue': 888.8}
+    - name: revenue_per_search
+      dimension: USD
+      updatedAt: 2025-05-15T17:52:15.644906Z
+      value: 12.45
+      metadata: {'winsorizedValue': 80.2, 'mean': 12.45}
+      bayesian:
+        probabilityToBeBetter: 0.991
+        relativeEffectCILow: 0.04
+        relativeEffectCIHigh: 0.39
+
+bayesianMetricResult:
+  type: object
+  description: |
+    Bayesian inference results for this variant metric.
+    Absent when Bayesian inference isn't available for this metric.
+  properties:
+    probabilityToBeBetter:
+      type: number
+      format: double
+      description: Probability that this variant is better than the control.
+      example: 0.991
+    relativeEffectCILow:
+      type: number
+      format: double
+      description: Lower bound of the 95% credible interval for the relative effect (variant/control minus 1).
+      example: 0.04
+    relativeEffectCIHigh:
+      type: number
+      format: double
+      description: Upper bound of the 95% credible interval for the relative effect (variant/control minus 1).
+      example: 0.39
 
 variantMetadata:
   type: object
@@ -137,7 +170,7 @@ metricMetadata:
       type: number
       format: double
       description: |
-        Only present in case the metric is 'revenue'.
+        Only present for `revenue` and `revenue_per_search` metrics.
         It is the amount exceeding the 95th percentile of global revenue transactions involved in the AB Test. This amount is not considered when calculating statistical significance.
         It is tied to a per revenue-currency pair contrary to other
         global filter effects (such as outliers and empty search count).
