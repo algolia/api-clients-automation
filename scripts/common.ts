@@ -4,7 +4,7 @@ import path from 'path';
 import { Octokit } from '@octokit/rest';
 import chalk from 'chalk';
 import type { ExecaError } from 'execa';
-import { execa, execaCommand } from 'execa';
+import { execa } from 'execa';
 import { remove } from 'fs-extra';
 
 import clientsConfig from '../config/clients.config.json' with { type: 'json' };
@@ -87,7 +87,7 @@ export async function run(command: string, { errorMessage, cwd, language }: RunO
     if (isVerbose()) {
       return (
         (
-          await execaCommand(wrappedCmd, {
+          await execa(wrappedCmd, {
             stdout: 'inherit',
             stderr: 'inherit',
             stdin: 'inherit',
@@ -100,7 +100,7 @@ export async function run(command: string, { errorMessage, cwd, language }: RunO
     }
     return (
       (
-        await execaCommand(wrappedCmd, {
+        await execa(wrappedCmd, {
           shell: 'bash',
           all: true,
           cwd: dockerImage ? ROOT_DIR : realCwd,

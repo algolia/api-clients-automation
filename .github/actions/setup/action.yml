@@ -39,7 +39,7 @@ runs:
 
     # JavaScript for monorepo and tooling
     - name: Install Node
-      uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+      uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
       with:
         node-version-file: .nvmrc
         cache: yarn
@@ -51,7 +51,7 @@ runs:
     # Csharp
     - name: Install dotnet
       if: ${{ inputs.language == 'csharp' }}
-      uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5.4.0
+      uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
       with:
         dotnet-version: ${{ inputs.version }}
 
@@ -70,7 +70,7 @@ runs:
     # Golang
     - name: Install golang
       if: ${{ inputs.language == 'go' }}
-      uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6.5.0
+      uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
       with:
         cache-dependency-path: clients/algoliasearch-client-go/go.sum
         go-version: ${{ inputs.version }}
@@ -130,7 +130,7 @@ runs:
       shell: bash
       run: pipx install poetry==2
 
-    - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+    - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
       if: ${{ inputs.language == 'python' }}
       with:
         python-version: ${{ inputs.version }}
