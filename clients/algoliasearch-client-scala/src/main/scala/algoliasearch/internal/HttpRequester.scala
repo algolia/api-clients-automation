@@ -49,6 +49,7 @@ private[algoliasearch] class HttpRequester private (
     clientBuilder.build()
   }
 
+  private val jsonMediaType = MediaType.parse("application/json")
   private val jsonSerializer = JsonSerializer()(builder.formats)
   private val isClosed: AtomicBoolean = new AtomicBoolean(false)
 
@@ -86,7 +87,7 @@ private[algoliasearch] class HttpRequester private (
   private def buildRequestBody(requestBody: AnyRef): RequestBody = {
     val stream = new ByteArrayOutputStream()
     jsonSerializer.serialize(stream, requestBody)
-    RequestBody.create(stream.toByteArray, MediaType.parse("application/json"))
+    RequestBody.create(stream.toByteArray, jsonMediaType)
   }
 
   /** Constructs the headers for the HTTP request. */
