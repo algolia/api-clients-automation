@@ -90,6 +90,12 @@ ABTestConfiguration:
       $ref: '#/MetricsFilters'
     errorCorrection:
       $ref: '#/ErrorCorrectionType'
+    method:
+      $ref: '#/AnalysisMethod'
+    primaryMetric:
+      type: string
+      description: Public metric name that drives the Bayesian end-test recommendation. Only relevant when `method` is `bayesian`.
+      example: conversionRate
 
 MinimumDetectableEffect:
   type: object
@@ -161,3 +167,10 @@ ErrorCorrectionType:
   enum:
     - bonferroni
     - benjamini-hochberg
+
+AnalysisMethod:
+  type: string
+  description: A/B test statistical analysis method.
+  enum:
+    - bayesian
+    - frequentist
