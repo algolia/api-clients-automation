@@ -281,7 +281,7 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.18.5"
     "@types/node": "npm:24.13.3"
     cross-fetch: "npm:4.1.0"
-    nock: "npm:14.0.16"
+    nock: "npm:14.0.17"
     publint: "npm:0.3.22"
     tsup: "npm:8.5.1"
     typescript: "npm:5.9.3"
@@ -296,7 +296,7 @@ __metadata:
     "@algolia/client-common": "npm:5.56.0"
     "@arethetypeswrong/cli": "npm:0.18.5"
     "@types/node": "npm:24.13.3"
-    nock: "npm:14.0.16"
+    nock: "npm:14.0.17"
     publint: "npm:0.3.22"
     tsup: "npm:8.5.1"
     typescript: "npm:5.9.3"
@@ -6640,14 +6640,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nock@npm:14.0.16":
-  version: 14.0.16
-  resolution: "nock@npm:14.0.16"
+"nock@npm:14.0.17":
+  version: 14.0.17
+  resolution: "nock@npm:14.0.17"
   dependencies:
     "@mswjs/interceptors": "npm:^0.41.0"
     json-stringify-safe: "npm:^5.0.1"
     propagate: "npm:^2.0.0"
-  checksum: 10/75f0d98d022bbe65b4a9e7667bde0ddb0fc27ad6db09b9969ebdc217700b50b7725da647878f07359cc05301bcedf684f10004b07012e45311cd1dabc7f93cdf
+  checksum: 10/deab3abb6a519f4b16e5b4656d169aae9ed774541fc224749d42d405640d2495031c2c3cc934b088fd0fa74fb6d323ad2e4900b57cb8b673e27bca3dc3f91604
   languageName: node
   linkType: hard
 
