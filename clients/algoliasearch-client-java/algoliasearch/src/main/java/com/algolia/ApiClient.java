@@ -128,10 +128,11 @@ public abstract class ApiClient implements Closeable {
   /**
    * Returns request options carrying a `Request-ID`, so that every request a multi-request helper
    * performs shares the same one. Returns the given options unchanged when this client does not
-   * support Request-ID or when the caller already supplied one.
+   * support Request-ID or when the caller already supplied one, per request or through default
+   * headers.
    */
   protected RequestOptions withRequestId(@Nullable RequestOptions requestOptions) {
-    if (!requestIdSupport || RequestId.isPresent(requestOptions)) {
+    if (!requestIdSupport || RequestId.isPresent(requestOptions) || RequestId.isPresent(clientOptions.getDefaultHeaders())) {
       return requestOptions;
     }
     return new RequestOptions().addExtraHeader(RequestId.HEADER, RequestId.generate()).mergeRight(requestOptions);

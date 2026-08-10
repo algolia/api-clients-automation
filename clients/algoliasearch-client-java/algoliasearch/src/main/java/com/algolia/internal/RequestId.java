@@ -46,6 +46,11 @@ public final class RequestId {
     );
   }
 
+  /** Returns whether the given headers already carry a Request-ID, using a case-insensitive comparison. */
+  public static boolean isPresent(Map<String, String> headers) {
+    return containsIgnoreCase(headers, HEADER);
+  }
+
   private static boolean containsIgnoreCase(Map<String, String> values, String name) {
     for (String key : values.keySet()) {
       if (key.equalsIgnoreCase(name)) {
