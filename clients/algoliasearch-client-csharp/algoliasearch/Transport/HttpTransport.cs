@@ -117,6 +117,19 @@ internal class HttpTransport : IDisposable
       Compression = _algoliaConfig.Compression,
     };
 
+    if (_algoliaConfig.RequestIdEnabled && !RequestIdHelper.HasRequestId(request.Headers))
+    {
+      // The ID is minted once per execution, before the host loop, so that
+      // every retry attempt shares the same value and each subsequent call
+      // gets a fresh one. GenerateHeaders returns the live DefaultHeaders
+      // dictionary on the no-options path, so it must be copied before
+      // injecting or the ID would be pinned into the client configuration.
+      request.Headers = new Dictionary<string, string>(request.Headers)
+      {
+        [Defaults.RequestIdHeader.ToLowerInvariant()] = RequestIdHelper.Generate(),
+      };
+    }
+
     var callType =
       (requestOptions?.UseReadTransporter != null && requestOptions.UseReadTransporter.Value)
       || method == HttpMethod.Get
@@ -273,7 +286,11 @@ internal class HttpTransport : IDisposable
             );
           }
 
-          throw new AlgoliaApiException(response.Error, response.HttpStatusCode);
+          throw new AlgoliaApiException(
+            response.Error,
+            response.HttpStatusCode,
+            GetCorrelationId(response)
+          );
         default:
           throw new ArgumentOutOfRangeException();
       }
@@ -358,6 +375,30 @@ internal class HttpTransport : IDisposable
 
     var builder = new UriBuilder(uri) { Query = string.Join("&", sanitized) };
     return builder.Uri.ToString();
+  }
+
+  /// <summary>
+  /// Read the Correlation-ID header of a failed response, case-insensitively:
+  /// the response dictionary keeps the server's casing. The unrelated
+  /// X-Algolia-RequestID edge header must never be read instead. Headers are
+  /// null on timeout and network failures.
+  /// </summary>
+  private static string GetCorrelationId(AlgoliaHttpResponse response)
+  {
+    if (response.ResponseHeaders == null)
+    {
+      return null;
+    }
+
+    foreach (var header in response.ResponseHeaders)
+    {
+      if (header.Key.Equals(Defaults.CorrelationIdHeader, StringComparison.OrdinalIgnoreCase))
+      {
+        return header.Value;
+      }
+    }
+
+    return null;
   }
 
   /// <summary>

@@ -66,6 +66,25 @@ public class {{client}}RequestTestsE2E
       {{#body}}
           TestHelpers.LenientJsonAssert("{{#lambda.escapeQuotes}}{{{.}}}{{/lambda.escapeQuotes}}", JsonSerializer.Serialize(resp, JsonConfig.Options));
       {{/body}}
+      {{#correlationIdSuffix}}
+          // Re-issue the request through customGet to read the response
+          // headers; customGet prepends the leading slash of request.path.
+          var httpResp = await client.CustomGetWithHTTPInfoAsync("{{{request.path}}}".TrimStart('/'){{#hasRequestOptions}}, options: new RequestOptionBuilder()
+          {{#requestOptions.queryParameters.parametersWithDataType}}
+            .AddExtraQueryParameters("{{{key}}}", {{> tests/requests/requestOptionsParams}} )
+          {{/requestOptions.queryParameters.parametersWithDataType}}
+          {{#requestOptions.headers.parametersWithDataType}}
+            .AddExtraHeader("{{{key}}}", {{#isVerbatim}}{{{value}}}{{/isVerbatim}}{{^isVerbatim}}"{{{value}}}"{{/isVerbatim}})
+          {{/requestOptions.headers.parametersWithDataType}}
+            .Build(){{/hasRequestOptions}});
+
+          var correlationId = httpResp.ResponseHeaders?
+            .Where(h => h.Key.Equals("Correlation-ID", StringComparison.OrdinalIgnoreCase))
+            .Select(h => h.Value)
+            .SingleOrDefault();
+          Assert.False(string.IsNullOrEmpty(correlationId), "the response must carry a Correlation-ID header");
+          Assert.EndsWith("{{{correlationIdSuffix}}}", correlationId);
+      {{/correlationIdSuffix}}
       } catch (Exception e)
       {
         Assert.Fail("An exception was thrown: " + e.Message);
