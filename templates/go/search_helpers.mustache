@@ -71,6 +71,10 @@ func (c *APIClient) WaitForTask(
     return time.Duration(min(200*count, 5000)) * time.Millisecond
   }), WithMaxRetries(100)}, opts...)
 
+  if opt, ok := requestIDOption(c, opts); ok {
+    opts = append([]IterableOption{opt}, opts...)
+  }
+
 	return CreateIterable( //nolint:wrapcheck
 		func(*GetTaskResponse, error) (*GetTaskResponse, error) {
 			return c.GetTask(c.NewApiGetTaskRequest(indexName, taskID), toRequestOptions(opts)...)
@@ -104,6 +108,10 @@ func (c *APIClient) WaitForAppTask(
   opts = append([]IterableOption{WithTimeout(func(count int) time.Duration {
     return time.Duration(min(200*count, 5000)) * time.Millisecond
   }), WithMaxRetries(100)}, opts...)
+
+  if opt, ok := requestIDOption(c, opts); ok {
+    opts = append([]IterableOption{opt}, opts...)
+  }
 
 	return CreateIterable( //nolint:wrapcheck
 		func(*GetTaskResponse, error) (*GetTaskResponse, error) {
@@ -239,6 +247,10 @@ func (c *APIClient) WaitForApiKey(
     return time.Duration(min(200*count, 5000)) * time.Millisecond
   }), WithMaxRetries(100)}, opts...)
 
+  if opt, ok := requestIDOption(c, opts); ok {
+    opts = append([]WaitForApiKeyOption{opt}, opts...)
+  }
+
 	return CreateIterable( //nolint:wrapcheck
 		func(*GetApiKeyResponse, error) (*GetApiKeyResponse, error) {
 			return c.GetApiKey(c.NewApiGetApiKeyRequest(key), toRequestOptions(opts)...)
@@ -265,6 +277,10 @@ func (c *APIClient) BrowseObjects(
 ) error {
 	if browseParams.HitsPerPage == nil {
     browseParams.HitsPerPage = utils.ToPtr(int32(1000))
+  }
+
+  if opt, ok := requestIDOption(c, opts); ok {
+    opts = append([]IterableOption{opt}, opts...)
   }
 
 	_, err := CreateIterable( //nolint:wrapcheck
@@ -306,6 +322,10 @@ func (c *APIClient) BrowseRules(
 	if searchRulesParams.HitsPerPage != nil {
 		hitsPerPage = *searchRulesParams.HitsPerPage
 	}
+
+  if opt, ok := requestIDOption(c, opts); ok {
+    opts = append([]IterableOption{opt}, opts...)
+  }
 
 	_, err := CreateIterable( //nolint:wrapcheck
 		func(previousResponse *SearchRulesResponse, previousErr error) (*SearchRulesResponse, error) {
@@ -356,6 +376,10 @@ func (c *APIClient) BrowseSynonyms(
 	if searchSynonymsParams.Page == nil {
 		searchSynonymsParams.Page = utils.ToPtr(int32(0))
 	}
+
+  if opt, ok := requestIDOption(c, opts); ok {
+    opts = append([]IterableOption{opt}, opts...)
+  }
 
 	_, err := CreateIterable( //nolint:wrapcheck
 		func(previousResponse *SearchSynonymsResponse, previousErr error) (*SearchSynonymsResponse, error) {
@@ -570,6 +594,10 @@ func (c *APIClient) ChunkedBatch(indexName string, objects []map[string]any, act
     opt.apply(&conf)
   }
 
+  if opt, ok := requestIDOption(c, opts); ok {
+    opts = append([]ChunkedBatchOption{opt}, opts...)
+  }
+
 	requests := make([]BatchRequest, 0, len(objects)%conf.batchSize)
 	responses := make([]BatchResponse, 0, len(objects)%conf.batchSize)
 
@@ -633,6 +661,10 @@ func (c *APIClient) ReplaceAllObjectsWithTransformation(indexName string, object
 
 	opts = append(opts, WithWaitForTasks(true))
 
+	if opt, ok := requestIDOption(c, opts); ok {
+		opts = append([]ReplaceAllObjectsOption{opt}, opts...)
+	}
+
 	copyResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope(conf.scopes))), toRequestOptions(opts)...)
 	if err != nil {
 		return nil, err
@@ -640,42 +672,42 @@ func (c *APIClient) ReplaceAllObjectsWithTransformation(indexName string, object
 
 	watchResp, err := c.ingestionTransporter.ChunkedPush(tmpIndexName, objects, ingestion.Action(ACTION_ADD_OBJECT), &indexName, toIngestionChunkedBatchOptions(replaceAllObjectsToChunkBatchOptions(opts))...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
 
 		return nil, err //nolint:wrapcheck
 	}
 
 	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
 
 		return nil, err
 	}
 
 	copyResp, err = c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope(conf.scopes))), toRequestOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
 
 		return nil, err
 	}
 
 	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
 
 		return nil, err
 	}
 
 	moveResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(tmpIndexName, NewOperationIndexParams(OPERATION_TYPE_MOVE, indexName)), toRequestOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
 
 		return nil, err
 	}
 
 	_, err = c.WaitForTask(tmpIndexName, moveResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
 
 		return nil, err
 	}
@@ -729,6 +761,10 @@ func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any
 
   opts = append(opts, WithWaitForTasks(true))
 
+  if opt, ok := requestIDOption(c, opts); ok {
+    opts = append([]ReplaceAllObjectsOption{opt}, opts...)
+  }
+
 	copyResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope(conf.scopes))), toRequestOptions(opts)...)
 	if err != nil {
 		return nil, err
@@ -736,42 +772,42 @@ func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any
 
 	batchResp, err := c.ChunkedBatch(tmpIndexName, objects, ACTION_ADD_OBJECT, replaceAllObjectsToChunkBatchOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
 
 		return nil, err
 	}
 
 	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
 
 		return nil, err
 	}
 
 	copyResp, err = c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope(conf.scopes))), toRequestOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
 
 		return nil, err
 	}
 
 	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
 
 		return nil, err
 	}
 
 	moveResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(tmpIndexName, NewOperationIndexParams(OPERATION_TYPE_MOVE, indexName)), toRequestOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
 
 		return nil, err
 	}
 
 	_, err = c.WaitForTask(tmpIndexName, moveResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
 
 		return nil, err
 	}
@@ -786,8 +822,12 @@ func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any
 // Exists returns whether an initialized index exists or not, along with a nil
 // error. When encountering a network error, a non-nil error is returned along
 // with false.
-func (c *APIClient) IndexExists(indexName string) (bool, error) {
-	_, err := c.GetSettings(c.NewApiGetSettingsRequest(indexName))
+func (c *APIClient) IndexExists(indexName string, opts ...RequestOption) (bool, error) {
+	if opt, ok := requestIDOption(c, opts); ok {
+		opts = append([]RequestOption{opt}, opts...)
+	}
+
+	_, err := c.GetSettings(c.NewApiGetSettingsRequest(indexName), opts...)
 	if err == nil {
 		return true, nil
 	}

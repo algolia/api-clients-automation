@@ -276,6 +276,28 @@ func WithApiKey(apiKey *ApiKey) waitForApiKeyOption {
 
 // --------- Helper to convert options ---------
 
+// requestIDOption mints the Request-ID shared by every request of one helper
+// invocation. ok is false when this client does not support Request-ID or the
+// caller already supplied one through the options or DefaultHeader, in which
+// case the options must be forwarded untouched.
+func requestIDOption[T RequestOption](c *APIClient, opts []T) (requestOption, bool) {
+	if !c.cfg.RequestIDEnabled {
+		return nil, false
+	}
+
+	conf := config{headerParams: map[string]string{}}
+
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	if transport.HasRequestID(conf.headerParams, c.cfg.DefaultHeader) {
+		return nil, false
+	}
+
+	return WithHeaderParam(transport.RequestIDHeader, transport.NewRequestID()), true
+}
+
 func toRequestOptions[T RequestOption](opts []T) []RequestOption {
 	requestOpts := make([]RequestOption, 0, len(opts))
 

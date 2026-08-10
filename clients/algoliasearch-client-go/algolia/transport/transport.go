@@ -22,6 +22,7 @@ type Transport struct {
 	compression                     compression.Compression
 	connectTimeout                  time.Duration
 	exposeIntermediateNetworkErrors bool
+	requestIDEnabled                bool
 }
 
 func New(cfg Configuration) *Transport {
@@ -31,6 +32,7 @@ func New(cfg Configuration) *Transport {
 		connectTimeout:                  cfg.ConnectTimeout,
 		compression:                     cfg.Compression,
 		exposeIntermediateNetworkErrors: cfg.ExposeIntermediateNetworkErrors,
+		requestIDEnabled:                cfg.RequestIDEnabled,
 	}
 
 	if transport.connectTimeout == 0 {
@@ -79,6 +81,8 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind,
 	if err != nil {
 		return nil, nil, err
 	}
+
+	t.injectRequestID(req)
 
 	for i, h := range t.retryStrategy.GetTryableHosts(k) {
 		// Handle per-request timeout by using a context with timeout.
@@ -197,6 +201,8 @@ func (t *Transport) RequestStream(ctx context.Context, req *http.Request, k call
 
 	req.Header.Set("Accept", "text/event-stream")
 
+	t.injectRequestID(req)
+
 	hosts := t.retryStrategy.GetTryableHosts(k)
 	if len(hosts) == 0 {
 		return nil, errs.ErrNoMoreHostToTry
@@ -236,6 +242,17 @@ func (t *Transport) RequestStream(ctx context.Context, req *http.Request, k call
 	}
 
 	return res, nil
+}
+
+// injectRequestID mints the Request-ID once per execution, before host
+// selection, so that every retry attempt of one call shares the same value
+// and each subsequent call gets a fresh one. A caller-supplied ID always
+// wins: every header set through the public API goes through http.Header,
+// whose keys are canonicalized, so the Get lookup is case-insensitive.
+func (t *Transport) injectRequestID(req *http.Request) {
+	if t.requestIDEnabled && req.Header.Get(RequestIDHeader) == "" {
+		req.Header.Set(RequestIDHeader, NewRequestID())
+	}
 }
 
 // resolveTimeouts returns the request and connect timeouts applying to a call
