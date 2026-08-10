@@ -7,6 +7,7 @@ import com.algolia.internal.JsonSerializer;
 import com.algolia.internal.RequestId;
 import com.algolia.internal.StatefulHost;
 import com.algolia.internal.interceptors.AuthInterceptor;
+import com.algolia.internal.interceptors.HeaderInterceptor;
 import com.algolia.internal.interceptors.RequestIdInterceptor;
 import com.algolia.internal.interceptors.RetryStrategy;
 import com.algolia.internal.interceptors.UserAgentInterceptor;
@@ -101,6 +102,7 @@ public abstract class ApiClient implements Closeable {
     this.authInterceptor = new AuthInterceptor(appId, apiKey);
     HttpRequester.Builder builder = new HttpRequester.Builder(serializer)
       .addInterceptor(authInterceptor)
+      .addInterceptor(new HeaderInterceptor(options.getDefaultHeaders()))
       .addInterceptor(new UserAgentInterceptor(algoliaAgent));
     if (requestIdSupport) {
       builder.addInterceptor(new RequestIdInterceptor());
