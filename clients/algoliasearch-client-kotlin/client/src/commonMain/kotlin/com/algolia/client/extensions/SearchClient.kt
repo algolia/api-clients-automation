@@ -13,6 +13,7 @@ import com.algolia.client.model.ingestion.Action as IngestionAction
 import com.algolia.client.model.ingestion.WatchResponse as IngestionWatchResponse
 import com.algolia.client.model.search.*
 import com.algolia.client.transport.RequestOptions
+import com.algolia.client.transport.internal.withRequestId
 import io.ktor.util.*
 import kotlin.random.Random
 import kotlin.time.Duration
@@ -77,8 +78,9 @@ public suspend fun SearchClient.waitForApiKey(
   initialDelay: Duration = 200.milliseconds,
   maxDelay: Duration = 5.seconds,
   requestOptions: RequestOptions? = null,
-): GetApiKeyResponse? =
-  when (operation) {
+): GetApiKeyResponse? {
+  val tracedRequestOptions = withRequestId(requestOptions)
+  return when (operation) {
     ApiKeyOperation.Add ->
       waitKeyCreation(
         key = key,
@@ -86,7 +88,7 @@ public suspend fun SearchClient.waitForApiKey(
         timeout = timeout,
         initialDelay = initialDelay,
         maxDelay = maxDelay,
-        requestOptions = requestOptions,
+        requestOptions = tracedRequestOptions,
       )
 
     ApiKeyOperation.Delete ->
@@ -96,7 +98,7 @@ public suspend fun SearchClient.waitForApiKey(
         timeout = timeout,
         initialDelay = initialDelay,
         maxDelay = maxDelay,
-        requestOptions = requestOptions,
+        requestOptions = tracedRequestOptions,
       )
 
     ApiKeyOperation.Update ->
@@ -107,9 +109,10 @@ public suspend fun SearchClient.waitForApiKey(
         maxRetries = maxRetries,
         initialDelay = initialDelay,
         maxDelay = maxDelay,
-        requestOptions = requestOptions,
+        requestOptions = tracedRequestOptions,
       )
   }
+}
 
 /**
  * Wait for a [taskID] to complete before executing the next line of code, to synchronize index
@@ -133,15 +136,17 @@ public suspend fun SearchClient.waitForTask(
   initialDelay: Duration = 200.milliseconds,
   maxDelay: Duration = 5.seconds,
   requestOptions: RequestOptions? = null,
-): GetTaskResponse =
-  retryUntil(
+): GetTaskResponse {
+  val tracedRequestOptions = withRequestId(requestOptions)
+  return retryUntil(
     timeout = timeout,
     maxRetries = maxRetries,
     initialDelay = initialDelay,
     maxDelay = maxDelay,
-    retry = { getTask(indexName, taskID, requestOptions) },
+    retry = { getTask(indexName, taskID, tracedRequestOptions) },
     until = { it.status == TaskStatus.Published },
   )
+}
 
 @Deprecated(
   "Please use waitForTask instead",
@@ -185,15 +190,17 @@ public suspend fun SearchClient.waitForAppTask(
   initialDelay: Duration = 200.milliseconds,
   maxDelay: Duration = 5.seconds,
   requestOptions: RequestOptions? = null,
-): GetTaskResponse =
-  retryUntil(
+): GetTaskResponse {
+  val tracedRequestOptions = withRequestId(requestOptions)
+  return retryUntil(
     timeout = timeout,
     maxRetries = maxRetries,
     initialDelay = initialDelay,
     maxDelay = maxDelay,
-    retry = { getAppTask(taskID, requestOptions) },
+    retry = { getAppTask(taskID, tracedRequestOptions) },
     until = { it.status == TaskStatus.Published },
   )
+}
 
 @Deprecated(
   "Please use waitForAppTask instead",
@@ -379,6 +386,7 @@ public suspend fun SearchClient.chunkedBatch(
   chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions(),
 ): List<BatchResponse> {
   val maxRetries = chunkedOptions.maxRetries
+  val tracedRequestOptions = withRequestId(requestOptions)
   val tasks = mutableListOf<BatchResponse>()
   objects.chunked(batchSize).forEach { chunk ->
     val requests = chunk.map { BatchRequest(action = action, body = it) }
@@ -386,12 +394,19 @@ public suspend fun SearchClient.chunkedBatch(
       batch(
         indexName = indexName,
         batchWriteParams = BatchWriteParams(requests),
-        requestOptions = requestOptions,
+        requestOptions = tracedRequestOptions,
       )
     tasks.add(batch)
   }
   if (waitForTasks) {
-    tasks.forEach { waitForTask(indexName, it.taskID, maxRetries = maxRetries) }
+    tasks.forEach {
+      waitForTask(
+        indexName = indexName,
+        taskID = it.taskID,
+        maxRetries = maxRetries,
+        requestOptions = tracedRequestOptions,
+      )
+    }
   }
   return tasks
 }
@@ -528,6 +543,7 @@ public suspend fun SearchClient.replaceAllObjects(
     )
   }
   val maxRetries = chunkedOptions.maxRetries
+  val tracedRequestOptions = withRequestId(requestOptions)
   val tmpIndexName = "${indexName}_tmp_${Random.nextInt(from = 0, until = 100)}"
 
   try {
@@ -540,7 +556,7 @@ public suspend fun SearchClient.replaceAllObjects(
             destination = tmpIndexName,
             scope = scopes,
           ),
-        requestOptions = requestOptions,
+        requestOptions = tracedRequestOptions,
       )
 
     val batchResponses =
@@ -550,11 +566,16 @@ public suspend fun SearchClient.replaceAllObjects(
         action = Action.AddObject,
         waitForTasks = true,
         batchSize = batchSize,
-        requestOptions = requestOptions,
+        requestOptions = tracedRequestOptions,
         chunkedOptions = chunkedOptions,
       )
 
-    waitForTask(indexName = tmpIndexName, taskID = copy.taskID, maxRetries = maxRetries)
+    waitForTask(
+      indexName = tmpIndexName,
+      taskID = copy.taskID,
+      maxRetries = maxRetries,
+      requestOptions = tracedRequestOptions,
+    )
 
     copy =
       operationIndex(
@@ -565,23 +586,33 @@ public suspend fun SearchClient.replaceAllObjects(
             destination = tmpIndexName,
             scope = scopes,
           ),
-        requestOptions = requestOptions,
+        requestOptions = tracedRequestOptions,
       )
-    waitForTask(indexName = tmpIndexName, taskID = copy.taskID, maxRetries = maxRetries)
+    waitForTask(
+      indexName = tmpIndexName,
+      taskID = copy.taskID,
+      maxRetries = maxRetries,
+      requestOptions = tracedRequestOptions,
+    )
 
     val move =
       operationIndex(
         indexName = tmpIndexName,
         operationIndexParams =
           OperationIndexParams(operation = OperationType.Move, destination = indexName),
-        requestOptions = requestOptions,
+        requestOptions = tracedRequestOptions,
       )
-    waitForTask(indexName = tmpIndexName, taskID = move.taskID, maxRetries = maxRetries)
+    waitForTask(
+      indexName = tmpIndexName,
+      taskID = move.taskID,
+      maxRetries = maxRetries,
+      requestOptions = tracedRequestOptions,
+    )
 
     return ReplaceAllObjectsResponse(copy, batchResponses, move)
   } catch (e: Exception) {
     try {
-      deleteIndex(tmpIndexName)
+      deleteIndex(indexName = tmpIndexName, requestOptions = tracedRequestOptions)
     } catch (rollback: Throwable) {
       e.addSuppressed(rollback)
     }
@@ -628,12 +659,17 @@ public fun securedApiKeyRemainingValidity(apiKey: String): Duration {
  * Checks that an index exists.
  *
  * @param indexName The name of the index to check.
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *   the transporter requestOptions. (optional)
  * @return true if the index exists, false otherwise.
  * @throws AlgoliaApiException if an error occurs during the request.
  */
-public suspend fun SearchClient.indexExists(indexName: String): Boolean {
+public suspend fun SearchClient.indexExists(
+  indexName: String,
+  requestOptions: RequestOptions? = null,
+): Boolean {
   try {
-    getSettings(indexName)
+    getSettings(indexName = indexName, requestOptions = requestOptions)
   } catch (e: AlgoliaApiException) {
     if (e.httpErrorCode == 404) {
       return false
@@ -698,18 +734,20 @@ public suspend fun SearchClient.browseObjects(
   validate: (BrowseResponse) -> Boolean = { response -> response.cursor == null },
   aggregator: ((BrowseResponse) -> Unit),
   requestOptions: RequestOptions? = null,
-): BrowseResponse =
-  createIterable(
+): BrowseResponse {
+  val tracedRequestOptions = withRequestId(requestOptions)
+  return createIterable(
     execute = { previousResponse ->
       browse(
         indexName,
         params.copy(hitsPerPage = params.hitsPerPage ?: 1000, cursor = previousResponse?.cursor),
-        requestOptions,
+        tracedRequestOptions,
       )
     },
     validate = validate,
     aggregator = aggregator,
   )
+}
 
 /**
  * Helper: Returns an iterator on top of the `browse` method.
@@ -729,6 +767,7 @@ public suspend fun SearchClient.browseRules(
   requestOptions: RequestOptions? = null,
 ): SearchRulesResponse {
   val hitsPerPage = searchRulesParams.hitsPerPage ?: 1000
+  val tracedRequestOptions = withRequestId(requestOptions)
 
   return createIterable(
     execute = { previousResponse ->
@@ -738,7 +777,7 @@ public suspend fun SearchClient.browseRules(
           page = if (previousResponse != null) (previousResponse.page + 1) else 0,
           hitsPerPage = hitsPerPage,
         ),
-        requestOptions,
+        tracedRequestOptions,
       )
     },
     validate = validate ?: { response -> response.hits.count() < hitsPerPage },
@@ -765,6 +804,7 @@ public suspend fun SearchClient.browseSynonyms(
 ): SearchSynonymsResponse {
   val hitsPerPage = 1000
   var page = searchSynonymsParams.page ?: 0
+  val tracedRequestOptions = withRequestId(requestOptions)
 
   return createIterable(
     execute = { _ ->
@@ -772,7 +812,7 @@ public suspend fun SearchClient.browseSynonyms(
         searchSynonyms(
           indexName,
           searchSynonymsParams = searchSynonymsParams.copy(page = page, hitsPerPage = hitsPerPage),
-          requestOptions,
+          tracedRequestOptions,
         )
       } finally {
         page += 1
@@ -895,6 +935,7 @@ public suspend fun SearchClient.replaceAllObjectsWithTransformation(
     )
   }
   val maxRetries = chunkedOptions.maxRetries
+  val tracedRequestOptions = withRequestId(requestOptions)
   val tmpIndexName = "${indexName}_tmp_${Random.nextInt(from = 0, until = 100)}"
 
   try {
@@ -907,7 +948,7 @@ public suspend fun SearchClient.replaceAllObjectsWithTransformation(
             destination = tmpIndexName,
             scope = scopes,
           ),
-        requestOptions = requestOptions,
+        requestOptions = tracedRequestOptions,
       )
 
     val watchResponses =
@@ -922,7 +963,12 @@ public suspend fun SearchClient.replaceAllObjectsWithTransformation(
         chunkedOptions = chunkedOptions,
       )
 
-    waitForTask(indexName = tmpIndexName, taskID = copy.taskID, maxRetries = maxRetries)
+    waitForTask(
+      indexName = tmpIndexName,
+      taskID = copy.taskID,
+      maxRetries = maxRetries,
+      requestOptions = tracedRequestOptions,
+    )
 
     copy =
       operationIndex(
@@ -933,18 +979,28 @@ public suspend fun SearchClient.replaceAllObjectsWithTransformation(
             destination = tmpIndexName,
             scope = scopes,
           ),
-        requestOptions = requestOptions,
+        requestOptions = tracedRequestOptions,
       )
-    waitForTask(indexName = tmpIndexName, taskID = copy.taskID, maxRetries = maxRetries)
+    waitForTask(
+      indexName = tmpIndexName,
+      taskID = copy.taskID,
+      maxRetries = maxRetries,
+      requestOptions = tracedRequestOptions,
+    )
 
     val move =
       operationIndex(
         indexName = tmpIndexName,
         operationIndexParams =
           OperationIndexParams(operation = OperationType.Move, destination = indexName),
-        requestOptions = requestOptions,
+        requestOptions = tracedRequestOptions,
       )
-    waitForTask(indexName = tmpIndexName, taskID = move.taskID, maxRetries = maxRetries)
+    waitForTask(
+      indexName = tmpIndexName,
+      taskID = move.taskID,
+      maxRetries = maxRetries,
+      requestOptions = tracedRequestOptions,
+    )
 
     return ReplaceAllObjectsWithTransformationResponse(
       copyOperationResponse = copy,
@@ -953,7 +1009,7 @@ public suspend fun SearchClient.replaceAllObjectsWithTransformation(
     )
   } catch (e: Exception) {
     try {
-      deleteIndex(tmpIndexName)
+      deleteIndex(indexName = tmpIndexName, requestOptions = tracedRequestOptions)
     } catch (rollback: Throwable) {
       e.addSuppressed(rollback)
     }

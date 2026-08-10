@@ -2,7 +2,7 @@
   {
     "testName": "the Request-ID stays stable across retries",
     "autoCreateClient": false,
-    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "python", "ruby", "scala", "swift"],
+    "skipLanguages": ["csharp", "dart", "go", "java", "php", "python", "ruby", "scala", "swift"],
     "steps": [
       {
         "type": "createClient",
@@ -40,7 +40,7 @@
   {
     "testName": "each call mints a fresh Request-ID",
     "autoCreateClient": false,
-    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "python", "ruby", "scala", "swift"],
+    "skipLanguages": ["csharp", "dart", "go", "java", "php", "python", "ruby", "scala", "swift"],
     "steps": [
       {
         "type": "createClient",
@@ -85,7 +85,7 @@
   {
     "testName": "a caller-supplied Request-ID is never overwritten",
     "autoCreateClient": false,
-    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "python", "ruby", "scala", "swift"],
+    "skipLanguages": ["csharp", "dart", "go", "java", "php", "python", "ruby", "scala", "swift"],
     "steps": [
       {
         "type": "createClient",
@@ -122,7 +122,7 @@
   {
     "testName": "every request of one helper call shares one Request-ID",
     "autoCreateClient": false,
-    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "python", "ruby", "scala", "swift"],
+    "skipLanguages": ["csharp", "dart", "go", "java", "php", "python", "ruby", "scala", "swift"],
     "steps": [
       {
         "type": "createClient",
@@ -233,7 +233,7 @@
   {
     "testName": "client errors expose the Correlation-ID",
     "autoCreateClient": false,
-    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "python", "ruby", "scala", "swift"],
+    "skipLanguages": ["csharp", "dart", "go", "java", "php", "python", "ruby", "scala", "swift"],
     "steps": [
       {
         "type": "createClient",
@@ -255,7 +255,8 @@
         },
         "expected": {
           "error": {
-            "javascript": "request-id error test (Correlation-ID: CtsFixedCorrelationId)"
+            "javascript": "request-id error test (Correlation-ID: CtsFixedCorrelationId)",
+            "kotlin": "Client request\\\\(GET http://%localhost%:6694/1/test/request-id/error/kotlin\\\\) invalid: 400 Bad Request. Text: \\\"\\\\{\\\"message\\\":\\\"request-id error test\\\"\\\\}\\\" \\\\(Correlation-ID: CtsFixedCorrelationId\\\\)"
           }
         }
       }
