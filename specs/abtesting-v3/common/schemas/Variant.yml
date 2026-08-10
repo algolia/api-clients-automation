@@ -111,6 +111,7 @@ metricResult:
       updatedAt: 2025-05-15T17:52:15.644906Z
       value: 0.20869847452125934
       pValue: 0.004
+      bayesian: {'probabilityToBeBetter': 0.991, 'evidence': {'status': 'enough'}}
     - name: revenue
       dimension: USD
       updatedAt: 2025-05-15T17:52:15.644906Z
@@ -154,6 +155,38 @@ bayesianMetricResult:
       format: double
       description: Upper bound of the 95% credible interval for the relative effect (variant/control minus 1).
       example: 0.39
+    evidence:
+      $ref: '#/metricEvidence'
+
+metricEvidence:
+  type: object
+  description: |
+    Sequential evidence accumulated for this variant metric.
+    Only present for the metric named by the A/B test's `primaryMetric`, and only on variants that are compared against the control.
+  properties:
+    status:
+      $ref: '#/evidenceStatus'
+  required:
+    - status
+
+evidenceStatus:
+  type: string
+  description: |
+    Whether this variant metric's result is trustworthy yet.
+    This doesn't mean the A/B test has ended, and it doesn't declare a winning variant.
+
+    - `enough`. Enough evidence has accumulated to trust this metric's result for this variant.
+    - `notEnough`. Evidence was computed but hasn't reached the threshold yet.
+    - `collecting`. Evidence is still accumulating, so it's too early to report a verdict.
+    - `noData`. No usable data for this variant metric, and none is expected for it.
+    - `unavailable`. Evidence can't be computed from the available inputs or the A/B test's configuration.
+  example: enough
+  enum:
+    - enough
+    - notEnough
+    - collecting
+    - noData
+    - unavailable
 
 variantMetadata:
   type: object
