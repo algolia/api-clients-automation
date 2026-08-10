@@ -10,7 +10,7 @@
   },
   {
     "testName": "the Correlation-ID ends with the sent Request-ID",
-    "skipLanguages": ["csharp", "dart", "php", "python", "ruby", "swift"],
+    "skipLanguages": ["dart", "php", "python", "ruby", "swift"],
     "parameters": {
       "compositionID": "id1"
     },
