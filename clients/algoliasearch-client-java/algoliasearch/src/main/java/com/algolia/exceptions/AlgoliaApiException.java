@@ -25,13 +25,9 @@ public class AlgoliaApiException extends AlgoliaRuntimeException {
   private final String correlationId;
 
   public AlgoliaApiException(String message, Throwable cause, int httpErrorCode) {
-    this(message, cause, httpErrorCode, null);
-  }
-
-  public AlgoliaApiException(String message, Throwable cause, int httpErrorCode, @Nullable String correlationId) {
     super(message, cause);
     this.statusCode = httpErrorCode;
-    this.correlationId = correlationId;
+    this.correlationId = null;
   }
 
   public AlgoliaApiException(String message, int httpErrorCode) {

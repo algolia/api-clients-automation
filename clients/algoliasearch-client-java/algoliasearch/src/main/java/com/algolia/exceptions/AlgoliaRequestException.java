@@ -9,10 +9,6 @@ public final class AlgoliaRequestException extends AlgoliaApiException {
     super(message, cause, httpErrorCode);
   }
 
-  public AlgoliaRequestException(String message, Throwable cause, int httpErrorCode, @Nullable String correlationId) {
-    super(message, cause, httpErrorCode, correlationId);
-  }
-
   public AlgoliaRequestException(String message, int httpErrorCode) {
     super(message, httpErrorCode);
   }
