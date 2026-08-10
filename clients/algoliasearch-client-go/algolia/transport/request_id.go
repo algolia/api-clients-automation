@@ -19,13 +19,15 @@ const requestIDLength = 11
 // the ID is a tracing breadcrumb, not a secret.
 func NewRequestID() string {
 	b := make([]byte, requestIDLength)
-	if _, err := rand.Read(b); err != nil {
+
+	_, err := rand.Read(b)
+	if err != nil {
 		// A request must not fail over its tracing metadata: when the entropy
 		// source is unavailable, degrade to a time-seeded sequence.
 		n := time.Now().UnixNano()
 		for i := range b {
 			n = n*6364136223846793005 + 1442695040888963407
-			b[i] = byte((n >> 33) & 0xff) //nolint:gosec // intentional truncation.
+			b[i] = byte((n >> 33) & 0xff)
 		}
 	}
 
