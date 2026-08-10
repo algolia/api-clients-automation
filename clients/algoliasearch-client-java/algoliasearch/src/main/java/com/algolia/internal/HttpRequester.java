@@ -89,7 +89,7 @@ public final class HttpRequester implements Requester {
     try (Response response = call.execute()) {
       // Handle unsuccessful responses.
       if (!response.isSuccessful()) {
-        throw new AlgoliaApiException(response.message(), response.code());
+        throw new AlgoliaApiException(response.message(), response.code(), response.header("Correlation-ID"));
       }
 
       // Return null if there's no content or the return type isn't provided.
