@@ -1,3 +1,4 @@
+{{! Request options are passed as a named argument so they cannot land in an optional parameter slot (like customGet's query dictionary). The argument name must match the target method's parameter: every generated operation and the helpers exercised by the CTS name it `options`, but some hand-written helpers (WaitFor*, Browse*) name it `requestOptions` — a CTS test passing request options to one of those will not compile until the names are aligned. }}
 {{#isAsyncMethod}}await {{/isAsyncMethod}}client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{#isAsyncMethod}}Async{{/isAsyncMethod}}{{#isGeneric}}<Hit>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, options: new RequestOptionBuilder()
 {{#requestOptions.queryParameters.parametersWithDataType}}
     .AddExtraQueryParameters("{{{key}}}", {{> tests/requests/requestOptionsParams}} )
