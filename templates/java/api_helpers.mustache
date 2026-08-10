@@ -1038,6 +1038,20 @@ public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects
  * @param waitForTasks Whether or not we should wait until every `batch` tasks has been processed.
  * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
  *     to `length(objects) / batchSize`.
+ */
+public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects, boolean waitForTasks, int batchSize) {
+  return saveObjects(indexName, objects, waitForTasks, batchSize, null);
+}
+
+/**
+ * Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used
+ * under the hood, which creates a `batch` requests with at most 1000 objects in it.
+ *
+ * @param indexName The `indexName` to replace `objects` in.
+ * @param objects The array of `objects` to store in the given Algolia `indexName`.
+ * @param waitForTasks Whether or not we should wait until every `batch` tasks has been processed.
+ * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+ *     to `length(objects) / batchSize`.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
  */
