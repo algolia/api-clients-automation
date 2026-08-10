@@ -819,9 +819,9 @@ func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any
 	}, nil
 }
 
-// Exists returns whether an initialized index exists or not, along with a nil
-// error. When encountering a network error, a non-nil error is returned along
-// with false.
+// IndexExists returns whether an initialized index exists or not, along with
+// a nil error. When encountering a network error, a non-nil error is returned
+// along with false.
 func (c *APIClient) IndexExists(indexName string, opts ...RequestOption) (bool, error) {
 	if opt, ok := requestIDOption(c, opts); ok {
 		opts = append([]RequestOption{opt}, opts...)

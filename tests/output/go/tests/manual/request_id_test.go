@@ -110,18 +110,18 @@ func TestRequestIDSentAndFreshPerCall(t *testing.T) {
 }
 
 func TestRequestIDReusedAcrossRetries(t *testing.T) {
-	var attempts int
-
-	recorder := &requestIDRecorder{handler: func(writer http.ResponseWriter, req *http.Request) {
-		attempts++
-		if attempts < 3 {
+	recorder := &requestIDRecorder{}
+	// ServeHTTP records before delegating, so the recorder's synchronized
+	// state doubles as the attempt counter.
+	recorder.handler = func(writer http.ResponseWriter, req *http.Request) {
+		if len(recorder.recorded()) < 3 {
 			writer.WriteHeader(http.StatusInternalServerError)
 
 			return
 		}
 
 		okSettings(writer, req)
-	}}
+	}
 
 	srv := httptest.NewServer(recorder)
 	defer srv.Close()
