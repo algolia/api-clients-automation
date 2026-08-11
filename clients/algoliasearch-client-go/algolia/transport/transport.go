@@ -260,10 +260,15 @@ func (t *Transport) RequestStream(ctx context.Context, req *http.Request, k call
 // injectRequestID mints the Request-ID once per execution, before host
 // selection, so that every retry attempt of one call shares the same value
 // and each subsequent call gets a fresh one. A caller-supplied ID always
-// wins: every header set through the public API goes through http.Header,
-// whose keys are canonicalized, so the Get lookup is case-insensitive.
+// wins, on either channel: every header set through the public API goes
+// through http.Header, whose keys are canonicalized, so the Get lookup is
+// case-insensitive; and because the server consults the x-algolia-request-id
+// query parameter only when the header is absent, a minted header would
+// shadow a caller-supplied parameter. The URL is final by the time the
+// transport runs: prepareRequest assembles the query string before building
+// the request, and only the scheme and host change per attempt.
 func (t *Transport) injectRequestID(req *http.Request) {
-	if t.requestIDEnabled && req.Header.Get(RequestIDHeader) == "" {
+	if t.requestIDEnabled && req.Header.Get(RequestIDHeader) == "" && !HasRequestIDQueryParam(req.URL.Query()) {
 		req.Header.Set(RequestIDHeader, NewRequestID())
 	}
 }

@@ -1,6 +1,7 @@
 package manual
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -156,6 +157,107 @@ func TestCallerSuppliedRequestIDWins(t *testing.T) {
 	require.NoError(t, err)
 
 	require.Equal(t, []string{"CallerOwnedId"}, recorder.recorded())
+}
+
+func TestHasRequestIDQueryParamIsCaseInsensitive(t *testing.T) {
+	require.False(t, transport.HasRequestIDQueryParam(nil))
+	require.False(t, transport.HasRequestIDQueryParam(url.Values{"query": {"a"}}))
+	require.True(t, transport.HasRequestIDQueryParam(url.Values{"x-algolia-request-id": {"a"}}))
+	require.True(t, transport.HasRequestIDQueryParam(url.Values{"X-Algolia-Request-Id": {"a"}}))
+	require.True(t, transport.HasRequestIDQueryParam(url.Values{"X-ALGOLIA-REQUEST-ID": {"a"}}))
+}
+
+func TestCallerSuppliedRequestIDQueryParamWins(t *testing.T) {
+	recorder := &requestIDRecorder{handler: okSettings}
+
+	srv := httptest.NewServer(recorder)
+	defer srv.Close()
+
+	client := newSearchClient(t, srv.URL, 1)
+
+	// The server consults the x-algolia-request-id query parameter only when
+	// the Request-ID header is absent: minting a header would shadow it.
+	_, err := client.CustomGet(
+		client.NewApiCustomGetRequest("1/test"),
+		search.WithQueryParam("X-Algolia-Request-Id", "QueryOwned"),
+	)
+	require.NoError(t, err)
+
+	require.Equal(t, []string{""}, recorder.recorded())
+}
+
+func TestRequestIDMintedWithoutQueryParam(t *testing.T) {
+	recorder := &requestIDRecorder{handler: okSettings}
+
+	srv := httptest.NewServer(recorder)
+	defer srv.Close()
+
+	client := newSearchClient(t, srv.URL, 1)
+
+	// The inverse of TestCallerSuppliedRequestIDQueryParamWins: the same call
+	// without the query parameter must mint, so the suppression assertion
+	// above cannot pass vacuously.
+	_, err := client.CustomGet(client.NewApiCustomGetRequest("1/test"))
+	require.NoError(t, err)
+
+	ids := recorder.recorded()
+	require.Len(t, ids, 1)
+	require.Regexp(t, requestIDFormat, ids[0])
+}
+
+// newRequestIDTransport builds a transport pointed at the recorder with the
+// Request-ID channel enabled, bypassing the generated clients so the
+// transport behaviour is provable regardless of the generated configuration.
+func newRequestIDTransport(t *testing.T, serverURL string) *transport.Transport {
+	t.Helper()
+
+	serverHost, err := url.Parse(serverURL)
+	require.NoError(t, err)
+
+	return transport.New(transport.Configuration{
+		Hosts: []transport.StatefulHost{
+			transport.NewStatefulHost(serverHost.Scheme, serverHost.Host, func(call.Kind) bool { return true }),
+		},
+		RequestIDEnabled: true,
+	})
+}
+
+func TestTransportSkipsMintingOverQueryParam(t *testing.T) {
+	recorder := &requestIDRecorder{handler: okSettings}
+
+	srv := httptest.NewServer(recorder)
+	defer srv.Close()
+
+	transporter := newRequestIDTransport(t, srv.URL)
+
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, srv.URL+"/1/test?X-Algolia-Request-Id=QueryOwned", nil)
+	require.NoError(t, err)
+
+	res, _, err := transporter.Request(context.Background(), req, call.Read, transport.RequestConfiguration{})
+	require.NoError(t, err)
+	require.NoError(t, res.Body.Close())
+
+	require.Equal(t, []string{""}, recorder.recorded())
+}
+
+func TestTransportMintsWithoutQueryParam(t *testing.T) {
+	recorder := &requestIDRecorder{handler: okSettings}
+
+	srv := httptest.NewServer(recorder)
+	defer srv.Close()
+
+	transporter := newRequestIDTransport(t, srv.URL)
+
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, srv.URL+"/1/test", nil)
+	require.NoError(t, err)
+
+	res, _, err := transporter.Request(context.Background(), req, call.Read, transport.RequestConfiguration{})
+	require.NoError(t, err)
+	require.NoError(t, res.Body.Close())
+
+	ids := recorder.recorded()
+	require.Len(t, ids, 1)
+	require.Regexp(t, requestIDFormat, ids[0])
 }
 
 func TestDefaultHeaderRequestIDWins(t *testing.T) {

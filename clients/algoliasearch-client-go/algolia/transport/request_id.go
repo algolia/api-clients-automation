@@ -2,6 +2,7 @@ package transport
 
 import (
 	"crypto/rand"
+	"net/url"
 	"strings"
 	"time"
 )
@@ -9,6 +10,11 @@ import (
 // RequestIDHeader is the name of the header carrying the Request-ID minted
 // when Configuration.RequestIDEnabled is set.
 const RequestIDHeader = "Request-ID"
+
+// RequestIDQueryParam is the name of the query parameter through which a
+// caller can supply its own Request-ID. The server consults it only when the
+// Request-ID header is absent, so minting a header would shadow it.
+const RequestIDQueryParam = "x-algolia-request-id"
 
 const requestIDAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 
@@ -48,6 +54,19 @@ func HasRequestID(headers ...map[string]string) bool {
 			if strings.EqualFold(k, RequestIDHeader) {
 				return true
 			}
+		}
+	}
+
+	return false
+}
+
+// HasRequestIDQueryParam reports whether the given query parameters carry a
+// Request-ID entry, whatever its casing. url.Values keeps the caller's
+// literal key casing, so the lookup must not assume a canonical form.
+func HasRequestIDQueryParam(queryParams url.Values) bool {
+	for k := range queryParams {
+		if strings.EqualFold(k, RequestIDQueryParam) {
+			return true
 		}
 	}
 

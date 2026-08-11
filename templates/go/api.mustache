@@ -278,8 +278,9 @@ func WithApiKey(apiKey *ApiKey) waitForApiKeyOption {
 
 // requestIDOption mints the Request-ID shared by every request of one helper
 // invocation. ok is false when this client does not support Request-ID or the
-// caller already supplied one through the options or DefaultHeader, in which
-// case the options must be forwarded untouched.
+// caller already supplied one through the options (as a header or as the
+// x-algolia-request-id query parameter) or DefaultHeader, in which case the
+// options must be forwarded untouched.
 func requestIDOption[T RequestOption](c *APIClient, opts []T) (requestOption, bool) {
 	if !c.cfg.RequestIDEnabled {
 		return nil, false
@@ -291,7 +292,7 @@ func requestIDOption[T RequestOption](c *APIClient, opts []T) (requestOption, bo
 		opt.apply(&conf)
 	}
 
-	if transport.HasRequestID(conf.headerParams, c.cfg.DefaultHeader) {
+	if transport.HasRequestID(conf.headerParams, c.cfg.DefaultHeader) || transport.HasRequestIDQueryParam(conf.queryParams) {
 		return nil, false
 	}
 
