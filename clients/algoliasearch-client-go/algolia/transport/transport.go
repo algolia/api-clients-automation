@@ -71,6 +71,10 @@ func prepareRetryableRequest(req *http.Request) (*http.Request, error) {
 func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind, c RequestConfiguration) (*http.Response, []byte, error) {
 	var intermediateNetworkErrors []error
 
+	// The Correlation-ID of the last retried attempt whose response carried
+	// one, surfaced on the exhaustion error for support tickets.
+	var lastCorrelationID string
+
 	// Add Content-Encoding header, if needed
 	if t.compression == compression.GZIP && shouldCompress(t.compression, req.Method, req.Body) {
 		req.Header.Add("Content-Encoding", "gzip")
@@ -140,6 +144,12 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind,
 
 			return res, body, err
 		default:
+			if res != nil {
+				if correlationID := res.Header.Get("Correlation-ID"); correlationID != "" {
+					lastCorrelationID = correlationID
+				}
+			}
+
 			if err != nil {
 				intermediateNetworkErrors = append(intermediateNetworkErrors, err)
 			} else if res != nil {
@@ -161,10 +171,13 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind,
 	}
 
 	if t.exposeIntermediateNetworkErrors {
-		return nil, nil, errs.NewNoMoreHostToTryError(intermediateNetworkErrors...)
+		return nil, nil, errs.NewNoMoreHostToTryErrorWithCorrelationID(lastCorrelationID, intermediateNetworkErrors...)
 	}
 
-	return nil, nil, errs.ErrNoMoreHostToTry
+	// A fresh instance rather than the ErrNoMoreHostToTry singleton, so the
+	// Correlation-ID can ride along; errors.Is still matches the singleton
+	// through NoMoreHostToTryError.Is.
+	return nil, nil, errs.NewNoMoreHostToTryErrorWithCorrelationID(lastCorrelationID)
 }
 
 // maxErrorBodySize bounds the error body read of a failed streaming request,

@@ -2,6 +2,7 @@ package manual
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -12,6 +13,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/errs"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
@@ -323,4 +325,59 @@ func TestAPIErrorJSONRoundTripExcludesCorrelationID(t *testing.T) {
 	require.Equal(t, "boom", restored.Message)
 	require.Empty(t, restored.CorrelationID)
 	require.NotContains(t, restored.AdditionalProperties, "correlationID")
+}
+
+func TestExhaustionErrorCarriesLastCorrelationID(t *testing.T) {
+	var attempts int
+
+	srv := httptest.NewServer(http.HandlerFunc(func(writer http.ResponseWriter, _ *http.Request) {
+		attempts++
+		writer.Header().Set("Correlation-ID", fmt.Sprintf("CorrAttempt%d", attempts))
+		writer.WriteHeader(http.StatusInternalServerError)
+	}))
+	defer srv.Close()
+
+	client := newSearchClient(t, srv.URL, 3)
+
+	_, err := client.GetSettings(client.NewApiGetSettingsRequest("indexName"))
+	require.Error(t, err)
+	require.ErrorIs(t, err, errs.ErrNoMoreHostToTry)
+
+	var exhausted *errs.NoMoreHostToTryError
+	require.ErrorAs(t, err, &exhausted)
+	require.Equal(t, "CorrAttempt3", exhausted.CorrelationID())
+	require.Contains(t, exhausted.Error(), "(Correlation-ID: CorrAttempt3)")
+}
+
+func TestExhaustionErrorWithoutCorrelationIDIsUnchanged(t *testing.T) {
+	srv := httptest.NewServer(http.HandlerFunc(func(writer http.ResponseWriter, _ *http.Request) {
+		writer.WriteHeader(http.StatusInternalServerError)
+	}))
+	defer srv.Close()
+
+	client := newSearchClient(t, srv.URL, 3)
+
+	_, err := client.GetSettings(client.NewApiGetSettingsRequest("indexName"))
+	require.Error(t, err)
+	require.ErrorIs(t, err, errs.ErrNoMoreHostToTry)
+	require.NotContains(t, err.Error(), "Correlation-ID")
+}
+
+func TestDeserializationErrorCarriesCorrelationID(t *testing.T) {
+	srv := httptest.NewServer(http.HandlerFunc(func(writer http.ResponseWriter, _ *http.Request) {
+		writer.Header().Set("Content-Type", "application/json")
+		writer.Header().Set("Correlation-ID", "CorrDecode1")
+		_, _ = writer.Write([]byte(`not-json`))
+	}))
+	defer srv.Close()
+
+	client := newSearchClient(t, srv.URL, 1)
+
+	_, err := client.GetSettings(client.NewApiGetSettingsRequest("indexName"))
+	require.Error(t, err)
+
+	var deser *errs.DeserializationError
+	require.ErrorAs(t, err, &deser)
+	require.Equal(t, "CorrDecode1", deser.CorrelationID())
+	require.Contains(t, err.Error(), "(Correlation-ID: CorrDecode1)")
 }

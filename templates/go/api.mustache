@@ -9,8 +9,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-  {{#isSearchClient}}
   "github.com/algolia/algoliasearch-client-go/v4/algolia/errs"
+  {{#isSearchClient}}
   "cmp"
   "crypto/hmac"
 	"crypto/sha256"
@@ -608,7 +608,7 @@ func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}
 	{{#returnType}}
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return {{#returnType}}returnValue, {{/returnType}}reportError("cannot decode result: %w", err)
+		return {{#returnType}}returnValue, {{/returnType}}errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	{{/returnType}}
