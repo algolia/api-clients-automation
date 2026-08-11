@@ -13,7 +13,7 @@ import Foundation
 public extension SearchClient {
     /// Derives the request options carrying the Request-ID shared by every request of one
     /// helper invocation. See ``RequestID/withRequestID(_:configuration:)``.
-    internal func withRequestId(_ requestOptions: RequestOptions?) -> RequestOptions? {
+    internal func withRequestID(_ requestOptions: RequestOptions?) -> RequestOptions? {
         RequestID.withRequestID(requestOptions, configuration: self.configuration)
     }
 
@@ -34,7 +34,7 @@ public extension SearchClient {
         },
         requestOptions: RequestOptions? = nil
     ) async throws -> GetTaskResponse {
-        let requestOptions = self.withRequestId(requestOptions)
+        let requestOptions = self.withRequestID(requestOptions)
         var retryCount = 0
 
         return try await createIterable(
@@ -76,7 +76,7 @@ public extension SearchClient {
         },
         requestOptions: RequestOptions? = nil
     ) async throws -> GetTaskResponse {
-        let requestOptions = self.withRequestId(requestOptions)
+        let requestOptions = self.withRequestID(requestOptions)
         var retryCount = 0
 
         return try await createIterable(
@@ -122,7 +122,7 @@ public extension SearchClient {
         },
         requestOptions: RequestOptions? = nil
     ) async throws -> GetApiKeyResponse? {
-        let requestOptions = self.withRequestId(requestOptions)
+        let requestOptions = self.withRequestID(requestOptions)
         var retryCount = 0
 
         if operation == .update {
@@ -252,7 +252,7 @@ public extension SearchClient {
         aggregator: @escaping (BrowseResponse<T>) -> Void,
         requestOptions: RequestOptions? = nil
     ) async throws -> BrowseResponse<T> {
-        let requestOptions = self.withRequestId(requestOptions)
+        let requestOptions = self.withRequestID(requestOptions)
         var updatedBrowseParams = browseParams
         if updatedBrowseParams.hitsPerPage == nil {
             updatedBrowseParams.hitsPerPage = 1000
@@ -290,7 +290,7 @@ public extension SearchClient {
         aggregator: @escaping (SearchRulesResponse) -> Void,
         requestOptions: RequestOptions? = nil
     ) async throws -> SearchRulesResponse {
-        let requestOptions = self.withRequestId(requestOptions)
+        let requestOptions = self.withRequestID(requestOptions)
         let hitsPerPage = searchRulesParams.hitsPerPage ?? 1000
 
         return try await createIterable(
@@ -334,7 +334,7 @@ public extension SearchClient {
         aggregator: @escaping (SearchSynonymsResponse) -> Void,
         requestOptions: RequestOptions? = nil
     ) async throws -> SearchSynonymsResponse {
-        let requestOptions = self.withRequestId(requestOptions)
+        let requestOptions = self.withRequestID(requestOptions)
         let hitsPerPage = 1000
 
         var updatedSearchSynonymsParams = searchSynonymsParams
@@ -456,7 +456,7 @@ public extension SearchClient {
         requestOptions: RequestOptions? = nil,
         chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
     ) async throws -> [BatchResponse] {
-        let requestOptions = self.withRequestId(requestOptions)
+        let requestOptions = self.withRequestID(requestOptions)
         let batches = stride(from: 0, to: objects.count, by: batchSize).map {
             Array(objects[$0 ..< min($0 + batchSize, objects.count)])
         }
@@ -602,7 +602,7 @@ public extension SearchClient {
         chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions(maxRetries: ChunkedHelperOptions
             .defaultReplaceAllObjectsMaxRetries)
     ) async throws -> ReplaceAllObjectsResponse {
-        let requestOptions = self.withRequestId(requestOptions)
+        let requestOptions = self.withRequestID(requestOptions)
 
         if objects.isEmpty {
             let warning =

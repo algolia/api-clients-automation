@@ -66,7 +66,7 @@ open class Transporter {
         // caller-supplied ID always wins, whether it comes through the request options or
         // the default headers, and only one casing may ever be present: header names are
         // applied `.capitalized` below, so duplicates would collapse nondeterministically.
-        if self.configuration.requestIdEnabled,
+        if self.configuration.requestIDEnabled,
            !RequestID.hasRequestID(in: headers),
            !RequestID.hasRequestID(in: self.configuration.defaultHeaders) {
             headers[RequestID.httpHeaderField] = RequestID.generate()

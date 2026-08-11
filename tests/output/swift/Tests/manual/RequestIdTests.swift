@@ -221,7 +221,7 @@ final class RequestIdTests: XCTestCase {
         ))
 
         let error = try XCTUnwrap(HTTPError(response: response, data: Data("{\"message\":\"boom\"}".utf8)))
-        XCTAssertEqual(error.correlationId, "CorrTest123")
+        XCTAssertEqual(error.correlationID, "CorrTest123")
         XCTAssertTrue(error.description.hasSuffix("(Correlation-ID: CorrTest123)"))
     }
 
@@ -234,7 +234,7 @@ final class RequestIdTests: XCTestCase {
         ))
 
         let error = try XCTUnwrap(HTTPError(response: response, data: nil))
-        XCTAssertNil(error.correlationId)
+        XCTAssertNil(error.correlationID)
         XCTAssertEqual(error.description, "Status code: 400 Message: No message")
     }
 }

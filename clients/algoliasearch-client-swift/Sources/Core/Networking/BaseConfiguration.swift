@@ -33,7 +33,7 @@ public protocol BaseConfiguration {
     /// opt in. The requirement must be declared here: without it, reads through the
     /// protocol existential would statically dispatch to the extension default and ignore
     /// the conforming type's value.
-    var requestIdEnabled: Bool { get }
+    var requestIDEnabled: Bool { get }
 }
 
 public extension BaseConfiguration {
@@ -42,7 +42,7 @@ public extension BaseConfiguration {
     /// request together. Only the generated configurations of the APIs that support it
     /// (search, recommend, composition) opt in; a Request-ID supplied through the request
     /// options or the default headers is never overwritten.
-    var requestIdEnabled: Bool {
+    var requestIDEnabled: Bool {
         false
     }
 }

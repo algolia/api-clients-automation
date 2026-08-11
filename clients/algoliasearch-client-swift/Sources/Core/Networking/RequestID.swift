@@ -40,7 +40,7 @@ public enum RequestID {
         _ requestOptions: RequestOptions?,
         configuration: BaseConfiguration
     ) -> RequestOptions? {
-        guard configuration.requestIdEnabled,
+        guard configuration.requestIDEnabled,
               !self.hasRequestID(in: requestOptions?.headers),
               !self.hasRequestID(in: configuration.defaultHeaders)
         else {

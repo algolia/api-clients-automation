@@ -211,7 +211,7 @@ public extension SearchClient {
 
         // The shared Request-ID only covers the search-side calls: the ingestion push goes
         // to an API that must not receive the header.
-        let searchRequestOptions = self.withRequestId(requestOptions)
+        let searchRequestOptions = self.withRequestID(requestOptions)
 
         if objects.isEmpty {
             let warning =

@@ -27,7 +27,7 @@ public struct {{#lambda.client-to-name}}{{{client}}}{{/lambda.client-to-name}}Cl
   {{#requestIdSupport}}
   // Request-ID tracing is only supported by the search, recommend and
   // composition APIs; computed so that it cannot be opted out of or into.
-  public var requestIdEnabled: Bool { true }
+  public var requestIDEnabled: Bool { true }
   {{/requestIdSupport}}
   {{#isSearchClient}}
 

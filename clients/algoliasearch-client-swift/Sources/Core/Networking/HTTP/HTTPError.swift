@@ -19,15 +19,15 @@ public struct HTTPError: Error, CustomStringConvertible {
 
     /// The Correlation-ID header of the failed response, when present.
     /// Quote it when contacting Algolia support.
-    public let correlationId: String?
+    public let correlationID: String?
 
     public var description: String {
         let base = "Status code: \(self.statusCode) Message: \(self.message?.description ?? "No message")"
-        guard let correlationId = self.correlationId else {
+        guard let correlationID = self.correlationID else {
             return base
         }
 
-        return "\(base) (Correlation-ID: \(correlationId))"
+        return "\(base) (Correlation-ID: \(correlationID))"
     }
 
     public init?(response: HTTPURLResponse?, data: Data?) {
@@ -39,20 +39,20 @@ public struct HTTPError: Error, CustomStringConvertible {
         self.init(
             statusCode: response.statusCode,
             message: message,
-            correlationId: Self.correlationId(from: response)
+            correlationID: Self.correlationID(from: response)
         )
     }
 
-    public init(statusCode: HTTPStatusСode, message: ErrorMessage?, correlationId: String? = nil) {
+    public init(statusCode: HTTPStatusСode, message: ErrorMessage?, correlationID: String? = nil) {
         self.statusCode = statusCode
         self.message = message
-        self.correlationId = correlationId
+        self.correlationID = correlationID
     }
 
     /// Reads the Correlation-ID header case-insensitively: `allHeaderFields` keeps the
     /// server's casing, and its case-insensitive lookup is not guaranteed off Darwin.
     /// The unrelated X-Algolia-RequestID edge header must never be read instead.
-    private static func correlationId(from response: HTTPURLResponse) -> String? {
+    private static func correlationID(from response: HTTPURLResponse) -> String? {
         for (key, value) in response.allHeaderFields {
             if let name = key as? String,
                name.caseInsensitiveCompare("Correlation-ID") == .orderedSame {
