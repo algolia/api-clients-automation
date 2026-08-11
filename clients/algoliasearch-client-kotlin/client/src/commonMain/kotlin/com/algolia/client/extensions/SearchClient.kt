@@ -245,13 +245,14 @@ public suspend fun SearchClient.waitKeyUpdate(
   initialDelay: Duration = 200.milliseconds,
   maxDelay: Duration = 5.seconds,
   requestOptions: RequestOptions? = null,
-): GetApiKeyResponse =
-  retryUntil(
+): GetApiKeyResponse {
+  val tracedRequestOptions = withRequestId(requestOptions)
+  return retryUntil(
     timeout = timeout,
     maxRetries = maxRetries,
     initialDelay = initialDelay,
     maxDelay = maxDelay,
-    retry = { getApiKey(key, requestOptions) },
+    retry = { getApiKey(key, tracedRequestOptions) },
     until = {
       apiKey ==
         ApiKey(
@@ -266,6 +267,7 @@ public suspend fun SearchClient.waitKeyUpdate(
         )
     },
   )
+}
 
 /**
  * Wait on an API key creation operation.
@@ -282,15 +284,16 @@ public suspend fun SearchClient.waitKeyCreation(
   initialDelay: Duration = 200.milliseconds,
   maxDelay: Duration = 5.seconds,
   requestOptions: RequestOptions? = null,
-): GetApiKeyResponse =
-  retryUntil(
+): GetApiKeyResponse {
+  val tracedRequestOptions = withRequestId(requestOptions)
+  return retryUntil(
       timeout = timeout,
       maxRetries = maxRetries,
       initialDelay = initialDelay,
       maxDelay = maxDelay,
       retry = {
         try {
-          val response = getApiKey(key, requestOptions)
+          val response = getApiKey(key, tracedRequestOptions)
           Result.success(response)
         } catch (e: AlgoliaApiException) {
           Result.failure(e)
@@ -299,6 +302,7 @@ public suspend fun SearchClient.waitKeyCreation(
       until = { it.isSuccess },
     )
     .getOrThrow()
+}
 
 /**
  * Wait on a delete API ket operation.
@@ -316,6 +320,7 @@ public suspend fun SearchClient.waitKeyDelete(
   maxDelay: Duration = 5.seconds,
   requestOptions: RequestOptions? = null,
 ): GetApiKeyResponse? {
+  val tracedRequestOptions = withRequestId(requestOptions)
   return retryUntil(
     timeout = timeout,
     maxRetries = maxRetries,
@@ -323,7 +328,7 @@ public suspend fun SearchClient.waitKeyDelete(
     maxDelay = maxDelay,
     retry = {
       try {
-        return@retryUntil getApiKey(key, requestOptions)
+        return@retryUntil getApiKey(key, tracedRequestOptions)
       } catch (e: AlgoliaApiException) {
         if (e.httpErrorCode == 404) {
           return@retryUntil null
