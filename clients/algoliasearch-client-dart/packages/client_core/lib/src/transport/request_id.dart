@@ -32,3 +32,12 @@ String generateRequestId() => String.fromCharCodes(
 /// not assume a canonical form.
 bool hasRequestIdHeader(Map<String, dynamic>? headers) =>
     headers?.keys.any((key) => key.toLowerCase() == 'request-id') ?? false;
+
+/// Whether the given query parameters already carry an `x-algolia-request-id`
+/// entry, whatever its casing. The server consults that parameter only when
+/// the header is absent, so a caller-supplied value must suppress header
+/// minting or it would be shadowed.
+bool hasRequestIdQueryParameter(Map<String, dynamic>? queryParameters) =>
+    queryParameters?.keys
+        .any((key) => key.toLowerCase() == 'x-algolia-request-id') ??
+    false;

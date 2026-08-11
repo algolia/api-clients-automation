@@ -13,8 +13,11 @@ extension WaitTask on SearchClient {
   RequestOptions? _withRequestId(RequestOptions? requestOptions) {
     // The default-headers check is gated on the default requester, like in
     // RetryStrategy.create: a custom requester never receives the client
-    // default headers, so an ID there must not suppress minting.
+    // default headers, so an ID there must not suppress minting. An ID in the
+    // x-algolia-request-id query parameter suppresses minting too: the server
+    // consults it only when the header is absent.
     if (hasRequestIdHeader(requestOptions?.headers) ||
+        hasRequestIdQueryParameter(requestOptions?.urlParameters) ||
         (options.requester == null && hasRequestIdHeader(options.headers))) {
       return requestOptions;
     }

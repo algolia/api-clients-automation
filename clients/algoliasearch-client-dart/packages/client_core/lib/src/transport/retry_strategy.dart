@@ -105,13 +105,17 @@ final class RetryStrategy {
     // The Request-ID is minted once per execution, before the host loop, so
     // that every retry attempt shares the same value and each subsequent call
     // gets a fresh one. A caller-supplied ID always wins, whether it comes
-    // through the request options, the operation headers, or the client
-    // default headers, and only one casing may ever be present: the header
-    // merge below is case-sensitive while HTTP treats names case-insensitively.
+    // through the request options, the operation headers, the client default
+    // headers, or the x-algolia-request-id query parameter (which the server
+    // consults only when the header is absent, so a minted header would shadow
+    // it), and only one casing may ever be present: the header merge below is
+    // case-sensitive while HTTP treats names case-insensitively.
     final requestId = requestIdSupport &&
             !hasDefaultRequestId &&
             !hasRequestIdHeader(options?.headers) &&
-            !hasRequestIdHeader(request.headers)
+            !hasRequestIdHeader(request.headers) &&
+            !hasRequestIdQueryParameter(options?.urlParameters) &&
+            !hasRequestIdQueryParameter(request.queryParams)
         ? generateRequestId()
         : null;
 

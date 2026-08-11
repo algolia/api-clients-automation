@@ -118,6 +118,20 @@ void main() {
     expect(requester.requestIds, ['CallerOwnedId']);
   });
 
+  test('a caller-supplied x-algolia-request-id query parameter suppresses minting',
+      () async {
+    final requester = RecordingRequester();
+    final retryStrategy = strategy(requester);
+
+    await retryStrategy.execute(
+      request: getRequest,
+      options: const RequestOptions(
+          urlParameters: {'X-Algolia-Request-Id': 'QueryOwned'}),
+    );
+
+    expect(requester.requestIds, [null]);
+  });
+
   test('an operation-supplied Request-ID wins over minting', () async {
     final requester = RecordingRequester();
     final retryStrategy = strategy(requester);
