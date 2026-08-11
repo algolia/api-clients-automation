@@ -112,7 +112,9 @@ module Algolia
 
       # Returns a fresh Request-ID, or nil when the feature is off for this client or
       # the caller already supplied one through the request options or the config
-      # default headers, whatever their casing.
+      # default headers, whatever their casing. An x-algolia-request-id query
+      # parameter counts as caller-supplied too: the server reads it when the
+      # header is absent, so minting a header would override it.
       #
       # @param opts [Hash]
       #
@@ -122,6 +124,7 @@ module Algolia
         return nil unless @config.request_id_support
         return nil if RequestId.request_id?(opts[:header_params])
         return nil if RequestId.request_id?(@config.header_params)
+        return nil if RequestId.request_id_query_param?(opts[:query_params])
 
         RequestId.generate
       end

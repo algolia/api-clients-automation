@@ -1,7 +1,8 @@
 # Helper: Derives the request options carrying the Request-ID shared by every request
 # of one helper invocation. Returns the options untouched when the client does not
-# support Request-ID or the caller already supplied one through the options or the
-# config headers, which also makes nested helpers reuse the ID minted by their caller.
+# support Request-ID or the caller already supplied one through the options (as a
+# header or an x-algolia-request-id query parameter) or the config headers, which
+# also makes nested helpers reuse the ID minted by their caller.
 #
 # @param request_options [Hash]
 #
@@ -10,7 +11,8 @@ private def with_request_id(request_options = {})
   config = api_client.config
   unless config.request_id_support &&
       !Transport::RequestId.request_id?(request_options[:header_params]) &&
-      !Transport::RequestId.request_id?(config.header_params)
+      !Transport::RequestId.request_id?(config.header_params) &&
+      !Transport::RequestId.request_id_query_param?(request_options[:query_params])
     return request_options
   end
 

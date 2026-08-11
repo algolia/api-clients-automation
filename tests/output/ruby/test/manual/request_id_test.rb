@@ -69,6 +69,15 @@ class TestRequestId < Test::Unit::TestCase
     assert_true(Algolia::Transport::RequestId.request_id?({:"REQUEST-ID" => "a"}))
   end
 
+  def test_request_id_query_param_predicate_is_case_insensitive
+    assert_false(Algolia::Transport::RequestId.request_id_query_param?(nil))
+    assert_false(Algolia::Transport::RequestId.request_id_query_param?(""))
+    assert_false(Algolia::Transport::RequestId.request_id_query_param?({"query" => "a"}))
+    assert_true(Algolia::Transport::RequestId.request_id_query_param?({"x-algolia-request-id" => "a"}))
+    assert_true(Algolia::Transport::RequestId.request_id_query_param?({"X-Algolia-Request-Id" => "a"}))
+    assert_true(Algolia::Transport::RequestId.request_id_query_param?({:"X-ALGOLIA-REQUEST-ID" => "a"}))
+  end
+
   def test_mints_fresh_request_id_per_call
     client = search_client
 
@@ -99,6 +108,27 @@ class TestRequestId < Test::Unit::TestCase
 
     assert_equal("CallerOwnedId", res.headers["request-id"])
     assert_false(res.headers.any? { |k, v| k.to_s.casecmp?("request-id") && v != "CallerOwnedId" })
+  end
+
+  def test_caller_supplied_query_param_request_id_wins
+    client = search_client
+
+    res = client.custom_get_with_http_info("1/test", {}, {:query_params => {"X-Algolia-Request-Id" => "QueryOwned"}})
+
+    # The server consults the query parameter only when the header is absent,
+    # so minting a header here would override the caller's value.
+    assert_false(res.headers.any? { |k, _| k.to_s.casecmp?("request-id") })
+    assert_true(res.query_params.any? { |k, _| k.to_s.casecmp?("X-Algolia-Request-Id") })
+  end
+
+  def test_transport_never_mints_over_query_param_request_id
+    config = search_config
+    config.request_id_support = true
+    transport = Algolia::Transport::Transport.new(config, config.requester)
+
+    res = transport.request(READ, :GET, "/1/test", nil, {:query_params => {:"x-algolia-request-id" => "QueryOwned"}})
+
+    assert_false(res.headers.any? { |k, _| k.to_s.casecmp?("request-id") })
   end
 
   def test_config_header_request_id_wins
