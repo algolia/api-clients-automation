@@ -11,8 +11,11 @@ extension WaitTask on SearchClient {
   /// already supplied an ID through the options or the client default headers,
   /// which also makes nested helpers reuse the ID minted by their caller.
   RequestOptions? _withRequestId(RequestOptions? requestOptions) {
+    // The default-headers check is gated on the default requester, like in
+    // RetryStrategy.create: a custom requester never receives the client
+    // default headers, so an ID there must not suppress minting.
     if (hasRequestIdHeader(requestOptions?.headers) ||
-        hasRequestIdHeader(options.headers)) {
+        (options.requester == null && hasRequestIdHeader(options.headers))) {
       return requestOptions;
     }
 

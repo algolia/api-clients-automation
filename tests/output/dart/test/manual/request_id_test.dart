@@ -181,6 +181,27 @@ void main() {
     expect(requester.requestIds[2], isNot(requester.requestIds[0]));
   });
 
+  test(
+      'waitTask mints one shared ID when default headers carry an ID '
+      'a custom requester never sends', () async {
+    final requester = RecordingRequester(
+        bodyFor: (_) => {'status': 'published', 'updatedAt': ''});
+    final client = SearchClient(
+      appId: 'test-app-id',
+      apiKey: 'test-api-key',
+      options: ClientOptions(
+        requester: requester,
+        hosts: [Host(url: 'localhost')],
+        headers: {'Request-ID': 'NeverReachesTheWire'},
+      ),
+    );
+
+    await client.waitTask(indexName: 'indexName', taskID: 42);
+
+    expect(requester.requestIds, hasLength(1));
+    expect(requester.requestIds[0], matches(requestIdFormat));
+  });
+
   test('waitTask keeps a caller-supplied Request-ID', () async {
     final requester = RecordingRequester(
         bodyFor: (_) => {'status': 'published', 'updatedAt': ''});
