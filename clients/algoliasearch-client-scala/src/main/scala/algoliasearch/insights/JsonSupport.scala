@@ -32,6 +32,7 @@ object JsonSupport {
     new AddToCartEventSerializer() :+
     new ClickEventSerializer() :+
     new ConversionEventSerializer() :+
+    new InstantsearchEventSerializer() :+
     new PurchaseEventSerializer() :+
     new ViewEventSerializer()
 

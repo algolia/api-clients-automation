@@ -12,6 +12,8 @@ import 'package:algolia_client_insights/src/model/converted_object_ids_after_sea
 import 'package:algolia_client_insights/src/model/error_base.dart';
 import 'package:algolia_client_insights/src/model/events_response.dart';
 import 'package:algolia_client_insights/src/model/insights_events.dart';
+import 'package:algolia_client_insights/src/model/instantsearch.dart';
+import 'package:algolia_client_insights/src/model/instantsearch_event.dart';
 import 'package:algolia_client_insights/src/model/object_data.dart';
 import 'package:algolia_client_insights/src/model/object_data_after_search.dart';
 import 'package:algolia_client_insights/src/model/purchase_event.dart';
@@ -78,6 +80,11 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'InsightsEvents':
       return InsightsEvents.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'Instantsearch':
+      return Instantsearch.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'InstantsearchEvent':
+      return InstantsearchEvent.fromJson(value) as ReturnType;
     case 'ObjectData':
       return ObjectData.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'ObjectDataAfterSearch':
