@@ -1,3 +1,26 @@
+# Helper: Derives the request options carrying the Request-ID shared by every request
+# of one helper invocation. Returns the options untouched when the client does not
+# support Request-ID or the caller already supplied one through the options or the
+# config headers, which also makes nested helpers reuse the ID minted by their caller.
+#
+# @param request_options [Hash]
+#
+# @return [Hash]
+private def with_request_id(request_options = {})
+  config = api_client.config
+  unless config.request_id_support &&
+      !Transport::RequestId.request_id?(request_options[:header_params]) &&
+      !Transport::RequestId.request_id?(config.header_params)
+    return request_options
+  end
+
+  request_options.merge(
+    :header_params => (request_options[:header_params] || {}).merge(
+      Transport::RequestId::HEADER => Transport::RequestId.generate
+    )
+  )
+end
+
 # The parent search config MUST NOT leak into the ingestion transporter.
 def _build_ingestion_transporter(transformation_options)
   hosts = if transformation_options.hosts
@@ -120,6 +143,10 @@ def replace_all_objects_with_transformation(
 )
   assert_ingestion_transporter!
 
+  # The shared Request-ID only covers the search-side calls: the ingestion
+  # push goes to an API that must not receive the header.
+  search_request_options = with_request_id(request_options)
+
   if objects.empty?
     @api_client.logger.warn("replace_all_objects_with_transformation was called with an empty list of objects, which will delete all records currently in the \"#{index_name}\" index.")
   end
@@ -135,7 +162,7 @@ def replace_all_objects_with_transformation(
         destination: tmp_index_name,
         scope: scopes
       ),
-      request_options
+      search_request_options
     )
 
     watch_responses = @ingestion_transporter.chunked_push(
@@ -149,7 +176,7 @@ def replace_all_objects_with_transformation(
       opts
     )
 
-    wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries)
+    wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries, -> (retry_count) { [retry_count * 200, 5000].min }, search_request_options)
 
     copy_operation_response = operation_index(
       index_name,
@@ -158,10 +185,10 @@ def replace_all_objects_with_transformation(
         destination: tmp_index_name,
         scope: scopes
       ),
-      request_options
+      search_request_options
     )
 
-    wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries)
+    wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries, -> (retry_count) { [retry_count * 200, 5000].min }, search_request_options)
 
     move_operation_response = operation_index(
       tmp_index_name,
@@ -169,10 +196,10 @@ def replace_all_objects_with_transformation(
         operation: Search::OperationType::MOVE,
         destination: index_name
       ),
-      request_options
+      search_request_options
     )
 
-    wait_for_task(tmp_index_name, move_operation_response.task_id, opts.max_retries)
+    wait_for_task(tmp_index_name, move_operation_response.task_id, opts.max_retries, -> (retry_count) { [retry_count * 200, 5000].min }, search_request_options)
 
     search_watch_responses = watch_responses.map do |wr|
       Search::WatchResponse.build_from_hash(wr.to_hash)
@@ -184,7 +211,7 @@ def replace_all_objects_with_transformation(
       move_operation_response: move_operation_response
     )
   rescue Exception => e
-    delete_index(tmp_index_name)
+    delete_index(tmp_index_name, search_request_options)
 
     raise e
   end
@@ -199,6 +226,7 @@ end
 # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `get_task` method.
 # @return [Http::Response] the last get_task response
 def wait_for_task(index_name, task_id, max_retries = Algolia::ChunkedHelperOptions::DEFAULT_MAX_RETRIES, timeout = -> (retry_count) { [retry_count * 200, 5000].min }, request_options = {})
+  request_options = with_request_id(request_options)
   retries = 0
   while retries < max_retries
     res = get_task(index_name, task_id, request_options)
@@ -219,6 +247,7 @@ end
 # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `get_task` method.
 # @return [Http::Response] the last get_task response
 def wait_for_app_task(task_id, max_retries = Algolia::ChunkedHelperOptions::DEFAULT_MAX_RETRIES, timeout = -> (retry_count) { [retry_count * 200, 5000].min }, request_options = {})
+  request_options = with_request_id(request_options)
   retries = 0
   while retries < max_retries
     res = get_app_task(task_id, request_options)
@@ -241,6 +270,7 @@ end
 # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `getApikey` method and merged with the transporter requestOptions.
 # @return [Http::Response] the last get_api_key response
 def wait_for_api_key(key, operation, api_key = Search::ApiKey.new, max_retries = Algolia::ChunkedHelperOptions::DEFAULT_MAX_RETRIES, timeout = -> (retry_count) { [retry_count * 200, 5000].min }, request_options = {})
+  request_options = with_request_id(request_options)
   api_key = api_client.object_to_hash(api_key)
 
   retries = 0
@@ -289,6 +319,7 @@ end
 # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `browse` method.
 # @param block [Proc] the block to execute on each object of the index.
 def browse_objects(index_name, browse_params = Search::BrowseParamsObject.new, request_options = {}, &block)
+  request_options = with_request_id(request_options)
   browse_params = api_client.object_to_hash(browse_params)
 
   browse_params[:hitsPerPage] = 1000 unless browse_params.key?(:hitsPerPage)
@@ -318,6 +349,7 @@ end
 # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `searchRules` method.
 # @param block [Proc] the block to execute on each rule of the index.
 def browse_rules(index_name, search_rules_params = Search::SearchRulesParams.new, request_options = {}, &block)
+  request_options = with_request_id(request_options)
   search_rules_params = api_client.object_to_hash(search_rules_params)
 
   search_rules_params[:page] ||= 0
@@ -347,6 +379,7 @@ end
 # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `searchSynonyms` method.
 # @param block [Proc] the block to execute on each synonym of the index.
 def browse_synonyms(index_name, search_synonyms_params = Search::SearchSynonymsParams.new, request_options = {}, &block)
+  request_options = with_request_id(request_options)
   search_synonyms_params = api_client.object_to_hash(search_synonyms_params)
 
   search_synonyms_params[:page] ||= 0
@@ -515,6 +548,7 @@ end
 # @return [Array<BatchResponse>]
 #
 def chunked_batch(index_name, objects, action = Action::ADD_OBJECT, wait_for_tasks = false, batch_size = 1000, request_options = {}, chunked_options = nil)
+  request_options = with_request_id(request_options)
   opts = Algolia::ChunkedHelperOptions.resolve(chunked_options)
   responses = []
   objects.each_slice(batch_size) do |chunk|
@@ -527,7 +561,7 @@ def chunked_batch(index_name, objects, action = Action::ADD_OBJECT, wait_for_tas
 
   if wait_for_tasks
     responses.each do |response|
-      wait_for_task(index_name, response.task_id, opts.max_retries)
+      wait_for_task(index_name, response.task_id, opts.max_retries, -> (retry_count) { [retry_count * 200, 5000].min }, request_options)
     end
   end
 
@@ -546,6 +580,8 @@ end
 #
 # @return [Array<ReplaceAllObjectsResponse>]
 def replace_all_objects(index_name, objects, batch_size = 1000, scopes = [Search::ScopeType::SETTINGS, Search::ScopeType::RULES, Search::ScopeType::SYNONYMS], request_options = {}, chunked_options = nil)
+  request_options = with_request_id(request_options)
+
   if objects.empty?
     @api_client.logger.warn("replace_all_objects was called with an empty list of objects, which will delete all records currently in the \"#{index_name}\" index.")
   end
@@ -574,7 +610,7 @@ def replace_all_objects(index_name, objects, batch_size = 1000, scopes = [Search
       opts
     )
 
-    wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries)
+    wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries, -> (retry_count) { [retry_count * 200, 5000].min }, request_options)
 
     copy_operation_response = operation_index(
       index_name,
@@ -586,7 +622,7 @@ def replace_all_objects(index_name, objects, batch_size = 1000, scopes = [Search
       request_options
     )
 
-    wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries)
+    wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries, -> (retry_count) { [retry_count * 200, 5000].min }, request_options)
 
     move_operation_response = operation_index(
       tmp_index_name,
@@ -597,7 +633,7 @@ def replace_all_objects(index_name, objects, batch_size = 1000, scopes = [Search
       request_options
     )
 
-    wait_for_task(tmp_index_name, move_operation_response.task_id, opts.max_retries)
+    wait_for_task(tmp_index_name, move_operation_response.task_id, opts.max_retries, -> (retry_count) { [retry_count * 200, 5000].min }, request_options)
 
     Search::ReplaceAllObjectsResponse.new(
       copy_operation_response: copy_operation_response,
@@ -605,7 +641,7 @@ def replace_all_objects(index_name, objects, batch_size = 1000, scopes = [Search
       move_operation_response: move_operation_response
     )
   rescue Exception => e
-    delete_index(tmp_index_name)
+    delete_index(tmp_index_name, request_options)
 
     raise e
   end

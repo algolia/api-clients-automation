@@ -27,12 +27,20 @@ module Algolia
   # which is also included in the response attribute.
   #
   class AlgoliaHttpError < AlgoliaError
-    attr_accessor :code, :http_message
+    attr_accessor :code, :http_message, :correlation_id
 
-    def initialize(code, message)
+    def initialize(code, message, correlation_id = nil)
       self.code = code
       self.http_message = message
-      super("#{code}: #{message}")
+      self.correlation_id = correlation_id
+
+      # correlation_id is the Correlation-ID header of the failed response, when
+      # present. Quote it when contacting Algolia support.
+      if correlation_id.nil? || correlation_id.empty?
+        super("#{code}: #{message}")
+      else
+        super("#{code}: #{message} (Correlation-ID: #{correlation_id})")
+      end
     end
   end
 end

@@ -41,6 +41,13 @@ module Algolia
       def request(call_type, method, path, body, opts = {})
         retry_errors = []
 
+        # The Request-ID is minted once per execution, before the host loop, so that
+        # every retry attempt shares the same value and each subsequent call gets a
+        # fresh one. The decision must also happen before the loop: RequestOptions#create
+        # consumes opts[:header_params] on the first attempt, so a caller-supplied ID is
+        # only visible here.
+        request_id = mint_request_id(opts)
+
         @retry_strategy.get_tryable_hosts(call_type).each do |host|
           opts[:timeout] ||= get_timeout(call_type)
           opts[:connect_timeout] ||= (@config.connect_timeout || Defaults::CONNECT_TIMEOUT) * (host.retry_count + 1)
@@ -50,7 +57,7 @@ module Algolia
           # TODO: what is this merge for ?
           # request_options.query_params.merge!(request_options.data) if method == :GET
 
-          request = build_request(method, path, body, request_options)
+          request = build_request(method, path, body, request_options, request_id)
           response = @requester.send_request(
             host,
             request[:method],
@@ -69,13 +76,15 @@ module Algolia
             network_failure: response.network_failure
           )
           if outcome == FAILURE
+            correlation_id = correlation_id_from(response.headers)
+
             # handle HTML error
             if response.headers["content-type"]&.include?("text/html")
-              raise Algolia::AlgoliaHttpError.new(response.status, response.reason_phrase)
+              raise Algolia::AlgoliaHttpError.new(response.status, response.reason_phrase, correlation_id)
             end
 
             decoded_error = JSON.parse(response.error, :symbolize_names => true)
-            raise Algolia::AlgoliaHttpError.new(response.status, decoded_error[:message])
+            raise Algolia::AlgoliaHttpError.new(response.status, decoded_error[:message], correlation_id)
           end
 
           if outcome == RETRY
@@ -95,22 +104,54 @@ module Algolia
 
       private
 
+      # Returns a fresh Request-ID, or nil when the feature is off for this client or
+      # the caller already supplied one through the request options or the config
+      # default headers, whatever their casing.
+      #
+      # @param opts [Hash]
+      #
+      # @return [String, nil]
+      #
+      def mint_request_id(opts)
+        return nil unless @config.request_id_support
+        return nil if RequestId.request_id?(opts[:header_params])
+        return nil if RequestId.request_id?(@config.header_params)
+
+        RequestId.generate
+      end
+
+      # Reads the Correlation-ID header of a failed response case-insensitively: the
+      # headers hash keeps the server's casing and defaults to an empty string on
+      # timeout and network failures. The unrelated X-Algolia-RequestID edge header
+      # must never be read instead.
+      #
+      # @param headers [Hash, String]
+      #
+      # @return [String, nil]
+      #
+      def correlation_id_from(headers)
+        return nil unless headers.respond_to?(:each_pair)
+
+        headers.find { |k, _| k.to_s.casecmp?("Correlation-ID") }&.last
+      end
+
       # Parse the different information and build the request
       #
       # @param [Symbol] method
       # @param [String] path
       # @param [Hash] body
       # @param [RequestOptions] request_options
+      # @param [String, nil] request_id
       #
       # @return [Hash]
       #
-      def build_request(method, path, body, request_options)
+      def build_request(method, path, body, request_options, request_id = nil)
         request = {}
         request[:method] = method.downcase
         request[:path] = path
         request[:body] = build_body(body, request_options)
         request[:query_params] = Algolia::Transport.stringify_query_params(request_options.query_params)
-        request[:header_params] = generate_header_params(body, request_options)
+        request[:header_params] = generate_header_params(body, request_options, request_id)
         request[:timeout] = request_options.timeout
         request[:connect_timeout] = request_options.connect_timeout
         request
@@ -130,12 +171,14 @@ module Algolia
       # Generates headers from config headers and optional parameters
       #
       # @param request_options [RequestOptions]
+      # @param request_id [String, nil]
       #
       # @return [Hash] merged headers
       #
-      def generate_header_params(body, request_options)
+      def generate_header_params(body, request_options, request_id = nil)
         header_params = request_options.header_params.transform_keys(&:downcase)
         header_params = @config.header_params.merge(header_params)
+        header_params["request-id"] = request_id if request_id
         if request_options.compression_type == "gzip" && body.is_a?(String) && !body.to_s.strip.empty?
           header_params["content-encoding"] = "gzip"
         end

@@ -13,7 +13,8 @@ module Algolia
       :connect_timeout,
       :compression_type,
       :requester,
-      :transformation_options
+      :transformation_options,
+      :request_id_support
     )
 
     # Set this to false to skip client side validation in the operation.
@@ -32,6 +33,13 @@ module Algolia
       @compression_type = opts[:compression_type] || "none"
       @requester = opts[:requester]
       @transformation_options = opts[:transformation_options]
+
+      # Whether the transport sends a Request-ID header, minted once per call and
+      # reused across its retry attempts, so that Algolia support can tie the attempts
+      # of one request together. Forced by the generated clients according to which
+      # APIs support it; a Request-ID supplied through request options or the config
+      # headers is never overwritten.
+      @request_id_support = false
 
       @user_agent = UserAgent.new.add(client_name, VERSION)
 
