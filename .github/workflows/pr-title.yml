@@ -9,11 +9,11 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
       - name: Pull Request title rules
-        uses: Slashgear/action-check-pr-title@v5.0.1
+        uses: Slashgear/action-check-pr-title@161cede0311ec624ae3ee76a2c27522f7b6fa2d8 # v5.0.1
         with:
           regexp: '^(docs|chore|snippets|guides)|((?:feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)\((?:clients|generators|playground|csharp|dart|go|java|javascript|kotlin|php|python|ruby|scala|swift|cts|specs|scripts|ci|templates|deps)\)): .+'

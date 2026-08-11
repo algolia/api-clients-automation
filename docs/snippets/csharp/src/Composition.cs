@@ -508,7 +508,7 @@ public class SnippetCompositionClient
   /// </summary>
   public async Task SnippetForCompositionClientGetComposition()
   {
-    // >SEPARATOR getComposition default
+    // >SEPARATOR getComposition getComposition
     // Initialize the client
     var client = new CompositionClient(
       new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")

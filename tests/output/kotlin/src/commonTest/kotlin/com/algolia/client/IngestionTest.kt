@@ -259,6 +259,41 @@ class IngestionTest {
   }
 
   @Test
+  fun `the ingestion client sends no Request-ID`() = runTest {
+    val client =
+      IngestionClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        "us",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6694,
+                )
+              )
+          ),
+      )
+
+    client.runTest(
+      call = {
+        customGet(path = "1/test/request-id/negative/kotlin")
+      },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """{"status":"ok"}""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
+      },
+    )
+  }
+
+  @Test
   fun `switch API key`() = runTest {
     val client =
       IngestionClient(

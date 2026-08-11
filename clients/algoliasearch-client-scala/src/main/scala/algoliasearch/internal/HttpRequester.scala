@@ -7,12 +7,11 @@ import algoliasearch.internal.util.escape
 import algoliasearch.internal.util.UseReadTransporter
 import okhttp3._
 import okhttp3.internal.http.HttpMethod
-import okio.BufferedSink
 import org.json4s.native.{JsonMethods, JsonParser, parseJson}
 import org.json4s.{DefaultFormats, Extraction, Formats}
 import org.json4s.native.Serialization.read
 
-import java.io.{ByteArrayInputStream, IOException}
+import java.io.{ByteArrayInputStream, ByteArrayOutputStream, IOException}
 import java.nio.charset.StandardCharsets
 import java.util.Collections
 import java.util.concurrent.TimeUnit
@@ -50,6 +49,7 @@ private[algoliasearch] class HttpRequester private (
     clientBuilder.build()
   }
 
+  private val jsonMediaType = MediaType.parse("application/json")
   private val jsonSerializer = JsonSerializer()(builder.formats)
   private val isClosed: AtomicBoolean = new AtomicBoolean(false)
 
@@ -83,13 +83,11 @@ private[algoliasearch] class HttpRequester private (
     buildRequestBody(body)
   }
 
-  /** Serializes the request body into JSON format. */
-  private def buildRequestBody(requestBody: AnyRef) = new RequestBody() {
-    override def contentType: MediaType = MediaType.parse("application/json")
-
-    override def writeTo(bufferedSink: BufferedSink): Unit = {
-      jsonSerializer.serialize(bufferedSink.outputStream, requestBody)
-    }
+  /** Serializes the request body into JSON and returns a fixed-length request body. */
+  private def buildRequestBody(requestBody: AnyRef): RequestBody = {
+    val stream = new ByteArrayOutputStream()
+    jsonSerializer.serialize(stream, requestBody)
+    RequestBody.create(stream.toByteArray, jsonMediaType)
   }
 
   /** Constructs the headers for the HTTP request. */

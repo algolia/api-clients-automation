@@ -16,8 +16,6 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Regression test for https://github.com/algolia/algoliasearch-client-php/issues/759
- *
  * operationIndex() advertises array|OperationIndexParams but passing a model
  * object triggered a TypeError in ApiWrapper::request() because array_merge()
  * received the unserialized object.

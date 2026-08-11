@@ -1,0 +1,20 @@
+type: object
+properties:
+  eventName:
+    $ref: './EventAttributes.yml#/eventName'
+  eventType:
+    $ref: './InstantsearchEvent.yml'
+  userToken:
+    $ref: './EventAttributes.yml#/userToken'
+  authenticatedUserToken:
+    $ref: './EventAttributes.yml#/authenticatedUserToken'
+  timestamp:
+    $ref: './EventAttributes.yml#/timestamp'
+  agentID:
+    $ref: './EventAttributes.yml#/agentID'
+required:
+  - eventName
+  - eventType
+  - userToken
+x-discriminator-fields:
+  - eventType

@@ -266,7 +266,7 @@ class SearchTest {
       },
       response = {
         lenientJsonAssert(
-          "{\"results\":[{\"index\":\"cts_e2e_query_categorization\",\"query\":\"sofa\",\"extensions\":{\"queryCategorization\":{\"normalizedQuery\":\"sofa\",\"categories\":[{}]}}}]}",
+          "{\"results\":[{\"index\":\"cts_e2e_query_categorization\",\"query\":\"sofa\",\"extensions\":{\"queryCategorization\":{}}}]}",
           Json.encodeToString(it),
         )
       },

@@ -560,7 +560,7 @@ def snippet_for_get_composition():
 
     getComposition
     """
-    # >SEPARATOR getComposition default
+    # >SEPARATOR getComposition getComposition
     # Initialize the client
     # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
     client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")

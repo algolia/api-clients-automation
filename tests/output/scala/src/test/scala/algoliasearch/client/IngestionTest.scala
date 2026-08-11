@@ -244,6 +244,36 @@ class IngestionTest extends AnyFunSuite {
     }
   }
 
+  test("the ingestion client sends no Request-ID") {
+
+    val client = IngestionClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      region = "us",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6694)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.customGet[JObject](
+        path = "1/test/request-id/negative/scala"
+      ),
+      Duration.Inf
+    )
+    assert(parse(write(res)) == parse("{\"status\":\"ok\"}"))
+  }
+
   test("switch API key") {
 
     val client = IngestionClient(

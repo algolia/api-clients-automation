@@ -15,6 +15,9 @@
     requester: createXhrRequester(),
     algoliaAgents: [{ segment: 'Browser' }],
     authMode: 'Within{{#isCompositionClient}}Headers{{/isCompositionClient}}{{#isAdvancedPersonalizationClient}}Headers{{/isAdvancedPersonalizationClient}}{{^isAdvancedPersonalizationClient}}{{^isCompositionClient}}QueryParameters{{/isCompositionClient}}{{/isAdvancedPersonalizationClient}}',
+    {{#requestIdSupport}}
+    requestIdChannel: 'queryParameters',
+    {{/requestIdSupport}}
     responsesCache: createMemoryCache(),
     requestsCache: createMemoryCache({ serializable: false }),
     hostsCache: createFallbackableCache({

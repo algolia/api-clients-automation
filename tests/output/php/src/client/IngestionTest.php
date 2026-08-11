@@ -49,7 +49,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             );
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), '429: Too Many Requests');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', '429: Too Many Requests'), $e->getMessage());
         }
     }
 
@@ -221,8 +221,22 @@ class IngestionTest extends TestCase implements HttpClientInterface
 
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), '`region` is required and must be one of the following: eu, us');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', '`region` is required and must be one of the following: eu, us'), $e->getMessage());
         }
+    }
+
+    #[TestDox('the ingestion client sends no Request-ID')]
+    public function test0requestId(): void
+    {
+        $client = IngestionClient::createWithConfig(IngestionConfig::create('test-app-id', 'test-api-key', 'us')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6694']));
+
+        $res = $client->customGet(
+            '1/test/request-id/negative/php',
+        );
+        $this->assertEquals(
+            '{"status":"ok"}',
+            json_encode($res)
+        );
     }
 
     #[TestDox('switch API key')]
