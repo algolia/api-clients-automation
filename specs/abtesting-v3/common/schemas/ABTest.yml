@@ -97,7 +97,10 @@ EffectMetric:
 
 MigratedABTestId:
   type: integer
-  description: Unique migrated A/B test identifier.
+  description: |
+    ID this A/B test had in the region it was migrated from.
+    Only set on tests that were moved between analytics regions.
+    It refers to that region's data, so it isn't a valid `abTestID` for requests to this API.
   example: 224
 
 MetricsFilter:
