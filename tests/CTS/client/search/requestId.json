@@ -2,7 +2,7 @@
   {
     "testName": "the Request-ID stays stable across retries",
     "autoCreateClient": false,
-    "skipLanguages": ["php", "python", "ruby"],
+    "skipLanguages": ["php", "python"],
     "steps": [
       {
         "type": "createClient",
@@ -40,7 +40,7 @@
   {
     "testName": "each call mints a fresh Request-ID",
     "autoCreateClient": false,
-    "skipLanguages": ["php", "python", "ruby"],
+    "skipLanguages": ["php", "python"],
     "steps": [
       {
         "type": "createClient",
@@ -85,7 +85,7 @@
   {
     "testName": "a caller-supplied Request-ID is never overwritten",
     "autoCreateClient": false,
-    "skipLanguages": ["php", "python", "ruby"],
+    "skipLanguages": ["php", "python"],
     "steps": [
       {
         "type": "createClient",
@@ -103,7 +103,8 @@
         "type": "method",
         "method": "customGet",
         "parameters": {
-          "path": "1/test/request-id/caller/${{language}}"
+          "path": "1/test/request-id/caller/${{language}}",
+          "parameters": {}
         },
         "requestOptions": {
           "headers": {
@@ -122,7 +123,7 @@
   {
     "testName": "every request of one helper call shares one Request-ID",
     "autoCreateClient": false,
-    "skipLanguages": ["php", "python", "ruby"],
+    "skipLanguages": ["php", "python"],
     "steps": [
       {
         "type": "createClient",
@@ -233,7 +234,7 @@
   {
     "testName": "client errors expose the Correlation-ID",
     "autoCreateClient": false,
-    "skipLanguages": ["php", "python", "ruby"],
+    "skipLanguages": ["php", "python"],
     "steps": [
       {
         "type": "createClient",
@@ -261,6 +262,7 @@
             "java": "Status Code: 400 - {\\\"message\\\":\\\"request-id error test\\\"} (Correlation-ID: CtsFixedCorrelationId)",
             "javascript": "request-id error test (Correlation-ID: CtsFixedCorrelationId)",
             "kotlin": "Client request\\\\(GET http://%localhost%:6694/1/test/request-id/error/kotlin\\\\) invalid: 400 Bad Request. Text: \\\"\\\\{\\\"message\\\":\\\"request-id error test\\\"\\\\}\\\" \\\\(Correlation-ID: CtsFixedCorrelationId\\\\)",
+            "ruby": "400: request-id error test (Correlation-ID: CtsFixedCorrelationId)",
             "scala": "request-id error test (Correlation-ID: CtsFixedCorrelationId)",
             "swift": "HTTP error: Status code: 400 Message: request-id error test (Correlation-ID: CtsFixedCorrelationId)"
           }

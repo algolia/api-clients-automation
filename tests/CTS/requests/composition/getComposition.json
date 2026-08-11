@@ -10,7 +10,7 @@
   },
   {
     "testName": "the Correlation-ID ends with the sent Request-ID",
-    "skipLanguages": ["php", "python", "ruby"],
+    "skipLanguages": ["php", "python"],
     "parameters": {
       "compositionID": "id1"
     },
