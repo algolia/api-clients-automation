@@ -137,6 +137,20 @@ final class RequestIdTests: XCTestCase {
         XCTAssertEqual(recorder.requestIDs, ["CallerOwnedId"])
     }
 
+    func testCallerSuppliedRequestIDQueryParameterSuppressesHeader() async throws {
+        let recorder = RequestIDRecordingRequestBuilder()
+        let client = try makeSearchClient(recorder: recorder)
+
+        // The server consults the query parameter only when the header is absent, so
+        // minting the header would override the caller's ID.
+        _ = try await client.customGet(
+            path: "1/test",
+            requestOptions: RequestOptions(queryParameters: ["X-Algolia-Request-Id": "QueryOwned"])
+        )
+
+        XCTAssertEqual(recorder.requestIDs, [nil])
+    }
+
     func testDefaultHeadersRequestIDWins() async throws {
         let recorder = RequestIDRecordingRequestBuilder()
         let client = try makeSearchClient(recorder: recorder, defaultHeaders: ["REQUEST-ID": "DefaultOwned"])

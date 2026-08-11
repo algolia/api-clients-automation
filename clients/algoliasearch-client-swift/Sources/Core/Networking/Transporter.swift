@@ -63,12 +63,15 @@ open class Transporter {
 
         // The Request-ID is minted once per execution, before the host loop, so that every
         // retry attempt shares the same value and each subsequent call gets a fresh one. A
-        // caller-supplied ID always wins, whether it comes through the request options or
-        // the default headers, and only one casing may ever be present: header names are
+        // caller-supplied ID always wins, whether it comes through the request options
+        // headers, the default headers, or an `x-algolia-request-id` query parameter (the
+        // server consults the parameter when the header is absent, so minting the header
+        // would override it). Only one casing may ever be present: header names are
         // applied `.capitalized` below, so duplicates would collapse nondeterministically.
         if self.configuration.requestIDEnabled,
            !RequestID.hasRequestID(in: headers),
-           !RequestID.hasRequestID(in: self.configuration.defaultHeaders) {
+           !RequestID.hasRequestID(in: self.configuration.defaultHeaders),
+           !RequestID.hasRequestIDQueryParameter(in: requestOptions?.queryParameters) {
             headers[RequestID.httpHeaderField] = RequestID.generate()
         }
         var body: Data? = nil

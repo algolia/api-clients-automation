@@ -12,6 +12,10 @@ public enum RequestID {
     /// The name of the header carrying the Request-ID.
     public static let httpHeaderField = "Request-ID"
 
+    /// The name of the query parameter carrying the Request-ID, the fallback channel the
+    /// server consults when the header is absent.
+    public static let queryParameterName = "x-algolia-request-id"
+
     private static let alphabet: [Character] = Array(
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
     )
@@ -32,17 +36,32 @@ public enum RequestID {
         return headers.keys.contains { $0.caseInsensitiveCompare(self.httpHeaderField) == .orderedSame }
     }
 
+    /// Whether the given query parameters already carry an `x-algolia-request-id` entry,
+    /// whatever its casing. The server consults the query parameter only when the header
+    /// is absent, so a caller supplying the ID on that channel must suppress the header.
+    public static func hasRequestIDQueryParameter(in queryParameters: [String: Any?]?) -> Bool {
+        guard let queryParameters else {
+            return false
+        }
+
+        return queryParameters.keys.contains {
+            $0.caseInsensitiveCompare(self.queryParameterName) == .orderedSame
+        }
+    }
+
     /// Derives the request options carrying the Request-ID shared by every request of one
     /// helper invocation. Returns the options untouched when the configuration does not
-    /// support Request-ID or the caller already supplied one through the options or the
-    /// default headers, which also makes nested helpers reuse the ID minted by their caller.
+    /// support Request-ID or the caller already supplied one through the options headers,
+    /// the default headers, or the options query parameters, which also makes nested
+    /// helpers reuse the ID minted by their caller.
     public static func withRequestID(
         _ requestOptions: RequestOptions?,
         configuration: BaseConfiguration
     ) -> RequestOptions? {
         guard configuration.requestIDEnabled,
               !self.hasRequestID(in: requestOptions?.headers),
-              !self.hasRequestID(in: configuration.defaultHeaders)
+              !self.hasRequestID(in: configuration.defaultHeaders),
+              !self.hasRequestIDQueryParameter(in: requestOptions?.queryParameters)
         else {
             return requestOptions
         }

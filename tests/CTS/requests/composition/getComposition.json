@@ -36,7 +36,7 @@
   },
   {
     "testName": "the Correlation-ID ends with the Request-ID sent as a query parameter",
-    "skipLanguages": ["dart", "php", "python", "ruby", "swift"],
+    "skipLanguages": ["dart", "php", "python", "ruby"],
     "parameters": {
       "compositionID": "id1"
     },
