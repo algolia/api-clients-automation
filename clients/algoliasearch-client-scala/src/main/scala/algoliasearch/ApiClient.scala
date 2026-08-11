@@ -144,9 +144,12 @@ abstract class ApiClient(
       requestOptions: Option[RequestOptions] = None
   ): AlgoliaHttpResponse[T] = requester.executeWithHttpInfo(httpRequest, requestOptions)
 
+  private val requestIdInDefaults: Boolean =
+    options.defaultHeaders.keys.exists(_.equalsIgnoreCase(RequestId.HeaderName))
+
   /** Returns request options carrying a `Request-ID`, so that every request a multi-request helper performs shares one
     * identifier. Returns the options unchanged when the client has no Request-ID support or when the caller already
-    * supplied one.
+    * supplied one, per call or in the client's default headers.
     *
     * @param requestOptions
     *   the request options given to the helper
@@ -154,7 +157,7 @@ abstract class ApiClient(
   private[algoliasearch] def withRequestId(
       requestOptions: Option[RequestOptions]
   ): Option[RequestOptions] = {
-    if (!requestIdSupport || RequestId.isPresent(requestOptions)) requestOptions
+    if (!requestIdSupport || requestIdInDefaults || RequestId.isPresent(requestOptions)) requestOptions
     else Some(RequestOptions(headers = Map(RequestId.HeaderName -> RequestId.generate())) + requestOptions)
   }
 
