@@ -188,3 +188,51 @@ class TestRequestId < Test::Unit::TestCase
     assert_equal("400: boom", error.message)
   end
 end
+
+# Requester failing every request with a retryable error carrying headers.
+class AlwaysFailingRequester
+  def initialize(headers_for_attempt)
+    @attempts = 0
+    @headers_for_attempt = headers_for_attempt
+  end
+
+  def send_request(host, _method, _path, _body, _query_params, _headers, _timeout, _connect_timeout)
+    @attempts += 1
+    Algolia::Http::Response.new(
+      host: host,
+      status: 500,
+      error: "unavailable",
+      headers: @headers_for_attempt.call(@attempts)
+    )
+  end
+end
+
+class TestRequestIdExhaustion < Test::Unit::TestCase
+  include CallType
+
+  def exhausted_client(requester)
+    hosts = Array.new(3) { Algolia::Transport::StatefulHost.new("localhost", accept: READ | WRITE) }
+    config = Algolia::Configuration.new("test-app-id", "test-api-key", hosts, "Search", requester: requester)
+    Algolia::SearchClient.create_with_config(config)
+  end
+
+  def test_exhaustion_carries_last_correlation_id
+    requester = AlwaysFailingRequester.new(->(attempt) { {"cOrReLaTiOn-Id" => "CorrAttempt#{attempt}"} })
+    client = exhausted_client(requester)
+
+    error = assert_raise(Algolia::AlgoliaUnreachableHostError) { client.custom_get("1/test") }
+
+    assert_equal("CorrAttempt3", error.correlation_id)
+    assert_true(error.message.end_with?("(Correlation-ID: CorrAttempt3)"))
+  end
+
+  def test_exhaustion_without_correlation_id_is_unchanged
+    requester = AlwaysFailingRequester.new(->(_) { {} })
+    client = exhausted_client(requester)
+
+    error = assert_raise(Algolia::AlgoliaUnreachableHostError) { client.custom_get("1/test") }
+
+    assert_nil(error.correlation_id)
+    assert_false(error.message.include?("Correlation-ID"))
+  end
+end

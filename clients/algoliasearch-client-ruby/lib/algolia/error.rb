@@ -10,15 +10,21 @@ module Algolia
   # Used when hosts are unreachable
   #
   class AlgoliaUnreachableHostError < AlgoliaError
-    attr_reader :errors
+    # correlation_id is the Correlation-ID header of the last retried attempt
+    # whose response carried one, or nil when no attempt did. Quote it when
+    # contacting Algolia support.
+    attr_reader :errors, :correlation_id
 
-    def initialize(message, errors = [])
+    def initialize(message, errors = [], correlation_id = nil)
       errors.last&.tap do |last_error|
         message += " Last error for #{last_error[:host]}: #{last_error[:error]}"
       end
 
+      message += " (Correlation-ID: #{correlation_id})" unless correlation_id.nil? || correlation_id.empty?
+
       super(message)
       @errors = errors
+      @correlation_id = correlation_id
     end
   end
 

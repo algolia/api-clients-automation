@@ -48,6 +48,10 @@ module Algolia
         # only visible here.
         request_id = mint_request_id(opts)
 
+        # The Correlation-ID of the last retried attempt whose response
+        # carried one, surfaced on the exhaustion error for support tickets.
+        last_correlation_id = nil
+
         @retry_strategy.get_tryable_hosts(call_type).each do |host|
           opts[:timeout] ||= get_timeout(call_type)
           opts[:connect_timeout] ||= (@config.connect_timeout || Defaults::CONNECT_TIMEOUT) * (host.retry_count + 1)
@@ -88,6 +92,7 @@ module Algolia
           end
 
           if outcome == RETRY
+            last_correlation_id = correlation_id_from(response.headers) || last_correlation_id
             retry_errors << {host: host.url, error: response.error}
           else
             return response
@@ -97,7 +102,8 @@ module Algolia
         raise(
           Algolia::AlgoliaUnreachableHostError.new(
             "Unreachable hosts. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support",
-            retry_errors
+            retry_errors,
+            last_correlation_id
           )
         )
       end
