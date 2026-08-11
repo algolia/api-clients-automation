@@ -1,3 +1,8 @@
+## [4.44.5](https://github.com/algolia/algoliasearch-client-python/compare/4.44.4...4.44.5)
+
+- [3bee6d1dee](https://github.com/algolia/api-clients-automation/commit/3bee6d1dee) chore(ci): pin all GitHub Action refs to commit SHAs (API-475) ([#6819](https://github.com/algolia/api-clients-automation/pull/6819)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [22af756864](https://github.com/algolia/api-clients-automation/commit/22af756864) chore(deps): dependencies 2026-07-20 ([#6733](https://github.com/algolia/api-clients-automation/pull/6733)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+
 ## [4.44.4](https://github.com/algolia/algoliasearch-client-python/compare/4.44.3...4.44.4)
 
 - [ac68c1a79c](https://github.com/algolia/api-clients-automation/commit/ac68c1a79c) fix(specs): add facetFilters back to recommend fallbackParameters ([#6727](https://github.com/algolia/api-clients-automation/pull/6727)) by [@raed667](https://github.com/raed667/)

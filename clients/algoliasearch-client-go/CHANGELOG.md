@@ -1,3 +1,9 @@
+## [4.45.0](https://github.com/algolia/algoliasearch-client-go/compare/4.44.1...4.45.0)
+
+- [6593f00cf0](https://github.com/algolia/api-clients-automation/commit/6593f00cf0) feat(go): add SSE package and streaming transport support ([#6724](https://github.com/algolia/api-clients-automation/pull/6724)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [1aeb3d32e6](https://github.com/algolia/api-clients-automation/commit/1aeb3d32e6) feat(go): generate streaming methods for x-streaming operations ([#6726](https://github.com/algolia/api-clients-automation/pull/6726)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [3bee6d1dee](https://github.com/algolia/api-clients-automation/commit/3bee6d1dee) chore(ci): pin all GitHub Action refs to commit SHAs (API-475) ([#6819](https://github.com/algolia/api-clients-automation/pull/6819)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+
 ## [4.44.1](https://github.com/algolia/algoliasearch-client-go/compare/4.44.0...4.44.1)
 
 - [772f7055cc](https://github.com/algolia/api-clients-automation/commit/772f7055cc) fix(clients): add warning in replace_all_objects for empty objects ([#6610](https://github.com/algolia/api-clients-automation/pull/6610)) by [@eric-zaharia](https://github.com/eric-zaharia/)

@@ -1,3 +1,8 @@
+## [3.46.1](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.46.0...3.46.1)
+
+- [3bee6d1dee](https://github.com/algolia/api-clients-automation/commit/3bee6d1dee) chore(ci): pin all GitHub Action refs to commit SHAs (API-475) ([#6819](https://github.com/algolia/api-clients-automation/pull/6819)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [22af756864](https://github.com/algolia/api-clients-automation/commit/22af756864) chore(deps): dependencies 2026-07-20 ([#6733](https://github.com/algolia/api-clients-automation/pull/6733)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+
 ## [3.46.0](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.45.2...3.46.0)
 
 - [33a932c1c2](https://github.com/algolia/api-clients-automation/commit/33a932c1c2) fix(kotlin): add warning in replaceAllObjects for empty objects ([#6613](https://github.com/algolia/api-clients-automation/pull/6613)) by [@eric-zaharia](https://github.com/eric-zaharia/)

@@ -1,3 +1,7 @@
+## [4.41.4](https://github.com/algolia/algoliasearch-client-java/compare/4.41.3...4.41.4)
+
+- [3bee6d1dee](https://github.com/algolia/api-clients-automation/commit/3bee6d1dee) chore(ci): pin all GitHub Action refs to commit SHAs (API-475) ([#6819](https://github.com/algolia/api-clients-automation/pull/6819)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+
 ## [4.41.3](https://github.com/algolia/algoliasearch-client-java/compare/4.41.2...4.41.3)
 
 - [ac68c1a79c](https://github.com/algolia/api-clients-automation/commit/ac68c1a79c) fix(specs): add facetFilters back to recommend fallbackParameters ([#6727](https://github.com/algolia/api-clients-automation/pull/6727)) by [@raed667](https://github.com/raed667/)

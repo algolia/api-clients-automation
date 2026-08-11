@@ -1,3 +1,8 @@
+## [7.46.4](https://github.com/algolia/algoliasearch-client-csharp/compare/7.46.3...7.46.4)
+
+- [3bee6d1dee](https://github.com/algolia/api-clients-automation/commit/3bee6d1dee) chore(ci): pin all GitHub Action refs to commit SHAs (API-475) ([#6819](https://github.com/algolia/api-clients-automation/pull/6819)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [22af756864](https://github.com/algolia/api-clients-automation/commit/22af756864) chore(deps): dependencies 2026-07-20 ([#6733](https://github.com/algolia/api-clients-automation/pull/6733)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+
 ## [7.46.3](https://github.com/algolia/algoliasearch-client-csharp/compare/7.46.2...7.46.3)
 
 - [38283179ee](https://github.com/algolia/api-clients-automation/commit/38283179ee) docs(specs): document the Correlation-ID and Request-ID headers ([#6690](https://github.com/algolia/api-clients-automation/pull/6690)) by [@xroche](https://github.com/xroche/)

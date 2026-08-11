@@ -1,3 +1,10 @@
+## [5.57.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.56.0...5.57.0)
+
+- [816ba11161](https://github.com/algolia/api-clients-automation/commit/816ba11161) fix(javascript): add warning in replaceAllObjects for empty objects ([#6608](https://github.com/algolia/api-clients-automation/pull/6608)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [2d0d8f3252](https://github.com/algolia/api-clients-automation/commit/2d0d8f3252) feat(javascript): Request-ID and Correlation-ID support ([#6747](https://github.com/algolia/api-clients-automation/pull/6747)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [3bee6d1dee](https://github.com/algolia/api-clients-automation/commit/3bee6d1dee) chore(ci): pin all GitHub Action refs to commit SHAs (API-475) ([#6819](https://github.com/algolia/api-clients-automation/pull/6819)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [22af756864](https://github.com/algolia/api-clients-automation/commit/22af756864) chore(deps): dependencies 2026-07-20 ([#6733](https://github.com/algolia/api-clients-automation/pull/6733)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+
 ## [5.56.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.55.2...5.56.0)
 
 - [8a5ab6f7e8](https://github.com/algolia/api-clients-automation/commit/8a5ab6f7e8) feat(javascript): add WithHTTPInfo methods ([#6682](https://github.com/algolia/api-clients-automation/pull/6682)) by [@eric-zaharia](https://github.com/eric-zaharia/)

@@ -1,3 +1,7 @@
+## [1.51.5](https://github.com/algolia/algoliasearch-client-dart/compare/1.51.4...1.51.5)
+
+- [3bee6d1dee](https://github.com/algolia/api-clients-automation/commit/3bee6d1dee) chore(ci): pin all GitHub Action refs to commit SHAs (API-475) ([#6819](https://github.com/algolia/api-clients-automation/pull/6819)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+
 ## [1.51.4](https://github.com/algolia/algoliasearch-client-dart/compare/1.51.3...1.51.4)
 
 - [76dd01ea75](https://github.com/algolia/api-clients-automation/commit/76dd01ea75) fix(dart): add missing READMEs for ingestion and agent studio packages ([#6689](https://github.com/algolia/api-clients-automation/pull/6689)) by [@Fluf22](https://github.com/Fluf22/)
