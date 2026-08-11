@@ -23,38 +23,15 @@
   */
 package algoliasearch.abtestingv3
 
-import algoliasearch.abtestingv3.Status._
-
-/** ABTest
+/** Outcome of the A/B test once a winner has been declared. Only present when a winning variant has been declared, so
+  * its presence indicates the test has been decided.
   *
-  * @param abTestID
-  *   Unique A/B test identifier.
-  * @param updatedAt
-  *   Date and time when the A/B test was last updated, in RFC 3339 format.
-  * @param createdAt
-  *   Date and time when the A/B test was created, in RFC 3339 format.
-  * @param endAt
-  *   End date and time of the A/B test, in RFC 3339 format.
-  * @param stoppedAt
-  *   Date and time when the A/B test was stopped, in RFC 3339 format.
-  * @param name
-  *   A/B test name.
-  * @param variants
-  *   A/B test variants. The first variant is your _control_ index, typically your production index. All of the
-  *   additional variants are indexes with changed settings that you want to test against the control.
-  * @param migratedAbTestID
-  *   Unique migrated A/B test identifier.
+  * @param winnerVariantId
+  *   Identifier of the declared winning variant. The control variant is 1.
+  * @param declaredAt
+  *   Date and time when the winning variant was declared, in RFC 3339 format.
   */
-case class ABTest(
-    abTestID: Int,
-    updatedAt: String,
-    createdAt: String,
-    endAt: String,
-    stoppedAt: Option[String] = scala.None,
-    name: String,
-    status: Status,
-    variants: Seq[Variant],
-    configuration: Option[ABTestConfiguration] = scala.None,
-    migratedAbTestID: Option[Int] = scala.None,
-    decision: Option[Decision] = scala.None
+case class Decision(
+    winnerVariantId: Int,
+    declaredAt: String
 )
