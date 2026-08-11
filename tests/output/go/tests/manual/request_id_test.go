@@ -8,6 +8,7 @@ import (
 	"net/url"
 	"regexp"
 	"sync"
+	"sync/atomic"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -49,7 +50,7 @@ func newSearchClient(t *testing.T, serverURL string, hostCount int) *search.APIC
 	require.NoError(t, err)
 
 	hosts := make([]transport.StatefulHost, 0, hostCount)
-	for i := 0; i < hostCount; i++ { //nolint:intrange // the tests module targets go1.21.
+	for range hostCount { //nolint:intrange // the tests module targets go1.21.
 		hosts = append(hosts, transport.NewStatefulHost(serverHost.Scheme, serverHost.Host, func(call.Kind) bool { return true }))
 	}
 
@@ -74,7 +75,7 @@ func okSettings(w http.ResponseWriter, _ *http.Request) {
 func TestNewRequestIDFormat(t *testing.T) {
 	seen := make(map[string]struct{})
 
-	for i := 0; i < 100; i++ { //nolint:intrange // the tests module targets go1.21.
+	for range 100 { //nolint:intrange // the tests module targets go1.21.
 		id := transport.NewRequestID()
 		require.Regexp(t, requestIDFormat, id)
 		seen[id] = struct{}{}
@@ -328,11 +329,10 @@ func TestAPIErrorJSONRoundTripExcludesCorrelationID(t *testing.T) {
 }
 
 func TestExhaustionErrorCarriesLastCorrelationID(t *testing.T) {
-	var attempts int
+	var attempts atomic.Int64
 
 	srv := httptest.NewServer(http.HandlerFunc(func(writer http.ResponseWriter, _ *http.Request) {
-		attempts++
-		writer.Header().Set("Correlation-ID", fmt.Sprintf("CorrAttempt%d", attempts))
+		writer.Header().Set("Correlation-ID", fmt.Sprintf("CorrAttempt%d", attempts.Add(1)))
 		writer.WriteHeader(http.StatusInternalServerError)
 	}))
 	defer srv.Close()

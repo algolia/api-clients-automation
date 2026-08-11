@@ -9,6 +9,9 @@ type DeserializationError struct {
 	correlationID string
 }
 
+// NewDeserializationError builds the error returned when a successful
+// response body cannot be decoded, carrying the response's Correlation-ID
+// when present.
 func NewDeserializationError(err error, correlationID string) *DeserializationError {
 	return &DeserializationError{
 		err:           err,
