@@ -123,6 +123,48 @@ public class RequestIdTests
   }
 
   [Fact]
+  public async Task ShouldKeepCallerSuppliedQueryParameterRequestId()
+  {
+    var observedIds = new List<string>();
+    var httpMock = RecordingMock(observedIds, _ => JsonResponse("{}"));
+    var config = new SearchConfig("test-app-id", "test-api-key");
+    var client = new SearchClient(config, httpMock.Object);
+
+    // The server consults the query parameter only when the header is absent,
+    // so minting a header would silently override the caller's ID.
+    Uri observedUri = null;
+    httpMock
+      .Setup(c =>
+        c.SendRequestAsync(
+          It.IsAny<Request>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<CancellationToken>()
+        )
+      )
+      .Returns<Request, TimeSpan, TimeSpan, CancellationToken>(
+        (rq, _, _, _) =>
+        {
+          observedIds.Add(ObservedRequestId(rq));
+          observedUri = rq.Uri;
+          return Task.FromResult(JsonResponse("{}"));
+        }
+      );
+
+    await client.CustomGetAsync(
+      "1/test",
+      options: new RequestOptions
+      {
+        QueryParameters = new Dictionary<string, object> { { "X-Algolia-Request-Id", "QueryOwned" } },
+      }
+    );
+
+    // The URI check keeps this from passing vacuously when minting is off.
+    Assert.Contains("QueryOwned", observedUri.Query);
+    Assert.Equal(new List<string> { null }, observedIds);
+  }
+
+  [Fact]
   public async Task ShouldKeepDefaultHeadersRequestId()
   {
     var observedIds = new List<string>();
@@ -237,6 +279,7 @@ public class RequestIdTests
       await client.CustomGetAsync("1/test")
     );
 
+    Assert.True(attempts > 1, "last-wins needs more than one attempt to prove anything");
     Assert.Equal($"CorrAttempt{attempts}", ex.CorrelationId);
     Assert.EndsWith($"(Correlation-ID: CorrAttempt{attempts})", ex.Message);
   }

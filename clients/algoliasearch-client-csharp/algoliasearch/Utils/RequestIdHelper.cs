@@ -35,6 +35,32 @@ internal static class RequestIdHelper
     return new string(id);
   }
 
+  private const string QueryParameter = "x-algolia-request-id";
+
+  /// <summary>
+  /// Whether the given query parameters already carry an x-algolia-request-id
+  /// entry, whatever its casing. The server consults the query parameter only
+  /// when the Request-ID header is absent, so minting a header would override
+  /// a caller who supplied their ID through this channel.
+  /// </summary>
+  internal static bool HasRequestIdQueryParameter<TValue>(IDictionary<string, TValue> queryParameters)
+  {
+    if (queryParameters == null)
+    {
+      return false;
+    }
+
+    foreach (var parameter in queryParameters)
+    {
+      if (parameter.Key.Equals(QueryParameter, StringComparison.OrdinalIgnoreCase))
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   /// <summary>
   /// Whether the given header dictionary already carries a Request-ID entry,
   /// whatever its casing. Plain header dictionaries keep the caller's literal

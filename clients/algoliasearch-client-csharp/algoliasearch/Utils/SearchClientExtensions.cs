@@ -571,6 +571,7 @@ public partial class SearchClient : ISearchClient
     if (
       !_transport._algoliaConfig.RequestIdEnabled
       || RequestIdHelper.HasRequestId(options?.Headers)
+      || RequestIdHelper.HasRequestIdQueryParameter(options?.QueryParameters)
       || RequestIdHelper.HasRequestId(_transport._algoliaConfig.DefaultHeaders)
     )
     {

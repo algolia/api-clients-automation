@@ -117,7 +117,11 @@ internal class HttpTransport : IDisposable
       Compression = _algoliaConfig.Compression,
     };
 
-    if (_algoliaConfig.RequestIdEnabled && !RequestIdHelper.HasRequestId(request.Headers))
+    if (
+      _algoliaConfig.RequestIdEnabled
+      && !RequestIdHelper.HasRequestId(request.Headers)
+      && !RequestIdHelper.HasRequestIdQueryParameter(requestOptions?.QueryParameters)
+    )
     {
       // The ID is minted once per execution, before the host loop, so that
       // every retry attempt shares the same value and each subsequent call
