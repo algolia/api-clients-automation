@@ -213,6 +213,54 @@ public class RequestIdTests
   }
 
   [Fact]
+  public async Task ShouldExposeLastCorrelationIdOnExhaustion()
+  {
+    var observedIds = new List<string>();
+    var attempts = 0;
+    var httpMock = RecordingMock(
+      observedIds,
+      _ =>
+        new AlgoliaHttpResponse
+        {
+          HttpStatusCode = 500,
+          Error = "unavailable",
+          ResponseHeaders = new Dictionary<string, string>
+          {
+            { "Correlation-ID", $"CorrAttempt{++attempts}" },
+          },
+        }
+    );
+    var config = new SearchConfig("test-app-id", "test-api-key");
+    var client = new SearchClient(config, httpMock.Object);
+
+    var ex = await Assert.ThrowsAsync<AlgoliaUnreachableHostException>(async () =>
+      await client.CustomGetAsync("1/test")
+    );
+
+    Assert.Equal($"CorrAttempt{attempts}", ex.CorrelationId);
+    Assert.EndsWith($"(Correlation-ID: CorrAttempt{attempts})", ex.Message);
+  }
+
+  [Fact]
+  public async Task ShouldLeaveExhaustionUntouchedWithoutCorrelationId()
+  {
+    var observedIds = new List<string>();
+    var httpMock = RecordingMock(
+      observedIds,
+      _ => new AlgoliaHttpResponse { HttpStatusCode = 500, Error = "unavailable" }
+    );
+    var config = new SearchConfig("test-app-id", "test-api-key");
+    var client = new SearchClient(config, httpMock.Object);
+
+    var ex = await Assert.ThrowsAsync<AlgoliaUnreachableHostException>(async () =>
+      await client.CustomGetAsync("1/test")
+    );
+
+    Assert.Null(ex.CorrelationId);
+    Assert.DoesNotContain("Correlation-ID", ex.Message);
+  }
+
+  [Fact]
   public async Task ShouldExposeCorrelationIdOnApiErrors()
   {
     var httpMock = new Mock<IHttpRequester>();
