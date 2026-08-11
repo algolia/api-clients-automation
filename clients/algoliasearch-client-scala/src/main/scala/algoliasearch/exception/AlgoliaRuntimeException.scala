@@ -24,7 +24,7 @@ sealed abstract class AlgoliaRuntimeException(
     this
   }
 
-  override def getMessage: String = _correlationId match {
+  override def getMessage: String = correlationId match {
     case Some(id) => s"${super.getMessage} (Correlation-ID: $id)"
     case None     => super.getMessage
   }
