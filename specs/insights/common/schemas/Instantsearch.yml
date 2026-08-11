@@ -1,3 +1,4 @@
+type: object
 properties:
   eventName:
     $ref: './EventAttributes.yml#/eventName'
