@@ -11,6 +11,19 @@ final class RetryStrategy {
   final Duration writeTimeout;
   final List<RetryableHost> _hosts;
 
+  /// Whether every execution mints a Request-ID header, reused across its
+  /// retry attempts, so that Algolia support can tie the attempts of one
+  /// request together. Only the generated clients of the APIs that support it
+  /// (search, recommend, composition) opt in; a caller-supplied Request-ID is
+  /// never overwritten.
+  final bool requestIdSupport;
+
+  /// Whether the client default headers already carry a Request-ID, in which
+  /// case minting is suppressed. Computed at construction: the default
+  /// requester snapshots its headers then, so later mutation of the caller's
+  /// map never reaches the wire anyway.
+  final bool hasDefaultRequestId;
+
   /// Provides access to hosts for testing purposes.
   List<RetryableHost> get hosts => _hosts;
 
@@ -20,6 +33,8 @@ final class RetryStrategy {
     required this.readTimeout,
     required this.writeTimeout,
     required Iterable<Host> hosts,
+    this.requestIdSupport = false,
+    this.hasDefaultRequestId = false,
   }) : _hosts = hosts.map((host) => RetryableHost(host)).toList();
 
   /// Creates [RetryStrategy], defaults to [DioRequester].
@@ -39,6 +54,7 @@ final class RetryStrategy {
     Duration defaultConnectTimeout = const Duration(seconds: 2),
     Duration defaultReadTimeout = const Duration(seconds: 5),
     Duration defaultWriteTimeout = const Duration(seconds: 30),
+    bool requestIdSupport = false,
   }) {
     final connectTimeout = options.connectTimeout == ClientOptions.unsetTimeout
         ? defaultConnectTimeout
@@ -69,6 +85,11 @@ final class RetryStrategy {
       writeTimeout: writeTimeout,
       hosts: options.hosts ?? defaultHosts.call(),
       requester: requester,
+      requestIdSupport: requestIdSupport,
+      // With a custom requester the options headers are not applied above, so
+      // they must not suppress minting either.
+      hasDefaultRequestId:
+          options.requester == null && hasRequestIdHeader(options.headers),
     );
   }
 
@@ -80,8 +101,23 @@ final class RetryStrategy {
     final callType = _callTypeOf(request);
     final hosts = _callableHosts(callType);
     final List<AlgoliaException> errors = [];
+
+    // The Request-ID is minted once per execution, before the host loop, so
+    // that every retry attempt shares the same value and each subsequent call
+    // gets a fresh one. A caller-supplied ID always wins, whether it comes
+    // through the request options, the operation headers, or the client
+    // default headers, and only one casing may ever be present: the header
+    // merge below is case-sensitive while HTTP treats names case-insensitively.
+    final requestId = requestIdSupport &&
+            !hasDefaultRequestId &&
+            !hasRequestIdHeader(options?.headers) &&
+            !hasRequestIdHeader(request.headers)
+        ? generateRequestId()
+        : null;
+
     for (final host in hosts) {
-      final httpRequest = _buildRequest(host, request, callType, options);
+      final httpRequest =
+          _buildRequest(host, request, callType, options, requestId);
       final requesterConnectTimeout =
           requester.connectTimeout ?? Duration(seconds: 2);
       if (options?.connectTimeout != null) {
@@ -133,8 +169,9 @@ final class RetryStrategy {
     RetryableHost host,
     ApiRequest request,
     CallType callType,
-    RequestOptions? options,
-  ) {
+    RequestOptions? options, [
+    String? requestId,
+  ]) {
     final baseTimeout = _timeoutOf(callType, options);
     final baseConnectTimeout = options?.connectTimeout ??
         requester.connectTimeout ??
@@ -146,7 +183,11 @@ final class RetryStrategy {
         path: request.path,
         timeout: baseTimeout,
         connectTimeout: connectTimeout,
-        headers: {...?options?.headers, ...?request.headers},
+        headers: {
+          ...?options?.headers,
+          ...?request.headers,
+          if (requestId != null) requestIdHeader: requestId,
+        },
         body: options?.body ?? request.body != null
             ? request.body
             : _requiresBody(request)

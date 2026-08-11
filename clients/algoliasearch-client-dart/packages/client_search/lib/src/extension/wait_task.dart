@@ -6,6 +6,20 @@ import 'package:algolia_client_search/src/model/task_status.dart';
 import 'package:collection/collection.dart';
 
 extension WaitTask on SearchClient {
+  /// Derives the request options carrying the Request-ID shared by every poll
+  /// of one helper invocation. Returns the options untouched when the caller
+  /// already supplied an ID through the options or the client default headers,
+  /// which also makes nested helpers reuse the ID minted by their caller.
+  RequestOptions? _withRequestId(RequestOptions? requestOptions) {
+    if (hasRequestIdHeader(requestOptions?.headers) ||
+        hasRequestIdHeader(options.headers)) {
+      return requestOptions;
+    }
+
+    return RequestOptions(headers: {requestIdHeader: generateRequestId()}) +
+        requestOptions;
+  }
+
   /// Wait for a [taskID] to complete before executing the next line of code, to synchronize index
   /// updates. All write operations in Algolia are asynchronous by design. It means that when you add
   /// or update an object to your index, our servers will reply to your request with a [taskID] as soon
@@ -17,6 +31,7 @@ extension WaitTask on SearchClient {
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
+    requestOptions = _withRequestId(requestOptions);
     await waitUntil(
       params: params,
       retry: () => getTask(
@@ -34,6 +49,7 @@ extension WaitTask on SearchClient {
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
+    requestOptions = _withRequestId(requestOptions);
     await waitUntil(
       params: params,
       retry: () => getAppTask(
@@ -52,6 +68,7 @@ extension WaitTask on SearchClient {
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
+    requestOptions = _withRequestId(requestOptions);
     await waitUntil(
       retry: () async {
         try {
@@ -71,6 +88,7 @@ extension WaitTask on SearchClient {
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
+    requestOptions = _withRequestId(requestOptions);
     await waitUntil(
       params: params,
       retry: () async {
@@ -92,6 +110,7 @@ extension WaitTask on SearchClient {
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
+    requestOptions = _withRequestId(requestOptions);
     await waitUntil(
       params: params,
       retry: () async =>

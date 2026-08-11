@@ -75,6 +75,10 @@ class DioRequester implements Requester {
           throw AlgoliaApiException(
             e.response?.statusCode ?? 0,
             e.error ?? e.response,
+            // Correlation-ID comes from the search infrastructure; the
+            // unrelated X-Algolia-RequestID edge header must never be read
+            // instead. Dio lowercases header names on parse.
+            correlationId: e.response?.headers['correlation-id']?.join(','),
           );
         default:
           throw AlgoliaIOException(e);
@@ -99,7 +103,13 @@ class DioRequester implements Requester {
           receiveTimeout: request.timeout,
         ),
       );
-      return HttpResponse(response.statusCode, response.data);
+      return HttpResponse(
+        response.statusCode,
+        response.data,
+        headers: response.headers.map.map(
+          (key, values) => MapEntry(key, values.join(',')),
+        ),
+      );
     } finally {
       _client.options.connectTimeout = previousConnectTimeout;
     }

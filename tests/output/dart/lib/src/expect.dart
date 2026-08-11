@@ -21,11 +21,26 @@ void expectBody(dynamic actual, String expected) {
 
 /// Verifies that the [actual] map of HTTP headers matches the [expected]
 /// headers given as a JSON string, with case-insensitive comparison.
-void expectHeaders(Map<String, dynamic>? actual, String expected) {
+/// [allowMintedRequestId] accepts the Request-ID header minted by the
+/// clients that support it: when the expectation does not pin one, the
+/// actual value only has to be well-formed.
+void expectHeaders(
+  Map<String, dynamic>? actual,
+  String expected, {
+  bool allowMintedRequestId = false,
+}) {
   final expectedMap = _normalizeKeys(
     jsonDecode(expected) as Map<String, dynamic>,
   );
   final actualMap = _normalizeKeys(actual);
+  if (allowMintedRequestId && !expectedMap.containsKey('request-id')) {
+    final minted = actualMap.remove('request-id');
+    expect(
+      minted?.toString(),
+      matches(RegExp(r'^[0-9A-Za-z]{11}$')),
+      reason: 'the client must mint a well-formed Request-ID',
+    );
+  }
   expect(
     const DeepCollectionEquality.unordered().equals(actualMap, expectedMap),
     true,

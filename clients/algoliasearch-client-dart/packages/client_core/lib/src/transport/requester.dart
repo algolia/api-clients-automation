@@ -106,9 +106,14 @@ final class HttpResponse {
   /// if a body was received, or null otherwise.
   final Map<String, dynamic>? body;
 
+  /// The headers of the HTTP response, when the requester provides them.
+  /// Keys keep the casing the requester delivered, so lookups should not
+  /// assume a canonical form. Not part of the equality of the response.
+  final Map<String, String>? headers;
+
   /// Constructs an [HttpResponse] instance with the provided status code
   /// and body.
-  const HttpResponse(this.statusCode, this.body);
+  const HttpResponse(this.statusCode, this.body, {this.headers});
 
   @override
   bool operator ==(Object other) =>
