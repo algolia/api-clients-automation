@@ -430,7 +430,9 @@
       "default": "var response = client.deleteCompositionRule(compositionID = \"1234\", objectID = \"5678\")"
     },
     "getComposition": {
-      "getComposition": "var response = client.getComposition(compositionID = \"foo\")"
+      "getComposition": "var response = client.getComposition(compositionID = \"foo\")",
+      "the Correlation-ID ends with the sent Request-ID": "var response =\n  client.getComposition(\n    compositionID = \"id1\",\n    requestOptions = RequestOptions(headers = buildMap { put(\"request-id\", \"CtsE2eEcho4\") }),\n  )",
+      "the Correlation-ID ends with the Request-ID sent as a query": "var response =\n  client.getComposition(\n    compositionID = \"id1\",\n    requestOptions =\n      RequestOptions(urlParameters = buildMap { put(\"x-algolia-request-id\", \"CtsE2eEchoQ\") }),\n  )"
     },
     "getRule": {
       "default": "var response = client.getRule(compositionID = \"foo\", objectID = \"123\")"

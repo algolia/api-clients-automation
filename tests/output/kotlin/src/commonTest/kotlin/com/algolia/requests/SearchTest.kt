@@ -4481,6 +4481,31 @@ class SearchTest {
     )
   }
 
+  @Test
+  fun `the classic engine accepts a Request-ID sent as a query parameter1`() = runTest {
+    client.runTest(
+      call = {
+        searchRules(
+          indexName = "cts_e2e_browse",
+          searchRulesParams = SearchRulesParams(query = "zorro"),
+          requestOptions =
+            RequestOptions(
+              urlParameters =
+                buildMap {
+                  put("x-algolia-request-id", "CtsE2eQry11")
+                }
+            ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/cts_e2e_browse/rules/search".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams("""{"x-algolia-request-id":"CtsE2eQry11"}""", it.url.encodedParameters)
+        assertJsonBody("""{"query":"zorro"}""", it.body)
+      },
+    )
+  }
+
   // searchSingleIndex
 
   @Test
