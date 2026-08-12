@@ -2,8 +2,8 @@ package algoliasearch
 
 import algoliasearch.config._
 import algoliasearch.exception.AlgoliaClientException
-import algoliasearch.internal.interceptor.{AuthInterceptor, RetryStrategy, UserAgentInterceptor}
-import algoliasearch.internal.{AlgoliaAgent, HttpRequester, StatefulHost}
+import algoliasearch.internal.interceptor.{AuthInterceptor, RequestIdInterceptor, RetryStrategy, UserAgentInterceptor}
+import algoliasearch.internal.{AlgoliaAgent, HttpRequester, RequestId, StatefulHost}
 import org.json4s.Formats
 
 import scala.concurrent.duration.Duration
@@ -30,6 +30,8 @@ import scala.util.Try
   *   the JSON formats
   * @param options
   *   the client options
+  * @param requestIdSupport
+  *   whether the target API accepts a `Request-ID`. Only the search cluster clients do.
   */
 abstract class ApiClient(
     appId: String,
@@ -40,7 +42,8 @@ abstract class ApiClient(
     defaultConnectTimeout: Duration,
     defaultWriteTimeout: Duration,
     formats: Formats,
-    options: ClientOptions = ClientOptions()
+    options: ClientOptions = ClientOptions(),
+    requestIdSupport: Boolean = false
 ) extends AutoCloseable {
 
   if (appId == null || appId.isEmpty) {
@@ -98,7 +101,11 @@ abstract class ApiClient(
       .builder(optionsWithDefaultTimeouts.customFormats.getOrElse(formats))
       .withInterceptor(authInterceptor)
       .withInterceptor(new UserAgentInterceptor(algoliaAgent))
-      .withInterceptor(new RetryStrategy(statefulHosts))
+
+    if (requestIdSupport) {
+      builder.withInterceptor(new RequestIdInterceptor())
+    }
+    builder.withInterceptor(new RetryStrategy(statefulHosts))
 
     optionsWithDefaultTimeouts.requesterConfig.foreach(_(builder))
 
@@ -136,6 +143,23 @@ abstract class ApiClient(
       httpRequest: HttpRequest,
       requestOptions: Option[RequestOptions] = None
   ): AlgoliaHttpResponse[T] = requester.executeWithHttpInfo(httpRequest, requestOptions)
+
+  private val requestIdInDefaults: Boolean =
+    options.defaultHeaders.keys.exists(_.equalsIgnoreCase(RequestId.HeaderName))
+
+  /** Returns request options carrying a `Request-ID`, so that every request a multi-request helper performs shares one
+    * identifier. Returns the options unchanged when the client has no Request-ID support or when the caller already
+    * supplied one, per call or in the client's default headers.
+    *
+    * @param requestOptions
+    *   the request options given to the helper
+    */
+  private[algoliasearch] def withRequestId(
+      requestOptions: Option[RequestOptions]
+  ): Option[RequestOptions] = {
+    if (!requestIdSupport || requestIdInDefaults || RequestId.isPresent(requestOptions)) requestOptions
+    else Some(RequestOptions(headers = Map(RequestId.HeaderName -> RequestId.generate())) + requestOptions)
+  }
 
   override def close(): Unit = {
     Try(requester.close())

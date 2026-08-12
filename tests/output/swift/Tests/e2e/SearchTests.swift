@@ -247,7 +247,7 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
                     ))]))
         try XCTLenientAssertEqual(
             received: XCTUnwrap(response.body),
-            expected: "{\"results\":[{\"index\":\"cts_e2e_query_categorization\",\"query\":\"sofa\",\"extensions\":{\"queryCategorization\":{\"normalizedQuery\":\"sofa\",\"categories\":[{}]}}}]}"
+            expected: "{\"results\":[{\"index\":\"cts_e2e_query_categorization\",\"query\":\"sofa\",\"extensions\":{\"queryCategorization\":{}}}]}"
         )
 
         XCTAssertEqual(response.statusCode, 200)

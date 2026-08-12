@@ -95,7 +95,8 @@ class CompositionClient(
       defaultWriteTimeout = writeTimeout(),
       defaultConnectTimeout = connectTimeout(),
       formats = JsonSupport.format,
-      options = clientOptions
+      options = clientOptions,
+      requestIdSupport = true
     ) {
 
   /** This method lets you send requests to the Algolia REST API.

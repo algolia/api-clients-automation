@@ -3847,6 +3847,30 @@ components:
       type: integer
       description: Unique migrated A/B test identifier.
       example: 224
+    Decision:
+      type: object
+      additionalProperties: false
+      description: >
+        Outcome of the A/B test once a winner has been declared.
+
+        Only present when a winning variant has been declared, so its presence
+        indicates the test has been decided.
+      properties:
+        declaredAt:
+          type: string
+          description: >-
+            Date and time when the winning variant was declared, in RFC 3339
+            format.
+          example: '2026-06-16T00:00:00Z'
+        winnerVariantId:
+          type: integer
+          description: >-
+            Identifier of the declared winning variant. The control variant is
+            1.
+          example: 2
+      required:
+        - winnerVariantId
+        - declaredAt
     ABTest:
       type: object
       additionalProperties: false
@@ -3867,6 +3891,8 @@ components:
           $ref: '#/components/schemas/variants'
         configuration:
           $ref: '#/components/schemas/ABTestConfiguration'
+        decision:
+          $ref: '#/components/schemas/Decision'
         migratedAbTestID:
           $ref: '#/components/schemas/MigratedABTestId'
         stoppedAt:

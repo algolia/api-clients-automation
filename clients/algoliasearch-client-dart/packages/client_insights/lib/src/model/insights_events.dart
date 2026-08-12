@@ -14,16 +14,17 @@ final class InsightsEvents {
 
   /// Click and conversion events.  **All** events must be valid, otherwise the API returns an error.
   /// One of types:
+  /// - [ClickedFilters]
+  /// - [ClickedObjectIDs]
+  /// - [AddedToCartObjectIDsAfterSearch]
+  /// - [ViewedFilters]
   /// - [ViewedObjectIDs]
   /// - [PurchasedObjectIDs]
   /// - [AddedToCartObjectIDs]
   /// - [PurchasedObjectIDsAfterSearch]
   /// - [ClickedObjectIDsAfterSearch]
-  /// - [ClickedFilters]
-  /// - [ClickedObjectIDs]
   /// - [ConvertedObjectIDs]
-  /// - [AddedToCartObjectIDsAfterSearch]
-  /// - [ViewedFilters]
+  /// - [Instantsearch]
   /// - [ConvertedFilters]
   /// - [ConvertedObjectIDsAfterSearch]
   @JsonKey(name: r'events')

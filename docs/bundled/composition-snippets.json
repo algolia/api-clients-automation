@@ -746,7 +746,9 @@
       "default": "val response = Await.result(\n  client.deleteCompositionRule(\n    compositionID = \"1234\",\n    objectID = \"5678\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getComposition": {
-      "getComposition": "val response = Await.result(\n  client.getComposition(\n    compositionID = \"foo\"\n  ),\n  Duration(100, \"sec\")\n)"
+      "getComposition": "val response = Await.result(\n  client.getComposition(\n    compositionID = \"foo\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "the Correlation-ID ends with the sent Request-ID": "val response = Await.result(\n  client.getComposition(\n    compositionID = \"id1\",\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withHeader(\"request-id\", \"CtsE2eEcho4\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "the Correlation-ID ends with the Request-ID sent as a query parameter": "val response = Await.result(\n  client.getComposition(\n    compositionID = \"id1\",\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"x-algolia-request-id\", \"CtsE2eEchoQ\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getRule": {
       "default": "val response = Await.result(\n  client.getRule(\n    compositionID = \"foo\",\n    objectID = \"123\"\n  ),\n  Duration(100, \"sec\")\n)"
