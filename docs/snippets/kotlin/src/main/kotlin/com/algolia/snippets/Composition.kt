@@ -434,6 +434,48 @@ class SnippetCompositionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetComposition1() {
+    // >SEPARATOR getComposition the Correlation-ID ends with the sent Request-ID
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.getComposition(
+        compositionID = "id1",
+        requestOptions = RequestOptions(headers = buildMap { put("request-id", "CtsE2eEcho4") }),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForGetComposition2() {
+    // >SEPARATOR getComposition the Correlation-ID ends with the Request-ID sent as a query
+    // parameter
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.getComposition(
+        compositionID = "id1",
+        requestOptions =
+          RequestOptions(urlParameters = buildMap { put("x-algolia-request-id", "CtsE2eEchoQ") }),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetRule() {
     // >SEPARATOR getRule default
     // Initialize the client
