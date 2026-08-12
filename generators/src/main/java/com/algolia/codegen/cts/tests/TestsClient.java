@@ -100,7 +100,6 @@ public class TestsClient extends TestsGenerator {
               }
 
               boolean hasDefaultHeaders = step.parameters != null && step.parameters.containsKey("defaultHeaders");
-              stepOut.put("hasDefaultHeaders", hasDefaultHeaders);
               if (hasDefaultHeaders) {
                 List<Map<String, String>> defaultHeaders = new ArrayList<>();
                 for (Map.Entry<String, Object> header : ((Map<String, Object>) step.parameters.get("defaultHeaders")).entrySet()) {
