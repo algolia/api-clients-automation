@@ -64,6 +64,16 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}E2E_{{#lambda
 
       jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
       {{/body}}
+      {{#correlationIdSuffix}}
+      {{! Re-issue the request through customGet to read the response headers;
+          customGet prepends the leading slash that request.path carries. }}
+      httpResp, _, err := client.CustomGetWithHTTPInfo(client.NewApiCustomGetRequest(strings.TrimPrefix("{{{request.path}}}", "/")){{#requestOptions}}{{#queryParameters.parametersWithDataType}}, {{clientPrefix}}.WithQueryParam("{{{key}}}", {{> tests/generateInnerParams}}){{/queryParameters.parametersWithDataType}}{{#headers.parametersWithDataType}}, {{clientPrefix}}.WithHeaderParam("{{{key}}}", {{> tests/generateInnerParams}}){{/headers.parametersWithDataType}}{{/requestOptions}})
+      require.NoError(t, err)
+
+      correlationID := httpResp.Header.Get("Correlation-ID")
+      require.NotEmpty(t, correlationID)
+      require.True(t, strings.HasSuffix(correlationID, "{{{correlationIdSuffix}}}"), "Correlation-ID %q must end with %q", correlationID, "{{{correlationIdSuffix}}}")
+      {{/correlationIdSuffix}}
       {{/response}}
       {{/isStreamingTest}}
       {{#isStreamingTest}}
