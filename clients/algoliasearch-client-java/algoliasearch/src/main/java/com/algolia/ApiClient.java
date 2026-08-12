@@ -99,6 +99,16 @@ public abstract class ApiClient implements Closeable {
   }
 
   /**
+   * Returns the client's executor for asynchronous work.
+   *
+   * <p>Intended for generated helper code that schedules CompletableFuture continuations on the
+   * same executor used by {@link #executeAsync}.
+   */
+  protected ExecutorService getExecutor() {
+    return executor;
+  }
+
+  /**
    * Executes an HTTP request asynchronously and returns a {@link CompletableFuture} of the response
    * deserialized into a specified type.
    */
