@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"net/url"
 	"strings"
+	"sync/atomic"
 	"time"
 )
 
@@ -20,6 +21,10 @@ const requestIDAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0
 
 const requestIDLength = 11
 
+// requestIDFallbackCounter keeps the fallback seeds of concurrent mints
+// distinct when they land within the same clock tick.
+var requestIDFallbackCounter atomic.Int64
+
 // NewRequestID returns a fresh 11-character base62 identifier suitable for
 // the Request-ID header. The modulo bias of the byte mapping is acceptable:
 // the ID is a tracing breadcrumb, not a secret.
@@ -30,7 +35,7 @@ func NewRequestID() string {
 	if err != nil {
 		// A request must not fail over its tracing metadata: when the entropy
 		// source is unavailable, degrade to a time-seeded sequence.
-		n := time.Now().UnixNano()
+		n := time.Now().UnixNano() + requestIDFallbackCounter.Add(1)
 		for i := range b {
 			n = n*6364136223846793005 + 1442695040888963407
 			b[i] = byte((n >> 33) & 0xff)
