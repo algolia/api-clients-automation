@@ -13,7 +13,7 @@ export async function snippetForAccountCopyIndex(): Promise<void> {
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
-  const response = await client.accountCopyIndex({
+  await client.accountCopyIndex({
     sourceIndexName: 'cts_e2e_account_copy_index_source_javascript',
     destinationAppID: 'test-app-id-destination',
     destinationApiKey: 'test-api-key-destination',
@@ -22,8 +22,6 @@ export async function snippetForAccountCopyIndex(): Promise<void> {
   });
 
   // >LOG
-  // print the response
-  console.log(response);
   // SEPARATOR<
 }
 

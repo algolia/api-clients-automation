@@ -46,6 +46,44 @@ class SnippetAbtestingV3Client {
     exitProcess(0)
   }
 
+  suspend fun snippetForApplyVariantSettings() {
+    // >SEPARATOR applyVariantSettings applyVariantSettings
+    // Initialize the client
+    val client =
+      AbtestingV3Client(
+        appId = "ALGOLIA_APPLICATION_ID",
+        apiKey = "ALGOLIA_API_KEY",
+        region = "ALGOLIA_APPLICATION_REGION",
+      )
+
+    // Call the API
+    client.applyVariantSettings(id = 42, variantId = 2)
+
+    // >LOG
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForApplyVariantSettings1() {
+    // >SEPARATOR applyVariantSettings revert applied settings via the control variant
+    // Initialize the client
+    val client =
+      AbtestingV3Client(
+        appId = "ALGOLIA_APPLICATION_ID",
+        apiKey = "ALGOLIA_API_KEY",
+        region = "ALGOLIA_APPLICATION_REGION",
+      )
+
+    // Call the API
+    client.applyVariantSettings(id = 42, variantId = 1)
+
+    // >LOG
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForCustomDelete() {
     // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
     // Initialize the client
@@ -590,6 +628,27 @@ class SnippetAbtestingV3Client {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetABTestSettings() {
+    // >SEPARATOR getABTestSettings default
+    // Initialize the client
+    val client =
+      AbtestingV3Client(
+        appId = "ALGOLIA_APPLICATION_ID",
+        apiKey = "ALGOLIA_API_KEY",
+        region = "ALGOLIA_APPLICATION_REGION",
+      )
+
+    // Call the API
+    var response = client.getABTestSettings(id = 42)
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetTimeseries() {
     // >SEPARATOR getTimeseries default
     // Initialize the client
@@ -655,6 +714,48 @@ class SnippetAbtestingV3Client {
     // >LOG
     // print the response
     println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveVariantSettings() {
+    // >SEPARATOR saveVariantSettings saveVariantSettings
+    // Initialize the client
+    val client =
+      AbtestingV3Client(
+        appId = "ALGOLIA_APPLICATION_ID",
+        apiKey = "ALGOLIA_API_KEY",
+        region = "ALGOLIA_APPLICATION_REGION",
+      )
+
+    // Call the API
+    client.saveVariantSettings(
+      id = 42,
+      variantId = 2,
+      saveSettingsRequest = SaveSettingsRequest(saveFeaturesSettings = true),
+    )
+
+    // >LOG
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveVariantSettings1() {
+    // >SEPARATOR saveVariantSettings saveVariantSettingsWithoutFeatures
+    // Initialize the client
+    val client =
+      AbtestingV3Client(
+        appId = "ALGOLIA_APPLICATION_ID",
+        apiKey = "ALGOLIA_API_KEY",
+        region = "ALGOLIA_APPLICATION_REGION",
+      )
+
+    // Call the API
+    client.saveVariantSettings(id = 42, variantId = 2, saveSettingsRequest = SaveSettingsRequest())
+
+    // >LOG
     // SEPARATOR<
 
     exitProcess(0)

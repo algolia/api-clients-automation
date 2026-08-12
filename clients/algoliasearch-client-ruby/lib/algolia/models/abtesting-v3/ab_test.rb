@@ -26,6 +26,9 @@ module Algolia
       # A/B test name.
       attr_accessor :name
 
+      # Expected outcome of the A/B test.
+      attr_accessor :hypothesis
+
       attr_accessor :status
 
       # A/B test variants.  The first variant is your _control_ index, typically your production index. All of the additional variants are indexes with changed settings that you want to test against the control.
@@ -47,6 +50,7 @@ module Algolia
           :end_at => :endAt,
           :stopped_at => :stoppedAt,
           :name => :name,
+          :hypothesis => :hypothesis,
           :status => :status,
           :variants => :variants,
           :configuration => :configuration,
@@ -64,6 +68,7 @@ module Algolia
           :end_at => :"String",
           :stopped_at => :"String",
           :name => :"String",
+          :hypothesis => :"String",
           :status => :"Status",
           :variants => :"Array<Variant>",
           :configuration => :"ABTestConfiguration",
@@ -135,6 +140,12 @@ module Algolia
           self.name = nil
         end
 
+        if attributes.key?(:hypothesis)
+          self.hypothesis = attributes[:hypothesis]
+        else
+          self.hypothesis = nil
+        end
+
         if attributes.key?(:status)
           self.status = attributes[:status]
         else
@@ -173,6 +184,7 @@ module Algolia
           end_at == other.end_at &&
           stopped_at == other.stopped_at &&
           name == other.name &&
+          hypothesis == other.hypothesis &&
           status == other.status &&
           variants == other.variants &&
           configuration == other.configuration &&
@@ -196,6 +208,7 @@ module Algolia
           end_at,
           stopped_at,
           name,
+          hypothesis,
           status,
           variants,
           configuration,
