@@ -46,7 +46,10 @@ public final class RequestId {
     );
   }
 
-  /** Returns whether the given headers already carry a Request-ID, using a case-insensitive comparison. */
+  /**
+   * Returns whether the given headers already carry a Request-ID, using a case-insensitive
+   * comparison.
+   */
   public static boolean isPresent(Map<String, String> headers) {
     return containsIgnoreCase(headers, HEADER);
   }

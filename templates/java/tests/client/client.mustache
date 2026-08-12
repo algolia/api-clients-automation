@@ -49,8 +49,12 @@ class {{client}}ClientTests {
     return ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
   }
 
-  private ClientOptions withCustomHosts(List<Host> hosts, boolean gzipEncoding) {
-    return ClientOptions.builder().setHosts(hosts).setCompressionType(gzipEncoding ? CompressionType.GZIP : CompressionType.NONE).build();
+  private ClientOptions withCustomHosts(List<Host> hosts, boolean gzipEncoding, String... defaultHeaders) {
+    ClientOptions.Builder builder = ClientOptions.builder().setHosts(hosts).setCompressionType(gzipEncoding ? CompressionType.GZIP : CompressionType.NONE);
+    for (int i = 0; i < defaultHeaders.length; i += 2) {
+      builder.addDefaultHeader(defaultHeaders[i], defaultHeaders[i + 1]);
+    }
+    return builder.build();
   }
 
   {{#blocksClient}}
