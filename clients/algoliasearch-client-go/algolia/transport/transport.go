@@ -240,18 +240,28 @@ func (t *Transport) RequestStream(ctx context.Context, req *http.Request, k call
 	}
 
 	if !is2xx(res.StatusCode) {
+		correlationID := res.Header.Get("Correlation-ID")
+
 		body, errBody := io.ReadAll(io.LimitReader(res.Body, maxErrorBodySize))
 		errClose := res.Body.Close()
 
 		if errBody != nil {
-			return nil, fmt.Errorf("cannot read error response body: %w: %w", errBody, errs.NewHTTPStatusError(res.StatusCode, nil))
+			return nil, fmt.Errorf(
+				"cannot read error response body: %w: %w",
+				errBody,
+				errs.NewHTTPStatusErrorWithCorrelationID(res.StatusCode, nil, correlationID),
+			)
 		}
 
 		if errClose != nil {
-			return nil, fmt.Errorf("cannot close error response body: %w: %w", errClose, errs.NewHTTPStatusError(res.StatusCode, body))
+			return nil, fmt.Errorf(
+				"cannot close error response body: %w: %w",
+				errClose,
+				errs.NewHTTPStatusErrorWithCorrelationID(res.StatusCode, body, correlationID),
+			)
 		}
 
-		return nil, errs.NewHTTPStatusError(res.StatusCode, body)
+		return nil, errs.NewHTTPStatusErrorWithCorrelationID(res.StatusCode, body, correlationID)
 	}
 
 	return res, nil
