@@ -440,9 +440,11 @@ func TestReplaceAllObjectsCleanupSurvivesCancelledContext(t *testing.T) {
 	defer cancel()
 
 	type recordedRequest struct {
-		method    string
-		path      string
-		requestID string
+		method     string
+		path       string
+		requestID  string
+		userHeader string
+		userQuery  string
 	}
 
 	var recorder struct {
@@ -454,7 +456,13 @@ func TestReplaceAllObjectsCleanupSurvivesCancelledContext(t *testing.T) {
 
 	srv := httptest.NewServer(http.HandlerFunc(func(writer http.ResponseWriter, req *http.Request) {
 		recorder.mu.Lock()
-		recorder.requests = append(recorder.requests, recordedRequest{method: req.Method, path: req.URL.Path, requestID: req.Header.Get("Request-ID")})
+		recorder.requests = append(recorder.requests, recordedRequest{
+			method:     req.Method,
+			path:       req.URL.Path,
+			requestID:  req.Header.Get("Request-ID"),
+			userHeader: req.Header.Get("X-Algolia-User-ID"),
+			userQuery:  req.URL.Query().Get("callerParam"),
+		})
 		recorder.mu.Unlock()
 
 		writer.Header().Set("Content-Type", "application/json")
@@ -480,6 +488,8 @@ func TestReplaceAllObjectsCleanupSurvivesCancelledContext(t *testing.T) {
 	_, err := client.ReplaceAllObjects("indexName",
 		[]map[string]any{{"objectID": "1"}},
 		search.WithContext(ctx),
+		search.WithHeaderParam("X-Algolia-User-ID", "cleanup-user"),
+		search.WithQueryParam("callerParam", "callerValue"),
 	)
 	// The transport reports the aborted batch without wrapping the context
 	// error, so the cancellation is asserted on the message.
@@ -492,7 +502,9 @@ func TestReplaceAllObjectsCleanupSurvivesCancelledContext(t *testing.T) {
 
 	// The copy, the aborted batch, then exactly one rescue DeleteIndex: the
 	// cleanup must survive the caller's context so the temporary index cannot
-	// leak, and it must carry the Request-ID shared by the helper invocation.
+	// leak, and it must carry the Request-ID shared by the helper invocation
+	// along with the caller's header and query parameters (a per-call
+	// credential override must reach the rescue delete too).
 	require.Len(t, recorded, 3)
 
 	deleteReq := recorded[2]
@@ -500,6 +512,8 @@ func TestReplaceAllObjectsCleanupSurvivesCancelledContext(t *testing.T) {
 	require.Regexp(t, `^/1/indexes/indexName_tmp_\d+$`, deleteReq.path)
 	require.Regexp(t, requestIDFormat, deleteReq.requestID)
 	require.Equal(t, recorded[0].requestID, deleteReq.requestID)
+	require.Equal(t, "cleanup-user", deleteReq.userHeader)
+	require.Equal(t, "callerValue", deleteReq.userQuery)
 }
 
 func TestAPIErrorCarriesCorrelationID(t *testing.T) {

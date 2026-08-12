@@ -299,22 +299,30 @@ func requestIDOption[T RequestOption](c *APIClient, opts []T) (requestOption, bo
 	return WithHeaderParam(transport.RequestIDHeader, transport.NewRequestID()), true
 }
 
-// requestIDHeaderValue returns the Request-ID header carried by the given
-// options, or the empty string when none of them sets one.
-func requestIDHeaderValue[T RequestOption](opts []T) string {
+// cleanupOptions returns the header and query parameters carried by the given
+// options (including the Request-ID shared by the helper invocation) as
+// standalone options: failure-path cleanups must keep the caller's parameter
+// overrides without inheriting its context or timeouts.
+func cleanupOptions[T RequestOption](opts []T) []RequestOption {
 	conf := config{headerParams: map[string]string{}}
 
 	for _, opt := range opts {
 		opt.apply(&conf)
 	}
 
+	cleanupOpts := make([]RequestOption, 0, len(conf.headerParams)+len(conf.queryParams))
+
 	for key, value := range conf.headerParams {
-		if strings.EqualFold(key, transport.RequestIDHeader) {
-			return value
+		cleanupOpts = append(cleanupOpts, WithHeaderParam(key, value))
+	}
+
+	for key, values := range conf.queryParams {
+		for _, value := range values {
+			cleanupOpts = append(cleanupOpts, WithQueryParam(key, value))
 		}
 	}
 
-	return ""
+	return cleanupOpts
 }
 
 func toRequestOptions[T RequestOption](opts []T) []RequestOption {
