@@ -533,23 +533,27 @@ attributeCriteriaComputedBy:
     - sum
   description: |
     Strategy for computing the Attribute ranking criterion.
-    This mainly affects multi-word queries where matches occur in and across multiple attributes.
+    This mainly affects multi-word queries with matches in more than one attribute.
+
+    The `ranking` setting decides whether `best` takes effect.
+    When Attribute comes after Proximity, which is the default order, the engine always uses the `minProximity` strategy and ignores `best`.
+    To select `best`, move Attribute before Proximity in `ranking`.
+    The `sum` strategy applies in both orders.
 
     - `minProximity`.
-      Determine the best matching attribute from those with the best proximity score.
-      This is the default when Attribute follows Proximity in the `ranking` setting.
-      Ties on an ordered attribute are broken by the match position.
+      Pick the best matching attribute from the attributes that form the best proximity score.
+      On an ordered attribute, the match position breaks ties.
     - `best`.
-      Determine the best matching attribute from all attributes matching any query term.
-      This is the default when Attribute comes before Proximity in the `ranking` setting.
-      Ties on an ordered attribute are broken by the match position.
+      Pick the best matching attribute from all attributes that match any query word.
+      On an ordered attribute, the match position breaks ties.
     - `sum`.
-      Instead of picking one best attribute, add up a score for every query word.
-      Each word's score depends on which attribute it matched (and, for ordered attributes, where in that attribute).
-      Records with a lower total score rank higher.
-      This stops a record from ranking high just because one word of a multi-word query matched in a top attribute.
-      For most use cases, use `sum` when you place Attribute before Proximity in the `ranking` setting, especially for indices with short, relevant attributes.
-      For long-text fields, set those attributes to unordered.
+      Add up a score for every query word instead of picking one attribute.
+      Each word's score comes from the attribute it matched, and from its position in that attribute when the attribute is ordered.
+      A query word that matches nothing adds a large penalty.
+      A record with a lower total ranks higher.
+      A record therefore cannot rank high only because one word of a multi-word query matched a top attribute.
+      Use `sum` with short, relevant attributes, and set long-text attributes to unordered.
+  default: best
   x-categories:
     - Advanced
 
