@@ -194,7 +194,9 @@
       "default": "response, err := client.DeleteCompositionRule(client.NewApiDeleteCompositionRuleRequest(\n  \"1234\", \"5678\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getComposition": {
-      "getComposition": "response, err := client.GetComposition(client.NewApiGetCompositionRequest(\n  \"foo\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "getComposition": "response, err := client.GetComposition(client.NewApiGetCompositionRequest(\n  \"foo\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "the Correlation-ID ends with the sent Request-ID": "response, err := client.GetComposition(client.NewApiGetCompositionRequest(\n  \"id1\"), composition.WithHeaderParam(\"request-id\", \"CtsE2eEcho4\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "the Correlation-ID ends with the Request-ID sent as a query parameter": "response, err := client.GetComposition(client.NewApiGetCompositionRequest(\n  \"id1\"), composition.WithQueryParam(\"x-algolia-request-id\", \"CtsE2eEchoQ\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getRule": {
       "default": "response, err := client.GetRule(client.NewApiGetRuleRequest(\n  \"foo\", \"123\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
