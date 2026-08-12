@@ -33,6 +33,88 @@ class CompositionTest {
   }
 
   @Test
+  fun `the Correlation-ID ends with the sent Request-ID1`() = runTest {
+    client.runTest(
+      call = {
+        getComposition(
+          compositionID = "id1",
+          requestOptions =
+            RequestOptions(
+              headers =
+                buildMap {
+                  put("request-id", "CtsE2eEcho4")
+                }
+            ),
+        )
+      },
+      response = {
+        lenientJsonAssert("{\"objectID\":\"id1\"}", Json.encodeToString(it))
+      },
+    )
+    val httpResponse =
+      client.customGetWithHTTPInfo(
+        path = "/1/compositions/id1",
+        requestOptions =
+          RequestOptions(
+            headers =
+              buildMap {
+                put("request-id", "CtsE2eEcho4")
+              }
+          ),
+      )
+    val correlationId =
+      assertNotNull(
+        httpResponse.headers["correlation-id"]?.firstOrNull(),
+        "the response must carry a Correlation-ID",
+      )
+    assertTrue(
+      correlationId.endsWith("CtsE2eEcho4"),
+      "expected Correlation-ID `$correlationId` to end with `CtsE2eEcho4`",
+    )
+  }
+
+  @Test
+  fun `the Correlation-ID ends with the Request-ID sent as a query parameter2`() = runTest {
+    client.runTest(
+      call = {
+        getComposition(
+          compositionID = "id1",
+          requestOptions =
+            RequestOptions(
+              urlParameters =
+                buildMap {
+                  put("x-algolia-request-id", "CtsE2eEchoQ")
+                }
+            ),
+        )
+      },
+      response = {
+        lenientJsonAssert("{\"objectID\":\"id1\"}", Json.encodeToString(it))
+      },
+    )
+    val httpResponse =
+      client.customGetWithHTTPInfo(
+        path = "/1/compositions/id1",
+        requestOptions =
+          RequestOptions(
+            urlParameters =
+              buildMap {
+                put("x-algolia-request-id", "CtsE2eEchoQ")
+              }
+          ),
+      )
+    val correlationId =
+      assertNotNull(
+        httpResponse.headers["correlation-id"]?.firstOrNull(),
+        "the response must carry a Correlation-ID",
+      )
+    assertTrue(
+      correlationId.endsWith("CtsE2eEchoQ"),
+      "expected Correlation-ID `$correlationId` to end with `CtsE2eEchoQ`",
+    )
+  }
+
+  @Test
   fun `listCompositions1`() = runTest {
     client.runTest(
       call = {

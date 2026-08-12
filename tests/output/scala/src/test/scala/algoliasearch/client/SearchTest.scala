@@ -1136,6 +1136,216 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
+  test("the Request-ID stays stable across retries") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6694)
+            ),
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6695)
+            ),
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6696)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.customPost[JObject](
+        path = "1/test/request-id/retry/scala"
+      ),
+      Duration.Inf
+    )
+    assert(parse(write(res)) == parse("{\"status\":\"ok\"}"))
+  }
+
+  test("each call mints a fresh Request-ID") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6694)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.customGet[JObject](
+          path = "1/test/request-id/fresh/scala"
+        ),
+        Duration.Inf
+      )
+      assert(parse(write(res)) == parse("{\"status\":\"ok\"}"))
+    }
+    {
+      var res = Await.result(
+        client.customGet[JObject](
+          path = "1/test/request-id/fresh/scala"
+        ),
+        Duration.Inf
+      )
+      assert(parse(write(res)) == parse("{\"status\":\"ok\"}"))
+    }
+  }
+
+  test("a caller-supplied Request-ID is never overwritten") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6694)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.customGet[JObject](
+        path = "1/test/request-id/caller/scala",
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("request-id", "CtsUserProvided")
+            .build()
+        )
+      ),
+      Duration.Inf
+    )
+    assert(parse(write(res)) == parse("{\"requestId\":\"CtsUserProvided\"}"))
+  }
+
+  test("every request of one helper call shares one Request-ID") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6694)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.saveObjects(
+          indexName = "cts_request_id_scala",
+          objects = Seq(
+            JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+            JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit")))),
+            JObject(List(JField("objectID", JString("3")), JField("name", JString("Cyril")))),
+            JObject(List(JField("objectID", JString("4")), JField("name", JString("David"))))
+          ),
+          waitForTasks = true,
+          batchSize = 2
+        ),
+        Duration.Inf
+      )
+      assert(
+        parse(write(res)) == parse(
+          "[{\"taskID\":42,\"objectIDs\":[\"1\",\"2\"]},{\"taskID\":42,\"objectIDs\":[\"3\",\"4\"]}]"
+        )
+      )
+    }
+    {
+      var res = Await.result(
+        client.saveObjects(
+          indexName = "cts_request_id_scala",
+          objects = Seq(
+            JObject(List(JField("objectID", JString("5")), JField("name", JString("Eva")))),
+            JObject(List(JField("objectID", JString("6")), JField("name", JString("Fred")))),
+            JObject(List(JField("objectID", JString("7")), JField("name", JString("Gina")))),
+            JObject(List(JField("objectID", JString("8")), JField("name", JString("Hugo"))))
+          ),
+          waitForTasks = true,
+          batchSize = 2
+        ),
+        Duration.Inf
+      )
+      assert(
+        parse(write(res)) == parse(
+          "[{\"taskID\":42,\"objectIDs\":[\"5\",\"6\"]},{\"taskID\":42,\"objectIDs\":[\"7\",\"8\"]}]"
+        )
+      )
+    }
+  }
+
+  test("client errors expose the Correlation-ID") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6694)
+            )
+          )
+        )
+        .build()
+    )
+
+    assertError("request-id error test (Correlation-ID: CtsFixedCorrelationId)") {
+      var res = Await.result(
+        client.customGet[JObject](
+          path = "1/test/request-id/error/scala"
+        ),
+        Duration.Inf
+      )
+    }
+  }
+
   test("call saveObjects without error") {
 
     val client = SearchClient(

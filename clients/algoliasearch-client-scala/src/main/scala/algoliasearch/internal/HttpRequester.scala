@@ -4,6 +4,7 @@ import algoliasearch.config._
 import algoliasearch.exception.{AlgoliaApiException, AlgoliaClientException}
 import algoliasearch.internal.interceptor.{GzipRequestInterceptor, HeaderInterceptor, LogInterceptor}
 import algoliasearch.internal.util.escape
+import algoliasearch.internal.util.CorrelationIdHeader
 import algoliasearch.internal.util.UseReadTransporter
 import okhttp3._
 import okhttp3.internal.http.HttpMethod
@@ -193,8 +194,10 @@ private[algoliasearch] class HttpRequester private (
     try {
       response = call.execute
       // Handle unsuccessful responses.
-      if (!response.isSuccessful)
+      if (!response.isSuccessful) {
         throw AlgoliaApiException(message = response.message, httpErrorCode = response.code)
+          .withCorrelationId(Option(response.header(CorrelationIdHeader)))
+      }
       handler(response)
     } catch {
       case exception: IOException => throw AlgoliaClientException(cause = exception)
@@ -211,7 +214,7 @@ private[algoliasearch] class HttpRequester private (
           message = message,
           cause = exception.cause,
           httpErrorCode = exception.httpErrorCode
-        )
+        ).withCorrelationId(exception.correlationId)
     } finally if (response != null) response.close()
   }
 }

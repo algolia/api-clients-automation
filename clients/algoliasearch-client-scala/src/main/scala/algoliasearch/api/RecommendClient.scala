@@ -89,7 +89,8 @@ class RecommendClient(
       defaultWriteTimeout = writeTimeout(),
       defaultConnectTimeout = connectTimeout(),
       formats = JsonSupport.format,
-      options = clientOptions
+      options = clientOptions,
+      requestIdSupport = true
     ) {
 
   /** Create or update a batch of Recommend Rules Each Recommend Rule is created or updated, depending on whether a

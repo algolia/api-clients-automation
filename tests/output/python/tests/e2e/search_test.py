@@ -376,7 +376,7 @@ class TestSearchClientE2E:
             },
         )
         _expected_body = loads(
-            """{"results":[{"index":"cts_e2e_query_categorization","query":"sofa","extensions":{"queryCategorization":{"normalizedQuery":"sofa","categories":[{}]}}}]}"""
+            """{"results":[{"index":"cts_e2e_query_categorization","query":"sofa","extensions":{"queryCategorization":{}}}]}"""
         )
         assert (
             self._helpers.union(_expected_body, self._helpers.unwrap(resp))
@@ -878,7 +878,7 @@ class TestSearchClientSyncE2E:
             },
         )
         _expected_body = loads(
-            """{"results":[{"index":"cts_e2e_query_categorization","query":"sofa","extensions":{"queryCategorization":{"normalizedQuery":"sofa","categories":[{}]}}}]}"""
+            """{"results":[{"index":"cts_e2e_query_categorization","query":"sofa","extensions":{"queryCategorization":{}}}]}"""
         )
         assert (
             self._helpers.union(_expected_body, self._helpers.unwrap(resp))

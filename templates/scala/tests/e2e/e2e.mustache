@@ -62,6 +62,30 @@ class {{clientPrefix}}Test extends AnyFunSuite {
       fail("there is a difference between received and expected")
     }
     {{/body}}
+    {{#correlationIdSuffix}}
+    val httpResponse = Await.result(
+      client.customGetWithHTTPInfo[JObject](
+        path = "{{{request.path}}}".drop(1)
+        {{#hasRequestOptions}}
+        , requestOptions = Some(RequestOptions.builder()
+        {{#requestOptions.queryParameters.parametersWithDataType}}
+          .withQueryParameter("{{{key}}}", {{> tests/requests/requestOptionsParams}})
+        {{/requestOptions.queryParameters.parametersWithDataType}}
+        {{#requestOptions.headers.parametersWithDataType}}
+          .withHeader("{{{key}}}", "{{{value}}}")
+        {{/requestOptions.headers.parametersWithDataType}}
+          .build())
+        {{/hasRequestOptions}}
+      ),
+      Duration.Inf
+    )
+    val correlationId = httpResponse.headers.get("correlation-id").flatMap(_.headOption)
+    assert(correlationId.isDefined, "the response carries no Correlation-ID header")
+    assert(
+      correlationId.get.endsWith("{{{correlationIdSuffix}}}"),
+      s"expected the Correlation-ID ${correlationId.get} to end with {{{correlationIdSuffix}}}"
+    )
+    {{/correlationIdSuffix}}
     {{/response}}
   }
   

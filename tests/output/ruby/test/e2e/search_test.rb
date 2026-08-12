@@ -236,7 +236,7 @@ class TestSearchClientE2E < Test::Unit::TestCase
       )
     )
     expected_body = JSON.parse(
-      "{\"results\":[{\"index\":\"cts_e2e_query_categorization\",\"query\":\"sofa\",\"extensions\":{\"queryCategorization\":{\"normalizedQuery\":\"sofa\",\"categories\":[{}]}}}]}"
+      "{\"results\":[{\"index\":\"cts_e2e_query_categorization\",\"query\":\"sofa\",\"extensions\":{\"queryCategorization\":{}}}]}"
     )
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
