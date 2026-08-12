@@ -59,9 +59,8 @@ module {{moduleName}}
         config.write_timeout = {{x-timeouts.server.write}}
       end
 
-      # Request-ID tracing is only supported by the search, recommend and
-      # composition APIs, so the setting is forced rather than defaulted.
-      config.request_id_support = {{#requestIdSupport}}true{{/requestIdSupport}}{{^requestIdSupport}}false{{/requestIdSupport}}
+      # Per-client default only, not forced: an explicit caller value always wins.
+      config.request_id_support = {{#requestIdSupport}}true{{/requestIdSupport}}{{^requestIdSupport}}false{{/requestIdSupport}} if config.request_id_support.nil?
 
       @api_client = Algolia::ApiClient.new(config)
       {{#isSearchClient}}

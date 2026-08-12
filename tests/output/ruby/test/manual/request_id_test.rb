@@ -142,7 +142,7 @@ class TestRequestId < Test::Unit::TestCase
     assert_nil(res.headers["request-id"])
   end
 
-  def test_ingestion_never_mints
+  def test_ingestion_explicit_opt_in_mints
     hosts = [Algolia::Transport::StatefulHost.new("localhost", accept: READ | WRITE)]
     config = Algolia::Configuration.new(
       "test-app-id",
@@ -151,10 +151,37 @@ class TestRequestId < Test::Unit::TestCase
       "Ingestion",
       requester: Algolia::Transport::EchoRequester.new
     )
-    # An explicit opt-in must not survive the constructor: only the search,
-    # recommend and composition APIs support Request-ID.
+    # The generated client only applies its per-client default (off for
+    # ingestion) when the setting is nil: an explicit opt-in survives.
     config.request_id_support = true
     client = Algolia::IngestionClient.create_with_config(config)
+
+    res = client.custom_get_with_http_info("1/test")
+
+    assert_match(REQUEST_ID_FORMAT, res.headers["request-id"])
+  end
+
+  def test_ingestion_default_never_mints
+    hosts = [Algolia::Transport::StatefulHost.new("localhost", accept: READ | WRITE)]
+    config = Algolia::Configuration.new(
+      "test-app-id",
+      "test-api-key",
+      hosts,
+      "Ingestion",
+      requester: Algolia::Transport::EchoRequester.new
+    )
+    client = Algolia::IngestionClient.create_with_config(config)
+
+    res = client.custom_get_with_http_info("1/test")
+
+    assert_false(res.headers.any? { |k, _| k.to_s.casecmp?("request-id") })
+  end
+
+  def test_search_explicit_opt_out_never_mints
+    config = search_config
+    # An explicit opt-out wins over the search client's on-by-default.
+    config.request_id_support = false
+    client = search_client(config)
 
     res = client.custom_get_with_http_info("1/test")
 
