@@ -40,6 +40,60 @@ func SnippetForAddABTestsOfAbtestingV3() {
 	// SEPARATOR<
 }
 
+func SnippetForApplyVariantSettingsOfAbtestingV3() {
+	/*
+	   Snippet for the applyVariantSettings method.
+
+	   applyVariantSettings
+	*/
+
+	// >SEPARATOR applyVariantSettings applyVariantSettings
+	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
+	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	err = client.ApplyVariantSettings(client.NewApiApplyVariantSettingsRequest(
+		42, 2))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// SEPARATOR<
+}
+
+func SnippetForApplyVariantSettingsOfAbtestingV31() {
+	/*
+	   Snippet for the applyVariantSettings method.
+
+	   revert applied settings via the control variant
+	*/
+
+	// >SEPARATOR applyVariantSettings revert applied settings via the control variant
+	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
+	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	err = client.ApplyVariantSettings(client.NewApiApplyVariantSettingsRequest(
+		42, 1))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// SEPARATOR<
+}
+
 func SnippetForCustomDeleteOfAbtestingV3() {
 	/*
 	   Snippet for the customDelete method.
@@ -669,6 +723,35 @@ func SnippetForGetABTestOfAbtestingV3() {
 	// SEPARATOR<
 }
 
+func SnippetForGetABTestSettingsOfAbtestingV3() {
+	/*
+	   Snippet for the getABTestSettings method.
+
+	   getABTestSettings
+	*/
+
+	// >SEPARATOR getABTestSettings default
+	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
+	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetABTestSettings(client.NewApiGetABTestSettingsRequest(
+		42))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
 func SnippetForGetTimeseriesOfAbtestingV3() {
 	/*
 	   Snippet for the getTimeseries method.
@@ -758,6 +841,62 @@ func SnippetForListABTestsOfAbtestingV31() {
 	// >LOG
 	// print the response
 	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForSaveVariantSettingsOfAbtestingV3() {
+	/*
+	   Snippet for the saveVariantSettings method.
+
+	   saveVariantSettings
+	*/
+
+	// >SEPARATOR saveVariantSettings saveVariantSettings
+	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
+	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	err = client.SaveVariantSettings(client.NewApiSaveVariantSettingsRequest(
+		42, 2,
+		abtestingV3.NewEmptySaveSettingsRequest().SetSaveFeaturesSettings(true)))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// SEPARATOR<
+}
+
+func SnippetForSaveVariantSettingsOfAbtestingV31() {
+	/*
+	   Snippet for the saveVariantSettings method.
+
+	   saveVariantSettingsWithoutFeatures
+	*/
+
+	// >SEPARATOR saveVariantSettings saveVariantSettingsWithoutFeatures
+	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
+	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	err = client.SaveVariantSettings(client.NewApiSaveVariantSettingsRequest(
+		42, 2,
+		abtestingV3.NewEmptySaveSettingsRequest()))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
 	// SEPARATOR<
 }
 
