@@ -299,6 +299,24 @@ func requestIDOption[T RequestOption](c *APIClient, opts []T) (requestOption, bo
 	return WithHeaderParam(transport.RequestIDHeader, transport.NewRequestID()), true
 }
 
+// requestIDHeaderValue returns the Request-ID header carried by the given
+// options, or the empty string when none of them sets one.
+func requestIDHeaderValue[T RequestOption](opts []T) string {
+	conf := config{headerParams: map[string]string{}}
+
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	for key, value := range conf.headerParams {
+		if strings.EqualFold(key, transport.RequestIDHeader) {
+			return value
+		}
+	}
+
+	return ""
+}
+
 func toRequestOptions[T RequestOption](opts []T) []RequestOption {
 	requestOpts := make([]RequestOption, 0, len(opts))
 

@@ -8,6 +8,7 @@ import (
 	"net/http/httptest"
 	"net/url"
 	"regexp"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"testing"
@@ -371,6 +372,73 @@ func TestHelperKeepsCallerRequestID(t *testing.T) {
 	require.NoError(t, err)
 
 	require.Equal(t, []string{"HelperCaller"}, recorder.recorded())
+}
+
+func TestReplaceAllObjectsCleanupSurvivesCancelledContext(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	type recordedRequest struct {
+		method    string
+		path      string
+		requestID string
+	}
+
+	var (
+		mu       sync.Mutex
+		requests []recordedRequest
+	)
+
+	release := make(chan struct{})
+
+	srv := httptest.NewServer(http.HandlerFunc(func(writer http.ResponseWriter, req *http.Request) {
+		mu.Lock()
+		requests = append(requests, recordedRequest{method: req.Method, path: req.URL.Path, requestID: req.Header.Get("Request-ID")})
+		mu.Unlock()
+
+		writer.Header().Set("Content-Type", "application/json")
+
+		switch {
+		case strings.HasSuffix(req.URL.Path, "/operation"):
+			_, _ = writer.Write([]byte(`{"taskID":42,"updatedAt":"2021-01-01T00:00:00.000Z"}`))
+		case strings.HasSuffix(req.URL.Path, "/batch"):
+			// Cancel the caller's context while the batch is in flight, then
+			// hold the handler until the test is done: the batch fails
+			// client-side and the helper enters its failure path.
+			cancel()
+			<-release
+		case req.Method == http.MethodDelete:
+			_, _ = writer.Write([]byte(`{"taskID":42,"deletedAt":"2021-01-01T00:00:00.000Z"}`))
+		}
+	}))
+	defer srv.Close()
+	defer close(release)
+
+	client := newSearchClient(t, srv.URL, 1)
+
+	_, err := client.ReplaceAllObjects("indexName",
+		[]map[string]any{{"objectID": "1"}},
+		search.WithContext(ctx),
+	)
+	// The transport reports the aborted batch without wrapping the context
+	// error, so the cancellation is asserted on the message.
+	require.Error(t, err)
+	require.ErrorContains(t, err, "context canceled")
+
+	mu.Lock()
+	recorded := append([]recordedRequest{}, requests...)
+	mu.Unlock()
+
+	// The copy, the aborted batch, then exactly one rescue DeleteIndex: the
+	// cleanup must survive the caller's context so the temporary index cannot
+	// leak, and it must carry the Request-ID shared by the helper invocation.
+	require.Len(t, recorded, 3)
+
+	deleteReq := recorded[2]
+	require.Equal(t, http.MethodDelete, deleteReq.method)
+	require.Regexp(t, `^/1/indexes/indexName_tmp_\d+$`, deleteReq.path)
+	require.Regexp(t, requestIDFormat, deleteReq.requestID)
+	require.Equal(t, recorded[0].requestID, deleteReq.requestID)
 }
 
 func TestAPIErrorCarriesCorrelationID(t *testing.T) {

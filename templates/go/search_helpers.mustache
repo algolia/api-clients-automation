@@ -665,6 +665,14 @@ func (c *APIClient) ReplaceAllObjectsWithTransformation(indexName string, object
 		opts = append([]ReplaceAllObjectsOption{opt}, opts...)
 	}
 
+	// The failure-path cleanups must survive the caller's context so the
+	// temporary index cannot leak: forward only the Request-ID, never the
+	// caller's context or timeouts.
+	var cleanupOpts []RequestOption
+	if requestID := requestIDHeaderValue(opts); requestID != "" {
+		cleanupOpts = append(cleanupOpts, WithHeaderParam(transport.RequestIDHeader, requestID))
+	}
+
 	copyResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope(conf.scopes))), toRequestOptions(opts)...)
 	if err != nil {
 		return nil, err
@@ -672,42 +680,42 @@ func (c *APIClient) ReplaceAllObjectsWithTransformation(indexName string, object
 
 	watchResp, err := c.ingestionTransporter.ChunkedPush(tmpIndexName, objects, ingestion.Action(ACTION_ADD_OBJECT), &indexName, toIngestionChunkedBatchOptions(replaceAllObjectsToChunkBatchOptions(opts))...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err //nolint:wrapcheck
 	}
 
 	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
 
 	copyResp, err = c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope(conf.scopes))), toRequestOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
 
 	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
 
 	moveResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(tmpIndexName, NewOperationIndexParams(OPERATION_TYPE_MOVE, indexName)), toRequestOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
 
 	_, err = c.WaitForTask(tmpIndexName, moveResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
@@ -765,6 +773,14 @@ func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any
     opts = append([]ReplaceAllObjectsOption{opt}, opts...)
   }
 
+  // The failure-path cleanups must survive the caller's context so the
+  // temporary index cannot leak: forward only the Request-ID, never the
+  // caller's context or timeouts.
+  var cleanupOpts []RequestOption
+  if requestID := requestIDHeaderValue(opts); requestID != "" {
+    cleanupOpts = append(cleanupOpts, WithHeaderParam(transport.RequestIDHeader, requestID))
+  }
+
 	copyResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope(conf.scopes))), toRequestOptions(opts)...)
 	if err != nil {
 		return nil, err
@@ -772,42 +788,42 @@ func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any
 
 	batchResp, err := c.ChunkedBatch(tmpIndexName, objects, ACTION_ADD_OBJECT, replaceAllObjectsToChunkBatchOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
 
 	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
 
 	copyResp, err = c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope(conf.scopes))), toRequestOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
 
 	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
 
 	moveResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(tmpIndexName, NewOperationIndexParams(OPERATION_TYPE_MOVE, indexName)), toRequestOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
 
 	_, err = c.WaitForTask(tmpIndexName, moveResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), toRequestOptions(opts)...)
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
