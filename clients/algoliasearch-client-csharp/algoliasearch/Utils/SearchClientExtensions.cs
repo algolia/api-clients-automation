@@ -1097,7 +1097,14 @@ public partial class SearchClient : ISearchClient
     {
       // The failure may be the caller's own cancellation, and the cleanup
       // must still delete the temporary index.
-      await DeleteIndexAsync(tmpIndexName, options, CancellationToken.None).ConfigureAwait(false);
+      try
+      {
+        await DeleteIndexAsync(tmpIndexName, options, CancellationToken.None).ConfigureAwait(false);
+      }
+      catch
+      {
+        // A failing cleanup must not replace the root cause.
+      }
 
       throw;
     }

@@ -666,4 +666,93 @@ public class RequestIdTests
     var deletedPath = Assert.Single(deletes);
     Assert.StartsWith("/1/indexes/test-index_tmp_", deletedPath);
   }
+
+  [Fact]
+  public async Task ShouldKeepRootCauseWhenCleanupDeleteFails()
+  {
+    var deletes = new List<string>();
+    using var cts = new CancellationTokenSource();
+    var httpMock = new Mock<IHttpRequester>();
+    httpMock
+      .Setup(c =>
+        c.SendRequestAsync(
+          It.IsAny<Request>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<CancellationToken>()
+        )
+      )
+      .Returns<Request, TimeSpan, TimeSpan, CancellationToken>(
+        (rq, _, _, ct) =>
+        {
+          ct.ThrowIfCancellationRequested();
+          if (rq.Method == HttpMethod.Delete)
+          {
+            deletes.Add(rq.Uri.AbsolutePath);
+            return Task.FromResult(
+              new AlgoliaHttpResponse
+              {
+                HttpStatusCode = 403,
+                Error = "{\"message\":\"forbidden\"}",
+              }
+            );
+          }
+          if (rq.Uri.AbsolutePath.EndsWith("/batch"))
+          {
+            cts.Cancel();
+            ct.ThrowIfCancellationRequested();
+          }
+          if (rq.Uri.AbsolutePath.Contains("/task/"))
+          {
+            return Task.FromResult(
+              JsonResponse("{\"status\":\"published\",\"pendingTask\":false}")
+            );
+          }
+          return Task.FromResult(
+            JsonResponse("{\"taskID\":42,\"updatedAt\":\"2021-01-01T00:00:00Z\"}")
+          );
+        }
+      );
+    var config = new SearchConfig("test-app-id", "test-api-key");
+    var client = new SearchClient(config, httpMock.Object);
+
+    // The forbidden cleanup delete must not replace the caller's cancellation.
+    await Assert.ThrowsAnyAsync<OperationCanceledException>(async () =>
+      await client.ReplaceAllObjectsAsync(
+        "test-index",
+        new List<object> { new { objectID = "1" } },
+        cancellationToken: cts.Token
+      )
+    );
+
+    Assert.Single(deletes);
+  }
+
+  [Fact]
+  public async Task ShouldKeepDefaultHeadersRequestIdInHelpers()
+  {
+    var observedIds = new List<string>();
+    var httpMock = RecordingMock(
+      observedIds,
+      rq =>
+        rq.Uri.AbsolutePath.EndsWith("/batch")
+          ? JsonResponse("{\"taskID\":42,\"objectIDs\":[\"1\"]}")
+          : JsonResponse("{\"status\":\"published\",\"pendingTask\":false}")
+    );
+    var config = new SearchConfig("test-app-id", "test-api-key");
+    config.DefaultHeaders["REQUEST-ID"] = "DefaultOwned";
+    var client = new SearchClient(config, httpMock.Object);
+
+    // A helper mint into request options would override DefaultHeaders in the
+    // merge, so WithRequestId must not mint at all here.
+    await client.ChunkedBatchAsync(
+      "test-index",
+      new List<object> { new { objectID = "1" } },
+      Action.AddObject,
+      waitForTasks: true
+    );
+
+    Assert.Equal(2, observedIds.Count);
+    Assert.All(observedIds, id => Assert.Equal("DefaultOwned", id));
+  }
 }
