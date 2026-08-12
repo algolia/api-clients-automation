@@ -384,17 +384,17 @@ func TestReplaceAllObjectsCleanupSurvivesCancelledContext(t *testing.T) {
 		requestID string
 	}
 
-	var (
+	var recorder struct {
 		mu       sync.Mutex
 		requests []recordedRequest
-	)
+	}
 
 	release := make(chan struct{})
 
 	srv := httptest.NewServer(http.HandlerFunc(func(writer http.ResponseWriter, req *http.Request) {
-		mu.Lock()
-		requests = append(requests, recordedRequest{method: req.Method, path: req.URL.Path, requestID: req.Header.Get("Request-ID")})
-		mu.Unlock()
+		recorder.mu.Lock()
+		recorder.requests = append(recorder.requests, recordedRequest{method: req.Method, path: req.URL.Path, requestID: req.Header.Get("Request-ID")})
+		recorder.mu.Unlock()
 
 		writer.Header().Set("Content-Type", "application/json")
 
@@ -425,9 +425,9 @@ func TestReplaceAllObjectsCleanupSurvivesCancelledContext(t *testing.T) {
 	require.Error(t, err)
 	require.ErrorContains(t, err, "context canceled")
 
-	mu.Lock()
-	recorded := append([]recordedRequest{}, requests...)
-	mu.Unlock()
+	recorder.mu.Lock()
+	recorded := append([]recordedRequest{}, recorder.requests...)
+	recorder.mu.Unlock()
 
 	// The copy, the aborted batch, then exactly one rescue DeleteIndex: the
 	// cleanup must survive the caller's context so the temporary index cannot
