@@ -156,7 +156,10 @@ public class RequestIdTests
       "1/test",
       options: new RequestOptions
       {
-        QueryParameters = new Dictionary<string, object> { { "X-Algolia-Request-Id", "QueryOwned" } },
+        QueryParameters = new Dictionary<string, object>
+        {
+          { "X-Algolia-Request-Id", "QueryOwned" },
+        },
       }
     );
 
@@ -262,16 +265,15 @@ public class RequestIdTests
     var attempts = 0;
     var httpMock = RecordingMock(
       observedIds,
-      _ =>
-        new AlgoliaHttpResponse
+      _ => new AlgoliaHttpResponse
+      {
+        HttpStatusCode = 500,
+        Error = "unavailable",
+        ResponseHeaders = new Dictionary<string, string>
         {
-          HttpStatusCode = 500,
-          Error = "unavailable",
-          ResponseHeaders = new Dictionary<string, string>
-          {
-            { "Correlation-ID", $"CorrAttempt{++attempts}" },
-          },
-        }
+          { "Correlation-ID", $"CorrAttempt{++attempts}" },
+        },
+      }
     );
     var config = new SearchConfig("test-app-id", "test-api-key");
     var client = new SearchClient(config, httpMock.Object);
@@ -341,11 +343,12 @@ public class RequestIdTests
 
     Assert.Equal("CorrTest123", ex.CorrelationId);
     Assert.Equal(400, ex.HttpErrorCode);
-    Assert.Equal("{\"message\":\"boom\"} (Correlation-ID: CorrTest123)", ex.Message);
+    Assert.Equal("{\"message\":\"boom\"}", ex.Message);
+    Assert.EndsWith(" (Correlation-ID: CorrTest123)", ex.ToString());
   }
 
   [Fact]
-  public async Task ShouldExposeRawResponseBodyOnApiErrors()
+  public async Task ShouldKeepApiErrorMessageMachineParsable()
   {
     const string rawBody = "{\"message\":\"boom\",\"status\":400}";
     var httpMock = new Mock<IHttpRequester>();
@@ -364,7 +367,10 @@ public class RequestIdTests
           {
             HttpStatusCode = 400,
             Error = rawBody,
-            ResponseHeaders = new Dictionary<string, string> { { "Correlation-ID", "CorrTest123" } },
+            ResponseHeaders = new Dictionary<string, string>
+            {
+              { "Correlation-ID", "CorrTest123" },
+            },
           }
         )
       );
@@ -375,12 +381,50 @@ public class RequestIdTests
       await client.CustomGetAsync("1/test")
     );
 
-    // Message carries the Correlation-ID suffix; ResponseBody stays the exact raw body.
-    Assert.EndsWith(" (Correlation-ID: CorrTest123)", ex.Message);
-    Assert.Equal(rawBody, ex.ResponseBody);
-    var parsed = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(ex.ResponseBody);
+    // Message stays the exact raw body; the Correlation-ID only decorates ToString().
+    Assert.Equal(rawBody, ex.Message);
+    Assert.EndsWith(" (Correlation-ID: CorrTest123)", ex.ToString());
+    var parsed = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(ex.Message);
     Assert.Equal("boom", parsed["message"].GetString());
     Assert.Equal(400, parsed["status"].GetInt32());
+  }
+
+  [Fact]
+  public async Task ShouldExposeCorrelationIdOnDeserializationErrors()
+  {
+    var httpMock = new Mock<IHttpRequester>();
+    httpMock
+      .Setup(c =>
+        c.SendRequestAsync(
+          It.IsAny<Request>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<CancellationToken>()
+        )
+      )
+      .Returns(() =>
+        Task.FromResult(
+          new AlgoliaHttpResponse
+          {
+            HttpStatusCode = 200,
+            Body = new MemoryStream(Encoding.UTF8.GetBytes("{not json")),
+            ResponseHeaders = new Dictionary<string, string>
+            {
+              { "Correlation-ID", "CorrDeser123" },
+            },
+          }
+        )
+      );
+    var config = new SearchConfig("test-app-id", "test-api-key");
+    var client = new SearchClient(config, httpMock.Object);
+
+    var ex = await Assert.ThrowsAsync<AlgoliaException>(async () =>
+      await client.GetSettingsAsync("test-index")
+    );
+
+    Assert.Equal("CorrDeser123", ex.CorrelationId);
+    Assert.EndsWith(" (Correlation-ID: CorrDeser123)", ex.ToString());
+    Assert.DoesNotContain("Correlation-ID", ex.Message);
   }
 
   [Fact]
@@ -412,7 +456,7 @@ public class RequestIdTests
     var client = new SearchClient(config, httpMock.Object);
 
     // All five RequestOptions properties set, no request-id: WithRequestId
-    // takes the hand-copy branch and must not drop any of them.
+    // takes the copy branch and must not drop any of them.
     var options = new RequestOptions
     {
       Headers = new Dictionary<string, string> { { "X-Caller-Header", "kept" } },
@@ -486,5 +530,48 @@ public class RequestIdTests
 
     Assert.Null(ex.CorrelationId);
     Assert.Equal("{\"message\":\"boom\"}", ex.Message);
+    Assert.DoesNotContain("Correlation-ID", ex.ToString());
+  }
+
+  [Fact]
+  public async Task ShouldForwardRequestOptionsFromIndexExists()
+  {
+    Request observed = null;
+    var httpMock = new Mock<IHttpRequester>();
+    httpMock
+      .Setup(c =>
+        c.SendRequestAsync(
+          It.IsAny<Request>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<CancellationToken>()
+        )
+      )
+      .Returns<Request, TimeSpan, TimeSpan, CancellationToken>(
+        (rq, _, _, _) =>
+        {
+          observed = rq;
+          return Task.FromResult(JsonResponse("{}"));
+        }
+      );
+    var config = new SearchConfig("test-app-id", "test-api-key");
+    var client = new SearchClient(config, httpMock.Object);
+
+    var exists = await client.IndexExistsAsync(
+      "test-index",
+      new RequestOptions
+      {
+        Headers = new Dictionary<string, string> { { "X-Caller-Header", "kept" } },
+      }
+    );
+
+    Assert.True(exists);
+    Assert.Equal(
+      "kept",
+      observed
+        .Headers.Where(h => h.Key.Equals("X-Caller-Header", StringComparison.OrdinalIgnoreCase))
+        .Select(h => h.Value)
+        .Single()
+    );
   }
 }

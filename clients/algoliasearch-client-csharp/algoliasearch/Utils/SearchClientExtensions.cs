@@ -440,8 +440,27 @@ public partial interface ISearchClient
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   Task<bool> IndexExistsAsync(string indexName, CancellationToken cancellationToken = default);
 
+  /// <summary>
+  /// Helper: Check if an index exists.
+  /// </summary>
+  /// <param name="indexName">The index in which to check.</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  Task<bool> IndexExistsAsync(
+    string indexName,
+    RequestOptions options,
+    CancellationToken cancellationToken = default
+  );
+
   /// <inheritdoc cref="IndexExistsAsync(string, CancellationToken)"/>
   bool IndexExists(string indexName, CancellationToken cancellationToken = default);
+
+  /// <inheritdoc cref="IndexExistsAsync(string, RequestOptions, CancellationToken)"/>
+  bool IndexExists(
+    string indexName,
+    RequestOptions options,
+    CancellationToken cancellationToken = default
+  );
 
   /// <summary>
   /// Helper: Similar to the `SaveObjects` method but requires a Push connector to be created first,
@@ -574,17 +593,14 @@ public partial class SearchClient : ISearchClient
       return options;
     }
 
-    return new RequestOptions
+    var copy = options?.ShallowCopy() ?? new RequestOptions();
+    copy.Headers = new Dictionary<string, string>(
+      options?.Headers ?? new Dictionary<string, string>()
+    )
     {
-      Headers = new Dictionary<string, string>(options?.Headers ?? new Dictionary<string, string>())
-      {
-        [Defaults.RequestIdHeader.ToLowerInvariant()] = RequestIdHelper.Generate(),
-      },
-      QueryParameters = options?.QueryParameters ?? new Dictionary<string, object>(),
-      ReadTimeout = options?.ReadTimeout,
-      WriteTimeout = options?.WriteTimeout,
-      ConnectTimeout = options?.ConnectTimeout,
+      [Defaults.RequestIdHeader] = RequestIdHelper.Generate(),
     };
+    return copy;
   }
 
   /// <inheritdoc/>
@@ -1406,27 +1422,37 @@ public partial class SearchClient : ISearchClient
   public async Task<bool> IndexExistsAsync(
     string indexName,
     CancellationToken cancellationToken = default
+  ) => await IndexExistsAsync(indexName, null, cancellationToken).ConfigureAwait(false);
+
+  /// <inheritdoc/>
+  public async Task<bool> IndexExistsAsync(
+    string indexName,
+    RequestOptions options,
+    CancellationToken cancellationToken = default
   )
   {
     try
     {
-      await GetSettingsAsync(indexName, null, null, cancellationToken);
+      await GetSettingsAsync(indexName, null, options, cancellationToken);
     }
     catch (AlgoliaApiException ex) when (ex.HttpErrorCode == 404)
     {
-      return await Task.FromResult(false);
-    }
-    catch (Exception ex)
-    {
-      throw;
+      return false;
     }
 
-    return await Task.FromResult(true);
+    return true;
   }
 
   /// <inheritdoc/>
   public bool IndexExists(string indexName, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => IndexExistsAsync(indexName, cancellationToken));
+
+  /// <inheritdoc/>
+  public bool IndexExists(
+    string indexName,
+    RequestOptions options,
+    CancellationToken cancellationToken = default
+  ) => AsyncHelper.RunSync(() => IndexExistsAsync(indexName, options, cancellationToken));
 
   // ==================== SaveObjectsWithTransformation ====================
 

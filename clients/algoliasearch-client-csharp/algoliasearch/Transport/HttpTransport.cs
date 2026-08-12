@@ -126,7 +126,7 @@ internal class HttpTransport : IDisposable
       // GenerateHeaders returns the live DefaultHeaders alias, so copy before injecting.
       request.Headers = new Dictionary<string, string>(request.Headers)
       {
-        [Defaults.RequestIdHeader.ToLowerInvariant()] = RequestIdHelper.Generate(),
+        [Defaults.RequestIdHeader] = RequestIdHelper.Generate(),
       };
     }
 
@@ -248,9 +248,18 @@ internal class HttpTransport : IDisposable
             return response as TResult;
           }
 
-          var deserialized = await _serializer
-            .Deserialize<TResult>(response.Body)
-            .ConfigureAwait(false);
+          TResult deserialized;
+          try
+          {
+            deserialized = await _serializer
+              .Deserialize<TResult>(response.Body)
+              .ConfigureAwait(false);
+          }
+          catch (AlgoliaException ex)
+          {
+            ex.CorrelationId = GetCorrelationId(response);
+            throw;
+          }
 
           if (_logger.IsEnabled(LogLevel.Debug))
           {

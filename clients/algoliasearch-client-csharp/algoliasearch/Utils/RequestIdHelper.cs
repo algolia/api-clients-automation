@@ -13,16 +13,16 @@ internal static class RequestIdHelper
 
   private const int Length = 11;
 
+  // Shared across requests; GetBytes is thread-safe.
+  private static readonly RandomNumberGenerator Rng = RandomNumberGenerator.Create();
+
   /// <summary>
   /// Returns a fresh 11-character base62 identifier for the Request-ID header.
   /// </summary>
   internal static string Generate()
   {
     var bytes = new byte[Length];
-    using (var rng = RandomNumberGenerator.Create())
-    {
-      rng.GetBytes(bytes);
-    }
+    Rng.GetBytes(bytes);
 
     var id = new char[Length];
     for (var i = 0; i < Length; i++)
@@ -38,7 +38,9 @@ internal static class RequestIdHelper
   /// <summary>
   /// Whether the query parameters already carry an x-algolia-request-id entry, whatever its casing.
   /// </summary>
-  internal static bool HasRequestIdQueryParameter<TValue>(IDictionary<string, TValue> queryParameters)
+  internal static bool HasRequestIdQueryParameter<TValue>(
+    IDictionary<string, TValue> queryParameters
+  )
   {
     if (queryParameters == null)
     {
