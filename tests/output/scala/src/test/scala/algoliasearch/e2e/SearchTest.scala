@@ -316,7 +316,7 @@ class SearchTest extends AnyFunSuite {
 
     val response = Await.result(future, Duration.Inf)
     val expected = parse(
-      """{"results":[{"index":"cts_e2e_query_categorization","query":"sofa","extensions":{"queryCategorization":{"normalizedQuery":"sofa","categories":[{}]}}}]}"""
+      """{"results":[{"index":"cts_e2e_query_categorization","query":"sofa","extensions":{"queryCategorization":{}}}]}"""
     )
     val extracted = Extraction.decompose(response)
     val diffRes = expected.diff(extracted)

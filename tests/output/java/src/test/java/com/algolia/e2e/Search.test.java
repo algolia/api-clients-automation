@@ -210,7 +210,7 @@ class SearchClientRequestsTestsE2E {
     );
     assertDoesNotThrow(() ->
       TestHelpers.lenientJsonAssert(
-        "{\"results\":[{\"index\":\"cts_e2e_query_categorization\",\"query\":\"sofa\",\"extensions\":{\"queryCategorization\":{\"normalizedQuery\":\"sofa\",\"categories\":[{}]}}}]}",
+        "{\"results\":[{\"index\":\"cts_e2e_query_categorization\",\"query\":\"sofa\",\"extensions\":{\"queryCategorization\":{}}}]}",
         json.writeValueAsString(res)
       )
     );

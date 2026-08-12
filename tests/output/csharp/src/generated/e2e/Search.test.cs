@@ -339,7 +339,7 @@ public class SearchClientRequestTestsE2E
       Assert.NotNull(resp);
 
       TestHelpers.LenientJsonAssert(
-        "{\"results\":[{\"index\":\"cts_e2e_query_categorization\",\"query\":\"sofa\",\"extensions\":{\"queryCategorization\":{\"normalizedQuery\":\"sofa\",\"categories\":[{}]}}}]}",
+        "{\"results\":[{\"index\":\"cts_e2e_query_categorization\",\"query\":\"sofa\",\"extensions\":{\"queryCategorization\":{}}}]}",
         JsonSerializer.Serialize(resp, JsonConfig.Options)
       );
     }

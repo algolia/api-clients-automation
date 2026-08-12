@@ -437,6 +437,27 @@ paths:
                       authenticatedUserToken: user-1
                       filters:
                         - category:books
+              InstantsearchMinimum:
+                summary: Minimum instantsearch event
+                description: >
+                  Minimum valid instantsearch event for agentic analytics
+                  telemetry.
+                value:
+                  events:
+                    - eventName: Instantsearch Telemetry
+                      eventType: instantsearch
+                      userToken: anonymous-user-1
+              InstantsearchWithAgentID:
+                summary: Instantsearch event with agentID
+                description: >
+                  Instantsearch event with agentID to correlate events within a
+                  single agent session.
+                value:
+                  events:
+                    - eventName: Instantsearch Telemetry
+                      eventType: instantsearch
+                      userToken: anonymous-user-1
+                      agentID: agent-session-123
       responses:
         '200':
           description: OK
@@ -581,7 +602,9 @@ paths:
                   summary: Wrong event type
                   value:
                     status: 422
-                    message: EventType must be one of "click", "conversion" or "view"
+                    message: >-
+                      EventType must be one of "click", "conversion", "view" or
+                      "instantsearch"
                 IndexRequired:
                   summary: Missing index attribute
                   value:
@@ -838,9 +861,8 @@ components:
         - 5
     queryID:
       type: string
-      pattern: '[0-9a-f]{32}'
-      minLength: 32
-      maxLength: 32
+      pattern: ^([0-9a-f]{32}|message_[!-~]+)$
+      maxLength: 128
       description: >
         Unique identifier for a search query.
 
@@ -850,7 +872,12 @@ components:
 
         If you add `clickAnalytics: true` as a search request parameter, the
         query ID is included in the API response.
-      example: 3e48cd0616e466948dd85abf5c3fbbe2
+
+        For agentic analytics events, the query ID may be prefixed with
+        `message_` followed by any printable string.
+      examples:
+        - 3e48cd0616e466948dd85abf5c3fbbe2
+        - message_my-custom-query-id
     userToken:
       type: string
       minLength: 1
@@ -1477,6 +1504,38 @@ components:
       x-discriminator-fields:
         - eventType
         - filters
+    InstantsearchEvent:
+      type: string
+      enum:
+        - instantsearch
+    agentID:
+      type: string
+      minLength: 1
+      description: >
+        Unique identifier for an agent session. Used to correlate instantsearch
+        events with a specific agent interaction.
+      example: agent-session-123
+    Instantsearch:
+      type: object
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/InstantsearchEvent'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+        agentID:
+          $ref: '#/components/schemas/agentID'
+      required:
+        - eventName
+        - eventType
+        - userToken
+      x-discriminator-fields:
+        - eventType
     EventsItems:
       oneOf:
         - $ref: '#/components/schemas/ClickedObjectIDsAfterSearch'
@@ -1491,6 +1550,7 @@ components:
         - $ref: '#/components/schemas/ConvertedFilters'
         - $ref: '#/components/schemas/ViewedObjectIDs'
         - $ref: '#/components/schemas/ViewedFilters'
+        - $ref: '#/components/schemas/Instantsearch'
     EventsResponse:
       type: object
       description: The response of the Insights API.
