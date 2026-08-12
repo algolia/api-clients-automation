@@ -590,6 +590,22 @@ public class RequestIdTests
         .Select(h => h.Value)
         .Single()
     );
+
+    // The sync twin is a RunSync delegate; smoke it end to end as well.
+    observed = null;
+    Assert.True(
+      client.IndexExists(
+        "test-index",
+        new RequestOptions
+        {
+          Headers = new Dictionary<string, string> { { "X-Caller-Header", "kept" } },
+        }
+      )
+    );
+    Assert.Contains(
+      observed.Headers,
+      h => h.Key.Equals("X-Caller-Header", StringComparison.OrdinalIgnoreCase) && h.Value == "kept"
+    );
   }
 
   [Fact]
