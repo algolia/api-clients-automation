@@ -69,6 +69,8 @@ public class {{client}}RequestTestsE2E
       {{#correlationIdSuffix}}
           // Re-issue the request through customGet to read the response
           // headers; customGet prepends the leading slash of request.path.
+          // Generation already hard-fails non-GET correlationIdSuffix tests
+          // (TestsRequest.java enforces GET-only), so the hard-coded GET is safe by construction.
           var httpResp = await client.CustomGetWithHTTPInfoAsync("{{{request.path}}}".TrimStart('/'){{#hasRequestOptions}}, options: new RequestOptionBuilder()
           {{#requestOptions.queryParameters.parametersWithDataType}}
             .AddExtraQueryParameters("{{{key}}}", {{> tests/requests/requestOptionsParams}} )

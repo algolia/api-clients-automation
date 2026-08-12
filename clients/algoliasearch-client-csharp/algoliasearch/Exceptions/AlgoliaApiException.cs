@@ -19,6 +19,11 @@ public class AlgoliaApiException : Exception
   public string CorrelationId { get; }
 
   /// <summary>
+  /// The raw response body, unmodified, for callers that parse the server payload.
+  /// </summary>
+  public string ResponseBody { get; }
+
+  /// <summary>
   /// Create a new AlgoliaAPIException
   /// </summary>
   /// <param name="message"></param>
@@ -37,5 +42,6 @@ public class AlgoliaApiException : Exception
   {
     HttpErrorCode = httpErrorCode;
     CorrelationId = correlationId;
+    ResponseBody = message;
   }
 }

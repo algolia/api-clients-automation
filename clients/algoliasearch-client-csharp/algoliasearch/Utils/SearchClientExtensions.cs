@@ -560,11 +560,7 @@ public partial class SearchClient : ISearchClient
   public const int DefaultMaxRetries = RetryHelper.DefaultMaxRetries;
 
   /// <summary>
-  /// Derives the request options carrying the Request-ID shared by every
-  /// request of one helper invocation. Returns the options untouched when the
-  /// client does not support Request-ID or the caller already supplied one
-  /// through the options or DefaultHeaders, which also makes nested helpers
-  /// reuse the ID minted by their caller.
+  /// Derives the request options carrying the shared per-invocation Request-ID; untouched when unsupported or the caller already supplied one.
   /// </summary>
   private RequestOptions WithRequestId(RequestOptions options)
   {

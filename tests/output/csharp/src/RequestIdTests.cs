@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using Algolia.Search.Clients;
 using Algolia.Search.Exceptions;
@@ -341,6 +342,115 @@ public class RequestIdTests
     Assert.Equal("CorrTest123", ex.CorrelationId);
     Assert.Equal(400, ex.HttpErrorCode);
     Assert.Equal("{\"message\":\"boom\"} (Correlation-ID: CorrTest123)", ex.Message);
+  }
+
+  [Fact]
+  public async Task ShouldExposeRawResponseBodyOnApiErrors()
+  {
+    const string rawBody = "{\"message\":\"boom\",\"status\":400}";
+    var httpMock = new Mock<IHttpRequester>();
+    httpMock
+      .Setup(c =>
+        c.SendRequestAsync(
+          It.IsAny<Request>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<CancellationToken>()
+        )
+      )
+      .Returns(() =>
+        Task.FromResult(
+          new AlgoliaHttpResponse
+          {
+            HttpStatusCode = 400,
+            Error = rawBody,
+            ResponseHeaders = new Dictionary<string, string> { { "Correlation-ID", "CorrTest123" } },
+          }
+        )
+      );
+    var config = new SearchConfig("test-app-id", "test-api-key");
+    var client = new SearchClient(config, httpMock.Object);
+
+    var ex = await Assert.ThrowsAsync<AlgoliaApiException>(async () =>
+      await client.CustomGetAsync("1/test")
+    );
+
+    // Message carries the Correlation-ID suffix; ResponseBody stays the exact raw body.
+    Assert.EndsWith(" (Correlation-ID: CorrTest123)", ex.Message);
+    Assert.Equal(rawBody, ex.ResponseBody);
+    var parsed = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(ex.ResponseBody);
+    Assert.Equal("boom", parsed["message"].GetString());
+    Assert.Equal(400, parsed["status"].GetInt32());
+  }
+
+  [Fact]
+  public async Task ShouldPreserveAllRequestOptionsWhenHelperMintsRequestId()
+  {
+    var recorded = new List<(Request Request, TimeSpan RequestTimeout, TimeSpan ConnectTimeout)>();
+    var httpMock = new Mock<IHttpRequester>();
+    httpMock
+      .Setup(c =>
+        c.SendRequestAsync(
+          It.IsAny<Request>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<CancellationToken>()
+        )
+      )
+      .Returns<Request, TimeSpan, TimeSpan, CancellationToken>(
+        (rq, requestTimeout, connectTimeout, _) =>
+        {
+          recorded.Add((rq, requestTimeout, connectTimeout));
+          return Task.FromResult(
+            rq.Uri.AbsolutePath.EndsWith("/batch")
+              ? JsonResponse("{\"taskID\":42,\"objectIDs\":[\"1\"]}")
+              : JsonResponse("{\"status\":\"published\",\"pendingTask\":false}")
+          );
+        }
+      );
+    var config = new SearchConfig("test-app-id", "test-api-key");
+    var client = new SearchClient(config, httpMock.Object);
+
+    // All five RequestOptions properties set, no request-id: WithRequestId
+    // takes the hand-copy branch and must not drop any of them.
+    var options = new RequestOptions
+    {
+      Headers = new Dictionary<string, string> { { "X-Caller-Header", "kept" } },
+      QueryParameters = new Dictionary<string, object> { { "callerParam", "kept" } },
+      ReadTimeout = TimeSpan.FromSeconds(41),
+      WriteTimeout = TimeSpan.FromSeconds(42),
+      ConnectTimeout = TimeSpan.FromSeconds(43),
+    };
+
+    await client.ChunkedBatchAsync(
+      "test-index",
+      new List<object> { new { objectID = "1" } },
+      Action.AddObject,
+      waitForTasks: true,
+      options: options
+    );
+
+    // One batch write plus one task poll, both built from the copied options.
+    Assert.Equal(2, recorded.Count);
+    var mintedId = ObservedRequestId(recorded[0].Request);
+    Assert.Matches(RequestIdFormat, mintedId);
+    foreach (var (request, _, connectTimeout) in recorded)
+    {
+      Assert.Equal(mintedId, ObservedRequestId(request));
+      Assert.Equal(
+        "kept",
+        request
+          .Headers.Where(h => h.Key.Equals("X-Caller-Header", StringComparison.OrdinalIgnoreCase))
+          .Select(h => h.Value)
+          .Single()
+      );
+      Assert.Contains("callerParam=kept", request.Uri.Query);
+      Assert.Equal(TimeSpan.FromSeconds(43), connectTimeout);
+    }
+
+    // The batch is a write call, the task poll a read call.
+    Assert.Equal(TimeSpan.FromSeconds(42), recorded[0].RequestTimeout);
+    Assert.Equal(TimeSpan.FromSeconds(41), recorded[1].RequestTimeout);
   }
 
   [Fact]

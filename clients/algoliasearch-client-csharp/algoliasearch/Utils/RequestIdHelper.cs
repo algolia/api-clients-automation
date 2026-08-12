@@ -14,9 +14,7 @@ internal static class RequestIdHelper
   private const int Length = 11;
 
   /// <summary>
-  /// Returns a fresh 11-character base62 identifier suitable for the
-  /// Request-ID header. The modulo bias of the byte mapping is acceptable:
-  /// the ID is a tracing breadcrumb, not a secret.
+  /// Returns a fresh 11-character base62 identifier for the Request-ID header.
   /// </summary>
   internal static string Generate()
   {
@@ -38,10 +36,7 @@ internal static class RequestIdHelper
   private const string QueryParameter = "x-algolia-request-id";
 
   /// <summary>
-  /// Whether the given query parameters already carry an x-algolia-request-id
-  /// entry, whatever its casing. The server consults the query parameter only
-  /// when the Request-ID header is absent, so minting a header would override
-  /// a caller who supplied their ID through this channel.
+  /// Whether the query parameters already carry an x-algolia-request-id entry, whatever its casing.
   /// </summary>
   internal static bool HasRequestIdQueryParameter<TValue>(IDictionary<string, TValue> queryParameters)
   {
@@ -62,9 +57,7 @@ internal static class RequestIdHelper
   }
 
   /// <summary>
-  /// Whether the given header dictionary already carries a Request-ID entry,
-  /// whatever its casing. Plain header dictionaries keep the caller's literal
-  /// casing, so the lookup must not assume a canonical form.
+  /// Whether the headers already carry a Request-ID entry, whatever its casing.
   /// </summary>
   internal static bool HasRequestId(IDictionary<string, string> headers)
   {

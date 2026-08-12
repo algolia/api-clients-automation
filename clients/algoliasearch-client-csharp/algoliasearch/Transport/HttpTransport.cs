@@ -123,11 +123,7 @@ internal class HttpTransport : IDisposable
       && !RequestIdHelper.HasRequestIdQueryParameter(requestOptions?.QueryParameters)
     )
     {
-      // The ID is minted once per execution, before the host loop, so that
-      // every retry attempt shares the same value and each subsequent call
-      // gets a fresh one. GenerateHeaders returns the live DefaultHeaders
-      // dictionary on the no-options path, so it must be copied before
-      // injecting or the ID would be pinned into the client configuration.
+      // GenerateHeaders returns the live DefaultHeaders alias, so copy before injecting.
       request.Headers = new Dictionary<string, string>(request.Headers)
       {
         [Defaults.RequestIdHeader.ToLowerInvariant()] = RequestIdHelper.Generate(),
@@ -387,8 +383,7 @@ internal class HttpTransport : IDisposable
   }
 
   /// <summary>
-  /// Read the Correlation-ID header of a failed response, case-insensitively:
-  /// the response dictionary keeps the server's casing. The unrelated
+  /// Read the Correlation-ID header of a failed response; the unrelated
   /// X-Algolia-RequestID edge header must never be read instead. Headers are
   /// null on timeout and network failures.
   /// </summary>
