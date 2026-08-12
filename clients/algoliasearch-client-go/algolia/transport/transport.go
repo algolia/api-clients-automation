@@ -32,7 +32,7 @@ func New(cfg Configuration) *Transport {
 		connectTimeout:                  cfg.ConnectTimeout,
 		compression:                     cfg.Compression,
 		exposeIntermediateNetworkErrors: cfg.ExposeIntermediateNetworkErrors,
-		requestIDEnabled:                cfg.RequestIDEnabled,
+		requestIDEnabled:                cfg.RequestIDEnabled != nil && *cfg.RequestIDEnabled,
 	}
 
 	if transport.connectTimeout == 0 {

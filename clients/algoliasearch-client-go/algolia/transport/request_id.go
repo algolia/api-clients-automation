@@ -8,7 +8,7 @@ import (
 )
 
 // RequestIDHeader is the name of the header carrying the Request-ID minted
-// when Configuration.RequestIDEnabled is set.
+// when Configuration.RequestIDEnabled resolves to true.
 const RequestIDHeader = "Request-ID"
 
 // RequestIDQueryParam is the name of the query parameter through which a

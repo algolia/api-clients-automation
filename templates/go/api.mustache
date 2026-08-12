@@ -282,7 +282,7 @@ func WithApiKey(apiKey *ApiKey) waitForApiKeyOption {
 // x-algolia-request-id query parameter) or DefaultHeader, in which case the
 // options must be forwarded untouched.
 func requestIDOption[T RequestOption](c *APIClient, opts []T) (requestOption, bool) {
-	if !c.cfg.RequestIDEnabled {
+	if c.cfg.RequestIDEnabled == nil || !*c.cfg.RequestIDEnabled {
 		return nil, false
 	}
 

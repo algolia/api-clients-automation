@@ -81,9 +81,10 @@ func NewClientWithConfig(cfg {{#lambda.titlecase}}{{#lambda.camelcase}}{{client}
 		cfg.WriteTimeout = {{x-timeouts.server.write}} * time.Millisecond
 	}
 
-  // Request-ID tracing is only supported by the search, recommend and
-  // composition APIs, so the setting is forced rather than defaulted.
-  cfg.RequestIDEnabled = {{#requestIdSupport}}true{{/requestIdSupport}}{{^requestIdSupport}}false{{/requestIdSupport}}
+  // Request-ID tracing default for this API; a caller-supplied value always wins.
+  if cfg.RequestIDEnabled == nil {
+    cfg.RequestIDEnabled = utils.ToPtr({{#requestIdSupport}}true{{/requestIdSupport}}{{^requestIdSupport}}false{{/requestIdSupport}})
+  }
 
   apiClient := APIClient{
 		appID: cfg.AppID,

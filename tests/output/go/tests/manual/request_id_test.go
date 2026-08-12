@@ -20,6 +20,7 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 var requestIDFormat = regexp.MustCompile(`^[0-9A-Za-z]{11}$`)
@@ -219,7 +220,7 @@ func newRequestIDTransport(t *testing.T, serverURL string) *transport.Transport 
 		Hosts: []transport.StatefulHost{
 			transport.NewStatefulHost(serverHost.Scheme, serverHost.Host, func(call.Kind) bool { return true }),
 		},
-		RequestIDEnabled: true,
+		RequestIDEnabled: utils.ToPtr(true),
 	})
 }
 
@@ -279,7 +280,7 @@ func TestDefaultHeaderRequestIDWins(t *testing.T) {
 	require.Equal(t, []string{"DefaultOwned"}, recorder.recorded())
 }
 
-func TestIngestionNeverMints(t *testing.T) {
+func TestIngestionExplicitOptInMints(t *testing.T) {
 	recorder := &requestIDRecorder{handler: func(w http.ResponseWriter, _ *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{}`))
@@ -298,14 +299,74 @@ func TestIngestionNeverMints(t *testing.T) {
 			Hosts: []transport.StatefulHost{
 				transport.NewStatefulHost(serverHost.Scheme, serverHost.Host, func(call.Kind) bool { return true }),
 			},
-			// An explicit opt-in must not survive the constructor: only the
-			// search, recommend and composition APIs support Request-ID.
-			RequestIDEnabled: true,
+			// Disabled is only the ingestion default: an explicit opt-in
+			// survives the constructor and enables minting on any client.
+			RequestIDEnabled: utils.ToPtr(true),
 		},
 	})
 	require.NoError(t, err)
 
 	_, err = client.CustomGet(client.NewApiCustomGetRequest("1/test"))
+	require.NoError(t, err)
+
+	ids := recorder.recorded()
+	require.Len(t, ids, 1)
+	require.Regexp(t, requestIDFormat, ids[0])
+}
+
+func TestIngestionDoesNotMintByDefault(t *testing.T) {
+	recorder := &requestIDRecorder{handler: func(w http.ResponseWriter, _ *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{}`))
+	}}
+
+	srv := httptest.NewServer(recorder)
+	defer srv.Close()
+
+	serverHost, err := url.Parse(srv.URL)
+	require.NoError(t, err)
+
+	client, err := ingestion.NewClientWithConfig(ingestion.IngestionConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "appID",
+			ApiKey: "apiKey",
+			Hosts: []transport.StatefulHost{
+				transport.NewStatefulHost(serverHost.Scheme, serverHost.Host, func(call.Kind) bool { return true }),
+			},
+		},
+	})
+	require.NoError(t, err)
+
+	_, err = client.CustomGet(client.NewApiCustomGetRequest("1/test"))
+	require.NoError(t, err)
+
+	require.Equal(t, []string{""}, recorder.recorded())
+}
+
+func TestSearchExplicitOptOutDisablesMinting(t *testing.T) {
+	recorder := &requestIDRecorder{handler: okSettings}
+
+	srv := httptest.NewServer(recorder)
+	defer srv.Close()
+
+	serverHost, err := url.Parse(srv.URL)
+	require.NoError(t, err)
+
+	client, err := search.NewClientWithConfig(search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "appID",
+			ApiKey: "apiKey",
+			Hosts: []transport.StatefulHost{
+				transport.NewStatefulHost(serverHost.Scheme, serverHost.Host, func(call.Kind) bool { return true }),
+			},
+			DefaultHeader: map[string]string{},
+			// Enabled is only the search default: an explicit opt-out wins.
+			RequestIDEnabled: utils.ToPtr(false),
+		},
+	})
+	require.NoError(t, err)
+
+	_, err = client.GetSettings(client.NewApiGetSettingsRequest("indexName"))
 	require.NoError(t, err)
 
 	require.Equal(t, []string{""}, recorder.recorded())
