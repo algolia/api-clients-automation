@@ -30,6 +30,9 @@ public class ABTest {
   @JsonProperty("name")
   private String name;
 
+  @JsonProperty("hypothesis")
+  private String hypothesis;
+
   @JsonProperty("status")
   private Status status;
 
@@ -109,6 +112,17 @@ public class ABTest {
   @javax.annotation.Nonnull
   public String getName() {
     return name;
+  }
+
+  public ABTest setHypothesis(String hypothesis) {
+    this.hypothesis = hypothesis;
+    return this;
+  }
+
+  /** Expected outcome of the A/B test. */
+  @javax.annotation.Nonnull
+  public String getHypothesis() {
+    return hypothesis;
   }
 
   public ABTest setStatus(Status status) {
@@ -191,6 +205,7 @@ public class ABTest {
       Objects.equals(this.endAt, abTest.endAt) &&
       Objects.equals(this.stoppedAt, abTest.stoppedAt) &&
       Objects.equals(this.name, abTest.name) &&
+      Objects.equals(this.hypothesis, abTest.hypothesis) &&
       Objects.equals(this.status, abTest.status) &&
       Objects.equals(this.variants, abTest.variants) &&
       Objects.equals(this.configuration, abTest.configuration) &&
@@ -208,6 +223,7 @@ public class ABTest {
       endAt,
       stoppedAt,
       name,
+      hypothesis,
       status,
       variants,
       configuration,
@@ -226,6 +242,7 @@ public class ABTest {
     sb.append("    endAt: ").append(toIndentedString(endAt)).append("\n");
     sb.append("    stoppedAt: ").append(toIndentedString(stoppedAt)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    hypothesis: ").append(toIndentedString(hypothesis)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    variants: ").append(toIndentedString(variants)).append("\n");
     sb.append("    configuration: ").append(toIndentedString(configuration)).append("\n");

@@ -40,6 +40,9 @@ public class MetricResult {
   @JsonProperty("significant")
   private Boolean significant;
 
+  @JsonProperty("bayesian")
+  private BayesianMetricResult bayesian;
+
   public MetricResult setName(String name) {
     this.name = name;
     return this;
@@ -116,7 +119,7 @@ public class MetricResult {
    * PValue for the first variant (control) will always be 0. For the other variants, pValue is
    * calculated for the current variant based on the control.
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Double getpValue() {
     return pValue;
   }
@@ -172,6 +175,17 @@ public class MetricResult {
     return significant;
   }
 
+  public MetricResult setBayesian(BayesianMetricResult bayesian) {
+    this.bayesian = bayesian;
+    return this;
+  }
+
+  /** Get bayesian */
+  @javax.annotation.Nullable
+  public BayesianMetricResult getBayesian() {
+    return bayesian;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -191,13 +205,14 @@ public class MetricResult {
       Objects.equals(this.dimension, metricResult.dimension) &&
       Objects.equals(this.metadata, metricResult.metadata) &&
       Objects.equals(this.criticalValue, metricResult.criticalValue) &&
-      Objects.equals(this.significant, metricResult.significant)
+      Objects.equals(this.significant, metricResult.significant) &&
+      Objects.equals(this.bayesian, metricResult.bayesian)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, updatedAt, value, valueCIHigh, valueCILow, pValue, dimension, metadata, criticalValue, significant);
+    return Objects.hash(name, updatedAt, value, valueCIHigh, valueCILow, pValue, dimension, metadata, criticalValue, significant, bayesian);
   }
 
   @Override
@@ -214,6 +229,7 @@ public class MetricResult {
     sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
     sb.append("    criticalValue: ").append(toIndentedString(criticalValue)).append("\n");
     sb.append("    significant: ").append(toIndentedString(significant)).append("\n");
+    sb.append("    bayesian: ").append(toIndentedString(bayesian)).append("\n");
     sb.append("}");
     return sb.toString();
   }

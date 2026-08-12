@@ -15,6 +15,9 @@ public class AddABTestsRequest {
   @JsonProperty("name")
   private String name;
 
+  @JsonProperty("hypothesis")
+  private String hypothesis;
+
   @JsonProperty("variants")
   private List<AddABTestsVariant> variants = new ArrayList<>();
 
@@ -36,6 +39,17 @@ public class AddABTestsRequest {
   @javax.annotation.Nonnull
   public String getName() {
     return name;
+  }
+
+  public AddABTestsRequest setHypothesis(String hypothesis) {
+    this.hypothesis = hypothesis;
+    return this;
+  }
+
+  /** Expected outcome of the A/B test. */
+  @javax.annotation.Nullable
+  public String getHypothesis() {
+    return hypothesis;
   }
 
   public AddABTestsRequest setVariants(List<AddABTestsVariant> variants) {
@@ -106,6 +120,7 @@ public class AddABTestsRequest {
     AddABTestsRequest addABTestsRequest = (AddABTestsRequest) o;
     return (
       Objects.equals(this.name, addABTestsRequest.name) &&
+      Objects.equals(this.hypothesis, addABTestsRequest.hypothesis) &&
       Objects.equals(this.variants, addABTestsRequest.variants) &&
       Objects.equals(this.metrics, addABTestsRequest.metrics) &&
       Objects.equals(this.configuration, addABTestsRequest.configuration) &&
@@ -115,7 +130,7 @@ public class AddABTestsRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, variants, metrics, configuration, endAt);
+    return Objects.hash(name, hypothesis, variants, metrics, configuration, endAt);
   }
 
   @Override
@@ -123,6 +138,7 @@ public class AddABTestsRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class AddABTestsRequest {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    hypothesis: ").append(toIndentedString(hypothesis)).append("\n");
     sb.append("    variants: ").append(toIndentedString(variants)).append("\n");
     sb.append("    metrics: ").append(toIndentedString(metrics)).append("\n");
     sb.append("    configuration: ").append(toIndentedString(configuration)).append("\n");

@@ -28,13 +28,11 @@ public partial class MetricResult
   /// <param name="name">name (required).</param>
   /// <param name="updatedAt">Date and time when the metric was last updated, in RFC 3339 format. (required).</param>
   /// <param name="value">value (required).</param>
-  /// <param name="pValue">PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the current variant based on the control. (required).</param>
-  public MetricResult(string name, string updatedAt, double value, double pValue)
+  public MetricResult(string name, string updatedAt, double value)
   {
     Name = name ?? throw new ArgumentNullException(nameof(name));
     UpdatedAt = updatedAt ?? throw new ArgumentNullException(nameof(updatedAt));
     Value = value;
-    PValue = pValue;
   }
 
   /// <summary>
@@ -75,7 +73,7 @@ public partial class MetricResult
   /// </summary>
   /// <value>PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the current variant based on the control.</value>
   [JsonPropertyName("pValue")]
-  public double PValue { get; set; }
+  public double? PValue { get; set; }
 
   /// <summary>
   /// Dimension defined during test creation.
@@ -105,6 +103,12 @@ public partial class MetricResult
   public bool? Significant { get; set; }
 
   /// <summary>
+  /// Gets or Sets Bayesian
+  /// </summary>
+  [JsonPropertyName("bayesian")]
+  public BayesianMetricResult Bayesian { get; set; }
+
+  /// <summary>
   /// Returns the string presentation of the object
   /// </summary>
   /// <returns>String presentation of the object</returns>
@@ -122,6 +126,7 @@ public partial class MetricResult
     sb.Append("  Metadata: ").Append(Metadata).Append("\n");
     sb.Append("  CriticalValue: ").Append(CriticalValue).Append("\n");
     sb.Append("  Significant: ").Append(Significant).Append("\n");
+    sb.Append("  Bayesian: ").Append(Bayesian).Append("\n");
     sb.Append("}\n");
     return sb.ToString();
   }
@@ -156,7 +161,8 @@ public partial class MetricResult
       && (Dimension == input.Dimension || (Dimension != null && Dimension.Equals(input.Dimension)))
       && (Metadata == input.Metadata || (Metadata != null && Metadata.Equals(input.Metadata)))
       && (CriticalValue == input.CriticalValue || CriticalValue.Equals(input.CriticalValue))
-      && (Significant == input.Significant || Significant.Equals(input.Significant));
+      && (Significant == input.Significant || Significant.Equals(input.Significant))
+      && (Bayesian == input.Bayesian || (Bayesian != null && Bayesian.Equals(input.Bayesian)));
   }
 
   /// <summary>
@@ -190,6 +196,10 @@ public partial class MetricResult
       }
       hashCode = (hashCode * 59) + CriticalValue.GetHashCode();
       hashCode = (hashCode * 59) + Significant.GetHashCode();
+      if (Bayesian != null)
+      {
+        hashCode = (hashCode * 59) + Bayesian.GetHashCode();
+      }
       return hashCode;
     }
   }
