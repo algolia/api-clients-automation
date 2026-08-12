@@ -512,14 +512,14 @@ alternativesAsExact:
 
 attributeCriteriaComputedByMinProximity:
   type: boolean
-  deprecated: true
   description: |
-    **Deprecated:** use `attributeCriteriaComputedBy` instead.
-
     Whether the best matching attribute should be determined by minimum proximity.
     This setting only affects ranking if the Attribute ranking criterion comes before Proximity in the `ranking` setting.
     If true, the best matching attribute is selected based on the minimum proximity of multiple matches.
     Otherwise, the best matching attribute is determined by the order in the `searchableAttributes` setting.
+
+    Prefer `attributeCriteriaComputedBy`, which expresses the same two behaviors and adds the `sum` strategy.
+    If you set both, `attributeCriteriaComputedBy` takes precedence.
   default: false
   x-categories:
     - Advanced
