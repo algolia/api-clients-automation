@@ -32,7 +32,7 @@ func (e *NoMoreHostToTryError) IntermediateNetworkErrors() []error {
 	return e.intermediateNetworkErrors
 }
 
-// CorrelationID is the Correlation-ID header of the last retry attempt whose
+// CorrelationID returns the Correlation-ID header of the last retry attempt whose
 // response carried one, or empty when no attempt did.
 func (e *NoMoreHostToTryError) CorrelationID() string {
 	return e.correlationID

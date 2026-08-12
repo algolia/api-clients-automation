@@ -19,7 +19,7 @@ func NewDeserializationError(err error, correlationID string) *DeserializationEr
 	}
 }
 
-// CorrelationID is the Correlation-ID header of the response whose body
+// CorrelationID returns the Correlation-ID header of the response whose body
 // failed to decode, when present. Quote it when contacting Algolia support.
 func (e *DeserializationError) CorrelationID() string {
 	return e.correlationID

@@ -278,9 +278,17 @@ func (t *Transport) RequestStream(ctx context.Context, req *http.Request, k call
 // transport runs: prepareRequest assembles the query string before building
 // the request, and only the scheme and host change per attempt.
 func (t *Transport) injectRequestID(req *http.Request) {
-	if t.requestIDEnabled && req.Header.Get(RequestIDHeader) == "" && !HasRequestIDQueryParam(req.URL.Query()) {
-		req.Header.Set(RequestIDHeader, NewRequestID())
+	if !t.requestIDEnabled || req.Header.Get(RequestIDHeader) != "" {
+		return
 	}
+
+	// req.URL.Query() allocates a url.Values on every call, so the query
+	// string is only parsed when there is one to inspect.
+	if req.URL.RawQuery != "" && HasRequestIDQueryParam(req.URL.Query()) {
+		return
+	}
+
+	req.Header.Set(RequestIDHeader, NewRequestID())
 }
 
 // resolveTimeouts returns the request and connect timeouts applying to a call
