@@ -84,12 +84,12 @@ namespace Algolia.Search.Clients
     /// <summary>
     /// Whether the transport sends a Request-ID header, minted once per call
     /// and reused across its retry attempts, so that Algolia support can tie
-    /// the attempts of one request together. Forced by the generated client
-    /// configurations according to which APIs support it; a Request-ID
-    /// supplied through request options or DefaultHeaders is never
-    /// overwritten.
+    /// the attempts of one request together. Defaulted by the generated client
+    /// configurations according to which APIs support it; set it to false to
+    /// disable minting entirely. A Request-ID supplied through request options
+    /// or DefaultHeaders is never overwritten.
     /// </summary>
-    internal bool RequestIdEnabled { get; set; }
+    public bool RequestIdEnabled { get; set; }
 
     /// <summary>
     /// Configurations hosts

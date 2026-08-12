@@ -21,17 +21,17 @@ public class AlgoliaApiException : Exception
   /// <summary>
   /// Create a new AlgoliaAPIException
   /// </summary>
-  /// <param name="message"></param>
-  /// <param name="httpErrorCode"></param>
+  /// <param name="message">The raw response body of the failed request.</param>
+  /// <param name="httpErrorCode">The HTTP status code of the failed response.</param>
   public AlgoliaApiException(string message, int httpErrorCode)
     : this(message, httpErrorCode, null) { }
 
   /// <summary>
   /// Create a new AlgoliaAPIException carrying the Correlation-ID of the failed response
   /// </summary>
-  /// <param name="message"></param>
-  /// <param name="httpErrorCode"></param>
-  /// <param name="correlationId"></param>
+  /// <param name="message">The raw response body of the failed request.</param>
+  /// <param name="httpErrorCode">The HTTP status code of the failed response.</param>
+  /// <param name="correlationId">The Correlation-ID header of the failed response, or null when absent.</param>
   public AlgoliaApiException(string message, int httpErrorCode, string correlationId)
     : base(message)
   {

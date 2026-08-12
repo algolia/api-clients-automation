@@ -183,6 +183,24 @@ public class RequestIdTests
   }
 
   [Fact]
+  public async Task ShouldAllowCallersToDisableMinting()
+  {
+    var observedIds = new List<string>();
+    var httpMock = RecordingMock(observedIds, _ => JsonResponse("{}"));
+    var config = new SearchConfig("test-app-id", "test-api-key");
+    var client = new SearchClient(config, httpMock.Object);
+
+    await client.CustomGetAsync("1/test");
+    config.RequestIdEnabled = false;
+    await client.CustomGetAsync("1/test");
+
+    // The first call guards against a vacuous pass with minting off entirely.
+    Assert.Equal(2, observedIds.Count);
+    Assert.Matches(RequestIdFormat, observedIds[0]);
+    Assert.Null(observedIds[1]);
+  }
+
+  [Fact]
   public async Task ShouldNeverMintForIngestion()
   {
     var observedIds = new List<string>();
@@ -573,5 +591,64 @@ public class RequestIdTests
         .Select(h => h.Value)
         .Single()
     );
+  }
+
+  [Fact]
+  public async Task ShouldCleanUpTmpIndexWhenCallerCancels()
+  {
+    var deletes = new List<string>();
+    using var cts = new CancellationTokenSource();
+    var httpMock = new Mock<IHttpRequester>();
+    httpMock
+      .Setup(c =>
+        c.SendRequestAsync(
+          It.IsAny<Request>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<CancellationToken>()
+        )
+      )
+      .Returns<Request, TimeSpan, TimeSpan, CancellationToken>(
+        (rq, _, _, ct) =>
+        {
+          // A real requester observes the token before sending.
+          ct.ThrowIfCancellationRequested();
+          if (rq.Method == HttpMethod.Delete)
+          {
+            deletes.Add(rq.Uri.AbsolutePath);
+            return Task.FromResult(
+              JsonResponse("{\"taskID\":42,\"deletedAt\":\"2021-01-01T00:00:00Z\"}")
+            );
+          }
+          if (rq.Uri.AbsolutePath.EndsWith("/batch"))
+          {
+            cts.Cancel();
+            ct.ThrowIfCancellationRequested();
+          }
+          if (rq.Uri.AbsolutePath.Contains("/task/"))
+          {
+            return Task.FromResult(
+              JsonResponse("{\"status\":\"published\",\"pendingTask\":false}")
+            );
+          }
+          return Task.FromResult(
+            JsonResponse("{\"taskID\":42,\"updatedAt\":\"2021-01-01T00:00:00Z\"}")
+          );
+        }
+      );
+    var config = new SearchConfig("test-app-id", "test-api-key");
+    var client = new SearchClient(config, httpMock.Object);
+
+    await Assert.ThrowsAnyAsync<OperationCanceledException>(async () =>
+      await client.ReplaceAllObjectsAsync(
+        "test-index",
+        new List<object> { new { objectID = "1" } },
+        cancellationToken: cts.Token
+      )
+    );
+
+    // The cleanup delete must go through even though the caller's token is canceled.
+    var deletedPath = Assert.Single(deletes);
+    Assert.StartsWith("/1/indexes/test-index_tmp_", deletedPath);
   }
 }

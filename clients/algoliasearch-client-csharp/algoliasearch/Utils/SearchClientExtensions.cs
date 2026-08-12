@@ -1095,7 +1095,9 @@ public partial class SearchClient : ISearchClient
     }
     catch (Exception ex)
     {
-      await DeleteIndexAsync(tmpIndexName, options, cancellationToken).ConfigureAwait(false);
+      // The failure may be the caller's own cancellation, and the cleanup
+      // must still delete the temporary index.
+      await DeleteIndexAsync(tmpIndexName, options, CancellationToken.None).ConfigureAwait(false);
 
       throw;
     }
@@ -1707,10 +1709,11 @@ public partial class SearchClient : ISearchClient
     }
     catch
     {
-      // Clean up temp index on error
+      // Clean up temp index on error; the failure may be the caller's own
+      // cancellation, and the cleanup must still delete the temporary index.
       try
       {
-        await DeleteIndexAsync(tmpIndexName, searchOptions, cancellationToken)
+        await DeleteIndexAsync(tmpIndexName, searchOptions, CancellationToken.None)
           .ConfigureAwait(false);
       }
       catch
