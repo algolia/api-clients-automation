@@ -149,7 +149,8 @@ class {{classname}}(
       defaultWriteTimeout = writeTimeout(),
       defaultConnectTimeout = connectTimeout(),
       formats = JsonSupport.format,
-      options = clientOptions
+      options = clientOptions{{#requestIdSupport}},
+      requestIdSupport = true{{/requestIdSupport}}
     ) {
 
 {{#isSearchClient}}
