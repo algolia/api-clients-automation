@@ -29,7 +29,7 @@ public class {{classname}}(
       require(apiKey.isNotBlank()) { "`apiKey` is missing." }
   }
 
-  override val requester: Requester = requesterOf(clientName = "{{{baseName}}}", appId = appId, apiKey = apiKey, connectTimeout = {{x-timeouts.server.connect}}.milliseconds, readTimeout = {{x-timeouts.server.read}}.milliseconds, writeTimeout = {{x-timeouts.server.write}}.milliseconds, options = options) {
+  override val requester: Requester = requesterOf(clientName = "{{{baseName}}}", appId = appId, apiKey = apiKey, connectTimeout = {{x-timeouts.server.connect}}.milliseconds, readTimeout = {{x-timeouts.server.read}}.milliseconds, writeTimeout = {{x-timeouts.server.write}}.milliseconds, options = options{{#requestIdSupport}}, sendsRequestId = true{{/requestIdSupport}}) {
   {{#hostWithAppID}}
     listOf(
       Host("$appId-dsn.algolia.net", CallType.Read),
