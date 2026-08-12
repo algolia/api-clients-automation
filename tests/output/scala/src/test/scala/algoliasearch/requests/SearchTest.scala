@@ -4111,6 +4111,40 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("the classic engine accepts a Request-ID sent as a query parameter1") {
+    val (client, echo) = testClient()
+    val future = client.searchRules(
+      indexName = "cts_e2e_browse",
+      searchRulesParams = Some(
+        SearchRulesParams(
+          query = Some("zorro")
+        )
+      ),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("x-algolia-request-id", "CtsE2eQry11")
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/cts_e2e_browse/rules/search")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"query":"zorro"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"x-algolia-request-id":"CtsE2eQry11"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
   test("search with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(

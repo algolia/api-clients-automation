@@ -391,6 +391,40 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
+  test("the classic engine accepts a Request-ID sent as a query parameter1") {
+    val client = testClient()
+    val future = client.searchRules(
+      indexName = "cts_e2e_browse",
+      searchRulesParams = Some(
+        SearchRulesParams(
+          query = Some("zorro")
+        )
+      ),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("x-algolia-request-id", "CtsE2eQry11")
+          .build()
+      )
+    )
+
+    val response = Await.result(future, Duration.Inf)
+    val expected = parse("""{"nbHits":1,"nbPages":1,"page":0}""")
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
+  }
+
   test("search with special characters in indexName1") {
     val client = testClient()
     val future = client.searchSingleIndex(
