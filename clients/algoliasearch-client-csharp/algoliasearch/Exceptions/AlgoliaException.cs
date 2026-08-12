@@ -29,10 +29,10 @@ public class AlgoliaException : Exception
     : base(message, inner) { }
 
   /// <summary>
-  /// Appends the Correlation-ID to the formatted string when one is known.
+  /// The exception details, with the Correlation-ID appended when one is
+  /// known. CorrelationId is set after construction, so the suffix cannot be
+  /// baked in through the base constructor.
   /// </summary>
-  public override string ToString() =>
-    CorrelationId == null
-      ? base.ToString()
-      : $"{base.ToString()} (Correlation-ID: {CorrelationId})";
+  public override string Message =>
+    CorrelationId == null ? base.Message : $"{base.Message} (Correlation-ID: {CorrelationId})";
 }

@@ -361,12 +361,11 @@ public class RequestIdTests
 
     Assert.Equal("CorrTest123", ex.CorrelationId);
     Assert.Equal(400, ex.HttpErrorCode);
-    Assert.Equal("{\"message\":\"boom\"}", ex.Message);
-    Assert.EndsWith(" (Correlation-ID: CorrTest123)", ex.ToString());
+    Assert.Equal("{\"message\":\"boom\"} (Correlation-ID: CorrTest123)", ex.Message);
   }
 
   [Fact]
-  public async Task ShouldKeepApiErrorMessageMachineParsable()
+  public async Task ShouldExposeRawResponseBodyOnApiErrors()
   {
     const string rawBody = "{\"message\":\"boom\",\"status\":400}";
     var httpMock = new Mock<IHttpRequester>();
@@ -399,10 +398,10 @@ public class RequestIdTests
       await client.CustomGetAsync("1/test")
     );
 
-    // Message stays the exact raw body; the Correlation-ID only decorates ToString().
-    Assert.Equal(rawBody, ex.Message);
-    Assert.EndsWith(" (Correlation-ID: CorrTest123)", ex.ToString());
-    var parsed = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(ex.Message);
+    // Message carries the Correlation-ID suffix; ResponseBody stays the exact raw body.
+    Assert.EndsWith(" (Correlation-ID: CorrTest123)", ex.Message);
+    Assert.Equal(rawBody, ex.ResponseBody);
+    var parsed = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(ex.ResponseBody);
     Assert.Equal("boom", parsed["message"].GetString());
     Assert.Equal(400, parsed["status"].GetInt32());
   }
@@ -441,8 +440,7 @@ public class RequestIdTests
     );
 
     Assert.Equal("CorrDeser123", ex.CorrelationId);
-    Assert.EndsWith(" (Correlation-ID: CorrDeser123)", ex.ToString());
-    Assert.DoesNotContain("Correlation-ID", ex.Message);
+    Assert.EndsWith(" (Correlation-ID: CorrDeser123)", ex.Message);
   }
 
   [Fact]
@@ -548,6 +546,7 @@ public class RequestIdTests
 
     Assert.Null(ex.CorrelationId);
     Assert.Equal("{\"message\":\"boom\"}", ex.Message);
+    Assert.Equal(ex.Message, ex.ResponseBody);
     Assert.DoesNotContain("Correlation-ID", ex.ToString());
   }
 

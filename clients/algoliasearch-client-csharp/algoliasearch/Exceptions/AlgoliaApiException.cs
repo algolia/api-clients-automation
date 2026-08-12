@@ -19,6 +19,12 @@ public class AlgoliaApiException : Exception
   public string CorrelationId { get; }
 
   /// <summary>
+  /// The response body as received, without the Correlation-ID suffix that
+  /// Message carries, for callers that parse the error payload.
+  /// </summary>
+  public string ResponseBody { get; }
+
+  /// <summary>
   /// Create a new AlgoliaAPIException
   /// </summary>
   /// <param name="message">The raw response body of the failed request.</param>
@@ -29,22 +35,14 @@ public class AlgoliaApiException : Exception
   /// <summary>
   /// Create a new AlgoliaAPIException carrying the Correlation-ID of the failed response
   /// </summary>
-  /// <param name="message">The raw response body of the failed request.</param>
+  /// <param name="message">The raw response body of the failed request; Message carries it with the Correlation-ID appended.</param>
   /// <param name="httpErrorCode">The HTTP status code of the failed response.</param>
   /// <param name="correlationId">The Correlation-ID header of the failed response, or null when absent.</param>
   public AlgoliaApiException(string message, int httpErrorCode, string correlationId)
-    : base(message)
+    : base(correlationId == null ? message : $"{message} (Correlation-ID: {correlationId})")
   {
     HttpErrorCode = httpErrorCode;
     CorrelationId = correlationId;
+    ResponseBody = message;
   }
-
-  /// <summary>
-  /// Appends the Correlation-ID to the formatted string when one is known;
-  /// Message stays the raw response body.
-  /// </summary>
-  public override string ToString() =>
-    CorrelationId == null
-      ? base.ToString()
-      : $"{base.ToString()} (Correlation-ID: {CorrelationId})";
 }
