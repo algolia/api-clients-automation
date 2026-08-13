@@ -5,7 +5,6 @@ using Algolia.Search.Clients;
 using Algolia.Search.Exceptions;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Search;
-using Algolia.Search.Utils;
 using Moq;
 using Xunit;
 using Action = Algolia.Search.Models.Search.Action;
@@ -326,6 +325,52 @@ public class RequestIdTests
   }
 
   [Fact]
+  public async Task ShouldKeepCallerQueryParameterRequestIdInHelpers()
+  {
+    var observedIds = new List<string>();
+    var observedUris = new List<Uri>();
+    var httpMock = new Mock<IHttpRequester>();
+    httpMock
+      .Setup(c =>
+        c.SendRequestAsync(
+          It.IsAny<Request>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<CancellationToken>()
+        )
+      )
+      .Returns<Request, TimeSpan, TimeSpan, CancellationToken>(
+        (rq, _, _, _) =>
+        {
+          observedIds.Add(ObservedRequestId(rq));
+          observedUris.Add(rq.Uri);
+          return Task.FromResult(JsonResponse("{\"taskID\":42,\"objectIDs\":[\"1\"]}"));
+        }
+      );
+    var config = new SearchConfig("test-app-id", "test-api-key");
+    var client = new SearchClient(config, httpMock.Object);
+
+    // A helper mint would land in the headers, which the server prefers over
+    // the caller's query parameter, so WithRequestId must not mint at all.
+    await client.ChunkedBatchAsync(
+      "test-index",
+      new List<object> { new { objectID = "1" } },
+      Action.AddObject,
+      options: new RequestOptions
+      {
+        QueryParameters = new Dictionary<string, object>
+        {
+          { "X-Algolia-Request-Id", "QueryOwned" },
+        },
+      }
+    );
+
+    // The URI check keeps this from passing vacuously when minting is off.
+    Assert.Contains("QueryOwned", Assert.Single(observedUris).Query);
+    Assert.Equal(new List<string> { null }, observedIds);
+  }
+
+  [Fact]
   public async Task ShouldExposeCorrelationIdOnApiErrors()
   {
     var httpMock = new Mock<IHttpRequester>();
@@ -613,6 +658,7 @@ public class RequestIdTests
   public async Task ShouldCleanUpTmpIndexWhenCallerCancels()
   {
     var deletes = new List<(Request Request, TimeSpan RequestTimeout, TimeSpan ConnectTimeout)>();
+    string mainRequestId = null;
     using var cts = new CancellationTokenSource();
     var httpMock = new Mock<IHttpRequester>();
     httpMock
@@ -636,6 +682,7 @@ public class RequestIdTests
               JsonResponse("{\"taskID\":42,\"deletedAt\":\"2021-01-01T00:00:00Z\"}")
             );
           }
+          mainRequestId ??= ObservedRequestId(rq);
           if (rq.Uri.AbsolutePath.EndsWith("/batch"))
           {
             cts.Cancel();
@@ -674,10 +721,15 @@ public class RequestIdTests
     Assert.StartsWith("/1/indexes/test-index_tmp_", deleteRequest.Uri.AbsolutePath);
 
     // The caller's timeouts that killed the main operation must not also
-    // govern the cleanup; the shared trace header survives the strip.
-    Assert.Equal(Defaults.WriteTimeout, deleteRequestTimeout);
-    Assert.Equal(Defaults.ConnectTimeout, deleteConnectTimeout);
-    Assert.Matches(RequestIdFormat, ObservedRequestId(deleteRequest));
+    // govern the cleanup: the delete falls back to the SearchConfig
+    // constructor timeouts (30s write, 2s connect).
+    Assert.Equal(TimeSpan.FromMilliseconds(30000), deleteRequestTimeout);
+    Assert.Equal(TimeSpan.FromMilliseconds(2000), deleteConnectTimeout);
+
+    // The delete reuses the invocation's shared Request-ID; a format-only
+    // check would also pass on a fresh transport-level mint.
+    Assert.Matches(RequestIdFormat, mainRequestId);
+    Assert.Equal(mainRequestId, ObservedRequestId(deleteRequest));
   }
 
   [Fact]
