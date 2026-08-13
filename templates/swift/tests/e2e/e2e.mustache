@@ -85,12 +85,12 @@ final class {{client}}RequestsTestsE2E: XCTestCase {
               ){{/requestOptions}}{{/hasRequestOptions}}
             )
 
-            let correlationId = try XCTUnwrap(
+            let correlationID = try XCTUnwrap(
               httpResponse.headers.first { $0.key.caseInsensitiveCompare("Correlation-ID") == .orderedSame }?.value
             )
             XCTAssertTrue(
-              correlationId.hasSuffix("{{{correlationIdSuffix}}}"),
-              "Correlation-ID \(correlationId) must end with {{{correlationIdSuffix}}}"
+              correlationID.hasSuffix("{{{correlationIdSuffix}}}"),
+              "Correlation-ID \(correlationID) must end with {{{correlationIdSuffix}}}"
             )
           {{/correlationIdSuffix}}
         {{/response}}
