@@ -72,7 +72,8 @@
       },
       "queryParameters": {
         "x-algolia-request-id": "CtsE2eQry11"
-      }
+      },
+      "absentHeaders": ["request-id"]
     },
     "response": {
       "statusCode": 200,
