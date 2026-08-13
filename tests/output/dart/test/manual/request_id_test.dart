@@ -118,7 +118,8 @@ void main() {
     expect(requester.requestIds, ['CallerOwnedId']);
   });
 
-  test('a caller-supplied x-algolia-request-id query parameter suppresses minting',
+  test(
+      'a caller-supplied x-algolia-request-id query parameter suppresses minting',
       () async {
     final requester = RecordingRequester();
     final retryStrategy = strategy(requester);
@@ -161,6 +162,42 @@ void main() {
     final retryStrategy = strategy(requester, requestIdSupport: false);
 
     await retryStrategy.execute(request: getRequest);
+
+    expect(requester.requestIds, [null]);
+  });
+
+  test('requestIdEnabled: false disables minting on a supporting client',
+      () async {
+    final requester = RecordingRequester();
+    final client = SearchClient(
+      appId: 'test-app-id',
+      apiKey: 'test-api-key',
+      options: ClientOptions(
+        requester: requester,
+        hosts: [Host(url: 'localhost')],
+        requestIdEnabled: false,
+      ),
+    );
+
+    await client.customGet(path: '1/test');
+
+    expect(requester.requestIds, [null]);
+  });
+
+  test('requestIdEnabled: false disables helper minting too', () async {
+    final requester = RecordingRequester(
+        bodyFor: (_) => {'status': 'published', 'updatedAt': ''});
+    final client = SearchClient(
+      appId: 'test-app-id',
+      apiKey: 'test-api-key',
+      options: ClientOptions(
+        requester: requester,
+        hosts: [Host(url: 'localhost')],
+        requestIdEnabled: false,
+      ),
+    );
+
+    await client.waitTask(indexName: 'indexName', taskID: 42);
 
     expect(requester.requestIds, [null]);
   });

@@ -85,7 +85,9 @@ final class RetryStrategy {
       writeTimeout: writeTimeout,
       hosts: options.hosts ?? defaultHosts.call(),
       requester: requester,
-      requestIdSupport: requestIdSupport,
+      // The caller's ClientOptions flag overrides the generated client's own
+      // setting in both directions.
+      requestIdSupport: options.requestIdEnabled ?? requestIdSupport,
       // With a custom requester the options headers are not applied above, so
       // they must not suppress minting either.
       hasDefaultRequestId:

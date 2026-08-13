@@ -16,7 +16,8 @@ extension WaitTask on SearchClient {
     // default headers, so an ID there must not suppress minting. An ID in the
     // x-algolia-request-id query parameter suppresses minting too: the server
     // consults it only when the header is absent.
-    if (hasRequestIdHeader(requestOptions?.headers) ||
+    if (options.requestIdEnabled == false ||
+        hasRequestIdHeader(requestOptions?.headers) ||
         hasRequestIdQueryParameter(requestOptions?.urlParameters) ||
         (options.requester == null && hasRequestIdHeader(options.headers))) {
       return requestOptions;
