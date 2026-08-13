@@ -395,6 +395,32 @@ public class SearchClientRequestTestsE2E
     }
   }
 
+  [Fact(DisplayName = "the classic engine accepts a Request-ID sent as a query parameter")]
+  public async Task SearchRulesTest1()
+  {
+    try
+    {
+      var resp = await client.SearchRulesAsync(
+        "cts_e2e_browse",
+        new SearchRulesParams { Query = "zorro" },
+        options: new RequestOptionBuilder()
+          .AddExtraQueryParameters("x-algolia-request-id", "CtsE2eQry11")
+          .Build()
+      );
+      // Check status code 200
+      Assert.NotNull(resp);
+
+      TestHelpers.LenientJsonAssert(
+        "{\"nbHits\":1,\"nbPages\":1,\"page\":0}",
+        JsonSerializer.Serialize(resp, JsonConfig.Options)
+      );
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
+    }
+  }
+
   [Fact(DisplayName = "search with special characters in indexName")]
   public async Task SearchSingleIndexTest1()
   {

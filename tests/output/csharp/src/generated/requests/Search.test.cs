@@ -699,7 +699,7 @@ public class SearchClientRequestTests
     await client.CustomGetAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "to be overridden" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("query", "parameters with space")
         .AddExtraQueryParameters("and an array", new List<object> { "array", "with spaces" })
         .AddExtraHeader("x-header-1", "spaces are left alone")
@@ -785,7 +785,9 @@ public class SearchClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("query", "myQueryParameter").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraQueryParameters("query", "myQueryParameter")
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -814,7 +816,9 @@ public class SearchClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("query2", "myQueryParameter").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraQueryParameters("query2", "myQueryParameter")
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -843,7 +847,9 @@ public class SearchClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -882,7 +888,9 @@ public class SearchClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -921,7 +929,7 @@ public class SearchClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
+      options: new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
     );
 
     var req = _echo.LastResponse;
@@ -950,7 +958,7 @@ public class SearchClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
+      options: new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
     );
 
     var req = _echo.LastResponse;
@@ -979,7 +987,7 @@ public class SearchClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { "b and c", "d" })
         .Build()
     );
@@ -1010,7 +1018,7 @@ public class SearchClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { true, true, false })
         .Build()
     );
@@ -1041,7 +1049,7 @@ public class SearchClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { 1, 2 })
         .Build()
     );
@@ -4064,6 +4072,40 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault("{\"query\":\"zorro\"}", req.Body, new JsonDiffConfig(false));
   }
 
+  [Fact(DisplayName = "the classic engine accepts a Request-ID sent as a query parameter")]
+  public async Task SearchRulesTest1()
+  {
+    await client.SearchRulesAsync(
+      "cts_e2e_browse",
+      new SearchRulesParams { Query = "zorro" },
+      options: new RequestOptionBuilder()
+        .AddExtraQueryParameters("x-algolia-request-id", "CtsE2eQry11")
+        .Build()
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/cts_e2e_browse/rules/search", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{\"query\":\"zorro\"}", req.Body, new JsonDiffConfig(false));
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"x-algolia-request-id\":\"CtsE2eQry11\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+    Assert.DoesNotContain(
+      req.Headers,
+      h => h.Key.Equals("request-id", StringComparison.OrdinalIgnoreCase)
+    );
+  }
+
   [Fact(DisplayName = "search with minimal parameters")]
   public async Task SearchSingleIndexTest()
   {
@@ -6044,7 +6086,9 @@ public class SearchClientRequestTests
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
       new SearchParams(new SearchParamsObject { Query = "query", AroundLatLngViaIP = true }),
-      new RequestOptionBuilder().AddExtraHeader("x-forwarded-for", "XX.XXX.XXX.XXX").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraHeader("x-forwarded-for", "XX.XXX.XXX.XXX")
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -6073,7 +6117,9 @@ public class SearchClientRequestTests
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
       new SearchParams(new SearchParamsString { }),
-      new RequestOptionBuilder().AddExtraHeader("x-forwarded-for", "XX.XXX.XXX.XXX").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraHeader("x-forwarded-for", "XX.XXX.XXX.XXX")
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -7086,7 +7132,7 @@ public class SearchClientRequestTests
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
       new SearchParams(new SearchParamsObject { Query = "query" }),
-      new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user1234").Build()
+      options: new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user1234").Build()
     );
 
     var req = _echo.LastResponse;
@@ -7101,7 +7147,7 @@ public class SearchClientRequestTests
     await client.SearchSingleIndexAsync<Hit>(
       "playlists",
       new SearchParams(new SearchParamsObject { Query = "peace" }),
-      new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user42").Build()
+      options: new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user42").Build()
     );
 
     var req = _echo.LastResponse;

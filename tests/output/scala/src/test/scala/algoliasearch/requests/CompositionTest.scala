@@ -611,6 +611,7 @@ class CompositionTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
+    assert(!res.headers.keys.exists(_.equalsIgnoreCase("request-id")))
   }
 
   test("getRule") {

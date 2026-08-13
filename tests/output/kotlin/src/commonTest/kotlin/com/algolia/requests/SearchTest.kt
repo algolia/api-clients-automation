@@ -4500,6 +4500,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/cts_e2e_browse/rules/search".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
+        assertFalse(it.headers.contains("request-id"), "the request-id header must not be sent")
         assertQueryParams("""{"x-algolia-request-id":"CtsE2eQry11"}""", it.url.encodedParameters)
         assertJsonBody("""{"query":"zorro"}""", it.body)
       },
