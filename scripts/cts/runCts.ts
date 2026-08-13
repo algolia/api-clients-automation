@@ -142,15 +142,17 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       });
       break;
     }
-    case 'swift':
+    case 'swift': {
+      const swiftSuites = [...folders, ...(suites.client ? ['manual'] : [])];
       await run(
-        `swift test -Xswiftc -suppress-warnings --build-path ${getSwiftBuildFolder()} --parallel ${filter((f) => `--filter "${f}.*"`)}`,
+        `swift test -Xswiftc -suppress-warnings --build-path ${getSwiftBuildFolder()} --parallel ${swiftSuites.map((f) => `--filter "${f}.*"`).join(' ')}`,
         {
           cwd,
           language,
         },
       );
       break;
+    }
     default:
       spinner.warn(`skipping unknown language '${language}' to run the CTS`);
       return;

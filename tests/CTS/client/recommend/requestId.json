@@ -2,7 +2,7 @@
   {
     "testName": "the recommend client sends a Request-ID",
     "autoCreateClient": false,
-    "skipLanguages": ["csharp", "go", "java", "php", "python", "ruby", "swift"],
+    "skipLanguages": ["php", "python", "ruby"],
     "steps": [
       {
         "type": "createClient",

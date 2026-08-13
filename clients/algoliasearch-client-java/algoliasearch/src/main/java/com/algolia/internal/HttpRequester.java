@@ -4,7 +4,6 @@ import com.algolia.config.*;
 import com.algolia.exceptions.AlgoliaApiException;
 import com.algolia.exceptions.AlgoliaClientException;
 import com.algolia.internal.interceptors.GzipRequestInterceptor;
-import com.algolia.internal.interceptors.HeaderInterceptor;
 import com.algolia.internal.interceptors.LogInterceptor;
 import com.algolia.utils.UseReadTransporter;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -38,7 +37,6 @@ public final class HttpRequester implements Requester {
       .connectTimeout(config.getConnectTimeout() == Duration.ZERO ? builder.connectTimeout : config.getConnectTimeout())
       .readTimeout(config.getReadTimeout() == Duration.ZERO ? builder.readTimeout : config.getReadTimeout())
       .writeTimeout(config.getWriteTimeout() == Duration.ZERO ? builder.writeTimeout : config.getWriteTimeout())
-      .addInterceptor(new HeaderInterceptor(config.getDefaultHeaders()))
       .addNetworkInterceptor(new LogInterceptor(config.getLogger(), config.getLogLevel()));
     builder.interceptors.forEach(clientBuilder::addInterceptor);
     builder.networkInterceptors.forEach(clientBuilder::addNetworkInterceptor);
@@ -89,7 +87,7 @@ public final class HttpRequester implements Requester {
     try (Response response = call.execute()) {
       // Handle unsuccessful responses.
       if (!response.isSuccessful()) {
-        throw new AlgoliaApiException(response.message(), response.code());
+        throw new AlgoliaApiException(response.message(), response.code(), response.header("Correlation-ID"));
       }
 
       // Return null if there's no content or the return type isn't provided.

@@ -31,6 +31,7 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     additionalProperties.put("packageName", client.equals("query-suggestions") ? "suggestions" : Helpers.camelize(client));
     additionalProperties.put("enumClassPrefix", true);
     additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize(client)) + "Client", true);
+    additionalProperties.put("requestIdSupport", Helpers.requestIdSupport(client));
 
     String outputFolder = "algolia" + File.separator + client;
     setOutputDir(getOutputDir() + File.separator + outputFolder);

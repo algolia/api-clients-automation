@@ -87,9 +87,10 @@ public final class RetryStrategy implements Interceptor {
       if (response.header("Content-Type", "application/json").contains("text/html")) {
         message = response.message();
       }
+      String correlationId = response.header("Correlation-ID");
       throw isRetryable(response)
-        ? new AlgoliaRequestException(message, response.code())
-        : new AlgoliaApiException(message, response.code());
+        ? new AlgoliaRequestException(message, response.code(), correlationId)
+        : new AlgoliaApiException(message, response.code(), correlationId);
     } finally {
       response.close();
     }

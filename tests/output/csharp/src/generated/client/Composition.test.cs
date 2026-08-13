@@ -177,6 +177,38 @@ public class CompositionClientTests
     Assert.Equal(null, res);
   }
 
+  [Fact(DisplayName = "the composition client sends a Request-ID")]
+  public async Task RequestIdTest0()
+  {
+    CompositionConfig _config = new CompositionConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6694,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new CompositionClient(_config);
+
+    var res = await client.CustomGetAsync("1/test/request-id/smoke/composition/csharp");
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"status\":\"ok\"}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "switch API key")]
   public async Task SetClientApiKeyTest0()
   {

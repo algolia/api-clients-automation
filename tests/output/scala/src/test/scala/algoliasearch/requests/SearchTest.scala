@@ -4143,6 +4143,7 @@ class SearchTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
+    assert(!res.headers.keys.exists(_.equalsIgnoreCase("request-id")))
   }
 
   test("search with minimal parameters") {

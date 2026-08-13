@@ -314,6 +314,7 @@ describe('getComposition', () => {
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual({ 'x-algolia-request-id': 'CtsE2eEchoQ' });
+    expect(Object.keys(req.headers ?? {}).map((key) => key.toLowerCase())).not.toContain('request-id'.toLowerCase());
   });
 });
 

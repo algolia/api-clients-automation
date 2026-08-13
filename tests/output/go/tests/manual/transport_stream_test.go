@@ -122,6 +122,55 @@ func TestRequestStreamHTTPStatusError(t *testing.T) {
 	require.Contains(t, string(statusErr.Body()), "invalid request")
 }
 
+func TestRequestStreamHTTPStatusErrorCarriesCorrelationID(t *testing.T) {
+	srv := httptest.NewServer(http.HandlerFunc(func(writer http.ResponseWriter, _ *http.Request) {
+		writer.Header().Set("Correlation-ID", "CorrStream1")
+		writer.WriteHeader(http.StatusInternalServerError)
+
+		_, _ = io.WriteString(writer, `{"message":"boom"}`)
+	}))
+	defer srv.Close()
+
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	transporter := newStreamTransport(t, srv.URL)
+
+	//nolint:bodyclose // The response is nil on error.
+	res, err := transporter.RequestStream(ctx, newStreamRequest(t, ctx), call.Read, transport.RequestConfiguration{})
+	require.Nil(t, res)
+
+	var statusErr *errs.HTTPStatusError
+	require.ErrorAs(t, err, &statusErr)
+	require.Equal(t, http.StatusInternalServerError, statusErr.StatusCode())
+	require.Equal(t, "CorrStream1", statusErr.CorrelationID())
+	require.Contains(t, err.Error(), "(Correlation-ID: CorrStream1)")
+}
+
+func TestRequestStreamHTTPStatusErrorWithoutCorrelationIDIsUnchanged(t *testing.T) {
+	srv := httptest.NewServer(http.HandlerFunc(func(writer http.ResponseWriter, _ *http.Request) {
+		writer.WriteHeader(http.StatusInternalServerError)
+
+		_, _ = io.WriteString(writer, `{"message":"boom"}`)
+	}))
+	defer srv.Close()
+
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	transporter := newStreamTransport(t, srv.URL)
+
+	//nolint:bodyclose // The response is nil on error.
+	res, err := transporter.RequestStream(ctx, newStreamRequest(t, ctx), call.Read, transport.RequestConfiguration{})
+	require.Nil(t, res)
+
+	var statusErr *errs.HTTPStatusError
+	require.ErrorAs(t, err, &statusErr)
+	require.Empty(t, statusErr.CorrelationID())
+	require.Equal(t, `HTTP 500: {"message":"boom"}`, statusErr.Error())
+	require.NotContains(t, err.Error(), "Correlation-ID")
+}
+
 func TestRequestStreamHTTPStatusErrorBodyTruncated(t *testing.T) {
 	srv := httptest.NewServer(http.HandlerFunc(func(writer http.ResponseWriter, _ *http.Request) {
 		writer.WriteHeader(http.StatusInternalServerError)

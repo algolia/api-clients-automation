@@ -165,6 +165,41 @@ func TestRecommendnoContent0(t *testing.T) {
 	require.Nil(t, res)
 }
 
+// the recommend client sends a Request-ID.
+func TestRecommendrequestId0(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *recommend.APIClient
+		cfg    recommend.RecommendConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = recommend.RecommendConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6694", call.IsReadWrite)},
+		},
+	}
+	client, err = recommend.NewClientWithConfig(cfg)
+
+	require.NoError(t, err)
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
+		"1/test/request-id/smoke/recommend/go"))
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `{"status":"ok"}`, string(rawBody))
+}
+
 // switch API key.
 func TestRecommendsetClientApiKey0(t *testing.T) {
 	var (

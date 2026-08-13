@@ -52,7 +52,7 @@
   },
   {
     "testName": "the classic engine accepts a Request-ID sent as a query parameter",
-    "skipLanguages": ["csharp", "dart", "go", "java", "php", "python", "ruby", "swift"],
+    "skipLanguages": ["dart", "go", "php", "python", "ruby", "swift"],
     "parameters": {
       "indexName": "cts_e2e_browse",
       "searchRulesParams": {
@@ -72,7 +72,8 @@
       },
       "queryParameters": {
         "x-algolia-request-id": "CtsE2eQry11"
-      }
+      },
+      "absentHeaders": ["request-id"]
     },
     "response": {
       "statusCode": 200,

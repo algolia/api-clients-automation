@@ -793,7 +793,7 @@ public class SnippetSearchClient
     var response = await client.CustomGetAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "to be overridden" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("query", "parameters with space")
         .AddExtraQueryParameters("and an array", new List<object> { "array", "with spaces" })
         .AddExtraHeader("x-header-1", "spaces are left alone")
@@ -863,7 +863,9 @@ public class SnippetSearchClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("query", "myQueryParameter").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraQueryParameters("query", "myQueryParameter")
+        .Build()
     );
     // >LOG
     // print the response
@@ -887,7 +889,9 @@ public class SnippetSearchClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("query2", "myQueryParameter").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraQueryParameters("query2", "myQueryParameter")
+        .Build()
     );
     // >LOG
     // print the response
@@ -911,7 +915,9 @@ public class SnippetSearchClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+        .Build()
     );
     // >LOG
     // print the response
@@ -935,7 +941,9 @@ public class SnippetSearchClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+        .Build()
     );
     // >LOG
     // print the response
@@ -959,7 +967,7 @@ public class SnippetSearchClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
+      options: new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
     );
     // >LOG
     // print the response
@@ -983,7 +991,7 @@ public class SnippetSearchClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
+      options: new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
     );
     // >LOG
     // print the response
@@ -1007,7 +1015,7 @@ public class SnippetSearchClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { "b and c", "d" })
         .Build()
     );
@@ -1033,7 +1041,7 @@ public class SnippetSearchClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { true, true, false })
         .Build()
     );
@@ -1059,7 +1067,7 @@ public class SnippetSearchClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { 1, 2 })
         .Build()
     );
@@ -2714,6 +2722,66 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the SaveObjects method.
   ///
+  /// every request of one helper call shares one Request-ID
+  /// </summary>
+  public async Task SnippetForSearchClientSaveObjects()
+  {
+    // >SEPARATOR saveObjects every request of one helper call shares one Request-ID
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SaveObjectsAsync(
+      "<YOUR_INDEX_NAME>",
+      new List<Object>
+      {
+        new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
+        new Dictionary<string, string> { { "objectID", "3" }, { "name", "Cyril" } },
+        new Dictionary<string, string> { { "objectID", "4" }, { "name", "David" } },
+      },
+      true,
+      2
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SaveObjects method.
+  ///
+  /// every request of one helper call shares one Request-ID
+  /// </summary>
+  public async Task SnippetForSearchClientSaveObjects1()
+  {
+    // >SEPARATOR saveObjects every request of one helper call shares one Request-ID
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SaveObjectsAsync(
+      "<YOUR_INDEX_NAME>",
+      new List<Object>
+      {
+        new Dictionary<string, string> { { "objectID", "5" }, { "name", "Eva" } },
+        new Dictionary<string, string> { { "objectID", "6" }, { "name", "Fred" } },
+        new Dictionary<string, string> { { "objectID", "7" }, { "name", "Gina" } },
+        new Dictionary<string, string> { { "objectID", "8" }, { "name", "Hugo" } },
+      },
+      true,
+      2
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SaveObjects method.
+  ///
   /// call saveObjects without error
   /// </summary>
   public async Task SnippetForSearchClientSaveObjects2()
@@ -2822,7 +2890,7 @@ public class SnippetSearchClient
       },
       false,
       1000,
-      new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "*").Build()
+      options: new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "*").Build()
     );
     // >LOG
     // print the response
@@ -2901,7 +2969,7 @@ public class SnippetSearchClient
       },
       true,
       10,
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-user-id", "test-user").Build()
+      options: new RequestOptionBuilder().AddExtraHeader("x-algolia-user-id", "test-user").Build()
     );
     // >LOG
     // print the response
@@ -5158,6 +5226,31 @@ public class SnippetSearchClient
     var response = await client.SearchRulesAsync(
       "<YOUR_INDEX_NAME>",
       new SearchRulesParams { Query = "zorro" }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchRules method.
+  ///
+  /// the classic engine accepts a Request-ID sent as a query parameter
+  /// </summary>
+  public async Task SnippetForSearchClientSearchRules1()
+  {
+    // >SEPARATOR searchRules the classic engine accepts a Request-ID sent as a query parameter
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchRulesAsync(
+      "<YOUR_INDEX_NAME>",
+      new SearchRulesParams { Query = "zorro" },
+      options: new RequestOptionBuilder()
+        .AddExtraQueryParameters("x-algolia-request-id", "CtsE2eQry11")
+        .Build()
     );
     // >LOG
     // print the response
@@ -7542,7 +7635,9 @@ public class SnippetSearchClient
     var response = await client.SearchSingleIndexAsync<Hit>(
       "<YOUR_INDEX_NAME>",
       new SearchParams(new SearchParamsObject { Query = "query", AroundLatLngViaIP = true }),
-      new RequestOptionBuilder().AddExtraHeader("x-forwarded-for", "XX.XXX.XXX.XXX").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraHeader("x-forwarded-for", "XX.XXX.XXX.XXX")
+        .Build()
     );
     // >LOG
     // print the response
@@ -7565,7 +7660,9 @@ public class SnippetSearchClient
     var response = await client.SearchSingleIndexAsync<Hit>(
       "<YOUR_INDEX_NAME>",
       new SearchParams(new SearchParamsString { }),
-      new RequestOptionBuilder().AddExtraHeader("x-forwarded-for", "XX.XXX.XXX.XXX").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraHeader("x-forwarded-for", "XX.XXX.XXX.XXX")
+        .Build()
     );
     // >LOG
     // print the response
@@ -8748,7 +8845,7 @@ public class SnippetSearchClient
     var response = await client.SearchSingleIndexAsync<Hit>(
       "<YOUR_INDEX_NAME>",
       new SearchParams(new SearchParamsObject { Query = "query" }),
-      new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user1234").Build()
+      options: new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user1234").Build()
     );
     // >LOG
     // print the response
@@ -8771,7 +8868,7 @@ public class SnippetSearchClient
     var response = await client.SearchSingleIndexAsync<Hit>(
       "<YOUR_INDEX_NAME>",
       new SearchParams(new SearchParamsObject { Query = "peace" }),
-      new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user42").Build()
+      options: new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user42").Build()
     );
     // >LOG
     // print the response

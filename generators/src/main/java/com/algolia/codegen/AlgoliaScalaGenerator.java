@@ -109,7 +109,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     Helpers.addCommonSupportingFiles(supportingFiles, "");
 
     additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
-    additionalProperties.put("requestIdSupport", client.equals("search") || client.equals("recommend") || client.equals("composition"));
+    additionalProperties.put("requestIdSupport", Helpers.requestIdSupport(client));
     typeMapping.put("AnyType", "Any");
     typeMapping.put("object", "Any");
 
