@@ -22,6 +22,7 @@ public class RequestOptions {
         self.body = body
     }
 
+    /// Enumerates every stored property: keep in sync when adding a field to RequestOptions.
     public static func +(lhs: RequestOptions, rhs: RequestOptions?) -> RequestOptions {
         guard let rhs else {
             return lhs
@@ -65,6 +66,7 @@ public class RequestOptions {
     /// A copy carrying only the headers and query parameters. The helpers' rescue cleanup
     /// requests forward the caller's identification this way without inheriting the
     /// timeouts or explicit body meant for the primary requests.
+    /// Enumerates the kept properties: revisit when adding a field to RequestOptions.
     public func withoutTimeoutsAndBody() -> RequestOptions {
         RequestOptions(headers: self.headers, queryParameters: self.queryParameters)
     }
