@@ -675,7 +675,10 @@ public extension SearchClient {
                 moveOperationResponse: moveOperationResponse
             )
         } catch {
-            _ = try? await self.deleteIndex(indexName: tmpIndexName, requestOptions: requestOptions)
+            _ = try? await self.deleteIndex(
+                indexName: tmpIndexName,
+                requestOptions: requestOptions?.withoutTimeoutsAndBody()
+            )
 
             throw error
         }

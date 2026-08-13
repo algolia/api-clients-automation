@@ -62,6 +62,13 @@ public class RequestOptions {
         )
     }
 
+    /// A copy carrying only the headers and query parameters. The helpers' rescue cleanup
+    /// requests forward the caller's identification this way without inheriting the
+    /// timeouts or explicit body meant for the primary requests.
+    public func withoutTimeoutsAndBody() -> RequestOptions {
+        RequestOptions(headers: self.headers, queryParameters: self.queryParameters)
+    }
+
     public func timeout(for callType: CallType) -> TimeInterval? {
         switch callType {
         case .read:

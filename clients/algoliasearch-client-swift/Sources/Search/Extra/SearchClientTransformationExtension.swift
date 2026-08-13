@@ -292,7 +292,10 @@ public extension SearchClient {
                 moveOperationResponse: moveOperationResponse
             )
         } catch {
-            _ = try? await deleteIndex(indexName: tmpIndexName, requestOptions: searchRequestOptions)
+            _ = try? await deleteIndex(
+                indexName: tmpIndexName,
+                requestOptions: searchRequestOptions?.withoutTimeoutsAndBody()
+            )
             throw error
         }
     }

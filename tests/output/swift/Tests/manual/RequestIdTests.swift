@@ -15,13 +15,23 @@ import XCTest
 @testable import AlgoliaIngestion
 @testable import AlgoliaSearch
 
+private struct RecordedRequest {
+    let method: String?
+    let url: URL
+    let timeout: TimeInterval
+    let headers: [String: String]?
+    let body: Data?
+}
+
 /// Records the Request-ID header of every request it serves.
 private final class RequestIDRecordingRequestBuilder: RequestBuilder {
     private(set) var requestIDs: [String?] = []
+    private(set) var requests: [RecordedRequest] = []
     var failuresBeforeSuccess = 0
+    var failOnPathContaining: String?
     var jsonForPath: (String) -> String = { _ in "{}" }
 
-    func execute<T: Decodable>(urlRequest: URLRequest, timeout _: TimeInterval) async throws -> Response<T> {
+    func execute<T: Decodable>(urlRequest: URLRequest, timeout: TimeInterval) async throws -> Response<T> {
         // Scan the headers case-insensitively: on corelibs-foundation the
         // value(forHTTPHeaderField:) lookup is not reliably case-insensitive.
         self.requestIDs.append(
@@ -34,9 +44,21 @@ private final class RequestIDRecordingRequestBuilder: RequestBuilder {
             throw AlgoliaError.requestError(GenericError(description: "missing URL"))
         }
 
+        self.requests.append(RecordedRequest(
+            method: urlRequest.httpMethod,
+            url: url,
+            timeout: timeout,
+            headers: urlRequest.allHTTPHeaderFields,
+            body: urlRequest.httpBody
+        ))
+
         if self.failuresBeforeSuccess > 0 {
             self.failuresBeforeSuccess -= 1
             throw AlgoliaError.httpError(HTTPError(statusCode: 500, message: nil))
+        }
+
+        if let fragment = self.failOnPathContaining, url.path.contains(fragment) {
+            throw AlgoliaError.httpError(HTTPError(statusCode: 400, message: nil))
         }
 
         let json = self.jsonForPath(url.path)
@@ -220,6 +242,52 @@ final class RequestIdTests: XCTestCase {
         )
 
         XCTAssertEqual(recorder.requestIDs, ["HelperCaller"])
+    }
+
+    func testRescueDeleteDropsTimeoutsAndBody() async throws {
+        let recorder = RequestIDRecordingRequestBuilder()
+        recorder.jsonForPath = { _ in
+            "{\"taskID\":42,\"updatedAt\":\"2026-01-01T00:00:00Z\",\"deletedAt\":\"2026-01-01T00:00:00Z\"}"
+        }
+        recorder.failOnPathContaining = "/batch"
+        let client = try makeSearchClient(recorder: recorder)
+
+        do {
+            _ = try await client.replaceAllObjects(
+                indexName: "indexName",
+                objects: [["objectID": "1"]],
+                requestOptions: RequestOptions(
+                    headers: ["X-Caller-Header": "kept"],
+                    queryParameters: ["callerParameter": "kept"],
+                    readTimeout: 11,
+                    writeTimeout: 22,
+                    body: ["callerBody": "kept"]
+                )
+            )
+            XCTFail("the failing batch call must surface to the caller")
+        } catch {}
+
+        let copyRequest = try XCTUnwrap(recorder.requests.first)
+        let deleteRequest = try XCTUnwrap(recorder.requests.last)
+        XCTAssertEqual(deleteRequest.method, "DELETE")
+        XCTAssertTrue(deleteRequest.url.path.contains("_tmp_"))
+
+        // The identification channels survive on the rescue delete, including the shared
+        // Request-ID minted for the whole helper invocation.
+        XCTAssertEqual(
+            deleteRequest.headers?.first { $0.key.caseInsensitiveCompare("X-Caller-Header") == .orderedSame }?.value,
+            "kept"
+        )
+        XCTAssertEqual(deleteRequest.url.query?.contains("callerParameter"), true)
+        XCTAssertEqual(recorder.requestIDs.count, 3)
+        try self.assertWellFormed(recorder.requestIDs[0])
+        XCTAssertEqual(recorder.requestIDs[2], recorder.requestIDs[0])
+
+        // The caller's timeouts and body apply to the primary calls only.
+        XCTAssertEqual(copyRequest.timeout, 22)
+        XCTAssertNotNil(copyRequest.body)
+        XCTAssertNotEqual(deleteRequest.timeout, 22)
+        XCTAssertNil(deleteRequest.body)
     }
 
     func testHTTPErrorCarriesCorrelationID() throws {
