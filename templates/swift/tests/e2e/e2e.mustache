@@ -69,6 +69,30 @@ final class {{client}}RequestsTestsE2E: XCTestCase {
           {{#statusCode}}
             XCTAssertEqual(response.statusCode, {{statusCode}})
           {{/statusCode}}
+
+          {{#correlationIdSuffix}}
+            // Re-issue the request through customGet to read the response headers;
+            // customGet prepends the leading slash that request.path carries.
+            let httpResponse: Response<AnyCodable> = try await client.customGetWithHTTPInfo(
+              path: String("{{{request.path}}}".dropFirst()){{#hasRequestOptions}}{{#requestOptions}},
+              requestOptions: RequestOptions(
+                {{#headers}}
+                headers: [{{#parametersWithDataType}}"{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}]{{#queryParameters}},{{/queryParameters}}
+                {{/headers}}
+                {{#queryParameters}}
+                queryParameters: [{{#parametersWithDataType}}"{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}]
+                {{/queryParameters}}
+              ){{/requestOptions}}{{/hasRequestOptions}}
+            )
+
+            let correlationID = try XCTUnwrap(
+              httpResponse.headers.first { $0.key.caseInsensitiveCompare("Correlation-ID") == .orderedSame }?.value
+            )
+            XCTAssertTrue(
+              correlationID.hasSuffix("{{{correlationIdSuffix}}}"),
+              "Correlation-ID \(correlationID) must end with {{{correlationIdSuffix}}}"
+            )
+          {{/correlationIdSuffix}}
         {{/response}}
       }
     {{/tests}}
