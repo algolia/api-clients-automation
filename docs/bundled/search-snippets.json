@@ -2008,6 +2008,7 @@
       "default": "SaveObjectResponse response = client.saveObject(\n  \"<YOUR_INDEX_NAME>\",\n  new HashMap() {\n    {\n      put(\"name\", \"Black T-shirt\");\n      put(\"color\", \"#000000||black\");\n      put(\"availableIn\", \"https://source.unsplash.com/100x100/?paris||Paris\");\n      put(\"objectID\", \"myID\");\n    }\n  }\n);"
     },
     "saveObjects": {
+      "every request of one helper call shares one Request-ID": "List response = client.saveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"5\");\n        put(\"name\", \"Eva\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"6\");\n        put(\"name\", \"Fred\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"7\");\n        put(\"name\", \"Gina\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"8\");\n        put(\"name\", \"Hugo\");\n      }\n    }\n  ),\n  true,\n  2\n);",
       "call saveObjects without error": "List response = client.saveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  )\n);",
       "saveObjects should report errors": "List response = client.saveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  )\n);",
       "saveObjectsPlaylist": "List response = client.saveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"visibility\", \"public\");\n        put(\"name\", \"Hot 100 Billboard Charts\");\n        put(\"playlistId\", \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\");\n        put(\"createdAt\", \"1500240452\");\n      }\n    }\n  )\n);",
@@ -2083,7 +2084,8 @@
       "facetName and facetQuery": "SearchForFacetValuesResponse response = client.searchForFacetValues(\n  \"<YOUR_INDEX_NAME>\",\n  \"author\",\n  new SearchForFacetValuesRequest().setFacetQuery(\"stephen\")\n);"
     },
     "searchRules": {
-      "searchRules": "SearchRulesResponse response = client.searchRules(\"<YOUR_INDEX_NAME>\", new SearchRulesParams().setQuery(\"zorro\"));"
+      "searchRules": "SearchRulesResponse response = client.searchRules(\"<YOUR_INDEX_NAME>\", new SearchRulesParams().setQuery(\"zorro\"));",
+      "the classic engine accepts a Request-ID sent as a query parameter": "SearchRulesResponse response = client.searchRules(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchRulesParams().setQuery(\"zorro\"),\n  new RequestOptions().addExtraQueryParameters(\"x-algolia-request-id\", \"CtsE2eQry11\")\n);"
     },
     "searchSingleIndex": {
       "search with minimal parameters": "SearchResponse response = client.searchSingleIndex(\"<YOUR_INDEX_NAME>\", Hit.class);",

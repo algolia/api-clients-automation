@@ -275,7 +275,9 @@
       "default": "TaskIDResponse response = client.deleteCompositionRule(\"1234\", \"5678\");"
     },
     "getComposition": {
-      "getComposition": "Composition response = client.getComposition(\"foo\");"
+      "getComposition": "Composition response = client.getComposition(\"foo\");",
+      "the Correlation-ID ends with the sent Request-ID": "Composition response = client.getComposition(\"id1\", new RequestOptions().addExtraHeader(\"request-id\", \"CtsE2eEcho4\"));",
+      "the Correlation-ID ends with the Request-ID sent as a query": "Composition response = client.getComposition(\n  \"id1\",\n  new RequestOptions().addExtraQueryParameters(\"x-algolia-request-id\", \"CtsE2eEchoQ\")\n);"
     },
     "getRule": {
       "default": "CompositionRule response = client.getRule(\"foo\", \"123\");"
