@@ -835,7 +835,9 @@
       "default": "let response = try await client.deleteCompositionRule(compositionID: \"1234\", objectID: \"5678\")"
     },
     "getComposition": {
-      "getComposition": "let response = try await client.getComposition(compositionID: \"foo\")"
+      "getComposition": "let response = try await client.getComposition(compositionID: \"foo\")",
+      "the Correlation-ID ends with the sent Request-ID": "let response = try await client.getComposition(compositionID: \"id1\", requestOptions: RequestOptions(\n    headers: [\"request-id\": \"CtsE2eEcho4\"]\n\n))",
+      "the Correlation-ID ends with the Request-ID sent as a query parameter": "let response = try await client.getComposition(compositionID: \"id1\", requestOptions: RequestOptions(\n    queryParameters: [\"x-algolia-request-id\": \"CtsE2eEchoQ\"]\n))"
     },
     "getRule": {
       "default": "let response = try await client.getRule(compositionID: \"foo\", objectID: \"123\")"

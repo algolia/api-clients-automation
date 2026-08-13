@@ -817,6 +817,151 @@ final class SearchClientClientTests: XCTestCase {
         }
     }
 
+    /// the Request-ID stays stable across retries
+    func testRequestIdTest0() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [
+                RetryableHost(url: URL(string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6694")!),
+                RetryableHost(url: URL(string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6695")!),
+                RetryableHost(url: URL(string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6696")!),
+            ]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.customPost(path: "1/test/request-id/retry/swift")
+
+        XTCJSONEquals(received: response, expected: "{\"status\":\"ok\"}")
+    }
+
+    /// each call mints a fresh Request-ID
+    func testRequestIdTest1() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6694")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        do {
+            let response = try await client.customGet(path: "1/test/request-id/fresh/swift")
+
+            XTCJSONEquals(received: response, expected: "{\"status\":\"ok\"}")
+        }
+        do {
+            let response = try await client.customGet(path: "1/test/request-id/fresh/swift")
+
+            XTCJSONEquals(received: response, expected: "{\"status\":\"ok\"}")
+        }
+    }
+
+    /// a caller-supplied Request-ID is never overwritten
+    func testRequestIdTest2() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6694")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.customGet(
+            path: "1/test/request-id/caller/swift",
+            requestOptions: RequestOptions(
+                headers: ["request-id": "CtsUserProvided"]
+            )
+        )
+
+        XTCJSONEquals(received: response, expected: "{\"requestId\":\"CtsUserProvided\"}")
+    }
+
+    /// every request of one helper call shares one Request-ID
+    func testRequestIdTest3() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6694")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        do {
+            let response = try await client.saveObjects(
+                indexName: "cts_request_id_swift",
+                objects: [
+                    ["objectID": "1", "name": "Adam"],
+                    ["objectID": "2", "name": "Benoit"],
+                    ["objectID": "3", "name": "Cyril"],
+                    ["objectID": "4", "name": "David"],
+                ],
+                waitForTasks: true,
+                batchSize: 2
+            )
+
+            try XCTLenientAssertEqual(
+                received: response,
+                expected: "[{\"taskID\":42,\"objectIDs\":[\"1\",\"2\"]},{\"taskID\":42,\"objectIDs\":[\"3\",\"4\"]}]"
+            )
+        }
+        do {
+            let response = try await client.saveObjects(
+                indexName: "cts_request_id_swift",
+                objects: [
+                    ["objectID": "5", "name": "Eva"],
+                    ["objectID": "6", "name": "Fred"],
+                    ["objectID": "7", "name": "Gina"],
+                    ["objectID": "8", "name": "Hugo"],
+                ],
+                waitForTasks: true,
+                batchSize: 2
+            )
+
+            try XCTLenientAssertEqual(
+                received: response,
+                expected: "[{\"taskID\":42,\"objectIDs\":[\"5\",\"6\"]},{\"taskID\":42,\"objectIDs\":[\"7\",\"8\"]}]"
+            )
+        }
+    }
+
+    /// client errors expose the Correlation-ID
+    func testRequestIdTest4() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6694")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        do {
+            let response = try await client.customGet(path: "1/test/request-id/error/swift")
+
+            XCTFail("Expected an error to be thrown")
+        } catch {
+            XCTAssertEqual(
+                error.localizedDescription,
+                "HTTP error: Status code: 400 Message: request-id error test (Correlation-ID: CtsFixedCorrelationId)"
+            )
+        }
+    }
+
     /// call saveObjects without error
     func testSaveObjectsTest0() async throws {
         let configuration = try SearchClientConfiguration(
