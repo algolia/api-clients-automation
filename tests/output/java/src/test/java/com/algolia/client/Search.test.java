@@ -1266,6 +1266,232 @@ class SearchClientClientTests {
   }
 
   @Test
+  @DisplayName("the Request-ID stays stable across retries")
+  void requestIdTest0() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6694
+          ),
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6695
+          ),
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6696
+          )
+        ),
+        false
+      )
+    );
+
+    Object res = client.customPost("1/test/request-id/retry/java");
+
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"status\":\"ok\"}", json.writeValueAsString(res), JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("each call mints a fresh Request-ID")
+  void requestIdTest1() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6694
+          )
+        ),
+        false
+      )
+    );
+
+    assertDoesNotThrow(() -> {
+      Object res = client.customGet("1/test/request-id/fresh/java");
+
+      assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"status\":\"ok\"}", json.writeValueAsString(res), JSONCompareMode.STRICT));
+    });
+    assertDoesNotThrow(() -> {
+      Object res = client.customGet("1/test/request-id/fresh/java");
+
+      assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"status\":\"ok\"}", json.writeValueAsString(res), JSONCompareMode.STRICT));
+    });
+  }
+
+  @Test
+  @DisplayName("a caller-supplied Request-ID is never overwritten")
+  void requestIdTest2() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6694
+          )
+        ),
+        false
+      )
+    );
+
+    Object res = client.customGet("1/test/request-id/caller/java", new RequestOptions().addExtraHeader("request-id", "CtsUserProvided"));
+
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"requestId\":\"CtsUserProvided\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("every request of one helper call shares one Request-ID")
+  void requestIdTest3() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6694
+          )
+        ),
+        false
+      )
+    );
+
+    assertDoesNotThrow(() -> {
+      List res = client.saveObjects(
+        "cts_request_id_java",
+        Arrays.asList(
+          new HashMap() {
+            {
+              put("objectID", "1");
+              put("name", "Adam");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "2");
+              put("name", "Benoit");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "3");
+              put("name", "Cyril");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "4");
+              put("name", "David");
+            }
+          }
+        ),
+        true,
+        2
+      );
+
+      assertDoesNotThrow(() ->
+        JSONAssert.assertEquals(
+          "[{\"taskID\":42,\"objectIDs\":[\"1\",\"2\"]},{\"taskID\":42,\"objectIDs\":[\"3\",\"4\"]}]",
+          json.writeValueAsString(res),
+          JSONCompareMode.STRICT
+        )
+      );
+    });
+    assertDoesNotThrow(() -> {
+      List res = client.saveObjects(
+        "cts_request_id_java",
+        Arrays.asList(
+          new HashMap() {
+            {
+              put("objectID", "5");
+              put("name", "Eva");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "6");
+              put("name", "Fred");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "7");
+              put("name", "Gina");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "8");
+              put("name", "Hugo");
+            }
+          }
+        ),
+        true,
+        2
+      );
+
+      assertDoesNotThrow(() ->
+        JSONAssert.assertEquals(
+          "[{\"taskID\":42,\"objectIDs\":[\"5\",\"6\"]},{\"taskID\":42,\"objectIDs\":[\"7\",\"8\"]}]",
+          json.writeValueAsString(res),
+          JSONCompareMode.STRICT
+        )
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("client errors expose the Correlation-ID")
+  void requestIdTest4() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6694
+          )
+        ),
+        false
+      )
+    );
+
+    {
+      Exception exception = assertThrows(Exception.class, () -> {
+        Object res = client.customGet("1/test/request-id/error/java");
+      });
+      assertEquals(
+        "Status Code: 400 - {\"message\":\"request-id error test\"} (Correlation-ID:" + " CtsFixedCorrelationId)",
+        exception.getMessage()
+      );
+    }
+  }
+
+  @Test
   @DisplayName("call saveObjects without error")
   void saveObjectsTest0() {
     SearchClient client = new SearchClient(

@@ -133,6 +133,30 @@ class RecommendClientClientTests {
   }
 
   @Test
+  @DisplayName("the recommend client sends a Request-ID")
+  void requestIdTest0() {
+    RecommendClient client = new RecommendClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6694
+          )
+        ),
+        false
+      )
+    );
+
+    Object res = client.customGet("1/test/request-id/smoke/recommend/java");
+
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"status\":\"ok\"}", json.writeValueAsString(res), JSONCompareMode.STRICT));
+  }
+
+  @Test
   @DisplayName("switch API key")
   void setClientApiKeyTest0() {
     RecommendClient client = new RecommendClient(

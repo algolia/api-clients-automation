@@ -245,6 +245,17 @@ class SearchClientRequestsTestsE2E {
   }
 
   @Test
+  @DisplayName("the classic engine accepts a Request-ID sent as a query parameter")
+  void searchRulesTest1() {
+    SearchRulesResponse res = client.searchRules(
+      "cts_e2e_browse",
+      new SearchRulesParams().setQuery("zorro"),
+      new RequestOptions().addExtraQueryParameters("x-algolia-request-id", "CtsE2eQry11")
+    );
+    assertDoesNotThrow(() -> TestHelpers.lenientJsonAssert("{\"nbHits\":1,\"nbPages\":1,\"page\":0}", json.writeValueAsString(res)));
+  }
+
+  @Test
   @DisplayName("search with special characters in indexName")
   void searchSingleIndexTest1() {
     SearchResponse res = client.searchSingleIndex("cts_e2e_space in index", Hit.class);
