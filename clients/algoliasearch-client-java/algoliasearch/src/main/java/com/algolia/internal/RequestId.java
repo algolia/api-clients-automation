@@ -3,6 +3,7 @@ package com.algolia.internal;
 import com.algolia.config.RequestOptions;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
@@ -50,7 +51,7 @@ public final class RequestId {
    * Returns whether the given headers already carry a Request-ID, using a case-insensitive
    * comparison.
    */
-  public static boolean isPresent(Map<String, String> headers) {
+  public static boolean isPresent(@Nonnull Map<String, String> headers) {
     return containsIgnoreCase(headers, HEADER);
   }
 

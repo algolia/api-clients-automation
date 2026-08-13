@@ -26,10 +26,7 @@ public class AlgoliaRetryException extends AlgoliaRuntimeException {
     return errors;
   }
 
-  /**
-   * The `Correlation-ID` of the last attempt that carried one, or null when no attempt received a
-   * response.
-   */
+  /** The `Correlation-ID` of the last attempt whose response carried one, or null when none did. */
   @Nullable
   public String getCorrelationId() {
     if (errors == null) {
