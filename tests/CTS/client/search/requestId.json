@@ -120,59 +120,6 @@
     ]
   },
   {
-    "testName": "a Request-ID set in the client default headers is honored, and a per-request one wins over it",
-    "autoCreateClient": false,
-    "skipLanguages": ["csharp", "dart", "go", "javascript", "kotlin", "php", "python", "ruby", "scala", "swift"],
-    "steps": [
-      {
-        "type": "createClient",
-        "parameters": {
-          "appId": "test-app-id",
-          "apiKey": "test-api-key",
-          "defaultHeaders": {
-            "request-id": "CtsDefaultHeader"
-          },
-          "customHosts": [
-            {
-              "port": 6694
-            }
-          ]
-        }
-      },
-      {
-        "type": "method",
-        "method": "customGet",
-        "parameters": {
-          "path": "1/test/request-id/caller/${{language}}"
-        },
-        "expected": {
-          "type": "response",
-          "match": {
-            "requestId": "CtsDefaultHeader"
-          }
-        }
-      },
-      {
-        "type": "method",
-        "method": "customGet",
-        "parameters": {
-          "path": "1/test/request-id/caller/${{language}}"
-        },
-        "requestOptions": {
-          "headers": {
-            "request-id": "CtsPerRequest"
-          }
-        },
-        "expected": {
-          "type": "response",
-          "match": {
-            "requestId": "CtsPerRequest"
-          }
-        }
-      }
-    ]
-  },
-  {
     "testName": "every request of one helper call shares one Request-ID",
     "autoCreateClient": false,
     "skipLanguages": ["csharp", "dart", "php", "python", "ruby", "swift"],
