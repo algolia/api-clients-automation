@@ -600,6 +600,7 @@ class CompositionTest {
       intercept = {
         assertEquals("/1/compositions/id1".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
+        assertFalse(it.headers.contains("request-id"), "the request-id header must not be sent")
         assertQueryParams("""{"x-algolia-request-id":"CtsE2eEchoQ"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
