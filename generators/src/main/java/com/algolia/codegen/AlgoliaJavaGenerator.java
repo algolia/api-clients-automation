@@ -50,6 +50,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     supportingFiles.add(new SupportingFile("build_config.mustache", invokerFolder, "BuildConfig.java"));
     supportingFiles.add(new SupportingFile("gradle.properties.mustache", "", "gradle.properties"));
     additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
+    additionalProperties.put("requestIdSupport", Helpers.requestIdSupport(client));
 
     Helpers.addCommonSupportingFiles(supportingFiles, "");
 
