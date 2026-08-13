@@ -26,7 +26,6 @@ internal class HttpTransport : IDisposable
   private readonly ISerializer _serializer;
   private readonly RetryStrategy _retryStrategy;
   internal AlgoliaConfig _algoliaConfig;
-  private string _errorMessage;
   private readonly ILogger<HttpTransport> _logger;
 
   private class VoidResult { }
@@ -141,8 +140,10 @@ internal class HttpTransport : IDisposable
     var attemptNumber = 0;
     var overallStopwatch = Stopwatch.StartNew();
     // The Correlation-ID of the last attempt whose response carried one,
-    // surfaced on the exhaustion exception for support tickets.
+    // surfaced on the exhaustion exception for support tickets. Both are
+    // locals so concurrent requests on one client cannot mix their values.
     string lastCorrelationId = null;
+    string errorMessage = null;
 
     foreach (var host in tryableHosts)
     {
@@ -186,7 +187,7 @@ internal class HttpTransport : IDisposable
         .ConfigureAwait(false);
       requestStopwatch.Stop();
 
-      _errorMessage = response.Error;
+      errorMessage = response.Error;
       lastCorrelationId = GetCorrelationId(response) ?? lastCorrelationId;
 
       switch (_retryStrategy.Decide(host, response))
@@ -314,13 +315,13 @@ internal class HttpTransport : IDisposable
       _logger.LogError(
         "Request failed after {MaxAttempts} attempts: {ErrorMessage}",
         maxAttempts,
-        _errorMessage
+        errorMessage
       );
     }
 
     throw new AlgoliaUnreachableHostException(
       "RetryStrategy failed to connect to Algolia. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support Reason: "
-        + _errorMessage,
+        + errorMessage,
       lastCorrelationId
     );
   }

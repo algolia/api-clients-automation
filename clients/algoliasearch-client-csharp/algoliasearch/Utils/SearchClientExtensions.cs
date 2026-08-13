@@ -603,6 +603,23 @@ public partial class SearchClient : ISearchClient
     return copy;
   }
 
+  /// <summary>
+  /// Derives the options for a rescue cleanup: the headers survive, the
+  /// caller's timeouts do not, so a timeout that killed the main operation
+  /// cannot also kill the cleanup and leak the temporary index.
+  /// </summary>
+  private static RequestOptions WithoutTimeouts(RequestOptions options)
+  {
+    var copy = options?.ShallowCopy();
+    if (copy != null)
+    {
+      copy.ReadTimeout = null;
+      copy.WriteTimeout = null;
+      copy.ConnectTimeout = null;
+    }
+    return copy;
+  }
+
   /// <inheritdoc/>
   public async Task<GetTaskResponse> WaitForTaskAsync(
     string indexName,
@@ -1093,13 +1110,14 @@ public partial class SearchClient : ISearchClient
         BatchResponses = batchResponse,
       };
     }
-    catch (Exception ex)
+    catch
     {
-      // The failure may be the caller's own cancellation, and the cleanup
-      // must still delete the temporary index.
+      // The failure may be the caller's own cancellation or timeout, and the
+      // cleanup must still delete the temporary index.
       try
       {
-        await DeleteIndexAsync(tmpIndexName, options, CancellationToken.None).ConfigureAwait(false);
+        await DeleteIndexAsync(tmpIndexName, WithoutTimeouts(options), CancellationToken.None)
+          .ConfigureAwait(false);
       }
       catch
       {
@@ -1720,7 +1738,7 @@ public partial class SearchClient : ISearchClient
       // cancellation, and the cleanup must still delete the temporary index.
       try
       {
-        await DeleteIndexAsync(tmpIndexName, searchOptions, CancellationToken.None)
+        await DeleteIndexAsync(tmpIndexName, WithoutTimeouts(searchOptions), CancellationToken.None)
           .ConfigureAwait(false);
       }
       catch

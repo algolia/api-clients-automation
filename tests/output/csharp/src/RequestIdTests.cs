@@ -5,6 +5,7 @@ using Algolia.Search.Clients;
 using Algolia.Search.Exceptions;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Search;
+using Algolia.Search.Utils;
 using Moq;
 using Xunit;
 using Action = Algolia.Search.Models.Search.Action;
@@ -611,7 +612,7 @@ public class RequestIdTests
   [Fact]
   public async Task ShouldCleanUpTmpIndexWhenCallerCancels()
   {
-    var deletes = new List<string>();
+    var deletes = new List<(Request Request, TimeSpan RequestTimeout, TimeSpan ConnectTimeout)>();
     using var cts = new CancellationTokenSource();
     var httpMock = new Mock<IHttpRequester>();
     httpMock
@@ -624,13 +625,13 @@ public class RequestIdTests
         )
       )
       .Returns<Request, TimeSpan, TimeSpan, CancellationToken>(
-        (rq, _, _, ct) =>
+        (rq, requestTimeout, connectTimeout, ct) =>
         {
           // A real requester observes the token before sending.
           ct.ThrowIfCancellationRequested();
           if (rq.Method == HttpMethod.Delete)
           {
-            deletes.Add(rq.Uri.AbsolutePath);
+            deletes.Add((rq, requestTimeout, connectTimeout));
             return Task.FromResult(
               JsonResponse("{\"taskID\":42,\"deletedAt\":\"2021-01-01T00:00:00Z\"}")
             );
@@ -658,13 +659,25 @@ public class RequestIdTests
       await client.ReplaceAllObjectsAsync(
         "test-index",
         new List<object> { new { objectID = "1" } },
+        options: new RequestOptions
+        {
+          ReadTimeout = TimeSpan.FromMilliseconds(41),
+          WriteTimeout = TimeSpan.FromMilliseconds(42),
+          ConnectTimeout = TimeSpan.FromMilliseconds(43),
+        },
         cancellationToken: cts.Token
       )
     );
 
     // The cleanup delete must go through even though the caller's token is canceled.
-    var deletedPath = Assert.Single(deletes);
-    Assert.StartsWith("/1/indexes/test-index_tmp_", deletedPath);
+    var (deleteRequest, deleteRequestTimeout, deleteConnectTimeout) = Assert.Single(deletes);
+    Assert.StartsWith("/1/indexes/test-index_tmp_", deleteRequest.Uri.AbsolutePath);
+
+    // The caller's timeouts that killed the main operation must not also
+    // govern the cleanup; the shared trace header survives the strip.
+    Assert.Equal(Defaults.WriteTimeout, deleteRequestTimeout);
+    Assert.Equal(Defaults.ConnectTimeout, deleteConnectTimeout);
+    Assert.Matches(RequestIdFormat, ObservedRequestId(deleteRequest));
   }
 
   [Fact]
