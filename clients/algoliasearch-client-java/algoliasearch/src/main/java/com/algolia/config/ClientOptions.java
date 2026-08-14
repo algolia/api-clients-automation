@@ -154,6 +154,7 @@ public final class ClientOptions implements ClientConfig {
       return this;
     }
 
+    /** Adds a header sent with every request. Ignored when a custom {@link Requester} is set. */
     public Builder addDefaultHeader(String header, String value) {
       this.defaultHeaders.put(header, value);
       return this;

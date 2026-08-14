@@ -4,8 +4,11 @@ import com.algolia.config.*;
 import com.algolia.exceptions.AlgoliaRuntimeException;
 import com.algolia.internal.HttpRequester;
 import com.algolia.internal.JsonSerializer;
+import com.algolia.internal.RequestId;
 import com.algolia.internal.StatefulHost;
 import com.algolia.internal.interceptors.AuthInterceptor;
+import com.algolia.internal.interceptors.HeaderInterceptor;
+import com.algolia.internal.interceptors.RequestIdInterceptor;
 import com.algolia.internal.interceptors.RetryStrategy;
 import com.algolia.internal.interceptors.UserAgentInterceptor;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -28,10 +31,11 @@ public abstract class ApiClient implements Closeable {
 
   private final Requester requester;
   private final ExecutorService executor;
+  private final boolean requestIdSupport;
   public final ClientOptions clientOptions;
   public AuthInterceptor authInterceptor;
 
-  /** Constructs a new instance of the {@link ApiClient}. */
+  /** Constructs a new instance of the {@link ApiClient}, without Request-ID support. */
   protected ApiClient(
     String appId,
     String apiKey,
@@ -42,6 +46,26 @@ public abstract class ApiClient implements Closeable {
     Duration readTimeout,
     Duration writeTimeout
   ) {
+    this(appId, apiKey, clientName, options, defaultHosts, connectTimeout, readTimeout, writeTimeout, false);
+  }
+
+  /**
+   * Constructs a new instance of the {@link ApiClient}.
+   *
+   * @param requestIdSupport Whether the API this client targets accepts a `Request-ID`.
+   */
+  protected ApiClient(
+    String appId,
+    String apiKey,
+    String clientName,
+    @Nullable ClientOptions options,
+    List<Host> defaultHosts,
+    Duration connectTimeout,
+    Duration readTimeout,
+    Duration writeTimeout,
+    boolean requestIdSupport
+  ) {
+    this.requestIdSupport = requestIdSupport;
     if (appId == null || appId.isEmpty()) {
       throw new AlgoliaRuntimeException("`appId` is missing.");
     }
@@ -78,7 +102,12 @@ public abstract class ApiClient implements Closeable {
     this.authInterceptor = new AuthInterceptor(appId, apiKey);
     HttpRequester.Builder builder = new HttpRequester.Builder(serializer)
       .addInterceptor(authInterceptor)
-      .addInterceptor(new UserAgentInterceptor(algoliaAgent))
+      .addInterceptor(new HeaderInterceptor(options.getDefaultHeaders()))
+      .addInterceptor(new UserAgentInterceptor(algoliaAgent));
+    if (requestIdSupport) {
+      builder.addInterceptor(new RequestIdInterceptor());
+    }
+    builder
       .addInterceptor(new RetryStrategy(statefulHosts))
       .setConnectTimeout(connectTimeout)
       .setReadTimeout(readTimeout)
@@ -96,6 +125,19 @@ public abstract class ApiClient implements Closeable {
    */
   public void setClientApiKey(@Nonnull String apiKey) {
     this.authInterceptor.setApiKey(apiKey);
+  }
+
+  /**
+   * Returns request options carrying a `Request-ID`, so that every request a multi-request helper
+   * performs shares the same one. Returns the given options unchanged when this client does not
+   * support Request-ID or when the caller already supplied one, per request or through default
+   * headers.
+   */
+  protected RequestOptions withRequestId(@Nullable RequestOptions requestOptions) {
+    if (!requestIdSupport || RequestId.isPresent(requestOptions) || RequestId.isPresent(clientOptions.getDefaultHeaders())) {
+      return requestOptions;
+    }
+    return new RequestOptions().addExtraHeader(RequestId.HEADER, RequestId.generate()).mergeRight(requestOptions);
   }
 
   /**

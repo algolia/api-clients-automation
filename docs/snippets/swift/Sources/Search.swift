@@ -2188,6 +2188,58 @@ final class SearchClientSnippet {
 
     /// Snippet for the saveObjects method.
     ///
+    /// every request of one helper call shares one Request-ID
+    func snippetForSaveObjects() async throws {
+        // >SEPARATOR saveObjects every request of one helper call shares one Request-ID
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.saveObjects(
+            indexName: "<YOUR_INDEX_NAME>",
+            objects: [
+                ["objectID": "1", "name": "Adam"],
+                ["objectID": "2", "name": "Benoit"],
+                ["objectID": "3", "name": "Cyril"],
+                ["objectID": "4", "name": "David"],
+            ],
+            waitForTasks: true,
+            batchSize: 2
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the saveObjects method.
+    ///
+    /// every request of one helper call shares one Request-ID
+    func snippetForSaveObjects1() async throws {
+        // >SEPARATOR saveObjects every request of one helper call shares one Request-ID
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.saveObjects(
+            indexName: "<YOUR_INDEX_NAME>",
+            objects: [
+                ["objectID": "5", "name": "Eva"],
+                ["objectID": "6", "name": "Fred"],
+                ["objectID": "7", "name": "Gina"],
+                ["objectID": "8", "name": "Hugo"],
+            ],
+            waitForTasks: true,
+            batchSize: 2
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the saveObjects method.
+    ///
     /// call saveObjects without error
     func snippetForSaveObjects2() async throws {
         // >SEPARATOR saveObjects call saveObjects without error

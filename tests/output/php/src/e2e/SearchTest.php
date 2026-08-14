@@ -210,7 +210,7 @@ class SearchTest extends TestCase
             ],
         );
 
-        $expected = json_decode('{"results":[{"index":"cts_e2e_query_categorization","query":"sofa","extensions":{"queryCategorization":{"normalizedQuery":"sofa","categories":[{}]}}}]}', true);
+        $expected = json_decode('{"results":[{"index":"cts_e2e_query_categorization","query":"sofa","extensions":{"queryCategorization":{}}}]}', true);
 
         $this->assertEquals($this->union($expected, $resp), $expected);
     }

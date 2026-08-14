@@ -2882,6 +2882,66 @@ class SnippetSearchClient {
 
   /** Snippet for the saveObjects method.
     *
+    * every request of one helper call shares one Request-ID
+    */
+  def snippetForSearchClientSaveObjects(): Unit = {
+    // >SEPARATOR saveObjects every request of one helper call shares one Request-ID
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveObjects(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects = Seq(
+          JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+          JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit")))),
+          JObject(List(JField("objectID", JString("3")), JField("name", JString("Cyril")))),
+          JObject(List(JField("objectID", JString("4")), JField("name", JString("David"))))
+        ),
+        waitForTasks = true,
+        batchSize = 2
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveObjects method.
+    *
+    * every request of one helper call shares one Request-ID
+    */
+  def snippetForSearchClientSaveObjects1(): Unit = {
+    // >SEPARATOR saveObjects every request of one helper call shares one Request-ID
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveObjects(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects = Seq(
+          JObject(List(JField("objectID", JString("5")), JField("name", JString("Eva")))),
+          JObject(List(JField("objectID", JString("6")), JField("name", JString("Fred")))),
+          JObject(List(JField("objectID", JString("7")), JField("name", JString("Gina")))),
+          JObject(List(JField("objectID", JString("8")), JField("name", JString("Hugo"))))
+        ),
+        waitForTasks = true,
+        batchSize = 2
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveObjects method.
+    *
     * call saveObjects without error
     */
   def snippetForSearchClientSaveObjects2(): Unit = {
@@ -5397,6 +5457,39 @@ class SnippetSearchClient {
           SearchRulesParams(
             query = Some("zorro")
           )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the searchRules method.
+    *
+    * the classic engine accepts a Request-ID sent as a query parameter
+    */
+  def snippetForSearchClientSearchRules1(): Unit = {
+    // >SEPARATOR searchRules the classic engine accepts a Request-ID sent as a query parameter
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.searchRules(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchRulesParams = Some(
+          SearchRulesParams(
+            query = Some("zorro")
+          )
+        ),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("x-algolia-request-id", "CtsE2eQry11")
+            .build()
         )
       ),
       Duration(100, "sec")

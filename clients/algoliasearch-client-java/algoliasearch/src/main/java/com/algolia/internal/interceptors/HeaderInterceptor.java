@@ -24,7 +24,7 @@ public final class HeaderInterceptor implements Interceptor {
     Headers requestHeaders = request.headers();
     for (Map.Entry<String, String> header : headers.entrySet()) {
       String key = header.getKey();
-      if (requestHeaders.get(key) != null) {
+      if (requestHeaders.get(key) == null) {
         builder.header(key, header.getValue());
       }
     }

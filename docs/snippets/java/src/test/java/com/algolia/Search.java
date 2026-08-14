@@ -2527,6 +2527,98 @@ class SnippetSearchClient {
 
   // Snippet for the saveObjects method.
   //
+  // every request of one helper call shares one Request-ID
+  void snippetForSaveObjects() throws Exception {
+    // >SEPARATOR saveObjects every request of one helper call shares one Request-ID
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    List response = client.saveObjects(
+      "<YOUR_INDEX_NAME>",
+      Arrays.asList(
+        new HashMap() {
+          {
+            put("objectID", "1");
+            put("name", "Adam");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "2");
+            put("name", "Benoit");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "3");
+            put("name", "Cyril");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "4");
+            put("name", "David");
+          }
+        }
+      ),
+      true,
+      2
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the saveObjects method.
+  //
+  // every request of one helper call shares one Request-ID
+  void snippetForSaveObjects1() throws Exception {
+    // >SEPARATOR saveObjects every request of one helper call shares one Request-ID
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    List response = client.saveObjects(
+      "<YOUR_INDEX_NAME>",
+      Arrays.asList(
+        new HashMap() {
+          {
+            put("objectID", "5");
+            put("name", "Eva");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "6");
+            put("name", "Fred");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "7");
+            put("name", "Gina");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "8");
+            put("name", "Hugo");
+          }
+        }
+      ),
+      true,
+      2
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the saveObjects method.
+  //
   // call saveObjects without error
   void snippetForSaveObjects2() throws Exception {
     // >SEPARATOR saveObjects call saveObjects without error
@@ -4401,6 +4493,26 @@ class SnippetSearchClient {
 
     // Call the API
     SearchRulesResponse response = client.searchRules("<YOUR_INDEX_NAME>", new SearchRulesParams().setQuery("zorro"));
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the searchRules method.
+  //
+  // the classic engine accepts a Request-ID sent as a query parameter
+  void snippetForSearchRules1() throws Exception {
+    // >SEPARATOR searchRules the classic engine accepts a Request-ID sent as a query parameter
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    SearchRulesResponse response = client.searchRules(
+      "<YOUR_INDEX_NAME>",
+      new SearchRulesParams().setQuery("zorro"),
+      new RequestOptions().addExtraQueryParameters("x-algolia-request-id", "CtsE2eQry11")
+    );
     // >LOG
     // print the response
     System.out.println(response);

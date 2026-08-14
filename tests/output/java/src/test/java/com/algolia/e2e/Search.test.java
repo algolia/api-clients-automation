@@ -210,7 +210,7 @@ class SearchClientRequestsTestsE2E {
     );
     assertDoesNotThrow(() ->
       TestHelpers.lenientJsonAssert(
-        "{\"results\":[{\"index\":\"cts_e2e_query_categorization\",\"query\":\"sofa\",\"extensions\":{\"queryCategorization\":{\"normalizedQuery\":\"sofa\",\"categories\":[{}]}}}]}",
+        "{\"results\":[{\"index\":\"cts_e2e_query_categorization\",\"query\":\"sofa\",\"extensions\":{\"queryCategorization\":{}}}]}",
         json.writeValueAsString(res)
       )
     );
@@ -242,6 +242,17 @@ class SearchClientRequestsTestsE2E {
         json.writeValueAsString(res)
       )
     );
+  }
+
+  @Test
+  @DisplayName("the classic engine accepts a Request-ID sent as a query parameter")
+  void searchRulesTest1() {
+    SearchRulesResponse res = client.searchRules(
+      "cts_e2e_browse",
+      new SearchRulesParams().setQuery("zorro"),
+      new RequestOptions().addExtraQueryParameters("x-algolia-request-id", "CtsE2eQry11")
+    );
+    assertDoesNotThrow(() -> TestHelpers.lenientJsonAssert("{\"nbHits\":1,\"nbPages\":1,\"page\":0}", json.writeValueAsString(res)));
   }
 
   @Test

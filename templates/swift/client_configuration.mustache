@@ -24,6 +24,11 @@ public struct {{#lambda.client-to-name}}{{{client}}}{{/lambda.client-to-name}}Cl
   public var defaultHeaders: [String: String]?
   public var hosts: [RetryableHost]
   public let compression: CompressionAlgorithm
+  {{#requestIdSupport}}
+  // Request-ID tracing is only supported by the search, recommend and
+  // composition APIs; computed so that it cannot be opted out of or into.
+  public var requestIDEnabled: Bool { true }
+  {{/requestIdSupport}}
   {{#isSearchClient}}
 
   /// Options for the ingestion transporter used by `*WithTransformation` helpers.
