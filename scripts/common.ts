@@ -135,7 +135,7 @@ export function toAbsolutePath(ppath: string): string {
 
 export async function git(
   args: string[],
-  { cwd, allowFailure }: { cwd?: string; allowFailure?: boolean } = {},
+  { cwd, allowFailure, errorMessage }: { cwd?: string; allowFailure?: boolean; errorMessage?: string } = {},
 ): Promise<string> {
   try {
     const { stdout } = await execa('git', args, {
@@ -147,6 +147,10 @@ export async function git(
   } catch (err) {
     if (allowFailure) {
       return '';
+    }
+
+    if (errorMessage) {
+      throw new Error(`[ERROR] ${errorMessage}`);
     }
 
     console.log((err as ExecaError).all);
@@ -166,16 +170,18 @@ export function assertSafeRef(ref: string): string {
 export async function gitCommit({
   message,
   coAuthors,
+  env,
   // the cwd must be absolute !
   cwd = ROOT_DIR,
 }: {
   message: string;
   coAuthors?: string[];
+  env?: Record<string, string>;
   cwd?: string;
 }): Promise<void> {
   const messageWithCoAuthors = coAuthors ? `${message}\n\n\n${coAuthors.join('\n')}` : message;
 
-  await execa('git', ['commit', '-m', messageWithCoAuthors], { cwd });
+  await execa('git', ['commit', '-m', messageWithCoAuthors], { cwd, env });
 }
 
 async function buildCustomGenerators(): Promise<void> {

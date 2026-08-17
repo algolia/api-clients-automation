@@ -8,11 +8,14 @@ import generationCommitText, {
 } from '../ci/codegen/text.ts';
 import { getNbGitDiff } from '../ci/utils.ts';
 import {
+  assertSafeRef,
   CI,
   configureGitHubAuthor,
   ensureGitHubToken,
   getOctokit,
+  git,
   gitBranchExists,
+  gitCommit,
   LANGUAGES,
   MAIN_BRANCH,
   OWNER,
@@ -254,7 +257,13 @@ async function getCommits(force?: boolean): Promise<{
 }> {
   // Reading commits since last release
   const latestCommits = (
-    await run(`git log --reverse --pretty=format:"%h|%ae|%s" ${await getLastReleasedTag()}..${MAIN_BRANCH}`)
+    await git([
+      'log',
+      '--reverse',
+      '--pretty=format:%h|%ae|%s',
+      '--end-of-options',
+      `${assertSafeRef(await getLastReleasedTag())}..${MAIN_BRANCH}`,
+    ])
   )
     .split('\n')
     .filter(Boolean);
@@ -320,7 +329,7 @@ async function prepareGitEnvironment(dryRun: boolean): Promise<void> {
     throw new Error('Working directory is not clean. Commit all the changes first.');
   }
 
-  await run(`git rev-parse --verify refs/tags/${await getLastReleasedTag()}`, {
+  await git(['rev-parse', '--verify', '--end-of-options', `refs/tags/${assertSafeRef(await getLastReleasedTag())}`], {
     errorMessage: '`released` tag is missing in this repository.',
   });
 
@@ -415,7 +424,7 @@ export async function createReleasePR({
   console.log(`Pushing updated changes to: ${headBranch}`);
   const commitMessage = generationCommitText.commitPrepareReleaseMessage;
   await run('git add .');
-  await run(`CI=true git commit -m "${commitMessage}"`);
+  await gitCommit({ message: commitMessage, env: { CI: 'true' } });
 
   // cleanup all the changes to the generated files (the ones not commited because of the pre-commit hook)
   await run('git checkout .');
