@@ -1,7 +1,7 @@
 import { execa } from 'execa';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { capitalize, createClientName, gitCommit } from '../common.ts';
+import { assertSafeRef, capitalize, createClientName, git, gitCommit } from '../common.ts';
 import { getClientsConfigField } from '../config.ts';
 
 vi.mock('execa', () => {
@@ -51,6 +51,85 @@ describe('gitCommit', () => {
       ],
       { cwd: expect.any(String) },
     );
+  });
+
+  it('passes env to the commit process instead of a shell prefix', () => {
+    gitCommit({ message: 'chore: prepare release', env: { CI: 'true' } });
+    expect(execa).toHaveBeenCalledWith('git', ['commit', '-m', 'chore: prepare release'], {
+      cwd: expect.any(String),
+      env: { CI: 'true' },
+    });
+  });
+});
+
+describe('git', () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('never runs through a shell', async () => {
+    vi.mocked(execa).mockResolvedValue({ stdout: 'output' } as never);
+
+    await expect(git(['status', '--short'])).resolves.toEqual('output');
+    expect(execa).toHaveBeenCalledWith('git', ['status', '--short'], { all: true, cwd: expect.any(String) });
+  });
+
+  it('passes each argument as its own argv element', async () => {
+    vi.mocked(execa).mockResolvedValue({ stdout: '' } as never);
+
+    const payload = 'fix(scripts): $(touch /tmp/pwned) `id` ${HOME} "quoted"';
+    await git(['show', '-s', '--format=%s', '--end-of-options', payload]);
+
+    expect(execa).toHaveBeenCalledWith(
+      'git',
+      ['show', '-s', '--format=%s', '--end-of-options', payload],
+      expect.anything(),
+    );
+  });
+
+  it('returns stdout only, so stderr cannot contaminate the value', async () => {
+    vi.mocked(execa).mockResolvedValue({
+      stdout: 'the value',
+      stderr: 'warning: noise',
+      all: 'the value\nwarning: noise',
+    } as never);
+
+    await expect(git(['show'])).resolves.toEqual('the value');
+  });
+
+  it('swallows the failure when allowFailure is set', async () => {
+    vi.mocked(execa).mockRejectedValue(new Error('boom'));
+
+    await expect(git(['push', '-d', 'origin', 'nope'], { allowFailure: true })).resolves.toEqual('');
+  });
+
+  it('throws the provided errorMessage on failure', async () => {
+    vi.mocked(execa).mockRejectedValue(new Error('boom'));
+
+    await expect(git(['rev-parse'], { errorMessage: '`released` tag is missing in this repository.' })).rejects.toThrow(
+      '[ERROR] `released` tag is missing in this repository.',
+    );
+  });
+});
+
+describe('assertSafeRef', () => {
+  it('returns ordinary refs unchanged', () => {
+    for (const ref of [
+      'main',
+      'feat/my-branch',
+      'origin/main',
+      'generated/feat/my-branch',
+      'fix/issue#123',
+      'released-2026-08-17-abc1234',
+    ]) {
+      expect(assertSafeRef(ref)).toEqual(ref);
+    }
+  });
+
+  it('rejects refs git would read as an option', () => {
+    for (const ref of ['-evil', '--output=/tmp/pwned', '--upload-pack=touch /tmp/pwned']) {
+      expect(() => assertSafeRef(ref)).toThrow('refusing to operate on suspicious git ref');
+    }
   });
 });
 
