@@ -56,6 +56,9 @@ info:
 
     The current version of the Analytics API is version 2, indicated by the `/2/` in each endpoint's URL.
 
+    A Beta semantic patterns framework is also available under `/3/patterns/*` for building custom
+    analytics queries. These endpoints are under active development and may change without notice.
+
     ## Query aggregation
 
     Algolia accepts queries on each keystroke.
@@ -95,6 +98,12 @@ tags:
     x-displayName: Filters
     description: |
       Metrics related to filters.
+  - name: pattern
+    x-displayName: Patterns (Beta)
+    description: |
+      Beta — the semantic patterns query framework (`/3/patterns/*`).
+      Build custom analytics queries from metrics, groupBy, filters, and parameters.
+      These endpoints are under active development and may change without notice.
   - name: revenue
     x-displayName: Revenue
     description: |
@@ -117,6 +126,7 @@ x-tagGroups:
       - click
       - revenue
       - filter
+      - pattern
       - user
   - name: Other
     tags:
@@ -179,6 +189,20 @@ paths:
   # ########################
   /2/status:
     $ref: 'paths/status/getStatus.yml'
+
+  # ##############################
+  # ### Patterns (Beta) — /3/ ####
+  # ##############################
+  /3/patterns/fields:
+    $ref: 'paths/patterns/getPatternsFields.yml'
+  /3/patterns/timeseries:
+    $ref: 'paths/patterns/queryPatternsTimeseries.yml'
+  /3/patterns/scalar:
+    $ref: 'paths/patterns/queryPatternsScalar.yml'
+  /3/patterns/table:
+    $ref: 'paths/patterns/queryPatternsTable.yml'
+  /3/patterns/distribution:
+    $ref: 'paths/patterns/queryPatternsDistribution.yml'
 
   # ###############
   # ### Helpers ###
