@@ -61,6 +61,28 @@ class {{clientPrefix}}Test extends TestCase
 
         $this->assertEquals($this->union($expected, $resp), $expected);
         {{/body}}
+        {{#correlationIdSuffix}}
+        $httpResp = $client->customGetWithHttpInfo(ltrim('{{{request.path}}}', '/'), null{{#hasRequestOptions}}, [
+          {{#requestOptions.queryParameters.parameters}}
+          'queryParameters' => [
+            {{#requestOptions.queryParameters.parametersWithDataType}}
+              '{{{key}}}' => {{> tests/requests/requestOptionsParams}},
+            {{/requestOptions.queryParameters.parametersWithDataType}}
+          ],
+          {{/requestOptions.queryParameters.parameters}}
+          {{#requestOptions.headers.parameters}}
+          'headers' => [
+            {{#requestOptions.headers.parametersWithDataType}}
+              '{{{key}}}' => {{#isVerbatim}}${{{value}}}{{/isVerbatim}}{{^isVerbatim}}'{{value}}'{{/isVerbatim}},
+            {{/requestOptions.headers.parametersWithDataType}}
+          ],
+          {{/requestOptions.headers.parameters}}
+        ]{{/hasRequestOptions}});
+
+        $correlationId = $httpResp->getHeader('Correlation-ID');
+        $this->assertNotNull($correlationId);
+        $this->assertStringEndsWith('{{{correlationIdSuffix}}}', is_array($correlationId) ? $correlationId[0] : $correlationId);
+        {{/correlationIdSuffix}}
         {{/response}}
     }
     {{/tests}}

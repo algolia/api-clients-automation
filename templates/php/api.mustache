@@ -23,6 +23,8 @@ use {{invokerPackage}}\Support\Helpers;
 {{#isSearchClient}}
 use {{invokerPackage}}\Configuration\IngestionConfig;
 use {{invokerPackage}}\Configuration\TransformationOptions;
+use {{invokerPackage}}\RequestOptions\RequestOptions;
+use {{invokerPackage}}\Support\RequestId;
 {{/isSearchClient}}
 
 use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
@@ -513,6 +515,49 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
 
     {{#isSearchClient}}
     /**
+     * Derives the request options carrying the Request-ID shared by every request of one helper
+     * invocation. The caller's value is returned untouched when the client opted out or when an
+     * id is already present on either channel.
+     *
+     * @param array|RequestOptions $requestOptions Request options
+     *
+     * @return array|RequestOptions
+     */
+    private function withRequestId($requestOptions)
+    {
+        if (!$this->config->getRequestIdEnabled()) {
+            return $requestOptions;
+        }
+
+        $isObject = $requestOptions instanceof RequestOptions;
+        $headers = $isObject ? $requestOptions->getHeaders() : ($requestOptions['headers'] ?? []);
+        $queryParameters = $isObject ? $requestOptions->getQueryParameters() : ($requestOptions['queryParameters'] ?? []);
+
+        if (RequestId::isPresentInHeaders($headers)
+            || RequestId::isPresentInHeaders($this->config->getDefaultHeaders())
+            || RequestId::isPresentInQueryParameters($queryParameters)) {
+            return $requestOptions;
+        }
+
+        $headers[RequestId::HEADER] = RequestId::generate();
+
+        if ($isObject) {
+            return new RequestOptions([
+                'headers' => $headers,
+                'queryParameters' => $queryParameters,
+                'body' => $requestOptions->getBody(),
+                'readTimeout' => $requestOptions->getReadTimeout(),
+                'writeTimeout' => $requestOptions->getWriteTimeout(),
+                'connectTimeout' => $requestOptions->getConnectTimeout(),
+            ]);
+        }
+
+        $requestOptions['headers'] = $headers;
+
+        return $requestOptions;
+    }
+
+    /**
      * Wait for a task to complete with `indexName` and `taskID`.
      *
      * @param string $indexName Index name
@@ -529,6 +574,8 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
      */
     public function waitForTask($indexName, $taskId, $requestOptions = [], $maxRetries = null, $timeout = null)
     {
+        $requestOptions = $this->withRequestId($requestOptions);
+
         if ($timeout === null) {
             $timeout = $this->config->getWaitTaskTimeBeforeRetry();
         }
@@ -563,6 +610,8 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
      */
     public function waitForAppTask($taskId, $requestOptions = [], $maxRetries = null, $timeout = null)
     {
+        $requestOptions = $this->withRequestId($requestOptions);
+
         if ($timeout === null) {
             $timeout = $this->config->getWaitTaskTimeBeforeRetry();
         }
@@ -603,6 +652,8 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         $timeout = null,
         $requestOptions = []
     ) {
+        $requestOptions = $this->withRequestId($requestOptions);
+
         if ($timeout === null) {
             $timeout = $this->config->getWaitTaskTimeBeforeRetry();
         }
@@ -633,7 +684,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
      */
     public function browseObjects($indexName, $requestOptions = [])
     {
-        return new ObjectIterator($indexName, $this, $requestOptions);
+        return new ObjectIterator($indexName, $this, $this->withRequestId($requestOptions));
     }
 
     /**
@@ -646,7 +697,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
      */
     public function browseRules($indexName, $requestOptions = [])
     {
-        return new RuleIterator($indexName, $this, $requestOptions);
+        return new RuleIterator($indexName, $this, $this->withRequestId($requestOptions));
     }
 
     /**
@@ -659,7 +710,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
      */
     public function browseSynonyms($indexName, $requestOptions = [])
     {
-        return new SynonymIterator($indexName, $this, $requestOptions);
+        return new SynonymIterator($indexName, $this, $this->withRequestId($requestOptions));
     }
 
     /**
@@ -691,6 +742,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
 
         $chunkedOptions ??= new ChunkedHelperOptions(ChunkedHelperOptions::DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES);
         $tmpIndexName = $indexName.'_tmp_'.rand(10000000, 99999999);
+        $searchRequestOptions = $this->withRequestId($requestOptions);
 
         try {
           $copyOperationResponse = $this->operationIndex(
@@ -700,12 +752,12 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
               'destination' => $tmpIndexName,
               'scope' => $scopes,
             ],
-            $requestOptions
+            $searchRequestOptions
           );
 
           $watchResponses = $this->ingestionTransporter->chunkedPush($tmpIndexName, $objects, 'addObject', true, $batchSize, $indexName, $requestOptions, $chunkedOptions);
 
-          $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID'], [], $chunkedOptions?->maxRetries);
+          $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID'], $searchRequestOptions, $chunkedOptions?->maxRetries);
 
           $copyOperationResponse = $this->operationIndex(
             $indexName,
@@ -714,10 +766,10 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
               'destination' => $tmpIndexName,
               'scope' => $scopes,
             ],
-            $requestOptions
+            $searchRequestOptions
           );
 
-          $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID'], [], $chunkedOptions?->maxRetries);
+          $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID'], $searchRequestOptions, $chunkedOptions?->maxRetries);
 
           $moveOperationResponse = $this->operationIndex(
             $tmpIndexName,
@@ -725,10 +777,10 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
               'operation' => 'move',
               'destination' => $indexName,
             ],
-            $requestOptions
+            $searchRequestOptions
           );
 
-          $this->waitForTask($tmpIndexName, $moveOperationResponse['taskID'], [], $chunkedOptions?->maxRetries);
+          $this->waitForTask($tmpIndexName, $moveOperationResponse['taskID'], $searchRequestOptions, $chunkedOptions?->maxRetries);
 
           return [
             'copyOperationResponse' => $copyOperationResponse,
@@ -736,7 +788,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             'moveOperationResponse' => $moveOperationResponse,
           ];
         } catch (\Throwable $e) {
-          $this->deleteIndex($tmpIndexName);
+          $this->deleteIndex($tmpIndexName, $searchRequestOptions);
 
           throw $e;
         }
@@ -762,6 +814,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
 
         $chunkedOptions ??= new ChunkedHelperOptions(ChunkedHelperOptions::DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES);
         $tmpIndexName = $indexName.'_tmp_'.rand(10000000, 99999999);
+        $requestOptions = $this->withRequestId($requestOptions);
 
         try {
           $copyOperationResponse = $this->operationIndex(
@@ -776,7 +829,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
 
           $batchResponses = $this->chunkedBatch($tmpIndexName, $objects, 'addObject', true, $batchSize, $requestOptions, $chunkedOptions);
 
-          $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID'], [], $chunkedOptions?->maxRetries);
+          $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID'], $requestOptions, $chunkedOptions?->maxRetries);
 
           $copyOperationResponse = $this->operationIndex(
             $indexName,
@@ -788,7 +841,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             $requestOptions
           );
 
-          $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID'], [], $chunkedOptions?->maxRetries);
+          $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID'], $requestOptions, $chunkedOptions?->maxRetries);
 
           $moveOperationResponse = $this->operationIndex(
             $tmpIndexName,
@@ -799,7 +852,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             $requestOptions
           );
 
-          $this->waitForTask($tmpIndexName, $moveOperationResponse['taskID'], [], $chunkedOptions?->maxRetries);
+          $this->waitForTask($tmpIndexName, $moveOperationResponse['taskID'], $requestOptions, $chunkedOptions?->maxRetries);
 
           return [
             'copyOperationResponse' => $copyOperationResponse,
@@ -807,7 +860,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             'moveOperationResponse' => $moveOperationResponse,
           ];
         } catch (\Throwable $e) {
-          $this->deleteIndex($tmpIndexName);
+          $this->deleteIndex($tmpIndexName, $requestOptions);
 
           throw $e;
         }
@@ -935,6 +988,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         $requestOptions = [],
         ?ChunkedHelperOptions $chunkedOptions = null
     ) {
+        $requestOptions = $this->withRequestId($requestOptions);
         $responses = [];
         $requests = [];
         $count = 0;
@@ -967,7 +1021,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
 
         if ($waitForTasks && !empty($responses)) {
             foreach ($responses as $response) {
-                $this->waitForTask($indexName, $response['taskID'], [], $chunkedOptions?->maxRetries);
+                $this->waitForTask($indexName, $response['taskID'], $requestOptions, $chunkedOptions?->maxRetries);
             }
         }
 
@@ -1024,10 +1078,18 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         return $validUntil - time();
     }
 
-    public function indexExists($indexName)
+    /**
+    * Helper: Checks if the given `indexName` exists.
+    *
+    * @param string $indexName      The `indexName` to check.
+    * @param array  $requestOptions Request options
+    *
+    * @return bool
+    */
+    public function indexExists($indexName, $requestOptions = [])
     {
         try {
-            $this->getSettings($indexName);
+            $this->getSettings($indexName, null, $requestOptions);
         } catch (NotFoundException $e) {
             return false;
         } catch (\Throwable $e) {
