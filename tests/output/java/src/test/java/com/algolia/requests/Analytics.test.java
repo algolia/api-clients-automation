@@ -1019,6 +1019,18 @@ class AnalyticsClientRequestsTests {
   }
 
   @Test
+  @DisplayName("getPatternsFields")
+  void getPatternsFieldsTest() {
+    assertDoesNotThrow(() -> {
+      client.getPatternsFields();
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/patterns/fields", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
   @DisplayName("get getPurchaseRate with minimal parameters")
   void getPurchaseRateTest() {
     assertDoesNotThrow(() -> {
@@ -1692,6 +1704,250 @@ class AnalyticsClientRequestsTests {
     try {
       Map<String, String> expectedQuery = json.readValue(
         "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
+  @DisplayName("queryPatternsDistribution")
+  void queryPatternsDistributionTest() {
+    assertDoesNotThrow(() -> {
+      client.queryPatternsDistribution(
+        new DistributionPayload()
+          .setDistributions(
+            Arrays.asList(
+              new DistributionDefinition()
+                .setKind("clickPosition")
+                .setBins(Arrays.asList(BinEdge.of(1), BinEdge.of(2), BinEdge.of(3), BinEdge.of(4), BinEdge.of(5)))
+            )
+          )
+          .setParameters(Arrays.asList(new ParameterDefinition().setKind("indices").setValue(ParameterValue.of(Arrays.asList("index"))))),
+        "index"
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/patterns/distribution", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"distributions\":[{\"kind\":\"clickPosition\",\"bins\":[1,2,3,4,5]}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"index\"]}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+
+    try {
+      Map<String, String> expectedQuery = json.readValue("{\"index\":\"index\"}", new TypeReference<HashMap<String, String>>() {});
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
+  @DisplayName("queryPatternsScalar")
+  void queryPatternsScalarTest() {
+    assertDoesNotThrow(() -> {
+      client.queryPatternsScalar(
+        new ScalarPayload()
+          .setMetrics(Arrays.asList(new FieldReference().setKind("conversionRate")))
+          .setParameters(Arrays.asList(new ParameterDefinition().setKind("indices").setValue(ParameterValue.of(Arrays.asList("index"))))),
+        "index"
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/patterns/scalar", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"metrics\":[{\"kind\":\"conversionRate\"}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"index\"]}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+
+    try {
+      Map<String, String> expectedQuery = json.readValue("{\"index\":\"index\"}", new TypeReference<HashMap<String, String>>() {});
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
+  @DisplayName("queryPatternsTable with minimal parameters")
+  void queryPatternsTableTest() {
+    assertDoesNotThrow(() -> {
+      client.queryPatternsTable(
+        new TablePayload()
+          .setMetrics(Arrays.asList(new FieldReference().setKind("searchesCount")))
+          .setParameters(Arrays.asList(new ParameterDefinition().setKind("indices").setValue(ParameterValue.of(Arrays.asList("index"))))),
+        "index"
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/patterns/table", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"metrics\":[{\"kind\":\"searchesCount\"}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"index\"]}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+
+    try {
+      Map<String, String> expectedQuery = json.readValue("{\"index\":\"index\"}", new TypeReference<HashMap<String, String>>() {});
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
+  @DisplayName("queryPatternsTable with all parameters")
+  void queryPatternsTableTest1() {
+    assertDoesNotThrow(() -> {
+      client.queryPatternsTable(
+        new TablePayload()
+          .setDomain("core")
+          .setMetrics(Arrays.asList(new FieldReference().setKind("searchesCount")))
+          .setGroupBy(Arrays.asList(new FieldReference().setKind("query")))
+          .setFilters(Arrays.asList(new FilterDefinition().setKind("clicked")))
+          .setParameters(Arrays.asList(new ParameterDefinition().setKind("indices").setValue(ParameterValue.of(Arrays.asList("index")))))
+          .setOrderBy(Arrays.asList(new OrderDefinition().setKind("searchesCount").setDirection(OrderDirection.DESC)))
+          .setLimit(100)
+          .setOffset(0),
+        "index"
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/patterns/table", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"domain\":\"core\",\"metrics\":[{\"kind\":\"searchesCount\"}],\"groupBy\":[{\"kind\":\"query\"}],\"filters\":[{\"kind\":\"clicked\"}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"index\"]}],\"orderBy\":[{\"kind\":\"searchesCount\",\"direction\":\"desc\"}],\"limit\":100,\"offset\":0}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+
+    try {
+      Map<String, String> expectedQuery = json.readValue("{\"index\":\"index\"}", new TypeReference<HashMap<String, String>>() {});
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
+  @DisplayName("queryPatternsTimeseries with minimal parameters")
+  void queryPatternsTimeseriesTest() {
+    assertDoesNotThrow(() -> {
+      client.queryPatternsTimeseries(
+        new TimeseriesPayload()
+          .setMetrics(Arrays.asList(new FieldReference().setKind("searchesCount")))
+          .setParameters(Arrays.asList(new ParameterDefinition().setKind("indices").setValue(ParameterValue.of(Arrays.asList("index"))))),
+        "index"
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/patterns/timeseries", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"metrics\":[{\"kind\":\"searchesCount\"}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"index\"]}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+
+    try {
+      Map<String, String> expectedQuery = json.readValue("{\"index\":\"index\"}", new TypeReference<HashMap<String, String>>() {});
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
+  @DisplayName("queryPatternsTimeseries with all parameters")
+  void queryPatternsTimeseriesTest1() {
+    assertDoesNotThrow(() -> {
+      client.queryPatternsTimeseries(
+        new TimeseriesPayload()
+          .setDomain("core")
+          .setMetrics(
+            Arrays.asList(new FieldReference().setKind("searchesCount"), new FieldReference().setDomain("abtesting").setKind("isMsrQuery"))
+          )
+          .setGroupBy(Arrays.asList(new FieldReference().setKind("index")))
+          .setFilters(
+            Arrays.asList(
+              new FilterDefinition().setKind("clicked"),
+              new FilterDefinition().setKind("country").setOperator("=").setParameter(new ParameterReference().setKind("country"))
+            )
+          )
+          .setParameters(
+            Arrays.asList(
+              new ParameterDefinition().setKind("indices").setValue(ParameterValue.of(Arrays.asList("indexA", "indexB"))),
+              new ParameterDefinition().setKind("startDate").setValue(ParameterValue.of("2024-01-01T00:00:00Z")),
+              new ParameterDefinition().setKind("endDate").setValue(ParameterValue.of("2024-01-07T23:59:59Z")),
+              new ParameterDefinition().setKind("country").setValue(ParameterValue.of("FR"))
+            )
+          )
+          .setLimit(50)
+          .setOffset(0),
+        "indexA,indexB"
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/patterns/timeseries", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"domain\":\"core\",\"metrics\":[{\"kind\":\"searchesCount\"},{\"domain\":\"abtesting\",\"kind\":\"isMsrQuery\"}],\"groupBy\":[{\"kind\":\"index\"}],\"filters\":[{\"kind\":\"clicked\"},{\"kind\":\"country\",\"operator\":\"=\",\"parameter\":{\"kind\":\"country\"}}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"indexA\",\"indexB\"]},{\"kind\":\"startDate\",\"value\":\"2024-01-01T00:00:00Z\"},{\"kind\":\"endDate\",\"value\":\"2024-01-07T23:59:59Z\"},{\"kind\":\"country\",\"value\":\"FR\"}],\"limit\":50,\"offset\":0}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+
+    try {
+      Map<String, String> expectedQuery = json.readValue(
+        "{\"index\":\"indexA%2CindexB\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, Object> actualQuery = req.queryParameters;

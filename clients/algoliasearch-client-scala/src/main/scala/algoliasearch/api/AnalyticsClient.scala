@@ -3,7 +3,9 @@
   */
 package algoliasearch.api
 
+import algoliasearch.analytics.Catalog
 import algoliasearch.analytics.Direction._
+import algoliasearch.analytics.DistributionPayload
 import algoliasearch.analytics.ErrorBase
 import algoliasearch.analytics.GetAddToCartRateResponse
 import algoliasearch.analytics.GetAverageClickPositionResponse
@@ -26,6 +28,11 @@ import algoliasearch.analytics.GetTopHitsResponse
 import algoliasearch.analytics.GetTopSearchesResponse
 import algoliasearch.analytics.GetUsersCountResponse
 import algoliasearch.analytics.OrderBy._
+import algoliasearch.analytics.ScalarPayload
+import algoliasearch.analytics.TablePayload
+import algoliasearch.analytics.TableResponse
+import algoliasearch.analytics.TimeseriesPayload
+import algoliasearch.analytics.TimeseriesResponse
 import algoliasearch.analytics._
 import algoliasearch.ApiClient
 import algoliasearch.api.AnalyticsClient.hosts
@@ -897,6 +904,37 @@ class AnalyticsClient(
       .withQueryParameter("startDate", startDate)
       .withQueryParameter("endDate", endDate)
       .withQueryParameter("tags", tags)
+      .build()
+  }
+
+  /** **Beta**: this endpoint is under active development and may change without notice. Returns the static catalog of
+    * analytics fields, grouped by domain and usage (metrics, filters, groups, distributions). No authentication is
+    * required. Use it to discover valid `(domain, kind)` pairs before building the other `/3/patterns/_*` queries; two
+    * fields are combinable in one query only when their `roots` intersect. Each entry's `requires` lists the ACLs
+    * needed when that field is actually used in a query.
+    */
+  def getPatternsFields(requestOptions: Option[RequestOptions] = None)(implicit ec: ExecutionContext): Future[Catalog] =
+    Future {
+      execute[Catalog](getPatternsFieldsHttpRequest(), requestOptions)
+    }
+
+  /** Variant of `getPatternsFields` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    */
+  def getPatternsFieldsWithHTTPInfo(
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Catalog]] = Future {
+    executeWithHttpInfo[Catalog](getPatternsFieldsHttpRequest(), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getPatternsFields` and `getPatternsFieldsWithHTTPInfo`.
+    */
+  private def getPatternsFieldsHttpRequest(): HttpRequest = {
+
+    HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/3/patterns/fields")
       .build()
   }
 
@@ -2306,6 +2344,260 @@ class AnalyticsClient(
       .withQueryParameter("startDate", startDate)
       .withQueryParameter("endDate", endDate)
       .withQueryParameter("tags", tags)
+      .build()
+  }
+
+  /** **Beta**: this endpoint is under active development and may change without notice. Buckets one or more numeric
+    * fields into histograms and returns an object keyed by `histogram<Field>`, each mapping a bin label to a count.
+    * `distributions` and `parameters` are required; `filters` is optional. Discover valid field kinds per domain with
+    * `/3/patterns/fields`.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API
+    *   keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted
+    *   keys.
+    */
+  def queryPatternsDistribution(
+      distributionPayload: DistributionPayload,
+      index: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[Map[String, Any]] = Future {
+    execute[Map[String, Any]](
+      queryPatternsDistributionHttpRequest(distributionPayload = distributionPayload, index = index),
+      requestOptions
+    )
+  }
+
+  /** Variant of `queryPatternsDistribution` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API
+    *   keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted
+    *   keys.
+    */
+  def queryPatternsDistributionWithHTTPInfo(
+      distributionPayload: DistributionPayload,
+      index: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Map[String, Any]]] = Future {
+    executeWithHttpInfo[Map[String, Any]](
+      queryPatternsDistributionHttpRequest(distributionPayload = distributionPayload, index = index),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `queryPatternsDistribution` and
+    * `queryPatternsDistributionWithHTTPInfo`.
+    */
+  private def queryPatternsDistributionHttpRequest(
+      distributionPayload: DistributionPayload,
+      index: Option[String] = None
+  ): HttpRequest = {
+    requireNotNull(
+      distributionPayload,
+      "Parameter `distributionPayload` is required when calling `queryPatternsDistribution`."
+    )
+
+    HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/3/patterns/distribution")
+      .withBody(distributionPayload)
+      .withQueryParameter("index", index)
+      .build()
+  }
+
+  /** **Beta**: this endpoint is under active development and may change without notice. Aggregates the requested
+    * `metrics` over the whole period and returns a single object keyed by metric kind. `metrics` and `parameters` are
+    * required; `filters` is optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API
+    *   keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted
+    *   keys.
+    */
+  def queryPatternsScalar(
+      scalarPayload: ScalarPayload,
+      index: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[Map[String, Any]] = Future {
+    execute[Map[String, Any]](
+      queryPatternsScalarHttpRequest(scalarPayload = scalarPayload, index = index),
+      requestOptions
+    )
+  }
+
+  /** Variant of `queryPatternsScalar` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API
+    *   keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted
+    *   keys.
+    */
+  def queryPatternsScalarWithHTTPInfo(
+      scalarPayload: ScalarPayload,
+      index: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Map[String, Any]]] = Future {
+    executeWithHttpInfo[Map[String, Any]](
+      queryPatternsScalarHttpRequest(scalarPayload = scalarPayload, index = index),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `queryPatternsScalar` and
+    * `queryPatternsScalarWithHTTPInfo`.
+    */
+  private def queryPatternsScalarHttpRequest(
+      scalarPayload: ScalarPayload,
+      index: Option[String] = None
+  ): HttpRequest = {
+    requireNotNull(scalarPayload, "Parameter `scalarPayload` is required when calling `queryPatternsScalar`.")
+
+    HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/3/patterns/scalar")
+      .withBody(scalarPayload)
+      .withQueryParameter("index", index)
+      .build()
+  }
+
+  /** **Beta**: this endpoint is under active development and may change without notice. Returns `rows`, each a flat
+    * object of the requested fields. `metrics` and `parameters` are required; `groupBy`, `filters`, and `orderBy` are
+    * optional, though `orderBy` is required when `groupBy` is set. Discover valid field kinds per domain with
+    * `/3/patterns/fields`.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API
+    *   keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted
+    *   keys.
+    */
+  def queryPatternsTable(
+      tablePayload: TablePayload,
+      index: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[TableResponse] = Future {
+    execute[TableResponse](queryPatternsTableHttpRequest(tablePayload = tablePayload, index = index), requestOptions)
+  }
+
+  /** Variant of `queryPatternsTable` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API
+    *   keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted
+    *   keys.
+    */
+  def queryPatternsTableWithHTTPInfo(
+      tablePayload: TablePayload,
+      index: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[TableResponse]] = Future {
+    executeWithHttpInfo[TableResponse](
+      queryPatternsTableHttpRequest(tablePayload = tablePayload, index = index),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `queryPatternsTable` and
+    * `queryPatternsTableWithHTTPInfo`.
+    */
+  private def queryPatternsTableHttpRequest(tablePayload: TablePayload, index: Option[String] = None): HttpRequest = {
+    requireNotNull(tablePayload, "Parameter `tablePayload` is required when calling `queryPatternsTable`.")
+
+    HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/3/patterns/table")
+      .withBody(tablePayload)
+      .withQueryParameter("index", index)
+      .build()
+  }
+
+  /** **Beta**: this endpoint is under active development and may change without notice. Returns one time series per
+    * `groupBy` combination, each with period `totals` and a per-day metric breakdown. `metrics` and `parameters` are
+    * required; `groupBy` and `filters` are optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API
+    *   keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted
+    *   keys.
+    */
+  def queryPatternsTimeseries(
+      timeseriesPayload: TimeseriesPayload,
+      index: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[TimeseriesResponse] = Future {
+    execute[TimeseriesResponse](
+      queryPatternsTimeseriesHttpRequest(timeseriesPayload = timeseriesPayload, index = index),
+      requestOptions
+    )
+  }
+
+  /** Variant of `queryPatternsTimeseries` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API
+    *   keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted
+    *   keys.
+    */
+  def queryPatternsTimeseriesWithHTTPInfo(
+      timeseriesPayload: TimeseriesPayload,
+      index: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[TimeseriesResponse]] = Future {
+    executeWithHttpInfo[TimeseriesResponse](
+      queryPatternsTimeseriesHttpRequest(timeseriesPayload = timeseriesPayload, index = index),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `queryPatternsTimeseries` and
+    * `queryPatternsTimeseriesWithHTTPInfo`.
+    */
+  private def queryPatternsTimeseriesHttpRequest(
+      timeseriesPayload: TimeseriesPayload,
+      index: Option[String] = None
+  ): HttpRequest = {
+    requireNotNull(
+      timeseriesPayload,
+      "Parameter `timeseriesPayload` is required when calling `queryPatternsTimeseries`."
+    )
+
+    HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/3/patterns/timeseries")
+      .withBody(timeseriesPayload)
+      .withQueryParameter("index", index)
       .build()
   }
 

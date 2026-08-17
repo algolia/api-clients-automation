@@ -3416,6 +3416,131 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
+   * **Beta**: this endpoint is under active development and may change without notice. Returns the
+   * static catalog of analytics fields, grouped by domain and usage (metrics, filters, groups,
+   * distributions). No authentication is required. Use it to discover valid `(domain, kind)` pairs
+   * before building the other `/3/patterns/_*` queries; two fields are combinable in one query only
+   * when their `roots` intersect. Each entry's `requires` lists the ACLs needed when that field is
+   * actually used in a query.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Catalog getPatternsFields(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getPatternsFieldsAsync(requestOptions));
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Returns the
+   * static catalog of analytics fields, grouped by domain and usage (metrics, filters, groups,
+   * distributions). No authentication is required. Use it to discover valid `(domain, kind)` pairs
+   * before building the other `/3/patterns/_*` queries; two fields are combinable in one query only
+   * when their `roots` intersect. Each entry's `requires` lists the ACLs needed when that field is
+   * actually used in a query.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getPatternsFieldsWithHTTPInfo(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getPatternsFieldsWithHTTPInfoAsync(requestOptions));
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Returns the
+   * static catalog of analytics fields, grouped by domain and usage (metrics, filters, groups,
+   * distributions). No authentication is required. Use it to discover valid `(domain, kind)` pairs
+   * before building the other `/3/patterns/_*` queries; two fields are combinable in one query only
+   * when their `roots` intersect. Each entry's `requires` lists the ACLs needed when that field is
+   * actually used in a query.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Catalog getPatternsFields() throws AlgoliaRuntimeException {
+    return this.getPatternsFields(null);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Returns the
+   * static catalog of analytics fields, grouped by domain and usage (metrics, filters, groups,
+   * distributions). No authentication is required. Use it to discover valid `(domain, kind)` pairs
+   * before building the other `/3/patterns/_*` queries; two fields are combinable in one query only
+   * when their `roots` intersect. Each entry's `requires` lists the ACLs needed when that field is
+   * actually used in a query.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getPatternsFieldsWithHTTPInfo() throws AlgoliaRuntimeException {
+    return this.getPatternsFieldsWithHTTPInfo(null);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Returns the static catalog of analytics fields, grouped by domain and usage (metrics,
+   * filters, groups, distributions). No authentication is required. Use it to discover valid
+   * `(domain, kind)` pairs before building the other `/3/patterns/_*` queries; two fields are
+   * combinable in one query only when their `roots` intersect. Each entry's `requires` lists the
+   * ACLs needed when that field is actually used in a query.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Catalog> getPatternsFieldsAsync(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder().setPath("/3/patterns/fields").setMethod("GET").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Catalog>() {});
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Returns the static catalog of analytics fields, grouped by domain and usage (metrics,
+   * filters, groups, distributions). No authentication is required. Use it to discover valid
+   * `(domain, kind)` pairs before building the other `/3/patterns/_*` queries; two fields are
+   * combinable in one query only when their `roots` intersect. Each entry's `requires` lists the
+   * ACLs needed when that field is actually used in a query.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getPatternsFieldsWithHTTPInfoAsync(@Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder().setPath("/3/patterns/fields").setMethod("GET").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Returns the static catalog of analytics fields, grouped by domain and usage (metrics,
+   * filters, groups, distributions). No authentication is required. Use it to discover valid
+   * `(domain, kind)` pairs before building the other `/3/patterns/_*` queries; two fields are
+   * combinable in one query only when their `roots` intersect. Each entry's `requires` lists the
+   * ACLs needed when that field is actually used in a query.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Catalog> getPatternsFieldsAsync() throws AlgoliaRuntimeException {
+    return this.getPatternsFieldsAsync(null);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Returns the static catalog of analytics fields, grouped by domain and usage (metrics,
+   * filters, groups, distributions). No authentication is required. Use it to discover valid
+   * `(domain, kind)` pairs before building the other `/3/patterns/_*` queries; two fields are
+   * combinable in one query only when their `roots` intersect. Each entry's `requires` lists the
+   * ACLs needed when that field is actually used in a query.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getPatternsFieldsWithHTTPInfoAsync() throws AlgoliaRuntimeException {
+    return this.getPatternsFieldsWithHTTPInfoAsync(null);
+  }
+
+  /**
    * Retrieves the purchase rate for all your searches with at least one purchase event, including a
    * daily breakdown. By default, the analyzed period includes the last eight days, including the
    * current day. The rate is purchase conversion events divided by tracked searches. A search is
@@ -8296,5 +8421,1186 @@ public class AnalyticsClient extends ApiClient {
    */
   public CompletableFuture<Response> getUsersCountWithHTTPInfoAsync(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getUsersCountWithHTTPInfoAsync(index, null, null, null, null);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Buckets one
+   * or more numeric fields into histograms and returns an object keyed by `histogram<Field>`, each
+   * mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param distributionPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Map<String, Object> queryPatternsDistribution(
+    @Nonnull DistributionPayload distributionPayload,
+    String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(queryPatternsDistributionAsync(distributionPayload, index, requestOptions));
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Buckets one
+   * or more numeric fields into histograms and returns an object keyed by `histogram<Field>`, each
+   * mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param distributionPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response queryPatternsDistributionWithHTTPInfo(
+    @Nonnull DistributionPayload distributionPayload,
+    String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(queryPatternsDistributionWithHTTPInfoAsync(distributionPayload, index, requestOptions));
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Buckets one
+   * or more numeric fields into histograms and returns an object keyed by `histogram<Field>`, each
+   * mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param distributionPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Map<String, Object> queryPatternsDistribution(@Nonnull DistributionPayload distributionPayload, String index)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsDistribution(distributionPayload, index, null);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Buckets one
+   * or more numeric fields into histograms and returns an object keyed by `histogram<Field>`, each
+   * mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param distributionPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response queryPatternsDistributionWithHTTPInfo(@Nonnull DistributionPayload distributionPayload, String index)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsDistributionWithHTTPInfo(distributionPayload, index, null);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Buckets one
+   * or more numeric fields into histograms and returns an object keyed by `histogram<Field>`, each
+   * mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param distributionPayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Map<String, Object> queryPatternsDistribution(
+    @Nonnull DistributionPayload distributionPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.queryPatternsDistribution(distributionPayload, null, requestOptions);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Buckets one
+   * or more numeric fields into histograms and returns an object keyed by `histogram<Field>`, each
+   * mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param distributionPayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response queryPatternsDistributionWithHTTPInfo(
+    @Nonnull DistributionPayload distributionPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.queryPatternsDistributionWithHTTPInfo(distributionPayload, null, requestOptions);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Buckets one
+   * or more numeric fields into histograms and returns an object keyed by `histogram<Field>`, each
+   * mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param distributionPayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Map<String, Object> queryPatternsDistribution(@Nonnull DistributionPayload distributionPayload) throws AlgoliaRuntimeException {
+    return this.queryPatternsDistribution(distributionPayload, null, null);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Buckets one
+   * or more numeric fields into histograms and returns an object keyed by `histogram<Field>`, each
+   * mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param distributionPayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response queryPatternsDistributionWithHTTPInfo(@Nonnull DistributionPayload distributionPayload) throws AlgoliaRuntimeException {
+    return this.queryPatternsDistributionWithHTTPInfo(distributionPayload, null, null);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Buckets one or more numeric fields into histograms and returns an object keyed by
+   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
+   * required; `filters` is optional. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
+   *
+   * @param distributionPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Map<String, Object>> queryPatternsDistributionAsync(
+    @Nonnull DistributionPayload distributionPayload,
+    String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(distributionPayload, "Parameter `distributionPayload` is required when calling `queryPatternsDistribution`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/3/patterns/distribution")
+      .setMethod("POST")
+      .setBody(distributionPayload)
+      .addQueryParameter("index", index)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Map<String, Object>>() {});
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Buckets one or more numeric fields into histograms and returns an object keyed by
+   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
+   * required; `filters` is optional. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
+   *
+   * @param distributionPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> queryPatternsDistributionWithHTTPInfoAsync(
+    @Nonnull DistributionPayload distributionPayload,
+    String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(distributionPayload, "Parameter `distributionPayload` is required when calling `queryPatternsDistribution`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/3/patterns/distribution")
+      .setMethod("POST")
+      .setBody(distributionPayload)
+      .addQueryParameter("index", index)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Buckets one or more numeric fields into histograms and returns an object keyed by
+   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
+   * required; `filters` is optional. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
+   *
+   * @param distributionPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Map<String, Object>> queryPatternsDistributionAsync(
+    @Nonnull DistributionPayload distributionPayload,
+    String index
+  ) throws AlgoliaRuntimeException {
+    return this.queryPatternsDistributionAsync(distributionPayload, index, null);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Buckets one or more numeric fields into histograms and returns an object keyed by
+   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
+   * required; `filters` is optional. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
+   *
+   * @param distributionPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> queryPatternsDistributionWithHTTPInfoAsync(
+    @Nonnull DistributionPayload distributionPayload,
+    String index
+  ) throws AlgoliaRuntimeException {
+    return this.queryPatternsDistributionWithHTTPInfoAsync(distributionPayload, index, null);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Buckets one or more numeric fields into histograms and returns an object keyed by
+   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
+   * required; `filters` is optional. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
+   *
+   * @param distributionPayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Map<String, Object>> queryPatternsDistributionAsync(
+    @Nonnull DistributionPayload distributionPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.queryPatternsDistributionAsync(distributionPayload, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Buckets one or more numeric fields into histograms and returns an object keyed by
+   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
+   * required; `filters` is optional. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
+   *
+   * @param distributionPayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> queryPatternsDistributionWithHTTPInfoAsync(
+    @Nonnull DistributionPayload distributionPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.queryPatternsDistributionWithHTTPInfoAsync(distributionPayload, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Buckets one or more numeric fields into histograms and returns an object keyed by
+   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
+   * required; `filters` is optional. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
+   *
+   * @param distributionPayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Map<String, Object>> queryPatternsDistributionAsync(@Nonnull DistributionPayload distributionPayload)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsDistributionAsync(distributionPayload, null, null);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Buckets one or more numeric fields into histograms and returns an object keyed by
+   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
+   * required; `filters` is optional. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
+   *
+   * @param distributionPayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> queryPatternsDistributionWithHTTPInfoAsync(@Nonnull DistributionPayload distributionPayload)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsDistributionWithHTTPInfoAsync(distributionPayload, null, null);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Aggregates
+   * the requested `metrics` over the whole period and returns a single object keyed by metric kind.
+   * `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per
+   * domain with `/3/patterns/fields`.
+   *
+   * @param scalarPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Map<String, Object> queryPatternsScalar(
+    @Nonnull ScalarPayload scalarPayload,
+    String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(queryPatternsScalarAsync(scalarPayload, index, requestOptions));
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Aggregates
+   * the requested `metrics` over the whole period and returns a single object keyed by metric kind.
+   * `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per
+   * domain with `/3/patterns/fields`.
+   *
+   * @param scalarPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response queryPatternsScalarWithHTTPInfo(
+    @Nonnull ScalarPayload scalarPayload,
+    String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(queryPatternsScalarWithHTTPInfoAsync(scalarPayload, index, requestOptions));
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Aggregates
+   * the requested `metrics` over the whole period and returns a single object keyed by metric kind.
+   * `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per
+   * domain with `/3/patterns/fields`.
+   *
+   * @param scalarPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Map<String, Object> queryPatternsScalar(@Nonnull ScalarPayload scalarPayload, String index) throws AlgoliaRuntimeException {
+    return this.queryPatternsScalar(scalarPayload, index, null);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Aggregates
+   * the requested `metrics` over the whole period and returns a single object keyed by metric kind.
+   * `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per
+   * domain with `/3/patterns/fields`.
+   *
+   * @param scalarPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response queryPatternsScalarWithHTTPInfo(@Nonnull ScalarPayload scalarPayload, String index) throws AlgoliaRuntimeException {
+    return this.queryPatternsScalarWithHTTPInfo(scalarPayload, index, null);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Aggregates
+   * the requested `metrics` over the whole period and returns a single object keyed by metric kind.
+   * `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per
+   * domain with `/3/patterns/fields`.
+   *
+   * @param scalarPayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Map<String, Object> queryPatternsScalar(@Nonnull ScalarPayload scalarPayload, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsScalar(scalarPayload, null, requestOptions);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Aggregates
+   * the requested `metrics` over the whole period and returns a single object keyed by metric kind.
+   * `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per
+   * domain with `/3/patterns/fields`.
+   *
+   * @param scalarPayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response queryPatternsScalarWithHTTPInfo(@Nonnull ScalarPayload scalarPayload, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsScalarWithHTTPInfo(scalarPayload, null, requestOptions);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Aggregates
+   * the requested `metrics` over the whole period and returns a single object keyed by metric kind.
+   * `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per
+   * domain with `/3/patterns/fields`.
+   *
+   * @param scalarPayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Map<String, Object> queryPatternsScalar(@Nonnull ScalarPayload scalarPayload) throws AlgoliaRuntimeException {
+    return this.queryPatternsScalar(scalarPayload, null, null);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Aggregates
+   * the requested `metrics` over the whole period and returns a single object keyed by metric kind.
+   * `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per
+   * domain with `/3/patterns/fields`.
+   *
+   * @param scalarPayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response queryPatternsScalarWithHTTPInfo(@Nonnull ScalarPayload scalarPayload) throws AlgoliaRuntimeException {
+    return this.queryPatternsScalarWithHTTPInfo(scalarPayload, null, null);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Aggregates the requested `metrics` over the whole period and returns a single object
+   * keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover
+   * valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param scalarPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Map<String, Object>> queryPatternsScalarAsync(
+    @Nonnull ScalarPayload scalarPayload,
+    String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(scalarPayload, "Parameter `scalarPayload` is required when calling `queryPatternsScalar`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/3/patterns/scalar")
+      .setMethod("POST")
+      .setBody(scalarPayload)
+      .addQueryParameter("index", index)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Map<String, Object>>() {});
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Aggregates the requested `metrics` over the whole period and returns a single object
+   * keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover
+   * valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param scalarPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> queryPatternsScalarWithHTTPInfoAsync(
+    @Nonnull ScalarPayload scalarPayload,
+    String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(scalarPayload, "Parameter `scalarPayload` is required when calling `queryPatternsScalar`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/3/patterns/scalar")
+      .setMethod("POST")
+      .setBody(scalarPayload)
+      .addQueryParameter("index", index)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Aggregates the requested `metrics` over the whole period and returns a single object
+   * keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover
+   * valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param scalarPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Map<String, Object>> queryPatternsScalarAsync(@Nonnull ScalarPayload scalarPayload, String index)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsScalarAsync(scalarPayload, index, null);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Aggregates the requested `metrics` over the whole period and returns a single object
+   * keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover
+   * valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param scalarPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> queryPatternsScalarWithHTTPInfoAsync(@Nonnull ScalarPayload scalarPayload, String index)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsScalarWithHTTPInfoAsync(scalarPayload, index, null);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Aggregates the requested `metrics` over the whole period and returns a single object
+   * keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover
+   * valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param scalarPayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Map<String, Object>> queryPatternsScalarAsync(
+    @Nonnull ScalarPayload scalarPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.queryPatternsScalarAsync(scalarPayload, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Aggregates the requested `metrics` over the whole period and returns a single object
+   * keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover
+   * valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param scalarPayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> queryPatternsScalarWithHTTPInfoAsync(
+    @Nonnull ScalarPayload scalarPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.queryPatternsScalarWithHTTPInfoAsync(scalarPayload, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Aggregates the requested `metrics` over the whole period and returns a single object
+   * keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover
+   * valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param scalarPayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Map<String, Object>> queryPatternsScalarAsync(@Nonnull ScalarPayload scalarPayload)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsScalarAsync(scalarPayload, null, null);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Aggregates the requested `metrics` over the whole period and returns a single object
+   * keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover
+   * valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param scalarPayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> queryPatternsScalarWithHTTPInfoAsync(@Nonnull ScalarPayload scalarPayload)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsScalarWithHTTPInfoAsync(scalarPayload, null, null);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Returns
+   * `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;
+   * `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy`
+   * is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param tablePayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TableResponse queryPatternsTable(@Nonnull TablePayload tablePayload, String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(queryPatternsTableAsync(tablePayload, index, requestOptions));
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Returns
+   * `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;
+   * `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy`
+   * is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param tablePayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response queryPatternsTableWithHTTPInfo(@Nonnull TablePayload tablePayload, String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(queryPatternsTableWithHTTPInfoAsync(tablePayload, index, requestOptions));
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Returns
+   * `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;
+   * `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy`
+   * is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param tablePayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TableResponse queryPatternsTable(@Nonnull TablePayload tablePayload, String index) throws AlgoliaRuntimeException {
+    return this.queryPatternsTable(tablePayload, index, null);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Returns
+   * `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;
+   * `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy`
+   * is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param tablePayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response queryPatternsTableWithHTTPInfo(@Nonnull TablePayload tablePayload, String index) throws AlgoliaRuntimeException {
+    return this.queryPatternsTableWithHTTPInfo(tablePayload, index, null);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Returns
+   * `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;
+   * `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy`
+   * is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param tablePayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TableResponse queryPatternsTable(@Nonnull TablePayload tablePayload, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsTable(tablePayload, null, requestOptions);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Returns
+   * `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;
+   * `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy`
+   * is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param tablePayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response queryPatternsTableWithHTTPInfo(@Nonnull TablePayload tablePayload, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsTableWithHTTPInfo(tablePayload, null, requestOptions);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Returns
+   * `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;
+   * `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy`
+   * is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param tablePayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TableResponse queryPatternsTable(@Nonnull TablePayload tablePayload) throws AlgoliaRuntimeException {
+    return this.queryPatternsTable(tablePayload, null, null);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Returns
+   * `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;
+   * `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy`
+   * is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param tablePayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response queryPatternsTableWithHTTPInfo(@Nonnull TablePayload tablePayload) throws AlgoliaRuntimeException {
+    return this.queryPatternsTableWithHTTPInfo(tablePayload, null, null);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters`
+   * are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required
+   * when `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param tablePayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TableResponse> queryPatternsTableAsync(
+    @Nonnull TablePayload tablePayload,
+    String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(tablePayload, "Parameter `tablePayload` is required when calling `queryPatternsTable`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/3/patterns/table")
+      .setMethod("POST")
+      .setBody(tablePayload)
+      .addQueryParameter("index", index)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<TableResponse>() {});
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters`
+   * are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required
+   * when `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param tablePayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> queryPatternsTableWithHTTPInfoAsync(
+    @Nonnull TablePayload tablePayload,
+    String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(tablePayload, "Parameter `tablePayload` is required when calling `queryPatternsTable`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/3/patterns/table")
+      .setMethod("POST")
+      .setBody(tablePayload)
+      .addQueryParameter("index", index)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters`
+   * are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required
+   * when `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param tablePayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TableResponse> queryPatternsTableAsync(@Nonnull TablePayload tablePayload, String index)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsTableAsync(tablePayload, index, null);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters`
+   * are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required
+   * when `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param tablePayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> queryPatternsTableWithHTTPInfoAsync(@Nonnull TablePayload tablePayload, String index)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsTableWithHTTPInfoAsync(tablePayload, index, null);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters`
+   * are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required
+   * when `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param tablePayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TableResponse> queryPatternsTableAsync(
+    @Nonnull TablePayload tablePayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.queryPatternsTableAsync(tablePayload, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters`
+   * are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required
+   * when `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param tablePayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> queryPatternsTableWithHTTPInfoAsync(
+    @Nonnull TablePayload tablePayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.queryPatternsTableWithHTTPInfoAsync(tablePayload, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters`
+   * are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required
+   * when `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param tablePayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TableResponse> queryPatternsTableAsync(@Nonnull TablePayload tablePayload) throws AlgoliaRuntimeException {
+    return this.queryPatternsTableAsync(tablePayload, null, null);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters`
+   * are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required
+   * when `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param tablePayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> queryPatternsTableWithHTTPInfoAsync(@Nonnull TablePayload tablePayload)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsTableWithHTTPInfoAsync(tablePayload, null, null);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Returns one
+   * time series per `groupBy` combination, each with period `totals` and a per-day metric
+   * breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional.
+   * Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param timeseriesPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TimeseriesResponse queryPatternsTimeseries(
+    @Nonnull TimeseriesPayload timeseriesPayload,
+    String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(queryPatternsTimeseriesAsync(timeseriesPayload, index, requestOptions));
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Returns one
+   * time series per `groupBy` combination, each with period `totals` and a per-day metric
+   * breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional.
+   * Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param timeseriesPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response queryPatternsTimeseriesWithHTTPInfo(
+    @Nonnull TimeseriesPayload timeseriesPayload,
+    String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(queryPatternsTimeseriesWithHTTPInfoAsync(timeseriesPayload, index, requestOptions));
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Returns one
+   * time series per `groupBy` combination, each with period `totals` and a per-day metric
+   * breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional.
+   * Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param timeseriesPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TimeseriesResponse queryPatternsTimeseries(@Nonnull TimeseriesPayload timeseriesPayload, String index)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsTimeseries(timeseriesPayload, index, null);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Returns one
+   * time series per `groupBy` combination, each with period `totals` and a per-day metric
+   * breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional.
+   * Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param timeseriesPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response queryPatternsTimeseriesWithHTTPInfo(@Nonnull TimeseriesPayload timeseriesPayload, String index)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsTimeseriesWithHTTPInfo(timeseriesPayload, index, null);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Returns one
+   * time series per `groupBy` combination, each with period `totals` and a per-day metric
+   * breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional.
+   * Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param timeseriesPayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TimeseriesResponse queryPatternsTimeseries(@Nonnull TimeseriesPayload timeseriesPayload, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsTimeseries(timeseriesPayload, null, requestOptions);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Returns one
+   * time series per `groupBy` combination, each with period `totals` and a per-day metric
+   * breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional.
+   * Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param timeseriesPayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response queryPatternsTimeseriesWithHTTPInfo(@Nonnull TimeseriesPayload timeseriesPayload, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsTimeseriesWithHTTPInfo(timeseriesPayload, null, requestOptions);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Returns one
+   * time series per `groupBy` combination, each with period `totals` and a per-day metric
+   * breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional.
+   * Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param timeseriesPayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TimeseriesResponse queryPatternsTimeseries(@Nonnull TimeseriesPayload timeseriesPayload) throws AlgoliaRuntimeException {
+    return this.queryPatternsTimeseries(timeseriesPayload, null, null);
+  }
+
+  /**
+   * **Beta**: this endpoint is under active development and may change without notice. Returns one
+   * time series per `groupBy` combination, each with period `totals` and a per-day metric
+   * breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional.
+   * Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param timeseriesPayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response queryPatternsTimeseriesWithHTTPInfo(@Nonnull TimeseriesPayload timeseriesPayload) throws AlgoliaRuntimeException {
+    return this.queryPatternsTimeseriesWithHTTPInfo(timeseriesPayload, null, null);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Returns one time series per `groupBy` combination, each with period `totals` and a
+   * per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param timeseriesPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TimeseriesResponse> queryPatternsTimeseriesAsync(
+    @Nonnull TimeseriesPayload timeseriesPayload,
+    String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(timeseriesPayload, "Parameter `timeseriesPayload` is required when calling `queryPatternsTimeseries`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/3/patterns/timeseries")
+      .setMethod("POST")
+      .setBody(timeseriesPayload)
+      .addQueryParameter("index", index)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<TimeseriesResponse>() {});
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Returns one time series per `groupBy` combination, each with period `totals` and a
+   * per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param timeseriesPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> queryPatternsTimeseriesWithHTTPInfoAsync(
+    @Nonnull TimeseriesPayload timeseriesPayload,
+    String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(timeseriesPayload, "Parameter `timeseriesPayload` is required when calling `queryPatternsTimeseries`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/3/patterns/timeseries")
+      .setMethod("POST")
+      .setBody(timeseriesPayload)
+      .addQueryParameter("index", index)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Returns one time series per `groupBy` combination, each with period `totals` and a
+   * per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param timeseriesPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TimeseriesResponse> queryPatternsTimeseriesAsync(@Nonnull TimeseriesPayload timeseriesPayload, String index)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsTimeseriesAsync(timeseriesPayload, index, null);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Returns one time series per `groupBy` combination, each with period `totals` and a
+   * per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param timeseriesPayload (required)
+   * @param index Comma-separated list of indices the request runs on, used for authorization.
+   *     Required for index-restricted API keys and must match the indices supplied in the request
+   *     body's `indices` parameter; optional for unrestricted keys. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> queryPatternsTimeseriesWithHTTPInfoAsync(@Nonnull TimeseriesPayload timeseriesPayload, String index)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsTimeseriesWithHTTPInfoAsync(timeseriesPayload, index, null);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Returns one time series per `groupBy` combination, each with period `totals` and a
+   * per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param timeseriesPayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TimeseriesResponse> queryPatternsTimeseriesAsync(
+    @Nonnull TimeseriesPayload timeseriesPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.queryPatternsTimeseriesAsync(timeseriesPayload, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Returns one time series per `groupBy` combination, each with period `totals` and a
+   * per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param timeseriesPayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> queryPatternsTimeseriesWithHTTPInfoAsync(
+    @Nonnull TimeseriesPayload timeseriesPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.queryPatternsTimeseriesWithHTTPInfoAsync(timeseriesPayload, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Returns one time series per `groupBy` combination, each with period `totals` and a
+   * per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param timeseriesPayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TimeseriesResponse> queryPatternsTimeseriesAsync(@Nonnull TimeseriesPayload timeseriesPayload)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsTimeseriesAsync(timeseriesPayload, null, null);
+  }
+
+  /**
+   * (asynchronously) **Beta**: this endpoint is under active development and may change without
+   * notice. Returns one time series per `groupBy` combination, each with period `totals` and a
+   * per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   *
+   * @param timeseriesPayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> queryPatternsTimeseriesWithHTTPInfoAsync(@Nonnull TimeseriesPayload timeseriesPayload)
+    throws AlgoliaRuntimeException {
+    return this.queryPatternsTimeseriesWithHTTPInfoAsync(timeseriesPayload, null, null);
   }
 }
