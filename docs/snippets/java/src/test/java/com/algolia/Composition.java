@@ -511,6 +511,42 @@ class SnippetCompositionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the getComposition method.
+  //
+  // the Correlation-ID ends with the sent Request-ID
+  void snippetForGetComposition1() throws Exception {
+    // >SEPARATOR getComposition the Correlation-ID ends with the sent Request-ID
+    // Initialize the client
+    CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    Composition response = client.getComposition("id1", new RequestOptions().addExtraHeader("request-id", "CtsE2eEcho4"));
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the getComposition method.
+  //
+  // the Correlation-ID ends with the Request-ID sent as a query parameter
+  void snippetForGetComposition2() throws Exception {
+    // >SEPARATOR getComposition the Correlation-ID ends with the Request-ID sent as a query
+    // parameter
+    // Initialize the client
+    CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    Composition response = client.getComposition(
+      "id1",
+      new RequestOptions().addExtraQueryParameters("x-algolia-request-id", "CtsE2eEchoQ")
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
   // Snippet for the getRule method.
   //
   // getRule

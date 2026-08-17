@@ -229,6 +229,30 @@ class CompositionClientClientTests {
   }
 
   @Test
+  @DisplayName("the composition client sends a Request-ID")
+  void requestIdTest0() {
+    CompositionClient client = new CompositionClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6694
+          )
+        ),
+        false
+      )
+    );
+
+    Object res = client.customGet("1/test/request-id/smoke/composition/java");
+
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"status\":\"ok\"}", json.writeValueAsString(res), JSONCompareMode.STRICT));
+  }
+
+  @Test
   @DisplayName("switch API key")
   void setClientApiKeyTest0() {
     CompositionClient client = new CompositionClient(

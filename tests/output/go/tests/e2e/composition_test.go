@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"gotests/tests"
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/joho/godotenv"
@@ -30,6 +31,92 @@ func createE2ECompositionClient(t *testing.T) *composition.APIClient {
 	require.NoError(t, err)
 
 	return client
+}
+
+func TestCompositionE2E_GetComposition(t *testing.T) {
+	t.Parallel()
+	t.Run("the Correlation-ID ends with the sent Request-ID", func(t *testing.T) {
+		t.Parallel()
+
+		client := createE2ECompositionClient(t)
+		res, err := client.GetComposition(client.NewApiGetCompositionRequest(
+			"id1"), composition.WithHeaderParam("request-id", "CtsE2eEcho4"))
+		require.NoError(t, err)
+
+		_ = res
+
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+
+		var rawBodyMap any
+
+		err = json.Unmarshal(rawBody, &rawBodyMap)
+		require.NoError(t, err)
+
+		expectedBodyRaw := `{"objectID":"id1"}`
+
+		var expectedBody any
+
+		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+		require.NoError(t, err)
+
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
+		unionBodyRaw, err := json.Marshal(unionBody)
+		require.NoError(t, err)
+
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
+
+		httpResp, _, err := client.CustomGetWithHTTPInfo(
+			client.NewApiCustomGetRequest(strings.TrimPrefix("/1/compositions/id1", "/")),
+			composition.WithHeaderParam("request-id", "CtsE2eEcho4"),
+		)
+		require.NoError(t, err)
+
+		correlationID := httpResp.Header.Get("Correlation-Id")
+		require.NotEmpty(t, correlationID)
+		require.True(t, strings.HasSuffix(correlationID, "CtsE2eEcho4"), "Correlation-ID %q must end with %q", correlationID, "CtsE2eEcho4")
+	})
+	t.Run("the Correlation-ID ends with the Request-ID sent as a query parameter", func(t *testing.T) {
+		t.Parallel()
+
+		client := createE2ECompositionClient(t)
+		res, err := client.GetComposition(client.NewApiGetCompositionRequest(
+			"id1"), composition.WithQueryParam("x-algolia-request-id", "CtsE2eEchoQ"))
+		require.NoError(t, err)
+
+		_ = res
+
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+
+		var rawBodyMap any
+
+		err = json.Unmarshal(rawBody, &rawBodyMap)
+		require.NoError(t, err)
+
+		expectedBodyRaw := `{"objectID":"id1"}`
+
+		var expectedBody any
+
+		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+		require.NoError(t, err)
+
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
+		unionBodyRaw, err := json.Marshal(unionBody)
+		require.NoError(t, err)
+
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
+
+		httpResp, _, err := client.CustomGetWithHTTPInfo(
+			client.NewApiCustomGetRequest(strings.TrimPrefix("/1/compositions/id1", "/")),
+			composition.WithQueryParam("x-algolia-request-id", "CtsE2eEchoQ"),
+		)
+		require.NoError(t, err)
+
+		correlationID := httpResp.Header.Get("Correlation-Id")
+		require.NotEmpty(t, correlationID)
+		require.True(t, strings.HasSuffix(correlationID, "CtsE2eEchoQ"), "Correlation-ID %q must end with %q", correlationID, "CtsE2eEchoQ")
+	})
 }
 
 func TestCompositionE2E_ListCompositions(t *testing.T) {

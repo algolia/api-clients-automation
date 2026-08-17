@@ -118,6 +118,35 @@ class RecommendTest extends AnyFunSuite {
     assert(res == null)
   }
 
+  test("the recommend client sends a Request-ID") {
+
+    val client = RecommendClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6694)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.customGet[JObject](
+        path = "1/test/request-id/smoke/recommend/scala"
+      ),
+      Duration.Inf
+    )
+    assert(parse(write(res)) == parse("{\"status\":\"ok\"}"))
+  }
+
   test("switch API key") {
 
     val client = RecommendClient(

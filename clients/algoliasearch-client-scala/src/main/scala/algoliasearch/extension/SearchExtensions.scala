@@ -87,8 +87,10 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
         maxRetries: Int = DefaultMaxRetries,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[GetTaskResponse] = {
+      val searchRequestOptions = client.withRequestId(requestOptions)
+
       retryUntil(
-        retry = () => client.getTask(indexName, taskID, requestOptions),
+        retry = () => client.getTask(indexName, taskID, searchRequestOptions),
         until = (res: GetTaskResponse) => res.status == TaskStatus.Published,
         maxRetries = maxRetries,
         delay = delay
@@ -121,8 +123,10 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
         maxRetries: Int = DefaultMaxRetries,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[GetTaskResponse] = {
+      val searchRequestOptions = client.withRequestId(requestOptions)
+
       retryUntil(
-        retry = () => client.getAppTask(taskID, requestOptions),
+        retry = () => client.getAppTask(taskID, searchRequestOptions),
         until = (res: GetTaskResponse) => res.status == TaskStatus.Published,
         maxRetries = maxRetries,
         delay = delay
@@ -157,8 +161,10 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
         delay: Long => Long = DEFAULT_DELAY,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Option[GetApiKeyResponse]] = {
+      val searchRequestOptions = client.withRequestId(requestOptions)
+
       retryUntil(
-        retry = () => client.getApiKey(key, requestOptions),
+        retry = () => client.getApiKey(key, searchRequestOptions),
         until = (res: GetApiKeyResponse) =>
           apiKey == ApiKey(
             acl = res.acl,
@@ -190,10 +196,12 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
         delay: Long => Long = DEFAULT_DELAY,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Option[GetApiKeyResponse]] = {
+      val searchRequestOptions = client.withRequestId(requestOptions)
+
       retryUntil(
         retry = () =>
           client
-            .getApiKey(key, requestOptions)
+            .getApiKey(key, searchRequestOptions)
             .map(Some(_))
             .recover { case _ => None },
         until = (res: Option[GetApiKeyResponse]) => res.isDefined,
@@ -217,10 +225,12 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
         delay: Long => Long = DEFAULT_DELAY,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Option[GetApiKeyResponse]] = {
+      val searchRequestOptions = client.withRequestId(requestOptions)
+
       retryUntil(
         retry = () =>
           client
-            .getApiKey(key, requestOptions)
+            .getApiKey(key, searchRequestOptions)
             .map(Some(_))
             .recover {
               case e: AlgoliaApiException if e.httpErrorCode == 404 => None // The key does not exist, done!
@@ -265,6 +275,7 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
         requestOptions: Option[RequestOptions] = None,
         chunkedOptions: ChunkedHelperOptions = ChunkedHelperOptions()
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
+      val searchRequestOptions = client.withRequestId(requestOptions)
       val batches = objects.grouped(batchSize).toSeq
 
       val futureResponses = batches
@@ -274,7 +285,7 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
               .batch(
                 indexName,
                 BatchWriteParams(batch.map(obj => BatchRequest(action, obj))),
-                requestOptions = requestOptions
+                requestOptions = searchRequestOptions
               )
               .map(rs :+ _)
           )
@@ -290,7 +301,7 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
                   indexName,
                   r.taskID,
                   maxRetries = chunkedOptions.maxRetries,
-                  requestOptions = requestOptions
+                  requestOptions = searchRequestOptions
                 )
               )
             )
@@ -432,6 +443,8 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
         chunkedOptions: ChunkedHelperOptions =
           ChunkedHelperOptions(maxRetries = ChunkedHelperOptions.DefaultReplaceAllObjectsMaxRetries)
     )(implicit ec: ExecutionContext): Future[ReplaceAllObjectsResponse] = {
+      val searchRequestOptions = client.withRequestId(requestOptions)
+
       if (objects.isEmpty) {
         client.logger.log(
           s"""Warning: replaceAllObjects was called with an empty list of objects, which will delete all records currently in the "$indexName" index."""
@@ -448,7 +461,7 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
             destination = tmpIndexName,
             scope = scopes
           ),
-          requestOptions = requestOptions
+          requestOptions = searchRequestOptions
         )
 
         batchResponses <- chunkedBatch(
@@ -457,7 +470,7 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
           action = Action.AddObject,
           waitForTasks = true,
           batchSize = batchSize,
-          requestOptions = requestOptions,
+          requestOptions = searchRequestOptions,
           chunkedOptions = chunkedOptions
         )
 
@@ -465,7 +478,7 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
           indexName = tmpIndexName,
           taskID = copy.taskID,
           maxRetries = chunkedOptions.maxRetries,
-          requestOptions = requestOptions
+          requestOptions = searchRequestOptions
         )
 
         copy <- client.operationIndex(
@@ -475,25 +488,25 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
             destination = tmpIndexName,
             scope = scopes
           ),
-          requestOptions = requestOptions
+          requestOptions = searchRequestOptions
         )
         _ <- client.waitForTask(
           indexName = tmpIndexName,
           taskID = copy.taskID,
           maxRetries = chunkedOptions.maxRetries,
-          requestOptions = requestOptions
+          requestOptions = searchRequestOptions
         )
 
         move <- client.operationIndex(
           indexName = tmpIndexName,
           operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
-          requestOptions = requestOptions
+          requestOptions = searchRequestOptions
         )
         _ <- client.waitForTask(
           indexName = tmpIndexName,
           taskID = move.taskID,
           maxRetries = chunkedOptions.maxRetries,
-          requestOptions = requestOptions
+          requestOptions = searchRequestOptions
         )
       } yield ReplaceAllObjectsResponse(
         copyOperationResponse = copy,
@@ -502,18 +515,22 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
       )
 
       steps.recoverWith { case e: Throwable =>
-        client.deleteIndex(tmpIndexName).transformWith(_ => Future.failed(e))
+        client.deleteIndex(tmpIndexName, searchRequestOptions).transformWith(_ => Future.failed(e))
       }
     }
 
     /** Check if an index exists.
       * @param indexName
       *   The index name to check.
+      * @param requestOptions
+      *   Additional request configuration.
       * @return
       *   A future containing a boolean indicating if the index exists.
       */
-    def indexExists(indexName: String)(implicit ec: ExecutionContext): Future[Boolean] = {
-      client.getSettings(indexName).map(_ => true).recover {
+    def indexExists(indexName: String, requestOptions: Option[RequestOptions] = None)(implicit
+        ec: ExecutionContext
+    ): Future[Boolean] = {
+      client.getSettings(indexName, requestOptions = requestOptions).map(_ => true).recover {
         case apiError: AlgoliaApiException if apiError.httpErrorCode == 404 => false
         case e                                                              => throw e
       }
@@ -540,6 +557,8 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
         aggregator: BrowseResponse => Unit,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[BrowseResponse] = {
+      val searchRequestOptions = client.withRequestId(requestOptions)
+
       createIterable(
         execute = (previousResponse: Option[BrowseResponse]) =>
           client.browse(
@@ -550,7 +569,7 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
                 cursor = previousResponse.flatMap(_.cursor)
               )
             ),
-            requestOptions
+            searchRequestOptions
           ),
         validate = validate,
         aggregator = Some(aggregator)
@@ -578,6 +597,7 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
         aggregator: SearchRulesResponse => Unit,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[SearchRulesResponse] = {
+      val searchRequestOptions = client.withRequestId(requestOptions)
       val hitsPerPage = 1000
 
       createIterable(
@@ -590,7 +610,7 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
                 hitsPerPage = Some(hitsPerPage)
               )
             ),
-            requestOptions
+            searchRequestOptions
           ),
         validate = validate.getOrElse((response: SearchRulesResponse) => response.hits.length < hitsPerPage),
         aggregator = Some(aggregator)
@@ -618,6 +638,7 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
         aggregator: SearchSynonymsResponse => Unit,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[SearchSynonymsResponse] = {
+      val searchRequestOptions = client.withRequestId(requestOptions)
       val hitsPerPage = 1000
       var page = searchSynonymsParams.page.getOrElse(0)
 
@@ -632,7 +653,7 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
                   hitsPerPage = Some(hitsPerPage)
                 )
               ),
-              requestOptions
+              searchRequestOptions
             )
           } finally {
             page += 1
@@ -816,6 +837,8 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
       client.ingestionTransporter match {
         case None => Future.failed(new AlgoliaClientException(transformationOptionsRequired))
         case Some(transporter) =>
+          val searchRequestOptions = client.withRequestId(requestOptions)
+
           if (objects.isEmpty) {
             client.logger.log(
               s"""Warning: replaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the "$indexName" index."""
@@ -832,7 +855,7 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
                 destination = tmpIndexName,
                 scope = scopes
               ),
-              requestOptions = requestOptions
+              requestOptions = searchRequestOptions
             )
 
             watchResponses <- transporter.chunkedPush(
@@ -850,7 +873,7 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
               indexName = tmpIndexName,
               taskID = copy.taskID,
               maxRetries = chunkedOptions.maxRetries,
-              requestOptions = requestOptions
+              requestOptions = searchRequestOptions
             )
 
             copy <- client.operationIndex(
@@ -860,25 +883,25 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
                 destination = tmpIndexName,
                 scope = scopes
               ),
-              requestOptions = requestOptions
+              requestOptions = searchRequestOptions
             )
             _ <- client.waitForTask(
               indexName = tmpIndexName,
               taskID = copy.taskID,
               maxRetries = chunkedOptions.maxRetries,
-              requestOptions = requestOptions
+              requestOptions = searchRequestOptions
             )
 
             move <- client.operationIndex(
               indexName = tmpIndexName,
               operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
-              requestOptions = requestOptions
+              requestOptions = searchRequestOptions
             )
             _ <- client.waitForTask(
               indexName = tmpIndexName,
               taskID = move.taskID,
               maxRetries = chunkedOptions.maxRetries,
-              requestOptions = requestOptions
+              requestOptions = searchRequestOptions
             )
           } yield ReplaceAllObjectsWithTransformationResponse(
             copyOperationResponse = copy,
@@ -887,7 +910,7 @@ trait SearchExtensions extends IngestionExtensions with SecuredApiKeyExtensions 
           )
 
           steps.recoverWith { case e: Throwable =>
-            client.deleteIndex(tmpIndexName).transformWith(_ => Future.failed(e))
+            client.deleteIndex(tmpIndexName, searchRequestOptions).transformWith(_ => Future.failed(e))
           }
       }
     }

@@ -560,6 +560,60 @@ class CompositionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
+  test("the Correlation-ID ends with the sent Request-ID1") {
+    val (client, echo) = testClient()
+    val future = client.getComposition(
+      compositionID = "id1",
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withHeader("request-id", "CtsE2eEcho4")
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/id1")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+    val expectedHeaders = parse("""{"request-id":"CtsE2eEcho4"}""").asInstanceOf[JObject].obj.toMap
+    val actualHeaders = res.headers
+    for ((k, v) <- expectedHeaders) {
+      assert(actualHeaders.contains(k))
+      assert(actualHeaders(k) == v.asInstanceOf[JString].s)
+    }
+  }
+
+  test("the Correlation-ID ends with the Request-ID sent as a query parameter2") {
+    val (client, echo) = testClient()
+    val future = client.getComposition(
+      compositionID = "id1",
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("x-algolia-request-id", "CtsE2eEchoQ")
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/id1")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse("""{"x-algolia-request-id":"CtsE2eEchoQ"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+    assert(!res.headers.keys.exists(_.equalsIgnoreCase("request-id")))
+  }
+
   test("getRule") {
     val (client, echo) = testClient()
     val future = client.getRule(

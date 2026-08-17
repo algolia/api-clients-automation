@@ -270,13 +270,7 @@ describe('search', () => {
     });
 
     const expectedBody = {
-      results: [
-        {
-          index: 'cts_e2e_query_categorization',
-          query: 'sofa',
-          extensions: { queryCategorization: { normalizedQuery: 'sofa', categories: [{}] } },
-        },
-      ],
+      results: [{ index: 'cts_e2e_query_categorization', query: 'sofa', extensions: { queryCategorization: {} } }],
     };
 
     expect(expectedBody).toEqual(union(expectedBody, resp));

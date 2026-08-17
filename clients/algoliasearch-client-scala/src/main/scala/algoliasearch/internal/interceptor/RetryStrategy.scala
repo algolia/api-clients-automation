@@ -82,16 +82,17 @@ private[algoliasearch] class RetryStrategy(hosts: List[StatefulHost]) extends In
       val message =
         if (response.body() != null) response.body().string()
         else response.message()
+      val correlationId = Option(response.header(CorrelationIdHeader))
       if (isRetryable(response)) {
         throw AlgoliaRequestException(
           message = message,
           httpErrorCode = response.code()
-        )
+        ).withCorrelationId(correlationId)
       } else {
         throw AlgoliaApiException(
           message = message,
           httpErrorCode = response.code()
-        )
+        ).withCorrelationId(correlationId)
       }
     } finally {
       response.close()

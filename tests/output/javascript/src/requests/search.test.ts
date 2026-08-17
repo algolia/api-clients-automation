@@ -2668,6 +2668,7 @@ describe('searchRules', () => {
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ query: 'zorro' });
     expect(req.searchParams).toStrictEqual({ 'x-algolia-request-id': 'CtsE2eQry11' });
+    expect(Object.keys(req.headers ?? {}).map((key) => key.toLowerCase())).not.toContain('request-id'.toLowerCase());
   });
 });
 

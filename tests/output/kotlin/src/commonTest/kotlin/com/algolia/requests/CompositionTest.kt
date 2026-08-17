@@ -558,6 +558,55 @@ class CompositionTest {
     )
   }
 
+  @Test
+  fun `the Correlation-ID ends with the sent Request-ID1`() = runTest {
+    client.runTest(
+      call = {
+        getComposition(
+          compositionID = "id1",
+          requestOptions =
+            RequestOptions(
+              headers =
+                buildMap {
+                  put("request-id", "CtsE2eEcho4")
+                }
+            ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/id1".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertContainsAll("""{"request-id":"CtsE2eEcho4"}""", it.headers)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `the Correlation-ID ends with the Request-ID sent as a query parameter2`() = runTest {
+    client.runTest(
+      call = {
+        getComposition(
+          compositionID = "id1",
+          requestOptions =
+            RequestOptions(
+              urlParameters =
+                buildMap {
+                  put("x-algolia-request-id", "CtsE2eEchoQ")
+                }
+            ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/id1".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertFalse(it.headers.contains("request-id"), "the request-id header must not be sent")
+        assertQueryParams("""{"x-algolia-request-id":"CtsE2eEchoQ"}""", it.url.encodedParameters)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // getRule
 
   @Test

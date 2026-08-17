@@ -9,8 +9,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-  {{#isSearchClient}}
   "github.com/algolia/algoliasearch-client-go/v4/algolia/errs"
+  {{#isSearchClient}}
   "cmp"
   "crypto/hmac"
 	"crypto/sha256"
@@ -275,6 +275,55 @@ func WithApiKey(apiKey *ApiKey) waitForApiKeyOption {
 }
 
 // --------- Helper to convert options ---------
+
+// requestIDOption mints the Request-ID shared by every request of one helper
+// invocation. ok is false when this client does not support Request-ID or the
+// caller already supplied one through the options (as a header or as the
+// x-algolia-request-id query parameter) or DefaultHeader, in which case the
+// options must be forwarded untouched.
+func requestIDOption[T RequestOption](c *APIClient, opts []T) (requestOption, bool) {
+	if c.cfg.RequestIDEnabled == nil || !*c.cfg.RequestIDEnabled {
+		return nil, false
+	}
+
+	conf := config{headerParams: map[string]string{}}
+
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	if transport.HasRequestID(conf.headerParams, c.cfg.DefaultHeader) || transport.HasRequestIDQueryParam(conf.queryParams) {
+		return nil, false
+	}
+
+	return WithHeaderParam(transport.RequestIDHeader, transport.NewRequestID()), true
+}
+
+// cleanupOptions returns the header and query parameters carried by the given
+// options (including the Request-ID shared by the helper invocation) as
+// standalone options: failure-path cleanups must keep the caller's parameter
+// overrides without inheriting its context or timeouts.
+func cleanupOptions[T RequestOption](opts []T) []RequestOption {
+	conf := config{headerParams: map[string]string{}}
+
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	cleanupOpts := make([]RequestOption, 0, len(conf.headerParams)+len(conf.queryParams))
+
+	for key, value := range conf.headerParams {
+		cleanupOpts = append(cleanupOpts, WithHeaderParam(key, value))
+	}
+
+	for key, values := range conf.queryParams {
+		for _, value := range values {
+			cleanupOpts = append(cleanupOpts, WithQueryParam(key, value))
+		}
+	}
+
+	return cleanupOpts
+}
 
 func toRequestOptions[T RequestOption](opts []T) []RequestOption {
 	requestOpts := make([]RequestOption, 0, len(opts))
@@ -586,7 +635,7 @@ func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}
 	{{#returnType}}
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return {{#returnType}}returnValue, {{/returnType}}reportError("cannot decode result: %w", err)
+		return {{#returnType}}returnValue, {{/returnType}}errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	{{/returnType}}

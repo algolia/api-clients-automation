@@ -4,6 +4,9 @@
                 {{#headers}}
                 assertContainsAll("""{{{.}}}""", it.headers)
                 {{/headers}}
+                {{#absentHeaders}}
+                assertFalse(it.headers.contains("{{{.}}}"), "the {{{.}}} header must not be sent")
+                {{/absentHeaders}}
                 {{#queryParameters}}
                 assertQueryParams("""{{{.}}}""", it.url.encodedParameters)
                 {{/queryParameters}}

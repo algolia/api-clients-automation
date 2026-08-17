@@ -45,6 +45,7 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     additionalProperties.put("netCoreProjectFile", true);
     additionalProperties.put("targetFramework", "netstandard2.1;netstandard2.0");
     additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
+    additionalProperties.put("requestIdSupport", Helpers.requestIdSupport(client));
     additionalProperties.put("apiPackageName", getClientName(client));
     additionalProperties.put("equatable", false);
     additionalProperties.put("disallowAdditionalPropertiesIfNotPresent", true);
