@@ -1,7 +1,7 @@
 import { execa } from 'execa';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { assertSafeRef, capitalize, createClientName, git, gitCommit } from '../common.ts';
+import { assertSafeRef, capitalize, createClientName, git, gitBranchExists, gitCommit, setVerbose } from '../common.ts';
 import { getClientsConfigField } from '../config.ts';
 
 vi.mock('execa', () => {
@@ -18,7 +18,10 @@ describe('gitCommit', () => {
   it('commits with message', () => {
     gitCommit({ message: 'chore: does something' });
     expect(execa).toHaveBeenCalledTimes(1);
-    expect(execa).toHaveBeenCalledWith('git', ['commit', '-m', 'chore: does something'], { cwd: expect.any(String) });
+    expect(execa).toHaveBeenCalledWith('git', ['commit', '-m', 'chore: does something'], {
+      all: true,
+      cwd: expect.any(String),
+    });
   });
 
   it('commits with co-author', () => {
@@ -49,16 +52,29 @@ describe('gitCommit', () => {
         '-m',
         'chore: does something\n\n\nCo-authored-by: them <them@algolia.com>\nCo-authored-by: me <me@algolia.com>\nCo-authored-by: you <you@algolia.com>',
       ],
-      { cwd: expect.any(String) },
+      { all: true, cwd: expect.any(String) },
     );
   });
 
   it('passes env to the commit process instead of a shell prefix', () => {
     gitCommit({ message: 'chore: prepare release', env: { CI: 'true' } });
     expect(execa).toHaveBeenCalledWith('git', ['commit', '-m', 'chore: prepare release'], {
+      all: true,
       cwd: expect.any(String),
       env: { CI: 'true' },
     });
+  });
+
+  it('echoes the commit output when verbose', async () => {
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {});
+    vi.mocked(execa).mockResolvedValue({ all: '[main abc1234] chore: prepare release' } as never);
+
+    setVerbose(true);
+    await gitCommit({ message: 'chore: prepare release' });
+    setVerbose(false);
+
+    expect(log).toHaveBeenCalledWith('[main abc1234] chore: prepare release');
+    log.mockRestore();
   });
 });
 
@@ -109,6 +125,51 @@ describe('git', () => {
     await expect(git(['rev-parse'], { errorMessage: '`released` tag is missing in this repository.' })).rejects.toThrow(
       '[ERROR] `released` tag is missing in this repository.',
     );
+  });
+
+  it('echoes the combined output when verbose, still returning stdout', async () => {
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {});
+    vi.mocked(execa).mockResolvedValue({ stdout: 'the value', all: 'the value\nwarning: noise' } as never);
+
+    setVerbose(true);
+    await expect(git(['show'])).resolves.toEqual('the value');
+    setVerbose(false);
+
+    expect(log).toHaveBeenCalledWith('the value\nwarning: noise');
+    log.mockRestore();
+  });
+
+  it('quotes arguments containing whitespace in the failure message', async () => {
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {});
+    vi.mocked(execa).mockRejectedValue(new Error('boom'));
+
+    await expect(git(['show', '-s', '--format=%s (generated)'])).rejects.toThrow(
+      'command failed: git show -s "--format=%s (generated)"',
+    );
+    log.mockRestore();
+  });
+});
+
+describe('gitBranchExists', () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('passes the branch as a pattern after --end-of-options', async () => {
+    vi.mocked(execa).mockResolvedValue({ stdout: 'abc1234\trefs/heads/chore/prepare-release-2026-08-17' } as never);
+
+    await expect(gitBranchExists('chore/prepare-release-2026-08-17')).resolves.toEqual(true);
+    expect(execa).toHaveBeenCalledWith(
+      'git',
+      ['ls-remote', '--heads', '--end-of-options', 'origin', 'chore/prepare-release-2026-08-17'],
+      expect.anything(),
+    );
+  });
+
+  it('returns false when the remote has no matching branch', async () => {
+    vi.mocked(execa).mockResolvedValue({ stdout: '' } as never);
+
+    await expect(gitBranchExists('chore/prepare-release-2026-08-17')).resolves.toEqual(false);
   });
 });
 

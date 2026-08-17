@@ -138,12 +138,16 @@ export async function git(
   { cwd, allowFailure, errorMessage }: { cwd?: string; allowFailure?: boolean; errorMessage?: string } = {},
 ): Promise<string> {
   try {
-    const { stdout } = await execa('git', args, {
+    const result = await execa('git', args, {
       all: true,
       cwd: path.resolve(ROOT_DIR, cwd ?? '.'),
     });
 
-    return stdout;
+    if (isVerbose() && result.all) {
+      console.log(result.all);
+    }
+
+    return result.stdout;
   } catch (err) {
     if (allowFailure) {
       return '';
@@ -155,7 +159,9 @@ export async function git(
 
     console.log((err as ExecaError).all);
 
-    throw new Error(`command failed: git ${args.join(' ')}`);
+    throw new Error(
+      `command failed: git ${args.map((arg) => (arg && !/\s/.test(arg) ? arg : JSON.stringify(arg))).join(' ')}`,
+    );
   }
 }
 
@@ -181,7 +187,11 @@ export async function gitCommit({
 }): Promise<void> {
   const messageWithCoAuthors = coAuthors ? `${message}\n\n\n${coAuthors.join('\n')}` : message;
 
-  await execa('git', ['commit', '-m', messageWithCoAuthors], { cwd, env });
+  const result = await execa('git', ['commit', '-m', messageWithCoAuthors], { all: true, cwd, env });
+
+  if (isVerbose() && result.all) {
+    console.log(result.all);
+  }
 }
 
 async function buildCustomGenerators(): Promise<void> {
@@ -209,7 +219,7 @@ async function buildCustomGenerators(): Promise<void> {
 }
 
 export async function gitBranchExists(branchName: string, cwd?: string): Promise<boolean> {
-  return Boolean(await run(`git ls-remote --heads origin ${branchName}`, { cwd }));
+  return Boolean(await git(['ls-remote', '--heads', '--end-of-options', 'origin', branchName], { cwd }));
 }
 
 export async function emptyDirExceptForDotGit(dir: string): Promise<void> {
