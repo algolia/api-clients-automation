@@ -26,6 +26,38 @@ class FailingThenSucceedingRequester
   end
 end
 
+# Requester recording every request, answering DELETE calls with a cleanup
+# error and everything else with a fixed root-cause error.
+class CleanupRecordingRequester
+  Recorded = Struct.new(:method, :path, :headers, :timeout, :connect_timeout)
+
+  attr_reader :requests
+
+  def initialize
+    @requests = []
+  end
+
+  def send_request(host, method, path, _body, _query_params, headers, timeout, connect_timeout)
+    @requests << Recorded.new(method, path, headers, timeout, connect_timeout)
+
+    if method == :delete
+      Algolia::Http::Response.new(
+        host: host,
+        status: 403,
+        error: JSON.generate({:message => "cleanup denied"}),
+        headers: {}
+      )
+    else
+      Algolia::Http::Response.new(
+        host: host,
+        status: 400,
+        error: JSON.generate({:message => "root cause"}),
+        headers: {}
+      )
+    end
+  end
+end
+
 # Requester answering every request with a fixed error response.
 class ErrorRequester
   def initialize(status, error_body, headers)
@@ -211,6 +243,51 @@ class TestRequestId < Test::Unit::TestCase
     assert_equal(options, client.send(:with_request_id, options))
   end
 
+  def test_helper_options_respect_config_header_request_id
+    config = search_config
+    config.header_params["ReQuEsT-Id"] = "ConfigOwned"
+    client = search_client(config)
+
+    options = {}
+
+    # A config-level Request-ID counts as caller-supplied for helpers too.
+    assert_equal(options, client.send(:with_request_id, options))
+  end
+
+  def test_cleanup_delete_keeps_root_cause_and_drops_caller_timeouts
+    requester = CleanupRecordingRequester.new
+    client = search_client(search_config(requester: requester))
+
+    error = assert_raise(Algolia::AlgoliaHttpError) do
+      client.replace_all_objects(
+        "cleanup-idx",
+        [{:objectID => "1"}],
+        1000,
+        [Algolia::Search::ScopeType::SETTINGS],
+        {:timeout => 1234, :connect_timeout => 56}
+      )
+    end
+
+    # The failing cleanup DELETE (403) must not mask the root cause (400).
+    assert_equal(400, error.code)
+    assert_equal("root cause", error.http_message)
+
+    deletes = requester.requests.select { |req| req.method == :delete }
+    assert_equal(1, deletes.length)
+    delete = deletes.first
+
+    # The cleanup DELETE shares the Request-ID minted for the invocation...
+    first = requester.requests.first
+    assert_match(REQUEST_ID_FORMAT, first.headers["request-id"])
+    assert_equal(first.headers["request-id"], delete.headers["request-id"])
+
+    # ...but runs with the default timeouts, not the caller's.
+    assert_equal(1234, first.timeout)
+    assert_equal(56, first.connect_timeout)
+    assert_not_equal(1234, delete.timeout)
+    assert_not_equal(56, delete.connect_timeout)
+  end
+
   def test_api_error_carries_correlation_id
     requester = ErrorRequester.new(
       400,
@@ -274,7 +351,7 @@ class TestRequestIdExhaustion < Test::Unit::TestCase
   end
 
   def test_exhaustion_carries_last_correlation_id
-    requester = AlwaysFailingRequester.new(->(attempt) { {"cOrReLaTiOn-Id" => "CorrAttempt#{attempt}"} })
+    requester = AlwaysFailingRequester.new(-> (attempt) { {"cOrReLaTiOn-Id" => "CorrAttempt#{attempt}"} })
     client = exhausted_client(requester)
 
     error = assert_raise(Algolia::AlgoliaUnreachableHostError) { client.custom_get("1/test") }
@@ -284,7 +361,7 @@ class TestRequestIdExhaustion < Test::Unit::TestCase
   end
 
   def test_exhaustion_without_correlation_id_is_unchanged
-    requester = AlwaysFailingRequester.new(->(_) { {} })
+    requester = AlwaysFailingRequester.new(-> (_) { {} })
     client = exhausted_client(requester)
 
     error = assert_raise(Algolia::AlgoliaUnreachableHostError) { client.custom_get("1/test") }

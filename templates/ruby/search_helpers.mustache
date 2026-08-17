@@ -23,6 +23,17 @@ private def with_request_id(request_options = {})
   )
 end
 
+# Helper: Drops the caller's timeouts from the given request options, so that the
+# failure-path cleanup calls run with the client defaults while keeping the other
+# options, notably the headers carrying the invocation's shared Request-ID.
+#
+# @param request_options [Hash]
+#
+# @return [Hash]
+private def without_timeouts(request_options)
+  request_options.reject { |key, _| key == :timeout || key == :connect_timeout }
+end
+
 # The parent search config MUST NOT leak into the ingestion transporter.
 def _build_ingestion_transporter(transformation_options)
   hosts = if transformation_options.hosts
@@ -213,7 +224,11 @@ def replace_all_objects_with_transformation(
       move_operation_response: move_operation_response
     )
   rescue Exception => e
-    delete_index(tmp_index_name, search_request_options)
+    begin
+      delete_index(tmp_index_name, without_timeouts(search_request_options))
+    rescue StandardError
+      # ignored: the root cause is re-raised below
+    end
 
     raise e
   end
@@ -643,7 +658,11 @@ def replace_all_objects(index_name, objects, batch_size = 1000, scopes = [Search
       move_operation_response: move_operation_response
     )
   rescue Exception => e
-    delete_index(tmp_index_name, request_options)
+    begin
+      delete_index(tmp_index_name, without_timeouts(request_options))
+    rescue StandardError
+      # ignored: the root cause is re-raised below
+    end
 
     raise e
   end
