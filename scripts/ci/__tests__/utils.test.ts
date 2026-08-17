@@ -34,6 +34,15 @@ describe('getNbGitDiff', () => {
     await getNbGitDiff({ head: null });
 
     expect(git).toHaveBeenCalledWith(['add', '-N', '.'], { cwd: undefined });
+    const ops = vi.mocked(git).mock.calls.map(([args]) => args[0]);
+    expect(ops.indexOf('add')).toBeLessThan(ops.indexOf('diff'));
+  });
+
+  it('forwards the cwd to both git calls', async () => {
+    await getNbGitDiff({ head: null, cwd: '/tmp/clone/java' });
+
+    expect(git).toHaveBeenCalledWith(['add', '-N', '.'], { cwd: '/tmp/clone/java' });
+    expect(vi.mocked(git).mock.calls.find(([args]) => args[0] === 'diff')?.[1]).toEqual({ cwd: '/tmp/clone/java' });
   });
 
   it('omits the revision entirely rather than passing an empty argument', async () => {

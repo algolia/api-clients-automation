@@ -56,14 +56,20 @@ export async function pushGeneratedCode(): Promise<void> {
   const skipCi = isMainBranch ? '[skip ci]' : '';
   const subject = await git(['show', '-s', '--format=%s', '--end-of-options', baseBranch]);
   const authorLine = await git(['show', '-s', '--format=Co-authored-by: %an <%ae>', '--end-of-options', baseBranch]);
-  const trailers = await git(['show', '-s', '--format=%(trailers:key=Co-authored-by)', '--end-of-options', baseBranch]);
+  const trailers = await git([
+    'show',
+    '-s',
+    '--format=%(trailers:key=Co-authored-by,unfold)',
+    '--end-of-options',
+    baseBranch,
+  ]);
 
   const coAuthors = [
     authorLine.trim(),
     ...trailers
       .split('\n')
       .map((coAuthor) => coAuthor.trim())
-      .filter(Boolean),
+      .filter((coAuthor) => coAuthor.startsWith('Co-authored-by:')),
   ];
 
   let message = [subject, text.commitEndMessage, skipCi].filter(Boolean).join(' ');

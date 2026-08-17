@@ -56,8 +56,8 @@ describe('gitCommit', () => {
     );
   });
 
-  it('passes env to the commit process instead of a shell prefix', () => {
-    gitCommit({ message: 'chore: prepare release', env: { CI: 'true' } });
+  it('passes env to the commit process instead of a shell prefix', async () => {
+    await gitCommit({ message: 'chore: prepare release', env: { CI: 'true' } });
     expect(execa).toHaveBeenCalledWith('git', ['commit', '-m', 'chore: prepare release'], {
       all: true,
       cwd: expect.any(String),
@@ -137,6 +137,18 @@ describe('git', () => {
     await expect(git(['rev-parse'], { errorMessage: '`released` tag is missing in this repository.' })).rejects.toThrow(
       '[ERROR] `released` tag is missing in this repository.',
     );
+  });
+
+  it('still logs the failure output when verbose and errorMessage is set', async () => {
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {});
+    vi.mocked(execa).mockRejectedValue(Object.assign(new Error('boom'), { all: 'fatal: could not read from remote' }));
+
+    setVerbose(true);
+    await expect(git(['rev-parse'], { errorMessage: 'tag is missing' })).rejects.toThrow('[ERROR] tag is missing');
+    setVerbose(false);
+
+    expect(log).toHaveBeenCalledWith('fatal: could not read from remote');
+    log.mockRestore();
   });
 
   it('echoes the combined output when verbose, still returning stdout', async () => {

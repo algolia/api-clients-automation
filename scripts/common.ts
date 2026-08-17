@@ -158,6 +158,10 @@ export async function git(
     }
 
     if (errorMessage) {
+      if (isVerbose()) {
+        console.log((err as ExecaError).all);
+      }
+
       throw new Error(`[ERROR] ${errorMessage}`);
     }
 

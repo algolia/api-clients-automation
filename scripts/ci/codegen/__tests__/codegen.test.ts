@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { git, gitCommit, MAIN_BRANCH } from '../../../common.ts';
 import { getNbGitDiff } from '../../utils.ts';
 import { pushGeneratedCode } from '../pushGeneratedCode.ts';
+import text, { commitStartPrepareRelease } from '../text.ts';
 
 vi.mock('../../../common.ts', async (importOriginal) => {
   return {
@@ -32,7 +33,8 @@ function stubGit({
   branch = 'feat/my-branch',
   subject = 'feat(scripts): something',
   trailers = '',
-}: Partial<{ branch: string; subject: string; trailers: string }> = {}): void {
+  pull = 'Already up to date.',
+}: Partial<{ branch: string; subject: string; trailers: string; pull: string }> = {}): void {
   vi.mocked(git).mockImplementation(async (args) => {
     if (args[0] === 'branch') {
       return branch;
@@ -52,7 +54,7 @@ function stubGit({
       }
     }
     if (args[0] === 'pull') {
-      return 'Already up to date.';
+      return pull;
     }
 
     return '';
@@ -134,5 +136,45 @@ describe('pushGeneratedCode', () => {
     await pushGeneratedCode();
 
     expect(git).toHaveBeenCalledWith(['push', 'origin', 'generated/feat/my-branch']);
+  });
+
+  it('skips the push when there are no generated changes', async () => {
+    vi.mocked(getNbGitDiff).mockResolvedValue(0);
+
+    await pushGeneratedCode();
+
+    expect(git).not.toHaveBeenCalledWith(['add', '.']);
+    expect(gitCommit).not.toHaveBeenCalled();
+  });
+
+  it('stops without committing when the branch is behind origin', async () => {
+    stubGit({ pull: 'Updating abc1234..def5678' });
+
+    await pushGeneratedCode();
+
+    expect(gitCommit).not.toHaveBeenCalled();
+    expect(git).not.toHaveBeenCalledWith(['push', 'origin', 'generated/feat/my-branch']);
+  });
+
+  it('replaces the message entirely for a release commit on main', async () => {
+    stubGit({ branch: MAIN_BRANCH, subject: `${commitStartPrepareRelease} 2026-08-17` });
+
+    await pushGeneratedCode();
+
+    expect(gitCommit).toHaveBeenCalledWith({
+      message: `${text.commitReleaseMessage} [skip ci]`,
+      coAuthors: [AUTHOR],
+    });
+  });
+
+  it('drops trailer lines that are not co-author entries', async () => {
+    stubGit({ trailers: ' <folded@example.com>\nCo-authored-by: me <me@algolia.com>' });
+
+    await pushGeneratedCode();
+
+    expect(gitCommit).toHaveBeenCalledWith({
+      message: 'feat(scripts): something (generated)',
+      coAuthors: [AUTHOR, 'Co-authored-by: me <me@algolia.com>'],
+    });
   });
 });
