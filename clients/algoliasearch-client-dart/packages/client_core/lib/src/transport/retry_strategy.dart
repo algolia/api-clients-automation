@@ -137,17 +137,13 @@ final class RetryStrategy {
         if (statusCode != null && statusCode ~/ 100 != 2) {
           // A requester that returns an error response instead of throwing
           // (the default requester throws) still surfaces the Correlation-ID,
-          // read from the response headers; the branching mirrors the
-          // AlgoliaApiException handler below.
-          final exception = AlgoliaApiException(
+          // read from the response headers; the AlgoliaApiException handler
+          // below classifies it like any thrown API error.
+          throw AlgoliaApiException(
             statusCode,
             response.body,
             correlationId: _correlationIdOf(response.headers),
           );
-          if (statusCode ~/ 100 == 4) throw exception;
-          host.failed();
-          errors.add(exception);
-          continue;
         }
         host.reset();
         return statusCode == 204 ? null : response.body;
