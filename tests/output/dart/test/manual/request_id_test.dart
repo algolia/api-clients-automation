@@ -9,6 +9,7 @@ final requestIdFormat = RegExp(r'^[0-9A-Za-z]{11}$');
 /// failing with retryable errors before succeeding.
 final class RecordingRequester implements Requester {
   final List<String?> requestIds = [];
+  final List<String?> queryParameterIds = [];
   int failuresBeforeSuccess;
   Map<String, dynamic> Function(HttpRequest request) bodyFor;
 
@@ -30,6 +31,14 @@ final class RecordingRequester implements Requester {
       }
     });
     requestIds.add(requestId);
+
+    String? queryParameterId;
+    request.queryParameters.forEach((key, value) {
+      if (key.toLowerCase() == 'x-algolia-request-id') {
+        queryParameterId = value?.toString();
+      }
+    });
+    queryParameterIds.add(queryParameterId);
 
     if (failuresBeforeSuccess > 0) {
       failuresBeforeSuccess--;
@@ -56,6 +65,7 @@ RetryStrategy strategy(
   RecordingRequester requester, {
   bool requestIdSupport = true,
   bool hasDefaultRequestId = false,
+  bool requestIdAsQueryParameter = false,
   int hostCount = 1,
 }) =>
     RetryStrategy(
@@ -65,6 +75,7 @@ RetryStrategy strategy(
       hosts: List.generate(hostCount, (_) => Host(url: 'localhost')),
       requestIdSupport: requestIdSupport,
       hasDefaultRequestId: hasDefaultRequestId,
+      requestIdAsQueryParameter: requestIdAsQueryParameter,
     );
 
 const getRequest = ApiRequest(method: RequestMethod.get, path: '/1/test');
@@ -163,6 +174,55 @@ void main() {
     await retryStrategy.execute(request: getRequest);
 
     expect(requester.requestIds, [null]);
+  });
+
+  test('the web channel mints the Request-ID as a query parameter', () async {
+    final requester = RecordingRequester(failuresBeforeSuccess: 1);
+    final retryStrategy =
+        strategy(requester, requestIdAsQueryParameter: true, hostCount: 2);
+
+    await retryStrategy.execute(request: getRequest);
+
+    // Browsers cannot send the Request-ID header (it would fail the CORS
+    // preflight), so the ID rides the query parameter, still shared across
+    // retries.
+    expect(requester.requestIds, [null, null]);
+    expect(requester.queryParameterIds, hasLength(2));
+    expect(requester.queryParameterIds[0], matches(requestIdFormat));
+    expect(requester.queryParameterIds.toSet(), hasLength(1));
+
+    // A second execution mints a fresh ID.
+    await retryStrategy.execute(request: getRequest);
+    expect(requester.queryParameterIds, hasLength(3));
+    expect(
+        requester.queryParameterIds[2], isNot(requester.queryParameterIds[0]));
+  });
+
+  test('a caller-supplied Request-ID suppresses query-parameter minting too',
+      () async {
+    final requester = RecordingRequester();
+    final retryStrategy = strategy(requester, requestIdAsQueryParameter: true);
+
+    await retryStrategy.execute(
+      request: getRequest,
+      options: const RequestOptions(headers: {'Request-ID': 'CallerOwnedId'}),
+    );
+
+    expect(requester.requestIds, ['CallerOwnedId']);
+    expect(requester.queryParameterIds, [null]);
+  });
+
+  test('mintedRequestIdOptions picks the channel', () {
+    final asHeader = mintedRequestIdOptions(asQueryParameter: false);
+    expect(asHeader.headers.keys, [requestIdHeader]);
+    expect(asHeader.headers[requestIdHeader], matches(requestIdFormat));
+    expect(asHeader.urlParameters, isEmpty);
+
+    final asQueryParameter = mintedRequestIdOptions(asQueryParameter: true);
+    expect(asQueryParameter.urlParameters.keys, [requestIdQueryParameter]);
+    expect(asQueryParameter.urlParameters[requestIdQueryParameter],
+        matches(requestIdFormat));
+    expect(asQueryParameter.headers, isEmpty);
   });
 
   test('disabled clients never mint', () async {

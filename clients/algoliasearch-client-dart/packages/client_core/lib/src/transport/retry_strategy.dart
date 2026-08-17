@@ -25,6 +25,12 @@ final class RetryStrategy {
   /// map never reaches the wire anyway.
   final bool hasDefaultRequestId;
 
+  /// Whether a minted Request-ID is sent as the `x-algolia-request-id` query
+  /// parameter instead of the `Request-ID` header. Defaults to the platform
+  /// channel: browsers must use the query parameter because the header would
+  /// fail the CORS preflight.
+  final bool requestIdAsQueryParameter;
+
   /// Provides access to hosts for testing purposes.
   List<RetryableHost> get hosts => _hosts;
 
@@ -36,6 +42,7 @@ final class RetryStrategy {
     required Iterable<Host> hosts,
     this.requestIdSupport = false,
     this.hasDefaultRequestId = false,
+    this.requestIdAsQueryParameter = platformRequestIdAsQueryParameter,
   }) : _hosts = hosts.map((host) => RetryableHost(host)).toList();
 
   /// Creates [RetryStrategy], defaults to [DioRequester].
@@ -193,7 +200,9 @@ final class RetryStrategy {
     }
   }
 
-  /// Constructs an HTTP request for a given [host], [request] and [options].
+  /// Constructs an HTTP request for a given [host], [request] and [options],
+  /// carrying the minted [requestId], when there is one, on the platform
+  /// channel.
   HttpRequest _buildRequest(
     RetryableHost host,
     ApiRequest request,
@@ -215,16 +224,21 @@ final class RetryStrategy {
         headers: {
           ...?options?.headers,
           ...?request.headers,
-          if (requestId != null) requestIdHeader: requestId,
+          if (requestId != null && !requestIdAsQueryParameter)
+            requestIdHeader: requestId,
         },
         body: options?.body ?? request.body != null
             ? request.body
             : _requiresBody(request)
                 ? const <String, dynamic>{}
                 : null,
-        queryParameters: {...?request.queryParams, ...?options?.urlParameters}
-            .map((key, value) => MapEntry(
-                _encodeQueryParameter(key), _encodeQueryParameter(value))));
+        queryParameters: {
+          ...?request.queryParams,
+          ...?options?.urlParameters,
+          if (requestId != null && requestIdAsQueryParameter)
+            requestIdQueryParameter: requestId,
+        }.map((key, value) => MapEntry(
+            _encodeQueryParameter(key), _encodeQueryParameter(value))));
   }
 
   /// Determines the call type of a given [config].

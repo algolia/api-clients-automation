@@ -103,12 +103,17 @@ class DioRequester implements Requester {
           receiveTimeout: request.timeout,
         ),
       );
+      final statusCode = response.statusCode;
       return HttpResponse(
-        response.statusCode,
+        statusCode,
         response.data,
-        headers: response.headers.map.map(
-          (key, values) => MapEntry(key, values.join(',')),
-        ),
+        // The transport only reads the headers of error responses (for the
+        // Correlation-ID), so the success path stays allocation-free.
+        headers: statusCode != null && statusCode ~/ 100 != 2
+            ? response.headers.map.map(
+                (key, values) => MapEntry(key, values.join(',')),
+              )
+            : null,
       );
     } finally {
       _client.options.connectTimeout = previousConnectTimeout;

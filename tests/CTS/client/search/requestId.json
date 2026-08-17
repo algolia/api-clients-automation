@@ -256,7 +256,7 @@
         "expected": {
           "error": {
             "csharp": "{\\\"message\\\":\\\"request-id error test\\\"} (Correlation-ID: CtsFixedCorrelationId)",
-            "dart": "(Correlation-ID: CtsFixedCorrelationId)",
+            "dart": "{\\\"message\\\":\\\"request-id error test\\\"}} (Correlation-ID: CtsFixedCorrelationId)",
             "go": "API error [400] request-id error test (Correlation-ID: CtsFixedCorrelationId)",
             "java": "Status Code: 400 - {\\\"message\\\":\\\"request-id error test\\\"} (Correlation-ID: CtsFixedCorrelationId)",
             "javascript": "request-id error test (Correlation-ID: CtsFixedCorrelationId)",

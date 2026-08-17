@@ -114,8 +114,9 @@ final class HttpResponse {
   /// populate it.
   final Map<String, String>? headers;
 
-  /// Constructs an [HttpResponse] instance with the provided status code
-  /// and body.
+  /// Constructs an [HttpResponse] instance with the provided status code and
+  /// body, optionally carrying the response headers so the transport can read
+  /// the Correlation-ID of an error response.
   const HttpResponse(this.statusCode, this.body, {this.headers});
 
   @override

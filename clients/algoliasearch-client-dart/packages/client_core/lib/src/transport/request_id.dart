@@ -1,7 +1,18 @@
 import 'dart:math';
 
+import 'package:algolia_client_core/src/transport/request_id_channel_native.dart'
+    if (dart.library.html) 'package:algolia_client_core/src/transport/request_id_channel_web.dart';
+import 'package:algolia_client_core/src/transport/request_options.dart';
+
+export 'package:algolia_client_core/src/transport/request_id_channel_native.dart'
+    if (dart.library.html) 'package:algolia_client_core/src/transport/request_id_channel_web.dart';
+
 /// The name of the header carrying the Request-ID minted when a client supports it.
 const requestIdHeader = 'Request-ID';
+
+/// The name of the query parameter carrying a Request-ID; the server consults
+/// it only when the header is absent.
+const requestIdQueryParameter = 'x-algolia-request-id';
 
 const _alphabet =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -39,5 +50,16 @@ bool hasRequestIdHeader(Map<String, dynamic>? headers) =>
 /// minting or it would be shadowed.
 bool hasRequestIdQueryParameter(Map<String, dynamic>? queryParameters) =>
     queryParameters?.keys
-        .any((key) => key.toLowerCase() == 'x-algolia-request-id') ??
+        .any((key) => key.toLowerCase() == requestIdQueryParameter) ??
     false;
+
+/// Returns request options carrying a freshly minted Request-ID on the given
+/// channel: the header on native platforms, the `x-algolia-request-id` query
+/// parameter on the web, where the header would fail the CORS preflight.
+RequestOptions mintedRequestIdOptions({
+  bool asQueryParameter = platformRequestIdAsQueryParameter,
+}) =>
+    asQueryParameter
+        ? RequestOptions(
+            urlParameters: {requestIdQueryParameter: generateRequestId()})
+        : RequestOptions(headers: {requestIdHeader: generateRequestId()});

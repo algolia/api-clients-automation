@@ -24,8 +24,7 @@ extension WaitTask on SearchClient {
       return requestOptions;
     }
 
-    return RequestOptions(headers: {requestIdHeader: generateRequestId()}) +
-        requestOptions;
+    return mintedRequestIdOptions() + requestOptions;
   }
 
   /// Wait for a [taskID] to complete before executing the next line of code, to synchronize index
