@@ -1,11 +1,16 @@
 import 'dart:math';
 
-import 'package:algolia_client_core/src/transport/request_id_channel_native.dart'
-    if (dart.library.html) 'package:algolia_client_core/src/transport/request_id_channel_web.dart';
+// The fallback direction is inverted relative to the other platform seams on
+// purpose: dart.library.html is false when compiling Flutter web with --wasm,
+// and defaulting to the header there would fail the CORS preflight and break
+// every request. The query parameter degrades safely everywhere, so only a
+// proven native platform (dart.library.io) selects the header.
+import 'package:algolia_client_core/src/transport/request_id_channel_web.dart'
+    if (dart.library.io) 'package:algolia_client_core/src/transport/request_id_channel_native.dart';
 import 'package:algolia_client_core/src/transport/request_options.dart';
 
-export 'package:algolia_client_core/src/transport/request_id_channel_native.dart'
-    if (dart.library.html) 'package:algolia_client_core/src/transport/request_id_channel_web.dart';
+export 'package:algolia_client_core/src/transport/request_id_channel_web.dart'
+    if (dart.library.io) 'package:algolia_client_core/src/transport/request_id_channel_native.dart';
 
 /// The name of the header carrying the Request-ID minted when a client supports it.
 const requestIdHeader = 'Request-ID';
