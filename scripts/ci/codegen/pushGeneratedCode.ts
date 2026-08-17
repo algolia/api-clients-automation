@@ -1,6 +1,6 @@
 import { setOutput } from '@actions/core';
 
-import { configureGitHubAuthor, ensureGitHubToken, git, gitCommit, MAIN_BRANCH } from '../../common.ts';
+import { assertSafeRef, configureGitHubAuthor, ensureGitHubToken, git, gitCommit, MAIN_BRANCH } from '../../common.ts';
 import { getNbGitDiff } from '../utils.ts';
 
 import text, { commitStartPrepareRelease } from './text.ts';
@@ -18,7 +18,7 @@ export async function pushGeneratedCode(): Promise<void> {
 
   await configureGitHubAuthor();
 
-  const baseBranch = await git(['branch', '--show-current']);
+  const baseBranch = assertSafeRef(await git(['branch', '--show-current']));
   const isMainBranch = baseBranch === MAIN_BRANCH;
   const IS_RELEASE_COMMIT = (await git(['log', '-1', '--format=%s'])).startsWith(commitStartPrepareRelease);
   console.log(`Checking codegen status on '${baseBranch}'.`);
@@ -54,9 +54,9 @@ export async function pushGeneratedCode(): Promise<void> {
   }
 
   const skipCi = isMainBranch ? '[skip ci]' : '';
-  const subject = await git(['show', '-s', '--format=%s', baseBranch]);
-  const authorLine = await git(['show', '-s', '--format=Co-authored-by: %an <%ae>', baseBranch]);
-  const trailers = await git(['show', '-s', '--format=%(trailers:key=Co-authored-by)', baseBranch]);
+  const subject = await git(['show', '-s', '--format=%s', '--end-of-options', baseBranch]);
+  const authorLine = await git(['show', '-s', '--format=Co-authored-by: %an <%ae>', '--end-of-options', baseBranch]);
+  const trailers = await git(['show', '-s', '--format=%(trailers:key=Co-authored-by)', '--end-of-options', baseBranch]);
 
   const coAuthors = [
     authorLine.trim(),

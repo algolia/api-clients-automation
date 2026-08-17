@@ -155,6 +155,14 @@ export async function git(
   }
 }
 
+export function assertSafeRef(ref: string): string {
+  if (ref.startsWith('-')) {
+    throw new Error(`refusing to operate on suspicious git ref: ${JSON.stringify(ref)}`);
+  }
+
+  return ref;
+}
+
 export async function gitCommit({
   message,
   coAuthors,
