@@ -133,6 +133,28 @@ export function toAbsolutePath(ppath: string): string {
   return path.resolve(ROOT_DIR, ppath);
 }
 
+export async function git(
+  args: string[],
+  { cwd, allowFailure }: { cwd?: string; allowFailure?: boolean } = {},
+): Promise<string> {
+  try {
+    const { stdout } = await execa('git', args, {
+      all: true,
+      cwd: path.resolve(ROOT_DIR, cwd ?? '.'),
+    });
+
+    return stdout;
+  } catch (err) {
+    if (allowFailure) {
+      return '';
+    }
+
+    console.log((err as ExecaError).all);
+
+    throw new Error(`command failed: git ${args.join(' ')}`);
+  }
+}
+
 export async function gitCommit({
   message,
   coAuthors,
