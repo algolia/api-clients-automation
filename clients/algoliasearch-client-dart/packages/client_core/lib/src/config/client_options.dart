@@ -66,9 +66,10 @@ final class ClientOptions {
   /// Whether the transport sends a Request-ID header, minted once per call
   /// and reused across its retry attempts, so that Algolia support can tie
   /// the attempts of one request together. When null, the generated client's
-  /// own setting applies: only the APIs that support the header (search,
-  /// recommend, composition) mint one. Set it to false to disable minting
-  /// entirely. A caller-supplied Request-ID is never overwritten.
+  /// own setting applies: only the clients of the APIs that support the
+  /// header (search, recommend, composition, and the algoliasearch package)
+  /// mint one. Set it to false to disable minting entirely. A caller-supplied
+  /// Request-ID is never overwritten.
   final bool? requestIdEnabled;
 
   /// Constructs a [ClientOptions] instance with the provided parameters.

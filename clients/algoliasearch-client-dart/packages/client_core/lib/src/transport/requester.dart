@@ -109,6 +109,9 @@ final class HttpResponse {
   /// The headers of the HTTP response, when the requester provides them.
   /// Keys keep the casing the requester delivered, so lookups should not
   /// assume a canonical form. Not part of the equality of the response.
+  /// The transport reads the Correlation-ID of an error response from here,
+  /// so requesters that return error responses instead of throwing should
+  /// populate it.
   final Map<String, String>? headers;
 
   /// Constructs an [HttpResponse] instance with the provided status code

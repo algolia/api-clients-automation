@@ -14,8 +14,9 @@ final class RetryStrategy {
   /// Whether every execution mints a Request-ID header, reused across its
   /// retry attempts, so that Algolia support can tie the attempts of one
   /// request together. Only the generated clients of the APIs that support it
-  /// (search, recommend, composition) opt in; a caller-supplied Request-ID is
-  /// never overwritten.
+  /// (search, recommend, composition, and the algoliasearch package) opt in,
+  /// and [ClientOptions.requestIdEnabled] overrides their setting in both
+  /// directions; a caller-supplied Request-ID is never overwritten.
   final bool requestIdSupport;
 
   /// Whether the client default headers already carry a Request-ID, in which
@@ -131,9 +132,25 @@ final class RetryStrategy {
       }
       try {
         final response = await requester.perform(httpRequest);
-        host.reset();
         requester.setConnectTimeout(requesterConnectTimeout);
-        return response.statusCode == 204 ? null : response.body;
+        final statusCode = response.statusCode;
+        if (statusCode != null && statusCode ~/ 100 != 2) {
+          // A requester that returns an error response instead of throwing
+          // (the default requester throws) still surfaces the Correlation-ID,
+          // read from the response headers; the branching mirrors the
+          // AlgoliaApiException handler below.
+          final exception = AlgoliaApiException(
+            statusCode,
+            response.body,
+            correlationId: _correlationIdOf(response.headers),
+          );
+          if (statusCode ~/ 100 == 4) throw exception;
+          host.failed();
+          errors.add(exception);
+          continue;
+        }
+        host.reset();
+        return statusCode == 204 ? null : response.body;
       } on AlgoliaTimeoutException catch (e) {
         host.timedOut();
         errors.add(e);
@@ -147,6 +164,16 @@ final class RetryStrategy {
       }
     }
     throw UnreachableHostsException(errors);
+  }
+
+  /// The Correlation-ID header of a response, whatever its casing; the
+  /// unrelated X-Algolia-RequestID edge header must never be read instead.
+  static String? _correlationIdOf(Map<String, String>? headers) {
+    if (headers == null) return null;
+    for (final entry in headers.entries) {
+      if (entry.key.toLowerCase() == 'correlation-id') return entry.value;
+    }
+    return null;
   }
 
   /// Returns a list of callable hosts.

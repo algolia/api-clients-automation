@@ -8,8 +8,9 @@ import 'package:collection/collection.dart';
 extension WaitTask on SearchClient {
   /// Derives the request options carrying the Request-ID shared by every poll
   /// of one helper invocation. Returns the options untouched when the caller
-  /// already supplied an ID through the options or the client default headers,
-  /// which also makes nested helpers reuse the ID minted by their caller.
+  /// disabled minting through [ClientOptions.requestIdEnabled], or already
+  /// supplied an ID through the options or the client default headers, which
+  /// also makes nested helpers reuse the ID minted by their caller.
   RequestOptions? _withRequestId(RequestOptions? requestOptions) {
     // The default-headers check is gated on the default requester, like in
     // RetryStrategy.create: a custom requester never receives the client
