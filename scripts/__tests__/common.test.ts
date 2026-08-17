@@ -119,6 +119,18 @@ describe('git', () => {
     await expect(git(['push', '-d', 'origin', 'nope'], { allowFailure: true })).resolves.toEqual('');
   });
 
+  it('still logs the failure output when verbose and allowFailure is set', async () => {
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {});
+    vi.mocked(execa).mockRejectedValue(Object.assign(new Error('boom'), { all: 'remote ref does not exist' }));
+
+    setVerbose(true);
+    await expect(git(['push', '-d', 'origin', 'nope'], { allowFailure: true })).resolves.toEqual('');
+    setVerbose(false);
+
+    expect(log).toHaveBeenCalledWith('remote ref does not exist');
+    log.mockRestore();
+  });
+
   it('throws the provided errorMessage on failure', async () => {
     vi.mocked(execa).mockRejectedValue(new Error('boom'));
 
@@ -191,6 +203,10 @@ describe('assertSafeRef', () => {
     for (const ref of ['-evil', '--output=/tmp/pwned', '--upload-pack=touch /tmp/pwned']) {
       expect(() => assertSafeRef(ref)).toThrow('refusing to operate on suspicious git ref');
     }
+  });
+
+  it('rejects an empty ref, as returned for a detached HEAD', () => {
+    expect(() => assertSafeRef('')).toThrow('refusing to operate on suspicious git ref');
   });
 });
 

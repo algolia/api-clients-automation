@@ -339,7 +339,7 @@ async function prepareGitEnvironment(dryRun: boolean): Promise<void> {
     await run('git fetch --tags --force');
 
     if (!dryRun) {
-      await run('git pull origin $(git branch --show-current)');
+      await git(['pull', 'origin', assertSafeRef(await git(['branch', '--show-current']))]);
     }
   }
 }

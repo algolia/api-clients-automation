@@ -8,7 +8,7 @@ vi.mock('../../../common.ts', async (importOriginal) => {
   return {
     // eslint-disable-next-line
     ...(await importOriginal<typeof import('../../../common.ts')>()),
-    run: vi.fn().mockResolvedValue(''),
+    configureGitHubAuthor: vi.fn(),
     git: vi.fn().mockResolvedValue(''),
     gitCommit: vi.fn(),
   };

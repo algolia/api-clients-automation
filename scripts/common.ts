@@ -150,6 +150,10 @@ export async function git(
     return result.stdout;
   } catch (err) {
     if (allowFailure) {
+      if (isVerbose()) {
+        console.log((err as ExecaError).all);
+      }
+
       return '';
     }
 
@@ -166,7 +170,7 @@ export async function git(
 }
 
 export function assertSafeRef(ref: string): string {
-  if (ref.startsWith('-')) {
+  if (!ref || ref.startsWith('-')) {
     throw new Error(`refusing to operate on suspicious git ref: ${JSON.stringify(ref)}`);
   }
 
