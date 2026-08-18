@@ -194,7 +194,8 @@ export async function runCts(
     assertValidReplaceAllObjects(languages.length - skip('dart'));
     assertValidReplaceAllObjectsWithTransformation(languages.length);
     assertValidAccountCopyIndex(only('javascript'));
-    assertValidRequestIds(languages.filter((lang) => REQUEST_ID_LANGUAGES.includes(lang)).length);
+    const requestIdLanguages = languages.filter((lang) => REQUEST_ID_LANGUAGES.includes(lang));
+    assertValidRequestIds(requestIdLanguages.length, requestIdLanguages.filter((lang) => lang !== 'dart').length);
     assertNoRequestIdLeaks(languages.length);
     assertValidReplaceAllObjectsFailed(languages.length - skip('dart'));
     assertValidReplaceAllObjectsScopes(languages.length - skip('dart'));

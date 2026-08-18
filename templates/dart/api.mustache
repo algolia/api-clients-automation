@@ -46,6 +46,9 @@ final class {{classname}} implements ApiClient {
             segment: AgentSegment(value: "{{{baseName}}}", version: packageVersion),
             appId: appId,
             apiKey: apiKey,
+            {{#requestIdSupport}}
+            requestIdSupport: true,
+            {{/requestIdSupport}}
             options: ClientOptions(
               connectTimeout: Duration(milliseconds: {{{x-timeouts.server.connect}}}),
               readTimeout: Duration(milliseconds: {{{x-timeouts.server.read}}}),
@@ -58,6 +61,7 @@ final class {{classname}} implements ApiClient {
               interceptors: options.interceptors,
               httpClientAdapter: options.httpClientAdapter,
               compression: options.compression,
+              requestIdEnabled: options.requestIdEnabled,
             ),
             {{#hostWithAppID}}
             defaultHosts: () => [
