@@ -448,6 +448,66 @@ void main() {
     expect(ingestionCalls, isNotEmpty);
   });
 
+  test(
+      'replaceAllObjectsWithTransformation rescue delete keeps the shared ID '
+      'and drops the caller timeouts', () async {
+    String? idOf(HttpRequest request) {
+      String? id;
+      request.headers?.forEach((key, value) {
+        if (key.toLowerCase() == 'request-id') id = value?.toString();
+      });
+      return id;
+    }
+
+    String? failedOperationId;
+    HttpRequest? deleteRequest;
+    final requester = RecordingRequester(bodyFor: (request) {
+      if (request.method == 'delete') {
+        deleteRequest = request;
+        return {'taskID': 42, 'deletedAt': '2026-01-01T00:00:00Z'};
+      }
+      failedOperationId = idOf(request);
+      throw AlgoliaApiException(400, 'boom');
+    });
+    final client = SearchClient(
+      appId: 'test-app-id',
+      apiKey: 'test-api-key',
+      options:
+          ClientOptions(requester: requester, hosts: [Host(url: 'localhost')]),
+      transformationOptions: TransformationOptions(
+        region: 'us',
+        ingestionClientOptions: ClientOptions(requester: requester),
+      ),
+    );
+
+    await expectLater(
+      client.replaceAllObjectsWithTransformation(
+        indexName: 'indexName',
+        objects: [
+          {'objectID': '1'}
+        ],
+        requestOptions: const RequestOptions(
+          readTimeout: Duration(seconds: 41),
+          writeTimeout: Duration(seconds: 42),
+          connectTimeout: Duration(seconds: 43),
+        ),
+      ),
+      throwsA(isA<AlgoliaApiException>()
+          .having((e) => e.statusCode, 'statusCode', 400)),
+    );
+
+    // The cleanup delete fires despite the failure, reuses the invocation's
+    // shared Request-ID, and falls back to the client default timeouts
+    // instead of the caller's, so a timeout that broke the main operation
+    // cannot also break the cleanup.
+    expect(deleteRequest, isNotNull);
+    expect(deleteRequest!.path, startsWith('/1/indexes/indexName_tmp_'));
+    expect(failedOperationId, matches(requestIdFormat));
+    expect(idOf(deleteRequest!), failedOperationId);
+    expect(deleteRequest!.timeout, const Duration(seconds: 30));
+    expect(deleteRequest!.body, isNull);
+  });
+
   test('a returned error response surfaces the Correlation-ID', () async {
     final requester = RecordingRequester(
       respondWith: (_) => const HttpResponse(

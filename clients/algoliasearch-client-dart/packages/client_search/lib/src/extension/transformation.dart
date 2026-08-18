@@ -224,7 +224,13 @@ extension Transformation on SearchClient {
       );
     } catch (_) {
       try {
-        await deleteIndex(indexName: tmpIndex);
+        // The cleanup keeps the invocation's shared Request-ID but drops the
+        // caller's timeouts and body, so whatever broke the main operation
+        // cannot also break the delete and leak the temporary index.
+        await deleteIndex(
+          indexName: tmpIndex,
+          requestOptions: searchOptions?.withoutTimeoutsAndBody(),
+        );
       } catch (_) {}
       rethrow;
     }

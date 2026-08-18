@@ -26,3 +26,15 @@ extension SharedRequestIdOptions on SearchClient {
     return mintedRequestIdOptions() + requestOptions;
   }
 }
+
+/// Shared by the transformation helper's rescue path; deliberately not
+/// exported from the package.
+extension CleanupRequestOptions on RequestOptions {
+  /// A copy for rescue cleanups: the headers (with the shared Request-ID) and
+  /// query parameters survive, the caller's timeouts and body do not, so a
+  /// timeout or body that broke the main operation cannot also break the
+  /// cleanup and leak the temporary index. Keep the field list in sync with
+  /// [RequestOptions].
+  RequestOptions withoutTimeoutsAndBody() =>
+      RequestOptions(headers: headers, urlParameters: urlParameters);
+}
