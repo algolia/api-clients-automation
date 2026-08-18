@@ -87,6 +87,7 @@ final class SearchClient implements ApiClient {
           segment: AgentSegment(value: "Search", version: packageVersion),
           appId: appId,
           apiKey: apiKey,
+          requestIdSupport: true,
           options: ClientOptions(
             connectTimeout: Duration(milliseconds: 2000),
             readTimeout: Duration(milliseconds: 5000),
@@ -99,6 +100,7 @@ final class SearchClient implements ApiClient {
             interceptors: options.interceptors,
             httpClientAdapter: options.httpClientAdapter,
             compression: options.compression,
+            requestIdEnabled: options.requestIdEnabled,
           ),
           defaultHosts: () =>
               [

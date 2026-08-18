@@ -106,9 +106,14 @@ final class HttpResponse {
   /// if a body was received, or null otherwise.
   final Map<String, dynamic>? body;
 
-  /// Constructs an [HttpResponse] instance with the provided status code
-  /// and body.
-  const HttpResponse(this.statusCode, this.body);
+  /// The response headers, when the requester provides them; keys keep the
+  /// requester's casing. The transport reads the Correlation-ID of error
+  /// responses from here. Not part of equality.
+  final Map<String, String>? headers;
+
+  /// Constructs an [HttpResponse] with the provided status code, body and
+  /// optional response headers.
+  const HttpResponse(this.statusCode, this.body, {this.headers});
 
   @override
   bool operator ==(Object other) =>

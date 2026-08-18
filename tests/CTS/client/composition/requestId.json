@@ -2,7 +2,7 @@
   {
     "testName": "the composition client sends a Request-ID",
     "autoCreateClient": false,
-    "skipLanguages": ["dart", "python", "ruby"],
+    "skipLanguages": ["python", "ruby"],
     "steps": [
       {
         "type": "createClient",

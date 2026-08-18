@@ -1,5 +1,6 @@
 import 'package:algolia_client_core/algolia_client_core.dart';
 import 'package:algolia_client_search/src/api/search_client.dart';
+import 'package:algolia_client_search/src/extension/request_id_options.dart';
 import 'package:algolia_client_search/src/model/api_key.dart';
 import 'package:algolia_client_search/src/model/get_api_key_response.dart';
 import 'package:algolia_client_search/src/model/task_status.dart';
@@ -17,6 +18,7 @@ extension WaitTask on SearchClient {
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
+    requestOptions = withSharedRequestId(requestOptions);
     await waitUntil(
       params: params,
       retry: () => getTask(
@@ -34,6 +36,7 @@ extension WaitTask on SearchClient {
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
+    requestOptions = withSharedRequestId(requestOptions);
     await waitUntil(
       params: params,
       retry: () => getAppTask(
@@ -52,6 +55,7 @@ extension WaitTask on SearchClient {
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
+    requestOptions = withSharedRequestId(requestOptions);
     await waitUntil(
       retry: () async {
         try {
@@ -71,6 +75,7 @@ extension WaitTask on SearchClient {
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
+    requestOptions = withSharedRequestId(requestOptions);
     await waitUntil(
       params: params,
       retry: () async {
@@ -92,6 +97,7 @@ extension WaitTask on SearchClient {
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
+    requestOptions = withSharedRequestId(requestOptions);
     await waitUntil(
       params: params,
       retry: () async =>
