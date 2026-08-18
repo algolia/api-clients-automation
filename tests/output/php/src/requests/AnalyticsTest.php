@@ -728,6 +728,21 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('getPatternsFields')]
+    public function testGetPatternsFields(): void
+    {
+        $client = $this->getClient();
+        $client->getPatternsFields();
+
+        $this->assertRequests([
+            [
+                'path' => '/3/patterns/fields',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
     #[TestDox('get getPurchaseRate with minimal parameters')]
     public function testGetPurchaseRate(): void
     {
@@ -1282,6 +1297,248 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
                 'method' => 'GET',
                 'body' => null,
                 'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('queryPatternsDistribution')]
+    public function testQueryPatternsDistribution(): void
+    {
+        $client = $this->getClient();
+        $client->queryPatternsDistribution(
+            ['distributions' => [
+                ['kind' => 'clickPosition',
+                    'bins' => [
+                        1,
+
+                        2,
+
+                        3,
+
+                        4,
+
+                        5,
+                    ],
+                ],
+            ],
+                'parameters' => [
+                    ['kind' => 'indices',
+                        'value' => [
+                            'index',
+                        ],
+                    ],
+                ],
+            ],
+            'index',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/patterns/distribution',
+                'method' => 'POST',
+                'body' => json_decode('{"distributions":[{"kind":"clickPosition","bins":[1,2,3,4,5]}],"parameters":[{"kind":"indices","value":["index"]}]}'),
+                'queryParameters' => json_decode('{"index":"index"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('queryPatternsScalar')]
+    public function testQueryPatternsScalar(): void
+    {
+        $client = $this->getClient();
+        $client->queryPatternsScalar(
+            ['metrics' => [
+                ['kind' => 'conversionRate',
+                ],
+            ],
+                'parameters' => [
+                    ['kind' => 'indices',
+                        'value' => [
+                            'index',
+                        ],
+                    ],
+                ],
+            ],
+            'index',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/patterns/scalar',
+                'method' => 'POST',
+                'body' => json_decode('{"metrics":[{"kind":"conversionRate"}],"parameters":[{"kind":"indices","value":["index"]}]}'),
+                'queryParameters' => json_decode('{"index":"index"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('queryPatternsTable with minimal parameters')]
+    public function testQueryPatternsTable(): void
+    {
+        $client = $this->getClient();
+        $client->queryPatternsTable(
+            ['metrics' => [
+                ['kind' => 'searchesCount',
+                ],
+            ],
+                'parameters' => [
+                    ['kind' => 'indices',
+                        'value' => [
+                            'index',
+                        ],
+                    ],
+                ],
+            ],
+            'index',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/patterns/table',
+                'method' => 'POST',
+                'body' => json_decode('{"metrics":[{"kind":"searchesCount"}],"parameters":[{"kind":"indices","value":["index"]}]}'),
+                'queryParameters' => json_decode('{"index":"index"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('queryPatternsTable with all parameters')]
+    public function testQueryPatternsTable1(): void
+    {
+        $client = $this->getClient();
+        $client->queryPatternsTable(
+            ['domain' => 'core',
+                'metrics' => [
+                    ['kind' => 'searchesCount',
+                    ],
+                ],
+                'groupBy' => [
+                    ['kind' => 'query',
+                    ],
+                ],
+                'filters' => [
+                    ['kind' => 'clicked',
+                    ],
+                ],
+                'parameters' => [
+                    ['kind' => 'indices',
+                        'value' => [
+                            'index',
+                        ],
+                    ],
+                ],
+                'orderBy' => [
+                    ['kind' => 'searchesCount',
+                        'direction' => 'desc',
+                    ],
+                ],
+                'limit' => 100,
+                'offset' => 0,
+            ],
+            'index',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/patterns/table',
+                'method' => 'POST',
+                'body' => json_decode('{"domain":"core","metrics":[{"kind":"searchesCount"}],"groupBy":[{"kind":"query"}],"filters":[{"kind":"clicked"}],"parameters":[{"kind":"indices","value":["index"]}],"orderBy":[{"kind":"searchesCount","direction":"desc"}],"limit":100,"offset":0}'),
+                'queryParameters' => json_decode('{"index":"index"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('queryPatternsTimeseries with minimal parameters')]
+    public function testQueryPatternsTimeseries(): void
+    {
+        $client = $this->getClient();
+        $client->queryPatternsTimeseries(
+            ['metrics' => [
+                ['kind' => 'searchesCount',
+                ],
+            ],
+                'parameters' => [
+                    ['kind' => 'indices',
+                        'value' => [
+                            'index',
+                        ],
+                    ],
+                ],
+            ],
+            'index',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/patterns/timeseries',
+                'method' => 'POST',
+                'body' => json_decode('{"metrics":[{"kind":"searchesCount"}],"parameters":[{"kind":"indices","value":["index"]}]}'),
+                'queryParameters' => json_decode('{"index":"index"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('queryPatternsTimeseries with all parameters')]
+    public function testQueryPatternsTimeseries1(): void
+    {
+        $client = $this->getClient();
+        $client->queryPatternsTimeseries(
+            ['domain' => 'core',
+                'metrics' => [
+                    ['kind' => 'searchesCount',
+                    ],
+
+                    ['domain' => 'abtesting',
+                        'kind' => 'isMsrQuery',
+                    ],
+                ],
+                'groupBy' => [
+                    ['kind' => 'index',
+                    ],
+                ],
+                'filters' => [
+                    ['kind' => 'clicked',
+                    ],
+
+                    ['kind' => 'country',
+                        'operator' => '=',
+                        'parameter' => ['kind' => 'country',
+                        ],
+                    ],
+                ],
+                'parameters' => [
+                    ['kind' => 'indices',
+                        'value' => [
+                            'indexA',
+
+                            'indexB',
+                        ],
+                    ],
+
+                    ['kind' => 'startDate',
+                        'value' => '2024-01-01T00:00:00Z',
+                    ],
+
+                    ['kind' => 'endDate',
+                        'value' => '2024-01-07T23:59:59Z',
+                    ],
+
+                    ['kind' => 'country',
+                        'value' => 'FR',
+                    ],
+                ],
+                'limit' => 50,
+                'offset' => 0,
+            ],
+            'indexA,indexB',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/patterns/timeseries',
+                'method' => 'POST',
+                'body' => json_decode('{"domain":"core","metrics":[{"kind":"searchesCount"},{"domain":"abtesting","kind":"isMsrQuery"}],"groupBy":[{"kind":"index"}],"filters":[{"kind":"clicked"},{"kind":"country","operator":"=","parameter":{"kind":"country"}}],"parameters":[{"kind":"indices","value":["indexA","indexB"]},{"kind":"startDate","value":"2024-01-01T00:00:00Z"},{"kind":"endDate","value":"2024-01-07T23:59:59Z"},{"kind":"country","value":"FR"}],"limit":50,"offset":0}'),
+                'queryParameters' => json_decode('{"index":"indexA%2CindexB"}', true),
             ],
         ]);
     }

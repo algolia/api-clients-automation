@@ -838,6 +838,26 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the GetPatternsFields method.
+     *
+     * getPatternsFields
+     */
+    public function snippetForGetPatternsFields(): void
+    {
+        // >SEPARATOR getPatternsFields default
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getPatternsFields();
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetPurchaseRate method.
      *
      * get getPurchaseRate with minimal parameters
@@ -1495,6 +1515,272 @@ class SnippetAnalyticsClient
             '1999-09-19',
             '2001-01-01',
             'tag',
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the QueryPatternsDistribution method.
+     *
+     * queryPatternsDistribution
+     */
+    public function snippetForQueryPatternsDistribution(): void
+    {
+        // >SEPARATOR queryPatternsDistribution default
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->queryPatternsDistribution(
+            ['distributions' => [
+                ['kind' => 'clickPosition',
+                    'bins' => [
+                        1,
+
+                        2,
+
+                        3,
+
+                        4,
+
+                        5,
+                    ],
+                ],
+            ],
+                'parameters' => [
+                    ['kind' => 'indices',
+                        'value' => [
+                            'index',
+                        ],
+                    ],
+                ],
+            ],
+            'index',
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the QueryPatternsScalar method.
+     *
+     * queryPatternsScalar
+     */
+    public function snippetForQueryPatternsScalar(): void
+    {
+        // >SEPARATOR queryPatternsScalar default
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->queryPatternsScalar(
+            ['metrics' => [
+                ['kind' => 'conversionRate',
+                ],
+            ],
+                'parameters' => [
+                    ['kind' => 'indices',
+                        'value' => [
+                            'index',
+                        ],
+                    ],
+                ],
+            ],
+            'index',
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the QueryPatternsTable method.
+     *
+     * queryPatternsTable with minimal parameters
+     */
+    public function snippetForQueryPatternsTable(): void
+    {
+        // >SEPARATOR queryPatternsTable queryPatternsTable with minimal parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->queryPatternsTable(
+            ['metrics' => [
+                ['kind' => 'searchesCount',
+                ],
+            ],
+                'parameters' => [
+                    ['kind' => 'indices',
+                        'value' => [
+                            'index',
+                        ],
+                    ],
+                ],
+            ],
+            'index',
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the QueryPatternsTable method.
+     *
+     * queryPatternsTable with all parameters
+     */
+    public function snippetForQueryPatternsTable1(): void
+    {
+        // >SEPARATOR queryPatternsTable queryPatternsTable with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->queryPatternsTable(
+            ['domain' => 'core',
+                'metrics' => [
+                    ['kind' => 'searchesCount',
+                    ],
+                ],
+                'groupBy' => [
+                    ['kind' => 'query',
+                    ],
+                ],
+                'filters' => [
+                    ['kind' => 'clicked',
+                    ],
+                ],
+                'parameters' => [
+                    ['kind' => 'indices',
+                        'value' => [
+                            'index',
+                        ],
+                    ],
+                ],
+                'orderBy' => [
+                    ['kind' => 'searchesCount',
+                        'direction' => 'desc',
+                    ],
+                ],
+                'limit' => 100,
+                'offset' => 0,
+            ],
+            'index',
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the QueryPatternsTimeseries method.
+     *
+     * queryPatternsTimeseries with minimal parameters
+     */
+    public function snippetForQueryPatternsTimeseries(): void
+    {
+        // >SEPARATOR queryPatternsTimeseries queryPatternsTimeseries with minimal parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->queryPatternsTimeseries(
+            ['metrics' => [
+                ['kind' => 'searchesCount',
+                ],
+            ],
+                'parameters' => [
+                    ['kind' => 'indices',
+                        'value' => [
+                            'index',
+                        ],
+                    ],
+                ],
+            ],
+            'index',
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the QueryPatternsTimeseries method.
+     *
+     * queryPatternsTimeseries with all parameters
+     */
+    public function snippetForQueryPatternsTimeseries1(): void
+    {
+        // >SEPARATOR queryPatternsTimeseries queryPatternsTimeseries with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->queryPatternsTimeseries(
+            ['domain' => 'core',
+                'metrics' => [
+                    ['kind' => 'searchesCount',
+                    ],
+
+                    ['domain' => 'abtesting',
+                        'kind' => 'isMsrQuery',
+                    ],
+                ],
+                'groupBy' => [
+                    ['kind' => 'index',
+                    ],
+                ],
+                'filters' => [
+                    ['kind' => 'clicked',
+                    ],
+
+                    ['kind' => 'country',
+                        'operator' => '=',
+                        'parameter' => ['kind' => 'country',
+                        ],
+                    ],
+                ],
+                'parameters' => [
+                    ['kind' => 'indices',
+                        'value' => [
+                            'indexA',
+
+                            'indexB',
+                        ],
+                    ],
+
+                    ['kind' => 'startDate',
+                        'value' => '2024-01-01T00:00:00Z',
+                    ],
+
+                    ['kind' => 'endDate',
+                        'value' => '2024-01-07T23:59:59Z',
+                    ],
+
+                    ['kind' => 'country',
+                        'value' => 'FR',
+                    ],
+                ],
+                'limit' => 50,
+                'offset' => 0,
+            ],
+            'indexA,indexB',
         );
 
         // >LOG
