@@ -1,0 +1,47 @@
+post:
+  tags:
+    - abtest
+  operationId: completeABTest
+  x-acl:
+    - analytics
+    - editSettings
+  summary: Complete an A/B test
+  description: |
+    Completes a running A/B test by its ID.
+
+    The A/B test's status becomes `expired` and its end date is set to the completion time,
+    mirroring what happens when an A/B test reaches its planned end date.
+    The variant allocation is removed from the search engine, like when stopping an A/B test.
+    Unlike stopped A/B tests, completed A/B tests are presented as finished rather than interrupted.
+
+    Only running A/B tests can be completed. Completing an A/B test that isn't running returns `409`.
+
+    You can't restart completed A/B tests.
+  parameters:
+    - $ref: '../common/parameters.yml#/ID'
+  responses:
+    '200':
+      description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-reset'
+      content:
+        application/json:
+          schema:
+            $ref: '../common/schemas/ABTestResponse.yml#/ABTestResponse'
+    '400':
+      $ref: '../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../common/responses/IndexNotFound.yml'
+    '409':
+      $ref: '../../common/responses/Conflict.yml'
+    '422':
+      $ref: '../../common/responses/UnprocessableEntity.yml'
