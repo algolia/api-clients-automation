@@ -1,13 +1,13 @@
 import { setOutput } from '@actions/core';
 
-import { configureGitHubAuthor, ensureGitHubToken, MAIN_BRANCH, run } from '../../common.ts';
+import { assertSafeRef, configureGitHubAuthor, ensureGitHubToken, git, gitCommit, MAIN_BRANCH } from '../../common.ts';
 import { getNbGitDiff } from '../utils.ts';
 
 import text, { commitStartPrepareRelease } from './text.ts';
 
 async function isUpToDate(baseBranch: string): Promise<boolean> {
-  await run('git fetch origin');
-  return (await run(`git pull origin ${baseBranch}`)).includes('Already up to date.');
+  await git(['fetch', 'origin']);
+  return (await git(['pull', 'origin', baseBranch])).includes('Already up to date.');
 }
 
 /**
@@ -18,9 +18,9 @@ export async function pushGeneratedCode(): Promise<void> {
 
   await configureGitHubAuthor();
 
-  const baseBranch = await run('git branch --show-current');
+  const baseBranch = assertSafeRef(await git(['branch', '--show-current']));
   const isMainBranch = baseBranch === MAIN_BRANCH;
-  const IS_RELEASE_COMMIT = (await run('git log -1 --format="%s"')).startsWith(commitStartPrepareRelease);
+  const IS_RELEASE_COMMIT = (await git(['log', '-1', '--format=%s'])).startsWith(commitStartPrepareRelease);
   console.log(`Checking codegen status on '${baseBranch}'.`);
 
   const nbDiff = await getNbGitDiff({
@@ -40,10 +40,10 @@ export async function pushGeneratedCode(): Promise<void> {
   const branchToPush = isMainBranch ? baseBranch : `generated/${baseBranch}`;
 
   if (!isMainBranch) {
-    await run(`git push -d origin generated/${baseBranch} || true`);
+    await git(['push', '-d', 'origin', `generated/${baseBranch}`], { allowFailure: true });
 
     console.log(`Creating branch for generated code: '${branchToPush}'`);
-    await run(`git checkout -B ${branchToPush}`);
+    await git(['checkout', '-B', branchToPush]);
   }
 
   if (!(await isUpToDate(baseBranch))) {
@@ -54,28 +54,37 @@ export async function pushGeneratedCode(): Promise<void> {
   }
 
   const skipCi = isMainBranch ? '[skip ci]' : '';
-  let message = await run(`git show -s ${baseBranch} --format="%s ${text.commitEndMessage} ${skipCi}"`);
-  const authors = await run(
-    `git show -s ${baseBranch} --format="
+  const subject = await git(['show', '-s', '--format=%s', '--end-of-options', baseBranch]);
+  const authorLine = await git(['show', '-s', '--format=Co-authored-by: %an <%ae>', '--end-of-options', baseBranch]);
+  const trailers = await git([
+    'show',
+    '-s',
+    '--format=%(trailers:key=Co-authored-by,unfold)',
+    '--end-of-options',
+    baseBranch,
+  ]);
 
+  const coAuthors = [
+    authorLine.trim(),
+    ...trailers
+      .split('\n')
+      .map((coAuthor) => coAuthor.trim())
+      .filter((coAuthor) => coAuthor.startsWith('Co-authored-by:')),
+  ];
 
-Co-authored-by: %an <%ae>
-%(trailers:key=Co-authored-by)"`,
-  );
+  let message = [subject, text.commitEndMessage, skipCi].filter(Boolean).join(' ');
 
   if (IS_RELEASE_COMMIT && isMainBranch) {
     console.log('Processing release commit');
     message = `${text.commitReleaseMessage} [skip ci]`;
   }
 
-  message += authors;
-
   console.log(`Pushing code to generated branch: '${branchToPush}'`);
-  await run('git add .');
-  await run(`git commit -m "${message.replaceAll('"', '\\"').replaceAll('`', '\\`')}"`);
-  await run(`git push origin ${branchToPush}`);
+  await git(['add', '.']);
+  await gitCommit({ message, coAuthors });
+  await git(['push', 'origin', branchToPush]);
 
-  setOutput('GENERATED_COMMIT', await run('git rev-parse HEAD'));
+  setOutput('GENERATED_COMMIT', await git(['rev-parse', 'HEAD']));
 }
 
 if (import.meta.url.endsWith(process.argv[1])) {
