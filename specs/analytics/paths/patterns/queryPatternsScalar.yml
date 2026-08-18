@@ -1,0 +1,43 @@
+post:
+  tags:
+    - pattern
+  operationId: queryPatternsScalar
+  x-acl:
+    - analytics
+  summary: (Beta) Query single-row aggregates
+  description: |
+    **Beta**: this endpoint is under active development and may change without notice.
+
+    Aggregates the requested `metrics` over the whole period and returns a single object keyed by metric
+    kind. `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per
+    domain with `/3/patterns/fields`.
+  parameters:
+    - $ref: '../../common/parameters.yml#/IndexQuery'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/patterns.yml#/ScalarPayload'
+  responses:
+    '200':
+      description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../../common/responses/rateLimit.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../../common/responses/rateLimit.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../../common/responses/rateLimit.yml#/x-ratelimit-reset'
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/patterns.yml#/ScalarResponse'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

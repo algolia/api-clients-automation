@@ -89,7 +89,7 @@ export async function isBaseChanged(
   for (const [key, path] of Object.entries(dependencies)) {
     const diff = await getNbGitDiff({
       branch: baseBranch,
-      path: path.join(' '),
+      path,
     });
 
     if (output) {
