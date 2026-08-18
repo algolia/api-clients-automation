@@ -383,6 +383,71 @@ void main() {
         'AlgoliaApiException{statusCode: 400, error: boom}');
   });
 
+  test(
+      'replaceAllObjectsWithTransformation shares one search-side Request-ID '
+      'and keeps ingestion ID-free', () async {
+    String? idOf(HttpRequest request) {
+      String? id;
+      request.headers?.forEach((key, value) {
+        if (key.toLowerCase() == 'request-id') id = value?.toString();
+      });
+      return id;
+    }
+
+    final searchIds = <String?>{};
+    final searchCalls = <String>[];
+    final ingestionCalls = <String>[];
+    final requester = RecordingRequester(bodyFor: (request) {
+      final path = request.path;
+      if (path.contains('/1/push/')) {
+        ingestionCalls.add(path);
+        expect(idOf(request), isNull, reason: 'ingestion must stay ID-free');
+        return {'runID': 'r1', 'eventID': 'e1'};
+      }
+      if (path.contains('/events/')) {
+        ingestionCalls.add(path);
+        expect(idOf(request), isNull, reason: 'ingestion must stay ID-free');
+        return {
+          'eventID': 'e1',
+          'runID': 'r1',
+          'status': 'succeeded',
+          'type': 'record',
+          'batchSize': 1,
+          'publishedAt': '2026-01-01T00:00:00Z',
+        };
+      }
+      searchCalls.add(path);
+      searchIds.add(idOf(request));
+      if (path.contains('/operation')) {
+        return {'taskID': 42, 'updatedAt': '2026-01-01T00:00:00Z'};
+      }
+      return {'status': 'published', 'updatedAt': ''};
+    });
+    final client = SearchClient(
+      appId: 'test-app-id',
+      apiKey: 'test-api-key',
+      options:
+          ClientOptions(requester: requester, hosts: [Host(url: 'localhost')]),
+      transformationOptions: TransformationOptions(
+        region: 'us',
+        ingestionClientOptions: ClientOptions(requester: requester),
+      ),
+    );
+
+    await client.replaceAllObjectsWithTransformation(
+      indexName: 'indexName',
+      objects: [
+        {'objectID': '1'}
+      ],
+    );
+
+    // Three operationIndex calls and three waitTask polls share one ID.
+    expect(searchCalls, hasLength(6));
+    expect(searchIds, hasLength(1));
+    expect(searchIds.single, matches(requestIdFormat));
+    expect(ingestionCalls, isNotEmpty);
+  });
+
   test('a returned error response surfaces the Correlation-ID', () async {
     final requester = RecordingRequester(
       respondWith: (_) => const HttpResponse(

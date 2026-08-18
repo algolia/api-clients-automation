@@ -1,32 +1,12 @@
 import 'package:algolia_client_core/algolia_client_core.dart';
 import 'package:algolia_client_search/src/api/search_client.dart';
+import 'package:algolia_client_search/src/extension/request_id_options.dart';
 import 'package:algolia_client_search/src/model/api_key.dart';
 import 'package:algolia_client_search/src/model/get_api_key_response.dart';
 import 'package:algolia_client_search/src/model/task_status.dart';
 import 'package:collection/collection.dart';
 
 extension WaitTask on SearchClient {
-  /// Derives the request options carrying the Request-ID shared by every poll
-  /// of one helper invocation. Returns the options untouched when the caller
-  /// disabled minting through [ClientOptions.requestIdEnabled], or already
-  /// supplied an ID through the options or the client default headers, which
-  /// also makes nested helpers reuse the ID minted by their caller.
-  RequestOptions? _withRequestId(RequestOptions? requestOptions) {
-    // The default-headers check is gated on the default requester, like in
-    // RetryStrategy.create: a custom requester never receives the client
-    // default headers, so an ID there must not suppress minting. An ID in the
-    // x-algolia-request-id query parameter suppresses minting too: the server
-    // consults it only when the header is absent.
-    if (options.requestIdEnabled == false ||
-        hasRequestIdHeader(requestOptions?.headers) ||
-        hasRequestIdQueryParameter(requestOptions?.urlParameters) ||
-        (options.requester == null && hasRequestIdHeader(options.headers))) {
-      return requestOptions;
-    }
-
-    return mintedRequestIdOptions() + requestOptions;
-  }
-
   /// Wait for a [taskID] to complete before executing the next line of code, to synchronize index
   /// updates. All write operations in Algolia are asynchronous by design. It means that when you add
   /// or update an object to your index, our servers will reply to your request with a [taskID] as soon
@@ -38,7 +18,7 @@ extension WaitTask on SearchClient {
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
-    requestOptions = _withRequestId(requestOptions);
+    requestOptions = withSharedRequestId(requestOptions);
     await waitUntil(
       params: params,
       retry: () => getTask(
@@ -56,7 +36,7 @@ extension WaitTask on SearchClient {
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
-    requestOptions = _withRequestId(requestOptions);
+    requestOptions = withSharedRequestId(requestOptions);
     await waitUntil(
       params: params,
       retry: () => getAppTask(
@@ -75,7 +55,7 @@ extension WaitTask on SearchClient {
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
-    requestOptions = _withRequestId(requestOptions);
+    requestOptions = withSharedRequestId(requestOptions);
     await waitUntil(
       retry: () async {
         try {
@@ -95,7 +75,7 @@ extension WaitTask on SearchClient {
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
-    requestOptions = _withRequestId(requestOptions);
+    requestOptions = withSharedRequestId(requestOptions);
     await waitUntil(
       params: params,
       retry: () async {
@@ -117,7 +97,7 @@ extension WaitTask on SearchClient {
     WaitParams params = const WaitParams(),
     RequestOptions? requestOptions,
   }) async {
-    requestOptions = _withRequestId(requestOptions);
+    requestOptions = withSharedRequestId(requestOptions);
     await waitUntil(
       params: params,
       retry: () async =>

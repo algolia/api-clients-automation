@@ -51,7 +51,8 @@ void expectHeaders(
 /// Normalizes a map by converting all keys to lowercase, making comparison
 /// case-insensitive.
 Map<String, dynamic> _normalizeKeys(Map<String, dynamic>? map) {
-  if (map == null) return const {};
+  // Mutable: expectHeaders removes the minted request-id entry.
+  if (map == null) return <String, dynamic>{};
   var newMap = <String, dynamic>{};
   map.forEach((key, value) => newMap[key.toLowerCase()] = value);
   return newMap;

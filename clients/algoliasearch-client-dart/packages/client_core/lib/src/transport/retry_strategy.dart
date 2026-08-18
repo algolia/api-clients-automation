@@ -11,7 +11,7 @@ final class RetryStrategy {
   final Duration writeTimeout;
   final List<RetryableHost> _hosts;
 
-  /// Whether every execution mints a Request-ID header, reused across its
+  /// Whether every execution mints a Request-ID, reused across its
   /// retry attempts, so that Algolia support can tie the attempts of one
   /// request together. Only the generated clients of the APIs that support it
   /// (search, recommend, composition, and the algoliasearch package) opt in,

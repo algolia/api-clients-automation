@@ -4,6 +4,7 @@ import 'package:algolia_client_core/algolia_client_core.dart';
 import 'package:algolia_client_ingestion/algolia_client_ingestion.dart'
     as ingestion;
 import 'package:algolia_client_search/src/api/search_client.dart';
+import 'package:algolia_client_search/src/extension/request_id_options.dart';
 import 'package:algolia_client_search/src/extension/wait_task.dart';
 import 'package:algolia_client_search/src/model/event.dart';
 import 'package:algolia_client_search/src/model/event_status.dart';
@@ -151,6 +152,10 @@ extension Transformation on SearchClient {
     final effectiveScopes =
         scopes ?? [ScopeType.settings, ScopeType.rules, ScopeType.synonyms];
     final tmpIndex = '${indexName}_tmp_${Random().nextInt(900000) + 100000}';
+    // One shared Request-ID covers the search-side requests of this
+    // invocation; the ingestion-side chunkedPush keeps the caller's options
+    // untouched because the Ingestion API must not receive the ID.
+    final searchOptions = withSharedRequestId(requestOptions);
 
     try {
       var copyResponse = await operationIndex(
@@ -160,7 +165,7 @@ extension Transformation on SearchClient {
           destination: tmpIndex,
           scope: effectiveScopes,
         ),
-        requestOptions: requestOptions,
+        requestOptions: searchOptions,
       );
 
       final watchResponses = await chunkedPush(
@@ -178,7 +183,7 @@ extension Transformation on SearchClient {
         indexName: tmpIndex,
         taskID: copyResponse.taskID,
         params: WaitParams(maxRetries: effectiveMaxRetries),
-        requestOptions: requestOptions,
+        requestOptions: searchOptions,
       );
 
       copyResponse = await operationIndex(
@@ -188,13 +193,13 @@ extension Transformation on SearchClient {
           destination: tmpIndex,
           scope: effectiveScopes,
         ),
-        requestOptions: requestOptions,
+        requestOptions: searchOptions,
       );
       await waitTask(
         indexName: tmpIndex,
         taskID: copyResponse.taskID,
         params: WaitParams(maxRetries: effectiveMaxRetries),
-        requestOptions: requestOptions,
+        requestOptions: searchOptions,
       );
 
       final moveResponse = await operationIndex(
@@ -203,13 +208,13 @@ extension Transformation on SearchClient {
           operation: OperationType.move,
           destination: indexName,
         ),
-        requestOptions: requestOptions,
+        requestOptions: searchOptions,
       );
       await waitTask(
         indexName: tmpIndex,
         taskID: moveResponse.taskID,
         params: WaitParams(maxRetries: effectiveMaxRetries),
-        requestOptions: requestOptions,
+        requestOptions: searchOptions,
       );
 
       return ReplaceAllObjectsWithTransformationResponse(
