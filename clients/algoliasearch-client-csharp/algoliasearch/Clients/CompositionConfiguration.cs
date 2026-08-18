@@ -27,13 +27,16 @@ public sealed class CompositionConfig : AlgoliaConfig
   /// <param name="appId">Your application ID</param>
   /// <param name="apiKey">Your API Key</param>
   public CompositionConfig(string appId, string apiKey)
-    : base(appId, apiKey, "Composition", "7.46.3")
+    : base(appId, apiKey, "Composition", "7.47.0")
   {
     DefaultHosts = GetDefaultHosts(appId);
     Compression = CompressionType.None;
     ReadTimeout = TimeSpan.FromMilliseconds(5000);
     WriteTimeout = TimeSpan.FromMilliseconds(30000);
     ConnectTimeout = TimeSpan.FromMilliseconds(2000);
+    // Request-ID tracing is only supported by the search, recommend and
+    // composition APIs.
+    RequestIdEnabled = true;
   }
 
   private static List<StatefulHost> GetDefaultHosts(string appId)

@@ -607,7 +607,7 @@ func SnippetForGetCompositionOfComposition() {
 	   getComposition
 	*/
 
-	// >SEPARATOR getComposition default
+	// >SEPARATOR getComposition getComposition
 	// Initialize the client
 	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -618,6 +618,64 @@ func SnippetForGetCompositionOfComposition() {
 	// Call the API
 	response, err := client.GetComposition(client.NewApiGetCompositionRequest(
 		"foo"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForGetCompositionOfComposition1() {
+	/*
+	   Snippet for the getComposition method.
+
+	   the Correlation-ID ends with the sent Request-ID
+	*/
+
+	// >SEPARATOR getComposition the Correlation-ID ends with the sent Request-ID
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetComposition(client.NewApiGetCompositionRequest(
+		"id1"), composition.WithHeaderParam("request-id", "CtsE2eEcho4"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForGetCompositionOfComposition2() {
+	/*
+	   Snippet for the getComposition method.
+
+	   the Correlation-ID ends with the Request-ID sent as a query parameter
+	*/
+
+	// >SEPARATOR getComposition the Correlation-ID ends with the Request-ID sent as a query parameter
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetComposition(client.NewApiGetCompositionRequest(
+		"id1"), composition.WithQueryParam("x-algolia-request-id", "CtsE2eEchoQ"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

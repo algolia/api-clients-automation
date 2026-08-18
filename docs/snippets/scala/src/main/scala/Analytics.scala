@@ -957,6 +957,31 @@ class SnippetAnalyticsClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the getPatternsFields method.
+    *
+    * getPatternsFields
+    */
+  def snippetForAnalyticsClientGetPatternsFields(): Unit = {
+    // >SEPARATOR getPatternsFields default
+    // Initialize the client
+    val client = AnalyticsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.getPatternsFields(
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
   /** Snippet for the getPurchaseRate method.
     *
     * get getPurchaseRate with minimal parameters
@@ -1722,6 +1747,308 @@ class SnippetAnalyticsClient {
         startDate = Some("1999-09-19"),
         endDate = Some("2001-01-01"),
         tags = Some("tag")
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the queryPatternsDistribution method.
+    *
+    * queryPatternsDistribution
+    */
+  def snippetForAnalyticsClientQueryPatternsDistribution(): Unit = {
+    // >SEPARATOR queryPatternsDistribution default
+    // Initialize the client
+    val client = AnalyticsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.queryPatternsDistribution(
+        distributionPayload = DistributionPayload(
+          distributions = Seq(
+            DistributionDefinition(
+              kind = "clickPosition",
+              bins = Seq(BinEdge(1), BinEdge(2), BinEdge(3), BinEdge(4), BinEdge(5))
+            )
+          ),
+          parameters = Seq(
+            ParameterDefinition(
+              kind = "indices",
+              value = ParameterValue(Seq("index"))
+            )
+          )
+        ),
+        index = Some("index")
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the queryPatternsScalar method.
+    *
+    * queryPatternsScalar
+    */
+  def snippetForAnalyticsClientQueryPatternsScalar(): Unit = {
+    // >SEPARATOR queryPatternsScalar default
+    // Initialize the client
+    val client = AnalyticsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.queryPatternsScalar(
+        scalarPayload = ScalarPayload(
+          metrics = Seq(
+            FieldReference(
+              kind = "conversionRate"
+            )
+          ),
+          parameters = Seq(
+            ParameterDefinition(
+              kind = "indices",
+              value = ParameterValue(Seq("index"))
+            )
+          )
+        ),
+        index = Some("index")
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the queryPatternsTable method.
+    *
+    * queryPatternsTable with minimal parameters
+    */
+  def snippetForAnalyticsClientQueryPatternsTable(): Unit = {
+    // >SEPARATOR queryPatternsTable queryPatternsTable with minimal parameters
+    // Initialize the client
+    val client = AnalyticsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.queryPatternsTable(
+        tablePayload = TablePayload(
+          metrics = Seq(
+            FieldReference(
+              kind = "searchesCount"
+            )
+          ),
+          parameters = Seq(
+            ParameterDefinition(
+              kind = "indices",
+              value = ParameterValue(Seq("index"))
+            )
+          )
+        ),
+        index = Some("index")
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the queryPatternsTable method.
+    *
+    * queryPatternsTable with all parameters
+    */
+  def snippetForAnalyticsClientQueryPatternsTable1(): Unit = {
+    // >SEPARATOR queryPatternsTable queryPatternsTable with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.queryPatternsTable(
+        tablePayload = TablePayload(
+          domain = Some("core"),
+          metrics = Seq(
+            FieldReference(
+              kind = "searchesCount"
+            )
+          ),
+          groupBy = Some(
+            Seq(
+              FieldReference(
+                kind = "query"
+              )
+            )
+          ),
+          filters = Some(
+            Seq(
+              FilterDefinition(
+                kind = "clicked"
+              )
+            )
+          ),
+          parameters = Seq(
+            ParameterDefinition(
+              kind = "indices",
+              value = ParameterValue(Seq("index"))
+            )
+          ),
+          orderBy = Some(
+            Seq(
+              OrderDefinition(
+                kind = "searchesCount",
+                direction = OrderDirection.withName("desc")
+              )
+            )
+          ),
+          limit = Some(100),
+          offset = Some(0)
+        ),
+        index = Some("index")
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the queryPatternsTimeseries method.
+    *
+    * queryPatternsTimeseries with minimal parameters
+    */
+  def snippetForAnalyticsClientQueryPatternsTimeseries(): Unit = {
+    // >SEPARATOR queryPatternsTimeseries queryPatternsTimeseries with minimal parameters
+    // Initialize the client
+    val client = AnalyticsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.queryPatternsTimeseries(
+        timeseriesPayload = TimeseriesPayload(
+          metrics = Seq(
+            FieldReference(
+              kind = "searchesCount"
+            )
+          ),
+          parameters = Seq(
+            ParameterDefinition(
+              kind = "indices",
+              value = ParameterValue(Seq("index"))
+            )
+          )
+        ),
+        index = Some("index")
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the queryPatternsTimeseries method.
+    *
+    * queryPatternsTimeseries with all parameters
+    */
+  def snippetForAnalyticsClientQueryPatternsTimeseries1(): Unit = {
+    // >SEPARATOR queryPatternsTimeseries queryPatternsTimeseries with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.queryPatternsTimeseries(
+        timeseriesPayload = TimeseriesPayload(
+          domain = Some("core"),
+          metrics = Seq(
+            FieldReference(
+              kind = "searchesCount"
+            ),
+            FieldReference(
+              domain = Some("abtesting"),
+              kind = "isMsrQuery"
+            )
+          ),
+          groupBy = Some(
+            Seq(
+              FieldReference(
+                kind = "index"
+              )
+            )
+          ),
+          filters = Some(
+            Seq(
+              FilterDefinition(
+                kind = "clicked"
+              ),
+              FilterDefinition(
+                kind = "country",
+                operator = Some("="),
+                parameter = Some(
+                  ParameterReference(
+                    kind = "country"
+                  )
+                )
+              )
+            )
+          ),
+          parameters = Seq(
+            ParameterDefinition(
+              kind = "indices",
+              value = ParameterValue(Seq("indexA", "indexB"))
+            ),
+            ParameterDefinition(
+              kind = "startDate",
+              value = ParameterValue("2024-01-01T00:00:00Z")
+            ),
+            ParameterDefinition(
+              kind = "endDate",
+              value = ParameterValue("2024-01-07T23:59:59Z")
+            ),
+            ParameterDefinition(
+              kind = "country",
+              value = ParameterValue("FR")
+            )
+          ),
+          limit = Some(50),
+          offset = Some(0)
+        ),
+        index = Some("indexA,indexB")
       ),
       Duration(100, "sec")
     )

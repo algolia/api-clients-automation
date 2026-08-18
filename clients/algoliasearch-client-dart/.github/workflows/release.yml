@@ -10,8 +10,8 @@ jobs:
     name: Run checks
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: dart-lang/setup-dart@v1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: dart-lang/setup-dart@7654d458321ee25acccccfdb86cd48bd95768ff1 # v1.8.0
       - name: Install Tools
         run: dart pub global activate melos
       - name: Bootstrap Workspace
@@ -25,7 +25,7 @@ jobs:
     needs: check
     permissions:
       id-token: write
-    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@7654d458321ee25acccccfdb86cd48bd95768ff1 # v1.8.0
     with:
       working-directory: packages/client_core
 
@@ -57,7 +57,7 @@ jobs:
           - packages/client_agent_studio
     permissions:
       id-token: write
-    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@7654d458321ee25acccccfdb86cd48bd95768ff1 # v1.8.0
     with:
       working-directory: ${{ matrix.package }}
 
@@ -81,7 +81,7 @@ jobs:
       - wait_for_dependencies
     permissions:
       id-token: write
-    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@7654d458321ee25acccccfdb86cd48bd95768ff1 # v1.8.0
     with:
       working-directory: packages/client_search
 
@@ -101,6 +101,6 @@ jobs:
       - wait_for_search
     permissions:
       id-token: write
-    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@7654d458321ee25acccccfdb86cd48bd95768ff1 # v1.8.0
     with:
       working-directory: packages/algoliasearch

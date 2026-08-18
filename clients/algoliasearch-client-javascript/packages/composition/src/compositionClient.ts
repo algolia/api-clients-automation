@@ -16,6 +16,7 @@ import {
   getAlgoliaAgent,
   shuffle,
   validateRequired,
+  withRequestId,
 } from '@algolia/client-common';
 
 import type { BatchParams } from '../model/batchParams';
@@ -51,7 +52,7 @@ import type {
   WaitForCompositionTaskOptions,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '1.31.0';
+export const apiClientVersion = '1.32.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -186,6 +187,7 @@ export function createCompositionClient({
       }: WaitForCompositionTaskOptions,
       requestOptions?: RequestOptions,
     ): Promise<GetTaskResponse> {
+      requestOptions = withRequestId(transporter, requestOptions);
       let retryCount = 0;
 
       return createIterablePromise({

@@ -92,7 +92,8 @@ public class SearchClient extends ApiClient {
       getDefaultHosts(appId),
       Duration.ofMillis(2000L),
       Duration.ofMillis(5000L),
-      Duration.ofMillis(30000L)
+      Duration.ofMillis(30000L),
+      true
     );
   }
 
@@ -12454,8 +12455,10 @@ public class SearchClient extends ApiClient {
     IntUnaryOperator timeout,
     RequestOptions requestOptions
   ) {
+    final RequestOptions helperRequestOptions = withRequestId(requestOptions);
+
     return TaskUtils.retryUntil(
-      () -> this.getTask(indexName, taskID, requestOptions),
+      () -> this.getTask(indexName, taskID, helperRequestOptions),
       (GetTaskResponse task) -> task.getStatus() == TaskStatus.PUBLISHED,
       maxRetries,
       timeout
@@ -12508,8 +12511,10 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions. (optional)
    */
   public GetTaskResponse waitForAppTask(Long taskID, int maxRetries, IntUnaryOperator timeout, RequestOptions requestOptions) {
+    final RequestOptions helperRequestOptions = withRequestId(requestOptions);
+
     return TaskUtils.retryUntil(
-      () -> this.getAppTask(taskID, requestOptions),
+      () -> this.getAppTask(taskID, helperRequestOptions),
       (GetTaskResponse task) -> task.getStatus() == TaskStatus.PUBLISHED,
       maxRetries,
       timeout
@@ -12569,6 +12574,8 @@ public class SearchClient extends ApiClient {
     IntUnaryOperator timeout,
     RequestOptions requestOptions
   ) {
+    final RequestOptions helperRequestOptions = withRequestId(requestOptions);
+
     if (operation == ApiKeyOperation.UPDATE) {
       if (apiKey == null) {
         throw new AlgoliaRuntimeException("`apiKey` is required when waiting for an `update` operation.");
@@ -12576,7 +12583,7 @@ public class SearchClient extends ApiClient {
 
       // when updating an api key, we poll the api until we receive a different key
       return TaskUtils.retryUntil(
-        () -> this.getApiKey(key, requestOptions),
+        () -> this.getApiKey(key, helperRequestOptions),
         (GetApiKeyResponse respKey) -> {
           // we need to convert to an ApiKey object to use the `equals` method
           ApiKey sameType = new ApiKey()
@@ -12599,7 +12606,7 @@ public class SearchClient extends ApiClient {
     return TaskUtils.retryUntil(
       () -> {
         try {
-          return this.getApiKey(key, requestOptions);
+          return this.getApiKey(key, helperRequestOptions);
         } catch (AlgoliaApiException e) {
           if (e.getStatusCode() == 404) {
             return null;
@@ -12733,6 +12740,7 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions. (optional)
    */
   public <T> Iterable<T> browseObjects(String indexName, BrowseParamsObject params, Class<T> innerType, RequestOptions requestOptions) {
+    final RequestOptions helperRequestOptions = withRequestId(requestOptions);
     final Holder<String> currentCursor = new Holder<>();
 
     if (params.getHitsPerPage() == null) {
@@ -12741,7 +12749,7 @@ public class SearchClient extends ApiClient {
 
     return AlgoliaIterableHelper.createIterable(
       () -> {
-        BrowseResponse<T> response = this.browse(indexName, params, innerType, requestOptions);
+        BrowseResponse<T> response = this.browse(indexName, params, innerType, helperRequestOptions);
         params.setCursor(response.getCursor());
         currentCursor.value = response.getCursor();
         return response.getHits().iterator();
@@ -12780,13 +12788,14 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions. (optional)
    */
   public Iterable<SynonymHit> browseSynonyms(String indexName, SearchSynonymsParams params, RequestOptions requestOptions) {
+    final RequestOptions helperRequestOptions = withRequestId(requestOptions);
     final Holder<Integer> currentPage = new Holder<>(0);
     final int hitsPerPage = 1000;
     params.setHitsPerPage(hitsPerPage);
 
     return AlgoliaIterableHelper.createIterable(
       () -> {
-        SearchSynonymsResponse response = this.searchSynonyms(indexName, params.setPage(currentPage.value), requestOptions);
+        SearchSynonymsResponse response = this.searchSynonyms(indexName, params.setPage(currentPage.value), helperRequestOptions);
         currentPage.value = response.getHits().size() < hitsPerPage ? null : currentPage.value + 1;
         return response.getHits().iterator();
       },
@@ -12822,13 +12831,14 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions. (optional)
    */
   public Iterable<Rule> browseRules(String indexName, SearchRulesParams params, RequestOptions requestOptions) {
+    final RequestOptions helperRequestOptions = withRequestId(requestOptions);
     final Holder<Integer> currentPage = new Holder<>(0);
     final int hitsPerPage = 1000;
     params.setHitsPerPage(hitsPerPage);
 
     return AlgoliaIterableHelper.createIterable(
       () -> {
-        SearchRulesResponse response = this.searchRules(indexName, params.setPage(currentPage.value), requestOptions);
+        SearchRulesResponse response = this.searchRules(indexName, params.setPage(currentPage.value), helperRequestOptions);
         currentPage.value = response.getHits().size() < hitsPerPage ? null : currentPage.value + 1;
         return response.getHits().iterator();
       },
@@ -13086,13 +13096,14 @@ public class SearchClient extends ApiClient {
     RequestOptions requestOptions,
     ChunkedHelperOptions chunkedOptions
   ) {
+    final RequestOptions helperRequestOptions = withRequestId(requestOptions);
     int maxRetries = chunkedOptions != null ? chunkedOptions.getMaxRetries() : TaskUtils.DEFAULT_MAX_RETRIES;
     List<BatchResponse> responses = new ArrayList<>();
     List<BatchRequest> requests = new ArrayList<>();
 
     for (T item : objects) {
       if (requests.size() == batchSize) {
-        BatchResponse batch = batch(indexName, new BatchWriteParams().setRequests(requests), requestOptions);
+        BatchResponse batch = batch(indexName, new BatchWriteParams().setRequests(requests), helperRequestOptions);
         responses.add(batch);
         requests.clear();
       }
@@ -13101,12 +13112,14 @@ public class SearchClient extends ApiClient {
     }
 
     if (requests.size() > 0) {
-      BatchResponse batch = batch(indexName, new BatchWriteParams().setRequests(requests), requestOptions);
+      BatchResponse batch = batch(indexName, new BatchWriteParams().setRequests(requests), helperRequestOptions);
       responses.add(batch);
     }
 
     if (waitForTasks) {
-      responses.forEach(response -> waitForTask(indexName, response.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions));
+      responses.forEach(response ->
+        waitForTask(indexName, response.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, helperRequestOptions)
+      );
     }
 
     return responses;
@@ -13318,6 +13331,20 @@ public class SearchClient extends ApiClient {
    */
   public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects, boolean waitForTasks, RequestOptions requestOptions) {
     return saveObjects(indexName, objects, waitForTasks, 1000, requestOptions);
+  }
+
+  /**
+   * Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used
+   * under the hood, which creates a `batch` requests with at most 1000 objects in it.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param waitForTasks Whether or not we should wait until every `batch` tasks has been processed.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   */
+  public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects, boolean waitForTasks, int batchSize) {
+    return saveObjects(indexName, objects, waitForTasks, batchSize, null);
   }
 
   /**
@@ -13869,6 +13896,8 @@ public class SearchClient extends ApiClient {
     RequestOptions requestOptions,
     ChunkedHelperOptions chunkedOptions
   ) {
+    final RequestOptions helperRequestOptions = withRequestId(requestOptions);
+
     if (objects instanceof java.util.Collection ? ((java.util.Collection<?>) objects).isEmpty() : !objects.iterator().hasNext()) {
       java.util.logging.Logger.getLogger(this.getClass().getName()).warning(
         "replaceAllObjects was called with an empty list of objects, which will delete all" +
@@ -13904,7 +13933,7 @@ public class SearchClient extends ApiClient {
       UpdatedAtResponse copyOperationResponse = operationIndex(
         indexName,
         new OperationIndexParams().setOperation(OperationType.COPY).setDestination(tmpIndexName).setScope(scopes),
-        requestOptions
+        helperRequestOptions
       );
 
       // Save new objects
@@ -13914,33 +13943,33 @@ public class SearchClient extends ApiClient {
         Action.ADD_OBJECT,
         true,
         batchSize,
-        requestOptions,
+        helperRequestOptions,
         chunkedOptions
       );
 
-      waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
+      waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, helperRequestOptions);
 
       copyOperationResponse = operationIndex(
         indexName,
         new OperationIndexParams().setOperation(OperationType.COPY).setDestination(tmpIndexName).setScope(scopes),
-        requestOptions
+        helperRequestOptions
       );
-      waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
+      waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, helperRequestOptions);
 
       // Move temporary index to source index
       UpdatedAtResponse moveOperationResponse = operationIndex(
         tmpIndexName,
         new OperationIndexParams().setOperation(OperationType.MOVE).setDestination(indexName),
-        requestOptions
+        helperRequestOptions
       );
-      waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
+      waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, helperRequestOptions);
 
       return new ReplaceAllObjectsResponse()
         .setCopyOperationResponse(copyOperationResponse)
         .setBatchResponses(batchResponses)
         .setMoveOperationResponse(moveOperationResponse);
     } catch (Exception e) {
-      deleteIndex(tmpIndexName);
+      deleteIndex(tmpIndexName, helperRequestOptions);
 
       throw e;
     }
@@ -14079,6 +14108,8 @@ public class SearchClient extends ApiClient {
       );
     }
 
+    final RequestOptions helperRequestOptions = withRequestId(requestOptions);
+
     if (objects instanceof java.util.Collection ? ((java.util.Collection<?>) objects).isEmpty() : !objects.iterator().hasNext()) {
       java.util.logging.Logger.getLogger(this.getClass().getName()).warning(
         "replaceAllObjectsWithTransformation was called with an empty list of objects, which" +
@@ -14114,7 +14145,7 @@ public class SearchClient extends ApiClient {
       UpdatedAtResponse copyOperationResponse = operationIndex(
         indexName,
         new OperationIndexParams().setOperation(OperationType.COPY).setDestination(tmpIndexName).setScope(scopes),
-        requestOptions
+        helperRequestOptions
       );
 
       // Save new objects
@@ -14129,29 +14160,29 @@ public class SearchClient extends ApiClient {
         chunkedOptions
       );
 
-      waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
+      waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, helperRequestOptions);
 
       copyOperationResponse = operationIndex(
         indexName,
         new OperationIndexParams().setOperation(OperationType.COPY).setDestination(tmpIndexName).setScope(scopes),
-        requestOptions
+        helperRequestOptions
       );
-      waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
+      waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, helperRequestOptions);
 
       // Move temporary index to source index
       UpdatedAtResponse moveOperationResponse = operationIndex(
         tmpIndexName,
         new OperationIndexParams().setOperation(OperationType.MOVE).setDestination(indexName),
-        requestOptions
+        helperRequestOptions
       );
-      waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
+      waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, helperRequestOptions);
 
       return new ReplaceAllObjectsWithTransformationResponse()
         .setCopyOperationResponse(copyOperationResponse)
         .setWatchResponses(ingestionResponseToSearchResponse(watchResponses))
         .setMoveOperationResponse(moveOperationResponse);
     } catch (Exception e) {
-      deleteIndex(tmpIndexName);
+      deleteIndex(tmpIndexName, helperRequestOptions);
 
       throw e;
     }
@@ -14260,8 +14291,19 @@ public class SearchClient extends ApiClient {
   }
 
   public boolean indexExists(String indexName) {
+    return indexExists(indexName, null);
+  }
+
+  /**
+   * Helper: Checks if the given `indexName` exists.
+   *
+   * @param indexName The index to look for.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public boolean indexExists(String indexName, RequestOptions requestOptions) {
     try {
-      getSettings(indexName);
+      getSettings(indexName, requestOptions);
     } catch (AlgoliaApiException e) {
       if (e.getStatusCode() == 404) {
         return false;

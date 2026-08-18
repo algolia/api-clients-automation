@@ -28,13 +28,16 @@ public sealed class QuerySuggestionsConfig : AlgoliaConfig
   /// <param name="apiKey">Your API Key</param>
   /// <param name="region">Targeted region </param>
   public QuerySuggestionsConfig(string appId, string apiKey, string region)
-    : base(appId, apiKey, "QuerySuggestions", "7.46.3")
+    : base(appId, apiKey, "QuerySuggestions", "7.47.0")
   {
     DefaultHosts = GetDefaultHosts(region);
     Compression = CompressionType.None;
     ReadTimeout = TimeSpan.FromMilliseconds(5000);
     WriteTimeout = TimeSpan.FromMilliseconds(30000);
     ConnectTimeout = TimeSpan.FromMilliseconds(2000);
+    // Request-ID tracing is only supported by the search, recommend and
+    // composition APIs.
+    RequestIdEnabled = false;
   }
 
   private static List<StatefulHost> GetDefaultHosts(string region)

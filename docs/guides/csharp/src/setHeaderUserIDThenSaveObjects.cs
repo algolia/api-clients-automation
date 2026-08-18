@@ -25,7 +25,9 @@ class SetHeaderUserIDThenSaveObjects
           playlists,
           false,
           1000,
-          new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", playlistUserID).Build()
+          options: new RequestOptionBuilder()
+            .AddExtraHeader("X-Algolia-User-ID", playlistUserID)
+            .Build()
         );
       }
       catch (Exception e)

@@ -139,7 +139,7 @@ final class IngestionClientClientTests: XCTestCase {
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
-        let pattern = "^Algolia for Swift \\(9.46.3\\).*"
+        let pattern = "^Algolia for Swift \\(9.47.0\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
@@ -196,6 +196,24 @@ final class IngestionClientClientTests: XCTestCase {
         } catch {
             XCTAssertEqual(error.localizedDescription, "`region` is required and must be one of the following: eu, us")
         }
+    }
+
+    /// the ingestion client sends no Request-ID
+    func testRequestIdTest0() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            region: Region(rawValue: "us"),
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6694")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.customGet(path: "1/test/request-id/negative/swift")
+
+        XTCJSONEquals(received: response, expected: "{\"status\":\"ok\"}")
     }
 
     /// switch API key

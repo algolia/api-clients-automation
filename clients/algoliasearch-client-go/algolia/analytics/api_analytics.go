@@ -10,6 +10,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/errs"
+
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
@@ -238,7 +240,7 @@ func (c *APIClient) CustomDelete(r ApiCustomDeleteRequest, opts ...RequestOption
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -374,7 +376,7 @@ func (c *APIClient) CustomGet(r ApiCustomGetRequest, opts ...RequestOption) (*ma
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -537,7 +539,7 @@ func (c *APIClient) CustomPost(r ApiCustomPostRequest, opts ...RequestOption) (*
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -700,7 +702,7 @@ func (c *APIClient) CustomPut(r ApiCustomPutRequest, opts ...RequestOption) (*ma
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -914,7 +916,7 @@ func (c *APIClient) GetAddToCartRate(r ApiGetAddToCartRateRequest, opts ...Reque
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -1120,7 +1122,7 @@ func (c *APIClient) GetAverageClickPosition(r ApiGetAverageClickPositionRequest,
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -1320,7 +1322,7 @@ func (c *APIClient) GetClickPositions(r ApiGetClickPositionsRequest, opts ...Req
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -1526,7 +1528,7 @@ func (c *APIClient) GetClickThroughRate(r ApiGetClickThroughRateRequest, opts ..
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -1732,7 +1734,7 @@ func (c *APIClient) GetConversionRate(r ApiGetConversionRateRequest, opts ...Req
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -1931,7 +1933,7 @@ func (c *APIClient) GetNoClickRate(r ApiGetNoClickRateRequest, opts ...RequestOp
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -2130,7 +2132,88 @@ func (c *APIClient) GetNoResultsRate(r ApiGetNoResultsRateRequest, opts ...Reque
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
+	}
+
+	return returnValue, nil
+}
+
+/*
+GetPatternsFields calls the API and returns the raw response from it.
+
+	**Beta**: this endpoint is under active development and may change without notice.
+
+Returns the static catalog of analytics fields, grouped by domain and usage (metrics, filters,
+groups, distributions). No authentication is required. Use it to discover valid `(domain, kind)`
+pairs before building the other `/3/patterns/*` queries; two fields are combinable in one query
+only when their `roots` intersect. Each entry's `requires` lists the ACLs needed when that field
+is actually used in a query.
+
+	Request can be constructed by NewApiGetPatternsFieldsRequest with parameters below.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
+*/
+func (c *APIClient) GetPatternsFieldsWithHTTPInfo(opts ...RequestOption) (*http.Response, []byte, error) {
+	requestPath := "/3/patterns/fields"
+
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.bodyParams, conf.headerParams, conf.queryParams)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return c.callAPI(req, false, conf.timeouts)
+}
+
+/*
+GetPatternsFields casts the HTTP response body to a defined struct.
+
+**Beta**: this endpoint is under active development and may change without notice.
+
+Returns the static catalog of analytics fields, grouped by domain and usage (metrics, filters,
+groups, distributions). No authentication is required. Use it to discover valid `(domain, kind)`
+pairs before building the other `/3/patterns/*` queries; two fields are combinable in one query
+only when their `roots` intersect. Each entry's `requires` lists the ACLs needed when that field
+is actually used in a query.
+
+Request can be constructed by NewApiGetPatternsFieldsRequest with parameters below.
+
+	@return Catalog
+*/
+func (c *APIClient) GetPatternsFields(opts ...RequestOption) (*Catalog, error) {
+	var returnValue *Catalog
+
+	res, resBody, err := c.GetPatternsFieldsWithHTTPInfo(opts...)
+	if err != nil {
+		return returnValue, err
+	}
+
+	if res == nil {
+		return returnValue, reportError("res is nil")
+	}
+	defer res.Body.Close()
+
+	if res.StatusCode >= 300 {
+		return returnValue, c.decodeError(res, resBody)
+	}
+
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -2344,7 +2427,7 @@ func (c *APIClient) GetPurchaseRate(r ApiGetPurchaseRateRequest, opts ...Request
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -2548,7 +2631,7 @@ func (c *APIClient) GetRevenue(r ApiGetRevenueRequest, opts ...RequestOption) (*
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -2744,7 +2827,7 @@ func (c *APIClient) GetSearchesCount(r ApiGetSearchesCountRequest, opts ...Reque
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -2988,7 +3071,7 @@ func (c *APIClient) GetSearchesNoClicks(r ApiGetSearchesNoClicksRequest, opts ..
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -3228,7 +3311,7 @@ func (c *APIClient) GetSearchesNoResults(r ApiGetSearchesNoResultsRequest, opts 
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -3352,7 +3435,7 @@ func (c *APIClient) GetStatus(r ApiGetStatusRequest, opts ...RequestOption) (*Ge
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -3592,7 +3675,7 @@ func (c *APIClient) GetTopCountries(r ApiGetTopCountriesRequest, opts ...Request
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -3860,7 +3943,7 @@ func (c *APIClient) GetTopFilterAttributes(r ApiGetTopFilterAttributesRequest, o
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -4150,7 +4233,7 @@ func (c *APIClient) GetTopFilterForAttribute(r ApiGetTopFilterForAttributeReques
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -4418,7 +4501,7 @@ func (c *APIClient) GetTopFiltersNoResults(r ApiGetTopFiltersNoResultsRequest, o
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -4778,7 +4861,7 @@ func (c *APIClient) GetTopHits(r ApiGetTopHitsRequest, opts ...RequestOption) (*
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -5166,7 +5249,7 @@ func (c *APIClient) GetTopSearches(r ApiGetTopSearchesRequest, opts ...RequestOp
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -5372,7 +5455,642 @@ func (c *APIClient) GetUsersCount(r ApiGetUsersCountRequest, opts ...RequestOpti
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
+	}
+
+	return returnValue, nil
+}
+
+func (r *ApiQueryPatternsDistributionRequest) UnmarshalJSON(b []byte) error {
+	req := map[string]json.RawMessage{}
+
+	err := json.Unmarshal(b, &req)
+	if err != nil {
+		return fmt.Errorf("cannot unmarshal request: %w", err)
+	}
+
+	if v, ok := req["distributionPayload"]; ok {
+		err = json.Unmarshal(v, &r.distributionPayload)
+		if err != nil {
+			err = json.Unmarshal(b, &r.distributionPayload)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal distributionPayload: %w", err)
+			}
+		}
+	} else {
+		err = json.Unmarshal(b, &r.distributionPayload)
+		if err != nil {
+			return fmt.Errorf("cannot unmarshal body parameter distributionPayload: %w", err)
+		}
+	}
+
+	if v, ok := req["index"]; ok {
+		err = json.Unmarshal(v, &r.index)
+		if err != nil {
+			err = json.Unmarshal(b, &r.index)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal index: %w", err)
+			}
+		}
+	}
+
+	return nil
+}
+
+// ApiQueryPatternsDistributionRequest represents the request with all the parameters for the API call.
+type ApiQueryPatternsDistributionRequest struct {
+	distributionPayload *DistributionPayload
+	index               *string
+}
+
+// NewApiQueryPatternsDistributionRequest creates an instance of the ApiQueryPatternsDistributionRequest to be used for the API call.
+func (c *APIClient) NewApiQueryPatternsDistributionRequest(distributionPayload *DistributionPayload) ApiQueryPatternsDistributionRequest {
+	return ApiQueryPatternsDistributionRequest{
+		distributionPayload: distributionPayload,
+	}
+}
+
+// WithIndex adds the index to the ApiQueryPatternsDistributionRequest and returns the request for chaining.
+func (r ApiQueryPatternsDistributionRequest) WithIndex(index string) ApiQueryPatternsDistributionRequest {
+	r.index = &index
+
+	return r
+}
+
+/*
+QueryPatternsDistribution calls the API and returns the raw response from it.
+
+	**Beta**: this endpoint is under active development and may change without notice.
+
+Buckets one or more numeric fields into histograms and returns an object keyed by `histogram<Field>`,
+each mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is
+optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+
+	    Required API Key ACLs:
+	    - analytics
+
+	Request can be constructed by NewApiQueryPatternsDistributionRequest with parameters below.
+	  @param distributionPayload DistributionPayload
+
+
+	  @param index string - Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted keys.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
+*/
+func (c *APIClient) QueryPatternsDistributionWithHTTPInfo(
+	r ApiQueryPatternsDistributionRequest,
+	opts ...RequestOption,
+) (*http.Response, []byte, error) {
+	requestPath := "/3/patterns/distribution"
+
+	if r.distributionPayload == nil {
+		return nil, nil, reportError("Parameter `distributionPayload` is required when calling `QueryPatternsDistribution`.")
+	}
+
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	if !utils.IsNilOrEmpty(r.index) {
+		conf.queryParams.Set("index", utils.QueryParameterToString(*r.index))
+	}
+
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	// body params
+	postBody = r.distributionPayload
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.bodyParams, conf.headerParams, conf.queryParams)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return c.callAPI(req, false, conf.timeouts)
+}
+
+/*
+QueryPatternsDistribution casts the HTTP response body to a defined struct.
+
+**Beta**: this endpoint is under active development and may change without notice.
+
+Buckets one or more numeric fields into histograms and returns an object keyed by `histogram<Field>`,
+each mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is
+optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiQueryPatternsDistributionRequest with parameters below.
+
+	@param distributionPayload DistributionPayload
+
+
+	@param index string - Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted keys.
+	@return map[string]any
+*/
+func (c *APIClient) QueryPatternsDistribution(r ApiQueryPatternsDistributionRequest, opts ...RequestOption) (*map[string]any, error) {
+	var returnValue *map[string]any
+
+	res, resBody, err := c.QueryPatternsDistributionWithHTTPInfo(r, opts...)
+	if err != nil {
+		return returnValue, err
+	}
+
+	if res == nil {
+		return returnValue, reportError("res is nil")
+	}
+	defer res.Body.Close()
+
+	if res.StatusCode >= 300 {
+		return returnValue, c.decodeError(res, resBody)
+	}
+
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
+	}
+
+	return returnValue, nil
+}
+
+func (r *ApiQueryPatternsScalarRequest) UnmarshalJSON(b []byte) error {
+	req := map[string]json.RawMessage{}
+
+	err := json.Unmarshal(b, &req)
+	if err != nil {
+		return fmt.Errorf("cannot unmarshal request: %w", err)
+	}
+
+	if v, ok := req["scalarPayload"]; ok {
+		err = json.Unmarshal(v, &r.scalarPayload)
+		if err != nil {
+			err = json.Unmarshal(b, &r.scalarPayload)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal scalarPayload: %w", err)
+			}
+		}
+	} else {
+		err = json.Unmarshal(b, &r.scalarPayload)
+		if err != nil {
+			return fmt.Errorf("cannot unmarshal body parameter scalarPayload: %w", err)
+		}
+	}
+
+	if v, ok := req["index"]; ok {
+		err = json.Unmarshal(v, &r.index)
+		if err != nil {
+			err = json.Unmarshal(b, &r.index)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal index: %w", err)
+			}
+		}
+	}
+
+	return nil
+}
+
+// ApiQueryPatternsScalarRequest represents the request with all the parameters for the API call.
+type ApiQueryPatternsScalarRequest struct {
+	scalarPayload *ScalarPayload
+	index         *string
+}
+
+// NewApiQueryPatternsScalarRequest creates an instance of the ApiQueryPatternsScalarRequest to be used for the API call.
+func (c *APIClient) NewApiQueryPatternsScalarRequest(scalarPayload *ScalarPayload) ApiQueryPatternsScalarRequest {
+	return ApiQueryPatternsScalarRequest{
+		scalarPayload: scalarPayload,
+	}
+}
+
+// WithIndex adds the index to the ApiQueryPatternsScalarRequest and returns the request for chaining.
+func (r ApiQueryPatternsScalarRequest) WithIndex(index string) ApiQueryPatternsScalarRequest {
+	r.index = &index
+
+	return r
+}
+
+/*
+QueryPatternsScalar calls the API and returns the raw response from it.
+
+	**Beta**: this endpoint is under active development and may change without notice.
+
+Aggregates the requested `metrics` over the whole period and returns a single object keyed by metric
+kind. `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per
+domain with `/3/patterns/fields`.
+
+	    Required API Key ACLs:
+	    - analytics
+
+	Request can be constructed by NewApiQueryPatternsScalarRequest with parameters below.
+	  @param scalarPayload ScalarPayload
+
+
+	  @param index string - Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted keys.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
+*/
+func (c *APIClient) QueryPatternsScalarWithHTTPInfo(r ApiQueryPatternsScalarRequest, opts ...RequestOption) (*http.Response, []byte, error) {
+	requestPath := "/3/patterns/scalar"
+
+	if r.scalarPayload == nil {
+		return nil, nil, reportError("Parameter `scalarPayload` is required when calling `QueryPatternsScalar`.")
+	}
+
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	if !utils.IsNilOrEmpty(r.index) {
+		conf.queryParams.Set("index", utils.QueryParameterToString(*r.index))
+	}
+
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	// body params
+	postBody = r.scalarPayload
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.bodyParams, conf.headerParams, conf.queryParams)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return c.callAPI(req, false, conf.timeouts)
+}
+
+/*
+QueryPatternsScalar casts the HTTP response body to a defined struct.
+
+**Beta**: this endpoint is under active development and may change without notice.
+
+Aggregates the requested `metrics` over the whole period and returns a single object keyed by metric
+kind. `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per
+domain with `/3/patterns/fields`.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiQueryPatternsScalarRequest with parameters below.
+
+	@param scalarPayload ScalarPayload
+
+
+	@param index string - Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted keys.
+	@return map[string]any
+*/
+func (c *APIClient) QueryPatternsScalar(r ApiQueryPatternsScalarRequest, opts ...RequestOption) (*map[string]any, error) {
+	var returnValue *map[string]any
+
+	res, resBody, err := c.QueryPatternsScalarWithHTTPInfo(r, opts...)
+	if err != nil {
+		return returnValue, err
+	}
+
+	if res == nil {
+		return returnValue, reportError("res is nil")
+	}
+	defer res.Body.Close()
+
+	if res.StatusCode >= 300 {
+		return returnValue, c.decodeError(res, resBody)
+	}
+
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
+	}
+
+	return returnValue, nil
+}
+
+func (r *ApiQueryPatternsTableRequest) UnmarshalJSON(b []byte) error {
+	req := map[string]json.RawMessage{}
+
+	err := json.Unmarshal(b, &req)
+	if err != nil {
+		return fmt.Errorf("cannot unmarshal request: %w", err)
+	}
+
+	if v, ok := req["tablePayload"]; ok {
+		err = json.Unmarshal(v, &r.tablePayload)
+		if err != nil {
+			err = json.Unmarshal(b, &r.tablePayload)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal tablePayload: %w", err)
+			}
+		}
+	} else {
+		err = json.Unmarshal(b, &r.tablePayload)
+		if err != nil {
+			return fmt.Errorf("cannot unmarshal body parameter tablePayload: %w", err)
+		}
+	}
+
+	if v, ok := req["index"]; ok {
+		err = json.Unmarshal(v, &r.index)
+		if err != nil {
+			err = json.Unmarshal(b, &r.index)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal index: %w", err)
+			}
+		}
+	}
+
+	return nil
+}
+
+// ApiQueryPatternsTableRequest represents the request with all the parameters for the API call.
+type ApiQueryPatternsTableRequest struct {
+	tablePayload *TablePayload
+	index        *string
+}
+
+// NewApiQueryPatternsTableRequest creates an instance of the ApiQueryPatternsTableRequest to be used for the API call.
+func (c *APIClient) NewApiQueryPatternsTableRequest(tablePayload *TablePayload) ApiQueryPatternsTableRequest {
+	return ApiQueryPatternsTableRequest{
+		tablePayload: tablePayload,
+	}
+}
+
+// WithIndex adds the index to the ApiQueryPatternsTableRequest and returns the request for chaining.
+func (r ApiQueryPatternsTableRequest) WithIndex(index string) ApiQueryPatternsTableRequest {
+	r.index = &index
+
+	return r
+}
+
+/*
+QueryPatternsTable calls the API and returns the raw response from it.
+
+	**Beta**: this endpoint is under active development and may change without notice.
+
+Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;
+`groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy` is set.
+Discover valid field kinds per domain with `/3/patterns/fields`.
+
+	    Required API Key ACLs:
+	    - analytics
+
+	Request can be constructed by NewApiQueryPatternsTableRequest with parameters below.
+	  @param tablePayload TablePayload
+
+
+	  @param index string - Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted keys.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
+*/
+func (c *APIClient) QueryPatternsTableWithHTTPInfo(r ApiQueryPatternsTableRequest, opts ...RequestOption) (*http.Response, []byte, error) {
+	requestPath := "/3/patterns/table"
+
+	if r.tablePayload == nil {
+		return nil, nil, reportError("Parameter `tablePayload` is required when calling `QueryPatternsTable`.")
+	}
+
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	if !utils.IsNilOrEmpty(r.index) {
+		conf.queryParams.Set("index", utils.QueryParameterToString(*r.index))
+	}
+
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	// body params
+	postBody = r.tablePayload
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.bodyParams, conf.headerParams, conf.queryParams)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return c.callAPI(req, false, conf.timeouts)
+}
+
+/*
+QueryPatternsTable casts the HTTP response body to a defined struct.
+
+**Beta**: this endpoint is under active development and may change without notice.
+
+Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;
+`groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy` is set.
+Discover valid field kinds per domain with `/3/patterns/fields`.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiQueryPatternsTableRequest with parameters below.
+
+	@param tablePayload TablePayload
+
+
+	@param index string - Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted keys.
+	@return TableResponse
+*/
+func (c *APIClient) QueryPatternsTable(r ApiQueryPatternsTableRequest, opts ...RequestOption) (*TableResponse, error) {
+	var returnValue *TableResponse
+
+	res, resBody, err := c.QueryPatternsTableWithHTTPInfo(r, opts...)
+	if err != nil {
+		return returnValue, err
+	}
+
+	if res == nil {
+		return returnValue, reportError("res is nil")
+	}
+	defer res.Body.Close()
+
+	if res.StatusCode >= 300 {
+		return returnValue, c.decodeError(res, resBody)
+	}
+
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
+	}
+
+	return returnValue, nil
+}
+
+func (r *ApiQueryPatternsTimeseriesRequest) UnmarshalJSON(b []byte) error {
+	req := map[string]json.RawMessage{}
+
+	err := json.Unmarshal(b, &req)
+	if err != nil {
+		return fmt.Errorf("cannot unmarshal request: %w", err)
+	}
+
+	if v, ok := req["timeseriesPayload"]; ok {
+		err = json.Unmarshal(v, &r.timeseriesPayload)
+		if err != nil {
+			err = json.Unmarshal(b, &r.timeseriesPayload)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal timeseriesPayload: %w", err)
+			}
+		}
+	} else {
+		err = json.Unmarshal(b, &r.timeseriesPayload)
+		if err != nil {
+			return fmt.Errorf("cannot unmarshal body parameter timeseriesPayload: %w", err)
+		}
+	}
+
+	if v, ok := req["index"]; ok {
+		err = json.Unmarshal(v, &r.index)
+		if err != nil {
+			err = json.Unmarshal(b, &r.index)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal index: %w", err)
+			}
+		}
+	}
+
+	return nil
+}
+
+// ApiQueryPatternsTimeseriesRequest represents the request with all the parameters for the API call.
+type ApiQueryPatternsTimeseriesRequest struct {
+	timeseriesPayload *TimeseriesPayload
+	index             *string
+}
+
+// NewApiQueryPatternsTimeseriesRequest creates an instance of the ApiQueryPatternsTimeseriesRequest to be used for the API call.
+func (c *APIClient) NewApiQueryPatternsTimeseriesRequest(timeseriesPayload *TimeseriesPayload) ApiQueryPatternsTimeseriesRequest {
+	return ApiQueryPatternsTimeseriesRequest{
+		timeseriesPayload: timeseriesPayload,
+	}
+}
+
+// WithIndex adds the index to the ApiQueryPatternsTimeseriesRequest and returns the request for chaining.
+func (r ApiQueryPatternsTimeseriesRequest) WithIndex(index string) ApiQueryPatternsTimeseriesRequest {
+	r.index = &index
+
+	return r
+}
+
+/*
+QueryPatternsTimeseries calls the API and returns the raw response from it.
+
+	**Beta**: this endpoint is under active development and may change without notice.
+
+Returns one time series per `groupBy` combination, each with period `totals` and a per-day metric
+breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional. Discover
+valid field kinds per domain with `/3/patterns/fields`.
+
+	    Required API Key ACLs:
+	    - analytics
+
+	Request can be constructed by NewApiQueryPatternsTimeseriesRequest with parameters below.
+	  @param timeseriesPayload TimeseriesPayload
+
+
+	  @param index string - Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted keys.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
+*/
+func (c *APIClient) QueryPatternsTimeseriesWithHTTPInfo(r ApiQueryPatternsTimeseriesRequest, opts ...RequestOption) (*http.Response, []byte, error) {
+	requestPath := "/3/patterns/timeseries"
+
+	if r.timeseriesPayload == nil {
+		return nil, nil, reportError("Parameter `timeseriesPayload` is required when calling `QueryPatternsTimeseries`.")
+	}
+
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	if !utils.IsNilOrEmpty(r.index) {
+		conf.queryParams.Set("index", utils.QueryParameterToString(*r.index))
+	}
+
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	// body params
+	postBody = r.timeseriesPayload
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.bodyParams, conf.headerParams, conf.queryParams)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return c.callAPI(req, false, conf.timeouts)
+}
+
+/*
+QueryPatternsTimeseries casts the HTTP response body to a defined struct.
+
+**Beta**: this endpoint is under active development and may change without notice.
+
+Returns one time series per `groupBy` combination, each with period `totals` and a per-day metric
+breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional. Discover
+valid field kinds per domain with `/3/patterns/fields`.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiQueryPatternsTimeseriesRequest with parameters below.
+
+	@param timeseriesPayload TimeseriesPayload
+
+
+	@param index string - Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted keys.
+	@return TimeseriesResponse
+*/
+func (c *APIClient) QueryPatternsTimeseries(r ApiQueryPatternsTimeseriesRequest, opts ...RequestOption) (*TimeseriesResponse, error) {
+	var returnValue *TimeseriesResponse
+
+	res, resBody, err := c.QueryPatternsTimeseriesWithHTTPInfo(r, opts...)
+	if err != nil {
+		return returnValue, err
+	}
+
+	if res == nil {
+		return returnValue, reportError("res is nil")
+	}
+	defer res.Body.Close()
+
+	if res.StatusCode >= 300 {
+		return returnValue, c.decodeError(res, resBody)
+	}
+
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil

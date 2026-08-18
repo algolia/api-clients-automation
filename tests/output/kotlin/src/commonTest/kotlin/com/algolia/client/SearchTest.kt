@@ -447,7 +447,7 @@ class SearchTest {
         customPost(path = "1/test")
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.46.0\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.47.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),
@@ -1555,6 +1555,317 @@ class SearchTest {
         )
       },
     )
+  }
+
+  @Test
+  fun `the Request-ID stays stable across retries`() = runTest {
+    val client =
+      SearchClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6694,
+                ),
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6695,
+                ),
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6696,
+                ),
+              )
+          ),
+      )
+
+    client.runTest(
+      call = {
+        customPost(path = "1/test/request-id/retry/kotlin")
+      },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """{"status":"ok"}""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `each call mints a fresh Request-ID`() = runTest {
+    val client =
+      SearchClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6694,
+                )
+              )
+          ),
+      )
+
+    client.runTest(
+      call = {
+        customGet(path = "1/test/request-id/fresh/kotlin")
+      },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """{"status":"ok"}""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
+      },
+    )
+
+    client.runTest(
+      call = {
+        customGet(path = "1/test/request-id/fresh/kotlin")
+      },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """{"status":"ok"}""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `a caller-supplied Request-ID is never overwritten`() = runTest {
+    val client =
+      SearchClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6694,
+                )
+              )
+          ),
+      )
+
+    client.runTest(
+      call = {
+        customGet(
+          path = "1/test/request-id/caller/kotlin",
+          requestOptions =
+            RequestOptions(
+              headers =
+                buildMap {
+                  put("request-id", "CtsUserProvided")
+                }
+            ),
+        )
+      },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """{"requestId":"CtsUserProvided"}""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `every request of one helper call shares one Request-ID`() = runTest {
+    val client =
+      SearchClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6694,
+                )
+              )
+          ),
+      )
+
+    client.runTest(
+      call = {
+        saveObjects(
+          indexName = "cts_request_id_kotlin",
+          objects =
+            listOf(
+              buildJsonObject {
+                put(
+                  "objectID",
+                  JsonPrimitive("1"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Adam"),
+                )
+              },
+              buildJsonObject {
+                put(
+                  "objectID",
+                  JsonPrimitive("2"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Benoit"),
+                )
+              },
+              buildJsonObject {
+                put(
+                  "objectID",
+                  JsonPrimitive("3"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Cyril"),
+                )
+              },
+              buildJsonObject {
+                put(
+                  "objectID",
+                  JsonPrimitive("4"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("David"),
+                )
+              },
+            ),
+          waitForTasks = true,
+          batchSize = 2,
+        )
+      },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """[{"taskID":42,"objectIDs":["1","2"]},{"taskID":42,"objectIDs":["3","4"]}]""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
+      },
+    )
+
+    client.runTest(
+      call = {
+        saveObjects(
+          indexName = "cts_request_id_kotlin",
+          objects =
+            listOf(
+              buildJsonObject {
+                put(
+                  "objectID",
+                  JsonPrimitive("5"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Eva"),
+                )
+              },
+              buildJsonObject {
+                put(
+                  "objectID",
+                  JsonPrimitive("6"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Fred"),
+                )
+              },
+              buildJsonObject {
+                put(
+                  "objectID",
+                  JsonPrimitive("7"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Gina"),
+                )
+              },
+              buildJsonObject {
+                put(
+                  "objectID",
+                  JsonPrimitive("8"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Hugo"),
+                )
+              },
+            ),
+          waitForTasks = true,
+          batchSize = 2,
+        )
+      },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """[{"taskID":42,"objectIDs":["5","6"]},{"taskID":42,"objectIDs":["7","8"]}]""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `client errors expose the Correlation-ID`() = runTest {
+    val client =
+      SearchClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6694,
+                )
+              )
+          ),
+      )
+
+    assertFails {
+        client.customGet(path = "1/test/request-id/error/kotlin")
+      }
+      .let { error ->
+        assertError(
+          error,
+          "Client request\\(GET http://%localhost%:6694/1/test/request-id/error/kotlin\\) invalid: 400 Bad Request. Text: \"\\{\"message\":\"request-id error test\"\\}\" \\(Correlation-ID: CtsFixedCorrelationId\\)"
+            .replace(
+              "%localhost%",
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+            ),
+        )
+      }
   }
 
   @Test

@@ -1,0 +1,271 @@
+[
+  {
+    "testName": "the Request-ID stays stable across retries",
+    "autoCreateClient": false,
+    "skipLanguages": ["php", "python", "ruby"],
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "port": 6694
+            },
+            {
+              "port": 6695
+            },
+            {
+              "port": 6696
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "customPost",
+        "parameters": {
+          "path": "1/test/request-id/retry/${{language}}"
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "status": "ok"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "each call mints a fresh Request-ID",
+    "autoCreateClient": false,
+    "skipLanguages": ["php", "python", "ruby"],
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "port": 6694
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "customGet",
+        "parameters": {
+          "path": "1/test/request-id/fresh/${{language}}"
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "status": "ok"
+          }
+        }
+      },
+      {
+        "type": "method",
+        "method": "customGet",
+        "parameters": {
+          "path": "1/test/request-id/fresh/${{language}}"
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "status": "ok"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "a caller-supplied Request-ID is never overwritten",
+    "autoCreateClient": false,
+    "skipLanguages": ["php", "python", "ruby"],
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "port": 6694
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "customGet",
+        "parameters": {
+          "path": "1/test/request-id/caller/${{language}}"
+        },
+        "requestOptions": {
+          "headers": {
+            "request-id": "CtsUserProvided"
+          }
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "requestId": "CtsUserProvided"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "every request of one helper call shares one Request-ID",
+    "autoCreateClient": false,
+    "skipLanguages": ["php", "python", "ruby"],
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "port": 6694
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "saveObjects",
+        "parameters": {
+          "indexName": "cts_request_id_${{language}}",
+          "objects": [
+            {
+              "objectID": "1",
+              "name": "Adam"
+            },
+            {
+              "objectID": "2",
+              "name": "Benoit"
+            },
+            {
+              "objectID": "3",
+              "name": "Cyril"
+            },
+            {
+              "objectID": "4",
+              "name": "David"
+            }
+          ],
+          "batchSize": 2,
+          "waitForTasks": true
+        },
+        "expected": {
+          "type": "response",
+          "match": [
+            {
+              "taskID": 42,
+              "objectIDs": [
+                "1",
+                "2"
+              ]
+            },
+            {
+              "taskID": 42,
+              "objectIDs": [
+                "3",
+                "4"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "saveObjects",
+        "parameters": {
+          "indexName": "cts_request_id_${{language}}",
+          "objects": [
+            {
+              "objectID": "5",
+              "name": "Eva"
+            },
+            {
+              "objectID": "6",
+              "name": "Fred"
+            },
+            {
+              "objectID": "7",
+              "name": "Gina"
+            },
+            {
+              "objectID": "8",
+              "name": "Hugo"
+            }
+          ],
+          "batchSize": 2,
+          "waitForTasks": true
+        },
+        "expected": {
+          "type": "response",
+          "match": [
+            {
+              "taskID": 42,
+              "objectIDs": [
+                "5",
+                "6"
+              ]
+            },
+            {
+              "taskID": 42,
+              "objectIDs": [
+                "7",
+                "8"
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "testName": "client errors expose the Correlation-ID",
+    "autoCreateClient": false,
+    "skipLanguages": ["php", "python", "ruby"],
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "port": 6694
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "customGet",
+        "parameters": {
+          "path": "1/test/request-id/error/${{language}}"
+        },
+        "expected": {
+          "error": {
+            "csharp": "{\\\"message\\\":\\\"request-id error test\\\"} (Correlation-ID: CtsFixedCorrelationId)",
+            "dart": "{\\\"message\\\":\\\"request-id error test\\\"}} (Correlation-ID: CtsFixedCorrelationId)",
+            "go": "API error [400] request-id error test (Correlation-ID: CtsFixedCorrelationId)",
+            "java": "Status Code: 400 - {\\\"message\\\":\\\"request-id error test\\\"} (Correlation-ID: CtsFixedCorrelationId)",
+            "javascript": "request-id error test (Correlation-ID: CtsFixedCorrelationId)",
+            "kotlin": "Client request\\\\(GET http://%localhost%:6694/1/test/request-id/error/kotlin\\\\) invalid: 400 Bad Request. Text: \\\"\\\\{\\\"message\\\":\\\"request-id error test\\\"\\\\}\\\" \\\\(Correlation-ID: CtsFixedCorrelationId\\\\)",
+            "scala": "request-id error test (Correlation-ID: CtsFixedCorrelationId)",
+            "swift": "HTTP error: Status code: 400 Message: request-id error test (Correlation-ID: CtsFixedCorrelationId)"
+          }
+        }
+      }
+    ]
+  }
+]

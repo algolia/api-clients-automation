@@ -189,7 +189,7 @@ class IngestionTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.44.0\).*""".r
+    val regexp = """^Algolia for Scala \(2.45.0\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }
@@ -242,6 +242,36 @@ class IngestionTest extends AnyFunSuite {
     assertError("`region` is required and must be one of the following: eu, us") {
       val (client, echo) = testClient(appId = "my-app-id", apiKey = "my-api-key", region = "not_a_region")
     }
+  }
+
+  test("the ingestion client sends no Request-ID") {
+
+    val client = IngestionClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      region = "us",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6694)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.customGet[JObject](
+        path = "1/test/request-id/negative/scala"
+      ),
+      Duration.Inf
+    )
+    assert(parse(write(res)) == parse("{\"status\":\"ok\"}"))
   }
 
   test("switch API key") {

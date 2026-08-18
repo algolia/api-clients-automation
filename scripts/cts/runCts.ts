@@ -16,6 +16,7 @@ import { assertValidReplaceAllObjects } from './testServer/replaceAllObjects.ts'
 import { assertValidReplaceAllObjectsFailed } from './testServer/replaceAllObjectsFailed.ts';
 import { assertValidReplaceAllObjectsScopes } from './testServer/replaceAllObjectsScopes.ts';
 import { assertValidReplaceAllObjectsWithTransformation } from './testServer/replaceAllObjectsWithTransformation.ts';
+import { assertNoRequestIdLeaks, assertValidRequestIds, REQUEST_ID_LANGUAGES } from './testServer/requestId.ts';
 import { assertSuccessServerCalled } from './testServer/success.ts';
 import { assertValidTimeouts } from './testServer/timeout.ts';
 import { assertValidWaitForApiKey } from './testServer/waitFor.ts';
@@ -141,15 +142,17 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       });
       break;
     }
-    case 'swift':
+    case 'swift': {
+      const swiftSuites = [...folders, ...(suites.client ? ['manual'] : [])];
       await run(
-        `swift test -Xswiftc -suppress-warnings --build-path ${getSwiftBuildFolder()} --parallel ${filter((f) => `--filter "${f}.*"`)}`,
+        `swift test -Xswiftc -suppress-warnings --build-path ${getSwiftBuildFolder()} --parallel ${swiftSuites.map((f) => `--filter "${f}.*"`).join(' ')}`,
         {
           cwd,
           language,
         },
       );
       break;
+    }
     default:
       spinner.warn(`skipping unknown language '${language}' to run the CTS`);
       return;
@@ -191,6 +194,9 @@ export async function runCts(
     assertValidReplaceAllObjects(languages.length - skip('dart'));
     assertValidReplaceAllObjectsWithTransformation(languages.length);
     assertValidAccountCopyIndex(only('javascript'));
+    const requestIdLanguages = languages.filter((lang) => REQUEST_ID_LANGUAGES.includes(lang));
+    assertValidRequestIds(requestIdLanguages.length, requestIdLanguages.filter((lang) => lang !== 'dart').length);
+    assertNoRequestIdLeaks(languages.length);
     assertValidReplaceAllObjectsFailed(languages.length - skip('dart'));
     assertValidReplaceAllObjectsScopes(languages.length - skip('dart'));
     assertValidWaitForApiKey(languages.length - skip('dart'));

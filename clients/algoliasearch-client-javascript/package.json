@@ -18,16 +18,16 @@
   "devDependencies": {
     "@types/node": "24.13.3",
     "bundlewatch": "0.4.2",
-    "execa": "9.6.1",
+    "execa": "10.0.1",
     "lerna": "9.0.7",
-    "rollup": "4.62.2",
+    "rollup": "4.62.4",
     "typescript": "5.9.3"
   },
   "bundlewatch": {
     "files": [
       {
         "path": "packages/algoliasearch/dist/algoliasearch.umd.js",
-        "maxSize": "21KB"
+        "maxSize": "21.5KB"
       },
       {
         "path": "packages/algoliasearch/dist/lite/builds/browser.umd.js",
@@ -35,15 +35,15 @@
       },
       {
         "path": "packages/abtesting/dist/builds/browser.umd.js",
-        "maxSize": "6KB"
+        "maxSize": "6.5KB"
       },
       {
         "path": "packages/client-abtesting/dist/builds/browser.umd.js",
-        "maxSize": "6KB"
+        "maxSize": "6.25KB"
       },
       {
         "path": "packages/client-analytics/dist/builds/browser.umd.js",
-        "maxSize": "7KB"
+        "maxSize": "7.5KB"
       },
       {
         "path": "packages/composition/dist/builds/browser.umd.js",
@@ -75,7 +75,7 @@
       },
       {
         "path": "packages/recommend/dist/builds/browser.umd.js",
-        "maxSize": "6KB"
+        "maxSize": "6.25KB"
       },
       {
         "path": "packages/agent-studio/dist/builds/browser.umd.js",
@@ -84,7 +84,7 @@
     ]
   },
   "resolutions": {
-    "axios": "^1.16.0",
+    "axios": "^1.19.0",
     "follow-redirects": "^1.16.0"
   },
   "engines": {

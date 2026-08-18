@@ -413,12 +413,49 @@ final class CompositionClientSnippet {
     ///
     /// getComposition
     func snippetForGetComposition() async throws {
-        // >SEPARATOR getComposition default
+        // >SEPARATOR getComposition getComposition
         // Initialize the client
         let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getComposition(compositionID: "foo")
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the getComposition method.
+    ///
+    /// the Correlation-ID ends with the sent Request-ID
+    func snippetForGetComposition1() async throws {
+        // >SEPARATOR getComposition the Correlation-ID ends with the sent Request-ID
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.getComposition(compositionID: "id1", requestOptions: RequestOptions(
+            headers: ["request-id": "CtsE2eEcho4"]
+
+        ))
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the getComposition method.
+    ///
+    /// the Correlation-ID ends with the Request-ID sent as a query parameter
+    func snippetForGetComposition2() async throws {
+        // >SEPARATOR getComposition the Correlation-ID ends with the Request-ID sent as a query parameter
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.getComposition(compositionID: "id1", requestOptions: RequestOptions(
+            queryParameters: ["x-algolia-request-id": "CtsE2eEchoQ"]
+        ))
         // >LOG
         // print the response
         print(response)

@@ -463,6 +463,17 @@ describe('getNoResultsRate', () => {
   });
 });
 
+describe('getPatternsFields', () => {
+  test('getPatternsFields', async () => {
+    const req = (await client.getPatternsFields()) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/patterns/fields');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('getPurchaseRate', () => {
   test('get getPurchaseRate with minimal parameters', async () => {
     const req = (await client.getPurchaseRate({ index: 'index' })) as unknown as EchoResponse;
@@ -925,5 +936,144 @@ describe('getUsersCount', () => {
       endDate: '2001-01-01',
       tags: 'tag',
     });
+  });
+});
+
+describe('queryPatternsDistribution', () => {
+  test('queryPatternsDistribution', async () => {
+    const req = (await client.queryPatternsDistribution({
+      distributionPayload: {
+        distributions: [{ kind: 'clickPosition', bins: [1, 2, 3, 4, 5] }],
+        parameters: [{ kind: 'indices', value: ['index'] }],
+      },
+      index: 'index',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/patterns/distribution');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      distributions: [{ kind: 'clickPosition', bins: [1, 2, 3, 4, 5] }],
+      parameters: [{ kind: 'indices', value: ['index'] }],
+    });
+    expect(req.searchParams).toStrictEqual({ index: 'index' });
+  });
+});
+
+describe('queryPatternsScalar', () => {
+  test('queryPatternsScalar', async () => {
+    const req = (await client.queryPatternsScalar({
+      scalarPayload: { metrics: [{ kind: 'conversionRate' }], parameters: [{ kind: 'indices', value: ['index'] }] },
+      index: 'index',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/patterns/scalar');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      metrics: [{ kind: 'conversionRate' }],
+      parameters: [{ kind: 'indices', value: ['index'] }],
+    });
+    expect(req.searchParams).toStrictEqual({ index: 'index' });
+  });
+});
+
+describe('queryPatternsTable', () => {
+  test('queryPatternsTable with minimal parameters', async () => {
+    const req = (await client.queryPatternsTable({
+      tablePayload: { metrics: [{ kind: 'searchesCount' }], parameters: [{ kind: 'indices', value: ['index'] }] },
+      index: 'index',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/patterns/table');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      metrics: [{ kind: 'searchesCount' }],
+      parameters: [{ kind: 'indices', value: ['index'] }],
+    });
+    expect(req.searchParams).toStrictEqual({ index: 'index' });
+  });
+
+  test('queryPatternsTable with all parameters', async () => {
+    const req = (await client.queryPatternsTable({
+      tablePayload: {
+        domain: 'core',
+        metrics: [{ kind: 'searchesCount' }],
+        groupBy: [{ kind: 'query' }],
+        filters: [{ kind: 'clicked' }],
+        parameters: [{ kind: 'indices', value: ['index'] }],
+        orderBy: [{ kind: 'searchesCount', direction: 'desc' }],
+        limit: 100,
+        offset: 0,
+      },
+      index: 'index',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/patterns/table');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      domain: 'core',
+      metrics: [{ kind: 'searchesCount' }],
+      groupBy: [{ kind: 'query' }],
+      filters: [{ kind: 'clicked' }],
+      parameters: [{ kind: 'indices', value: ['index'] }],
+      orderBy: [{ kind: 'searchesCount', direction: 'desc' }],
+      limit: 100,
+      offset: 0,
+    });
+    expect(req.searchParams).toStrictEqual({ index: 'index' });
+  });
+});
+
+describe('queryPatternsTimeseries', () => {
+  test('queryPatternsTimeseries with minimal parameters', async () => {
+    const req = (await client.queryPatternsTimeseries({
+      timeseriesPayload: { metrics: [{ kind: 'searchesCount' }], parameters: [{ kind: 'indices', value: ['index'] }] },
+      index: 'index',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/patterns/timeseries');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      metrics: [{ kind: 'searchesCount' }],
+      parameters: [{ kind: 'indices', value: ['index'] }],
+    });
+    expect(req.searchParams).toStrictEqual({ index: 'index' });
+  });
+
+  test('queryPatternsTimeseries with all parameters', async () => {
+    const req = (await client.queryPatternsTimeseries({
+      timeseriesPayload: {
+        domain: 'core',
+        metrics: [{ kind: 'searchesCount' }, { domain: 'abtesting', kind: 'isMsrQuery' }],
+        groupBy: [{ kind: 'index' }],
+        filters: [{ kind: 'clicked' }, { kind: 'country', operator: '=', parameter: { kind: 'country' } }],
+        parameters: [
+          { kind: 'indices', value: ['indexA', 'indexB'] },
+          { kind: 'startDate', value: '2024-01-01T00:00:00Z' },
+          { kind: 'endDate', value: '2024-01-07T23:59:59Z' },
+          { kind: 'country', value: 'FR' },
+        ],
+        limit: 50,
+        offset: 0,
+      },
+      index: 'indexA,indexB',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/patterns/timeseries');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      domain: 'core',
+      metrics: [{ kind: 'searchesCount' }, { domain: 'abtesting', kind: 'isMsrQuery' }],
+      groupBy: [{ kind: 'index' }],
+      filters: [{ kind: 'clicked' }, { kind: 'country', operator: '=', parameter: { kind: 'country' } }],
+      parameters: [
+        { kind: 'indices', value: ['indexA', 'indexB'] },
+        { kind: 'startDate', value: '2024-01-01T00:00:00Z' },
+        { kind: 'endDate', value: '2024-01-07T23:59:59Z' },
+        { kind: 'country', value: 'FR' },
+      ],
+      limit: 50,
+      offset: 0,
+    });
+    expect(req.searchParams).toStrictEqual({ index: 'indexA%2CindexB' });
   });
 });

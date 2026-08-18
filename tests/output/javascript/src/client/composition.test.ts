@@ -102,7 +102,7 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.31.0\).*/);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.32.0\).*/);
   }, 25000);
 });
 
@@ -122,6 +122,25 @@ describe('noContent', () => {
     const result = await client.customDelete({ path: '1/test/no-content' });
 
     expect(result).toEqual(undefined);
+  }, 25000);
+});
+
+describe('requestId', () => {
+  test('the composition client sends a Request-ID', async () => {
+    const client = compositionClient('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6694,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.customGet({ path: '1/test/request-id/smoke/composition/javascript' });
+
+    expect(result).toEqual({ status: 'ok' });
   }, 25000);
 });
 

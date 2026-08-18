@@ -62,7 +62,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.46.3\).*/',
+                '/^Algolia for PHP \(4.47.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
@@ -113,7 +113,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
 
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), '`region` must be one of the following: de, us');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', '`region` must be one of the following: de, us'), $e->getMessage());
         }
     }
 

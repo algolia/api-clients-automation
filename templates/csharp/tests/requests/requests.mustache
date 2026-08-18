@@ -83,6 +83,9 @@ private readonly {{client}} client;
           Assert.Equal(expectedHeader.Value, actualHeaderValue);
         }
     {{/headers}}
+    {{#absentHeaders}}
+        Assert.DoesNotContain(req.Headers, h => h.Key.Equals("{{{.}}}", StringComparison.OrdinalIgnoreCase));
+    {{/absentHeaders}}
     {{/request}}
   }
   {{/tests}}

@@ -117,7 +117,7 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.56.0\).*/);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.57.0\).*/);
   }, 25000);
 });
 
@@ -175,6 +175,29 @@ describe('parameters', () => {
     } catch (e) {
       expect((e as Error).message).toMatch('`region` is required and must be one of the following: eu, us');
     }
+  }, 25000);
+});
+
+describe('requestId', () => {
+  test('the ingestion client sends no Request-ID', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key').initIngestion({
+      options: {
+        hosts: [
+          {
+            url: 'localhost',
+            port: 6694,
+            accept: 'readWrite',
+            protocol: 'http',
+          },
+        ],
+      },
+      // @ts-ignore
+      region: 'us',
+    });
+
+    const result = await client.customGet({ path: '1/test/request-id/negative/javascript' });
+
+    expect(result).toEqual({ status: 'ok' });
   }, 25000);
 });
 
