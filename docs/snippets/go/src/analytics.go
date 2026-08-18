@@ -948,6 +948,34 @@ func SnippetForGetNoResultsRateOfAnalytics1() {
 	// SEPARATOR<
 }
 
+func SnippetForGetPatternsFieldsOfAnalytics() {
+	/*
+	   Snippet for the getPatternsFields method.
+
+	   getPatternsFields
+	*/
+
+	// >SEPARATOR getPatternsFields default
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetPatternsFields()
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
 func SnippetForGetPurchaseRateOfAnalytics() {
 	/*
 	   Snippet for the getPurchaseRate method.
@@ -1726,6 +1754,243 @@ func SnippetForGetUsersCountOfAnalytics1() {
 	// Call the API
 	response, err := client.GetUsersCount(client.NewApiGetUsersCountRequest(
 		"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForQueryPatternsDistributionOfAnalytics() {
+	/*
+	   Snippet for the queryPatternsDistribution method.
+
+	   queryPatternsDistribution
+	*/
+
+	// >SEPARATOR queryPatternsDistribution default
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.QueryPatternsDistribution(client.NewApiQueryPatternsDistributionRequest(
+
+		analytics.NewEmptyDistributionPayload().SetDistributions(
+			[]analytics.DistributionDefinition{*analytics.NewEmptyDistributionDefinition().SetKind("clickPosition").SetBins(
+				[]analytics.BinEdge{*analytics.Int32AsBinEdge(1), *analytics.Int32AsBinEdge(2), *analytics.Int32AsBinEdge(3), *analytics.Int32AsBinEdge(4), *analytics.Int32AsBinEdge(5)})}).SetParameters(
+			[]analytics.ParameterDefinition{
+				*analytics.NewEmptyParameterDefinition().SetKind("indices").SetValue(analytics.ArrayOfStringAsParameterValue(
+					[]string{"index"})),
+			}),
+	).WithIndex("index"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForQueryPatternsScalarOfAnalytics() {
+	/*
+	   Snippet for the queryPatternsScalar method.
+
+	   queryPatternsScalar
+	*/
+
+	// >SEPARATOR queryPatternsScalar default
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.QueryPatternsScalar(client.NewApiQueryPatternsScalarRequest(
+
+		analytics.NewEmptyScalarPayload().SetMetrics(
+			[]analytics.FieldReference{*analytics.NewEmptyFieldReference().SetKind("conversionRate")}).SetParameters(
+			[]analytics.ParameterDefinition{
+				*analytics.NewEmptyParameterDefinition().SetKind("indices").SetValue(analytics.ArrayOfStringAsParameterValue(
+					[]string{"index"})),
+			}),
+	).WithIndex("index"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForQueryPatternsTableOfAnalytics() {
+	/*
+	   Snippet for the queryPatternsTable method.
+
+	   queryPatternsTable with minimal parameters
+	*/
+
+	// >SEPARATOR queryPatternsTable queryPatternsTable with minimal parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.QueryPatternsTable(client.NewApiQueryPatternsTableRequest(
+
+		analytics.NewEmptyTablePayload().SetMetrics(
+			[]analytics.FieldReference{*analytics.NewEmptyFieldReference().SetKind("searchesCount")}).SetParameters(
+			[]analytics.ParameterDefinition{
+				*analytics.NewEmptyParameterDefinition().SetKind("indices").SetValue(analytics.ArrayOfStringAsParameterValue(
+					[]string{"index"})),
+			}),
+	).WithIndex("index"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForQueryPatternsTableOfAnalytics1() {
+	/*
+	   Snippet for the queryPatternsTable method.
+
+	   queryPatternsTable with all parameters
+	*/
+
+	// >SEPARATOR queryPatternsTable queryPatternsTable with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.QueryPatternsTable(client.NewApiQueryPatternsTableRequest(
+
+		analytics.NewEmptyTablePayload().SetDomain("core").SetMetrics(
+			[]analytics.FieldReference{*analytics.NewEmptyFieldReference().SetKind("searchesCount")}).SetGroupBy(
+			[]analytics.FieldReference{*analytics.NewEmptyFieldReference().SetKind("query")}).SetFilters(
+			[]analytics.FilterDefinition{*analytics.NewEmptyFilterDefinition().SetKind("clicked")}).SetParameters(
+			[]analytics.ParameterDefinition{
+				*analytics.NewEmptyParameterDefinition().SetKind("indices").SetValue(analytics.ArrayOfStringAsParameterValue(
+					[]string{"index"})),
+			}).
+			SetOrderBy(
+				[]analytics.OrderDefinition{
+					*analytics.NewEmptyOrderDefinition().SetKind("searchesCount").SetDirection(analytics.OrderDirection("desc")),
+				}).
+			SetLimit(100).SetOffset(0)).WithIndex("index"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForQueryPatternsTimeseriesOfAnalytics() {
+	/*
+	   Snippet for the queryPatternsTimeseries method.
+
+	   queryPatternsTimeseries with minimal parameters
+	*/
+
+	// >SEPARATOR queryPatternsTimeseries queryPatternsTimeseries with minimal parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.QueryPatternsTimeseries(client.NewApiQueryPatternsTimeseriesRequest(
+
+		analytics.NewEmptyTimeseriesPayload().SetMetrics(
+			[]analytics.FieldReference{*analytics.NewEmptyFieldReference().SetKind("searchesCount")}).SetParameters(
+			[]analytics.ParameterDefinition{
+				*analytics.NewEmptyParameterDefinition().SetKind("indices").SetValue(analytics.ArrayOfStringAsParameterValue(
+					[]string{"index"})),
+			}),
+	).WithIndex("index"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForQueryPatternsTimeseriesOfAnalytics1() {
+	/*
+	   Snippet for the queryPatternsTimeseries method.
+
+	   queryPatternsTimeseries with all parameters
+	*/
+
+	// >SEPARATOR queryPatternsTimeseries queryPatternsTimeseries with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.QueryPatternsTimeseries(client.NewApiQueryPatternsTimeseriesRequest(
+
+		analytics.NewEmptyTimeseriesPayload().SetDomain("core").SetMetrics(
+			[]analytics.FieldReference{
+				*analytics.NewEmptyFieldReference().SetKind("searchesCount"),
+				*analytics.NewEmptyFieldReference().SetDomain("abtesting").SetKind("isMsrQuery"),
+			}).
+			SetGroupBy(
+				[]analytics.FieldReference{*analytics.NewEmptyFieldReference().SetKind("index")}).SetFilters(
+			[]analytics.FilterDefinition{
+				*analytics.NewEmptyFilterDefinition().SetKind("clicked"),
+				*analytics.NewEmptyFilterDefinition().SetKind("country").SetOperator("=").SetParameter(
+					analytics.NewEmptyParameterReference().SetKind("country")),
+			}).
+			SetParameters(
+				[]analytics.ParameterDefinition{
+					*analytics.NewEmptyParameterDefinition().SetKind("indices").SetValue(analytics.ArrayOfStringAsParameterValue(
+						[]string{"indexA", "indexB"})),
+					*analytics.NewEmptyParameterDefinition().SetKind("startDate").SetValue(analytics.StringAsParameterValue("2024-01-01T00:00:00Z")),
+					*analytics.NewEmptyParameterDefinition().SetKind("endDate").SetValue(analytics.StringAsParameterValue("2024-01-07T23:59:59Z")),
+					*analytics.NewEmptyParameterDefinition().SetKind("country").SetValue(analytics.StringAsParameterValue("FR")),
+				}).
+			SetLimit(50).SetOffset(0)).WithIndex("indexA,indexB"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

@@ -90,6 +90,13 @@ info:
     `/2/` in each endpoint's URL.
 
 
+    A Beta semantic patterns framework is also available under `/3/patterns/*`
+    for building custom
+
+    analytics queries. These endpoints are under active development and may
+    change without notice.
+
+
     ## Query aggregation
 
 
@@ -131,6 +138,16 @@ tags:
     x-displayName: Filters
     description: |
       Metrics related to filters.
+  - name: pattern
+    x-displayName: Patterns (Beta)
+    description: >
+      Beta — the semantic patterns query framework (`/3/patterns/*`).
+
+      Build custom analytics queries from metrics, groupBy, filters, and
+      parameters.
+
+      These endpoints are under active development and may change without
+      notice.
   - name: revenue
     x-displayName: Revenue
     description: |
@@ -1694,6 +1711,251 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+  /3/patterns/fields:
+    get:
+      tags:
+        - analytics
+      operationId: getPatternsFields
+      x-acl: []
+      security: []
+      summary: (Beta) Retrieve the field catalog
+      description: >
+        **Beta**: this endpoint is under active development and may change
+        without notice.
+
+
+        Returns the static catalog of analytics fields, grouped by domain and
+        usage (metrics, filters,
+
+        groups, distributions). No authentication is required. Use it to
+        discover valid `(domain, kind)`
+
+        pairs before building the other `/3/patterns/*` queries; two fields are
+        combinable in one query
+
+        only when their `roots` intersect. Each entry's `requires` lists the
+        ACLs needed when that field
+
+        is actually used in a query.
+      responses:
+        '200':
+          description: OK
+          headers:
+            ETag:
+              description: Strong entity tag over the catalog; stable per release.
+              schema:
+                type: string
+            Cache-Control:
+              description: Caching directives for the catalog response.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Catalog'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /3/patterns/timeseries:
+    post:
+      tags:
+        - analytics
+      operationId: queryPatternsTimeseries
+      x-acl:
+        - analytics
+      summary: (Beta) Query a metrics time series
+      description: >
+        **Beta**: this endpoint is under active development and may change
+        without notice.
+
+
+        Returns one time series per `groupBy` combination, each with period
+        `totals` and a per-day metric
+
+        breakdown. `metrics` and `parameters` are required; `groupBy` and
+        `filters` are optional. Discover
+
+        valid field kinds per domain with `/3/patterns/fields`.
+      parameters:
+        - $ref: '#/components/parameters/IndexQuery'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeseriesPayload'
+      responses:
+        '200':
+          description: OK
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeseriesResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+  /3/patterns/scalar:
+    post:
+      tags:
+        - analytics
+      operationId: queryPatternsScalar
+      x-acl:
+        - analytics
+      summary: (Beta) Query single-row aggregates
+      description: >
+        **Beta**: this endpoint is under active development and may change
+        without notice.
+
+
+        Aggregates the requested `metrics` over the whole period and returns a
+        single object keyed by metric
+
+        kind. `metrics` and `parameters` are required; `filters` is optional.
+        Discover valid field kinds per
+
+        domain with `/3/patterns/fields`.
+      parameters:
+        - $ref: '#/components/parameters/IndexQuery'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScalarPayload'
+      responses:
+        '200':
+          description: OK
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScalarResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+  /3/patterns/table:
+    post:
+      tags:
+        - analytics
+      operationId: queryPatternsTable
+      x-acl:
+        - analytics
+      summary: (Beta) Query a grouped table
+      description: >
+        **Beta**: this endpoint is under active development and may change
+        without notice.
+
+
+        Returns `rows`, each a flat object of the requested fields. `metrics`
+        and `parameters` are required;
+
+        `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is
+        required when `groupBy` is set.
+
+        Discover valid field kinds per domain with `/3/patterns/fields`.
+      parameters:
+        - $ref: '#/components/parameters/IndexQuery'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TablePayload'
+      responses:
+        '200':
+          description: OK
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+  /3/patterns/distribution:
+    post:
+      tags:
+        - analytics
+      operationId: queryPatternsDistribution
+      x-acl:
+        - analytics
+      summary: (Beta) Query a numeric distribution
+      description: >
+        **Beta**: this endpoint is under active development and may change
+        without notice.
+
+
+        Buckets one or more numeric fields into histograms and returns an object
+        keyed by `histogram<Field>`,
+
+        each mapping a bin label to a count. `distributions` and `parameters`
+        are required; `filters` is
+
+        optional. Discover valid field kinds per domain with
+        `/3/patterns/fields`.
+      parameters:
+        - $ref: '#/components/parameters/IndexQuery'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DistributionPayload'
+      responses:
+        '200':
+          description: OK
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DistributionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
   /setClientApiKey:
     get:
       x-helper: true
@@ -1857,6 +2119,17 @@ components:
       schema:
         type: string
         example: brand
+    IndexQuery:
+      in: query
+      name: index
+      required: false
+      description: >
+        Comma-separated list of indices the request runs on, used for
+        authorization. Required for index-restricted API keys and must match the
+        indices supplied in the request body's `indices` parameter; optional for
+        unrestricted keys.
+      schema:
+        type: string
   schemas:
     ErrorBase:
       description: Error.
@@ -2492,6 +2765,458 @@ components:
           description: Date and time when the object was updated, in RFC 3339 format.
           example: '2023-07-04T12:49:15Z'
         - type: 'null'
+    CatalogEntry:
+      type: object
+      title: Catalog entry
+      additionalProperties: false
+      required:
+        - kind
+        - description
+        - roots
+        - requires
+      properties:
+        kind:
+          type: string
+          description: Field identifier.
+        description:
+          type: string
+          description: Human-readable description of the field.
+        roots:
+          type: array
+          description: >-
+            Root stages the field depends on. Two fields are combinable in one
+            query only when their roots intersect.
+          items:
+            type: string
+        requires:
+          type: array
+          description: >-
+            Public ACL identifiers required to read the field, for example
+            `clickAnalyticsEnabled`.
+          items:
+            type: string
+    DomainCatalog:
+      type: object
+      title: Domain catalog
+      additionalProperties: false
+      required:
+        - metrics
+        - filters
+        - groups
+        - distributions
+      properties:
+        metrics:
+          type: array
+          description: Fields usable as metrics.
+          items:
+            $ref: '#/components/schemas/CatalogEntry'
+        filters:
+          type: array
+          description: Fields usable as filters.
+          items:
+            $ref: '#/components/schemas/CatalogEntry'
+        groups:
+          type: array
+          description: Fields usable in `groupBy`.
+          items:
+            $ref: '#/components/schemas/CatalogEntry'
+        distributions:
+          type: array
+          description: Fields usable in distributions.
+          items:
+            $ref: '#/components/schemas/CatalogEntry'
+    Catalog:
+      type: object
+      title: Field catalog
+      additionalProperties: false
+      required:
+        - domains
+      properties:
+        domains:
+          type: object
+          description: Catalog entries grouped by domain.
+          additionalProperties:
+            $ref: '#/components/schemas/DomainCatalog'
+    FieldReference:
+      type: object
+      title: Field reference
+      additionalProperties: false
+      required:
+        - kind
+      properties:
+        domain:
+          type: string
+          description: >-
+            Domain the field belongs to. Defaults to the payload's top-level
+            `domain` when omitted.
+          example: core
+        kind:
+          type: string
+          description: >-
+            Field identifier within the domain, as listed by the
+            `/3/patterns/fields` catalog.
+          example: searchesCount
+    filterOperator:
+      type: string
+      description: >-
+        Comparison operator applied to a filter field, one of: `=`, `!=`, `>`,
+        `<`, `>=`, `<=`, `IN`, `TAG_TREE`, `CONTAINS`, `STARTS_WITH`,
+        `CONTAINS_PREFIX`. Requires a `parameter` to carry the operand.
+      example: =
+    ParameterReference:
+      type: object
+      title: Parameter reference
+      additionalProperties: false
+      required:
+        - kind
+      properties:
+        domain:
+          type: string
+          description: Domain the parameter belongs to.
+          example: core
+        kind:
+          type: string
+          description: >-
+            Parameter identifier that resolves to a value supplied in
+            `parameters`.
+          example: country
+    FilterDefinition:
+      type: object
+      title: Filter definition
+      additionalProperties: false
+      required:
+        - kind
+      properties:
+        domain:
+          type: string
+          description: Domain the field belongs to.
+        kind:
+          type: string
+          description: Field to filter on. With no `operator`, the field must be boolean.
+          example: country
+        operator:
+          $ref: '#/components/schemas/filterOperator'
+        parameter:
+          $ref: '#/components/schemas/ParameterReference'
+    parameterValue:
+      description: >-
+        Literal value. Its JSON type depends on `kind` (array of strings for
+        `indices`, string for dates, tags, and country, number for numeric
+        operands, and so on).
+      oneOf:
+        - type: string
+        - type: number
+          format: double
+        - type: boolean
+        - type: array
+          items:
+            type: string
+    ParameterDefinition:
+      type: object
+      title: Parameter definition
+      additionalProperties: false
+      required:
+        - kind
+        - value
+      properties:
+        domain:
+          type: string
+          description: Domain the parameter belongs to.
+        kind:
+          type: string
+          description: >-
+            Parameter identifier, for example `indices`, `startDate`, `endDate`,
+            `tags`, or `country`.
+          example: indices
+        value:
+          $ref: '#/components/schemas/parameterValue'
+    TimeseriesPayload:
+      type: object
+      title: Timeseries query
+      additionalProperties: false
+      required:
+        - metrics
+        - parameters
+      properties:
+        domain:
+          type: string
+          description: Default domain propagated to entries that omit their own.
+          example: core
+        metrics:
+          type: array
+          description: Fields to aggregate.
+          items:
+            $ref: '#/components/schemas/FieldReference'
+        groupBy:
+          type: array
+          description: Fields to split the series by.
+          items:
+            $ref: '#/components/schemas/FieldReference'
+        filters:
+          type: array
+          description: Filter conditions.
+          items:
+            $ref: '#/components/schemas/FilterDefinition'
+        parameters:
+          type: array
+          description: Literal values referenced by the query.
+          items:
+            $ref: '#/components/schemas/ParameterDefinition'
+        limit:
+          type: integer
+          default: 100
+          minimum: 1
+          maximum: 100
+          description: Maximum number of series (groupBy values) to return.
+        offset:
+          type: integer
+          default: 0
+          minimum: 0
+          description: Number of series to skip.
+    TimeseriesResponse:
+      type: object
+      title: Timeseries response
+      additionalProperties: false
+      required:
+        - series
+      properties:
+        series:
+          type: array
+          nullable: true
+          description: >-
+            One entry per `groupBy` combination. `null` when the query matched
+            no data.
+          items:
+            title: series
+            type: object
+            additionalProperties: false
+            required:
+              - totals
+              - dates
+            properties:
+              key:
+                type: object
+                description: >-
+                  The `groupBy` values identifying this series. Absent when the
+                  query has no `groupBy`.
+                additionalProperties: true
+              totals:
+                type: object
+                description: Metric totals over the whole period.
+                additionalProperties: true
+              dates:
+                type: array
+                description: Per-day metric breakdown.
+                items:
+                  title: seriesDate
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - date
+                    - metrics
+                  properties:
+                    date:
+                      type: string
+                      description: Day, formatted as YYYY-MM-DD.
+                    metrics:
+                      type: object
+                      description: Metric values for the day.
+                      additionalProperties: true
+    ScalarPayload:
+      type: object
+      title: Scalar query
+      additionalProperties: false
+      required:
+        - metrics
+        - parameters
+      properties:
+        domain:
+          type: string
+          description: Default domain propagated to entries that omit their own.
+          example: core
+        metrics:
+          type: array
+          description: Fields to aggregate.
+          items:
+            $ref: '#/components/schemas/FieldReference'
+        filters:
+          type: array
+          description: Filter conditions.
+          items:
+            $ref: '#/components/schemas/FilterDefinition'
+        parameters:
+          type: array
+          description: Literal values referenced by the query.
+          items:
+            $ref: '#/components/schemas/ParameterDefinition'
+    ScalarResponse:
+      type: object
+      title: Scalar response
+      description: Object keyed by metric kind, each mapping to its aggregate value.
+      additionalProperties: true
+    orderDirection:
+      type: string
+      description: Sort direction.
+      enum:
+        - asc
+        - desc
+    OrderDefinition:
+      type: object
+      title: Order definition
+      additionalProperties: false
+      required:
+        - kind
+        - direction
+      properties:
+        domain:
+          type: string
+          description: Domain the field belongs to.
+        kind:
+          type: string
+          description: Field to sort by. Must appear in `metrics` or `groupBy`.
+          example: searchesCount
+        direction:
+          $ref: '#/components/schemas/orderDirection'
+    TablePayload:
+      type: object
+      title: Table query
+      additionalProperties: false
+      description: When `groupBy` is set, `orderBy` is required.
+      required:
+        - metrics
+        - parameters
+      properties:
+        domain:
+          type: string
+          description: Default domain propagated to entries that omit their own.
+          example: core
+        metrics:
+          type: array
+          description: Fields to aggregate.
+          items:
+            $ref: '#/components/schemas/FieldReference'
+        groupBy:
+          type: array
+          description: Fields to split rows by.
+          items:
+            $ref: '#/components/schemas/FieldReference'
+        filters:
+          type: array
+          description: Filter conditions.
+          items:
+            $ref: '#/components/schemas/FilterDefinition'
+        parameters:
+          type: array
+          description: Literal values referenced by the query.
+          items:
+            $ref: '#/components/schemas/ParameterDefinition'
+        orderBy:
+          type: array
+          description: Sort specification. Required when `groupBy` is set.
+          items:
+            $ref: '#/components/schemas/OrderDefinition'
+        limit:
+          type: integer
+          default: 1000
+          minimum: 1
+          maximum: 1000
+          description: Maximum number of rows to return.
+        offset:
+          type: integer
+          default: 0
+          minimum: 0
+          description: Number of rows to skip.
+    TableResponse:
+      type: object
+      title: Table response
+      additionalProperties: false
+      required:
+        - rows
+      properties:
+        rows:
+          type: array
+          description: Result rows. Each row is a flat object of the requested fields.
+          items:
+            type: object
+            additionalProperties: true
+    binEdge:
+      description: >-
+        A histogram bin edge. Use integers for discrete distributions and
+        floating-point values for continuous ones.
+      oneOf:
+        - type: integer
+        - type: number
+          format: double
+    DistributionDefinition:
+      type: object
+      title: Distribution definition
+      additionalProperties: false
+      required:
+        - kind
+        - bins
+      properties:
+        domain:
+          type: string
+          description: Domain the field belongs to.
+        kind:
+          type: string
+          description: Numeric field to bucket into a histogram.
+          example: clickPosition
+        continuous:
+          type: boolean
+          default: false
+          description: Set to true for continuous kinds; use float bins.
+        bins:
+          type: array
+          description: Bin edges.
+          items:
+            $ref: '#/components/schemas/binEdge'
+          example:
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 21
+            - -1
+    DistributionPayload:
+      type: object
+      title: Distribution query
+      additionalProperties: false
+      required:
+        - distributions
+        - parameters
+      properties:
+        domain:
+          type: string
+          description: Default domain propagated to entries that omit their own.
+          example: core
+        distributions:
+          type: array
+          description: Histogram specifications.
+          items:
+            $ref: '#/components/schemas/DistributionDefinition'
+        filters:
+          type: array
+          description: Filter conditions.
+          items:
+            $ref: '#/components/schemas/FilterDefinition'
+        parameters:
+          type: array
+          description: Literal values referenced by the query.
+          items:
+            $ref: '#/components/schemas/ParameterDefinition'
+    DistributionResponse:
+      type: object
+      title: Distribution response
+      description: Object keyed by `histogram<Field>`, each mapping a bin label to a count.
+      additionalProperties: true
   responses:
     BadRequest:
       description: Bad request or request arguments.
@@ -2542,6 +3267,7 @@ x-tagGroups:
       - click
       - revenue
       - filter
+      - pattern
       - user
   - name: Other
     tags:
