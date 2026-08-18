@@ -179,6 +179,7 @@ module Algolia
 
       # Generates headers from config headers and optional parameters
       #
+      # @param body [String, nil]
       # @param request_options [RequestOptions]
       # @param request_id [String, nil]
       #

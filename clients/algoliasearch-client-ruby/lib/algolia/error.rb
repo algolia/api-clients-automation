@@ -10,10 +10,11 @@ module Algolia
   # Used when hosts are unreachable
   #
   class AlgoliaUnreachableHostError < AlgoliaError
-    # correlation_id is the Correlation-ID header of the last retried attempt
-    # whose response carried one, or nil when no attempt did. Quote it when
-    # contacting Algolia support.
-    attr_reader :errors, :correlation_id
+    attr_reader :errors
+
+    # The Correlation-ID header of the last retried attempt that carried one
+    # (possibly ""), or nil. Quote it when contacting Algolia support.
+    attr_reader :correlation_id
 
     def initialize(message, errors = [], correlation_id = nil)
       errors.last&.tap do |last_error|
@@ -33,9 +34,11 @@ module Algolia
   # which is also included in the response attribute.
   #
   class AlgoliaHttpError < AlgoliaError
-    # correlation_id is the Correlation-ID header of the failed response, when
-    # present. Quote it when contacting Algolia support.
-    attr_accessor :code, :http_message, :correlation_id
+    attr_accessor :code, :http_message
+
+    # The Correlation-ID header of the failed response (possibly ""), or nil.
+    # Quote it when contacting Algolia support.
+    attr_accessor :correlation_id
 
     def initialize(code, message, correlation_id = nil)
       self.code = code

@@ -60,14 +60,21 @@ end
 
 # Requester answering every request with a fixed error response.
 class ErrorRequester
-  def initialize(status, error_body, headers)
+  def initialize(status, error_body, headers, reason_phrase: nil)
     @status = status
     @error_body = error_body
     @headers = headers
+    @reason_phrase = reason_phrase
   end
 
   def send_request(host, _method, _path, _body, _query_params, _headers, _timeout, _connect_timeout)
-    Algolia::Http::Response.new(host: host, status: @status, error: @error_body, headers: @headers)
+    Algolia::Http::Response.new(
+      host: host,
+      status: @status,
+      error: @error_body,
+      headers: @headers,
+      reason_phrase: @reason_phrase
+    )
   end
 end
 
@@ -138,8 +145,8 @@ class TestRequestId < Test::Unit::TestCase
 
     res = client.custom_get_with_http_info("1/test", {}, {:header_params => {"ReQuEsT-iD" => "CallerOwnedId"}})
 
+    # Header keys are downcased before the merge, so a minted ID could only land on this key.
     assert_equal("CallerOwnedId", res.headers["request-id"])
-    assert_false(res.headers.any? { |k, v| k.to_s.casecmp?("request-id") && v != "CallerOwnedId" })
   end
 
   def test_caller_supplied_query_param_request_id_wins
@@ -308,6 +315,34 @@ class TestRequestId < Test::Unit::TestCase
     assert_equal("400: boom (Correlation-ID: CorrTest123)", error.message)
   end
 
+  def test_html_error_carries_correlation_id
+    requester = ErrorRequester.new(
+      400,
+      "<html>Bad Request</html>",
+      {"content-type" => "text/html; charset=utf-8", "cOrReLaTiOn-Id" => "CorrHtml456"},
+      reason_phrase: "Bad Request"
+    )
+    client = search_client(search_config(requester: requester))
+
+    error = assert_raise(Algolia::AlgoliaHttpError) { client.custom_get("1/test") }
+
+    assert_equal("CorrHtml456", error.correlation_id)
+    assert_equal(400, error.code)
+    assert_equal("Bad Request", error.http_message)
+    assert_equal("400: Bad Request (Correlation-ID: CorrHtml456)", error.message)
+  end
+
+  def test_api_error_with_empty_correlation_id_has_no_suffix
+    requester = ErrorRequester.new(400, JSON.generate({:message => "boom"}), {"Correlation-ID" => ""})
+    client = search_client(search_config(requester: requester))
+
+    error = assert_raise(Algolia::AlgoliaHttpError) { client.custom_get("1/test") }
+
+    # Kept verbatim on the error, but never rendered as a dangling suffix.
+    assert_equal("", error.correlation_id)
+    assert_equal("400: boom", error.message)
+  end
+
   def test_api_error_without_correlation_id_is_unchanged
     requester = ErrorRequester.new(
       400,
@@ -358,6 +393,28 @@ class TestRequestIdExhaustion < Test::Unit::TestCase
 
     assert_equal("CorrAttempt3", error.correlation_id)
     assert_true(error.message.end_with?("(Correlation-ID: CorrAttempt3)"))
+  end
+
+  def test_exhaustion_keeps_correlation_id_of_earlier_attempt
+    # Later attempts without a Correlation-ID must not erase the earlier one.
+    requester = AlwaysFailingRequester.new(-> (attempt) { attempt == 1 ? {"cOrReLaTiOn-Id" => "CorrAttempt1"} : {} })
+    client = exhausted_client(requester)
+
+    error = assert_raise(Algolia::AlgoliaUnreachableHostError) { client.custom_get("1/test") }
+
+    assert_equal("CorrAttempt1", error.correlation_id)
+    assert_true(error.message.end_with?("(Correlation-ID: CorrAttempt1)"))
+  end
+
+  def test_exhaustion_with_empty_correlation_id_has_no_suffix
+    requester = AlwaysFailingRequester.new(-> (_) { {"Correlation-ID" => ""} })
+    client = exhausted_client(requester)
+
+    error = assert_raise(Algolia::AlgoliaUnreachableHostError) { client.custom_get("1/test") }
+
+    # Kept verbatim on the error, but never rendered as a dangling suffix.
+    assert_equal("", error.correlation_id)
+    assert_false(error.message.include?("Correlation-ID"))
   end
 
   def test_exhaustion_without_correlation_id_is_unchanged
