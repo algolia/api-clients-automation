@@ -104,6 +104,7 @@ final class IngestionClient implements ApiClient {
               interceptors: options.interceptors,
               httpClientAdapter: options.httpClientAdapter,
               compression: options.compression,
+              requestIdEnabled: options.requestIdEnabled,
             ),
             defaultHosts: () {
               final allowedRegions = ['eu', 'us'];
