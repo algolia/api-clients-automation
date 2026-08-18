@@ -1,6 +1,6 @@
 import fsp from 'fs/promises';
 
-import { exists, isVerbose, run, runComposerInstall, toAbsolutePath } from '../common.ts';
+import { CI, exists, isVerbose, run, runComposerInstall, toAbsolutePath } from '../common.ts';
 import { getSwiftBuildFolder, getTestOutputFolder } from '../config.ts';
 import { createSpinner } from '../spinners.ts';
 import type { Language } from '../types.ts';
@@ -88,10 +88,13 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       break;
     }
     case 'javascript':
-      await run(`YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test ${filter((f) => `src/${f}`)}`, {
-        cwd,
-        language,
-      });
+      await run(
+        `${CI ? 'YARN_ENABLE_HARDENED_MODE=1 ' : ''}YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test ${filter((f) => `src/${f}`)}`,
+        {
+          cwd,
+          language,
+        },
+      );
       break;
     case 'kotlin':
       await run(`./gradle/gradlew -p tests/output/kotlin jvmTest ${filter((f) => `--tests 'com.algolia.${f}*'`)}`, {
