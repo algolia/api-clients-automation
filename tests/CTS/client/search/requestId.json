@@ -2,7 +2,7 @@
   {
     "testName": "the Request-ID stays stable across retries",
     "autoCreateClient": false,
-    "skipLanguages": ["dart", "php", "python", "ruby"],
+    "skipLanguages": ["php", "python", "ruby"],
     "steps": [
       {
         "type": "createClient",
@@ -40,7 +40,7 @@
   {
     "testName": "each call mints a fresh Request-ID",
     "autoCreateClient": false,
-    "skipLanguages": ["dart", "php", "python", "ruby"],
+    "skipLanguages": ["php", "python", "ruby"],
     "steps": [
       {
         "type": "createClient",
@@ -85,7 +85,7 @@
   {
     "testName": "a caller-supplied Request-ID is never overwritten",
     "autoCreateClient": false,
-    "skipLanguages": ["dart", "php", "python", "ruby"],
+    "skipLanguages": ["php", "python", "ruby"],
     "steps": [
       {
         "type": "createClient",
@@ -122,7 +122,7 @@
   {
     "testName": "every request of one helper call shares one Request-ID",
     "autoCreateClient": false,
-    "skipLanguages": ["dart", "php", "python", "ruby"],
+    "skipLanguages": ["php", "python", "ruby"],
     "steps": [
       {
         "type": "createClient",
@@ -233,7 +233,7 @@
   {
     "testName": "client errors expose the Correlation-ID",
     "autoCreateClient": false,
-    "skipLanguages": ["dart", "php", "python", "ruby"],
+    "skipLanguages": ["php", "python", "ruby"],
     "steps": [
       {
         "type": "createClient",
@@ -256,6 +256,7 @@
         "expected": {
           "error": {
             "csharp": "{\\\"message\\\":\\\"request-id error test\\\"} (Correlation-ID: CtsFixedCorrelationId)",
+            "dart": "{\\\"message\\\":\\\"request-id error test\\\"}} (Correlation-ID: CtsFixedCorrelationId)",
             "go": "API error [400] request-id error test (Correlation-ID: CtsFixedCorrelationId)",
             "java": "Status Code: 400 - {\\\"message\\\":\\\"request-id error test\\\"} (Correlation-ID: CtsFixedCorrelationId)",
             "javascript": "request-id error test (Correlation-ID: CtsFixedCorrelationId)",

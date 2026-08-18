@@ -11,12 +11,20 @@ final class AlgoliaApiException implements AlgoliaException {
   /// The error message returned by the API.
   final dynamic error;
 
-  /// Constructs an [AlgoliaApiException] with the provided status code and error message.
-  const AlgoliaApiException(this.statusCode, this.error);
+  /// The Correlation-ID header of the failed response, when present.
+  /// Quote it when contacting Algolia support.
+  final String? correlationId;
+
+  /// Constructs an [AlgoliaApiException] with the provided status code, error
+  /// message and optional Correlation-ID.
+  const AlgoliaApiException(this.statusCode, this.error, {this.correlationId});
 
   @override
   String toString() {
-    return 'AlgoliaApiException{statusCode: $statusCode, error: $error}';
+    final base = 'AlgoliaApiException{statusCode: $statusCode, error: $error}';
+    return correlationId == null
+        ? base
+        : '$base (Correlation-ID: $correlationId)';
   }
 }
 

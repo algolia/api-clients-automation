@@ -9,7 +9,7 @@ import { setupServer } from './index.ts';
 export const REQUEST_ID_FORMAT = /^[0-9A-Za-z]{11}$/;
 
 // languages that have ported Request-ID support (API-516)
-export const REQUEST_ID_LANGUAGES = ['csharp', 'go', 'java', 'javascript', 'kotlin', 'scala', 'swift'];
+export const REQUEST_ID_LANGUAGES = ['csharp', 'dart', 'go', 'java', 'javascript', 'kotlin', 'scala', 'swift'];
 
 const retryState: Record<string, string[]> = {};
 const freshState: Record<string, string[]> = {};
@@ -29,10 +29,18 @@ function record(state: Record<string, string[]>, key: string, req: express.Reque
   state[key].push(observedRequestId(req));
 }
 
-export function assertValidRequestIds(expectedCount: number): void {
+// helperCount is lower than expectedCount when a language without the
+// saveObjects helper (dart) is in the roster: its helper test cannot run,
+// so it never records into helperState.
+export function assertValidRequestIds(expectedCount: number, helperCount: number = expectedCount): void {
   expect(Object.keys(retryState)).to.have.length(expectedCount);
   expect(Object.keys(freshState)).to.have.length(expectedCount);
-  expect(Object.keys(helperState)).to.have.length(expectedCount);
+  expect(Object.keys(helperState)).to.have.length(helperCount);
+  // dart has no saveObjects helper to run the helper test with, so it must
+  // never appear here.
+  if (helperCount !== expectedCount) {
+    expect(helperState).to.not.have.property('dart');
+  }
   // recommend and composition each run one smoke test per language
   expect(Object.keys(smokeState)).to.have.length(2 * expectedCount);
 
