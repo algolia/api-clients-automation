@@ -1,3 +1,11 @@
+## [1.52.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.51.4...1.52.0)
+
+- [3bee6d1dee](https://github.com/algolia/api-clients-automation/commit/3bee6d1dee) chore(ci): pin all GitHub Action refs to commit SHAs (API-475) ([#6819](https://github.com/algolia/api-clients-automation/pull/6819)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [1f389d1f7f](https://github.com/algolia/api-clients-automation/commit/1f389d1f7f) feat(specs): add agentic analytics support to insights spec ([#6876](https://github.com/algolia/api-clients-automation/pull/6876)) by [@sirockin](https://github.com/sirockin/)
+- [65cc642811](https://github.com/algolia/api-clients-automation/commit/65cc642811) feat(specs): add decision (declared winner) to abtesting-v3 ABTest ([#6732](https://github.com/algolia/api-clients-automation/pull/6732)) by [@cdhawke](https://github.com/cdhawke/)
+- [bed536e149](https://github.com/algolia/api-clients-automation/commit/bed536e149) chore(deps): dependencies 2026-08-10 ([#6835](https://github.com/algolia/api-clients-automation/pull/6835)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+- [3bb5bb5f3d](https://github.com/algolia/api-clients-automation/commit/3bb5bb5f3d) feat(dart): Request-ID and Correlation-ID support ([#6878](https://github.com/algolia/api-clients-automation/pull/6878)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+
 ## [1.51.4](https://github.com/algolia/algoliasearch-client-dart/compare/1.51.3...1.51.4)
 
 - [76dd01ea75](https://github.com/algolia/api-clients-automation/commit/76dd01ea75) fix(dart): add missing READMEs for ingestion and agent studio packages ([#6689](https://github.com/algolia/api-clients-automation/pull/6689)) by [@Fluf22](https://github.com/Fluf22/)
