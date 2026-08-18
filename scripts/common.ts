@@ -133,19 +133,73 @@ export function toAbsolutePath(ppath: string): string {
   return path.resolve(ROOT_DIR, ppath);
 }
 
+export async function git(
+  args: string[],
+  { cwd, allowFailure, errorMessage }: { cwd?: string; allowFailure?: boolean; errorMessage?: string } = {},
+): Promise<string> {
+  try {
+    const result = await execa('git', args, {
+      all: true,
+      cwd: path.resolve(ROOT_DIR, cwd ?? '.'),
+    });
+
+    if (isVerbose() && result.all) {
+      console.log(result.all);
+    }
+
+    return result.stdout;
+  } catch (err) {
+    if (allowFailure) {
+      if (isVerbose()) {
+        console.log((err as ExecaError).all);
+      }
+
+      return '';
+    }
+
+    if (errorMessage) {
+      if (isVerbose()) {
+        console.log((err as ExecaError).all);
+      }
+
+      throw new Error(`[ERROR] ${errorMessage}`);
+    }
+
+    console.log((err as ExecaError).all);
+
+    throw new Error(
+      `command failed: git ${args.map((arg) => (arg && !/\s/.test(arg) ? arg : JSON.stringify(arg))).join(' ')}`,
+    );
+  }
+}
+
+export function assertSafeRef(ref: string): string {
+  if (!ref || ref.startsWith('-')) {
+    throw new Error(`refusing to operate on suspicious git ref: ${JSON.stringify(ref)}`);
+  }
+
+  return ref;
+}
+
 export async function gitCommit({
   message,
   coAuthors,
+  env,
   // the cwd must be absolute !
   cwd = ROOT_DIR,
 }: {
   message: string;
   coAuthors?: string[];
+  env?: Record<string, string>;
   cwd?: string;
 }): Promise<void> {
   const messageWithCoAuthors = coAuthors ? `${message}\n\n\n${coAuthors.join('\n')}` : message;
 
-  await execa('git', ['commit', '-m', messageWithCoAuthors], { cwd });
+  const result = await execa('git', ['commit', '-m', messageWithCoAuthors], { all: true, cwd, env });
+
+  if (isVerbose() && result.all) {
+    console.log(result.all);
+  }
 }
 
 async function buildCustomGenerators(): Promise<void> {
@@ -173,7 +227,7 @@ async function buildCustomGenerators(): Promise<void> {
 }
 
 export async function gitBranchExists(branchName: string, cwd?: string): Promise<boolean> {
-  return Boolean(await run(`git ls-remote --heads origin ${branchName}`, { cwd }));
+  return Boolean(await git(['ls-remote', '--heads', '--end-of-options', 'origin', branchName], { cwd }));
 }
 
 export async function emptyDirExceptForDotGit(dir: string): Promise<void> {
