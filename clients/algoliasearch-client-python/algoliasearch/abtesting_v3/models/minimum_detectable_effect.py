@@ -32,7 +32,7 @@ def _alias_generator(name: str) -> str:
 
 class MinimumDetectableEffect(BaseModel):
     """
-    Configuration for the smallest difference between test variants you want to detect.
+    Configuration for the smallest difference between test variants you want to detect. Applies only to Frequentist tests, where it powers the fixed-horizon sample-size estimate. Requests with `method: bayesian` that include `minimumDetectableEffect` are rejected.
     """
 
     size: float

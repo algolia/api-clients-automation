@@ -19,6 +19,8 @@ public struct AbtestingV3ABTest: Codable, JSONEncodable {
     public var stoppedAt: String?
     /// A/B test name.
     public var name: String
+    /// Expected outcome of the A/B test.
+    public var hypothesis: String
     public var status: AbtestingV3Status
     /// A/B test variants.  The first variant is your _control_ index, typically your production index. All of the
     /// additional variants are indexes with changed settings that you want to test against the control.
@@ -27,6 +29,10 @@ public struct AbtestingV3ABTest: Codable, JSONEncodable {
     /// Unique migrated A/B test identifier.
     public var migratedAbTestID: Int?
     public var decision: Decision?
+    /// Whether the A/B test has accumulated enough evidence to trust its result on the test's `primaryMetric`.  If
+    /// omitted, the signal is unknown or not applicable. false means the test was evaluated but doesn't yet have enough
+    /// evidence.
+    public var hasEnoughEvidence: Bool?
 
     public init(
         abTestID: Int,
@@ -35,11 +41,13 @@ public struct AbtestingV3ABTest: Codable, JSONEncodable {
         endAt: String,
         stoppedAt: String? = nil,
         name: String,
+        hypothesis: String,
         status: AbtestingV3Status,
         variants: [AbtestingV3Variant],
         configuration: AbtestingV3ABTestConfiguration? = nil,
         migratedAbTestID: Int? = nil,
-        decision: Decision? = nil
+        decision: Decision? = nil,
+        hasEnoughEvidence: Bool? = nil
     ) {
         self.abTestID = abTestID
         self.updatedAt = updatedAt
@@ -47,11 +55,13 @@ public struct AbtestingV3ABTest: Codable, JSONEncodable {
         self.endAt = endAt
         self.stoppedAt = stoppedAt
         self.name = name
+        self.hypothesis = hypothesis
         self.status = status
         self.variants = variants
         self.configuration = configuration
         self.migratedAbTestID = migratedAbTestID
         self.decision = decision
+        self.hasEnoughEvidence = hasEnoughEvidence
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -61,11 +71,13 @@ public struct AbtestingV3ABTest: Codable, JSONEncodable {
         case endAt
         case stoppedAt
         case name
+        case hypothesis
         case status
         case variants
         case configuration
         case migratedAbTestID
         case decision
+        case hasEnoughEvidence
     }
 
     // Encodable protocol methods
@@ -78,11 +90,13 @@ public struct AbtestingV3ABTest: Codable, JSONEncodable {
         try container.encode(self.endAt, forKey: .endAt)
         try container.encodeIfPresent(self.stoppedAt, forKey: .stoppedAt)
         try container.encode(self.name, forKey: .name)
+        try container.encode(self.hypothesis, forKey: .hypothesis)
         try container.encode(self.status, forKey: .status)
         try container.encode(self.variants, forKey: .variants)
         try container.encodeIfPresent(self.configuration, forKey: .configuration)
         try container.encodeIfPresent(self.migratedAbTestID, forKey: .migratedAbTestID)
         try container.encodeIfPresent(self.decision, forKey: .decision)
+        try container.encodeIfPresent(self.hasEnoughEvidence, forKey: .hasEnoughEvidence)
     }
 }
 
@@ -96,10 +110,12 @@ extension AbtestingV3ABTest: Hashable {
         hasher.combine(self.endAt.hashValue)
         hasher.combine(self.stoppedAt?.hashValue)
         hasher.combine(self.name.hashValue)
+        hasher.combine(self.hypothesis.hashValue)
         hasher.combine(self.status.hashValue)
         hasher.combine(self.variants.hashValue)
         hasher.combine(self.configuration?.hashValue)
         hasher.combine(self.migratedAbTestID?.hashValue)
         hasher.combine(self.decision?.hashValue)
+        hasher.combine(self.hasEnoughEvidence?.hashValue)
     }
 }

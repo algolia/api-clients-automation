@@ -35,6 +35,8 @@ module Algolia
       # Whether the pValue is significant or not based on the critical value and the error correction algorithm used.
       attr_accessor :significant
 
+      attr_accessor :bayesian
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -47,7 +49,8 @@ module Algolia
           :dimension => :dimension,
           :metadata => :metadata,
           :critical_value => :criticalValue,
-          :significant => :significant
+          :significant => :significant,
+          :bayesian => :bayesian
         }
       end
 
@@ -63,7 +66,8 @@ module Algolia
           :dimension => :"String",
           :metadata => :"MetricMetadata",
           :critical_value => :"Float",
-          :significant => :"Boolean"
+          :significant => :"Boolean",
+          :bayesian => :"BayesianMetricResult"
         }
       end
 
@@ -125,8 +129,6 @@ module Algolia
 
         if attributes.key?(:p_value)
           self.p_value = attributes[:p_value]
-        else
-          self.p_value = nil
         end
 
         if attributes.key?(:dimension)
@@ -144,6 +146,10 @@ module Algolia
         if attributes.key?(:significant)
           self.significant = attributes[:significant]
         end
+
+        if attributes.key?(:bayesian)
+          self.bayesian = attributes[:bayesian]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -160,7 +166,8 @@ module Algolia
           dimension == other.dimension &&
           metadata == other.metadata &&
           critical_value == other.critical_value &&
-          significant == other.significant
+          significant == other.significant &&
+          bayesian == other.bayesian
       end
 
       # @see the `==` method
@@ -182,7 +189,8 @@ module Algolia
           dimension,
           metadata,
           critical_value,
-          significant
+          significant,
+          bayesian
         ].hash
       end
 

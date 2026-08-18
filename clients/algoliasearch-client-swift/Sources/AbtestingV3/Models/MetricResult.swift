@@ -23,7 +23,7 @@ public struct MetricResult: Codable, JSONEncodable {
     public var valueCILow: Double?
     /// PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the
     /// current variant based on the control.
-    public var pValue: Double
+    public var pValue: Double?
     /// Dimension defined during test creation.
     public var dimension: String?
     public var metadata: MetricMetadata?
@@ -33,6 +33,7 @@ public struct MetricResult: Codable, JSONEncodable {
     public var criticalValue: Double?
     /// Whether the pValue is significant or not based on the critical value and the error correction algorithm used.
     public var significant: Bool?
+    public var bayesian: BayesianMetricResult?
 
     public init(
         name: String,
@@ -40,11 +41,12 @@ public struct MetricResult: Codable, JSONEncodable {
         value: Double,
         valueCIHigh: Double? = nil,
         valueCILow: Double? = nil,
-        pValue: Double,
+        pValue: Double? = nil,
         dimension: String? = nil,
         metadata: MetricMetadata? = nil,
         criticalValue: Double? = nil,
-        significant: Bool? = nil
+        significant: Bool? = nil,
+        bayesian: BayesianMetricResult? = nil
     ) {
         self.name = name
         self.updatedAt = updatedAt
@@ -56,6 +58,7 @@ public struct MetricResult: Codable, JSONEncodable {
         self.metadata = metadata
         self.criticalValue = criticalValue
         self.significant = significant
+        self.bayesian = bayesian
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -69,6 +72,7 @@ public struct MetricResult: Codable, JSONEncodable {
         case metadata
         case criticalValue
         case significant
+        case bayesian
     }
 
     // Encodable protocol methods
@@ -80,11 +84,12 @@ public struct MetricResult: Codable, JSONEncodable {
         try container.encode(self.value, forKey: .value)
         try container.encodeIfPresent(self.valueCIHigh, forKey: .valueCIHigh)
         try container.encodeIfPresent(self.valueCILow, forKey: .valueCILow)
-        try container.encode(self.pValue, forKey: .pValue)
+        try container.encodeIfPresent(self.pValue, forKey: .pValue)
         try container.encodeIfPresent(self.dimension, forKey: .dimension)
         try container.encodeIfPresent(self.metadata, forKey: .metadata)
         try container.encodeIfPresent(self.criticalValue, forKey: .criticalValue)
         try container.encodeIfPresent(self.significant, forKey: .significant)
+        try container.encodeIfPresent(self.bayesian, forKey: .bayesian)
     }
 }
 
@@ -97,10 +102,11 @@ extension MetricResult: Hashable {
         hasher.combine(self.value.hashValue)
         hasher.combine(self.valueCIHigh?.hashValue)
         hasher.combine(self.valueCILow?.hashValue)
-        hasher.combine(self.pValue.hashValue)
+        hasher.combine(self.pValue?.hashValue)
         hasher.combine(self.dimension?.hashValue)
         hasher.combine(self.metadata?.hashValue)
         hasher.combine(self.criticalValue?.hashValue)
         hasher.combine(self.significant?.hashValue)
+        hasher.combine(self.bayesian?.hashValue)
     }
 }

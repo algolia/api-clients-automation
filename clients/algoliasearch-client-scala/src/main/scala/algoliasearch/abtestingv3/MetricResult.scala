@@ -55,9 +55,10 @@ case class MetricResult(
     value: Double,
     valueCIHigh: Option[Double] = scala.None,
     valueCILow: Option[Double] = scala.None,
-    pValue: Double,
+    pValue: Option[Double] = scala.None,
     dimension: Option[String] = scala.None,
     metadata: Option[MetricMetadata] = scala.None,
     criticalValue: Option[Double] = scala.None,
-    significant: Option[Boolean] = scala.None
+    significant: Option[Boolean] = scala.None,
+    bayesian: Option[BayesianMetricResult] = scala.None
 )

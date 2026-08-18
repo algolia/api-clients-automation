@@ -30,6 +30,9 @@ public class ABTest {
   @JsonProperty("name")
   private String name;
 
+  @JsonProperty("hypothesis")
+  private String hypothesis;
+
   @JsonProperty("status")
   private Status status;
 
@@ -44,6 +47,9 @@ public class ABTest {
 
   @JsonProperty("decision")
   private Decision decision;
+
+  @JsonProperty("hasEnoughEvidence")
+  private Boolean hasEnoughEvidence;
 
   public ABTest setAbTestID(Integer abTestID) {
     this.abTestID = abTestID;
@@ -111,6 +117,17 @@ public class ABTest {
     return name;
   }
 
+  public ABTest setHypothesis(String hypothesis) {
+    this.hypothesis = hypothesis;
+    return this;
+  }
+
+  /** Expected outcome of the A/B test. */
+  @javax.annotation.Nonnull
+  public String getHypothesis() {
+    return hypothesis;
+  }
+
   public ABTest setStatus(Status status) {
     this.status = status;
     return this;
@@ -175,6 +192,21 @@ public class ABTest {
     return decision;
   }
 
+  public ABTest setHasEnoughEvidence(Boolean hasEnoughEvidence) {
+    this.hasEnoughEvidence = hasEnoughEvidence;
+    return this;
+  }
+
+  /**
+   * Whether the A/B test has accumulated enough evidence to trust its result on the test's
+   * `primaryMetric`. If omitted, the signal is unknown or not applicable. false means the test was
+   * evaluated but doesn't yet have enough evidence.
+   */
+  @javax.annotation.Nullable
+  public Boolean getHasEnoughEvidence() {
+    return hasEnoughEvidence;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -191,11 +223,13 @@ public class ABTest {
       Objects.equals(this.endAt, abTest.endAt) &&
       Objects.equals(this.stoppedAt, abTest.stoppedAt) &&
       Objects.equals(this.name, abTest.name) &&
+      Objects.equals(this.hypothesis, abTest.hypothesis) &&
       Objects.equals(this.status, abTest.status) &&
       Objects.equals(this.variants, abTest.variants) &&
       Objects.equals(this.configuration, abTest.configuration) &&
       Objects.equals(this.migratedAbTestID, abTest.migratedAbTestID) &&
-      Objects.equals(this.decision, abTest.decision)
+      Objects.equals(this.decision, abTest.decision) &&
+      Objects.equals(this.hasEnoughEvidence, abTest.hasEnoughEvidence)
     );
   }
 
@@ -208,11 +242,13 @@ public class ABTest {
       endAt,
       stoppedAt,
       name,
+      hypothesis,
       status,
       variants,
       configuration,
       migratedAbTestID,
-      decision
+      decision,
+      hasEnoughEvidence
     );
   }
 
@@ -226,11 +262,13 @@ public class ABTest {
     sb.append("    endAt: ").append(toIndentedString(endAt)).append("\n");
     sb.append("    stoppedAt: ").append(toIndentedString(stoppedAt)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    hypothesis: ").append(toIndentedString(hypothesis)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    variants: ").append(toIndentedString(variants)).append("\n");
     sb.append("    configuration: ").append(toIndentedString(configuration)).append("\n");
     sb.append("    migratedAbTestID: ").append(toIndentedString(migratedAbTestID)).append("\n");
     sb.append("    decision: ").append(toIndentedString(decision)).append("\n");
+    sb.append("    hasEnoughEvidence: ").append(toIndentedString(hasEnoughEvidence)).append("\n");
     sb.append("}");
     return sb.toString();
   }

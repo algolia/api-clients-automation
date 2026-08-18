@@ -21,14 +21,18 @@ type ABTest struct {
 	// Date and time when the A/B test was stopped, in RFC 3339 format.
 	StoppedAt utils.Nullable[string] `json:"stoppedAt,omitempty"`
 	// A/B test name.
-	Name   string `json:"name"`
-	Status Status `json:"status"`
+	Name string `json:"name"`
+	// Expected outcome of the A/B test.
+	Hypothesis string `json:"hypothesis"`
+	Status     Status `json:"status"`
 	// A/B test variants.  The first variant is your _control_ index, typically your production index. All of the additional variants are indexes with changed settings that you want to test against the control.
 	Variants      []Variant            `json:"variants"`
 	Configuration *ABTestConfiguration `json:"configuration,omitempty"`
 	// Unique migrated A/B test identifier.
 	MigratedAbTestID *int32    `json:"migratedAbTestID,omitempty"`
 	Decision         *Decision `json:"decision,omitempty"`
+	// Whether the A/B test has accumulated enough evidence to trust its result on the test's `primaryMetric`.  If omitted, the signal is unknown or not applicable. false means the test was evaluated but doesn't yet have enough evidence.
+	HasEnoughEvidence *bool `json:"hasEnoughEvidence,omitempty"`
 }
 
 type ABTestOption func(f *ABTest)
@@ -57,6 +61,12 @@ func WithABTestDecision(val Decision) ABTestOption {
 	}
 }
 
+func WithABTestHasEnoughEvidence(val bool) ABTestOption {
+	return func(f *ABTest) {
+		f.HasEnoughEvidence = &val
+	}
+}
+
 // NewABTest instantiates a new ABTest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
@@ -67,6 +77,7 @@ func NewABTest(
 	createdAt string,
 	endAt string,
 	name string,
+	hypothesis string,
 	status Status,
 	variants []Variant,
 	opts ...ABTestOption,
@@ -77,6 +88,7 @@ func NewABTest(
 	this.CreatedAt = createdAt
 	this.EndAt = endAt
 	this.Name = name
+	this.Hypothesis = hypothesis
 	this.Status = status
 
 	this.Variants = variants
@@ -280,6 +292,34 @@ func (o *ABTest) SetName(v string) *ABTest {
 	return o
 }
 
+// GetHypothesis returns the Hypothesis field value.
+func (o *ABTest) GetHypothesis() string {
+	if o == nil {
+		var ret string
+
+		return ret
+	}
+
+	return o.Hypothesis
+}
+
+// GetHypothesisOk returns a tuple with the Hypothesis field value
+// and a boolean to check if the value has been set.
+func (o *ABTest) GetHypothesisOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+
+	return &o.Hypothesis, true
+}
+
+// SetHypothesis sets field value.
+func (o *ABTest) SetHypothesis(v string) *ABTest {
+	o.Hypothesis = v
+
+	return o
+}
+
 // GetStatus returns the Status field value.
 func (o *ABTest) GetStatus() Status {
 	if o == nil {
@@ -447,6 +487,43 @@ func (o *ABTest) SetDecision(v *Decision) *ABTest {
 	return o
 }
 
+// GetHasEnoughEvidence returns the HasEnoughEvidence field value if set, zero value otherwise.
+func (o *ABTest) GetHasEnoughEvidence() bool {
+	if o == nil || o.HasEnoughEvidence == nil {
+		var ret bool
+
+		return ret
+	}
+
+	return *o.HasEnoughEvidence
+}
+
+// GetHasEnoughEvidenceOk returns a tuple with the HasEnoughEvidence field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ABTest) GetHasEnoughEvidenceOk() (*bool, bool) {
+	if o == nil || o.HasEnoughEvidence == nil {
+		return nil, false
+	}
+
+	return o.HasEnoughEvidence, true
+}
+
+// HasHasEnoughEvidence returns a boolean if a field has been set.
+func (o *ABTest) HasHasEnoughEvidence() bool {
+	if o != nil && o.HasEnoughEvidence != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetHasEnoughEvidence gets a reference to the given bool and assigns it to the HasEnoughEvidence field.
+func (o *ABTest) SetHasEnoughEvidence(v bool) *ABTest {
+	o.HasEnoughEvidence = &v
+
+	return o
+}
+
 func (o ABTest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
 	toSerialize["abTestID"] = o.AbTestID
@@ -459,6 +536,7 @@ func (o ABTest) MarshalJSON() ([]byte, error) {
 	}
 
 	toSerialize["name"] = o.Name
+	toSerialize["hypothesis"] = o.Hypothesis
 	toSerialize["status"] = o.Status
 
 	toSerialize["variants"] = o.Variants
@@ -472,6 +550,10 @@ func (o ABTest) MarshalJSON() ([]byte, error) {
 
 	if o.Decision != nil {
 		toSerialize["decision"] = o.Decision
+	}
+
+	if o.HasEnoughEvidence != nil {
+		toSerialize["hasEnoughEvidence"] = o.HasEnoughEvidence
 	}
 
 	serialized, err := json.Marshal(toSerialize)
@@ -490,11 +572,13 @@ func (o ABTest) String() string {
 	out += fmt.Sprintf("  endAt=%v\n", o.EndAt)
 	out += fmt.Sprintf("  stoppedAt=%v\n", o.StoppedAt)
 	out += fmt.Sprintf("  name=%v\n", o.Name)
+	out += fmt.Sprintf("  hypothesis=%v\n", o.Hypothesis)
 	out += fmt.Sprintf("  status=%v\n", o.Status)
 	out += fmt.Sprintf("  variants=%v\n", o.Variants)
 	out += fmt.Sprintf("  configuration=%v\n", o.Configuration)
 	out += fmt.Sprintf("  migratedAbTestID=%v\n", o.MigratedAbTestID)
 	out += fmt.Sprintf("  decision=%v\n", o.Decision)
+	out += fmt.Sprintf("  hasEnoughEvidence=%v\n", o.HasEnoughEvidence)
 
 	return fmt.Sprintf("ABTest {\n%s}", out)
 }

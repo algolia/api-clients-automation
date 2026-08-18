@@ -72,6 +72,42 @@ class AbtestingV3ClientRequestsTests {
   }
 
   @Test
+  @DisplayName("applyVariantSettings")
+  void applyVariantSettingsTest() {
+    assertDoesNotThrow(() -> {
+      client.applyVariantSettings(42, 2);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/42/settings/2/apply", req.path);
+    assertEquals("POST", req.method);
+    assertEquals("{}", req.body);
+  }
+
+  @Test
+  @DisplayName("revert applied settings via the control variant")
+  void applyVariantSettingsTest1() {
+    assertDoesNotThrow(() -> {
+      client.applyVariantSettings(42, 1);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/42/settings/1/apply", req.path);
+    assertEquals("POST", req.method);
+    assertEquals("{}", req.body);
+  }
+
+  @Test
+  @DisplayName("completeABTest")
+  void completeABTestTest() {
+    assertDoesNotThrow(() -> {
+      client.completeABTest(42);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/42/complete", req.path);
+    assertEquals("POST", req.method);
+    assertEquals("{}", req.body);
+  }
+
+  @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
   void customDeleteTest() {
     assertDoesNotThrow(() -> {
@@ -746,6 +782,18 @@ class AbtestingV3ClientRequestsTests {
   }
 
   @Test
+  @DisplayName("getABTestSettings")
+  void getABTestSettingsTest() {
+    assertDoesNotThrow(() -> {
+      client.getABTestSettings(42);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/42/settings", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
   @DisplayName("getTimeseries")
   void getTimeseriesTest() {
     assertDoesNotThrow(() -> {
@@ -794,6 +842,30 @@ class AbtestingV3ClientRequestsTests {
     } catch (JsonProcessingException e) {
       fail("failed to parse queryParameters json");
     }
+  }
+
+  @Test
+  @DisplayName("saveVariantSettings")
+  void saveVariantSettingsTest() {
+    assertDoesNotThrow(() -> {
+      client.saveVariantSettings(42, 2, new SaveSettingsRequest().setSaveFeaturesSettings(true));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/42/settings/2", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"saveFeaturesSettings\":true}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("saveVariantSettingsWithoutFeatures")
+  void saveVariantSettingsTest1() {
+    assertDoesNotThrow(() -> {
+      client.saveVariantSettings(42, 2, new SaveSettingsRequest());
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/42/settings/2", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
   }
 
   @Test

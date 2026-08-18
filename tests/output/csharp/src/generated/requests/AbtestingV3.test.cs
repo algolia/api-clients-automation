@@ -52,6 +52,39 @@ public class AbtestingV3ClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "applyVariantSettings")]
+  public async Task ApplyVariantSettingsTest()
+  {
+    await client.ApplyVariantSettingsAsync(42, 2);
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/3/abtests/42/settings/2/apply", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    Assert.Equal("{}", req.Body);
+  }
+
+  [Fact(DisplayName = "revert applied settings via the control variant")]
+  public async Task ApplyVariantSettingsTest1()
+  {
+    await client.ApplyVariantSettingsAsync(42, 1);
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/3/abtests/42/settings/1/apply", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    Assert.Equal("{}", req.Body);
+  }
+
+  [Fact(DisplayName = "completeABTest")]
+  public async Task CompleteABTestTest()
+  {
+    await client.CompleteABTestAsync(42);
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/3/abtests/42/complete", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    Assert.Equal("{}", req.Body);
+  }
+
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
   public async Task CustomDeleteTest()
   {
@@ -597,6 +630,17 @@ public class AbtestingV3ClientRequestTests
     Assert.Null(req.Body);
   }
 
+  [Fact(DisplayName = "getABTestSettings")]
+  public async Task GetABTestSettingsTest()
+  {
+    await client.GetABTestSettingsAsync(42);
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/3/abtests/42/settings", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
   [Fact(DisplayName = "getTimeseries")]
   public async Task GetTimeseriesTest()
   {
@@ -641,6 +685,36 @@ public class AbtestingV3ClientRequestTests
       expectedQuery.TryGetValue(actual.Key, out var expected);
       Assert.Equal(expected, actual.Value);
     }
+  }
+
+  [Fact(DisplayName = "saveVariantSettings")]
+  public async Task SaveVariantSettingsTest()
+  {
+    await client.SaveVariantSettingsAsync(
+      42,
+      2,
+      new SaveSettingsRequest { SaveFeaturesSettings = true }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/3/abtests/42/settings/2", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"saveFeaturesSettings\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "saveVariantSettingsWithoutFeatures")]
+  public async Task SaveVariantSettingsTest1()
+  {
+    await client.SaveVariantSettingsAsync(42, 2, new SaveSettingsRequest { });
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/3/abtests/42/settings/2", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "stopABTest")]

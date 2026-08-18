@@ -176,6 +176,316 @@ public class AbtestingV3Client extends ApiClient {
   }
 
   /**
+   * Applies the captured settings of the given variant to the control index. The settings must
+   * first be captured with the `saveVariantSettings` operation. To revert previously applied
+   * settings on the control index, use this operation with the control variant (variant 1).
+   * Settings can be applied up to 14 days after the A/B test ends, and reverted up to 15 days
+   * after. Later requests return `400`. Each set of captured settings can only be applied once, and
+   * settings that were reverted can't be applied again. Both cases return `400`. The control index
+   * must not be in use by an active A/B test. Otherwise, the request returns `422`.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param variantId One-based index of the A/B test variant. The control is variant 1. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public void applyVariantSettings(@Nonnull Integer id, @Nonnull Integer variantId, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    LaunderThrowable.await(applyVariantSettingsAsync(id, variantId, requestOptions));
+    return;
+  }
+
+  /**
+   * Applies the captured settings of the given variant to the control index. The settings must
+   * first be captured with the `saveVariantSettings` operation. To revert previously applied
+   * settings on the control index, use this operation with the control variant (variant 1).
+   * Settings can be applied up to 14 days after the A/B test ends, and reverted up to 15 days
+   * after. Later requests return `400`. Each set of captured settings can only be applied once, and
+   * settings that were reverted can't be applied again. Both cases return `400`. The control index
+   * must not be in use by an active A/B test. Otherwise, the request returns `422`.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param variantId One-based index of the A/B test variant. The control is variant 1. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response applyVariantSettingsWithHTTPInfo(@Nonnull Integer id, @Nonnull Integer variantId, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(applyVariantSettingsWithHTTPInfoAsync(id, variantId, requestOptions));
+  }
+
+  /**
+   * Applies the captured settings of the given variant to the control index. The settings must
+   * first be captured with the `saveVariantSettings` operation. To revert previously applied
+   * settings on the control index, use this operation with the control variant (variant 1).
+   * Settings can be applied up to 14 days after the A/B test ends, and reverted up to 15 days
+   * after. Later requests return `400`. Each set of captured settings can only be applied once, and
+   * settings that were reverted can't be applied again. Both cases return `400`. The control index
+   * must not be in use by an active A/B test. Otherwise, the request returns `422`.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param variantId One-based index of the A/B test variant. The control is variant 1. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public void applyVariantSettings(@Nonnull Integer id, @Nonnull Integer variantId) throws AlgoliaRuntimeException {
+    this.applyVariantSettings(id, variantId, null);
+  }
+
+  /**
+   * Applies the captured settings of the given variant to the control index. The settings must
+   * first be captured with the `saveVariantSettings` operation. To revert previously applied
+   * settings on the control index, use this operation with the control variant (variant 1).
+   * Settings can be applied up to 14 days after the A/B test ends, and reverted up to 15 days
+   * after. Later requests return `400`. Each set of captured settings can only be applied once, and
+   * settings that were reverted can't be applied again. Both cases return `400`. The control index
+   * must not be in use by an active A/B test. Otherwise, the request returns `422`.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param variantId One-based index of the A/B test variant. The control is variant 1. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response applyVariantSettingsWithHTTPInfo(@Nonnull Integer id, @Nonnull Integer variantId) throws AlgoliaRuntimeException {
+    return this.applyVariantSettingsWithHTTPInfo(id, variantId, null);
+  }
+
+  /**
+   * (asynchronously) Applies the captured settings of the given variant to the control index. The
+   * settings must first be captured with the `saveVariantSettings` operation. To revert previously
+   * applied settings on the control index, use this operation with the control variant (variant 1).
+   * Settings can be applied up to 14 days after the A/B test ends, and reverted up to 15 days
+   * after. Later requests return `400`. Each set of captured settings can only be applied once, and
+   * settings that were reverted can't be applied again. Both cases return `400`. The control index
+   * must not be in use by an active A/B test. Otherwise, the request returns `422`.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param variantId One-based index of the A/B test variant. The control is variant 1. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Void> applyVariantSettingsAsync(
+    @Nonnull Integer id,
+    @Nonnull Integer variantId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(id, "Parameter `id` is required when calling `applyVariantSettings`.");
+
+    Parameters.requireNonNull(variantId, "Parameter `variantId` is required when calling `applyVariantSettings`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/3/abtests/{id}/settings/{variantId}/apply", id, variantId)
+      .setMethod("POST")
+      .build();
+    return executeAsync(request, requestOptions, null);
+  }
+
+  /**
+   * (asynchronously) Applies the captured settings of the given variant to the control index. The
+   * settings must first be captured with the `saveVariantSettings` operation. To revert previously
+   * applied settings on the control index, use this operation with the control variant (variant 1).
+   * Settings can be applied up to 14 days after the A/B test ends, and reverted up to 15 days
+   * after. Later requests return `400`. Each set of captured settings can only be applied once, and
+   * settings that were reverted can't be applied again. Both cases return `400`. The control index
+   * must not be in use by an active A/B test. Otherwise, the request returns `422`.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param variantId One-based index of the A/B test variant. The control is variant 1. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> applyVariantSettingsWithHTTPInfoAsync(
+    @Nonnull Integer id,
+    @Nonnull Integer variantId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(id, "Parameter `id` is required when calling `applyVariantSettings`.");
+
+    Parameters.requireNonNull(variantId, "Parameter `variantId` is required when calling `applyVariantSettings`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/3/abtests/{id}/settings/{variantId}/apply", id, variantId)
+      .setMethod("POST")
+      .build();
+    return executeAsync(request, requestOptions, null);
+  }
+
+  /**
+   * (asynchronously) Applies the captured settings of the given variant to the control index. The
+   * settings must first be captured with the `saveVariantSettings` operation. To revert previously
+   * applied settings on the control index, use this operation with the control variant (variant 1).
+   * Settings can be applied up to 14 days after the A/B test ends, and reverted up to 15 days
+   * after. Later requests return `400`. Each set of captured settings can only be applied once, and
+   * settings that were reverted can't be applied again. Both cases return `400`. The control index
+   * must not be in use by an active A/B test. Otherwise, the request returns `422`.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param variantId One-based index of the A/B test variant. The control is variant 1. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Void> applyVariantSettingsAsync(@Nonnull Integer id, @Nonnull Integer variantId) throws AlgoliaRuntimeException {
+    return this.applyVariantSettingsAsync(id, variantId, null);
+  }
+
+  /**
+   * (asynchronously) Applies the captured settings of the given variant to the control index. The
+   * settings must first be captured with the `saveVariantSettings` operation. To revert previously
+   * applied settings on the control index, use this operation with the control variant (variant 1).
+   * Settings can be applied up to 14 days after the A/B test ends, and reverted up to 15 days
+   * after. Later requests return `400`. Each set of captured settings can only be applied once, and
+   * settings that were reverted can't be applied again. Both cases return `400`. The control index
+   * must not be in use by an active A/B test. Otherwise, the request returns `422`.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param variantId One-based index of the A/B test variant. The control is variant 1. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> applyVariantSettingsWithHTTPInfoAsync(@Nonnull Integer id, @Nonnull Integer variantId)
+    throws AlgoliaRuntimeException {
+    return this.applyVariantSettingsWithHTTPInfoAsync(id, variantId, null);
+  }
+
+  /**
+   * Completes a running A/B test by its ID. The A/B test's status becomes `expired` and its end
+   * date is set to the completion time, mirroring what happens when an A/B test reaches its planned
+   * end date. The variant allocation is removed from the search engine, like when stopping an A/B
+   * test. Unlike stopped A/B tests, completed A/B tests are presented as finished rather than
+   * interrupted. Only running A/B tests can be completed. Completing an A/B test that isn't running
+   * returns `409`. You can't restart completed A/B tests.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ABTestResponse completeABTest(@Nonnull Integer id, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(completeABTestAsync(id, requestOptions));
+  }
+
+  /**
+   * Completes a running A/B test by its ID. The A/B test's status becomes `expired` and its end
+   * date is set to the completion time, mirroring what happens when an A/B test reaches its planned
+   * end date. The variant allocation is removed from the search engine, like when stopping an A/B
+   * test. Unlike stopped A/B tests, completed A/B tests are presented as finished rather than
+   * interrupted. Only running A/B tests can be completed. Completing an A/B test that isn't running
+   * returns `409`. You can't restart completed A/B tests.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response completeABTestWithHTTPInfo(@Nonnull Integer id, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(completeABTestWithHTTPInfoAsync(id, requestOptions));
+  }
+
+  /**
+   * Completes a running A/B test by its ID. The A/B test's status becomes `expired` and its end
+   * date is set to the completion time, mirroring what happens when an A/B test reaches its planned
+   * end date. The variant allocation is removed from the search engine, like when stopping an A/B
+   * test. Unlike stopped A/B tests, completed A/B tests are presented as finished rather than
+   * interrupted. Only running A/B tests can be completed. Completing an A/B test that isn't running
+   * returns `409`. You can't restart completed A/B tests.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ABTestResponse completeABTest(@Nonnull Integer id) throws AlgoliaRuntimeException {
+    return this.completeABTest(id, null);
+  }
+
+  /**
+   * Completes a running A/B test by its ID. The A/B test's status becomes `expired` and its end
+   * date is set to the completion time, mirroring what happens when an A/B test reaches its planned
+   * end date. The variant allocation is removed from the search engine, like when stopping an A/B
+   * test. Unlike stopped A/B tests, completed A/B tests are presented as finished rather than
+   * interrupted. Only running A/B tests can be completed. Completing an A/B test that isn't running
+   * returns `409`. You can't restart completed A/B tests.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response completeABTestWithHTTPInfo(@Nonnull Integer id) throws AlgoliaRuntimeException {
+    return this.completeABTestWithHTTPInfo(id, null);
+  }
+
+  /**
+   * (asynchronously) Completes a running A/B test by its ID. The A/B test's status becomes
+   * `expired` and its end date is set to the completion time, mirroring what happens when an A/B
+   * test reaches its planned end date. The variant allocation is removed from the search engine,
+   * like when stopping an A/B test. Unlike stopped A/B tests, completed A/B tests are presented as
+   * finished rather than interrupted. Only running A/B tests can be completed. Completing an A/B
+   * test that isn't running returns `409`. You can't restart completed A/B tests.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ABTestResponse> completeABTestAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(id, "Parameter `id` is required when calling `completeABTest`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/3/abtests/{id}/complete", id).setMethod("POST").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<ABTestResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Completes a running A/B test by its ID. The A/B test's status becomes
+   * `expired` and its end date is set to the completion time, mirroring what happens when an A/B
+   * test reaches its planned end date. The variant allocation is removed from the search engine,
+   * like when stopping an A/B test. Unlike stopped A/B tests, completed A/B tests are presented as
+   * finished rather than interrupted. Only running A/B tests can be completed. Completing an A/B
+   * test that isn't running returns `409`. You can't restart completed A/B tests.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> completeABTestWithHTTPInfoAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(id, "Parameter `id` is required when calling `completeABTest`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/3/abtests/{id}/complete", id).setMethod("POST").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Completes a running A/B test by its ID. The A/B test's status becomes
+   * `expired` and its end date is set to the completion time, mirroring what happens when an A/B
+   * test reaches its planned end date. The variant allocation is removed from the search engine,
+   * like when stopping an A/B test. Unlike stopped A/B tests, completed A/B tests are presented as
+   * finished rather than interrupted. Only running A/B tests can be completed. Completing an A/B
+   * test that isn't running returns `409`. You can't restart completed A/B tests.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ABTestResponse> completeABTestAsync(@Nonnull Integer id) throws AlgoliaRuntimeException {
+    return this.completeABTestAsync(id, null);
+  }
+
+  /**
+   * (asynchronously) Completes a running A/B test by its ID. The A/B test's status becomes
+   * `expired` and its end date is set to the completion time, mirroring what happens when an A/B
+   * test reaches its planned end date. The variant allocation is removed from the search engine,
+   * like when stopping an A/B test. Unlike stopped A/B tests, completed A/B tests are presented as
+   * finished rather than interrupted. Only running A/B tests can be completed. Completing an A/B
+   * test that isn't running returns `409`. You can't restart completed A/B tests.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> completeABTestWithHTTPInfoAsync(@Nonnull Integer id) throws AlgoliaRuntimeException {
+    return this.completeABTestWithHTTPInfoAsync(id, null);
+  }
+
+  /**
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
@@ -1356,6 +1666,138 @@ public class AbtestingV3Client extends ApiClient {
   }
 
   /**
+   * Retrieves the settings captured for each variant of an A/B test, and whether another active A/B
+   * test is using the control index. Settings are captured by the `saveVariantSettings` operation.
+   * The response includes an entry for the control (variant 1) alongside the captured variant, so
+   * the control's original configuration can be restored later. Returns `404` if no settings have
+   * been captured for the A/B test.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ABTestSettingsResponse getABTestSettings(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getABTestSettingsAsync(id, requestOptions));
+  }
+
+  /**
+   * Retrieves the settings captured for each variant of an A/B test, and whether another active A/B
+   * test is using the control index. Settings are captured by the `saveVariantSettings` operation.
+   * The response includes an entry for the control (variant 1) alongside the captured variant, so
+   * the control's original configuration can be restored later. Returns `404` if no settings have
+   * been captured for the A/B test.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getABTestSettingsWithHTTPInfo(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getABTestSettingsWithHTTPInfoAsync(id, requestOptions));
+  }
+
+  /**
+   * Retrieves the settings captured for each variant of an A/B test, and whether another active A/B
+   * test is using the control index. Settings are captured by the `saveVariantSettings` operation.
+   * The response includes an entry for the control (variant 1) alongside the captured variant, so
+   * the control's original configuration can be restored later. Returns `404` if no settings have
+   * been captured for the A/B test.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ABTestSettingsResponse getABTestSettings(@Nonnull Integer id) throws AlgoliaRuntimeException {
+    return this.getABTestSettings(id, null);
+  }
+
+  /**
+   * Retrieves the settings captured for each variant of an A/B test, and whether another active A/B
+   * test is using the control index. Settings are captured by the `saveVariantSettings` operation.
+   * The response includes an entry for the control (variant 1) alongside the captured variant, so
+   * the control's original configuration can be restored later. Returns `404` if no settings have
+   * been captured for the A/B test.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getABTestSettingsWithHTTPInfo(@Nonnull Integer id) throws AlgoliaRuntimeException {
+    return this.getABTestSettingsWithHTTPInfo(id, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the settings captured for each variant of an A/B test, and whether
+   * another active A/B test is using the control index. Settings are captured by the
+   * `saveVariantSettings` operation. The response includes an entry for the control (variant 1)
+   * alongside the captured variant, so the control's original configuration can be restored later.
+   * Returns `404` if no settings have been captured for the A/B test.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ABTestSettingsResponse> getABTestSettingsAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(id, "Parameter `id` is required when calling `getABTestSettings`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/3/abtests/{id}/settings", id).setMethod("GET").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<ABTestSettingsResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the settings captured for each variant of an A/B test, and whether
+   * another active A/B test is using the control index. Settings are captured by the
+   * `saveVariantSettings` operation. The response includes an entry for the control (variant 1)
+   * alongside the captured variant, so the control's original configuration can be restored later.
+   * Returns `404` if no settings have been captured for the A/B test.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getABTestSettingsWithHTTPInfoAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(id, "Parameter `id` is required when calling `getABTestSettings`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/3/abtests/{id}/settings", id).setMethod("GET").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the settings captured for each variant of an A/B test, and whether
+   * another active A/B test is using the control index. Settings are captured by the
+   * `saveVariantSettings` operation. The response includes an entry for the control (variant 1)
+   * alongside the captured variant, so the control's original configuration can be restored later.
+   * Returns `404` if no settings have been captured for the A/B test.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ABTestSettingsResponse> getABTestSettingsAsync(@Nonnull Integer id) throws AlgoliaRuntimeException {
+    return this.getABTestSettingsAsync(id, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the settings captured for each variant of an A/B test, and whether
+   * another active A/B test is using the control index. Settings are captured by the
+   * `saveVariantSettings` operation. The response includes an entry for the control (variant 1)
+   * alongside the captured variant, so the control's original configuration can be restored later.
+   * Returns `404` if no settings have been captured for the A/B test.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getABTestSettingsWithHTTPInfoAsync(@Nonnull Integer id) throws AlgoliaRuntimeException {
+    return this.getABTestSettingsWithHTTPInfoAsync(id, null);
+  }
+
+  /**
    * Retrieves timeseries for an A/B test by its ID.
    *
    * @param id Unique A/B test identifier. (required)
@@ -1897,6 +2339,210 @@ public class AbtestingV3Client extends ApiClient {
    */
   public CompletableFuture<Response> listABTestsWithHTTPInfoAsync() throws AlgoliaRuntimeException {
     return this.listABTestsWithHTTPInfoAsync(null, null, null, null, null, null);
+  }
+
+  /**
+   * Captures the settings of the given variant and of the control, then stops the A/B test. The
+   * captured settings can later be applied to the control index with the `applyVariantSettings`
+   * operation, and read back with the `getABTestSettings` operation. The A/B test must have reached
+   * 80% of its planned duration. Earlier requests return `400`. Settings can only be captured once
+   * per A/B test. A second request returns `409`. `synonyms` and `enableRules` are not captured, so
+   * applying the captured settings never changes them on the control index.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param variantId One-based index of the A/B test variant. The control is variant 1. (required)
+   * @param saveSettingsRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public void saveVariantSettings(
+    @Nonnull Integer id,
+    @Nonnull Integer variantId,
+    @Nonnull SaveSettingsRequest saveSettingsRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    LaunderThrowable.await(saveVariantSettingsAsync(id, variantId, saveSettingsRequest, requestOptions));
+    return;
+  }
+
+  /**
+   * Captures the settings of the given variant and of the control, then stops the A/B test. The
+   * captured settings can later be applied to the control index with the `applyVariantSettings`
+   * operation, and read back with the `getABTestSettings` operation. The A/B test must have reached
+   * 80% of its planned duration. Earlier requests return `400`. Settings can only be captured once
+   * per A/B test. A second request returns `409`. `synonyms` and `enableRules` are not captured, so
+   * applying the captured settings never changes them on the control index.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param variantId One-based index of the A/B test variant. The control is variant 1. (required)
+   * @param saveSettingsRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response saveVariantSettingsWithHTTPInfo(
+    @Nonnull Integer id,
+    @Nonnull Integer variantId,
+    @Nonnull SaveSettingsRequest saveSettingsRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(saveVariantSettingsWithHTTPInfoAsync(id, variantId, saveSettingsRequest, requestOptions));
+  }
+
+  /**
+   * Captures the settings of the given variant and of the control, then stops the A/B test. The
+   * captured settings can later be applied to the control index with the `applyVariantSettings`
+   * operation, and read back with the `getABTestSettings` operation. The A/B test must have reached
+   * 80% of its planned duration. Earlier requests return `400`. Settings can only be captured once
+   * per A/B test. A second request returns `409`. `synonyms` and `enableRules` are not captured, so
+   * applying the captured settings never changes them on the control index.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param variantId One-based index of the A/B test variant. The control is variant 1. (required)
+   * @param saveSettingsRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public void saveVariantSettings(@Nonnull Integer id, @Nonnull Integer variantId, @Nonnull SaveSettingsRequest saveSettingsRequest)
+    throws AlgoliaRuntimeException {
+    this.saveVariantSettings(id, variantId, saveSettingsRequest, null);
+  }
+
+  /**
+   * Captures the settings of the given variant and of the control, then stops the A/B test. The
+   * captured settings can later be applied to the control index with the `applyVariantSettings`
+   * operation, and read back with the `getABTestSettings` operation. The A/B test must have reached
+   * 80% of its planned duration. Earlier requests return `400`. Settings can only be captured once
+   * per A/B test. A second request returns `409`. `synonyms` and `enableRules` are not captured, so
+   * applying the captured settings never changes them on the control index.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param variantId One-based index of the A/B test variant. The control is variant 1. (required)
+   * @param saveSettingsRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response saveVariantSettingsWithHTTPInfo(
+    @Nonnull Integer id,
+    @Nonnull Integer variantId,
+    @Nonnull SaveSettingsRequest saveSettingsRequest
+  ) throws AlgoliaRuntimeException {
+    return this.saveVariantSettingsWithHTTPInfo(id, variantId, saveSettingsRequest, null);
+  }
+
+  /**
+   * (asynchronously) Captures the settings of the given variant and of the control, then stops the
+   * A/B test. The captured settings can later be applied to the control index with the
+   * `applyVariantSettings` operation, and read back with the `getABTestSettings` operation. The A/B
+   * test must have reached 80% of its planned duration. Earlier requests return `400`. Settings can
+   * only be captured once per A/B test. A second request returns `409`. `synonyms` and
+   * `enableRules` are not captured, so applying the captured settings never changes them on the
+   * control index.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param variantId One-based index of the A/B test variant. The control is variant 1. (required)
+   * @param saveSettingsRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Void> saveVariantSettingsAsync(
+    @Nonnull Integer id,
+    @Nonnull Integer variantId,
+    @Nonnull SaveSettingsRequest saveSettingsRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(id, "Parameter `id` is required when calling `saveVariantSettings`.");
+
+    Parameters.requireNonNull(variantId, "Parameter `variantId` is required when calling `saveVariantSettings`.");
+
+    Parameters.requireNonNull(saveSettingsRequest, "Parameter `saveSettingsRequest` is required when calling `saveVariantSettings`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/3/abtests/{id}/settings/{variantId}", id, variantId)
+      .setMethod("POST")
+      .setBody(saveSettingsRequest)
+      .build();
+    return executeAsync(request, requestOptions, null);
+  }
+
+  /**
+   * (asynchronously) Captures the settings of the given variant and of the control, then stops the
+   * A/B test. The captured settings can later be applied to the control index with the
+   * `applyVariantSettings` operation, and read back with the `getABTestSettings` operation. The A/B
+   * test must have reached 80% of its planned duration. Earlier requests return `400`. Settings can
+   * only be captured once per A/B test. A second request returns `409`. `synonyms` and
+   * `enableRules` are not captured, so applying the captured settings never changes them on the
+   * control index.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param variantId One-based index of the A/B test variant. The control is variant 1. (required)
+   * @param saveSettingsRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> saveVariantSettingsWithHTTPInfoAsync(
+    @Nonnull Integer id,
+    @Nonnull Integer variantId,
+    @Nonnull SaveSettingsRequest saveSettingsRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(id, "Parameter `id` is required when calling `saveVariantSettings`.");
+
+    Parameters.requireNonNull(variantId, "Parameter `variantId` is required when calling `saveVariantSettings`.");
+
+    Parameters.requireNonNull(saveSettingsRequest, "Parameter `saveSettingsRequest` is required when calling `saveVariantSettings`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/3/abtests/{id}/settings/{variantId}", id, variantId)
+      .setMethod("POST")
+      .setBody(saveSettingsRequest)
+      .build();
+    return executeAsync(request, requestOptions, null);
+  }
+
+  /**
+   * (asynchronously) Captures the settings of the given variant and of the control, then stops the
+   * A/B test. The captured settings can later be applied to the control index with the
+   * `applyVariantSettings` operation, and read back with the `getABTestSettings` operation. The A/B
+   * test must have reached 80% of its planned duration. Earlier requests return `400`. Settings can
+   * only be captured once per A/B test. A second request returns `409`. `synonyms` and
+   * `enableRules` are not captured, so applying the captured settings never changes them on the
+   * control index.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param variantId One-based index of the A/B test variant. The control is variant 1. (required)
+   * @param saveSettingsRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Void> saveVariantSettingsAsync(
+    @Nonnull Integer id,
+    @Nonnull Integer variantId,
+    @Nonnull SaveSettingsRequest saveSettingsRequest
+  ) throws AlgoliaRuntimeException {
+    return this.saveVariantSettingsAsync(id, variantId, saveSettingsRequest, null);
+  }
+
+  /**
+   * (asynchronously) Captures the settings of the given variant and of the control, then stops the
+   * A/B test. The captured settings can later be applied to the control index with the
+   * `applyVariantSettings` operation, and read back with the `getABTestSettings` operation. The A/B
+   * test must have reached 80% of its planned duration. Earlier requests return `400`. Settings can
+   * only be captured once per A/B test. A second request returns `409`. `synonyms` and
+   * `enableRules` are not captured, so applying the captured settings never changes them on the
+   * control index.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param variantId One-based index of the A/B test variant. The control is variant 1. (required)
+   * @param saveSettingsRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> saveVariantSettingsWithHTTPInfoAsync(
+    @Nonnull Integer id,
+    @Nonnull Integer variantId,
+    @Nonnull SaveSettingsRequest saveSettingsRequest
+  ) throws AlgoliaRuntimeException {
+    return this.saveVariantSettingsWithHTTPInfoAsync(id, variantId, saveSettingsRequest, null);
   }
 
   /**

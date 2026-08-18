@@ -19,11 +19,13 @@ final class ABTest {
     required this.endAt,
     this.stoppedAt,
     required this.name,
+    required this.hypothesis,
     required this.status,
     required this.variants,
     this.configuration,
     this.migratedAbTestID,
     this.decision,
+    this.hasEnoughEvidence,
   });
 
   /// Unique A/B test identifier.
@@ -50,6 +52,10 @@ final class ABTest {
   @JsonKey(name: r'name')
   final String name;
 
+  /// Expected outcome of the A/B test.
+  @JsonKey(name: r'hypothesis')
+  final String hypothesis;
+
   @JsonKey(name: r'status')
   final Status status;
 
@@ -67,6 +73,10 @@ final class ABTest {
   @JsonKey(name: r'decision')
   final Decision? decision;
 
+  /// Whether the A/B test has accumulated enough evidence to trust its result on the test's `primaryMetric`.  If omitted, the signal is unknown or not applicable. false means the test was evaluated but doesn't yet have enough evidence.
+  @JsonKey(name: r'hasEnoughEvidence')
+  final bool? hasEnoughEvidence;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -77,11 +87,13 @@ final class ABTest {
           other.endAt == endAt &&
           other.stoppedAt == stoppedAt &&
           other.name == name &&
+          other.hypothesis == hypothesis &&
           other.status == status &&
           other.variants == variants &&
           other.configuration == configuration &&
           other.migratedAbTestID == migratedAbTestID &&
-          other.decision == decision;
+          other.decision == decision &&
+          other.hasEnoughEvidence == hasEnoughEvidence;
 
   @override
   int get hashCode =>
@@ -91,11 +103,13 @@ final class ABTest {
       endAt.hashCode +
       (stoppedAt == null ? 0 : stoppedAt.hashCode) +
       name.hashCode +
+      hypothesis.hashCode +
       status.hashCode +
       variants.hashCode +
       configuration.hashCode +
       migratedAbTestID.hashCode +
-      decision.hashCode;
+      decision.hashCode +
+      hasEnoughEvidence.hashCode;
 
   factory ABTest.fromJson(Map<String, dynamic> json) => _$ABTestFromJson(json);
 

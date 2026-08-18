@@ -69,6 +69,50 @@ class AbtestingV3Test extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("applyVariantSettings") {
+    val (client, echo) = testClient()
+    val future = client.applyVariantSettings(
+      id = 42,
+      variantId = 2
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/abtests/42/settings/2/apply")
+    assert(res.method == "POST")
+    assert(res.body.contains("{}"))
+  }
+
+  test("revert applied settings via the control variant1") {
+    val (client, echo) = testClient()
+    val future = client.applyVariantSettings(
+      id = 42,
+      variantId = 1
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/abtests/42/settings/1/apply")
+    assert(res.method == "POST")
+    assert(res.body.contains("{}"))
+  }
+
+  test("completeABTest") {
+    val (client, echo) = testClient()
+    val future = client.completeABTest(
+      id = 42
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/abtests/42/complete")
+    assert(res.method == "POST")
+    assert(res.body.contains("{}"))
+  }
+
   test("allow del method for a custom path with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.customDelete[JObject](
@@ -617,6 +661,20 @@ class AbtestingV3Test extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
+  test("getABTestSettings") {
+    val (client, echo) = testClient()
+    val future = client.getABTestSettings(
+      id = 42
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/abtests/42/settings")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
   test("getTimeseries") {
     val (client, echo) = testClient()
     val future = client.getTimeseries(
@@ -669,6 +727,45 @@ class AbtestingV3Test extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
+  }
+
+  test("saveVariantSettings") {
+    val (client, echo) = testClient()
+    val future = client.saveVariantSettings(
+      id = 42,
+      variantId = 2,
+      saveSettingsRequest = SaveSettingsRequest(
+        saveFeaturesSettings = Some(true)
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/abtests/42/settings/2")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"saveFeaturesSettings":true}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("saveVariantSettingsWithoutFeatures1") {
+    val (client, echo) = testClient()
+    val future = client.saveVariantSettings(
+      id = 42,
+      variantId = 2,
+      saveSettingsRequest = SaveSettingsRequest(
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/abtests/42/settings/2")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
   }
 
   test("stopABTest") {

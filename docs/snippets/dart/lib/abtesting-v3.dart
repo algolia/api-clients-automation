@@ -43,6 +43,67 @@ void snippetForaddABTests() async {
   // SEPARATOR<
 }
 
+// Snippet for the applyVariantSettings method.
+//
+// applyVariantSettings
+void snippetForapplyVariantSettings() async {
+  // >SEPARATOR applyVariantSettings applyVariantSettings
+  // Initialize the client
+  final client = AbtestingV3Client(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  await client.applyVariantSettings(
+    id: 42,
+    variantId: 2,
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the applyVariantSettings method.
+//
+// revert applied settings via the control variant
+void snippetForapplyVariantSettings1() async {
+  // >SEPARATOR applyVariantSettings revert applied settings via the control variant
+  // Initialize the client
+  final client = AbtestingV3Client(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  await client.applyVariantSettings(
+    id: 42,
+    variantId: 1,
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the completeABTest method.
+//
+// completeABTest
+void snippetForcompleteABTest() async {
+  // >SEPARATOR completeABTest default
+  // Initialize the client
+  final client = AbtestingV3Client(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.completeABTest(
+    id: 42,
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
 // Snippet for the customDelete method.
 //
 // allow del method for a custom path with minimal parameters
@@ -643,6 +704,27 @@ void snippetForgetABTest() async {
   // SEPARATOR<
 }
 
+// Snippet for the getABTestSettings method.
+//
+// getABTestSettings
+void snippetForgetABTestSettings() async {
+  // >SEPARATOR getABTestSettings default
+  // Initialize the client
+  final client = AbtestingV3Client(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.getABTestSettings(
+    id: 42,
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
 // Snippet for the getTimeseries method.
 //
 // getTimeseries
@@ -705,6 +787,50 @@ void snippetForlistABTests1() async {
   // >LOG
   // print the response
   print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveVariantSettings method.
+//
+// saveVariantSettings
+void snippetForsaveVariantSettings() async {
+  // >SEPARATOR saveVariantSettings saveVariantSettings
+  // Initialize the client
+  final client = AbtestingV3Client(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  await client.saveVariantSettings(
+    id: 42,
+    variantId: 2,
+    saveSettingsRequest: SaveSettingsRequest(
+      saveFeaturesSettings: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveVariantSettings method.
+//
+// saveVariantSettingsWithoutFeatures
+void snippetForsaveVariantSettings1() async {
+  // >SEPARATOR saveVariantSettings saveVariantSettingsWithoutFeatures
+  // Initialize the client
+  final client = AbtestingV3Client(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  await client.saveVariantSettings(
+    id: 42,
+    variantId: 2,
+    saveSettingsRequest: SaveSettingsRequest(),
+  );
+  // >LOG
   // SEPARATOR<
 }
 

@@ -36,6 +36,50 @@ class SnippetAbtestingV3Client {
     // SEPARATOR<
   }
 
+  // Snippet for the applyVariantSettings method.
+  //
+  // applyVariantSettings
+  void snippetForApplyVariantSettings() throws Exception {
+    // >SEPARATOR applyVariantSettings applyVariantSettings
+    // Initialize the client
+    AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.applyVariantSettings(42, 2);
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the applyVariantSettings method.
+  //
+  // revert applied settings via the control variant
+  void snippetForApplyVariantSettings1() throws Exception {
+    // >SEPARATOR applyVariantSettings revert applied settings via the control variant
+    // Initialize the client
+    AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.applyVariantSettings(42, 1);
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the completeABTest method.
+  //
+  // completeABTest
+  void snippetForCompleteABTest() throws Exception {
+    // >SEPARATOR completeABTest default
+    // Initialize the client
+    AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    ABTestResponse response = client.completeABTest(42);
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
   // Snippet for the customDelete method.
   //
   // allow del method for a custom path with minimal parameters
@@ -551,6 +595,22 @@ class SnippetAbtestingV3Client {
     // SEPARATOR<
   }
 
+  // Snippet for the getABTestSettings method.
+  //
+  // getABTestSettings
+  void snippetForGetABTestSettings() throws Exception {
+    // >SEPARATOR getABTestSettings default
+    // Initialize the client
+    AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    ABTestSettingsResponse response = client.getABTestSettings(42);
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
   // Snippet for the getTimeseries method.
   //
   // getTimeseries
@@ -596,6 +656,35 @@ class SnippetAbtestingV3Client {
     // >LOG
     // print the response
     System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the saveVariantSettings method.
+  //
+  // saveVariantSettings
+  void snippetForSaveVariantSettings() throws Exception {
+    // >SEPARATOR saveVariantSettings saveVariantSettings
+    // Initialize the client
+    AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.saveVariantSettings(42, 2, new SaveSettingsRequest().setSaveFeaturesSettings(true));
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the saveVariantSettings method.
+  //
+  // saveVariantSettingsWithoutFeatures
+  void snippetForSaveVariantSettings1() throws Exception {
+    // >SEPARATOR saveVariantSettings saveVariantSettingsWithoutFeatures
+    // Initialize the client
+    AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.saveVariantSettings(42, 2, new SaveSettingsRequest());
+
+    // >LOG
     // SEPARATOR<
   }
 

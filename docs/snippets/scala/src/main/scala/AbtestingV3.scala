@@ -61,6 +61,82 @@ class SnippetAbtestingV3Client {
     // SEPARATOR<
   }
 
+  /** Snippet for the applyVariantSettings method.
+    *
+    * applyVariantSettings
+    */
+  def snippetForAbtestingV3ClientApplyVariantSettings(): Unit = {
+    // >SEPARATOR applyVariantSettings applyVariantSettings
+    // Initialize the client
+    val client = AbtestingV3Client(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    Await.result(
+      client.applyVariantSettings(
+        id = 42,
+        variantId = 2
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the applyVariantSettings method.
+    *
+    * revert applied settings via the control variant
+    */
+  def snippetForAbtestingV3ClientApplyVariantSettings1(): Unit = {
+    // >SEPARATOR applyVariantSettings revert applied settings via the control variant
+    // Initialize the client
+    val client = AbtestingV3Client(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    Await.result(
+      client.applyVariantSettings(
+        id = 42,
+        variantId = 1
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the completeABTest method.
+    *
+    * completeABTest
+    */
+  def snippetForAbtestingV3ClientCompleteABTest(): Unit = {
+    // >SEPARATOR completeABTest default
+    // Initialize the client
+    val client = AbtestingV3Client(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.completeABTest(
+        id = 42
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
   /** Snippet for the customDelete method.
     *
     * allow del method for a custom path with minimal parameters
@@ -711,6 +787,32 @@ class SnippetAbtestingV3Client {
     // SEPARATOR<
   }
 
+  /** Snippet for the getABTestSettings method.
+    *
+    * getABTestSettings
+    */
+  def snippetForAbtestingV3ClientGetABTestSettings(): Unit = {
+    // >SEPARATOR getABTestSettings default
+    // Initialize the client
+    val client = AbtestingV3Client(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.getABTestSettings(
+        id = 42
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
   /** Snippet for the getTimeseries method.
     *
     * getTimeseries
@@ -789,6 +891,61 @@ class SnippetAbtestingV3Client {
     // >LOG
     // print the response
     println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveVariantSettings method.
+    *
+    * saveVariantSettings
+    */
+  def snippetForAbtestingV3ClientSaveVariantSettings(): Unit = {
+    // >SEPARATOR saveVariantSettings saveVariantSettings
+    // Initialize the client
+    val client = AbtestingV3Client(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    Await.result(
+      client.saveVariantSettings(
+        id = 42,
+        variantId = 2,
+        saveSettingsRequest = SaveSettingsRequest(
+          saveFeaturesSettings = Some(true)
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveVariantSettings method.
+    *
+    * saveVariantSettingsWithoutFeatures
+    */
+  def snippetForAbtestingV3ClientSaveVariantSettings1(): Unit = {
+    // >SEPARATOR saveVariantSettings saveVariantSettingsWithoutFeatures
+    // Initialize the client
+    val client = AbtestingV3Client(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    Await.result(
+      client.saveVariantSettings(
+        id = 42,
+        variantId = 2,
+        saveSettingsRequest = SaveSettingsRequest(
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 

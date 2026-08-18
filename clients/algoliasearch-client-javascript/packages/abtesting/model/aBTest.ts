@@ -36,6 +36,11 @@ export type ABTest = {
    */
   name: string;
 
+  /**
+   * Expected outcome of the A/B test.
+   */
+  hypothesis: string;
+
   status: Status;
 
   /**
@@ -51,4 +56,9 @@ export type ABTest = {
   migratedAbTestID?: number | undefined;
 
   decision?: Decision | undefined;
+
+  /**
+   * Whether the A/B test has accumulated enough evidence to trust its result on the test\'s `primaryMetric`.  If omitted, the signal is unknown or not applicable. false means the test was evaluated but doesn\'t yet have enough evidence.
+   */
+  hasEnoughEvidence?: boolean | undefined;
 };

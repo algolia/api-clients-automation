@@ -12,7 +12,7 @@ use Algolia\AlgoliaSearch\Model\ModelInterface;
  *
  * @category Class
  *
- * @description Configuration for the smallest difference between test variants you want to detect.
+ * @description Configuration for the smallest difference between test variants you want to detect. Applies only to Frequentist tests, where it powers the fixed-horizon sample-size estimate. Requests with `method: bayesian` that include `minimumDetectableEffect` are rejected.
  */
 class MinimumDetectableEffect extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
 {

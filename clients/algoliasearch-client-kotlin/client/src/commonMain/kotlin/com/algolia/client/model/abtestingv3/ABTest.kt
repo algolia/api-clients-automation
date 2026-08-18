@@ -15,6 +15,7 @@ import kotlinx.serialization.json.*
  * @param createdAt Date and time when the A/B test was created, in RFC 3339 format.
  * @param endAt End date and time of the A/B test, in RFC 3339 format.
  * @param name A/B test name.
+ * @param hypothesis Expected outcome of the A/B test.
  * @param status
  * @param variants A/B test variants. The first variant is your _control_ index, typically your
  *   production index. All of the additional variants are indexes with changed settings that you
@@ -23,6 +24,9 @@ import kotlinx.serialization.json.*
  * @param configuration
  * @param migratedAbTestID Unique migrated A/B test identifier.
  * @param decision
+ * @param hasEnoughEvidence Whether the A/B test has accumulated enough evidence to trust its result
+ *   on the test's `primaryMetric`. If omitted, the signal is unknown or not applicable. false means
+ *   the test was evaluated but doesn't yet have enough evidence.
  */
 @Serializable
 public data class ABTest(
@@ -41,6 +45,9 @@ public data class ABTest(
 
   /** A/B test name. */
   @SerialName(value = "name") val name: String,
+
+  /** Expected outcome of the A/B test. */
+  @SerialName(value = "hypothesis") val hypothesis: String,
   @SerialName(value = "status") val status: Status,
 
   /**
@@ -57,4 +64,11 @@ public data class ABTest(
   /** Unique migrated A/B test identifier. */
   @SerialName(value = "migratedAbTestID") val migratedAbTestID: Int? = null,
   @SerialName(value = "decision") val decision: Decision? = null,
+
+  /**
+   * Whether the A/B test has accumulated enough evidence to trust its result on the test's
+   * `primaryMetric`. If omitted, the signal is unknown or not applicable. false means the test was
+   * evaluated but doesn't yet have enough evidence.
+   */
+  @SerialName(value = "hasEnoughEvidence") val hasEnoughEvidence: Boolean? = null,
 ) {}

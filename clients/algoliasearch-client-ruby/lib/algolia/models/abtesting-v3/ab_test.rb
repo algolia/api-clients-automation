@@ -26,6 +26,9 @@ module Algolia
       # A/B test name.
       attr_accessor :name
 
+      # Expected outcome of the A/B test.
+      attr_accessor :hypothesis
+
       attr_accessor :status
 
       # A/B test variants.  The first variant is your _control_ index, typically your production index. All of the additional variants are indexes with changed settings that you want to test against the control.
@@ -38,6 +41,9 @@ module Algolia
 
       attr_accessor :decision
 
+      # Whether the A/B test has accumulated enough evidence to trust its result on the test's `primaryMetric`.  If omitted, the signal is unknown or not applicable. false means the test was evaluated but doesn't yet have enough evidence.
+      attr_accessor :has_enough_evidence
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -47,11 +53,13 @@ module Algolia
           :end_at => :endAt,
           :stopped_at => :stoppedAt,
           :name => :name,
+          :hypothesis => :hypothesis,
           :status => :status,
           :variants => :variants,
           :configuration => :configuration,
           :migrated_ab_test_id => :migratedAbTestID,
-          :decision => :decision
+          :decision => :decision,
+          :has_enough_evidence => :hasEnoughEvidence
         }
       end
 
@@ -64,11 +72,13 @@ module Algolia
           :end_at => :"String",
           :stopped_at => :"String",
           :name => :"String",
+          :hypothesis => :"String",
           :status => :"Status",
           :variants => :"Array<Variant>",
           :configuration => :"ABTestConfiguration",
           :migrated_ab_test_id => :"Integer",
-          :decision => :"Decision"
+          :decision => :"Decision",
+          :has_enough_evidence => :"Boolean"
         }
       end
 
@@ -135,6 +145,12 @@ module Algolia
           self.name = nil
         end
 
+        if attributes.key?(:hypothesis)
+          self.hypothesis = attributes[:hypothesis]
+        else
+          self.hypothesis = nil
+        end
+
         if attributes.key?(:status)
           self.status = attributes[:status]
         else
@@ -160,6 +176,10 @@ module Algolia
         if attributes.key?(:decision)
           self.decision = attributes[:decision]
         end
+
+        if attributes.key?(:has_enough_evidence)
+          self.has_enough_evidence = attributes[:has_enough_evidence]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -173,11 +193,13 @@ module Algolia
           end_at == other.end_at &&
           stopped_at == other.stopped_at &&
           name == other.name &&
+          hypothesis == other.hypothesis &&
           status == other.status &&
           variants == other.variants &&
           configuration == other.configuration &&
           migrated_ab_test_id == other.migrated_ab_test_id &&
-          decision == other.decision
+          decision == other.decision &&
+          has_enough_evidence == other.has_enough_evidence
       end
 
       # @see the `==` method
@@ -196,11 +218,13 @@ module Algolia
           end_at,
           stopped_at,
           name,
+          hypothesis,
           status,
           variants,
           configuration,
           migrated_ab_test_id,
-          decision
+          decision,
+          has_enough_evidence
         ].hash
       end
 

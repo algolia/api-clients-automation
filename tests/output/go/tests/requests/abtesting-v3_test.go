@@ -55,6 +55,52 @@ func TestAbtestingV3_AddABTests(t *testing.T) {
 	})
 }
 
+func TestAbtestingV3_ApplyVariantSettings(t *testing.T) {
+	t.Parallel()
+
+	client, echo := createAbtestingV3Client(t)
+	_ = echo
+
+	t.Run("applyVariantSettings", func(t *testing.T) {
+		err := client.ApplyVariantSettings(client.NewApiApplyVariantSettingsRequest(
+			42, 2))
+		require.NoError(t, err)
+
+		require.Equal(t, "/3/abtests/42/settings/2/apply", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		require.Empty(t, echo.Body)
+	})
+	t.Run("revert applied settings via the control variant", func(t *testing.T) {
+		err := client.ApplyVariantSettings(client.NewApiApplyVariantSettingsRequest(
+			42, 1))
+		require.NoError(t, err)
+
+		require.Equal(t, "/3/abtests/42/settings/1/apply", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		require.Empty(t, echo.Body)
+	})
+}
+
+func TestAbtestingV3_CompleteABTest(t *testing.T) {
+	t.Parallel()
+
+	client, echo := createAbtestingV3Client(t)
+	_ = echo
+
+	t.Run("completeABTest", func(t *testing.T) {
+		_, err := client.CompleteABTest(client.NewApiCompleteABTestRequest(
+			42))
+		require.NoError(t, err)
+
+		require.Equal(t, "/3/abtests/42/complete", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		require.Empty(t, echo.Body)
+	})
+}
+
 func TestAbtestingV3_CustomDelete(t *testing.T) {
 	t.Parallel()
 
@@ -475,6 +521,24 @@ func TestAbtestingV3_GetABTest(t *testing.T) {
 	})
 }
 
+func TestAbtestingV3_GetABTestSettings(t *testing.T) {
+	t.Parallel()
+
+	client, echo := createAbtestingV3Client(t)
+	_ = echo
+
+	t.Run("getABTestSettings", func(t *testing.T) {
+		_, err := client.GetABTestSettings(client.NewApiGetABTestSettingsRequest(
+			42))
+		require.NoError(t, err)
+
+		require.Equal(t, "/3/abtests/42/settings", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+	})
+}
+
 func TestAbtestingV3_GetTimeseries(t *testing.T) {
 	t.Parallel()
 
@@ -534,6 +598,36 @@ func TestAbtestingV3_ListABTests(t *testing.T) {
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
+	})
+}
+
+func TestAbtestingV3_SaveVariantSettings(t *testing.T) {
+	t.Parallel()
+
+	client, echo := createAbtestingV3Client(t)
+	_ = echo
+
+	t.Run("saveVariantSettings", func(t *testing.T) {
+		err := client.SaveVariantSettings(client.NewApiSaveVariantSettingsRequest(
+			42, 2,
+			abtestingV3.NewEmptySaveSettingsRequest().SetSaveFeaturesSettings(true)))
+		require.NoError(t, err)
+
+		require.Equal(t, "/3/abtests/42/settings/2", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"saveFeaturesSettings":true}`)
+	})
+	t.Run("saveVariantSettingsWithoutFeatures", func(t *testing.T) {
+		err := client.SaveVariantSettings(client.NewApiSaveVariantSettingsRequest(
+			42, 2,
+			abtestingV3.NewEmptySaveSettingsRequest()))
+		require.NoError(t, err)
+
+		require.Equal(t, "/3/abtests/42/settings/2", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{}`)
 	})
 }
 

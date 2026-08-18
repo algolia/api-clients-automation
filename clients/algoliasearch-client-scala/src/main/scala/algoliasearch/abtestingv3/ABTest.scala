@@ -39,11 +39,17 @@ import algoliasearch.abtestingv3.Status._
   *   Date and time when the A/B test was stopped, in RFC 3339 format.
   * @param name
   *   A/B test name.
+  * @param hypothesis
+  *   Expected outcome of the A/B test.
   * @param variants
   *   A/B test variants. The first variant is your _control_ index, typically your production index. All of the
   *   additional variants are indexes with changed settings that you want to test against the control.
   * @param migratedAbTestID
   *   Unique migrated A/B test identifier.
+  * @param hasEnoughEvidence
+  *   Whether the A/B test has accumulated enough evidence to trust its result on the test's `primaryMetric`. If
+  *   omitted, the signal is unknown or not applicable. false means the test was evaluated but doesn't yet have enough
+  *   evidence.
   */
 case class ABTest(
     abTestID: Int,
@@ -52,9 +58,11 @@ case class ABTest(
     endAt: String,
     stoppedAt: Option[String] = scala.None,
     name: String,
+    hypothesis: String,
     status: Status,
     variants: Seq[Variant],
     configuration: Option[ABTestConfiguration] = scala.None,
     migratedAbTestID: Option[Int] = scala.None,
-    decision: Option[Decision] = scala.None
+    decision: Option[Decision] = scala.None,
+    hasEnoughEvidence: Option[Boolean] = scala.None
 )

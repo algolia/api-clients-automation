@@ -63,6 +63,59 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('applyVariantSettings')]
+    public function testApplyVariantSettings(): void
+    {
+        $client = $this->getClient();
+        $client->applyVariantSettings(
+            42,
+            2,
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests/42/settings/2/apply',
+                'method' => 'POST',
+                'body' => json_decode(''),
+            ],
+        ]);
+    }
+
+    #[TestDox('revert applied settings via the control variant')]
+    public function testApplyVariantSettings1(): void
+    {
+        $client = $this->getClient();
+        $client->applyVariantSettings(
+            42,
+            1,
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests/42/settings/1/apply',
+                'method' => 'POST',
+                'body' => json_decode(''),
+            ],
+        ]);
+    }
+
+    #[TestDox('completeABTest')]
+    public function testCompleteABTest(): void
+    {
+        $client = $this->getClient();
+        $client->completeABTest(
+            42,
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests/42/complete',
+                'method' => 'POST',
+                'body' => json_decode(''),
+            ],
+        ]);
+    }
+
     #[TestDox('allow del method for a custom path with minimal parameters')]
     public function testCustomDelete(): void
     {
@@ -551,6 +604,23 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('getABTestSettings')]
+    public function testGetABTestSettings(): void
+    {
+        $client = $this->getClient();
+        $client->getABTestSettings(
+            42,
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests/42/settings',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
     #[TestDox('getTimeseries')]
     public function testGetTimeseries(): void
     {
@@ -601,6 +671,45 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
                 'method' => 'GET',
                 'body' => null,
                 'queryParameters' => json_decode('{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('saveVariantSettings')]
+    public function testSaveVariantSettings(): void
+    {
+        $client = $this->getClient();
+        $client->saveVariantSettings(
+            42,
+            2,
+            ['saveFeaturesSettings' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests/42/settings/2',
+                'method' => 'POST',
+                'body' => json_decode('{"saveFeaturesSettings":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('saveVariantSettingsWithoutFeatures')]
+    public function testSaveVariantSettings1(): void
+    {
+        $client = $this->getClient();
+        $client->saveVariantSettings(
+            42,
+            2,
+            [],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests/42/settings/2',
+                'method' => 'POST',
+                'body' => json_decode('{}'),
             ],
         ]);
     }
