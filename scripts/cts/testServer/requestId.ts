@@ -36,9 +36,8 @@ export function assertValidRequestIds(expectedCount: number, helperCount: number
   expect(Object.keys(retryState)).to.have.length(expectedCount);
   expect(Object.keys(freshState)).to.have.length(expectedCount);
   expect(Object.keys(helperState)).to.have.length(helperCount);
-  // a bare count would not notice dart accidentally recording while another
-  // language silently stopped: dart has no saveObjects helper to run the
-  // helper test with, so it must never appear here.
+  // dart has no saveObjects helper to run the helper test with, so it must
+  // never appear here.
   if (helperCount !== expectedCount) {
     expect(helperState).to.not.have.property('dart');
   }

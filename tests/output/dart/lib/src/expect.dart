@@ -48,9 +48,7 @@ void expectHeaders(
   );
 }
 
-/// Verifies that the [actual] headers do not carry [name], whatever its
-/// casing, e.g. a Request-ID that must not be minted because the caller
-/// supplied one through another channel.
+/// Verifies that the [actual] headers do not carry [name], whatever its casing.
 void expectNoHeader(Map<String, dynamic>? actual, String name) {
   expect(
     actual?.keys.any((key) => key.toLowerCase() == name.toLowerCase()) ?? false,
@@ -62,7 +60,6 @@ void expectNoHeader(Map<String, dynamic>? actual, String name) {
 /// Normalizes a map by converting all keys to lowercase, making comparison
 /// case-insensitive.
 Map<String, dynamic> _normalizeKeys(Map<String, dynamic>? map) {
-  // Mutable: expectHeaders removes the minted request-id entry.
   if (map == null) return <String, dynamic>{};
   var newMap = <String, dynamic>{};
   map.forEach((key, value) => newMap[key.toLowerCase()] = value);

@@ -75,9 +75,8 @@ class DioRequester implements Requester {
           throw AlgoliaApiException(
             e.response?.statusCode ?? 0,
             e.error ?? e.response,
-            // Correlation-ID comes from the search infrastructure; the
-            // unrelated X-Algolia-RequestID edge header must never be read
-            // instead. Dio lowercases header names on parse.
+            // Never the unrelated X-Algolia-RequestID edge header; dio
+            // lowercases header names on parse.
             correlationId: e.response?.headers['correlation-id']?.join(','),
           );
         default:
@@ -107,8 +106,8 @@ class DioRequester implements Requester {
       return HttpResponse(
         statusCode,
         response.data,
-        // The transport only reads the headers of error responses (for the
-        // Correlation-ID), so the success path stays allocation-free.
+        // Only error responses need headers (Correlation-ID); success stays
+        // allocation-free.
         headers: statusCode != null && statusCode ~/ 100 != 2
             ? response.headers.map.map(
                 (key, values) => MapEntry(key, values.join(',')),

@@ -15,9 +15,8 @@ final class AlgoliaApiException implements AlgoliaException {
   /// Quote it when contacting Algolia support.
   final String? correlationId;
 
-  /// Constructs an [AlgoliaApiException] with the provided status code and
-  /// error message, optionally carrying the Correlation-ID header of the
-  /// failed response.
+  /// Constructs an [AlgoliaApiException] with the provided status code, error
+  /// message and optional Correlation-ID.
   const AlgoliaApiException(this.statusCode, this.error, {this.correlationId});
 
   @override

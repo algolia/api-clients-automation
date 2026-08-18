@@ -63,13 +63,10 @@ final class ClientOptions {
   /// Set to 'gzip' to enable gzip compression for POST/PUT requests.
   final String? compression;
 
-  /// Whether the transport sends a Request-ID, minted once per call
-  /// and reused across its retry attempts, so that Algolia support can tie
-  /// the attempts of one request together. When null, the generated client's
-  /// own setting applies: only the clients of the APIs that support it
-  /// (search, recommend, composition, and the algoliasearch package)
-  /// mint one. Set it to false to disable minting entirely. A caller-supplied
-  /// Request-ID is never overwritten.
+  /// Whether the transport sends a Request-ID, minted once per call and
+  /// reused across retries. Null keeps the generated client's setting (only
+  /// search, recommend, composition and algoliasearch mint); false disables
+  /// minting. A caller-supplied Request-ID is never overwritten.
   final bool? requestIdEnabled;
 
   /// Constructs a [ClientOptions] instance with the provided parameters.

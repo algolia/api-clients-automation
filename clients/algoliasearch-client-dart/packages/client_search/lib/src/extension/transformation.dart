@@ -152,9 +152,8 @@ extension Transformation on SearchClient {
     final effectiveScopes =
         scopes ?? [ScopeType.settings, ScopeType.rules, ScopeType.synonyms];
     final tmpIndex = '${indexName}_tmp_${Random().nextInt(900000) + 100000}';
-    // One shared Request-ID covers the search-side requests of this
-    // invocation; the ingestion-side chunkedPush keeps the caller's options
-    // untouched because the Ingestion API must not receive the ID.
+    // One shared Request-ID for the search-side requests; chunkedPush keeps
+    // the caller's options because ingestion must not receive the ID.
     final searchOptions = withSharedRequestId(requestOptions);
 
     try {
@@ -224,9 +223,8 @@ extension Transformation on SearchClient {
       );
     } catch (_) {
       try {
-        // The cleanup keeps the invocation's shared Request-ID but drops the
-        // caller's timeouts and body, so whatever broke the main operation
-        // cannot also break the delete and leak the temporary index.
+        // Keep the shared Request-ID but not the caller's timeouts or body,
+        // which may be what broke the main operation.
         await deleteIndex(
           indexName: tmpIndex,
           requestOptions: searchOptions?.withoutTimeoutsAndBody(),

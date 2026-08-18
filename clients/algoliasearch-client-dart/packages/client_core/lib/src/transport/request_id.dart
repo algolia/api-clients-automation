@@ -1,10 +1,7 @@
 import 'dart:math';
 
-// The fallback direction is inverted relative to the other platform seams on
-// purpose: dart.library.html is false when compiling Flutter web with --wasm,
-// and defaulting to the header there would fail the CORS preflight and break
-// every request. The query parameter degrades safely everywhere, so only a
-// proven native platform (dart.library.io) selects the header.
+// Fallback inverted on purpose: dart.library.html is false under wasm web
+// builds, and only the query parameter degrades safely on unknown platforms.
 import 'package:algolia_client_core/src/transport/request_id_channel_web.dart'
     if (dart.library.io) 'package:algolia_client_core/src/transport/request_id_channel_native.dart';
 import 'package:algolia_client_core/src/transport/request_options.dart';
@@ -43,24 +40,19 @@ String generateRequestId() => String.fromCharCodes(
       ),
     );
 
-/// Whether the given headers already carry a Request-ID entry, whatever its
-/// casing. Header maps keep the caller's literal casing, so the lookup must
-/// not assume a canonical form.
+/// Whether the given headers already carry a Request-ID entry, whatever its casing.
 bool hasRequestIdHeader(Map<String, dynamic>? headers) =>
     headers?.keys.any((key) => key.toLowerCase() == 'request-id') ?? false;
 
 /// Whether the given query parameters already carry an `x-algolia-request-id`
-/// entry, whatever its casing. The server consults that parameter only when
-/// the header is absent, so a caller-supplied value must suppress header
-/// minting or it would be shadowed.
+/// entry, whatever its casing; a minted header would shadow it.
 bool hasRequestIdQueryParameter(Map<String, dynamic>? queryParameters) =>
     queryParameters?.keys
         .any((key) => key.toLowerCase() == requestIdQueryParameter) ??
     false;
 
-/// Returns request options carrying a freshly minted Request-ID on the given
-/// channel: the header on native platforms, the `x-algolia-request-id` query
-/// parameter on the web, where the header would fail the CORS preflight.
+/// Request options carrying a freshly minted Request-ID on the given channel:
+/// the header on native platforms, the query parameter on the web.
 RequestOptions mintedRequestIdOptions({
   bool asQueryParameter = platformRequestIdAsQueryParameter,
 }) =>

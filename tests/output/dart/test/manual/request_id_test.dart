@@ -87,8 +87,7 @@ void main() {
     for (final id in ids) {
       expect(id, matches(requestIdFormat));
     }
-    // A collision among 100 draws of 11-char base62 has probability ~1e-17,
-    // so strict uniqueness is deterministic-safe.
+    // Collision probability over 100 draws is ~1e-17: deterministic-safe.
     expect(ids.toSet(), hasLength(100),
         reason: 'IDs are expected to be unique');
   });
@@ -183,9 +182,8 @@ void main() {
 
     await retryStrategy.execute(request: getRequest);
 
-    // Browsers cannot send the Request-ID header (it would fail the CORS
-    // preflight), so the ID rides the query parameter, still shared across
-    // retries.
+    // Browsers mint the query parameter instead of the header, still shared
+    // across retries.
     expect(requester.requestIds, [null, null]);
     expect(requester.queryParameterIds, hasLength(2));
     expect(requester.queryParameterIds[0], matches(requestIdFormat));
@@ -343,9 +341,8 @@ void main() {
 
     await client.waitTask(indexName: 'indexName', taskID: 42);
 
-    // Two polls sharing one well-formed ID pin the helper's own gate: were
-    // the helper to return the options untouched, the transport would mint a
-    // fresh ID per poll and the set below would have two entries.
+    // Two polls pin the helper's own gate: a broken gate would let the
+    // transport mint a fresh ID per poll.
     expect(requester.requestIds, hasLength(2));
     expect(requester.requestIds[0], matches(requestIdFormat));
     expect(requester.requestIds.toSet(), hasLength(1));
@@ -496,10 +493,8 @@ void main() {
           .having((e) => e.statusCode, 'statusCode', 400)),
     );
 
-    // The cleanup delete fires despite the failure, reuses the invocation's
-    // shared Request-ID, and falls back to the client default timeouts
-    // instead of the caller's, so a timeout that broke the main operation
-    // cannot also break the cleanup.
+    // The cleanup delete reuses the shared Request-ID and falls back to the
+    // client default timeouts instead of the caller's.
     expect(deleteRequest, isNotNull);
     expect(deleteRequest!.path, startsWith('/1/indexes/indexName_tmp_'));
     expect(failedOperationId, matches(requestIdFormat));

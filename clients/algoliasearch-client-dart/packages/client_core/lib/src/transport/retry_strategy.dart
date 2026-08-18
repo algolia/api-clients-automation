@@ -11,24 +11,18 @@ final class RetryStrategy {
   final Duration writeTimeout;
   final List<RetryableHost> _hosts;
 
-  /// Whether every execution mints a Request-ID, reused across its
-  /// retry attempts, so that Algolia support can tie the attempts of one
-  /// request together. Only the generated clients of the APIs that support it
-  /// (search, recommend, composition, and the algoliasearch package) opt in,
-  /// and [ClientOptions.requestIdEnabled] overrides their setting in both
-  /// directions; a caller-supplied Request-ID is never overwritten.
+  /// Whether every execution mints a Request-ID, reused across its retry
+  /// attempts. [ClientOptions.requestIdEnabled] overrides the generated
+  /// client's setting; a caller-supplied Request-ID is never overwritten.
   final bool requestIdSupport;
 
   /// Whether the client default headers already carry a Request-ID, in which
-  /// case minting is suppressed. Computed at construction: the default
-  /// requester snapshots its headers then, so later mutation of the caller's
-  /// map never reaches the wire anyway.
+  /// case minting is suppressed; computed at construction because the default
+  /// requester snapshots its headers then.
   final bool hasDefaultRequestId;
 
   /// Whether a minted Request-ID is sent as the `x-algolia-request-id` query
-  /// parameter instead of the `Request-ID` header. Defaults to the platform
-  /// channel: browsers must use the query parameter because the header would
-  /// fail the CORS preflight.
+  /// parameter instead of the header, as browsers require.
   final bool requestIdAsQueryParameter;
 
   /// Provides access to hosts for testing purposes.
@@ -93,8 +87,6 @@ final class RetryStrategy {
       writeTimeout: writeTimeout,
       hosts: options.hosts ?? defaultHosts.call(),
       requester: requester,
-      // The caller's ClientOptions flag overrides the generated client's own
-      // setting in both directions.
       requestIdSupport: options.requestIdEnabled ?? requestIdSupport,
       // With a custom requester the options headers are not applied above, so
       // they must not suppress minting either.
@@ -112,14 +104,9 @@ final class RetryStrategy {
     final hosts = _callableHosts(callType);
     final List<AlgoliaException> errors = [];
 
-    // The Request-ID is minted once per execution, before the host loop, so
-    // that every retry attempt shares the same value and each subsequent call
-    // gets a fresh one. A caller-supplied ID always wins, whether it comes
-    // through the request options, the operation headers, the client default
-    // headers, or the x-algolia-request-id query parameter (which the server
-    // consults only when the header is absent, so a minted header would shadow
-    // it), and only one casing may ever be present: the header merge below is
-    // case-sensitive while HTTP treats names case-insensitively.
+    // Minted once per execution so every retry attempt shares one value; a
+    // caller-supplied ID wins on any channel, including the query parameter,
+    // which the server consults only when the header is absent.
     final requestId = requestIdSupport &&
             !hasDefaultRequestId &&
             !hasRequestIdHeader(options?.headers) &&
@@ -143,9 +130,7 @@ final class RetryStrategy {
         final statusCode = response.statusCode;
         if (statusCode != null && statusCode ~/ 100 != 2) {
           // A requester that returns an error response instead of throwing
-          // (the default requester throws) still surfaces the Correlation-ID,
-          // read from the response headers; the AlgoliaApiException handler
-          // below classifies it like any thrown API error.
+          // still surfaces the Correlation-ID; the handler below classifies it.
           throw AlgoliaApiException(
             statusCode,
             response.body,
@@ -169,8 +154,8 @@ final class RetryStrategy {
     throw UnreachableHostsException(errors);
   }
 
-  /// The Correlation-ID header of a response, whatever its casing; the
-  /// unrelated X-Algolia-RequestID edge header must never be read instead.
+  /// The Correlation-ID header of a response, whatever its casing; never the
+  /// unrelated X-Algolia-RequestID edge header.
   static String? _correlationIdOf(Map<String, String>? headers) {
     if (headers == null) return null;
     for (final entry in headers.entries) {
@@ -201,8 +186,7 @@ final class RetryStrategy {
   }
 
   /// Constructs an HTTP request for a given [host], [request] and [options],
-  /// carrying the minted [requestId], when there is one, on the platform
-  /// channel.
+  /// carrying the minted [requestId] on the platform channel.
   HttpRequest _buildRequest(
     RetryableHost host,
     ApiRequest request,
