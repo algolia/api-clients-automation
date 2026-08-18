@@ -72,6 +72,8 @@ import org.json4s._
   *   Number of search results (hits) returned for the query.
   * @param innerQueries
   *   Queries performed for the given request.
+  * @param cid
+  *   Correlation ID of the request, also returned in the `Correlation-ID` response header.
   */
 case class Log(
     timestamp: String,
@@ -88,7 +90,8 @@ case class Log(
     index: Option[String] = scala.None,
     queryParams /* query_params */: Option[String] = scala.None,
     queryNbHits /* query_nb_hits */: Option[String] = scala.None,
-    innerQueries /* inner_queries */: Option[Seq[LogQuery]] = scala.None
+    innerQueries /* inner_queries */: Option[Seq[LogQuery]] = scala.None,
+    cid: Option[String] = scala.None
 )
 
 class LogSerializer extends Serializer[Log] {

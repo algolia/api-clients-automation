@@ -35,6 +35,7 @@ class Log extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSe
         'queryParams' => 'string',
         'queryNbHits' => 'string',
         'innerQueries' => '\Algolia\AlgoliaSearch\Model\Search\LogQuery[]',
+        'cid' => 'string',
     ];
 
     /**
@@ -58,6 +59,7 @@ class Log extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSe
         'queryParams' => null,
         'queryNbHits' => null,
         'innerQueries' => null,
+        'cid' => null,
     ];
 
     /**
@@ -82,6 +84,7 @@ class Log extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSe
         'queryParams' => 'query_params',
         'queryNbHits' => 'query_nb_hits',
         'innerQueries' => 'inner_queries',
+        'cid' => 'cid',
     ];
 
     /**
@@ -105,6 +108,7 @@ class Log extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSe
         'queryParams' => 'setQueryParams',
         'queryNbHits' => 'setQueryNbHits',
         'innerQueries' => 'setInnerQueries',
+        'cid' => 'setCid',
     ];
 
     /**
@@ -128,6 +132,7 @@ class Log extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSe
         'queryParams' => 'getQueryParams',
         'queryNbHits' => 'getQueryNbHits',
         'innerQueries' => 'getInnerQueries',
+        'cid' => 'getCid',
     ];
 
     /**
@@ -188,6 +193,9 @@ class Log extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSe
         }
         if (isset($data['innerQueries'])) {
             $this->container['innerQueries'] = $data['innerQueries'];
+        }
+        if (isset($data['cid'])) {
+            $this->container['cid'] = $data['cid'];
         }
     }
 
@@ -652,6 +660,30 @@ class Log extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSe
     public function setInnerQueries($innerQueries)
     {
         $this->container['innerQueries'] = $innerQueries;
+
+        return $this;
+    }
+
+    /**
+     * Gets cid.
+     *
+     * @return null|string
+     */
+    public function getCid()
+    {
+        return $this->container['cid'] ?? null;
+    }
+
+    /**
+     * Sets cid.
+     *
+     * @param null|string $cid correlation ID of the request, also returned in the `Correlation-ID` response header
+     *
+     * @return self
+     */
+    public function setCid($cid)
+    {
+        $this->container['cid'] = $cid;
 
         return $this;
     }

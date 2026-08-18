@@ -26,6 +26,7 @@ import kotlinx.serialization.json.*
  * @param queryParams Query parameters sent with the request.
  * @param queryNbHits Number of search results (hits) returned for the query.
  * @param innerQueries Queries performed for the given request.
+ * @param cid Correlation ID of the request, also returned in the `Correlation-ID` response header.
  */
 @Serializable
 public data class Log(
@@ -76,4 +77,7 @@ public data class Log(
 
   /** Queries performed for the given request. */
   @SerialName(value = "inner_queries") val innerQueries: List<LogQuery>? = null,
+
+  /** Correlation ID of the request, also returned in the `Correlation-ID` response header. */
+  @SerialName(value = "cid") val cid: String? = null,
 ) {}

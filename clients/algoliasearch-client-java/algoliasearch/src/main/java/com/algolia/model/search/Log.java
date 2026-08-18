@@ -57,6 +57,9 @@ public class Log {
   @JsonProperty("inner_queries")
   private List<LogQuery> innerQueries;
 
+  @JsonProperty("cid")
+  private String cid;
+
   public Log setTimestamp(String timestamp) {
     this.timestamp = timestamp;
     return this;
@@ -232,6 +235,17 @@ public class Log {
     return innerQueries;
   }
 
+  public Log setCid(String cid) {
+    this.cid = cid;
+    return this;
+  }
+
+  /** Correlation ID of the request, also returned in the `Correlation-ID` response header. */
+  @javax.annotation.Nullable
+  public String getCid() {
+    return cid;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -256,7 +270,8 @@ public class Log {
       Objects.equals(this.index, log.index) &&
       Objects.equals(this.queryParams, log.queryParams) &&
       Objects.equals(this.queryNbHits, log.queryNbHits) &&
-      Objects.equals(this.innerQueries, log.innerQueries)
+      Objects.equals(this.innerQueries, log.innerQueries) &&
+      Objects.equals(this.cid, log.cid)
     );
   }
 
@@ -277,7 +292,8 @@ public class Log {
       index,
       queryParams,
       queryNbHits,
-      innerQueries
+      innerQueries,
+      cid
     );
   }
 
@@ -300,6 +316,7 @@ public class Log {
     sb.append("    queryParams: ").append(toIndentedString(queryParams)).append("\n");
     sb.append("    queryNbHits: ").append(toIndentedString(queryNbHits)).append("\n");
     sb.append("    innerQueries: ").append(toIndentedString(innerQueries)).append("\n");
+    sb.append("    cid: ").append(toIndentedString(cid)).append("\n");
     sb.append("}");
     return sb.toString();
   }

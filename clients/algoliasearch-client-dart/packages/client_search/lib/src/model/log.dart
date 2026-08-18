@@ -25,6 +25,7 @@ final class Log {
     this.queryParams,
     this.queryNbHits,
     this.innerQueries,
+    this.cid,
   });
 
   /// Date and time of the API request, in RFC 3339 format.
@@ -87,6 +88,10 @@ final class Log {
   @JsonKey(name: r'inner_queries')
   final List<LogQuery>? innerQueries;
 
+  /// Correlation ID of the request, also returned in the `Correlation-ID` response header.
+  @JsonKey(name: r'cid')
+  final String? cid;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -105,7 +110,8 @@ final class Log {
           other.index == index &&
           other.queryParams == queryParams &&
           other.queryNbHits == queryNbHits &&
-          other.innerQueries == innerQueries;
+          other.innerQueries == innerQueries &&
+          other.cid == cid;
 
   @override
   int get hashCode =>
@@ -123,7 +129,8 @@ final class Log {
       index.hashCode +
       queryParams.hashCode +
       queryNbHits.hashCode +
-      innerQueries.hashCode;
+      innerQueries.hashCode +
+      cid.hashCode;
 
   factory Log.fromJson(Map<String, dynamic> json) => _$LogFromJson(json);
 

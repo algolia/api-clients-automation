@@ -36,6 +36,7 @@ _ALIASES = {
     "var_query_params": "query_params",
     "query_nb_hits": "query_nb_hits",
     "inner_queries": "inner_queries",
+    "cid": "cid",
 }
 
 
@@ -78,6 +79,8 @@ class Log(BaseModel):
     """ Number of search results (hits) returned for the query. """
     inner_queries: Optional[List[LogQuery]] = None
     """ Queries performed for the given request. """
+    cid: Optional[str] = None
+    """ Correlation ID of the request, also returned in the `Correlation-ID` response header. """
 
     model_config = ConfigDict(
         strict=False,

@@ -31,6 +31,7 @@ Log _$LogFromJson(Map<String, dynamic> json) => $checkedCreate(
               (v) => (v as List<dynamic>?)
                   ?.map((e) => LogQuery.fromJson(e as Map<String, dynamic>))
                   .toList()),
+          cid: $checkedConvert('cid', (v) => v as String?),
         );
         return val;
       },
@@ -72,5 +73,6 @@ Map<String, dynamic> _$LogToJson(Log instance) {
   writeNotNull('query_nb_hits', instance.queryNbHits);
   writeNotNull(
       'inner_queries', instance.innerQueries?.map((e) => e.toJson()).toList());
+  writeNotNull('cid', instance.cid);
   return val;
 }

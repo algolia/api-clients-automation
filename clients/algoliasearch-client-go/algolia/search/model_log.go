@@ -38,6 +38,8 @@ type Log struct {
 	QueryNbHits *string `json:"query_nb_hits,omitempty"`
 	// Queries performed for the given request.
 	InnerQueries []LogQuery `json:"inner_queries,omitempty"`
+	// Correlation ID of the request, also returned in the `Correlation-ID` response header.
+	Cid *string `json:"cid,omitempty"`
 }
 
 type LogOption func(f *Log)
@@ -69,6 +71,12 @@ func WithLogQueryNbHits(val string) LogOption {
 func WithLogInnerQueries(val []LogQuery) LogOption {
 	return func(f *Log) {
 		f.InnerQueries = val
+	}
+}
+
+func WithLogCid(val string) LogOption {
+	return func(f *Log) {
+		f.Cid = &val
 	}
 }
 
@@ -578,6 +586,43 @@ func (o *Log) SetInnerQueries(v []LogQuery) *Log {
 	return o
 }
 
+// GetCid returns the Cid field value if set, zero value otherwise.
+func (o *Log) GetCid() string {
+	if o == nil || o.Cid == nil {
+		var ret string
+
+		return ret
+	}
+
+	return *o.Cid
+}
+
+// GetCidOk returns a tuple with the Cid field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Log) GetCidOk() (*string, bool) {
+	if o == nil || o.Cid == nil {
+		return nil, false
+	}
+
+	return o.Cid, true
+}
+
+// HasCid returns a boolean if a field has been set.
+func (o *Log) HasCid() bool {
+	if o != nil && o.Cid != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetCid gets a reference to the given string and assigns it to the Cid field.
+func (o *Log) SetCid(v string) *Log {
+	o.Cid = &v
+
+	return o
+}
+
 func (o Log) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
 	toSerialize["timestamp"] = o.Timestamp
@@ -611,6 +656,10 @@ func (o Log) MarshalJSON() ([]byte, error) {
 		toSerialize["inner_queries"] = o.InnerQueries
 	}
 
+	if o.Cid != nil {
+		toSerialize["cid"] = o.Cid
+	}
+
 	serialized, err := json.Marshal(toSerialize)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal Log: %w", err)
@@ -636,6 +685,7 @@ func (o Log) String() string {
 	out += fmt.Sprintf("  query_params=%v\n", o.QueryParams)
 	out += fmt.Sprintf("  query_nb_hits=%v\n", o.QueryNbHits)
 	out += fmt.Sprintf("  inner_queries=%v\n", o.InnerQueries)
+	out += fmt.Sprintf("  cid=%v\n", o.Cid)
 
 	return fmt.Sprintf("Log {\n%s}", out)
 }

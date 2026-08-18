@@ -37,6 +37,8 @@ public struct Log: Codable, JSONEncodable {
     public var queryNbHits: String?
     /// Queries performed for the given request.
     public var innerQueries: [LogQuery]?
+    /// Correlation ID of the request, also returned in the `Correlation-ID` response header.
+    public var cid: String?
 
     public init(
         timestamp: String,
@@ -53,7 +55,8 @@ public struct Log: Codable, JSONEncodable {
         index: String? = nil,
         queryParams: String? = nil,
         queryNbHits: String? = nil,
-        innerQueries: [LogQuery]? = nil
+        innerQueries: [LogQuery]? = nil,
+        cid: String? = nil
     ) {
         self.timestamp = timestamp
         self.method = method
@@ -70,6 +73,7 @@ public struct Log: Codable, JSONEncodable {
         self.queryParams = queryParams
         self.queryNbHits = queryNbHits
         self.innerQueries = innerQueries
+        self.cid = cid
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -88,6 +92,7 @@ public struct Log: Codable, JSONEncodable {
         case queryParams = "query_params"
         case queryNbHits = "query_nb_hits"
         case innerQueries = "inner_queries"
+        case cid
     }
 
     // Encodable protocol methods
@@ -109,6 +114,7 @@ public struct Log: Codable, JSONEncodable {
         try container.encodeIfPresent(self.queryParams, forKey: .queryParams)
         try container.encodeIfPresent(self.queryNbHits, forKey: .queryNbHits)
         try container.encodeIfPresent(self.innerQueries, forKey: .innerQueries)
+        try container.encodeIfPresent(self.cid, forKey: .cid)
     }
 }
 
@@ -131,5 +137,6 @@ extension Log: Hashable {
         hasher.combine(self.queryParams?.hashValue)
         hasher.combine(self.queryNbHits?.hashValue)
         hasher.combine(self.innerQueries?.hashValue)
+        hasher.combine(self.cid?.hashValue)
     }
 }

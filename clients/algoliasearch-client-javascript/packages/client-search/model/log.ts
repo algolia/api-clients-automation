@@ -77,4 +77,9 @@ export type Log = {
    * Queries performed for the given request.
    */
   inner_queries?: Array<LogQuery> | undefined;
+
+  /**
+   * Correlation ID of the request, also returned in the `Correlation-ID` response header.
+   */
+  cid?: string | undefined;
 };

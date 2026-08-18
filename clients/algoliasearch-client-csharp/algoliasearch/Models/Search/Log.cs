@@ -167,6 +167,13 @@ public partial class Log
   public List<LogQuery> InnerQueries { get; set; }
 
   /// <summary>
+  /// Correlation ID of the request, also returned in the `Correlation-ID` response header.
+  /// </summary>
+  /// <value>Correlation ID of the request, also returned in the `Correlation-ID` response header.</value>
+  [JsonPropertyName("cid")]
+  public string Cid { get; set; }
+
+  /// <summary>
   /// Returns the string presentation of the object
   /// </summary>
   /// <returns>String presentation of the object</returns>
@@ -189,6 +196,7 @@ public partial class Log
     sb.Append("  QueryParams: ").Append(QueryParams).Append("\n");
     sb.Append("  QueryNbHits: ").Append(QueryNbHits).Append("\n");
     sb.Append("  InnerQueries: ").Append(InnerQueries).Append("\n");
+    sb.Append("  Cid: ").Append(Cid).Append("\n");
     sb.Append("}\n");
     return sb.ToString();
   }
@@ -253,7 +261,8 @@ public partial class Log
         || InnerQueries != null
           && input.InnerQueries != null
           && InnerQueries.SequenceEqual(input.InnerQueries)
-      );
+      )
+      && (Cid == input.Cid || (Cid != null && Cid.Equals(input.Cid)));
   }
 
   /// <summary>
@@ -324,6 +333,10 @@ public partial class Log
       if (InnerQueries != null)
       {
         hashCode = (hashCode * 59) + InnerQueries.GetHashCode();
+      }
+      if (Cid != null)
+      {
+        hashCode = (hashCode * 59) + Cid.GetHashCode();
       }
       return hashCode;
     }

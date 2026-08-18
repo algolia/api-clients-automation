@@ -53,6 +53,9 @@ module Algolia
       # Queries performed for the given request.
       attr_accessor :inner_queries
 
+      # Correlation ID of the request, also returned in the `Correlation-ID` response header.
+      attr_accessor :cid
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -70,7 +73,8 @@ module Algolia
           :index => :index,
           :_query_params => :query_params,
           :query_nb_hits => :query_nb_hits,
-          :inner_queries => :inner_queries
+          :inner_queries => :inner_queries,
+          :cid => :cid
         }
       end
 
@@ -91,7 +95,8 @@ module Algolia
           :index => :"String",
           :_query_params => :"String",
           :query_nb_hits => :"String",
-          :inner_queries => :"Array<LogQuery>"
+          :inner_queries => :"Array<LogQuery>",
+          :cid => :"String"
         }
       end
 
@@ -203,6 +208,10 @@ module Algolia
             self.inner_queries = value
           end
         end
+
+        if attributes.key?(:cid)
+          self.cid = attributes[:cid]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -224,7 +233,8 @@ module Algolia
           index == other.index &&
           _query_params == other._query_params &&
           query_nb_hits == other.query_nb_hits &&
-          inner_queries == other.inner_queries
+          inner_queries == other.inner_queries &&
+          cid == other.cid
       end
 
       # @see the `==` method
@@ -251,7 +261,8 @@ module Algolia
           index,
           _query_params,
           query_nb_hits,
-          inner_queries
+          inner_queries,
+          cid
         ].hash
       end
 

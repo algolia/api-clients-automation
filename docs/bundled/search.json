@@ -3576,6 +3576,11 @@
                                 }
                               }
                             }
+                          },
+                          "cid": {
+                            "type": "string",
+                            "description": "Correlation ID of the request, also returned in the `Correlation-ID` response header.",
+                            "example": "MyAppl-1tMcE-a7BqLm2Pd0Z"
                           }
                         },
                         "required": [
