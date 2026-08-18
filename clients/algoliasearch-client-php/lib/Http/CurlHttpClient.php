@@ -76,6 +76,24 @@ final class CurlHttpClient implements HttpClientInterface
         curl_setopt($curlHandle, CURLOPT_NOSIGNAL, 1);
         curl_setopt($curlHandle, CURLOPT_FAILONERROR, false);
 
+        $responseHeaders = [];
+        curl_setopt($curlHandle, CURLOPT_HEADERFUNCTION, function ($handle, $header) use (&$responseHeaders) {
+            $length = strlen($header);
+            $parts = explode(':', $header, 2);
+
+            if (count($parts) < 2) {
+                if (0 === strpos($header, 'HTTP/')) {
+                    $responseHeaders = [];
+                }
+
+                return $length;
+            }
+
+            $responseHeaders[trim($parts[0])] = trim($parts[1]);
+
+            return $length;
+        });
+
         $method = $request->getMethod();
         if ('GET' === $method) {
             curl_setopt($curlHandle, CURLOPT_CUSTOMREQUEST, 'GET');
@@ -118,7 +136,6 @@ final class CurlHttpClient implements HttpClientInterface
         $responseBody = curl_multi_getcontent($curlHandle);
         $error = curl_error($curlHandle);
         $errorCode = curl_errno($curlHandle);
-        $contentType = curl_getinfo($curlHandle, CURLINFO_CONTENT_TYPE);
 
         $this->releaseMHandle($curlHandle);
 
@@ -132,7 +149,7 @@ final class CurlHttpClient implements HttpClientInterface
 
         return new Response(
             $statusCode,
-            ['Content-Type' => $contentType],
+            $responseHeaders,
             $responseBody,
             '1.1',
             $error
