@@ -11,6 +11,11 @@ extension SharedRequestIdOptions on SearchClient {
   /// options or the client default headers, which also makes nested helpers
   /// reuse the ID minted by their caller.
   RequestOptions? withSharedRequestId(RequestOptions? requestOptions) {
+    // Only ClientOptions.requestIdEnabled is consulted, not the generated
+    // per-client requestIdSupport flag: these extensions exist solely on
+    // SearchClient, whose generated flag is always true. If a helper
+    // extension is ever added to a client outside Helpers.requestIdSupport,
+    // thread that client's resolved flag through here too.
     // The default-headers check is gated on the default requester, like in
     // RetryStrategy.create: a custom requester never receives the client
     // default headers, so an ID there must not suppress minting. An ID in the

@@ -27,6 +27,9 @@ void main() {
         {{#headers}}
         expectHeaders(request.headers, """{{{.}}}"""{{#requestIdSupport}}, allowMintedRequestId: true{{/requestIdSupport}});
         {{/headers}}
+        {{#absentHeaders}}
+        expectNoHeader(request.headers, '{{{.}}}');
+        {{/absentHeaders}}
         {{#queryParameters}}
         expectParams(request.queryParameters, """{{{.}}}""");
         {{/queryParameters}}
