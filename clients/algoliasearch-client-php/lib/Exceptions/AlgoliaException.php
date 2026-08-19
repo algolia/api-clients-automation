@@ -20,7 +20,11 @@ class AlgoliaException extends \Exception
         $this->correlationId = $correlationId;
 
         if (null !== $correlationId && '' !== $correlationId) {
-            $message .= ' (Correlation-ID: '.$correlationId.')';
+            $suffix = ' (Correlation-ID: '.$correlationId.')';
+
+            if (false === strpos($message, $suffix)) {
+                $message .= $suffix;
+            }
         }
 
         parent::__construct($message, $code, $previous);

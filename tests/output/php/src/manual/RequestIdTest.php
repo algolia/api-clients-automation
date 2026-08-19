@@ -233,6 +233,24 @@ class RequestIdTest extends TestCase
         }
     }
 
+    public function testUnreachableHostsKeepAnEarlierCorrelationIdInTheMessage(): void
+    {
+        $http = $this->recorder([
+            new Response(500, ['Correlation-ID' => 'EarlyCorrelationId'], '{"message":"boom"}'),
+            new Response(500, [], '{"message":"boom"}'),
+            new Response(500, [], '{"message":"boom"}'),
+        ]);
+
+        try {
+            $this->searchClient($http)->customGet('1/test');
+            $this->fail('Expected UnreachableException to be thrown');
+        } catch (UnreachableException $e) {
+            $this->assertSame('EarlyCorrelationId', $e->getCorrelationId());
+            $this->assertStringEndsWith('(Correlation-ID: EarlyCorrelationId)', $e->getMessage());
+            $this->assertSame(1, substr_count($e->getMessage(), 'Correlation-ID:'));
+        }
+    }
+
     public function testPresenceChecksAreCaseInsensitiveOnBothChannels(): void
     {
         $this->assertMatchesRegularExpression(self::FORMAT, RequestId::generate());

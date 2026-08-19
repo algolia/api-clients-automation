@@ -17,9 +17,7 @@ final class UnreachableException extends AlgoliaException
             $message = self::DEFAULT_MESSAGE;
         }
 
-        parent::__construct($message, $code, $previous);
-
-        $this->correlationId = $correlationId;
+        parent::__construct($message, $code, $previous, $correlationId);
     }
 
     /**
