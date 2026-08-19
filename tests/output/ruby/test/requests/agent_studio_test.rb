@@ -758,24 +758,6 @@ class TestAgentStudioClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
-  # e2e get conversation
-  def test_get_conversation1
-    req = @client.get_conversation_with_http_info(
-      "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
-      "76710f1b-8231-42e5-b0d1-f43aac618e15"
-    )
-
-    assert_equal(:get, req.method)
-    assert_equal(
-      "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/alg_cnv_miss_yqcZtaOSPTF8bJsJ",
-      req.path
-    )
-    assert_equal({}.to_a, req.query_params.to_a)
-    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-
-    assert(req.body.nil?, "body is not nil")
-  end
-
   # getProvider
   def test_get_provider
     req = @client.get_provider_with_http_info("c2905529-b933-4b69-87ec-75f9829d5f59")

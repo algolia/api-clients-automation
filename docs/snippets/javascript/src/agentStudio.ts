@@ -1003,33 +1003,13 @@ export async function snippetForGetConfiguration1(): Promise<void> {
 //
 // getConversation
 export async function snippetForGetConversation(): Promise<void> {
-  // >SEPARATOR getConversation getConversation
+  // >SEPARATOR getConversation default
   // Initialize the client
   const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getConversation({
     conversationId: 'test-conversation-id',
-    agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
-  });
-
-  // >LOG
-  // print the response
-  console.log(response);
-  // SEPARATOR<
-}
-
-// Snippet for the getConversation method.
-//
-// e2e get conversation
-export async function snippetForGetConversation1(): Promise<void> {
-  // >SEPARATOR getConversation e2e get conversation
-  // Initialize the client
-  const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
-
-  // Call the API
-  const response = await client.getConversation({
-    conversationId: 'alg_cnv_miss_yqcZtaOSPTF8bJsJ',
     agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
   });
 

@@ -903,32 +903,13 @@ final class AgentStudioClientSnippet {
     ///
     /// getConversation
     func snippetForGetConversation() async throws {
-        // >SEPARATOR getConversation getConversation
+        // >SEPARATOR getConversation default
         // Initialize the client
         let client = try AgentStudioClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getConversation(
             conversationId: "test-conversation-id",
-            agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15"
-        )
-        // >LOG
-        // print the response
-        print(response)
-        // SEPARATOR<
-    }
-
-    /// Snippet for the getConversation method.
-    ///
-    /// e2e get conversation
-    func snippetForGetConversation1() async throws {
-        // >SEPARATOR getConversation e2e get conversation
-        // Initialize the client
-        let client = try AgentStudioClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
-
-        // Call the API
-        let response = try await client.getConversation(
-            conversationId: "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
             agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15"
         )
         // >LOG
