@@ -1511,33 +1511,6 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// e2e get conversation
-    func testGetConversationTest1() async throws {
-        let configuration = try AgentStudioClientConfiguration(
-            appID: AgentStudioClientRequestsTests.APPLICATION_ID,
-            apiKey: AgentStudioClientRequestsTests.API_KEY
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = AgentStudioClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client.getConversationWithHTTPInfo(
-            conversationId: "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
-            agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15"
-        )
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        XCTAssertNil(echoResponse.originalBodyData)
-
-        XCTAssertEqual(
-            echoResponse.path,
-            "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/alg_cnv_miss_yqcZtaOSPTF8bJsJ"
-        )
-        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
-
-        XCTAssertNil(echoResponse.queryParameters)
-    }
-
     /// getProvider
     func testGetProviderTest() async throws {
         let configuration = try AgentStudioClientConfiguration(

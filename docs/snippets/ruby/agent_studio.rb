@@ -896,29 +896,12 @@ end
 #
 # getConversation
 def snippet_for_get_conversation
-  # >SEPARATOR getConversation getConversation
+  # >SEPARATOR getConversation default
   # Initialize the client
   client = Algolia::AgentStudioClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_conversation("test-conversation-id", "76710f1b-8231-42e5-b0d1-f43aac618e15")
-
-  # >LOG
-  # print the response
-  puts(response)
-  # SEPARATOR<
-end
-
-# Snippet for the getConversation method.
-#
-# e2e get conversation
-def snippet_for_get_conversation1
-  # >SEPARATOR getConversation e2e get conversation
-  # Initialize the client
-  client = Algolia::AgentStudioClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
-
-  # Call the API
-  response = client.get_conversation("alg_cnv_miss_yqcZtaOSPTF8bJsJ", "76710f1b-8231-42e5-b0d1-f43aac618e15")
 
   # >LOG
   # print the response
