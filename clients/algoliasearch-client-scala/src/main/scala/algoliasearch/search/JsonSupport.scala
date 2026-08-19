@@ -49,6 +49,7 @@ object JsonSupport {
     new AnchoringSerializer() :+
     new ApiKeyOperationSerializer() :+
     new AroundRadiusAllSerializer() :+
+    new AttributeCriteriaComputedBySerializer() :+
     new BooleanStringSerializer() :+
     new BuiltInOperationTypeSerializer() :+
     new CategoryPredictionBinSerializer() :+

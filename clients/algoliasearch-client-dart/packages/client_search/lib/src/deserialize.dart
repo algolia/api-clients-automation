@@ -8,6 +8,7 @@ import 'package:algolia_client_search/src/model/api_key.dart';
 import 'package:algolia_client_search/src/model/api_key_operation.dart';
 import 'package:algolia_client_search/src/model/around_radius_all.dart';
 import 'package:algolia_client_search/src/model/assign_user_id_params.dart';
+import 'package:algolia_client_search/src/model/attribute_criteria_computed_by.dart';
 import 'package:algolia_client_search/src/model/auto_filtering_result.dart';
 import 'package:algolia_client_search/src/model/automatic_facet_filter.dart';
 import 'package:algolia_client_search/src/model/banner.dart';
@@ -215,6 +216,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AssignUserIdParams':
       return AssignUserIdParams.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'AttributeCriteriaComputedBy':
+      return AttributeCriteriaComputedBy.fromJson(value) as ReturnType;
     case 'AutoFilteringResult':
       return AutoFilteringResult.fromJson(value as Map<String, dynamic>)
           as ReturnType;

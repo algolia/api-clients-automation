@@ -73,9 +73,9 @@ info:
     of attributes in the API response.
 
 
-    - Successful responses return a `2xx` status
+    - Successful responses return a `2xx` status.
 
-    - Client errors return a `4xx` status
+    - Client errors return a `4xx` status.
 
     - Server errors are indicated by a `5xx` status.
 

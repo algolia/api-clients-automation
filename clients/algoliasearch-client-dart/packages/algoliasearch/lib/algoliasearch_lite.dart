@@ -10,6 +10,7 @@ export 'src/model/advanced_syntax_features.dart';
 export 'src/model/alternatives_as_exact.dart';
 export 'src/model/api_key.dart';
 export 'src/model/around_radius_all.dart';
+export 'src/model/attribute_criteria_computed_by.dart';
 export 'src/model/auto_filtering_result.dart';
 export 'src/model/automatic_facet_filter.dart';
 export 'src/model/banner.dart';
