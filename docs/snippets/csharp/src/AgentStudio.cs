@@ -1183,7 +1183,7 @@ public class SnippetAgentStudioClient
   /// </summary>
   public async Task SnippetForAgentStudioClientGetConversation()
   {
-    // >SEPARATOR getConversation getConversation
+    // >SEPARATOR getConversation default
     // Initialize the client
     var client = new AgentStudioClient(
       new AgentStudioConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -1192,30 +1192,6 @@ public class SnippetAgentStudioClient
     // Call the API
     var response = await client.GetConversationAsync(
       "test-conversation-id",
-      "76710f1b-8231-42e5-b0d1-f43aac618e15"
-    );
-    // >LOG
-    // print the response
-    Console.WriteLine(response);
-    // SEPARATOR<
-  }
-
-  /// <summary>
-  /// Snippet for the GetConversation method.
-  ///
-  /// e2e get conversation
-  /// </summary>
-  public async Task SnippetForAgentStudioClientGetConversation1()
-  {
-    // >SEPARATOR getConversation e2e get conversation
-    // Initialize the client
-    var client = new AgentStudioClient(
-      new AgentStudioConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
-    );
-
-    // Call the API
-    var response = await client.GetConversationAsync(
-      "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
       "76710f1b-8231-42e5-b0d1-f43aac618e15"
     );
     // >LOG

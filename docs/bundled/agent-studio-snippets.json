@@ -97,8 +97,7 @@
       "e2e getConfiguration": "var response = await client.GetConfigurationAsync();"
     },
     "getConversation": {
-      "getConversation": "var response = await client.GetConversationAsync(\n  \"test-conversation-id\",\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\"\n);",
-      "e2e get conversation": "var response = await client.GetConversationAsync(\n  \"alg_cnv_miss_yqcZtaOSPTF8bJsJ\",\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\"\n);"
+      "default": "var response = await client.GetConversationAsync(\n  \"test-conversation-id\",\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\"\n);"
     },
     "getProvider": {
       "getProvider": "var response = await client.GetProviderAsync(\"c2905529-b933-4b69-87ec-75f9829d5f59\");",
@@ -272,8 +271,7 @@
       "e2e getConfiguration": "final response = await client.getConfiguration();"
     },
     "getConversation": {
-      "getConversation": "final response = await client.getConversation(\n  conversationId: \"test-conversation-id\",\n  agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n);",
-      "e2e get conversation": "final response = await client.getConversation(\n  conversationId: \"alg_cnv_miss_yqcZtaOSPTF8bJsJ\",\n  agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n);"
+      "default": "final response = await client.getConversation(\n  conversationId: \"test-conversation-id\",\n  agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n);"
     },
     "getProvider": {
       "getProvider": "final response = await client.getProvider(\n  providerId: \"c2905529-b933-4b69-87ec-75f9829d5f59\",\n);",
@@ -451,8 +449,7 @@
       "e2e getConfiguration": "response, err := client.GetAgentStudioConfiguration()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getConversation": {
-      "getConversation": "response, err := client.GetConversation(client.NewApiGetConversationRequest(\n  \"test-conversation-id\", \"76710f1b-8231-42e5-b0d1-f43aac618e15\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "e2e get conversation": "response, err := client.GetConversation(client.NewApiGetConversationRequest(\n  \"alg_cnv_miss_yqcZtaOSPTF8bJsJ\", \"76710f1b-8231-42e5-b0d1-f43aac618e15\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetConversation(client.NewApiGetConversationRequest(\n  \"test-conversation-id\", \"76710f1b-8231-42e5-b0d1-f43aac618e15\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getProvider": {
       "getProvider": "response, err := client.GetProvider(client.NewApiGetProviderRequest(\n  \"c2905529-b933-4b69-87ec-75f9829d5f59\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -626,8 +623,7 @@
       "e2e getConfiguration": "ApplicationConfigResponse response = client.getConfiguration();"
     },
     "getConversation": {
-      "getConversation": "ConversationFullResponse response = client.getConversation(\"test-conversation-id\", \"76710f1b-8231-42e5-b0d1-f43aac618e15\");",
-      "e2e get conversation": "ConversationFullResponse response = client.getConversation(\"alg_cnv_miss_yqcZtaOSPTF8bJsJ\", \"76710f1b-8231-42e5-b0d1-f43aac618e15\");"
+      "default": "ConversationFullResponse response = client.getConversation(\"test-conversation-id\", \"76710f1b-8231-42e5-b0d1-f43aac618e15\");"
     },
     "getProvider": {
       "getProvider": "ProviderAuthenticationResponse response = client.getProvider(\"c2905529-b933-4b69-87ec-75f9829d5f59\");",
@@ -805,8 +801,7 @@
       "e2e getConfiguration": "const response = await client.getConfiguration();"
     },
     "getConversation": {
-      "getConversation": "const response = await client.getConversation({\n  conversationId: 'test-conversation-id',\n  agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',\n});",
-      "e2e get conversation": "const response = await client.getConversation({\n  conversationId: 'alg_cnv_miss_yqcZtaOSPTF8bJsJ',\n  agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',\n});"
+      "default": "const response = await client.getConversation({\n  conversationId: 'test-conversation-id',\n  agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',\n});"
     },
     "getProvider": {
       "getProvider": "const response = await client.getProvider({ providerId: 'c2905529-b933-4b69-87ec-75f9829d5f59' });",
@@ -977,8 +972,7 @@
       "e2e getConfiguration": "var response = client.getConfiguration()"
     },
     "getConversation": {
-      "getConversation": "var response =\n  client.getConversation(\n    conversationId = \"test-conversation-id\",\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  )",
-      "e2e get conversation": "var response =\n  client.getConversation(\n    conversationId = \"alg_cnv_miss_yqcZtaOSPTF8bJsJ\",\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  )"
+      "default": "var response =\n  client.getConversation(\n    conversationId = \"test-conversation-id\",\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  )"
     },
     "getProvider": {
       "getProvider": "var response = client.getProvider(providerId = \"c2905529-b933-4b69-87ec-75f9829d5f59\")",
@@ -1152,8 +1146,7 @@
       "e2e getConfiguration": "$response = $client->getConfiguration();"
     },
     "getConversation": {
-      "getConversation": "$response = $client->getConversation(\n    'test-conversation-id',\n    '76710f1b-8231-42e5-b0d1-f43aac618e15',\n);",
-      "e2e get conversation": "$response = $client->getConversation(\n    'alg_cnv_miss_yqcZtaOSPTF8bJsJ',\n    '76710f1b-8231-42e5-b0d1-f43aac618e15',\n);"
+      "default": "$response = $client->getConversation(\n    'test-conversation-id',\n    '76710f1b-8231-42e5-b0d1-f43aac618e15',\n);"
     },
     "getProvider": {
       "getProvider": "$response = $client->getProvider(\n    'c2905529-b933-4b69-87ec-75f9829d5f59',\n);",
@@ -1331,8 +1324,7 @@
       "e2e getConfiguration": "response = client.get_configuration()"
     },
     "getConversation": {
-      "getConversation": "response = client.get_conversation(\n    conversation_id=\"test-conversation-id\",\n    agent_id=\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n)",
-      "e2e get conversation": "response = client.get_conversation(\n    conversation_id=\"alg_cnv_miss_yqcZtaOSPTF8bJsJ\",\n    agent_id=\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n)"
+      "default": "response = client.get_conversation(\n    conversation_id=\"test-conversation-id\",\n    agent_id=\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n)"
     },
     "getProvider": {
       "getProvider": "response = client.get_provider(\n    provider_id=\"c2905529-b933-4b69-87ec-75f9829d5f59\",\n)",
@@ -1506,8 +1498,7 @@
       "e2e getConfiguration": "response = client.get_configuration"
     },
     "getConversation": {
-      "getConversation": "response = client.get_conversation(\"test-conversation-id\", \"76710f1b-8231-42e5-b0d1-f43aac618e15\")",
-      "e2e get conversation": "response = client.get_conversation(\"alg_cnv_miss_yqcZtaOSPTF8bJsJ\", \"76710f1b-8231-42e5-b0d1-f43aac618e15\")"
+      "default": "response = client.get_conversation(\"test-conversation-id\", \"76710f1b-8231-42e5-b0d1-f43aac618e15\")"
     },
     "getProvider": {
       "getProvider": "response = client.get_provider(\"c2905529-b933-4b69-87ec-75f9829d5f59\")",
@@ -1681,8 +1672,7 @@
       "e2e getConfiguration": "val response = Await.result(\n  client.getConfiguration(\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getConversation": {
-      "getConversation": "val response = Await.result(\n  client.getConversation(\n    conversationId = \"test-conversation-id\",\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\"\n  ),\n  Duration(100, \"sec\")\n)",
-      "e2e get conversation": "val response = Await.result(\n  client.getConversation(\n    conversationId = \"alg_cnv_miss_yqcZtaOSPTF8bJsJ\",\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\"\n  ),\n  Duration(100, \"sec\")\n)"
+      "default": "val response = Await.result(\n  client.getConversation(\n    conversationId = \"test-conversation-id\",\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getProvider": {
       "getProvider": "val response = Await.result(\n  client.getProvider(\n    providerId = \"c2905529-b933-4b69-87ec-75f9829d5f59\"\n  ),\n  Duration(100, \"sec\")\n)",
@@ -1856,8 +1846,7 @@
       "e2e getConfiguration": "let response = try await client.getConfiguration()"
     },
     "getConversation": {
-      "getConversation": "let response = try await client.getConversation(\n    conversationId: \"test-conversation-id\",\n    agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\"\n)",
-      "e2e get conversation": "let response = try await client.getConversation(\n    conversationId: \"alg_cnv_miss_yqcZtaOSPTF8bJsJ\",\n    agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\"\n)"
+      "default": "let response = try await client.getConversation(\n    conversationId: \"test-conversation-id\",\n    agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\"\n)"
     },
     "getProvider": {
       "getProvider": "let response = try await client.getProvider(providerId: \"c2905529-b933-4b69-87ec-75f9829d5f59\")",

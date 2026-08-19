@@ -1037,24 +1037,6 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('e2e get conversation')]
-    public function testGetConversation1(): void
-    {
-        $client = $this->getClient();
-        $client->getConversation(
-            'alg_cnv_miss_yqcZtaOSPTF8bJsJ',
-            '76710f1b-8231-42e5-b0d1-f43aac618e15',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/alg_cnv_miss_yqcZtaOSPTF8bJsJ',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
     #[TestDox('getProvider')]
     public function testGetProvider(): void
     {

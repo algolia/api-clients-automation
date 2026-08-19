@@ -1203,36 +1203,13 @@ class SnippetAgentStudioClient
      */
     public function snippetForGetConversation(): void
     {
-        // >SEPARATOR getConversation getConversation
+        // >SEPARATOR getConversation default
         // Initialize the client
         $client = AgentStudioClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getConversation(
             'test-conversation-id',
-            '76710f1b-8231-42e5-b0d1-f43aac618e15',
-        );
-
-        // >LOG
-        // print the response
-        var_dump($response);
-        // SEPARATOR<
-    }
-
-    /**
-     * Snippet for the GetConversation method.
-     *
-     * e2e get conversation
-     */
-    public function snippetForGetConversation1(): void
-    {
-        // >SEPARATOR getConversation e2e get conversation
-        // Initialize the client
-        $client = AgentStudioClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
-
-        // Call the API
-        $response = $client->getConversation(
-            'alg_cnv_miss_yqcZtaOSPTF8bJsJ',
             '76710f1b-8231-42e5-b0d1-f43aac618e15',
         );
 

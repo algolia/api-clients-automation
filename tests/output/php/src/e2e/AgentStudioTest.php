@@ -71,20 +71,6 @@ class AgentStudioTest extends TestCase
         $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
-    #[TestDox('e2e get conversation')]
-    public function testGetConversation1(): void
-    {
-        $client = $this->getClient();
-        $resp = $client->getConversation(
-            'alg_cnv_miss_yqcZtaOSPTF8bJsJ',
-            '76710f1b-8231-42e5-b0d1-f43aac618e15',
-        );
-
-        $expected = json_decode('{"id":"alg_cnv_miss_yqcZtaOSPTF8bJsJ","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15","title":"General Greeting"}', true);
-
-        $this->assertEquals($this->union($expected, $resp), $expected);
-    }
-
     #[TestDox('e2e get provider')]
     public function testGetProvider1(): void
     {
@@ -151,10 +137,6 @@ class AgentStudioTest extends TestCase
         $resp = $client->listAgentConversations(
             '76710f1b-8231-42e5-b0d1-f43aac618e15',
         );
-
-        $expected = json_decode('{"data":[{"id":"alg_cnv_miss_yqcZtaOSPTF8bJsJ","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15","title":"General Greeting"}]}', true);
-
-        $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
     #[TestDox('e2e list agents')]

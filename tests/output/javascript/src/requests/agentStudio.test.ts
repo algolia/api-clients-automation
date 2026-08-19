@@ -785,20 +785,6 @@ describe('getConversation', () => {
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
   });
-
-  test('e2e get conversation', async () => {
-    const req = (await client.getConversation({
-      conversationId: 'alg_cnv_miss_yqcZtaOSPTF8bJsJ',
-      agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
-    })) as unknown as EchoResponse;
-
-    expect(req.path).toEqual(
-      '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/alg_cnv_miss_yqcZtaOSPTF8bJsJ',
-    );
-    expect(req.method).toEqual('GET');
-    expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual(undefined);
-  });
 });
 
 describe('getProvider', () => {

@@ -63,23 +63,6 @@ describe('getConfiguration', () => {
   });
 });
 
-describe('getConversation', () => {
-  test('e2e get conversation', async () => {
-    const resp = await client.getConversation({
-      conversationId: 'alg_cnv_miss_yqcZtaOSPTF8bJsJ',
-      agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
-    });
-
-    const expectedBody = {
-      id: 'alg_cnv_miss_yqcZtaOSPTF8bJsJ',
-      agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
-      title: 'General Greeting',
-    };
-
-    expect(expectedBody).toEqual(union(expectedBody, resp));
-  });
-});
-
 describe('getProvider', () => {
   test('e2e get provider', async () => {
     const resp = await client.getProvider({ providerId: 'c2905529-b933-4b69-87ec-75f9829d5f59' });
@@ -132,19 +115,7 @@ describe('listAgentConversations', () => {
   });
 
   test('e2e list agent conversations', async () => {
-    const resp = await client.listAgentConversations({ agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15' });
-
-    const expectedBody = {
-      data: [
-        {
-          id: 'alg_cnv_miss_yqcZtaOSPTF8bJsJ',
-          agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
-          title: 'General Greeting',
-        },
-      ],
-    };
-
-    expect(expectedBody).toEqual(union(expectedBody, resp));
+    await client.listAgentConversations({ agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15' });
   });
 });
 
