@@ -3776,6 +3776,29 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"zorro"}""")
 
+    async def test_search_rules_1(self):
+        """
+        the classic engine accepts a Request-ID sent as a query parameter
+        """
+        _req = await self._client.search_rules_with_http_info(
+            index_name="cts_e2e_browse",
+            search_rules_params={
+                "query": "zorro",
+            },
+            request_options={
+                "query_parameters": loads("""{"x-algolia-request-id":"CtsE2eQry11"}"""),
+            },
+        )
+
+        assert _req.path == "/1/indexes/cts_e2e_browse/rules/search"
+        assert _req.verb == "POST"
+        assert (
+            _req.query_parameters.items()
+            == {"x-algolia-request-id": "CtsE2eQry11"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"zorro"}""")
+
     async def test_search_single_index_(self):
         """
         search with minimal parameters
@@ -13364,6 +13387,29 @@ class TestSearchClientSync:
         assert _req.path == "/1/indexes/cts_e2e_browse/rules/search"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"zorro"}""")
+
+    def test_search_rules_1(self):
+        """
+        the classic engine accepts a Request-ID sent as a query parameter
+        """
+        _req = self._client.search_rules_with_http_info(
+            index_name="cts_e2e_browse",
+            search_rules_params={
+                "query": "zorro",
+            },
+            request_options={
+                "query_parameters": loads("""{"x-algolia-request-id":"CtsE2eQry11"}"""),
+            },
+        )
+
+        assert _req.path == "/1/indexes/cts_e2e_browse/rules/search"
+        assert _req.verb == "POST"
+        assert (
+            _req.query_parameters.items()
+            == {"x-algolia-request-id": "CtsE2eQry11"}.items()
+        )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"zorro"}""")
 
