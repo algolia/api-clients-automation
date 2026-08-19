@@ -11,3 +11,7 @@ specs/analytics @algolia/optimization
 
 specs/composition @algolia/composition
 tests/CTS/**/composition @algolia/composition @algolia/api-clients-automation
+
+# keep these rules last: CODEOWNERS is last-match-wins, so a broader rule added above cannot silently take over the CI surface
+/.github/workflows/ @algolia/api-clients-automation
+/.github/actions/ @algolia/api-clients-automation

@@ -4,13 +4,14 @@ on:
   pull_request:
     types: [closed]
 
+permissions: {}
+
 jobs:
   cleanup:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     permissions:
-      pull-requests: write
-      contents: write
+      contents: write # deletes the generated/* branch
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 

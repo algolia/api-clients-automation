@@ -13,6 +13,8 @@ concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: ${{ !contains(github.event.head_commit.message, 'prepare release')}}
 
+permissions: {}
+
 # Uncomment the line below to enable artifacts debugging
 # env:
 #   ACTIONS_RUNNER_DEBUG: true
@@ -47,6 +49,8 @@ jobs:
   setup:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    permissions:
+      contents: read
     env:
       CACHE_VERSION: 1.13 # bump this to run all clients on the CI.
     steps:
@@ -135,6 +139,8 @@ jobs:
     timeout-minutes: 10
     needs: setup
     if: ${{ needs.setup.outputs.RUN_SCRIPTS == 'true' }}
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -159,6 +165,8 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     needs: setup
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -195,6 +203,8 @@ jobs:
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
       METIS_APPLICATION_ID: ${{ secrets.METIS_APPLICATION_ID }}
       METIS_API_KEY: ${{ secrets.METIS_API_KEY }}
+    permissions:
+      contents: read
     name: client javascript${{ needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' && format('@{0}', fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).version) || '' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -317,6 +327,8 @@ jobs:
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
       METIS_APPLICATION_ID: ${{ secrets.METIS_APPLICATION_ID }}
       METIS_API_KEY: ${{ secrets.METIS_API_KEY }}
+    permissions:
+      contents: read
     outputs:
       hasBreakingChanges: ${{ steps.breakingChanges.outputs.hasBreakingChanges }}
     name: client ${{ matrix.client.language }}@${{ matrix.client.version }}
@@ -432,6 +444,8 @@ jobs:
       needs.setup.outputs.KOTLIN_DATA != '' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
+    permissions:
+      contents: read
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
     name: client kotlin${{ format('@{0}', fromJSON(needs.setup.outputs.KOTLIN_DATA).version) }} macos
@@ -482,6 +496,8 @@ jobs:
       ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
       ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
+    permissions:
+      contents: read
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
     name: client swift${{ format('@{0}', fromJSON(needs.setup.outputs.SWIFT_DATA).version) }} linux
@@ -659,6 +675,8 @@ jobs:
   action_pins:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
