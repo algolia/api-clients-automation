@@ -54,11 +54,6 @@ jobs:
     env:
       CACHE_VERSION: 1.13 # bump this to run all clients on the CI.
     steps:
-      - name: debugging - dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
-        run: echo "$GITHUB_CONTEXT"
-
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
