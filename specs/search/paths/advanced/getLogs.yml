@@ -158,7 +158,9 @@ get:
                             example: 96f59a3145dd9bd8963dc223950507c8
                     cid:
                       type: string
-                      description: Correlation ID of the request, also returned in the `Correlation-ID` response header.
+                      description: |
+                        Correlation ID of the logged API request, also returned in that request's `Correlation-ID` response header.
+                        Absent when the request had no correlation identifier.
                       example: MyAppl-1tMcE-a7BqLm2Pd0Z
                   required:
                     - timestamp
