@@ -1351,7 +1351,7 @@ def snippet_for_get_conversation():
 
     getConversation
     """
-    # >SEPARATOR getConversation getConversation
+    # >SEPARATOR getConversation default
     # Initialize the client
     # In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.
     client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -1359,29 +1359,6 @@ def snippet_for_get_conversation():
     # Call the API
     response = client.get_conversation(
         conversation_id="test-conversation-id",
-        agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
-    )
-
-    # >LOG
-    # print the response
-    print(response)
-    # SEPARATOR<
-
-
-def snippet_for_get_conversation1():
-    """
-    Snippet for the getConversation method.
-
-    e2e get conversation
-    """
-    # >SEPARATOR getConversation e2e get conversation
-    # Initialize the client
-    # In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.
-    client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
-
-    # Call the API
-    response = client.get_conversation(
-        conversation_id="alg_cnv_miss_yqcZtaOSPTF8bJsJ",
         agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
     )
 

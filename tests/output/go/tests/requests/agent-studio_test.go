@@ -1091,16 +1091,6 @@ func TestAgentStudio_GetConversation(t *testing.T) {
 
 		require.Nil(t, echo.Body)
 	})
-	t.Run("e2e get conversation", func(t *testing.T) {
-		_, err := client.GetConversation(client.NewApiGetConversationRequest(
-			"alg_cnv_miss_yqcZtaOSPTF8bJsJ", "76710f1b-8231-42e5-b0d1-f43aac618e15"))
-		require.NoError(t, err)
-
-		require.Equal(t, "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/alg_cnv_miss_yqcZtaOSPTF8bJsJ", echo.Path)
-		require.Equal(t, "GET", echo.Method)
-
-		require.Nil(t, echo.Body)
-	})
 }
 
 func TestAgentStudio_GetProvider(t *testing.T) {
