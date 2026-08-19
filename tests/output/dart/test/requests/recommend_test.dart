@@ -145,7 +145,8 @@ void main() {
         expectPath(request.path, '/test/all');
         expect(request.method, 'get');
         expectHeaders(
-            request.headers, """{"x-header-1":"spaces are left alone"}""");
+            request.headers, """{"x-header-1":"spaces are left alone"}""",
+            allowMintedRequestId: true);
         expectParams(request.queryParameters,
             """{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}""");
         expect(request.body, null);
@@ -290,7 +291,8 @@ void main() {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
         expectHeaders(
-            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""",
+            allowMintedRequestId: true);
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
@@ -323,7 +325,8 @@ void main() {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
         expectHeaders(
-            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""",
+            allowMintedRequestId: true);
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },

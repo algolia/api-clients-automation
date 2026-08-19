@@ -123,7 +123,8 @@ void main() {
         expectPath(request.path, '/test/all');
         expect(request.method, 'get');
         expectHeaders(
-            request.headers, """{"x-header-1":"spaces are left alone"}""");
+            request.headers, """{"x-header-1":"spaces are left alone"}""",
+            allowMintedRequestId: true);
         expectParams(request.queryParameters,
             """{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}""");
         expect(request.body, null);
@@ -268,7 +269,8 @@ void main() {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
         expectHeaders(
-            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""",
+            allowMintedRequestId: true);
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
@@ -301,7 +303,8 @@ void main() {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
         expectHeaders(
-            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""",
+            allowMintedRequestId: true);
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
@@ -581,6 +584,59 @@ void main() {
       intercept: (request) {
         expectPath(request.path, '/1/compositions/foo');
         expect(request.method, 'get');
+        expect(request.body, null);
+      },
+    ),
+  );
+
+  // getComposition
+  test(
+    'the Correlation-ID ends with the sent Request-ID',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getComposition(
+          compositionID: "id1",
+          requestOptions: RequestOptions(
+            headers: {
+              'request-id': "CtsE2eEcho4",
+            },
+          )),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/id1');
+        expect(request.method, 'get');
+        expectHeaders(request.headers, """{"request-id":"CtsE2eEcho4"}""",
+            allowMintedRequestId: true);
+        expect(request.body, null);
+      },
+    ),
+  );
+
+  // getComposition
+  test(
+    'the Correlation-ID ends with the Request-ID sent as a query parameter',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getComposition(
+          compositionID: "id1",
+          requestOptions: RequestOptions(
+            urlParameters: {
+              'x-algolia-request-id': "CtsE2eEchoQ",
+            },
+          )),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/id1');
+        expect(request.method, 'get');
+        expectNoHeader(request.headers, 'request-id');
+        expectParams(request.queryParameters,
+            """{"x-algolia-request-id":"CtsE2eEchoQ"}""");
         expect(request.body, null);
       },
     ),

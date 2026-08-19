@@ -117,7 +117,9 @@
       "default": "final response = await client.deleteCompositionRule(\n  compositionID: \"1234\",\n  objectID: \"5678\",\n);"
     },
     "getComposition": {
-      "getComposition": "final response = await client.getComposition(\n  compositionID: \"foo\",\n);"
+      "getComposition": "final response = await client.getComposition(\n  compositionID: \"foo\",\n);",
+      "the Correlation-ID ends with the sent Request-ID": "final response = await client.getComposition(\n  compositionID: \"id1\",\n  requestOptions: RequestOptions(\n    headers: {\n      'request-id': 'CtsE2eEcho4',\n    },\n  ),\n);",
+      "the Correlation-ID ends with the Request-ID sent as a query parameter": "final response = await client.getComposition(\n  compositionID: \"id1\",\n  requestOptions: RequestOptions(\n    urlParameters: {\n      'x-algolia-request-id': \"CtsE2eEchoQ\",\n    },\n  ),\n);"
     },
     "getRule": {
       "default": "final response = await client.getRule(\n  compositionID: \"foo\",\n  objectID: \"123\",\n);"
