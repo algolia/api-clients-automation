@@ -17,8 +17,7 @@ module Algolia
     # Initializes the ApiClient
     # @option config [Configuration] Configuration for initializing the object, default to Configuration.default
     # @param request_id_support [true, false] the generated per-client Request-ID capability,
-    #   applied when config.request_id_enabled is nil; an explicit caller value always wins.
-    #   Resolved here so a Configuration shared across clients is never mutated.
+    #   applied when config.request_id_enabled is nil. Resolved here so a shared Configuration is never mutated.
     def initialize(config = Configuration.default, request_id_support: false)
       @config = config
       @request_id_enabled = config.request_id_enabled.nil? ? request_id_support : config.request_id_enabled

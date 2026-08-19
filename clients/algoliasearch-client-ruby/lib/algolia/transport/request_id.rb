@@ -21,8 +21,7 @@ module Algolia
         headers.any? { |k, _| k.to_s.casecmp?(HEADER) }
       end
 
-      # The Request-ID value carried by the given headers, or nil when absent,
-      # using the same case-insensitive lookup as request_id?.
+      # The Request-ID value carried by the given headers, or nil when absent.
       def self.value(headers)
         return nil unless headers.respond_to?(:each_pair)
 

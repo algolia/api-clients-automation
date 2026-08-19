@@ -147,8 +147,21 @@ class TestRequestId < Test::Unit::TestCase
 
     client.custom_get("1/test", {}, {:header_params => {"ReQuEsT-iD" => "CallerOwnedId"}})
 
-    # Request options are consumed on the first attempt: the transport must
-    # re-apply the caller's ID on every retry.
+    # Request options are consumed on attempt 1: retries must re-apply the caller's ID.
+    assert_equal(3, requester.request_ids.length)
+    assert_equal(["CallerOwnedId"], requester.request_ids.uniq)
+  end
+
+  def test_caller_supplied_request_id_survives_retries_when_disabled
+    requester = FailingThenSucceedingRequester.new(2)
+    hosts = Array.new(3) { Algolia::Transport::StatefulHost.new("localhost", accept: READ | WRITE) }
+    config = search_config(requester: requester, hosts: hosts)
+    config.request_id_enabled = false
+    client = search_client(config)
+
+    client.custom_get("1/test", {}, {:header_params => {"ReQuEsT-iD" => "CallerOwnedId"}})
+
+    # Caller request options ride every attempt regardless of the flag.
     assert_equal(3, requester.request_ids.length)
     assert_equal(["CallerOwnedId"], requester.request_ids.uniq)
   end
@@ -252,8 +265,7 @@ class TestRequestId < Test::Unit::TestCase
     Algolia::IngestionClient.create_with_config(config)
     search = Algolia::SearchClient.create_with_config(config)
 
-    # Building the ingestion client first must not pin its off-default into the
-    # shared config and silently disable minting for the search client.
+    # The first client's default must not pin into the shared config and disable the second's.
     assert_nil(config.request_id_enabled)
     assert_match(REQUEST_ID_FORMAT, search.custom_get_with_http_info("1/test").headers["request-id"])
   end

@@ -59,8 +59,7 @@ module {{moduleName}}
         config.write_timeout = {{x-timeouts.server.write}}
       end
 
-      # Per-client capability, resolved against config.request_id_enabled without
-      # mutating the caller's config: an explicit caller value always wins.
+      # Per-client capability; an explicit config.request_id_enabled always wins.
       @api_client = Algolia::ApiClient.new(config, request_id_support: {{#requestIdSupport}}true{{/requestIdSupport}}{{^requestIdSupport}}false{{/requestIdSupport}})
       {{#isSearchClient}}
       @ingestion_transporter = nil

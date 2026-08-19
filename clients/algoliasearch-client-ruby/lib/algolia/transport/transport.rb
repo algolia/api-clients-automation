@@ -23,8 +23,7 @@ module Algolia
 
       # @param config [Configuration]
       # @param requester [Object] requester used for sending requests. Uses Algolia::Http::HttpRequester by default
-      # @param request_id_enabled [true, false] whether the transport mints Request-ID headers,
-      #   already resolved against the per-client capability by ApiClient
+      # @param request_id_enabled [true, false] whether to mint Request-ID headers, resolved by ApiClient
       #
       def initialize(config, requester, request_id_enabled: false)
         @config = config
@@ -114,19 +113,18 @@ module Algolia
 
       private
 
-      # Returns the Request-ID applied to every attempt of this execution: the
-      # caller's request-option value when present (request options are consumed on
-      # the first attempt, so retries would otherwise drop it), nil when the feature
-      # is off for this client or the caller supplied one through the config default
-      # headers or the x-algolia-request-id query parameter, otherwise a fresh mint.
+      # Returns the Request-ID applied to every attempt: the caller's request-option
+      # value when present, even on a disabled client (request options are consumed
+      # on the first attempt), nil when the feature is off or the caller supplied one
+      # through the config headers or the query parameter, otherwise a fresh mint.
       #
       # @param opts [Hash]
       #
       # @return [String, nil]
       #
       def mint_request_id(opts)
-        return nil unless @request_id_enabled
         return RequestId.value(opts[:header_params]) if RequestId.request_id?(opts[:header_params])
+        return nil unless @request_id_enabled
         return nil if RequestId.request_id?(@config.header_params)
         return nil if RequestId.request_id_query_param?(opts[:query_params])
 
