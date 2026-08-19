@@ -17,15 +17,26 @@ final class RequestId
     private const LENGTH = 11;
 
     /**
-     * Mints a fresh identifier for the `request-id` header.
+     * Mints a fresh identifier for the `request-id` header. Degrades to a non-cryptographic
+     * source when the entropy pool is unavailable: the identifier is a tracing breadcrumb, not a
+     * secret, and a request must not fail over it.
      *
      * @return string 11 base62 characters
      */
     public static function generate()
     {
         $alphabetLength = strlen(self::ALPHABET);
-        $bytes = random_bytes(self::LENGTH);
         $id = '';
+
+        try {
+            $bytes = random_bytes(self::LENGTH);
+        } catch (\Throwable $e) {
+            $bytes = '';
+
+            for ($i = 0; $i < self::LENGTH; ++$i) {
+                $bytes .= chr(mt_rand(0, 255));
+            }
+        }
 
         for ($i = 0; $i < self::LENGTH; ++$i) {
             $id .= self::ALPHABET[ord($bytes[$i]) % $alphabetLength];
