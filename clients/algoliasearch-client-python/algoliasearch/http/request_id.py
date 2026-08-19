@@ -1,5 +1,5 @@
 from copy import copy
-from secrets import choice
+from secrets import token_bytes
 from typing import Any, Dict, Optional, TypeVar, Union, cast
 
 from algoliasearch.http.base_config import BaseConfig
@@ -19,7 +19,10 @@ RequestOptionsType = TypeVar(
 
 def generate_request_id() -> str:
     """Returns a fresh 11 character base62 identifier for the Request-ID header."""
-    return "".join(choice(REQUEST_ID_ALPHABET) for _ in range(REQUEST_ID_LENGTH))
+    return "".join(
+        REQUEST_ID_ALPHABET[byte % len(REQUEST_ID_ALPHABET)]
+        for byte in token_bytes(REQUEST_ID_LENGTH)
+    )
 
 
 def _contains_key(mapping: Optional[Dict[str, Any]], name: str) -> bool:

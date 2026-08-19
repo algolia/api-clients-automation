@@ -59,22 +59,29 @@ class RecordingSession(Session):
         self._statuses = list(statuses)
         self._headers = headers
         self.observed_request_ids: List[Optional[str]] = []
+        self.observed_urls: List[str] = []
 
     def send(self, request: PreparedRequest, **kwargs: Any) -> Response:  # type: ignore # the tests only need the recorded request
         _ = kwargs
         self.observed_request_ids.append(request.headers.get("request-id"))
+        self.observed_urls.append(request.url or "")
         return FakeResponse(self._statuses.pop(0), self._headers)
 
 
 def send(
-    config: BaseConfig, session: RecordingSession, verb: Verb = Verb.GET
+    config: BaseConfig,
+    session: RecordingSession,
+    verb: Verb = Verb.GET,
+    request_options: Optional[Dict[str, Any]] = None,
 ) -> Response:
     transporter = TransporterSync(config)
     transporter._session = session
     return transporter.request(
         verb=verb,
         path="/test",
-        request_options=RequestOptions(config).merge(),
+        request_options=RequestOptions(config).merge(
+            user_request_options=request_options
+        ),
         use_read_transporter=True,
     )
 
@@ -168,6 +175,35 @@ def test_an_unsupported_client_sends_no_request_id() -> None:
     send(create_config(request_id_enabled=False), session)
 
     assert session.observed_request_ids == [None]
+
+
+def test_a_caller_supplied_header_reaches_the_wire_untouched() -> None:
+    session = RecordingSession([200])
+
+    send(
+        create_config(),
+        session,
+        request_options={"headers": {"Request-Id": "CallerProvided"}},
+    )
+
+    assert session.observed_request_ids == ["CallerProvided"]
+
+
+def test_a_caller_supplied_query_parameter_sends_no_header() -> None:
+    session = RecordingSession([200])
+
+    send(
+        create_config(),
+        session,
+        request_options={
+            "query_parameters": {"x-algolia-request-id": "CallerProvided"}
+        },
+    )
+
+    assert session.observed_request_ids == [None]
+    assert session.observed_urls[0].endswith(
+        "/test?x-algolia-request-id=CallerProvided"
+    )
 
 
 def test_get_correlation_id_is_case_insensitive() -> None:
