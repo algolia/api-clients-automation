@@ -42,7 +42,7 @@ import org.json4s._
 
 sealed trait SearchTypeFacet
 
-/**   - `default`: perform a search query - `facet` [searches for facet
+/**   - `default`: perform a search query. - `facet` [searches for facet
   *     values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
   */
 object SearchTypeFacet {

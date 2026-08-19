@@ -8825,7 +8825,7 @@ components:
     clickAnalytics:
       type: boolean
       description: >
-        Whether to include a `queryID` attribute in the response
+        Whether to include a `queryID` attribute in the response.
 
         The query ID is a unique identifier for a search query and is required
         for tracking [click and conversion
@@ -8851,7 +8851,7 @@ components:
       type: boolean
       description: >
         Whether this search will use [Dynamic
-        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking)
+        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking).
 
         This setting only has an effect if you activated Dynamic Re-Ranking for
         this index in the Algolia dashboard.
@@ -8904,7 +8904,7 @@ components:
         type: string
       description: >
         Facets for which to retrieve facet values that match the search criteria
-        and the number of matching facet values
+        and the number of matching facet values.
 
         To retrieve all facets, use the wildcard character `*`.
 
@@ -9220,7 +9220,7 @@ components:
         $ref: '#/components/schemas/supportedLanguage'
       description: >
         ISO language codes that adjust settings that are useful for processing
-        natural language queries (as opposed to keyword searches)
+        natural language queries (as opposed to keyword searches).
 
         - Sets `removeStopWords` and `ignorePlurals` to the list of provided
         languages.
@@ -9352,7 +9352,7 @@ components:
       example: 90
       description: >
         Relevancy threshold below which less relevant results aren't included in
-        the results
+        the results.
 
         You can only set `relevancyStrictness` on [virtual replica
         indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
@@ -9367,7 +9367,7 @@ components:
       items:
         type: string
       description: >
-        Assigns a rule context to the run query
+        Assigns a rule context to the run query.
 
         [Rule
         contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context)
@@ -10445,7 +10445,7 @@ components:
       type: boolean
       description: >
         Whether to support phrase matching and excluding words from search
-        queries
+        queries.
 
         Use the `advancedSyntaxFeatures` parameter to control which feature is
         supported.
@@ -10464,13 +10464,13 @@ components:
       items:
         $ref: '#/components/schemas/advancedSyntaxFeatures'
       description: |
-        Advanced search syntax features you want to support
+        Advanced search syntax features you want to support.
         - `exactPhrase`.
           Phrases in quotes must match exactly.
-          For example, `sparkly blue "iPhone case"` only returns records with the exact string "iPhone case"
+          For example, `sparkly blue "iPhone case"` only returns records with the exact string "iPhone case".
         - `excludeWords`.
           Query words prefixed with a `-` must not occur in a record.
-          For example, `search -engine` matches records that contain "search" but not "engine"
+          For example, `search -engine` matches records that contain "search" but not "engine".
         This setting only has an effect if `advancedSyntax` is true.
       default:
         - exactPhrase
@@ -10480,7 +10480,7 @@ components:
     allowTyposOnNumericTokens:
       type: boolean
       description: |
-        Whether to allow typos on numbers in the search query
+        Whether to allow typos on numbers in the search query.
         Turn off this setting to reduce the number of irrelevant matches
         when searching in large sets of similar numbers.
       default: true
@@ -10501,24 +10501,24 @@ components:
         $ref: '#/components/schemas/alternativesAsExact'
       description: >
         Determine which plurals and synonyms should be considered an exact
-        matches
+        matches.
 
         By default, Algolia treats singular and plural forms of a word, and
         single-word synonyms, as
         [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact)
         matches when searching.
 
-        For example
+        For example:
 
-        - "swimsuit" and "swimsuits" are treated the same
+        - "swimsuit" and "swimsuits" are treated the same.
 
         - "swimsuit" and "swimwear" are treated the same (if they are
-        [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms))
+        [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms)).
 
         - `ignorePlurals`.
-          Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches
+          Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.
         - `singleWordSynonym`.
-          Single-word synonyms, such as "NY" = "NYC", are considered exact matches
+          Single-word synonyms, such as "NY" = "NYC", are considered exact matches.
         - `multiWordsSynonym`.
           Multi-word synonyms, such as "NY" = "New York", are considered exact matches.
       default:
@@ -10530,7 +10530,7 @@ components:
       type: boolean
       description: >
         Whether the best matching attribute should be determined by minimum
-        proximity
+        proximity.
 
         This setting only affects ranking if the Attribute ranking criterion
         comes before Proximity in the `ranking` setting.
@@ -10553,7 +10553,7 @@ components:
         - conten
         - content
       description: >
-        Attributes to highlight
+        Attributes to highlight.
 
         By default, all searchable attributes are highlighted.
 
@@ -10581,7 +10581,7 @@ components:
         - title
         - content
       description: >
-        Attributes to include in the API response
+        Attributes to include in the API response.
 
         To reduce the size of your response, you can retrieve only some of the
         attributes.
@@ -10668,7 +10668,7 @@ components:
         attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes).
 
         - Reducing the number of matches when you have too many.
-          This can happen with attributes that are long blocks of text, such as product descriptions
+          This can happen with attributes that are long blocks of text, such as product descriptions.
         Consider alternatives such as `disableTypoToleranceOnWords` or adding
         synonyms if your attributes have intentional unusual spellings that
         might look like typos.
@@ -10813,7 +10813,7 @@ components:
       minimum: 1
       maximum: 7
       description: >
-        Minimum proximity score for two matching words
+        Minimum proximity score for two matching words.
 
         This adjusts the [Proximity ranking
         criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity)
@@ -10909,7 +10909,7 @@ components:
     personalizationImpact:
       type: integer
       description: >
-        Impact that Personalization should have on this search
+        Impact that Personalization should have on this search.
 
         The higher this value is, the more Personalization determines the
         ranking compared to other factors.
@@ -11016,7 +11016,7 @@ components:
     replaceSynonymsInHighlight:
       type: boolean
       description: >
-        Whether to replace a highlighted word with the matched synonym
+        Whether to replace a highlighted word with the matched synonym.
 
         By default, the original words are highlighted even if a synonym
         matches.
@@ -11042,7 +11042,7 @@ components:
       items:
         type: string
       description: >
-        Properties to include in the API response of search and browse requests
+        Properties to include in the API response of search and browse requests.
 
         By default, all response properties are included.
 
@@ -11098,7 +11098,7 @@ components:
       items:
         type: string
       description: >
-        Assigns a rule context to the search query
+        Assigns a rule context to the search query.
 
         [Rule
         contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context)
@@ -11251,7 +11251,7 @@ components:
     facetingAfterDistinct:
       type: boolean
       description: >
-        Whether faceting should be applied after deduplication with `distinct`
+        Whether faceting should be applied after deduplication with `distinct`.
 
         This leads to accurate facet counts when using faceting in combination
         with `distinct`.
@@ -11274,13 +11274,13 @@ components:
     sortFacetValuesBy:
       type: string
       description: >
-        Order in which to retrieve facet values
+        Order in which to retrieve facet values.
 
         - `count`.
           Facet values are retrieved by decreasing count.
-          The count is the number of matching records containing this facet value
+          The count is the number of matching records containing this facet value.
         - `alpha`.
-          Retrieve facet values alphabetically
+          Retrieve facet values alphabetically.
         This setting doesn't influence how facet values are displayed in your UI
         (see `renderingContent`).
 
@@ -11292,7 +11292,7 @@ components:
     sumOrFiltersScores:
       type: boolean
       description: >
-        Whether to sum all filter scores
+        Whether to sum all filter scores.
 
         If true, all filter scores are summed.
 

@@ -576,6 +576,56 @@ def snippet_for_get_composition():
     # SEPARATOR<
 
 
+def snippet_for_get_composition1():
+    """
+    Snippet for the getComposition method.
+
+    the Correlation-ID ends with the sent Request-ID
+    """
+    # >SEPARATOR getComposition the Correlation-ID ends with the sent Request-ID
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.get_composition(
+        composition_id="id1",
+        request_options={
+            "headers": loads("""{"request-id":"CtsE2eEcho4"}"""),
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_get_composition2():
+    """
+    Snippet for the getComposition method.
+
+    the Correlation-ID ends with the Request-ID sent as a query parameter
+    """
+    # >SEPARATOR getComposition the Correlation-ID ends with the Request-ID sent as a query parameter
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.get_composition(
+        composition_id="id1",
+        request_options={
+            "query_parameters": loads("""{"x-algolia-request-id":"CtsE2eEchoQ"}"""),
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_get_rule():
     """
     Snippet for the getRule method.

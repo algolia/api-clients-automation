@@ -712,7 +712,7 @@
         ],
         "x-streaming": true,
         "summary": "Create Completion",
-        "description": "Create a completion for the specified agent.\n\nThis endpoint handles two types of requests:\n1. Normal completion request: User message -> Agent response\n2. Tool approval response: User approval -> Execute tool -> Agent response\n\nTool Approval Flow (for MCP tools with requiresApproval: true):\n- Request 1: User sends message -> Agent requests tool call -> Return approval request\n- Request 2: User approves -> Execute tool -> Agent continues with result.",
+        "description": "Create a completion for the specified agent.\n\nThis endpoint handles two types of requests:\n1. Normal completion request: User message -> Agent response\n2. Tool approval response: User approval -> Execute tool -> Agent response\n\nTool Approval Flow (for MCP tools with requiresApproval: true):\n- Request 1: User sends message -> Agent requests tool call -> Return approval request.\n- Request 2: User approves -> Execute tool -> Agent continues with result.",
         "parameters": [
           {
             "name": "agentId",

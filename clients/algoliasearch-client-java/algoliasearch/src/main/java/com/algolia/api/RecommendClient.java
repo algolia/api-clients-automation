@@ -60,7 +60,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * Create or update a batch of Recommend Rules. Each Recommend Rule is created or updated,
    * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
    * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
    * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -91,7 +91,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * Create or update a batch of Recommend Rules. Each Recommend Rule is created or updated,
    * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
    * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
    * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -122,7 +122,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * Create or update a batch of Recommend Rules. Each Recommend Rule is created or updated,
    * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
    * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
    * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -150,7 +150,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * Create or update a batch of Recommend Rules. Each Recommend Rule is created or updated,
    * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
    * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
    * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -178,7 +178,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * Create or update a batch of Recommend Rules. Each Recommend Rule is created or updated,
    * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
    * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
    * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -207,7 +207,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * Create or update a batch of Recommend Rules. Each Recommend Rule is created or updated,
    * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
    * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
    * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -236,7 +236,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * Create or update a batch of Recommend Rules. Each Recommend Rule is created or updated,
    * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
    * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
    * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -260,7 +260,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * Create or update a batch of Recommend Rules. Each Recommend Rule is created or updated,
    * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
    * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
    * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -284,7 +284,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * (asynchronously) Create or update a batch of Recommend Rules. Each Recommend Rule is created or
    * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
    * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
    * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -325,7 +325,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * (asynchronously) Create or update a batch of Recommend Rules. Each Recommend Rule is created or
    * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
    * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
    * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -366,7 +366,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * (asynchronously) Create or update a batch of Recommend Rules. Each Recommend Rule is created or
    * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
    * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
    * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -394,7 +394,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * (asynchronously) Create or update a batch of Recommend Rules. Each Recommend Rule is created or
    * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
    * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
    * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -422,7 +422,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * (asynchronously) Create or update a batch of Recommend Rules. Each Recommend Rule is created or
    * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
    * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
    * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -451,7 +451,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * (asynchronously) Create or update a batch of Recommend Rules. Each Recommend Rule is created or
    * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
    * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
    * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -480,7 +480,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * (asynchronously) Create or update a batch of Recommend Rules. Each Recommend Rule is created or
    * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
    * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
    * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -504,7 +504,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * (asynchronously) Create or update a batch of Recommend Rules. Each Recommend Rule is created or
    * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
    * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
    * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the

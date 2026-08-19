@@ -95,6 +95,35 @@ class TestRecommendClient:
         )
         assert _req is None
 
+    async def test_request_id_0(self):
+        """
+        the recommend client sends a Request-ID
+        """
+
+        _config = RecommendConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6694,
+                )
+            ]
+        )
+        _client = RecommendClient.create_with_config(config=_config)
+        _req = await _client.custom_get(
+            path="1/test/request-id/smoke/recommend/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"status":"ok"}""")
+
     async def test_set_client_api_key_0(self):
         """
         switch API key
@@ -221,6 +250,35 @@ class TestRecommendClientSync:
             path="1/test/no-content",
         )
         assert _req is None
+
+    def test_request_id_0(self):
+        """
+        the recommend client sends a Request-ID
+        """
+
+        _config = RecommendConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6694,
+                )
+            ]
+        )
+        _client = RecommendClientSync.create_with_config(config=_config)
+        _req = _client.custom_get(
+            path="1/test/request-id/smoke/recommend/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"status":"ok"}""")
 
     def test_set_client_api_key_0(self):
         """
