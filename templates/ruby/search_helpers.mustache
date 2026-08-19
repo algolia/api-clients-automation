@@ -9,7 +9,7 @@
 # @return [Hash]
 private def with_request_id(request_options = {})
   config = api_client.config
-  unless api_client.request_id_enabled &&
+  unless api_client.request_id_enabled? &&
       !Transport::RequestId.request_id?(request_options[:header_params]) &&
       !Transport::RequestId.request_id?(config.header_params) &&
       !Transport::RequestId.request_id_query_param?(request_options[:query_params])

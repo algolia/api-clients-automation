@@ -23,7 +23,8 @@ module Algolia
     end
 
     # Whether the transport mints Request-ID headers, resolved per request.
-    def request_id_enabled
+    # @return [true, false]
+    def request_id_enabled?
       @transporter.request_id_enabled?
     end
 
