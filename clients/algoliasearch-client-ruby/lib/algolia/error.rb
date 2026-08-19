@@ -38,12 +38,12 @@ module Algolia
 
     # The Correlation-ID header of the failed response (possibly ""), or nil.
     # Quote it when contacting Algolia support.
-    attr_accessor :correlation_id
+    attr_reader :correlation_id
 
     def initialize(code, message, correlation_id = nil)
       self.code = code
       self.http_message = message
-      self.correlation_id = correlation_id
+      @correlation_id = correlation_id
 
       if correlation_id.nil? || correlation_id.empty?
         super("#{code}: #{message}")

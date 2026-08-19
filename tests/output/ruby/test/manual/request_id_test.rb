@@ -188,7 +188,7 @@ class TestRequestId < Test::Unit::TestCase
 
   def test_transport_never_mints_over_query_param_request_id
     config = search_config
-    transport = Algolia::Transport::Transport.new(config, config.requester, request_id_enabled: true)
+    transport = Algolia::Transport::Transport.new(config, config.requester, request_id_support: true)
 
     res = transport.request(READ, :GET, "/1/test", nil, {:query_params => {:"x-algolia-request-id" => "QueryOwned"}})
 
@@ -252,6 +252,19 @@ class TestRequestId < Test::Unit::TestCase
     assert_false(res.headers.any? { |k, _| k.to_s.casecmp?("request-id") })
   end
 
+  def test_flipping_request_id_enabled_after_construction_applies
+    config = search_config
+    client = search_client(config)
+
+    # The setting is read per request, like every other Configuration setting.
+    config.request_id_enabled = false
+    res = client.custom_get_with_http_info("1/test")
+    assert_false(res.headers.any? { |k, _| k.to_s.casecmp?("request-id") })
+
+    config.request_id_enabled = nil
+    assert_match(REQUEST_ID_FORMAT, client.custom_get_with_http_info("1/test").headers["request-id"])
+  end
+
   def test_shared_config_keeps_each_clients_default
     hosts = [Algolia::Transport::StatefulHost.new("localhost", accept: READ | WRITE)]
     config = Algolia::Configuration.new(
@@ -274,7 +287,7 @@ class TestRequestId < Test::Unit::TestCase
     client = search_client
 
     options = client.send(:with_request_id, {})
-    minted = options[:header_params]["Request-ID"]
+    minted = options[:header_params]["request-id"]
 
     assert_match(REQUEST_ID_FORMAT, minted)
 
@@ -282,7 +295,7 @@ class TestRequestId < Test::Unit::TestCase
     assert_equal(options, client.send(:with_request_id, options))
 
     # A fresh helper invocation mints a fresh ID.
-    assert_not_equal(minted, client.send(:with_request_id, {})[:header_params]["Request-ID"])
+    assert_not_equal(minted, client.send(:with_request_id, {})[:header_params]["request-id"])
   end
 
   def test_helper_options_keep_caller_request_id

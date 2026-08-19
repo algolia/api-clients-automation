@@ -23,13 +23,23 @@ module Algolia
 
       # @param config [Configuration]
       # @param requester [Object] requester used for sending requests. Uses Algolia::Http::HttpRequester by default
-      # @param request_id_enabled [true, false] whether to mint Request-ID headers, resolved by ApiClient
+      # @param request_id_support [true, false] the generated per-client Request-ID capability
       #
-      def initialize(config, requester, request_id_enabled: false)
+      def initialize(config, requester, request_id_support: false)
         @config = config
         @requester = requester
-        @request_id_enabled = request_id_enabled
+        @request_id_support = request_id_support
         @retry_strategy = RetryStrategy.new(config.hosts)
+      end
+
+      # Whether the transport mints Request-ID headers. Resolved per request so a
+      # caller can flip config.request_id_enabled at any time, like every other
+      # Configuration setting; nil falls back to the per-client capability.
+      #
+      # @return [true, false]
+      #
+      def request_id_enabled?
+        @config.request_id_enabled.nil? ? @request_id_support : @config.request_id_enabled
       end
 
       # @param call_type [Binary] READ or WRITE operation
@@ -124,7 +134,7 @@ module Algolia
       #
       def mint_request_id(opts)
         return RequestId.value(opts[:header_params]) if RequestId.request_id?(opts[:header_params])
-        return nil unless @request_id_enabled
+        return nil unless request_id_enabled?
         return nil if RequestId.request_id?(@config.header_params)
         return nil if RequestId.request_id_query_param?(opts[:query_params])
 
@@ -143,7 +153,7 @@ module Algolia
       def correlation_id_from(headers)
         return nil unless headers.respond_to?(:each_pair)
 
-        headers.find { |k, _| k.to_s.casecmp?("Correlation-ID") }&.last
+        headers.find { |k, _| k.to_s.casecmp?(RequestId::CORRELATION_HEADER) }&.last
       end
 
       # Parse the different information and build the request
@@ -190,7 +200,7 @@ module Algolia
       def generate_header_params(body, request_options, request_id = nil)
         header_params = request_options.header_params.transform_keys(&:downcase)
         header_params = @config.header_params.merge(header_params)
-        header_params["request-id"] = request_id if request_id
+        header_params[RequestId::HEADER] = request_id if request_id
         if request_options.compression_type == "gzip" && body.is_a?(String) && !body.to_s.strip.empty?
           header_params["content-encoding"] = "gzip"
         end

@@ -11,14 +11,21 @@ module Algolia
       :connect_timeout,
       :compression_type,
       :requester,
-      :transformation_options,
-      :request_id_enabled
+      :transformation_options
     )
 
     # Set this to false to skip client side validation in the operation.
     # Default to true.
     # @return [true, false]
     attr_accessor :client_side_validation
+
+    # Whether the transport sends a Request-ID header, minted once per call and
+    # reused across its retry attempts. When nil, each generated client applies its
+    # per-client default (on for the search, recommend and composition APIs, off
+    # elsewhere); an explicit true or false always wins and may be flipped at any
+    # time. A caller-supplied Request-ID is never overwritten.
+    # @return [true, false, nil]
+    attr_accessor :request_id_enabled
 
     def initialize(app_id, api_key, hosts, client_name, opts = {})
       @hosts = hosts
@@ -32,13 +39,6 @@ module Algolia
       @requester = opts[:requester]
       @transformation_options = opts[:transformation_options]
 
-      # Whether the transport sends a Request-ID header, minted once per call and
-      # reused across its retry attempts, so that Algolia support can tie the attempts
-      # of one request together. When nil, the generated clients apply their
-      # per-client default (on for the search, recommend and composition APIs, off
-      # elsewhere); an explicit true or false always wins over that default. A
-      # Request-ID supplied through request options or the config headers is never
-      # overwritten.
       @request_id_enabled = opts[:request_id_enabled]
 
       @user_agent = UserAgent.new.add(client_name, VERSION)
