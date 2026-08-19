@@ -1,6 +1,6 @@
 import { existsSync } from 'node:fs';
 
-import { createClientName, run, toAbsolutePath } from './common.ts';
+import { YARN_HARDENED_MODE_PREFIX, createClientName, run, toAbsolutePath } from './common.ts';
 import { getLanguageFolder, getSwiftBuildFolder } from './config.ts';
 import { formatter } from './formatter.ts';
 import { updatePlaygroundLanguageVersion } from './playground.ts';
@@ -54,7 +54,10 @@ async function buildLanguage(
       await run('go build -o /dev/null ./...', { cwd, language });
       break;
     case 'javascript':
-      await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install', { cwd, language });
+      await run(`${YARN_HARDENED_MODE_PREFIX}YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install`, {
+        cwd,
+        language,
+      });
       if (buildType === 'client') {
         await run(`yarn build`, { cwd, language });
         break;
