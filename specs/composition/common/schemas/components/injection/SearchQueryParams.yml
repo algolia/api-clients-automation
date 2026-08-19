@@ -13,8 +13,6 @@ baseInjectionQueryParameters:
       $ref: '../../../params/Search.yml#/alternativesAsExact'
     attributeCriteriaComputedByMinProximity:
       $ref: '../../../params/Search.yml#/attributeCriteriaComputedByMinProximity'
-    attributeCriteriaComputedBy:
-      $ref: '../../../params/Search.yml#/attributeCriteriaComputedBy'
     attributesToHighlight:
       $ref: '../../../params/Search.yml#/attributesToHighlight'
     attributesToRetrieve:

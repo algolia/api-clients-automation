@@ -34,9 +34,6 @@ aroundRadius:
 attributeCriteriaComputedByMinProximity:
   $ref: '../../../common/schemas/IndexSettings.yml#/attributeCriteriaComputedByMinProximity'
 
-attributeCriteriaComputedBy:
-  $ref: '../../../common/schemas/IndexSettings.yml#/attributeCriteriaComputedBy'
-
 attributesToHighlight:
   $ref: '../../../common/schemas/IndexSettings.yml#/attributesToHighlight'
 
