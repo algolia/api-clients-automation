@@ -1,4 +1,12 @@
-import { CI, callGenerator, exists, isWSL, run, setupAndGen, toAbsolutePath } from '../common.ts';
+import {
+  YARN_HARDENED_MODE_PREFIX,
+  callGenerator,
+  exists,
+  isWSL,
+  run,
+  setupAndGen,
+  toAbsolutePath,
+} from '../common.ts';
 import { getTestOutputFolder } from '../config.ts';
 import { formatter } from '../formatter.ts';
 import type { Generator } from '../types.ts';
@@ -29,7 +37,7 @@ export async function docsGenerateMany(
     const docsPath = `docs/${scope}/${lang}`;
 
     if (lang === 'javascript') {
-      await run(`${CI ? 'YARN_ENABLE_HARDENED_MODE=1 ' : ''}YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install`, {
+      await run(`${YARN_HARDENED_MODE_PREFIX}YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install`, {
         cwd: docsPath,
       });
     }

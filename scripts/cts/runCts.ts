@@ -1,6 +1,6 @@
 import fsp from 'fs/promises';
 
-import { CI, exists, isVerbose, run, runComposerInstall, toAbsolutePath } from '../common.ts';
+import { exists, isVerbose, run, runComposerInstall, toAbsolutePath, YARN_HARDENED_MODE_PREFIX } from '../common.ts';
 import { getSwiftBuildFolder, getTestOutputFolder } from '../config.ts';
 import { createSpinner } from '../spinners.ts';
 import type { Language } from '../types.ts';
@@ -89,7 +89,7 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
     }
     case 'javascript':
       await run(
-        `${CI ? 'YARN_ENABLE_HARDENED_MODE=1 ' : ''}YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test ${filter((f) => `src/${f}`)}`,
+        `${YARN_HARDENED_MODE_PREFIX}YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test ${filter((f) => `src/${f}`)}`,
         {
           cwd,
           language,
