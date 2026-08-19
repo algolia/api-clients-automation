@@ -675,42 +675,75 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
     }
 
     /**
+     * Restores the historical contract of the browse helpers, whose single options argument was
+     * merged into each request body: keys of `$requestOptions` that are not request options are
+     * treated as browse/search parameters.
+     *
+     * @param array                $params         browse/search parameters sent in each request body
+     * @param array|RequestOptions $requestOptions Request options
+     *
+     * @return array{0: array, 1: array|RequestOptions}
+     */
+    private function splitBrowseOptions($params, $requestOptions)
+    {
+        if (!is_array($requestOptions) || [] === $requestOptions) {
+            return [$params, $requestOptions];
+        }
+
+        $transportKeys = array_flip(['headers', 'queryParameters', 'body', 'readTimeout', 'writeTimeout', 'connectTimeout']);
+
+        return [
+            $params + array_diff_key($requestOptions, $transportKeys),
+            array_intersect_key($requestOptions, $transportKeys),
+        ];
+    }
+
+    /**
      * Helper: Iterate on the `browse` method of the client to allow aggregating objects of an index.
      *
      * @param string $indexName Index name
-     * @param array $requestOptions Request options
+     * @param array $browseParams the `browse` parameters sent in each request body
+     * @param array|RequestOptions $requestOptions Request options
      *
      * @return ObjectIterator
      */
-    public function browseObjects($indexName, $requestOptions = [])
+    public function browseObjects($indexName, $browseParams = [], $requestOptions = [])
     {
-        return new ObjectIterator($indexName, $this, $this->withRequestId($requestOptions));
+        [$browseParams, $requestOptions] = $this->splitBrowseOptions($browseParams, $requestOptions);
+
+        return new ObjectIterator($indexName, $this, $browseParams, $this->withRequestId($requestOptions));
     }
 
     /**
      * Helper: Iterate on the `searchRules` method of the client to allow aggregating rules of an index.
      *
      * @param string $indexName Index name
-     * @param array $requestOptions Request options
+     * @param array $searchRulesParams the `searchRules` parameters sent in each request body
+     * @param array|RequestOptions $requestOptions Request options
      *
      * @return RuleIterator
      */
-    public function browseRules($indexName, $requestOptions = [])
+    public function browseRules($indexName, $searchRulesParams = [], $requestOptions = [])
     {
-        return new RuleIterator($indexName, $this, $this->withRequestId($requestOptions));
+        [$searchRulesParams, $requestOptions] = $this->splitBrowseOptions($searchRulesParams, $requestOptions);
+
+        return new RuleIterator($indexName, $this, $searchRulesParams, $this->withRequestId($requestOptions));
     }
 
     /**
      * Helper: Iterate on the `searchSynonyms` method of the client to allow aggregating synonyms of an index.
      *
      * @param string $indexName Index name
-     * @param array $requestOptions Request options
+     * @param array $searchSynonymsParams the `searchSynonyms` parameters sent in each request body
+     * @param array|RequestOptions $requestOptions Request options
      *
      * @return SynonymIterator
      */
-    public function browseSynonyms($indexName, $requestOptions = [])
+    public function browseSynonyms($indexName, $searchSynonymsParams = [], $requestOptions = [])
     {
-        return new SynonymIterator($indexName, $this, $this->withRequestId($requestOptions));
+        [$searchSynonymsParams, $requestOptions] = $this->splitBrowseOptions($searchSynonymsParams, $requestOptions);
+
+        return new SynonymIterator($indexName, $this, $searchSynonymsParams, $this->withRequestId($requestOptions));
     }
 
     /**

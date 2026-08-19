@@ -260,6 +260,87 @@ class RequestIdTest extends TestCase
         $this->assertFalse(RequestId::isPresentInQueryParameters([]));
     }
 
+    public function testBrowseObjectsSendsOneRequestIdAsAHeaderAndKeepsTheBodyClean(): void
+    {
+        $http = $this->recorder([
+            new Response(200, [], '{"hits":[{"objectID":"1"}],"cursor":"page2"}'),
+            new Response(200, [], '{"hits":[{"objectID":"2"}]}'),
+        ]);
+
+        iterator_to_array($this->searchClient($http)->browseObjects('idx', ['query' => 'foo']));
+
+        $ids = $this->sentRequestIds($http);
+        $this->assertCount(2, $ids);
+        $this->assertMatchesRegularExpression(self::FORMAT, $ids[0]);
+        $this->assertCount(1, array_unique($ids));
+
+        foreach ($http->requests as $request) {
+            $body = json_decode((string) $request->getBody(), true);
+            $this->assertArrayNotHasKey('headers', $body);
+            $this->assertSame('foo', $body['query']);
+            $this->assertSame(1000, $body['hitsPerPage']);
+        }
+    }
+
+    public function testBrowseRulesAndBrowseSynonymsShareTheBrowseContract(): void
+    {
+        foreach (['browseRules', 'browseSynonyms'] as $helper) {
+            $http = $this->recorder([
+                new Response(200, [], '{"hits":[{"objectID":"1"}],"nbHits":1}'),
+            ]);
+
+            iterator_to_array($this->searchClient($http)->{$helper}('idx'));
+
+            $body = json_decode((string) $http->requests[0]->getBody(), true);
+            $this->assertArrayNotHasKey('headers', $body, $helper);
+            $this->assertSame(1000, $body['hitsPerPage'], $helper);
+            $this->assertMatchesRegularExpression(self::FORMAT, $this->sentRequestIds($http)[0], $helper);
+        }
+    }
+
+    public function testBrowseObjectsHonorsCallerRequestOptionsOnTheTransportChannel(): void
+    {
+        $http = $this->recorder([new Response(200, [], '{"hits":[]}')]);
+
+        iterator_to_array($this->searchClient($http)->browseObjects('idx', [], [
+            'headers' => ['x-custom-header' => 'custom-value'],
+        ]));
+
+        $request = $http->requests[0];
+        $this->assertSame('custom-value', $request->getHeaderLine('x-custom-header'));
+        $this->assertMatchesRegularExpression(self::FORMAT, $request->getHeaderLine('request-id'));
+        $this->assertArrayNotHasKey('headers', json_decode((string) $request->getBody(), true));
+    }
+
+    public function testBrowseObjectsNeverOverwritesACallerSuppliedRequestId(): void
+    {
+        $http = $this->recorder([
+            new Response(200, [], '{"hits":[{"objectID":"1"}],"cursor":"page2"}'),
+            new Response(200, [], '{"hits":[]}'),
+        ]);
+
+        iterator_to_array($this->searchClient($http)->browseObjects('idx', [], [
+            'headers' => ['Request-ID' => 'CallerProvided'],
+        ]));
+
+        $this->assertSame(['CallerProvided', 'CallerProvided'], $this->sentRequestIds($http));
+    }
+
+    public function testBrowseHelpersKeepAcceptingBrowseParametersInTheRequestOptionsArgument(): void
+    {
+        $http = $this->recorder([new Response(200, [], '{"hits":[]}')]);
+
+        iterator_to_array($this->searchClient($http)->browseObjects('idx', requestOptions: [
+            'hitsPerPage' => 42,
+            'headers' => ['x-custom-header' => 'custom-value'],
+        ]));
+
+        $body = json_decode((string) $http->requests[0]->getBody(), true);
+        $this->assertSame(42, $body['hitsPerPage']);
+        $this->assertArrayNotHasKey('headers', $body);
+        $this->assertSame('custom-value', $http->requests[0]->getHeaderLine('x-custom-header'));
+    }
+
     /**
      * @return Response[] one `saveObjects` call with `batchSize: 2` over 4 objects
      */

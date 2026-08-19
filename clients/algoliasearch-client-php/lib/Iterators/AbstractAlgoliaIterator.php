@@ -3,6 +3,7 @@
 namespace Algolia\AlgoliaSearch\Iterators;
 
 use Algolia\AlgoliaSearch\Api\SearchClient;
+use Algolia\AlgoliaSearch\RequestOptions\RequestOptions;
 
 abstract class AbstractAlgoliaIterator implements \Iterator
 {
@@ -14,9 +15,14 @@ abstract class AbstractAlgoliaIterator implements \Iterator
     protected $searchClient;
 
     /**
-     * @var array RequestOptions passed when getting new batch from Algolia
+     * @var array browse/search parameters merged into the body of each request
      */
     protected $requestOptions;
+
+    /**
+     * @var array|RequestOptions request options forwarded to every underlying call
+     */
+    protected $transportRequestOptions;
 
     /**
      * @var int
@@ -42,13 +48,15 @@ abstract class AbstractAlgoliaIterator implements \Iterator
     public function __construct(
         $indexName,
         SearchClient $searchClient,
-        $requestOptions = []
+        $requestOptions = [],
+        $transportRequestOptions = []
     ) {
         $this->indexName = $indexName;
         $this->searchClient = $searchClient;
         $this->requestOptions = $requestOptions + [
             'hitsPerPage' => 1000,
         ];
+        $this->transportRequestOptions = $transportRequestOptions;
 
         $this->fetchNextPage();
     }
