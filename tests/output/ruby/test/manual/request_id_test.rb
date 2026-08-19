@@ -140,6 +140,19 @@ class TestRequestId < Test::Unit::TestCase
     assert_equal([requester.request_ids[0]], requester.request_ids.uniq)
   end
 
+  def test_caller_supplied_request_id_survives_retries
+    requester = FailingThenSucceedingRequester.new(2)
+    hosts = Array.new(3) { Algolia::Transport::StatefulHost.new("localhost", accept: READ | WRITE) }
+    client = search_client(search_config(requester: requester, hosts: hosts))
+
+    client.custom_get("1/test", {}, {:header_params => {"ReQuEsT-iD" => "CallerOwnedId"}})
+
+    # Request options are consumed on the first attempt: the transport must
+    # re-apply the caller's ID on every retry.
+    assert_equal(3, requester.request_ids.length)
+    assert_equal(["CallerOwnedId"], requester.request_ids.uniq)
+  end
+
   def test_caller_supplied_request_id_wins
     client = search_client
 
@@ -162,8 +175,7 @@ class TestRequestId < Test::Unit::TestCase
 
   def test_transport_never_mints_over_query_param_request_id
     config = search_config
-    config.request_id_support = true
-    transport = Algolia::Transport::Transport.new(config, config.requester)
+    transport = Algolia::Transport::Transport.new(config, config.requester, request_id_enabled: true)
 
     res = transport.request(READ, :GET, "/1/test", nil, {:query_params => {:"x-algolia-request-id" => "QueryOwned"}})
 
@@ -192,7 +204,7 @@ class TestRequestId < Test::Unit::TestCase
     )
     # The generated client only applies its per-client default (off for
     # ingestion) when the setting is nil: an explicit opt-in survives.
-    config.request_id_support = true
+    config.request_id_enabled = true
     client = Algolia::IngestionClient.create_with_config(config)
 
     res = client.custom_get_with_http_info("1/test")
@@ -219,12 +231,31 @@ class TestRequestId < Test::Unit::TestCase
   def test_search_explicit_opt_out_never_mints
     config = search_config
     # An explicit opt-out wins over the search client's on-by-default.
-    config.request_id_support = false
+    config.request_id_enabled = false
     client = search_client(config)
 
     res = client.custom_get_with_http_info("1/test")
 
     assert_false(res.headers.any? { |k, _| k.to_s.casecmp?("request-id") })
+  end
+
+  def test_shared_config_keeps_each_clients_default
+    hosts = [Algolia::Transport::StatefulHost.new("localhost", accept: READ | WRITE)]
+    config = Algolia::Configuration.new(
+      "test-app-id",
+      "test-api-key",
+      hosts,
+      "Shared",
+      requester: Algolia::Transport::EchoRequester.new
+    )
+
+    Algolia::IngestionClient.create_with_config(config)
+    search = Algolia::SearchClient.create_with_config(config)
+
+    # Building the ingestion client first must not pin its off-default into the
+    # shared config and silently disable minting for the search client.
+    assert_nil(config.request_id_enabled)
+    assert_match(REQUEST_ID_FORMAT, search.custom_get_with_http_info("1/test").headers["request-id"])
   end
 
   def test_helper_options_share_one_request_id
@@ -396,8 +427,9 @@ class TestRequestIdExhaustion < Test::Unit::TestCase
   end
 
   def test_exhaustion_keeps_correlation_id_of_earlier_attempt
-    # Later attempts without a Correlation-ID must not erase the earlier one.
-    requester = AlwaysFailingRequester.new(-> (attempt) { attempt == 1 ? {"cOrReLaTiOn-Id" => "CorrAttempt1"} : {} })
+    # Later attempts with an absent or empty Correlation-ID must not erase the earlier one.
+    headers = [{"cOrReLaTiOn-Id" => "CorrAttempt1"}, {"Correlation-ID" => ""}, {}]
+    requester = AlwaysFailingRequester.new(-> (attempt) { headers[attempt - 1] })
     client = exhausted_client(requester)
 
     error = assert_raise(Algolia::AlgoliaUnreachableHostError) { client.custom_get("1/test") }
@@ -412,8 +444,8 @@ class TestRequestIdExhaustion < Test::Unit::TestCase
 
     error = assert_raise(Algolia::AlgoliaUnreachableHostError) { client.custom_get("1/test") }
 
-    # Kept verbatim on the error, but never rendered as a dangling suffix.
-    assert_equal("", error.correlation_id)
+    # An empty Correlation-ID is worthless in a support ticket: never retained.
+    assert_nil(error.correlation_id)
     assert_false(error.message.include?("Correlation-ID"))
   end
 

@@ -59,10 +59,9 @@ module {{moduleName}}
         config.write_timeout = {{x-timeouts.server.write}}
       end
 
-      # Per-client default only, not forced: an explicit caller value always wins.
-      config.request_id_support = {{#requestIdSupport}}true{{/requestIdSupport}}{{^requestIdSupport}}false{{/requestIdSupport}} if config.request_id_support.nil?
-
-      @api_client = Algolia::ApiClient.new(config)
+      # Per-client capability, resolved against config.request_id_enabled without
+      # mutating the caller's config: an explicit caller value always wins.
+      @api_client = Algolia::ApiClient.new(config, request_id_support: {{#requestIdSupport}}true{{/requestIdSupport}}{{^requestIdSupport}}false{{/requestIdSupport}})
       {{#isSearchClient}}
       @ingestion_transporter = nil
       if config.transformation_options

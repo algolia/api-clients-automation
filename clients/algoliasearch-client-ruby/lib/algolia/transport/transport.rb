@@ -23,10 +23,13 @@ module Algolia
 
       # @param config [Configuration]
       # @param requester [Object] requester used for sending requests. Uses Algolia::Http::HttpRequester by default
+      # @param request_id_enabled [true, false] whether the transport mints Request-ID headers,
+      #   already resolved against the per-client capability by ApiClient
       #
-      def initialize(config, requester)
+      def initialize(config, requester, request_id_enabled: false)
         @config = config
         @requester = requester
+        @request_id_enabled = request_id_enabled
         @retry_strategy = RetryStrategy.new(config.hosts)
       end
 
@@ -48,8 +51,8 @@ module Algolia
         # only visible here.
         request_id = mint_request_id(opts)
 
-        # The Correlation-ID of the last retried attempt whose response
-        # carried one, surfaced on the exhaustion error for support tickets.
+        # The Correlation-ID of the last retried attempt whose response carried a
+        # non-empty one, surfaced on the exhaustion error for support tickets.
         last_correlation_id = nil
 
         @retry_strategy.get_tryable_hosts(call_type).each do |host|
@@ -92,7 +95,8 @@ module Algolia
           end
 
           if outcome == RETRY
-            last_correlation_id = correlation_id_from(response.headers) || last_correlation_id
+            correlation_id = correlation_id_from(response.headers)
+            last_correlation_id = correlation_id unless correlation_id.nil? || correlation_id.empty?
             retry_errors << {host: host.url, error: response.error}
           else
             return response
@@ -110,19 +114,19 @@ module Algolia
 
       private
 
-      # Returns a fresh Request-ID, or nil when the feature is off for this client or
-      # the caller already supplied one through the request options or the config
-      # default headers, whatever their casing. An x-algolia-request-id query
-      # parameter counts as caller-supplied too: the server reads it when the
-      # header is absent, so minting a header would override it.
+      # Returns the Request-ID applied to every attempt of this execution: the
+      # caller's request-option value when present (request options are consumed on
+      # the first attempt, so retries would otherwise drop it), nil when the feature
+      # is off for this client or the caller supplied one through the config default
+      # headers or the x-algolia-request-id query parameter, otherwise a fresh mint.
       #
       # @param opts [Hash]
       #
       # @return [String, nil]
       #
       def mint_request_id(opts)
-        return nil unless @config.request_id_support
-        return nil if RequestId.request_id?(opts[:header_params])
+        return nil unless @request_id_enabled
+        return RequestId.value(opts[:header_params]) if RequestId.request_id?(opts[:header_params])
         return nil if RequestId.request_id?(@config.header_params)
         return nil if RequestId.request_id_query_param?(opts[:query_params])
 

@@ -12,8 +12,8 @@ module Algolia
   class AlgoliaUnreachableHostError < AlgoliaError
     attr_reader :errors
 
-    # The Correlation-ID header of the last retried attempt that carried one
-    # (possibly ""), or nil. Quote it when contacting Algolia support.
+    # The last non-empty Correlation-ID header among the retried attempts, or nil.
+    # Quote it when contacting Algolia support.
     attr_reader :correlation_id
 
     def initialize(message, errors = [], correlation_id = nil)

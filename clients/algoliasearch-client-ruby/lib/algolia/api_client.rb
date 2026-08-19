@@ -11,13 +11,20 @@ module Algolia
     # The logger, shared with the requester when it provides one.
     attr_reader :logger
 
+    # Whether the transport mints Request-ID headers, resolved once at construction.
+    attr_reader :request_id_enabled
+
     # Initializes the ApiClient
     # @option config [Configuration] Configuration for initializing the object, default to Configuration.default
-    def initialize(config = Configuration.default)
+    # @param request_id_support [true, false] the generated per-client Request-ID capability,
+    #   applied when config.request_id_enabled is nil; an explicit caller value always wins.
+    #   Resolved here so a Configuration shared across clients is never mutated.
+    def initialize(config = Configuration.default, request_id_support: false)
       @config = config
+      @request_id_enabled = config.request_id_enabled.nil? ? request_id_support : config.request_id_enabled
       @requester = config.requester || Http::HttpRequester.new("net_http_persistent", LoggerHelper.create)
       @logger = (@requester.logger if @requester.respond_to?(:logger)) || LoggerHelper.create
-      @transporter = Transport::Transport.new(config, @requester)
+      @transporter = Transport::Transport.new(config, @requester, request_id_enabled: @request_id_enabled)
     end
 
     def self.default
