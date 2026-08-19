@@ -1,13 +1,14 @@
 # This file list code owners for the repository, or part of it.
 # See https://help.github.com/articles/about-code-owners/
 
+# CODEOWNERS is last-match-wins: the catch-all must stay first so the team rules below it take effect
+* @algolia/api-clients-automation
+
 specs/ @algolia/doc-approvers
 website/ @algolia/doc-approvers
 specs/advanced-personalization @algolia/predict-fe
 specs/abtesting-v3 @algolia/optimization
 specs/analytics @algolia/optimization
-
-* @algolia/api-clients-automation
 
 specs/composition @algolia/composition
 tests/CTS/**/composition @algolia/composition @algolia/api-clients-automation
