@@ -26,6 +26,9 @@ export const TODAY = new Date().toISOString().split('T')[0];
 
 export const CI = Boolean(process.env.CI);
 
+// command prefix for yarn installs, `run` has no env option so it must be part of the command string (API-476)
+export const YARN_HARDENED_MODE_PREFIX = CI ? 'YARN_ENABLE_HARDENED_MODE=1 ' : '';
+
 // This script is run by `yarn workspace ...`, which means the current working directory is `./script`
 export const ROOT_DIR = path.resolve(process.cwd(), '..');
 
