@@ -39,6 +39,11 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSyncClien
         assert raw_resp.status_code == {{statusCode}}
         {{/statusCode}}
 
+        {{#correlationIdSuffix}}
+        _correlation_id = next((_value for _key, _value in (raw_resp.headers or {}).items() if _key.lower() == "correlation-id"), None)
+        assert _correlation_id is not None
+        assert _correlation_id.endswith("{{{correlationIdSuffix}}}")
+        {{/correlationIdSuffix}}
 
         {{#body}}
         resp = {{^isSyncClient}}await {{/isSyncClient}}{{#lambda.pascalcase}}{{{client}}}{{#isSyncClient}}Sync{{/isSyncClient}}{{/lambda.pascalcase}}(self._e2e_app_id, self._e2e_api_key{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}}).{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
