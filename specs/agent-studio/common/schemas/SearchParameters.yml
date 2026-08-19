@@ -176,11 +176,6 @@ SearchParameters:
         - type: boolean
         - type: 'null'
       title: attributecriteriacomputedbyminproximity
-    attributeCriteriaComputedBy:
-      oneOf:
-        - $ref: '../../../common/schemas/IndexSettings.yml#/attributeCriteriaComputedBy'
-        - type: 'null'
-      title: attributecriteriacomputedby
     distinct:
       $ref: 'DistinctUnion.yml#/DistinctUnion'
     enableRules:
