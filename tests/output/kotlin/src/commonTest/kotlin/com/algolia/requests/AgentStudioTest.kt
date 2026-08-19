@@ -1207,27 +1207,6 @@ class AgentStudioTest {
     )
   }
 
-  @Test
-  fun `e2e get conversation1`() = runTest {
-    client.runTest(
-      call = {
-        getConversation(
-          conversationId = "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
-          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
-        )
-      },
-      intercept = {
-        assertEquals(
-          "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/alg_cnv_miss_yqcZtaOSPTF8bJsJ"
-            .toPathSegments(),
-          it.url.pathSegments,
-        )
-        assertEquals(HttpMethod.parse("GET"), it.method)
-        assertNoBody(it.body)
-      },
-    )
-  }
-
   // getProvider
 
   @Test

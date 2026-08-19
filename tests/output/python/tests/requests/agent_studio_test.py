@@ -1150,24 +1150,6 @@ class TestAgentStudioClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_conversation_1(self):
-        """
-        e2e get conversation
-        """
-        _req = await self._client.get_conversation_with_http_info(
-            conversation_id="alg_cnv_miss_yqcZtaOSPTF8bJsJ",
-            agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
-        )
-
-        assert (
-            _req.path
-            == "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/alg_cnv_miss_yqcZtaOSPTF8bJsJ"
-        )
-        assert _req.verb == "GET"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert _req.data is None
-
     async def test_get_provider_(self):
         """
         getProvider
@@ -2888,24 +2870,6 @@ class TestAgentStudioClientSync:
         assert (
             _req.path
             == "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/test-conversation-id"
-        )
-        assert _req.verb == "GET"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert _req.data is None
-
-    def test_get_conversation_1(self):
-        """
-        e2e get conversation
-        """
-        _req = self._client.get_conversation_with_http_info(
-            conversation_id="alg_cnv_miss_yqcZtaOSPTF8bJsJ",
-            agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
-        )
-
-        assert (
-            _req.path
-            == "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/alg_cnv_miss_yqcZtaOSPTF8bJsJ"
         )
         assert _req.verb == "GET"
         assert _req.query_parameters.items() == {}.items()

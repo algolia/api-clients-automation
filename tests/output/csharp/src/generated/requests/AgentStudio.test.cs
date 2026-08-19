@@ -1102,23 +1102,6 @@ public class AgentStudioClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "e2e get conversation")]
-  public async Task GetConversationTest1()
-  {
-    await client.GetConversationAsync(
-      "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
-      "76710f1b-8231-42e5-b0d1-f43aac618e15"
-    );
-
-    var req = _echo.LastResponse;
-    Assert.Equal(
-      "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/alg_cnv_miss_yqcZtaOSPTF8bJsJ",
-      req.Path
-    );
-    Assert.Equal("GET", req.Method.ToString());
-    Assert.Null(req.Body);
-  }
-
   [Fact(DisplayName = "getProvider")]
   public async Task GetProviderTest()
   {

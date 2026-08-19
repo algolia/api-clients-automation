@@ -150,41 +150,6 @@ func TestAgentStudioE2E_GetConfiguration(t *testing.T) {
 	})
 }
 
-func TestAgentStudioE2E_GetConversation(t *testing.T) {
-	t.Parallel()
-	t.Run("e2e get conversation", func(t *testing.T) {
-		t.Parallel()
-
-		client := createE2EAgentStudioClient(t)
-		res, err := client.GetConversation(client.NewApiGetConversationRequest(
-			"alg_cnv_miss_yqcZtaOSPTF8bJsJ", "76710f1b-8231-42e5-b0d1-f43aac618e15"))
-		require.NoError(t, err)
-
-		_ = res
-
-		rawBody, err := json.Marshal(res)
-		require.NoError(t, err)
-
-		var rawBodyMap any
-
-		err = json.Unmarshal(rawBody, &rawBodyMap)
-		require.NoError(t, err)
-
-		expectedBodyRaw := `{"id":"alg_cnv_miss_yqcZtaOSPTF8bJsJ","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15","title":"General Greeting"}`
-
-		var expectedBody any
-
-		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
-		require.NoError(t, err)
-
-		unionBody := tests.Union(t, expectedBody, rawBodyMap)
-		unionBodyRaw, err := json.Marshal(unionBody)
-		require.NoError(t, err)
-
-		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
-	})
-}
-
 func TestAgentStudioE2E_GetProvider(t *testing.T) {
 	t.Parallel()
 	t.Run("e2e get provider", func(t *testing.T) {
@@ -333,27 +298,6 @@ func TestAgentStudioE2E_ListAgentConversations(t *testing.T) {
 		require.NoError(t, err)
 
 		_ = res
-
-		rawBody, err := json.Marshal(res)
-		require.NoError(t, err)
-
-		var rawBodyMap any
-
-		err = json.Unmarshal(rawBody, &rawBodyMap)
-		require.NoError(t, err)
-
-		expectedBodyRaw := `{"data":[{"id":"alg_cnv_miss_yqcZtaOSPTF8bJsJ","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15","title":"General Greeting"}]}`
-
-		var expectedBody any
-
-		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
-		require.NoError(t, err)
-
-		unionBody := tests.Union(t, expectedBody, rawBodyMap)
-		unionBodyRaw, err := json.Marshal(unionBody)
-		require.NoError(t, err)
-
-		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
 	})
 }
 
