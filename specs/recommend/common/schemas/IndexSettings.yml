@@ -74,8 +74,6 @@ baseRecommendIndexSettings:
       $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/sortFacetValuesBy'
     attributeCriteriaComputedByMinProximity:
       $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/attributeCriteriaComputedByMinProximity'
-    attributeCriteriaComputedBy:
-      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/attributeCriteriaComputedBy'
     renderingContent:
       $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/renderingContent'
     enableReRanking:
