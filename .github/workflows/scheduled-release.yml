@@ -11,6 +11,8 @@ jobs:
   release:
     name: Scheduled/Manual Release
     runs-on: ubuntu-22.04
+    # the app token minted below lives 60 minutes, keep the job well under that so the release push cannot hit an expired credential
+    timeout-minutes: 30
     permissions:
       contents: read
     steps:

@@ -98,6 +98,9 @@ jobs:
       - name: Lint GitHub actions
         run: yarn github-actions:lint
 
+      - name: Check that the issue sync workflow matches its template
+        run: diff .github/workflows/issue.yml templates/issue.yml
+
       - name: Lint generators
         run: |
           yarn cli format java generators
@@ -655,7 +658,8 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: 'Deploy from GitHub Actions'
           enable-pull-request-comment: true
-          enable-commit-comment: true
+          # commit comments need contents: write which this job does not have, the flag never produced a comment
+          enable-commit-comment: false
           overwrites-pull-request-comment: true
           netlify-config-path: ./netlify.toml
         env:
@@ -685,6 +689,16 @@ jobs:
           if [[ -s unpinned.txt ]]; then
             echo "The following action refs are not pinned to a commit SHA:"
             cat unpinned.txt
+            exit 1
+          fi
+
+      # scoped to .github, the client repo workflows still have known permission gaps (API-479 follow-up)
+      - name: Check that monorepo workflows keep least-privilege permissions
+        run: |
+          jq -r '.[] | select(.ident == "excessive-permissions") | "\(.locations[0].symbolic.key.Local.verbatim_path):\(.locations[0].concrete.location.start_point.row + 1)"' zizmor.json | grep -v '^clients/' | sort -u > excessive.txt || true
+          if [[ -s excessive.txt ]]; then
+            echo "The following workflows grant more GITHUB_TOKEN permissions than they use:"
+            cat excessive.txt
             exit 1
           fi
 
