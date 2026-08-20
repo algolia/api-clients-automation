@@ -55,7 +55,7 @@ final class UnreachableException extends AlgoliaException
     /**
      * @param array<int, array{host: string, error: RequestException}> $errors
      *
-     * @return null|string the last attempt that carried a `Correlation-ID`, null for pure timeouts
+     * @return null|string the `Correlation-ID` of the last attempt that carried one, null for pure timeouts
      */
     private static function lastCorrelationId(array $errors)
     {

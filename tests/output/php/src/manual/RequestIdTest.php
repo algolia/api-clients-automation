@@ -6,6 +6,7 @@ use Algolia\AlgoliaSearch\Api\IngestionClient;
 use Algolia\AlgoliaSearch\Api\SearchClient;
 use Algolia\AlgoliaSearch\Configuration\IngestionConfig;
 use Algolia\AlgoliaSearch\Configuration\SearchConfig;
+use Algolia\AlgoliaSearch\Exceptions\AlgoliaException;
 use Algolia\AlgoliaSearch\Exceptions\BadRequestException;
 use Algolia\AlgoliaSearch\Exceptions\UnreachableException;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
@@ -214,6 +215,43 @@ class RequestIdTest extends TestCase
             $this->assertNull($e->getCorrelationId());
             $this->assertSame('request-id error test', $e->getMessage());
         }
+    }
+
+    public function testADeserializationFailureCarriesTheCorrelationId(): void
+    {
+        $http = $this->recorder([
+            new Response(200, ['Correlation-ID' => 'CtsFixedCorrelationId'], 'not json'),
+        ]);
+
+        try {
+            $this->searchClient($http)->customGet('1/test');
+            $this->fail('Expected InvalidArgumentException to be thrown');
+        } catch (\InvalidArgumentException $e) {
+            $this->assertStringEndsWith('(Correlation-ID: CtsFixedCorrelationId)', $e->getMessage());
+            $this->assertInstanceOf(\InvalidArgumentException::class, $e->getPrevious());
+        }
+    }
+
+    public function testADeserializationFailureWithoutTheHeaderIsUnchanged(): void
+    {
+        $http = $this->recorder([
+            new Response(200, [], 'not json'),
+        ]);
+
+        try {
+            $this->searchClient($http)->customGet('1/test');
+            $this->fail('Expected InvalidArgumentException to be thrown');
+        } catch (\InvalidArgumentException $e) {
+            $this->assertStringNotContainsString('Correlation-ID', $e->getMessage());
+        }
+    }
+
+    public function testAnEmptyCorrelationIdIsNormalizedToNull(): void
+    {
+        $e = new AlgoliaException('request-id error test', 0, null, '');
+
+        $this->assertNull($e->getCorrelationId());
+        $this->assertSame('request-id error test', $e->getMessage());
     }
 
     public function testUnreachableHostsExposeTheLastCorrelationIdExactlyOnce(): void

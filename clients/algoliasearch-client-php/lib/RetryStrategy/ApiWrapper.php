@@ -316,6 +316,10 @@ final class ApiWrapper implements ApiWrapperInterface
             } catch (\InvalidArgumentException $e) {
                 $this->log(LogLevel::ERROR, 'Failed to deserialize response: '.$e->getMessage());
 
+                if (null !== $correlationId) {
+                    throw new \InvalidArgumentException($e->getMessage().' (Correlation-ID: '.$correlationId.')', $e->getCode(), $e);
+                }
+
                 throw $e;
             }
         }

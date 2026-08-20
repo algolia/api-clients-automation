@@ -17,9 +17,13 @@ class AlgoliaException extends \Exception
      */
     public function __construct($message = '', $code = 0, $previous = null, $correlationId = null)
     {
+        if ('' === $correlationId) {
+            $correlationId = null;
+        }
+
         $this->correlationId = $correlationId;
 
-        if (null !== $correlationId && '' !== $correlationId) {
+        if (null !== $correlationId) {
             $suffix = ' (Correlation-ID: '.$correlationId.')';
 
             if (false === strpos($message, $suffix)) {

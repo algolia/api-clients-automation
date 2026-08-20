@@ -89,7 +89,7 @@ final class CurlHttpClient implements HttpClientInterface
                 return $length;
             }
 
-            $responseHeaders[trim($parts[0])] = trim($parts[1]);
+            $responseHeaders[trim($parts[0])][] = trim($parts[1]);
 
             return $length;
         });
