@@ -26,6 +26,7 @@ public class AlgoliaRubyGenerator extends RubyClientCodegen {
     CLIENT = (String) additionalProperties.get("client");
 
     additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
+    additionalProperties.put("requestIdSupport", Helpers.requestIdSupport(CLIENT));
     additionalProperties.put("packageVersion", Helpers.getClientConfigField("ruby", "packageVersion"));
     setGemName("algolia");
     additionalProperties.put("modelModule", Helpers.capitalize(Helpers.camelize(CLIENT)));

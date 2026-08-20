@@ -245,6 +245,25 @@ class SearchTest extends TestCase
         $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
+    #[TestDox('the classic engine accepts a Request-ID sent as a query parameter')]
+    public function testSearchRules1(): void
+    {
+        $client = $this->getClient();
+        $resp = $client->searchRules(
+            'cts_e2e_browse',
+            ['query' => 'zorro',
+            ],
+            requestOptions: [
+                'queryParameters' => [
+                    'x-algolia-request-id' => 'CtsE2eQry11',
+                ], ]
+        );
+
+        $expected = json_decode('{"nbHits":1,"nbPages":1,"page":0}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
+    }
+
     #[TestDox('search with special characters in indexName')]
     public function testSearchSingleIndex1(): void
     {

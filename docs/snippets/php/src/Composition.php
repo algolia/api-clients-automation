@@ -119,7 +119,7 @@ class SnippetCompositionClient
             'test/all',
             ['query' => 'to be overridden',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query' => 'parameters with space',
                     'and an array' => ['array', 'with spaces',
@@ -203,7 +203,7 @@ class SnippetCompositionClient
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query' => 'myQueryParameter',
                 ], ]
@@ -233,7 +233,7 @@ class SnippetCompositionClient
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query2' => 'myQueryParameter',
                 ], ]
@@ -263,7 +263,7 @@ class SnippetCompositionClient
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
@@ -294,7 +294,7 @@ class SnippetCompositionClient
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
@@ -325,7 +325,7 @@ class SnippetCompositionClient
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'isItWorking' => true,
                 ], ]
@@ -355,7 +355,7 @@ class SnippetCompositionClient
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => 2,
                 ], ]
@@ -385,7 +385,7 @@ class SnippetCompositionClient
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => ['b and c', 'd',
                     ],
@@ -416,7 +416,7 @@ class SnippetCompositionClient
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => [true, true, false,
                     ],
@@ -447,7 +447,7 @@ class SnippetCompositionClient
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => [1, 2,
                     ],
@@ -567,6 +567,59 @@ class SnippetCompositionClient
         // Call the API
         $response = $client->getComposition(
             'foo',
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetComposition method.
+     *
+     * the Correlation-ID ends with the sent Request-ID
+     */
+    public function snippetForGetComposition1(): void
+    {
+        // >SEPARATOR getComposition the Correlation-ID ends with the sent Request-ID
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->getComposition(
+            'id1',
+            requestOptions: [
+                'headers' => [
+                    'request-id' => 'CtsE2eEcho4',
+                ],
+            ]
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetComposition method.
+     *
+     * the Correlation-ID ends with the Request-ID sent as a query parameter
+     */
+    public function snippetForGetComposition2(): void
+    {
+        // >SEPARATOR getComposition the Correlation-ID ends with the Request-ID sent as a query parameter
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->getComposition(
+            'id1',
+            requestOptions: [
+                'queryParameters' => [
+                    'x-algolia-request-id' => 'CtsE2eEchoQ',
+                ], ]
         );
 
         // >LOG

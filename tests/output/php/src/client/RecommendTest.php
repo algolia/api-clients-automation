@@ -118,6 +118,20 @@ class RecommendTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('the recommend client sends a Request-ID')]
+    public function test0requestId(): void
+    {
+        $client = RecommendClient::createWithConfig(RecommendConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6694']));
+
+        $res = $client->customGet(
+            '1/test/request-id/smoke/recommend/php',
+        );
+        $this->assertEquals(
+            '{"status":"ok"}',
+            json_encode($res)
+        );
+    }
+
     #[TestDox('switch API key')]
     public function test0setClientApiKey(): void
     {

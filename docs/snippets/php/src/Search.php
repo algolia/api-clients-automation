@@ -811,7 +811,7 @@ class SnippetSearchClient
             'test/all',
             ['query' => 'to be overridden',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query' => 'parameters with space',
                     'and an array' => ['array', 'with spaces',
@@ -895,7 +895,7 @@ class SnippetSearchClient
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query' => 'myQueryParameter',
                 ], ]
@@ -925,7 +925,7 @@ class SnippetSearchClient
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query2' => 'myQueryParameter',
                 ], ]
@@ -955,7 +955,7 @@ class SnippetSearchClient
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
@@ -986,7 +986,7 @@ class SnippetSearchClient
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
@@ -1017,7 +1017,7 @@ class SnippetSearchClient
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'isItWorking' => true,
                 ], ]
@@ -1047,7 +1047,7 @@ class SnippetSearchClient
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => 2,
                 ], ]
@@ -1077,7 +1077,7 @@ class SnippetSearchClient
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => ['b and c', 'd',
                     ],
@@ -1108,7 +1108,7 @@ class SnippetSearchClient
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => [true, true, false,
                     ],
@@ -1139,7 +1139,7 @@ class SnippetSearchClient
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => [1, 2,
                     ],
@@ -2999,6 +2999,88 @@ class SnippetSearchClient
     /**
      * Snippet for the SaveObjects method.
      *
+     * every request of one helper call shares one Request-ID
+     */
+    public function snippetForSaveObjects(): void
+    {
+        // >SEPARATOR saveObjects every request of one helper call shares one Request-ID
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveObjects(
+            '<YOUR_INDEX_NAME>',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+
+                ['objectID' => '3',
+                    'name' => 'Cyril',
+                ],
+
+                ['objectID' => '4',
+                    'name' => 'David',
+                ],
+            ],
+            true,
+            2,
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveObjects method.
+     *
+     * every request of one helper call shares one Request-ID
+     */
+    public function snippetForSaveObjects1(): void
+    {
+        // >SEPARATOR saveObjects every request of one helper call shares one Request-ID
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveObjects(
+            '<YOUR_INDEX_NAME>',
+            [
+                ['objectID' => '5',
+                    'name' => 'Eva',
+                ],
+
+                ['objectID' => '6',
+                    'name' => 'Fred',
+                ],
+
+                ['objectID' => '7',
+                    'name' => 'Gina',
+                ],
+
+                ['objectID' => '8',
+                    'name' => 'Hugo',
+                ],
+            ],
+            true,
+            2,
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveObjects method.
+     *
      * call saveObjects without error
      */
     public function snippetForSaveObjects2(): void
@@ -3112,7 +3194,7 @@ class SnippetSearchClient
             ],
             false,
             1000,
-            [
+            requestOptions: [
                 'headers' => [
                     'X-Algolia-User-ID' => '*',
                 ],
@@ -3274,7 +3356,7 @@ class SnippetSearchClient
             ],
             true,
             10,
-            [
+            requestOptions: [
                 'headers' => [
                     'x-algolia-user-id' => 'test-user',
                 ],
@@ -5386,6 +5468,34 @@ class SnippetSearchClient
             '<YOUR_INDEX_NAME>',
             ['query' => 'zorro',
             ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchRules method.
+     *
+     * the classic engine accepts a Request-ID sent as a query parameter
+     */
+    public function snippetForSearchRules1(): void
+    {
+        // >SEPARATOR searchRules the classic engine accepts a Request-ID sent as a query parameter
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchRules(
+            '<YOUR_INDEX_NAME>',
+            ['query' => 'zorro',
+            ],
+            requestOptions: [
+                'queryParameters' => [
+                    'x-algolia-request-id' => 'CtsE2eQry11',
+                ], ]
         );
 
         // >LOG
@@ -7784,7 +7894,7 @@ class SnippetSearchClient
             ['query' => 'query',
                 'aroundLatLngViaIP' => true,
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'x-forwarded-for' => 'XX.XXX.XXX.XXX',
                 ],
@@ -7812,7 +7922,7 @@ class SnippetSearchClient
         $response = $client->searchSingleIndex(
             '<YOUR_INDEX_NAME>',
             [],
-            [
+            requestOptions: [
                 'headers' => [
                     'x-forwarded-for' => 'XX.XXX.XXX.XXX',
                 ],
@@ -9041,7 +9151,7 @@ class SnippetSearchClient
             '<YOUR_INDEX_NAME>',
             ['query' => 'query',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'X-Algolia-User-ID' => 'user1234',
                 ],
@@ -9070,7 +9180,7 @@ class SnippetSearchClient
             '<YOUR_INDEX_NAME>',
             ['query' => 'peace',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'X-Algolia-User-ID' => 'user42',
                 ],
