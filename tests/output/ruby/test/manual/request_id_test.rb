@@ -6,16 +6,18 @@ require "test/unit"
 # Requester failing with a network error until the configured number of
 # attempts is reached, recording the Request-ID header of every attempt.
 class FailingThenSucceedingRequester
-  attr_reader :request_ids
+  attr_reader :request_ids, :query_request_ids
 
   def initialize(failures)
     @failures = failures
     @attempts = 0
     @request_ids = []
+    @query_request_ids = []
   end
 
   def send_request(host, method, path, body, query_params, headers, timeout, connect_timeout)
     @request_ids << headers["request-id"]
+    @query_request_ids << (query_params.find { |k, _| k.to_s.casecmp?("x-algolia-request-id") }&.last)
     @attempts += 1
 
     if @attempts <= @failures
@@ -173,6 +175,19 @@ class TestRequestId < Test::Unit::TestCase
 
     # Header keys are downcased before the merge, so a minted ID could only land on this key.
     assert_equal("CallerOwnedId", res.headers["request-id"])
+  end
+
+  def test_caller_supplied_query_param_request_id_survives_retries
+    requester = FailingThenSucceedingRequester.new(2)
+    hosts = Array.new(3) { Algolia::Transport::StatefulHost.new("localhost", accept: READ | WRITE) }
+    client = search_client(search_config(requester: requester, hosts: hosts))
+
+    client.custom_get("1/test", {}, {:query_params => {"X-Algolia-Request-Id" => "QueryOwned"}})
+
+    # The query-param channel survives retries on its own channel, with no header minted over it.
+    assert_equal(3, requester.query_request_ids.length)
+    assert_equal(["QueryOwned"], requester.query_request_ids.uniq)
+    assert_equal([nil], requester.request_ids.uniq)
   end
 
   def test_caller_supplied_query_param_request_id_wins
@@ -347,8 +362,10 @@ class TestRequestId < Test::Unit::TestCase
     # ...but runs with the default timeouts, not the caller's.
     assert_equal(1234, first.timeout)
     assert_equal(56, first.connect_timeout)
-    assert_not_equal(1234, delete.timeout)
-    assert_not_equal(56, delete.connect_timeout)
+    # The generated search client's write/connect defaults, pinned so a cleanup
+    # that strips the timeouts entirely fails too.
+    assert_equal(30_000, delete.timeout)
+    assert_equal(2000, delete.connect_timeout)
   end
 
   def test_api_error_carries_correlation_id

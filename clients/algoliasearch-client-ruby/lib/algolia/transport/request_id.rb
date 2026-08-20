@@ -56,6 +56,18 @@ module Algolia
 
         query_params.any? { |k, _| k.to_s.casecmp?(QUERY_PARAM) }
       end
+
+      # The x-algolia-request-id value carried by the given query parameters, or nil when absent.
+      #
+      # @param query_params [Hash, nil]
+      #
+      # @return [String, nil]
+      #
+      def self.query_param_value(query_params)
+        return nil unless query_params.respond_to?(:each_pair)
+
+        query_params.find { |k, _| k.to_s.casecmp?(QUERY_PARAM) }&.last
+      end
     end
   end
 end

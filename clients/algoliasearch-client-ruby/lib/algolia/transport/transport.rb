@@ -60,6 +60,11 @@ module Algolia
         # only visible here.
         request_id = mint_request_id(opts)
 
+        # A Request-ID sent on the query-param channel must survive retries on that
+        # same channel: RequestOptions#create consumes opts[:query_params] on the
+        # first attempt, just like the header channel handled above.
+        request_id_query_param = RequestId.query_param_value(opts[:query_params])
+
         # The Correlation-ID of the last retried attempt whose response carried a
         # non-empty one, surfaced on the exhaustion error for support tickets.
         last_correlation_id = nil
@@ -73,7 +78,7 @@ module Algolia
           # TODO: what is this merge for ?
           # request_options.query_params.merge!(request_options.data) if method == :GET
 
-          request = build_request(method, path, body, request_options, request_id)
+          request = build_request(method, path, body, request_options, request_id, request_id_query_param)
           response = @requester.send_request(
             host,
             request[:method],
@@ -163,15 +168,20 @@ module Algolia
       # @param [Hash] body
       # @param [RequestOptions] request_options
       # @param [String, nil] request_id
+      # @param [String, nil] request_id_query_param
       #
       # @return [Hash]
       #
-      def build_request(method, path, body, request_options, request_id = nil)
+      def build_request(method, path, body, request_options, request_id = nil, request_id_query_param = nil)
         request = {}
         request[:method] = method.downcase
         request[:path] = path
         request[:body] = build_body(body, request_options)
         request[:query_params] = Algolia::Transport.stringify_query_params(request_options.query_params)
+        if request_id_query_param && request[:query_params].keys.none? { |k| k.to_s.casecmp?(RequestId::QUERY_PARAM) }
+          request[:query_params][RequestId::QUERY_PARAM.to_sym] = Algolia::Transport.encode_uri(request_id_query_param)
+        end
+
         request[:header_params] = generate_header_params(body, request_options, request_id)
         request[:timeout] = request_options.timeout
         request[:connect_timeout] = request_options.connect_timeout
