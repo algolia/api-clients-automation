@@ -826,6 +826,136 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('the Request-ID stays stable across retries')]
+    public function test0requestId(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6694', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6695', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6696']));
+
+        $res = $client->customPost(
+            '1/test/request-id/retry/php',
+        );
+        $this->assertEquals(
+            '{"status":"ok"}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('each call mints a fresh Request-ID')]
+    public function test1requestId(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6694']));
+
+        $res = $client->customGet(
+            '1/test/request-id/fresh/php',
+        );
+        $this->assertEquals(
+            '{"status":"ok"}',
+            json_encode($res)
+        );
+
+        $res = $client->customGet(
+            '1/test/request-id/fresh/php',
+        );
+        $this->assertEquals(
+            '{"status":"ok"}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('a caller-supplied Request-ID is never overwritten')]
+    public function test2requestId(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6694']));
+
+        $res = $client->customGet(
+            '1/test/request-id/caller/php',
+            requestOptions: [
+                'headers' => [
+                    'request-id' => 'CtsUserProvided',
+                ],
+            ]
+        );
+        $this->assertEquals(
+            '{"requestId":"CtsUserProvided"}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('every request of one helper call shares one Request-ID')]
+    public function test3requestId(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6694']));
+
+        $res = $client->saveObjects(
+            'cts_request_id_php',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+
+                ['objectID' => '3',
+                    'name' => 'Cyril',
+                ],
+
+                ['objectID' => '4',
+                    'name' => 'David',
+                ],
+            ],
+            true,
+            2,
+        );
+        $this->assertEquals(
+            '[{"taskID":42,"objectIDs":["1","2"]},{"taskID":42,"objectIDs":["3","4"]}]',
+            json_encode($res)
+        );
+
+        $res = $client->saveObjects(
+            'cts_request_id_php',
+            [
+                ['objectID' => '5',
+                    'name' => 'Eva',
+                ],
+
+                ['objectID' => '6',
+                    'name' => 'Fred',
+                ],
+
+                ['objectID' => '7',
+                    'name' => 'Gina',
+                ],
+
+                ['objectID' => '8',
+                    'name' => 'Hugo',
+                ],
+            ],
+            true,
+            2,
+        );
+        $this->assertEquals(
+            '[{"taskID":42,"objectIDs":["5","6"]},{"taskID":42,"objectIDs":["7","8"]}]',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('client errors expose the Correlation-ID')]
+    public function test4requestId(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6694']));
+
+        try {
+            $res = $client->customGet(
+                '1/test/request-id/error/php',
+            );
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'request-id error test (Correlation-ID: CtsFixedCorrelationId)'), $e->getMessage());
+        }
+    }
+
     #[TestDox('call saveObjects without error')]
     public function test0saveObjects(): void
     {
@@ -908,7 +1038,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             ],
             false,
             1000,
-            [
+            requestOptions: [
                 'headers' => [
                     'X-Algolia-User-ID' => '*',
                 ],
@@ -1050,7 +1180,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             ],
             true,
             10,
-            [
+            requestOptions: [
                 'headers' => [
                     'x-algolia-user-id' => 'test-user',
                 ],
@@ -1067,7 +1197,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             'playlists',
             ['query' => 'foo',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'X-Algolia-User-ID' => 'user1234',
                 ],
