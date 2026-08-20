@@ -29,8 +29,6 @@ ABTest _$ABTestFromJson(Map<String, dynamic> json) => $checkedCreate(
               (v) => v == null
                   ? null
                   : ABTestConfiguration.fromJson(v as Map<String, dynamic>)),
-          migratedAbTestID:
-              $checkedConvert('migratedAbTestID', (v) => (v as num?)?.toInt()),
           decision: $checkedConvert(
               'decision',
               (v) => v == null
@@ -60,7 +58,6 @@ Map<String, dynamic> _$ABTestToJson(ABTest instance) {
   val['status'] = instance.status.toJson();
   val['variants'] = instance.variants.map((e) => e.toJson()).toList();
   writeNotNull('configuration', instance.configuration?.toJson());
-  writeNotNull('migratedAbTestID', instance.migratedAbTestID);
   writeNotNull('decision', instance.decision?.toJson());
   return val;
 }
